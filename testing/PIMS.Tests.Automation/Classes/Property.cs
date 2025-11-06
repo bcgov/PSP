@@ -70,7 +70,8 @@
         public string POIName { get; set; } = null!;
         public PropertyLatitudeLongitude LatitudeLongitude { get; set; } = new PropertyLatitudeLongitude();
         public SurveyParcel SurveyParcel { get; set; } = new SurveyParcel();
-        public List<string> MultiplePIDS { get; set; } = new List<string>();      
+        public List<string> MultiplePIDS { get; set; } = new List<string>();
+        public List<string> DisplayingList { get; set; } = new List<string>();
     }
 
     public class PropertyManagement

@@ -3,6 +3,7 @@ import { createFileDownload } from '@/features/documents/DownloadDocumentButton'
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_AgreementTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementTypes';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
@@ -11,35 +12,59 @@ import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concept
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateAgreement } from '@/models/generate/GenerateAgreement';
-import { exists } from '@/utils/utils';
+import { exists, firstOrNull } from '@/utils/utils';
+
+import { getCancelModalProps } from './../../../../../../hooks/useModalContext';
 
 export const useGenerateAgreement = () => {
   const { getPersonConcept, getOrganizationConcept } = useApiContacts();
   const { getAcquisitionFile, getAcquisitionProperties } = useAcquisitionProvider();
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
+  const { setModalContent, setDisplayModal } = useModalContext();
   const generateAgreement = async (agreement: ApiGen_Concepts_Agreement) => {
     if (!exists(agreement?.agreementType?.id)) {
       throw Error('user must choose agreement type in order to generate a document');
     }
     const file = await getAcquisitionFile.execute(agreement.acquisitionFileId);
     const properties = await getAcquisitionProperties.execute(agreement.acquisitionFileId);
+
     if (!file) {
       throw Error('Acquisition file not found');
     }
     file.fileProperties = properties ?? null;
 
-    const coordinator = file.acquisitionTeam?.find(
+    const coordinators = file.acquisitionTeam?.filter(
       team => team.teamProfileTypeCode === 'PROPCOORD',
     );
-    const negotiatingAgent = file.acquisitionTeam?.find(
+    const negotiatingAgents = file.acquisitionTeam?.filter(
       team => team.teamProfileTypeCode === 'NEGOTAGENT',
     );
-    const provincialSolicitor = file.acquisitionTeam?.find(
+    const provincialSolicitors = file.acquisitionTeam?.filter(
       team => team.teamProfileTypeCode === 'MOTILAWYER',
     );
     const ownerSolicitor = file.acquisitionFileInterestHolders?.find(
       x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR,
     );
+
+    if (
+      coordinators?.length > 1 ||
+      negotiatingAgents?.length > 1 ||
+      provincialSolicitors?.length > 1
+    ) {
+      setModalContent({
+        ...getCancelModalProps(),
+        cancelButtonText: null,
+        okButtonText: 'Ok',
+        title: 'Warning',
+        message:
+          'This file has more then one property coordinator, negotiating agent, or MOTI lawyer. You may need to correct the generated report.',
+      });
+      setDisplayModal(true);
+    }
+
+    const coordinator = firstOrNull(coordinators);
+    const negotiatingAgent = firstOrNull(negotiatingAgents);
+    const provincialSolicitor = firstOrNull(provincialSolicitors);
 
     const coordinatorPromise = coordinator?.personId
       ? getPersonConcept(coordinator?.personId).then(p => (coordinator.person = p?.data))

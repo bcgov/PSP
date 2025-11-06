@@ -303,7 +303,7 @@ exports[`Expropriation Form 9 > matches snapshot 1`] = `
         class="c2 required text-left col"
       >
         <div
-          class="form-group"
+          class="input form-group"
         >
           <div
             class="row"

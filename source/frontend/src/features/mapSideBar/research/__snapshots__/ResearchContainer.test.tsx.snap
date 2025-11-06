@@ -643,6 +643,20 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   max-width: 60rem;
 }
 
+.c42 {
+  border: none;
+}
+
+.c42 .card-body {
+  padding: 0;
+}
+
+.c43 {
+  overflow: hidden;
+  white-space: break-spaces;
+  word-break: break-all;
+}
+
 @media only screen and (max-width:1199px) {
   .c0.expanded {
     min-width: 70rem;
@@ -1038,52 +1052,56 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                 <div
                   class="c27"
                 >
-                  Active
                   <div
-                    class="c28"
-                    data-testid="menu-item-row-1"
+                    data-testid="Active-section"
                   >
-                    <div />
-                    <div>
-                      <div
-                        class="c29"
-                      >
-                        1
-                      </div>
-                    </div>
+                    Active
                     <div
-                      class="c30"
+                      class="c28"
+                      data-testid="menu-item-row-1"
                     >
+                      <div />
+                      <div>
+                        <div
+                          class="c29"
+                        >
+                          1
+                        </div>
+                      </div>
                       <div
                         class="c30"
-                        data-testid="menu-item-property-0"
                       >
-                        123-456-789
-                      </div>
-                    </div>
-                    <div
-                      class="c31"
-                    >
-                      <span
-                        class="tooltip-icon"
-                        data-testid="tooltip-icon-no-location-tooltip"
-                        id="no-location-tooltip"
-                      >
-                        <svg
-                          class="tooltip-icon"
-                          fill="currentColor"
-                          height="1em"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 512 512"
-                          width="1em"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <div
+                          class="c30"
+                          data-testid="menu-item-property-0"
                         >
-                          <path
-                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                          />
-                        </svg>
-                      </span>
+                          123-456-789
+                        </div>
+                      </div>
+                      <div
+                        class="c31"
+                      >
+                        <span
+                          class="tooltip-icon"
+                          data-testid="tooltip-icon-no-location-tooltip"
+                          id="no-location-tooltip"
+                        >
+                          <svg
+                            class="tooltip-icon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                            />
+                          </svg>
+                        </span>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -1338,7 +1356,31 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="c41 text-left col"
                               />
                             </div>
-                            a request description
+                            <div
+                              class="c42 card"
+                              style="padding: 0px;"
+                            >
+                              <div
+                                class="card-body"
+                              >
+                                <div
+                                  class="card-body"
+                                  style="padding: 0px;"
+                                >
+                                  <p
+                                    class="card-text"
+                                    style="padding: 0px; word-break: break-all;"
+                                  >
+                                    <label
+                                      class="c43"
+                                      style="max-height: fit-content;"
+                                    >
+                                      a request description
+                                    </label>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <div
@@ -1396,7 +1438,31 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="c41 text-left col"
                               />
                             </div>
-                            A research result
+                            <div
+                              class="c42 card"
+                              style="padding: 0px;"
+                            >
+                              <div
+                                class="card-body"
+                              >
+                                <div
+                                  class="card-body"
+                                  style="padding: 0px;"
+                                >
+                                  <p
+                                    class="card-text"
+                                    style="padding: 0px; word-break: break-all;"
+                                  >
+                                    <label
+                                      class="c43"
+                                      style="max-height: fit-content;"
+                                    >
+                                      A research result
+                                    </label>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                         <div
@@ -1454,7 +1520,31 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="c41 text-left col"
                               />
                             </div>
-                            An expropriation note
+                            <div
+                              class="c42 card"
+                              style="padding: 0px;"
+                            >
+                              <div
+                                class="card-body"
+                              >
+                                <div
+                                  class="card-body"
+                                  style="padding: 0px;"
+                                >
+                                  <p
+                                    class="card-text"
+                                    style="padding: 0px; word-break: break-all;"
+                                  >
+                                    <label
+                                      class="c43"
+                                      style="max-height: fit-content;"
+                                    >
+                                      An expropriation note
+                                    </label>
+                                  </p>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
                       </div>

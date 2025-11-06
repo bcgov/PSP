@@ -18,7 +18,7 @@ namespace PIMS.Tests.Automation.Reports
 
         public static void ExtentReportInit()
         {
-            ExtentSparkReporter spark = new ExtentSparkReporter(reportPath + $"{Path.DirectorySeparatorChar}PIMS_AutomationReport.html");
+            ExtentSparkReporter spark = new(reportPath + $"{Path.DirectorySeparatorChar}PIMS_AutomationReport.html");
             spark.Config.ReportName = "Automation Status Report";
             spark.Config.DocumentTitle = "Automation Status Report";
             spark.Config.Theme = Theme.Standard;
