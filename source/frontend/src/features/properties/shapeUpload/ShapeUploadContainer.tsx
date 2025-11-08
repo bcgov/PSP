@@ -11,6 +11,7 @@ import { IShapeUploadResultViewProps } from './ShapeUploadResultView';
 export interface IShapeUploadContainerProps {
   formikRef: React.Ref<FormikProps<ShapeUploadModel>>;
   uploadResult: UploadResponseModel | null;
+  propertyIdentifier?: string;
   onUploadFile: (result: UploadResponseModel) => void;
   View: React.FunctionComponent<IShapeUploadFormProps>;
   ResultsView: React.FunctionComponent<IShapeUploadResultViewProps>;
@@ -22,6 +23,7 @@ export interface IShapeUploadContainerProps {
 export const ShapeUploadContainer: React.FunctionComponent<IShapeUploadContainerProps> = ({
   formikRef,
   uploadResult,
+  propertyIdentifier,
   onUploadFile,
   View,
   ResultsView,
@@ -48,7 +50,12 @@ export const ShapeUploadContainer: React.FunctionComponent<IShapeUploadContainer
   return exists(uploadResult) ? (
     <ResultsView uploadResult={uploadResult} />
   ) : (
-    <View formikRef={formikRef} isLoading={isUploading} onUploadFile={onUploadFileHandler} />
+    <View
+      formikRef={formikRef}
+      isLoading={isUploading}
+      propertyIdentifier={propertyIdentifier}
+      onUploadFile={onUploadFileHandler}
+    />
   );
 };
 

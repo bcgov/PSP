@@ -14,12 +14,14 @@ import ShapeUploadResultView from './ShapeUploadResultView';
 export interface IShapeUploadModalProps {
   display?: boolean;
   setDisplay?: (display: boolean) => void;
+  propertyIdentifier?: string;
   onClose: (result: UploadResponseModel | null) => void;
 }
 
 export const ShapeUploadModal: React.FunctionComponent<IShapeUploadModalProps> = ({
   display,
   setDisplay,
+  propertyIdentifier,
   onClose,
 }) => {
   const formikRef = useRef<FormikProps<ShapeUploadModel>>(null);
@@ -59,6 +61,7 @@ export const ShapeUploadModal: React.FunctionComponent<IShapeUploadModalProps> =
         <ShapeUploadContainer
           formikRef={formikRef}
           uploadResult={uploadResult}
+          propertyIdentifier={propertyIdentifier}
           onUploadFile={onUploadFileHandler}
           View={ShapeUploadForm}
           ResultsView={ShapeUploadResultView}

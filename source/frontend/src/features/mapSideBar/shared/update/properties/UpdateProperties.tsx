@@ -163,6 +163,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
       location: mapLocationFeatureDataset?.location,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
       pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
       regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,

@@ -42,9 +42,8 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
     return featureCollection(validBoundaries);
   }, [filePropertyLocations]);
 
-  // These are the uploaded shapes in the context of the file (can be different than the property boundaries)
+  // These are the user-uploaded shapes in the context of the file (can be different than the property boundaries that mirror PMBC)
   const fileBoundaryFeatures = useMemo<FeatureCollection>(() => {
-    // ignore properties without a valid boundary
     const validBoundaries = (filePropertyLocations ?? [])
       .map(pl => pl.fileBoundary)
       .filter(exists)
@@ -105,44 +104,48 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
   return useMemo(
     () => (
       <>
-        <FeatureGroup ref={draftFeatureGroupRef}>
-          {draftPoints.map((draftPoint, index) => {
-            return (
-              <Marker
-                key={uuidv4()}
-                position={draftPoint.location}
-                icon={
-                  draftPoint.isActive !== false
-                    ? getDraftIcon((index + 1).toString())
-                    : getDisabledDraftIcon((index + 1).toString())
-                }
-                zIndexOffset={500}
-                eventHandlers={{
-                  click: e => {
-                    // stop propagation of 'click' event to the underlying leaflet map
-                    e.originalEvent.preventDefault();
-                    e.originalEvent.stopPropagation();
+        <Pane name="file-markers-pane" style={{ zIndex: 650 }}>
+          <FeatureGroup ref={draftFeatureGroupRef}>
+            {draftPoints.map((draftPoint, index) => {
+              return (
+                <Marker
+                  key={uuidv4()}
+                  position={draftPoint.location}
+                  icon={
+                    draftPoint.isActive !== false
+                      ? getDraftIcon((index + 1).toString())
+                      : getDisabledDraftIcon((index + 1).toString())
+                  }
+                  zIndexOffset={500}
+                  eventHandlers={{
+                    click: e => {
+                      // stop propagation of 'click' event to the underlying leaflet map
+                      e.originalEvent.preventDefault();
+                      e.originalEvent.stopPropagation();
 
-                    mapMarkerClickFn({
-                      clusterId: 'NO_ID',
-                      latlng: draftPoint.location,
-                      pimsLocationFeature: null,
-                      pimsBoundaryFeature: null,
-                      fullyAttributedFeature: null,
-                    });
-                  },
-                }}
-              ></Marker>
-            );
-          })}
-        </FeatureGroup>
+                      mapMarkerClickFn({
+                        clusterId: 'NO_ID',
+                        latlng: draftPoint.location,
+                        pimsLocationFeature: null,
+                        pimsBoundaryFeature: null,
+                        fullyAttributedFeature: null,
+                      });
+                    },
+                  }}
+                ></Marker>
+              );
+            })}
+          </FeatureGroup>
+        </Pane>
 
         {draftBoundaryFeatures?.features?.length > 0 && (
-          <GeoJSON
-            key={boundaryLayerKeyRef.current}
-            data={draftBoundaryFeatures}
-            pathOptions={{ color: '#2A81CB', fill: false, dashArray: [12] }}
-          ></GeoJSON>
+          <Pane name="property-boundaries-pane" style={{ zIndex: 200 }}>
+            <GeoJSON
+              key={boundaryLayerKeyRef.current}
+              data={draftBoundaryFeatures}
+              pathOptions={{ color: '#2A81CB', fill: false, dashArray: [12] }}
+            ></GeoJSON>
+          </Pane>
         )}
 
         {fileBoundaryFeatures?.features?.length > 0 && (

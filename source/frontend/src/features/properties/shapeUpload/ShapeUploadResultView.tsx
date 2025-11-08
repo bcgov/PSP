@@ -18,26 +18,26 @@ export const ShapeUploadResultView: React.FunctionComponent<IShapeUploadResultVi
   return (
     <>
       {uploadResult.isSuccess ? (
-        <SectionField label="Shapefile uploaded successfully" labelWidth={{ xs: 12 }}>
+        <StyledSuccessSection label="Shapefile uploaded successfully" labelWidth={{ xs: 12 }}>
           {truncate(uploadResult.fileName ?? '', { length: 100 })}
           <FaCheck
             data-testid="file-check-icon"
             className="ml-2"
             size="1.6rem"
-            color={theme.css.iconsColorSuccess}
+            color={theme.bcTokens.iconsColorSuccess}
           />
-        </SectionField>
+        </StyledSuccessSection>
       ) : (
-        <SectionField label="Shapefile upload failed" labelWidth={{ xs: 12 }}>
+        <StyledFailSection label="Shapefile upload failed" labelWidth={{ xs: 12 }}>
           {truncate(uploadResult.fileName ?? '', { length: 100 })}
           <FaTimesCircle
             data-testid="file-check-icon"
             className="ml-2"
             size="1.6rem"
-            color={theme.css.iconsColorDanger}
+            color={theme.bcTokens.iconsColorDanger}
           />
-          <StyledFailDiv>{uploadResult.errorMessage ?? ''}</StyledFailDiv>
-        </SectionField>
+          <div className="pt-2">{uploadResult.errorMessage ?? ''}</div>
+        </StyledFailSection>
       )}
     </>
   );
@@ -45,6 +45,10 @@ export const ShapeUploadResultView: React.FunctionComponent<IShapeUploadResultVi
 
 export default ShapeUploadResultView;
 
-const StyledFailDiv = styled.div`
+const StyledSuccessSection = styled(SectionField)`
+  color: ${props => props.theme.bcTokens.iconsColorSuccess};
+`;
+
+const StyledFailSection = styled(SectionField)`
   color: ${props => props.theme.bcTokens.iconsColorDanger};
 `;

@@ -144,6 +144,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           display={isUploadVisible}
           setDisplay={setIsUploadVisible}
           onClose={handleModalUploadClose}
+          propertyIdentifier={propertyIdentifier}
         />
       )}
     </>
