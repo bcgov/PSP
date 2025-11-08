@@ -44,6 +44,7 @@ export const ShapeUploadModal: React.FunctionComponent<IShapeUploadModalProps> =
     } else {
       setDisplayConfirmation(false);
       onClose(uploadResult);
+      setUploadResult(null);
     }
   };
 

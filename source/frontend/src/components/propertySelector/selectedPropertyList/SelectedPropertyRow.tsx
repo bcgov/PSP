@@ -66,6 +66,11 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
       break;
   }
 
+  const handleModalUploadClose = (result: UploadResponseModel | null) => {
+    setIsUploadVisible(false);
+    onUploadShapefile?.(result);
+  };
+
   return (
     <>
       <StyledRow className="align-items-center mb-3 no-gutters">
@@ -138,7 +143,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
         <ShapeUploadModal
           display={isUploadVisible}
           setDisplay={setIsUploadVisible}
-          onClose={result => onUploadShapefile?.(result)}
+          onClose={handleModalUploadClose}
         />
       )}
     </>
