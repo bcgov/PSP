@@ -422,6 +422,15 @@ namespace Pims.Api.Services
                 fileProperty.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
             }
 
+            // apply similar logic to the boundary (only for Acquisition properties at the moment)
+            var boundaryGeom = fileProperty is PimsPropertyAcquisitionFile acquisitionFileProperty
+                ? acquisitionFileProperty.Boundary
+                : null;
+            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
+            {
+                _coordinateService.TransformGeometry(boundaryGeom.SRID, SpatialReference.BCALBERS, boundaryGeom);
+            }
+
             return fileProperty;
         }
 
@@ -435,6 +444,16 @@ namespace Pims.Api.Services
             {
                 var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
                 filePropertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
+            }
+
+            // apply similar logic to the boundary (only for Acquisition properties at the moment)
+            var boundaryGeom = incomingFileProperty is PimsPropertyAcquisitionFile acquisitionFileProperty
+                ? acquisitionFileProperty.Boundary
+                : null;
+            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS && filePropertyToUpdate is PimsPropertyAcquisitionFile acquisitionFilePropertyToUpdate)
+            {
+                _coordinateService.TransformGeometry(boundaryGeom.SRID, SpatialReference.BCALBERS, boundaryGeom);
+                acquisitionFilePropertyToUpdate.Boundary = boundaryGeom;
             }
         }
 
@@ -479,6 +498,12 @@ namespace Pims.Api.Services
                 if (fileProperty.Location is not null)
                 {
                     fileProperty.Location = TransformCoordinates(fileProperty.Location);
+                }
+
+                // transform property boundary in-place (polygon/multipolygon) - only for Acquisition properties at the moment
+                if (fileProperty is PimsPropertyAcquisitionFile acquisitionFileProperty && acquisitionFileProperty.Boundary is not null)
+                {
+                    _coordinateService.TransformGeometry(SpatialReference.BCALBERS, SpatialReference.WGS84, acquisitionFileProperty.Boundary);
                 }
 
                 TransformPropertyToLatLong(fileProperty.Property);
