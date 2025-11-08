@@ -105,6 +105,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
 
   const closePropertySelector = () => {
     setIsEditing(false);
+    onSuccess();
     history.push(`${match.url}`);
   };
 
