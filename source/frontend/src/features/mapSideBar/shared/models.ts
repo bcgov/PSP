@@ -113,7 +113,7 @@ export class PropertyForm {
       latitude: model?.location?.lat,
       longitude: model?.location?.lng,
       fileLocation: model?.fileLocation ?? model?.location ?? undefined,
-      fileBoundary: undefined,
+      fileBoundary: model?.fileBoundary ?? undefined,
       planNumber:
         pimsFeature?.properties?.SURVEY_PLAN_NUMBER ?? parcelFeature?.properties?.PLAN_NUMBER ?? '',
       polygon:
@@ -180,6 +180,7 @@ export class PropertyForm {
       },
       location: { lat: this.latitude, lng: this.longitude },
       fileLocation: this.fileLocation ?? { lat: this.latitude, lng: this.longitude },
+      fileBoundary: this.fileBoundary ?? null,
       regionFeature: {
         properties: {
           REGION_NAME: this.regionName,
