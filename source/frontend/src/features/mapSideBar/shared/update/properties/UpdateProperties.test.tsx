@@ -199,6 +199,7 @@ describe('UpdateProperties component', () => {
             {
               location: { lng: -120.69195885, lat: 50.25163372 },
               fileLocation: null,
+              fileBoundary: null,
               pimsFeature: null,
               parcelFeature: getMockFullyAttributedParcel('111-111-111'),
               regionFeature: null,
@@ -209,6 +210,7 @@ describe('UpdateProperties component', () => {
             {
               location: { lng: -120.69195885, lat: 50.25163372 },
               fileLocation: null,
+              fileBoundary: null,
               pimsFeature: null,
               parcelFeature: getMockFullyAttributedParcel('222-222-222'),
               regionFeature: null,
@@ -219,6 +221,7 @@ describe('UpdateProperties component', () => {
             {
               location: { lng: -120.69195885, lat: 50.25163372 },
               fileLocation: null,
+              fileBoundary: null,
               pimsFeature: null,
               parcelFeature: getMockFullyAttributedParcel('333-333-333'),
               regionFeature: null,
