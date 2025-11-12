@@ -654,7 +654,8 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 .c43 {
   overflow: hidden;
   white-space: break-spaces;
-  word-break: break-all;
+  word-break: break-word;
+  text-align: justify;
 }
 
 @media only screen and (max-width:1199px) {
