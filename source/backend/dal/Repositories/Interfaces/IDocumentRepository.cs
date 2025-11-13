@@ -1,4 +1,6 @@
+using Pims.Api.Models.Concepts.Document;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 
 namespace Pims.Dal.Repositories
 {
@@ -8,6 +10,8 @@ namespace Pims.Dal.Repositories
     public interface IDocumentRepository : IRepository<PimsDocument>
     {
         PimsDocument Add(PimsDocument document);
+
+        Paged<PimsDocument> GetPageDeep(DocumentSearchFilterModel filter);
 
         PimsDocument TryGet(long documentId);
 

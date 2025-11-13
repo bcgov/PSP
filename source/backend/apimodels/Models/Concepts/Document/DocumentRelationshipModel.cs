@@ -21,6 +21,11 @@ namespace Pims.Api.Models.Concepts.Document
         public string ParentId { get; set; }
 
         /// <summary>
+        /// get/set - Id of the other entity in the relationship (i.e. activity-id, file-id, etc).
+        /// </summary>
+        public string ParentNameOrNumber { get; set; }
+
+        /// <summary>
         /// get/set - The document that is linked though this relationship.
         /// </summary>
         public DocumentModel Document { get; set; }

@@ -14,7 +14,7 @@ import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Conc
 import { exists } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
-import { BatchUploadFormModel, DocumentUploadFormData } from '../ComposedDocument';
+import { BatchUploadFormModel, DocumentUploadFormData } from '../models';
 
 export interface ISelectedDocumentHeaderProps {
   // props
