@@ -237,6 +237,18 @@ exports[`GenerateFormContainer component > renders as expected 1`] = `
         Conditions of Entry (H0443)
       </div>
     </button>
+    <button
+      class="c0 Button btn btn-link"
+      title="Download File"
+      type="button"
+    >
+      <div
+        class="Button__value"
+      >
+        Generate Notice of Entry
+      </div>
+    </button>
+    <div />
   </div>
 </DocumentFragment>
 `;

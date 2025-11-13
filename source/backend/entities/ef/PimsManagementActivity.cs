@@ -13,10 +13,16 @@ namespace Pims.Dal.Entities;
 [Index("ManagementFileId", Name = "MGMTAC_MANAGEMENT_FILE_ID_IDX")]
 [Index("MgmtActivityStatusTypeCode", Name = "MGMTAC_MGMT_ACTIVITY_STATUS_TYPE_CODE_IDX")]
 [Index("MgmtActivityTypeCode", Name = "MGMTAC_MGMT_ACTIVITY_TYPE_CODE_IDX")]
+[Index("RequestorOrganizationId", Name = "MGMTAC_REQUESTOR_ORGANIZATION_ID_IDX")]
+[Index("RequestorPersonId", Name = "MGMTAC_REQUESTOR_PERSON_ID_IDX")]
+[Index("RequestorPrimaryContactId", Name = "MGMTAC_REQUESTOR_PRIMARY_CONTACT_ID_IDX")]
 [Index("ServiceProviderOrgId", Name = "MGMTAC_SERVICE_PROVIDER_ORG_ID_IDX")]
 [Index("ServiceProviderPersonId", Name = "MGMTAC_SERVICE_PROVIDER_PERSON_ID_IDX")]
 public partial class PimsManagementActivity
 {
+    /// <summary>
+    /// System-generated unique surrogate primary key.
+    /// </summary>
     [Key]
     [Column("MANAGEMENT_ACTIVITY_ID")]
     public long ManagementActivityId { get; set; }
@@ -98,7 +104,7 @@ public partial class PimsManagementActivity
     public string RequestSource { get; set; }
 
     /// <summary>
-    /// Indicates if the code is disabled.
+    /// Indicates if the record is disabled and therefore not selectable or displayed.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool? IsDisabled { get; set; }
@@ -116,7 +122,7 @@ public partial class PimsManagementActivity
     public DateTime AppCreateTimestamp { get; set; }
 
     /// <summary>
-    /// The user account that created the record.
+    /// The user that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USERID")]
@@ -124,13 +130,13 @@ public partial class PimsManagementActivity
     public string AppCreateUserid { get; set; }
 
     /// <summary>
-    /// The GUID of the user account that created the record.
+    /// GUID of the user that created the record.
     /// </summary>
     [Column("APP_CREATE_USER_GUID")]
     public Guid? AppCreateUserGuid { get; set; }
 
     /// <summary>
-    /// The directory of the user account that created the record.
+    /// User directory of the user that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USER_DIRECTORY")]
@@ -138,13 +144,13 @@ public partial class PimsManagementActivity
     public string AppCreateUserDirectory { get; set; }
 
     /// <summary>
-    /// The date and time the user updated the record.
+    /// The date and time the record was updated by the user.
     /// </summary>
     [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppLastUpdateTimestamp { get; set; }
 
     /// <summary>
-    /// The user account that updated the record.
+    /// The user that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USERID")]
@@ -152,13 +158,13 @@ public partial class PimsManagementActivity
     public string AppLastUpdateUserid { get; set; }
 
     /// <summary>
-    /// The GUID of the user account that updated the record.
+    /// GUID of the user that updated the record.
     /// </summary>
     [Column("APP_LAST_UPDATE_USER_GUID")]
     public Guid? AppLastUpdateUserGuid { get; set; }
 
     /// <summary>
-    /// The directory of the user account that updated the record.
+    /// User directory of the user that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
@@ -223,11 +229,23 @@ public partial class PimsManagementActivity
     [InverseProperty("ManagementActivity")]
     public virtual ICollection<PimsMgmtActivityDocument> PimsMgmtActivityDocuments { get; set; } = new List<PimsMgmtActivityDocument>();
 
+    [ForeignKey("RequestorOrganizationId")]
+    [InverseProperty("PimsManagementActivityRequestorOrganizations")]
+    public virtual PimsOrganization RequestorOrganization { get; set; }
+
+    [ForeignKey("RequestorPersonId")]
+    [InverseProperty("PimsManagementActivityRequestorPeople")]
+    public virtual PimsPerson RequestorPerson { get; set; }
+
+    [ForeignKey("RequestorPrimaryContactId")]
+    [InverseProperty("PimsManagementActivityRequestorPrimaryContacts")]
+    public virtual PimsPerson RequestorPrimaryContact { get; set; }
+
     [ForeignKey("ServiceProviderOrgId")]
-    [InverseProperty("PimsManagementActivities")]
+    [InverseProperty("PimsManagementActivityServiceProviderOrgs")]
     public virtual PimsOrganization ServiceProviderOrg { get; set; }
 
     [ForeignKey("ServiceProviderPersonId")]
-    [InverseProperty("PimsManagementActivities")]
+    [InverseProperty("PimsManagementActivityServiceProviderPeople")]
     public virtual PimsPerson ServiceProviderPerson { get; set; }
 }

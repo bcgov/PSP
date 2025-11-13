@@ -48,7 +48,7 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
     props.onSuccess();
   };
 
-  if (!exists(props.file)) {
+  if (!exists(props.file?.fileProperties)) {
     return null;
   }
 

@@ -123,13 +123,13 @@ namespace Pims.Api.Test.Controllers.Reports
             this._leaseService.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Once());
         }
 
-        //[Fact]
+        [Fact]
         public void ExportLeases_Lease_Mapping()
         {
             // Arrange
             this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPECSV);
 
-            var lease = EntityHelper.CreateLease(1);
+            var lease = EntityHelper.CreateLease(1, addProperty: false);
             lease.RegionCodeNavigation = new PimsRegion() { RegionCode = 1, Description = "region" };
             lease.LFileNo = "L-010-070";
             lease.OrigStartDate = new DateTime(2000, 1, 1);
@@ -147,6 +147,8 @@ namespace Pims.Api.Test.Controllers.Reports
             };
 
             lease.LeaseStatusTypeCodeNavigation = new PimsLeaseStatusType() { LeaseStatusTypeCode = "STATUS", Description = "status" };
+            lease.LeasePayRvblTypeCodeNavigation = new PimsLeasePayRvblType() { LeasePayRvblTypeCode = "RCVBL", Description = "Receivable" };
+            lease.LeasePayRvblTypeCode = "RCVBL";
             lease.PsFileNo = "123";
             lease.LeaseNotes = "note";
             lease.InspectionDate = new DateTime(2000, 2, 2);
@@ -156,14 +158,16 @@ namespace Pims.Api.Test.Controllers.Reports
                 PropertyId = 2,
                 PimsHistoricalFileNumbers = new Collection<PimsHistoricalFileNumber> {
                     new PimsHistoricalFileNumber() {
-                         HistoricalFileNumber = "123",
+                        HistoricalFileNumber = "123",
+                        HistoricalFileNumberTypeCode= "LIS",
                         HistoricalFileNumberTypeCodeNavigation = new PimsHistoricalFileNumberType(){ HistoricalFileNumberTypeCode = "LIS", Description = "LIS"} },
                     new PimsHistoricalFileNumber() {
                         HistoricalFileNumber = "456",
+                        HistoricalFileNumberTypeCode= "PS",
                         HistoricalFileNumberTypeCodeNavigation = new PimsHistoricalFileNumberType(){ HistoricalFileNumberTypeCode = "PS", Description = "PS"} } }
             };
 
-            lease.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = 3, Property = propertyTwo });
+            lease.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = 2, Property = propertyTwo });
 
             var leases = new[] { lease };
 
@@ -183,6 +187,7 @@ namespace Pims.Api.Test.Controllers.Reports
             result.PurposeTypes.Should().Be("otherpurposedesc - purpose");
             result.LeaseTypeName.Should().Be("othertypedesc - type");
             result.HistoricalFileNo.Should().Be("LIS: 123; PS: 456");
+            result.AccountType.Should().Be("Receivable");
         }
 
         public static IEnumerable<object[]> Financial_Public_Values = new List<object[]>()

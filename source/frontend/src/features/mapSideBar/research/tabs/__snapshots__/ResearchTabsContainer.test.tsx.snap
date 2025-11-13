@@ -93,6 +93,21 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
   font-weight: bold;
 }
 
+.c8 {
+  border: none;
+}
+
+.c8 .card-body {
+  padding: 0;
+}
+
+.c9 {
+  overflow: hidden;
+  white-space: break-spaces;
+  word-break: break-word;
+  text-align: justify;
+}
+
 <div
     class="c0"
   >
@@ -336,7 +351,31 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
                   class="c7 text-left col"
                 />
               </div>
-              a request description
+              <div
+                class="c8 card"
+                style="padding: 0px;"
+              >
+                <div
+                  class="card-body"
+                >
+                  <div
+                    class="card-body"
+                    style="padding: 0px;"
+                  >
+                    <p
+                      class="card-text"
+                      style="padding: 0px; word-break: break-all;"
+                    >
+                      <label
+                        class="c9"
+                        style="max-height: fit-content;"
+                      >
+                        a request description
+                      </label>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div
@@ -392,7 +431,31 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
                   class="c7 text-left col"
                 />
               </div>
-              A research result
+              <div
+                class="c8 card"
+                style="padding: 0px;"
+              >
+                <div
+                  class="card-body"
+                >
+                  <div
+                    class="card-body"
+                    style="padding: 0px;"
+                  >
+                    <p
+                      class="card-text"
+                      style="padding: 0px; word-break: break-all;"
+                    >
+                      <label
+                        class="c9"
+                        style="max-height: fit-content;"
+                      >
+                        A research result
+                      </label>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div
@@ -448,7 +511,31 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
                   class="c7 text-left col"
                 />
               </div>
-              An expropriation note
+              <div
+                class="c8 card"
+                style="padding: 0px;"
+              >
+                <div
+                  class="card-body"
+                >
+                  <div
+                    class="card-body"
+                    style="padding: 0px;"
+                  >
+                    <p
+                      class="card-text"
+                      style="padding: 0px; word-break: break-all;"
+                    >
+                      <label
+                        class="c9"
+                        style="max-height: fit-content;"
+                      >
+                        An expropriation note
+                      </label>
+                    </p>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>

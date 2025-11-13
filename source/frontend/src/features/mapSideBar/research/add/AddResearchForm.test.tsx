@@ -64,7 +64,7 @@ describe('AddResearchForm component', () => {
     const { getByPlaceholderText, findByText } = setup({ initialValues });
 
     expect(await findByText(/Name this research file/i)).toBeVisible();
-    const fileName = getByPlaceholderText(/Road name - Descriptive text/i);
+    const fileName = getByPlaceholderText(/Road name - MOTT District - Location or description/i);
     expect(fileName).toBeInTheDocument();
   });
 

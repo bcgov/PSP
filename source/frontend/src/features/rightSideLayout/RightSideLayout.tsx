@@ -52,7 +52,7 @@ export const StyledMapSideBar = styled.div<{ show: boolean }>`
   flex-direction: column;
   height: calc(100vh - 7.2rem - 4.8rem - 28rem);
   max-width: ${props => (props.show ? `34.1rem` : `0`)};
-  width: ${props => (props.show ? `100%` : `0`)};
+  width: ${props => (props.show ? `34rem` : `0`)};
   margin-left: ${props => (props.show ? `1rem` : `0`)};
   background-color: ${props => props.theme.bcTokens.surfaceColorFormsDefault};
   visibility: ${props => (props.show ? `visible` : `hidden`)};

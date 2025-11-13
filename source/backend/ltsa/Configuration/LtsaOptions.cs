@@ -15,6 +15,7 @@ namespace Pims.Ltsa.Configuration
         /// get/set - API endpoint for title summaries endpoint
         /// </summary>
         public string TitleSummariesEndpoint { get; set; } = "titleSummaries";
+
         /// <summary>
         /// get/set - API endpoint for orders endpoint
         /// </summary>
@@ -34,6 +35,37 @@ namespace Pims.Ltsa.Configuration
         /// get/set - API endpoint for integrator login
         /// </summary>
         public string LoginIntegratorEndpoint { get; set; } = "login/integrator";
+
+        /// <summary>
+        /// get/set - OAuth2.0 - Authorization Endpoint
+        /// </summary>
+        public string AuthorizationEndpoint { get; set; }
+
+        /// <summary>
+        /// get/set - OAuth2.0 - Token Endpoint
+        /// </summary>
+        public string TokenEndpoint { get; set; }
+
+        /// <summary>
+        /// get/set - OAuth2.0 - Scope
+        /// </summary>
+        public string Scope { get; set; } = "openid";
+
+        /// <summary>
+        /// get/set - OAuth2.0 - Client Id
+        /// </summary>
+        public string ClientId { get; set; } = "pims";
+
+
+        /// <summary>
+        /// get/set - OAuth2.0 - Client Secret
+        /// </summary>
+        public string ClientSecret { get; set; }
+
+        /// <summary>
+        /// get/set - OAuth2.0 - Client Id
+        /// </summary>
+        public string GrantType { get; set; } = "password";
 
         /// <summary>
         /// get/set - Integrator Username.

@@ -170,8 +170,9 @@ export const pimsLayerConfig: ContentConfig = {
   },
   LAND_AREA: {
     label: 'PIMS land area',
-    display: (data: { [key: string]: any }) =>
-      data.LAND_AREA + ' ' + getAreaUnit(data.PROPERTY_AREA_UNIT_TYPE_CODE.toLowerCase()),
+    display: (data: { [key: string]: any }): string => {
+      return `${data.LAND_AREA ?? '0'} ${getAreaUnit(data.PROPERTY_AREA_UNIT_TYPE_CODE)}`;
+    },
   },
 };
 

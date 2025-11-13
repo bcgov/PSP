@@ -7,7 +7,6 @@ namespace Pims.Api.Models.Concepts.Document
     /// </summary>
     public class DocumentTypeModel : BaseAuditModel
     {
-
         #region Properties
 
         /// <summary>

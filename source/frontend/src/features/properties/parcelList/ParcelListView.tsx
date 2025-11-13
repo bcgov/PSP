@@ -11,7 +11,7 @@ export interface IParcelListViewProps {
 
 export const ParcelListView: React.FC<IParcelListViewProps> = ({ parcels }) => {
   if (parcels.length === 0) {
-    return <StyledSection>No properties to show</StyledSection>;
+    return <StyledSection className="p-0">No properties to show</StyledSection>;
   }
 
   return (
@@ -46,7 +46,6 @@ const StyledHeader = styled.div`
   align-items: center;
   justify-content: space-between;
   width: 100%;
-  padding-bottom: 1rem;
 
   position: sticky;
   top: 0; /* pin to the top of the scrolling container   */

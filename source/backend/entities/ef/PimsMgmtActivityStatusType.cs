@@ -29,13 +29,13 @@ public partial class PimsMgmtActivityStatusType
     public string Description { get; set; }
 
     /// <summary>
-    /// Indicates if the code is disabled.
+    /// Indicates if the record is disabled and therefore not selectable or displayed.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }
 
     /// <summary>
-    /// Force the display order of the codes.
+    /// Designates a preferred presentation order of the code descriptions.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }
@@ -47,7 +47,7 @@ public partial class PimsMgmtActivityStatusType
     public long ConcurrencyControlNumber { get; set; }
 
     /// <summary>
-    /// The date and time the record was created
+    /// The date and time the record was created.
     /// </summary>
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }

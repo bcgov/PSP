@@ -14,8 +14,9 @@ import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
-import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
+import { DocumentUpdateFormData } from '../models';
 import { DocumentDetailForm, IDocumentDetailFormProps } from './DocumentDetailForm';
+import { ComposedDocument } from '../models/ComposedDocument';
 
 // mock auth library
 
@@ -84,6 +85,7 @@ const documentMetadata: ApiGen_Mayan_DocumentMetadata[] = [
         timestamp: '',
         checksum: '',
         file: '',
+        document_id: 99,
       },
       id: 1,
       document_type: documentTypes[0],
@@ -144,6 +146,7 @@ const mockDocument: ComposedDocument = {
       documentQueueStatusTypeCode: null,
     },
     parentId: null,
+    parentNameOrNumber: null,
     relationshipType: ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles,
     appCreateTimestamp: EpochIsoDateTime,
     appLastUpdateTimestamp: EpochIsoDateTime,
@@ -217,8 +220,8 @@ describe('DocumentDetailForm component', () => {
   });
 
   it('renders the file name', async () => {
-    const { getAllByText } = await setup({});
-    const textarea = getAllByText('NewFile.doc')[0];
+    const { getAllByDisplayValue } = await setup({});
+    const textarea = getAllByDisplayValue('NewFile.doc')[0];
 
     expect(textarea).toBeVisible();
   });

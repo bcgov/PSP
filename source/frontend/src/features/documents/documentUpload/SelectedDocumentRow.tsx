@@ -9,8 +9,8 @@ import { exists } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { StyledScrollable } from '../commonStyles';
-import { BatchUploadFormModel, DocumentUploadFormData } from '../ComposedDocument';
 import { DocumentMetadataView } from '../DocumentMetadataView';
+import { BatchUploadFormModel, DocumentUploadFormData } from '../models';
 import { SelectedDocumentHeader } from './SelectedDocumentHeader';
 
 export interface ISelectedDocumentRowProps {

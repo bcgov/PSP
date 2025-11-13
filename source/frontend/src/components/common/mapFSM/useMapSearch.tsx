@@ -1,3 +1,4 @@
+import bbox from '@turf/bbox';
 import { FeatureCollection, Geometry } from 'geojson';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
@@ -7,8 +8,10 @@ import { useCrownLandLayer } from '@/hooks/repositories/mapLayer/useCrownLandLay
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
 import { usePimsHighwayLayer } from '@/hooks/repositories/mapLayer/useHighwayLayer';
 import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
+import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
+import { defaultPropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
 import {
@@ -16,7 +19,7 @@ import {
   PIMS_Property_Lite_View,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
-import { exists, firstOrNull, isValidId } from '@/utils';
+import { exists } from '@/utils';
 
 import {
   emptyFeatureData,
@@ -34,6 +37,7 @@ export const useMapSearch = () => {
   const highwayService = usePimsHighwayLayer();
   const pimsPropertyLayerService = usePimsPropertyLayer();
   const crownLandService = useCrownLandLayer();
+  const { getMatchingProperties } = usePimsPropertyRepository();
 
   const { setModalContent, setDisplayModal } = useModalContext();
   const keycloak = useKeycloakWrapper();
@@ -219,6 +223,58 @@ export const useMapSearch = () => {
     ],
   );
 
+  const searchByProject = useCallback(
+    async (filter?: IGeoSearchParams) => {
+      let result: MapFeatureData = emptyFeatureData;
+      try {
+        let findPropertyIdsByProjectTask: Promise<number[]> | undefined = undefined;
+
+        const loadPropertiesTask = loadPimsProperties(filter);
+
+        if (exists(filter?.PROJECT)) {
+          findPropertyIdsByProjectTask = getMatchingProperties.execute({
+            ...defaultPropertyFilterCriteria,
+            projectId: +filter?.PROJECT,
+          });
+        }
+
+        const [properties, projectPropertyIds] = await Promise.all([
+          loadPropertiesTask,
+          findPropertyIdsByProjectTask,
+        ]);
+
+        const validFeatures = properties.features?.filter(
+          feature =>
+            !!feature?.geometry && projectPropertyIds.includes(feature.properties.PROPERTY_ID),
+        );
+
+        result = {
+          pimsLocationFeatures: exists(validFeatures)
+            ? {
+                type: 'FeatureCollection',
+                bbox: bbox({ type: 'FeatureCollection', features: validFeatures }),
+                features: validFeatures,
+              }
+            : emptyPimsLocationFeatureCollection,
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
+          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          highwayPlanFeatures: emptyHighwayFeatures,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+        };
+
+        if ((validFeatures?.length ?? 0) === 0) {
+          toast.info('No search results found');
+        }
+      } catch (error) {
+        toast.error((error as Error).message, { autoClose: 7000 });
+      }
+
+      return result;
+    },
+    [loadPimsProperties, getMatchingProperties],
+  );
+
   const searchByHistorical = useCallback(
     async (filter?: IGeoSearchParams) => {
       let result: MapFeatureData = emptyFeatureData;
@@ -257,44 +313,6 @@ export const useMapSearch = () => {
             feature => !!feature?.geometry,
           );
 
-          const findByPinTask:
-            | Promise<
-                FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined
-              >[]
-            | undefined = [];
-
-          const findByPidTask:
-            | Promise<
-                FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties> | undefined
-              >[]
-            | undefined = [];
-
-          validFeatures.forEach(x => {
-            const pid = x.properties.PID;
-            const pin = x.properties.PIN;
-            if (isValidId(pid)) {
-              findByPidTask.push(pmbcServiceFindByPid(pid.toString()));
-            }
-            if (isValidId(pin)) {
-              findByPinTask.push(pmbcServiceFindByPin(pin.toString()));
-            }
-          });
-
-          const pidPmbcData = await Promise.all(findByPidTask);
-          const pinPmbcData = await Promise.all(findByPinTask);
-
-          const attributedFeatures: FeatureCollection<
-            Geometry,
-            PMBC_FullyAttributed_Feature_Properties
-          > = {
-            type: 'FeatureCollection',
-            features: [
-              ...(pidPmbcData?.flatMap(x => x?.features) || []),
-              ...(pinPmbcData?.flatMap(x => x?.features) || []),
-            ],
-            bbox: firstOrNull(pidPmbcData)?.bbox || firstOrNull(pinPmbcData)?.bbox,
-          };
-
           result = {
             pimsLocationFeatures: {
               type: historicalNumberInventoryData.type,
@@ -303,7 +321,7 @@ export const useMapSearch = () => {
             },
             pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
             pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
-            fullyAttributedFeatures: attributedFeatures,
+            fullyAttributedFeatures: emptyPmbcFeatureCollection,
             surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
             highwayPlanFeatures: emptyHighwayFeatures,
           };
@@ -320,14 +338,7 @@ export const useMapSearch = () => {
 
       return result;
     },
-    [
-      loadPimsProperties,
-      setModalContent,
-      setDisplayModal,
-      logout,
-      pmbcServiceFindByPin,
-      pmbcServiceFindByPid,
-    ],
+    [loadPimsProperties, setModalContent, setDisplayModal, logout],
   );
 
   const searchBySurveyParcel = useCallback(
@@ -553,6 +564,7 @@ export const useMapSearch = () => {
   return {
     searchOneLocation,
     searchByPlanNumber,
+    searchByProject,
     searchMany,
     loadMapProperties,
     searchByHistorical,

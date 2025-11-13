@@ -58,7 +58,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchLicense1stResultTenantsContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/div");
         private readonly By searchLicense1stResultPropertiesContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[5]/div/div");
         private readonly By searchLicense1stResultHistoricalFileContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[6]");
-        private readonly By searchLicense1stResultStatusContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[7]");
+        private readonly By searchLicense1stResultStatusContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[8]");
 
         private readonly By searchLicenseFileHeaderCode = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::div/following-sibling::div/span[1]");
 
@@ -147,8 +147,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFirstOption()
         {
+            var originalWindowHandle = webDriver.CurrentWindowHandle;
+
             WaitUntilClickable(searchLicense1stResultLink);
             webDriver.FindElement(searchLicense1stResultLink).Click();
+
+            Wait();
+            var allWindowsHandle = webDriver.WindowHandles;
+            var newWindowHandle = allWindowsHandle.Where(handle => handle != originalWindowHandle).First();
+            webDriver.SwitchTo().Window(newWindowHandle);
 
             WaitUntilVisible(searchLicenseFileHeaderCode);
             Assert.True(webDriver.FindElement(searchLicenseFileHeaderCode).Displayed);
@@ -334,8 +341,8 @@ namespace PIMS.Tests.Automation.PageObjects
             if(lease.Program != "")
                 AssertTrueContentEquals(searchLicense1stResultProgramContent, lease.Program);
 
-            //if(lease.LeaseTenants.Count > 0)
-            //    Assert.NotEmpty(webDriver.FindElements(searchLicense1stResultTenantsContent));
+            if(lease.LeaseTenants.Count > 0)
+                Assert.NotEmpty(webDriver.FindElements(searchLicense1stResultTenantsContent));
 
             if (lease.SearchPropertiesIndex!= 0)
                 Assert.True(webDriver.FindElements(searchLicense1stResultPropertiesContent).Count > 0);

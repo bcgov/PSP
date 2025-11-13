@@ -22,6 +22,7 @@ import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { stripTrailingSlash } from '@/utils';
 
+import { useFilePropertyIdFromUrl } from '../../../hooks/useFilePropertyIdFromUrl';
 import { SideBarContext } from '../context/sidebarContext';
 import { InventoryTabNames } from '../property/InventoryTabs';
 import FilePropertyRouter from '../router/FilePropertyRouter';
@@ -31,7 +32,6 @@ import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
-import { useFilePropertyIdFromUrl } from '../shared/usePropertyIndexFromUrl';
 import { DispositionHeader } from './common/DispositionHeader';
 import DispositionRouter from './router/DispositionRouter';
 import DispositionStatusUpdateSolver from './tabs/fileDetails/detail/DispositionStatusUpdateSolver';
@@ -102,7 +102,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
 
   // Extract the zero-based property index from the current URL path.
   // It will be null if route is not matched
-  const currentPropertyId: number | null = useFilePropertyIdFromUrl();
+  const { filePropertyId: currentPropertyId } = useFilePropertyIdFromUrl();
   const statusSolver = new DispositionStatusUpdateSolver(dispositionFile);
 
   return (

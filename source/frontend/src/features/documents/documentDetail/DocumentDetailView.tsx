@@ -11,8 +11,8 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { exists } from '@/utils';
 
 import { StyledH3, StyledNoData, StyledScrollable } from '../commonStyles';
-import { ComposedDocument } from '../ComposedDocument';
 import { StyledContainer } from '../list/styles';
+import { ComposedDocument } from '../models/ComposedDocument';
 import DocumentDetailHeader from './DocumentDetailHeader';
 
 export interface IDocumentDetailsViewProps {
@@ -41,7 +41,6 @@ export const DocumentDetailView: React.FunctionComponent<
       <LoadingBackdrop show={props.isLoading} />
       {hasClaim(Claims.DOCUMENT_VIEW) && (
         <>
-          <DocumentDetailHeader document={props.document} />
           <Section
             noPadding
             header={
@@ -68,6 +67,7 @@ export const DocumentDetailView: React.FunctionComponent<
                 </LinkButton>
               </RightFlexDiv>
             )}
+            <DocumentDetailHeader document={props.document} />
             <SectionField
               data-testid="document-type"
               label="Document type"

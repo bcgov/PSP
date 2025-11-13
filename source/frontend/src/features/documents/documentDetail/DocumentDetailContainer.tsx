@@ -9,29 +9,32 @@ import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
 import { exists, isValidId } from '@/utils/utils';
 
-import { ComposedDocument, DocumentRow, DocumentUpdateFormData } from '../ComposedDocument';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
+import { DocumentUpdateFormData } from '../models';
+import { ComposedDocument } from '../models/ComposedDocument';
 import { DocumentDetailForm } from './DocumentDetailForm';
 import { DocumentDetailView } from './DocumentDetailView';
 
 export interface IDocumentDetailContainerProps {
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
-  pimsDocument: DocumentRow;
+  pimsDocumentRelationship: ApiGen_Concepts_DocumentRelationship;
   canEdit: boolean;
-  onUpdateSuccess: () => void;
+  onUpdateSuccess?: () => void;
 }
 
 export const DocumentDetailContainer: React.FunctionComponent<
   React.PropsWithChildren<IDocumentDetailContainerProps>
 > = props => {
   const [document, setDocument] = useState<ComposedDocument>({
-    pimsDocumentRelationship: DocumentRow.toApi(props.pimsDocument),
+    pimsDocumentRelationship: props.pimsDocumentRelationship,
   });
+
   const [documentTypeMetadataTypes, setDocumentTypeMetadataTypes] = useState<
     ApiGen_Mayan_DocumentTypeMetadataType[]
   >([]);
@@ -85,8 +88,11 @@ export const DocumentDetailContainer: React.FunctionComponent<
   };
 
   const onUpdateDocument = async (updateRequest: ApiGen_Requests_DocumentUpdateRequest) => {
-    if (props.pimsDocument.id) {
-      const result = await updateDocument(props.pimsDocument.id, updateRequest);
+    if (props.pimsDocumentRelationship.id) {
+      const result = await updateDocument(
+        props.pimsDocumentRelationship.document.id,
+        updateRequest,
+      );
       if (exists(result)) {
         props.onUpdateSuccess && props.onUpdateSuccess();
       }
@@ -140,7 +146,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
         const documentTypeId = Number(changeEvent.target.value);
         await getDocumentMetadata(documentTypes.find(x => x.id === documentTypeId));
 
-        if (documentTypeId !== props.pimsDocument.documentType.id) {
+        if (documentTypeId !== props.pimsDocumentRelationship?.document?.documentType?.id) {
           setDocumentTypeUpdated(true);
           formikRef?.current?.setValues({ ...formikRef?.current?.values, documentMetadata: {} });
         } else {
@@ -151,15 +157,19 @@ export const DocumentDetailContainer: React.FunctionComponent<
         setDocumentTypeUpdated(false);
       }
     },
-    [documentTypes, props.pimsDocument.documentType.id, getDocumentMetadata],
+    [documentTypes, props.pimsDocumentRelationship.document?.documentType?.id, getDocumentMetadata],
   );
 
   // fetch additional document child entities (like metadata and document details) upon rendering this component
   useEffect(() => {
     const fetch = async () => {
-      if (props.pimsDocument.mayanDocumentId !== undefined) {
-        const metadataPromise = retrieveDocumentMetadata(props.pimsDocument.mayanDocumentId);
-        const detailPromise = retrieveDocumentDetail(props.pimsDocument.mayanDocumentId);
+      if (props.pimsDocumentRelationship.document.mayanDocumentId !== undefined) {
+        const metadataPromise = retrieveDocumentMetadata(
+          props.pimsDocumentRelationship.document.mayanDocumentId,
+        );
+        const detailPromise = retrieveDocumentDetail(
+          props.pimsDocumentRelationship.document.mayanDocumentId,
+        );
         const [metadataResponse, detailResponse] = await Promise.all([
           metadataPromise,
           detailPromise,
@@ -189,7 +199,7 @@ export const DocumentDetailContainer: React.FunctionComponent<
 
     fetch();
   }, [
-    props.pimsDocument.mayanDocumentId,
+    props.pimsDocumentRelationship.document.mayanDocumentId,
     retrieveDocumentMetadata,
     isMounted,
     retrieveDocumentDetail,
@@ -202,15 +212,15 @@ export const DocumentDetailContainer: React.FunctionComponent<
         return;
       }
 
-      if (props.pimsDocument.mayanDocumentId !== undefined) {
-        await getDocumentMetadata(props.pimsDocument.documentType);
+      if (props.pimsDocumentRelationship.document.mayanDocumentId !== undefined) {
+        await getDocumentMetadata(props.pimsDocumentRelationship.document.documentType);
       }
     };
     fetch();
   }, [
     getDocumentMetadata,
-    props.pimsDocument.documentType,
-    props.pimsDocument.mayanDocumentId,
+    props.pimsDocumentRelationship.document.documentType,
+    props.pimsDocumentRelationship.document.mayanDocumentId,
     props.relationshipType,
   ]);
 

@@ -1,39 +1,37 @@
-import userEvent from '@testing-library/user-event';
+import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants/index';
 import { IPaginateLeases, useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { getEmptyAddress } from '@/mocks/address.mock';
 import { getEmptyPerson } from '@/mocks/contacts.mock';
+import { mockHistoricalFileNumber } from '@/mocks/historicalFileNumber.mock';
 import { getEmptyLeaseStakeholder } from '@/mocks/lease.mock';
 import { getEmptyPropertyLease } from '@/mocks/properties.mock';
 import { getUserMock } from '@/mocks/user.mock';
+import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_HistoricalFileNumberTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { getEmptyLease, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import {
-  act,
-  fillInput,
-  render,
-  RenderOptions,
-  waitFor,
-  waitForElementToBeRemoved,
-} from '@/utils/test-utils';
+import { act, fillInput, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { ILeaseFilter } from '..';
 import { LeaseListView } from './LeaseListView';
-import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_HistoricalFileNumberTypes';
-import { mockHistoricalFileNumber } from '@/mocks/historicalFileNumber.mock';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: [] },
 };
 
+const history = createMemoryHistory();
+
 vi.mock('@/hooks/pims-api/useApiLeases');
 const getLeases = vi.fn();
-vi.mocked(useApiLeases).mockReturnValue({
+const exportLeases = vi.fn();
+vi.mocked(useApiLeases, { partial: true }).mockReturnValue({
   getLeases,
-} as unknown as ReturnType<typeof useApiLeases>);
+  getAllLeaseFileTeamMembers: vi.fn().mockResolvedValue({ data: [] }),
+  exportLeases,
+});
 
 vi.mock('@/hooks/repositories/useUserInfoRepository');
 vi.mocked(useUserInfoRepository).mockReturnValue({
@@ -43,9 +41,15 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
 });
 
 // render component under test
-const setup = (renderOptions: RenderOptions = { store: storeState }) => {
-  const utils = render(<LeaseListView />, { ...renderOptions, claims: [Claims.LEASE_VIEW] });
+const setup = async (renderOptions: RenderOptions = { store: storeState }) => {
+  const utils = render(<LeaseListView />, {
+    ...renderOptions,
+    claims: renderOptions?.claims || [Claims.LEASE_VIEW],
+    history,
+  });
+  await act(async () => {});
   const searchButton = utils.getByTestId('search');
+  console.log(searchButton);
   return { searchButton, ...utils };
 };
 
@@ -70,11 +74,8 @@ describe('Lease and License List View', () => {
 
   it('matches snapshot', async () => {
     setupMockSearch();
-    const { asFragment } = setup();
-    await act(async () => {});
-
-    const fragment = await waitFor(() => asFragment());
-    expect(fragment).toMatchSnapshot();
+    const { asFragment } = await setup();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('searches by pid', async () => {
@@ -103,8 +104,7 @@ describe('Lease and License List View', () => {
         ],
       },
     ]);
-    const { container, searchButton, findByText, getByTitle } = setup();
-    await waitForElementToBeRemoved(getByTitle('table-loading'));
+    const { container, searchButton, findByText } = await setup();
 
     await act(async () => {
       fillInput(container, 'searchBy', 'pid', 'select');
@@ -136,6 +136,7 @@ describe('Lease and License List View', () => {
         details: '',
         leaseTeamOrganizationId: undefined,
         leaseTeamPersonId: null,
+        isReceivable: null,
         quantity: 10,
         sort: undefined,
         page: 1,
@@ -171,8 +172,7 @@ describe('Lease and License List View', () => {
         ],
       },
     ]);
-    const { container, searchButton, findByText, getByTitle } = setup();
-    await waitForElementToBeRemoved(getByTitle('table-loading'));
+    const { container, searchButton, findByText } = await setup();
 
     await act(async () => {
       fillInput(container, 'searchBy', 'pin', 'select');
@@ -204,6 +204,7 @@ describe('Lease and License List View', () => {
         details: '',
         leaseTeamOrganizationId: undefined,
         leaseTeamPersonId: null,
+        isReceivable: null,
         page: 1,
         quantity: 10,
         sort: undefined,
@@ -240,7 +241,7 @@ describe('Lease and License List View', () => {
         ],
       },
     ]);
-    const { container, searchButton, findByText } = setup();
+    const { container, searchButton, findByText } = await setup();
     fillInput(container, 'searchBy', 'lFileNo', 'select');
     fillInput(container, 'lFileNo', '123');
     await act(async () => userEvent.click(searchButton));
@@ -293,7 +294,7 @@ describe('Lease and License List View', () => {
         ],
       },
     ]);
-    const { container, searchButton, findByText } = setup();
+    const { container, searchButton, findByText } = await setup();
 
     fillInput(container, 'searchBy', 'historical', 'select');
     fillInput(container, 'historical', '0309-001');
@@ -346,7 +347,7 @@ describe('Lease and License List View', () => {
         ],
       },
     ]);
-    const { container, searchButton, findByText } = setup();
+    const { container, searchButton, findByText } = await setup();
 
     fillInput(container, 'searchBy', 'historical', 'select');
     fillInput(container, 'historical', '0309-000');
@@ -400,7 +401,7 @@ describe('Lease and License List View', () => {
         ],
       },
     ]);
-    const { container, searchButton, findByText } = setup();
+    const { container, searchButton, findByText } = await setup();
 
     fillInput(container, 'searchBy', 'historical', 'select');
     fillInput(container, 'historical', '0309-999');
@@ -444,7 +445,7 @@ describe('Lease and License List View', () => {
         ],
       },
     ]);
-    const { container, searchButton, findByText } = setup();
+    const { container, searchButton, findByText } = await setup();
 
     fillInput(container, 'searchBy', 'pid', 'select');
     fillInput(container, 'tenantName', 'Chester');
@@ -474,6 +475,7 @@ describe('Lease and License List View', () => {
         details: '',
         leaseTeamOrganizationId: undefined,
         leaseTeamPersonId: null,
+        isReceivable: null,
         page: 1,
         quantity: 10,
         sort: undefined,
@@ -485,7 +487,7 @@ describe('Lease and License List View', () => {
 
   it('displays an error when no matching records found', async () => {
     setupMockSearch();
-    const { container, searchButton, findAllByText } = setup();
+    const { container, searchButton, findAllByText } = await setup();
 
     fillInput(container, 'searchBy', 'pid', 'select');
     fillInput(container, 'pid', 'foo-bar-baz');
@@ -515,6 +517,7 @@ describe('Lease and License List View', () => {
         details: '',
         leaseTeamOrganizationId: undefined,
         leaseTeamPersonId: null,
+        isReceivable: null,
       }),
     );
     const toasts = await findAllByText('Lease / Licence details do not exist in PIMS inventory');
@@ -524,7 +527,7 @@ describe('Lease and License List View', () => {
   it('displays an error when when Search API is unreachable', async () => {
     // simulate a network error
     getLeases.mockRejectedValue(new Error('network error'));
-    const { container, searchButton, findAllByText } = setup();
+    const { container, searchButton, findAllByText } = await setup();
 
     fillInput(container, 'searchBy', 'pid', 'select');
     fillInput(container, 'pid', '123');
@@ -554,9 +557,73 @@ describe('Lease and License List View', () => {
         details: '',
         leaseTeamOrganizationId: undefined,
         leaseTeamPersonId: null,
+        isReceivable: null,
       }),
     );
     const toasts = await findAllByText('network error');
     expect(toasts[0]).toBeVisible();
+  });
+
+  it('calls export function when export button clicked', async () => {
+    setupMockSearch([
+      {
+        ...getEmptyLease(),
+        id: 1,
+        lFileNo: 'L-123-456',
+        programName: 'TRAN-IT',
+        stakeholders: [
+          {
+            ...getEmptyLeaseStakeholder(),
+            person: { ...getEmptyPerson(), firstName: 'Chester', surname: 'Tester' },
+          },
+        ],
+        fileProperties: [
+          {
+            ...getEmptyPropertyLease(),
+            property: {
+              ...getEmptyProperty(),
+              id: 123,
+              address: { ...getEmptyAddress(), streetAddress1: '123 mock st' },
+              pin: 123,
+              historicalFileNumbers: [
+                mockHistoricalFileNumber(
+                  1000,
+                  123,
+                  '0309-000',
+                  ApiGen_CodeTypes_HistoricalFileNumberTypes.PSNO.toString(),
+                  'PS',
+                ),
+              ],
+            },
+          },
+        ],
+      },
+    ]);
+    await setup();
+
+    const button = await screen.findByTestId(/excel-icon/i);
+    expect(button).toBeVisible();
+    await act(async () => userEvent.click(button));
+    expect(exportLeases).toHaveBeenCalled();
+  });
+
+  it(`renders the 'add disposition' button when user has permissions`, async () => {
+    const { getByText } = await setup({ claims: [Claims.LEASE_VIEW, Claims.LEASE_ADD] });
+    const button = getByText(/Create a Lease\/Licence/i);
+    expect(button).toBeVisible();
+  });
+
+  it(`hides the 'add disposition' button when user has no permissions`, async () => {
+    const { queryByText } = await setup({ claims: [Claims.LEASE_VIEW] });
+    const button = queryByText(/Create a Lease\/Licence/i);
+    expect(button).toBeNull();
+  });
+
+  it('navigates to create lease route when user clicks add button', async () => {
+    const { getByText } = await setup({ claims: [Claims.LEASE_VIEW, Claims.LEASE_ADD] });
+    const button = getByText(/Create a Lease\/Licence/i);
+    expect(button).toBeVisible();
+    await act(async () => userEvent.click(button));
+    expect(history.location.pathname).toBe('/mapview/sidebar/lease/new');
   });
 });

@@ -177,7 +177,7 @@ export const PropertyFileContainer: React.FunctionComponent<
       content: (
         <PropertyDetailsTabView
           property={{
-            ...toFormValues(props.fileProperty.property),
+            ...toFormValues(composedProperties.apiWrapper?.response),
             electoralDistrict: firstOrNull(composedProperties?.composedProperty?.electoralFeatures),
             isALR: composedProperties?.composedProperty?.alrFeatures?.length > 0,
             firstNations: {
@@ -318,7 +318,7 @@ export const PropertyFileContainer: React.FunctionComponent<
           onSuccess={props.onChildSuccess}
         />
       ),
-      key: InventoryTabNames.document,
+      key: InventoryTabNames.documents,
       name: 'Property Documents',
     });
   }
@@ -353,7 +353,7 @@ export const PropertyFileContainer: React.FunctionComponent<
     Object.values(InventoryTabNames).find(t => t === params.tab) ?? props.defaultTab;
 
   useEffect(() => {
-    if (activeTab === InventoryTabNames.document || activeTab === InventoryTabNames.notes) {
+    if (activeTab === InventoryTabNames.documents || activeTab === InventoryTabNames.notes) {
       setFullWidthSideBar(true);
     } else {
       setFullWidthSideBar(false);

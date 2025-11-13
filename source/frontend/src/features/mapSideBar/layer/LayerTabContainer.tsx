@@ -188,7 +188,10 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
     ];
   }, [composedProperty]);
 
-  const activeLayersData = layersData.filter(ld => ld.tab === activeTab);
+  const activeLayersData = useMemo(
+    () => layersData.filter(ld => ld.tab === activeTab),
+    [layersData, activeTab],
+  );
 
   // Always pass all props, both views will ignore unused ones
   return (

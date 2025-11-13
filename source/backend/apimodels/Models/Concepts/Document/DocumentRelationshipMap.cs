@@ -2,6 +2,7 @@ using Mapster;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.CodeTypes;
 using Entity = Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Api.Models.Concepts.Document.Document
 {
@@ -12,6 +13,7 @@ namespace Pims.Api.Models.Concepts.Document.Document
             config.NewConfig<Entity.PimsAcquisitionFileDocument, DocumentRelationshipModel>()
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentId, src => src.FileId)
+                .Map(dest => dest.ParentNameOrNumber, src => src.AcquisitionFile.FileNumberFormatted)
                 .Map(dest => dest.Document, src => src.Document)
                 .Map(dest => dest.RelationshipType, src => DocumentRelationType.AcquisitionFiles)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
@@ -25,6 +27,7 @@ namespace Pims.Api.Models.Concepts.Document.Document
             config.NewConfig<Entity.PimsResearchFileDocument, DocumentRelationshipModel>()
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentId, src => src.FileId)
+                .Map(dest => dest.ParentNameOrNumber, src => src.ResearchFile.RfileNumber)
                 .Map(dest => dest.Document, src => src.Document)
                 .Map(dest => dest.RelationshipType, src => DocumentRelationType.ResearchFiles)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
@@ -38,6 +41,7 @@ namespace Pims.Api.Models.Concepts.Document.Document
             config.NewConfig<Entity.PimsProjectDocument, DocumentRelationshipModel>()
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentId, src => src.FileId)
+                .Map(dest => dest.ParentNameOrNumber, src => src.Project.Description)
                 .Map(dest => dest.Document, src => src.Document)
                 .Map(dest => dest.RelationshipType, src => DocumentRelationType.Projects)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
@@ -65,6 +69,7 @@ namespace Pims.Api.Models.Concepts.Document.Document
             config.NewConfig<Entity.PimsLeaseDocument, DocumentRelationshipModel>()
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentId, src => src.FileId)
+                .Map(dest => dest.ParentNameOrNumber, src => src.Lease.LFileNo)
                 .Map(dest => dest.Document, src => src.Document)
                 .Map(dest => dest.RelationshipType, src => DocumentRelationType.Leases)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
@@ -78,6 +83,7 @@ namespace Pims.Api.Models.Concepts.Document.Document
             config.NewConfig<Entity.PimsMgmtActivityDocument, DocumentRelationshipModel>()
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentId, src => src.FileId)
+                .Map(dest => dest.ParentNameOrNumber, src => src.ManagementActivity.ManagementActivityId)
                 .Map(dest => dest.Document, src => src.Document)
                 .Map(dest => dest.RelationshipType, src => DocumentRelationType.ManagementActivities)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
@@ -91,6 +97,7 @@ namespace Pims.Api.Models.Concepts.Document.Document
             config.NewConfig<Entity.PimsDispositionFileDocument, DocumentRelationshipModel>()
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentId, src => src.FileId)
+                .Map(dest => dest.ParentNameOrNumber, src => src.DispositionFile.FileNumber)
                 .Map(dest => dest.Document, src => src.Document)
                 .Map(dest => dest.RelationshipType, src => DocumentRelationType.DispositionFiles)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
@@ -104,6 +111,7 @@ namespace Pims.Api.Models.Concepts.Document.Document
             config.NewConfig<Entity.PimsManagementFileDocument, DocumentRelationshipModel>()
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentId, src => src.FileId)
+                .Map(dest => dest.ParentNameOrNumber, src => src.ManagementFile.FileName)
                 .Map(dest => dest.Document, src => src.Document)
                 .Map(dest => dest.RelationshipType, src => DocumentRelationType.ManagementFiles)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
@@ -117,6 +125,7 @@ namespace Pims.Api.Models.Concepts.Document.Document
             config.NewConfig<Entity.PimsPropertyDocument, DocumentRelationshipModel>()
                 .Map(dest => dest.Id, src => src.Internal_Id)
                 .Map(dest => dest.ParentId, src => src.FileId)
+                .Map(dest => dest.ParentNameOrNumber, src => src.Property.GetPropertyName())
                 .Map(dest => dest.Document, src => src.Document)
                 .Map(dest => dest.RelationshipType, src => DocumentRelationType.Properties)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();

@@ -87,7 +87,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Create/View Renewal Options Elements
         private readonly By licenseDetailsRenewalTitle = By.XPath("//h2/div/div[contains(text(),'Renewal Option')]");
         private readonly By licenseDetailsAddRenewButton = By.XPath("//div[contains(text(),'+ Add a Renewal')]/parent::button");
-        private readonly By licenceDetailsFirstRenewalDeleteBttn = By.XPath("//*[@data-testid='renewal.0.remove-button']/parent::div/parent::button");
+        private readonly By licenceDetailsFirstRenewalDeleteBttn = By.CssSelector("button[data-testid='renewal.0.remove-button']");
 
         //Create/View Administration Elements
         private readonly By licenseDetailsAdmSubtitle = By.XPath("//div[contains(text(),'Administration')]/parent::div/parent::h2");
@@ -162,8 +162,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsCancelButton = By.XPath("//div[contains(text(),'Cancel')]/parent::button");
 
         //Lease Property Section Elements
-        private readonly By leasePropertiesSubtitle = By.XPath("//div[contains(text(),'Property Information')]/parent::div/parent::h2");
-        private readonly By leasePropertiesUpdateSubtitle = By.XPath("//div[contains(text(),'Selected properties')]/parent::div/parent::h2");
+        private readonly By leasePropertiesUpdateSubtitle = By.XPath("//div[contains(text(),'Selected Properties')]");
         private readonly By leaseEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
 
         //Leases Modal Element
@@ -294,7 +293,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     Wait();
                     FocusAndClick(licenseDetailsPurposeMultiselector);
 
-                    Wait();
+                    Wait(4000);
                     ChooseMultiSelectSpecificOption(licenseDetailsPurposeOptions, purpose);
                 }
 
@@ -656,6 +655,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelLicense()
         {
+            Wait();
             ButtonElement("Cancel");
             sharedModals.CancelActionModal();
         }

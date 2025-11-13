@@ -6,7 +6,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c10 .react-datepicker__calendar-icon {
+  .c11 .react-datepicker__calendar-icon {
   width: 2.4rem;
   height: 3rem;
   margin-top: 0.5rem;
@@ -16,19 +16,19 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
   pointer-events: none;
 }
 
-.c10 .react-datepicker__view-calendar-icon input {
+.c11 .react-datepicker__view-calendar-icon input {
   padding: 0.8rem 1.2rem 0.8rem 1.2rem;
 }
 
-.c11.c11.form-control.is-valid {
+.c12.c12.form-control.is-valid {
   background-image: none;
 }
 
-.c11.c11.form-control.is-invalid {
+.c12.c12.form-control.is-invalid {
   border-color: #d8292f !important;
 }
 
-.c9 {
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -40,13 +40,24 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c9 .form-label {
+.c10 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
 .c2 {
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+}
+
+.c2 button {
+  font-size: 14px;
+}
+
+.c3 {
   font-size: 16px;
   color: #1a5a96;
   font-style: italic;
@@ -57,7 +68,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
   margin-bottom: 1rem;
 }
 
-.c6 {
+.c7 {
   padding: 1.5rem 1.8rem;
   border-radius: 4px;
   background-color: #f0f7fc;
@@ -69,19 +80,19 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
   line-height: 24px;
 }
 
-.c5 {
+.c6 {
   float: right;
   cursor: pointer;
   color: #1a5a96;
   font-size: 2.8rem;
 }
 
-.c4 {
+.c5 {
   margin-right: 1.5rem;
   font-size: 1.3rem;
 }
 
-.c3 {
+.c4 {
   cursor: pointer;
 }
 
@@ -100,14 +111,14 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c8.required::before {
+.c9.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c7 {
+.c8 {
   font-weight: bold;
 }
 
@@ -134,109 +145,113 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
         class="c2"
       >
         <div
-          class="c3 no-gutters row"
+          class="c3"
         >
           <div
-            class="col"
+            class="c4 no-gutters row"
           >
-            <svg
-              class="c4"
-              fill="currentColor"
-              height="1em"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 512 512"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
+            <div
+              class="col"
             >
-              <path
-                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-              />
-            </svg>
-            Help with choosing the agreement Program, Type and Purpose
-          </div>
-          <div
-            class="col-1"
-          >
-            <svg
-              class="c5"
-              fill="currentColor"
-              height="1em"
-              stroke="currentColor"
-              stroke-width="0"
-              viewBox="0 0 24 24"
-              width="1em"
-              xmlns="http://www.w3.org/2000/svg"
+              <svg
+                class="c5"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                />
+              </svg>
+              Help with choosing the agreement Program, Type and Purpose
+            </div>
+            <div
+              class="col-1"
             >
-              <path
-                d="M0 0h24v24H0z"
-                fill="none"
-              />
-              <path
-                d="m7 10 5 5 5-5z"
-              />
-            </svg>
+              <svg
+                class="c6"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 24 24"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M0 0h24v24H0z"
+                  fill="none"
+                />
+                <path
+                  d="m7 10 5 5 5-5z"
+                />
+              </svg>
+            </div>
           </div>
         </div>
-      </div>
-      <div
-        class="c6 collapse"
-      >
-        <p
-          class="mb-4"
+        <div
+          class="c7 collapsing"
         >
-          Select the appropriate drop-down options based on the intended use of the property. Program is broad level and is searchable. Type is the type of agreement; only certain document generation options will exist depending on what option you select. Purpose is a summary of the intended use.
-        </p>
-        <ul>
-          <li>
-            Program
-          </li>
-          <ul>
-            <li>
-              “Engineering” includes geotechnical, aggregate, environmental, survey and other engineering type uses.
-            </li>
-            <li>
-              “Rail Trail” excludes trails that are not a historical rail corridor being used for multi-use trail purposes. Choose “Other” program and “Trail” purpose for other trail uses.
-            </li>
-          </ul>
-          <li>
-            Type
-          </li>
-          <p>
-            Consult Legal Services if in doubt about the agreement type or agreement conditions.
+          <p
+            class="mb-4"
+          >
+            Select the appropriate drop-down options based on the intended use of the property. Program is broad level and is searchable. Type is the type of agreement; only certain document generation options will exist depending on what option you select. Purpose is a summary of the intended use.
           </p>
           <ul>
             <li>
-              If Amending Agreement is selected, request legal review if amending conditions other than expiry date and payment amounts.
+              Program
             </li>
+            <ul>
+              <li>
+                “Engineering” includes geotechnical, aggregate, environmental, survey and other engineering type uses.
+              </li>
+              <li>
+                “Rail Trail” excludes trails that are not a historical rail corridor being used for multi-use trail purposes. Choose “Other” program and “Trail” purpose for other trail uses.
+              </li>
+            </ul>
             <li>
-              Select “Building Lease (receivable)” if leasing both land and building(s).
+              Type
             </li>
+            <p>
+              Consult Legal Services if in doubt about the agreement type or agreement conditions.
+            </p>
+            <ul>
+              <li>
+                If Amending Agreement is selected, request legal review if amending conditions other than expiry date and payment amounts.
+              </li>
+              <li>
+                Select “Building Lease (receivable)” if leasing both land and building(s).
+              </li>
+            </ul>
+            <li>
+              Purpose
+            </li>
+            <ul>
+              <li>
+                “Camping” includes tree planter camps and campgrounds.
+              </li>
+              <li>
+                “Crossing” includes oil and gas crossings or crossings other than Railway Crossing.
+              </li>
+              <li>
+                “Emergency Services” includes fire halls, ambulance services, RCMP or police stations, etc.
+              </li>
+              <li>
+                “Historical” is for historical files where the purpose is unknown.
+              </li>
+              <li>
+                “Marine Facility” is for facilities other than BC Ferries i.e. dock.
+              </li>
+              <li>
+                “Staging Area” has the same meaning as laydown area.
+              </li>
+            </ul>
           </ul>
-          <li>
-            Purpose
-          </li>
-          <ul>
-            <li>
-              “Camping” includes tree planter camps and campgrounds.
-            </li>
-            <li>
-              “Crossing” includes oil and gas crossings or crossings other than Railway Crossing.
-            </li>
-            <li>
-              “Emergency Services” includes fire halls, ambulance services, RCMP or police stations, etc.
-            </li>
-            <li>
-              “Historical” is for historical files where the purpose is unknown.
-            </li>
-            <li>
-              “Marine Facility” is for facilities other than BC Ferries i.e. dock.
-            </li>
-            <li>
-              “Staging Area” has the same meaning as laydown area.
-            </li>
-          </ul>
-        </ul>
+        </div>
       </div>
       <div
         class="pb-2 row"
@@ -245,16 +260,16 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           class="pr-0 text-left col-3"
         >
           <label
-            class="c7"
+            class="c8"
           >
             MOTT contact:
           </label>
         </div>
         <div
-          class="c8 text-left col-6"
+          class="c9 text-left col-6"
         >
           <div
-            class="c9 input form-group"
+            class="c10 input form-group"
           >
             <input
               class="form-control"
@@ -274,13 +289,13 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           class="pr-0 text-left col-3"
         >
           <label
-            class="c7"
+            class="c8"
           >
             MOTT region:
           </label>
         </div>
         <div
-          class="c8 required text-left col-auto"
+          class="c9 required text-left col-auto"
         >
           <div
             class="required d-flex form-group"
@@ -314,13 +329,13 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           class="pr-0 text-left col-3"
         >
           <label
-            class="c7"
+            class="c8"
           >
             Program:
           </label>
         </div>
         <div
-          class="c8 required text-left col-auto"
+          class="c9 required text-left col-auto"
         >
           <div
             class="required form-group"
@@ -438,13 +453,13 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           class="pr-0 text-left col-3"
         >
           <label
-            class="c7"
+            class="c8"
           >
             Type:
           </label>
         </div>
         <div
-          class="c8 required text-left col-9"
+          class="c9 required text-left col-9"
         >
           <div
             class="required form-group"
@@ -569,13 +584,13 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           class="pr-0 text-left col-3"
         >
           <label
-            class="c7"
+            class="c8"
           >
             Purpose:
           </label>
         </div>
         <div
-          class="c8 required text-left col-9"
+          class="c9 required text-left col-9"
         >
           <div
             class="form-group"
@@ -865,7 +880,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           class="pr-0 text-left col-3"
         >
           <label
-            class="c7"
+            class="c8"
           >
             Initiator:
             <span>
@@ -893,7 +908,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c8 text-left col-4"
+          class="c9 text-left col-4"
         >
           <div
             class="form-group"
@@ -940,7 +955,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           class="pr-0 text-left col-3"
         >
           <label
-            class="c7"
+            class="c8"
           >
             Responsibility:
             <span>
@@ -968,7 +983,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c8 text-left col-auto"
+          class="c9 text-left col-auto"
         >
           <div
             class="form-group"
@@ -1015,16 +1030,16 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           class="pr-0 text-left col-3"
         >
           <label
-            class="c7"
+            class="c8"
           >
             Effective date:
           </label>
         </div>
         <div
-          class="c8 text-left col"
+          class="c9 text-left col"
         >
           <div
-            class="c10 form-group"
+            class="c11 form-group"
           >
             <div
               class="react-datepicker-wrapper d-block"
@@ -1043,7 +1058,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
                 </svg>
                 <input
                   autocomplete="off"
-                  class="c11 form-control date-picker"
+                  class="c12 form-control date-picker"
                   id="datepicker-responsibilityEffectiveDate"
                   name="responsibilityEffectiveDate"
                   placeholder="MMM DD, YYYY"
@@ -1062,7 +1077,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           class="pr-0 text-left col-12"
         >
           <label
-            class="c7"
+            class="c8"
           >
             Intended use:
             <span>
@@ -1090,7 +1105,7 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           </label>
         </div>
         <div
-          class="c8 text-left col"
+          class="c9 text-left col"
         >
           <div
             class="textarea input form-group"
@@ -1112,13 +1127,13 @@ exports[`AdministrationSubForm component > renders as expected 1`] = `
           class="pr-0 text-left col-12"
         >
           <label
-            class="c7"
+            class="c8"
           >
             Primary arbitration city:
           </label>
         </div>
         <div
-          class="c8 text-left col"
+          class="c9 text-left col"
         >
           <div
             class="input form-group"

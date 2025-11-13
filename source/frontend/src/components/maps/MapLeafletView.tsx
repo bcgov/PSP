@@ -1,12 +1,5 @@
 import axios from 'axios';
-import {
-  geoJSON,
-  LatLngBounds,
-  LeafletEvent,
-  LeafletMouseEvent,
-  Map,
-  Popup as LeafletPopup,
-} from 'leaflet';
+import { geoJSON, LatLngBounds, LeafletEvent, LeafletMouseEvent, Map, Popup } from 'leaflet';
 import { isEqual } from 'lodash';
 import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
@@ -17,6 +10,7 @@ import {
   ScaleControl,
   TileLayer,
 } from 'react-leaflet';
+import styled from 'styled-components';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
@@ -48,6 +42,7 @@ import HighwayParcelsLayer from './leaflet/Layers/HighwayParcelsLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
 import MapsearchParcelsLayer from './leaflet/Layers/MapsearchParcelsLayer';
 import { MarkerLayer } from './leaflet/Layers/MarkerLayer';
+import WorklistMarkersLayer from './leaflet/Layers/WorklistMarkersLayer';
 import WorklistParcelsLayer from './leaflet/Layers/WorklistParcelsLayer';
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
@@ -75,7 +70,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   const [zoom, setZoom] = useState(defaultZoom);
   const [isMapReady, setIsMapReady] = useState(false);
 
-  const popupRef = useRef<LeafletPopup>(null);
+  const popupRef = useRef<Popup>(null);
   const mapRef = useRef<Map | null>(null);
 
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<L.GeoJSON>();
@@ -83,6 +78,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
   const { parcels } = useWorklistContext();
   const isWorklistActive = useMemo(() => parcels?.length > 0, [parcels?.length]);
+  const worklistItemCount = useMemo(() => parcels?.length ?? 0, [parcels?.length]);
 
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
@@ -105,6 +101,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
       if (isCtrlKeyPressed) {
         mapMachine.worklistMapClick(latlng);
       } else {
+        mapMachine.mapMarkLocation(latlng);
         mapMachine.mapClick(latlng);
       }
     }, doubleClickInterval ?? 250);
@@ -297,14 +294,15 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         <ScaleControl position="bottomleft" metric={true} imperial={false} />
         <Control position="topright">
           <Row noGutters className="flex-nowrap">
-            <Col xs="auto">
+            <StyledRightSideCol xs="auto">
               <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
               <SearchControl active={isSearchActive} onToggle={mapMachine.toggleMapSearchControl} />
               <WorklistControl
                 active={isWorklistActive}
+                itemCount={worklistItemCount}
                 onToggle={mapMachine.toggleWorkListControl}
               />
-            </Col>
+            </StyledRightSideCol>
             <Col xs="auto">
               <RightSideContainer />
             </Col>
@@ -323,6 +321,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         />
 
         <Pane name="worklistParcels" style={{ zIndex: 500 }}>
+          <WorklistMarkersLayer />
           <WorklistParcelsLayer />
           <WorklistMapClickMonitor />
         </Pane>
@@ -345,3 +344,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 };
 
 export default MapLeafletView;
+
+const StyledRightSideCol = styled(Col)`
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+`;

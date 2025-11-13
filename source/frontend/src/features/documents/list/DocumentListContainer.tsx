@@ -7,8 +7,8 @@ import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 import { exists } from '@/utils';
 
-import { DocumentRow } from '../ComposedDocument';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
+import { DocumentRow } from '../models/DocumentRow';
 import { IUpdateDocumentsStrategy } from '../models/IUpdateDocumentsStrategy';
 import DocumentListView from './DocumentListView';
 

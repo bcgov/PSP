@@ -1,5 +1,5 @@
-import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
+import { ApiGen_CodeTypes_AcquisitionFileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionFileTypeTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
@@ -431,7 +431,7 @@ export const mockAcquisitionFileResponse = (
 });
 
 export const getMockExpropriationFile = (
-  fileType: string = EnumAcquisitionFileType.SECTN6,
+  fileType: string = ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN6,
 ): ApiGen_Concepts_AcquisitionFile => {
   const mockFile = mockAcquisitionFileResponse();
   mockFile.acquisitionTypeCode = toTypeCodeNullable(fileType);

@@ -21,10 +21,10 @@ namespace Pims.Api.Models.CodeTypes
         [EnumMember(Value = "H179FSPART")]
         H179FSPART,
 
-        [EnumMember(Value = "TOTAL")]
-        TOTAL,
-
         [EnumMember(Value = "H179PTO")]
         H179PTO,
+
+        [EnumMember(Value = "H179FS")]
+        H179FS,
     }
 }

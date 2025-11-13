@@ -720,6 +720,12 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.Contains("Remove any draft compensations requisitions. Agreements should be set to final, cancelled, or removed.", sharedModals.ModalContent());
         }
 
+        public void VerifyDeletePayeeErrorMessage()
+        {
+            Wait(3000);
+            Assert.Contains("Lease File Stakeholder can not be removed since it's assigned as a payee for a compensation requisition", sharedModals.ModalContent());
+        }
+
         private void CreateFinancialActivity(CompensationActivity activity)
         {
             Wait();

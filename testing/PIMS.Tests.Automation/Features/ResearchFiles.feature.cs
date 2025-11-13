@@ -219,7 +219,7 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.GivenAsync("I create a basic Research File from row number 3", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 20
- await testRunner.WhenAsync("I create Digital Documents for a \"Research File\" row number 3", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("I create Digital Documents for a \"Research File\" from row number 3", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 21
  await testRunner.AndAsync("I edit a Digital Document for a \"Research File\" from row number 6", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

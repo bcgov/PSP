@@ -9,8 +9,8 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using Microsoft.Extensions.Options;
 using Moq;
-using Pims.Dal;
 using Pims.Core.Security;
+using Pims.Dal;
 
 namespace Pims.Core.Test
 {

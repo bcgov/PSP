@@ -4,7 +4,7 @@ import { useEffect, useMemo } from 'react';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
-import { addPropertiesToCurrentFile } from '@/features/mapSideBar/shared/update/properties/UpdateProperties';
+import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
 import { exists } from '@/utils/utils';
 
 import { useEditPropertiesMode } from './useEditPropertiesMode';
