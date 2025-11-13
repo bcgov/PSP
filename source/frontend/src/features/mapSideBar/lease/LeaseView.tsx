@@ -10,6 +10,7 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, stripTrailingSlash } from '@/utils';
 
+import { useFilePropertyIdFromUrl } from '../../../hooks/useFilePropertyIdFromUrl';
 import GenerateFormView from '../acquisition/common/GenerateForm/GenerateFormView';
 import { SideBarContext } from '../context/sidebarContext';
 import FileLayout from '../layout/FileLayout';
@@ -19,7 +20,6 @@ import FilePropertyRouter from '../router/FilePropertyRouter';
 import FileMenuView from '../shared/FileMenuView';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
-import { useFilePropertyIdFromUrl } from '../shared/usePropertyIndexFromUrl';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseContainerState } from './LeaseContainer';
 import LeaseGenerateContainer from './LeaseGenerateContainer';
@@ -69,7 +69,7 @@ export const LeaseView: React.FunctionComponent<ILeaseViewProps> = ({
 
   // Extract the zero-based property index from the current URL path.
   // It will be null if route is not matched
-  const currentFilePropertyId: number | null = useFilePropertyIdFromUrl();
+  const { filePropertyId: currentFilePropertyId } = useFilePropertyIdFromUrl();
 
   return (
     <Switch>

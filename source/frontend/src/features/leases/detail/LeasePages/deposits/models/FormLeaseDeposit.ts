@@ -1,7 +1,7 @@
 import { fromContact, IContactSearchResult, toContact } from '@/interfaces';
 import { ApiGen_Concepts_SecurityDeposit } from '@/models/api/generated/ApiGen_Concepts_SecurityDeposit';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { isValidIsoDateTime } from '@/utils';
+import { isValidIsoDateTime, isValidString } from '@/utils';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
 export class FormLeaseDeposit {
@@ -52,9 +52,9 @@ export class FormLeaseDeposit {
     return {
       id: this.id ?? null,
       leaseId: this.leaseId ?? 0,
-      description: this.description,
+      description: this.description ?? null,
       amountPaid: this.amountPaid === '' ? 0 : this.amountPaid,
-      depositDateOnly: this.depositDate,
+      depositDateOnly: isValidString(this.depositDate) ? this.depositDate : null,
       depositType: toTypeCodeNullable(this.depositTypeCode),
       otherTypeDescription: this.otherTypeDescription === '' ? null : this.otherTypeDescription,
       contactHolder: this.contactHolder !== undefined ? toContact(this.contactHolder) : null,

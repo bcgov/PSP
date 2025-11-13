@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations.Schema;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.ManagementActivity;
 using Pims.Api.Models.Concepts.ManagementFile;
@@ -27,9 +26,15 @@ namespace Pims.Api.Models.Concepts.Property
 
         public long? RequestorPersonId { get; set; }
 
+        public PersonModel RequestorPerson { get; set; }
+
         public long? RequestorOrganizationId { get; set; }
 
+        public OrganizationModel RequestorOrganization { get; set; }
+
         public long? RequestorPrimaryContactId { get; set; }
+
+        public PersonModel RequestorPrimaryContact { get; set; }
 
         public DateOnly RequestAddedDateOnly { get; set; }
 

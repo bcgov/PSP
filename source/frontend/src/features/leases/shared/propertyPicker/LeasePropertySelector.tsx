@@ -1,16 +1,22 @@
 import { FieldArray, FieldArrayRenderProps, FormikProps } from 'formik';
-import { geoJSON } from 'leaflet';
-import { useCallback, useContext, useRef } from 'react';
+import noop from 'lodash/noop';
+import { useCallback, useContext, useEffect, useMemo, useRef } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { PiCornersOut } from 'react-icons/pi';
+import styled from 'styled-components';
 
-import { LinkButton } from '@/components/common/buttons';
+import { Button } from '@/components/common/buttons';
 import { ModalProps } from '@/components/common/GenericModal';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
-import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { ModalContext } from '@/contexts/modalContext';
-import { exists, latLngLiteralToGeometry } from '@/utils';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
+import AddPropertiesGuide from '@/features/mapSideBar/shared/update/properties/AddPropertiesGuide';
+import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
+import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
+import { exists, featuresetToLocationBoundaryDataset, firstOrNull } from '@/utils';
+import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
 
 import { LeaseFormModel } from '../../models';
 import SelectedPropertyHeaderRow from './selectedPropertyList/SelectedPropertyHeaderRow';
@@ -24,26 +30,57 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
   formikProps,
 }) => {
   const { values } = formikProps;
+  const localRef = useRef<FormikProps<LeaseFormModel>>(null);
+
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
 
-  const mapMachine = useMapStateMachine();
+  const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
+    useMapStateMachine();
+
+  useDraftMarkerSynchronizer(
+    values.properties.map(p => featuresetToLocationBoundaryDataset(p.property.toFeatureDataset())),
+  );
+
+  const { featuresWithAddresses } = useFeatureDatasetsWithAddresses(selectedFeatures ?? []);
 
   const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
 
-  const fitBoundaries = () => {
-    const fileProperties = values.properties;
+  const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
+    return {
+      selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
+      location: mapLocationFeatureDataset?.location,
+      fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
+      pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
+      regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
+      districtFeature: mapLocationFeatureDataset?.districtFeature ?? null,
+      municipalityFeature: firstOrNull(mapLocationFeatureDataset?.municipalityFeatures),
+      isActive: true,
+      displayOrder: 0,
+    };
+  }, [
+    mapLocationFeatureDataset?.selectingComponentId,
+    mapLocationFeatureDataset?.location,
+    mapLocationFeatureDataset?.fileLocation,
+    mapLocationFeatureDataset?.parcelFeatures,
+    mapLocationFeatureDataset?.pimsFeatures,
+    mapLocationFeatureDataset?.regionFeature,
+    mapLocationFeatureDataset?.districtFeature,
+    mapLocationFeatureDataset?.municipalityFeatures,
+  ]);
 
-    if (exists(fileProperties)) {
-      const locations = fileProperties
-        .map(p => p?.property?.polygon ?? latLngLiteralToGeometry(p?.property?.fileLocation))
-        .filter(exists);
-      const bounds = geoJSON(locations).getBounds();
-
-      if (exists(bounds) && bounds.isValid()) {
-        mapMachine.requestFlyToBounds(bounds);
-      }
-    }
-  };
+  // Convert SelectedFeatureDataset to PropertyForm
+  const propertyForms = useMemo(
+    () =>
+      featuresWithAddresses.map(obj => {
+        const property = PropertyForm.fromFeatureDataset(obj.feature);
+        if (exists(obj.address)) {
+          property.address = obj.address;
+        }
+        return property;
+      }),
+    [featuresWithAddresses],
+  );
 
   const cancelRemove = useCallback(() => {
     setDisplayModal(false);
@@ -83,12 +120,30 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
     [getRemoveModalProps, setDisplayModal, setModalContent],
   );
 
+  const handleAddToSelection = useCallback(() => {
+    prepareForCreation([selectedFeatureDataset]);
+  }, [prepareForCreation, selectedFeatureDataset]);
+
+  useEffect(() => {
+    if (exists(localRef.current) && propertyForms.length > 0) {
+      addPropertiesToCurrentFile(localRef, 'properties', propertyForms, noop);
+      processCreation();
+    }
+  }, [localRef, processCreation, propertyForms]);
+
   return (
     <Section header="Properties to include in this file:">
       <div className="py-2">
         Select one or more properties that you want to include in this lease/licence file. You can
         choose a location from the map, or search by other criteria.
       </div>
+
+      <AddPropertiesGuide />
+      {exists(selectedFeatureDataset?.parcelFeature) && (
+        <StyledButtonWrapper>
+          <Button onClick={handleAddToSelection}>Add selected property</Button>
+        </StyledButtonWrapper>
+      )}
 
       <FieldArray
         name="properties"
@@ -100,14 +155,10 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
                 <Row>
                   <Col xs="11">Selected Properties</Col>
                   <Col>
-                    <TooltipWrapper
-                      tooltip="Fit map to the file properties"
-                      tooltipId="property-selector-tooltip"
-                    >
-                      <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
-                        <PiCornersOut size={18} className="mr-2" />
-                      </LinkButton>
-                    </TooltipWrapper>
+                    <ZoomToLocation
+                      icon={ZoomIconType.area}
+                      formProperties={formikProps?.values?.properties?.map(lf => lf?.property)}
+                    />
                   </Col>
                 </Row>
               }
@@ -115,7 +166,7 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
               <SelectedPropertyHeaderRow />
               {formikProps.values.properties.map((leaseProperty, index) => {
                 const property = leaseProperty?.property;
-                if (property !== undefined) {
+                if (exists(property)) {
                   return (
                     <SelectedPropertyRow
                       formikProps={formikProps}
@@ -140,3 +191,14 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
 };
 
 export default LeasePropertySelector;
+
+const StyledButtonWrapper = styled.div`
+  margin: 0 1.6rem;
+  padding-left: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+
+  button {
+    font-size: 14px;
+  }
+`;

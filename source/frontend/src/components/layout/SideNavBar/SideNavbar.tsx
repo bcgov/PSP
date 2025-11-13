@@ -1,11 +1,13 @@
 import clsx from 'classnames';
 import { useContext, useMemo, useState } from 'react';
+import { FaClipboardList } from 'react-icons/fa';
 import { matchPath, useHistory, useLocation } from 'react-router-dom';
 
 import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
 import AdminIcon from '@/assets/images/admin-icon.svg?react';
 import ContactIcon from '@/assets/images/contact-icon.svg?react';
 import DispositionIcon from '@/assets/images/disposition-icon.svg?react';
+import DocumentIcon from '@/assets/images/document-icon.svg?react';
 import HomeIcon from '@/assets/images/home-icon.svg?react';
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import ManagementIcon from '@/assets/images/management-icon.svg?react';
@@ -35,6 +37,16 @@ export const SideNavBar = () => {
     () =>
       matchPath(location.pathname, {
         path: ['/mapview/sidebar/property/*', '/mapview'],
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
+
+  const isPropertyList = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: ['/properties/list*'],
         exact: true,
         strict: true,
       }),
@@ -130,6 +142,17 @@ export const SideNavBar = () => {
       }),
     [location],
   );
+
+  const isDocumentSearch = useMemo(
+    () =>
+      matchPath(location.pathname, {
+        path: ['/documents/list'],
+        exact: true,
+        strict: true,
+      }),
+    [location],
+  );
+
   return (
     <Styled.ZIndexWrapper>
       <Styled.SideNavBar className={clsx({ expanded: expanded })}>
@@ -141,6 +164,16 @@ export const SideNavBar = () => {
           text="Map View"
           showText={expanded}
           isNavActive={isHomeMap != null}
+        />
+        <NavIcon
+          onClick={() => {
+            history.push('/properties/list');
+          }}
+          icon={<FaClipboardList size={24} />}
+          text="PIMS Property List View"
+          showText={expanded}
+          claims={[Claims.PROPERTY_VIEW]}
+          isNavActive={isPropertyList != null}
         />
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.PROJECT)}
@@ -206,6 +239,17 @@ export const SideNavBar = () => {
           claims={[Claims.CONTACT_VIEW]}
           isNavActive={isContacts != null}
         />
+
+        <NavIcon
+          onClick={() => {
+            history.push('/documents/list');
+          }}
+          icon={<DocumentIcon width="24px" height="24px" />}
+          text="Document Search"
+          showText={expanded}
+          isNavActive={isDocumentSearch != null}
+        />
+
         <NavIcon
           onClick={() => setTrayPage(SidebarContextType.ADMIN)}
           icon={<AdminIcon />}

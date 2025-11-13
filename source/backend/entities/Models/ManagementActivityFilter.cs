@@ -41,5 +41,15 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The MOTI project name or the project number, search for both simultaneously.
         /// </summary>
         public string ProjectNameOrNumber { get; set; }
+
+        /// <summary>
+        /// get/set - The management file status code.
+        /// </summary>
+        public string ManagementFileStatusCode { get; set; }
+
+        /// <summary>
+        /// get/set - The management file purpose.
+        /// </summary>
+        public string ManagementFilePurposeCode { get; set; }
     }
 }

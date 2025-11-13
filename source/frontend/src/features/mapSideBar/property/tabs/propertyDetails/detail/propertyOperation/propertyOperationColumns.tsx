@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import { ColumnWithProps } from '@/components/Table';
-import { AreaUnitTypes } from '@/constants';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { convertArea, formatNumber } from '@/utils';
 
 import { PropertyOperationResult } from './OperationView';
@@ -81,7 +81,7 @@ const getPropertyOperationColumns: (
       Cell: (props: CellProps<PropertyOperationResult>) => {
         const landArea = props.row.original.area;
         const landUnitCode = props.row.original.areaUnitCode;
-        const meters = convertArea(landArea, landUnitCode, AreaUnitTypes.SquareMeters);
+        const meters = convertArea(landArea, landUnitCode, ApiGen_CodeTypes_AreaUnitTypes.M2);
         return (
           <>
             {formatNumber(meters, 0, 4)} m<sup>2</sup>

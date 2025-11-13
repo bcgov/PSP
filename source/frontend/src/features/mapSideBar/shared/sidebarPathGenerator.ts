@@ -24,9 +24,26 @@ export interface IPathGeneratorMethods {
     fileId: number,
     filePropertyId: number,
     detailType: string,
-    replace: boolean,
+    detailSubType?: string,
+    detailId?: number,
+    replace?: boolean,
+  ) => void;
+  addFilePropertyDetail: (
+    fileType: string,
+    fileId: number,
+    filePropertyId: number,
+    detailType: string,
+    detailSubType?: string,
+    replace?: boolean,
   ) => void;
   showPropertyByPid: (pid: string) => void;
+  showPropertyDetail: (
+    propertyId: number,
+    detailType: string,
+    detailSubType?: string,
+    detailId?: number,
+  ) => void;
+  addPropertyDetail: (propertyId: number, detailType: string, detailSubType?: string) => void;
 }
 
 export type IPathGenerator = () => IPathGeneratorMethods;
@@ -172,9 +189,43 @@ const usePathGenerator: IPathGenerator = () => {
       fileId: number,
       filePropertyId: number,
       detailType: string,
-      replace: boolean,
+      detailSubType?: string,
+      detailId?: number,
+      replace?: boolean,
     ) => {
-      const a = `${sidebarBasePath}/:fileType/:fileId/file_property/:filePropertyId/:detailType`;
+      const a = `${sidebarBasePath}/:fileType/:fileId/property/:filePropertyId/:detailType${
+        detailSubType ? '/' + detailSubType : ''
+      }/:detailId?`;
+      const path = generatePath(a, {
+        fileType,
+        fileId,
+        filePropertyId,
+        detailType,
+        detailId,
+      });
+
+      if (replace === true) {
+        history.replace(path);
+      } else {
+        history.push(path);
+      }
+    },
+    [history],
+  );
+
+  const addFilePropertyDetail = useCallback(
+    (
+      fileType: string,
+      fileId: number,
+      filePropertyId: number,
+      detailType: string,
+      detailSubType?: string,
+      replace?: boolean,
+    ) => {
+      const a = `${sidebarBasePath}/:fileType/:fileId/property/:filePropertyId/:detailType${
+        detailSubType ? '/' + detailSubType : ''
+      }/new`;
+
       const path = generatePath(a, {
         fileType,
         fileId,
@@ -182,7 +233,7 @@ const usePathGenerator: IPathGenerator = () => {
         detailType,
       });
 
-      if (replace) {
+      if (replace === true) {
         history.replace(path);
       } else {
         history.push(path);
@@ -203,6 +254,37 @@ const usePathGenerator: IPathGenerator = () => {
     [history],
   );
 
+  const showPropertyDetail = useCallback(
+    (propertyId: number, detailType: string, detailSubType?: string, detailId?: number) => {
+      const a = `${sidebarBasePath}/property/:propertyId/:detailType${
+        detailSubType ? '/' + detailSubType : ''
+      }/:detailId?`;
+      const path = generatePath(a, {
+        propertyId,
+        detailType,
+        detailId,
+      });
+
+      history.push(path);
+    },
+    [history],
+  );
+
+  const addPropertyDetail = useCallback(
+    (propertyId: number, detailType: string, detailSubType?: string) => {
+      const a = `${sidebarBasePath}/property/:propertyId/:detailType${
+        detailSubType ? '/' + detailSubType : ''
+      }/new`;
+      const path = generatePath(a, {
+        propertyId,
+        detailType,
+      });
+
+      history.push(path);
+    },
+    [history],
+  );
+
   return {
     newFile,
     showFile,
@@ -214,7 +296,10 @@ const usePathGenerator: IPathGenerator = () => {
     editProperties,
     showFilePropertyId,
     showFilePropertyDetail,
+    addFilePropertyDetail,
     showPropertyByPid,
+    showPropertyDetail,
+    addPropertyDetail,
   };
 };
 

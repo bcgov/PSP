@@ -3,10 +3,12 @@ using System.Collections.Generic;
 using System.Globalization;
 using System.Linq;
 using System.Security.Claims;
+using System.Text.RegularExpressions;
 using LinqKit;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
@@ -885,6 +887,7 @@ namespace Pims.Dal.Repositories
                         .Include(l => l.LeaseProgramTypeCodeNavigation)
                         .Include(l => l.LeaseStatusTypeCodeNavigation)
                         .Include(l => l.LeaseLicenseTypeCodeNavigation)
+                        .Include(l => l.LeasePayRvblTypeCodeNavigation)
                         .Include(l => l.PimsLeaseStakeholders)
                             .ThenInclude(t => t.Person)
                         .Include(l => l.PimsLeaseStakeholders)
@@ -1044,6 +1047,28 @@ namespace Pims.Dal.Repositories
             return _mapper.Map<PimsLease>(leaseHist);
         }
 
+        private static string NormalizeLFileNo(string input)
+        {
+            if (string.IsNullOrWhiteSpace(input))
+            {
+                return input;
+            }
+
+            // Remove spaces
+            input = input.Replace(" ", string.Empty);
+
+            // Validate allowed format: optional 'L' followed by numbers/hyphens
+            if (!Regex.IsMatch(input, @"^L?-?[0-9\-]+$"))
+            {
+                throw new ArgumentException("Invalid L-File number format. Allowed format: optional 'L' followed by digits or hyphens.");
+            }
+
+            // Remove L and hyphens
+            input = input.TrimStart('L').Replace("-", string.Empty);
+
+            return input;
+        }
+
         /// <summary>
         /// Generate an SQL statement for the specified 'region' and 'filter'.
         /// </summary>
@@ -1081,7 +1106,8 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.LFileNo))
             {
-                predicateBuilder = predicateBuilder.And(l => EF.Functions.Like(l.LFileNo, $"%{filter.LFileNo}%"));
+                var normalized = NormalizeLFileNo(filter.LFileNo);
+                predicateBuilder = predicateBuilder.And(l => EF.Functions.Like(l.LFileNo.Replace("L", string.Empty).Replace("-", string.Empty), $"%{normalized}%"));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Historical))
@@ -1100,9 +1126,12 @@ namespace Pims.Dal.Repositories
                     EF.Functions.Like(pl.Property.Address.MunicipalityName, $"%{filter.Address}%"))));
             }
 
-            if (filter.IsReceivable == true)
+            // Allow filtering by "payable" or "receivable" leases.
+            if (filter.IsReceivable.HasValue)
             {
-                predicateBuilder = predicateBuilder.And(l => l.LeasePayRvblTypeCode == "RCVBL");
+                predicateBuilder = filter.IsReceivable.Value
+                    ? predicateBuilder.And(l => l.LeasePayRvblTypeCode == nameof(LeasePaymentReceivableTypes.RCVBL))
+                    : predicateBuilder.And(l => l.LeasePayRvblTypeCode != nameof(LeasePaymentReceivableTypes.RCVBL));
             }
 
             if (filter.NotInStatus.Count > 0)

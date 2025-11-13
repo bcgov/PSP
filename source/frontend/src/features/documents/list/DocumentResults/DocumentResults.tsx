@@ -2,11 +2,11 @@ import { useMemo } from 'react';
 
 import { Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
-import { DocumentRow } from '@/features/documents/ComposedDocument';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts_Document';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 
+import { DocumentRow } from '../../models/DocumentRow';
 import { ParentInformationDisplay } from '../DocumentListView';
 import { getDocumentColumns } from './DocumentResultsColumns';
 

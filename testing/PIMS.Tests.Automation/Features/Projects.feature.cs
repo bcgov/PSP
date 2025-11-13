@@ -215,7 +215,7 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.GivenAsync("I create a new Project from row number 6", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 21
- await testRunner.WhenAsync("I create Digital Documents for a \"Project\" row number 8", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("I create Digital Documents for a \"Project\" from row number 8", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 22
  await testRunner.AndAsync("I edit a Digital Document for a \"Project\" from row number 9", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");

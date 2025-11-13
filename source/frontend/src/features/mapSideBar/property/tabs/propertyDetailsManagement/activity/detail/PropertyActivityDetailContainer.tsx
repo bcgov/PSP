@@ -32,6 +32,7 @@ export const PropertyActivityDetailContainer: React.FunctionComponent<
     fetchMinistryContacts,
     fetchPartiesContact,
     fetchProviderContact,
+    fetchRequestorContact,
     isLoading: isContactLoading,
   } = useActivityContactRetriever();
 
@@ -55,13 +56,20 @@ export const PropertyActivityDetailContainer: React.FunctionComponent<
           }
         }
         await fetchProviderContact(retrieved);
+        await fetchRequestorContact(retrieved);
 
         setLoadedActivity(retrieved);
       } else {
         setLoadedActivity(null);
       }
     },
-    [fetchMinistryContacts, fetchPartiesContact, fetchProviderContact, getActivity],
+    [
+      fetchMinistryContacts,
+      fetchPartiesContact,
+      fetchProviderContact,
+      fetchRequestorContact,
+      getActivity,
+    ],
   );
 
   useEffect(() => {
@@ -72,7 +80,6 @@ export const PropertyActivityDetailContainer: React.FunctionComponent<
 
   return (
     <View
-      propertyId={propertyId}
       activity={loadedActivity}
       onClose={onClose}
       loading={getActivityLoading || isContactLoading}

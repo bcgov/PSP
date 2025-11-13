@@ -14,8 +14,8 @@ import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeasePaymentRepository } from '@/hooks/repositories/useLeasePaymentRepository';
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
 import { ApiGen_CodeTypes_LeasePaymentCategoryTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentCategoryTypes';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { getEmptyLease } from '@/models/defaultInitializers';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { isValidId, isValidIsoDateTime } from '@/utils';
@@ -131,7 +131,8 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
       // For new periods, adjust the "Requires GST" field based on whether the lease is receivable or payable.
       if (!isValidId(values?.id)) {
         const isReceivableLease =
-          lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeaseAccountTypes.RCVBL.toString();
+          lease?.paymentReceivableType?.id ===
+          ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL.toString();
         values = {
           ...values,
           isGstEligible: isReceivableLease ? true : false,
@@ -217,7 +218,8 @@ export const PeriodPaymentsContainer: React.FunctionComponent<
         onSavePayment={onSavePayment}
         isFileFinalStatus={!statusSolver.canEditPayments()}
         isReceivable={
-          lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeaseAccountTypes.RCVBL.toString()
+          lease?.paymentReceivableType?.id ===
+          ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL.toString()
         }
         lease={LeaseFormModel.fromApi({
           ...getEmptyLease(),

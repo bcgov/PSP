@@ -447,7 +447,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="form-group"
+                  class="input form-group"
                 >
                   <div
                     class="row"
@@ -1079,7 +1079,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="form-group"
+                  class="input form-group"
                 >
                   <div
                     class="row"

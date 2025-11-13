@@ -1,5 +1,7 @@
-﻿using OpenQA.Selenium;
+﻿using AventStack.ExtentReports.Model;
+using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -50,43 +52,45 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //View Activity List Elements
         private readonly By managementAddActivityBttn = By.XPath("//div[contains(text(),'Activities List')]/following-sibling::div/button");
-        private readonly By managementFileActivitiesTitle = By.XPath("//div[contains(text(),'Activities List')]");
-        private readonly By managementActivitiesListTable = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']");
-        private readonly By managementActivitiesListTableActivityTypeColumn = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Activity type')]");
-        private readonly By managementActivitiesListTableActivitySubtypeColumn = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Activity sub-type')]");
-        private readonly By managementActivitiesListTableActivityStatusColumn = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Activity status')]");
-        private readonly By managementActivitiesListTableCommencementColumn = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Commencement')]");
-        private readonly By managementActivitiesListTableActionsColumn = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Actions')]");
-        private readonly By managementActivitiesListTable1stActTypeContext = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[1]");
-        private readonly By managementActivitiesListTable1stActSubtypeContext = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[2]");
-        private readonly By managementActivitiesListTable1stActStatusContext = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[3]");
-        private readonly By managementActivitiesListTable1stActCommencementContext = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[4]");
-        private readonly By managementActivitiesListTable1stActViewBttn = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[5]/div/button[@title='property-activity view details']");
-        private readonly By managementActivitiesListTable1stActDeleteBttn = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[5]/div/button[@title='Delete']");
-        private readonly By managementActivitiesListTable1stActWarning = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[5]/div/button/following-sibling::*");
-        private readonly By managementActivitiesBodyCount = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']");
+        private readonly By managementFileActivitiesTitle = By.CssSelector("div[data-testid='ad-hoc activities']");
+        private readonly By managementActivitiesListTable = By.CssSelector("div[data-testid='adhoc-activity-list']");
+        private readonly By managementActivitiesListTableActivityTypeColumn = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='thead thead-light'] div[role='columnheader']:nth-child(1) div");
+        private readonly By managementActivitiesListActivityTypeSortBttn = By.CssSelector("div[data-testid='sort-column-activityType']");
+        private readonly By managementActivitiesListTableActivitySubtypeColumn = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='thead thead-light'] div[role='columnheader']:nth-child(2) div");
+        private readonly By managementActivitiesListActivitySubtypeSortBttn = By.CssSelector("div[data-testid='sort-column-activitySubTypes']");
+        private readonly By managementActivitiesListTableActivityStatusColumn = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='thead thead-light'] div[role='columnheader']:nth-child(3) div");
+        private readonly By managementActivitiesListActivityStatusSortBttn = By.CssSelector("div[data-testid='sort-column-activityStatusType']");
+        private readonly By managementActivitiesListTableCommencementColumn = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='thead thead-light'] div[role='columnheader']:nth-child(4) div");
+        private readonly By managementActivitiesListActivityCommencementSortBttn = By.CssSelector("div[data-testid='sort-column-requestedAddedDate]");
+        private readonly By managementActivitiesListTableActionsColumn = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='thead thead-light'] div[role='columnheader']:nth-child(5) div");
+        private readonly By managementActivitiesListTable1stActTypeContext = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(1)");
+        private readonly By managementActivitiesListTable1stActSubtypeContext = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(2)");
+        private readonly By managementActivitiesListTable1stActStatusContext = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(3)");
+        private readonly By managementActivitiesListTable1stActCommencementContext = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(4)");
+        private readonly By managementActivitiesListTable1stActViewBttn = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(5) button[title='property-activity view details']");
+        private readonly By managementActivitiesListTable1stActDeleteBttn = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(5) button[title='Delete']");
+        private readonly By managementActivitiesListTable1stActWarning = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(5) svg");
+        private readonly By managementActivitiesBodyCount = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']");
         private readonly By managementActivitiesDeleteBttns = By.CssSelector("button[title='Delete']");
-        private readonly By managementActivityPaginationOptions = By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li");
+        private readonly By managementActivityPaginationOptions = By.XPath("//div[contains(text(),'Ad-hoc Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li");
 
         //View Property File Activity Summary Elements
         private readonly By activitiesFileListSubtitle = By.XPath("//div[contains(text(),'Property File Activity Summary')]");
         private readonly By activitiesFileListTooltip = By.CssSelector("span[data-testid='tooltip-icon-property-file-activity-summary']");
         private readonly By activitiesFileListTableExpandBttn = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/following-sibling::div");
-        private readonly By activitiesFileListTableActivityTypeColumn = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Activity type')]");
-        private readonly By activitiesFileListTableActivitySubtypeColumn = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Activity sub-type')]");
-        private readonly By activitiesFileListTableActivityStatusColumn = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Activity status')]");
-        private readonly By activitiesFileListTableActivityCommencementColumn = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Commencement')]");
-        private readonly By activitiesFileListTableActivityNavigationColumn = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Navigation')]");
-        private readonly By activitiesFileListTable1stActTypeContext = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[1]");
-        private readonly By activitiesFileListTable1stActSubtypeContext = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[2]");
-        private readonly By activitiesFileListTable1stActStatusContext = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[3]");
-        private readonly By activitiesFileListTable1stActCommencementContext = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[4]");
-        private readonly By activitiesFileListTable1stActNavigationContext = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[1]/div/div[5]/a");
+        private readonly By activitiesFileListTableActivityTypeColumn = By.CssSelector("div[data-testid='mgmt-activity-list-readonly'] div[class='thead thead-light'] div[role='columnheader']:nth-child(1) div");
+        private readonly By activitiesFileListTableActivitySubtypeColumn = By.CssSelector("div[data-testid='mgmt-activity-list-readonly'] div[class='thead thead-light'] div[role='columnheader']:nth-child(2) div");
+        private readonly By activitiesFileListTableActivityStatusColumn = By.CssSelector("div[data-testid='mgmt-activity-list-readonly'] div[class='thead thead-light'] div[role='columnheader']:nth-child(3) div");
+        private readonly By activitiesFileListTableActivityCommencementColumn = By.CssSelector("div[data-testid='mgmt-activity-list-readonly'] div[class='thead thead-light'] div[role='columnheader']:nth-child(4) div");
+        private readonly By activitiesFileListTableActivityNavigationColumn = By.CssSelector("div[data-testid='mgmt-activity-list-readonly'] div[class='thead thead-light'] div[role='columnheader']:nth-child(5) div");
+        private readonly By activitiesFileListTable1stActTypeContext = By.CssSelector("div[data-testid='mgmt-activity-list-readonly'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(1)");
+        private readonly By activitiesFileListTable1stActSubtypeContext = By.XPath("div[data-testid='mgmt-activity-list-readonly'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(1)");
+        private readonly By activitiesFileListTable1stActStatusContext = By.XPath("div[data-testid='mgmt-activity-list-readonly'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(1)");
+        private readonly By activitiesFileListTable1stActCommencementContext = By.XPath("div[data-testid='mgmt-activity-list-readonly'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(1)");
+        private readonly By activitiesFileListTable1stActNavigationContext = By.XPath("div[data-testid='mgmt-activity-list-readonly'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(1)");
         private readonly By activitiesFileActivityPaginationOptions = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li");
 
         private readonly By activitiesTablesEmptyInfo = By.XPath("//div[contains(text(),'No property management activities found')]");
-
-       
 
         private SharedModals sharedModals;
         private SharedSelectContact sharedSelectContact;
@@ -146,9 +150,8 @@ namespace PIMS.Tests.Automation.PageObjects
             if (webDriver.FindElements(managementPropertyPurposeDeleteBttns).Count > 0)
             {
                 while (webDriver.FindElements(managementPropertyPurposeDeleteBttns).Count > 0)
-                {
                     webDriver.FindElements(managementPropertyPurposeDeleteBttns)[0].Click();
-                }
+                
                 webDriver.FindElement(managementPropertyPurposeLabel).Click();
             }
             //Add Property Purpose

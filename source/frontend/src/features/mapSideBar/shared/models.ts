@@ -3,7 +3,8 @@ import { LatLngLiteral } from 'leaflet';
 import { isNumber } from 'lodash';
 
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
-import { AreaUnitTypes, DistrictCodes, RegionCodes } from '@/constants';
+import { DistrictCodes, RegionCodes } from '@/constants';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_CodeTypes_GeoJsonTypes';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
@@ -90,7 +91,7 @@ export class PropertyForm {
   public displayOrder?: number;
   public isOwned?: boolean;
   public landArea?: number;
-  public areaUnit?: AreaUnitTypes;
+  public areaUnit?: ApiGen_CodeTypes_AreaUnitTypes;
   public isRetired?: boolean;
   public isDisposed?: boolean;
   public isActive?: string;
@@ -132,8 +133,11 @@ export class PropertyForm {
         ? +pimsFeature?.properties?.LAND_AREA
         : parcelFeature?.properties?.FEATURE_AREA_SQM ?? 0,
       areaUnit: pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
-        ? enumFromValue(pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
-        : AreaUnitTypes.SquareMeters,
+        ? enumFromValue(
+            pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE,
+            ApiGen_CodeTypes_AreaUnitTypes,
+          )
+        : ApiGen_CodeTypes_AreaUnitTypes.M2,
       isRetired: pimsFeature?.properties?.IS_RETIRED ?? false,
       isDisposed: pimsFeature?.properties?.IS_DISPOSED ?? false,
       legalDescription:
@@ -258,7 +262,9 @@ export class PropertyForm {
     newForm.legalDescription = model?.landLegalDescription ?? undefined;
     newForm.landArea = model?.landArea ?? undefined;
     newForm.areaUnit = model?.areaUnit
-      ? AreaUnitTypes[model?.areaUnit?.id as keyof typeof AreaUnitTypes]
+      ? ApiGen_CodeTypes_AreaUnitTypes[
+          model?.areaUnit?.id as keyof typeof ApiGen_CodeTypes_AreaUnitTypes
+        ]
       : undefined;
 
     return newForm;

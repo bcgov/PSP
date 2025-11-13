@@ -1,14 +1,14 @@
-import { Formik } from 'formik';
 import { createMemoryHistory } from 'history';
-import noop from 'lodash/noop';
 
 import { DetailAdministration, IDetailAdministrationProps } from '@/features/leases';
 import { mockApiProperty } from '@/mocks/filterData.mock';
 import { getEmptyPropertyLease } from '@/mocks/properties.mock';
-import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
+import { ApiGen_CodeTypes_LeaseProgramTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseProgramTypes';
+import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { getEmptyLease } from '@/models/defaultInitializers';
 import { toTypeCode } from '@/utils/formUtils';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { render, RenderOptions, screen } from '@/utils/test-utils';
 
 const history = createMemoryHistory();
 
@@ -17,18 +17,16 @@ describe('DetailAdministration component', () => {
     renderOptions: RenderOptions & IDetailAdministrationProps = { lease: getEmptyLease() },
   ) => {
     // render component under test
-    const component = render(<DetailAdministration lease={renderOptions.lease} />, {
+    const utils = render(<DetailAdministration lease={renderOptions.lease} />, {
       ...renderOptions,
       history,
     });
 
-    return {
-      component,
-    };
+    return { ...utils };
   };
 
   it('renders minimally as expected', () => {
-    const { component } = setup({
+    const { asFragment } = setup({
       lease: {
         ...getEmptyLease(),
         fileProperties: [
@@ -49,11 +47,11 @@ describe('DetailAdministration component', () => {
         },
       },
     });
-    expect(component.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders a complete lease as expected', () => {
-    const { component } = setup({
+    const { asFragment } = setup({
       lease: {
         ...getEmptyLease(),
         fileProperties: [
@@ -81,24 +79,33 @@ describe('DetailAdministration component', () => {
         startDate: '2020-01-01',
       },
     });
-    expect(component.asFragment()).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders all other fields', () => {
-    const {
-      component: { getByText },
-    } = setup({
+    setup({
       lease: {
-        programType: { id: 'OTHER' },
+        ...getEmptyLease(),
+        programType: {
+          id: ApiGen_CodeTypes_LeaseProgramTypes.OTHER,
+          description: '',
+          isDisabled: false,
+          displayOrder: 0,
+        },
         otherProgramType: 'other program type',
-        type: { id: 'OTHER' },
+        type: {
+          id: ApiGen_CodeTypes_LeaseLicenceTypes.OTHER,
+          description: 'Other',
+          isDisabled: false,
+          displayOrder: 0,
+        },
         otherType: 'other type',
         leasePurposes: [
           {
             id: 36,
             leaseId: 31,
             leasePurposeTypeCode: {
-              id: 'OTHER',
+              id: ApiGen_CodeTypes_LeasePurposeTypes.OTHER,
               description: 'Other*',
               isDisabled: false,
               displayOrder: 99,
@@ -113,52 +120,59 @@ describe('DetailAdministration component', () => {
             rowVersion: 1,
           },
         ],
-      } as any,
+      },
     });
 
-    expect(getByText('PLAY POKER')).toBeVisible();
-    expect(getByText('other program type')).toBeVisible();
-    expect(getByText('other type')).toBeVisible();
+    expect(screen.getByText('PLAY POKER')).toBeVisible();
+    expect(screen.getByText('other program type')).toBeVisible();
+    expect(screen.getByText('Other - other type')).toBeVisible();
   });
 
   it('does not render other fields if values not set to other', () => {
-    const {
-      component: { queryByDisplayValue },
-    } = setup({
+    setup({
       lease: {
+        ...getEmptyLease(),
+        programType: {
+          id: ApiGen_CodeTypes_LeaseProgramTypes.RESRENTAL,
+          description: 'Residential Rentals',
+          isDisabled: false,
+          displayOrder: 0,
+        },
         otherProgramType: 'other program type',
+        type: {
+          id: ApiGen_CodeTypes_LeaseLicenceTypes.AMNDAGREE,
+          description: 'Amending Agreement',
+          isDisabled: false,
+          displayOrder: 0,
+        },
         otherType: 'other type',
         leasePurposes: [],
-      } as any,
+      },
     });
 
-    expect(queryByDisplayValue('PLAY POKER')).toBeNull();
-    expect(queryByDisplayValue('other program type')).toBeNull();
-    expect(queryByDisplayValue('other type')).toBeNull();
+    expect(screen.queryByDisplayValue('PLAY POKER')).toBeNull();
+    expect(screen.queryByDisplayValue('other program type')).toBeNull();
+    expect(screen.queryByDisplayValue('other type')).toBeNull();
   });
 
   it('renders the program name', () => {
-    const {
-      component: { getByText },
-    } = setup({
+    setup({
       lease: {
         ...getEmptyLease(),
         programName: 'A program',
       },
     });
-    expect(getByText('A program')).toBeVisible();
+    expect(screen.getByText('A program')).toBeVisible();
   });
 
   it('renders the primary arbitration city', async () => {
-    const {
-      component: { getByText },
-    } = setup({
+    setup({
       lease: {
         ...getEmptyLease(),
         primaryArbitrationCity: 'Vancouver',
       },
     });
 
-    expect(getByText('Vancouver')).toBeVisible();
+    expect(screen.getByText('Vancouver')).toBeVisible();
   });
 });

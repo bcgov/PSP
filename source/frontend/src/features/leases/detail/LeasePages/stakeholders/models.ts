@@ -55,28 +55,29 @@ export class FormStakeholder {
   public readonly original?: IContactSearchResult;
   public readonly provinceState?: string;
 
-  public static toContactSearchResult = (model: FormStakeholder): IContactSearchResult => {
-    if (!model.id) {
+  public static toContactSearchResult = (model: FormStakeholder): IContactSearchResult | null => {
+    if (!exists(model?.id)) {
       throw Error('Invalid tenant id');
     }
 
-    if (model.original) {
+    if (exists(model?.original)) {
       return model.original;
     }
+
     const contact = {
-      id: model.id,
-      summary: model.summary,
+      id: model?.id,
+      summary: model?.summary,
 
-      mailingAddress: model.mailingAddress?.streetAddress1,
-      municipalityName: model.municipalityName,
+      mailingAddress: model?.mailingAddress?.streetAddress1,
+      municipalityName: model?.municipalityName,
 
-      provinceState: model.provinceState,
+      provinceState: model?.provinceState,
       isDisabled: false,
       organizationName: null,
       email: null,
     };
 
-    if (model.personId) {
+    if (isValidId(model?.personId)) {
       return {
         ...contact,
         personId: model.personId,
@@ -85,13 +86,15 @@ export class FormStakeholder {
         firstName: null,
         middleNames: null,
       };
-    } else if (model.organizationId) {
+    } else if (isValidId(model?.organizationId)) {
       return {
         ...contact,
         organizationId: model.organizationId,
         organization: null,
       };
     }
+
+    return null;
   };
 
   public static toApi(model: FormStakeholder): ApiGen_Concepts_LeaseStakeholder {

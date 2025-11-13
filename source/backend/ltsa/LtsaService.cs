@@ -4,10 +4,15 @@ using System.Linq;
 using System.Net;
 using System.Net.Http;
 using System.Net.Http.Headers;
+using System.Net.Http.Json;
 using System.Text;
 using System.Text.Json;
+using System.Text.Json.Nodes;
 using System.Text.Json.Serialization;
+using System.Threading;
 using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Drawing;
+using Microsoft.AspNetCore.Authentication.OAuth;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Core.Exceptions;
@@ -26,6 +31,8 @@ namespace Pims.Ltsa
     /// </summary>
     public class LtsaService : ILtsaService
     {
+        private static readonly JsonSerializerOptions LtsaSerializerOptions = new() { PropertyNamingPolicy = JsonNamingPolicy.SnakeCaseLower };
+
         #region Variables
         private readonly JsonSerializerOptions _jsonSerializerOptions = null;
         private readonly ILogger<ILtsaService> _logger;
@@ -47,8 +54,8 @@ namespace Pims.Ltsa
         /// <param name="serializerOptions"></param>
         public LtsaService(IOptions<LtsaOptions> options, ILogger<ILtsaService> logger, IOptions<JsonSerializerOptions> serializerOptions, IHttpClientFactory httpClientFactory)
         {
-            this.Options = options.Value;
-            this._httpClientFactory = httpClientFactory;
+            Options = options.Value;
+            _httpClientFactory = httpClientFactory;
             _logger = logger;
             _jsonSerializerOptions = serializerOptions.Value;
             _authPolicy = Policy
@@ -78,9 +85,9 @@ namespace Pims.Ltsa
                 return await _authPolicy.ExecuteAsync(async (context) =>
                 {
                     var token = (TokenModel)context["access_token"];
-                    if (token != null)
+                    if (token is not null)
                     {
-                        client?.DefaultRequestHeaders?.Add("X-Authorization", $"Bearer {token?.AccessToken}");
+                        client.DefaultRequestHeaders?.Add("Authorization", $"Bearer {token.AccessToken}");
                     }
 
                     var response = await client.GetAsync(url);
@@ -104,7 +111,7 @@ namespace Pims.Ltsa
             }
             catch (JsonException ex)
             {
-                this._logger.LogError("Failed to process LTSA json: ", ex);
+               _logger.LogError(ex, "Failed to process LTSA json: {Msg}", ex.Message);
                 throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
@@ -130,18 +137,21 @@ namespace Pims.Ltsa
 
             try
             {
-                var stringContent = JsonSerializer.Serialize(data, _jsonSerializerOptions);
-                var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-
                 var response = await _authPolicy.ExecuteAsync(async (context) =>
                 {
                     var token = (TokenModel)context["access_token"];
-                    if (token != null)
+
+                    using var request = new HttpRequestMessage(HttpMethod.Post, url);
+                    if (token is not null)
                     {
-                        client?.DefaultRequestHeaders?.Add("X-Authorization", $"Bearer {token?.AccessToken}");
+                        request.Headers.Add("Authorization", $"Bearer {token.AccessToken}");
                     }
 
-                    var response = await client.PostAsync(url, content);
+                    var stringContent = JsonSerializer.Serialize(data, _jsonSerializerOptions);
+                    var content = new StringContent(stringContent, Encoding.UTF8, "application/json");
+                    request.Content = content;
+
+                    var response = await client.SendAsync(request);
                     if (!response.IsSuccessStatusCode)
                     {
                         throw new HttpClientRequestException(response);
@@ -171,7 +181,7 @@ namespace Pims.Ltsa
             }
             catch (JsonException ex)
             {
-                this._logger.LogError("Failed to process LTSA json: ", ex);
+               _logger.LogError(ex, "Failed to process LTSA json: {Msg}", ex.Message);
                 throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
@@ -206,38 +216,53 @@ namespace Pims.Ltsa
         /// Make an HTTP request if one is needed.
         /// </summary>
         /// <returns></returns>
-        private async Task<TokenModel> RefreshAccessTokenAsync(TokenModel token)
+        private async Task<TokenModel> RefreshAccessTokenAsync(TokenModel token, CancellationToken cancellationToken = default)
         {
             using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
             // If the refresh token exists, try and refresh the token.
-            if (token?.RefreshToken != null)
+            if (token?.RefreshToken is not null)
             {
                 try
                 {
-                    var refreshToken = token?.RefreshToken;
-                    token = null; // remove any existing token details so that the authpolicy will fetch a new token if this auth request fails.
-                    var stringContent = JsonSerializer.Serialize(refreshToken, _jsonSerializerOptions);
-                    var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                    var response = await _authPolicy.ExecuteAsync(async () => await client.PostAsync(this.Options.AuthUrl.AppendToURL(this.Options.RefreshEndpoint), content));
-                    var tokens = JsonSerializer.Deserialize<AuthResponseTokens>(await response.Content.ReadAsStringAsync(), _jsonSerializerOptions);
-                    token = new TokenModel(tokens.AccessToken, tokens.RefreshToken);
+                    var parameters = new Dictionary<string, string>
+                        {
+                        ["grant_type"] = "refresh_token",
+                        ["client_id"] = Options.ClientId,
+                        ["client_secret"] = Options.ClientSecret,
+                        ["refresh_token"] = token.RefreshToken,
+                    };
+
+                    using var request = new HttpRequestMessage(HttpMethod.Post, Options.TokenEndpoint);
+                    request.Headers.Add("Accept", "application/json");
+                    request.Content = new FormUrlEncodedContent(parameters);
+                    var tokenResponse = await client.SendAsync(request, cancellationToken);
+                    tokenResponse.EnsureSuccessStatusCode();
+
+                    var tokenStr = await tokenResponse.Content.ReadAsStringAsync(cancellationToken);
+                    AuthResponseTokens newToken = JsonSerializer.Deserialize<AuthResponseTokens>(tokenStr, LtsaSerializerOptions);
+
+                    token.RenewToken(newToken.AccessToken, newToken.RefreshToken);
                 }
                 catch (HttpClientRequestException ex)
                 {
-                    _logger.LogError(ex, $"Failed to send/receive auth refresh request: ${this.Options.AuthUrl}");
+                    _logger.LogError(ex, "Failed to send/receive auth refresh request: {AuthUrl}", Options.AuthUrl);
                     throw new LtsaException(ex.Message, ex, ex.StatusCode.Value);
                 }
                 catch (JsonException ex)
                 {
-                    _logger.LogError(ex, $"Failed to parse refresh token JSON response");
+                    _logger.LogError(ex, "Failed to parse refresh token JSON response");
                     throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
                 }
-                token = await GetTokenAsync();
+                catch (InvalidOperationException)
+                {
+                    token = await GetTokenAsync(cancellationToken: cancellationToken);
+                }
             }
             else
             {
-                token = await GetTokenAsync();
+                token = await GetTokenAsync(cancellationToken: cancellationToken);
             }
+
             return token;
         }
 
@@ -249,29 +274,41 @@ namespace Pims.Ltsa
         /// <param name="myLtsaUsername"></param>
         /// <param name="myLtsaUserPassword"></param>
         /// <returns></returns>
-        public async Task<TokenModel> GetTokenAsync(string integratorUsername = null, string integratorPassword = null, string myLtsaUsername = null, string myLtsaUserPassword = null)
+        public async Task<TokenModel> GetTokenAsync(string integratorUsername = null, string integratorPassword = null, string myLtsaUsername = null, string myLtsaUserPassword = null, CancellationToken cancellationToken = default)
         {
             var creds = new IntegratorCredentials()
             {
-                IntegratorUsername = integratorUsername ?? this.Options.IntegratorUsername,
-                IntegratorPassword = integratorPassword ?? this.Options.IntegratorPassword,
-                MyLtsaUserName = myLtsaUsername ?? this.Options.MyLtsaUsername,
-                MyLtsaUserPassword = myLtsaUserPassword ?? this.Options.MyLtsaUserPassword
+                IntegratorUsername = integratorUsername ?? Options.IntegratorUsername,
+                IntegratorPassword = integratorPassword ?? Options.IntegratorPassword,
+                MyLtsaUserName = myLtsaUsername ?? Options.MyLtsaUsername,
+                MyLtsaUserPassword = myLtsaUserPassword ?? Options.MyLtsaUserPassword
             };
 
-            string url = this.Options.AuthUrl.AppendToURL(this.Options.LoginIntegratorEndpoint);
+            string url = Options.AuthUrl.AppendToURL(Options.LoginIntegratorEndpoint);
             using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
+
             try
             {
-                var stringContent = JsonSerializer.Serialize(creds, _jsonSerializerOptions);
-                var content = new StringContent(stringContent.ToString(), Encoding.UTF8, "application/json");
-                var response = await client.PostAsync(url, content);
-                if (!response.IsSuccessStatusCode)
+                var parameters = new Dictionary<string, string>
                 {
-                    throw new LtsaException("Received error response from LTSA when retrieving authorization token", response.StatusCode);
-                }
-                var tokens = JsonSerializer.Deserialize<AuthResponseTokens>(await response.Content.ReadAsStringAsync(), _jsonSerializerOptions);
-                return new TokenModel(tokens.AccessToken, tokens.RefreshToken);
+                   { "client_id", Options.ClientId },
+                   { "client_secret", Options.ClientSecret },
+                   { "username", creds.MyLtsaUserName },
+                   { "password", creds.MyLtsaUserPassword },
+                   { "grant_type", Options.GrantType },
+                   { "scope", Options.Scope }
+                };
+
+                using var request = new HttpRequestMessage(HttpMethod.Post, Options.TokenEndpoint);
+                request.Headers.Add("Accept", "application/json");
+                request.Content = new FormUrlEncodedContent(parameters);
+                var tokenResponse = await client.SendAsync(request, cancellationToken);
+                tokenResponse.EnsureSuccessStatusCode();
+
+                var tokenStr = await tokenResponse.Content.ReadAsStringAsync(cancellationToken);
+                AuthResponseTokens token = JsonSerializer.Deserialize<AuthResponseTokens>(tokenStr, LtsaSerializerOptions );
+
+                return new TokenModel(token.AccessToken, token.RefreshToken);
             }
             catch (HttpClientRequestException ex)
             {
@@ -280,7 +317,7 @@ namespace Pims.Ltsa
             }
             catch (JsonException ex)
             {
-                this._logger.LogError($"Failed to process LTSA json:", ex);
+                _logger.LogError(ex, "Failed to process LTSA json: {Msg}", ex.Message);
                 throw new LtsaException(ex.Message, HttpStatusCode.InternalServerError);
             }
         }
@@ -292,7 +329,7 @@ namespace Pims.Ltsa
         /// <returns></returns>
         public async Task<TitleSummariesResponse> GetTitleSummariesAsync(int pid)
         {
-            var url = this.Options.HostUri.AppendToURL(new string[] { this.Options.TitleSummariesEndpoint, $"?filter=parcelIdentifier:{pid}" });
+            var url = Options.HostUri.AppendToURL(Options.TitleSummariesEndpoint, $"?filter=parcelIdentifier:{pid}");
             return await GetAsync<TitleSummariesResponse>(url);
         }
 
@@ -305,7 +342,7 @@ namespace Pims.Ltsa
         public async Task<OrderWrapper<OrderParent<Title>>> PostTitleOrder(string titleNumber, string landTitleDistrictCode)
         {
             TitleOrder order = new(new TitleOrderParameters(titleNumber, Enum.Parse<LandTitleDistrictCode>(landTitleDistrictCode)));
-            var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint);
+            var url = Options.HostUri.AppendToURL(Options.OrdersEndpoint);
             return await PostOrderAsync<Title, OrderWrapper<TitleOrder>>(url, new OrderWrapper<TitleOrder>(order));
         }
 
@@ -317,7 +354,7 @@ namespace Pims.Ltsa
         public async Task<OrderWrapper<OrderParent<ParcelInfo>>> PostParcelInfoOrder(string pid)
         {
             ParcelInfoOrder order = new(new ParcelInfoOrderParameters(pid));
-            var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint);
+            var url = Options.HostUri.AppendToURL(Options.OrdersEndpoint);
             return await PostOrderAsync<ParcelInfo, OrderWrapper<ParcelInfoOrder>>(url, new OrderWrapper<ParcelInfoOrder>(order));
         }
 
@@ -341,7 +378,7 @@ namespace Pims.Ltsa
         /// <returns></returns>
         public async Task<OrderWrapper<OrderParent<T>>> GetOrderById<T>(string orderId) where T : IFieldedData
         {
-            var url = this.Options.HostUri.AppendToURL(this.Options.OrdersEndpoint, orderId);
+            var url = Options.HostUri.AppendToURL(Options.OrdersEndpoint, orderId);
             return await GetAsync<OrderWrapper<OrderParent<T>>>(url);
         }
 

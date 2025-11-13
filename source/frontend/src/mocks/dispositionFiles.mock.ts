@@ -279,6 +279,7 @@ export const mockDispositionFilePropertyResponse = () => [
         },
       },
       boundary: {
+        type: 'Polygon',
         coordinates: [
           {
             x: 1227371.213199999,

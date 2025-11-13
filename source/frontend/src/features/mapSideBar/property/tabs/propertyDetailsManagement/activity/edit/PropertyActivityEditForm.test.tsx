@@ -1,8 +1,16 @@
 import { Claims } from '@/constants';
-import { getMockPropertyManagementActivity } from '@/mocks/PropertyManagementActivity.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { getMockManagementActivity } from '@/mocks/managementActivity.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, getByName, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+import {
+  act,
+  getByName,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+  waitForEffects,
+} from '@/utils/test-utils';
 
 import {
   IPropertyActivityEditFormProps,
@@ -33,7 +41,7 @@ const onClose = vi.fn();
 
 const mockManagementActivityFormValues: PropertyActivityFormModel =
   PropertyActivityFormModel.fromApi({
-    ...getMockPropertyManagementActivity(1),
+    ...getMockManagementActivity(1),
   });
 
 describe('PropertyActivityEditForm component', () => {
@@ -80,9 +88,13 @@ describe('PropertyActivityEditForm component', () => {
   });
 
   it('validates form values before submitting the form', async () => {
-    setup();
+    vi.spyOn(console, 'error').mockImplementation(() => {});
+    await setup();
+    await waitForEffects();
 
-    await act(async () => userEvent.paste(getByName('requestedSource'), 'Lorem Ipsum'));
+    await act(async () => {
+      userEvent.type(getByName('completionDate'), '2005-03-15', { delay: 100 });
+    });
     const save = screen.getByText('Save');
     await act(async () => userEvent.click(save));
 

@@ -286,6 +286,13 @@ exports[`MapFilterBar > renders correctly 1`] = `
             >
               Survey Parcel
             </option>
+            <option
+              class="option"
+              data-testid="select-option-project"
+              value="project"
+            >
+              Project
+            </option>
           </select>
         </div>
       </div>

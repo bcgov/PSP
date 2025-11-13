@@ -9,6 +9,7 @@ export enum ApiGen_CodeTypes_FormTypes {
   FORM9 = 'FORM9',
   FORM12 = 'FORM12',
   H0074 = 'H0074',
+  H0224 = 'H0224',
   H0443 = 'H0443',
   H1005 = 'H1005',
   H1005A = 'H1005A',
@@ -18,5 +19,6 @@ export enum ApiGen_CodeTypes_FormTypes {
   H179P = 'H179P',
   H179PTO = 'H179PTO',
   H179T = 'H179T',
+  H179FS = 'H179FS',
   LETTER = 'LETTER',
 }

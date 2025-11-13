@@ -42,7 +42,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var options = Options.Create(new LtsaOptions());
             var service = helper.Create<LtsaService>(options, user);
 
-            var token = new TokenModel();
             var client = helper.GetService<Mock<IHttpRequestClient>>();
             client.Setup(m => m.PostJsonAsync(It.IsAny<string>(), It.IsAny<IntegratorCredentials>())).ReturnsAsync<IHttpRequestClient, HttpResponseMessage>(new HttpResponseMessage() { Content = new StringContent(accessTokenResponse) });
 
@@ -133,10 +132,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var options = Options.Create(new LtsaOptions());
             var service = helper.Create<LtsaService>(options, user);
 
-            var token = new TokenModel()
-            {
-                AccessToken = "test",
-            };
             var response = new TitleSummariesResponse()
             {
                 TitleSummaries = new List<TitleSummary>()
@@ -320,10 +315,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var options = Options.Create(new LtsaOptions());
             var service = helper.Create<LtsaService>(options, user);
 
-            var token = new TokenModel()
-            {
-                AccessToken = "test",
-            };
             var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
                 RequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://test"),
@@ -358,10 +349,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var options = Options.Create(new LtsaOptions());
             var service = helper.Create<LtsaService>(options, user);
 
-            var token = new TokenModel()
-            {
-                AccessToken = "test",
-            };
             var response = new OrderWrapper<OrderParent<Title>>(new TitleOrder());
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
@@ -389,10 +376,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var options = Options.Create(new LtsaOptions());
             var service = helper.Create<LtsaService>(options, user);
 
-            var token = new TokenModel()
-            {
-                AccessToken = "test",
-            };
             var orderResponse = new OrderWrapper<OrderParent<Title>>(new TitleOrder() { Status = OrderParent<Title>.StatusEnum.Processing, OrderId = "1" });
             var orderIdResponse = new OrderWrapper<OrderParent<Title>>(new TitleOrder() { Status = OrderParent<Title>.StatusEnum.Completed, OrderId = "1" });
 
@@ -422,10 +405,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var options = Options.Create(new LtsaOptions() { MaxRetries = 0 });
             var service = helper.Create<LtsaService>(options, user);
 
-            var token = new TokenModel()
-            {
-                AccessToken = "test",
-            };
             var response = new OrderWrapper<OrderParent<Title>>(new TitleOrder() { Status = OrderParent<Title>.StatusEnum.Processing, OrderId = "1" });
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
@@ -452,10 +431,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var options = Options.Create(new LtsaOptions());
             var service = helper.Create<LtsaService>(options, user);
 
-            var token = new TokenModel()
-            {
-                AccessToken = "test",
-            };
             var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
                 RequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://test"),
@@ -481,10 +456,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var options = Options.Create(new LtsaOptions());
             var service = helper.Create<LtsaService>(options, user);
 
-            var token = new TokenModel()
-            {
-                AccessToken = "test",
-            };
             var response = new OrderWrapper<OrderParent<ParcelInfo>>(new ParcelInfoOrder());
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
@@ -512,10 +483,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var options = Options.Create(new LtsaOptions());
             var service = helper.Create<LtsaService>(options, user);
 
-            var token = new TokenModel()
-            {
-                AccessToken = "test",
-            };
             var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
                 RequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://test"),
@@ -541,10 +508,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var options = Options.Create(new LtsaOptions());
             var service = helper.Create<LtsaService>(options, user);
 
-            var token = new TokenModel()
-            {
-                AccessToken = "test",
-            };
             var response = new OrderWrapper<OrderParent<StrataPlanCommonProperty>>(new SpcpOrder());
 
             var client = helper.GetService<Mock<IHttpRequestClient>>();
@@ -572,10 +535,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var options = Options.Create(new LtsaOptions());
             var service = helper.Create<LtsaService>(options, user);
 
-            var token = new TokenModel()
-            {
-                AccessToken = "test",
-            };
             var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
                 RequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://test"),
@@ -601,10 +560,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var options = Options.Create(new LtsaOptions());
             var service = helper.Create<LtsaService>(options, user);
 
-            var token = new TokenModel()
-            {
-                AccessToken = "test",
-            };
             var titleResponse = new OrderWrapper<OrderParent<Title>>(new TitleOrder());
             var parcelInfoResponse = new OrderWrapper<OrderParent<ParcelInfo>>(new ParcelInfoOrder());
             var titleSummariesResponse = new TitleSummariesResponse()
@@ -649,10 +604,6 @@ namespace Pims.Dal.Test.Libraries.Ltsa
             var options = Options.Create(new LtsaOptions());
             var service = helper.Create<LtsaService>(options, user);
 
-            var token = new TokenModel()
-            {
-                AccessToken = "test",
-            };
             var response = new HttpResponseMessage(HttpStatusCode.BadRequest)
             {
                 RequestMessage = new HttpRequestMessage(HttpMethod.Post, "https://test"),

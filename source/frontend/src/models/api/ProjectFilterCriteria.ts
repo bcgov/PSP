@@ -18,3 +18,20 @@ export interface Api_PropertyFilterCriteria {
   isDisposed: boolean;
   isRetired: boolean;
 }
+
+export const defaultPropertyFilterCriteria: Api_PropertyFilterCriteria = {
+  projectId: undefined,
+  anomalyIds: [],
+  isCoreInventory: undefined,
+  tenurePPH: undefined,
+  tenureRoadTypes: [],
+  tenureStatuses: [],
+  isDisposed: undefined,
+  leaseTypes: [],
+  leaseStatus: undefined,
+  leasePurposes: [],
+  leasePayRcvblType: undefined,
+  isOtherInterest: undefined,
+  isPropertyOfInterest: undefined,
+  isRetired: undefined,
+};

@@ -1,7 +1,7 @@
 import clsx from 'classnames';
 import React from 'react';
 import { Col } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import EditButton from '@/components/common/buttons/EditButton';
@@ -21,7 +21,6 @@ import PropertyActivityDetailsSubView from './ActivityDetailSubView';
 import { InvoiceView } from './InvoiceView';
 
 export interface IPropertyActivityDetailViewProps {
-  propertyId: number;
   activity: ApiGen_Concepts_ManagementActivity | null;
   onClose: () => void;
   loading: boolean;
@@ -36,6 +35,7 @@ export const PropertyActivityDetailView: React.FunctionComponent<
     props.setShow(false);
     props.onClose();
   };
+  const location = useLocation();
 
   const { hasClaim } = useKeycloakWrapper();
   const history = useHistory();
@@ -69,9 +69,8 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                     <EditButton
                       title="Edit Property Activity"
                       onClick={() => {
-                        history.push(
-                          `/mapview/sidebar/property/${props.propertyId}/management/activity/${props.activity?.id}/edit`,
-                        );
+                        const baseUrl = location.pathname.split('/activity')[0];
+                        history.push(`${baseUrl}/activity/${props.activity?.id}/edit`);
                       }}
                       style={{ float: 'right' }}
                     />

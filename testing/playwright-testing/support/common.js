@@ -86,7 +86,7 @@ async function clickAndWaitFor(
   const {
     maxRetries = 3,
     clickDelay = 2000, // ms delay before retry click
-    timeout = 5000, // time to wait for expected element before retry
+    timeout = 10000, // time to wait for expected element before retry
   } = options;
 
   let lastError;
@@ -97,15 +97,11 @@ async function clickAndWaitFor(
 
       // Wait for the target element to appear
       await page.waitForSelector(waitSelector, { timeout });
-      console.log("Success -" + clickSelector);
       return;
     } catch (err) {
       lastError = err;
 
       if (attempt < maxRetries) {
-        console.log(
-          `Attempt ${attempt} failed. Retrying click on "${clickSelector}"...`
-        );
         await page.waitForTimeout(clickDelay);
       }
     }
@@ -139,14 +135,37 @@ async function fillTypeahead(page, selector, text, optionSelector) {
   await option.click({ force: true });
 }
 
+async function textEqualsIfNotEmpty(page, selector, value) {
+  if (value && value.trim() !== "") {
+    await expect(page.locator(selector)).toHaveText(value);
+  }
+}
+
+async function textNotEmpty(page, selector) {
+  const text = await page.textContent(selector);
+  expect(text.trim().length).toBeGreaterThan(0);
+}
+
+async function listEquals(page, baseXpath, values) {
+  for (let i = 0; i < values.length; i++) {
+    if (values[i] && values[i].trim() !== "") {
+      const locator = page.locator(`${baseXpath}//span[${i + 1}]`);
+      await expect(locator).toHaveText(values[i]);
+    }
+  }
+}
+
 module.exports = {
   getUserCredential,
   clickSaveButton,
-  clickCancelButton: cancelAction,
+  cancelAction,
   getViewFieldListContent,
   transformDateFormat,
   transformCurrencyFormat,
   splitStringToArray,
   clickAndWaitFor,
   fillTypeahead,
+  textEqualsIfNotEmpty,
+  textNotEmpty,
+  listEquals,
 };

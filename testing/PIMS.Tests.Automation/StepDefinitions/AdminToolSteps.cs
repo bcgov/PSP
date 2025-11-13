@@ -167,7 +167,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             cdogsTemplates.AddNewTemplate();
 
             //Upload a new template
-            Random random = new Random();
+            Random random = new();
             var index = random.Next(0, documentFiles.Count());
             var template = documentFiles.ElementAt(index);
             digitalDocuments.UploadDocument(template.Url);
@@ -176,7 +176,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocuments.SaveDigitalDocumentUpload();
 
             //Verify Document List
-            digitalDocuments.VerifyDocumentsListView();
+            digitalDocuments.VerifyFileDocumentsListView();
 
             //Add new template
             cdogsTemplates.AddNewTemplate();
