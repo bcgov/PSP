@@ -1,7 +1,7 @@
 import React, { useCallback, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 
-import { AreaUnitTypes } from '@/constants/index';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { convertArea, round } from '@/utils';
 
 import { StyledGreenCol, StyledGreenGrey, StyledInput } from './styles';
@@ -14,7 +14,7 @@ export interface IAreaFormProps {
 
 export const AreaForm: React.FC<IAreaFormProps> = ({
   area = 0,
-  areaUnitTypeCode = AreaUnitTypes.Hectares,
+  areaUnitTypeCode = ApiGen_CodeTypes_AreaUnitTypes.HA,
   onChange,
 }) => {
   // keep track of which input is receiving user input
@@ -24,91 +24,151 @@ export const AreaForm: React.FC<IAreaFormProps> = ({
   // derive our internal state from props
   useEffect(() => {
     const initialState: Record<string, number> = {
-      [AreaUnitTypes.SquareMeters]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.SquareMeters),
-      [AreaUnitTypes.SquareFeet]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.SquareFeet),
-      [AreaUnitTypes.Hectares]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.Hectares),
-      [AreaUnitTypes.Acres]: convertArea(area, areaUnitTypeCode, AreaUnitTypes.Acres),
+      [ApiGen_CodeTypes_AreaUnitTypes.M2]: convertArea(
+        area,
+        areaUnitTypeCode,
+        ApiGen_CodeTypes_AreaUnitTypes.M2,
+      ),
+      [ApiGen_CodeTypes_AreaUnitTypes.FEET2]: convertArea(
+        area,
+        areaUnitTypeCode,
+        ApiGen_CodeTypes_AreaUnitTypes.FEET2,
+      ),
+      [ApiGen_CodeTypes_AreaUnitTypes.HA]: convertArea(
+        area,
+        areaUnitTypeCode,
+        ApiGen_CodeTypes_AreaUnitTypes.HA,
+      ),
+      [ApiGen_CodeTypes_AreaUnitTypes.ACRE]: convertArea(
+        area,
+        areaUnitTypeCode,
+        ApiGen_CodeTypes_AreaUnitTypes.ACRE,
+      ),
     };
     setState(initialState);
   }, [area, areaUnitTypeCode]);
 
-  const sqMeters = round(state[AreaUnitTypes.SquareMeters], 4);
-  const sqFeet = round(state[AreaUnitTypes.SquareFeet], 4);
-  const ha = round(state[AreaUnitTypes.Hectares], 4);
-  const acres = round(state[AreaUnitTypes.Acres], 4);
+  const sqMeters = round(state[ApiGen_CodeTypes_AreaUnitTypes.M2], 4);
+  const sqFeet = round(state[ApiGen_CodeTypes_AreaUnitTypes.FEET2], 4);
+  const ha = round(state[ApiGen_CodeTypes_AreaUnitTypes.HA], 4);
+  const acres = round(state[ApiGen_CodeTypes_AreaUnitTypes.ACRE], 4);
 
   // update dependent fields based on user input
   useEffect(() => {
-    if (focus === AreaUnitTypes.SquareMeters) {
+    if (focus === ApiGen_CodeTypes_AreaUnitTypes.M2) {
       setState(prevState => {
-        const value = prevState[AreaUnitTypes.SquareMeters];
-        const newSqFeet = convertArea(value, AreaUnitTypes.SquareMeters, AreaUnitTypes.SquareFeet);
-        const newHa = convertArea(value, AreaUnitTypes.SquareMeters, AreaUnitTypes.Hectares);
-        const newAcres = convertArea(value, AreaUnitTypes.SquareMeters, AreaUnitTypes.Acres);
+        const value = prevState[ApiGen_CodeTypes_AreaUnitTypes.M2];
+        const newSqFeet = convertArea(
+          value,
+          ApiGen_CodeTypes_AreaUnitTypes.M2,
+          ApiGen_CodeTypes_AreaUnitTypes.FEET2,
+        );
+        const newHa = convertArea(
+          value,
+          ApiGen_CodeTypes_AreaUnitTypes.M2,
+          ApiGen_CodeTypes_AreaUnitTypes.HA,
+        );
+        const newAcres = convertArea(
+          value,
+          ApiGen_CodeTypes_AreaUnitTypes.M2,
+          ApiGen_CodeTypes_AreaUnitTypes.ACRE,
+        );
 
         return {
-          [AreaUnitTypes.SquareMeters]: value,
-          [AreaUnitTypes.SquareFeet]: newSqFeet,
-          [AreaUnitTypes.Hectares]: newHa,
-          [AreaUnitTypes.Acres]: newAcres,
+          [ApiGen_CodeTypes_AreaUnitTypes.M2]: value,
+          [ApiGen_CodeTypes_AreaUnitTypes.FEET2]: newSqFeet,
+          [ApiGen_CodeTypes_AreaUnitTypes.HA]: newHa,
+          [ApiGen_CodeTypes_AreaUnitTypes.ACRE]: newAcres,
         };
       });
     }
   }, [focus, sqMeters]);
 
   useEffect(() => {
-    if (focus === AreaUnitTypes.SquareFeet) {
+    if (focus === ApiGen_CodeTypes_AreaUnitTypes.FEET2) {
       setState(prevState => {
-        const value = prevState[AreaUnitTypes.SquareFeet];
+        const value = prevState[ApiGen_CodeTypes_AreaUnitTypes.FEET2];
         const newSqMeters = convertArea(
           value,
-          AreaUnitTypes.SquareFeet,
-          AreaUnitTypes.SquareMeters,
+          ApiGen_CodeTypes_AreaUnitTypes.FEET2,
+          ApiGen_CodeTypes_AreaUnitTypes.M2,
         );
-        const newHa = convertArea(value, AreaUnitTypes.SquareFeet, AreaUnitTypes.Hectares);
-        const newAcres = convertArea(value, AreaUnitTypes.SquareFeet, AreaUnitTypes.Acres);
+        const newHa = convertArea(
+          value,
+          ApiGen_CodeTypes_AreaUnitTypes.FEET2,
+          ApiGen_CodeTypes_AreaUnitTypes.HA,
+        );
+        const newAcres = convertArea(
+          value,
+          ApiGen_CodeTypes_AreaUnitTypes.FEET2,
+          ApiGen_CodeTypes_AreaUnitTypes.ACRE,
+        );
 
         return {
-          [AreaUnitTypes.SquareMeters]: newSqMeters,
-          [AreaUnitTypes.SquareFeet]: value,
-          [AreaUnitTypes.Hectares]: newHa,
-          [AreaUnitTypes.Acres]: newAcres,
+          [ApiGen_CodeTypes_AreaUnitTypes.M2]: newSqMeters,
+          [ApiGen_CodeTypes_AreaUnitTypes.FEET2]: value,
+          [ApiGen_CodeTypes_AreaUnitTypes.HA]: newHa,
+          [ApiGen_CodeTypes_AreaUnitTypes.ACRE]: newAcres,
         };
       });
     }
   }, [focus, sqFeet]);
 
   useEffect(() => {
-    if (focus === AreaUnitTypes.Hectares) {
+    if (focus === ApiGen_CodeTypes_AreaUnitTypes.HA) {
       setState(prevState => {
-        const value = prevState[AreaUnitTypes.Hectares];
-        const newSqMeters = convertArea(value, AreaUnitTypes.Hectares, AreaUnitTypes.SquareMeters);
-        const newSqFeet = convertArea(value, AreaUnitTypes.Hectares, AreaUnitTypes.SquareFeet);
-        const newAcres = convertArea(value, AreaUnitTypes.Hectares, AreaUnitTypes.Acres);
+        const value = prevState[ApiGen_CodeTypes_AreaUnitTypes.HA];
+        const newSqMeters = convertArea(
+          value,
+          ApiGen_CodeTypes_AreaUnitTypes.HA,
+          ApiGen_CodeTypes_AreaUnitTypes.M2,
+        );
+        const newSqFeet = convertArea(
+          value,
+          ApiGen_CodeTypes_AreaUnitTypes.HA,
+          ApiGen_CodeTypes_AreaUnitTypes.FEET2,
+        );
+        const newAcres = convertArea(
+          value,
+          ApiGen_CodeTypes_AreaUnitTypes.HA,
+          ApiGen_CodeTypes_AreaUnitTypes.ACRE,
+        );
 
         return {
-          [AreaUnitTypes.SquareMeters]: newSqMeters,
-          [AreaUnitTypes.SquareFeet]: newSqFeet,
-          [AreaUnitTypes.Hectares]: value,
-          [AreaUnitTypes.Acres]: newAcres,
+          [ApiGen_CodeTypes_AreaUnitTypes.M2]: newSqMeters,
+          [ApiGen_CodeTypes_AreaUnitTypes.FEET2]: newSqFeet,
+          [ApiGen_CodeTypes_AreaUnitTypes.HA]: value,
+          [ApiGen_CodeTypes_AreaUnitTypes.ACRE]: newAcres,
         };
       });
     }
   }, [focus, ha]);
 
   useEffect(() => {
-    if (focus === AreaUnitTypes.Acres) {
+    if (focus === ApiGen_CodeTypes_AreaUnitTypes.ACRE) {
       setState(prevState => {
-        const value = prevState[AreaUnitTypes.Acres];
-        const newSqMeters = convertArea(value, AreaUnitTypes.Acres, AreaUnitTypes.SquareMeters);
-        const newSqFeet = convertArea(value, AreaUnitTypes.Acres, AreaUnitTypes.SquareFeet);
-        const newHa = convertArea(value, AreaUnitTypes.Acres, AreaUnitTypes.Hectares);
+        const value = prevState[ApiGen_CodeTypes_AreaUnitTypes.ACRE];
+        const newSqMeters = convertArea(
+          value,
+          ApiGen_CodeTypes_AreaUnitTypes.ACRE,
+          ApiGen_CodeTypes_AreaUnitTypes.M2,
+        );
+        const newSqFeet = convertArea(
+          value,
+          ApiGen_CodeTypes_AreaUnitTypes.ACRE,
+          ApiGen_CodeTypes_AreaUnitTypes.FEET2,
+        );
+        const newHa = convertArea(
+          value,
+          ApiGen_CodeTypes_AreaUnitTypes.ACRE,
+          ApiGen_CodeTypes_AreaUnitTypes.HA,
+        );
 
         return {
-          [AreaUnitTypes.SquareMeters]: newSqMeters,
-          [AreaUnitTypes.SquareFeet]: newSqFeet,
-          [AreaUnitTypes.Hectares]: newHa,
-          [AreaUnitTypes.Acres]: value,
+          [ApiGen_CodeTypes_AreaUnitTypes.M2]: newSqMeters,
+          [ApiGen_CodeTypes_AreaUnitTypes.FEET2]: newSqFeet,
+          [ApiGen_CodeTypes_AreaUnitTypes.HA]: newHa,
+          [ApiGen_CodeTypes_AreaUnitTypes.ACRE]: value,
         };
       });
     }
@@ -124,73 +184,75 @@ export const AreaForm: React.FC<IAreaFormProps> = ({
   );
 
   return (
-    <>
-      <Row>
-        <Col>
-          <StyledGreenCol>
-            <Row className="pb-2">
-              <Col className="text-right">
-                <StyledInput
-                  name="area-sq-meters"
-                  aria-label="square metres"
-                  type="number"
-                  step=".01"
-                  value={isNaN(sqMeters) ? 0 : sqMeters}
-                  onChange={e =>
-                    handleInputChange(e.target.valueAsNumber, AreaUnitTypes.SquareMeters)
-                  }
-                />
-              </Col>
-              <Col>sq. metres</Col>
-            </Row>
-            <Row>
-              <Col className="text-right">
-                <StyledInput
-                  name="area-hectares"
-                  aria-label="hectares"
-                  type="number"
-                  step=".01"
-                  value={isNaN(ha) ? 0 : ha}
-                  onChange={e => handleInputChange(e.target.valueAsNumber, AreaUnitTypes.Hectares)}
-                />
-              </Col>
-              <Col>hectares</Col>
-            </Row>
-          </StyledGreenCol>
-        </Col>
-        <Col>
-          <StyledGreenGrey>
-            <Row className="pb-2">
-              <Col className="text-right">
-                <StyledInput
-                  name="area-sq-feet"
-                  aria-label="square feet"
-                  type="number"
-                  step=".01"
-                  value={isNaN(sqFeet) ? 0 : sqFeet}
-                  onChange={e =>
-                    handleInputChange(e.target.valueAsNumber, AreaUnitTypes.SquareFeet)
-                  }
-                />
-              </Col>
-              <Col>sq. feet</Col>
-            </Row>
-            <Row>
-              <Col className="text-right">
-                <StyledInput
-                  name="area-acres"
-                  aria-label="acres"
-                  type="number"
-                  step=".01"
-                  value={isNaN(acres) ? 0 : acres}
-                  onChange={e => handleInputChange(e.target.valueAsNumber, AreaUnitTypes.Acres)}
-                />
-              </Col>
-              <Col>acres</Col>
-            </Row>
-          </StyledGreenGrey>
-        </Col>
-      </Row>
-    </>
+    <Row>
+      <Col>
+        <StyledGreenCol>
+          <Row className="pb-2">
+            <Col className="text-right">
+              <StyledInput
+                name="area-sq-meters"
+                aria-label="square metres"
+                type="number"
+                step=".01"
+                value={isNaN(sqMeters) ? 0 : sqMeters}
+                onChange={e =>
+                  handleInputChange(e.target.valueAsNumber, ApiGen_CodeTypes_AreaUnitTypes.M2)
+                }
+              />
+            </Col>
+            <Col>sq. metres</Col>
+          </Row>
+          <Row>
+            <Col className="text-right">
+              <StyledInput
+                name="area-hectares"
+                aria-label="hectares"
+                type="number"
+                step=".01"
+                value={isNaN(ha) ? 0 : ha}
+                onChange={e =>
+                  handleInputChange(e.target.valueAsNumber, ApiGen_CodeTypes_AreaUnitTypes.HA)
+                }
+              />
+            </Col>
+            <Col>hectares</Col>
+          </Row>
+        </StyledGreenCol>
+      </Col>
+      <Col>
+        <StyledGreenGrey>
+          <Row className="pb-2">
+            <Col className="text-right">
+              <StyledInput
+                name="area-sq-feet"
+                aria-label="square feet"
+                type="number"
+                step=".01"
+                value={isNaN(sqFeet) ? 0 : sqFeet}
+                onChange={e =>
+                  handleInputChange(e.target.valueAsNumber, ApiGen_CodeTypes_AreaUnitTypes.FEET2)
+                }
+              />
+            </Col>
+            <Col>sq. feet</Col>
+          </Row>
+          <Row>
+            <Col className="text-right">
+              <StyledInput
+                name="area-acres"
+                aria-label="acres"
+                type="number"
+                step=".01"
+                value={isNaN(acres) ? 0 : acres}
+                onChange={e =>
+                  handleInputChange(e.target.valueAsNumber, ApiGen_CodeTypes_AreaUnitTypes.ACRE)
+                }
+              />
+            </Col>
+            <Col>acres</Col>
+          </Row>
+        </StyledGreenGrey>
+      </Col>
+    </Row>
   );
 };

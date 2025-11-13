@@ -84,6 +84,7 @@ const documentMetadata: ApiGen_Mayan_DocumentMetadata[] = [
         timestamp: '',
         checksum: '',
         file: '',
+        document_id: 99,
       },
       id: 1,
       document_type: documentTypes[0],
@@ -217,8 +218,8 @@ describe('DocumentDetailForm component', () => {
   });
 
   it('renders the file name', async () => {
-    const { getAllByText } = await setup({});
-    const textarea = getAllByText('NewFile.doc')[0];
+    const { getAllByDisplayValue } = await setup({});
+    const textarea = getAllByDisplayValue('NewFile.doc')[0];
 
     expect(textarea).toBeVisible();
   });

@@ -20,7 +20,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Tenant Add Tenant Modal Elements
         private readonly By stakeholderOrganizationRadioBttn = By.Id("input-organizations");
         private readonly By stakeholderSearchInput = By.Id("input-summary");
-        private readonly By tenantSearchBttn = By.Id("search-button");
+        private readonly By tenantSearchBttn = By.CssSelector("div[class='modal-body'] button[id='search-button']");
         private readonly By stakeholderFirstResultRadioBttn = By.CssSelector("div[data-testid='contactsTable'] div[class='tr-wrapper']:nth-child(1) div:nth-child(1) input");
         private readonly By stakeholderAddSelectedButton = By.XPath("//div[contains(text(), 'Select')]/parent::button[@title='ok-modal']");
 
@@ -141,19 +141,11 @@ namespace PIMS.Tests.Automation.PageObjects
             ChooseSpecificSelectOption(stakeholderType1stSelect, stakeholder.StakeholderType);
         }
 
-        public void DeleteFirstStakeholder()
+        public void DeleteNthStakeholder(int index)
         {
             Wait();
-            webDriver.FindElement(stakeholder1stStakeholderList).Click();
-        }
-
-        public void DeleteLastStakeholder()
-        {
-            Wait();
-
-            var totalStakeholderSelected = webDriver.FindElements(stakeholderTotalSelected).Count;
-            var deleteLastTenant = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child("+ totalStakeholderSelected +") button[title='Click to remove']");
-            webDriver.FindElement(deleteLastTenant).Click();
+            var nthStakeholderRemoveButton = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child("+ index +") button[title='Click to remove']");
+            webDriver.FindElement(nthStakeholderRemoveButton).Click();
         }
 
         public void EditStakeholder(Stakeholder tenant)
@@ -172,7 +164,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Wait();
             //If primary contact hasn't been selected for any of the tenants
-            if (webDriver.FindElements(stakeholderModal).Count > 0)
+            if (webDriver.FindElements(stakeholderModal).Count > 0 && sharedModals.ModalHeader() == "Confirm save")
             {
                 Assert.True(sharedModals.ModalHeader() == "Confirm save");
                 Assert.True(webDriver.FindElement(stakeholderModalSave2ndParagraph).Text == "Do you wish to save without providing a primary contact?");

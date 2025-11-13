@@ -1,14 +1,17 @@
-import userEvent from '@testing-library/user-event';
+import { Feature, Geometry } from 'geojson';
 import { createMemoryHistory } from 'history';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
+import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
+import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { getMockFullyAttributedParcel } from '@/mocks/faParcelLayerResponse.mock';
 import { getMockPolygon } from '@/mocks/geometries.mock';
 import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
@@ -17,6 +20,7 @@ import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_Use
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { getEmptyBaseAudit, getEmptyLease } from '@/models/defaultInitializers';
 import { emptyRegion } from '@/models/layers/motRegionalBoundary';
+import { PIMS_Property_Boundary_View } from '@/models/layers/pimsPropertyLocationView';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import {
@@ -27,16 +31,12 @@ import {
   RenderOptions,
   screen,
   selectOptions,
+  userEvent,
 } from '@/utils/test-utils';
 
 import { useAddLease } from '../hooks/useAddLease';
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
 import AddLeaseForm from './AddLeaseForm';
-import { PIMS_Property_Boundary_View } from '@/models/layers/pimsPropertyLocationView';
-import { Feature, Geometry } from 'geojson';
-import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
-import { getMockFullyAttributedParcel } from '@/mocks/faParcelLayerResponse.mock';
-import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
 
 const retrieveUserInfo = vi.fn();
 vi.mock('@/hooks/repositories/useUserInfoRepository');
@@ -175,7 +175,10 @@ describe('AddLeaseContainer component', () => {
 
     await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
-      selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
+      selectOptions(
+        'paymentReceivableTypeCode',
+        ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL,
+      ),
     );
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => selectOptions('programTypeCode', 'COMMBLDG'));
@@ -223,7 +226,10 @@ describe('AddLeaseContainer component', () => {
 
     await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
-      selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
+      selectOptions(
+        'paymentReceivableTypeCode',
+        ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL,
+      ),
     );
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => selectOptions('programTypeCode', 'COMMBLDG'));
@@ -267,7 +273,10 @@ describe('AddLeaseContainer component', () => {
 
     await act(async () => selectOptions('statusTypeCode', ApiGen_CodeTypes_LeaseStatusTypes.DRAFT));
     await act(async () =>
-      selectOptions('paymentReceivableTypeCode', ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
+      selectOptions(
+        'paymentReceivableTypeCode',
+        ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL,
+      ),
     );
     await act(async () => selectOptions('regionId', '1'));
     await act(async () => selectOptions('programTypeCode', 'COMMBLDG'));
@@ -360,7 +369,7 @@ const leaseData: ApiGen_Concepts_Lease = {
   rowVersion: null,
   startDate: '2020-01-01',
   amount: 0,
-  paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
+  paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL),
   fileStatusTypeCode: toTypeCodeNullable('DRAFT'),
   type: toTypeCodeNullable('LOOBCTFA'),
   region: toTypeCodeNullable(1),

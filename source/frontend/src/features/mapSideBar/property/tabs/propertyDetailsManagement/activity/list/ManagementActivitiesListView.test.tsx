@@ -3,9 +3,10 @@ import { createMemoryHistory } from 'history';
 import Claims from '@/constants/claims';
 import { mockLookups } from '@/mocks/index.mock';
 import {
-  mockGetManagementActivityList,
-  mockGetPropertyManagementActivityNotStarted,
-} from '@/mocks/PropertyManagementActivity.mock';
+  getMockManagementActivityList,
+  getMockManagementActivityNotStarted,
+} from '@/mocks/managementActivity.mock';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { fireEvent, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
@@ -13,7 +14,6 @@ import ManagementActivitiesListView, {
   IManagementActivitiesListViewProps,
 } from './ManagementActivitiesListView';
 import { PropertyActivityRow } from './models/PropertyActivityRow';
-import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -60,7 +60,7 @@ describe('Activities list view', () => {
   });
 
   it('renders as expected', async () => {
-    const apiModelList = mockGetManagementActivityList();
+    const apiModelList = getMockManagementActivityList();
     const { asFragment } = await setup({
       claims: [Claims.MANAGEMENT_VIEW],
       propertyActivities: [
@@ -74,7 +74,7 @@ describe('Activities list view', () => {
   });
 
   it('Hides the delete activity button when user has only read claims', async () => {
-    const apiModelList = mockGetManagementActivityList();
+    const apiModelList = getMockManagementActivityList();
     const { queryByTestId } = await setup({
       claims: [Claims.MANAGEMENT_VIEW],
       propertyActivities: [
@@ -89,7 +89,7 @@ describe('Activities list view', () => {
   });
 
   it('Shows the delete activity button when user has delete claims', async () => {
-    const managementActivity = mockGetPropertyManagementActivityNotStarted();
+    const managementActivity = getMockManagementActivityNotStarted();
     const { queryByTestId } = await setup({
       claims: [Claims.MANAGEMENT_VIEW, Claims.MANAGEMENT_DELETE],
       propertyActivities: [PropertyActivityRow.fromApi(managementActivity)],
@@ -100,7 +100,7 @@ describe('Activities list view', () => {
   });
 
   it('Hides the delete activity button when activity has already started', async () => {
-    const apiModelList = mockGetManagementActivityList();
+    const apiModelList = getMockManagementActivityList();
     const { queryByTestId } = await setup({
       claims: [Claims.MANAGEMENT_VIEW, Claims.MANAGEMENT_DELETE],
       propertyActivities: [
@@ -114,7 +114,7 @@ describe('Activities list view', () => {
   });
 
   it('Calls the delete function when clicked Delete Button', async () => {
-    const managementActivity = mockGetPropertyManagementActivityNotStarted();
+    const managementActivity = getMockManagementActivityNotStarted();
     const { queryByTestId } = await setup({
       claims: [Claims.MANAGEMENT_VIEW, Claims.MANAGEMENT_DELETE],
       propertyActivities: [PropertyActivityRow.fromApi(managementActivity)],

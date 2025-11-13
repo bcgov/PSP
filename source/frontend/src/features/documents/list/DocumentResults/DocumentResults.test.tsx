@@ -101,7 +101,7 @@ describe('Document Results Table', () => {
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT],
     });
 
-    const viewButtons = await getAllByTestId('document-view-button');
+    const viewButtons = await getAllByTestId('document-view-button-0');
     expect(viewButtons[0]).toBeVisible();
   });
 
@@ -174,7 +174,7 @@ describe('Document Results Table', () => {
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
     });
 
-    const deleteButtons = await getAllByTestId('document-delete-button');
+    const deleteButtons = await getAllByTestId('document-delete-button-0');
     expect(deleteButtons[0]).toBeVisible();
   });
 
@@ -208,7 +208,7 @@ describe('Document Results Table', () => {
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT],
     });
 
-    const viewButton = getAllByTestId('document-view-button')[0];
+    const viewButton = getAllByTestId('document-view-button-0')[0];
     userEvent.click(viewButton);
     expect(onViewDetails).toHaveBeenCalled();
   });
@@ -221,7 +221,7 @@ describe('Document Results Table', () => {
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
     });
 
-    const deleteButton = getAllByTestId('document-delete-button')[0];
+    const deleteButton = getAllByTestId('document-delete-button-0')[0];
     userEvent.click(deleteButton);
     expect(onDelete).toHaveBeenCalled();
   });

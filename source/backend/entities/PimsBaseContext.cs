@@ -34,11 +34,7 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsAcqFileAcqProgressHist> PimsAcqFileAcqProgressHists { get; set; }
 
-    public virtual DbSet<PimsAcqFileAppraisalType> PimsAcqFileAppraisalTypes { get; set; }
-
     public virtual DbSet<PimsAcqFileExpropRiskType> PimsAcqFileExpropRiskTypes { get; set; }
-
-    public virtual DbSet<PimsAcqFileLglSrvyType> PimsAcqFileLglSrvyTypes { get; set; }
 
     public virtual DbSet<PimsAcqFileProgessType> PimsAcqFileProgessTypes { get; set; }
 
@@ -265,6 +261,10 @@ public partial class PimsBaseContext : DbContext
     public virtual DbSet<PimsExpropriationVestingHist> PimsExpropriationVestingHists { get; set; }
 
     public virtual DbSet<PimsFenceType> PimsFenceTypes { get; set; }
+
+    public virtual DbSet<PimsFileAppraisalType> PimsFileAppraisalTypes { get; set; }
+
+    public virtual DbSet<PimsFileLglSrvyType> PimsFileLglSrvyTypes { get; set; }
 
     public virtual DbSet<PimsFinancialActivityCode> PimsFinancialActivityCodes { get; set; }
 
@@ -768,21 +768,50 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ACCESS_REQUEST", tb =>
                 {
+                    tb.HasComment("Many-to-many entity to track user access requests for specific roles.");
                     tb.HasTrigger("PIMS_ACRQST_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_ACRQST_I_S_I_TR");
                     tb.HasTrigger("PIMS_ACRQST_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AccessRequestId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACCESS_REQUEST_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AccessRequestId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACCESS_REQUEST_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AccessRequestStatusTypeCode).HasComment("Foreign key to the PIMS_ACCESS_REQUEST_STATUS_TYPE table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Note).HasComment("Note associated with this access request.");
-            entity.Property(e => e.RegionCode).HasDefaultValue((short)4);
+            entity.Property(e => e.RegionCode)
+                .HasDefaultValue((short)4)
+                .HasComment("Foreign key to the PIMS_REGION table.");
+            entity.Property(e => e.RoleId).HasComment("Foreign key to the PIMS_ROLE table.");
+            entity.Property(e => e.UserId).HasComment("Foreign key to the PIMS_USER table.");
+            entity.Property(e => e.UserTypeCode).HasComment("Foreign key to the PIMS_USER_TYPE table.");
 
             entity.HasOne(d => d.AccessRequestStatusTypeCodeNavigation).WithMany(p => p.PimsAccessRequests)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -815,20 +844,47 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ACCESS_REQUEST_ORGANIZATION", tb =>
                 {
+                    tb.HasComment("Table to track user access requests for an organization's data.");
                     tb.HasTrigger("PIMS_ACRQOR_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_ACRQOR_I_S_I_TR");
                     tb.HasTrigger("PIMS_ACRQOR_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AccessRequestOrganizationId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACCESS_REQUEST_ORGANIZATION_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.IsDisabled).HasDefaultValue(false);
+            entity.Property(e => e.AccessRequestOrganizationId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACCESS_REQUEST_ORGANIZATION_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AccessRequestId).HasComment("Foreign key to the PIMS_ACCESS_REQUEST table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.IsDisabled)
+                .HasDefaultValue(false)
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+            entity.Property(e => e.OrganizationId).HasComment("Foreign key to the PIMS_ORGANIZATION table.");
 
             entity.HasOne(d => d.AccessRequest).WithMany(p => p.PimsAccessRequestOrganizations)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -851,15 +907,30 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ACCESS_REQUEST_STATUS_TYPE", tb =>
                 {
+                    tb.HasComment("Code table used to select and describe the progess of the user access request.  Current values are:  - Access Request approved - Access Request denied - Access Request initiated but receipt not acknowedged - Access Request requires additional information");
                     tb.HasTrigger("PIMS_ARQSTT_I_S_I_TR");
                     tb.HasTrigger("PIMS_ARQSTT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AccessRequestStatusTypeCode).HasComment("Code value of the access request status type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the access request status type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsAcqChklstItemType>(entity =>
@@ -873,15 +944,25 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_ACQCIT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AcqChklstItemTypeCode).HasComment("Checklist item code value.");
-            entity.Property(e => e.AcqChklstSectionTypeCode).HasComment("Section to which the item belongs.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AcqChklstItemTypeCode).HasComment("Code value of the checklist item code type.");
+            entity.Property(e => e.AcqChklstSectionTypeCode).HasComment("Description of the checklist item code type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Checklist item descriptive text presented to the user.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies the order that the checklist items are presented to the user.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.EffectiveDate)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("Date the checklist item is able to be presented to the user via the input form.");
@@ -907,7 +988,7 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_AQCSCT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AcqChklstSectionTypeCode).HasComment("Checklist section code value.");
+            entity.Property(e => e.AcqChklstSectionTypeCode).HasComment("Code value of the checklist section code type.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -923,8 +1004,8 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.Description).HasComment("Checklist section descriptive text presented to the user.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies the order that the checklist sections are presented to the user.");
+            entity.Property(e => e.Description).HasComment("Description of the checklist section code type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.EffectiveDate)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("Date the checklist section is able to be presented to the user via the input form.");
@@ -937,6 +1018,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP", tb =>
                 {
+                    tb.HasComment("Table to provide multiple acquisition take types for an acquisition file.");
                     tb.HasTrigger("PIMS_AQFATT_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_AQFATT_I_S_I_TR");
                     tb.HasTrigger("PIMS_AQFATT_I_S_U_TR");
@@ -944,7 +1026,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.AcqFileAcqFlTakeTypeId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQ_FILE_ACQ_FL_TAKE_TYPE_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AcqFileTakeTypeCode).HasComment("Foreign key to the PIMS_ACQ_FILE_TAKE_TYPE table.");
             entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
             entity.Property(e => e.AppCreateTimestamp)
@@ -952,21 +1034,21 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -1002,6 +1084,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ACQ_FILE_ACQ_PROGRESS", tb =>
                 {
+                    tb.HasComment("Table to provide multiple acquisition progress types for an acquisition file.");
                     tb.HasTrigger("PIMS_AQFFLP_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_AQFFLP_I_S_I_TR");
                     tb.HasTrigger("PIMS_AQFFLP_I_S_U_TR");
@@ -1009,7 +1092,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.AcqFileAcqProgressId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQ_FILE_ACQ_PROGRESS_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AcqFileProgessTypeCode).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
             entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
             entity.Property(e => e.AppCreateTimestamp)
@@ -1017,21 +1100,21 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -1059,38 +1142,6 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.AcqFileAcqProgressHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQ_FILE_ACQ_PROGRESS_H_ID_SEQ])");
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
-        });
-
-        modelBuilder.Entity<PimsAcqFileAppraisalType>(entity =>
-        {
-            entity.HasKey(e => e.AcqFileAppraisalTypeCode).HasName("AFAPPRT_PK");
-
-            entity.ToTable("PIMS_ACQ_FILE_APPRAISAL_TYPE", tb =>
-                {
-                    tb.HasComment("Codified values for the acquisition file appraisal type.");
-                    tb.HasTrigger("PIMS_AFAPPRT_I_S_I_TR");
-                    tb.HasTrigger("PIMS_AFAPPRT_I_S_U_TR");
-                });
-
-            entity.Property(e => e.AcqFileAppraisalTypeCode).HasComment("Code value of the acquisition file appraisal type.");
-            entity.Property(e => e.ConcurrencyControlNumber)
-                .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
-            entity.Property(e => e.DbCreateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created.");
-            entity.Property(e => e.DbCreateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user or proxy account that created the record.");
-            entity.Property(e => e.DbLastUpdateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created or last updated.");
-            entity.Property(e => e.DbLastUpdateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.Description).HasComment("Description of the acquisition file appraisal type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
         });
 
         modelBuilder.Entity<PimsAcqFileExpropRiskType>(entity =>
@@ -1122,39 +1173,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the acquisition file expropriation risk type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
-        });
-
-        modelBuilder.Entity<PimsAcqFileLglSrvyType>(entity =>
-        {
-            entity.HasKey(e => e.AcqFileLglSrvyTypeCode).HasName("AFLSVT_PK");
-
-            entity.ToTable("PIMS_ACQ_FILE_LGL_SRVY_TYPE", tb =>
-                {
-                    tb.HasComment("Codified values for the acquisition file legal survey type.");
-                    tb.HasTrigger("PIMS_AFLSVT_I_S_I_TR");
-                    tb.HasTrigger("PIMS_AFLSVT_I_S_U_TR");
-                });
-
-            entity.Property(e => e.AcqFileLglSrvyTypeCode).HasComment("Code value of the acquisition file legal survey type.");
-            entity.Property(e => e.ConcurrencyControlNumber)
-                .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
-            entity.Property(e => e.DbCreateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created.");
-            entity.Property(e => e.DbCreateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user or proxy account that created the record.");
-            entity.Property(e => e.DbLastUpdateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created or last updated.");
-            entity.Property(e => e.DbLastUpdateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.Description).HasComment("Description of the acquisition file legal survey type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsAcqFileProgessType>(entity =>
@@ -1186,7 +1205,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the acquisition file progress type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsAcqFileTakeType>(entity =>
@@ -1218,7 +1237,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the acquisition file take type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsAcqFlTeamProfileType>(entity =>
@@ -1233,14 +1252,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.AcqFlTeamProfileTypeCode).HasComment("Code value for the acquistion file staff/org profile (role).");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the acquistion file staff/org profile (role).");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsAcqPhysFileStatusType>(entity =>
@@ -1255,14 +1284,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.AcqPhysFileStatusTypeCode).HasComment("Code value for the acquistion physical file status type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the acquistion physical file status type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsAcquisitionChecklistItem>(entity =>
@@ -1271,24 +1310,53 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ACQUISITION_CHECKLIST_ITEM", tb =>
                 {
+                    tb.HasComment("Table to provide multiple acquisition checklist items for an acquisition file.");
                     tb.HasTrigger("PIMS_ACQCKI_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_ACQCKI_I_S_I_TR");
                     tb.HasTrigger("PIMS_ACQCKI_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AcquisitionChecklistItemId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_CHECKLIST_ITEM_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AcquisitionChecklistItemId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_CHECKLIST_ITEM_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AcqChklstItemTypeCode).HasComment("Foreign key to the PIMS_ACQ_CHKLIST_ITEM_TYPE table.");
+            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ChklstItemStatusTypeCode).HasComment("Foreign key to the PIMS_CHKLST_ITEM_STATUS_TYPE table.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
 
             entity.HasOne(d => d.AcqChklstItemTypeCodeNavigation).WithMany(p => p.PimsAcquisitionChecklistItems).HasConstraintName("PIM_ACQCIT_PIM_ACQCKI_FK");
 
@@ -1323,10 +1391,8 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.AcquisitionFileId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
-            entity.Property(e => e.AcqFileAppraisalTypeCode).HasComment("Foreign key to the PIMS_ACQ_FILE_APPRAISAL_TYPE table.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AcqFileExpropRiskTypeCode).HasComment("Foreign key to the PIMS_ACQ_FILE_EXPROP_RISK_TYPE table.");
-            entity.Property(e => e.AcqFileLglSrvyTypeCode).HasComment("Foreign key to the PIMS_ACQ_FILE_LGL_SRVY_TYPE table.");
             entity.Property(e => e.AcqPhysFileStatusTypeCode).HasComment("Foreign key to the PIMS_ACQ_PHYS_FILE_STATUS_TYPE table.");
             entity.Property(e => e.AcquisitionFileStatusTypeCode).HasComment("Foreign key to the PIMS_ACQUISITION_FILE_STATUS_TYPE table.");
             entity.Property(e => e.AcquisitionFundingTypeCode).HasComment("Foreign key to the PIMS_ACQUISITION_FUNDING_TYPE table.");
@@ -1336,21 +1402,21 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.AssignedDate)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("Date of file assignment.");
@@ -1371,6 +1437,8 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.DeliveryDate).HasComment("Date of file delivery.");
             entity.Property(e => e.EstCompletionDt).HasComment("Estimated date by which the acquisition would be completed.");
+            entity.Property(e => e.FileAppraisalTypeCode).HasComment("Foreign key to the PIMS_ACQ_FILE_APPRAISAL_TYPE table.");
+            entity.Property(e => e.FileLglSrvyTypeCode).HasComment("Foreign key to the PIMS_ACQ_FILE_LGL_SRVY_TYPE table.");
             entity.Property(e => e.FileName).HasComment("Descriptive name given to the acquisition file.");
             entity.Property(e => e.FileNo)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_NO_SEQ])")
@@ -1394,11 +1462,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.SubfileInterestTypeCode).HasComment("Foreign key to the PIMS_SUBFILE_INTEREST_TYPE table.");
             entity.Property(e => e.TotalAllowableCompensation).HasComment("The maximum allowable compensation for the acquisition file.  This amount should not be exceeded by the total of all assiciated H120's.");
 
-            entity.HasOne(d => d.AcqFileAppraisalTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles).HasConstraintName("PIM_AFAPPRT_PIM_ACQNFL_FK");
-
             entity.HasOne(d => d.AcqFileExpropRiskTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles).HasConstraintName("PIM_AFEXRT_PIM_ACQNFL_FK");
-
-            entity.HasOne(d => d.AcqFileLglSrvyTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles).HasConstraintName("PIM_AFLSVT_PIM_ACQNFL_FK");
 
             entity.HasOne(d => d.AcqPhysFileStatusTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles).HasConstraintName("PIM_ACQPFS_PIM_ACQNFL_FK");
 
@@ -1411,6 +1475,10 @@ public partial class PimsBaseContext : DbContext
             entity.HasOne(d => d.AcquisitionTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_ACQTYP_PIM_ACQNFL_FK");
+
+            entity.HasOne(d => d.FileAppraisalTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles).HasConstraintName("PIM_FLAPPT_PIM_ACQNFL_FK");
+
+            entity.HasOne(d => d.FileLglSrvyTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFiles).HasConstraintName("PIM_FLLSVT_PIM_ACQNFL_FK");
 
             entity.HasOne(d => d.PrntAcquisitionFile).WithMany(p => p.InversePrntAcquisitionFile).HasConstraintName("PIM_ACQNFL_PIM_ACQNFL_FK");
 
@@ -1437,18 +1505,46 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_ACQDOC_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AcquisitionFileDocumentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_DOCUMENT_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AcquisitionFileDocumentId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_DOCUMENT_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.DocumentId).HasComment("Foreign key to the PIMS_DOCUMENT table.");
 
             entity.HasOne(d => d.AcquisitionFile).WithMany(p => p.PimsAcquisitionFileDocuments)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -1479,18 +1575,47 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_ACQFRM_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AcquisitionFileFormId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_FORM_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AcquisitionFileFormId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_FORM_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.FormJson).HasComment("JSON associated with the form.");
+            entity.Property(e => e.FormTypeCode).HasComment("Foreign key to the PIMS_FORM_TYPE table.");
 
             entity.HasOne(d => d.AcquisitionFile).WithMany(p => p.PimsAcquisitionFileForms)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -1529,18 +1654,46 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_ACQNOT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AcquisitionFileNoteId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_NOTE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AcquisitionFileNoteId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_NOTE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.NoteId).HasComment("Foreign key to the PIMS_NOTE table.");
 
             entity.HasOne(d => d.AcquisitionFile).WithMany(p => p.PimsAcquisitionFileNotes)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -1571,14 +1724,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.AcquisitionFileStatusTypeCode).HasComment("Code value for the acquistion file status.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the acquistion file status.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsAcquisitionFileTeam>(entity =>
@@ -1593,21 +1756,49 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_ACQNTM_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AcquisitionFileTeamId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_TEAM_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.OrganizationId).HasComment("Foreign key to the team member's organization");
-            entity.Property(e => e.PersonId).HasComment("Foreign key to the team member");
-            entity.Property(e => e.PrimaryContactId).HasComment("Primary contact for the organization");
+            entity.Property(e => e.AcquisitionFileTeamId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_TEAM_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AcqFlTeamProfileTypeCode).HasComment("Foreign key to the PIMS_ACQ_FL_TEAM_PROFILE_TYPE table.");
+            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.OrganizationId).HasComment("Foreign key to the PIMS_ORGANIZATION table for the organization");
+            entity.Property(e => e.PersonId).HasComment("Foreign key to the PIMS_PERSON table for an associated person.");
+            entity.Property(e => e.PrimaryContactId).HasComment("Foreign key to the PIMS_ORGANIZATION table for the organization's primary contact.");
 
             entity.HasOne(d => d.AcqFlTeamProfileTypeCodeNavigation).WithMany(p => p.PimsAcquisitionFileTeams)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -1644,14 +1835,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.AcquisitionFundingTypeCode).HasComment("Code value for the acquistion funding type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the acquistion funding type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsAcquisitionOwner>(entity =>
@@ -1666,20 +1867,48 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_ACQOWN_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AcquisitionOwnerId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_OWNER_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
+            entity.Property(e => e.AcquisitionOwnerId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_OWNER_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
+            entity.Property(e => e.AddressId).HasComment("Foreign key to the PIMS_ADDRESS table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.ContactEmailAddr).HasComment("Email address to be used for contacting the owner.");
             entity.Property(e => e.ContactPhoneNum).HasComment("Phone number to be used for contacting the owner.");
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.EffectiveDate)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("Date the owner record became effective. Defaults to current date/time.");
@@ -1717,14 +1946,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.AcquisitionTypeCode).HasComment("Code value for the acquistion type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the acquistion type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsAddress>(entity =>
@@ -1733,20 +1972,55 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ADDRESS", tb =>
                 {
+                    tb.HasComment("Table that contains the physical address location of a property, organization, or person.");
                     tb.HasTrigger("PIMS_ADDRSS_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_ADDRSS_I_S_I_TR");
                     tb.HasTrigger("PIMS_ADDRSS_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AddressId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ADDRESS_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.OtherCountry).HasComment("Other country not listed in drop-down list");
+            entity.Property(e => e.AddressId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ADDRESS_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.Comment).HasComment("Comments on the address.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.CountryId).HasComment("Foreign key to the PIMS_COUNTRY table.");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.DistrictCode).HasComment("Foreign key to the PIMS_DISTRICT table.");
+            entity.Property(e => e.Latitude).HasComment("Latitude of the address.");
+            entity.Property(e => e.Longitude).HasComment("longitude of the address.");
+            entity.Property(e => e.MunicipalityName).HasComment("Name of the address' municipality.");
+            entity.Property(e => e.OtherCountry).HasComment("Other country not listed in drop-down list.");
+            entity.Property(e => e.PostalCode).HasComment("Postal code for the address.");
+            entity.Property(e => e.ProvinceStateId).HasComment("Foreign key to the PIMS_PROVINCE_STATE table.");
+            entity.Property(e => e.RegionCode).HasComment("Foreign key to the PIMS_REGION table.");
+            entity.Property(e => e.StreetAddress1).HasComment("Line 1 of the street address.");
+            entity.Property(e => e.StreetAddress2).HasComment("Line 2 of the street address.");
+            entity.Property(e => e.StreetAddress3).HasComment("Line 3 of the street address.");
 
             entity.HasOne(d => d.Country).WithMany(p => p.PimsAddresses).HasConstraintName("PIM_CNTRY_PIM_ADDRSS_FK");
 
@@ -1771,15 +2045,30 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ADDRESS_USAGE_TYPE", tb =>
                 {
+                    tb.HasComment("Specifies the type of physical address.  Currrent values are: - Billing address - ETL unknown address - Proof of insurance address - Mailing address - Mailing address - Physical address - Property notification address - Rental payment address - Property a");
                     tb.HasTrigger("PIMS_ADUSGT_I_S_I_TR");
                     tb.HasTrigger("PIMS_ADUSGT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AddressUsageTypeCode).HasComment("Code value of the address usage type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the address usage type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsAgreement>(entity =>
@@ -1794,23 +2083,53 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_AGRMNT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AgreementId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_AGREEMENT_ID_SEQ])");
+            entity.Property(e => e.AgreementId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_AGREEMENT_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
             entity.Property(e => e.AgreementDate).HasComment("Date of the agreement.");
-            entity.Property(e => e.AgreementStatusTypeCode).HasDefaultValue("DRAFT");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AgreementStatusTypeCode)
+                .HasDefaultValue("DRAFT")
+                .HasComment("Foreign key to the PIMS_AGREEMENT_STATUS_TYPE table.");
+            entity.Property(e => e.AgreementTypeCode).HasComment("Foreign key to the PIMS_AGREEMENT_TYPE table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.CancellationNote).HasComment("Note pertaining to the cancellation of the agreement.");
             entity.Property(e => e.CommencementDate).HasComment("Date of commencement of the agreement.");
             entity.Property(e => e.CompletionDate).HasComment("Date of completion of the agreement.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.DepositAmount).HasComment("Amount of the deposit on the agreement.");
             entity.Property(e => e.ExpiryTs).HasComment("Expiry date and time of acquisition offer.");
             entity.Property(e => e.ExpropriationDate).HasComment("Date of expropriation of the property.");
@@ -1855,17 +2174,27 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_AGRSTY_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AgreementStatusTypeCode).HasComment("Codified version of the agreement status.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AgreementStatusTypeCode).HasComment("Code value of the agreement status.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the agreement status type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the code value is inactive.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsAgreementType>(entity =>
@@ -1879,17 +2208,27 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_AGRTYP_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AgreementTypeCode).HasComment("Codified version of the agreement type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AgreementTypeCode).HasComment("Code value of the agreement type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the agreement type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the code value is inactive.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsAreaUnitType>(entity =>
@@ -1903,15 +2242,25 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_ARUNIT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AreaUnitTypeCode).HasComment("The area unit used for measuring Properties.  The units must be in metric: square metres or hectares.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.Description).HasComment("Translation of the code value into a description that can be displayed to the user.");
-            entity.Property(e => e.DisplayOrder).HasComment("Order in which to display the code values, if required.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is still active or is now disabled.");
+            entity.Property(e => e.AreaUnitTypeCode).HasComment("Code value of the  area unit type.  The area unit used for measuring Properties.  The units must be in metric: square metres or hectares.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the  area unit type.  Translation of the code value into a description that can be displayed to the user.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsBusinessFunctionCode>(entity =>
@@ -1928,22 +2277,46 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_BUSINESS_FUNCTION_ID_SEQ])")
-                .HasComment("System-generated primary key.");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.Code)
                 .HasDefaultValue("<Empty>")
-                .HasComment("Name of the code.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.Description).HasComment("Descriptive value  of a code within the set.");
+                .HasComment("Code value of the business function  type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the business function  type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.EffectiveDate)
                 .HasDefaultValueSql("(getutcdate())")
@@ -1973,22 +2346,46 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CHART_OF_ACCOUNTS_ID_SEQ])")
-                .HasComment("System-generated primary key.");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.Code)
                 .HasDefaultValue("<Empty>")
-                .HasComment("Name of the code.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.Description).HasComment("Descriptive value  of a code within the set.");
+                .HasComment("Code value of the chart of accounts code.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the chart of accounts code.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.EffectiveDate)
                 .HasDefaultValueSql("(getutcdate())")
@@ -2015,7 +2412,7 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_CHKLIS_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ChklstItemStatusTypeCode).HasComment("Codified version of the various checklist item status types.");
+            entity.Property(e => e.ChklstItemStatusTypeCode).HasComment("Code value of the checklist item status types.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -2031,9 +2428,9 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.Description).HasComment("Description of the various checklist item status type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.Description).HasComment("Description of the checklist item status types.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsClaim>(entity =>
@@ -2042,19 +2439,47 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_CLAIM", tb =>
                 {
+                    tb.HasComment("Contains the name and description of the keycloak claim available for assignment to roles.  Current values include: - acquisitionfile-add: Ability to add new acquisition files. - acquisitionfile-delete: Ability to delete acquisition files. - acquisitionfi");
                     tb.HasTrigger("PIMS_CLMTYP_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_CLMTYP_I_S_I_TR");
                     tb.HasTrigger("PIMS_CLMTYP_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ClaimId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CLAIM_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ClaimId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CLAIM_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.ClaimUid).HasComment("Unique identifier for the claim.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the claim.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+            entity.Property(e => e.KeycloakRoleId).HasComment("Unique identifier for the keycloak role.");
+            entity.Property(e => e.Name).HasComment("Name assigned to the claim.");
         });
 
         modelBuilder.Entity<PimsClaimHist>(entity =>
@@ -2079,7 +2504,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.CompReqAcqPayeeId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMP_REQ_ACQ_PAYEE_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AcquisitionFileTeamId).HasComment("Foreign key reference to the PIMS_ACQUISITION_FILE_TEAM table.");
             entity.Property(e => e.AcquisitionOwnerId).HasComment("Foreign key reference to the PIMS_ACQUISITION_OWNER table.");
             entity.Property(e => e.AppCreateTimestamp)
@@ -2087,21 +2512,21 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.CompensationRequisitionId).HasComment("Foreign key reference to the PIMS_COMPENSATION_REQUISITION table.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
@@ -2150,21 +2575,49 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_CRQFIN_I_S_U_TR");
                 });
 
-            entity.Property(e => e.CompReqFinancialId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMP_REQ_FINANCIAL_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.CompReqFinancialId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMP_REQ_FINANCIAL_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.CompensationRequisitionId).HasComment("Foreign key to the PIMS_COMPENSATION_REQUISITION table.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.FinancialActivityCodeId).HasComment("Foreign key to the PIMS_FINANCIAL_ACTIVITY table.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the requisition is inactive.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.IsGstRequired)
                 .HasDefaultValue(false)
                 .HasComment("Indicates if GST is required for this transaction.");
@@ -2203,10 +2656,10 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.CompReqLeasePayeeId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMP_REQ_LEASE_PAYEE_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created by the user.");
+                .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("User directory of the user that created the record.");
@@ -2227,7 +2680,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.CompensationRequisitionId).HasComment("Foreign key to the PIMS_COMPENSATION_REQUISITION table.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -2282,7 +2735,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.CompensationRequisitionId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COMPENSATION_REQUISITION_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
             entity.Property(e => e.AgreementDt).HasComment("Agreement date.");
             entity.Property(e => e.AlternateProjectId).HasComment("Link a file to an \"Alternate Project\", so the user can make alternate payments that may be due after the original file's project closes.");
@@ -2291,21 +2744,21 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ChartOfAccountsId).HasComment("Foreign key to the PIMS_CHART_OF_ACCOUNTS table.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
@@ -2329,7 +2782,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.GstNumber).HasComment("GST number of the organization receiving the payment.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the requisition is inactive.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.IsDraft)
                 .HasDefaultValue(false)
                 .HasComment("Indicates if the agreement is in draft format.");
@@ -2390,8 +2843,8 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the consultation outcome type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Onscreen display order of the code types.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code type is active.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsConsultationStatusType>(entity =>
@@ -2408,16 +2861,26 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.ConsultationStatusTypeCode)
                 .HasDefaultValue("OTHER")
                 .HasComment("Code value of the consultation status type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description)
                 .HasDefaultValue("<Empty>")
                 .HasComment("Description of the consultation status type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Onscreen display order of the consultation types.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the consultation status  type is active.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsConsultationType>(entity =>
@@ -2434,16 +2897,26 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.ConsultationTypeCode)
                 .HasDefaultValue("OTHER")
                 .HasComment("Code value of the consultation type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description)
                 .HasDefaultValue("<Empty>")
                 .HasComment("Description of the consultation type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Onscreen display order of the consultation types.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the consultation type is active.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.OtherDescription).HasComment("Additional descriptive text of the consultation type.");
         });
 
@@ -2453,20 +2926,49 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_CONTACT_METHOD", tb =>
                 {
+                    tb.HasComment("Contains the multiple contact methods that are assigned to a person or organization.");
                     tb.HasTrigger("PIMS_CNTMTH_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_CNTMTH_I_S_I_TR");
                     tb.HasTrigger("PIMS_CNTMTH_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ContactMethodId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CONTACT_METHOD_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.IsPreferredMethod).HasDefaultValue(false);
+            entity.Property(e => e.ContactMethodId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_CONTACT_METHOD_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.ContactMethodTypeCode).HasComment("Foreign key to the PIMS_CONTACT_METHOD_TYPE table.");
+            entity.Property(e => e.ContactMethodValue).HasComment("Foreign key to the PIMS_CONTACT_METHOD table.");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.IsPreferredMethod)
+                .HasDefaultValue(false)
+                .HasComment("Indicates is this is the preferred method of contact.");
+            entity.Property(e => e.OrganizationId).HasComment("Foreign key to the PIMS_ORGANIZATION table.");
+            entity.Property(e => e.PersonId).HasComment("Foreign key to the PIMS_PERSON table.");
 
             entity.HasOne(d => d.ContactMethodTypeCodeNavigation).WithMany(p => p.PimsContactMethods)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -2491,15 +2993,30 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_CONTACT_METHOD_TYPE", tb =>
                 {
+                    tb.HasComment("Describes the type fo contact methods availabvle for a person or organization.  Current values are: - Facsimile machine - Personal email - Personal mobile phone - Personal phone - Work email - Work mobile phone - Work phone");
                     tb.HasTrigger("PIMS_CNTMTT_I_S_I_TR");
                     tb.HasTrigger("PIMS_CNTMTT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ContactMethodTypeCode).HasComment("Code value of the contact method type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the contact method type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsContactMgrVw>(entity =>
@@ -2521,21 +3038,45 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_COST_TYPE_ID_SEQ])")
-                .HasComment("System-generated primary key.");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.Code)
                 .HasDefaultValue("<Empty>")
                 .HasComment("Name of the code.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Descriptive value  of a code within the set.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.EffectiveDate)
@@ -2563,15 +3104,27 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_CNTRY_I_S_U_TR");
                 });
 
-            entity.Property(e => e.CountryId).ValueGeneratedNever();
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
+            entity.Property(e => e.CountryId)
+                .ValueGeneratedNever()
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.CountryCode).HasComment("Abbreviated country code.");
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Country name/description.");
-            entity.Property(e => e.DisplayOrder).HasComment("Defines the display order of the codes.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
         });
 
         modelBuilder.Entity<PimsDataSourceType>(entity =>
@@ -2586,14 +3139,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.DataSourceTypeCode).HasComment("Code value of the source system of the data (PAIMS, LIS, etc.)");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the source system of the data (PAIMS, LIS, etc.)");
-            entity.Property(e => e.DisplayOrder).HasComment("Defines the default display order of the descriptions");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is still in use");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsDispositionAppraisal>(entity =>
@@ -2610,10 +3173,10 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.DispositionAppraisalId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DISPOSITION_APPRAISAL_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created by the user.");
+                .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("User directory of the user that created the record.");
@@ -2637,7 +3200,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.BcaValueAmt).HasComment("BC Assessment value of the disposition file.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -2672,6 +3235,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_DISPOSITION_CHECKLIST_ITEM", tb =>
                 {
+                    tb.HasComment("Table to provide multiple disposition checklist items for a disposition file.");
                     tb.HasTrigger("PIMS_DSPCKI_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_DSPCKI_I_S_I_TR");
                     tb.HasTrigger("PIMS_DSPCKI_I_S_U_TR");
@@ -2679,10 +3243,10 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.DispositionChecklistItemId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DISPOSITION_CHECKLIST_ITEM_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created by the user.");
+                .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("User directory of the user that created the record.");
@@ -2703,7 +3267,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.ChklstItemStatusTypeCode).HasComment("Foreign key to the PIMS_CHKLST_ITEM_STATUS_TYPE table.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -2752,10 +3316,10 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.DispositionFileId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DISPOSITION_FILE_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created by the user.");
+                .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("User directory of the user that created the record.");
@@ -2777,7 +3341,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.CompletedDt).HasComment("Date the disposition file was completed.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -2846,6 +3410,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_DISPOSITION_FILE_DOCUMENT", tb =>
                 {
+                    tb.HasComment("Contains the relationship between a disposition file and an associated document.");
                     tb.HasTrigger("PIMS_DSPDOC_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_DSPDOC_I_S_I_TR");
                     tb.HasTrigger("PIMS_DSPDOC_I_S_U_TR");
@@ -2853,10 +3418,10 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.DispositionFileDocumentId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DISPOSITION_FILE_DOCUMENT_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created by the user.");
+                .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("User directory of the user that created the record.");
@@ -2876,7 +3441,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -2889,6 +3454,8 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.DispositionFileId).HasComment("Foreign key to the PIMS_DISPOSITION_FILE table.");
+            entity.Property(e => e.DocumentId).HasComment("Foreign key to the PIMS_DOCUMENT table.");
 
             entity.HasOne(d => d.DispositionFile).WithMany(p => p.PimsDispositionFileDocuments)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -2921,6 +3488,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_DISPOSITION_FILE_NOTE", tb =>
                 {
+                    tb.HasComment("Contains the relationship between a disposition file and an associated note.");
                     tb.HasTrigger("PIMS_DSPNOT_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_DSPNOT_I_S_I_TR");
                     tb.HasTrigger("PIMS_DSPNOT_I_S_U_TR");
@@ -2928,10 +3496,10 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.DispositionFileNoteId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DISPOSITION_FILE_NOTE_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created by the user.");
+                .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("User directory of the user that created the record.");
@@ -2951,7 +3519,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -2998,10 +3566,10 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.DispositionFilePropertyId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DISPOSITION_FILE_PROPERTY_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created by the user.");
+                .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("User directory of the user that created the record.");
@@ -3021,7 +3589,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -3034,7 +3602,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies the display order of the property (PSP-10521).");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.DispositionFileId).HasComment("Primary key of the associated disposition file.");
             entity.Property(e => e.Location).HasComment("Geospatial location (pin) of property");
             entity.Property(e => e.PropertyId).HasComment("Primary key of the associated property.");
@@ -3071,7 +3639,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DispositionFileStatusTypeCode).HasComment("Code value for the dispostion file status.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -3086,7 +3654,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the dispostion file status.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsDispositionFileTeam>(entity =>
@@ -3103,10 +3671,10 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.DispositionFileTeamId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DISPOSITION_FILE_TEAM_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created by the user.");
+                .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("User directory of the user that created the record.");
@@ -3126,7 +3694,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -3182,7 +3750,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DispositionFundingTypeCode).HasComment("Code value for the disposition funding type.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -3197,7 +3765,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the dispostion funding type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsDispositionInitiatingDocType>(entity =>
@@ -3214,7 +3782,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DispositionInitiatingDocTypeCode).HasComment("Code value for the dispostion initiating document type.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -3229,7 +3797,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the dispostion initiating document type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsDispositionOffer>(entity =>
@@ -3246,10 +3814,10 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.DispositionOfferId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DISPOSITION_OFFER_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created by the user.");
+                .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("User directory of the user that created the record.");
@@ -3269,7 +3837,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -3319,7 +3887,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DispositionOfferStatusTypeCode).HasComment("Code value for the dispostion offer status.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -3334,7 +3902,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the dispostion offer status.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsDispositionPurchaser>(entity =>
@@ -3351,10 +3919,10 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.DispositionPurchaserId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DISPOSITION_PURCHASER_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created by the user.");
+                .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("User directory of the user that created the record.");
@@ -3374,7 +3942,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -3390,7 +3958,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DispositionSaleId).HasComment("Foreign key value for the dispostion sale.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the code value is inactive.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.OrganizationId).HasComment("Foreign key of the organization purchasing the disposition file.");
             entity.Property(e => e.PersonId).HasComment("Foreign key of the individual purchasing the disposition file.");
             entity.Property(e => e.PrimaryContactId).HasComment("Primary contact person for the organization");
@@ -3428,10 +3996,10 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.DispositionSaleId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DISPOSITION_SALE_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created by the user.");
+                .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("User directory of the user that created the record.");
@@ -3451,7 +4019,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -3510,7 +4078,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DispositionStatusTypeCode).HasComment("Code value for the dispostion status.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -3525,7 +4093,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the dispostion status.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsDispositionType>(entity =>
@@ -3542,7 +4110,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DispositionTypeCode).HasComment("Code value for the disposition type.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -3557,7 +4125,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the dispostion type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsDistrict>(entity =>
@@ -3566,16 +4134,33 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_DISTRICT", tb =>
                 {
+                    tb.HasComment("Contains the district codes for the Ministry.  Current values are: - Lower Mainland District - Vancouver Island District - Rocky Mountain District - West Kootenay District - Okanagan-Shuswap District - Thompson-Nicola District - Cariboo District - Peace D");
                     tb.HasTrigger("PIMS_DSTRCT_I_S_I_TR");
                     tb.HasTrigger("PIMS_DSTRCT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.DistrictCode).ValueGeneratedNever();
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.DistrictCode)
+                .ValueGeneratedNever()
+                .HasComment("Code value assigned to the district.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.DistrictName).HasComment("Name of the assigned district.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+            entity.Property(e => e.RegionCode).HasComment("Code value assigned to the region.");
 
             entity.HasOne(d => d.RegionCodeNavigation).WithMany(p => p.PimsDistricts)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -3594,20 +4179,49 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_DOCMNT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.DocumentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DOCUMENT_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.DocumentId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DOCUMENT_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.DocumentExternalId).HasComment("Fluid key used to uniquely identify document in external system.");
-            entity.Property(e => e.DocumentStatusTypeCode).HasDefaultValue("NONE");
+            entity.Property(e => e.DocumentStatusTypeCode)
+                .HasDefaultValue("NONE")
+                .HasComment("Foreign key to the PIMS_DOCUMENT_STATUS_TYPE table.");
+            entity.Property(e => e.DocumentTypeId).HasComment("Foreign key to the PIMS_DOCUMENT_TYPE table.");
             entity.Property(e => e.FileName)
                 .HasDefaultValue("<Empty>")
                 .HasComment("Name of the file stored on Mayan EDMS.");
@@ -3628,18 +4242,33 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_DOCUMENT_CATEGORY_SUBTYPE", tb =>
                 {
+                    tb.HasComment("Contains the relationship between the document type and the document");
                     tb.HasTrigger("PIMS_DCCTSB_I_S_I_TR");
                     tb.HasTrigger("PIMS_DCCTSB_I_S_U_TR");
                 });
 
-            entity.Property(e => e.DocumentCategorySubtypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DOCUMENT_CATEGORY_SUBTYPE_ID_SEQ])");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DisplayOrder).HasComment("Order in which to display the code values, if required.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is still active or is now disabled.");
+            entity.Property(e => e.DocumentCategorySubtypeId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DOCUMENT_CATEGORY_SUBTYPE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.DocumentCategoryTypeCode).HasComment("Foreign key to the PIMS_DOCUMENT_CATEGORY_TYPE table.");
+            entity.Property(e => e.DocumentTypeId).HasComment("Foreign key to the PIMS_DOCUMENT_TYPE table.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
 
             entity.HasOne(d => d.DocumentCategoryTypeCodeNavigation).WithMany(p => p.PimsDocumentCategorySubtypes)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -3662,14 +4291,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.DocumentCategoryTypeCode).HasComment("The code value category of the document.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Translation of the code value into a description that can be displayed to the user.");
-            entity.Property(e => e.DisplayOrder).HasComment("Order in which to display the code values, if required.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is still active or is now disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsDocumentFormatType>(entity =>
@@ -3684,13 +4323,23 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.DocumentFormatTypeCode).HasComment("Code value of the acceptable document type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Decription of the acceptable document type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code values or descriptions.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.EffectiveDate)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("Date that the document format became acceptable to the system.");
@@ -3719,27 +4368,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.DocumentQueueId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DOCUMENT_QUEUE_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -3797,14 +4446,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.DocumentQueueStatusTypeCode).HasComment("Code value of the document queue status.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the document queue status.");
-            entity.Property(e => e.DisplayOrder).HasComment("Order in which to display the code values, if required.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is still active or is now disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsDocumentStatusType>(entity =>
@@ -3821,14 +4480,24 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DocumentStatusTypeCode)
                 .HasDefaultValue("NEXT VALUE FOR [PIMS_DOCUMENT_ID_SEQ]")
                 .HasComment("Code value of the document status type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Descriptive translation of the document status type code.");
-            entity.Property(e => e.DisplayOrder).HasComment("Determines the default display order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is still in use.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsDocumentTyp>(entity =>
@@ -3843,19 +4512,45 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_DOCTYP_I_S_U_TR");
                 });
 
-            entity.Property(e => e.DocumentTypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DOCUMENT_TYPE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DisplayOrder).HasComment("Determines the default display order of the code descriptions.");
+            entity.Property(e => e.DocumentTypeId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DOCUMENT_TYPE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.DocumentType)
                 .HasDefaultValue("<Empty>")
                 .HasComment("Code value of the available document types.");
@@ -3863,7 +4558,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DocumentTypeDescription)
                 .HasDefaultValue("<Empty>")
                 .HasComment("Description of the available document types.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is still in use.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.MayanId)
                 .HasDefaultValue(-1L)
                 .HasComment("Mayan-generated document type number used for retrieval from Mayan EDMS.");
@@ -3891,7 +4586,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DspChklstItemTypeCode).HasComment("Disposition checklist item code value.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -3905,7 +4600,7 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Disposition Checklist item descriptive text presented to the user.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies the order that the disposition checklist items are presented to the user.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.DspChklstSectionTypeCode).HasComment("Disposition Section to which the item belongs.");
             entity.Property(e => e.EffectiveDate)
                 .HasDefaultValueSql("(getutcdate())")
@@ -3935,7 +4630,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DspChklstSectionTypeCode).HasComment("Disposition checklist section code value.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -3949,7 +4644,7 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Disposition checklist section descriptive text presented to the user.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies the order that the disposition checklist sections are presented to the user.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.EffectiveDate)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("Date the disposition checklist section is able to be presented to the user via the input form.");
@@ -3970,7 +4665,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DspFlTeamProfileTypeCode).HasComment("Code value for the disposition file profile type.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -3985,7 +4680,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the dispostion file profile type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsDspInitiatingBranchType>(entity =>
@@ -4002,7 +4697,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DspInitiatingBranchTypeCode).HasComment("Code value for the dispostion initiating branch.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -4017,7 +4712,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the dispostion initiating branch.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsDspPhysFileStatusType>(entity =>
@@ -4034,7 +4729,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DspPhysFileStatusTypeCode).HasComment("Code value for the dispostion physical file status.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -4049,7 +4744,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the dispostion physical file status.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsDspPurchAgent>(entity =>
@@ -4066,10 +4761,10 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.DspPurchAgentId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DSP_PURCH_AGENT_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created by the user.");
+                .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("User directory of the user that created the record.");
@@ -4089,7 +4784,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -4104,7 +4799,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the code value is inactive.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.OrganizationId).HasComment("Foreign key of the organization agent for the disposition file.");
             entity.Property(e => e.PersonId).HasComment("Foreign key of the individual agent for the disposition file.");
             entity.Property(e => e.PrimaryContactId).HasComment("Primary contact person for the organization.");
@@ -4138,10 +4833,10 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.DspPurchSolicitorId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_DSP_PURCH_SOLICITOR_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created by the user.");
+                .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("User directory of the user that created the record.");
@@ -4161,7 +4856,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -4176,7 +4871,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the code value is inactive.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.OrganizationId).HasComment("Foreign key of the organization solicitor for the disposition file.");
             entity.Property(e => e.PersonId).HasComment("Foreign key of the individual solicitor for the disposition file.");
             entity.Property(e => e.PrimaryContactId).HasComment("Primary contact person for the organization.");
@@ -4210,7 +4905,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.ExpropOwnerHistoryId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROP_OWNER_HISTORY_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
             entity.Property(e => e.AcquisitionOwnerId).HasComment("Foreign key to the PIMS_ACQUISITION_HOLDER table.");
             entity.Property(e => e.AppCreateTimestamp)
@@ -4218,21 +4913,21 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -4253,7 +4948,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.InterestHolderId).HasComment("Foreign key to the PIMS_INTEREST_HOLDER table.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the row is inactive.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
 
             entity.HasOne(d => d.AcquisitionFile).WithMany(p => p.PimsExpropOwnerHistories)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -4304,10 +4999,10 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the owner history type status.");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the code value is inactive.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsExpropPmtPmtItem>(entity =>
@@ -4322,24 +5017,52 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_XPMTITY_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ExpropPmtPmtItemId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROP_PMT_PMT_ITEM_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ExpropPmtPmtItemId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROP_PMT_PMT_ITEM_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.ExpropriationPaymentId).HasComment("Foreign key to the PIMS_EXPROPRIATION_PAYMENT table.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the relationship is active.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.IsGstRequired)
                 .HasDefaultValue(false)
                 .HasComment("Indicates if GST is required for this transaction.");
+            entity.Property(e => e.PaymentItemTypeCode).HasComment("Foreign key to the PIMS_PAYMENT_ITEM_TYPE table.");
             entity.Property(e => e.PretaxAmt).HasComment("Subtotal of the Form 8 payment.");
             entity.Property(e => e.TaxAmt).HasComment("GST on the Form 8 oayment.");
             entity.Property(e => e.TotalAmt).HasComment("Total amount of the Form 8 payment.");
@@ -4383,7 +5106,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.ExpropriationPaymentId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_EXPROPRIATION_PAYMENT_ID_SEQ])")
-                .HasComment("Unique auto-generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key of the acquisition file.");
             entity.Property(e => e.AcquisitionOwnerId).HasComment("Foreign key of the acquisition owner.");
             entity.Property(e => e.AppCreateTimestamp)
@@ -4391,21 +5114,21 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -4426,7 +5149,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.InterestHolderId).HasComment("Foreign key of the acquisition interest holder.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the Form 8 payment is inactive.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
 
             entity.HasOne(d => d.AcquisitionFile).WithMany(p => p.PimsExpropriationPayments)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -4467,14 +5190,88 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.FenceTypeCode).HasComment("Code value for the fence type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the fence type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+        });
+
+        modelBuilder.Entity<PimsFileAppraisalType>(entity =>
+        {
+            entity.HasKey(e => e.FileAppraisalTypeCode).HasName("FLAPPT_PK");
+
+            entity.ToTable("PIMS_FILE_APPRAISAL_TYPE", tb =>
+                {
+                    tb.HasComment("Codified values for the acquisition file appraisal type.");
+                    tb.HasTrigger("PIMS_FLAPPT_I_S_I_TR");
+                    tb.HasTrigger("PIMS_FLAPPT_I_S_U_TR");
+                });
+
+            entity.Property(e => e.FileAppraisalTypeCode).HasComment("Code value of the acquisition file appraisal type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the acquisition file appraisal type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+        });
+
+        modelBuilder.Entity<PimsFileLglSrvyType>(entity =>
+        {
+            entity.HasKey(e => e.FileLglSrvyTypeCode).HasName("FLLSVT_PK");
+
+            entity.ToTable("PIMS_FILE_LGL_SRVY_TYPE", tb =>
+                {
+                    tb.HasComment("Codified values for the acquisition file legal survey type.");
+                    tb.HasTrigger("PIMS_FLLSVT_I_S_I_TR");
+                    tb.HasTrigger("PIMS_FLLSVT_I_S_U_TR");
+                });
+
+            entity.Property(e => e.FileLglSrvyTypeCode).HasComment("Code value of the acquisition file legal survey type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the acquisition file legal survey type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsFinancialActivityCode>(entity =>
@@ -4491,21 +5288,45 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_FINANCIAL_ACTIVITY_ID_SEQ])")
-                .HasComment("System-generated primary key.");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.Code)
                 .HasDefaultValue("<Empty>")
                 .HasComment("Value of the code.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Descriptive value  of a code within the set.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.EffectiveDate)
@@ -4552,7 +5373,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.Description).HasComment("Description of the form type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.DocumentId).HasComment("Foreign key to the PIMS_DOCUMENT table.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
 
             entity.HasOne(d => d.Document).WithMany(p => p.PimsFormTypes).HasConstraintName("PIM_DOCMNT_PIM_FRMTYP_FK");
         });
@@ -4569,23 +5390,53 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_H120CT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.H120CategoryId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_H120_CATEGORY_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.H120CategoryId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_H120_CATEGORY_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.CostTypeId).HasComment("Foreign key to the PIMS_COST_TYPE table.");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the H120 category.");
             entity.Property(e => e.ExpiryDate).HasComment("Expiry date of the H120 category.");
+            entity.Property(e => e.FinancialActivityId).HasComment("Foreign key to the PIMS_FINANCIAL_ACTIVITY table.");
+            entity.Property(e => e.H120CategoryNo).HasComment("Number assigned to the H120 category.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the requisition is inactive.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+            entity.Property(e => e.WorkActivityId).HasComment("Foreign key to the PIMS_WORK_ACTIVITY table.");
 
             entity.HasOne(d => d.CostType).WithMany(p => p.PimsH120Categories).HasConstraintName("PIM_COSTYP_PIM_H120CT_FK");
 
@@ -4618,27 +5469,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.HistoricalFileNumberId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_HISTORICAL_FILE_NUMBER_ID_SEQ])")
-                .HasComment("Generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -4659,7 +5510,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.HistoricalFileNumberTypeCode).HasComment("Foreign key describing the historical file number type.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the record is disabled.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.OtherHistFileNumberTypeCode).HasComment("Description of the historical file number type that's not currently listed.");
             entity.Property(e => e.PropertyId).HasComment("Foreign key to the PIMS_PROPERTY table.");
 
@@ -4710,8 +5561,8 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the type of historical file number.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsHistoricalFileNumberVw>(entity =>
@@ -4725,6 +5576,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_INSURANCE", tb =>
                 {
+                    tb.HasComment("Contains the type(s) of insurance that are associated with a lease.");
                     tb.HasTrigger("PIMS_INSRNC_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_INSRNC_I_S_I_TR");
                     tb.HasTrigger("PIMS_INSRNC_I_S_U_TR");
@@ -4732,27 +5584,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.InsuranceId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INSURANCE_ID_SEQ])")
-                .HasComment("Generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -4768,10 +5620,10 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created the record.");
             entity.Property(e => e.DbLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was updated.");
+                .HasComment("The date and time the record was created or last updated.");
             entity.Property(e => e.DbLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user or proxy account that updated the record.");
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.ExpiryDate).HasComment("Date the insurance expires");
             entity.Property(e => e.InsuranceTypeCode).HasComment("Foreign key indicating the type of insurance on the lease.");
             entity.Property(e => e.IsInsuranceInPlace).HasComment("Indicator that insurance is in place.  TRUE if insurance is in place, FALSE if insurance is not in place, and NULL if it is unknown if insurance is in place.");
@@ -4801,15 +5653,30 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_INSURANCE_TYPE", tb =>
                 {
+                    tb.HasComment("Contains the various types of insurance available for a lease.  The current values are: - Sudden and Accidental Coverage - Aircraft Liability Coverage - Commercial General Liability (CGL) - Marine Liability Coverage - Other Insurance Coverage - Unmanned A");
                     tb.HasTrigger("PIMS_INSPYT_I_S_I_TR");
                     tb.HasTrigger("PIMS_INSPYT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.InsuranceTypeCode).HasComment("Code value of the insurance type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the insurance type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsInterestHolder>(entity =>
@@ -4824,24 +5691,55 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_INTHLD_I_S_U_TR");
                 });
 
-            entity.Property(e => e.InterestHolderId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INTEREST_HOLDER_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.InterestHolderId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INTEREST_HOLDER_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.Comment).HasComment("Additional comment concerning the owener representative.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.InterestHolderTypeCode).HasDefaultValue("INTHLDR");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.InterestHolderTypeCode)
+                .HasDefaultValue("INTHLDR")
+                .HasComment("Foreign key to the PIMS_INTEREST_HOLDER_TYPE table.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the code value is inactive.");
-            entity.Property(e => e.PrimaryContactId).HasComment("Primary contact for the organization");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+            entity.Property(e => e.OrganizationId).HasComment("Foreign key to the PIMS_ORGANIZATION table.");
+            entity.Property(e => e.PersonId).HasComment("Foreign key to the PIMS_PERSON table.");
+            entity.Property(e => e.PrimaryContactId).HasComment("Foreign key to the PIMS_PERSON table.  Primary contact for the organization");
 
             entity.HasOne(d => d.AcquisitionFile).WithMany(p => p.PimsInterestHolders)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -4878,16 +5776,26 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.InterestHolderInterestTypeCode).HasComment("Codified version of the interest holder interest type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the interest holder interest type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the code value is inactive.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsInterestHolderType>(entity =>
@@ -4902,14 +5810,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.InterestHolderTypeCode).HasComment("Codified version of the interest holder types, such as solicitors, representatives, and interest holders.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the interest holder types, such as solicitors, representatives, and interest holders.");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsInthldrPropInterest>(entity =>
@@ -4918,23 +5836,52 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_INTHLDR_PROP_INTEREST", tb =>
                 {
+                    tb.HasComment("Associates a acquisition property, an interest holder and the interest holder's type of interst in the acquisition of the property.");
                     tb.HasTrigger("PIMS_IHPRIN_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_IHPRIN_I_S_I_TR");
                     tb.HasTrigger("PIMS_IHPRIN_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PimsInthldrPropInterestId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INTHLDR_PROP_INTEREST_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.PimsInthldrPropInterestId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INTHLDR_PROP_INTEREST_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.InterestHolderId).HasComment("Foreign key to the PIMS_INTEREST_HOLDER table.");
+            entity.Property(e => e.PropertyAcquisitionFileId).HasComment("Foreign key to the PIMS_PROPERTY_ACQUISITION_FILE table.");
 
             entity.HasOne(d => d.InterestHolder).WithMany(p => p.PimsInthldrPropInterests)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -4962,15 +5909,25 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_LNDATY_I_S_U_TR");
                 });
 
-            entity.Property(e => e.LandActTypeCode).HasComment("Codified version of the Land Act type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.LandActTypeCode).HasComment("Code value of the Land Act type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the Land Act type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLandSurveyorType>(entity =>
@@ -4985,14 +5942,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.LandSurveyorTypeCode).HasComment("Code value for the land surveyor type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the land surveyor type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLease>(entity =>
@@ -5009,27 +5976,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.LeaseId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.CancellationReason).HasComment("Reason for the cancellation of the lease.  For example, \"The request for leasing the space was withdrawn.\"");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
@@ -5048,6 +6015,8 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.DocumentationReference).HasComment("Location of documents pertianing to the lease/license");
             entity.Property(e => e.FeeDeterminationNote).HasComment("Note associated with fee determination.");
+            entity.Property(e => e.FileAppraisalTypeCode).HasComment("Foreign key to the PIMS_FILE_APPRAISAL_TYPE table.");
+            entity.Property(e => e.FileLglSrvyTypeCode).HasComment("Foreign key to the PIMS_FILE_LGL_SRVY_TYPE table.");
             entity.Property(e => e.HasDigitalFile).HasComment("Indicator that digital file exists");
             entity.Property(e => e.HasDigitalLicense).HasComment("Indicator that digital license exists");
             entity.Property(e => e.HasPhysicalFile).HasComment("Indicator that phyical file exists");
@@ -5094,6 +6063,10 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.TfaFileNumber).HasComment("Sourced from t_fileMain.TFA_File_Number || - || t_fileSub.Subfile_Sequence_Code");
             entity.Property(e => e.TotalAllowableCompensation).HasComment("The maximum allowable compensation for the lease.  This amount should not be exceeded by the total of all assiciated H120's.");
 
+            entity.HasOne(d => d.FileAppraisalTypeCodeNavigation).WithMany(p => p.PimsLeases).HasConstraintName("PIM_FLAPPT_PIM_LEASE_FK");
+
+            entity.HasOne(d => d.FileLglSrvyTypeCodeNavigation).WithMany(p => p.PimsLeases).HasConstraintName("PIM_FLLSVT_PIM_LEASE_FK");
+
             entity.HasOne(d => d.LeaseInitiatorTypeCodeNavigation).WithMany(p => p.PimsLeases).HasConstraintName("PIM_LINITT_PIM_LEASE_FK");
 
             entity.HasOne(d => d.LeaseLicenseTypeCodeNavigation).WithMany(p => p.PimsLeases)
@@ -5135,27 +6108,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.LeaseChecklistItemId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_CHECKLIST_ITEM_ID_SEQ])")
-                .HasComment("Generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ChklstItemStatusTypeCode)
                 .HasDefaultValue("INCOMP")
                 .HasComment("Foreign key to the PIMS_CHKLST_ITEM_STATUS_TYPE table.");
@@ -5226,13 +6199,13 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Lease & license checklist item descriptive text presented to the user.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies the order that the lease & license checklist items are presented to the user.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.EffectiveDate)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("Date the lease & license checklist item is able to be presented to the user via the input form.");
             entity.Property(e => e.ExpiryDate).HasComment("Date the lease & license checklist item is removed from the input form.");
             entity.Property(e => e.Hint).HasComment("Lease & license checklist item descriptive tooltip presented to the user.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is currently active.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.IsRequired)
                 .HasDefaultValue(false)
                 .HasComment("Indicates if the lease & license checklist item is a required field.");
@@ -5271,12 +6244,12 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Lease & license checklist section descriptive text presented to the user.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies the order that the lease & license checklist sections are presented to the user.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.EffectiveDate)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("Date the lease & license checklist section is able to be presented to the user via the input form.");
             entity.Property(e => e.ExpiryDate).HasComment("Date the lease & license checklist section is removed from the input form.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is currently active.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLeaseConsultation>(entity =>
@@ -5285,6 +6258,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_LEASE_CONSULTATION", tb =>
                 {
+                    tb.HasComment("Describes a consultation with the person or organization associate3d with a lease.");
                     tb.HasTrigger("PIMS_LESCON_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_LESCON_I_S_I_TR");
                     tb.HasTrigger("PIMS_LESCON_I_S_U_TR");
@@ -5292,27 +6266,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.LeaseConsultationId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_CONSULTATION_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.Comment).HasComment("Remarks / summary on the process or its results.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
@@ -5338,7 +6312,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("if the record is disabled.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.IsResponseReceived).HasComment("Has the consultation request response been received?");
             entity.Property(e => e.LeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
             entity.Property(e => e.OrganizationId).HasComment("Consultation contact organization.");
@@ -5391,18 +6365,46 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_LESDOC_I_S_U_TR");
                 });
 
-            entity.Property(e => e.LeaseDocumentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_DOCUMENT_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.LeaseDocumentId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_DOCUMENT_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.DocumentId).HasComment("Foreign key to the PIMS_DOCUMENT table.");
+            entity.Property(e => e.LeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
 
             entity.HasOne(d => d.Document).WithMany(p => p.PimsLeaseDocuments)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -5441,48 +6443,6 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.LeaseInitiatorTypeCode).HasComment("Code value of the initiator of the lease");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.Description).HasComment("Description of the initiator of the lease");
-        });
-
-        modelBuilder.Entity<PimsLeaseLeasePurpose>(entity =>
-        {
-            entity.HasKey(e => e.LeaseLeasePurposeId).HasName("LLPURP_PK");
-
-            entity.ToTable("PIMS_LEASE_LEASE_PURPOSE", tb =>
-                {
-                    tb.HasTrigger("PIMS_LLPURP_A_S_IUD_TR");
-                    tb.HasTrigger("PIMS_LLPURP_I_S_I_TR");
-                    tb.HasTrigger("PIMS_LLPURP_I_S_U_TR");
-                });
-
-            entity.Property(e => e.LeaseLeasePurposeId)
-                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_LEASE_PURPOSE_ID_SEQ])")
-                .HasComment("PK Generated surrogate primary key");
-            entity.Property(e => e.AppCreateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user created the record.");
-            entity.Property(e => e.AppCreateUserDirectory)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
-            entity.Property(e => e.AppLastUpdateTimestamp)
-                .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
-            entity.Property(e => e.AppLastUpdateUserDirectory)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserid)
-                .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -5498,9 +6458,64 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.LeaseId).HasComment("FK Foreign key to the PIMS_LEASE table.");
+            entity.Property(e => e.Description).HasComment("Description of the initiator of the lease");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+        });
+
+        modelBuilder.Entity<PimsLeaseLeasePurpose>(entity =>
+        {
+            entity.HasKey(e => e.LeaseLeasePurposeId).HasName("LLPURP_PK");
+
+            entity.ToTable("PIMS_LEASE_LEASE_PURPOSE", tb =>
+                {
+                    tb.HasComment("Associates lease with the purpose(s) of the lease,");
+                    tb.HasTrigger("PIMS_LLPURP_A_S_IUD_TR");
+                    tb.HasTrigger("PIMS_LLPURP_I_S_I_TR");
+                    tb.HasTrigger("PIMS_LLPURP_I_S_U_TR");
+                });
+
+            entity.Property(e => e.LeaseLeasePurposeId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_LEASE_PURPOSE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.LeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
             entity.Property(e => e.LeasePurposeOtherDesc).HasComment("User-specified lease purpose description not included in standard set of lease purposes");
-            entity.Property(e => e.LeasePurposeTypeCode).HasComment("FK Foreign key to the PIMS_LEASE_PURPOSE_TYPE table.");
+            entity.Property(e => e.LeasePurposeTypeCode).HasComment("Foreign key to the PIMS_LEASE_PURPOSE_TYPE table.");
 
             entity.HasOne(d => d.Lease).WithMany(p => p.PimsLeaseLeasePurposes)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -5533,27 +6548,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.LeaseLicenseTeamId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_LICENSE_TEAM_ID_SEQ])")
-                .HasComment("Generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -5604,15 +6619,30 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_LEASE_LICENSE_TYPE", tb =>
                 {
+                    tb.HasComment("Describes the type of lease/license.  Current values are: - Amending Agreement - Building Lease (receivable) - Licence to Construct - Licence of Occupation (BCTFA fee simple) - Licence of Occupation (BCTFA fee simple) - Licence of Occupation (HMK fee simp");
                     tb.HasTrigger("PIMS_LELIST_I_S_I_TR");
                     tb.HasTrigger("PIMS_LELIST_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.LeaseLicenseTypeCode).HasComment("Code value of the lease/license type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the lease/license type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLeaseNote>(entity =>
@@ -5627,18 +6657,46 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_LESNOT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.LeaseNoteId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_NOTE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.LeaseNoteId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_NOTE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.LeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
+            entity.Property(e => e.NoteId).HasComment("Foreign key to the PIMS_NOTE table.");
 
             entity.HasOne(d => d.Lease).WithMany(p => p.PimsLeaseNotes)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -5663,15 +6721,30 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_LEASE_PAY_RVBL_TYPE", tb =>
                 {
+                    tb.HasComment("Describes the payable or receivable type of lease/license.  Current values are: - Payable (BCTFA as tenant) - Payable (MOTT as tenant) - Receivable");
                     tb.HasTrigger("PIMS_LSPRTY_I_S_I_TR");
                     tb.HasTrigger("PIMS_LSPRTY_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.LeasePayRvblTypeCode).HasComment("Code value of the lease payable/receivable type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the lease payable/receivable type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLeasePayment>(entity =>
@@ -5688,27 +6761,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.LeasePaymentId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PAYMENT_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -5779,8 +6852,8 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Payment category type description.");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the descriptions");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates that the record is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLeasePaymentHist>(entity =>
@@ -5803,14 +6876,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.LeasePaymentMethodTypeCode).HasComment("Payment method type code");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Payment method type description");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the descriptions");
-            entity.Property(e => e.IsDisabled).HasComment("Is this code disabled?");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLeasePaymentStatusType>(entity =>
@@ -5825,14 +6908,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.LeasePaymentStatusTypeCode).HasComment("Payment status type code");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Payment status type description");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the descriptions");
-            entity.Property(e => e.IsDisabled).HasComment("Is this code disabled?");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLeasePeriod>(entity =>
@@ -5849,7 +6942,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.LeasePeriodId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_PERIOD_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AddlRentAgreedPmt).HasComment("Indicates the agreed-to variable additional rent payment amount.");
             entity.Property(e => e.AddlRentFreq).HasComment("Foreign key reference to the PIMS_LEASE_PMT_FREQ_TYPE table.");
             entity.Property(e => e.AddlRentGstAmount).HasComment("GST dollar amount for the additional rent.");
@@ -5858,21 +6951,21 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -5957,8 +7050,8 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the status of the lease period.");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates that the record is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLeasePmtFreqType>(entity =>
@@ -5989,8 +7082,8 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Payment frequency type code description");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates that the record is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLeaseProgramType>(entity =>
@@ -6004,11 +7097,25 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_LSPRGT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.LeaseProgramTypeCode).HasComment("Code value of the lease program type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the lease program type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLeasePurposeType>(entity =>
@@ -6022,11 +7129,25 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_LPRPTY_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.LeasePurposeTypeCode).HasComment("Code value of the lease purpose type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the lease purpose type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLeaseRenewal>(entity =>
@@ -6043,27 +7164,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.LeaseRenewalId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_RENEWAL_ID_SEQ])")
-                .HasComment("Generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.CommencementDt).HasComment("Date that the lease lease begins.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
@@ -6110,12 +7231,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.LeaseResponsibilityTypeCode).HasComment("Code value of the organization responsible for this lease");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the organization responsible for this lease");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLeaseStakeholder>(entity =>
@@ -6130,21 +7263,55 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_LSTKHL_I_S_U_TR");
                 });
 
-            entity.Property(e => e.LeaseStakeholderId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_STAKEHOLDER_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.LeaseStakeholderTypeCode).HasDefaultValue("UNK");
-            entity.Property(e => e.LessorTypeCode).HasDefaultValue("UNK");
+            entity.Property(e => e.LeaseStakeholderId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_LEASE_STAKEHOLDER_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.LeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
+            entity.Property(e => e.LeaseStakeholderTypeCode)
+                .HasDefaultValue("UNK")
+                .HasComment("Foreign key to the PIMS_LEASE_STAKEHOLDER_TYPE table.");
+            entity.Property(e => e.LessorTypeCode)
+                .HasDefaultValue("UNK")
+                .HasComment("Foreign key to the PIMS_LESSOR_TYPE table.");
             entity.Property(e => e.Note).HasComment("Notes associated with the lease/tenant relationship.");
+            entity.Property(e => e.OrganizationId).HasComment("Foreign key to the PIMS_ORGANIZATION table.");
+            entity.Property(e => e.PersonId).HasComment("Foreign key to the PIMS_PERSON table.");
+            entity.Property(e => e.PrimaryContactId).HasComment("Foreign key to the PIMS_PERSON table for the organization's primary contact.");
 
             entity.HasOne(d => d.Lease).WithMany(p => p.PimsLeaseStakeholders)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -6205,8 +7372,8 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.Description)
                 .HasDefaultValue("Unknown")
                 .HasComment("Description of the types of stakeholders on a lease.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies a specific order to visually present the code.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is currently active.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.IsPayableRelated)
                 .HasDefaultValue(false)
                 .HasComment("Indicates if the code is related to payable leases.");
@@ -6224,12 +7391,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.LeaseStatusTypeCode).HasComment("Code value of the status of the lease");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the status of the lease");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLessorType>(entity =>
@@ -6246,16 +7425,26 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.LessorTypeCode)
                 .HasDefaultValue("UNK")
                 .HasComment("Code representing the types of lessors on a lease.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description)
                 .HasDefaultValue("Unknown")
                 .HasComment("Description of the types of lessors on a lease.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies a specific order to visually present the code.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is currently active.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLetterType>(entity =>
@@ -6270,14 +7459,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.LetterTypeCode).HasComment("Code value for the letter type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the letter type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsLlTeamProfileType>(entity =>
@@ -6309,7 +7508,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the lease and license profile (role).");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsManagementActivity>(entity =>
@@ -6324,27 +7523,29 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_MGMTAC_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ManagementActivityId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_MANAGEMENT_ACTIVITY_ID_SEQ])");
+            entity.Property(e => e.ManagementActivityId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_MANAGEMENT_ACTIVITY_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.CompletionDt).HasComment("Date the property management activity was completed.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
@@ -6364,7 +7565,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.Description).HasComment("Description of the property management activity.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the code is disabled.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.ManagementFileId).HasComment("Foreign key of the associated management file (PIMS_MANAGEMENT_FILE).");
             entity.Property(e => e.MgmtActivityStatusTypeCode)
                 .HasDefaultValue("NOTSTARTED")
@@ -6386,9 +7587,15 @@ public partial class PimsBaseContext : DbContext
 
             entity.HasOne(d => d.MgmtActivityTypeCodeNavigation).WithMany(p => p.PimsManagementActivities).HasConstraintName("PIM_MATYPE_PIM_MGMTAC_FK");
 
-            entity.HasOne(d => d.ServiceProviderOrg).WithMany(p => p.PimsManagementActivities).HasConstraintName("PIM_ORG_PIM_MGMTAC_FK");
+            entity.HasOne(d => d.RequestorOrganization).WithMany(p => p.PimsManagementActivityRequestorOrganizations).HasConstraintName("PIM_ORG_PIM_MGMTAC_RQ_ORG_FK");
 
-            entity.HasOne(d => d.ServiceProviderPerson).WithMany(p => p.PimsManagementActivities).HasConstraintName("PIM_PERSON_PIM_MGMTAC_FK");
+            entity.HasOne(d => d.RequestorPerson).WithMany(p => p.PimsManagementActivityRequestorPeople).HasConstraintName("PIM_PERSON_PIM_MGMTAC_RQ_PRSN_FK");
+
+            entity.HasOne(d => d.RequestorPrimaryContact).WithMany(p => p.PimsManagementActivityRequestorPrimaryContacts).HasConstraintName("PIM_PERSON_PIM_MGMTAC_RQ_PRMRY_FK");
+
+            entity.HasOne(d => d.ServiceProviderOrg).WithMany(p => p.PimsManagementActivityServiceProviderOrgs).HasConstraintName("PIM_ORG_PIM_MGMTAC_FK");
+
+            entity.HasOne(d => d.ServiceProviderPerson).WithMany(p => p.PimsManagementActivityServiceProviderPeople).HasConstraintName("PIM_PERSON_PIM_MGMTAC_FK");
         });
 
         modelBuilder.Entity<PimsManagementActivityHist>(entity =>
@@ -6413,27 +7620,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.ManagementActivityInvoiceId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_MANAGEMENT_ACTIVITY_INVOICE_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -6459,7 +7666,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.InvoiceNum).HasComment("Number assigned to the invoice.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the invoice is disabled.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.IsPstRequired).HasComment("Indicates if the invoice requires PST.");
             entity.Property(e => e.ManagementActivityId).HasComment("Foreign key to the PIMS_MANAGEMENT_ACTIVITY table.");
             entity.Property(e => e.PretaxAmt).HasComment("Subtotal of the invoice,");
@@ -6493,27 +7700,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.ManagementActivityPropertyId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_MANAGEMENT_ACTIVITY_PROPERTY_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -6563,7 +7770,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.ManagementFileId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_MANAGEMENT_FILE_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AcquisitionFundingTypeCode).HasComment("Foreign key to the PIMS_ACQUISITION_FUNDING_TYPE table.");
             entity.Property(e => e.AdditionalDetails).HasComment("Additional details of the management file.");
             entity.Property(e => e.AppCreateTimestamp)
@@ -6571,21 +7778,21 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -6608,6 +7815,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.ManagementFileStatusTypeCode).HasComment("Foreign key to the PIMS_MANAGEMENT_FILE_STATUS_TYPE table.");
             entity.Property(e => e.ProductId).HasComment("Foreign key to the PIMS_PRODUCT table.");
             entity.Property(e => e.ProjectId).HasComment("Foreign key to the PIMS_PROJECT table.");
+            entity.Property(e => e.RegionCode).HasComment("Foreign key to the PIMS_REGION table.");
 
             entity.HasOne(d => d.AcquisitionFundingTypeCodeNavigation).WithMany(p => p.PimsManagementFiles).HasConstraintName("PIM_ACQFTY_PIM_MGMTFL_FK");
 
@@ -6622,6 +7830,8 @@ public partial class PimsBaseContext : DbContext
             entity.HasOne(d => d.Product).WithMany(p => p.PimsManagementFiles).HasConstraintName("PIM_PRODCT_PIM_MGMTFL_FK");
 
             entity.HasOne(d => d.Project).WithMany(p => p.PimsManagementFiles).HasConstraintName("PIM_PROJCT_PIM_MGMTFL_FK");
+
+            entity.HasOne(d => d.RegionCodeNavigation).WithMany(p => p.PimsManagementFiles).HasConstraintName("PIM_REGION_PIM_MGMTFL_FK");
         });
 
         modelBuilder.Entity<PimsManagementFileContact>(entity =>
@@ -6638,27 +7848,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.ManagementFileContactId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_MANAGEMENT_FILE_CONTACT_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -6713,27 +7923,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.ManagementFileDocumentId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_MANAGEMENT_FILE_DOCUMENT_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -6791,27 +8001,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.ManagementFileNoteId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_MANAGEMENT_FILE_NOTE_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -6875,8 +8085,8 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the management file profile type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies the display order of the code description.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsManagementFileProperty>(entity =>
@@ -6893,27 +8103,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.ManagementFilePropertyId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_MANAGEMENT_FILE_PROPERTY_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -6929,7 +8139,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies the display order of the property (PSP-10521).");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.IsActive)
                 .HasDefaultValue(true)
                 .HasComment("Indicates if the record is disabled.");
@@ -6983,8 +8193,8 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the management file purpose type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies the display order of the code description.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsManagementFileStatusType>(entity =>
@@ -7015,8 +8225,8 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the management file status type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies the display order of the code description.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsManagementFileTeam>(entity =>
@@ -7033,27 +8243,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.PimsManagementFileTeamId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_MANAGEMENT_FILE_TEAM_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -7112,27 +8322,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.MgmtActInvolvedPartyId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_MGMT_ACT_INVOLVED_PARTY_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -7183,27 +8393,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.MgmtActMinContactId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_MGMT_ACT_MIN_CONTACT_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -7253,27 +8463,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.MgmtActivityActivitySubtypId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_MGMT_ACTIVITY_ACTIVITY_SUBTYP_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -7315,6 +8525,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_MGMT_ACTIVITY_DOCUMENT", tb =>
                 {
+                    tb.HasComment("Associates the document(s) associated with (possibly multple) management activities.");
                     tb.HasTrigger("PIMS_MGACDC_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_MGACDC_I_S_I_TR");
                     tb.HasTrigger("PIMS_MGACDC_I_S_U_TR");
@@ -7322,27 +8533,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.MgmtActivityDocumentId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_MGMT_ACTIVITY_DOCUMENT_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -7395,7 +8606,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created");
+                .HasComment("The date and time the record was created.");
             entity.Property(e => e.DbCreateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created the record.");
@@ -7406,8 +8617,8 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the status of the property management status.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsMgmtActivitySubtype>(entity =>
@@ -7438,8 +8649,8 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the subtype of property management.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.MgmtActivityTypeCode).HasComment("Code representing the type of property management.");
 
             entity.HasOne(d => d.MgmtActivityTypeCodeNavigation).WithMany(p => p.PimsMgmtActivitySubtypes)
@@ -7475,8 +8686,8 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the type of property management.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsNote>(entity =>
@@ -7491,18 +8702,44 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_NOTE_I_S_U_TR");
                 });
 
-            entity.Property(e => e.NoteId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.NoteId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.IsSystemGenerated).HasComment("Indicatesd if this note is system-generated.");
             entity.Property(e => e.NoteTxt)
                 .HasDefaultValue("<Empty>")
@@ -7523,15 +8760,30 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ORG_IDENTIFIER_TYPE", tb =>
                 {
+                    tb.HasComment("Describes the type of identifier for an organization.  Current values are: - A BC electronic identifier that allows businesses to connect to the BC Government to manage a variety of company information - A Government organization identifier - A global uni");
                     tb.HasTrigger("PIMS_ORGIDT_I_S_I_TR");
                     tb.HasTrigger("PIMS_ORGIDT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.OrgIdentifierTypeCode).HasComment("Code value of the organization identtifier type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the organization identtifier type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsOrganization>(entity =>
@@ -7546,15 +8798,48 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_ORG_I_S_U_TR");
                 });
 
-            entity.Property(e => e.OrganizationId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ORGANIZATION_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.OrganizationId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ORGANIZATION_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.Comment).HasComment("Comment accompanying the organization.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.DistrictCode).HasComment("Foreign key to the PIMS_DISTRICT table.");
             entity.Property(e => e.IncorporationNumber).HasComment("Incorporation number of the orgnization");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+            entity.Property(e => e.OrgIdentifierTypeCode).HasComment("Foreign key to the PIMS_ORG_IDENTIFIER_TYPE table.");
+            entity.Property(e => e.OrganizationAlias).HasComment("Alias assigned to the organization.");
+            entity.Property(e => e.OrganizationIdentifier).HasComment("Identifier assigned to the organization.");
+            entity.Property(e => e.OrganizationName).HasComment("Name assigned to the organization.");
+            entity.Property(e => e.OrganizationTypeCode).HasComment("Foreign key to the PIMS_ORGANIZATION_TYPE table.");
+            entity.Property(e => e.PrntOrganizationId).HasComment("Recursive foreign key to the parent organization.");
+            entity.Property(e => e.RegionCode).HasComment("Foreign key to the PIMS_REGION table.");
+            entity.Property(e => e.Website).HasComment("URL to the organization's web site.");
 
             entity.HasOne(d => d.DistrictCodeNavigation).WithMany(p => p.PimsOrganizations).HasConstraintName("PIM_DSTRCT_PIM_ORG_FK");
 
@@ -7579,14 +8864,39 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_ORGADD_I_S_U_TR");
                 });
 
-            entity.Property(e => e.OrganizationAddressId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ORGANIZATION_ADDRESS_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.OrganizationAddressId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ORGANIZATION_ADDRESS_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AddressId).HasComment("Foreign key to the PIMS_ADDRESS table.");
+            entity.Property(e => e.AddressUsageTypeCode).HasComment("Foreign key to the PIMS_ADDRESS_USAGE_TYPE table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.OrganizationId).HasComment("Foreign key to the PIMS_ORGANIZATION table.");
 
             entity.HasOne(d => d.Address).WithMany(p => p.PimsOrganizationAddresses)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -7623,15 +8933,30 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ORGANIZATION_TYPE", tb =>
                 {
+                    tb.HasComment("Describes the type of organization.  Current values are: - BC District Office - BC Ministry - BC Regional Office - First Nations - Other - Partnership - Private owner - Railway corporation - Real estate corporation");
                     tb.HasTrigger("PIMS_ORGTYP_I_S_I_TR");
                     tb.HasTrigger("PIMS_ORGTYP_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.OrganizationTypeCode).HasComment("Code value of the organization type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the organization type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsPaymentItemType>(entity =>
@@ -7645,15 +8970,25 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_PMTITM_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PaymentItemTypeCode).HasComment("Codified version of the payment item types, such as market value, temporary SRW, and disturbance damages.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.PaymentItemTypeCode).HasComment("Code value of the payment item types, such as market value, temporary SRW, and disturbance damages.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the payment item types, such as market value, temporary SRW, and disturbance damages.");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsPerson>(entity =>
@@ -7662,20 +8997,55 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PERSON", tb =>
                 {
+                    tb.HasComment("Describes the information required to identify an individual, such as name and birth date.");
                     tb.HasTrigger("PIMS_PERSON_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PERSON_I_S_I_TR");
                     tb.HasTrigger("PIMS_PERSON_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PersonId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.UseOrganizationAddress).HasDefaultValue(false);
+            entity.Property(e => e.PersonId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AddressComment).HasComment("Comment associated with the person's address.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.BirthDate).HasComment("Person's date of birth.");
+            entity.Property(e => e.Comment).HasComment("Comment associated with the person.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.FirstName).HasComment("Person's first name.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+            entity.Property(e => e.MiddleNames).HasComment("Person's middle name(s).");
+            entity.Property(e => e.NameSuffix).HasComment("Person's name suffix.");
+            entity.Property(e => e.PimsPropertyActivityId).HasComment("Foreign key to the PIMS_PROPERTY_ACTIVITY table.");
+            entity.Property(e => e.PreferredName).HasComment("Person's preferred name.");
+            entity.Property(e => e.Surname).HasComment("Person's surname.");
+            entity.Property(e => e.UseOrganizationAddress)
+                .HasDefaultValue(false)
+                .HasComment("Indicates if the organization's address si preferred.");
         });
 
         modelBuilder.Entity<PimsPersonAddress>(entity =>
@@ -7690,14 +9060,39 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_PERADD_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PersonAddressId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ADDRESS_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.PersonAddressId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ADDRESS_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AddressId).HasComment("Foreign key to the PIMS_ADDRESS table.");
+            entity.Property(e => e.AddressUsageTypeCode).HasComment("Foreign key to the PIMS_ADDRESS_USAGE_TYPE table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.PersonId).HasComment("Foreign key to the PIMS_PERSON table.");
 
             entity.HasOne(d => d.Address).WithMany(p => p.PimsPersonAddresses)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -7739,19 +9134,44 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PERSON_ORGANIZATION", tb =>
                 {
+                    tb.HasComment("Associates a person with an organization");
                     tb.HasTrigger("PIMS_PERORG_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PERORG_I_S_I_TR");
                     tb.HasTrigger("PIMS_PERORG_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PersonOrganizationId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ORGANIZATION_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.PersonOrganizationId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PERSON_ORGANIZATION_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.OrganizationId).HasComment("Foreign key to the PIMS_ORGANIZATION table.");
+            entity.Property(e => e.PersonId).HasComment("Foreign key to the PIMS_PERSON table.");
 
             entity.HasOne(d => d.Organization).WithMany(p => p.PimsPersonOrganizations).HasConstraintName("PIM_ORG_PIM_PERORG_FK");
 
@@ -7778,16 +9198,26 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.PphStatusTypeCode).HasComment("Code indicating the Provincial Public Highway status");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the code indicating the purpose of the property research");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the code is disabled.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsPrfPropResearchPurposeTyp>(entity =>
@@ -7796,29 +9226,60 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PRF_PROP_RESEARCH_PURPOSE_TYP", tb =>
                 {
+                    tb.HasComment("Describes one or more research purpose types for a property research file.");
                     tb.HasTrigger("PIMS_PRSPRP_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PRSPRP_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRSPRP_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PrfPropResearchPurposeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PRF_PROP_RESEARCH_PURPOSE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.PrfPropResearchPurposeId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PRF_PROP_RESEARCH_PURPOSE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.PropResearchPurposeTypeCode).HasComment("Foreign key to the PIMS_PROP_RESEARCH_PURPOSE_TYPE table.");
+            entity.Property(e => e.PropertyResearchFileId).HasComment("Foreign key to the PIMS_PROPERTY_RESEARCH_FILE table.");
 
             entity.HasOne(d => d.PropResearchPurposeTypeCodeNavigation).WithMany(p => p.PimsPrfPropResearchPurposeTyps)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_RRESPT_PIM_PRSPRP_FK");
 
-            entity.HasOne(d => d.PropertyResearchFile).WithMany(p => p.PimsPrfPropResearchPurposeTyps).HasConstraintName("PIM_PRSCRC_PIM_PRSPRP_FK");
+            entity.HasOne(d => d.PropertyResearchFile).WithMany(p => p.PimsPrfPropResearchPurposeTyps)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_PRSCRC_PIM_PRSPRP_FK");
         });
 
         modelBuilder.Entity<PimsPrfPropResearchPurposeTypHist>(entity =>
@@ -7843,21 +9304,45 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PRODUCT_ID_SEQ])")
-                .HasComment("System-generated primary key.");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.Code).HasComment("Product number.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.CostEstimate).HasComment("Estimate cost of the product.");
             entity.Property(e => e.CostEstimateDate).HasComment("Date the product cost was estimated.");
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Product description.");
             entity.Property(e => e.Objective).HasComment("Product objective(s).");
             entity.Property(e => e.Scope).HasComment("Product scope.");
@@ -7886,25 +9371,56 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_ID_SEQ])")
-                .HasComment("System-generated primary key.");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.BusinessFunctionCodeId).HasComment("Foreign key to the PIMS_BUSINESS_FUNCTION table.");
             entity.Property(e => e.Code).HasComment("Project number.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.CostTypeCodeId).HasComment("Foreign key to the PIMS_COST_TYPE table.");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description)
                 .HasDefaultValue("<Empty>")
                 .HasComment("Project description.");
             entity.Property(e => e.Note).HasComment("Descriptive note relevant to the project.");
-            entity.Property(e => e.ProjectStatusTypeCode).HasDefaultValue("AC");
-            entity.Property(e => e.RegionCode).HasDefaultValue((short)4);
+            entity.Property(e => e.ProjectStatusTypeCode)
+                .HasDefaultValue("AC")
+                .HasComment("Foreign key to the PIMS_PROJECT_STATUS_TYPE table.");
+            entity.Property(e => e.RegionCode)
+                .HasDefaultValue((short)4)
+                .HasComment("Foreign key to the PIMS_REGION table.");
+            entity.Property(e => e.WorkActivityCodeId).HasComment("Foreign key to the PIMS_WORK_ACTIVITY table.");
 
             entity.HasOne(d => d.BusinessFunctionCode).WithMany(p => p.PimsProjects).HasConstraintName("PIM_BIZFCN_PIM_PROJCT_FK");
 
@@ -7927,23 +9443,52 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROJECT_DOCUMENT", tb =>
                 {
+                    tb.HasComment("A many-to-many entity that associates a project with a document.");
                     tb.HasTrigger("PIMS_PRJDOC_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PRJDOC_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRJDOC_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ProjectDocumentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_DOCUMENT_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ProjectDocumentId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_DOCUMENT_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.DocumentId).HasComment("Foreign key to the PIMS_DOCUMENT table.");
+            entity.Property(e => e.ProjectId).HasComment("Foreign key to the PIMS_PROJECT table.");
 
             entity.HasOne(d => d.Document).WithMany(p => p.PimsProjectDocuments)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -7976,23 +9521,52 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROJECT_NOTE", tb =>
                 {
+                    tb.HasComment("A many-to-many entity that associates a project with a note.");
                     tb.HasTrigger("PIMS_PRJNOT_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PRJNOT_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRJNOT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ProjectNoteId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_NOTE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ProjectNoteId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_NOTE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.NoteId).HasComment("Foreign key to the PIMS_NOTE table.");
+            entity.Property(e => e.ProjectId).HasComment("Foreign key to the PIMS_PROJECT table.");
 
             entity.HasOne(d => d.Note).WithMany(p => p.PimsProjectNotes)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -8023,21 +9597,50 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_PRJPER_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ProjectPersonId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_PERSON_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ProjectPersonId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_PERSON_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the relationship is active.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+            entity.Property(e => e.PersonId).HasComment("Foreign key to the PIMS_PERSON table.");
+            entity.Property(e => e.ProjectId).HasComment("Foreign key to the PIMS_PROJECT table.");
+            entity.Property(e => e.ProjectPersonRoleTypeCode).HasComment("Foreign key to the PIMS_PROJECT_PERSON_ROLE_TYPE table.");
 
             entity.HasOne(d => d.Person).WithMany(p => p.PimsProjectPeople)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -8070,14 +9673,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.ProjectPersonRoleTypeCode).HasComment("Code value of the project/person role.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the project/person role.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsProjectProduct>(entity =>
@@ -8086,23 +9699,52 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROJECT_PRODUCT", tb =>
                 {
+                    tb.HasComment("A many-to-many entity that associates a project with a product.");
                     tb.HasTrigger("PIMS_PRJPRD_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PRJPRD_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRJPRD_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ProjectProductId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_PRODUCT_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ProjectProductId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROJECT_PRODUCT_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.ProductId).HasComment("Foreign key to the PIMS_PRODUCT table.");
+            entity.Property(e => e.ProjectId).HasComment("Foreign key to the PIMS_PROJECT table.");
 
             entity.HasOne(d => d.Product).WithMany(p => p.PimsProjectProducts)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -8133,14 +9775,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.ProjectStatusTypeCode).HasComment("Code value for the project status.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the project status.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsPropAcqFlCompReq>(entity =>
@@ -8149,6 +9801,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROP_ACQ_FL_COMP_REQ", tb =>
                 {
+                    tb.HasComment("A many-to-many entity that associates an acquisition file with a compensation requisition.");
                     tb.HasTrigger("PIMS_PACMRQ_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PACMRQ_I_S_I_TR");
                     tb.HasTrigger("PIMS_PACMRQ_I_S_U_TR");
@@ -8156,27 +9809,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.PropAcqFlCompReqId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_ACQ_FL_COMP_REQ_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.CompensationRequisitionId).HasComment("Foreign key reference to the COMPENSATION_REQUISITION table.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
@@ -8218,23 +9871,52 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROP_INTHLDR_INTEREST_TYP", tb =>
                 {
+                    tb.HasComment("A many-to-many entity that associates an acquisition interest holder's property with one or more interest types.");
                     tb.HasTrigger("PIMS_PIHITY_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PIHITY_I_S_I_TR");
                     tb.HasTrigger("PIMS_PIHITY_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PropInthldrInterestTypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_INTHLDR_INTEREST_TYPE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.PropInthldrInterestTypeId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_INTHLDR_INTEREST_TYPE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.InterestHolderInterestTypeCode).HasComment("Foreign key to the PIMS_INTEREST_HOLDER_INTEREST_TYPE table.");
+            entity.Property(e => e.PimsInthldrPropInterestId).HasComment("Foreign key to the PIMS_INTHLDR_PROP_INTEREST table.");
 
             entity.HasOne(d => d.InterestHolderInterestTypeCodeNavigation).WithMany(p => p.PimsPropInthldrInterestTyps)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -8267,10 +9949,10 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.PropLeaseCompReqId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_LEASE_COMP_REQ_ID_SEQ])")
-                .HasComment("Generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the record was created by the user.");
+                .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("User directory of the user that created the record.");
@@ -8291,7 +9973,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.CompensationRequisitionId).HasComment("Foreign key to the PIMS_COMPENSATION_REQUISITION table.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
-                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update.  If this is done then the update will succeed, provided that the row was not updated by any");
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
             entity.Property(e => e.DbCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the record was created.");
@@ -8335,18 +10017,46 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_PRPRAT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PropPropAnomalyTypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_ANOMALY_TYPE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.PropPropAnomalyTypeId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_ANOMALY_TYPE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.PropertyAnomalyTypeCode).HasComment("Foreign key to the PIMS_PROPERTY_ANOMALY_TYPE table.");
+            entity.Property(e => e.PropertyId).HasComment("Foreign key to the PIMS_PROPERTY table.");
 
             entity.HasOne(d => d.PropertyAnomalyTypeCodeNavigation).WithMany(p => p.PimsPropPropAnomalyTyps)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -8377,18 +10087,44 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_PRPRPU_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PropPropPurposeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_PURPOSE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.PropPropPurposeId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_PURPOSE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.PropertyId).HasComment("Primary key of the associated property.");
             entity.Property(e => e.PropertyPurposeTypeCode).HasComment("Primary key of the associated property purpose.");
 
@@ -8421,18 +10157,46 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_PRPRRT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PropPropRoadTypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_ROAD_TYPE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.PropPropRoadTypeId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_ROAD_TYPE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.PropertyId).HasComment("Foreign key to the PIMS_PROPERTY table.");
+            entity.Property(e => e.PropertyRoadTypeCode).HasComment("Foreign key to the PIMS_PROPERTY_ROAD_TYPE table.");
 
             entity.HasOne(d => d.Property).WithMany(p => p.PimsPropPropRoadTyps)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -8463,19 +10227,48 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_PRPRTT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PropPropTenureTypeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_TENURE_TYPE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.PropertyTenureTypeCode).HasDefaultValue("UNKNOWN");
+            entity.Property(e => e.PropPropTenureTypeId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_PROP_TENURE_TYPE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.PropertyId).HasComment("Foreign key to the PIMS_PROPERTY table.");
+            entity.Property(e => e.PropertyTenureTypeCode)
+                .HasDefaultValue("UNKNOWN")
+                .HasComment("Foreign key to the PIMS_PROPERTY_TENURE_TYPE table.");
 
             entity.HasOne(d => d.Property).WithMany(p => p.PimsPropPropTenureTyps)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -8506,16 +10299,26 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.PropResearchPurposeTypeCode).HasComment("Code indicating the purpose of the property research");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the code indicating the purpose of the property research");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the code is disabled.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsPropTenureCleanup>(entity =>
@@ -8532,27 +10335,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.PropTenureCleanupId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROP_TENURE_CLEANUP_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -8602,21 +10405,21 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.PropertyId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ID_SEQ])")
-                .HasComment("Generated surrogate primary key");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AdditionalDetails).HasComment("Additional details about the property.");
             entity.Property(e => e.AddressId).HasComment("Foreign key to the address table.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
-            entity.Property(e => e.AppCreateUserDirectory).HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserid).HasComment("The user account that created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user account that updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
             entity.Property(e => e.BandName).HasComment("Name of the Indian band.");
             entity.Property(e => e.Boundary).HasComment("Spatial bundary of land");
             entity.Property(e => e.ConcurrencyControlNumber)
@@ -8731,28 +10534,28 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.PropertyAcquisitionFileId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ACQUISITION_FILE_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the ACQUISTION_FILE table.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -8768,7 +10571,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies the display order of the property (PSP-10521).");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.Location).HasComment("Geospatial location (pin) of property");
             entity.Property(e => e.PropertyId).HasComment("Foreign key to the PROPERTY table.");
             entity.Property(e => e.PropertyName).HasComment("Descriptive reference for the property associated with the acquisition file.");
@@ -8802,14 +10605,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.PropertyAnomalyTypeCode).HasComment("Property anomaly code.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Property anomaly code description.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsPropertyBoundaryAcquisitionVw>(entity =>
@@ -8869,27 +10682,29 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_PRPCNT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PropertyContactId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_CONTACT_ID_SEQ])");
+            entity.Property(e => e.PropertyContactId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_CONTACT_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -8946,27 +10761,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.PropertyDocumentId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_DOCUMENT_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -9022,20 +10837,48 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_PIMPRV_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PropertyImprovementId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_IMPROVEMENT_ID_SEQ])");
+            entity.Property(e => e.PropertyImprovementId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_IMPROVEMENT_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.Address).HasComment("Addresses affected");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.ImprovementDescription).HasComment("Description of the improvements");
+            entity.Property(e => e.LeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
+            entity.Property(e => e.PropertyImprovementTypeCode).HasComment("Foreign key to the PIMS_PROPERTY_IMPROVEMENT_TYPE table.");
             entity.Property(e => e.StructureSize).HasComment("Size of the structure (house, building, bridge, etc,)");
 
             entity.HasOne(d => d.Lease).WithMany(p => p.PimsPropertyImprovements)
@@ -9067,13 +10910,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.PropertyImprovementTypeCode).HasComment("Code value of the types of improvements made to a property during the lease.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Code description of the types of improvements made to a property during the lease.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsPropertyLease>(entity =>
@@ -9082,6 +10936,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROPERTY_LEASE", tb =>
                 {
+                    tb.HasComment("A many-to-many entity that associates a propert with a lease.");
                     tb.HasTrigger("PIMS_PROPLS_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PROPLS_I_S_I_TR");
                     tb.HasTrigger("PIMS_PROPLS_I_S_U_TR");
@@ -9089,27 +10944,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.PropertyLeaseId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_LEASE_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.AreaUnitTypeCode).HasComment("Foreign key to the PIMS AREA_UNIT_TYPE table.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
@@ -9126,7 +10981,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies the display order of the property (PSP-10521).");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.LeaseArea).HasComment("Leased area measurement");
             entity.Property(e => e.LeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
             entity.Property(e => e.Location).HasComment("Geospatial location (pin) of property");
@@ -9181,27 +11036,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.PropertyNoteId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_NOTE_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -9251,27 +11106,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.PropertyOperationId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_OPERATION_ID_SEQ])")
-                .HasComment("Surrogate sequence-based generated primary key for the table.  This is used internally to enforce data uniqueness.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -9290,7 +11145,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DestinationPropertyId).HasComment("Foreign key to the destination property of the property operation.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the record is disabled.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.OperationDt).HasComment("Business date of the property operation.");
             entity.Property(e => e.PropertyOperationNo).HasComment("Sequence-based operation identifying business key.  This is used to help identify when multiple properties were involved in a discrete operation.  The sequence number referenced is PIMS_PROPERTY_OPERATION_NO_SEQ.");
             entity.Property(e => e.PropertyOperationTypeCode).HasComment("Foriegn key to the descriptive operation  type code.");
@@ -9343,8 +11198,8 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the type of property operation.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsPropertyOrganization>(entity =>
@@ -9353,19 +11208,44 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROPERTY_ORGANIZATION", tb =>
                 {
+                    tb.HasComment("A many-to-many entity that associates a property with an organizattion.");
                     tb.HasTrigger("PIMS_PRPORG_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_PRPORG_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRPORG_I_S_U_TR");
                 });
 
-            entity.Property(e => e.PropertyOrganizationId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ORGANIZATION_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.PropertyOrganizationId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_ORGANIZATION_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.OrganizationId).HasComment("Foreign key to the PIMS_ORGANIZATION table.");
+            entity.Property(e => e.PropertyId).HasComment("Foreign key to the PIMS_PROPERTY table.");
 
             entity.HasOne(d => d.Organization).WithMany(p => p.PimsPropertyOrganizations)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -9396,14 +11276,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.PropertyPurposeTypeCode).HasComment("Code representing the purpose of the property.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the purpose of the property.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsPropertyResearchFile>(entity =>
@@ -9420,27 +11310,27 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.PropertyResearchFileId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PROPERTY_RESEARCH_FILE_ID_SEQ])")
-                .HasComment("Generated surrogate primary key.");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AppCreateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
                 .HasComment("The date and time the user created the record.");
             entity.Property(e => e.AppCreateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that created the record.");
-            entity.Property(e => e.AppCreateUserGuid).HasComment("The GUID of the user account that created the record.");
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
             entity.Property(e => e.AppCreateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that created the record.");
+                .HasComment("The user that created the record.");
             entity.Property(e => e.AppLastUpdateTimestamp)
                 .HasDefaultValueSql("(getutcdate())")
-                .HasComment("The date and time the user updated the record.");
+                .HasComment("The date and time the record was updated by the user.");
             entity.Property(e => e.AppLastUpdateUserDirectory)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The directory of the user account that updated the record.");
-            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("The GUID of the user account that updated the record.");
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
-                .HasComment("The user account that updated the record.");
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -9456,7 +11346,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DbLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specifies the display order of the property (PSP-10521).");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.DocumentReference).HasComment("URL / reference to a LAN Drive");
             entity.Property(e => e.IsLegalOpinionObtained).HasComment("Indicates whether a legal opinion was obtained (0 = No, 1 = Yes, null = Unknown)");
             entity.Property(e => e.IsLegalOpinionRequired).HasComment("Indicates whether a legal opinion is required (0 = No, 1 = Yes, null = Unknown)");
@@ -9495,14 +11385,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.PropertyRoadTypeCode).HasComment("Property highway/road code.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Property highway/road code description.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsPropertyStatusType>(entity =>
@@ -9517,14 +11417,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.PropertyStatusTypeCode).HasComment("Property status code.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Property status code description.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsPropertyTenureType>(entity =>
@@ -9538,11 +11448,25 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_PRPTNR_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.PropertyTenureTypeCode).HasComment("Code value of the property tenure type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the property tenure type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsPropertyType>(entity =>
@@ -9551,15 +11475,30 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_PROPERTY_TYPE", tb =>
                 {
+                    tb.HasComment("Code table to describe the type of property.  Current values include: - Buiding - Crown - Federal - Surveyed - Crown - Federal - Unsurveyed - Crown - Provincial - Surveyed - Crown - Provincial - Unsurveyed - Hwy / Road - Land - Parks - Reserve (IR) - Stra");
                     tb.HasTrigger("PIMS_PRPTYP_I_S_I_TR");
                     tb.HasTrigger("PIMS_PRPTYP_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.PropertyTypeCode).HasComment("Code value of the property type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the property type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsPropertyVw>(entity =>
@@ -9583,15 +11522,28 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_PROVNC_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ProvinceStateId).ValueGeneratedNever();
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ProvinceStateId)
+                .ValueGeneratedNever()
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.CountryId).HasComment("Foreign key to the PIMS_COUNTRY table.");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Full name/description of the provbince/state.");
-            entity.Property(e => e.DisplayOrder).HasComment("Defines the display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if this code is disabled or enabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.ProvinceStateCode).HasComment("Abbreviated province.state code.");
 
             entity.HasOne(d => d.Country).WithMany(p => p.PimsProvinceStates)
@@ -9605,16 +11557,32 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_REGION", tb =>
                 {
+                    tb.HasComment("Contains the Ministry's regions.  Current values are: - South Coast Region - Southern Interior Region - Northern Region - Cannot determine");
                     tb.HasTrigger("PIMS_REGION_I_S_I_TR");
                     tb.HasTrigger("PIMS_REGION_I_S_U_TR");
                 });
 
-            entity.Property(e => e.RegionCode).ValueGeneratedNever();
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.RegionCode)
+                .ValueGeneratedNever()
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+            entity.Property(e => e.RegionName).HasComment("Name assigned to the region.");
         });
 
         modelBuilder.Entity<PimsRegionUser>(entity =>
@@ -9623,24 +11591,54 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_REGION_USER", tb =>
                 {
+                    tb.HasComment("Many-to-many entity that associates a user with a Ministry region.");
                     tb.HasTrigger("PIMS_RGNUSR_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_RGNUSR_I_S_I_TR");
                     tb.HasTrigger("PIMS_RGNUSR_I_S_U_TR");
                 });
 
-            entity.Property(e => e.RegionUserId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_REGION_USER_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.RegionCode).HasDefaultValue((short)4);
+            entity.Property(e => e.RegionUserId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_REGION_USER_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.RegionCode)
+                .HasDefaultValue((short)4)
+                .HasComment("Foreign key to the PIMS_REGION table.");
+            entity.Property(e => e.UserId).HasComment("Foreign key to the PIMS_USER table.");
 
             entity.HasOne(d => d.RegionCodeNavigation).WithMany(p => p.PimsRegionUsers)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -9671,16 +11669,26 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.RequestSourceTypeCode).HasComment("Code indicating the source of the research request.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the code indicating the source of the research request.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the code is disabled.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsResearchFile>(entity =>
@@ -9695,27 +11703,56 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_RESRCH_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ResearchFileId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ResearchFileId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.ExpropriationNotes).HasComment("Notes associated with an expropriation.");
             entity.Property(e => e.IsExpropriation).HasComment("Is this an expropriation?");
             entity.Property(e => e.Name).HasComment("Name given to the research file.");
             entity.Property(e => e.RequestDate).HasComment("Date of the research request.");
             entity.Property(e => e.RequestDescription).HasComment("Description of the research request.");
+            entity.Property(e => e.RequestSourceTypeCode).HasComment("Foreign key to the PIMS_REQUEST_SOURCE_TYPE table.");
             entity.Property(e => e.RequestorName).HasComment("Name of the research requestor.");
             entity.Property(e => e.RequestorOrganization).HasComment("Organization associated with the research requestor.");
             entity.Property(e => e.ResearchCompletionDate).HasComment("Date the research request was completed.");
-            entity.Property(e => e.ResearchFileStatusTypeCode).HasDefaultValue("ACTIVE");
+            entity.Property(e => e.ResearchFileStatusTypeCode)
+                .HasDefaultValue("ACTIVE")
+                .HasComment("Foreign key to the PIMS_RESEARCH_FILE_STATUS_TYPE table.");
             entity.Property(e => e.ResearchResult).HasComment("Result of the research request.");
             entity.Property(e => e.RfileNumber)
                 .HasDefaultValue("RFILE-UNKNOWN")
@@ -9746,18 +11783,46 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_RFLDOC_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ResearchFileDocumentId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_DOCUMENT_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ResearchFileDocumentId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_DOCUMENT_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.DocumentId).HasComment("Foreign key to the PIMS_DOCUMENT table.");
+            entity.Property(e => e.ResearchFileId).HasComment("Foreign key to the PIMS_RESEARCH_FILE table.");
 
             entity.HasOne(d => d.Document).WithMany(p => p.PimsResearchFileDocuments)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -9796,18 +11861,46 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_RFLNOT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ResearchFileNoteId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_NOTE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ResearchFileNoteId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_NOTE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.NoteId).HasComment("Foreign key to the PIMS_NOTE table.");
+            entity.Property(e => e.ResearchFileId).HasComment("Foreign key to the PIMS_RESEARCH_FILE table.");
 
             entity.HasOne(d => d.Note).WithMany(p => p.PimsResearchFileNotes)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -9838,18 +11931,46 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_RFLPRJ_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ResearchFileProjectId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_PROJECT_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ResearchFileProjectId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_PROJECT_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.ProjectId).HasComment("Foreign key to the PIMS_PROJECT table.");
+            entity.Property(e => e.ResearchFileId).HasComment("Foreign key to the PIMS_RESEARCH_FILE table.");
 
             entity.HasOne(d => d.Project).WithMany(p => p.PimsResearchFileProjects)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -9874,24 +11995,54 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_RESEARCH_FILE_PURPOSE", tb =>
                 {
+                    tb.HasComment("Many-to-many entity that associates a research file with a purpose type.");
                     tb.HasTrigger("PIMS_RSFLPR_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_RSFLPR_I_S_I_TR");
                     tb.HasTrigger("PIMS_RSFLPR_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ResearchFilePurposeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_PURPOSE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ResearchPurposeTypeCode).HasDefaultValue("GENENQ");
+            entity.Property(e => e.ResearchFilePurposeId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESEARCH_FILE_PURPOSE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.ResearchFileId).HasComment("Foreign key to the PIMS_RESEARCH_FILE table.");
+            entity.Property(e => e.ResearchPurposeTypeCode)
+                .HasDefaultValue("GENENQ")
+                .HasComment("Foreign key to the PIMS_RESEARCH_PURPOSE_TYPE table.");
 
             entity.HasOne(d => d.ResearchFile).WithMany(p => p.PimsResearchFilePurposes)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -9922,16 +12073,26 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.ResearchFileStatusTypeCode).HasComment("Code indicating the status of the research file.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the code indicating the status of the research file.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the code is disabled.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsResearchPurposeType>(entity =>
@@ -9946,16 +12107,26 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.ResearchPurposeTypeCode).HasComment("Code indicating the purpose of the research request.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the code indicating the purpose of the research request.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if the code is disabled.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsResponsibilityCode>(entity =>
@@ -9972,21 +12143,45 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_RESPONSIBILITY_ID_SEQ])")
-                .HasComment("System-generated primary key.");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.Code)
                 .HasDefaultValue("<Empty>")
                 .HasComment("Name of the code.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Descriptive value  of a code within the set.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.EffectiveDate)
@@ -10009,19 +12204,49 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ROLE", tb =>
                 {
+                    tb.HasComment("Entity that contains a description of the available roles that a user can request for access to the systems.  Current values are: - Acquisition functional: Access to create, read, update Acquisition files. - Acquisition read-only: Access to read Acquisiti");
                     tb.HasTrigger("PIMS_ROLE_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_ROLE_I_S_I_TR");
                     tb.HasTrigger("PIMS_ROLE_I_S_U_TR");
                 });
 
-            entity.Property(e => e.RoleId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ROLE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.RoleId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ROLE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the role.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+            entity.Property(e => e.IsPublic).HasComment("Indicates that the role is public.");
+            entity.Property(e => e.KeycloakGroupId).HasComment("Unique identifier assigned to the keycloak group.");
+            entity.Property(e => e.Name).HasComment("Name assigned to the role.");
+            entity.Property(e => e.RoleUid).HasComment("Unique identifier assigned to the role.");
+            entity.Property(e => e.SortOrder).HasComment("Designates a preferred presentation order of the role.");
         });
 
         modelBuilder.Entity<PimsRoleClaim>(entity =>
@@ -10030,20 +12255,47 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_ROLE_CLAIM", tb =>
                 {
+                    tb.HasComment("Associates a role with a keycloak claim.");
                     tb.HasTrigger("PIMS_ROLCLM_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_ROLCLM_I_S_I_TR");
                     tb.HasTrigger("PIMS_ROLCLM_I_S_U_TR");
                 });
 
-            entity.Property(e => e.RoleClaimId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ROLE_CLAIM_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.IsDisabled).HasDefaultValue(false);
+            entity.Property(e => e.RoleClaimId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ROLE_CLAIM_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.ClaimId).HasComment("Foreign key to the PIMS_CLAIM table.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.IsDisabled)
+                .HasDefaultValue(false)
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+            entity.Property(e => e.RoleId).HasComment("Foreign key to the PIMS_ROLE table.");
 
             entity.HasOne(d => d.Claim).WithMany(p => p.PimsRoleClaims)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -10082,22 +12334,50 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_SECDEP_I_S_U_TR");
                 });
 
-            entity.Property(e => e.SecurityDepositId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_ID_SEQ])");
+            entity.Property(e => e.SecurityDepositId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AmountPaid).HasComment("Amount paid of this security deposit");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.DepositDate).HasComment("Date of this security deposit");
             entity.Property(e => e.Description).HasComment("Descirption of this security deposit");
+            entity.Property(e => e.LeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
             entity.Property(e => e.OtherDepositTypeDesc).HasComment("Description of the deposit type If the SECURITY_DEPOSIT_TYPE_CODE has been chosen for this scurity deposit.");
+            entity.Property(e => e.SecurityDepositTypeCode).HasComment("Foreign key to the PIMS_SECURITY_DEPOSIT_TYPE table.");
 
             entity.HasOne(d => d.Lease).WithMany(p => p.PimsSecurityDeposits)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -10122,23 +12402,53 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_SECURITY_DEPOSIT_HOLDER", tb =>
                 {
+                    tb.HasComment("Many-to-many entity that associates the security deposit on a lease/license with a person or organization.");
                     tb.HasTrigger("PIMS_SCDPHL_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_SCDPHL_I_S_I_TR");
                     tb.HasTrigger("PIMS_SCDPHL_I_S_U_TR");
                 });
 
-            entity.Property(e => e.SecurityDepositHolderId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_HOLDER_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.SecurityDepositHolderId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_HOLDER_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.OrganizationId).HasComment("Foreign key to the PIMS_ORGANIZATION table.");
+            entity.Property(e => e.PersonId).HasComment("Foreign key to the PIMS_PERSON table.");
+            entity.Property(e => e.SecurityDepositId).HasComment("Foreign key to the PIMS_SECURITY_DEPOSIT table.");
 
             entity.HasOne(d => d.Organization).WithMany(p => p.PimsSecurityDepositHolders).HasConstraintName("PIM_ORG_PIM_SCDPHL_FK");
 
@@ -10169,22 +12479,49 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_SDRTRN_I_S_U_TR");
                 });
 
-            entity.Property(e => e.SecurityDepositReturnId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_RETURN_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.SecurityDepositReturnId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_RETURN_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.ClaimsAgainst).HasComment("Amount of claims against the deposit");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.InterestPaid).HasComment("Interest paid on the deposit to the deposit holder");
             entity.Property(e => e.ReturnAmount).HasComment("Amount returned minus claims");
             entity.Property(e => e.ReturnDate).HasComment("Date of deposit return");
+            entity.Property(e => e.SecurityDepositId).HasComment("Foreign key to the PIMS_SECURITY_DEPOSIT table.");
             entity.Property(e => e.TerminationDate).HasComment("Date the lease/license was terminated or surrendered");
 
             entity.HasOne(d => d.SecurityDeposit).WithMany(p => p.PimsSecurityDepositReturns)
@@ -10206,23 +12543,53 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_SECURITY_DEPOSIT_RETURN_HOLDER", tb =>
                 {
+                    tb.HasComment("Many-to-many entity that associates the security deposit return on a lease/license with a person or organization.");
                     tb.HasTrigger("PIMS_SCDPRH_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_SCDPRH_I_S_I_TR");
                     tb.HasTrigger("PIMS_SCDPRH_I_S_U_TR");
                 });
 
-            entity.Property(e => e.SecurityDepositReturnHolderId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_RETURN_HOLDER_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.SecurityDepositReturnHolderId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_SECURITY_DEPOSIT_RETURN_HOLDER_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.OrganizationId).HasComment("Foreign key to the PIMS_ORGANIZATION table.");
+            entity.Property(e => e.PersonId).HasComment("Foreign key to the PIMS_PERSON table.");
+            entity.Property(e => e.SecurityDepositReturnId).HasComment("Foreign key to the PIMS_SECURITY_DEPOSIT_RETURN table.");
 
             entity.HasOne(d => d.Organization).WithMany(p => p.PimsSecurityDepositReturnHolders).HasConstraintName("PIM_ORG_PIM_SCDPRH_FK");
 
@@ -10247,15 +12614,30 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_SECURITY_DEPOSIT_TYPE", tb =>
                 {
+                    tb.HasComment("Entity that describes the type of secutiry deposit for a lease or license.  Current cvalues include: - Other deposit - Pet deposit - Security deposit");
                     tb.HasTrigger("PIMS_SECDPT_I_S_I_TR");
                     tb.HasTrigger("PIMS_SECDPT_I_S_U_TR");
                 });
 
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.SecurityDepositTypeCode).HasComment("Code value of the security deposit type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the security deposit type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsStaticVariable>(entity =>
@@ -10264,22 +12646,49 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_STATIC_VARIABLE", tb =>
                 {
+                    tb.HasComment("Entity that contains information used by the system for operations.  Current values are:  - CLIENT: 034 - DBVERSION: 111.00 - FYEND: 31/03/2026 - FYSTART: 01/04/2025 - GST: 5.0 - PST: 7.0");
                     tb.HasTrigger("PIMS_STAVBL_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_STAVBL_I_S_I_TR");
                     tb.HasTrigger("PIMS_STAVBL_I_S_U_TR");
                 });
 
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.StaticVariableName).HasComment("The name of the static variable.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.StaticVariableValue).HasComment("The value of the static variable.");
         });
 
         modelBuilder.Entity<PimsStaticVariableHist>(entity =>
@@ -10319,7 +12728,7 @@ public partial class PimsBaseContext : DbContext
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the subfile interest type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsSurplusDeclarationType>(entity =>
@@ -10334,13 +12743,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.SurplusDeclarationTypeCode).HasComment("Code value of the surplus property type");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Code description of the surplus property type");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates that the code value is disabled");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsSurveyPlanType>(entity =>
@@ -10355,14 +12775,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.SurveyPlanTypeCode).HasComment("Code value for the survey plan type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the survey plan type.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsTake>(entity =>
@@ -10377,21 +12807,48 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_TAKE_I_S_U_TR");
                 });
 
-            entity.Property(e => e.TakeId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TAKE_ID_SEQ])");
+            entity.Property(e => e.TakeId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TAKE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.ActiveLeaseArea).HasComment("Area of the active lease.");
             entity.Property(e => e.ActiveLeaseEndDt).HasComment("End date of the active lease.");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.AreaUnitTypeCode).HasComment("Foreign key to the PIMS_AREA_UNIT_TYPE table.");
             entity.Property(e => e.CompletionDt).HasComment("Date the take was completed.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the property take.");
             entity.Property(e => e.IsAcquiredForInventory).HasComment("Is this being acquired for inventory? (default = TRUE)");
             entity.Property(e => e.IsActiveLease).HasComment("Is there an active lease associated with the take?");
@@ -10402,14 +12859,21 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.IsThereSurplus).HasComment("Is there a surplus or severance? (default = FALSE)");
             entity.Property(e => e.LandActArea).HasComment("Area of the Section 16 activity.");
             entity.Property(e => e.LandActEndDt).HasComment("End date of the Section 16 activity.");
+            entity.Property(e => e.LandActTypeCode).HasComment("Foreign key to the PIMS_LAND_ACT_TYPE table.");
             entity.Property(e => e.LicenseToConstructArea).HasComment("Area of the license to construct.");
             entity.Property(e => e.LtcEndDt).HasComment("End date of the license to construct.");
             entity.Property(e => e.NewHighwayDedicationArea).HasComment("Area of the new right-of-way.");
+            entity.Property(e => e.PropertyAcquisitionFileId).HasComment("Foreign key to the PIMS_PROPERTY_ACQUISITION_FILE table.");
             entity.Property(e => e.SrwEndDt).HasComment("End date of the statutory right-of-way.");
             entity.Property(e => e.StatutoryRightOfWayArea).HasComment("Area of the statutory right-of-way.");
             entity.Property(e => e.SurplusArea).HasComment("Surplus/severance area.");
-            entity.Property(e => e.TakeSiteContamTypeCode).HasDefaultValue("UNK");
-            entity.Property(e => e.TakeStatusTypeCode).HasDefaultValue("INPROGRESS");
+            entity.Property(e => e.TakeSiteContamTypeCode)
+                .HasDefaultValue("UNK")
+                .HasComment("Foreign key to the PIMS_TAKE_SITE_CONTAM_TYPE table.");
+            entity.Property(e => e.TakeStatusTypeCode)
+                .HasDefaultValue("INPROGRESS")
+                .HasComment("Foreign key to the PIMS_TAKE_STATUS_TYPE table.");
+            entity.Property(e => e.TakeTypeCode).HasComment("Foreign key to the PIMS_TAKE_TYPE table.");
 
             entity.HasOne(d => d.AreaUnitTypeCodeNavigation).WithMany(p => p.PimsTakes).HasConstraintName("PIM_ARUNIT_PIM_TAKE_FK");
 
@@ -10450,14 +12914,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.TakeSiteContamTypeCode).HasComment("Codified version of the site contamination type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the site contamination type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsTakeStatusType>(entity =>
@@ -10472,14 +12946,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.TakeStatusTypeCode).HasComment("Codified version of the take status type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the take status type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsTakeType>(entity =>
@@ -10494,14 +12978,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.TakeTypeCode).HasComment("Codified version of the take type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the take type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is inactive.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsTaxResponsibilityType>(entity =>
@@ -10532,8 +13026,8 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the party responsible for parcel/property tax payments.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsTenant>(entity =>
@@ -10549,13 +13043,23 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.TenantId)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_TENANT_ID_SEQ])")
-                .HasComment("Auto-sequenced unique key value");
+                .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.Code).HasComment("Code value for entry");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the entry for display purposes");
             entity.Property(e => e.Name).HasComment("Name of the entry for display purposes");
             entity.Property(e => e.Settings).HasComment("Serialized JSON value for the configuration");
@@ -10573,14 +13077,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.TenureCleanupTypeCode).HasComment("Code representing the type of property cleanup.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the type of property cleanup.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsUser>(entity =>
@@ -10595,25 +13109,49 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_USER_I_S_U_TR");
                 });
 
-            entity.Property(e => e.UserId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
+            entity.Property(e => e.UserId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
             entity.Property(e => e.ApprovedById).HasComment("Identifier of the person that approved the creation of this PIMS user.");
             entity.Property(e => e.BusinessIdentifierValue).HasComment("Accepted identifier of a user (e.g. IDIR)");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.ExpiryDate).HasComment("Expiry date/time of this user account.");
             entity.Property(e => e.GuidIdentifierValue).HasComment("Unique GUID associated with the user.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if this user account is disabled.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
             entity.Property(e => e.IssueDate).HasComment("Date/time that this user was identified as a PIMS user,");
             entity.Property(e => e.LastLogin).HasComment("Last date/time the user was logged into PIMS.");
             entity.Property(e => e.Note).HasComment("Notes associated with this user.");
+            entity.Property(e => e.PersonId).HasComment("Foreign key to the PIMS_PERSON table.");
             entity.Property(e => e.Position).HasComment("Role/position assigned to the user.");
+            entity.Property(e => e.UserTypeCode).HasComment("Foreign key to the PIMS_USER_TYPE table.");
 
             entity.HasOne(d => d.Person).WithMany(p => p.PimsUsers)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -10642,14 +13180,39 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_USRORG_I_S_U_TR");
                 });
 
-            entity.Property(e => e.UserOrganizationId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ORGANIZATION_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.UserOrganizationId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ORGANIZATION_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.OrganizationId).HasComment("Foreign key to the PIMS_ORGANIZATION table.");
+            entity.Property(e => e.RoleId).HasComment("Foreign key to the PIMS_ROLE table.");
+            entity.Property(e => e.UserId).HasComment("Foreign key to the PIMS_USER table.");
 
             entity.HasOne(d => d.Organization).WithMany(p => p.PimsUserOrganizations)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -10684,17 +13247,41 @@ public partial class PimsBaseContext : DbContext
                     tb.HasTrigger("PIMS_USERRL_I_S_U_TR");
                 });
 
-            entity.Property(e => e.UserRoleId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ROLE_ID_SEQ])");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.UserRoleId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_USER_ROLE_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory).HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid).HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory).HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
-                .HasComment("Indicates if this association is disabled.");
+                .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+            entity.Property(e => e.RoleId).HasComment("Foreign key to the PIMS_ROLE table.");
+            entity.Property(e => e.UserId).HasComment("Foreign key to the PIMS_USER table.");
 
             entity.HasOne(d => d.Role).WithMany(p => p.PimsUserRoles)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -10727,16 +13314,26 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.UserTypeCode)
                 .HasDefaultValue("CONTRACT")
                 .HasComment("Code value of the user type.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description)
                 .HasDefaultValue("Contractor")
                 .HasComment("Code description of the user type.");
-            entity.Property(e => e.DisplayOrder).HasComment("Specified display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the user type is active.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsUtilityResponsibilityType>(entity =>
@@ -10767,8 +13364,8 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Description of the party responsible for parcel/property utility payments.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsVolumeUnitType>(entity =>
@@ -10783,14 +13380,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.VolumeUnitTypeCode).HasComment("The volume unit used for measuring Properties.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Translation of the code value into a description that can be displayed to the user.");
-            entity.Property(e => e.DisplayOrder).HasComment("Order in which to display the code values, if required.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code value is still active or is now disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsVolumetricType>(entity =>
@@ -10805,14 +13412,24 @@ public partial class PimsBaseContext : DbContext
                 });
 
             entity.Property(e => e.VolumetricTypeCode).HasComment("Property parcel/property volumetric code.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Property parcel/property volumetric code description.");
-            entity.Property(e => e.DisplayOrder).HasComment("Force the display order of the codes.");
-            entity.Property(e => e.IsDisabled).HasComment("Indicates if the code is disabled.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
         });
 
         modelBuilder.Entity<PimsWorkActivityCode>(entity =>
@@ -10829,21 +13446,45 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_WORK_ACTIVITY_ID_SEQ])")
-                .HasComment("System-generated primary key.");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.Code)
                 .HasDefaultValue("<Empty>")
                 .HasComment("Name of the code.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Descriptive value  of a code within the set.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.EffectiveDate)
@@ -10874,21 +13515,45 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.Id)
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_YEARLY_FINANCIAL_CODE_ID_SEQ])")
-                .HasComment("System-generated primary key.");
-            entity.Property(e => e.AppCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppCreateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.AppLastUpdateUserDirectory).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.AppLastUpdateUserid).HasDefaultValueSql("(user_name())");
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
             entity.Property(e => e.Code)
                 .HasDefaultValue("<Empty>")
                 .HasComment("Standard Object of Expenditure (STOB) code.");
-            entity.Property(e => e.ConcurrencyControlNumber).HasDefaultValue(1L);
-            entity.Property(e => e.DbCreateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbCreateUserid).HasDefaultValueSql("(user_name())");
-            entity.Property(e => e.DbLastUpdateTimestamp).HasDefaultValueSql("(getutcdate())");
-            entity.Property(e => e.DbLastUpdateUserid).HasDefaultValueSql("(user_name())");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.Description).HasComment("Descriptive value  of the STOB code.");
             entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
             entity.Property(e => e.EffectiveDate)
@@ -11459,9 +14124,6 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_LEASE_RENEWAL_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_LEASE_STAKEHOLDER_COMP_REQ_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_LEASE_STAKEHOLDER_COMP_REQ_ID_SEQ")

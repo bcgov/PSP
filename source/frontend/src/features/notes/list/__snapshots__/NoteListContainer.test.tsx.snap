@@ -288,6 +288,7 @@ exports[`Note List Container > renders as expected 1`] = `
 
 <div
     class="c0 form-section"
+    data-testid="main-notes-section"
   >
     <h2
       class="c1"

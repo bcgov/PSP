@@ -1,3 +1,4 @@
+import classNames from 'classnames';
 import { getIn, useFormikContext } from 'formik';
 import { Col, Form, FormControlProps, Row } from 'react-bootstrap';
 import { FaAddressBook } from 'react-icons/fa';
@@ -43,6 +44,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
   contactManagerProps,
   placeholder,
   canEditDetails,
+  required,
 }) => {
   const { errors, touched, values } = useFormikContext<any>();
   const error = getIn(errors, field);
@@ -58,7 +60,10 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
 
   return (
     <>
-      <Form.Group controlId={`input-${field}`}>
+      <Form.Group
+        controlId={`input-${field}`}
+        className={classNames(required ? 'required' : '', 'input')}
+      >
         {!!label && <Form.Label>{label}</Form.Label>}
 
         <TooltipWrapper tooltipId={`${field}-error-tooltip}`} tooltip={errorTooltip}>

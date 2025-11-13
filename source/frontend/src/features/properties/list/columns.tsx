@@ -9,10 +9,11 @@ import { TypeaheadField } from '@/components/common/form/Typeahead';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps } from '@/components/Table';
-import { AreaUnitTypes, Claims } from '@/constants/index';
+import { Claims } from '@/constants/index';
 import HistoricalNumbersContainer from '@/features/mapSideBar/shared/header/HistoricalNumberContainer';
 import { HistoricalNumberFieldView } from '@/features/mapSideBar/shared/header/HistoricalNumberFieldView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import {
@@ -124,8 +125,8 @@ export const columns = ({
       const landUnitCode = props.row.original.propertyAreaUnitTypeCode;
       const hectars = convertArea(
         landArea,
-        landUnitCode ?? AreaUnitTypes.SquareMeters,
-        AreaUnitTypes.Hectares,
+        landUnitCode ?? ApiGen_CodeTypes_AreaUnitTypes.M2,
+        ApiGen_CodeTypes_AreaUnitTypes.HA,
       );
       return <> {formatNumber(hectars, 0, 3)} </>;
     },

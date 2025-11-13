@@ -13,6 +13,10 @@ namespace Pims.Dal.Repositories
 
         Paged<PimsManagementActivity> GetPageDeep(ManagementActivityFilter filter);
 
+        IList<PimsManagementActivity> SearchManagementActivities(ManagementActivityFilter filter);
+
+        IList<PimsManagementActivityInvoice> SearchManagementActivityInvoices(ManagementActivityFilter filter);
+
         IList<PimsManagementActivity> GetActivitiesByProperty(long propertyId);
 
         PimsManagementActivity GetActivity(long activityId);

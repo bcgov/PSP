@@ -1,7 +1,6 @@
-import { geoJSON } from 'leaflet';
 import React, { SyntheticEvent, useCallback, useEffect, useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaEye, FaMinus, FaPlus, FaSearchPlus, FaWindowClose } from 'react-icons/fa';
+import { FaEye, FaMinus, FaPlus, FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import AcquisitionIcon from '@/assets/images/acquisition-icon.svg?react';
@@ -16,11 +15,19 @@ import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFe
 import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { Claims } from '@/constants';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
+import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useLtsa } from '@/hooks/useLtsa';
-import { exists, firstOrNull, isValidString, pidFormatter } from '@/utils';
+import {
+  exists,
+  firstOrNull,
+  getPropertyNameFromSelectedFeatureSet,
+  isValidString,
+  pidFormatter,
+} from '@/utils';
 import { formatNames } from '@/utils/personUtils';
 
 export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () => {
@@ -28,32 +35,61 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
   const [ownerNames, setOwnerNames] = useState('');
 
   const {
-    requestFlyToBounds,
-    requestFlyToLocation,
     mapLocationFeatureDataset,
     prepareForCreation,
     worklistAdd,
     isEditPropertiesMode,
+    mapMarkedLocation,
     mapFeatureData,
   } = useMapStateMachine();
 
+  const { findByPid, findByPin } = useFullyAttributedParcelMapLayer();
+
   const pathGenerator = usePathGenerator();
 
-  const locationInfo = useMemo(() => {
-    const parcelMapFeature = firstOrNull(mapLocationFeatureDataset?.parcelFeatures)?.properties;
-    const pimsMapFeature = firstOrNull(mapLocationFeatureDataset?.pimsFeatures)?.properties;
-    if (exists(parcelMapFeature)) {
-      return parcelMapFeature;
-    } else if (exists(pimsMapFeature)) {
-      const foundFullyAttributed = mapFeatureData.fullyAttributedFeatures?.features.find(
-        fa =>
-          (exists(fa.properties?.PID_NUMBER) && fa.properties.PID_NUMBER === pimsMapFeature.PID) ||
-          (exists(fa.properties?.PIN) && fa.properties.PIN === pimsMapFeature.PIN),
-      );
-      return foundFullyAttributed?.properties ?? null;
-    }
+  // use state + effect to asynchronously resolve locationInfo
+  const [locationInfo, setLocationInfo] = useState<any>(null);
+  useEffect(() => {
+    const loadLocationInfo = async () => {
+      const parcelMapFeature = firstOrNull(mapLocationFeatureDataset?.parcelFeatures)?.properties;
+      const pimsMapFeature = firstOrNull(mapLocationFeatureDataset?.pimsFeatures)?.properties;
+
+      if (exists(parcelMapFeature)) {
+        setLocationInfo(parcelMapFeature);
+        return;
+      }
+
+      if (exists(pimsMapFeature)) {
+        const foundFullyAttributed = mapFeatureData.fullyAttributedFeatures?.features.find(
+          fa =>
+            (exists(fa.properties?.PID_NUMBER) &&
+              fa.properties.PID_NUMBER === pimsMapFeature.PID) ||
+            (exists(fa.properties?.PIN) && fa.properties.PIN === pimsMapFeature.PIN),
+        );
+
+        if (!exists(foundFullyAttributed)) {
+          if (exists(pimsMapFeature.PID)) {
+            const matchingPids = await findByPid(pimsMapFeature.PID_PADDED.toString(), true);
+            setLocationInfo(firstOrNull(matchingPids.features)?.properties ?? null);
+            return;
+          } else if (exists(pimsMapFeature.PIN)) {
+            const matchingPins = await findByPin(pimsMapFeature.PIN.toString(), true);
+            setLocationInfo(firstOrNull(matchingPins.features)?.properties ?? null);
+            return;
+          }
+        }
+        setLocationInfo(foundFullyAttributed?.properties ?? null);
+        return;
+      }
+
+      setLocationInfo(null);
+    };
+
+    loadLocationInfo();
   }, [
-    mapFeatureData.fullyAttributedFeatures.features,
+    findByPid,
+    findByPin,
+    mapFeatureData.fullyAttributedFeatures?.features,
     mapLocationFeatureDataset?.parcelFeatures,
     mapLocationFeatureDataset?.pimsFeatures,
   ]);
@@ -93,25 +129,10 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
   }, [getOwnerInfo, locationInfo?.PID]);
 
   const onViewPropertyInfo = useCallback(() => {
-    pathGenerator.showPropertyByPid(locationInfo.PID);
-  }, [locationInfo?.PID, pathGenerator]);
-
-  const onZoomToBounds = useCallback(() => {
-    if (exists(locationInfo?.SHAPE)) {
-      const bounds = geoJSON(locationInfo.SHAPE).getBounds();
-
-      if (exists(bounds) && bounds.isValid()) {
-        requestFlyToBounds(bounds);
-      }
-    } else if (exists(mapLocationFeatureDataset?.location)) {
-      requestFlyToLocation(mapLocationFeatureDataset.location);
+    if (exists(locationInfo?.PID)) {
+      pathGenerator.showPropertyByPid(locationInfo.PID);
     }
-  }, [
-    locationInfo?.SHAPE,
-    mapLocationFeatureDataset?.location,
-    requestFlyToBounds,
-    requestFlyToLocation,
-  ]);
+  }, [locationInfo?.PID, pathGenerator]);
 
   const showViewPropertyInfo = useMemo(
     () => isValidString(locationInfo?.PID) && !hasMultipleProperties,
@@ -275,47 +296,45 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
   }, [ltsaRequestWrapper.loading, mapMachine.isLoading]);
 
   return (
-    <StyledContainer isMinimized={isMinimized} isVisible={isVisible}>
+    <StyledContainer isMinimized={isMinimized} isVisible={isVisible} data-testid="quick-info">
       <LoadingBackdrop show={isLoading} parentScreen />
-      <StyledHeaderRow noGutters>
+      <StyledHeaderRow noGutters data-testid="quick-info-header">
         <Col xs="1">
           {showViewPropertyInfo && (
             <TooltipWrapper
               tooltipId={`property-quick-info-view-property`}
               tooltip={'View Property Information'}
             >
-              <StyledIconWrapper>
-                <FaEye size={18} title="Zoom map" onClick={onViewPropertyInfo} />
+              <StyledIconWrapper data-testid="view-property-icon">
+                <FaEye size={18} title="Show Property Info" onClick={onViewPropertyInfo} />
               </StyledIconWrapper>
             </TooltipWrapper>
           )}
         </Col>
         <Col xs="1" className="pl-2">
-          <MoreOptionsMenu variant="dark" options={menuOptions} />
+          <MoreOptionsMenu
+            variant="dark"
+            options={menuOptions}
+            dataTestid="quick-info-more-options"
+          />
         </Col>
         <Col xs="1"></Col>
         <Col xs="6" className="text-center">
           Property
         </Col>
         <Col xs="1">
-          <TooltipWrapper tooltipId={`property-quick-info-zoom`} tooltip={'Zoom to location'}>
-            <StyledIconWrapper>
-              <FaSearchPlus
-                size={18}
-                title="Zoom map"
-                onClick={(event: React.MouseEvent<SVGElement>) => {
-                  event.preventDefault();
-                  event.stopPropagation();
-                  onZoomToBounds();
-                }}
-              />
-            </StyledIconWrapper>
-          </TooltipWrapper>
+          <StyledIconWrapper>
+            <ZoomToLocation
+              icon={ZoomIconType.single}
+              featureCollection={mapLocationFeatureDataset?.parcelFeatures}
+            />
+          </StyledIconWrapper>
         </Col>
         <Col xs="1">
           <TooltipWrapper
             tooltipId={`property-quick-info-toggle`}
             tooltip={'Toggle Quick Property Information'}
+            key={`property-quick-info-toggle-${isMinimized}`}
           >
             <StyledIconWrapper
               onClick={(event: SyntheticEvent) => {
@@ -380,6 +399,13 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
               </SectionField>
             </StyledInfoWrapper>
           )}
+          {isEmpty && exists(mapMarkedLocation) && (
+            <StyledInfoWrapper>
+              <SectionField label="Location">
+                {getPropertyNameFromSelectedFeatureSet(selectedFeatureDataset).value}
+              </SectionField>
+            </StyledInfoWrapper>
+          )}
           {hasMultipleProperties && <div className="pt-8">Multiple properties found</div>}
         </>
       )}
@@ -422,6 +448,17 @@ const StyledIconWrapper = styled.div`
   color: white;
   font-size: 22px;
   cursor: pointer;
+  button {
+    min-height: auto;
+    .Button__value {
+      line-height: 0px;
+    }
+  }
+  svg {
+    color: white;
+    font-size: 22px;
+    cursor: pointer;
+  }
 `;
 
 const StyledCloseIcon = styled(FaWindowClose)`

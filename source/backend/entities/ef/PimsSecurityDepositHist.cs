@@ -35,7 +35,6 @@ public partial class PimsSecurityDepositHist
     [StringLength(200)]
     public string OtherDepositTypeDesc { get; set; }
 
-    [Required]
     [Column("DESCRIPTION")]
     [StringLength(2000)]
     public string Description { get; set; }
@@ -44,7 +43,7 @@ public partial class PimsSecurityDepositHist
     public decimal AmountPaid { get; set; }
 
     [Column("DEPOSIT_DATE")]
-    public DateOnly DepositDate { get; set; }
+    public DateOnly? DepositDate { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

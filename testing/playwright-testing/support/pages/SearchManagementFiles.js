@@ -26,6 +26,26 @@ class SearchManagementFiles {
       .click();
   }
 
+  async navigateToSearchActivitiesManagement() {
+    await clickAndWaitFor(
+      this.page,
+      "div[data-testid='nav-tooltip-project'] a",
+      "div[data-testid='side-tray']"
+    );
+    await clickAndWaitFor(
+      this.page,
+      "div[data-testid='nav-tooltip-management'] a",
+      "div[data-testid='side-tray']"
+    );
+
+    await this.page
+      .getByRole("link", { name: "Manage Management Activities" })
+      .waitFor({ state: "visible" });
+    await this.page
+      .getByRole("link", { name: "Manage Management Activities" })
+      .click();
+  }
+
   async orderByMgmtFileName() {
     await this.page.getByTestId("sort-column-fileName").click();
   }
@@ -381,6 +401,161 @@ class SearchManagementFiles {
       "div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div div:nth-child(8)"
     );
     expect(managementStatus).toHaveText(managementFile.ManagementStatus);
+  }
+
+  async verifySearchManagementActivitiesListView() {
+    //Search Management Activities Title
+    await this.page
+      .locator("h1 span")
+      .filter({ hasText: "Management Activities" })
+      .waitFor({ state: "visible" });
+    expect(
+      this.page.locator("h1 span").filter({ hasText: "Management Activities" })
+    ).toBeVisible();
+
+    //Search Management Filters
+    await this.page.locator("text=Search by:").waitFor({ state: "visible" });
+    expect(this.page.locator("text=Search by:")).toBeVisible();
+
+    await this.page.locator("#input-searchBy").waitFor({ state: "visible" });
+    expect(this.page.locator("#input-searchBy")).toBeVisible();
+
+    await this.page.locator("#input-address").waitFor({ state: "visible" });
+    expect(this.page.locator("#input-address")).toBeVisible();
+
+    await this.page
+      .locator("#input-fileNameOrNumberOrReference")
+      .waitFor({ state: "visible" });
+    expect(
+      this.page.locator("#input-fileNameOrNumberOrReference")
+    ).toBeVisible();
+
+    await this.page
+      .locator("#input-activityStatusCode")
+      .waitFor({ state: "visible" });
+    expect(this.page.locator("#input-activityStatusCode")).toBeVisible();
+
+    await this.page
+      .locator("#input-activityTypeCode")
+      .waitFor({ status: "visible" });
+    expect(this.page.locator("#input-activityTypeCode")).toBeVisible();
+
+    await this.page
+      .locator("#input-projectNameOrNumber")
+      .waitFor({ status: "visible" });
+    expect(this.page.locator("#input-projectNameOrNumber")).toBeVisible();
+
+    await this.page
+      .locator("#input-managementFileStatusCode")
+      .waitFor({ status: "visible" });
+    expect(this.page.locator("#input-managementFileStatusCode")).toBeVisible();
+
+    await this.page
+      .locator("#input-managementFilePurposeCode")
+      .waitFor({ status: "visible" });
+    expect(this.page.locator("#input-managementFilePurposeCode")).toBeVisible();
+
+    await this.page.locator("#search-button").waitFor({ status: "visible" });
+    expect(this.page.locator("#search-button")).toBeVisible();
+
+    await this.page.locator("#reset-button").waitFor({ status: "visible" });
+    expect(this.page.locator("#reset-button")).toBeVisible();
+
+    await this.page
+      .getByTestId("excel-icon-overview")
+      .waitFor({ status: "visible" });
+    expect(this.page.getByTestId("excel-icon-overview")).toBeVisible();
+
+    await this.page
+      .locator("//span[text()='Activity overview']")
+      .waitFor({ status: "visible" });
+    expect(
+      this.page.locator("//span[text()='Activity overview']")
+    ).toBeVisible();
+
+    await this.page
+      .getByTestId("excel-icon-invoices")
+      .waitFor({ status: "visible" });
+    expect(this.page.getByTestId("excel-icon-invoices")).toBeVisible();
+
+    await this.page
+      .locator("//span[text()='Invoice report']")
+      .waitFor({ status: "visible" });
+    expect(this.page.locator("//span[text()='Invoice report']")).toBeVisible();
+
+    //Search Management Column Headers
+    const managementActDescriptionColumn = await this.page
+      .locator(
+        "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(1) div[class='sortable-column']"
+      )
+      .getByText("Description");
+    expect(managementActDescriptionColumn).toBeVisible();
+
+    await this.page
+      .getByTestId("sort-column-description")
+      .waitFor({ status: "visible" });
+    expect(this.page.getByTestId("sort-column-description")).toBeVisible();
+
+    const fileNameColumn = await this.page.locator(
+      "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(2) div[class='sortable-column']"
+    );
+    expect(fileNameColumn).toHaveText("File name");
+
+    await this.page
+      .getByTestId("sort-column-fileName")
+      .waitFor({ status: "visible" });
+    expect(this.page.getByTestId("sort-column-fileName")).toBeVisible();
+
+    const historyFileColumn = await this.page.locator(
+      "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(3) div[class='sortable-column']"
+    );
+    expect(historyFileColumn).toHaveText("Historical File #");
+
+    await this.page
+      .getByTestId("sort-column-legacyFileNum")
+      .waitFor({ status: "visible" });
+    expect(this.page.getByTestId("sort-column-legacyFileNum")).toBeVisible();
+
+    const addressColumn = await this.page.locator(
+      "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(4) div[class='sortable-column']"
+    );
+    expect(addressColumn).toHaveText("Civic Address / PID / PIN");
+
+    const typeColumn = await this.page.locator(
+      "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(5) div[class='sortable-column']"
+    );
+    expect(typeColumn).toHaveText("Type");
+
+    await this.page
+      .getByTestId("sort-column-activityType")
+      .waitFor({ status: "visible" });
+    expect(this.page.getByTestId("sort-column-activityType")).toBeVisible();
+
+    const subtypeColumn = await this.page.locator(
+      "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(6) div[class='sortable-column']"
+    );
+    expect(subtypeColumn).toHaveText("Sub-type");
+
+    const statusColumn = await this.page.locator(
+      "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(7) div[class='sortable-column']"
+    );
+    expect(statusColumn).toHaveText("Status");
+
+    await this.page
+      .getByTestId("sort-column-activityStatus")
+      .waitFor({ status: "visible" });
+    expect(this.page.getByTestId("sort-column-activityStatus")).toBeVisible();
+
+    //Search Management Pagination
+    await this.page
+      .locator("div[class='Menu-root']")
+      .waitFor({ status: "visible" });
+    expect(this.page.locator("div[class='Menu-root']")).toBeVisible();
+
+    await this.page
+      .locator("ul[class='pagination']")
+      .waitFor({ status: "visible" });
+    expect(this.page.locator("ul[class='pagination']")).toBeVisible();
   }
 }
 

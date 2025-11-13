@@ -3,14 +3,11 @@ import { useCallback, useEffect, useState } from 'react';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 
+import { IAcquisitionOwnersSummaryViewProps } from './AcquisitionOwnersSummaryView';
+
 export interface IAcquisitionOwnersContainerProps {
   acquisitionFileId: number;
   View: React.FC<IAcquisitionOwnersSummaryViewProps>;
-}
-
-export interface IAcquisitionOwnersSummaryViewProps {
-  ownersList?: ApiGen_Concepts_AcquisitionFileOwner[];
-  isLoading: boolean;
 }
 
 const AcquisitionOwnersSummaryContainer: React.FunctionComponent<

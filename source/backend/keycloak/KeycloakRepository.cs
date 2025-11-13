@@ -38,13 +38,13 @@ namespace Pims.Keycloak
         public KeycloakRepository(IOpenIdConnectRequestClient client, IOptions<Configuration.KeycloakOptions> options)
         {
             this.Options = options.Value;
-            this.Options.Validate();
-            this.Options.ServiceAccount.Validate();
+            Options.Validate();
+            Options.ServiceAccount.Validate();
             _client = client;
-            _client.AuthClientOptions.Audience = this.Options.ServiceAccount.Audience ?? this.Options.Audience;
-            _client.AuthClientOptions.Authority = this.Options.ServiceAccount.Authority ?? this.Options.Authority;
-            _client.AuthClientOptions.Client = this.Options.ServiceAccount.Client;
-            _client.AuthClientOptions.Secret = this.Options.ServiceAccount.Secret;
+            _client.AuthClientOptions.Audience = Options.ServiceAccount.Audience ?? Options.Audience;
+            _client.AuthClientOptions.Authority = Options.ServiceAccount.Authority ?? Options.Authority;
+            _client.AuthClientOptions.Client = Options.ServiceAccount.Client;
+            _client.AuthClientOptions.Secret = Options.ServiceAccount.Secret;
         }
 
         /// <summary>
@@ -60,7 +60,7 @@ namespace Pims.Keycloak
 
         public async Task<List<UserModel>> GetUsersAsync(Guid id)
         {
-            var response = await _client.GetAsync($"{this.Options.ServiceAccount.Api}/{this.Options.ServiceAccount.Environment}/idir/users?guid={id.ToString().Replace("-", string.Empty)}");
+            var response = await _client.GetAsync($"{Options.ServiceAccount.Api}/{Options.ServiceAccount.Environment}/idir/users?guid={id.ToString().Replace("-", string.Empty)}");
             var result = await response.HandleResponseAsync<ResponseWrapper<UserModel>>();
 
             return result.Data.ToList();
@@ -126,7 +126,7 @@ namespace Pims.Keycloak
 
         private string GetIntegrationUrl()
         {
-            return $"{this.Options.ServiceAccount.Api}/integrations/{this.Options.ServiceAccount.Integration}/{this.Options.ServiceAccount.Environment}";
+            return $"{Options.ServiceAccount.Api}/integrations/{Options.ServiceAccount.Integration}/{Options.ServiceAccount.Environment}";
         }
         #endregion
 

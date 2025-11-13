@@ -415,12 +415,12 @@ exports[`AccessRequestContainer component > makes a request based on the access 
             class="form-control"
             id="input-email"
             name="email"
-            placeholder="test@test.com"
+            placeholder="devin.smith@gov.bc.ca"
             readonly=""
             style="word-break: break-all;"
-            title="test@test.com"
+            title=""
             type="email"
-            value="test@test.com"
+            value=""
           />
         </div>
       </div>
@@ -1216,7 +1216,7 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
             class="form-control"
             id="input-email"
             name="email"
-            placeholder="test@test.com"
+            placeholder="devin.smith@gov.bc.ca"
             readonly=""
             style="word-break: break-all;"
             title="test@test.com"

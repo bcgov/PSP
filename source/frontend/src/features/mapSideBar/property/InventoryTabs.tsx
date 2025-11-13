@@ -29,7 +29,7 @@ export enum InventoryTabNames {
   other = 'other',
   highway = 'highway',
   pmbc = 'pmbc',
-  document = 'document',
+  documents = 'documents',
   notes = 'notes',
 }
 /**

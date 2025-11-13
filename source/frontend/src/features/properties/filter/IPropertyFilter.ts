@@ -2,6 +2,8 @@
  * Property filter options used by Formik.
  */
 
+import { IAutocompletePrediction } from '@/interfaces';
+
 import { DmsCoordinates } from './CoordinateSearch/models';
 
 export interface IPropertyFilter {
@@ -39,6 +41,8 @@ export interface IPropertyFilter {
   range: string;
   /** Survey Parcel District */
   district: string;
+  /** PIMS project */
+  project: IAutocompletePrediction;
 }
 
 export const defaultPropertyFilter: IPropertyFilter = {
@@ -59,4 +63,5 @@ export const defaultPropertyFilter: IPropertyFilter = {
   township: '',
   range: '',
   district: '',
+  project: null,
 };

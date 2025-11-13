@@ -1,10 +1,11 @@
-import { AreaUnitTypes } from '@/constants';
 import { convertArea, exists, firstValidOrNull, isValidString, pidFormatter } from '@/utils';
 
+import { ApiGen_CodeTypes_AreaUnitTypes } from '../api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { ApiGen_Concepts_Geometry } from '../api/generated/ApiGen_Concepts_Geometry';
 import { ApiGen_Concepts_Property } from '../api/generated/ApiGen_Concepts_Property';
 import { PMBC_FullyAttributed_Feature_Properties } from '../layers/parcelMapBC';
 import { Api_GenerateAddress } from './GenerateAddress';
+
 export class Api_GenerateProperty {
   location: ApiGen_Concepts_Geometry | null;
   pid: string;
@@ -14,7 +15,7 @@ export class Api_GenerateProperty {
   location_of_land: string;
   district: string;
   electoral_dist: string;
-  area_sqm: number;
+  area_sqm: number | null;
   plan_number: string;
 
   constructor(
@@ -45,7 +46,7 @@ export class Api_GenerateProperty {
     const pims_area_sqm = convertArea(
       pimsProperty?.landArea || 0,
       pimsProperty?.areaUnit?.id || '',
-      AreaUnitTypes.SquareMeters,
+      ApiGen_CodeTypes_AreaUnitTypes.M2,
     );
 
     this.area_sqm = firstValidOrNull([fa_area_sqm, pims_area_sqm], exists) ?? 0;

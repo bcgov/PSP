@@ -4,7 +4,7 @@ using PIMS.Tests.Automation.Classes;
 namespace PIMS.Tests.Automation.PageObjects
 {
     public class SharedActivities : PageObjectBase
-    {  
+    {
         //Create Activity Elements
         private readonly By managementActCloseTrayBttn = By.CssSelector("button[id='close-tray']");
         private readonly By managementActEditButton = By.CssSelector("button[title='Edit property activity']");
@@ -22,7 +22,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementActSubTypeLabel = By.XPath("//label[contains(text(),'Sub-type')]");
         private readonly By managementActSubTypeSelect = By.Id("multiselect-activitySubtypeCodes");
         private readonly By managementActSubTypeSelectOptions = By.CssSelector("div[id='multiselect-activitySubtypeCodes'] div[class='optionListContainer displayNone']");
-        private readonly By managementActSubTypeSelect1stOption = By.CssSelector("div[id='multiselect-activitySubtypeCodes'] div[class='optionListContainer displayNone'] ul li:first-child");
         private readonly By managementActSubTypeDeleteBttns = By.CssSelector("div[id='multiselect-activitySubtypeCodes'] i[class='custom-close']");
         private readonly By managementActSubTypeContents = By.CssSelector("div[id='multiselectContainerReact']");
         private readonly By managementActStatusLabel = By.XPath("//label[contains(text(),'Activity status')]");
@@ -52,8 +51,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementActContactManagerLabel = By.XPath("//label[contains(text(),'Contact manager')]");
         private readonly By managementActContactManagerContent = By.XPath("//label[contains(text(),'Contact manager')]/parent::div/following-sibling::div");
         private readonly By managementActContactManagerTooltip = By.XPath("//label[contains(text(),'Contact manager')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
-        private readonly By managementActInvolvedPartiesLabel = By.XPath("//label[contains(text(),'Involved parties')]");
-        private readonly By managementActInvolvedPartiesInput = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/div/div/div/div//div[contains(text(),'Select from contacts')]");
+        //private readonly By managementActInvolvedPartiesLabel = By.XPath("//label[contains(text(),'Involved parties')]");
+        //private readonly By managementActInvolvedPartiesInput = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/div/div/div/div//div[contains(text(),'Select from contacts')]");
         private readonly By managementActInvolvedPartiesExtContactsBttn = By.XPath("//input[@id='input-involvedParties[0].id']/parent::div/parent::div/following-sibling::div/button");
         private readonly By managementActInvolvedPartiesExtContactsAddContactLink = By.XPath("//input[@id='input-involvedParties[0].id']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::button");
         private readonly By managementActInvolvedPartiesDeleteBttns = By.XPath("//label[contains(text(),'Involved parties')]/parent::div/following-sibling::div/div/div/button");
@@ -62,8 +61,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementActDetailsActivityExternalContactsInput = By.XPath("//label[contains(text(),'External contacts')]/parent::div/following-sibling::div/div/div/div/div/div//div[contains(text(),'Select from contacts')]");
         private readonly By managementActDetailsActivityExternalContactsAddBttn = By.XPath("//label[contains(text(),'External contacts')]/parent::div/following-sibling::div/div/div/div/div/div/button");
         private readonly By managementActDetailsActivityExternalContactsCount = By.XPath("//label[contains(text(),'External contacts')]/parent::div/following-sibling::div/a");
-        private readonly By managementActDetailsActivityExternalContactCreateCount = By.XPath("//label[contains(text(),'External contacts')]/parent::div/following-sibling::div/div");
-        private readonly By managementActDetailsActivityExternalContacts1stDeleteBttn = By.XPath("//label[contains(text(),'External contacts')]/parent::div/following-sibling::div/div[1]/div[2]/button");
         private readonly By managementActServiceProviderLabel = By.XPath("//label[contains(text(),'Service provider')]");
         private readonly By managementActServiceProviderInput = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/div/div/div/div[contains(text(),'Select from contacts')]");
         private readonly By managementActServiceProviderBttn = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/div/div/div/button");
@@ -300,20 +297,11 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(managementActRequestorContent, activity.PropertyActivityRequestorContactMngr);
             }
 
-            if (activityType == "Management File")
-            {
                 AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsLabel);
                 if (activity.PropertyActivityInvolvedPartiesExtContactsList.First() != "")
                     for (int i = 0; i < activity.PropertyActivityInvolvedPartiesExtContactsList.Count; i++)
                         Assert.Equal(webDriver.FindElements(managementActDetailsActivityExternalContactsCount)[i].Text, activity.PropertyActivityInvolvedPartiesExtContactsList[i]);
-            }
-            else
-            {
-                AssertTrueIsDisplayed(managementActInvolvedPartiesLabel);
-                if (activity.PropertyActivityInvolvedPartiesExtContactsList.First() != "")
-                    for (int i = 0; i < activity.PropertyActivityInvolvedPartiesExtContactsList.Count; i++)
-                        Assert.Equal(webDriver.FindElements(managementActInvolvedPartiesContent)[i].Text, activity.PropertyActivityInvolvedPartiesExtContactsList[i]);
-            }
+            
 
 
             AssertTrueIsDisplayed(managementActServiceProviderLabel);
@@ -353,11 +341,8 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementActSubTypeSelect);
             AssertTrueIsDisplayed(managementActStatusLabel);
             AssertTrueIsDisplayed(managementActStatusInput);
-
-            if (activityType == "Management File")
-                AssertTrueIsDisplayed(managementActCommencementLabel);
-            else
-                AssertTrueIsDisplayed(managementActRequestAddedDateLabel);
+            AssertTrueIsDisplayed(managementActCommencementLabel);
+            
             AssertTrueIsDisplayed(managementActRequestAddedCommenceDateInput);
 
             AssertTrueIsDisplayed(managementActCompletionDateLabel);
@@ -383,20 +368,9 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(managementActRequestorInput);
             }
 
-            if (activityType == "Management File")
-            {
-                AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsLabel);
-                AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsInput);
-                AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsAddBttn); 
-            }
-            else
-            {
-                AssertTrueIsDisplayed(managementActInvolvedPartiesLabel);
-                AssertTrueIsDisplayed(managementActInvolvedPartiesInput);
-                AssertTrueIsDisplayed(managementActInvolvedPartiesExtContactsBttn);
-                AssertTrueIsDisplayed(managementActInvolvedPartiesExtContactsAddContactLink);
-            }
-
+            AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsLabel);
+            AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsInput);
+            AssertTrueIsDisplayed(managementActDetailsActivityExternalContactsAddBttn); 
             AssertTrueIsDisplayed(managementActServiceProviderLabel);
             AssertTrueIsDisplayed(managementActServiceProviderInput);
             AssertTrueIsDisplayed(managementActServiceProviderBttn);

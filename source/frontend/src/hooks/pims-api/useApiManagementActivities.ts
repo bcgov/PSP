@@ -3,6 +3,7 @@ import React from 'react';
 
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
+import { Api_ManagementActivityFilter } from '@/models/api/ManagementActivityFilter';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
 import useAxiosApi from './useApi';
@@ -39,22 +40,6 @@ export const useApiManagementActivities = () => {
         api.get<ApiGen_Base_Page<ApiGen_Concepts_ManagementActivity>>(
           `/management-activities/search?${params ? queryString.stringify(params) : ''}`,
         ),
-
-      exportManagementActivitiesApi: (
-        filter: IPaginateManagementActivities,
-        outputFormat: 'csv' | 'excel' = 'excel',
-      ) =>
-        api.get<Blob>(
-          `/reports/management-activities?${
-            filter ? queryString.stringify({ ...filter, all: true }) : ''
-          }`,
-          {
-            responseType: 'blob',
-            headers: {
-              Accept: outputFormat === 'csv' ? 'text/csv' : 'application/vnd.ms-excel',
-            },
-          },
-        ),
       getActivityApi: (managementFileId: number, managementActivityId: number) =>
         api.get<ApiGen_Concepts_ManagementActivity>(
           `/managementfiles/${managementFileId}/management-activities/${managementActivityId}`,
@@ -72,6 +57,22 @@ export const useApiManagementActivities = () => {
         api.delete<boolean>(
           `/managementfiles/${managementFileId}/management-activities/${managementActivityId}`,
         ),
+
+      generateManagementActivitiesOverviewReportApi: (filter: Api_ManagementActivityFilter) =>
+        api.post<Blob>(`/reports/management-activities/overview`, filter, {
+          responseType: 'blob',
+          headers: {
+            Accept: 'application/vnd.ms-excel',
+          },
+        }),
+
+      generateManagementActivitiesInvoiceReportApi: (filter: Api_ManagementActivityFilter) =>
+        api.post<Blob>(`/reports/management-activities/invoices`, filter, {
+          responseType: 'blob',
+          headers: {
+            Accept: 'application/vnd.ms-excel',
+          },
+        }),
     }),
     [api],
   );
