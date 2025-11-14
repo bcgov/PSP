@@ -282,7 +282,7 @@ describe('Documents Search Results Table', () => {
           rowVersion: 2,
         },
       ],
-      claims: [Claims.PROPERTY_VIEW,]
+      claims: [Claims.PROPERTY_VIEW],
     });
 
     const propertyIdentifier = getByTestId('property-id-37');
