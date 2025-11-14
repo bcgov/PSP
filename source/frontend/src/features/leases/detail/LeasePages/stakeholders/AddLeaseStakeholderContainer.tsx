@@ -54,7 +54,7 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
   const { setModalContent, setDisplayModal } = useModalContext();
   const [stakeholders, setStakeholders] = useState<FormStakeholder[]>(initialStakeholders);
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(
-    stakeholders.map(t => FormStakeholder.toContactSearchResult(t)) || [],
+    stakeholders.map(t => FormStakeholder.toContactSearchResult(t)).filter(exists) || [],
   );
   const [showContactManager, setShowContactManager] = React.useState<boolean>(false);
   const [handleSubmit, setHandleSubmit] = useState<(() => void) | undefined>(undefined);
@@ -81,14 +81,16 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
   useEffect(() => {
     const stakeholderFunc = async () => {
       const stakeholders = await getLeaseStakeholders(leaseId ?? 0);
-      if (stakeholders !== undefined) {
+      if (exists(stakeholders)) {
         setStakeholders(
           stakeholders.map((t: ApiGen_Concepts_LeaseStakeholder) => new FormStakeholder(t)),
         );
         setSelectedContacts(
-          stakeholders.map((t: ApiGen_Concepts_LeaseStakeholder) =>
-            FormStakeholder.toContactSearchResult(new FormStakeholder(t)),
-          ) || [],
+          stakeholders
+            .map((t: ApiGen_Concepts_LeaseStakeholder) =>
+              FormStakeholder.toContactSearchResult(new FormStakeholder(t)),
+            )
+            .filter(exists) || [],
         );
       }
     };
@@ -180,7 +182,9 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
             });
             setStakeholders(initialStakeholders ?? []);
             setSelectedContacts(
-              initialStakeholders?.map(t => FormStakeholder.toContactSearchResult(t)) ?? [],
+              initialStakeholders
+                ?.map(t => FormStakeholder.toContactSearchResult(t))
+                .filter(exists) ?? [],
             );
             setDisplayModal(true);
           } else {

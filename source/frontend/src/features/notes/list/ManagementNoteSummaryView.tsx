@@ -64,6 +64,7 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
       title="notes"
       isCollapsable
       initiallyExpanded
+      data-testid="management-notes-summary"
     >
       <NoteResults
         results={notes}

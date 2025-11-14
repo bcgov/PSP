@@ -10,5 +10,6 @@ export interface ApiGen_Requests_DocumentUpdateRequest {
   mayanDocumentId: number;
   documentTypeId: number;
   documentStatusCode: string | null;
+  fileName: string | null;
   documentMetadata: ApiGen_Concepts_DocumentMetadataUpdate[] | null;
 }

@@ -17,7 +17,7 @@ Scenario: 02._Research_File_Properties
 
 Scenario: 03._Research_File_Documents
 	Given I create a basic Research File from row number 3
-	When I create Digital Documents for a "Research File" row number 3
+	When I create Digital Documents for a "Research File" from row number 3
 	And I edit a Digital Document for a "Research File" from row number 6
 	Then A new Research File is created successfully
 

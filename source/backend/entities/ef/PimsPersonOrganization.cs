@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Associates a person with an organization
+/// </summary>
 [Table("PIMS_PERSON_ORGANIZATION")]
 [Index("OrganizationId", Name = "PERORG_ORGANIZATION_ID_IDX")]
 [Index("PersonId", Name = "PERORG_PERSON_ID_IDX")]

@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Describes the type of identifier for an organization.  Current values are: - A BC electronic identifier that allows businesses to connect to the BC Government to manage a variety of company information - A Government organization identifier - A global uni
+/// </summary>
 [Table("PIMS_ORG_IDENTIFIER_TYPE")]
 public partial class PimsOrgIdentifierType
 {

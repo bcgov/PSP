@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Describes the payable or receivable type of lease/license.  Current values are: - Payable (BCTFA as tenant) - Payable (MOTT as tenant) - Receivable
+/// </summary>
 [Table("PIMS_LEASE_PAY_RVBL_TYPE")]
 public partial class PimsLeasePayRvblType
 {

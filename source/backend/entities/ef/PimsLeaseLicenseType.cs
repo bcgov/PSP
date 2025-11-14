@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Describes the type of lease/license.  Current values are: - Amending Agreement - Building Lease (receivable) - Licence to Construct - Licence of Occupation (BCTFA fee simple) - Licence of Occupation (BCTFA fee simple) - Licence of Occupation (HMK fee simp
+/// </summary>
 [Table("PIMS_LEASE_LICENSE_TYPE")]
 public partial class PimsLeaseLicenseType
 {

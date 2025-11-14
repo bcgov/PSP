@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Contains the relationship between the document type and the document
+/// </summary>
 [Table("PIMS_DOCUMENT_CATEGORY_SUBTYPE")]
 [Index("DocumentTypeId", "DocumentCategoryTypeCode", Name = "DCCTSB_DOCUMENT_CATEGORY_SUBTYPE_TUC", IsUnique = true)]
 [Index("DocumentCategoryTypeCode", Name = "DCCTSB_DOCUMENT_CATEGORY_TYPE_CODE_IDX")]

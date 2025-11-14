@@ -11,7 +11,6 @@ namespace Pims.Dal.Entities;
 /// </summary>
 [Table("PIMS_DISPOSITION_FILE_TEAM")]
 [Index("DispositionFileId", Name = "DSPFTM_DISPOSITION_FILE_ID_IDX")]
-[Index("DispositionFileId", "DspFlTeamProfileTypeCode", Name = "DSPFTM_DSP_FILE_PROFILE_TUC", IsUnique = true)]
 [Index("DspFlTeamProfileTypeCode", Name = "DSPFTM_DSP_FL_TEAM_PROFILE_TYPE_CODE_IDX")]
 [Index("OrganizationId", Name = "DSPFTM_ORGANIZATION_ID_IDX")]
 [Index("PersonId", Name = "DSPFTM_PERSON_ID_IDX")]

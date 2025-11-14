@@ -51,7 +51,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By search1stPMBCResultCreateManagementOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Management File']");
         private readonly By search1stPMBCResultCreateLeaseOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Lease File']");
         private readonly By search1stPMBCResultCreateDispositionOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Disposition File']");
-        private readonly By search1stPMBCResultAddToFileOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Add to Open File']");
+        private readonly By search1stPMBCResultAddToFileOption = By.CssSelector("div[data-testid='pmbc-search-results-section'] div[data-testid='search-property-0'] div[data-testid='more-options-menu'] a[aria-label='Add to Open File']");
 
         private readonly By search1stPIMSResult = By.XPath("//div[text()='Results (PIMS)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[1]/div");
         private readonly By search1stPIMSResultEllipsisBttn = By.XPath("//div[text()='Results (PIMS)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[2]/div/div/button");
@@ -255,7 +255,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectFirstPMBCResult(string action = "")
         {
             Wait();
-            Actions hoverAction = new Actions(webDriver);
+            Actions hoverAction = new(webDriver);
             hoverAction.MoveToElement(webDriver.FindElement(search1stPMBCResult)).MoveToElement(webDriver.FindElement(search1stPMBCResultEllipsisBttn)).Click().Build().Perform();
 
             switch (action)
@@ -292,7 +292,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectSecondPMBCResult(string action = "")
         {
             Wait();
-            Actions hoverAction = new Actions(webDriver);
+            Actions hoverAction = new(webDriver);
             hoverAction.MoveToElement(webDriver.FindElement(search2ndPMBCResult)).MoveToElement(webDriver.FindElement(search2ndPMBCResultEllipsisBttn)).Click().Build().Perform();
 
             switch (action)
@@ -321,7 +321,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectFirstPIMSResultToFile()
         {
             Wait();
-            Actions action = new Actions(webDriver);
+            Actions action = new(webDriver);
             action.MoveToElement(webDriver.FindElement(search1stPIMSResult)).MoveToElement(webDriver.FindElement(search1stPIMSResultEllipsisBttn)).Click().Build().Perform();
             webDriver.FindElement(search1stPMBCResultAddToFileOption).Click();
         }

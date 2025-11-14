@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Table to provide multiple acquisition progress types for an acquisition file.
+/// </summary>
 [Table("PIMS_ACQ_FILE_ACQ_PROGRESS")]
 [Index("AcquisitionFileId", Name = "AQFFLP_ACQUISITION_FILE_ID_IDX")]
 [Index("AcqFileProgessTypeCode", Name = "AQFFLP_ACQ_FILE_PROGESS_TYPE_CODE_IDX")]

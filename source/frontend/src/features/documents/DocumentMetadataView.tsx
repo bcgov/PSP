@@ -6,7 +6,7 @@ import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/Ap
 import { withNameSpace } from '@/utils/formUtils';
 
 import { StyledNoData } from './commonStyles';
-import { DocumentUpdateFormData, DocumentUploadFormData } from './ComposedDocument';
+import { DocumentUpdateFormData, DocumentUploadFormData } from './models';
 
 export interface IDocumentMetadataViewProps {
   namespace?: string;

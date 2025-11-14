@@ -1,14 +1,11 @@
-import { useKeycloak } from '@react-keycloak/web';
-import noop from 'lodash/noop';
-
 import { Claims } from '@/constants/claims';
-import { DocumentRow } from '@/features/documents/ComposedDocument';
 import { mockDocumentResponse, mockDocumentsResponse } from '@/mocks/documents.mock';
 import { cleanup, mockKeycloak, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { DocumentResults, IDocumentResultProps } from './DocumentResults';
 import { get } from 'lodash';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { DocumentRow } from '../../models/DocumentRow';
 
 const setSort = vi.fn();
 
@@ -101,7 +98,7 @@ describe('Document Results Table', () => {
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT],
     });
 
-    const viewButtons = await getAllByTestId('document-view-button');
+    const viewButtons = await getAllByTestId('document-view-button-0');
     expect(viewButtons[0]).toBeVisible();
   });
 
@@ -174,7 +171,7 @@ describe('Document Results Table', () => {
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
     });
 
-    const deleteButtons = await getAllByTestId('document-delete-button');
+    const deleteButtons = await getAllByTestId('document-delete-button-0');
     expect(deleteButtons[0]).toBeVisible();
   });
 
@@ -208,7 +205,7 @@ describe('Document Results Table', () => {
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT],
     });
 
-    const viewButton = getAllByTestId('document-view-button')[0];
+    const viewButton = getAllByTestId('document-view-button-0')[0];
     userEvent.click(viewButton);
     expect(onViewDetails).toHaveBeenCalled();
   });
@@ -221,7 +218,7 @@ describe('Document Results Table', () => {
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
     });
 
-    const deleteButton = getAllByTestId('document-delete-button')[0];
+    const deleteButton = getAllByTestId('document-delete-button-0')[0];
     userEvent.click(deleteButton);
     expect(onDelete).toHaveBeenCalled();
   });

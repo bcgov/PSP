@@ -23,31 +23,25 @@ export const UpdateAcquisitionTeamYupSchema = yup.object().shape({
       .max(200, 'Other Description must be at most 200 characters'),
     otherwise: yup.string().nullable(),
   }),
-  team: yup
-    .array()
-    .of(
-      yup.object().shape(
-        {
-          contactTypeCode: yup.string().when('contact', {
-            is: (contact: object) => !!contact,
-            then: yup.string().required('Select a profile'),
+  team: yup.array().of(
+    yup.object().shape(
+      {
+        contactTypeCode: yup.string().when('contact', {
+          is: (contact: object) => !!contact,
+          then: yup.string().required('Select a profile'),
+        }),
+        contact: yup
+          .object()
+          .nullable()
+          .when('contactTypeCode', {
+            is: (contactTypeCode: string) => !!contactTypeCode,
+            then: yup.object().required('Select a team member').nullable(),
           }),
-          contact: yup
-            .object()
-            .nullable()
-            .when('contactTypeCode', {
-              is: (contactTypeCode: string) => !!contactTypeCode,
-              then: yup.object().required('Select a team member').nullable(),
-            }),
-        },
-        [
-          ['contactTypeCode', 'contact'],
-          ['contact', 'contactTypeCode'],
-        ],
-      ),
-    )
-    .unique(
-      'You have selected a team member role that has already been filled. Each team member role can only be filled once. Select a new team member type.',
-      (val: any) => val.contactTypeCode,
+      },
+      [
+        ['contactTypeCode', 'contact'],
+        ['contact', 'contactTypeCode'],
+      ],
     ),
+  ),
 });

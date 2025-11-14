@@ -45,7 +45,6 @@ public partial class PimsSecurityDeposit
     /// <summary>
     /// Descirption of this security deposit
     /// </summary>
-    [Required]
     [Column("DESCRIPTION")]
     [StringLength(2000)]
     public string Description { get; set; }
@@ -60,7 +59,7 @@ public partial class PimsSecurityDeposit
     /// Date of this security deposit
     /// </summary>
     [Column("DEPOSIT_DATE")]
-    public DateOnly DepositDate { get; set; }
+    public DateOnly? DepositDate { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o

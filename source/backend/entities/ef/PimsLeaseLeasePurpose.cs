@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Associates lease with the purpose(s) of the lease,
+/// </summary>
 [Table("PIMS_LEASE_LEASE_PURPOSE")]
 [Index("LeaseId", Name = "LLPURP_LEASE_ID_IDX")]
 [Index("LeasePurposeTypeCode", Name = "LLPURP_LEASE_PURPOSE_TYPE_CODE_IDX")]

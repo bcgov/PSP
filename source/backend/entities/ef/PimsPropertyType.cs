@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Code table to describe the type of property.  Current values include: - Buiding - Crown - Federal - Surveyed - Crown - Federal - Unsurveyed - Crown - Provincial - Surveyed - Crown - Provincial - Unsurveyed - Hwy / Road - Land - Parks - Reserve (IR) - Stra
+/// </summary>
 [Table("PIMS_PROPERTY_TYPE")]
 public partial class PimsPropertyType
 {

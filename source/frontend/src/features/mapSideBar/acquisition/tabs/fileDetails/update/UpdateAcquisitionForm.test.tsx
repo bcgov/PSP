@@ -278,7 +278,7 @@ describe('UpdateAcquisitionForm component', () => {
     });
 
     expect(validationSchema).toHaveBeenCalled();
-    expect(getByTestId('team-profile-dup-error')).toBeVisible();
+    expect(queryByTestId('team-profile-dup-error')).toBeNull();
 
     // Set unique should pass
     await act(async () => {

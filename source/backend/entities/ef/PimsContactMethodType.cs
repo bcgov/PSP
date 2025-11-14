@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Describes the type fo contact methods availabvle for a person or organization.  Current values are: - Facsimile machine - Personal email - Personal mobile phone - Personal phone - Work email - Work mobile phone - Work phone
+/// </summary>
 [Table("PIMS_CONTACT_METHOD_TYPE")]
 public partial class PimsContactMethodType
 {

@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Table to provide multiple acquisition take types for an acquisition file.
+/// </summary>
 [Table("PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP")]
 [Index("AcquisitionFileId", Name = "AQFATT_ACQUISITION_FILE_ID_IDX")]
 [Index("AcqFileTakeTypeCode", Name = "AQFATT_ACQ_FILE_TAKE_TYPE_CODE_IDX")]

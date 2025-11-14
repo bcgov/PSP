@@ -18,7 +18,7 @@ import DocumentUploadContainer, {
   IDocumentUploadContainerRef,
 } from './DocumentUploadContainer';
 import { IDocumentUploadFormProps } from './DocumentUploadForm';
-import { BatchUploadFormModel, DocumentUploadFormData } from '../ComposedDocument';
+import { BatchUploadFormModel, DocumentUploadFormData } from '../models';
 
 const history = createMemoryHistory();
 const storeState = {

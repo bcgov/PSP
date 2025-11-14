@@ -60,6 +60,14 @@ public partial class PimsLeaseHist
     [Column("PRODUCT_ID")]
     public long? ProductId { get; set; }
 
+    [Column("FILE_APPRAISAL_TYPE_CODE")]
+    [StringLength(20)]
+    public string FileAppraisalTypeCode { get; set; }
+
+    [Column("FILE_LGL_SRVY_TYPE_CODE")]
+    [StringLength(20)]
+    public string FileLglSrvyTypeCode { get; set; }
+
     [Column("L_FILE_NO")]
     [StringLength(50)]
     public string LFileNo { get; set; }

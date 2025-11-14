@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Many-to-many entity to track user access requests for specific roles.
+/// </summary>
 [Table("PIMS_ACCESS_REQUEST")]
 [Index("AccessRequestStatusTypeCode", Name = "ACRQST_ACCESS_REQUEST_STATUS_TYPE_CODE_IDX")]
 [Index("RegionCode", Name = "ACRQST_REGION_CODE_IDX")]

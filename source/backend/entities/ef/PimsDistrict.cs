@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Contains the district codes for the Ministry.  Current values are: - Lower Mainland District - Vancouver Island District - Rocky Mountain District - West Kootenay District - Okanagan-Shuswap District - Thompson-Nicola District - Cariboo District - Peace D
+/// </summary>
 [Table("PIMS_DISTRICT")]
 [Index("RegionCode", Name = "DSTRCT_REGION_CODE_IDX")]
 public partial class PimsDistrict

@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Describes the type of organization.  Current values are: - BC District Office - BC Ministry - BC Regional Office - First Nations - Other - Partnership - Private owner - Railway corporation - Real estate corporation
+/// </summary>
 [Table("PIMS_ORGANIZATION_TYPE")]
 public partial class PimsOrganizationType
 {

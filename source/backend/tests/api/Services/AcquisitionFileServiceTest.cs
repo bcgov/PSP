@@ -274,12 +274,15 @@ namespace Pims.Api.Test.Services
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
             // Act
             Action act = () => service.Add(acqFile, new List<UserOverrideCode>());
 
             // Assert
-            act.Should().Throw<BadRequestException>();
-            repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Never);
+            act.Should().NotThrow<BadRequestException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Once);
         }
 
         [Fact]
@@ -968,7 +971,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(acqFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
 
             // Assert
-            act.Should().Throw<BadRequestException>();
+            act.Should().NotThrow<BadRequestException>();
         }
 
         [Fact]

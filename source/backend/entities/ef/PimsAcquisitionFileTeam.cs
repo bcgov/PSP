@@ -10,7 +10,6 @@ namespace Pims.Dal.Entities;
 /// Table to associate an acquisition file to a person.
 /// </summary>
 [Table("PIMS_ACQUISITION_FILE_TEAM")]
-[Index("AcquisitionFileId", "AcqFlTeamProfileTypeCode", Name = "ACQNTM_FILE_PROFILE_TUC", IsUnique = true)]
 [Index("OrganizationId", Name = "ACQNTM_ORGANIZATION_ID_IDX")]
 [Index("PrimaryContactId", Name = "ACQNTM_PRIMARY_CONTACT_ID_IDX")]
 [Index("AcquisitionFileId", Name = "ACQPER_ACQUISITION_FILE_ID_IDX")]

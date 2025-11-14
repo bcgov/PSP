@@ -1052,7 +1052,7 @@ exports[`ManagementActivityEditForm component > renders as expected 1`] = `
                       class="col-11 col"
                     >
                       <div
-                        class="form-group"
+                        class="input form-group"
                       >
                         <div
                           class="row"
@@ -1167,7 +1167,7 @@ exports[`ManagementActivityEditForm component > renders as expected 1`] = `
                       class="col-11 col"
                     >
                       <div
-                        class="form-group"
+                        class="input form-group"
                       >
                         <div
                           class="row"
@@ -1249,7 +1249,7 @@ exports[`ManagementActivityEditForm component > renders as expected 1`] = `
                       class="col-11 col"
                     >
                       <div
-                        class="form-group"
+                        class="input form-group"
                       >
                         <div
                           class="row"
@@ -1342,7 +1342,7 @@ exports[`ManagementActivityEditForm component > renders as expected 1`] = `
                       class="col-11 col"
                     >
                       <div
-                        class="form-group"
+                        class="input form-group"
                       >
                         <div
                           class="row"

@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// A many-to-many entity that associates an acquisition file with a compensation requisition.
+/// </summary>
 [Table("PIMS_PROP_ACQ_FL_COMP_REQ")]
 [Index("CompensationRequisitionId", Name = "PACMRQ_COMPENSATION_REQUISITION_ID_IDX")]
 [Index("PropertyAcquisitionFileId", Name = "PACMRQ_PROPERTY_ACQUISITION_FILE_ID_IDX")]

@@ -301,29 +301,12 @@ exports[`SearchContainer component > renders as expected 1`] = `
 
 .c0 {
   height: 60%;
+  margin-top: 1rem;
 }
 
 <div
     class="c0"
   >
-    <div
-      class="c1 form-section my-0"
-    >
-      <div
-        class="collapse show"
-      >
-        <button
-          class="c2 Button btn btn-primary"
-          type="button"
-        >
-          <div
-            class="Button__value"
-          >
-            Search PIMS information
-          </div>
-        </button>
-      </div>
-    </div>
     <div
       class="c1 form-section my-0 pt-0"
     >
@@ -403,6 +386,13 @@ exports[`SearchContainer component > renders as expected 1`] = `
                     value="surveyParcel"
                   >
                     Survey Parcel
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-project"
+                    value="project"
+                  >
+                    Project
                   </option>
                 </select>
               </div>
@@ -503,6 +493,7 @@ exports[`SearchContainer component > renders as expected 1`] = `
     </div>
     <div
       class="c1 form-section my-0 py-0"
+      data-testid="pmbc-search-results-section"
     >
       <h2
         class="c3"
@@ -584,7 +575,7 @@ exports[`SearchContainer component > renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c1 form-section c7"
+          class="c1 form-section c7 p-0"
         >
           <div
             class="collapse show"
@@ -596,6 +587,7 @@ exports[`SearchContainer component > renders as expected 1`] = `
     </div>
     <div
       class="c1 form-section my-0 py-0"
+      data-testid="pims-search-results-section"
     >
       <h2
         class="c3"
@@ -677,7 +669,7 @@ exports[`SearchContainer component > renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c1 form-section c7"
+          class="c1 form-section c7 p-0"
         >
           <div
             class="collapse show"

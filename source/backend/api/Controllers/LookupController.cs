@@ -133,8 +133,8 @@ namespace Pims.Api.Controllers
                 var consultationOutcomeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllConsultationOutcomeTypes());
                 var subfileInterestTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllSubfileInterestTypes());
                 var acquisitionFileProgressStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileProgressStatusTypes());
-                var acquisitionFileAppraisalStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileAppraisalStatusTypes());
-                var acquisitionFileLegalSurveyStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileLegalSurveyStatusTypes());
+                var acquisitionFileAppraisalStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllFileAppraisalStatusTypes());
+                var acquisitionFileLegalSurveyStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllFileLegalSurveyStatusTypes());
                 var acquisitionFileTakeTypesStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileTakeStatusTypes());
                 var acquisitionFileExpropiationRiskStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileExpropiationRiskStatusTypes());
                 var llTeamProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLlTeamProfileTypes());

@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.BiDi.BrowsingContext;
 using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -27,7 +28,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementFileHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
         //Create / Update / View Management File
-        private readonly By createManagementTitle = By.XPath("//h1[contains(text(),'Create Management File')]");
+        private readonly By createManagementTitle = By.CssSelector("div[data-testid='form-title']");
         private readonly By viewManagementTitle = By.XPath("//h1[contains(text(),'Management File')]");
         private readonly By updateManagementTitle = By.XPath("//h1[contains(text(),'Update Management File')]");
 
@@ -68,6 +69,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementFileAddAnotherMemberLink = By.CssSelector("button[data-testid='add-team-member']");
         private readonly By managementFileViewTeamMembersGroup = By.XPath("//div[contains(text(),'Management Team')]/parent::div/parent::h2/following-sibling::div/div");
 
+        private readonly By managementFileSummaryBttn = By.CssSelector("button[title='File Details']");
         private readonly By managementEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
 
         private readonly By managementFileConfirmationModal = By.CssSelector("div[class='modal-content']");
@@ -92,10 +94,10 @@ namespace PIMS.Tests.Automation.PageObjects
             FocusAndClick(managementMainMenuCreateLink);
         }
 
-        public void NavigateToAddPropertiesManagementFile()
+        public void NavigateToManagementFileSection()
         {
             Wait();
-            webDriver.FindElement(managementEditPropertiesBttn).Click();
+            webDriver.FindElement(managementFileSummaryBttn).Click();
         }
 
         public void CreateMinimumManagementDetails(ManagementFile mgmtFile)
@@ -246,7 +248,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             //Create Title
-            AssertTrueIsDisplayed(createManagementTitle);
+            AssertTrueContentEquals(createManagementTitle, "Create Management File");
 
             //Project
             AssertTrueIsDisplayed(managementFileProjectSubtitle);

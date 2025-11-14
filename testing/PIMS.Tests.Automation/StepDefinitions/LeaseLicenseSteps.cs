@@ -131,6 +131,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save the new license details
             leaseDetails.SaveLicense();
+
+            //Verify properties order
+            sharedFileProperties.VerifyInsertedPropsOrder(lease.SearchProperties.DisplayingList);
         }
 
         [StepDefinition(@"I update a Lease's Details from row number (.*)")]
@@ -280,7 +283,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             checklist.SaveLeaseChecklist();
         }
 
-        [StepDefinition(@"I add Tenants to the Lease")]
+        [StepDefinition(@"I add Tenants or Payees to the Lease")]
         public void CreateTenants()
         {
             //TENANTS
@@ -352,7 +355,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             {
                 //Delete last stakeholder
                 tenant.EditStakeholderButton();
-                tenant.DeleteLastStakeholder();
+                tenant.DeleteNthStakeholder(lease.TenantsQuantity);
 
                 //Save stakeholders changes
                 tenant.SaveTenant();
@@ -822,27 +825,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchLeases.OrderByLastLease();
         }
 
-        [StepDefinition(@"A new lease is created successfully")]
-        public void NewLeaseCreated()
-        {
-            //TEST COVERAGE: PSP-2466, PSP-2993
-
-            searchLeases.NavigateToSearchLicense();
-            searchLeases.SearchLicenseByLFile(leaseCode);
-
-            Assert.True(searchLeases.SearchFoundResults());
-            searchLeases.VerifyLeaseTableContent(lease);
-        }
-
-        [StepDefinition(@"Expected Lease File Content is displayed on Leases Table")]
-        public void VerifyAcquisitionFileTableContent()
-        {
-            /* TEST COVERAGE: PSP-1833 */
-
-            //Verify List View
-            searchLeases.VerifySearchLeasesView();
-        }
-
         [StepDefinition(@"I create Compensation Requisition within a Lease or Licence")]
         public void CreateCompensationRequisition()
         {
@@ -936,7 +918,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             tenant.EditStakeholderButton();
 
             //Delete the stakeholder that is associated to a compensation requisition
-            tenant.DeleteFirstStakeholder();
+            tenant.DeleteNthStakeholder(1);
 
             //Save Acquisition File Details changes
             leaseDetails.SaveLicenseWithExpectedErrors();
@@ -972,6 +954,55 @@ namespace PIMS.Tests.Automation.StepDefinitions
             var compensationsAfterDelete = h120.TotalCompensationCount();
 
             Assert.True(compensationsBeforeDelete - compensationsAfterDelete == 1);
+        }
+
+        [StepDefinition(@"I delete a payee from lease")]
+        public void DeletePayee()
+        {
+            //Go to Payee Tab
+            tenant.NavigateToStakeholderSection(lease.AccountType);
+
+            //Edit stakeholders Section
+            tenant.EditStakeholderButton();
+
+            //Delete a Payee
+            tenant.DeleteNthStakeholder(2);
+
+            //Save changes
+            tenant.SaveTenant();
+        }
+
+        [StepDefinition(@"A new lease is created successfully")]
+        public void NewLeaseCreated()
+        {
+            //TEST COVERAGE: PSP-2466, PSP-2993
+
+            searchLeases.NavigateToSearchLicense();
+            searchLeases.SearchLicenseByLFile(leaseCode);
+
+            Assert.True(searchLeases.SearchFoundResults());
+            searchLeases.VerifyLeaseTableContent(lease);
+        }
+
+        [StepDefinition(@"Expected Lease File Content is displayed on Leases Table")]
+        public void VerifyAcquisitionFileTableContent()
+        {
+            /* TEST COVERAGE: PSP-1833 */
+
+            //Verify List View
+            searchLeases.VerifySearchLeasesView();
+        }
+
+        [StepDefinition(@"Lease cannot be completed due to Draft items")]
+        public void CompensationDraftError()
+        {
+            h120.VerifyIncompleteAgreementH120ErrorMessage();
+        }
+
+        [StepDefinition(@"Payee cannot be deleted")]
+        public void CompensationPayeeDelete()
+        {
+            h120.VerifyDeletePayeeErrorMessage();
         }
 
         private void PopulateLeaseLicense(int rowNumber)
@@ -1058,6 +1089,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 lease.SearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "SurveyTownship");
                 lease.SearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "SurveyRange");
                 lease.SearchProperties.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "MultiplePIDS"));
+                lease.SearchProperties.DisplayingList = genericSteps.PopulateLists(ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "DisplayingList"));
+
             }
 
             lease.LeasePropertyDetailsStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeasePropertyDetailsStartRow"));
@@ -1233,7 +1266,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                TeamMember teamMember = new TeamMember();
+                TeamMember teamMember = new();
                 teamMember.TeamMemberRole = ExcelDataContext.ReadData(i, "TeamMemberRole");
                 teamMember.TeamMemberContactName = ExcelDataContext.ReadData(i, "TeamMemberContactName");
                 teamMember.TeamMemberContactType = ExcelDataContext.ReadData(i, "TeamMemberContactType");
@@ -1416,7 +1449,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                Compensation compensation = new Compensation();
+                Compensation compensation = new();
 
                 compensation.CompensationAmount = ExcelDataContext.ReadData(i, "CompensationAmount");
                 compensation.CompensationGSTAmount = ExcelDataContext.ReadData(i, "CompensationGSTAmount");
@@ -1454,7 +1487,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                CompensationActivity activity = new CompensationActivity();
+                CompensationActivity activity = new();
 
                 activity.ActCodeDescription = ExcelDataContext.ReadData(i, "ActCodeDescription");
                 activity.ActAmount = ExcelDataContext.ReadData(i, "ActAmount");
