@@ -31,7 +31,7 @@ export const ShapeUploadResultView: React.FunctionComponent<IShapeUploadResultVi
         <StyledFailSection label="Shapefile upload failed" labelWidth={{ xs: 12 }}>
           {truncate(uploadResult.fileName ?? '', { length: 100 })}
           <FaTimesCircle
-            data-testid="file-check-icon"
+            data-testid="file-error-icon"
             className="ml-2"
             size="1.6rem"
             color={theme.bcTokens.iconsColorDanger}

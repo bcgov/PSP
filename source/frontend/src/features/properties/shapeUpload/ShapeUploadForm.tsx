@@ -13,7 +13,7 @@ export interface IShapeUploadFormProps {
   isLoading: boolean;
   formikRef: React.Ref<FormikProps<ShapeUploadModel>>;
   propertyIdentifier?: string;
-  onUploadFile: (request: ShapeUploadModel) => void;
+  onUploadFile: (request: ShapeUploadModel) => Promise<void>;
 }
 
 /**
@@ -53,13 +53,13 @@ export const ShapeUploadForm: React.FunctionComponent<IShapeUploadFormProps> = (
               keyName={formikProps.values?.file?.name}
             />
           </SectionField>
+          <DisplayError field="file" className="pt-4" />
 
           {exists(formikProps.values?.file) && (
             <>
               <SectionField label="File" labelWidth={{ xs: 1 }}>
                 {truncate(formikProps.values?.file?.name, { length: 100 })}
               </SectionField>
-              <DisplayError field="file" className="pt-4" />
               <div className="pt-1">
                 {exists(propertyIdentifier)
                   ? `You have attached a shapefile for property: ${propertyIdentifier}. Do you want to proceed and save?`
