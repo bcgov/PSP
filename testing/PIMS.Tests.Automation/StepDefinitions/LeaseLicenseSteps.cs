@@ -60,8 +60,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a new minimum Lease from row number (.*)")]
         public void CreateMinimumLeaseLicense(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-1966, PSP-2550, PSP-4558, PSP-5100 */
-
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -258,7 +256,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             leaseConsultation.VerifyLastInsertedConsultationView(lease.LeaseConsultations[0]);
 
             //Delete last "Other" consultation
-            leaseConsultation.DeleteLastConsultationByType("Other");
+            leaseConsultation.DeleteFirstConsultationByType("Other");
         }
 
         [StepDefinition(@"I insert Checklist information to a Lease")]
@@ -337,8 +335,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update a Lease's Tenants from row number (.*)")]
         public void UpdateTenants(int rowNumber)
         {
-            /* TEST COVERAGE:  PSP-4558 */
-
             //Navigate to Search Leases
             PopulateLeaseLicense(rowNumber);
             searchLeases.NavigateToSearchLicense();
@@ -975,8 +971,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"A new lease is created successfully")]
         public void NewLeaseCreated()
         {
-            //TEST COVERAGE: PSP-2466, PSP-2993
-
             searchLeases.NavigateToSearchLicense();
             searchLeases.SearchLicenseByLFile(leaseCode);
 
@@ -987,8 +981,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"Expected Lease File Content is displayed on Leases Table")]
         public void VerifyAcquisitionFileTableContent()
         {
-            /* TEST COVERAGE: PSP-1833 */
-
             //Verify List View
             searchLeases.VerifySearchLeasesView();
         }
@@ -1044,15 +1036,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.IntendedUse = ExcelDataContext.ReadData(rowNumber, "IntendedUse");
             lease.ArbitrationCity = ExcelDataContext.ReadData(rowNumber, "ArbitrationCity");
 
-            lease.FirstNation = ExcelDataContext.ReadData(rowNumber, "FirstNation");
-            lease.StrategicRealEstate = ExcelDataContext.ReadData(rowNumber, "StrategicRealEstate");
-            lease.RegionalPlanning = ExcelDataContext.ReadData(rowNumber, "RegionalPlanning");
-            lease.RegionalPropertyService = ExcelDataContext.ReadData(rowNumber, "RegionalPropertyService");
-            lease.District = ExcelDataContext.ReadData(rowNumber, "District");
-            lease.Headquarter = ExcelDataContext.ReadData(rowNumber, "Headquarter");
-            lease.ConsultationOther = ExcelDataContext.ReadData(rowNumber, "ConsultationOther");
-            lease.ConsultationOtherDetails = ExcelDataContext.ReadData(rowNumber, "ConsultationOtherDetails");
-
             lease.LeaseTeamStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseTeamStartRow"));
             lease.LeaseTeamCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "LeaseTeamCount"));
             if (lease.LeaseTeamStartRow != 0 && lease.LeaseTeamCount != 0)
@@ -1089,7 +1072,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 lease.SearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "SurveyTownship");
                 lease.SearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "SurveyRange");
                 lease.SearchProperties.MultiplePIDS = genericSteps.PopulateLists(ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "MultiplePIDS"));
-                lease.SearchProperties.DisplayingList = genericSteps.PopulateLists(ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "DisplayingList"));
+                lease.SearchProperties.DisplayingList = genericSteps.PopulateUnsortedLists(ExcelDataContext.ReadData(lease.SearchPropertiesIndex, "DisplayingList"));
 
             }
 

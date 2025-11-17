@@ -170,7 +170,7 @@ namespace PIMS.Tests.Automation.PageObjects
         protected void CleanUpCurrencyInput(By elementBy)
         {
             var element = webDriver.FindElement(elementBy);
-            int charCounter = 0;
+            int charCounter = 1;
 
             //Validate if the field has a value
             if (element.GetAttribute("value") != "$0.00")
@@ -249,7 +249,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected void AssertTrueContentEquals(By elementBy, string text = "")
         {
-            WaitUntilVisible(elementBy);
+            Wait();
             Assert.Equal(text, webDriver.FindElement(elementBy).Text);
         }
 
