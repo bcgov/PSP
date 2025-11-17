@@ -95,7 +95,7 @@ class ManagementFile {
     await expect(this.page.getByTestId("add-team-member")).toBeVisible();
   }
 
-   async navigateToSearchManagement() {
+  async navigateToSearchManagement() {
     await clickAndWaitFor(
       this.page,
       "div[data-testid='nav-tooltip-project'] a",
