@@ -2,7 +2,6 @@ import { Feature, Geometry } from 'geojson';
 import { chain } from 'lodash';
 import React, { useMemo } from 'react';
 import { FaPlus } from 'react-icons/fa';
-import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import AcquisitionIcon from '@/assets/images/acquisition-icon.svg?react';
@@ -10,7 +9,6 @@ import DispositionIcon from '@/assets/images/disposition-icon.svg?react';
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import ManagementIcon from '@/assets/images/management-icon.svg?react';
 import ResearchIcon from '@/assets/images/research-icon.svg?react';
-import { Button } from '@/components/common/buttons';
 import { MapFeatureData } from '@/components/common/mapFSM/models';
 import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
 import { Section } from '@/components/common/Section/Section';
@@ -54,7 +52,6 @@ interface PropertyProjection<T> {
 }
 
 export const SearchView: React.FC<ISearchViewProps> = props => {
-  const history = useHistory();
   const keycloak = useKeycloakWrapper();
 
   const groupedFeatures = chain(props.searchResult?.fullyAttributedFeatures.features)
@@ -108,10 +105,6 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
       .value()
       .flatMap(x => x)
       .map(x => ParcelDataset.fromPimsFeature(x.feature)) ?? [];
-
-  const onOpenPropertyList = () => {
-    history.push('/properties/list');
-  };
 
   const menuOptions: MenuOption[] = useMemo(() => {
     const options: MenuOption[] = [];
@@ -174,58 +167,54 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
   ]);
 
   return (
-    <>
-      <StyledWrapper
-        onClick={e => {
-          e.stopPropagation(); // prevent any clicks on the search sidebar from propogating to the map.
-        }}
+    <StyledWrapper
+      onClick={e => {
+        e.stopPropagation(); // prevent any clicks on the search sidebar from propogating to the map.
+      }}
+    >
+      <Section className="my-0 pt-0">
+        <PropertyFilter
+          defaultFilter={{ ...defaultPropertyFilter }}
+          propertyFilter={props.propertyFilter}
+          onChange={props.onFilterChange}
+          useGeocoder
+        />
+      </Section>
+      <Section
+        className="my-0 py-0"
+        header={
+          <SimpleSectionHeader title="Results (PMBC)">
+            <MoreOptionsMenu options={menuOptions} ariaLabel="search pmbc results more options" />
+          </SimpleSectionHeader>
+        }
+        isCollapsable
+        initiallyExpanded
+        data-testid="pmbc-search-results-section"
       >
-        <Section className="my-0">
-          <Button onClick={onOpenPropertyList}>Search PIMS information</Button>
-        </Section>
-        <Section className="my-0 pt-0">
-          <PropertyFilter
-            defaultFilter={{ ...defaultPropertyFilter }}
-            propertyFilter={props.propertyFilter}
-            onChange={props.onFilterChange}
-            useGeocoder
-          />
-        </Section>
-        <Section
-          className="my-0 py-0"
-          header={
-            <SimpleSectionHeader title="Results (PMBC)">
-              <MoreOptionsMenu options={menuOptions} ariaLabel="search pmbc results more options" />
-            </SimpleSectionHeader>
-          }
-          isCollapsable
-          initiallyExpanded
-          data-testid="pmbc-search-results-section"
-        >
-          <ParcelListContainer View={ParcelListView} parcels={propertyProjections} />
-        </Section>
-        <Section
-          className="my-0 py-0"
-          header={
-            <SimpleSectionHeader title="Results (PIMS)">
-              <MoreOptionsMenu options={menuOptions} ariaLabel="search pims results more options" />
-            </SimpleSectionHeader>
-          }
-          isCollapsable
-          initiallyExpanded
-          data-testid="pims-search-results-section"
-        >
-          <ParcelListContainer View={ParcelListView} parcels={pimsPropertyProjections} />
-        </Section>
-        {exists(props.searchResult?.highwayPlanFeatures) &&
-          props.searchResult.highwayPlanFeatures.features.length > 0 && (
-            <HighwayListView searchResult={props.searchResult} />
-          )}
-      </StyledWrapper>
-    </>
+        <ParcelListContainer View={ParcelListView} parcels={propertyProjections} />
+      </Section>
+      <Section
+        className="my-0 py-0"
+        header={
+          <SimpleSectionHeader title="Results (PIMS)">
+            <MoreOptionsMenu options={menuOptions} ariaLabel="search pims results more options" />
+          </SimpleSectionHeader>
+        }
+        isCollapsable
+        initiallyExpanded
+        data-testid="pims-search-results-section"
+      >
+        <ParcelListContainer View={ParcelListView} parcels={pimsPropertyProjections} />
+      </Section>
+      {exists(props.searchResult?.highwayPlanFeatures) &&
+        props.searchResult.highwayPlanFeatures.features.length > 0 && (
+          <HighwayListView searchResult={props.searchResult} />
+        )}
+    </StyledWrapper>
   );
 };
 
 const StyledWrapper = styled.div`
   height: 60%;
+  margin-top: 1rem;
 `;

@@ -19,6 +19,8 @@ import {
   pimsGeomeryToGeometry,
 } from '@/utils';
 
+import TooltipIcon from '../common/TooltipIcon';
+
 export interface IUpdatePropertiesProps {
   formProperties?: PropertyForm[] | null;
   pimsProperties?: ApiGen_Concepts_Property[] | null;
@@ -134,10 +136,20 @@ export const ZoomToLocation: React.FunctionComponent<IUpdatePropertiesProps> = (
   // Zoom to boundary
   return (
     <TooltipWrapper tooltip="Zoom" tooltipId="zoom-tooltip">
-      <LinkButton title="Fit boundaries button" onClick={fitBoundaries} disabled={!isValid}>
-        {icon === ZoomIconType.single && <FaSearchPlus size={18} />}
-        {icon === ZoomIconType.area && <PiCornersOut size={18} />}
-      </LinkButton>
+      <>
+        {isValid === true ? (
+          <LinkButton title="Fit boundaries" onClick={fitBoundaries} disabled={!isValid}>
+            {icon === ZoomIconType.single && <FaSearchPlus size={18} />}
+            {icon === ZoomIconType.area && <PiCornersOut size={18} />}
+          </LinkButton>
+        ) : (
+          <TooltipIcon
+            toolTipId={'no-location-tooltip'}
+            toolTip={'No valid location'}
+            placement={'auto'}
+          />
+        )}
+      </>
     </TooltipWrapper>
   );
 };

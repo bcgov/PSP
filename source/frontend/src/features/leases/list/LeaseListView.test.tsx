@@ -49,6 +49,7 @@ const setup = async (renderOptions: RenderOptions = { store: storeState }) => {
   });
   await act(async () => {});
   const searchButton = utils.getByTestId('search');
+  console.log(searchButton);
   return { searchButton, ...utils };
 };
 

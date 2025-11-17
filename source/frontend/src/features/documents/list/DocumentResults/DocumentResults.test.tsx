@@ -1,14 +1,11 @@
-import { useKeycloak } from '@react-keycloak/web';
-import noop from 'lodash/noop';
-
 import { Claims } from '@/constants/claims';
-import { DocumentRow } from '@/features/documents/ComposedDocument';
 import { mockDocumentResponse, mockDocumentsResponse } from '@/mocks/documents.mock';
 import { cleanup, mockKeycloak, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { DocumentResults, IDocumentResultProps } from './DocumentResults';
 import { get } from 'lodash';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { DocumentRow } from '../../models/DocumentRow';
 
 const setSort = vi.fn();
 

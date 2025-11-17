@@ -316,50 +316,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   flex-wrap: nowrap;
 }
 
-.c18 {
-  position: relative;
-  border-radius: 0.4rem;
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-  padding-left: 1.2rem;
-  padding-right: 2.8rem;
-  background-image: none;
-  color: #474543;
-  border: #606060 solid 0.1rem;
-  cursor: default;
-}
-
-.c18.is-invalid {
-  border: #CE3E39 solid 0.1rem;
-}
-
-.c19.c19.btn {
-  position: absolute;
-  top: calc(50% - 1.4rem);
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-  padding-right: 1.2rem;
-  height: 1.6rem;
-  right: 0rem;
-  color: #9F9D9C;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c19.c19.btn .text {
-  display: none;
-}
-
-.c19.c19.btn:hover,
-.c19.c19.btn:active,
-.c19.c19.btn:focus {
-  color: #CE3E39;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  opacity: unset;
-}
-
 .c20.form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -406,6 +362,51 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
 
 .c20 .form-label {
   margin-bottom: unset;
+}
+
+.c18 {
+  position: relative;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+  word-break: break-all;
+  background-image: none;
+  color: #474543;
+  border: #606060 solid 0.1rem;
+  cursor: default;
+}
+
+.c18.is-invalid {
+  border: #CE3E39 solid 0.1rem;
+}
+
+.c19.c19.btn {
+  position: absolute;
+  top: calc(50% - 1.4rem);
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-right: 1.2rem;
+  height: 1.6rem;
+  right: 0rem;
+  color: #9F9D9C;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c19.c19.btn .text {
+  display: none;
+}
+
+.c19.c19.btn:hover,
+.c19.c19.btn:active,
+.c19.c19.btn:focus {
+  color: #CE3E39;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
 }
 
 .c1 {
@@ -1217,6 +1218,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                       Dairy Queen Forever! Property Management
                       <button
                         class="c13 Button c19 btn btn-link"
+                        title="remove"
                         type="button"
                       >
                         <div
@@ -1231,9 +1233,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                             width="2rem"
                             xmlns="http://www.w3.org/2000/svg"
                           >
-                            <title>
-                              remove
-                            </title>
                             <path
                               d="M0 0h24v24H0z"
                               fill="none"
@@ -1264,6 +1263,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                   >
                     <button
                       class="c13 Button Button--icon-only px-2 btn btn-primary"
+                      title="Select Contact"
                       type="button"
                     >
                       <div
@@ -1287,6 +1287,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                   </div>
                 </div>
               </div>
+              <div />
             </div>
           </div>
           <div
@@ -1312,6 +1313,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
               class="form-control"
               id="input-requestDescription"
               name="requestDescription"
+              required=""
               style="word-break: break-all;"
               title="a request description"
             >
@@ -1409,6 +1411,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
               class="form-control"
               id="input-researchResult"
               name="researchResult"
+              required=""
               style="word-break: break-all;"
               title="A research result"
             >
@@ -1529,6 +1532,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
               class="form-control"
               id="input-expropriationNotes"
               name="expropriationNotes"
+              required=""
               style="word-break: break-all;"
               title="An expropriation note"
             >
@@ -1537,7 +1541,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
           </div>
         </div>
       </div>
-      <div />
     </div>
   </div>
 </DocumentFragment>

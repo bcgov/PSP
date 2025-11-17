@@ -10,6 +10,7 @@ import { ApiGen_Concepts_Document } from './ApiGen_Concepts_Document';
 export interface ApiGen_Concepts_DocumentRelationship extends ApiGen_Base_BaseAudit {
   id: number;
   parentId: string | null;
+  parentNameOrNumber: string | null;
   document: ApiGen_Concepts_Document | null;
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
 }

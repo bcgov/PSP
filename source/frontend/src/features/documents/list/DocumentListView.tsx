@@ -18,11 +18,11 @@ import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 
-import { DocumentRow } from '../ComposedDocument';
 import { DocumentViewerContext } from '../context/DocumentViewerContext';
 import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';
 import { DocumentUploadModal } from '../documentUpload/DocumentUploadModal';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
+import { DocumentRow } from '../models/DocumentRow';
 import { DocumentFilterForm } from './DocumentFilter/DocumentFilterForm';
 import { DocumentResults } from './DocumentResults/DocumentResults';
 
@@ -162,9 +162,8 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [isUploadVisible, setIsUploadVisible] = useState(false);
-  const [selectedDocument, setSelectedDocument] = useState<
-    ApiGen_Concepts_DocumentRelationship | undefined
-  >(undefined);
+  const [selectedDocument, setSelectedDocument] =
+    useState<ApiGen_Concepts_DocumentRelationship | null>(null);
 
   const handleModalUploadClose = () => {
     setIsUploadVisible(false);
@@ -176,8 +175,8 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   };
 
   const handleViewDetails = (document: ApiGen_Concepts_DocumentRelationship) => {
-    setIsDetailsVisible(true);
     setSelectedDocument(document);
+    setIsDetailsVisible(true);
   };
 
   const handleModalDetailsClose = () => {
@@ -274,7 +273,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
         display={isDetailsVisible}
         relationshipType={props.relationshipType}
         setDisplay={setIsDetailsVisible}
-        pimsDocument={selectedDocument ? DocumentRow.fromApi(selectedDocument, '') : undefined}
+        pimsDocumentRelationship={selectedDocument}
         onUpdateSuccess={onUpdateSuccess}
         onClose={handleModalDetailsClose}
         canEdit={!props.showParentInformation}

@@ -390,7 +390,7 @@ exports[`FileMenuView component > matches snapshot 1`] = `
         >
           <button
             class="c2 Button btn btn-link"
-            title="Fit boundaries button"
+            title="Fit boundaries"
             type="button"
           >
             <div
@@ -451,7 +451,7 @@ exports[`FileMenuView component > matches snapshot 1`] = `
           >
             <button
               class="c2 Button btn btn-link"
-              title="Fit boundaries button"
+              title="Fit boundaries"
               type="button"
             >
               <div
@@ -501,7 +501,7 @@ exports[`FileMenuView component > matches snapshot 1`] = `
           >
             <button
               class="c2 Button btn btn-link"
-              title="Fit boundaries button"
+              title="Fit boundaries"
               type="button"
             >
               <div

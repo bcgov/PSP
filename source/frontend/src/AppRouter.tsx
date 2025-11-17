@@ -21,6 +21,12 @@ import ManagementListView from './features/management/list/ManagementListView';
 import AccessDenied from './pages/401/AccessDenied';
 
 const MapView = lazy(() => componentLoader(import('@/features/properties/map/MapContainer'), 2));
+const DocumentListView = lazy(() =>
+  componentLoader(
+    import('@/features/documents/documentGlobalSearch/list/DocumentSearchListView'),
+    2,
+  ),
+);
 const AccessRequestPage = lazy(() =>
   componentLoader(import('@/features/admin/access-request/AccessRequestPage'), 2),
 );
@@ -274,6 +280,14 @@ const AppRouter: FC<PropsWithChildren<unknown>> = () => {
             layout={AuthLayout}
             claim={Claims.CONTACT_VIEW}
             title={getTitle('View Contacts')}
+          />
+          <AppRoute
+            protected
+            path="/documents/list"
+            customComponent={DocumentListView}
+            layout={AuthLayout}
+            claim={Claims.DOCUMENT_VIEW}
+            title={getTitle('View Documents')}
           />
           <AppRoute
             protected

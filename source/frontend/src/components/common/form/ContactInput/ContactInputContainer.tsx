@@ -14,6 +14,7 @@ export type IContactInputContainerProps = {
   onContactSelected?: (contact: IContactSearchResult) => void;
   placeholder?: string;
   canEditDetails?: boolean;
+  required?: boolean;
 };
 
 export const ContactInputContainer: React.FC<
@@ -31,6 +32,7 @@ export const ContactInputContainer: React.FC<
   onContactSelected,
   placeholder,
   canEditDetails,
+  required,
 }) => {
   const [showContactManager, setShowContactManager] = useState(false);
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>([]);
@@ -75,6 +77,7 @@ export const ContactInputContainer: React.FC<
       }}
       placeholder={placeholder}
       canEditDetails={editEnabled}
+      required={required ?? false}
     />
   );
 };

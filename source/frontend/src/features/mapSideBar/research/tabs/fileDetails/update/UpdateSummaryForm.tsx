@@ -4,13 +4,14 @@ import { createRef, useState } from 'react';
 import { FaTimes } from 'react-icons/fa';
 
 import { Input, Select, TextArea } from '@/components/common/form';
-import { ContactInput } from '@/components/common/form/ContactInput';
+import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
+import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { RadioGroup } from '@/components/common/form/RadioGroup';
 import { InlineFastDatePicker } from '@/components/common/form/styles';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
-import { ContactManagerModal } from '@/components/contact/ContactManagerModal';
+import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IContactSearchResult, isPersonSummary } from '@/interfaces';
@@ -46,14 +47,10 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
     values.researchFilePurposes?.map(x => x.researchPurposeTypeCode).includes(x.id),
   );
 
-  const [showContactManager, setShowContactManager] = useState(false);
-
   const initialContacts: IContactSearchResult[] = [];
   if (values.requestor !== undefined) {
     initialContacts.push(values.requestor);
   }
-
-  const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>(initialContacts);
 
   const [selectedPurposes, setSelectedPurposes] = useState<MultiSelectOption[]>(initialPurposeList);
 
@@ -68,12 +65,6 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
       return purposeType;
     });
     props.formikProps.setFieldValue('researchFilePurposes', mapped);
-  }
-
-  function handleRequesterSelected() {
-    const selectedContact = selectedContacts[0];
-    props.formikProps.setFieldValue('requestor', selectedContact);
-    setShowContactManager(false);
   }
 
   return (
@@ -154,13 +145,12 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
           />
         </SectionField>
         <SectionField label="Requester">
-          <ContactInput
+          <ContactInputContainer
             field="requestor"
-            setShowContactManager={setShowContactManager}
-            onClear={() => {
-              props.formikProps.setFieldValue('requestor', undefined);
-              setSelectedContacts([]);
-            }}
+            View={ContactInputView}
+            restrictContactType={RestrictContactType.ALL}
+            displayErrorAsTooltip={false}
+            required={false}
           />
         </SectionField>
         {values.requestor &&
@@ -202,14 +192,6 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
         <SectionField label="Expropriation comments" />
         <TextArea field="expropriationNotes" required />
       </Section>
-      <ContactManagerModal
-        display={showContactManager}
-        setDisplay={setShowContactManager}
-        setSelectedRows={setSelectedContacts}
-        selectedRows={selectedContacts}
-        handleModalOk={handleRequesterSelected}
-        isSingleSelect
-      ></ContactManagerModal>
     </StyledSummarySection>
   );
 };
