@@ -1,12 +1,14 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.DevTools.V140.Security;
 using PIMS.Tests.Automation.Classes;
+using System.Diagnostics;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
     public class DigitalDocuments: PageObjectBase
     {
         //Documents Tab Element
-        private readonly By documentsTab = By.CssSelector("a[data-rb-event-key='document']");
+        private readonly By documentsTab = By.CssSelector("a[data-rb-event-key='documents']");
         private readonly By propsDocumentsTab = By.CssSelector("a[data-rb-event-key='document']");
 
         //Upload Documents Dialog General Elements
@@ -104,7 +106,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentMinisterialOrderTypeMOInput = By.CssSelector("input[data-testid='metadata-input-MO_NUMBER']");
         private readonly By documentTypeMotiFileInput = By.CssSelector("input[data-testid='metadata-input-MOTI_FILE_NUMBER']");
         private readonly By documentPropertyIdentifierLabel = By.XPath("//label[contains(text(),'Property identifier')]");
-        private readonly By documentTypePropIdInput = By.CssSelector("input[data-testid='metadata-input-PROPERTY_IDENTIFIER']");
 
         //Upload Miscellaneous notes (LTSA) Fields
         private readonly By documentMiscNotesTypePIDLabel = By.XPath("//input[@data-testid='metadata-input-PID']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'PID')]");
@@ -167,7 +168,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Upload Transfer of Administration Type Fields
         private readonly By documentDateSignedLabel = By.XPath("//label[contains(text(),'Date signed')]");
         private readonly By documentDateSignedInput = By.CssSelector("input[data-testid='metadata-input-DATE_SIGNED']");
-        private readonly By documentMOTIFileLabel = By.XPath("//label[contains(text(),'MoTT file #')]");
+        private readonly By documentMOTIFileLabel = By.XPath("//label[contains(text(),'MoTI file #')]");
         private readonly By documentTransferAdmTypeProIdLabel = By.XPath("//label[contains(text(),'Property identifier')]");
         private readonly By documentTransferAdmTypeTransferLabel = By.XPath("//label[contains(text(),'Transfer')]");
         private readonly By documentTransferAdmTypeTransferInput = By.CssSelector("input[data-testid='metadata-input-TRANSFER_NUMBER']");
@@ -175,8 +176,8 @@ namespace PIMS.Tests.Automation.PageObjects
         //View Document Details Elements
         private readonly By documentViewDocumentTypeLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Document type')]");
         private readonly By documentViewDocumentTypeContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Document type')]/parent::div/following-sibling::div");
-        private readonly By documenyViewDocumentNameLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'File name')]");
-        private readonly By documentViewFileNameContent = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'File name')]/parent::div/following-sibling::div");
+        private readonly By documenyViewDocumentNameLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'File name')]");
+        private readonly By documentViewFileNameContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'File name')]/parent::div/following-sibling::div");
         private readonly By documentViewInfoSubtitle = By.XPath("//div[contains(text(),'Document Information')]");
         private readonly By documentViewDocumentInfoTooltip = By.CssSelector("span[data-testid='tooltip-icon-documentInfoToolTip']");
         private readonly By documentViewStatusLabel = By.XPath("//div[contains(text(),'Document Information')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
@@ -214,7 +215,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentViewOwnerContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Owner')]/parent::div/following-sibling::div");
         private readonly By documentViewPhysicalLocationContent = By.XPath("//label[contains(text(),'Physical location')]/parent::div/following-sibling::div");
         private readonly By documentViewPIDLabel = By.XPath("//label[contains(text(),'PID')]");
-        private readonly By documentViewPIDContent = By.XPath("//label[contains(text(),'PID')]/parent::div/following-sibling::div");
+        private readonly By documentViewPIDContent = By.XPath("//div[@class='pr-0 text-left col-4']/label[contains(text(),'PID')]/parent::div/following-sibling::div");
         private readonly By documentViewPINContent = By.XPath("//div[@class='pb-2 row'][1]/div/label[contains(text(),'PIN')]/parent::div/following-sibling::div");
         private readonly By documentViewPlanNumberContent = By.XPath("//label[contains(text(),'Plan #')]/parent::div/following-sibling::div");
         private readonly By documentViewPlanRevisionContent = By.XPath("//label[contains(text(),'Plan revision')]/parent::div/following-sibling::div");
@@ -241,8 +242,8 @@ namespace PIMS.Tests.Automation.PageObjects
         //Document Modal Elements
         private readonly By documentModalCloseIcon = By.CssSelector("div[class='modal-close-btn']");
         private readonly By documentEditBttn = By.XPath("//div[@class='modal-body']/div/div/div/div/button");
-        private readonly By documentCancelEditButton = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div/div/button/div[contains(text(),'No')]/parent::button");
-        private readonly By documentSaveEditButton = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div/div/button/div[contains(text(),'Yes')]/parent::button");
+        private readonly By documentCancelEditButton = By.CssSelector("div[class='modal-content'] button[type='button']");
+        private readonly By documentSaveEditButton = By.CssSelector("div[class='modal-content'] button[type='submit']");
         private readonly By documentCancelEmbbedWarning = By.XPath("//div[@class='modal-footer']/div[@class='button-wrap']/p");
 
         //Document Confirmation Modal Elements
@@ -265,7 +266,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentFilterResetBttn = By.CssSelector("div[data-testid='main-document-list'] button[data-testid='reset-button']");
 
         //Main Documents Table
-        private readonly By documentsTitle = By.XPath("//span[contains(text(),'File Documents')]");
+        private readonly By documentsTitle = By.XPath("//span[contains(text(),'Documents')]");
         private readonly By propDocumentsTitle = By.XPath("//span[contains(text(),'Property Documents')]");
         private readonly By addDocumentBttn = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button");
         private readonly By refresh1stTableBttn = By.CssSelector("div[data-testid='main-document-list'] button[id='refresh-button']");
@@ -334,8 +335,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentTableResults1stDocumentNameContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[2]/div/button/div");
         private readonly By documentTableResults1stDocumentStatusContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[4]");
         private readonly By documentTableRefreshResultsButton = By.CssSelector("button[data-testid='refresh-button']");
-        private readonly By documentTableResults1stViewBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/button[@data-testid='document-view-button']");
-        private readonly By documentTableResults1stDeleteBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/button[@data-testid='document-delete-button']");
+        private readonly By documentTableResults1stViewBttn = By.CssSelector("div[data-testid='documentsTable'] div[class='tbody'] button[data-testid='document-view-button-0']");
+        private readonly By documentTableResults1stDeleteBttn = By.CssSelector("div[data-testid='documentsTable'] div[class='tbody'] button[data-testid='document-delete-button-0']");
 
         //Documents Tab Pagination
         private readonly By documentPagination = By.XPath("//div[@class='row']/div[4]/ul[@class='pagination']");
@@ -391,19 +392,19 @@ namespace PIMS.Tests.Automation.PageObjects
         public void OrderByDocumentFileType()
         {
             Wait();
-            webDriver.FindElement(documentFilterTypeSelect).Click();
+            webDriver.FindElement(documentsTableColumnTypeSort).Click();
         }
 
         public void OrderByDocumentFileName()
         {
-            WaitUntilClickable(documentFilterNameInput);
-            webDriver.FindElement(documentFilterNameInput).Click();
+            WaitUntilClickable(documentsTableColumnNameSort);
+            webDriver.FindElement(documentsTableColumnNameSort).Click();
         }
 
         public void OrderByDocumentFileStatus()
         {
-            WaitUntilClickable(documentFilterStatusSelect);
-            webDriver.FindElement(documentFilterStatusSelect).Click();
+            WaitUntilClickable(documentsTableColumnStatusSort);
+            webDriver.FindElement(documentsTableColumnStatusSort).Click();
         }
 
         public string FirstDocumentFileType()
@@ -546,7 +547,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ViewUploadedDocument(int index)
         {
-            WaitUntilClickable(documentTableResults1stViewBttn);
+            
+            Wait();
 
             if (index > 9)
                 FocusAndClick(documentPaginationNextPageLink);
@@ -682,8 +684,8 @@ namespace PIMS.Tests.Automation.PageObjects
             if (document.PhysicalLocation != "" && webDriver.FindElements(documentHistoricFileTypePhyLocationInput).Count > 0)
                 webDriver.FindElement(documentHistoricFileTypePhyLocationInput).SendKeys(document.PhysicalLocation);
 
-            if (document.PIDNumber != "" && webDriver.FindElements(documentTypePropIdInput).Count > 0)
-                webDriver.FindElement(documentTypePropIdInput).SendKeys(document.PIDNumber);
+            if (document.PIDNumber != "" && webDriver.FindElements(documentMiscNotesTypePIDInput).Count > 0)
+                webDriver.FindElement(documentMiscNotesTypePIDInput).SendKeys(document.PIDNumber);
 
             if (document.PINNumber != "" && webDriver.FindElements(documentOtherTypePINInput).Count > 0)
                 webDriver.FindElement(documentOtherTypePINInput).SendKeys(document.PINNumber);
@@ -891,10 +893,10 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearInput(documentTypeOwnerInput);
                 webDriver.FindElement(documentTypeOwnerInput).SendKeys(document.PhysicalLocation);
             }
-            if (document.PIDNumber != "" && webDriver.FindElements(documentTypePropIdInput).Count > 0)
+            if (document.PIDNumber != "" && webDriver.FindElements(documentMiscNotesTypePIDInput).Count > 0)
             {
-                ClearInput(documentTypePropIdInput);
-                webDriver.FindElement(documentTypePropIdInput).SendKeys(document.PIDNumber);
+                ClearInput(documentMiscNotesTypePIDInput); //HEREEEEE
+                webDriver.FindElement(documentMiscNotesTypePIDInput).SendKeys(document.PIDNumber);
             }
             if (document.PINNumber != "" && webDriver.FindElements(documentOtherTypePINInput).Count > 0)
             {

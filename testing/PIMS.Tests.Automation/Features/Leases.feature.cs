@@ -234,13 +234,13 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 20
- await testRunner.GivenAsync("I create a new minimum Lease from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new minimum Lease from row number 20", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 21
  await testRunner.WhenAsync("I insert new consultations to the Lease", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 22
- await testRunner.AndAsync("I update a Lease\'s consultation from row number 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I update a Lease\'s consultation from row number 21", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 23
  await testRunner.ThenAsync("A new lease is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -271,7 +271,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 26
- await testRunner.GivenAsync("I create a new minimum Lease from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new minimum Lease from row number 22", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 27
  await testRunner.WhenAsync("I insert Checklist information to a Lease", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
@@ -305,13 +305,13 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 31
- await testRunner.GivenAsync("I create a new minimum Lease from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new minimum Lease from row number 5", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 32
  await testRunner.WhenAsync("I add Tenants or Payees to the Lease", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 33
- await testRunner.AndAsync("I update a Lease\'s Tenants from row number 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I update a Lease\'s Tenants from row number 31", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 34
  await testRunner.ThenAsync("A new lease is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -379,13 +379,13 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 43
- await testRunner.GivenAsync("I create a new minimum Lease from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new minimum Lease from row number 23", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 44
  await testRunner.WhenAsync("I add Improvements to the Lease", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 45
- await testRunner.AndAsync("I update a Lease\'s Improvements from row number 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I update a Lease\'s Improvements from row number 24", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 46
  await testRunner.ThenAsync("A new lease is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -416,13 +416,13 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 49
- await testRunner.GivenAsync("I create a new minimum Lease from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new minimum Lease from row number 25", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 50
  await testRunner.WhenAsync("I add Insurance to the Lease", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 51
- await testRunner.AndAsync("I update a Lease\'s Insurance from row number 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I update a Lease\'s Insurance from row number 26", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 52
  await testRunner.ThenAsync("A new lease is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -453,13 +453,13 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 55
- await testRunner.GivenAsync("I create a new minimum Lease from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new minimum Lease from row number 27", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 56
  await testRunner.WhenAsync("I add Deposits to the Lease", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 57
- await testRunner.AndAsync("I update a Lease\'s Deposits from row number 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I update a Lease\'s Deposits from row number 28", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 58
  await testRunner.ThenAsync("A new lease is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -490,13 +490,13 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 61
- await testRunner.GivenAsync("I create a new minimum Lease from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new minimum Lease from row number 29", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 62
  await testRunner.WhenAsync("I add Periods and Payments to the Lease", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 63
- await testRunner.AndAsync("I update a Lease\'s Payments from row number 2", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I update a Lease\'s Payments from row number 30", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 64
  await testRunner.ThenAsync("A new lease is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -573,7 +573,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 76
- await testRunner.GivenAsync("I create a new minimum Lease from row number 5", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new minimum Lease from row number 32", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 77
  await testRunner.WhenAsync("I create Digital Documents for a \"Lease\" from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
@@ -625,15 +625,15 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="13._Lease_and_License_from_Inventory_Property_Pin")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="13._Lease_and_License_from_Inventory_Search_Control")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Leases and Licenses")]
-        [global::Xunit.TraitAttribute("Description", "13._Lease_and_License_from_Inventory_Property_Pin")]
-        public async global::System.Threading.Tasks.Task _13__Lease_And_License_From_Inventory_Property_Pin()
+        [global::Xunit.TraitAttribute("Description", "13._Lease_and_License_from_Inventory_Search_Control")]
+        public async global::System.Threading.Tasks.Task _13__Lease_And_License_From_Inventory_Search_Control()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "13";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("13._Lease_and_License_from_Inventory_Property_Pin", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("13._Lease_and_License_from_Inventory_Search_Control", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
 #line 87
@@ -647,7 +647,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 88
- await testRunner.GivenAsync("I create a new Lease through a Property Pin from row number 5", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new Lease through a Property Pin from row number 33", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 89
  await testRunner.ThenAsync("A new lease is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");

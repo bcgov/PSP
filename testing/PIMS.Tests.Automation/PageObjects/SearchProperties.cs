@@ -40,28 +40,27 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchPropertyPOINameOptionList = By.CssSelector("input[data-testid='geographic-name-input']");
         private readonly By searchPropertyPOINameFirstOption = By.XPath("//input[@data-testid='geographic-name-input']/following-sibling::ul/li[1]");
 
-        private readonly By search1stPMBCResult = By.XPath("//div[text()='Results (PMBC)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[1]/div");
-        private readonly By search1stPMBCResultEllipsisBttn = By.XPath("//div[text()='Results (PMBC)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[2]/div/div/button");
+        private readonly By search1stPMBCResult = By.CssSelector("div[data-testid='pmbc-search-results-section'] div[data-testid='search-property-0']");
+        private readonly By searchInfoEllipsisBttn = By.CssSelector("div[data-testid='quick-info-header'] button[id='dropdown-ellipsis']");
         private readonly By search2ndPMBCResult = By.XPath("//div[text()='Results (PMBC)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-1']/div[1]/div");
         private readonly By search2ndPMBCResultEllipsisBttn = By.XPath("//div[text()='Results (PMBC)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-1']/div[2]/div/div/button");
 
 
-        private readonly By search1stPMBCResultCreateResearchOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Research File']");
-        private readonly By search1stPMBCResultCreateAcquisitionOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Acquisition File']");
-        private readonly By search1stPMBCResultCreateManagementOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Management File']");
-        private readonly By search1stPMBCResultCreateLeaseOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Lease File']");
-        private readonly By search1stPMBCResultCreateDispositionOption = By.CssSelector("div[data-testid='more-options-menu'] a[aria-label='Create Disposition File']");
-        private readonly By search1stPMBCResultAddToFileOption = By.CssSelector("div[data-testid='pmbc-search-results-section'] div[data-testid='search-property-0'] div[data-testid='more-options-menu'] a[aria-label='Add to Open File']");
+        private readonly By search1stPMBCResultCreateResearchOption = By.CssSelector("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Research File']");
+        private readonly By search1stPMBCResultCreateAcquisitionOption = By.CssSelector("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Acquisition File']");
+        private readonly By search1stPMBCResultCreateManagementOption = By.CssSelector("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Management File']");
+        private readonly By search1stPMBCResultCreateLeaseOption = By.CssSelector("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Lease File']");
+        private readonly By search1stPMBCResultCreateDispositionOption = By.CssSelector("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Disposition File']");
+        private readonly By search1stPMBCResultAddToFileOption = By.CssSelector("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Add to Open File']");
+        private readonly By quickInfoCloseModalBttn = By.CssSelector("*[data-testid='close-icon']");
 
         private readonly By search1stPIMSResult = By.XPath("//div[text()='Results (PIMS)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[1]/div");
         private readonly By search1stPIMSResultEllipsisBttn = By.XPath("//div[text()='Results (PIMS)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[2]/div/div/button");
 
-        private readonly By searchPropertyMoreOptionsBttn = By.XPath("//div[text()='Property']/preceding-sibling::div/div/button");
-        private readonly By searchPropertyAddToFileOption = By.XPath("//div[text()='Property']/preceding-sibling::div/div[@class='show dropdown']/div[@data-testid='more-options-menu']/a[@aria-label='Add to Open File']");
+        private readonly By searchPropertyMoreOptionsBttn = By.CssSelector("button[data-testid='quick-info-more-options']");
+        private readonly By searchPropertyAddToFileOption = By.CssSelector("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Add to Open File']");
 
-        private readonly By searchProperty1stPinOnMap = By.CssSelector("div[class='leaflet-pane leaflet-marker-pane'] img:first-child");
-
-        private readonly By searchPropertyListViewBttn = By.XPath("//div[text()='Search PIMS information']/parent::button");
+        private readonly By searchPropertyListViewBttn = By.CssSelector("div[data-testid='nav-tooltip-pimspropertylistview']");
 
         //Map Pin element
         private readonly By searchPropertyFoundLocationPin = By.CssSelector("div[class='leaflet-pane leaflet-marker-pane'] img:first-child");
@@ -113,7 +112,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SearchProperty(string PID = "", string PIN = "", string address = "", string plan = "", string historicFile = "", string POIName = "",
             PropertyLatitudeLongitude? coordinates = null, SurveyParcel? surveyParcel = null)
         {
-            Wait();
+            WaitUntilVisible(searchPropertyTypeSelect);
 
             if (PID != "")
             {
@@ -255,8 +254,10 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectFirstPMBCResult(string action = "")
         {
             Wait();
-            Actions hoverAction = new(webDriver);
-            hoverAction.MoveToElement(webDriver.FindElement(search1stPMBCResult)).MoveToElement(webDriver.FindElement(search1stPMBCResultEllipsisBttn)).Click().Build().Perform();
+            webDriver.FindElement(search1stPMBCResult).Click();
+
+            Wait();
+            FocusAndClick(searchInfoEllipsisBttn);
 
             switch (action)
             {
@@ -287,6 +288,9 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.Contains("You have selected a property not previously in the inventory. Do you want to add this property to the lease?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
+
+            Wait();
+            webDriver.FindElement(quickInfoCloseModalBttn).Click();
         }
 
         public void SelectSecondPMBCResult(string action = "")
@@ -429,6 +433,20 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NoPropertiesFound()
         {
             Assert.True(sharedModals.ToastifyText() == "No search result found");
+        }
+
+        public void DuplicatePropertyInserted()
+        {
+            Wait();
+            webDriver.FindElement(search1stPMBCResult).Click();
+
+            Wait();
+            FocusAndClick(searchInfoEllipsisBttn);
+
+            Wait();
+            webDriver.FindElement(search1stPMBCResultAddToFileOption).Click();
+
+            Assert.Equal("Skipped 1 duplicate property(s).", sharedModals.ToastifyText());
         }
     }
 }

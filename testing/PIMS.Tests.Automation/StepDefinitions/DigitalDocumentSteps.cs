@@ -90,13 +90,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Order Documents by Document Type
-            digitalDocumentsTab.OrderByDocumentFileType();
             digitalDocumentsTab.WaitUploadDocument();
-
+            digitalDocumentsTab.OrderByDocumentFileType();
 
             //Insert Document Details to previously uploaded documents
             for (var l = 0; l < digitalDocumentList.Count; l++)
             {
+                if ((fileType == "Lease" || fileType == "Property") && l > 0)
+                    digitalDocumentsTab.OrderByDocumentFileType();
+
                 digitalDocumentsTab.ViewUploadedDocument(l);
                 digitalDocumentsTab.EditDocumentButton();
                 digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[l].DocumentType);
@@ -108,12 +110,22 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.NavigateToFirstPageDocumentsTable();
 
             //Verify Details View Form of previously uploaded documents
+            if (fileType == "Lease" || fileType == "Property")
+                digitalDocumentsTab.OrderByDocumentFileType();
+
             for (var m = 0; m < digitalDocumentList.Count; m++)
             {
                 digitalDocumentsTab.ViewUploadedDocument(m);
                 digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[m]);
                 digitalDocumentsTab.CloseDigitalDocumentViewDetails();
             }
+
+            if (fileType == "Lease")
+            {
+                digitalDocumentsTab.OrderByDocumentFileType();
+                digitalDocumentsTab.OrderByDocumentFileType();
+            }
+                
         }
 
         [StepDefinition(@"I create Digital Documents for a Property Management row number (.*)")]
@@ -201,9 +213,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I edit a Digital Document for a ""(.*)"" from row number (.*)")]
         public void UpdateDigitalDocuments(string fileType, int rowNumber)
         {
-            //Navigate back to the file section
-
-
             //Access the documents tab
             digitalDocumentsTab.NavigateDocumentsTab();
 
@@ -212,7 +221,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Add new digital document
             digitalDocumentsTab.AddNewDocumentButton();
-            //digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[0]);
 
             Random random = new();
             var index2 = random.Next(0, documentFiles.Count());
@@ -225,6 +233,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Edit digital document's details
             digitalDocumentsTab.NavigateToFirstPageDocumentsTable();
+
+            //Disable Order by Document's type
+            if (fileType != "Lease")
+            {
+                digitalDocumentsTab.OrderByDocumentFileType();
+                digitalDocumentsTab.OrderByDocumentFileType();
+            }
+
+            //Pick 1st available digital document
             digitalDocumentsTab.View1stDocument();
             digitalDocumentsTab.EditDocumentButton();
             digitalDocumentsTab.UpdateNewDocumentType(digitalDocumentList[0]);

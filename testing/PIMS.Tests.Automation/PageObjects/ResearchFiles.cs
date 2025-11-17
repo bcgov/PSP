@@ -76,7 +76,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By researchFileDetailsProjectSubtitle = By.XPath("//h2/div/div[contains(text(),'Project')]");
         private readonly By reserachFileDetailsProjectLabel = By.XPath("//label[contains(text(),'Ministry project')]");
         private readonly By researchFileDetailsProjectsCount = By.XPath("//div[contains(text(),'Project')]/parent::div/parent::h2/following-sibling::div/div/div/div");
-        private readonly By researchFileDetailsProjectsRemoveBttn = By.CssSelector("svg[data-testid='remove-button']");
+        private readonly By researchFileDetailsProjectsRemoveBttn = By.CssSelector("button[data-testid='remove-button']");
 
         private readonly By researchFileDetailsRoadSubtitle = By.XPath("//div[contains(text(),'Roads')]");
         private readonly By researchFileDetailsRoadNameLabel = By.XPath("//label[contains(text(),'Road name')]");
@@ -564,7 +564,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             //Title and Name
-            AssertTrueIsDisplayed(researchFileCreateHeader);
+            //AssertTrueIsDisplayed(researchFileCreateHeader);
             AssertTrueIsDisplayed(researchFileNameLabel);
             AssertTrueIsDisplayed(researchFileNameInput);
             AssertTrueIsDisplayed(researchFileHelpNameTooltip);

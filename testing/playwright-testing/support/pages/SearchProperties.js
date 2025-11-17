@@ -145,6 +145,7 @@ class SearchProperties {
       "POI Name",
       "Lat/Long",
       "Survey Parcel",
+      "Project"
     ]);
 
     const searchPIDText = await this.page.locator("#input-searchBy");
