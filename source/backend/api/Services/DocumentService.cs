@@ -29,6 +29,7 @@ using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
 using Polly;
 
@@ -143,6 +144,15 @@ namespace Pims.Api.Services
                     throw new InvalidDataException("The requested category relationship does not exist");
             }
             return documentTypeRepository.GetByCategory(categoryType);
+        }
+
+        public Paged<PimsDocument> GetPage(DocumentSearchFilterModel filter)
+        {
+            Logger.LogInformation("Searching for documents...");
+
+            User.ThrowIfNotAuthorized(Permissions.DocumentView);
+
+            return documentRepository.GetPageDeep(filter);
         }
 
         public async Task<DocumentUploadResponse> UploadDocumentSync(DocumentUploadRequest uploadRequest)

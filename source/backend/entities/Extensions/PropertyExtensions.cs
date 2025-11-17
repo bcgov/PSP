@@ -28,12 +28,6 @@ namespace Pims.Dal.Helpers.Extensions
             return string.Join("; ", groupedHistorical.Select(g => g.GetAsString()));
         }
 
-        public static string GetPropertyName(this IFilePropertyEntity fileProperty)
-        {
-            var property = fileProperty?.Property;
-            return property.GetPropertyName();
-        }
-
         public static string GetPropertyName(this PimsProperty property)
         {
             if (property == null)

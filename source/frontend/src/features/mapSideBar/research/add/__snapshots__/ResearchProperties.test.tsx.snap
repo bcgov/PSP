@@ -709,7 +709,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             >
               <button
                 class="c10 Button btn btn-link"
-                title="Fit boundaries button"
+                title="Fit boundaries"
                 type="button"
               >
                 <div
@@ -906,7 +906,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
             >
               <button
                 class="c10 Button btn btn-link"
-                title="Fit boundaries button"
+                title="Fit boundaries"
                 type="button"
               >
                 <div

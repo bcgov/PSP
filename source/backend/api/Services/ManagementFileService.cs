@@ -417,7 +417,7 @@ namespace Pims.Api.Services
                 Note = new PimsNote()
                 {
                     IsSystemGenerated = true,
-                    NoteTxt = $"Management File property {(updateManagementFileProperty as IFilePropertyEntity).GetPropertyName()} {disabledOrEnabled}",
+                    NoteTxt = $"Management File property {(updateManagementFileProperty as IFilePropertyEntity).Property.GetPropertyName()} {disabledOrEnabled}",
                     AppCreateTimestamp = DateTime.Now,
                     AppCreateUserid = this._user.GetUsername(),
                 },

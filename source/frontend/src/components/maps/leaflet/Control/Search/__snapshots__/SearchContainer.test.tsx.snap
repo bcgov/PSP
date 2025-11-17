@@ -301,29 +301,12 @@ exports[`SearchContainer component > renders as expected 1`] = `
 
 .c0 {
   height: 60%;
+  margin-top: 1rem;
 }
 
 <div
     class="c0"
   >
-    <div
-      class="c1 form-section my-0"
-    >
-      <div
-        class="collapse show"
-      >
-        <button
-          class="c2 Button btn btn-primary"
-          type="button"
-        >
-          <div
-            class="Button__value"
-          >
-            Search PIMS information
-          </div>
-        </button>
-      </div>
-    </div>
     <div
       class="c1 form-section my-0 pt-0"
     >

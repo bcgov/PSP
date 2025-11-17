@@ -258,7 +258,7 @@ exports[`ContactInputView component > renders as expected 1`] = `
 }
 
 <div
-    class="form-group"
+    class="input form-group"
   >
     <div
       class="row"

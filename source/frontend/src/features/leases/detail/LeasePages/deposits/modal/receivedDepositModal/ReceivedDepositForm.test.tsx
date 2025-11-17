@@ -1,9 +1,13 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
+import React from 'react';
 
 import { MAX_SQL_MONEY_SIZE } from '@/constants/API';
+import { IContactSearchResult } from '@/interfaces';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { ApiGen_CodeTypes_LeaseSecurityDepositTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseSecurityDepositTypes';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fakeText, fillInput, render, RenderOptions } from '@/utils/test-utils';
 
@@ -14,7 +18,6 @@ const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 
 const onSave = vi.fn();
-const submitForm = vi.fn();
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -23,10 +26,11 @@ const storeState = {
 describe('ReceivedDepositForm component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions & { initialValues: FormLeaseDeposit }) => {
+    const formikRef = React.createRef<FormikProps<FormLeaseDeposit>>();
     const utils = render(
       <ReceivedDepositForm
         onSave={onSave}
-        formikRef={{ current: { submitForm } } as any}
+        formikRef={formikRef}
         initialValues={renderOptions.initialValues}
       />,
       {
@@ -36,7 +40,7 @@ describe('ReceivedDepositForm component', () => {
       },
     );
 
-    return { ...utils };
+    return { ...utils, formikRef };
   };
 
   let initialValues: FormLeaseDeposit;
@@ -49,22 +53,20 @@ describe('ReceivedDepositForm component', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = setup({ initialValues });
-    await act(async () => {});
-    expect(asFragment()).toMatchSnapshot();
-  });
-  it('renders with data as expected', () => {
-    const { asFragment } = setup({ initialValues });
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('validates that the deposit date is required', async () => {
+  it('validates that the deposit date is not required', async () => {
     const { container, findByDisplayValue } = setup({ initialValues });
 
+    let input: HTMLInputElement;
     await act(async () => {
-      const { input } = await fillInput(container, 'depositDate', '2020-01-02', 'datepicker');
-      await findByDisplayValue('Jan 02, 2020');
-      expect(input).toHaveProperty('required');
+      const result = await fillInput(container, 'depositDate', '2020-01-02', 'datepicker');
+      input = result.input as HTMLInputElement;
     });
+
+    await findByDisplayValue('Jan 02, 2020');
+    expect(input).toHaveProperty('required', false);
   });
 
   it('should validate required fields', async () => {
@@ -85,26 +87,40 @@ describe('ReceivedDepositForm component', () => {
     const { container, findByText } = setup({ initialValues });
 
     await act(async () => {
-      await fillInput(container, 'depositTypeCode', 'OTHER', 'select');
+      await fillInput(
+        container,
+        'depositTypeCode',
+        ApiGen_CodeTypes_LeaseSecurityDepositTypes.OTHER,
+        'select',
+      );
     });
 
     await act(async () => {
       await fillInput(container, 'otherTypeDescription', fakeText(20));
     });
 
+    let descriptionInput: HTMLTextAreaElement;
     await act(async () => {
-      await fillInput(container, 'description', '', 'textarea');
+      const result = await fillInput(container, 'description', '', 'textarea');
+      descriptionInput = result.input as HTMLTextAreaElement;
     });
     expect(
       await findByText(/Description required when Deposit type "Other" is selected/i),
     ).toBeVisible();
+
+    expect(descriptionInput).toHaveProperty('required', true);
   });
 
   it('should validate character limits', async () => {
     const { container, findByText } = setup({ initialValues });
 
     await act(async () => {
-      await fillInput(container, 'depositTypeCode', 'OTHER', 'select');
+      await fillInput(
+        container,
+        'depositTypeCode',
+        ApiGen_CodeTypes_LeaseSecurityDepositTypes.OTHER,
+        'select',
+      );
     });
     expect(await findByText(/Describe other/i)).toBeVisible();
 
@@ -124,5 +140,49 @@ describe('ReceivedDepositForm component', () => {
       await fillInput(container, 'amountPaid', MAX_SQL_MONEY_SIZE + 10);
     });
     expect(await findByText(`Amount paid must be less than ${MAX_SQL_MONEY_SIZE}`)).toBeVisible();
+  });
+
+  it('displays other type text if Other is selected', async () => {
+    const { container, findByText } = setup({ initialValues });
+
+    let otherField = container.querySelector(`input[name="otherTypeDescription"]`);
+    expect(otherField).toBeNull();
+
+    await act(async () => {
+      await fillInput(
+        container,
+        'depositTypeCode',
+        ApiGen_CodeTypes_LeaseSecurityDepositTypes.OTHER,
+        'select',
+      );
+    });
+    const otherText = await findByText('Describe other:');
+    expect(otherText).toBeVisible();
+
+    otherField = container.querySelector(`input[name="otherTypeDescription"]`);
+    expect(otherField).toBeVisible();
+  });
+
+  it('calls onSave when form is submitted', async () => {
+    const mockDeposit = FormLeaseDeposit.createEmpty(1);
+    mockDeposit.depositTypeCode = ApiGen_CodeTypes_LeaseSecurityDepositTypes.OTHER;
+    mockDeposit.otherTypeDescription = 'Some other type';
+    mockDeposit.description = 'This is a description';
+    mockDeposit.amountPaid = 500;
+    mockDeposit.contactHolder = {} as IContactSearchResult;
+
+    const { container, findByText, formikRef } = setup({ initialValues: mockDeposit });
+
+    const otherText = await findByText('Describe other:');
+    expect(otherText).toBeVisible();
+
+    let otherField = container.querySelector(`input[name="otherTypeDescription"]`);
+    expect(otherField).toBeVisible();
+
+    await act(async () => {
+      formikRef.current?.submitForm();
+    });
+
+    expect(onSave).toHaveBeenCalledWith(mockDeposit);
   });
 });
