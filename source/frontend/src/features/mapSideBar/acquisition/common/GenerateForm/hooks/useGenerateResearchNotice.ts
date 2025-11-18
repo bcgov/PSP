@@ -34,11 +34,11 @@ export const useGenerateResearchNotice = () => {
       pimsProperties.forEach(pimsProperty => {
         if (isValidId(pimsProperty?.property?.pid)) {
           fullyAttributedTasks.push(
-            fullyAttributedRepository.findByPid(pimsProperty.property.pid.toString()),
+            fullyAttributedRepository.findByPid(pimsProperty.property.pid.toString(), true),
           );
         } else if (isValidId(pimsProperty?.property?.pin)) {
           fullyAttributedTasks.push(
-            fullyAttributedRepository.findByPin(pimsProperty.property.pin.toString()),
+            fullyAttributedRepository.findByPin(pimsProperty.property.pin.toString(), true),
           );
         }
       });
