@@ -27,11 +27,6 @@ namespace Pims.Dal.Entities
         /// get/set - A collection of Organizations associated to this Lease.
         /// </summary>
         public ICollection<PimsOrganization> GetOrganizations() => PimsLeaseStakeholders?.Where(lt => lt.Person == null && lt.Organization != null).Select(lt => lt.Organization).ToArray();
-
-        /// <summary>
-        /// get/set - A collection of Improvements associated to this Lease.
-        /// </summary>
-        public ICollection<PimsPropertyImprovement> GetImprovements() => PimsPropertyImprovements;
         #endregion
     }
 }
