@@ -150,9 +150,6 @@ public partial class PimsPropertyAcquisitionFile
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [Column("BOUNDARY", TypeName = "geometry")]
-    public Geometry Boundary { get; set; }
-
     [ForeignKey("AcquisitionFileId")]
     [InverseProperty("PimsPropertyAcquisitionFiles")]
     public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
