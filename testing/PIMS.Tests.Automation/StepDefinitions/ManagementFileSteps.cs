@@ -556,12 +556,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyActivity.PropertyActivityType = ExcelDataContext.ReadData(i, "PropertyActivityType");
                 propertyActivity.PropertyActivitySubTypeList = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivitySubType"));
                 propertyActivity.PropertyActivityStatus = ExcelDataContext.ReadData(i, "PropertyActivityStatus");
-                propertyActivity.PropertyActivityRequestedCommenceDate = ExcelDataContext.ReadData(i, "PropertyActivityRequestedCommenceDate");
+                propertyActivity.PropertyActivityCommenceDate = ExcelDataContext.ReadData(i, "PropertyActivityRequestedCommenceDate");
                 propertyActivity.PropertyActivityCompletionDate = ExcelDataContext.ReadData(i, "PropertyActivityCompletionDate");
                 propertyActivity.PropertyActivityDescription = ExcelDataContext.ReadData(i, "PropertyActivityDescription");
                 propertyActivity.PropertyActivityMinistryContactList = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityMinistryContact"));
-                propertyActivity.PropertyActivityRequestorContactMngr = ExcelDataContext.ReadData(i, "PropertyActivityRequestorContactMngr");
-                propertyActivity.PropertyActivityInvolvedPartiesExtContactsList = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityInvolvedPartiesExtContacts"));
+                propertyActivity.PropertyActivityRequestorMngr = ExcelDataContext.ReadData(i, "PropertyActivityRequestorContactMngr");
+                propertyActivity.PropertyActivityExtContactsList = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityInvolvedPartiesExtContacts"));
                 propertyActivity.PropertyActivityServiceProvider = ExcelDataContext.ReadData(i, "PropertyActivityServiceProvider");
                 propertyActivity.ManagementPropertyActivityInvoicesStartRow = int.Parse(ExcelDataContext.ReadData(i, "ManagementPropertyActivityInvoicesStartRow"));
                 propertyActivity.ManagementPropertyActivityInvoicesCount = int.Parse(ExcelDataContext.ReadData(i, "ManagementPropertyActivityInvoicesCount"));

@@ -152,10 +152,10 @@ namespace PIMS.Tests.Automation.PageObjects
             while (webDriver.FindElements(propertiesFileConfirmationModal).Count() > 0)
             {
 
-                if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the disposition file that are not in the MOTT Inventory"))
+                if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the disposition file that are not in the MoTT Inventory"))
                 {
                     Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                    Assert.Equal("You have added one or more properties to the disposition file that are not in the MOTT Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
+                    Assert.Equal("You have added one or more properties to the disposition file that are not in the MoTT Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
                     sharedModals.SecondaryModalClickOKBttn();
                 }
                 else if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the management file that are not in the MoTT Inventory"))
@@ -195,6 +195,8 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(propertiesFileConfirmationModal);
             Assert.Equal("This property cannot be deleted as it is part of an activity in this file\n", sharedModals.ModalContent());
+        }
+
         public void VerifyInsertedPropsOrder(List<string> propertiesList)
         {
             for (int i = 0; i < propertiesList.Count; i++)

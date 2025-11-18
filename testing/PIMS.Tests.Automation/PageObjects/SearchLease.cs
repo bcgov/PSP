@@ -56,7 +56,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchLicense1stResultExpiryDateContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[2]/span[1]");
         private readonly By searchLicense1stResultProgramContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[3]");
         private readonly By searchLicense1stResultTenantsContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/div");
-        private readonly By searchLicense1stResultPropertiesContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[5]/div/div");
+        private readonly By searchLicense1stResultPropertiesContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[6]/div/div");
         private readonly By searchLicense1stResultHistoricalFileContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[6]");
         private readonly By searchLicense1stResultStatusContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[8]");
 
@@ -331,7 +331,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLeaseTableContent(Lease lease)
         {
-            WaitUntilVisibleText(searchLicense1stResultExpiryDateContent, webDriver.FindElement(searchLicense1stResultExpiryDateContent).Text);
+            Wait();
 
             AssertTrueIsDisplayed(searchLicense1stResultLink);
 
@@ -341,14 +341,17 @@ namespace PIMS.Tests.Automation.PageObjects
             if(lease.Program != "")
                 AssertTrueContentEquals(searchLicense1stResultProgramContent, lease.Program);
 
-            if(lease.LeaseTenants.Count > 0)
-                Assert.NotEmpty(webDriver.FindElements(searchLicense1stResultTenantsContent));
+            var tenants = webDriver.FindElements(searchLicense1stResultTenantsContent);
+            var firstTenant = lease.LeaseTenants?.FirstOrDefault();
+            bool hasValidTenant = firstTenant != null && !lease.IsStakeholderEmpty(firstTenant);
+
+            if (hasValidTenant)
+                Assert.NotEmpty(tenants);
+            else
+                Assert.Empty(tenants);
 
             if (lease.SearchPropertiesIndex!= 0)
                 Assert.True(webDriver.FindElements(searchLicense1stResultPropertiesContent).Count > 0);
-
-            //TO-DO: HISTORICAL FILE
-
 
             if(lease.LeaseStatus != "")
                 AssertTrueContentEquals(searchLicense1stResultStatusContent, lease.LeaseStatus);

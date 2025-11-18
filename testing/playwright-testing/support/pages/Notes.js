@@ -1,5 +1,4 @@
 const { expect } = require("@playwright/test");
-const { clickSaveButton } = require("../../support/common.js");
 
 class Notes {
   constructor(page) {

@@ -47,6 +47,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchProjectShowEntries = By.CssSelector("div[class='Menu-root']");
         private By searchProjectPagination = By.CssSelector("ul[class='pagination']");
 
+        private readonly By projectHeaderProjectNameLabel = By.XPath("//label[(text()='Project:')]");
+
         public SearchProjects(IWebDriver webDriver) : base(webDriver)
         {}
 
@@ -111,8 +113,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFirstResult()
         {
-            WaitUntilVisible(searchProjectTotalCount);
+            var originalWindowHandle = webDriver.CurrentWindowHandle;
+
+            Wait();
             webDriver.FindElement(searchProject1stResultNbrLink).Click();
+
+            Wait();
+            var allWindowsHandle = webDriver.WindowHandles;
+            var newWindowHandle = allWindowsHandle.Where(handle => handle != originalWindowHandle).First();
+            webDriver.SwitchTo().Window(newWindowHandle);
+
+
+            WaitUntilClickable(projectHeaderProjectNameLabel);
+            AssertTrueIsDisplayed(projectHeaderProjectNameLabel);
         }
 
         public void OrderByProjectNumber()

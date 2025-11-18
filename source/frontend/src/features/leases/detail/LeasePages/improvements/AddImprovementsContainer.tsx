@@ -90,7 +90,7 @@ const addEmptyImprovements = (
         description: '',
         structureSize: '',
         address: '',
-        leaseId: leaseId ?? 0,
+        propertyId: leaseId ?? 0,
       };
     }
     allImprovements.push(improvementForType);

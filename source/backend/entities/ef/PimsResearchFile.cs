@@ -90,9 +90,11 @@ public partial class PimsResearchFile
     /// Description of the research request.
     /// </summary>
     [Column("REQUEST_DESCRIPTION")]
-    [StringLength(3000)]
     public string RequestDescription { get; set; }
 
+    /// <summary>
+    /// Description of the source of the research request.
+    /// </summary>
     [Column("REQUEST_SOURCE_DESCRIPTION")]
     [StringLength(2000)]
     public string RequestSourceDescription { get; set; }
@@ -101,7 +103,6 @@ public partial class PimsResearchFile
     /// Result of the research request.
     /// </summary>
     [Column("RESEARCH_RESULT")]
-    [StringLength(2000)]
     public string ResearchResult { get; set; }
 
     /// <summary>
