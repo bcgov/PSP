@@ -60,7 +60,7 @@ public partial class PimsResearchFileHist
     public string RoadAlias { get; set; }
 
     [Column("REQUEST_DESCRIPTION")]
-    [StringLength(3000)]
+    [StringLength(4000)]
     public string RequestDescription { get; set; }
 
     [Column("REQUEST_SOURCE_DESCRIPTION")]
@@ -68,7 +68,7 @@ public partial class PimsResearchFileHist
     public string RequestSourceDescription { get; set; }
 
     [Column("RESEARCH_RESULT")]
-    [StringLength(2000)]
+    [StringLength(4000)]
     public string ResearchResult { get; set; }
 
     [Column("IS_EXPROPRIATION")]

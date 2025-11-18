@@ -36,6 +36,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             return result;
         }
 
+        public List<string> PopulateUnsortedLists(string stringToList)
+        {
+            List<string> result = stringToList.Split(';').ToList();
+            return result;
+        }
+
         public IConfiguration ReadConfiguration() =>
            new ConfigurationBuilder()
                .AddUserSecrets<TestHooks>()

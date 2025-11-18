@@ -1,9 +1,98 @@
 const { expect } = require("@playwright/test");
-const { clickAndWaitFor } = require("../../support/common.js");
+const { clickAndWaitFor } = require("../common.js");
 
-class SearchManagementFiles {
+class ManagementFile {
   constructor(page) {
     this.page = page;
+  }
+  async navigateManagementMainMenu() {
+    clickAndWaitFor(
+      this.page,
+      "div[data-testid='nav-tooltip-management'] a",
+      "div[data-testid='side-tray']"
+    );
+  }
+
+  async createManagementFileLink() {
+    await this.page
+      .locator("//a[contains(text(), 'Create Management File')]")
+      .click();
+  }
+
+  async cancelManagementFile() {
+    await this.page
+      .locator("//div[contains(text(),'Cancel')]/parent::button")
+      .click();
+  }
+
+  async validateInitManagementFileDetailsPage() {
+    await this.page
+      .getByRole("h1", { name: "Create Management File" })
+      .isVisible();
+
+    //Project
+    await expect(this.page.locator('h2:has-text("Project")')).toBeVisible();
+    await expect(
+      this.page.locator("label:has-text('Ministry project')")
+    ).toBeVisible();
+    await expect(this.page.getByTestId("typeahead-project")).toBeVisible();
+    await expect(
+      this.page.locator("label", { hasText: "Funding" })
+    ).toBeVisible();
+
+    const fundingSelect = await this.page.locator("#input-fundingTypeCode");
+    expect(fundingSelect).toBeVisible();
+
+    const fundingOptions = await fundingSelect.locator("option").count();
+    expect(fundingOptions).toBeGreaterThan(0);
+
+    //Properties
+    await expect(
+      this.page.locator(
+        "//h2/div/div[text()='Properties to include in this file:']"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Select one or more properties that you want to include in this management file. You can choose a location from the map, or search by other criteria.')]"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator("//h2/div/div[text()='Selected Properties']")
+    ).toBeVisible();
+    await expect(
+      this.page.locator("//div[contains(text(),'New workflow')]")
+    ).toBeVisible();
+    await expect(
+      this.page.locator("//div[contains(text(),'Identifier')]")
+    ).toBeVisible();
+    await expect(
+      this.page.locator(
+        "//div[contains(text(),'Provide a descriptive name for this land')]"
+      )
+    ).toBeVisible();
+    await expect(
+      this.page.locator("//span[contains(text(),'No Properties selected')]")
+    ).toBeVisible();
+
+    //Management Details
+    await expect(
+      this.page.locator('h2:has-text("Management Details")')
+    ).toBeVisible();
+    await expect(this.page.getByText("File name")).toBeVisible();
+    await expect(this.page.locator("#input-fileName")).toBeVisible();
+    await expect(this.page.getByText("Historical file number")).toBeVisible();
+    await expect(this.page.locator("#input-legacyFileNum")).toBeVisible();
+    await expect(this.page.getByText("Purpose")).toBeVisible();
+    await expect(this.page.locator("#input-purposeTypeCode")).toBeVisible();
+    await expect(this.page.getByText("Additional details")).toBeVisible();
+    await expect(this.page.locator("#input-additionalDetails")).toBeVisible();
+
+    //Management Team
+    await expect(
+      this.page.locator('h2:has-text("Management Team")')
+    ).toBeVisible();
+    await expect(this.page.getByTestId("add-team-member")).toBeVisible();
   }
 
   async navigateToSearchManagement() {
@@ -44,154 +133,6 @@ class SearchManagementFiles {
     await this.page
       .getByRole("link", { name: "Manage Management Activities" })
       .click();
-  }
-
-  async orderByMgmtFileName() {
-    await this.page.getByTestId("sort-column-fileName").click();
-  }
-
-  async orderByMgmtHistoricalFileNbr() {
-    await this.page.getByTestId("sort-column-legacyFileNum").click();
-  }
-
-  async orderByMgmtPurpose() {
-    await this.page
-      .getByTestId("sort-column-managementFilePurposeTypeCode")
-      .click();
-  }
-
-  async orderByMgmtStatus() {
-    await this.page
-      .getByTestId("sort-column-managementFileStatusTypeCode")
-      .click();
-  }
-
-  async selectFirstOption() {
-    await this.page
-      .locator(
-        "div[data-testid='managementFilesTable'] div[class='tr-wrapper']:first-child a"
-      )
-      .click();
-    await expect(this.page.getByTestId("mgmt-fileId")).toBeVisible();
-  }
-
-  async firstMgmtFileName() {
-    return await this.page
-      .locator(
-        "div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td clickable']:nth-child(2)"
-      )
-      .textContent();
-  }
-
-  async firstMgmtHistoricalFile() {
-    return await this.page
-      .locator(
-        "div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td clickable']:nth-child(3)"
-      )
-      .textContent();
-  }
-
-  async firstMgmtPurpose() {
-    return await this.page
-      .locator(
-        "div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td clickable']:nth-child(5)"
-      )
-      .textContent();
-  }
-
-  async firstMgmtStatus() {
-    return await this.page
-      .locator(
-        "div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td clickable']:nth-child(8)"
-      )
-      .textContent();
-  }
-
-  async filterManagementFiles({
-    pid = "",
-    pin = "",
-    address = "",
-    mgmtfile = "",
-    teamMember = "",
-    status = "",
-    purpose = "",
-    project = "",
-  }) {
-    await this.page.locator("#reset-button").click();
-
-    if (pid != "") {
-      await this.page.locator("#input-searchBy").selectOption({ label: "PID" });
-      await this.page.locator("#input-pid").fill(pid);
-    }
-
-    if (pin != "") {
-      await this.page.locator("#input-searchBy").selectOption({ label: "PIN" });
-      await this.page.locator("#input-pin").fill(pin);
-    }
-
-    if (address != "") {
-      await this.page
-        .locator("#input-searchBy")
-        .selectOption({ label: "Address" });
-      await this.page.locator("#input-address").fill(address);
-    }
-
-    if (mgmtfile != "") {
-      await this.page
-        .locator("#input-fileNameOrNumberOrReference")
-        .fill(mgmtfile);
-    }
-
-    if (teamMember != "") {
-      await this.page
-        .locator("typeahead-select-managementTeamMember")
-        .fill(pid);
-      await this.page
-        .locator(
-          "div[id='typeahead-select-managementTeamMember'] a:first-child"
-        )
-        .click();
-    }
-
-    if (status != "") {
-      await this.page
-        .locator("#input-managementFileStatusCode")
-        .selectOption({ label: status });
-    }
-
-    if (purpose != "") {
-      await this.page
-        .locator("#input-managementFilePurposeCode")
-        .selectOption({ label: purpose });
-    }
-
-    if (project != "") {
-      await this.page.locator("#input-projectNameOrNumber").fill(project);
-    }
-
-    await this.page.locator("#search-button").click();
-  }
-
-  async searchFoundResults() {
-    return (
-      (await this.page
-        .locator(
-          "div[data-testid='managementFilesTable'] div[class='tr-wrapper']:first-child a"
-        )
-        .count()) > 0
-    );
-  }
-
-  async mgmtTableResultNumber() {
-    await this.page.locator(
-      "div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-    );
-    const tableNumbers = await this.page
-      .locator(
-        "div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
-      )
-      .count();
-    return tableNumbers;
   }
 
   async verifySearchManagementListView() {
@@ -331,76 +272,6 @@ class SearchManagementFiles {
       .locator("ul[class='pagination']")
       .waitFor({ status: "visible" });
     expect(this.page.locator("ul[class='pagination']")).toBeVisible();
-  }
-
-  async verifyManagementTableContent(managementFile) {
-    await this.page
-      .locator(
-        "div[data-testid='managementFilesTable'] div[class='tr-wrapper']:first-child"
-      )
-      .waitFor({ status: "visible" });
-    expect(
-      this.page.locator(
-        "div[data-testid='managementFilesTable'] div[class='tr-wrapper']:first-child"
-      )
-    ).toBeVisible();
-
-    const managementNameContent = await this.page.locator(
-      "div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div div:nth-child(2)"
-    );
-    expect(managementNameContent).toHaveText(managementFile.ManagementName);
-
-    if (managementFile.ManagementHistoricalFile != null) {
-      const historicalFileContent = await this.page.locator(
-        "div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div div:nth-child(3)"
-      );
-      expect(historicalFileContent).toHaveText(
-        managementFile.ManagementHistoricalFile
-      );
-    }
-
-    if (managementFile.ManagementMinistryProject != null) {
-      const ministryProjectContent = await this.page.locator(
-        "div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div div:nth-child(4)"
-      );
-      await expect(ministryProjectContent).toHaveText(
-        managementFile.ManagementMinistryProjectCode +
-          " " +
-          managementFile.ManagementMinistryProject
-      );
-    }
-
-    const managementPurposeContent = await this.page.locator(
-      "div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div div:nth-child(5)"
-    );
-    await expect(managementPurposeContent).toHaveText(
-      managementFile.ManagementPurpose
-    );
-
-    if (managementFile.ManagementTeam.length > 0) {
-      await this.page
-        .locator(
-          "div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div div:nth-child(6) span"
-        )
-        .waitFor({ status: "visible" });
-      const managementTeamCount = await this.page
-        .locator(
-          "div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div div:nth-child(6) span"
-        )
-        .count();
-      expect(managementTeamCount).toBeGreaterThan(0);
-    }
-
-    // if (managementFile.ManagementSearchProperties != {}) {
-    //   await this.page.locator("div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div div:nth-child(7) div div").waitFor({status: 'visible'});
-    //   const propertiesCount = await this.page.locator("div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div div:nth-child(7) div div").count()
-    //   expect(propertiesCount).toBeGreaterThan(0);
-    // }
-
-    const managementStatus = await this.page.locator(
-      "div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div div:nth-child(8)"
-    );
-    expect(managementStatus).toHaveText(managementFile.ManagementStatus);
   }
 
   async verifySearchManagementActivitiesListView() {
@@ -558,5 +429,4 @@ class SearchManagementFiles {
     expect(this.page.locator("ul[class='pagination']")).toBeVisible();
   }
 }
-
-module.exports = SearchManagementFiles;
+module.exports = ManagementFile;

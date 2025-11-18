@@ -111,28 +111,28 @@ Then(
 );
 
 Given("I navigate to the Management Files Page", async function () {
-  await this.searchManagementFiles.navigateToSearchManagement();
+  await this.managementFile.navigateToSearchManagement();
 });
 
 When("I verify the Management Files List View", async function () {
-  await this.searchManagementFiles.verifySearchManagementListView();
+  await this.managementFile.verifySearchManagementListView();
 });
 
 When("I verify the Management Activities List View", async function () {
-  await this.searchManagementFiles.navigateToSearchActivitiesManagement();
-  await this.searchManagementFiles.verifySearchManagementActivitiesListView();
+  await this.managementFile.navigateToSearchActivitiesManagement();
+  await this.managementFile.verifySearchManagementActivitiesListView();
 });
 
 When("I verify the Management Files Create Form fields", async function () {
-  await this.managementFileDetails.navigateManagementMainMenu();
-  await this.managementFileDetails.createManagementFileLink();
-  await this.managementFileDetails.validateInitManagementFileDetailsPage();
+  await this.managementFile.navigateManagementMainMenu();
+  await this.managementFile.createManagementFileLink();
+  await this.managementFile.validateInitManagementFileDetailsPage();
 });
 
 Then(
   "The Management Files section is rendered successfully",
   async function () {
-    await this.managementFileDetails.cancelManagementFile();
+    await this.managementFile.cancelManagementFile();
   }
 );
 

@@ -92,7 +92,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             var originalWindowHandle = webDriver.CurrentWindowHandle;
 
-            WaitUntilClickable(searchAcquisitionFile1stResultLink);
+            Wait();
             webDriver.FindElement(searchAcquisitionFile1stResultLink).Click();
 
             Wait();

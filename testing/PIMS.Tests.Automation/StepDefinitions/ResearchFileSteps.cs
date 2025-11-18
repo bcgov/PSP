@@ -408,7 +408,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 researchFile.SearchProperties.SurveyParcel.Section = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "SurveySection");
                 researchFile.SearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "SurveyTownship");
                 researchFile.SearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "SurveyRange");
-                researchFile.SearchProperties.DisplayingList = genericSteps.PopulateLists(ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "DisplayingList"));
+                researchFile.SearchProperties.DisplayingList = genericSteps.PopulateUnsortedLists(ExcelDataContext.ReadData(researchFile.SearchPropertiesIndex, "DisplayingList"));
 
             }
             if (researchFile.PropertyResearchRowCount != 0 && researchFile.PropertyResearchRowStart != 0)
