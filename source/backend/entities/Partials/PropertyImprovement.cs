@@ -21,13 +21,13 @@ namespace Pims.Dal.Entities
         /// <summary>
         /// Creates a new instance of a PropertyImprovement object, initializes with specified arguments.
         /// </summary>
-        /// <param name="lease"></param>
+        /// <param name="property"></param>
         /// <param name="improvementType"></param>
-        public PimsPropertyImprovement(PimsLease lease, PimsPropertyImprovementType improvementType)
+        public PimsPropertyImprovement(PimsProperty property, PimsPropertyImprovementType improvementType)
             : this()
         {
-            this.LeaseId = lease?.LeaseId ?? throw new ArgumentNullException(nameof(lease));
-            this.Lease = lease;
+            this.PropertyId = property?.PropertyId ?? throw new ArgumentNullException(nameof(property));
+            this.Property = property;
             this.PropertyImprovementTypeCode = improvementType.Id ?? throw new ArgumentNullException(nameof(improvementType));
             this.PropertyImprovementTypeCodeNavigation = improvementType;
         }

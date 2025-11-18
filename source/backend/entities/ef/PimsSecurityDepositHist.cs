@@ -40,7 +40,7 @@ public partial class PimsSecurityDepositHist
     public string Description { get; set; }
 
     [Column("AMOUNT_PAID", TypeName = "money")]
-    public decimal AmountPaid { get; set; }
+    public decimal? AmountPaid { get; set; }
 
     [Column("DEPOSIT_DATE")]
     public DateOnly? DepositDate { get; set; }
