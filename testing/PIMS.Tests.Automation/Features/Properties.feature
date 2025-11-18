@@ -42,11 +42,11 @@ Scenario: 06._Property_Management_Activity_Digital_Documents
 Scenario: 07._Verify_Digital_Documents_on_Related_Documents
 	Given I search for a property in the inventory by PID from row number 37
 	When I create Digital Documents for a "Property" from row number 16
-	And  I create a new Management File from row number 5
+	And  I create a Management File from row number 5 to check common data
 	And I add Properties to the Management File
 	Then The related documents appeared as expected
 
-Scenario: 08._Properties_Map_and_List_Filters
+Scenario: 08._Properties_List
 	Given I search for a Property in the Properties List by different filters from row number 29
 	Then Properties filters works successfully
 

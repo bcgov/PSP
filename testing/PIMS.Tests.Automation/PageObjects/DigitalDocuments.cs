@@ -373,7 +373,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToFirstPageDocumentsTable()
         {
-            WaitUntilVisible(documentPaginationPrevPageLink);
+            Wait();
             FocusAndClick(documentPaginationPrevPageLink);
         }
 
