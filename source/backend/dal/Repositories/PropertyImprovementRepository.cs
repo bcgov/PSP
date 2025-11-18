@@ -16,7 +16,7 @@ namespace Pims.Dal.Repositories
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a LeaseRepository, and initializes it with the specified arguments.
+        /// Creates a new instance of a PropertyImprovementRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
@@ -30,30 +30,31 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
-        /// get the improvements on a lease.
+        /// get the improvements on a property.
         /// </summary>
-        /// <param name="leaseId"></param>
+        /// <param name="propertyId"></param>
         /// <returns></returns>
-        public IEnumerable<PimsPropertyImprovement> GetByLeaseId(long leaseId)
+        public IEnumerable<PimsPropertyImprovement> GetByPropertyId(long propertyId)
         {
             using var scope = Logger.QueryScope();
-            return this.Context.PimsPropertyImprovements
+
+            return Context.PimsPropertyImprovements.AsNoTracking()
                 .Include(pi => pi.PropertyImprovementTypeCodeNavigation)
-                .Where(l => l.LeaseId == leaseId).AsNoTracking()
-                .OrderBy(i => i.PropertyImprovementTypeCode)
-                 ?? throw new KeyNotFoundException();
+                .Where(x => x.PropertyId == propertyId)
+                .OrderBy(i => i.PropertyImprovementTypeCode) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
-        /// update the improvements on a lease.
+        /// update the improvements on a property.
         /// </summary>
-        /// <param name="leaseId"></param>
+        /// <param name="propertyId"></param>
         /// <param name="pimsPropertyImprovements"></param>
         /// <returns></returns>
-        public IEnumerable<PimsPropertyImprovement> Update(long leaseId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements)
+        public IEnumerable<PimsPropertyImprovement> Update(long propertyId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements)
         {
             using var scope = Logger.QueryScope();
-            this.Context.UpdateChild<PimsLease, long, PimsPropertyImprovement, long>(l => l.PimsPropertyImprovements, leaseId, pimsPropertyImprovements.ToArray());
+
+            Context.UpdateChild<PimsProperty, long, PimsPropertyImprovement, long>(x => x.PimsPropertyImprovements, propertyId, pimsPropertyImprovements.ToArray());
 
             return pimsPropertyImprovements;
         }

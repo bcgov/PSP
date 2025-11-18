@@ -1,4 +1,5 @@
 using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.Property;
 
 namespace Pims.Api.Models.Concepts.Lease
 {
@@ -8,9 +9,9 @@ namespace Pims.Api.Models.Concepts.Lease
 
         public long? Id { get; set; }
 
-        public long? LeaseId { get; set; }
+        public long? PropertyId { get; set; }
 
-        public LeaseModel Lease { get; set; }
+        public PropertyModel Property { get; set; }
 
         public string Address { get; set; }
 

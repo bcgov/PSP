@@ -174,7 +174,7 @@ public partial class PimsProperty
     public string LandLegalDescription { get; set; }
 
     /// <summary>
-    /// Spatial bundary of land
+    /// Spatial boundary of property.
     /// </summary>
     [Column("BOUNDARY", TypeName = "geometry")]
     public Geometry Boundary { get; set; }
@@ -441,6 +441,9 @@ public partial class PimsProperty
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyDocument> PimsPropertyDocuments { get; set; } = new List<PimsPropertyDocument>();
+
+    [InverseProperty("Property")]
+    public virtual ICollection<PimsPropertyImprovement> PimsPropertyImprovements { get; set; } = new List<PimsPropertyImprovement>();
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; } = new List<PimsPropertyLease>();

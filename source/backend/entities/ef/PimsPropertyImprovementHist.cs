@@ -23,8 +23,8 @@ public partial class PimsPropertyImprovementHist
     [Column("PROPERTY_IMPROVEMENT_ID")]
     public long PropertyImprovementId { get; set; }
 
-    [Column("LEASE_ID")]
-    public long LeaseId { get; set; }
+    [Column("PROPERTY_ID")]
+    public long PropertyId { get; set; }
 
     [Required]
     [Column("PROPERTY_IMPROVEMENT_TYPE_CODE")]
