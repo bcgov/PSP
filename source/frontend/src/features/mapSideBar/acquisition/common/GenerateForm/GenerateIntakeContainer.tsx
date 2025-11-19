@@ -31,7 +31,7 @@ const GenerateIntakeContainer: React.FunctionComponent<
     },
   } = useAcquisitionProvider();
 
-  const featchAcquisitionTeam = useCallback(async () => {
+  const fetchAcquisitionTeam = useCallback(async () => {
     const file = await getAcquisitionFile(acquisitionFileId);
     if (exists(file)) {
       const properties = await getAcquisitionProperties(acquisitionFileId);
@@ -41,9 +41,9 @@ const GenerateIntakeContainer: React.FunctionComponent<
   }, [acquisitionFileId, getAcquisitionFile, getAcquisitionProperties]);
 
   const handleGenerateClick = useCallback(() => {
-    featchAcquisitionTeam();
+    fetchAcquisitionTeam();
     openPropertyModal();
-  }, [featchAcquisitionTeam, openPropertyModal]);
+  }, [fetchAcquisitionTeam, openPropertyModal]);
 
   const handleSelectedProperties = (selectedProperties: ApiGen_Concepts_FileProperty[]) => {
     onGenerate(selectedProperties);
@@ -60,7 +60,7 @@ const GenerateIntakeContainer: React.FunctionComponent<
       <LoadingBackdrop show={isLoading} />
       <GenerateItemView
         label="Generate Intake"
-        formType={ApiGen_CodeTypes_FormTypes.FORM1}
+        formType={ApiGen_CodeTypes_FormTypes.FORMINTAKE}
         onGenerate={handleGenerateClick}
       />
       <PropertySelectorModal
