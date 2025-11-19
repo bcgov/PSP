@@ -80,7 +80,7 @@ export const useGenerateIntake = () => {
       const intakeData = new Api_GenerateAcquisitionPropertyIntake(file, composedProperty);
 
       const generatedFile = await generate({
-        templateType: ApiGen_CodeTypes_FormTypes.FORMINTAKE, // TODO
+        templateType: ApiGen_CodeTypes_FormTypes.FORMINTAKE,
         templateData: intakeData,
         convertToType: null,
       });
