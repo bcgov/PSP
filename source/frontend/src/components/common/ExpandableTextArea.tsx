@@ -56,5 +56,6 @@ const StyledCard = styled(Card)`
 const ContentCard = styled.label`
   overflow: hidden;
   white-space: break-spaces;
-  word-break: break-all;
+  word-break: break-word;
+  text-align: justify;
 `;

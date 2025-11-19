@@ -27,6 +27,7 @@ namespace Pims.Dal.Entities
         public ICollection<PimsOrganization> GetOrganizations() => PimsPropertyOrganizations?.Select(o => o.Organization).ToArray();
 
         public ICollection<PimsLease> GetLeases() => PimsPropertyLeases?.Select(l => l.Lease).ToArray();
+
         #endregion
 
         #region Constructors

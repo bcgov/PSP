@@ -10,7 +10,6 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderGenTypeCode } from '@/components/Table';
 import { Claims } from '@/constants/index';
-import { DocumentRow } from '@/features/documents/ComposedDocument';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentQueueStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_DocumentQueueStatusTypes';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
@@ -18,6 +17,8 @@ import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/Api
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { prettyFormatUTCDate, stringToFragment } from '@/utils';
 
+import { documentQueueInError, documentQueueInProcess } from '../../documentUtils';
+import { DocumentRow } from '../../models/DocumentRow';
 import { ParentInformationDisplay } from '../DocumentListView';
 
 export interface IDocumentColumnProps {
@@ -207,13 +208,8 @@ const renderActions = (
   return function ({ row: { original, index } }: CellProps<DocumentRow, string>) {
     const { hasClaim } = useKeycloakWrapper();
 
-    const documentInError =
-      original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PIMS_ERROR ||
-      original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.MAYAN_ERROR;
-
-    const documentProcessing =
-      original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PENDING ||
-      original.queueStatusTypeCode?.id === ApiGen_CodeTypes_DocumentQueueStatusTypes.PROCESSING;
+    const documentInError = documentQueueInError(original.queueStatusTypeCode?.id);
+    const documentProcessing = documentQueueInProcess(original.queueStatusTypeCode?.id);
 
     const canViewDocument =
       (original.mayanDocumentId && original.queueStatusTypeCode === null) ||

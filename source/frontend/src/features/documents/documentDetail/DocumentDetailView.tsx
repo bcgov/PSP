@@ -11,8 +11,8 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { exists } from '@/utils';
 
 import { StyledH3, StyledNoData, StyledScrollable } from '../commonStyles';
-import { ComposedDocument } from '../ComposedDocument';
 import { StyledContainer } from '../list/styles';
+import { ComposedDocument } from '../models/ComposedDocument';
 import DocumentDetailHeader from './DocumentDetailHeader';
 
 export interface IDocumentDetailsViewProps {

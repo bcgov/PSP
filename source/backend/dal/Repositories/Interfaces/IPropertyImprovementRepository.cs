@@ -9,8 +9,8 @@ namespace Pims.Dal.Repositories
     public interface IPropertyImprovementRepository : IRepository<PimsPropertyImprovement>
     {
 
-        IEnumerable<PimsPropertyImprovement> GetByLeaseId(long leaseId);
+        IEnumerable<PimsPropertyImprovement> GetByPropertyId(long propertyId);
 
-        IEnumerable<PimsPropertyImprovement> Update(long leaseId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements);
+        IEnumerable<PimsPropertyImprovement> Update(long propertyId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements);
     }
 }

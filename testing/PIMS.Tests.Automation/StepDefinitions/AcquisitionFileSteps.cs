@@ -211,8 +211,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (acquisitionFile.AcquisitionSearchProperties.PID != "")
             {
                 searchProperties.SearchProperty(PID: acquisitionFile.AcquisitionSearchProperties.PID);
-                searchProperties.SelectFirstPMBCResult();
-                searchProperties.ResetPropertySearch();
+                searchProperties.DuplicatePropertyInserted();
             }
 
             //Save Research File
@@ -1177,7 +1176,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 acquisitionFile.AcquisitionSearchProperties.SurveyParcel.District = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "SurveyDistrict");
                 acquisitionFile.AcquisitionSearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "SurveyTownship");
                 acquisitionFile.AcquisitionSearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "SurveyRange");
-                acquisitionFile.AcquisitionSearchProperties.DisplayingList = genericSteps.PopulateLists(ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "DisplayingList"));
+                acquisitionFile.AcquisitionSearchProperties.DisplayingList = genericSteps.PopulateUnsortedLists(ExcelDataContext.ReadData(acquisitionFile.AcquisitionSearchPropertiesIndex, "DisplayingList"));
             }
 
             //Acquisition's Properties' Takes

@@ -14,8 +14,9 @@ import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
-import { ComposedDocument, DocumentUpdateFormData } from '../ComposedDocument';
+import { DocumentUpdateFormData } from '../models';
 import { DocumentDetailForm, IDocumentDetailFormProps } from './DocumentDetailForm';
+import { ComposedDocument } from '../models/ComposedDocument';
 
 // mock auth library
 
@@ -145,6 +146,7 @@ const mockDocument: ComposedDocument = {
       documentQueueStatusTypeCode: null,
     },
     parentId: null,
+    parentNameOrNumber: null,
     relationshipType: ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles,
     appCreateTimestamp: EpochIsoDateTime,
     appLastUpdateTimestamp: EpochIsoDateTime,

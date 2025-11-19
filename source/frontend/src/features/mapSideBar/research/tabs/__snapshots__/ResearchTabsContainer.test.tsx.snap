@@ -104,7 +104,8 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
 .c9 {
   overflow: hidden;
   white-space: break-spaces;
-  word-break: break-all;
+  word-break: break-word;
+  text-align: justify;
 }
 
 <div

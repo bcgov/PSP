@@ -10,8 +10,8 @@ import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 
 import { StyledScrollable } from '../commonStyles';
-import { BatchUploadFormModel, DocumentUploadFormData } from '../ComposedDocument';
 import { getDocumentMetadataYupSchema } from '../DocumentMetadataYupSchema';
+import { BatchUploadFormModel, DocumentUploadFormData } from '../models';
 import SelectedDocumentRow from './SelectedDocumentRow';
 
 export interface IDocumentUploadFormProps {

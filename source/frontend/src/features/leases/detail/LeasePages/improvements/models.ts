@@ -8,7 +8,7 @@ export class ILeaseImprovementsForm {
 
 export class ILeaseImprovementForm {
   id?: number;
-  leaseId?: number;
+  propertyId?: number;
   propertyImprovementTypeId = '';
   propertyImprovementType = '';
   description = '';
@@ -19,7 +19,7 @@ export class ILeaseImprovementForm {
   public static fromApi(improvement: ApiGen_Concepts_PropertyImprovement) {
     const form = new ILeaseImprovementForm();
     form.id = improvement.id ?? undefined;
-    form.leaseId = improvement.leaseId ?? undefined;
+    form.propertyId = improvement.propertyId ?? undefined;
     form.propertyImprovementTypeId = improvement.propertyImprovementTypeCode?.id ?? '';
     form.propertyImprovementType = improvement.propertyImprovementTypeCode?.description ?? '';
     form.description = improvement.improvementDescription ?? '';
@@ -32,8 +32,8 @@ export class ILeaseImprovementForm {
   public static toApi(form: ILeaseImprovementForm) {
     const improvement: ApiGen_Concepts_PropertyImprovement = {
       id: form.id ?? null,
-      leaseId: form.leaseId ?? null,
-      lease: null,
+      propertyId: form.propertyId ?? null,
+      property: null,
       propertyImprovementTypeCode: toTypeCodeNullable(form.propertyImprovementTypeId),
       improvementDescription: form.description,
       structureSize: form.structureSize,
