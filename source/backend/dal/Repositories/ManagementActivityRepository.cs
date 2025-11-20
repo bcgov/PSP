@@ -76,6 +76,11 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(x => x.PimsManagementActivityProperties.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pin.ToString(), $"%{pinValue}%")));
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.RegionCode))
+            {
+                predicate = predicate.And(x => (x.ManagementFile != null && x.ManagementFile.RegionCode.ToString() == filter.RegionCode) || x.PimsManagementActivityProperties.Any(map => map.Property.RegionCode.ToString() == filter.RegionCode));
+            }
+
             if (!string.IsNullOrWhiteSpace(filter.Address))
             {
                 predicate = predicate.And(x => x.PimsManagementActivityProperties.Any(pd => pd != null &&
@@ -123,6 +128,12 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(x => x.ManagementFile.ManagementFilePurposeTypeCode == filter.ManagementFilePurposeCode);
             }
 
+            if (filter.ManagementFileRegionCode.HasValue)
+            {
+                predicate = predicate.And(x => (x.ManagementFile != null && x.ManagementFile.RegionCode == filter.ManagementFileRegionCode) ||
+                    (x.ManagementFile == null && x.PimsManagementActivityProperties.All(ap => ap.Property != null && ap.Property.RegionCode == filter.ManagementFileRegionCode)));
+            }
+
             return predicate;
         }
 
@@ -138,10 +149,15 @@ namespace Pims.Dal.Repositories
                 .Include(pp => pp.PimsManagementActivityProperties)
                     .ThenInclude(p => p.Property)
                         .ThenInclude(a => a.Address)
+                .Include(pp => pp.PimsManagementActivityProperties)
+                    .ThenInclude(p => p.Property)
+                        .ThenInclude(p => p.RegionCodeNavigation)
                 .Include(f => f.ManagementFile)
                     .ThenInclude(pr => pr.PimsManagementFileProperties)
                         .ThenInclude(p => p.Property)
                             .ThenInclude(a => a.Address)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(pr => pr.RegionCodeNavigation)
 
                 .Where(predicate);
 
@@ -198,6 +214,9 @@ namespace Pims.Dal.Repositories
                 .Include(pp => pp.PimsManagementActivityProperties)
                     .ThenInclude(p => p.Property)
                         .ThenInclude(a => a.Address)
+                .Include(pp => pp.PimsManagementActivityProperties)
+                    .ThenInclude(p => p.Property)
+                        .ThenInclude(a => a.RegionCodeNavigation)
                 .Include(f => f.ManagementFile)
                     .ThenInclude(fp => fp.PimsManagementFileProperties)
                         .ThenInclude(p => p.Property)
@@ -216,7 +235,9 @@ namespace Pims.Dal.Repositories
                         .ThenInclude(o => o.Organization)
                 .Include(f => f.ManagementFile)
                     .ThenInclude(o => o.PimsManagementFileContacts)
-                        .ThenInclude(o => o.PrimaryContact);
+                        .ThenInclude(o => o.PrimaryContact)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(ft => ft.RegionCodeNavigation);
 
             var predicate = GetCommonActivityFilterPredicate(filter);
 
@@ -245,6 +266,10 @@ namespace Pims.Dal.Repositories
                         .ThenInclude(p => p.Property)
                             .ThenInclude(a => a.Address)
                 .Include(f => f.ManagementActivity.ManagementFile)
+                    .ThenInclude(fp => fp.PimsManagementFileProperties)
+                        .ThenInclude(p => p.Property)
+                            .ThenInclude(r => r.RegionCodeNavigation)
+                .Include(f => f.ManagementActivity.ManagementFile)
                     .ThenInclude(ft => ft.AcquisitionFundingTypeCodeNavigation)
                 .Include(f => f.ManagementActivity.ManagementFile)
                     .ThenInclude(pt => pt.ManagementFilePurposeTypeCodeNavigation)
@@ -258,7 +283,9 @@ namespace Pims.Dal.Repositories
                         .ThenInclude(o => o.Organization)
                 .Include(f => f.ManagementActivity.ManagementFile)
                     .ThenInclude(o => o.PimsManagementFileContacts)
-                        .ThenInclude(o => o.PrimaryContact);
+                        .ThenInclude(o => o.PrimaryContact)
+                .Include(f => f.ManagementActivity.ManagementFile)
+                    .ThenInclude(o => o.RegionCodeNavigation);
 
             var predicate = PredicateBuilder.New<PimsManagementActivityInvoice>(ai => true);
 

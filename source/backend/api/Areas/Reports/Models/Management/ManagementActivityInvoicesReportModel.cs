@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
+using System.Drawing;
 using System.Globalization;
 using System.Linq;
+using MoreLinq;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 
@@ -59,6 +61,10 @@ namespace Pims.Api.Areas.Reports.Models.Management
         [CsvHelper.Configuration.Attributes.Name("Services Provider")]
         public string ServicesProvider { get; set; }
 
+        [DisplayName("Regions")]
+        [CsvHelper.Configuration.Attributes.Name("Regions")]
+        public string Regions { get; set; }
+
         [DisplayName("Properties")]
         [CsvHelper.Configuration.Attributes.Name("Properties")]
         public string Properties { get; set; }
@@ -111,6 +117,7 @@ namespace Pims.Api.Areas.Reports.Models.Management
             ActivitySubTypes = GetActivitySubTypesAsString(invoice.ManagementActivity?.PimsMgmtActivityActivitySubtyps);
             CompletionDate = GetNullableDate(invoice.ManagementActivity?.CompletionDt);
             ServicesProvider = invoice.ManagementActivity?.ServiceProviderPerson?.GetFullName() ?? GetNullableString(invoice.ManagementActivity?.ServiceProviderOrg?.Name);
+            Regions = GetRegionsAsString(invoice.ManagementActivity);
             Properties = GetPropertiesAsString(invoice.ManagementActivity);
             InvoicePreTaxTotal = invoice.PretaxAmt;
             InvoiceGstAmount = invoice.GstAmt ?? 0;
@@ -166,6 +173,23 @@ namespace Pims.Api.Areas.Reports.Models.Management
                         .Select(st => st?.MgmtActivitySubtypeCodeNavigation?.Description)
                         .Where(s => !string.IsNullOrWhiteSpace(s))
                         .Distinct());
+            }
+            return string.Empty;
+        }
+
+        private static string GetRegionsAsString(PimsManagementActivity activity)
+        {
+            if (activity is not null)
+            {
+                var activityRegions = activity.PimsManagementActivityProperties
+                        .Select(map => map?.Property?.RegionCodeNavigation?.Description)
+                        .Where(s => !string.IsNullOrWhiteSpace(s))
+                        .Distinct();
+                if (activity?.ManagementFile?.RegionCode != null)
+                {
+                    activityRegions.Concat(activity?.ManagementFile?.RegionCodeNavigation?.Description);
+                }
+                return string.Join("|", activityRegions);
             }
             return string.Empty;
         }

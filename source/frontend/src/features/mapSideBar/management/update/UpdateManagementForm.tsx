@@ -4,6 +4,7 @@ import styled from 'styled-components';
 
 import { ProjectSelector, Select, SelectOption } from '@/components/common/form';
 import { Input } from '@/components/common/form/Input';
+import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -147,6 +148,13 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
                 </SectionField>
                 <SectionField label="Additional details">
                   <Input field="additionalDetails" disabled={!canEditDetails} />
+                </SectionField>
+                <SectionField label="Ministry region" required>
+                  <UserRegionSelectContainer
+                    field="regionCode"
+                    placeholder="Select region..."
+                    required
+                  />
                 </SectionField>
               </Section>
 

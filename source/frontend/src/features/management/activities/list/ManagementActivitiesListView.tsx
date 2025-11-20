@@ -128,6 +128,7 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
   // update internal state whenever the filter bar changes
   const changeFilter = useCallback(
     (filter: Api_ManagementActivityFilter) => {
+      console.log(filter);
       setFilter(filter);
       setCurrentPage(0);
     },

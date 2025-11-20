@@ -14,6 +14,7 @@ export interface ApiGen_Concepts_ManagementFile extends ApiGen_Concepts_File {
   filePurpose: string | null;
   additionalDetails: string | null;
   legacyFileNum: string | null;
+  regionCode: ApiGen_Base_CodeType<number> | null;
   projectId: number | null;
   project: ApiGen_Concepts_Project | null;
   productId: number | null;

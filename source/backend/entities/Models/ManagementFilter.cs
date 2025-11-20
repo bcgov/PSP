@@ -15,6 +15,11 @@ namespace Pims.Dal.Entities.Models
         public string Pin { get; set; }
 
         /// <summary>
+        /// get/set - The region to search by.
+        /// </summary>
+        public string RegionCode { get; set; }
+
+        /// <summary>
         /// get/set - The address to search by.
         /// </summary>
         public string Address { get; set; }
@@ -33,6 +38,11 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The status of the management file.
         /// </summary>
         public string ManagementFilePurposeCode { get; set; }
+
+        /// <summary>
+        /// get/set - The region of the management file.
+        /// </summary>
+        public long? ManagementRegionCode { get; set; }
 
         /// <summary>
         /// get/set - The MOTI project name or the project number, search for both simultaneously.

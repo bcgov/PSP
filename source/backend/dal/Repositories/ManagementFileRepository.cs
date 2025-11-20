@@ -49,6 +49,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.Project)
                 .Include(d => d.Product)
+                .Include(d => d.RegionCodeNavigation)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
                 .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
@@ -77,6 +78,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.Project)
                 .Include(d => d.Product)
+                .Include(d => d.RegionCodeNavigation)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
                 .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
@@ -417,6 +419,11 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(acq => acq.PimsManagementFileProperties.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pin.ToString(), $"%{pinValue}%")));
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.RegionCode))
+            {
+                predicate = predicate.And(acq => acq.RegionCode.ToString() == filter.RegionCode);
+            }
+
             if (!string.IsNullOrWhiteSpace(filter.Address))
             {
                 predicate = predicate.And(disp => disp.PimsManagementFileProperties.Any(pd => pd != null &&
@@ -460,10 +467,16 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(disp => disp.PimsManagementFileTeams.Any(x => x.OrganizationId == filter.TeamMemberOrganizationId.Value));
             }
 
+            if (filter.ManagementRegionCode.HasValue)
+            {
+                predicate = predicate.And(disp => disp.RegionCode == filter.ManagementRegionCode);
+            }
+
             var query = this.Context.PimsManagementFiles.AsNoTracking()
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.Project)
                 .Include(d => d.Product)
+                .Include(d => d.RegionCodeNavigation)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
                 .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
