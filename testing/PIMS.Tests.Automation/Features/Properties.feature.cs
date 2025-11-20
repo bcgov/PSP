@@ -385,7 +385,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
  await testRunner.WhenAsync("I create Digital Documents for a \"Property\" from row number 16", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 45
- await testRunner.AndAsync("I create a new Management File from row number 5", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I create a Management File from row number 5 to check common data", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 46
  await testRunner.AndAsync("I add Properties to the Management File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -397,15 +397,15 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="08._Properties_Map_and_List_Filters")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="08._Properties_List")]
         [global::Xunit.TraitAttribute("FeatureTitle", "Properties")]
-        [global::Xunit.TraitAttribute("Description", "08._Properties_Map_and_List_Filters")]
-        public async global::System.Threading.Tasks.Task _08__Properties_Map_And_List_Filters()
+        [global::Xunit.TraitAttribute("Description", "08._Properties_List")]
+        public async global::System.Threading.Tasks.Task _08__Properties_List()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "7";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08._Properties_Map_and_List_Filters", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08._Properties_List", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
 #line 49
