@@ -61,6 +61,15 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
     maxWidth: 40,
   },
   {
+    Header: 'Region(s)',
+    accessor: 'regionCodes',
+    align: 'left',
+    clickable: true,
+    sortable: true,
+    width: 20,
+    maxWidth: 40,
+  },
+  {
     Header: 'Historical File #',
     accessor: 'legacyFileNum',
     align: 'left',

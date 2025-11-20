@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using MoreLinq;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 
@@ -22,6 +23,10 @@ namespace Pims.Api.Areas.Reports.Models.Management
         [DisplayName("Properties")]
         [CsvHelper.Configuration.Attributes.Name("Properties")]
         public string Properties { get; set; }
+
+        [DisplayName("Regions")]
+        [CsvHelper.Configuration.Attributes.Name("Regions")]
+        public string Regions { get; set; }
 
         [DisplayName("Funding")]
         [CsvHelper.Configuration.Attributes.Name("Funding")]
@@ -94,6 +99,7 @@ namespace Pims.Api.Areas.Reports.Models.Management
             ManagementFileName = GetNullableString(activity.ManagementFile?.FileName);
             LegacyFileNum = GetNullableString(activity.ManagementFile?.LegacyFileNum);
             Properties = GetPropertiesAsString(activity);
+            Regions = GetRegionsAsString(activity);
             Funding = GetNullableString(activity.ManagementFile?.AcquisitionFundingTypeCodeNavigation?.Description);
             Purpose = GetNullableString(activity.ManagementFile?.ManagementFilePurposeTypeCodeNavigation?.Description);
             CreatedBy = GetNullableString(activity.ManagementFile?.AppCreateUserid);
@@ -168,6 +174,23 @@ namespace Pims.Api.Areas.Reports.Models.Management
                         .Select(c => c?.Person?.GetFullName() ?? GetNullableString(c?.Organization?.Name))
                         .Where(s => !string.IsNullOrWhiteSpace(s))
                         .Distinct());
+            }
+            return string.Empty;
+        }
+
+        private static string GetRegionsAsString(PimsManagementActivity activity)
+        {
+            if (activity is not null)
+            {
+                var activityRegions = activity.PimsManagementActivityProperties
+                        .Select(map => map?.Property?.RegionCodeNavigation?.Description)
+                        .Where(s => !string.IsNullOrWhiteSpace(s))
+                        .Distinct();
+                if (activity?.ManagementFile?.RegionCode != null)
+                {
+                    activityRegions = activityRegions.Concat(activity?.ManagementFile?.RegionCodeNavigation?.Description);
+                }
+                return string.Join("|", activityRegions);
             }
             return string.Empty;
         }
