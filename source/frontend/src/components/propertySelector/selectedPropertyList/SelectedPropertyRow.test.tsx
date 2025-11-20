@@ -69,8 +69,8 @@ describe('SelectedPropertyRow component', () => {
             onRemove={onRemove}
             showDisable={renderOptions.props?.showDisable ?? false}
             nameSpace="properties.0"
-            canUploadShapefile={renderOptions.props?.canUploadShapefile}
-            onUploadShapefile={renderOptions.props?.onUploadShapefile}
+            canUploadShapefile={renderOptions.props?.canUploadShapefile ?? false}
+            onUploadShapefile={renderOptions.props?.onUploadShapefile ?? vi.fn()}
           />
         )}
       </Formik>,
