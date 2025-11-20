@@ -341,7 +341,7 @@ describe('mapPropertyUtils', () => {
   it.each([
     [
       { ...getEmptyFileProperty(), location: getMockLocation() },
-      { location: getMockLatLng(), boundary: null, isActive: null },
+      { location: getMockLatLng(), boundary: null, isActive: null, fileBoundary: null },
     ],
     [
       {
@@ -353,7 +353,7 @@ describe('mapPropertyUtils', () => {
           boundary: getMockPolygon(),
         },
       },
-      { location: getMockLatLng(), boundary: getMockPolygon(), isActive: null },
+      { location: getMockLatLng(), boundary: getMockPolygon(), isActive: null, fileBoundary: null },
     ],
     [{ ...getEmptyFileProperty(), location: null }, null],
   ])(

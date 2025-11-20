@@ -68,6 +68,7 @@ export const mockManagementFileResponse = (
       fileId: id,
       propertyName: null,
       location: null,
+      boundary: null,
       displayOrder: null,
       isActive: true,
       property: {
@@ -302,6 +303,7 @@ export const mockManagementFilePropertiesResponse =
       propertyName: null,
       displayOrder: null,
       location: null,
+      boundary: null,
       property: {
         ...getEmptyProperty(),
         id: 227,

@@ -95,5 +95,6 @@ const fakePropertyResearch: ApiGen_Concepts_ResearchFileProperty = {
   fileId: 0,
   displayOrder: null,
   location: null,
+  boundary: null,
   rowVersion: null,
 };

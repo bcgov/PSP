@@ -167,6 +167,7 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
             y: 392268.0638614455,
           },
         },
+        boundary: null,
         rowVersion: 1,
       },
       rowVersion: 1,
@@ -191,6 +192,7 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
             y: 392268.0638614455,
           },
         },
+        boundary: null,
         rowVersion: 1,
       },
       rowVersion: 1,
@@ -444,6 +446,7 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
         y: 1139847.4977669886,
       },
     },
+    boundary: null,
     displayOrder: null,
     property: {
       id: 292,
@@ -552,6 +555,7 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
         y: 389961.4937399403,
       },
     },
+    boundary: null,
     displayOrder: null,
     property: {
       id: 443,
