@@ -327,6 +327,7 @@ export class PropertyForm {
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
       historicalFileNumbers: null,
+      tenureCleanups: null,
       surplusDeclarationDate: EpochIsoDateTime,
     };
   }

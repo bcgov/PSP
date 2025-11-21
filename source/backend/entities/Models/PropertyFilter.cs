@@ -40,6 +40,11 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The property ownership status.
         /// </summary>
         public IList<string> Ownership { get; set; }
+
+        /// <summary>
+        /// get/set - The property tenure cleanup.
+        /// </summary>
+        public IList<string> TenureCleanup { get; set; }
         #endregion
 
         #region Constructors
@@ -50,6 +55,7 @@ namespace Pims.Dal.Entities.Models
         public PropertyFilter()
         {
             Ownership = new List<string>();
+            TenureCleanup = new List<string>();
         }
 
         /// <summary>
@@ -68,6 +74,7 @@ namespace Pims.Dal.Entities.Models
             Pin = filter.GetStringValue(nameof(Pin));
             PlanNumber = filter.GetStringValue(nameof(PlanNumber));
             Ownership = filter.GetStringArrayValue(nameof(Ownership));
+            TenureCleanup = filter.GetStringArrayValue(nameof(Ownership));
         }
         #endregion
 

@@ -201,6 +201,7 @@ export const mockManagementFileResponse = (
         },
         generalLocation: null,
         historicalFileNumbers: [],
+        tenureCleanups: [],
         surplusDeclarationType: null,
         surplusDeclarationComment: null,
         surplusDeclarationDate: '0001-01-01',
