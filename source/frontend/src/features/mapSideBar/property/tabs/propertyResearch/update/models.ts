@@ -113,6 +113,7 @@ export class UpdatePropertyFormModel {
       researchSummary: this.researchSummary ?? null,
       property: null,
       location: null,
+      boundary: null,
       isActive: null,
       fileId: this.researchFileId ?? 0,
       file: { ...getEmptyResearchFile(), rowVersion: this.researchFileRowVersion },

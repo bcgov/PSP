@@ -91,6 +91,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             /* TEST COVERAGE: PSP-1558, PSP-3153, PSP-3184, PSP-3589, PSP-4903, PSP-4905, PSP-5163, PSP-7815 */
 
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
             //Navigate to the Inventory List View
             PopulateSearchProperty(rowNumber);
             searchProperties.NavigatePropertyListView();
@@ -214,8 +217,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Validate that the result gives only one pin
             Assert.True(searchProperties.PropertiesPinMapFoundCount() == 1);
 
-            //Click on the founf property
-            searchProperties.SelectFound1stPropAddToFile();
+            //Click on the found property
+            searchProperties.SelectFound1stPropFromMap();
         }
 
         [StepDefinition(@"I search for a property in the inventory by PID from row number (.*)")]
@@ -459,16 +462,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             mapFeatures.VerifyMapLayers();
         }
 
-        [StepDefinition(@"I verify the Maps Filters")]
-        public void VerifyMapsFilters()
-        {
-            //Open the Map Filters leaflet
-            mapFeatures.OpenMapFilters();
-
-            //Verify the map Filters UI
-            mapFeatures.VerifyMapFilters();
-        }
-
         [StepDefinition(@"No Properties were found")]
         public void NonPropertyFound()
         {
@@ -491,7 +484,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void NonInventoryPropertySucess()
         {
             //Validate tabs counting
-            Assert.Equal(2, propertyInformation.PropertyTabs());
+            Assert.Equal(4, propertyInformation.PropertyTabs());
 
             //Validate correct tabs are displayed
             propertyInformation.VerifyNonInventoryPropertyTabs();
@@ -530,7 +523,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void MapFeaturesSuccess()
         {
             //Reset map filters
-            mapFeatures.ResetMapFeatures();
+            mapFeatures.OpenMapLayers();
         }
 
         private void PopulateProperty(int rowNumber)

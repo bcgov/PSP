@@ -1687,6 +1687,7 @@ export const getMockLeaseProperties = (leaseId = 1): ApiGen_Concepts_PropertyLea
         y: 381468.28746302053,
       },
     },
+    boundary: null,
     displayOrder: null,
     property: {
       id: 442,

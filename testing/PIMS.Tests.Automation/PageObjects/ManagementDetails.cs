@@ -70,7 +70,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementFileViewTeamMembersGroup = By.XPath("//div[contains(text(),'Management Team')]/parent::div/parent::h2/following-sibling::div/div");
 
         private readonly By managementFileSummaryBttn = By.CssSelector("button[title='File Details']");
-        private readonly By managementEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
 
         private readonly By managementFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 

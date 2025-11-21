@@ -50,6 +50,26 @@ namespace PIMS.Tests.Automation.StepDefinitions
             managementFileCode = ManagementFilesDetails.GetManagementCode();
         }
 
+        [StepDefinition(@"I create a Management File from row number (.*) to check common data")]
+        public void CreateManagementFileWithoutLogin(int rowNumber)
+        {
+            //Navigate to Management File
+            PopulateManagementFile(rowNumber);
+            ManagementFilesDetails.NavigateToCreateNewManagementFile();
+
+            //Validate Management File Details Create Form
+            ManagementFilesDetails.VerifyManagementFileInitCreateForm();
+
+            //Create basic Management File
+            ManagementFilesDetails.CreateMinimumManagementDetails(managementFile);
+
+            //Save Management File
+            ManagementFilesDetails.SaveManagementFile();
+
+            //Get Acquisition File code
+            managementFileCode = ManagementFilesDetails.GetManagementCode();
+        }
+
         [StepDefinition(@"I add additional information to the Management File Details")]
         public void AddAdditionalInfoManagementFile()
         {
