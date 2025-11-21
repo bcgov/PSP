@@ -475,9 +475,9 @@ exports[`AccessRequestPage > renders correctly 1`] = `
                   placeholder=""
                   readonly=""
                   style="word-break: break-all;"
-                  title=""
+                  title="test@test.com"
                   type="email"
-                  value=""
+                  value="test@test.com"
                 />
               </div>
             </div>
