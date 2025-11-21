@@ -385,9 +385,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Grab data from excel
             PopulateManagementProperty(rowNumber);
 
-            //Close Activity Tray
-            sharedActivities.CloseActivityTray();
-
             //Update Summary section
             propertyManagementTab.UpdateManagementSummaryButton();
             propertyManagementTab.InsertManagementSummaryInformation(propertyManagement);

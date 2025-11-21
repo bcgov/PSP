@@ -354,7 +354,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
  await testRunner.AndAsync("I insert activities to the Management Activities Tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 41
- await testRunner.AndAsync("I update information in the Property Management Tab from row number 9", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I update an activity from the Activities Tab from row number 9", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 42
  await testRunner.ThenAsync("A new Management file is created or updated successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");

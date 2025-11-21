@@ -327,15 +327,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         }
 
-        [StepDefinition(@"I update an activity from the Activities Tab")]
-        public void UpdateManagementPropertyTab()
+        [StepDefinition(@"I update an activity from the Activities Tab from row number (.*)")]
+        public void UpdateManagementActivity(int rowNumber)
         {
+            //Populate data
+            PopulateManagementFile(rowNumber);
+
             //Update an activity
             managementActivities.ViewLastActivityFromList();
             managementActivities.ViewLastActivityButton();
-            sharedActivities.UpdateSelectedActivityBttn();
+            sharedActivities.UpdateSelectedFileActivityBttn();
             sharedActivities.InsertNewPropertyActivity(managementFile.ManagementPropertyActivities[0]);
-            sharedActivities.SaveManagementActivity();
+            sharedActivities.SaveManagementActivity("Management");
             sharedActivities.VerifyInsertedActivity(managementFile.ManagementPropertyActivities[0], "Management File");
             managementActivities.ViewLastActivityFromList();
             managementActivities.VerifyLastInsertedActivityTable(managementFile.ManagementPropertyActivities[0]);
@@ -463,8 +466,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateManagementFile(int rowNumber)
         {
-            System.Data.DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["ManagementFiles"]!;
-            ExcelDataContext.PopulateInCollection(acquisitionSheet);
+            System.Data.DataTable managementSheet = ExcelDataContext.GetInstance().Sheets["ManagementFiles"]!;
+            ExcelDataContext.PopulateInCollection(managementSheet);
             managementFile = new ManagementFile();
 
             //Management Status
@@ -476,13 +479,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             managementFile.ManagementMinistryProduct = ExcelDataContext.ReadData(rowNumber, "ManagementMinistryProduct");
             managementFile.ManagementMinistryFunding = ExcelDataContext.ReadData(rowNumber, "ManagementMinistryFunding");
 
-            //Acquisition Details
+            //Management Details
             managementFile.ManagementName = ExcelDataContext.ReadData(rowNumber, "ManagementName");
             managementFile.ManagementHistoricalFile = ExcelDataContext.ReadData(rowNumber, "ManagementHistoricalFile");
             managementFile.ManagementPurpose = ExcelDataContext.ReadData(rowNumber, "ManagementPurpose");
             managementFile.ManagementAdditionalDetails = ExcelDataContext.ReadData(rowNumber, "ManagementAdditionalDetails");
 
-            //Acquisition Team
+            //Management Team
             managementFile.ManagementTeamStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementTeamStartRow"));
             managementFile.ManagementTeamCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementTeamCount"));
 
@@ -515,7 +518,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 managementFile.ManagementSearchProperties.SurveyParcel.Section = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "SurveySection");
                 managementFile.ManagementSearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "SurveyTownship");
                 managementFile.ManagementSearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "SurveyRange");
-                managementFile.ManagementSearchProperties.DisplayingList = genericSteps.PopulateLists(ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "DisplayingList"));
+                managementFile.ManagementSearchProperties.DisplayingList = genericSteps.PopulateUnsortedLists(ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "DisplayingList"));
             }
 
             //Management Activities
