@@ -24,6 +24,8 @@ const emptyLease: ApiGen_Concepts_Lease = {
   lFileNo: null,
   tfaFileNumber: null,
   psFileNo: null,
+  fileAppraisalStatusTypeCode: null,
+  fileLegalSurveyStatusTypeCode: null,
   otherProgramType: null,
   otherType: null,
   expiryDate: null,
