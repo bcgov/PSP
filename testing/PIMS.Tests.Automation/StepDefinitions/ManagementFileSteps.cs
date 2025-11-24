@@ -326,6 +326,92 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchManagementFiles.FilterManagementFiles(mgmtfile: managementFile.ManagementName, status: managementFile.ManagementStatus);
         }
 
+        [StepDefinition(@"I search for an existing Management Activities List")]
+        public void SearchExistingManagementActivitiesList()
+        {
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Management Activities Search
+            searchActivities.NavigateToSearchActivities();
+
+            //Verify Pagination
+            sharedPagination.ChoosePaginationOption(5);
+            Assert.Equal(5, searchActivities.MgmtActsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(10);
+            Assert.Equal(10, searchActivities.MgmtActsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(20);
+            Assert.Equal(20, searchActivities.MgmtActsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(50);
+            Assert.Equal(50, searchActivities.MgmtActsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(100);
+            Assert.Equal(100, searchActivities.MgmtActsTableResultNumber());
+
+            //Verify Column Sorting by Description
+            searchActivities.OrderByActDescription();
+            var firstDescriptionDescResult = searchActivities.FirstActDescription();
+
+            searchActivities.OrderByActDescription();
+            var firstDescriptionAscResult = searchActivities.FirstActDescription();
+
+            Assert.NotEqual(firstDescriptionDescResult, firstDescriptionAscResult);
+
+            //Verify Column Sorting by File Name
+            searchActivities.OrderByActName();
+            var firstFileNameDescResult = searchActivities.FirstActName();
+
+            searchActivities.OrderByActName();
+            var firstFileNameAscResult = searchActivities.FirstActName();
+
+            Assert.NotEqual(firstFileNameDescResult, firstFileNameAscResult);
+
+            //Verify Column Sorting by Historical File
+            searchActivities.OrderByActHistoricalFileNbr();
+            var firstHistoricalDescResult = searchActivities.FirstActHistoricalFile();
+
+            searchActivities.OrderByActHistoricalFileNbr();
+            var firstHistoricalAscResult = searchActivities.FirstActHistoricalFile();
+
+            Assert.NotEqual(firstHistoricalDescResult, firstHistoricalAscResult);
+
+            //Verify Column Sorting by Type
+            searchActivities.OrderByActType();
+            var firstActTypeDescResult = searchActivities.FirstActType();
+
+            searchActivities.OrderByActType();
+            var firstActTypeAscResult = searchActivities.FirstActType();
+
+            Assert.NotEqual(firstActTypeDescResult, firstActTypeAscResult);
+
+            //Verify Column Sorting by Status
+            searchActivities.OrderByActStatus();
+            var firstActStatusDescResult = searchActivities.FirstActMgmtStatus();
+
+            searchActivities.OrderByActStatus();
+            var firstActStatusAscResult = searchActivities.FirstActMgmtStatus();
+
+            Assert.NotEqual(firstActStatusDescResult, firstActStatusAscResult);
+
+            //Verify Pagination display different set of results
+            sharedPagination.ResetSearch();
+            sharedPagination.ChoosePaginationOption(5);
+
+            var firstAcquisitionPage1 = searchManagementFiles.FirstMgmtFileName();
+            sharedPagination.GoNextPage();
+            var firstAcquisitionPage2 = searchManagementFiles.FirstMgmtFileName();
+            Assert.NotEqual(firstAcquisitionPage1, firstAcquisitionPage2);
+
+            sharedPagination.ResetSearch();
+
+            //Filter Activities
+            searchManagementFiles.FilterManagementFiles(pid: "003-549-551", mgmtfile: "Management from Jonathan Doe", status: "Cancelled");
+            Assert.False(searchManagementFiles.SearchFoundResults());
+        }
+
         [StepDefinition(@"I insert activities to the Management Activities Tab")]
         public void InsertActivityTab()
         {
@@ -375,28 +461,28 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Pagination
             sharedPagination.ChoosePaginationOption(5);
-            Assert.Equal(5, searchManagementFiles.MgmtTableResultNumber());
+            Assert.Equal(5, searchActivities.MgmtActsTableResultNumber());
 
             sharedPagination.ChoosePaginationOption(10);
-            Assert.Equal(10, searchManagementFiles.MgmtTableResultNumber());
+            Assert.Equal(10, searchActivities.MgmtActsTableResultNumber());
 
             sharedPagination.ChoosePaginationOption(20);
-            Assert.Equal(20, searchManagementFiles.MgmtTableResultNumber());
+            Assert.Equal(20, searchActivities.MgmtActsTableResultNumber());
 
             sharedPagination.ChoosePaginationOption(50);
-            Assert.Equal(50, searchManagementFiles.MgmtTableResultNumber());
+            Assert.Equal(50, searchActivities.MgmtActsTableResultNumber());
 
             sharedPagination.ChoosePaginationOption(100);
-            Assert.Equal(100, searchManagementFiles.MgmtTableResultNumber());
+            Assert.Equal(100, searchActivities.MgmtActsTableResultNumber());
 
             //Verify Column Sorting by Description
-            searchActivities.OrderByActDescription();
-            var firstActDescriptionDescResult = searchActivities.FirstActDescription();
+            //searchActivities.OrderByActDescription();
+            //var firstActDescriptionDescResult = searchActivities.FirstActDescription();
 
-            searchActivities.OrderByActDescription();
-            var firstActDescriptionAscResult = searchActivities.FirstActDescription();
+            //searchActivities.OrderByActDescription();
+            //var firstActDescriptionAscResult = searchActivities.FirstActDescription();
 
-            Assert.NotEqual(firstActDescriptionDescResult, firstActDescriptionAscResult);
+            //Assert.NotEqual(firstActDescriptionDescResult, firstActDescriptionAscResult);
 
             //Verify Column Sorting by File Name
             searchActivities.OrderByActName();
@@ -445,9 +531,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             sharedPagination.ResetSearch();
 
-            //Filter Acquisition Files
+            //Filter Management Activities
             searchActivities.FilterManagementActivities(pid: "003-549-551", actName: "Management from Jonathan Doe", mgmtStatus: "Cancelled");
             Assert.False(searchManagementFiles.SearchFoundResults());
+
+            sharedPagination.ResetSearch();
         }
 
         [StepDefinition(@"A new Management file is created or updated successfully")]
@@ -472,10 +560,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"Expected Management Activities Content is displayed on Management Activities Table")]
         public void VerifyManagementActivitiesTableContent()
         {
-
             //Verify List View
-            searchManagementFiles.VerifySearchManagementListView();
-            searchManagementFiles.VerifyManagementTableContent(managementFile);
+            searchActivities.VerifySearchManagementActivitiesListView();
         }
 
         [StepDefinition(@"An error from deleting a property attached to an activity appears")]

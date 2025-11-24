@@ -24,7 +24,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementActSubTypeSelect = By.Id("multiselect-activitySubtypeCodes");
         private readonly By managementActSubTypeSelectOptions = By.CssSelector("div[id='multiselect-activitySubtypeCodes'] div[class='optionListContainer displayBlock']");
         private readonly By managementActSubTypeDeleteBttns = By.CssSelector("div[id='multiselect-activitySubtypeCodes'] i[class='custom-close']");
-        private readonly By managementActSubTypeContents = By.CssSelector("div[id='multiselectContainerReact'] div[class='search-wrapper searchWrapper']");
+        private readonly By managementActSubTypeContents = By.CssSelector("div[id='multiselectContainerReact'] div[class='search-wrapper searchWrapper ']");
         private readonly By managementActStatusLabel = By.XPath("//label[contains(text(),'Activity status')]");
         private readonly By managementActStatusInput = By.Id("input-activityStatusCode");
         private readonly By managementActStatusContent = By.XPath("//label[contains(text(),'Activity status')]/parent::div/following-sibling::div");

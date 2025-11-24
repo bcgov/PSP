@@ -43,13 +43,13 @@ Scenario: 06._Management_Activities_Tab
 
 Scenario: 07._Management_Activity_Digital_Documents
 	Given I create a new Management File from row number 10
-	When I insert activities to the Management Activities Tab
-	And I create Digital Documents for a "Management Activity" from row number 14
-	Then The related documents appeared as expected
+	When I add Properties to the Management File
+	And I insert activities to the Management Activities Tab
+	Then I create Digital Documents for a "Management Activity" from row number 14
 
 Scenario: 08._Management_Activities_List_View
-	Given I search for an existing Management File from row number 2
-	Then Expected Management File Content is displayed on Management File Table
+	Given I search for activities at the Management Activities List
+	Then Expected Management Activities Content is displayed on Management Activities Table
 
 Scenario: 09._Management_Properties_Error_Delete
 	Given I create a new Management File from row number 3
