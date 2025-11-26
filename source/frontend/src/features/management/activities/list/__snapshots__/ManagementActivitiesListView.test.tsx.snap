@@ -923,6 +923,36 @@ exports[`ManagementActivitiesListView > matches snapshot 1`] = `
                       </div>
                     </div>
                   </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-xl-6"
+                    >
+                      <div
+                        class="d-flex form-group"
+                      >
+                        <select
+                          class="form-select form-control"
+                          id="input-regionCode"
+                          name="regionCode"
+                        >
+                          <option
+                            value=""
+                          >
+                            All Regions
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-1"
+                            value="1"
+                          >
+                            South Coast Region
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div
                   class="c9 col-xl-1"
@@ -1078,7 +1108,7 @@ exports[`ManagementActivitiesListView > matches snapshot 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 210px;"
+            style="display: flex; flex: 1 0 auto; min-width: 240px;"
           >
             <div
               class="th"
@@ -1139,6 +1169,52 @@ exports[`ManagementActivitiesListView > matches snapshot 1`] = `
                 <div
                   class="c12"
                   data-testid="sort-column-fileName"
+                >
+                  <svg
+                    class="c13"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c14"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Region(s)
+                <div
+                  class="c12"
+                  data-testid="sort-column-regionCodes"
                 >
                   <svg
                     class="c13"
@@ -1346,7 +1422,7 @@ exports[`ManagementActivitiesListView > matches snapshot 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 210px;"
+              style="display: flex; flex: 1 0 auto; min-width: 240px;"
             >
               <div
                 class="td clickable"
@@ -1376,6 +1452,12 @@ exports[`ManagementActivitiesListView > matches snapshot 1`] = `
                   </svg>
                 </a>
               </div>
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
               <div
                 class="td clickable"
                 role="cell"
