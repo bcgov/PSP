@@ -33,14 +33,19 @@ export interface IPropertyFilter {
   coordinates: DmsCoordinates | null;
   /** The geographic name of the property */
   name: string;
-  /** Survey Parcel Section */
-  section: string;
-  /** Survey Parcel Township */
-  township: string;
-  /** Survey Parcel Range */
-  range: string;
+
   /** Survey Parcel District */
-  district: string;
+  district: string | null;
+  /** Survey Parcel Section */
+  section: string | null;
+  /** Survey Parcel Township */
+  township: string | null;
+  /** Survey Parcel Range */
+  range: string | null;
+
+  /** Survey Parcel District Lot */
+  districtLot: string | null;
+
   /** PIMS project */
   project: IAutocompletePrediction;
 }
@@ -59,9 +64,10 @@ export const defaultPropertyFilter: IPropertyFilter = {
   quantity: undefined,
   ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
   name: '',
-  section: '',
-  township: '',
-  range: '',
-  district: '',
+  district: null,
+  section: null,
+  township: null,
+  range: null,
+  districtLot: null,
   project: null,
 };

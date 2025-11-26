@@ -1,12 +1,14 @@
 import { Formik } from 'formik';
 import { Feature, Geometry } from 'geojson';
-import React, { useMemo } from 'react';
+import React, { useMemo, useState } from 'react';
 import { Row } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, ProjectSelector, Select } from '@/components/common/form';
+import { InlineFlexDiv } from '@/components/common/styles';
 import { getFeatureLatLng } from '@/components/maps/leaflet/Layers/PointClusterer';
 import { TableSort } from '@/components/Table/TableSort';
 import { IGeographicNamesProperties } from '@/hooks/pims-api/interfaces/IGeographicNamesProperties';
@@ -43,6 +45,8 @@ export interface IPropertyFilterProps {
   useGeocoder?: boolean;
 }
 
+type SurveyParcelOptions = 'district' | 'district-lot';
+
 /**
  * Property filter bar to search for properties.
  * Applied filter will be added to the URL query parameters and stored in a redux store.
@@ -56,6 +60,8 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
 }) => {
   const { getSitePids } = useGeocoderRepository();
   const { landTitleDistricts } = useTenant();
+  const [selectedSurveyParcelSearch, setSelectedSurveyParcelSearch] =
+    useState<SurveyParcelOptions | null>(null);
 
   const initialValues = useMemo(() => {
     const values = { ...defaultFilter, ...propertyFilter };
@@ -127,15 +133,25 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   setFieldValue('planNumber', null);
                   setFieldValue('historical', null);
                   setFieldValue('name', null);
+                  setFieldValue('district', null);
                   setFieldValue('section', null);
                   setFieldValue('township', null);
                   setFieldValue('range', null);
-                  setFieldValue('district', null);
+                  setFieldValue('districtLot', null);
                   setFieldValue('project', null);
                   if (e.target.value === 'coordinates') {
                     setFieldValue('coordinates', new DmsCoordinates());
                   } else {
                     setFieldValue('coordinates', null);
+                  }
+
+                  if (e.target.value === 'surveyParcel') {
+                    setSelectedSurveyParcelSearch('district');
+
+                    setFieldValue('district', 'ALL');
+                    setFieldValue('section', '');
+                    setFieldValue('township', '');
+                    setFieldValue('range', '');
                   }
                 }}
               />
@@ -215,31 +231,100 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
             {values.searchBy === 'surveyParcel' && (
               <>
                 <Row noGutters>
-                  <Col>
-                    <Select
-                      field="district"
-                      options={landTitleDistricts.map(ltd => ({
-                        value: ltd,
-                        label: ltd,
-                      }))}
-                    />
-                  </Col>
+                  <StyledRadioGroup>
+                    <div className="radio-group">
+                      <InlineFlexDiv>
+                        <Form.Check
+                          id="input-radio-district"
+                          name="radio-district"
+                          type="radio"
+                          value="district"
+                          checked={selectedSurveyParcelSearch === 'district'}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            setSelectedSurveyParcelSearch(
+                              e.target.value.toString() as SurveyParcelOptions,
+                            );
+                            setFieldValue('districtLot', null);
+                            setFieldValue('district', '');
+                            setFieldValue('section', '');
+                            setFieldValue('township', '');
+                            setFieldValue('range', '');
+                            setFieldValue('district', 'ALL');
+                          }}
+                        ></Form.Check>
+                        <Form.Label className="form-check-label" htmlFor="input-radio-district">
+                          Disctrict
+                        </Form.Label>
+                      </InlineFlexDiv>
+                      <InlineFlexDiv>
+                        <Form.Check
+                          id="input-radio-district-lot"
+                          name="radio-district-lot"
+                          type="radio"
+                          value="district-lot"
+                          checked={selectedSurveyParcelSearch === 'district-lot'}
+                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                            setSelectedSurveyParcelSearch(
+                              e.target.value.toString() as SurveyParcelOptions,
+                            );
+                            setFieldValue('district', null);
+                            setFieldValue('section', null);
+                            setFieldValue('township', null);
+                            setFieldValue('range', null);
+                            setFieldValue('districtLot', '');
+                          }}
+                        ></Form.Check>
+                        <Form.Label className="form-check-label" htmlFor="input-radio-district-lot">
+                          Disctrict Lot
+                        </Form.Label>
+                      </InlineFlexDiv>
+                    </div>
+                  </StyledRadioGroup>
                 </Row>
-                <Row noGutters>
-                  <Col>
-                    <Input placeholder="Section" field="section" displayErrorTooltips></Input>
-                  </Col>
-                </Row>
-                <Row noGutters>
-                  <Col>
-                    <Input placeholder="Township" field="township" displayErrorTooltips></Input>
-                  </Col>
-                </Row>
-                <Row noGutters>
-                  <Col>
-                    <Input placeholder="Range" field="range" displayErrorTooltips></Input>
-                  </Col>
-                </Row>
+
+                {selectedSurveyParcelSearch === 'district' && (
+                  <>
+                    <Row noGutters>
+                      <Col>
+                        <Select
+                          field="district"
+                          options={landTitleDistricts.map(ltd => ({
+                            value: ltd,
+                            label: ltd,
+                          }))}
+                        />
+                      </Col>
+                    </Row>
+
+                    <Row noGutters>
+                      <Col>
+                        <Input placeholder="Section" field="section" displayErrorTooltips></Input>
+                      </Col>
+                    </Row>
+                    <Row noGutters>
+                      <Col>
+                        <Input placeholder="Township" field="township" displayErrorTooltips></Input>
+                      </Col>
+                    </Row>
+                    <Row noGutters>
+                      <Col>
+                        <Input placeholder="Range" field="range" displayErrorTooltips></Input>
+                      </Col>
+                    </Row>
+                  </>
+                )}
+
+                {selectedSurveyParcelSearch === 'district-lot' && (
+                  <Row noGutters>
+                    <Col>
+                      <Input
+                        placeholder="District Lot"
+                        field="districtLot"
+                        displayErrorTooltips
+                      ></Input>
+                    </Col>
+                  </Row>
+                )}
               </>
             )}
             {values.searchBy === 'project' && (
@@ -265,6 +350,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                     values.section ||
                     values.range ||
                     values.district ||
+                    values.districtLot ||
                     values.project ||
                     (values.searchBy === 'coordinates' && isValid)
                   )
@@ -290,3 +376,38 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
     </Formik>
   );
 };
+
+export const StyledRadioGroup = styled(Form.Group)`
+  &.form-group {
+    font-size: 1.5rem;
+    display: flex;
+    margin-bottom: 0;
+
+    .radio-group {
+      display: flex;
+      flex-direction: row;
+      row-gap: '0.4rem';
+      margin-bottom: 1rem;
+
+      .form-check {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin-bottom: 0.3rem;
+
+        .form-check-input {
+          margin-left: 0;
+        }
+      }
+
+      .form-check-label {
+        margin-left: 1rem;
+        margin-bottom: 0.1rem;
+      }
+    }
+  }
+
+  .form-label {
+    margin-bottom: unset;
+  }
+`;
