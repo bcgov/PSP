@@ -60,6 +60,47 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+      - name: Login to OpenShift Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ secrets.OPENSHIFT_REGISTRY }}
+          username: ${{ secrets.OC_USERNAME_SA }}
+          password: ${{ env.OPENSHIFT_TOKEN }}
+      - name: Pre-deploy scan frontend (block on CRITICAL/HIGH)
+        env:
+          IMAGE: ${{ secrets.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-app:test
+        run: |
+          docker pull "$IMAGE";
+          trivy image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH --ignore-unfixed "$IMAGE" | tee frontend_predeploy_scan.txt
+      - name: Pre-deploy scan api (block on CRITICAL/HIGH)
+        env:
+          IMAGE: ${{ secrets.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-api:test
+        run: |
+          docker pull "$IMAGE";
+          trivy image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH --ignore-unfixed "$IMAGE" | tee api_predeploy_scan.txt
+      - name: Pre-deploy scan proxy (block on CRITICAL/HIGH)
+        env:
+          IMAGE: ${{ secrets.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-proxy:test
+        run: |
+          docker pull "$IMAGE";
+          trivy image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH --ignore-unfixed "$IMAGE" | tee proxy_predeploy_scan.txt
+      - name: Pre-deploy scan scheduler (block on CRITICAL/HIGH)
+        env:
+          IMAGE: ${{ secrets.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-scheduler:test
+        run: |
+          docker pull "$IMAGE";
+          trivy image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH --ignore-unfixed "$IMAGE" | tee scheduler_predeploy_scan.txt
+      - name: Upload scan reports
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: uat-predeploy-scan-reports
+          path: |
+            frontend_predeploy_scan.txt
+            api_predeploy_scan.txt
+            proxy_predeploy_scan.txt
+            scheduler_predeploy_scan.txt
+          retention-days: 14
       - name: call scripts to deploy api and frontend
         run: |
           ./openshift/4.0/player.sh deploy api $DESTINATION -apply

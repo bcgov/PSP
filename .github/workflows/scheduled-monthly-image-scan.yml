@@ -1,0 +1,118 @@
+name: Scheduled Monthly Image Scan
+
+on:
+  schedule:
+    - cron: "0 6 1 * *" # 1st of every month at 06:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  scan-start-notification:
+    name: Monthly Scan Start Notification
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Notify scan start
+        uses: dragos-cojocari/ms-teams-notification@v1.0.2
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
+          notification-summary: Monthly Container Image Security Scan STARTED
+          notification-color: 17a2b8
+          timezone: America/Los_Angeles
+
+  scan-deployed-and-bases:
+    name: Scan Deployed and Base Images
+    needs: scan-start-notification
+    runs-on: ubuntu-22.04
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    env:
+      OPENSHIFT_NAMESPACE: 3cd915-tools
+      OPENSHIFT_REGISTRY: ${{ secrets.OPENSHIFT_REGISTRY }}
+      OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
+      OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
+      OC_USERNAME_SA: ${{ secrets.OC_USERNAME_SA }}
+      NODEJS20_BASE_TAG: ${{ secrets.NODEJS20_BASE_TAG }}
+      NGINX_BASE_TAG: ${{ secrets.NGINX_BASE_TAG }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Authenticate OpenShift
+        uses: redhat-actions/oc-login@v1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+
+      - name: Login to OpenShift Container Registry
+        uses: docker/login-action@v1
+        with:
+          registry: ${{ env.OPENSHIFT_REGISTRY }}
+          username: ${{ env.OC_USERNAME_SA }}
+          password: ${{ env.OPENSHIFT_TOKEN }}
+
+      - name: Define images to scan
+        id: define
+        run: |
+          IMAGES=(
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/pims-app:latest"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/pims-api:latest"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/pims-proxy:latest"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/pims-scheduler:latest"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/dotnet-aspnet:8.0"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/dotnet-sdk:8.0"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/nodejs-20-ubi9:${NODEJS20_BASE_TAG}"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/nginx-base:${NGINX_BASE_TAG}"
+          )
+          printf "%s\n" "${IMAGES[@]}" > images.txt
+
+      - name: Pull images
+        run: |
+          while read IMG; do
+            echo "Pulling $IMG";
+            docker pull "$IMG";
+          done < images.txt
+
+      - name: Scan images with Trivy
+        uses: aquasecurity/trivy-action@master
+        with:
+          scan-type: "image"
+          format: "table"
+          exit-code: "1"
+          ignore-unfixed: true
+          scanners: "vuln,secret,misconfig"
+          vuln-type: "os,library"
+          severity: "CRITICAL,HIGH"
+          image-ref: "$(head -n1 images.txt)"
+        continue-on-error: true
+
+      - name: Scan remaining images
+        run: |
+          tail -n +2 images.txt | while read IMG; do
+            echo "Scanning $IMG";
+            trivy image --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH --ignore-unfixed "$IMG" | tee "$(echo $IMG | tr '/' '_' | tr ':' '_').txt" || true;
+          done
+
+      - name: Upload reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: monthly-image-scan-reports
+          path: "*.txt"
+          retention-days: 90
+
+  scan-end-notification:
+    name: Monthly Scan End Notification to Teams Channel
+    runs-on: ubuntu-22.04
+    needs: scan-deployed-and-bases
+    if: always()
+    steps:
+      - name: check workflow status
+        uses: martialonline/workflow-status@v4
+        id: check
+      - name: End notification to Teams Channel
+        uses: dragos-cojocari/ms-teams-notification@v1.0.2
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
+          notification-summary: Monthly Container Image Security Scan COMPLETED with status ${{ steps.check.outputs.status }}. Review scan reports in GitHub Actions artifacts.
+          notification-color: 17a2b8
+          timezone: America/Los_Angeles
