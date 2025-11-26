@@ -48,6 +48,8 @@ export interface IPropertyFilter {
 
   /** PIMS project */
   project: IAutocompletePrediction;
+  /** The property tenure cleanup */
+  tenureCleanup: string;
 }
 
 export const defaultPropertyFilter: IPropertyFilter = {
@@ -70,4 +72,5 @@ export const defaultPropertyFilter: IPropertyFilter = {
   range: null,
   districtLot: null,
   project: null,
+  tenureCleanup: '',
 };

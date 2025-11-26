@@ -384,6 +384,7 @@ describe('MapFilterBar', () => {
       township: null,
       project: null,
       districtLot: null,
+      tenureCleanup: '',
     } as IPropertyFilter);
   });
 
@@ -422,6 +423,7 @@ describe('MapFilterBar', () => {
       district: null,
       districtLot: null,
       project: null,
+      tenureCleanup: '',
     } as IPropertyFilter);
   });
 
@@ -460,6 +462,7 @@ describe('MapFilterBar', () => {
       township: null,
       districtLot: null,
       project: null,
+      tenureCleanup: '',
     } as IPropertyFilter);
   });
 
@@ -517,6 +520,7 @@ describe('MapFilterBar', () => {
       township: null,
       districtLot: null,
       project: null,
+      tenureCleanup: '',
     } as IPropertyFilter);
   });
 
@@ -576,6 +580,7 @@ describe('MapFilterBar', () => {
       district: 'ALL',
       districtLot: null,
       project: null,
+      tenureCleanup: '',
     } as IPropertyFilter);
   });
 
@@ -628,6 +633,7 @@ describe('MapFilterBar', () => {
       district: null,
       districtLot: '50',
       project: null,
+      tenureCleanup: '',
     } as IPropertyFilter);
   });
 
@@ -697,6 +703,7 @@ describe('MapFilterBar', () => {
       range: null,
       districtLot: null,
       project: null,
+      tenureCleanup: '',
     } as IPropertyFilter);
   });
 

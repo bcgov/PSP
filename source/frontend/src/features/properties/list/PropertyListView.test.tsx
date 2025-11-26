@@ -26,7 +26,10 @@ import {
 } from '@/utils/test-utils';
 
 import { IPropertyFilter } from '../filter/IPropertyFilter';
-import PropertyListView, { ownershipFilterOptions } from './PropertyListView';
+import PropertyListView, {
+  ownershipFilterOptions,
+  tenureCleanupFilterOptions,
+} from './PropertyListView';
 
 // Set all module functions to vi.fn
 
@@ -227,17 +230,24 @@ describe('Property list view', () => {
       component: { container },
     } = setup({});
 
+    const multiselectorId = '#ownership-selector';
+
     const optionSelected = ownershipFilterOptions.find(
       o => o.id === 'isDisposed',
     ) as MultiSelectOption;
 
     // click on the multi-select to show drop-down list
     await act(async () =>
-      userEvent.click(container.querySelector(`#properties-selector`) as HTMLInputElement),
+      userEvent.click(container.querySelector(multiselectorId) as HTMLInputElement),
     );
 
     // select an option from the drop-down
-    await focusOptionMultiselect(container, optionSelected, ownershipFilterOptions);
+    await focusOptionMultiselect(
+      multiselectorId,
+      container,
+      optionSelected,
+      ownershipFilterOptions,
+    );
 
     expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith(
       expect.objectContaining<Partial<IPropertyFilter>>({
@@ -249,6 +259,49 @@ describe('Property list view', () => {
         pin: '',
         planNumber: '',
         historical: '',
+        tenureCleanup: '',
+        searchBy: 'pid',
+      }),
+    );
+  });
+
+  it('allows property tenure cleanup to be selected', async () => {
+    setupMockApi([mockApiPropertyView()]);
+
+    const {
+      component: { container },
+    } = setup({});
+
+    const multiselectorId = '#tenure-cleanup-selector';
+
+    const optionSelected = tenureCleanupFilterOptions.find(
+      o => o.id === 'FORM12',
+    ) as MultiSelectOption;
+
+    // click on the multi-select to show drop-down list
+    await act(async () =>
+      userEvent.click(container.querySelector(multiselectorId) as HTMLInputElement),
+    );
+
+    // select an option from the drop-down
+    await focusOptionMultiselect(
+      multiselectorId,
+      container,
+      optionSelected,
+      tenureCleanupFilterOptions,
+    );
+
+    expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith(
+      expect.objectContaining<Partial<IPropertyFilter>>({
+        address: '',
+        latitude: '',
+        longitude: '',
+        ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+        pid: '',
+        pin: '',
+        planNumber: '',
+        historical: '',
+        tenureCleanup: 'FORM12',
         searchBy: 'pid',
       }),
     );

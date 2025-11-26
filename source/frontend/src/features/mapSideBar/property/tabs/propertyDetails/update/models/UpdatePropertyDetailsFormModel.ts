@@ -286,6 +286,7 @@ export class UpdatePropertyDetailsFormModel {
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
       historicalFileNumbers: null,
+      tenureCleanups: null,
       surplusDeclarationDate: EpochIsoDateTime,
     };
   }

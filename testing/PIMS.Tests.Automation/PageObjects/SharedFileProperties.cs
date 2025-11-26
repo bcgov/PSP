@@ -158,10 +158,10 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Equal("You have added one or more properties to the disposition file that are not in the MoTT Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
                     sharedModals.SecondaryModalClickOKBttn();
                 }
-                else if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the management file that are not in the MoTT Inventory"))
+                else if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the management file that are not in the MOTT Inventory"))
                 {
                     Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                    Assert.Equal("You have added one or more properties to the management file that are not in the MoTT Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?", sharedModals.SecondaryModalContent());
+                    Assert.Equal("You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?", sharedModals.SecondaryModalContent());
                     sharedModals.SecondaryModalClickOKBttn();
                 }
                 else if (sharedModals.SecondaryModalContent().Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details."))

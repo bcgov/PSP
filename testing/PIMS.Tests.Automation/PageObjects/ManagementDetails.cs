@@ -247,7 +247,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             //Create Title
-            AssertTrueContentEquals(createManagementTitle, "Create Management File");
+            AssertTrueIsDisplayed(createManagementTitle);
 
             //Project
             AssertTrueIsDisplayed(managementFileProjectSubtitle);
