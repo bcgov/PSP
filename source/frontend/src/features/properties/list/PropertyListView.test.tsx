@@ -26,10 +26,8 @@ import {
 } from '@/utils/test-utils';
 
 import { IPropertyFilter } from '../filter/IPropertyFilter';
-import PropertyListView, {
-  ownershipFilterOptions,
-  tenureCleanupFilterOptions,
-} from './PropertyListView';
+import PropertyListView, { ownershipFilterOptions } from './PropertyListView';
+import { mockLookups } from '@/mocks/lookups.mock';
 
 // Set all module functions to vi.fn
 
@@ -75,12 +73,7 @@ const history = createMemoryHistory();
 
 // we need these lookup codes for the property list view to function
 const setupReduxStore = () => {
-  const lookupCodes = [
-    { id: 1, name: 'Victoria', isDisabled: false, type: API.ADMINISTRATIVE_AREA_TYPES },
-    { id: 2, name: 'Kamloops', isDisabled: false, type: API.ADMINISTRATIVE_AREA_TYPES },
-  ] as ILookupCode[];
-
-  return { [lookupCodesSlice.name]: { lookupCodes } };
+  return { [lookupCodesSlice.name]: { lookupCodes: mockLookups } };
 };
 
 const setup = (renderOptions: RenderOptions = {}) => {
@@ -155,7 +148,7 @@ describe('Property list view', () => {
   it('matches snapshot', async () => {
     setupMockApi();
     const { component, findSpinner } = setup();
-    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
+    await waitFor(() => expect(findSpinner()).not.toBeInTheDocument());
     expect(component.asFragment()).toMatchSnapshot();
   });
 
@@ -188,7 +181,7 @@ describe('Property list view', () => {
     } = setup();
 
     // wait for table to finish loading
-    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
+    await waitFor(() => expect(findSpinner()).not.toBeInTheDocument());
 
     expect(getByTestId('excel-icon')).toBeInTheDocument();
     expect(getByTestId('csv-icon')).toBeInTheDocument();
@@ -202,7 +195,7 @@ describe('Property list view', () => {
     } = setup();
 
     // wait for table to finish loading
-    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
+    await waitFor(() => expect(findSpinner()).not.toBeInTheDocument());
 
     expect(getByTestId('view-prop-tab')).toBeInTheDocument();
     expect(getByTestId('view-prop-ext')).toBeInTheDocument();
@@ -216,12 +209,14 @@ describe('Property list view', () => {
     } = setup({});
 
     // wait for table to finish loading
-    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
+    await waitFor(() => expect(findSpinner()).not.toBeInTheDocument());
+    await act(async () => {});
 
     expect(getByText('Core Inventory')).toBeInTheDocument();
     expect(getByText('Property Of Interest')).toBeInTheDocument();
     expect(getByText('Disposed')).toBeInTheDocument();
   });
+  1;
 
   it('allows property ownership to be selected', async () => {
     setupMockApi([mockApiPropertyView()]);
@@ -229,6 +224,8 @@ describe('Property list view', () => {
     const {
       component: { container },
     } = setup({});
+
+    await act(async () => {});
 
     const multiselectorId = '#ownership-selector';
 
@@ -242,12 +239,14 @@ describe('Property list view', () => {
     );
 
     // select an option from the drop-down
-    await focusOptionMultiselect(
-      multiselectorId,
-      container,
-      optionSelected,
-      ownershipFilterOptions,
-    );
+    await act(async () => {
+      await focusOptionMultiselect(
+        multiselectorId,
+        container,
+        optionSelected,
+        ownershipFilterOptions,
+      );
+    });
 
     expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith(
       expect.objectContaining<Partial<IPropertyFilter>>({
@@ -272,11 +271,14 @@ describe('Property list view', () => {
       component: { container },
     } = setup({});
 
+    await act(async () => {});
+
     const multiselectorId = '#tenure-cleanup-selector';
 
-    const optionSelected = tenureCleanupFilterOptions.find(
-      o => o.id === 'FORM12',
-    ) as MultiSelectOption;
+    const tenureCleanupFilterOptions = mockLookups
+      .filter(o => o.type === API.TENURE_CLEANUP_TYPES)
+      .map(o => ({ id: o.id, text: o.name }));
+    const multiSelectOption = tenureCleanupFilterOptions[0];
 
     // click on the multi-select to show drop-down list
     await act(async () =>
@@ -284,12 +286,14 @@ describe('Property list view', () => {
     );
 
     // select an option from the drop-down
-    await focusOptionMultiselect(
-      multiselectorId,
-      container,
-      optionSelected,
-      tenureCleanupFilterOptions,
-    );
+    await act(async () => {
+      await focusOptionMultiselect(
+        multiselectorId,
+        container,
+        multiSelectOption,
+        tenureCleanupFilterOptions,
+      );
+    });
 
     expect(mockApiGetPropertiesPagedApi).toHaveBeenCalledWith(
       expect.objectContaining<Partial<IPropertyFilter>>({
@@ -313,10 +317,10 @@ describe('Property list view', () => {
       component: { getByTestId },
       findSpinner,
     } = setup({});
-    await act(async () => {});
 
     // wait for table to finish loading
-    await waitFor(async () => expect(findSpinner()).not.toBeInTheDocument());
+    await waitFor(() => expect(findSpinner()).not.toBeInTheDocument());
+    await act(async () => {});
 
     expect(getByTestId('tooltip-icon-retired-tooltip')).toBeVisible();
   });
