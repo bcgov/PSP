@@ -1,8 +1,11 @@
 import userEvent from '@testing-library/user-event';
+import { http, HttpResponse } from 'msw';
 
 import { MANAGEMENT_FILE_STATUS_TYPES, MANAGEMENT_FILE_PURPOSE_TYPES } from '@/constants/API';
 import { Claims } from '@/constants/index';
 import { getMockLookUpsByType, mockLookups } from '@/mocks/lookups.mock';
+import { server } from '@/mocks/msw/server';
+import { getUserMock } from '@/mocks/user.mock';
 import { Api_ManagementFilter } from '@/models/api/ManagementFilter';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, getByName, render, RenderOptions, screen } from '@/utils/test-utils';
@@ -40,6 +43,9 @@ describe('Management filter', () => {
   };
 
   beforeEach(() => {
+    server.use(
+      http.get('/api/users/info/*', () => HttpResponse.json(getUserMock(), { status: 200 })),
+    );
     setFilter.mockClear();
   });
 
