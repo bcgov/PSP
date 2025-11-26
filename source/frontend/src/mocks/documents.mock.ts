@@ -2415,6 +2415,7 @@ export const mockDocumentSearchResultsResponse = (): ApiGen_Concepts_DocumentSea
           },
           generalLocation: null,
           historicalFileNumbers: [],
+          tenureCleanups: [],
           surplusDeclarationType: null,
           surplusDeclarationComment: null,
           surplusDeclarationDate: '0001-01-01',
