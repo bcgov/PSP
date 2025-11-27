@@ -209,19 +209,14 @@ export const useCrownLandLayer = () => {
       let districtQuery = '';
       let districtLotQuery = '';
 
-      let query: string;
-
       if (isValidString(district) && district !== 'ALL') {
         const districtSearchString = district.replace('DISTRICT', 'DIST');
 
         districtQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%${districtSearchString}%'`;
-        query = districtQuery;
       }
 
       if (isValidString(districtLot)) {
         districtLotQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%DISTRICT LOT ${districtLot},%' OR (PARCEL_LEGAL_DESCRIPTION ilike '%SECTIONS%' AND PARCEL_LEGAL_DESCRIPTION ilike '%${districtLot},%')`;
-
-        query = [districtQuery, districtLotQuery].filter(x => isValidString(x)).join(' AND ');
       } else {
         if (isValidString(section?.toString())) {
           if (isValidString(range?.toString())) {
@@ -236,13 +231,12 @@ export const useCrownLandLayer = () => {
         if (isValidString(range?.toString())) {
           rangeQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%RANGE ${range},%'`;
         }
-
-        query = [districtQuery, sectionQuery, townshipQuery, rangeQuery]
-          .filter(x => isValidString(x))
-          .join(' AND ');
       }
 
-      console.log(query);
+      const query = [districtQuery, sectionQuery, townshipQuery, rangeQuery, districtLotQuery]
+        .filter(x => isValidString(x))
+        .join(' AND ');
+
       const searchParams = new URLSearchParams();
 
       searchParams.set('request', 'GetFeature');
