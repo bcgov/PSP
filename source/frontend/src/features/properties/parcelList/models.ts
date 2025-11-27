@@ -11,7 +11,7 @@ import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDist
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
-import { apiPropertyToPimsFeature, exists } from '@/utils';
+import { apiPropertyToPimsFeature, exists, getLatLng } from '@/utils';
 
 export class ParcelDataset {
   public id: string;
@@ -58,8 +58,10 @@ export class ParcelDataset {
   }
 
   public static fromPropertyApi(apiProperty: ApiGen_Concepts_Property): ParcelDataset {
-    const pimsFeature = apiPropertyToPimsFeature(apiProperty);
-    return ParcelDataset.fromPimsFeature(pimsFeature);
+    const parcel = new ParcelDataset();
+    parcel.pimsFeature = apiPropertyToPimsFeature(apiProperty);
+    parcel.location = getLatLng(apiProperty?.location);
+    return parcel;
   }
 
   public toSelectedFeatureDataset(): SelectedFeatureDataset {
