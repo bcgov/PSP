@@ -228,8 +228,21 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                 <CoordinateSearchForm field="coordinates" innerClassName="flex-nowrap" />
               </Col>
             )}
+
             {values.searchBy === 'surveyParcel' && (
               <>
+                <Row noGutters>
+                  <Col>
+                    <Select
+                      field="district"
+                      options={landTitleDistricts.map(ltd => ({
+                        value: ltd,
+                        label: ltd,
+                      }))}
+                    />
+                  </Col>
+                </Row>
+
                 <Row noGutters>
                   <StyledRadioGroup>
                     <div className="radio-group">
@@ -245,11 +258,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                               e.target.value.toString() as SurveyParcelOptions,
                             );
                             setFieldValue('districtLot', null);
-                            setFieldValue('district', '');
+                            setFieldValue('district', 'ALL');
                             setFieldValue('section', '');
                             setFieldValue('township', '');
                             setFieldValue('range', '');
-                            setFieldValue('district', 'ALL');
                           }}
                         ></Form.Check>
                         <Form.Label className="form-check-label" htmlFor="input-radio-district">
@@ -267,7 +279,6 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                             setSelectedSurveyParcelSearch(
                               e.target.value.toString() as SurveyParcelOptions,
                             );
-                            setFieldValue('district', null);
                             setFieldValue('section', null);
                             setFieldValue('township', null);
                             setFieldValue('range', null);
@@ -284,18 +295,6 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
 
                 {selectedSurveyParcelSearch === 'district' && (
                   <>
-                    <Row noGutters>
-                      <Col>
-                        <Select
-                          field="district"
-                          options={landTitleDistricts.map(ltd => ({
-                            value: ltd,
-                            label: ltd,
-                          }))}
-                        />
-                      </Col>
-                    </Row>
-
                     <Row noGutters>
                       <Col>
                         <Input placeholder="Section" field="section" displayErrorTooltips></Input>

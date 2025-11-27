@@ -630,7 +630,7 @@ describe('MapFilterBar', () => {
       section: null,
       township: null,
       range: null,
-      district: null,
+      district: 'ALL',
       districtLot: '50',
       project: null,
       tenureCleanup: '',
