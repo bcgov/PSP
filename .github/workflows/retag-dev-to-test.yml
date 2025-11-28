@@ -61,18 +61,21 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Login to OpenShift Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ env.OPENSHIFT_REGISTRY }}
-          username: ${{ env.OC_USERNAME_SA }}
-          password: ${{ env.OPENSHIFT_TOKEN }}
+      - name: Docker login to OpenShift registry
+        run: echo "${{ env.OPENSHIFT_TOKEN }}" | docker login ${{ env.OPENSHIFT_REGISTRY }} -u unused --password-stdin
       - name: Pre-deploy scan frontend (block on CRITICAL/HIGH)
         env:
           IMAGE: ${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-app:dev
         run: |
           docker pull "$IMAGE";
-          trivy image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH --ignore-unfixed "$IMAGE" | tee frontend_predeploy_scan.txt
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMAGE" | tee frontend_predeploy_scan.txt;
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/frontend_predeploy_scan.sarif
+      - name: Upload frontend SARIF to Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        with:
+          sarif_file: frontend_predeploy_scan.sarif
+          category: test-frontend-predeploy
       - name: Deploy PIMS frontend
         shell: bash
         run: |
@@ -84,7 +87,14 @@ jobs:
           IMAGE: ${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-api:dev
         run: |
           docker pull "$IMAGE";
-          trivy image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH --ignore-unfixed "$IMAGE" | tee api_predeploy_scan.txt
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMAGE" | tee api_predeploy_scan.txt;
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/api_predeploy_scan.sarif
+      - name: Upload api SARIF to Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        with:
+          sarif_file: api_predeploy_scan.sarif
+          category: test-api-predeploy
       - name: Deploy PIMS api
         shell: bash
         run: |
@@ -96,7 +106,14 @@ jobs:
           IMAGE: ${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-proxy:dev
         run: |
           docker pull "$IMAGE";
-          trivy image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH --ignore-unfixed "$IMAGE" | tee proxy_predeploy_scan.txt
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMAGE" | tee proxy_predeploy_scan.txt;
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/proxy_predeploy_scan.sarif
+      - name: Upload proxy SARIF to Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        with:
+          sarif_file: proxy_predeploy_scan.sarif
+          category: test-proxy-predeploy
       - name: Deploy geoserver proxy microservice
         shell: bash
         run: |
@@ -108,7 +125,14 @@ jobs:
           IMAGE: ${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-scheduler:dev
         run: |
           docker pull "$IMAGE";
-          trivy image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH --ignore-unfixed "$IMAGE" | tee scheduler_predeploy_scan.txt
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMAGE" | tee scheduler_predeploy_scan.txt;
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/scheduler_predeploy_scan.sarif
+      - name: Upload scheduler SARIF to Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        with:
+          sarif_file: scheduler_predeploy_scan.sarif
+          category: test-scheduler-predeploy
       - name: Deploy scheduler microservice
         shell: bash
         run: |
@@ -117,7 +141,7 @@ jobs:
           oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
       - name: Upload scan reports
         if: failure()
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
         with:
           name: test-predeploy-scan-reports
           path: |
@@ -126,10 +150,21 @@ jobs:
             proxy_predeploy_scan.txt
             scheduler_predeploy_scan.txt
           retention-days: 14
+      - name: Upload SARIF files as artifacts
+        if: always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: test-predeploy-sarif-reports
+          path: |
+            frontend_predeploy_scan.sarif
+            api_predeploy_scan.sarif
+            proxy_predeploy_scan.sarif
+            scheduler_predeploy_scan.sarif
+          retention-days: 14
       - name: Deploy mayan
         shell: bash
         run: |
-          oc tag mayan-bcgov:$RELEASE_TAG mayan-bcgov:$DESTINATION      
+          oc tag mayan-bcgov:$RELEASE_TAG mayan-bcgov:$DESTINATION
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
   # 2) greps the generated name from the previous step.
@@ -155,8 +190,8 @@ jobs:
           oc wait --for=condition=complete job/$JOB_NAME --timeout=120s
           oc get pods -o custom-columns=POD:.metadata.name --no-headers | grep -Eo $JOB_NAME-[^\s].* | (read POD_NAME; oc logs $POD_NAME)
 
-  ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
-  ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
+  # ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
+  # ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
   mayan-sync:
     name: sync mayan
     needs: database-upgrade
@@ -178,7 +213,7 @@ jobs:
           oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso-test | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
           oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-test-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso-test | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
 
-  ## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
+  # ## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
   keycloak-sync:
     name: sync keycloak
     needs: database-upgrade

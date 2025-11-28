@@ -67,25 +67,50 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Login to OpenShift Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ env.OPENSHIFT_REGISTRY }}
-          username: ${{ env.OC_USERNAME_SA }}
-          password: ${{ env.OPENSHIFT_TOKEN }}
+      - name: Docker login to OpenShift registry
+        run: echo "${{ env.OPENSHIFT_TOKEN }}" | docker login ${{ env.OPENSHIFT_REGISTRY }} -u unused --password-stdin
       - name: Pre-deploy scan images (block on CRITICAL/HIGH)
         run: |
-          [[ -z ${{github.event.inputs.OVERRIDE_VERSION}} ]] && RELEASE_VERSION=${{steps.previoustag.outputs.tag}}-master || RELEASE_VERSION=${{github.event.inputs.OVERRIDE_VERSION}}-master
+          SCAN_FAILED=0
           for IMG in pims-app pims-api pims-proxy pims-scheduler; do
-            IMAGE="${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/${IMG}:${RELEASE_VERSION}";
+            IMAGE="${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/${IMG}:uat";
             echo "Pulling $IMAGE";
             docker pull "$IMAGE";
             echo "Scanning $IMAGE";
-            trivy image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH --ignore-unfixed "$IMAGE" | tee "${IMG}_prod_predeploy_scan.txt";
+            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMAGE" | tee "${IMG}_prod_predeploy_scan.txt" || SCAN_FAILED=1;
+            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o "/workspace/${IMG}_prod_predeploy_scan.sarif";
           done
+          if [ $SCAN_FAILED -eq 1 ]; then
+            echo "One or more scans found CRITICAL/HIGH vulnerabilities"
+            exit 1
+          fi
+      - name: Upload frontend SARIF to Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        with:
+          sarif_file: pims-app_prod_predeploy_scan.sarif
+          category: prod-frontend-predeploy
+      - name: Upload api SARIF to Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        with:
+          sarif_file: pims-api_prod_predeploy_scan.sarif
+          category: prod-api-predeploy
+      - name: Upload proxy SARIF to Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        with:
+          sarif_file: pims-proxy_prod_predeploy_scan.sarif
+          category: prod-proxy-predeploy
+      - name: Upload scheduler SARIF to Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        with:
+          sarif_file: pims-scheduler_prod_predeploy_scan.sarif
+          category: prod-scheduler-predeploy
       - name: Upload scan reports
-        if: failure()
-        uses: actions/upload-artifact@v4
+        if: always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
         with:
           name: prod-predeploy-scan-reports
           path: |
@@ -93,6 +118,17 @@ jobs:
             pims-api_prod_predeploy_scan.txt
             pims-proxy_prod_predeploy_scan.txt
             pims-scheduler_prod_predeploy_scan.txt
+          retention-days: 14
+      - name: Upload SARIF files
+        if: always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: uat-predeploy-sarif-reports
+          path: |
+            pims-app_prod_predeploy_scan.sarif
+            pims-api_prod_predeploy_scan.sarif
+            pims-proxy_prod_predeploy_scan.sarif
+            pims-scheduler_prod_predeploy_scan.sarif
           retention-days: 14
       - name: Display the maintenance page instead of the app
         run: |
@@ -131,8 +167,8 @@ jobs:
           oc wait --for=condition=complete job/$JOB_NAME --timeout=120s
           oc get pods -o custom-columns=POD:.metadata.name --no-headers | grep -Eo $JOB_NAME-[^\s].* | (read POD_NAME; oc logs $POD_NAME)
 
-  ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
-  ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
+  # ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
+  # ## Note: this depends on the mayan-sync configmap for the target namespace being up to date.
   mayan-sync:
     name: sync mayan
     needs: database-upgrade
@@ -154,7 +190,7 @@ jobs:
           oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-prod -p TOKEN_URL=https://loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
           oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-prod -p TOKEN_URL=https://loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-4380 -p MAYAN_SYNC_URL=https://pims-app-3cd915-prod.apps.silver.devops.gov.bc.ca/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
 
-  ## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
+  # ## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
   keycloak-sync:
     name: sync keycloak
     needs: database-upgrade
