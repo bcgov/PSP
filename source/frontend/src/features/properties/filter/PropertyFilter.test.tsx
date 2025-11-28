@@ -371,6 +371,7 @@ describe('MapFilterBar', () => {
       range: '',
       district: '',
       project: null,
+      tenureCleanup: ''
     });
   });
 
@@ -408,6 +409,7 @@ describe('MapFilterBar', () => {
       range: '',
       district: '',
       project: null,
+      tenureCleanup: ''
     });
   });
 
@@ -445,6 +447,7 @@ describe('MapFilterBar', () => {
       range: '',
       district: '',
       project: null,
+      tenureCleanup: ''
     });
   });
 
@@ -501,6 +504,7 @@ describe('MapFilterBar', () => {
       range: '',
       district: '',
       project: null,
+      tenureCleanup: ''
     });
   });
 
@@ -550,6 +554,7 @@ describe('MapFilterBar', () => {
       range: '3',
       district: '',
       project: null,
+      tenureCleanup: ''
     });
   });
 
@@ -618,6 +623,7 @@ describe('MapFilterBar', () => {
       range: '',
       district: '',
       project: null,
+      tenureCleanup:''
     });
   });
 
