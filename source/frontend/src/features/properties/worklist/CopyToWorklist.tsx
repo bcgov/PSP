@@ -12,17 +12,13 @@ export interface ICopyToWorklistProps {
   iconSize?: string | number;
 }
 
-// Map FileProperty fields to ParcelDataset fields as needed
-const convertToParcelItem = (fileProperty: ApiGen_Concepts_FileProperty): ParcelDataset => {
-  const parcelItem = ParcelDataset.fromPropertyApi(fileProperty.property);
-  return parcelItem;
-};
-
 export const CopyToWorklist: React.FC<ICopyToWorklistProps> = ({ fileProperties, iconSize }) => {
   const { addRange } = useWorklistContext();
 
   const handleCopy = () => {
-    const parcelItems = fileProperties.map(convertToParcelItem);
+    const parcelItems = fileProperties.map(fp => {
+      return ParcelDataset.fromPropertyApi(fp.property);
+    });
     addRange(parcelItems);
   };
 
