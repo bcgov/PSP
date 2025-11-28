@@ -216,7 +216,6 @@ describe('Property list view', () => {
     expect(getByText('Property Of Interest')).toBeInTheDocument();
     expect(getByText('Disposed')).toBeInTheDocument();
   });
-  1;
 
   it('allows property ownership to be selected', async () => {
     setupMockApi([mockApiPropertyView()]);
