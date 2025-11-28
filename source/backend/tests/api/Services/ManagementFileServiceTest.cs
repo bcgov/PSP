@@ -1263,19 +1263,21 @@ namespace Pims.Api.Test.Services
             });
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
-            repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
-            repository.Setup(x => x.Add(It.IsAny<PimsManagementFile>())).Returns(managementFile);
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
 
-            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
-            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+            var filePropertyRepository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(managementFile.PimsManagementFileProperties.ToList());
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(retiredProperty);
 
-            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
+            statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
+            statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes?>())).Returns(true);
 
             // Act
-            Action act = () => service.Add(managementFile, new List<UserOverrideCode>());
+            Action act = () => service.UpdateProperties(managementFile, new List<UserOverrideCode>());
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
