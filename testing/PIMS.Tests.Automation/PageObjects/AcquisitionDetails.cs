@@ -34,6 +34,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
         private readonly By acquisitionFileProjectSubtitle = By.XPath("//h2/div/div[normalize-space(text())='Project']");
+        private readonly By acquisitionFileProjectCreateLabel = By.XPath("//label[contains(text(),'Ministry project')]");
         private readonly By acquisitionFileProjectLabel = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]");
         private readonly By acquisitionFileProjectContent = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]/parent::div/following-sibling::div");
         private readonly By acquisitionFileProjectProductLabel = By.XPath("//label[contains(text(),'Product')]");
@@ -117,7 +118,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileEstimatedDateInput = By.Id("datepicker-estimatedCompletionDate");
         private readonly By acquisitionFilePossesionDateInput = By.Id("datepicker-possessionDate");
 
-        private readonly By acquisitionFileNameInput = By.Id("input-fileName");
+        private readonly By acquisitionFileNameInput = By.CssSelector("input[id='input-fileName']");
         private readonly By acquisitionFileNameInvalidMessage = By.XPath("//div[contains(text(),'Acquisition file name must be at most 500 characters')]");
         private readonly By acquisitionFileHistoricalNumberInput = By.Id("input-legacyFileNumber");
         private readonly By acquisitionFileHistoricalInvalidMessage = By.XPath("//div[contains(text(),'Legacy file number must be at most 18 characters')]");
@@ -785,8 +786,8 @@ namespace PIMS.Tests.Automation.PageObjects
             //    AssertTrueContentEquals(acquisitionFileTitle, "Create Acquisition Sub-Interest File");
 
             //Project
-            //AssertTrueIsDisplayed(acquisitionFileProjectSubtitle);
-            AssertTrueIsDisplayed(acquisitionFileProjectLabel);
+            AssertTrueIsDisplayed(acquisitionFileProjectSubtitle);
+            AssertTrueIsDisplayed(acquisitionFileProjectCreateLabel);
             if (acquisitionType == "Main")
                 AssertTrueIsDisplayed(acquisitionFileProjectInput);
              
