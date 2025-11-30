@@ -101,11 +101,14 @@ const ManagementPropertiesSubForm: React.FunctionComponent<ManagementPropertiesS
         {({ remove }) => (
           <Section header="Selected Properties">
             <AddPropertiesGuide />
-            {exists(selectedFeatureDataset?.parcelFeature) && (
+            {exists(selectedFeatureDataset?.parcelFeature) ||
+            exists(selectedFeatureDataset?.pimsFeature) ||
+            exists(selectedFeatureDataset?.location) ? (
               <StyledButtonWrapper>
                 <Button onClick={handleAddToSelection}>Add selected property</Button>
               </StyledButtonWrapper>
-            )}
+            ) : null}
+
             <SelectedPropertyHeaderRow />
             {formikProps.values.fileProperties.map((property, index) => (
               <SelectedPropertyRow
