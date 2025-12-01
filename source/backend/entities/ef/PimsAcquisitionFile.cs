@@ -13,9 +13,9 @@ namespace Pims.Dal.Entities;
 [Index("AcquisitionFileStatusTypeCode", Name = "ACQNFL_ACQUISITION_FILE_STATUS_TYPE_CODE_IDX")]
 [Index("AcquisitionFundingTypeCode", Name = "ACQNFL_ACQUISITION_FUNDING_TYPE_CODE_IDX")]
 [Index("AcquisitionTypeCode", Name = "ACQNFL_ACQUISITION_TYPE_CODE_IDX")]
-[Index("AcqFileAppraisalTypeCode", Name = "ACQNFL_ACQ_FILE_APPRAISAL_TYPE_CODE_IDX")]
+[Index("FileAppraisalTypeCode", Name = "ACQNFL_ACQ_FILE_APPRAISAL_TYPE_CODE_IDX")]
 [Index("AcqFileExpropRiskTypeCode", Name = "ACQNFL_ACQ_FILE_EXPROP_RISK_TYPE_CODE_IDX")]
-[Index("AcqFileLglSrvyTypeCode", Name = "ACQNFL_ACQ_FILE_LGL_SRVY_TYPE_CODE_IDX")]
+[Index("FileLglSrvyTypeCode", Name = "ACQNFL_ACQ_FILE_LGL_SRVY_TYPE_CODE_IDX")]
 [Index("AcqPhysFileStatusTypeCode", Name = "ACQNFL_ACQ_PHYS_FILE_STATUS_TYPE_CODE_IDX")]
 [Index("FileNo", Name = "ACQNFL_FILE_NO_IDX")]
 [Index("LegacyFileNumber", Name = "ACQNFL_LEGACY_FILE_NUMBER_IDX")]
@@ -27,7 +27,7 @@ namespace Pims.Dal.Entities;
 public partial class PimsAcquisitionFile
 {
     /// <summary>
-    /// Generated surrogate primary key.
+    /// System-generated unique surrogate primary key.
     /// </summary>
     [Key]
     [Column("ACQUISITION_FILE_ID")]
@@ -97,16 +97,16 @@ public partial class PimsAcquisitionFile
     /// <summary>
     /// Foreign key to the PIMS_ACQ_FILE_APPRAISAL_TYPE table.
     /// </summary>
-    [Column("ACQ_FILE_APPRAISAL_TYPE_CODE")]
+    [Column("FILE_APPRAISAL_TYPE_CODE")]
     [StringLength(20)]
-    public string AcqFileAppraisalTypeCode { get; set; }
+    public string FileAppraisalTypeCode { get; set; }
 
     /// <summary>
     /// Foreign key to the PIMS_ACQ_FILE_LGL_SRVY_TYPE table.
     /// </summary>
-    [Column("ACQ_FILE_LGL_SRVY_TYPE_CODE")]
+    [Column("FILE_LGL_SRVY_TYPE_CODE")]
     [StringLength(20)]
-    public string AcqFileLglSrvyTypeCode { get; set; }
+    public string FileLglSrvyTypeCode { get; set; }
 
     /// <summary>
     /// Foreign key to the PIMS_ACQ_FILE_EXPROP_RISK_TYPE table.
@@ -219,7 +219,7 @@ public partial class PimsAcquisitionFile
     public DateTime AppCreateTimestamp { get; set; }
 
     /// <summary>
-    /// The user account that created the record.
+    /// The user that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USERID")]
@@ -227,13 +227,13 @@ public partial class PimsAcquisitionFile
     public string AppCreateUserid { get; set; }
 
     /// <summary>
-    /// The GUID of the user account that created the record.
+    /// GUID of the user that created the record.
     /// </summary>
     [Column("APP_CREATE_USER_GUID")]
     public Guid? AppCreateUserGuid { get; set; }
 
     /// <summary>
-    /// The directory of the user account that created the record.
+    /// User directory of the user that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USER_DIRECTORY")]
@@ -241,13 +241,13 @@ public partial class PimsAcquisitionFile
     public string AppCreateUserDirectory { get; set; }
 
     /// <summary>
-    /// The date and time the user updated the record.
+    /// The date and time the record was updated by the user.
     /// </summary>
     [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppLastUpdateTimestamp { get; set; }
 
     /// <summary>
-    /// The user account that updated the record.
+    /// The user that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USERID")]
@@ -255,13 +255,13 @@ public partial class PimsAcquisitionFile
     public string AppLastUpdateUserid { get; set; }
 
     /// <summary>
-    /// The GUID of the user account that updated the record.
+    /// GUID of the user that updated the record.
     /// </summary>
     [Column("APP_LAST_UPDATE_USER_GUID")]
     public Guid? AppLastUpdateUserGuid { get; set; }
 
     /// <summary>
-    /// The directory of the user account that updated the record.
+    /// User directory of the user that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
@@ -296,17 +296,9 @@ public partial class PimsAcquisitionFile
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("AcqFileAppraisalTypeCode")]
-    [InverseProperty("PimsAcquisitionFiles")]
-    public virtual PimsAcqFileAppraisalType AcqFileAppraisalTypeCodeNavigation { get; set; }
-
     [ForeignKey("AcqFileExpropRiskTypeCode")]
     [InverseProperty("PimsAcquisitionFiles")]
     public virtual PimsAcqFileExpropRiskType AcqFileExpropRiskTypeCodeNavigation { get; set; }
-
-    [ForeignKey("AcqFileLglSrvyTypeCode")]
-    [InverseProperty("PimsAcquisitionFiles")]
-    public virtual PimsAcqFileLglSrvyType AcqFileLglSrvyTypeCodeNavigation { get; set; }
 
     [ForeignKey("AcqPhysFileStatusTypeCode")]
     [InverseProperty("PimsAcquisitionFiles")]
@@ -323,6 +315,14 @@ public partial class PimsAcquisitionFile
     [ForeignKey("AcquisitionTypeCode")]
     [InverseProperty("PimsAcquisitionFiles")]
     public virtual PimsAcquisitionType AcquisitionTypeCodeNavigation { get; set; }
+
+    [ForeignKey("FileAppraisalTypeCode")]
+    [InverseProperty("PimsAcquisitionFiles")]
+    public virtual PimsFileAppraisalType FileAppraisalTypeCodeNavigation { get; set; }
+
+    [ForeignKey("FileLglSrvyTypeCode")]
+    [InverseProperty("PimsAcquisitionFiles")]
+    public virtual PimsFileLglSrvyType FileLglSrvyTypeCodeNavigation { get; set; }
 
     [InverseProperty("PrntAcquisitionFile")]
     public virtual ICollection<PimsAcquisitionFile> InversePrntAcquisitionFile { get; set; } = new List<PimsAcquisitionFile>();

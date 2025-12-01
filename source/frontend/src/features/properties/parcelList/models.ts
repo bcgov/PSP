@@ -61,6 +61,7 @@ export class ParcelDataset {
       selectingComponentId: null,
       location: this.location ?? { lat: 0, lng: 0 },
       fileLocation: this.location ?? null,
+      fileBoundary: null,
       id: this.id,
       parcelFeature: this.pmbcFeature ?? null,
       pimsFeature: this.pimsFeature ?? null,

@@ -261,50 +261,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   flex-wrap: nowrap;
 }
 
-.c15 {
-  position: relative;
-  border-radius: 0.4rem;
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-  padding-left: 1.2rem;
-  padding-right: 2.8rem;
-  background-image: none;
-  color: #474543;
-  border: #606060 solid 0.1rem;
-  cursor: default;
-}
-
-.c15.is-invalid {
-  border: #CE3E39 solid 0.1rem;
-}
-
-.c16.c16.btn {
-  position: absolute;
-  top: calc(50% - 1.4rem);
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-  padding-right: 1.2rem;
-  height: 1.6rem;
-  right: 0rem;
-  color: #9F9D9C;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c16.c16.btn .text {
-  display: none;
-}
-
-.c16.c16.btn:hover,
-.c16.c16.btn:active,
-.c16.c16.btn:focus {
-  color: #CE3E39;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  opacity: unset;
-}
-
 .c17.form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -351,6 +307,51 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
 
 .c17 .form-label {
   margin-bottom: unset;
+}
+
+.c15 {
+  position: relative;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+  word-break: break-all;
+  background-image: none;
+  color: #474543;
+  border: #606060 solid 0.1rem;
+  cursor: default;
+}
+
+.c15.is-invalid {
+  border: #CE3E39 solid 0.1rem;
+}
+
+.c16.c16.btn {
+  position: absolute;
+  top: calc(50% - 1.4rem);
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-right: 1.2rem;
+  height: 1.6rem;
+  right: 0rem;
+  color: #9F9D9C;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c16.c16.btn .text {
+  display: none;
+}
+
+.c16.c16.btn:hover,
+.c16.c16.btn:active,
+.c16.c16.btn:focus {
+  color: #CE3E39;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
 }
 
 .c0 {
@@ -600,35 +601,61 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             <p
               class="mb-4"
             >
-              Provide a predictable research file name that will be easy to search for. Recommended format is to use the road name(s) followed by some descriptive text that may include (but not limited to) one or more of the following:
+              The recommended format for naming Research files is to provide the Road name, followed by the corresponding MOTT District, followed by supporting descriptive text.
+            </p>
+            <p
+              class="mb-4"
+            >
+              If the road name is not available /applicable, use supporting descriptive text that identifies the location and enables searchability of the file in the future.
+            </p>
+            <p
+              class="mb-4"
+            >
+              Descriptive text may include (but is not limited to) one or more of the following:
             </p>
             <ul>
               <li>
-                Ministry project name
+                Project name
               </li>
               <li>
-                Name of the area
+                Road intersection (or similar unique reference)
               </li>
               <li>
-                Name of the MOTT highway district
+                Geographic area (municipality/regional district/unincorporated area)
               </li>
               <li>
-                Name of the enquirer
-              </li>
-              <li>
-                Legal description
+                Legal description (District lot, Section, Plan)
               </li>
             </ul>
             <p
-              class="mb-4 mt-3"
+              class="mb-4"
             >
-              If the road name is not available /applicable, the descriptive text should make the research file easy to search for in the future
+              <i>
+                Examples:
+              </i>
             </p>
+            <ul>
+              <li>
+                <i>
+                  Hwy 16 – Skeena District – New Hazelton to College St
+                </i>
+              </li>
+              <li>
+                <i>
+                  Hwy 97 – Okanagan Shuswap – Smith property
+                </i>
+              </li>
+              <li>
+                <i>
+                  Plywood Rd – Cariboo District – DL 222
+                </i>
+              </li>
+            </ul>
             <p>
               <b>
                 Note:
               </b>
-               This name does not need to be entirely unique, as a unique file number will be generated for your research file when you save it.
+               a unique file number will be generated for your research file when you save it.
             </p>
           </div>
         </div>
@@ -1012,6 +1039,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                     Dairy Queen Forever! Property Management
                     <button
                       class="c11 Button c16 btn btn-link"
+                      title="remove"
                       type="button"
                     >
                       <div
@@ -1026,9 +1054,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                           width="2rem"
                           xmlns="http://www.w3.org/2000/svg"
                         >
-                          <title>
-                            remove
-                          </title>
                           <path
                             d="M0 0h24v24H0z"
                             fill="none"
@@ -1059,6 +1084,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                 >
                   <button
                     class="c11 Button Button--icon-only px-2 btn btn-primary"
+                    title="Select Contact"
                     type="button"
                   >
                     <div
@@ -1082,6 +1108,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
                 </div>
               </div>
             </div>
+            <div />
           </div>
         </div>
         <div
@@ -1107,6 +1134,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             class="form-control"
             id="input-requestDescription"
             name="requestDescription"
+            required=""
             style="word-break: break-all;"
             title="a request description"
           >
@@ -1204,6 +1232,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             class="form-control"
             id="input-researchResult"
             name="researchResult"
+            required=""
             style="word-break: break-all;"
             title="A research result"
           >
@@ -1324,6 +1353,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
             class="form-control"
             id="input-expropriationNotes"
             name="expropriationNotes"
+            required=""
             style="word-break: break-all;"
             title="An expropriation note"
           >
@@ -1332,7 +1362,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
         </div>
       </div>
     </div>
-    <div />
   </div>
 </DocumentFragment>
 `;

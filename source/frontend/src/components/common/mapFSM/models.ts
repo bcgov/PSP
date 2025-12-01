@@ -48,6 +48,7 @@ export interface RequestedCenterTo {
 export interface LocationBoundaryDataset {
   readonly location: LatLngLiteral;
   readonly boundary: Geometry | null;
+  readonly fileBoundary: Geometry | null;
   readonly isActive?: boolean;
 }
 

@@ -336,7 +336,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
           onSuccess={onChildSuccess}
         />
       ),
-      key: InventoryTabNames.document,
+      key: InventoryTabNames.documents,
       name: 'Documents',
     });
   }
@@ -368,7 +368,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
   const activeTab = Object.values(InventoryTabNames).find(t => t === params.tab) ?? defaultTab;
 
   useEffect(() => {
-    if (activeTab === InventoryTabNames.document || activeTab === InventoryTabNames.notes) {
+    if (activeTab === InventoryTabNames.documents || activeTab === InventoryTabNames.notes) {
       setFullWidthSideBar(true);
     } else {
       setFullWidthSideBar(false);

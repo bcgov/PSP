@@ -2365,7 +2365,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                     data-testid="contact-input"
                   >
                     <div
-                      class="form-group"
+                      class="input form-group"
                     >
                       <div
                         class="row"
@@ -2562,7 +2562,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                     data-testid="contact-input"
                   >
                     <div
-                      class="form-group"
+                      class="input form-group"
                     >
                       <div
                         class="row"
@@ -2754,7 +2754,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                     class="c16 text-left col"
                   >
                     <div
-                      class="form-group"
+                      class="input form-group"
                     >
                       <div
                         class="row"
@@ -2828,7 +2828,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                     class="c16 text-left col"
                   >
                     <div
-                      class="form-group"
+                      class="input form-group"
                     >
                       <div
                         class="row"
@@ -5125,7 +5125,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                     class="c16 text-left col"
                   >
                     <div
-                      class="form-group"
+                      class="input form-group"
                     >
                       <div
                         class="row"
@@ -5199,7 +5199,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                     class="c16 text-left col"
                   >
                     <div
-                      class="form-group"
+                      class="input form-group"
                     >
                       <div
                         class="row"

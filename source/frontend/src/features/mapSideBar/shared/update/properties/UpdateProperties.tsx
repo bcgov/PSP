@@ -1,39 +1,31 @@
 import axios, { AxiosError } from 'axios';
 import { FieldArray, Formik, FormikProps } from 'formik';
-import { geoJSON, LatLngLiteral } from 'leaflet';
+import { LatLngLiteral } from 'leaflet';
 import noop from 'lodash/noop';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { PiCornersOut } from 'react-icons/pi';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons';
-import { LinkButton } from '@/components/common/buttons/LinkButton';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
-import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import MapClickMonitor from '@/components/propertySelector/MapClickMonitor';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import { useEditPropertiesMode } from '@/hooks/useEditPropertiesMode';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import {
-  exists,
-  firstOrNull,
-  isLatLngInFeatureSetBoundary,
-  isNumber,
-  isValidId,
-  latLngLiteralToGeometry,
-} from '@/utils';
+import { exists, firstOrNull, isLatLngInFeatureSetBoundary, isNumber, isValidId } from '@/utils';
 import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
 
 import { FileForm, PropertyForm } from '../../models';
@@ -54,6 +46,7 @@ export interface IUpdatePropertiesProps {
   confirmBeforeAddMessage?: React.ReactNode;
   formikRef?: React.RefObject<FormikProps<any>>;
   disableProperties?: boolean;
+  canUploadShapefiles?: boolean;
 }
 
 export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> = props => {
@@ -66,13 +59,8 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const [isValid, setIsValid] = useState<boolean>(true);
   const { setModalContent, setDisplayModal } = useModalContext();
   const { resetFilePropertyLocations } = useContext(SideBarContext);
-  const {
-    requestFlyToBounds,
-    selectedFeatures,
-    processCreation,
-    mapLocationFeatureDataset,
-    prepareForCreation,
-  } = useMapStateMachine();
+  const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
+    useMapStateMachine();
 
   useEditPropertiesMode();
 
@@ -101,21 +89,6 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
       processCreation();
     }
   }, [formikRef, processCreation, propertyForms]);
-
-  const fitBoundaries = () => {
-    const fileProperties = formikRef?.current?.values?.properties;
-
-    if (exists(fileProperties)) {
-      const locations = fileProperties.map(
-        p => p?.polygon ?? latLngLiteralToGeometry(p?.fileLocation),
-      );
-      const bounds = geoJSON(locations).getBounds();
-
-      if (exists(bounds) && bounds.isValid()) {
-        requestFlyToBounds(bounds);
-      }
-    }
-  };
 
   const handleSaveClick = async () => {
     await formikRef?.current?.validateForm();
@@ -190,6 +163,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
       location: mapLocationFeatureDataset?.location,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
       pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
       regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
@@ -252,14 +226,10 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                       <Row>
                         <Col xs="11">Selected Properties</Col>
                         <Col>
-                          <TooltipWrapper
-                            tooltip="Fit map to the file properties"
-                            tooltipId="property-selector-tooltip"
-                          >
-                            <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
-                              <PiCornersOut size={18} className="mr-2" />
-                            </LinkButton>
-                          </TooltipWrapper>
+                          <ZoomToLocation
+                            formProperties={formikProps?.values?.properties}
+                            icon={ZoomIconType.area}
+                          />
                         </Col>
                       </Row>
                     }
@@ -313,6 +283,17 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                         index={index}
                         property={property.toFeatureDataset()}
                         showDisable={props.disableProperties}
+                        canUploadShapefile={props.canUploadShapefiles}
+                        onUploadShapefile={(result: UploadResponseModel | null) => {
+                          // Update the property boundary based on the uploaded shapefile
+                          if (exists(result)) {
+                            if (result.isSuccess && exists(result.boundary)) {
+                              const updatedFormProperty = new PropertyForm(property);
+                              updatedFormProperty.fileBoundary = result.boundary;
+                              replace(index, updatedFormProperty);
+                            }
+                          }
+                        }}
                       />
                     ))}
                     {formikProps.values.properties.length === 0 && (

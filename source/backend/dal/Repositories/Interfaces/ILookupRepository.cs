@@ -160,9 +160,9 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsAcqFileProgessType> GetAllAcquisitionFileProgressStatusTypes();
 
-        IEnumerable<PimsAcqFileAppraisalType> GetAllAcquisitionFileAppraisalStatusTypes();
+        IEnumerable<PimsFileAppraisalType> GetAllFileAppraisalStatusTypes();
 
-        IEnumerable<PimsAcqFileLglSrvyType> GetAllAcquisitionFileLegalSurveyStatusTypes();
+        IEnumerable<PimsFileLglSrvyType> GetAllFileLegalSurveyStatusTypes();
 
         IEnumerable<PimsAcqFileTakeType> GetAllAcquisitionFileTakeStatusTypes();
 

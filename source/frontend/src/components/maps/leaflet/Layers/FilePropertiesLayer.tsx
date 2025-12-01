@@ -3,7 +3,8 @@ import { FeatureCollection } from 'geojson';
 import L, { LatLng } from 'leaflet';
 import find from 'lodash/find';
 import { useEffect, useMemo, useRef } from 'react';
-import { FeatureGroup, GeoJSON, Marker } from 'react-leaflet';
+import { FeatureGroup, GeoJSON, Marker, Pane } from 'react-leaflet';
+import { useTheme } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
@@ -18,6 +19,7 @@ import { getDisabledDraftIcon, getDraftIcon } from './util';
 export const FilePropertiesLayer: React.FunctionComponent = () => {
   const draftFeatureGroupRef = useRef<L.FeatureGroup>(null);
   const filterState = useFilterContext();
+  const theme = useTheme();
 
   const mapMachine = useMapStateMachine();
   const mapMarkerClickFn = mapMachine.mapMarkerClick;
@@ -25,10 +27,11 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
 
   const draftPoints = useMemo<LocationBoundaryDataset[]>(() => {
     return (filePropertyLocations ?? []).filter(
-      dp => exists(dp?.location) && exists(dp.location.lat) && exists(dp.location.lng),
+      dp => exists(dp?.location?.lat) && exists(dp?.location?.lng),
     );
   }, [filePropertyLocations]);
 
+  // These are the boundaries for the properties
   const draftBoundaryFeatures = useMemo<FeatureCollection>(() => {
     // ignore properties without a valid boundary
     const validBoundaries = (filePropertyLocations ?? [])
@@ -39,17 +42,36 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
     return featureCollection(validBoundaries);
   }, [filePropertyLocations]);
 
-  const geojsonKeyRef = useRef<string>(uuidv4());
+  // These are the user-uploaded shapes in the context of the file (can be different than the property boundaries that mirror PMBC)
+  const fileBoundaryFeatures = useMemo<FeatureCollection>(() => {
+    const validBoundaries = (filePropertyLocations ?? [])
+      .map(pl => pl.fileBoundary)
+      .filter(exists)
+      .map(boundary => feature(boundary));
+
+    return featureCollection(validBoundaries);
+  }, [filePropertyLocations]);
+
+  const boundaryLayerKeyRef = useRef<string>(uuidv4());
+  const fileBoundaryLayerKeyRef = useRef<string>(uuidv4());
+
   const previousBoundaries = usePrevious(draftBoundaryFeatures);
+  const previousFileBoundaries = usePrevious(fileBoundaryFeatures);
 
   // We need to regenerate an unique `key` on the `<GeoJSON>` element when the underlying data changes.
   // This is to force React to re-render the GeoJSON component with the updated property boundaries.
   // https://github.com/PaulLeCam/react-leaflet/issues/332
   useEffect(() => {
     if (previousBoundaries !== draftBoundaryFeatures) {
-      geojsonKeyRef.current = uuidv4();
+      boundaryLayerKeyRef.current = uuidv4();
     }
   }, [draftBoundaryFeatures, previousBoundaries]);
+
+  useEffect(() => {
+    if (previousFileBoundaries !== fileBoundaryFeatures) {
+      fileBoundaryLayerKeyRef.current = uuidv4();
+    }
+  }, [fileBoundaryFeatures, previousFileBoundaries]);
 
   /**
    * Cleanup draft layers.
@@ -82,46 +104,67 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
   return useMemo(
     () => (
       <>
-        <FeatureGroup ref={draftFeatureGroupRef}>
-          {draftPoints.map((draftPoint, index) => {
-            return (
-              <Marker
-                key={uuidv4()}
-                position={draftPoint.location}
-                icon={
-                  draftPoint.isActive !== false
-                    ? getDraftIcon((index + 1).toString())
-                    : getDisabledDraftIcon((index + 1).toString())
-                }
-                zIndexOffset={500}
-                eventHandlers={{
-                  click: e => {
-                    // stop propagation of 'click' event to the underlying leaflet map
-                    e.originalEvent.preventDefault();
-                    e.originalEvent.stopPropagation();
+        <Pane name="file-markers-pane" style={{ zIndex: 650 }}>
+          <FeatureGroup ref={draftFeatureGroupRef}>
+            {draftPoints.map((draftPoint, index) => {
+              return (
+                <Marker
+                  key={uuidv4()}
+                  position={draftPoint.location}
+                  icon={
+                    draftPoint.isActive !== false
+                      ? getDraftIcon((index + 1).toString())
+                      : getDisabledDraftIcon((index + 1).toString())
+                  }
+                  zIndexOffset={500}
+                  eventHandlers={{
+                    click: e => {
+                      // stop propagation of 'click' event to the underlying leaflet map
+                      e.originalEvent.preventDefault();
+                      e.originalEvent.stopPropagation();
 
-                    mapMarkerClickFn({
-                      clusterId: 'NO_ID',
-                      latlng: draftPoint.location,
-                      pimsLocationFeature: null,
-                      pimsBoundaryFeature: null,
-                      fullyAttributedFeature: null,
-                    });
-                  },
-                }}
-              ></Marker>
-            );
-          })}
-        </FeatureGroup>
+                      mapMarkerClickFn({
+                        clusterId: 'NO_ID',
+                        latlng: draftPoint.location,
+                        pimsLocationFeature: null,
+                        pimsBoundaryFeature: null,
+                        fullyAttributedFeature: null,
+                      });
+                    },
+                  }}
+                ></Marker>
+              );
+            })}
+          </FeatureGroup>
+        </Pane>
+
         {draftBoundaryFeatures?.features?.length > 0 && (
-          <GeoJSON
-            key={geojsonKeyRef.current}
-            data={draftBoundaryFeatures}
-            pathOptions={{ color: '#2A81CB', fill: false, dashArray: [12] }}
-          ></GeoJSON>
+          <Pane name="property-boundaries-pane" style={{ zIndex: 200 }}>
+            <GeoJSON
+              key={boundaryLayerKeyRef.current}
+              data={draftBoundaryFeatures}
+              pathOptions={{ color: '#2A81CB', fill: false, dashArray: [12] }}
+            ></GeoJSON>
+          </Pane>
+        )}
+
+        {fileBoundaryFeatures?.features?.length > 0 && (
+          <Pane name="file-boundaries-pane" style={{ zIndex: 450 }}>
+            <GeoJSON
+              key={fileBoundaryLayerKeyRef.current}
+              data={fileBoundaryFeatures}
+              pathOptions={{ color: theme.css.pimsRed80, fill: true, fillOpacity: 0.2 }}
+            ></GeoJSON>
+          </Pane>
         )}
       </>
     ),
-    [draftBoundaryFeatures, draftPoints, geojsonKeyRef, mapMarkerClickFn],
+    [
+      draftPoints,
+      draftBoundaryFeatures,
+      fileBoundaryFeatures,
+      theme.css.pimsRed80,
+      mapMarkerClickFn,
+    ],
   );
 };

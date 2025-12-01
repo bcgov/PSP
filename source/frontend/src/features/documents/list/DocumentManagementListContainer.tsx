@@ -10,8 +10,8 @@ import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGe
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
 import { exists, getFilePropertyName, relationshipTypeToPathName } from '@/utils';
 
-import { DocumentRow } from '../ComposedDocument';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
+import { DocumentRow } from '../models/DocumentRow';
 import { IDocumentListContainerProps } from './DocumentListContainer';
 import DocumentListView from './DocumentListView';
 import { DocRelation } from './models';

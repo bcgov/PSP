@@ -1,4 +1,5 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
+import { generatePath } from 'react-router-dom';
 
 import { TableSort } from '@/components/Table/TableSort';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
@@ -126,6 +127,19 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
       canEditActivities={canEditActivities}
       addActivityButtonText="Add an Ad-hoc Activity"
       activitiesListTitle="Ad-hoc Activities List"
+      getNavigationUrl={(activityRow: PropertyActivityRow) => {
+        const urlPattern = `/mapview/sidebar/:fileType/:fileId/:detailType/:detailId`;
+        const path = generatePath(urlPattern, {
+          fileType: 'management',
+          fileId: activityRow.managementFileId,
+          detailType: 'activities',
+          detailId: activityRow.activityId,
+        });
+        return {
+          title: `M-${activityRow.managementFileId}`,
+          url: path,
+        };
+      }}
     />
   );
 };

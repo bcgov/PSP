@@ -1,3 +1,4 @@
+import bbox from '@turf/bbox';
 import { FeatureCollection, Geometry } from 'geojson';
 import { useCallback } from 'react';
 import { toast } from 'react-toastify';
@@ -7,8 +8,10 @@ import { useCrownLandLayer } from '@/hooks/repositories/mapLayer/useCrownLandLay
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
 import { usePimsHighwayLayer } from '@/hooks/repositories/mapLayer/useHighwayLayer';
 import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
+import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
+import { defaultPropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
 import {
@@ -34,6 +37,7 @@ export const useMapSearch = () => {
   const highwayService = usePimsHighwayLayer();
   const pimsPropertyLayerService = usePimsPropertyLayer();
   const crownLandService = useCrownLandLayer();
+  const { getMatchingProperties } = usePimsPropertyRepository();
 
   const { setModalContent, setDisplayModal } = useModalContext();
   const keycloak = useKeycloakWrapper();
@@ -217,6 +221,58 @@ export const useMapSearch = () => {
       setDisplayModal,
       logout,
     ],
+  );
+
+  const searchByProject = useCallback(
+    async (filter?: IGeoSearchParams) => {
+      let result: MapFeatureData = emptyFeatureData;
+      try {
+        let findPropertyIdsByProjectTask: Promise<number[]> | undefined = undefined;
+
+        const loadPropertiesTask = loadPimsProperties(filter);
+
+        if (exists(filter?.PROJECT)) {
+          findPropertyIdsByProjectTask = getMatchingProperties.execute({
+            ...defaultPropertyFilterCriteria,
+            projectId: +filter?.PROJECT,
+          });
+        }
+
+        const [properties, projectPropertyIds] = await Promise.all([
+          loadPropertiesTask,
+          findPropertyIdsByProjectTask,
+        ]);
+
+        const validFeatures = properties.features?.filter(
+          feature =>
+            !!feature?.geometry && projectPropertyIds.includes(feature.properties.PROPERTY_ID),
+        );
+
+        result = {
+          pimsLocationFeatures: exists(validFeatures)
+            ? {
+                type: 'FeatureCollection',
+                bbox: bbox({ type: 'FeatureCollection', features: validFeatures }),
+                features: validFeatures,
+              }
+            : emptyPimsLocationFeatureCollection,
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
+          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          fullyAttributedFeatures: emptyPmbcFeatureCollection,
+          highwayPlanFeatures: emptyHighwayFeatures,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+        };
+
+        if ((validFeatures?.length ?? 0) === 0) {
+          toast.info('No search results found');
+        }
+      } catch (error) {
+        toast.error((error as Error).message, { autoClose: 7000 });
+      }
+
+      return result;
+    },
+    [loadPimsProperties, getMatchingProperties],
   );
 
   const searchByHistorical = useCallback(
@@ -508,6 +564,7 @@ export const useMapSearch = () => {
   return {
     searchOneLocation,
     searchByPlanNumber,
+    searchByProject,
     searchMany,
     loadMapProperties,
     searchByHistorical,

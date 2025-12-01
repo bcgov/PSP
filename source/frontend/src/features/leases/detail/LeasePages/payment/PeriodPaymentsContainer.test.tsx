@@ -1,7 +1,10 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 import { Formik } from 'formik';
+import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
+import { createRef } from 'react';
+import { Mock } from 'vitest';
 
 import { Claims } from '@/constants';
 import { LeasePeriodStatusTypes } from '@/constants/leaseStatusTypes';
@@ -10,19 +13,17 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
+import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { defaultApiLease } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, fillInput, renderAsync, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+
 import { defaultFormLeasePeriod, FormLeasePeriod } from './models';
-import { Mock } from 'vitest';
-import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
-import PeriodPaymentsView, { IPeriodPaymentsViewProps } from './table/periods/PaymentPeriodsView';
-import { createRef } from 'react';
 import PeriodPaymentsContainer from './PeriodPaymentsContainer';
 import { defaultTestFormLeasePayment } from './table/payments/PaymentsView.test';
-import { createMemoryHistory } from 'history';
-import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
+import PeriodPaymentsView, { IPeriodPaymentsViewProps } from './table/periods/PaymentPeriodsView';
 
 const defaultRepositoryResponse = {
   execute: vi.fn(),
@@ -360,9 +361,9 @@ describe('PeriodsPaymentsContainer component', () => {
     });
 
     it.each([
-      [ApiGen_CodeTypes_LeaseAccountTypes.RCVBL, true],
-      [ApiGen_CodeTypes_LeaseAccountTypes.PYBLBCTFA, false],
-      [ApiGen_CodeTypes_LeaseAccountTypes.PYBLMOTI, false],
+      [ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL, true],
+      [ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLBCTFA, false],
+      [ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLMOTI, false],
     ])(
       'when adding a new period, the GST field is defaulted based on lease type - %s',
       async (leaseType: string, gstDefault: boolean) => {

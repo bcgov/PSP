@@ -37,8 +37,8 @@ describe('ResearchFileNameGuide', () => {
     expect(screen.getByText(`Help with choosing a name`)).toBeInTheDocument();
   });
 
-  it('should have the Ministry project name text in the component', async () => {
+  it('should have the Project name text in the component', async () => {
     setup({});
-    expect(screen.getByText(`Ministry project name`)).toBeInTheDocument();
+    expect(screen.getByText(`Project name`)).toBeInTheDocument();
   });
 });

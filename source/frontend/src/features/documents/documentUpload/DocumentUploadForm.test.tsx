@@ -9,7 +9,7 @@ import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/Ap
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fireEvent, render, RenderOptions, screen } from '@/utils/test-utils';
 
-import { BatchUploadFormModel, DocumentUploadFormData } from '../ComposedDocument';
+import { BatchUploadFormModel, DocumentUploadFormData } from '../models';
 import DocumentUploadForm from './DocumentUploadForm';
 
 const history = createMemoryHistory();

@@ -1,8 +1,12 @@
 import { File } from 'buffer';
+import queryString from 'query-string';
 import React from 'react';
 
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
+import { ApiGen_Concepts_DocumentSearchFilter } from '@/models/api/generated/ApiGen_Concepts_DocumentSearchFilter';
+import { ApiGen_Concepts_DocumentSearchResult } from '@/models/api/generated/ApiGen_Concepts_DocumentSearchResult';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { ApiGen_Mayan_DocumentDetail } from '@/models/api/generated/ApiGen_Mayan_DocumentDetail';
 import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_Mayan_DocumentMetadata';
@@ -16,7 +20,10 @@ import { ApiGen_Requests_ExternalResponse } from '@/models/api/generated/ApiGen_
 import { ApiGen_Requests_FileDownloadResponse } from '@/models/api/generated/ApiGen_Requests_FileDownloadResponse';
 
 import { ApiGen_Mayan_FilePage } from './../../models/api/generated/ApiGen_Mayan_FilePage';
+import { IPaginateRequest } from './interfaces/IPaginateRequest';
 import useAxiosApi from './useApi';
+
+export type IPaginateDocument = IPaginateRequest<ApiGen_Concepts_DocumentSearchFilter>;
 
 /**
  * PIMS API wrapper to centralize all AJAX requests to the document endpoints.
@@ -28,6 +35,11 @@ export const useApiDocuments = () => {
 
   return React.useMemo(
     () => ({
+      getDocumentsPagedApi: (params: IPaginateDocument | null) =>
+        api.get<ApiGen_Base_Page<ApiGen_Concepts_DocumentSearchResult>>(
+          `/documents/search?${params ? queryString.stringify(params) : ''}`,
+        ),
+
       getDocumentTypesApiCall: () => api.get<ApiGen_Concepts_DocumentType[]>(`/documents/types`),
 
       getDocumentRelationshipTypesApiCall: (

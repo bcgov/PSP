@@ -70,7 +70,8 @@
         public string POIName { get; set; } = null!;
         public PropertyLatitudeLongitude LatitudeLongitude { get; set; } = new PropertyLatitudeLongitude();
         public SurveyParcel SurveyParcel { get; set; } = new SurveyParcel();
-        public List<string> MultiplePIDS { get; set; } = new List<string>();      
+        public List<string> MultiplePIDS { get; set; } = new List<string>();
+        public List<string> DisplayingList { get; set; } = new List<string>();
     }
 
     public class PropertyManagement
@@ -101,12 +102,12 @@
         public string PropertyActivityType { get; set; } = null!;
         public List<string> PropertyActivitySubTypeList { get; set; } = new List<string>();
         public string PropertyActivityStatus { get; set; } = null!;
-        public string PropertyActivityRequestedCommenceDate { get; set; } = null!;
+        public string PropertyActivityCommenceDate { get; set; } = null!;
         public string PropertyActivityCompletionDate { get; set; } = null!;
         public string PropertyActivityDescription { get; set; } = null!;
         public List<string> PropertyActivityMinistryContactList { get; set; } = new List<string>();
-        public string PropertyActivityRequestorContactMngr { get; set; } = null!;
-        public List<string> PropertyActivityInvolvedPartiesExtContactsList { get; set; } = new List<string>();
+        public string PropertyActivityRequestorMngr { get; set; } = null!;
+        public List<string> PropertyActivityExtContactsList { get; set; } = new List<string>();
         public string PropertyActivityServiceProvider { get; set; } = null!;
         public int ManagementPropertyActivityInvoicesStartRow { get; set; } = 0;
         public int ManagementPropertyActivityInvoicesCount { get; set; } = 0;

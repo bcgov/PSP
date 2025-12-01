@@ -62,7 +62,6 @@ const NoticeGenerateContainer: React.FunctionComponent<
     responsibleTeamMember: ApiGen_Concepts_AcquisitionFileTeam | null,
     signingTeamMember: ApiGen_Concepts_AcquisitionFileTeam | null,
   ) => {
-    //onGenerate(selectedProperties);
     closeModal();
     onGenerate(selectedOwners, responsibleTeamMember, signingTeamMember);
   };
@@ -70,9 +69,11 @@ const NoticeGenerateContainer: React.FunctionComponent<
   const handleGenerateClick = useCallback(() => {
     if (isValidId(acquisitionFileId)) {
       featchAcquisitionTeam();
+      openModal();
+    } else {
+      onGenerate([], null, null);
     }
-    openModal();
-  }, [acquisitionFileId, featchAcquisitionTeam, openModal]);
+  }, [acquisitionFileId, featchAcquisitionTeam, onGenerate, openModal]);
 
   const handleCancelClick = () => {
     closeModal();

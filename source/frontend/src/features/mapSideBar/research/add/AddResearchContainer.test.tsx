@@ -17,6 +17,7 @@ import {
   render,
   screen,
   userEvent,
+  waitFor,
 } from '@/utils/test-utils';
 
 import { SideBarContextProvider } from '../../context/sidebarContext';
@@ -100,8 +101,9 @@ describe('AddResearchContainer component', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = await setup();
-    await act(async () => {});
-    expect(asFragment()).toMatchSnapshot();
+    waitFor(async () => {
+      expect(asFragment()).toMatchSnapshot();
+    });
   });
 
   it('displays the currently selected property', async () => {
@@ -112,6 +114,7 @@ describe('AddResearchContainer component', () => {
           {
             location: { lat: 0, lng: 0 },
             fileLocation: null,
+            fileBoundary: null,
             pimsFeature: null,
             parcelFeature: selectedFeature,
             regionFeature: null,
@@ -178,6 +181,7 @@ describe('AddResearchContainer component', () => {
           {
             location: { lng: -120.69195885, lat: 50.25163372 },
             fileLocation: null,
+            fileBoundary: null,
             pimsFeature: null,
             parcelFeature: getMockFullyAttributedParcel('111-111-111'),
             regionFeature: null,
@@ -188,6 +192,7 @@ describe('AddResearchContainer component', () => {
           {
             location: { lng: -120.69195885, lat: 50.25163372 },
             fileLocation: null,
+            fileBoundary: null,
             pimsFeature: null,
             parcelFeature: getMockFullyAttributedParcel('222-222-222'),
             regionFeature: null,
@@ -198,6 +203,7 @@ describe('AddResearchContainer component', () => {
           {
             location: { lng: -120.69195885, lat: 50.25163372 },
             fileLocation: null,
+            fileBoundary: null,
             pimsFeature: null,
             parcelFeature: getMockFullyAttributedParcel('333-333-333'),
             regionFeature: null,

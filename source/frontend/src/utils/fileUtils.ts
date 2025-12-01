@@ -1,7 +1,10 @@
 import moment from 'moment';
 
 import { ApiGen_Base_BaseAudit } from '@/models/api/generated/ApiGen_Base_BaseAudit';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
+
+import { exists } from './utils';
 
 export function sortByDisplayOrder(
   a: ApiGen_Concepts_FileChecklistItem,
@@ -40,3 +43,6 @@ export function isDefaultState(checklistItem: ApiGen_Concepts_FileChecklistItem)
     )
   );
 }
+
+export const isAcquisitionFile = (file: object): file is ApiGen_Concepts_AcquisitionFile =>
+  exists(file) && Object.hasOwn(file, 'acquisitionTypeCode');

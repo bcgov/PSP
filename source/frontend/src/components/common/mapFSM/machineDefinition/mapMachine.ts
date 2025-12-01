@@ -546,6 +546,13 @@ const quickInfoStates = {
   initial: 'closed',
   states: {
     closed: {
+      entry: [
+        assign({
+          mapLocationSelected: () => null,
+          mapFeatureSelected: () => null,
+          mapLocationFeatureDataset: () => null,
+        }),
+      ],
       on: {
         OPEN_QUICK_INFO: {
           target: 'opened',

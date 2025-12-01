@@ -73,6 +73,7 @@ describe('LeasePropertySelector component', () => {
       FormLeaseProperty.fromApi({
         id: 1,
         location: { coordinate: { y: 44, x: -77 } },
+        boundary: null,
         fileId: 1,
         file: null,
         isActive: null,
@@ -92,6 +93,7 @@ describe('LeasePropertySelector component', () => {
       FormLeaseProperty.fromApi({
         id: 2,
         location: { coordinate: { y: 44, x: -77 } },
+        boundary: null,
         fileId: 1,
         file: null,
         isActive: null,

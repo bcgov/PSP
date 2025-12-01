@@ -76,6 +76,7 @@ export class PropertyForm {
   public latitude?: number;
   public longitude?: number;
   public fileLocation?: LatLngLiteral;
+  public fileBoundary?: Polygon | MultiPolygon;
   public polygon?: Polygon | MultiPolygon;
   public planNumber?: string;
   public name?: string;
@@ -112,6 +113,7 @@ export class PropertyForm {
       latitude: model?.location?.lat,
       longitude: model?.location?.lng,
       fileLocation: model?.fileLocation ?? model?.location ?? undefined,
+      fileBoundary: model?.fileBoundary ?? undefined,
       planNumber:
         pimsFeature?.properties?.SURVEY_PLAN_NUMBER ?? parcelFeature?.properties?.PLAN_NUMBER ?? '',
       polygon:
@@ -178,6 +180,7 @@ export class PropertyForm {
       },
       location: { lat: this.latitude, lng: this.longitude },
       fileLocation: this.fileLocation ?? { lat: this.latitude, lng: this.longitude },
+      fileBoundary: this.fileBoundary ?? null,
       regionFeature: {
         properties: {
           REGION_NAME: this.regionName,
@@ -220,6 +223,9 @@ export class PropertyForm {
     newForm.latitude = model.property?.latitude ?? undefined;
     newForm.longitude = model.property?.longitude ?? undefined;
     newForm.fileLocation = getLatLng(model.location) ?? undefined;
+    newForm.fileBoundary = exists(model.boundary)
+      ? (model.boundary as Polygon | MultiPolygon)
+      : undefined;
     newForm.polygon = exists(model.property?.boundary)
       ? (model.property?.boundary as Polygon | MultiPolygon)
       : undefined;
@@ -279,6 +285,7 @@ export class PropertyForm {
       propertyId: this.apiId ?? 0,
       propertyName: this.name ?? null,
       location: latLngToApiLocation(this.fileLocation?.lat, this.fileLocation?.lng),
+      boundary: this.fileBoundary ? this.fileBoundary : null,
       displayOrder: this.displayOrder ?? null,
       isActive: this.isActive !== 'false',
       rowVersion: this.rowVersion ?? null,
@@ -327,6 +334,7 @@ export class PropertyForm {
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
       historicalFileNumbers: null,
+      tenureCleanups: null,
       surplusDeclarationDate: EpochIsoDateTime,
     };
   }

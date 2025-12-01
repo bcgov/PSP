@@ -28,6 +28,11 @@ namespace Pims.Api.Models.Concepts.File
         public GeometryModel Location { get; set; }
 
         /// <summary>
+        /// get/set - The boundary of the property in the context of this file.
+        /// </summary>
+        public NetTopologySuite.Geometries.Geometry Boundary { get; set; }
+
+        /// <summary>
         /// get/set - The order to display the relationship.
         /// </summary>
         public int? DisplayOrder { get; set; }

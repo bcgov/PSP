@@ -11,7 +11,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchSectionSubfileInstructions = By.XPath("//div[contains(text(),'Properties to include in this sub-file')]/parent::div/parent::h2/following-sibling::div/div[1]");
 
         //Selected Properties Elements
-        private readonly By searchPropertiesSelectedPropertiesSubtitle = By.XPath("//div[contains(text(),'Selected Properties')]");
         private readonly By searchPropertiesSelectedIdentifierHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Identifier')]");
         private readonly By searchPropertiesSelectedDescriptiveNameHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Provide a descriptive name for this land')]");
         private readonly By searchPropertiesSelectedToolTipIcon = By.CssSelector("span[data-testid='tooltip-icon-property-selector-tooltip']");
@@ -22,14 +21,13 @@ namespace PIMS.Tests.Automation.PageObjects
         //File - Edit Properties button
         private readonly By fileEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
 
-        //File - Properties Elements
-        private readonly By acquisitionProperty1stPropLink = By.CssSelector("div[data-testid='menu-item-property-0']");
+        //File - View list of attached properties Elements
+        private readonly By activePropsCount = By.CssSelector("div[data-testid='Active-section'] div");
+        private readonly By inactivePropsCount = By.CssSelector("div[data-testid='Inactive-section'] div");
 
         //File Confirmation Modal Elements
         private readonly By propertiesFileConfirmationModal = By.CssSelector("div[class='modal-content']");
 
-        //Toast Element
-        //private readonly By duplicatePropToast = By.CssSelector("div[id='duplicate-property'] div[class='Toastify__toast-body']");
 
         private SharedModals sharedModals;
 
@@ -75,12 +73,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             webDriver.FindElement(fileEditPropertiesBttn).Click();
-        }
-
-        public void SelectFirstPropertyOptionFromFile()
-        {
-            Wait();
-            webDriver.FindElement(acquisitionProperty1stPropLink).Click();
         }
 
         public void SelectNthPropertyOptionFromFile(int elementIdx)
@@ -138,6 +130,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         }
 
+        public void DisableEnableProperty(int index, string status)
+        {
+            Wait();
+            var propertystatusSelectElement = By.CssSelector("input-properties."+ index +".isActive");
+            ChooseSpecificSelectOption(propertystatusSelectElement, status);
+        }
+
         public void SaveFileProperties()
         {
             Wait();
@@ -153,16 +152,16 @@ namespace PIMS.Tests.Automation.PageObjects
             while (webDriver.FindElements(propertiesFileConfirmationModal).Count() > 0)
             {
 
-                if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the disposition file that are not in the MOTT Inventory"))
+                if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the disposition file that are not in the MoTT Inventory"))
                 {
                     Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                    Assert.Equal("You have added one or more properties to the disposition file that are not in the MOTT Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
+                    Assert.Equal("You have added one or more properties to the disposition file that are not in the MoTT Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
                     sharedModals.SecondaryModalClickOKBttn();
                 }
-                else if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the management file that are not in the MoTT Inventory"))
+                else if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the management file that are not in the MOTT Inventory"))
                 {
                     Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                    Assert.Equal("You have added one or more properties to the management file that are not in the MoTT Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?", sharedModals.SecondaryModalContent());
+                    Assert.Equal("You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?", sharedModals.SecondaryModalContent());
                     sharedModals.SecondaryModalClickOKBttn();
                 }
                 else if (sharedModals.SecondaryModalContent().Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details."))
@@ -178,6 +177,30 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
                     Wait();
             }
+        }
+
+        public int ActivePropertiesCount()
+        {
+            Wait();
+            return webDriver.FindElements(activePropsCount).Count;
+        }
+
+        public int InactivePropertiesCount()
+        {
+            Wait();
+            return webDriver.FindElements(inactivePropsCount).Count;
+        }
+
+        public void VerifyErrorCannotDeletePropertyInActivity()
+        {
+            WaitUntilVisible(propertiesFileConfirmationModal);
+            Assert.Equal("This property cannot be deleted as it is part of an activity in this file\n", sharedModals.ModalContent());
+        }
+
+        public void VerifyInsertedPropsOrder(List<string> propertiesList)
+        {
+            for (int i = 0; i < propertiesList.Count; i++)
+                AssertTrueContentEquals(By.CssSelector("div[data-testid='menu-item-property-"+i+"']"), propertiesList[i]);
         }
     }
 }

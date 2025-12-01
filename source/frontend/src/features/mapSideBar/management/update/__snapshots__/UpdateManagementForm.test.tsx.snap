@@ -850,7 +850,7 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
             data-testid="contact-input"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"
@@ -1019,7 +1019,7 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
             data-testid="contact-input"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"

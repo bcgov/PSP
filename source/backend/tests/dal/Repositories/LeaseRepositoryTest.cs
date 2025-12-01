@@ -32,8 +32,6 @@ namespace Pims.Dal.Test.Repositories
             {
                 new object[] { new LeaseFilter() { TenantName = "tenant" }, 1 },
                 new object[] { new LeaseFilter() { TenantName = "fake" }, 0 },
-                new object[] { new LeaseFilter() { LFileNo = "123" }, 1 },
-                new object[] { new LeaseFilter() { LFileNo = "fake" }, 0 },
                 new object[] { new LeaseFilter() { Pid = "456" }, 1 },
                 new object[] { new LeaseFilter() { Pin = "789" }, 1 },
                 new object[] { new LeaseFilter() { Historical = "111" }, 1 },
@@ -349,6 +347,95 @@ namespace Pims.Dal.Test.Repositories
             Assert.NotNull(result);
             Assert.IsAssignableFrom<Paged<Entity.PimsLease>>(result);
             Assert.Equal(1, result.Items.Count);
+        }
+
+        #endregion
+
+        #region LFileNo Normalization Tests
+
+        [Fact]
+        public void Get_Leases_Filter_LFileNo_NoPrefixNoDash_ShouldMatch()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var elease = EntityHelper.CreateLease(456, 789, lFileNo: "L-000-123");
+            var context = helper.CreatePimsContext(user, true);
+            context.AddAndSaveChanges(elease);
+            var service = helper.CreateRepository<LeaseRepository>(user);
+
+            // Act
+            var filter = new LeaseFilter() { LFileNo = "000123" }; // no prefix or dash
+            var result = service.GetPage(filter, new HashSet<short>());
+
+            // Assert
+            result.Items.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void Get_Leases_Filter_LFileNo_WithPrefixAndDash_ShouldMatch()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var elease = EntityHelper.CreateLease(456, 789, lFileNo: "L-000-123");
+            var context = helper.CreatePimsContext(user, true);
+            context.AddAndSaveChanges(elease);
+            var service = helper.CreateRepository<LeaseRepository>(user);
+
+            var filter = new LeaseFilter() { LFileNo = "L-000-123" };
+            var result = service.GetPage(filter, new HashSet<short>());
+
+            result.Items.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void Get_Leases_Filter_LFileNo_Partial_ShouldMatch()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var elease = EntityHelper.CreateLease(456, 789, lFileNo: "L-000-123");
+            var context = helper.CreatePimsContext(user, true);
+            context.AddAndSaveChanges(elease);
+            var service = helper.CreateRepository<LeaseRepository>(user);
+
+            var filter = new LeaseFilter() { LFileNo = "123" }; // partial
+            var result = service.GetPage(filter, new HashSet<short>());
+
+            result.Items.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void Get_Leases_Filter_LFileNo_WithSpaces_ShouldMatch()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var elease = EntityHelper.CreateLease(456, 789, lFileNo: "L-000-123");
+            var context = helper.CreatePimsContext(user, true);
+            context.AddAndSaveChanges(elease);
+            var service = helper.CreateRepository<LeaseRepository>(user);
+
+            var filter = new LeaseFilter() { LFileNo = "  000 123  " }; // spaces
+            var result = service.GetPage(filter, new HashSet<short>());
+
+            result.Items.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void Get_Leases_Filter_LFileNo_InvalidFormat_ShouldThrow()
+        {
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var elease = EntityHelper.CreateLease(456, 789, lFileNo: "L-000-123");
+            var context = helper.CreatePimsContext(user, true);
+            context.AddAndSaveChanges(elease);
+            var service = helper.CreateRepository<LeaseRepository>(user);
+
+            var filter = new LeaseFilter() { LFileNo = "ABC123" }; // invalid
+
+            Action act = () => service.GetPage(filter, new HashSet<short>());
+
+            act.Should().Throw<ArgumentException>()
+               .WithMessage("Invalid L-File number*");
         }
 
         #endregion
@@ -876,103 +963,6 @@ namespace Pims.Dal.Test.Repositories
         }
         #endregion
 
-        #region Update Lease Property Improvements
-        [Fact]
-        public void Update_Lease_Improvements_Add()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1);
-            helper.CreatePimsContext(user, true).AddRange(lease);
-            var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
-            helper.SaveChanges();
-
-            // Act
-            var addImprovement = new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId };
-            lease.PimsPropertyImprovements.Add(addImprovement);
-            var improvements = repository.Update(1, lease.PimsPropertyImprovements);
-
-            // Assert
-            improvements.Should().HaveCount(1);
-            improvements.Should().Contain(addImprovement);
-        }
-
-        [Fact]
-        public void Update_Lease_Improvements_Update()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1);
-            lease.PimsPropertyImprovements.Add(new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId, PropertyImprovementId = 1, PropertyImprovementTypeCode = "OTHER" });
-            var context = helper.CreatePimsContext(user, true);
-            context.AddRange(lease);
-            var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
-            helper.SaveChanges();
-
-            // Act
-            var improvementToUpdate = lease.PimsPropertyImprovements.FirstOrDefault();
-            improvementToUpdate.Address = "test update";
-            var updatedImprovements = repository.Update(1, lease.PimsPropertyImprovements);
-
-            // Assert
-            updatedImprovements.Should().HaveCount(1);
-            updatedImprovements.Should().Contain(improvementToUpdate);
-        }
-
-        [Fact]
-        public void Update_Lease_Improvements_Remove()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1);
-            lease.PimsPropertyImprovements.Add(new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId, PropertyImprovementId = 1, PropertyImprovementTypeCode = "OTHER" });
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(lease);
-
-            var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
-
-            // Act
-            var deleteImprovement = lease.PimsPropertyImprovements.FirstOrDefault();
-            lease.PimsPropertyImprovements.Remove(deleteImprovement);
-            context.ChangeTracker.Clear();
-            var updatedImprovements = repository.Update(1, lease.PimsPropertyImprovements);
-
-            // Assert
-            updatedImprovements.Should().BeEmpty();
-        }
-        [Fact]
-        public void Update_Lease_Improvements_AddRemove()
-        {
-            // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit, Permissions.LeaseView);
-
-            var lease = EntityHelper.CreateLease(1);
-            var context = helper.CreatePimsContext(user, true);
-            context.AddRange(lease);
-            var repository = helper.CreateRepository<PropertyImprovementRepository>(user);
-            helper.SaveChanges();
-
-            // Act
-            var deleteProperty = lease.PimsPropertyImprovements.FirstOrDefault();
-            lease.PimsPropertyImprovements.Remove(deleteProperty);
-
-            var addPropertyImprovement = new Dal.Entities.PimsPropertyImprovement() { LeaseId = lease.LeaseId };
-            lease.PimsPropertyImprovements.Add(addPropertyImprovement);
-            var updatedImprovements = repository.Update(1, lease.PimsPropertyImprovements);
-
-            // Assert
-            updatedImprovements.Should().HaveCount(1);
-            updatedImprovements.Should().NotContain(deleteProperty);
-            updatedImprovements.Should().Contain(addPropertyImprovement);
-        }
-        #endregion
         #endregion
     }
 }

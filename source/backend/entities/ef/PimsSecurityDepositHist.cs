@@ -35,16 +35,15 @@ public partial class PimsSecurityDepositHist
     [StringLength(200)]
     public string OtherDepositTypeDesc { get; set; }
 
-    [Required]
     [Column("DESCRIPTION")]
     [StringLength(2000)]
     public string Description { get; set; }
 
     [Column("AMOUNT_PAID", TypeName = "money")]
-    public decimal AmountPaid { get; set; }
+    public decimal? AmountPaid { get; set; }
 
     [Column("DEPOSIT_DATE")]
-    public DateOnly DepositDate { get; set; }
+    public DateOnly? DepositDate { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

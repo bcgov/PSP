@@ -18,7 +18,7 @@ Scenario: 01._Project_Details
 
 Scenario: 02._Project_Documents
 	Given I create a new Project from row number 6
-	When I create Digital Documents for a "Project" row number 8
+	When I create Digital Documents for a "Project" from row number 8
 	And  I edit a Digital Document for a "Project" from row number 9
 	Then A new Project is created successfully
 

@@ -370,6 +370,8 @@ describe('MapFilterBar', () => {
       township: '',
       range: '',
       district: '',
+      project: null,
+      tenureCleanup: ''
     });
   });
 
@@ -406,6 +408,8 @@ describe('MapFilterBar', () => {
       township: '',
       range: '',
       district: '',
+      project: null,
+      tenureCleanup: ''
     });
   });
 
@@ -442,6 +446,8 @@ describe('MapFilterBar', () => {
       township: '',
       range: '',
       district: '',
+      project: null,
+      tenureCleanup: ''
     });
   });
 
@@ -497,6 +503,8 @@ describe('MapFilterBar', () => {
       township: '',
       range: '',
       district: '',
+      project: null,
+      tenureCleanup: ''
     });
   });
 
@@ -545,6 +553,8 @@ describe('MapFilterBar', () => {
       township: '2',
       range: '3',
       district: '',
+      project: null,
+      tenureCleanup: ''
     });
   });
 
@@ -612,6 +622,8 @@ describe('MapFilterBar', () => {
       township: '',
       range: '',
       district: '',
+      project: null,
+      tenureCleanup:''
     });
   });
 

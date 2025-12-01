@@ -3,7 +3,13 @@ import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
 
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
+import {
+  IShapeUploadModalProps,
+  ShapeUploadModal,
+} from '@/features/properties/shapeUpload/ShapeUploadModal';
 import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
+import { getMockPolygon } from '@/mocks/geometries.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -16,6 +22,27 @@ const history = createMemoryHistory();
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
+
+vi.mock('@/features/properties/shapeUpload/ShapeUploadModal');
+vi.mocked(ShapeUploadModal).mockImplementation((props: IShapeUploadModalProps) => {
+  return props.display ? (
+    <div data-testid="shape-upload-modal">
+      <span data-testid="prop-id">{props.propertyIdentifier}</span>
+      <button
+        data-testid="modal-close"
+        onClick={() => {
+          const fakeResult = new UploadResponseModel('fakefile.shp');
+          fakeResult.isSuccess = true;
+          fakeResult.boundary = getMockPolygon();
+
+          props.onClose && props.onClose(fakeResult);
+        }}
+      >
+        close
+      </button>
+    </div>
+  ) : null;
+});
 
 const onRemove = vi.fn();
 
@@ -42,6 +69,8 @@ describe('SelectedPropertyRow component', () => {
             onRemove={onRemove}
             showDisable={renderOptions.props?.showDisable ?? false}
             nameSpace="properties.0"
+            canUploadShapefile={renderOptions.props?.canUploadShapefile ?? false}
+            onUploadShapefile={renderOptions.props?.onUploadShapefile ?? vi.fn()}
           />
         )}
       </Formik>,
@@ -75,13 +104,6 @@ describe('SelectedPropertyRow component', () => {
     const moveButton = screen.getByTitle('move-pin-location');
     await act(async () => userEvent.click(moveButton));
     expect(mapMachineBaseMock.startReposition).toHaveBeenCalled();
-  });
-
-  it('calls map machine when Zoom button is clicked', async () => {
-    await setup({ props: { property: getMockSelectedFeatureDataset() } });
-    const zoomButton = screen.getByTestId('zoom-to-property-0');
-    await act(async () => userEvent.click(zoomButton));
-    expect(mapMachineBaseMock.requestFlyToBounds).toHaveBeenCalled();
   });
 
   it('displays pid', async () => {
@@ -177,5 +199,55 @@ describe('SelectedPropertyRow component', () => {
     await setup({ props: { property: mockFeatureSet, showDisable: true } });
 
     expect(screen.getByDisplayValue('Active')).toBeInTheDocument();
+  });
+
+  // New tests for shapefile upload functionality
+  it('renders upload button when canUploadShapefile is true', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
+    await setup({ props: { property: mockFeatureSet, canUploadShapefile: true } });
+    expect(screen.getByTestId('upload-shapefile-0')).toBeInTheDocument();
+  });
+
+  it('does not render upload button when canUploadShapefile is false or undefined', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
+    await setup({ props: { property: mockFeatureSet, canUploadShapefile: false } });
+    expect(screen.queryByTestId('upload-shapefile-0')).toBeNull();
+  });
+
+  it('opens ShapeUploadModal when upload button is clicked and passes property identifier, then calls onUploadShapefile on close', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
+    mockFeatureSet.parcelFeature = {} as any;
+    mockFeatureSet.pimsFeature = {
+      ...mockFeatureSet.pimsFeature,
+      properties: {
+        ...mockFeatureSet.pimsFeature?.properties,
+        PID_PADDED: '222-222-222',
+      },
+    };
+
+    const onUploadShapefile = vi.fn();
+    await setup({
+      props: {
+        property: mockFeatureSet,
+        canUploadShapefile: true,
+        onUploadShapefile,
+      },
+    });
+
+    const uploadBtn = screen.getByTestId('upload-shapefile-0');
+    await act(async () => userEvent.click(uploadBtn));
+
+    // modal (mock) should be visible and show propertyIdentifier
+    expect(screen.getByTestId('shape-upload-modal')).toBeVisible();
+    expect(screen.getByTestId('prop-id')).toHaveTextContent('222-222-222');
+
+    const closeBtn = screen.getByTestId('modal-close');
+    await act(async () => userEvent.click(closeBtn));
+    expect(onUploadShapefile).toHaveBeenCalledWith(
+      expect.objectContaining<Partial<UploadResponseModel>>({
+        fileName: 'fakefile.shp',
+        isSuccess: true,
+      }),
+    );
   });
 });

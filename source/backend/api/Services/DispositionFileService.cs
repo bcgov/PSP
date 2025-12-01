@@ -72,7 +72,6 @@ namespace Pims.Api.Services
 
             dispositionFile.DispositionStatusTypeCode ??= DispositionStatusTypes.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= DispositionFileStatusTypes.ACTIVE.ToString();
-            ValidateStaff(dispositionFile);
 
             MatchProperties(dispositionFile, userOverrides);
             ValidatePropertyRegions(dispositionFile);
@@ -601,15 +600,6 @@ namespace Pims.Api.Services
             return 0;
         }
 
-        private static void ValidateStaff(PimsDispositionFile dispositionFile)
-        {
-            bool duplicate = dispositionFile.PimsDispositionFileTeams.GroupBy(p => p.DspFlTeamProfileTypeCode).Any(g => g.Count() > 1);
-            if (duplicate)
-            {
-                throw new BadRequestException("Invalid Disposition team, each team member and role combination can only be added once.");
-            }
-        }
-
         private static void ValidateDispositionOfferStatus(PimsDispositionFile dispositionFile, PimsDispositionOffer newOffer)
         {
             bool offerAlreadyAccepted = dispositionFile.PimsDispositionOffers.Any(x => x.DispositionOfferStatusTypeCode == EnumDispositionOfferStatusTypeCode.ACCCEPTED.ToString() && x.DispositionOfferId != newOffer.DispositionOfferId);
@@ -642,7 +632,6 @@ namespace Pims.Api.Services
                 }
             }
 
-            ValidateStaff(incomingDispositionFile);
             incomingDispositionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
 
             // From here on - these checks result in warnings that require user confirmation

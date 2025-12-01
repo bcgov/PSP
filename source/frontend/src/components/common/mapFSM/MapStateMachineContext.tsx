@@ -250,6 +250,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           geoFilter.forceExactMatch = false;
           const response = mapSearch.searchBySurveyParcel(geoFilter);
           return response;
+        } else if (geoFilter?.PROJECT) {
+          return mapSearch.searchByProject(geoFilter);
         } else {
           return mapSearch.loadMapProperties();
         }
@@ -723,6 +725,7 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
     TOWNSHIP: filter.township,
     RANGE: filter.range,
     DISTRICT: filter.district,
+    PROJECT: filter.project?.id,
     latitude: filter.latitude,
     longitude: filter.longitude,
     forceExactMatch: pidValue?.length === 9,

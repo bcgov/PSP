@@ -898,7 +898,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                         >
                           <button
                             class="c17 Button c18 btn btn-link"
-                            data-testid="remove-button"
+                            data-testid="email-remove-button-0"
                             type="button"
                           >
                             <div
@@ -937,6 +937,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                     </div>
                     <button
                       class="c17 Button btn btn-link"
+                      data-testid="add-email-button"
                       type="button"
                     >
                       <div
@@ -1040,7 +1041,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                       >
                         <button
                           class="c17 Button c18 btn btn-link"
-                          data-testid="remove-button"
+                          data-testid="phone-delete-button-0"
                           type="button"
                         >
                           <div
@@ -1078,6 +1079,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                     </div>
                     <button
                       class="c17 Button btn btn-link"
+                      data-testid="add-phone-button"
                       type="button"
                     >
                       <div

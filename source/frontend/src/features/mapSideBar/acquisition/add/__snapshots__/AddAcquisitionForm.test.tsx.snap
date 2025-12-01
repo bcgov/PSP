@@ -2020,7 +2020,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
             class="c4 text-left col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"
@@ -2094,7 +2094,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
             class="c4 text-left col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"
@@ -4085,7 +4085,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
             class="c4 text-left col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"
@@ -4159,7 +4159,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
             class="c4 text-left col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"

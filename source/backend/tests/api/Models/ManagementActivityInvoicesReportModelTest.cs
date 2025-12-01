@@ -26,6 +26,7 @@ namespace Pims.Api.Test
                 GstAmt = 5,
                 PstAmt = 7,
                 TotalAmt = 112,
+                AppCreateUserid = "creator-2",
                 ManagementActivity = new PimsManagementActivity
                 {
                     CompletionDt = new DateOnly(2022, 12, 31),
@@ -40,7 +41,7 @@ namespace Pims.Api.Test
                         LegacyFileNum = "L001",
                         AcquisitionFundingTypeCodeNavigation = new PimsAcquisitionFundingType { Description = "FundDesc" },
                         ManagementFilePurposeTypeCodeNavigation = new PimsManagementFilePurposeType { Description = "PurposeDesc" },
-                        AppCreateUserid = "creator",
+                        AppCreateUserid = "creator-1",
                         ManagementFileStatusTypeCodeNavigation = new PimsManagementFileStatusType { Description = "Active" },
                         PimsManagementFileContacts = new List<PimsManagementFileContact>
                         {
@@ -60,9 +61,58 @@ namespace Pims.Api.Test
             model.LegacyFileNum.Should().Be("L001");
             model.Funding.Should().Be("FundDesc");
             model.Purpose.Should().Be("PurposeDesc");
-            model.CreatedBy.Should().Be("creator");
+            model.CreatedBy.Should().Be("creator-2");
             model.PropertyContacts.Should().Be("John Doe|OrgA");
             model.ManagementFileStatus.Should().Be("Active");
+            model.ActivityType.Should().Be("TypeA");
+            model.ActivitySubTypes.Should().Be("Sub1");
+            model.CompletionDate.Should().Be("2022-12-31");
+            model.ServicesProvider.Should().Be("OrgB");
+            model.InvoicePreTaxTotal.Should().Be(100);
+            model.InvoiceGstAmount.Should().Be(5);
+            model.InvoicePstAmount.Should().Be(7);
+            model.InvoiceTotal.Should().Be(112);
+            model.ActivityPreTaxTotal.Should().Be(100);
+            model.ActivityGstAmount.Should().Be(5);
+            model.ActivityPstAmount.Should().Be(7);
+            model.ActivityTotal.Should().Be(112);
+        }
+
+        [Fact]
+        public void Constructor_BasicProperties_Without_Management_File_MapCorrectly()
+        {
+            var invoice = new PimsManagementActivityInvoice
+            {
+                InvoiceNum = "INV-001",
+                PretaxAmt = 100,
+                GstAmt = 5,
+                PstAmt = 7,
+                TotalAmt = 112,
+                AppCreateUserid = "creator-2",
+                ManagementActivity = new PimsManagementActivity
+                {
+                    CompletionDt = new DateOnly(2022, 12, 31),
+                    MgmtActivityTypeCodeNavigation = new PimsMgmtActivityType { Description = "TypeA" },
+                    PimsMgmtActivityActivitySubtyps = new List<PimsMgmtActivityActivitySubtyp>
+                    {
+                        new PimsMgmtActivityActivitySubtyp { MgmtActivitySubtypeCodeNavigation = new PimsMgmtActivitySubtype { Description = "Sub1" } },
+                    },
+                    ManagementFile = null,
+                    ServiceProviderOrg = new PimsOrganization { Name = "OrgB" },
+                }
+            };
+            invoice.ManagementActivity.PimsManagementActivityInvoices = new List<PimsManagementActivityInvoice> { invoice };
+
+            var model = new ManagementActivityInvoicesReportModel(invoice);
+
+            model.InvoiceNumber.Should().Be("INV-001");
+            model.ManagementFileName.Should().Be("");
+            model.LegacyFileNum.Should().Be("");
+            model.Funding.Should().Be("");
+            model.Purpose.Should().Be("");
+            model.CreatedBy.Should().Be("creator-2");
+            model.PropertyContacts.Should().Be("");
+            model.ManagementFileStatus.Should().Be("");
             model.ActivityType.Should().Be("TypeA");
             model.ActivitySubTypes.Should().Be("Sub1");
             model.CompletionDate.Should().Be("2022-12-31");

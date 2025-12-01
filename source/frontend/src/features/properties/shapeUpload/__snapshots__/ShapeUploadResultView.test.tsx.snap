@@ -1,0 +1,124 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ShapeUploadResultView > matches snapshot for failure 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c2.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c1 {
+  font-weight: bold;
+}
+
+.c0 {
+  color: #CE3E39;
+}
+
+<div
+    class="c0 row"
+  >
+    <div
+      class="pr-0 text-left col-12"
+    >
+      <label
+        class="c1"
+      >
+        Shapefile upload failed:
+      </label>
+    </div>
+    <div
+      class="c2 text-left col"
+    >
+      example.zip
+      <svg
+        class="ml-2"
+        color="red"
+        data-testid="file-error-icon"
+        fill="currentColor"
+        height="1.6rem"
+        stroke="currentColor"
+        stroke-width="0"
+        style="color: red;"
+        viewBox="0 0 512 512"
+        width="1.6rem"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8zm121.6 313.1c4.7 4.7 4.7 12.3 0 17L338 377.6c-4.7 4.7-12.3 4.7-17 0L256 312l-65.1 65.6c-4.7 4.7-12.3 4.7-17 0L134.4 338c-4.7-4.7-4.7-12.3 0-17l65.6-65-65.6-65.1c-4.7-4.7-4.7-12.3 0-17l39.6-39.6c4.7-4.7 12.3-4.7 17 0l65 65.7 65.1-65.6c4.7-4.7 12.3-4.7 17 0l39.6 39.6c4.7 4.7 4.7 12.3 0 17L312 256l65.6 65.1z"
+        />
+      </svg>
+      <div
+        class="pt-2"
+      >
+        Upload failed
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
+
+exports[`ShapeUploadResultView > matches snapshot for success 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c2.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c1 {
+  font-weight: bold;
+}
+
+.c0 {
+  color: #42814A;
+}
+
+<div
+    class="c0 row"
+  >
+    <div
+      class="pr-0 text-left col-12"
+    >
+      <label
+        class="c1"
+      >
+        Shapefile uploaded successfully:
+      </label>
+    </div>
+    <div
+      class="c2 text-left col"
+    >
+      example.zip
+      <svg
+        class="ml-2"
+        color="green"
+        data-testid="file-check-icon"
+        fill="currentColor"
+        height="1.6rem"
+        stroke="currentColor"
+        stroke-width="0"
+        style="color: green;"
+        viewBox="0 0 512 512"
+        width="1.6rem"
+        xmlns="http://www.w3.org/2000/svg"
+      >
+        <path
+          d="M173.898 439.404l-166.4-166.4c-9.997-9.997-9.997-26.206 0-36.204l36.203-36.204c9.997-9.998 26.207-9.998 36.204 0L192 312.69 432.095 72.596c9.997-9.997 26.207-9.997 36.204 0l36.203 36.204c9.997 9.997 9.997 26.206 0 36.204l-294.4 294.401c-9.998 9.997-26.207 9.997-36.204-.001z"
+        />
+      </svg>
+    </div>
+  </div>
+</DocumentFragment>
+`;

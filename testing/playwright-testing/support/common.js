@@ -86,7 +86,7 @@ async function clickAndWaitFor(
   const {
     maxRetries = 3,
     clickDelay = 2000, // ms delay before retry click
-    timeout = 5000, // time to wait for expected element before retry
+    timeout = 10000, // time to wait for expected element before retry
   } = options;
 
   let lastError;
@@ -97,15 +97,11 @@ async function clickAndWaitFor(
 
       // Wait for the target element to appear
       await page.waitForSelector(waitSelector, { timeout });
-      console.log("Success -" + clickSelector);
       return;
     } catch (err) {
       lastError = err;
 
       if (attempt < maxRetries) {
-        console.log(
-          `Attempt ${attempt} failed. Retrying click on "${clickSelector}"...`
-        );
         await page.waitForTimeout(clickDelay);
       }
     }
@@ -162,7 +158,7 @@ async function listEquals(page, baseXpath, values) {
 module.exports = {
   getUserCredential,
   clickSaveButton,
-  clickCancelButton: cancelAction,
+  cancelAction,
   getViewFieldListContent,
   transformDateFormat,
   transformCurrencyFormat,

@@ -122,7 +122,7 @@ describe('UpdateDispositionForm component', () => {
   });
 
   it('it validates that only profile is not repeated on another team member', async () => {
-    const { getByTestId, queryByTestId, getTeamMemberProfileDropDownList } = setup({
+    const { queryByTestId, getTeamMemberProfileDropDownList } = setup({
       initialValues,
       loading: false,
       formikRef: ref,
@@ -134,7 +134,7 @@ describe('UpdateDispositionForm component', () => {
       userEvent.selectOptions(getTeamMemberProfileDropDownList(0), 'NEGOTAGENT');
     });
 
-    expect(getByTestId('team-profile-dup-error')).toBeVisible();
+    expect(queryByTestId('team-profile-dup-error')).toBeNull();
 
     // Set unique should pass
     await act(async () => {

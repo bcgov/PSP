@@ -23,21 +23,21 @@ public partial class PimsPropertyImprovementHist
     [Column("PROPERTY_IMPROVEMENT_ID")]
     public long PropertyImprovementId { get; set; }
 
-    [Column("LEASE_ID")]
-    public long LeaseId { get; set; }
+    [Column("PROPERTY_ID")]
+    public long PropertyId { get; set; }
 
     [Required]
     [Column("PROPERTY_IMPROVEMENT_TYPE_CODE")]
     [StringLength(20)]
     public string PropertyImprovementTypeCode { get; set; }
 
-    [Column("IMPROVEMENT_DESCRIPTION")]
-    [StringLength(2000)]
-    public string ImprovementDescription { get; set; }
-
     [Column("STRUCTURE_SIZE")]
     [StringLength(2000)]
     public string StructureSize { get; set; }
+
+    [Column("IMPROVEMENT_DESCRIPTION")]
+    [StringLength(2000)]
+    public string ImprovementDescription { get; set; }
 
     [Column("ADDRESS")]
     [StringLength(2000)]

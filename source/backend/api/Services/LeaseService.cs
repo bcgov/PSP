@@ -165,7 +165,7 @@ namespace Pims.Api.Services
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
 
-            return _propertyImprovementRepository.GetByLeaseId(leaseId);
+            return _propertyImprovementRepository.GetByPropertyId(leaseId);
         }
 
         public IEnumerable<PimsPropertyImprovement> UpdateImprovementsByLeaseId(long leaseId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements)
@@ -185,7 +185,7 @@ namespace Pims.Api.Services
             _propertyImprovementRepository.Update(leaseId, pimsPropertyImprovements);
             _propertyImprovementRepository.CommitTransaction();
 
-            return _propertyImprovementRepository.GetByLeaseId(leaseId);
+            return _propertyImprovementRepository.GetByPropertyId(leaseId);
         }
 
         public IEnumerable<PimsLeaseStakeholder> GetStakeholdersByLeaseId(long leaseId)

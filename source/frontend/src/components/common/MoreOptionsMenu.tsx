@@ -25,6 +25,7 @@ export interface IMoreOptionsMenuProps {
   variant?: 'light' | 'dark';
   /** List of menu options */
   options: MenuOption[];
+  dataTestid?: string;
 }
 
 /**
@@ -41,6 +42,7 @@ const MoreOptionsMenu: React.FC<IMoreOptionsMenuProps> = ({
   ariaLabel = 'More options',
   alignRight = true,
   variant = 'light',
+  dataTestid,
 }) => {
   return (
     <Dropdown alignRight={alignRight}>
@@ -50,12 +52,13 @@ const MoreOptionsMenu: React.FC<IMoreOptionsMenuProps> = ({
           variant="link"
           $toggleVariant={variant}
           aria-label={ariaLabel}
+          data-testid={dataTestid}
         >
           <FaEllipsisH size={18} />
         </StyledToggleButton>
       </TooltipWrapper>
 
-      <StyledDropdownMenu data-testid="more-options-menu">
+      <StyledDropdownMenu>
         {options.map((opt, index) => {
           // Disabled option with optional tooltip
           if (opt.disabled) {

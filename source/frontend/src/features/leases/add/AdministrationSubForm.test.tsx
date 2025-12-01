@@ -1,16 +1,18 @@
 import { Formik, FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
+import React from 'react';
 
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getUserMock } from '@/mocks/user.mock';
+import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
+import { ApiGen_CodeTypes_LeaseProgramTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseProgramTypes';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { getDefaultFormLease, LeaseFormModel } from '../models';
 import AdministrationSubForm from './AdministrationSubForm';
-import React from 'react';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -27,7 +29,7 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
 
 describe('AdministrationSubForm component', () => {
   // render component under test
-  const setup = (renderOptions: RenderOptions & { initialValues?: LeaseFormModel } = {}) => {
+  const setup = async (renderOptions: RenderOptions & { initialValues?: LeaseFormModel } = {}) => {
     const formikRef = React.createRef<FormikProps<LeaseFormModel>>();
     const utils = render(
       <Formik
@@ -45,8 +47,11 @@ describe('AdministrationSubForm component', () => {
       },
     );
 
+    await act(async () => {});
+
     return {
       ...utils,
+      formikRef,
       getPurposeMultiSelect: () =>
         utils.container.querySelector(`#multiselect-purposes_input`) as HTMLElement,
       getOtherPurposeTextbox: () =>
@@ -58,48 +63,91 @@ describe('AdministrationSubForm component', () => {
     vi.clearAllMocks();
   });
 
-  it('renders as expected', () => {
-    const { asFragment } = setup({});
+  it('renders as expected', async () => {
+    const { asFragment } = await setup({});
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('displays other type text if Other is selected', async () => {
-    const { container, findByText } = setup({});
+  it('clears other type description when lease type is changed from Other to another value', async () => {
+    const { container, findByText, formikRef } = await setup({
+      initialValues: {
+        ...getDefaultFormLease(),
+        leaseTypeCode: ApiGen_CodeTypes_LeaseLicenceTypes.OTHER,
+        otherLeaseTypeDescription: 'Some other type',
+      },
+    });
 
-    let otherField = await container.querySelector(`input[name="otherLeaseTypeDescription"]`);
+    expect(formikRef.current?.values.otherLeaseTypeDescription).toBe('Some other type');
+
+    const otherText = await findByText('Describe other:');
+    expect(otherText).toBeVisible();
+
+    let otherField = container.querySelector(`input[name="otherLeaseTypeDescription"]`);
+    expect(otherField).toBeVisible();
+
+    await act(async () => {
+      await fillInput(
+        container,
+        'leaseTypeCode',
+        ApiGen_CodeTypes_LeaseLicenceTypes.MANUFHOME,
+        'select',
+      );
+    });
+
+    // Verify that the otherLeaseTypeDescription field has been cleared
+    expect(formikRef.current?.values.otherLeaseTypeDescription).toBe('');
+
+    otherField = container.querySelector(`input[name="otherLeaseTypeDescription"]`);
+    expect(otherField).toBeNull();
+  });
+
+  it('displays other type text if Other is selected', async () => {
+    const { container, findByText } = await setup({});
+
+    let otherField = container.querySelector(`input[name="otherLeaseTypeDescription"]`);
     expect(otherField).toBeNull();
 
     await act(async () => {
-      await fillInput(container, 'leaseTypeCode', 'OTHER', 'select');
+      await fillInput(
+        container,
+        'leaseTypeCode',
+        ApiGen_CodeTypes_LeaseLicenceTypes.OTHER,
+        'select',
+      );
     });
     const otherText = await findByText('Describe other:');
     expect(otherText).toBeVisible();
 
-    otherField = await container.querySelector(`input[name="otherLeaseTypeDescription"]`);
+    otherField = container.querySelector(`input[name="otherLeaseTypeDescription"]`);
     expect(otherField).toBeVisible();
   });
 
   it('displays other program text if Other is selected', async () => {
-    const { container, getByText } = setup({});
-    let otherField = await container.querySelector(`input[name="otherProgramTypeDescription"]`);
+    const { container, getByText } = await setup({});
+    let otherField = container.querySelector(`input[name="otherProgramTypeDescription"]`);
     expect(otherField).toBeNull();
 
     await act(async () => {
-      await fillInput(container, 'programTypeCode', 'OTHER', 'select');
+      await fillInput(
+        container,
+        'programTypeCode',
+        ApiGen_CodeTypes_LeaseProgramTypes.OTHER,
+        'select',
+      );
     });
     const otherText = await getByText('Other Program:');
     expect(otherText).toBeVisible();
-    otherField = await container.querySelector(`input[name="otherProgramTypeDescription"]`);
+    otherField = container.querySelector(`input[name="otherProgramTypeDescription"]`);
     expect(otherField).toBeVisible();
   });
 
   it('displays other purpose text if Other is selected', async () => {
-    const { container, getByText, getOtherPurposeTextbox, getPurposeMultiSelect } = setup({});
+    const { container, getByText, getOtherPurposeTextbox, getPurposeMultiSelect } = await setup({});
     expect(getOtherPurposeTextbox()).toBeNull();
 
     const multiSelectPurposes = getPurposeMultiSelect();
+    expect(multiSelectPurposes).not.toBeNull();
     await act(async () => {
-      expect(multiSelectPurposes).not.toBeNull();
       userEvent.click(multiSelectPurposes);
     });
 
@@ -114,5 +162,32 @@ describe('AdministrationSubForm component', () => {
     const otherText = await getByText('Describe other:');
     expect(otherText).toBeVisible();
     expect(getOtherPurposeTextbox()).toBeInTheDocument();
+  });
+
+  it('clears other program description when program type is changed from Other to another value', async () => {
+    const { container, formikRef } = await setup({
+      initialValues: {
+        ...getDefaultFormLease(),
+        programTypeCode: ApiGen_CodeTypes_LeaseProgramTypes.OTHER,
+        otherProgramTypeDescription: 'Some other program',
+      },
+    });
+
+    expect(formikRef.current?.values.otherProgramTypeDescription).toBe('Some other program');
+
+    const otherField = container.querySelector(`input[name="otherProgramTypeDescription"]`);
+    expect(otherField).toBeVisible();
+
+    await act(async () => {
+      await fillInput(
+        container,
+        'programTypeCode',
+        ApiGen_CodeTypes_LeaseProgramTypes.AGRIC,
+        'select',
+      );
+    });
+
+    // Verify that the otherProgramTypeDescription field has been cleared
+    expect(formikRef.current?.values.otherProgramTypeDescription).toBe('');
   });
 });
