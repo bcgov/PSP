@@ -85,7 +85,7 @@ if [ "$NODE_ENV" != "production" ]; then
 
 else
 
-	echo "---> Installing all dependencies"
+	echo "---> Installing all dependencies using ci"
 	NODE_ENV=development npm ci
 
 	#do not fail when there is no build script
