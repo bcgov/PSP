@@ -23,6 +23,7 @@ import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen
 import React from 'react';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { getMockApiLease } from '@/mocks/lease.mock';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -66,6 +67,15 @@ describe('LeaseDetailSubForm component', () => {
       // Finding elements
       getStatusDropDown: (): HTMLSelectElement => {
         return document.querySelector(`select[name="statusTypeCode"]`);
+      },
+      getPaymentReceivableDropDown: (): HTMLSelectElement => {
+        return document.querySelector(`select[name="paymentReceivableTypeCode"]`);
+      },
+      getAppraisalDropDown: (): HTMLSelectElement => {
+        return document.querySelector(`select[name="appraisalStatusType"]`);
+      },
+      getLegalSurveyDropDown: (): HTMLSelectElement => {
+        return document.querySelector(`select[name="legalSurveyStatusType"]`);
       },
       getProjectSelector: (): HTMLElement => {
         return document.querySelector(`input[name="typeahead-project"]`);
@@ -260,6 +270,33 @@ describe('LeaseDetailSubForm component', () => {
 
     expect(getCancellationReason()).toBeInTheDocument();
   });
+
+  it.each([
+    [ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLBCTFA, true],
+    [ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLMOTI, true],
+    [ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL, false],
+  ])(
+    'Displays the Progress statuses when needed - %s',
+    async (paymentReceivable: string, show: boolean) => {
+      const {
+        getPaymentReceivableDropDown,
+        getAppraisalDropDown,
+        getLegalSurveyDropDown,
+      } = await setup({});
+
+      await act(async () =>
+        userEvent.selectOptions(getPaymentReceivableDropDown(), paymentReceivable),
+      );
+
+      if (show) {
+        expect(getAppraisalDropDown()).toBeInTheDocument();
+        expect(getLegalSurveyDropDown()).toBeInTheDocument();
+      } else {
+        expect(getAppraisalDropDown()).not.toBeInTheDocument();
+        expect(getLegalSurveyDropDown()).not.toBeInTheDocument();
+      }
+    },
+  );
 
   it('displays a confirmation modal when user changes the status from "Discarded" to a new status', async () => {
     const { getByTestId, getCancellationReason, getStatusDropDown, formikRef } = await setup({

@@ -40,6 +40,8 @@ export interface ApiGen_Concepts_Lease extends ApiGen_Concepts_FileWithChecklist
   leasePurposes: ApiGen_Concepts_LeasePurpose[] | null;
   region: ApiGen_Base_CodeType<number> | null;
   programType: ApiGen_Base_CodeType<string> | null;
+  fileAppraisalStatusTypeCode: ApiGen_Base_CodeType<string> | null;
+  fileLegalSurveyStatusTypeCode: ApiGen_Base_CodeType<string> | null;
   returnNotes: string | null;
   responsibilityEffectiveDate: UtcIsoDate | null;
   isResidential: boolean;
