@@ -29,7 +29,7 @@ jobs:
       working-directory: ./openshift/4.0/templates/Logging
 
     steps:
-      - uses: actions/checkout@34e114876b3c7e4b16de87326c18e60c7f5a36da # v4.3.1
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Set ENV variable
         run: |
           if [[ ${{github.event.ref}} == 'refs/heads/test' ]]; then
