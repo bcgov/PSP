@@ -35,9 +35,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e840a24f2a7748a4939f9c48adfd128ab78 # v1.3
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
