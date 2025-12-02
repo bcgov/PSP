@@ -204,7 +204,7 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
             field="paymentReceivableTypeCode"
             options={paymentReceivableTypes}
             onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-              const selectedValue = [].slice
+              const selectedValue = Array.prototype.slice
                 .call(e.target.selectedOptions)
                 .map((option: HTMLOptionElement & number) => option.value)[0];
 

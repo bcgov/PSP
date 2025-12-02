@@ -279,7 +279,6 @@ describe('LeaseDetailSubForm component', () => {
     'Displays the Progress statuses when needed - %s',
     async (paymentReceivable: string, show: boolean) => {
       const {
-        container,
         getPaymentReceivableDropDown,
         getAppraisalDropDown,
         getLegalSurveyDropDown,

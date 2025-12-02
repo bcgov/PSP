@@ -71,7 +71,6 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.PimsAcqFileAcqProgresses, src => src.AcquisitionFileProgressStatuses)
                 .Map(dest => dest.FileAppraisalTypeCode, src => src.AcquisitionFileAppraisalStatusTypeCode.Id)
                 .Map(dest => dest.FileLglSrvyTypeCode, src => src.AcquisitionFileLegalSurveyStatusTypeCode.Id)
-                .Map(dest => dest.FileAppraisalTypeCode, src => src.AcquisitionFileAppraisalStatusTypeCode.Id)
                 .Map(dest => dest.FileLglSrvyTypeCode, src => src.AcquisitionFileLegalSurveyStatusTypeCode.Id)
                 .Map(dest => dest.PimsAcqFileAcqFlTakeTyps, src => src.AcquisitionFileTakingStatuses)
                 .Map(dest => dest.AcqFileExpropRiskTypeCode, src => src.AcquisitionFileExpropiationRiskStatusTypeCode.Id)
