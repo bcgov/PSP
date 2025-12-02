@@ -119,7 +119,6 @@ describe('LeasePropertySelector component', () => {
 
   it('renders as expected', async () => {
     const { asFragment } = setup({ initialForm: testForm });
-    await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 
@@ -130,7 +129,6 @@ describe('LeasePropertySelector component', () => {
 
   it('renders list of properties', async () => {
     setup({ initialForm: testForm });
-
     expect(await screen.findByText('PID: 123-456-789')).toBeVisible();
     expect(await screen.findByText('PIN: 1111222')).toBeVisible();
   });
@@ -139,7 +137,7 @@ describe('LeasePropertySelector component', () => {
     setup({ initialForm: testForm });
 
     // click remove button and confirm the popup
-    const pidRow = screen.getAllByTitle('remove')[0];
+    const pidRow = screen.getByTestId('delete-property-0');
     await act(async () => userEvent.click(pidRow));
     const ok = screen.getByTitle('ok-modal');
     await act(async () => userEvent.click(ok));
@@ -154,64 +152,47 @@ describe('LeasePropertySelector component', () => {
     expect(screen.getByTitle('2')).toBeInTheDocument();
   });
 
-  // TODO: fix tests affected by the removal of the property selector tool
-  it.skip('should pre-populate the region if a property is selected', async () => {
-    const testMockMachine: IMapStateMachineContext = {
-      ...mapMachineBaseMock,
-      isSelecting: true,
-      selectingComponentId: undefined,
-      mapLocationFeatureDataset: null,
-    };
-
-    const leaseWithoutProperties = testForm;
-    leaseWithoutProperties.properties = [];
-
-    const { rerender, formikRef } = setup(
-      { initialForm: leaseWithoutProperties },
-      { mockMapMachine: testMockMachine },
+  it('adds lat/long based properties to the file', async () => {
+    const { getByText } = await setup(
+      {
+        initialForm: new LeaseFormModel(),
+      },
+      {
+        mockMapMachine: {
+          ...mapMachineBaseMock,
+          // this "fakes" a click on the map to add lat/long based properties
+          mapLocationFeatureDataset: {
+            selectingComponentId: null,
+            location: { lat: 50.25163372, lng: -120.69195885 },
+            fileLocation: null,
+            pimsFeatures: [],
+            parcelFeatures: [],
+            regionFeature: null,
+            districtFeature: null,
+            municipalityFeatures: [],
+            highwayFeatures: [],
+            crownLandLeasesFeatures: [],
+            crownLandLicensesFeatures: [],
+            crownLandTenuresFeatures: [],
+            crownLandInventoryFeatures: [],
+            crownLandInclusionsFeatures: [],
+          },
+        },
+      },
     );
 
-    // no region should be selected by default
-    expect(formikRef.current.values.regionId).toBe('');
+    const addButton = getByText('Add selected property');
+    expect(addButton).toBeVisible();
+    await act(async () => userEvent.click(addButton));
 
-    // simulate a map click via the map state machine
-    testMockMachine.isSelecting = true;
-    testMockMachine.mapLocationFeatureDataset = {
-      location: { lng: -120.69195885, lat: 50.25163372 },
-      fileLocation: null,
-      pimsFeatures: [
-        {
-          type: 'Feature',
-          properties: { ...emptyPropertyLocation, PROPERTY_ID: 1, PID: 1 },
-          geometry: getMockPolygon(),
-        },
-      ],
-      parcelFeatures: [
-        {
-          type: 'Feature',
-          properties: { ...emptyPmbcParcel, PID_NUMBER: 1 },
-          geometry: getMockPolygon(),
-        },
-      ],
-      regionFeature: {
-        type: 'Feature',
-        properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
-        geometry: getMockPolygon(),
-      },
-      districtFeature: null,
-      municipalityFeatures: null,
-      highwayFeatures: null,
-      selectingComponentId: null,
-      crownLandLeasesFeatures: null,
-      crownLandLicensesFeatures: null,
-      crownLandTenuresFeatures: null,
-      crownLandInventoryFeatures: null,
-      crownLandInclusionsFeatures: null,
-    };
-
-    // verify that upon map click the lease region is auto-selected based on the property region
-    await act(async () => rerender());
-    expect(formikRef.current.values.regionId).toBe('1');
+    // Verify that the map machine was called to prepare the lat/long property for addition to the file
+    expect(mapMachineBaseMock.prepareForCreation).toHaveBeenCalledWith(
+      expect.arrayContaining([
+        expect.objectContaining<Partial<SelectedFeatureDataset>>({
+          location: { lat: 50.25163372, lng: -120.69195885 },
+        }),
+      ]),
+    );
   });
 
   // TODO: fix tests affected by the removal of the property selector tool
