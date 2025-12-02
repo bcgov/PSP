@@ -1,4 +1,4 @@
-import { Feature, FeatureCollection, Geometry } from 'geojson';
+import { Feature, FeatureCollection, Geometry, MultiPolygon, Polygon } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { useCallback } from 'react';
 
@@ -53,6 +53,7 @@ export interface LocationFeatureDataset extends FeatureDataset {
 export interface SelectedFeatureDataset extends FeatureDataset {
   id?: string;
   location: LatLngLiteral;
+  fileBoundary: Polygon | MultiPolygon | null;
   parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
   pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
   regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;

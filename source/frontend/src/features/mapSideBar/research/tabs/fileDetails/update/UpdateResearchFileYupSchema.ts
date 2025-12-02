@@ -7,10 +7,10 @@ export const UpdateResearchFileYupSchema = Yup.object().shape({
   roadName: Yup.string().max(4000, 'Road name must be less than 4000 characters'),
   roadAlias: Yup.string().max(4000, 'Road alias must be less than 4000 characters'),
   requestDescription: Yup.string().max(
-    4000,
-    'Description of request must be less than 4000 characters',
+    10000,
+    'Description of request must be less than 10,000 characters',
   ),
-  researchResult: Yup.string().max(4000, 'Result of request must be less than 4000 characters'),
+  researchResult: Yup.string().max(10000, 'Result of request must be less than 10,000 characters'),
   expropriationNotes: Yup.string().max(
     4000,
     'Expropriation comments must be less than 4000 characters',

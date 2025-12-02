@@ -154,6 +154,7 @@ export const getMockSelectedFeatureDataset = (): SelectedFeatureDataset => {
     selectingComponentId: locationFeatureDataset.selectingComponentId,
     location: locationFeatureDataset.location,
     fileLocation: locationFeatureDataset.fileLocation,
+    fileBoundary: null,
     parcelFeature: locationFeatureDataset.parcelFeatures[0],
     pimsFeature: locationFeatureDataset.pimsFeatures[0],
     regionFeature: locationFeatureDataset.regionFeature,

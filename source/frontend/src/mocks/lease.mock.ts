@@ -1689,6 +1689,7 @@ export const getMockLeaseProperties = (leaseId = 1): ApiGen_Concepts_PropertyLea
         y: 381468.28746302053,
       },
     },
+    boundary: null,
     displayOrder: null,
     property: {
       id: 442,
@@ -1779,6 +1780,7 @@ export const getMockLeaseProperties = (leaseId = 1): ApiGen_Concepts_PropertyLea
       },
       generalLocation: null,
       historicalFileNumbers: [],
+      tenureCleanups: [],
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
       surplusDeclarationDate: '0001-01-01',

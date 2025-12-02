@@ -38,6 +38,13 @@ export const ownershipFilterOptions: MultiSelectOption[] = [
   { id: 'isRetired', text: 'Retired' },
 ];
 
+export const tenureCleanupFilterOptions: MultiSelectOption[] = [
+  { id: 'FORM12', text: 'Form 12' },
+  { id: 'NEEDSRVY', text: 'Needs Survey' },
+  { id: 'SECT42', text: 'Section 42 Roads' },
+  { id: 'TBD', text: 'TBD' },
+];
+
 const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { getByType } = useLookupCodeHelpers();
   const municipalities = useMemo(() => getByType(API.ADMINISTRATIVE_AREA_TYPES), [getByType]);
@@ -149,6 +156,12 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
     setFilter({ ...filter, ownership: selectedIds.join(',') });
   };
 
+  const onSelectedTenureCleanupChange = (selectedList: MultiSelectOption[]) => {
+    setPageIndex(0);
+    const selectedIds = selectedList.map(o => o.id);
+    setFilter({ ...filter, tenureCleanup: selectedIds.join(',') });
+  };
+
   const ownership = useDeepCompareMemo(
     () =>
       filter.ownership
@@ -156,6 +169,15 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
         .map<MultiSelectOption | undefined>(o => ownershipFilterOptions.find(op => op.id === o))
         .filter((x): x is MultiSelectOption => x !== undefined),
     [filter.ownership],
+  );
+
+  const tenureCleanup = useDeepCompareMemo(
+    () =>
+      filter.tenureCleanup
+        .split(',')
+        .map<MultiSelectOption | undefined>(o => tenureCleanupFilterOptions.find(op => op.id === o))
+        .filter((x): x is MultiSelectOption => x !== undefined),
+    [filter.tenureCleanup],
   );
 
   return (
@@ -185,26 +207,36 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
         <Row>
           <Col xs="10">
             <StyledFilterBox className="p-3">
-              <Row>
-                <Col xl="1">
-                  <strong>View by:</strong>
-                </Col>
-                <Col xs="auto">
-                  <Multiselect
-                    id="properties-selector"
-                    ref={multiselectOwnershipRef}
-                    options={ownershipFilterOptions}
-                    selectedValues={ownership}
-                    onSelect={onSelectedOwnershipChange}
-                    onRemove={onSelectedOwnershipChange}
-                    displayValue="text"
-                    placeholder="Select ownership status"
-                    customCloseIcon={<FaTimes size="18px" className="ml-3" />}
-                    hidePlaceholder={true}
-                    style={defaultStyle}
-                  />
-                </Col>
-              </Row>
+              <SectionField label="Ownership" labelWidth={{ xs: '2' }}>
+                <Multiselect
+                  id="ownership-selector"
+                  ref={multiselectOwnershipRef}
+                  options={ownershipFilterOptions}
+                  selectedValues={ownership}
+                  onSelect={onSelectedOwnershipChange}
+                  onRemove={onSelectedOwnershipChange}
+                  displayValue="text"
+                  placeholder="Select ownership status"
+                  customCloseIcon={<FaTimes size="18px" className="ml-3" />}
+                  hidePlaceholder={true}
+                  style={defaultStyle}
+                />
+              </SectionField>
+              <SectionField label="Tenure Cleanup" labelWidth={{ xs: '2' }}>
+                <Multiselect
+                  id="tenure-cleanup-selector"
+                  ref={multiselectOwnershipRef}
+                  options={tenureCleanupFilterOptions}
+                  selectedValues={tenureCleanup}
+                  onSelect={onSelectedTenureCleanupChange}
+                  onRemove={onSelectedTenureCleanupChange}
+                  displayValue="text"
+                  placeholder="Select Tenure Cleanup"
+                  customCloseIcon={<FaTimes size="18px" className="ml-3" />}
+                  hidePlaceholder={true}
+                  style={defaultStyle}
+                />
+              </SectionField>
             </StyledFilterBox>
           </Col>
           <Col>

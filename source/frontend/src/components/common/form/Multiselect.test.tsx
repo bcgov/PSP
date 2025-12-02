@@ -95,7 +95,7 @@ describe('Multiselect component', () => {
     });
 
     // select an option from the drop-down
-    await focusOptionMultiselect(container, optionSelected, fakeOptions);
+    await focusOptionMultiselect('.multiselect-container', container, optionSelected, fakeOptions);
 
     // assert
     expect(onSelectSpy).toHaveBeenCalledWith([optionSelected]);

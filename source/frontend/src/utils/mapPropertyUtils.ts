@@ -176,6 +176,7 @@ export const featuresetToLocationBoundaryDataset = (
   return {
     location: featureSet?.fileLocation ?? featureSet?.location,
     boundary: featureSet?.pimsFeature?.geometry ?? featureSet?.parcelFeature?.geometry ?? null,
+    fileBoundary: featureSet?.fileBoundary ?? null,
     isActive: featureSet.isActive,
   };
 };
@@ -281,6 +282,7 @@ export function filePropertyToLocationBoundaryDataset(
     ? {
         location,
         boundary: fileProperty?.property?.boundary ?? null,
+        fileBoundary: fileProperty?.boundary ?? null,
         isActive: fileProperty.isActive,
       }
     : null;
@@ -294,6 +296,7 @@ export function propertyToLocationBoundaryDataset(
     ? {
         location,
         boundary: property?.boundary ?? null,
+        fileBoundary: null,
       }
     : null;
 }

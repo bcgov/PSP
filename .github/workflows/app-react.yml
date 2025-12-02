@@ -1,5 +1,9 @@
 name: APP (React)
 
+env:
+  # Default: ignore lifecycle scripts for *all* npm install commands in this workflow
+  npm_config_ignore_scripts: true
+
 on:
   push:
     branches: [master, dev, test]
