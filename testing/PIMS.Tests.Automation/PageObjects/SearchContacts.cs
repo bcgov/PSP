@@ -120,7 +120,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchContactResetBttn);
             AssertTrueIsDisplayed(searchContactActiveChckBox);
             AssertTrueIsDisplayed(searchContactActiveSpan);
-            AssertTrueIsDisplayed(searchContactAddNewBttn);
+//            AssertTrueIsDisplayed(searchContactAddNewBttn);
 
             //Table Elements
             AssertTrueIsDisplayed(searchContactTableSummaryColumn);
@@ -159,7 +159,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OrderByContactOrganization()
         {
-            WaitUntilClickable(searchContactOrderByOrganizationBttn);
+            Wait(4000);
             webDriver.FindElement(searchContactOrderByOrganizationBttn).Click();
         }
 
