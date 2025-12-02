@@ -191,7 +191,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
     <>
       <LoadingBackdrop show={bcaLoading} />
       <MapSideBarLayout
-        title={'Property selection'}
+        title="Property selection"
         icon={undefined}
         footer={
           <SidebarFooter
@@ -204,11 +204,13 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
       >
         <>
           <AddPropertiesGuide />
-          {exists(selectedFeatureDataset?.parcelFeature) && (
+          {exists(selectedFeatureDataset?.parcelFeature) ||
+          exists(selectedFeatureDataset?.pimsFeature) ||
+          exists(selectedFeatureDataset?.location) ? (
             <StyledButtonWrapper>
               <Button onClick={handleAddToSelection}>Add selected property</Button>
             </StyledButtonWrapper>
-          )}
+          ) : null}
           <Formik<FileForm>
             innerRef={formikRef}
             initialValues={formFile}

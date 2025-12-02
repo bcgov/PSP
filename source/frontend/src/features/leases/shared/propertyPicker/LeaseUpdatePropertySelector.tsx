@@ -367,11 +367,13 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
                 return (
                   <>
                     <AddPropertiesGuide />
-                    {exists(selectedFeatureDataset?.parcelFeature) && (
+                    {exists(selectedFeatureDataset?.parcelFeature) ||
+                    exists(selectedFeatureDataset?.pimsFeature) ||
+                    exists(selectedFeatureDataset?.location) ? (
                       <StyledButtonWrapper>
                         <Button onClick={handleAddToSelection}>Add selected property</Button>
                       </StyledButtonWrapper>
-                    )}
+                    ) : null}
                     <Section
                       header={
                         <Row>
