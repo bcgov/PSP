@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Start notification to Teams Channel
-        uses: dragos-cojocari/ms-teams-notification@v1.0.2
+        uses: dragos-cojocari/ms-teams-notification@bdee8c55e87b8987c0b19c141fe1599be19addf3 # v1.0.2
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
@@ -52,15 +52,15 @@ jobs:
     needs: ci-cd-start-notification
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b3c7e4b16de87326c18e60c7f5a36da # v4.3.1
         with:
           ref: master
           fetch-depth: 0
       - name: "Get Previous tag"
         id: previoustag
-        uses: "WyriHaximus/github-action-get-previous-tag@v1"
+        uses: WyriHaximus/github-action-get-previous-tag@04e8485ecb6487243907e330d522ff60f02283ce # v1.4.0
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e840a24f2a7748a4939f9c48adfd128ab78 # v1.3
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -97,9 +97,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b3c7e4b16de87326c18e60c7f5a36da # v4.3.1
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e840a24f2a7748a4939f9c48adfd128ab78 # v1.3
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -120,9 +120,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b3c7e4b16de87326c18e60c7f5a36da # v4.3.1
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e840a24f2a7748a4939f9c48adfd128ab78 # v1.3
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -142,9 +142,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b3c7e4b16de87326c18e60c7f5a36da # v4.3.1
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e840a24f2a7748a4939f9c48adfd128ab78 # v1.3
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}

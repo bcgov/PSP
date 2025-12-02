@@ -20,7 +20,7 @@ jobs:
       working-directory: ./source/database/mssql/scripts/dbscripts
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b3c7e4b16de87326c18e60c7f5a36da # v4.3.1
       - name: Set up random env variable
         run: |
           passvar=$(date +%s | sha256sum | base64 | head -c 29)A8!
@@ -46,7 +46,7 @@ jobs:
         run: docker run -d -p 5433:1433 --name db-schema --env-file ./.env docker.io/my-organization/my-app:${{ github.sha }}
         working-directory: ${{env.working-directory}}
       - name: Wait on the sqlserver process
-        uses: jakejarvis/wait-action@master
+        uses: jakejarvis/wait-action@919fc193e07906705e5b7a50f90ea9e74d20b2b0 #v0.1.1
         with:
           time: "120s"
       - name: Check running containers

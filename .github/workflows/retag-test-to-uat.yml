@@ -38,7 +38,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Start notification to Teams Channel
-        uses: dragos-cojocari/ms-teams-notification@v1.0.2
+        uses: dragos-cojocari/ms-teams-notification@bdee8c55e87b8987c0b19c141fe1599be19addf3 # v1.0.2
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
@@ -52,9 +52,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b3c7e4b16de87326c18e60c7f5a36da # v4.3.1
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e840a24f2a7748a4939f9c48adfd128ab78 # v1.3
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -85,9 +85,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b3c7e4b16de87326c18e60c7f5a36da # v4.3.1
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e840a24f2a7748a4939f9c48adfd128ab78 # v1.3
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -108,9 +108,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b3c7e4b16de87326c18e60c7f5a36da # v4.3.1
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e840a24f2a7748a4939f9c48adfd128ab78 # v1.3
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -130,9 +130,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b3c7e4b16de87326c18e60c7f5a36da # v4.3.1
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e840a24f2a7748a4939f9c48adfd128ab78 # v1.3
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -149,9 +149,9 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b3c7e4b16de87326c18e60c7f5a36da # v4.3.1
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e840a24f2a7748a4939f9c48adfd128ab78 # v1.3
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -174,10 +174,10 @@ jobs:
     if: always()
     steps:
       - name: check workflow status
-        uses: martialonline/workflow-status@v4
+        uses: martialonline/workflow-status@326830cacf79872efe767e15031f58d1ea0508c4 # v4.2
         id: check
       - name: End notification to Teams Channel
-        uses: dragos-cojocari/ms-teams-notification@v1.0.2
+        uses: dragos-cojocari/ms-teams-notification@bdee8c55e87b8987c0b19c141fe1599be19addf3 # v1.0.2
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
