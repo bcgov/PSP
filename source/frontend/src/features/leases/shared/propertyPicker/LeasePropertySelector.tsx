@@ -139,11 +139,13 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
       </div>
 
       <AddPropertiesGuide />
-      {exists(selectedFeatureDataset?.parcelFeature) && (
+      {exists(selectedFeatureDataset?.parcelFeature) ||
+      exists(selectedFeatureDataset?.pimsFeature) ||
+      exists(selectedFeatureDataset?.location) ? (
         <StyledButtonWrapper>
           <Button onClick={handleAddToSelection}>Add selected property</Button>
         </StyledButtonWrapper>
-      )}
+      ) : null}
 
       <FieldArray
         name="properties"

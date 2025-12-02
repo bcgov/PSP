@@ -116,7 +116,9 @@ describe('DocumentDetailContainer component', () => {
   ) => {
     const utils = render(
       <DocumentDetailContainer
-        pimsDocumentRelationship={renderOptions?.props?.pimsDocumentRelationship ?? mockDocumentAcquisitionRelationship}
+        pimsDocumentRelationship={
+          renderOptions?.props?.pimsDocumentRelationship ?? mockDocumentAcquisitionRelationship
+        }
         relationshipType={
           renderOptions?.props?.relationshipType ??
           ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles
