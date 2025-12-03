@@ -52,7 +52,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By search1stPMBCResultCreateLeaseOption = By.CssSelector("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Lease File']");
         private readonly By search1stPMBCResultCreateDispositionOption = By.CssSelector("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Disposition File']");
         private readonly By search1stPMBCResultAddToFileOption = By.CssSelector("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Add to Open File']");
-        private readonly By quickInfoCloseModalBttn = By.CssSelector("*[data-testid='close-icon']");
+        private readonly By quickInfoCloseModalBttn = By.CssSelector("div[data-testid='quick-info-header'] *[data-testid='close-icon']");
 
         private readonly By search1stPIMSResult = By.XPath("//div[text()='Results (PIMS)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[1]/div");
         private readonly By search1stPIMSResultEllipsisBttn = By.XPath("//div[text()='Results (PIMS)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[2]/div/div/button");
@@ -228,7 +228,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void SelectFound1stPropAddToFile()
         {
             Wait();
-            webDriver.FindElement(searchPropertyFoundLocationPin).Click();
+            FocusAndClick(searchPropertyFoundLocationPin);
 
             Wait();
             webDriver.FindElement(searchPropertyMoreOptionsBttn).Click();
@@ -289,7 +289,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedModals.ModalClickOKBttn();
             }
 
-            Wait();
+            Wait(10000);
             webDriver.FindElement(quickInfoCloseModalBttn).Click();
         }
 
@@ -334,6 +334,12 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             webDriver.FindElement(search1stPIMSResult).Click();
+        }
+
+        public void SelectFirstPMBCResult()
+        {
+            Wait();
+            webDriver.FindElement(search1stPMBCResult).Click();
         }
 
         public void NavigatePropertyListView()

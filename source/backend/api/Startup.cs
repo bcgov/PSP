@@ -307,7 +307,7 @@ namespace Pims.Api
                     "ApiMetrics",
                     sp => new PimsMetricsHealthcheck(csBuilder.ConnectionString),
                     HealthStatus.Unhealthy,
-                    new string[] { SERVICES })
+                    new string[] { SERVICES, EXTERNAL })
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.ApiMetrics.Period) });
             }
 
@@ -337,7 +337,7 @@ namespace Pims.Api
                     "Mayan",
                     sp => new PimsMayanHealthcheck(sp.GetService<IEdmsDocumentRepository>()),
                     null,
-                    new string[] { SERVICES, SYSTEMCHECK })
+                    new string[] { SERVICES, EXTERNAL, SYSTEMCHECK })
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Mayan.Period) });
             }
 
@@ -495,7 +495,7 @@ namespace Pims.Api
             });
             app.UseHealthChecks(this.Configuration.GetValue<string>("HealthChecks:ReadyPath"), healthPort, new HealthCheckOptions
             {
-                Predicate = r => r.Tags.Contains("services") && !r.Tags.Contains("external"),
+                Predicate = r => r.Tags.Contains(SERVICES) && !r.Tags.Contains(EXTERNAL),
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
             });
 

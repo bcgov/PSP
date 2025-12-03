@@ -30,7 +30,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Property Information Tabs Elements
         private readonly By propertyInformationTabsTotal = By.CssSelector("nav[role='tablist'] a");
-        private readonly By propertyInformationTitleTab = By.XPath("//a[contains(text(),'Title')]");
+        private readonly By propertyInformationTitleTab = By.CssSelector("a[data-rb-event-key='ltsa']");
         private readonly By propertyInformationValueTab = By.XPath("//a[contains(text(),'Value')]");
 
         //Property Information Header Elements

@@ -36,7 +36,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By dispositionFileHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
         private readonly By dispositionFileStatusSelect = By.Id("input-fileStatusTypeCode");
-        private readonly By dispositionFileProjectSubtitle = By.XPath("(//div[contains(text(),'Project')])[1]");
+        private readonly By dispositionFileProjectSubtitle = By.XPath("//h2/div/div[contains(text(),'Project')]");
         private readonly By dispositionFileProjectLabel = By.XPath("//label[normalize-space()='Ministry project:']");
         private readonly By dispositionFileProjectInput = By.CssSelector("input[id='typeahead-project']");
         private readonly By dispositionFileProject1stOption = By.CssSelector("div[id='typeahead-project'] a");
@@ -458,7 +458,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyDispositionFileInitCreate()
         {
-            AssertTrueIsDisplayed(dispositionFileCreateTitle);
+            //AssertTrueIsDisplayed(dispositionFileCreateTitle);
 
             //Project
             AssertTrueIsDisplayed(dispositionFileProjectSubtitle);

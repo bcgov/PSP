@@ -101,6 +101,8 @@ namespace Pims.Dal.Repositories
                 .Include(l => l.PimsInsurances)
                 .Include(l => l.PimsSecurityDeposits)
                 .Include(l => l.PimsLeasePeriods)
+                .Include(l => l.FileAppraisalTypeCodeNavigation)
+                .Include(l => l.FileLglSrvyTypeCodeNavigation)
                 .Include(l => l.Project)
                     .ThenInclude(x => x.WorkActivityCode)
                 .Include(r => r.Project)
@@ -640,6 +642,9 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(l => l.RegionCodeNavigation)
+
+                .Include(l => l.FileAppraisalTypeCodeNavigation)
+                .Include(l => l.FileLglSrvyTypeCodeNavigation)
 
                 .Include(l => l.Project)
                 .Include(l => l.LeaseProgramTypeCodeNavigation)
