@@ -37,7 +37,7 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Start notification to Teams Channel
-        uses: dragos-cojocari/ms-teams-notification@bdee8c55e87b8987c0b19c141fe1599be19addf3 # v1.0.2
+        uses: dragos-cojocari/ms-teams-notification@bdee8c5584729d6a2dcaad8fc21ecfd40d1418ab # v1.0.2
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
@@ -165,7 +165,7 @@ jobs:
         uses: martialonline/workflow-status@326830cacf79872efe767e15031f58d1ea0508c4 # v4.2
         id: check
       - name: End notification to Teams Channel
-        uses: dragos-cojocari/ms-teams-notification@bdee8c55e87b8987c0b19c141fe1599be19addf3 # v1.0.2
+        uses: dragos-cojocari/ms-teams-notification@bdee8c5584729d6a2dcaad8fc21ecfd40d1418ab # v1.0.2
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
