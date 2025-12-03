@@ -79,7 +79,7 @@ jobs:
         env:
           MS_TEAMS_NOTIFY_URL: ${{ secrets.MS_TEAMS_NOTIFY_URL }}
         if: env.MS_TEAMS_NOTIFY_URL != '' && failure()
-        uses: dragos-cojocari/ms-teams-notification@bdee8c55e87b8987c0b19c141fe1599be19addf3 # v1.0.2
+        uses: dragos-cojocari/ms-teams-notification@bdee8c5584729d6a2dcaad8fc21ecfd40d1418ab # v1.0.2
         with:
           github-token: ${{ github.token }}
           ms-teams-webhook-uri: ${{ env.MS_TEAMS_NOTIFY_URL }}
