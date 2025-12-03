@@ -32,15 +32,6 @@ PRINT '     == DB TRANSACTION START ========'
    PRINT '- Executing PSP_PIMS_S113_00/Alter Down/999_Create_PIM_PRPRTY_PIM_PIMPRV_FK_Alter_Down.sql '
    :setvar filepath "PSP_PIMS_S113_00/Alter Down/999_Create_PIM_PRPRTY_PIM_PIMPRV_FK_Alter_Down.sql"
    :r $(filepath)
-   PRINT '- Executing PSP_PIMS_S103_00/Alter Down/169_FN_PIM_GET_PK_COLUMN_Alter_Down.sql '
-   :setvar filepath "PSP_PIMS_S103_00/Alter Down/169_FN_PIM_GET_PK_COLUMN_Alter_Down.sql"
-   :r $(filepath)
-   PRINT '- Executing PSP_PIMS_S103_00/Alter Down/170_FN_PIM_GET_COLUMN_LIST_Alter_Down.sql '
-   :setvar filepath "PSP_PIMS_S103_00/Alter Down/170_FN_PIM_GET_COLUMN_LIST_Alter_Down.sql"
-   :r $(filepath)
-   PRINT '- Executing PSP_PIMS_S103_00/Alter Down/171_SP_PIM_DELETION_HISTORY_Alter_Down.sql '
-   :setvar filepath "PSP_PIMS_S103_00/Alter Down/171_SP_PIM_DELETION_HISTORY_Alter_Down.sql"
-   :r $(filepath)
 
    --End script section
 
