@@ -1,8 +1,11 @@
-import { MultiPolygon, Polygon } from 'geojson';
+import { Feature, Geometry, MultiPolygon, Polygon } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { isNumber } from 'lodash';
 
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import {
+  emptyFeatureDataset,
+  LocationFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { DistrictCodes, RegionCodes } from '@/constants';
 import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_CodeTypes_GeoJsonTypes';
@@ -21,6 +24,7 @@ import {
   applyDisplayOrder,
   enumFromValue,
   exists,
+  firstOrNull,
   formatApiAddress,
   formatBcaAddress,
   getLatLng,
@@ -101,10 +105,11 @@ export class PropertyForm {
     Object.assign(this, baseModel);
   }
 
-  public static fromFeatureDataset(model: SelectedFeatureDataset): PropertyForm {
+  public static fromLocationFeatureDataset(model: LocationFeatureDataset): PropertyForm {
     // TODO: Make it work with multiple properties
-    const pimsFeature = model?.pimsFeature;
-    const parcelFeature = model?.parcelFeature;
+    const pimsFeature = firstOrNull(model?.pimsFeatures);
+    const pimsBoundaryFeature = firstOrNull(model?.pimsBoundaryFeatures);
+    const parcelFeature = firstOrNull(model?.parcelFeatures);
 
     return new PropertyForm({
       apiId: +(pimsFeature?.properties?.PROPERTY_ID ?? 0),
@@ -112,8 +117,13 @@ export class PropertyForm {
       pin: pinFromFeatureSet(model),
       latitude: model?.location?.lat,
       longitude: model?.location?.lng,
-      fileLocation: model?.fileLocation ?? model?.location ?? undefined,
-      fileBoundary: model?.fileBoundary ?? undefined,
+      fileLocation: model?.location ?? undefined,
+      fileBoundary:
+        pimsBoundaryFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Polygon
+          ? (pimsBoundaryFeature?.geometry as Polygon)
+          : pimsBoundaryFeature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.MultiPolygon
+          ? (pimsBoundaryFeature?.geometry as MultiPolygon)
+          : undefined,
       planNumber:
         pimsFeature?.properties?.SURVEY_PLAN_NUMBER ?? parcelFeature?.properties?.PLAN_NUMBER ?? '',
       polygon:
@@ -146,41 +156,44 @@ export class PropertyForm {
         pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
         parcelFeature?.properties?.LEGAL_DESCRIPTION ??
         '',
-      isActive: model.isActive !== false ? 'true' : 'false',
-      displayOrder: model.displayOrder,
     });
   }
 
-  public toFeatureDataset(): SelectedFeatureDataset {
+  public toFeature(): Feature<Geometry, PIMS_Property_Location_View> {
     return {
-      parcelFeature: null,
-      selectingComponentId: null,
-      pimsFeature: {
-        properties: {
-          ...emptyPropertyLocation,
-          PROPERTY_ID: this.apiId,
-          PID: this.pid ? +this.pid.replaceAll(/-/g, '') : null,
-          PID_PADDED: this?.pid?.padStart(9, '0'),
-          PIN: this.pin ? +this.pin : null,
-          SURVEY_PLAN_NUMBER: this.planNumber,
-          REGION_CODE: this.region,
-          DISTRICT_CODE: this.district,
-          LAND_AREA: this.landArea,
-          PROPERTY_AREA_UNIT_TYPE_CODE: this.areaUnit,
-          STREET_ADDRESS_1: this.address?.streetAddress1 ?? this.formattedAddress,
-          STREET_ADDRESS_2: this.address?.streetAddress2,
-          STREET_ADDRESS_3: this.address?.streetAddress3,
-          MUNICIPALITY_NAME: this.address?.municipality,
-          POSTAL_CODE: this.address?.postalCode,
-          IS_RETIRED: this.isRetired,
-          LAND_LEGAL_DESCRIPTION: this.legalDescription,
-        },
-        type: 'Feature',
-        geometry: this.polygon ? this.polygon : null,
+      properties: {
+        ...emptyPropertyLocation,
+        PROPERTY_ID: this.apiId,
+        PID: this.pid ? +this.pid.replaceAll(/-/g, '') : null,
+        PID_PADDED: this?.pid?.padStart(9, '0'),
+        PIN: this.pin ? +this.pin : null,
+        SURVEY_PLAN_NUMBER: this.planNumber,
+        REGION_CODE: this.region,
+        DISTRICT_CODE: this.district,
+        LAND_AREA: this.landArea,
+        PROPERTY_AREA_UNIT_TYPE_CODE: this.areaUnit,
+        STREET_ADDRESS_1: this.address?.streetAddress1 ?? this.formattedAddress,
+        STREET_ADDRESS_2: this.address?.streetAddress2,
+        STREET_ADDRESS_3: this.address?.streetAddress3,
+        MUNICIPALITY_NAME: this.address?.municipality,
+        POSTAL_CODE: this.address?.postalCode,
+        IS_RETIRED: this.isRetired,
+        LAND_LEGAL_DESCRIPTION: this.legalDescription,
       },
+      type: 'Feature',
+      geometry: this.polygon ? this.polygon : null,
+    };
+  }
+
+  public toLocationFeatureDataset(): LocationFeatureDataset {
+    return {
+      ...emptyFeatureDataset(),
       location: { lat: this.latitude, lng: this.longitude },
-      fileLocation: this.fileLocation ?? { lat: this.latitude, lng: this.longitude },
-      fileBoundary: this.fileBoundary ?? null,
+      pimsFeatures: [
+        {
+          ...this.toFeature(),
+        },
+      ],
       regionFeature: {
         properties: {
           REGION_NAME: this.regionName,
@@ -207,8 +220,6 @@ export class PropertyForm {
         type: 'Feature',
         geometry: null,
       },
-      municipalityFeature: null,
-      isActive: this.isActive !== 'false',
     };
   }
 
@@ -350,6 +361,7 @@ export class AddressForm {
   public streetAddress3?: string;
   public municipality?: string;
   public postalCode?: string;
+  public province?: string;
 
   public static fromBcaAddress(model: IBcAssessmentSummary['ADDRESSES'][0]): AddressForm {
     const newForm = new AddressForm();
@@ -382,6 +394,7 @@ export class AddressForm {
     newForm.municipality = model.municipality ?? undefined;
     newForm.postalCode = model.postal ?? undefined;
     newForm.apiId = model?.id ?? undefined;
+    newForm.province = model?.province?.description ?? undefined;
     newForm.rowVersion = model.rowVersion ?? undefined;
 
     return newForm;

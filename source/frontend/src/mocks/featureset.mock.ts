@@ -1,16 +1,13 @@
 import {
+  emptyFeatureDataset,
   LocationFeatureDataset,
-  SelectedFeatureDataset,
 } from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 import getMockISSResult from './mockISSResult';
 
 export const getMockLocationFeatureDataset = (): LocationFeatureDataset => ({
+  ...emptyFeatureDataset(),
   location: {
-    lat: 48.432802005,
-    lng: -123.310041775,
-  },
-  fileLocation: {
     lat: 48.432802005,
     lng: -123.310041775,
   },
@@ -140,25 +137,8 @@ export const getMockLocationFeatureDataset = (): LocationFeatureDataset => ({
     },
   ],
   highwayFeatures: getMockISSResult().features,
-  selectingComponentId: '',
-  crownLandLeasesFeatures: [],
-  crownLandLicensesFeatures: [],
-  crownLandTenuresFeatures: [],
-  crownLandInventoryFeatures: [],
-  crownLandInclusionsFeatures: [],
 });
 
-export const getMockSelectedFeatureDataset = (): SelectedFeatureDataset => {
-  const locationFeatureDataset = getMockLocationFeatureDataset();
-  return {
-    selectingComponentId: locationFeatureDataset.selectingComponentId,
-    location: locationFeatureDataset.location,
-    fileLocation: locationFeatureDataset.fileLocation,
-    fileBoundary: null,
-    parcelFeature: locationFeatureDataset.parcelFeatures[0],
-    pimsFeature: locationFeatureDataset.pimsFeatures[0],
-    regionFeature: locationFeatureDataset.regionFeature,
-    districtFeature: locationFeatureDataset.districtFeature,
-    municipalityFeature: locationFeatureDataset.municipalityFeatures[0],
-  };
+export const getMockSelectedFeatureDataset = (): LocationFeatureDataset => {
+  return getMockLocationFeatureDataset();
 };

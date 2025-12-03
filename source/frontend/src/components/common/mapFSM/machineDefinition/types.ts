@@ -1,21 +1,14 @@
+import { Feature, Geometry } from 'geojson';
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { IMapSideBarViewState as IMapSideBarState } from '@/features/mapSideBar/MapSideBar';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 
-import {
-  LocationBoundaryDataset,
-  MapFeatureData,
-  MarkerSelected,
-  RequestedCenterTo,
-  RequestedFlyTo,
-} from '../models';
-import {
-  LocationFeatureDataset,
-  SelectedFeatureDataset,
-  WorklistLocationFeatureDataset,
-} from '../useLocationFeatureLoader';
+import { MapFeatureData, MarkerSelected, RequestedCenterTo, RequestedFlyTo } from '../models';
+import { LocationFeatureDataset } from '../useLocationFeatureLoader';
 
 export enum SideBarType {
   NOT_DEFINED = 'NOT_DEFINED',
@@ -37,16 +30,13 @@ export type MachineContext = {
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
   mapMarkedLocation: LatLngLiteral | null;
-  selectedFeatures: SelectedFeatureDataset[];
-  repositioningFeatureDataset: SelectedFeatureDataset | null;
-  repositioningPropertyIndex: number | null;
-  selectingComponentId: string | null;
-
+  locationFeaturesForAddition: LocationFeatureDataset[] | null;
+  repositioningFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
   mapFeatureData: MapFeatureData;
 
   // worklist-related state
   worklistSelectedMapLocation: LatLngLiteral | null;
-  worklistLocationFeatureDataset: WorklistLocationFeatureDataset | null;
+  worklistLocationFeatureDataset: LocationFeatureDataset | null;
 
   // TODO: this is partially in the URL. Either move it completly there or remove it
   searchCriteria: IPropertyFilter | null;
@@ -56,7 +46,7 @@ export type MachineContext = {
   requestedFitBounds: LatLngBounds;
   requestedFlyTo: RequestedFlyTo;
   requestedCenterTo: RequestedCenterTo;
-  filePropertyLocations: LocationBoundaryDataset[];
+  filePropertyLocations: ApiGen_Concepts_FileProperty[];
   activePimsPropertyIds: number[];
   activeLayers: Set<string>;
   mapLayersToRefresh: Set<string>;

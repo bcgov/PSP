@@ -13,6 +13,7 @@ import { act, cleanup, render, RenderOptions, userEvent, waitFor } from '@/utils
 
 import MotiInventoryContainer, { IMotiInventoryContainerProps } from './MotiInventoryContainer';
 import { mockFAParcelLayerResponse } from '@/mocks/faParcelLayerResponse.mock';
+import { emptyFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 const mockAxios = new MockAdapter(axios);
 const history = createMemoryHistory();
@@ -140,23 +141,10 @@ describe('MotiInventoryContainer component', () => {
   it('shows the crown tab when property has a TANTALIS record', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      isSelecting: true,
-      selectingComponentId: undefined,
       mapLocationFeatureDataset: {
+        ...emptyFeatureDataset(),
         location: { lng: -120.69195885, lat: 50.25163372 },
-        fileLocation: null,
-        pimsFeatures: null,
         parcelFeatures: mockFAParcelLayerResponse.features as any,
-        regionFeature: null,
-        districtFeature: null,
-        municipalityFeatures: null,
-        highwayFeatures: null,
-        selectingComponentId: null,
-        crownLandLeasesFeatures: null,
-        crownLandLicensesFeatures: null,
-        crownLandTenuresFeatures: null,
-        crownLandInventoryFeatures: null,
-        crownLandInclusionsFeatures: null,
       },
     };
 

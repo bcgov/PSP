@@ -6,8 +6,8 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
 import { useModalContext } from '@/hooks/useModalContext';
+import { usePropertyFormSyncronizer } from '@/hooks/usePropertyFormSyncronizer';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -56,7 +56,7 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
 
   const mapMachine = useMapStateMachine();
 
-  const { featuresWithAddresses, bcaLoading } = useEditPropertiesNotifier(
+  const { featuresWithAddresses, isLoading } = usePropertyFormSyncronizer(
     formikRef,
     'fileProperties',
   );
@@ -71,7 +71,7 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
   useEffect(() => {
     const runAsync = async () => {
       const incomingProperties =
-        featuresWithAddresses?.map(f => PropertyForm.fromFeatureDataset(f.feature)) ?? [];
+        featuresWithAddresses?.map(f => PropertyForm.fromLocationFeatureDataset(f.feature)) ?? [];
       if (exists(incomingProperties) && exists(formikRef.current) && needsUserConfirmation) {
         if (incomingProperties.length > 0) {
           // Check all properties for confirmation
@@ -163,7 +163,6 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
         handleSuccess(response);
       }
     } finally {
-      mapMachine.processCreation();
       formikHelpers?.setSubmitting(false);
     }
   };
@@ -172,7 +171,7 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
     <View
       formikRef={formikRef}
       managementInitialValues={initialForm}
-      loading={loading || bcaLoading}
+      loading={loading || isLoading}
       displayFormInvalid={!isFormValid}
       confirmBeforeAdd={confirmBeforeAdd}
       onSave={handleSave}

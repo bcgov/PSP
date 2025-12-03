@@ -5,7 +5,7 @@ import { createRef } from 'react';
 import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSelectorContainer';
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
 import Claims from '@/constants/claims';
-import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
+import { getMockSelectedFeatureDataset } from '@/mocks/getMockSelectedFeatureDataset';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
@@ -99,13 +99,15 @@ describe('Add Subdivision View', () => {
       mapSelectorProps.addSelectedProperties([
         {
           ...mockFeatureSet,
-          pimsFeature: {
-            ...mockFeatureSet.pimsFeature,
-            properties: {
-              ...mockFeatureSet.pimsFeature?.properties,
-              PID_PADDED: '123-456-789',
+          pimsFeatures: [
+            {
+              ...mockFeatureSet.pimsFeatures,
+              properties: {
+                ...mockFeatureSet.pimsFeature?.properties,
+                PID_PADDED: '123-456-789',
+              },
             },
-          },
+          ],
         },
       ]);
     });

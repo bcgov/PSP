@@ -1,5 +1,6 @@
 import { FeatureCollection, Geometry } from 'geojson';
 
+import { emptyFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
@@ -66,31 +67,20 @@ export const useGenerateResearchNotice = () => {
             : pimsProperty?.planNumber,
           id: pimsProperty?.id ?? 0,
           pimsProperty: pimsProperty,
-          parcelMapFeatureCollection: {
-            features: [
+          featureDataset: {
+            ...emptyFeatureDataset(),
+            parcelFeatures: [
               {
                 type: 'Feature',
                 properties: fullyAttributed,
                 geometry: undefined,
               },
             ],
-            type: 'FeatureCollection',
           },
-          crownTenureFeatures: [],
-          crownLeaseFeatures: [],
-          crownLicenseFeatures: [],
-          crownInclusionFeatures: [],
-          crownInventoryFeatures: [],
-          highwayFeatures: [],
-          municipalityFeatures: [],
           ltsaOrders: undefined,
           spcpOrder: undefined,
           propertyAssociations: undefined,
-          pimsGeoserverFeatureCollection: undefined,
           bcAssessmentSummary: undefined,
-          firstNationFeatures: undefined,
-          alrFeatures: undefined,
-          electoralFeatures: undefined,
         };
         return composed;
       });

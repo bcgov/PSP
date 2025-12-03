@@ -1,6 +1,6 @@
 import isNumber from 'lodash/isNumber';
 
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import {
   fromApiOrganization,
   fromApiPerson,
@@ -294,9 +294,9 @@ export class FormLeaseProperty {
     return model;
   }
 
-  public static fromFeatureDataset(mapProperty: SelectedFeatureDataset): FormLeaseProperty {
+  public static fromFeatureDataset(mapProperty: LocationFeatureDataset): FormLeaseProperty {
     const model = new FormLeaseProperty();
-    model.property = PropertyForm.fromFeatureDataset(mapProperty);
+    model.property = PropertyForm.fromLocationFeatureDataset(mapProperty);
     return model;
   }
 

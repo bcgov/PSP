@@ -32,7 +32,7 @@ import FileMenuView from '../shared/FileMenuView';
 import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
-import UpdateProperties from '../shared/update/properties/UpdateProperties';
+import UpdatePropertiesContainer from '../shared/update/properties/UpdatePropertiesContainer';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionGenerateContainer from './common/GenerateForm/AcquisitionGenerateContainer';
@@ -118,7 +118,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
     <Switch>
       <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
         {file && (
-          <UpdateProperties
+          <UpdatePropertiesContainer
             file={file}
             setIsShowingPropertySelector={closePropertySelector}
             onSuccess={onSuccess}
@@ -132,6 +132,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
             }
             canRemove={canRemove}
             canUploadShapefiles={true}
+            canReposition={true}
             formikRef={formikRef}
           />
         )}

@@ -2,11 +2,8 @@ import { polygon } from '@turf/turf';
 import { Feature, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 
-import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
-import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
 import { getEmptyFileProperty } from '@/mocks/fileProperty.mock';
-import { getMockLatLng, getMockLocation, getMockPolygon } from '@/mocks/geometries.mock';
+import { getMockLocation } from '@/mocks/geometries.mock';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
 import { getEmptyProperty } from '@/models/defaultInitializers';
@@ -14,11 +11,10 @@ import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelM
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 
 import {
-  filePropertyToLocationBoundaryDataset,
   getFilePropertyName,
   getLatLng,
   getPrettyLatLng,
-  getPropertyNameFromSelectedFeatureSet,
+  getPropertyNameFromLocationFeatureSet,
   isLatLngInFeatureSetBoundary,
   latLngToApiLocation,
   locationFromFileProperty,
@@ -27,13 +23,15 @@ import {
   pinFromFeatureSet,
   PropertyName,
 } from './mapPropertyUtils';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
 
 describe('mapPropertyUtils', () => {
   it.each([
     [{}, { label: NameSourceType.NONE, value: '' }],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         location: null,
         pimsFeature: {} as any,
         parcelFeature: { properties: { PID: undefined } } as any,
@@ -42,7 +40,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         location: null,
         pimsFeature: {} as any,
         parcelFeature: { properties: { PID: '' } } as any,
@@ -51,7 +49,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: {} as any,
         parcelFeature: { properties: { PID: '000-000-001' } } as any,
       },
@@ -59,7 +57,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: {} as any,
         parcelFeature: {
           properties: {
@@ -73,7 +71,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         location: null,
         pimsFeature: {} as any,
         parcelFeature: { properties: { PIN: undefined } } as any,
@@ -82,7 +80,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         location: null,
         pimsFeature: {} as any,
         parcelFeature: { properties: { PIN: '' } } as any,
@@ -91,7 +89,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: {} as any,
         parcelFeature: { properties: { PIN: 111112 } } as any,
       },
@@ -99,7 +97,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: {} as any,
         parcelFeature: {
           properties: {
@@ -112,7 +110,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         location: null,
         pimsFeature: {} as any,
         parcelFeature: { properties: { PLAN_NUMBER: undefined } } as any,
@@ -121,7 +119,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         location: null,
         pimsFeature: {} as any,
         parcelFeature: { properties: { PLAN_NUMBER: '' } } as any,
@@ -130,7 +128,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: {} as any,
         parcelFeature: { properties: { PLAN_NUMBER: '1' } } as any,
       },
@@ -138,7 +136,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: {} as any,
         parcelFeature: { properties: { PLAN_NUMBER: 'PB1000' } } as any,
       },
@@ -146,7 +144,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         location: { lat: 1, lng: 2 },
         fileLocation: null,
         pimsFeature: {} as any,
@@ -156,7 +154,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         location: null,
         pimsFeature: { properties: { STREET_ADDRESS_1: undefined } } as any,
         parcelFeature: {} as any,
@@ -165,7 +163,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         location: null,
         pimsFeature: { properties: { STREET_ADDRESS_1: '' } } as any,
         parcelFeature: {} as any,
@@ -174,7 +172,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         location: null,
         pimsFeature: { properties: { STREET_ADDRESS_1: '1234 fake st' } } as any,
         parcelFeature: {} as any,
@@ -183,8 +181,8 @@ describe('mapPropertyUtils', () => {
     ],
   ])(
     'getPropertyNameFromSelectedFeatureSet test with source %o expecting %o',
-    (featureSet: SelectedFeatureDataset, expectedName: PropertyName) => {
-      const actualName = getPropertyNameFromSelectedFeatureSet(featureSet);
+    (featureSet: LocationFeatureDataset, expectedName: PropertyName) => {
+      const actualName = getPropertyNameFromLocationFeatureSet(featureSet);
       expect(actualName.label).toEqual(expectedName.label);
       expect(actualName.value).toEqual(expectedName.value);
     },
@@ -251,14 +249,14 @@ describe('mapPropertyUtils', () => {
   it.each([
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: { properties: { PID_PADDED: '123-456-789' } } as any,
       },
       '123-456-789',
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: {} as any,
         parcelFeature: { properties: { PID: '9999' } } as any,
       },
@@ -266,7 +264,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: {} as any,
         parcelFeature: {} as any,
       },
@@ -274,7 +272,7 @@ describe('mapPropertyUtils', () => {
     ],
   ])(
     'pidFromFeatureSet test with feature set %o - expected %s',
-    (featureSet: SelectedFeatureDataset, expectedValue: string | null) => {
+    (featureSet: LocationFeatureDataset, expectedValue: string | null) => {
       const pid = pidFromFeatureSet(featureSet);
       expect(pid).toEqual(expectedValue);
     },
@@ -282,12 +280,12 @@ describe('mapPropertyUtils', () => {
 
   it.each([
     [
-      { ...getMockSelectedFeatureDataset(), pimsFeature: { properties: { PIN: 1234 } } as any },
+      { ...getMockLocationFeatureDataset(), pimsFeature: { properties: { PIN: 1234 } } as any },
       '1234',
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: {} as any,
         parcelFeature: { properties: { PIN: 9999 } } as any,
       },
@@ -295,7 +293,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: {} as any,
         parcelFeature: {} as any,
       },
@@ -303,6 +301,7 @@ describe('mapPropertyUtils', () => {
     ],
     [
       {
+        ...getMockLocationFeatureDataset(),
         pimsFeature: { properties: { pin: '4321' } } as any,
         parcelFeature: { properties: { pid: 1234 } } as any,
       },
@@ -310,7 +309,7 @@ describe('mapPropertyUtils', () => {
     ],
   ])(
     'pinFromFeatureSet test with feature set %o - expected %s',
-    (featureSet: SelectedFeatureDataset, expectedValue: string | null) => {
+    (featureSet: LocationFeatureDataset, expectedValue: string | null) => {
       const pid = pinFromFeatureSet(featureSet);
       expect(pid).toEqual(expectedValue);
     },
@@ -339,35 +338,6 @@ describe('mapPropertyUtils', () => {
   );
 
   it.each([
-    [
-      { ...getEmptyFileProperty(), location: getMockLocation() },
-      { location: getMockLatLng(), boundary: null, isActive: null, fileBoundary: null },
-    ],
-    [
-      {
-        ...getEmptyFileProperty(),
-        location: null,
-        property: {
-          ...getEmptyProperty(),
-          location: getMockLocation(),
-          boundary: getMockPolygon(),
-        },
-      },
-      { location: getMockLatLng(), boundary: getMockPolygon(), isActive: null, fileBoundary: null },
-    ],
-    [{ ...getEmptyFileProperty(), location: null }, null],
-  ])(
-    'filePropertyToLocationBoundaryDataset test with file property %o - expected %o',
-    (
-      fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
-      expectedValue: LocationBoundaryDataset | null,
-    ) => {
-      const dataset = filePropertyToLocationBoundaryDataset(fileProperty);
-      expect(dataset).toEqual(expectedValue);
-    },
-  );
-
-  it.each([
     [4, 5, { ...getMockLocation(4, 5) }],
     [null, null, null],
   ])(
@@ -386,7 +356,7 @@ describe('mapPropertyUtils', () => {
     [
       { lat: 44, lng: -77 },
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: polygon([
           [
             [-81, 41],
@@ -402,7 +372,7 @@ describe('mapPropertyUtils', () => {
     [
       { lat: 44, lng: 80 },
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: polygon([
           [
             [-81, 41],
@@ -418,7 +388,7 @@ describe('mapPropertyUtils', () => {
     [
       { lat: 44, lng: -77 },
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: null,
         parcelFeature: polygon([
           [
@@ -435,7 +405,7 @@ describe('mapPropertyUtils', () => {
     [
       { lat: 44, lng: 80 },
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         pimsFeature: null,
         parcelFeature: polygon([
           [
@@ -452,7 +422,7 @@ describe('mapPropertyUtils', () => {
     [
       { lat: 44, lng: -77 },
       {
-        ...getMockSelectedFeatureDataset(),
+        ...getMockLocationFeatureDataset(),
         location: null,
         fileLocation: null,
         pimsFeature: null,
@@ -462,7 +432,7 @@ describe('mapPropertyUtils', () => {
     ],
   ])(
     'isLatLngInFeatureSetBoundary test with lat/long %o, feature set %o - expected %o',
-    (latLng: LatLngLiteral, featureset: SelectedFeatureDataset, expectedValue: boolean) => {
+    (latLng: LatLngLiteral, featureset: LocationFeatureDataset, expectedValue: boolean) => {
       const result = isLatLngInFeatureSetBoundary(latLng, featureset);
       expect(result).toEqual(expectedValue);
     },

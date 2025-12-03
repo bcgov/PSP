@@ -13,8 +13,11 @@ import { chain, compact, isNumber } from 'lodash';
 import polylabel from 'polylabel';
 import { toast } from 'react-toastify';
 
-import { LocationBoundaryDataset, MapFeatureData } from '@/components/common/mapFSM/models';
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { MapFeatureData } from '@/components/common/mapFSM/models';
+import {
+  FeatureDataset,
+  LocationFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { ONE_HUNDRED_METER_PRECISION } from '@/components/maps/constants';
 import { AddressForm, PropertyForm } from '@/features/mapSideBar/shared/models';
 import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_CodeTypes_GeoJsonTypes';
@@ -24,7 +27,7 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { exists, formatApiAddress, pidFormatter } from '@/utils';
+import { exists, firstOrNull, formatApiAddress, formatSplitAddress, pidFormatter } from '@/utils';
 
 export enum NameSourceType {
   PID = 'PID',
@@ -41,8 +44,8 @@ export interface PropertyName {
   value: string;
 }
 
-export const getPropertyNameFromSelectedFeatureSet = (
-  selectedFeature: SelectedFeatureDataset | null,
+export const getPropertyNameFromLocationFeatureSet = (
+  selectedFeature: LocationFeatureDataset | null,
 ): PropertyName => {
   if (!exists(selectedFeature)) {
     return { label: NameSourceType.NONE, value: '' };
@@ -67,6 +70,46 @@ export const getPropertyNameFromSelectedFeatureSet = (
     };
   } else if (exists(address) && address?.length > 0) {
     return { label: NameSourceType.ADDRESS, value: address ?? '' };
+  }
+
+  return { label: NameSourceType.NONE, value: '' };
+};
+
+export const getPropertyNameFromForm = (propertyForm: PropertyForm | null): PropertyName => {
+  if (!exists(propertyForm)) {
+    return { label: NameSourceType.NONE, value: '' };
+  }
+
+  const pid = propertyForm.pid;
+  const pin = propertyForm.pin;
+  const planNumber = propertyForm.planNumber;
+  const address = propertyForm.address;
+  const location = propertyForm.fileLocation;
+
+  if (exists(pid) && pid?.toString()?.length > 0 && pid !== '0') {
+    return { label: NameSourceType.PID, value: pidFormatter(pid.toString()) };
+  } else if (exists(pin) && pin?.toString()?.length > 0 && pin !== '0') {
+    return { label: NameSourceType.PIN, value: pin.toString() };
+  } else if (exists(planNumber) && planNumber?.toString()?.length > 0) {
+    return { label: NameSourceType.PLAN, value: planNumber.toString() };
+  } else if (exists(location?.lat) && exists(location?.lng)) {
+    return {
+      label: NameSourceType.LOCATION,
+      value: compact([location.lng?.toFixed(6), location.lat?.toFixed(6)]).join(', '),
+    };
+  } else if (exists(address)) {
+    return {
+      label: NameSourceType.ADDRESS,
+      value:
+        formatSplitAddress(
+          address.streetAddress1,
+          address.streetAddress1,
+          address.streetAddress3,
+          address.municipality,
+          address.province,
+          address.postalCode,
+        ) ?? '',
+    };
   }
 
   return { label: NameSourceType.NONE, value: '' };
@@ -170,17 +213,6 @@ export const getFeatureBoundedCenter = (feature: Feature<Geometry, GeoJsonProper
   }
 };
 
-export const featuresetToLocationBoundaryDataset = (
-  featureSet: SelectedFeatureDataset,
-): LocationBoundaryDataset => {
-  return {
-    location: featureSet?.fileLocation ?? featureSet?.location,
-    boundary: featureSet?.pimsFeature?.geometry ?? featureSet?.parcelFeature?.geometry ?? null,
-    fileBoundary: featureSet?.fileBoundary ?? null,
-    isActive: featureSet.isActive,
-  };
-};
-
 export function pidFromFullyAttributedFeature(
   parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null,
 ): string | null {
@@ -201,40 +233,45 @@ export function planFromFullyAttributedFeature(
     : null;
 }
 
-export function pidFromFeatureSet(featureset: SelectedFeatureDataset): string | null {
-  if (exists(featureset?.pimsFeature?.properties)) {
-    return exists(featureset?.pimsFeature?.properties?.PID_PADDED)
-      ? featureset?.pimsFeature?.properties?.PID_PADDED?.toString()
+export function pidFromFeatureSet(featureset: FeatureDataset): string | null {
+  const pimsFeature = firstOrNull(featureset?.pimsFeatures);
+  if (exists(pimsFeature?.properties)) {
+    return exists(pimsFeature?.properties?.PID_PADDED)
+      ? pimsFeature?.properties?.PID_PADDED?.toString()
       : null;
   }
 
-  return pidFromFullyAttributedFeature(featureset?.parcelFeature);
+  const parcelFeature = firstOrNull(featureset?.parcelFeatures);
+  return pidFromFullyAttributedFeature(parcelFeature);
 }
 
-export function pinFromFeatureSet(featureset: SelectedFeatureDataset): string | null {
-  if (exists(featureset?.pimsFeature?.properties)) {
-    return exists(featureset?.pimsFeature?.properties?.PIN)
-      ? featureset?.pimsFeature?.properties?.PIN?.toString()
+export function pinFromFeatureSet(featureset: FeatureDataset): string | null {
+  const pimsFeature = firstOrNull(featureset?.pimsFeatures);
+  if (exists(pimsFeature?.properties)) {
+    return exists(pimsFeature?.properties?.PIN) ? pimsFeature?.properties?.PIN?.toString() : null;
+  }
+
+  const parcelFeature = firstOrNull(featureset?.parcelFeatures);
+  return pinFromFullyAttributedFeature(parcelFeature);
+}
+
+export function planFromFeatureSet(featureset: FeatureDataset): string | null {
+  const pimsFeature = firstOrNull(featureset?.pimsFeatures);
+  if (exists(pimsFeature?.properties)) {
+    return exists(pimsFeature?.properties?.SURVEY_PLAN_NUMBER)
+      ? pimsFeature?.properties?.SURVEY_PLAN_NUMBER?.toString()
       : null;
   }
 
-  return pinFromFullyAttributedFeature(featureset?.parcelFeature);
+  const parcelFeature = firstOrNull(featureset?.parcelFeatures);
+  return planFromFullyAttributedFeature(parcelFeature);
 }
 
-export function planFromFeatureSet(featureset: SelectedFeatureDataset): string | null {
-  if (exists(featureset?.pimsFeature?.properties)) {
-    return exists(featureset?.pimsFeature?.properties?.SURVEY_PLAN_NUMBER)
-      ? featureset?.pimsFeature?.properties?.SURVEY_PLAN_NUMBER?.toString()
-      : null;
-  }
-
-  return planFromFullyAttributedFeature(featureset?.parcelFeature);
-}
-
-export function addressFromFeatureSet(featureset: SelectedFeatureDataset): string | null {
-  if (exists(featureset?.pimsFeature?.properties)) {
-    return exists(featureset?.pimsFeature?.properties?.STREET_ADDRESS_1)
-      ? formatApiAddress(AddressForm.fromPimsView(featureset?.pimsFeature?.properties).toApi())
+export function addressFromFeatureSet(featureset: FeatureDataset): string | null {
+  const pimsFeature = firstOrNull(featureset?.pimsFeatures);
+  if (exists(pimsFeature?.properties)) {
+    return exists(pimsFeature?.properties?.STREET_ADDRESS_1)
+      ? formatApiAddress(AddressForm.fromPimsView(pimsFeature?.properties).toApi())
       : null;
   }
 
@@ -273,34 +310,6 @@ export function pimsGeomeryToGeometry(
   return null;
 }
 
-export function filePropertyToLocationBoundaryDataset(
-  fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
-): LocationBoundaryDataset | null {
-  const geom = locationFromFileProperty(fileProperty);
-  const location = getLatLng(geom);
-  return exists(location)
-    ? {
-        location,
-        boundary: fileProperty?.property?.boundary ?? null,
-        fileBoundary: fileProperty?.boundary ?? null,
-        isActive: fileProperty.isActive,
-      }
-    : null;
-}
-
-export function propertyToLocationBoundaryDataset(
-  property: ApiGen_Concepts_Property | undefined | null,
-): LocationBoundaryDataset | null {
-  const location = getLatLng(property.location);
-  return exists(location)
-    ? {
-        location,
-        boundary: property?.boundary ?? null,
-        fileBoundary: null,
-      }
-    : null;
-}
-
 /**
  * Takes a (Lat, Long) value and a FeatureSet and determines if the point resides inside the polygon.
  * The polygon can be convex or concave. The function accounts for holes.
@@ -311,12 +320,14 @@ export function propertyToLocationBoundaryDataset(
  */
 export function isLatLngInFeatureSetBoundary(
   latLng: LatLngLiteral,
-  featureset: SelectedFeatureDataset,
+  featureset: FeatureDataset,
 ): boolean {
+  // TODO: Make this work with the all of the features instead of just the first one
+  const pimsFeature = firstOrNull(featureset?.pimsFeatures);
+  const parcelFeature = firstOrNull(featureset?.parcelFeatures);
+
   const location = point([latLng.lng, latLng.lat]);
-  const boundary = (featureset?.pimsFeature?.geometry ?? featureset?.parcelFeature?.geometry) as
-    | Polygon
-    | MultiPolygon;
+  const boundary = (pimsFeature?.geometry ?? parcelFeature?.geometry) as Polygon | MultiPolygon;
 
   return exists(boundary) && booleanPointInPolygon(location, boundary);
 }
@@ -348,24 +359,76 @@ export function sortFileProperties<T extends ApiGen_Concepts_FileProperty>(
   return null;
 }
 
-export const areSelectedFeaturesEqual = (
-  lhs: SelectedFeatureDataset,
-  rhs: SelectedFeatureDataset,
-) => {
-  const lhsName = getPropertyNameFromSelectedFeatureSet(lhs);
-  const rhsName = getPropertyNameFromSelectedFeatureSet(rhs);
-  if (
-    (lhsName.label === rhsName.label &&
-      lhsName.label !== NameSourceType.NONE &&
-      lhsName.label !== NameSourceType.PLAN) ||
-    (lhsName.label === NameSourceType.PLAN &&
-      lhs.location.lat === rhs.location.lat &&
-      lhs.location.lng === rhs.location.lng)
-  ) {
-    return lhsName.value === rhsName.value;
+export function areFeatureDatasetsEqual(p1: FeatureDataset, p2: FeatureDataset): boolean {
+  if (!exists(p1) || !exists(p2)) {
+    return false;
   }
+
+  const pid1 = pidFromFeatureSet(p1) ?? null;
+  const pid2 = pidFromFeatureSet(p2) ?? null;
+  if (exists(pid1) && pid1 === pid2) {
+    return true;
+  }
+
+  const pin1 = pinFromFeatureSet(p1) ?? null;
+  const pin2 = pinFromFeatureSet(p2) ?? null;
+
+  if (exists(pin1) && pin1 === pin2) {
+    return true;
+  }
+
+  // Some parcels are only identified by their plan-number (e.g. common strata, parks)
+  // Only consider plan-number as an identifier when there are no PID/PIN
+  const planNumber1 = planFromFeatureSet(p1) ?? null;
+  const planNumber2 = planFromFeatureSet(p2) ?? null;
+  if (
+    exists(planNumber1) &&
+    !exists(pid1) &&
+    !exists(pin1) &&
+    !exists(pid2) &&
+    !exists(pin2) &&
+    planNumber1 === planNumber2
+  ) {
+    return true;
+  }
+
   return false;
-};
+}
+
+export function areLocationFeatureDatasetsEqual(
+  p1: LocationFeatureDataset,
+  p2: LocationFeatureDataset,
+): boolean {
+  if (!exists(p1) || !exists(p2)) {
+    return false;
+  }
+
+  if (areFeatureDatasetsEqual(p1, p2)) {
+    return true;
+  }
+
+  // Only consider lat/long when there are no PID/PIN
+  const location1 = p1.location;
+  const location2 = p2.location;
+  const pid1 = pidFromFeatureSet(p1) ?? null;
+  const pid2 = pidFromFeatureSet(p2) ?? null;
+  const pin1 = pinFromFeatureSet(p1) ?? null;
+  const pin2 = pinFromFeatureSet(p2) ?? null;
+  if (
+    exists(location1) &&
+    exists(location2) &&
+    !exists(pid1) &&
+    !exists(pin1) &&
+    !exists(pid2) &&
+    !exists(pin2) &&
+    location1.lat === location2.lat &&
+    location1.lng === location2.lng
+  ) {
+    return true;
+  }
+
+  return false;
+}
 
 export const isEmptyFeatureCollection = (collection: FeatureCollection) => {
   return !(exists(collection?.features) && collection.features.length > 0);
@@ -386,7 +449,10 @@ export const arePropertyFormsEqual = (lhs: PropertyForm, rhs: PropertyForm): boo
   if (!exists(lhs) || !exists(rhs)) {
     return exists(lhs) === exists(rhs);
   }
-  return areSelectedFeaturesEqual(lhs.toFeatureDataset(), rhs.toFeatureDataset());
+  return areLocationFeatureDatasetsEqual(
+    lhs.toLocationFeatureDataset(),
+    rhs.toLocationFeatureDataset(),
+  );
 };
 
 export interface RegionDistrictResult {
@@ -394,14 +460,9 @@ export interface RegionDistrictResult {
   districtResult: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties>;
 }
 
-export function featureSetToLatLngKey(featureSet: SelectedFeatureDataset | null | undefined) {
-  if (exists(featureSet.location)) {
-    const latLng: LatLngLiteral = {
-      lat: featureSet.location.lat,
-      lng: featureSet.location.lng,
-    };
-
-    const key = `${latLng.lat}-${latLng.lng}`;
+export function latLngToKey(location: LatLngLiteral | null | undefined) {
+  if (exists(location)) {
+    const key = `${location.lat}-${location.lng}`;
 
     return key;
   }
@@ -416,7 +477,7 @@ export function featureSetToLatLngKey(featureSet: SelectedFeatureDataset | null 
  * @returns A Map where keys are lat-lng strings and values are RegionDistrictResult objects.
  */
 export async function getRegionAndDistrictsResults(
-  properties: SelectedFeatureDataset[],
+  properties: LocationFeatureDataset[],
   regionSearch: (
     latlng: LatLngLiteral,
     geometryName?: string | undefined,
@@ -435,15 +496,10 @@ export async function getRegionAndDistrictsResults(
       continue;
     }
 
-    const latLng: LatLngLiteral = {
-      lat: property.location.lat,
-      lng: property.location.lng,
-    };
-
-    const key = featureSetToLatLngKey(property);
+    const key = latLngToKey(property.location);
 
     if (!latLngMap.has(key)) {
-      latLngMap.set(key, latLng);
+      latLngMap.set(key, property.location);
     }
   }
 

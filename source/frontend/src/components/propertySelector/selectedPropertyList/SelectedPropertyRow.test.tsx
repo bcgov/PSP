@@ -8,7 +8,6 @@ import {
   IShapeUploadModalProps,
   ShapeUploadModal,
 } from '@/features/properties/shapeUpload/ShapeUploadModal';
-import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
 import { getMockPolygon } from '@/mocks/geometries.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
@@ -17,6 +16,7 @@ import { exists } from '@/utils';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import SelectedPropertyRow, { ISelectedPropertyRowProps } from './SelectedPropertyRow';
+import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -55,16 +55,12 @@ describe('SelectedPropertyRow component', () => {
       <Formik
         onSubmit={noop}
         initialValues={{
-          properties: [
-            exists(renderOptions.props?.property)
-              ? PropertyForm.fromFeatureDataset(renderOptions.props?.property)
-              : new PropertyForm(),
-          ],
+          properties: [renderOptions.props?.property ?? new PropertyForm()],
         }}
       >
         {() => (
           <SelectedPropertyRow
-            property={renderOptions.props?.property ?? new PropertyForm().toFeatureDataset()}
+            property={renderOptions.props?.property ?? new PropertyForm()}
             index={renderOptions.props?.index ?? 0}
             onRemove={onRemove}
             showDisable={renderOptions.props?.showDisable ?? false}
@@ -107,21 +103,23 @@ describe('SelectedPropertyRow component', () => {
   });
 
   it('displays pid', async () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
-    mockFeatureSet.parcelFeature = {} as any;
-    mockFeatureSet.pimsFeature = {
-      ...mockFeatureSet.pimsFeature,
-      properties: {
-        ...mockFeatureSet.pimsFeature?.properties,
-        PID_PADDED: '111-111-111',
+    const mockFeatureSet = getMockLocationFeatureDataset();
+    mockFeatureSet.parcelFeatures = [] as any;
+    mockFeatureSet.pimsFeatures = [
+      {
+        ...mockFeatureSet.pimsFeatures[0],
+        properties: {
+          ...mockFeatureSet.pimsFeatures[0]?.properties,
+          PID_PADDED: '111-111-111',
+        },
       },
-    };
-    await setup({ props: { property: mockFeatureSet } });
+    ];
+    await setup({ props: { property: PropertyForm.fromLocationFeatureDataset(mockFeatureSet) } });
     expect(screen.getByText('PID: 111-111-111')).toBeVisible();
   });
 
   it('falls back to pin', async () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
+    const mockFeatureSet = getMockLocationFeatureDataset();
     mockFeatureSet.parcelFeature = {} as any;
     mockFeatureSet.pimsFeature = {
       ...mockFeatureSet.pimsFeature,
@@ -136,25 +134,27 @@ describe('SelectedPropertyRow component', () => {
   });
 
   it('falls back to plan number', async () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
-    mockFeatureSet.parcelFeature = {} as any;
-    mockFeatureSet.pimsFeature = {
-      ...mockFeatureSet.pimsFeature,
-      properties: {
-        ...mockFeatureSet.pimsFeature?.properties,
-        SURVEY_PLAN_NUMBER: 'VIP123',
-        PID_PADDED: undefined,
-        PIN: undefined,
+    const mockFeatureSet = getMockLocationFeatureDataset();
+    mockFeatureSet.parcelFeatures = null;
+    mockFeatureSet.pimsFeatures = [
+      {
+        ...mockFeatureSet.pimsFeatures[0],
+        properties: {
+          ...mockFeatureSet.pimsFeatures[0]?.properties,
+          SURVEY_PLAN_NUMBER: 'VIP123',
+          PID_PADDED: undefined,
+          PIN: undefined,
+        },
       },
-    };
+    ];
     await setup({ props: { property: mockFeatureSet } });
     expect(screen.getByText('Plan #: VIP123')).toBeVisible();
   });
 
   it('falls back to lat/lng', async () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
-    mockFeatureSet.pimsFeature = {} as any;
-    mockFeatureSet.parcelFeature = {} as any;
+    const mockFeatureSet = getMockLocationFeatureDataset();
+    mockFeatureSet.pimsFeatures = null;
+    mockFeatureSet.parcelFeatures = null;
     mockFeatureSet.location = { lat: 4, lng: 5 };
 
     await setup({ props: { property: mockFeatureSet } });
@@ -162,19 +162,21 @@ describe('SelectedPropertyRow component', () => {
   });
 
   it('falls back to address', async () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
+    const mockFeatureSet = getMockLocationFeatureDataset();
     mockFeatureSet.location = undefined;
-    mockFeatureSet.parcelFeature = {} as any;
-    mockFeatureSet.pimsFeature = {
-      ...mockFeatureSet.pimsFeature,
-      properties: {
-        ...mockFeatureSet.pimsFeature?.properties,
-        PID_PADDED: undefined,
-        PIN: undefined,
-        SURVEY_PLAN_NUMBER: undefined,
-        STREET_ADDRESS_1: 'a test address',
+    mockFeatureSet.parcelFeatures = null;
+    mockFeatureSet.pimsFeatures = [
+      {
+        ...mockFeatureSet.pimsFeatures[0],
+        properties: {
+          ...mockFeatureSet.pimsFeatures[0]?.properties,
+          PID_PADDED: undefined,
+          PIN: undefined,
+          SURVEY_PLAN_NUMBER: undefined,
+          STREET_ADDRESS_1: 'a test address',
+        },
       },
-    };
+    ];
     await setup({ props: { property: mockFeatureSet } });
     expect(screen.getByText('Address: a test address')).toBeVisible();
   });

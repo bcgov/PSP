@@ -182,16 +182,18 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
           property={{
             ...toFormValues(composedPropertyState?.apiWrapper?.response),
             electoralDistrict: firstOrNull(
-              composedPropertyState?.composedProperty?.electoralFeatures,
+              composedPropertyState?.composedProperty?.featureDataset?.electoralFeatures,
             ),
-            isALR: composedPropertyState?.composedProperty?.alrFeatures?.length > 0,
+            isALR: composedPropertyState?.composedProperty?.featureDataset?.alrFeatures?.length > 0,
             firstNations: {
               bandName:
-                firstOrNull(composedPropertyState?.composedProperty?.firstNationFeatures)
-                  ?.properties.BAND_NAME || '',
+                firstOrNull(
+                  composedPropertyState?.composedProperty?.featureDataset?.firstNationFeatures,
+                )?.properties.BAND_NAME || '',
               reserveName:
-                firstOrNull(composedPropertyState?.composedProperty?.firstNationFeatures)
-                  ?.properties.ENGLISH_NAME || '',
+                firstOrNull(
+                  composedPropertyState?.composedProperty?.featureDataset?.firstNationFeatures,
+                )?.properties.ENGLISH_NAME || '',
             },
           }}
           loading={composedPropertyState.apiWrapper?.loading ?? false}
@@ -241,7 +243,8 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
 
   if (exists(composedPropertyState?.composedProperty)) {
     const composedProperty = composedPropertyState?.composedProperty;
-    if (composedProperty?.parcelMapFeatureCollection?.features?.length > 0) {
+    const featureDataset = composedPropertyState?.composedProperty?.featureDataset;
+    if (featureDataset?.parcelFeatures?.length > 0) {
       tabViews.push({
         content: (
           <LayerTabContainer
@@ -254,10 +257,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
         name: 'PMBC',
       });
     }
-    if (
-      composedProperty?.pimsGeoserverFeatureCollection?.features?.length > 0 &&
-      !exists(composedProperty?.id)
-    ) {
+    if (featureDataset?.pimsFeatures?.length > 0 && !exists(composedProperty?.id)) {
       tabViews.push({
         content: (
           <LayerTabContainer
@@ -271,12 +271,11 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
       });
     }
     if (
-      composedProperty?.crownInclusionFeatures?.length +
-        composedProperty?.crownInventoryFeatures?.length +
-        composedProperty?.crownLeaseFeatures?.length +
-        composedProperty?.crownLeaseFeatures?.length +
-        composedProperty?.crownLicenseFeatures?.length +
-        composedProperty?.crownTenureFeatures?.length >
+      featureDataset?.crownLandInclusionsFeatures?.length +
+        featureDataset?.crownLandInventoryFeatures?.length +
+        featureDataset?.crownLandLeasesFeatures?.length +
+        featureDataset?.crownLandLicensesFeatures?.length +
+        featureDataset?.crownLandTenuresFeatures?.length >
       0
     ) {
       tabViews.push({
@@ -291,7 +290,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
         name: 'Crown',
       });
     }
-    if (composedProperty?.highwayFeatures?.length > 0) {
+    if (featureDataset?.highwayFeatures?.length > 0) {
       tabViews.push({
         content: (
           <LayerTabContainer
@@ -305,10 +304,10 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
       });
     }
     if (
-      composedProperty?.municipalityFeatures?.length > 0 ||
-      composedProperty?.electoralFeatures?.length > 0 ||
-      composedProperty?.alrFeatures?.length > 0 ||
-      (composedProperty?.firstNationFeatures?.length > 0 &&
+      featureDataset?.municipalityFeatures?.length > 0 ||
+      featureDataset?.electoralFeatures?.length > 0 ||
+      featureDataset?.alrFeatures?.length > 0 ||
+      (featureDataset?.firstNationFeatures?.length > 0 &&
         !composedPropertyState.alrLoading &&
         !composedPropertyState.electoralLoading &&
         !composedPropertyState.electoralLoading &&

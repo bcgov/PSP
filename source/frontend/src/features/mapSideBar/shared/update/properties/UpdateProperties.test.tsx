@@ -20,7 +20,11 @@ import {
   waitFor,
 } from '@/utils/test-utils';
 
-import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
+import UpdatePropertiesContainer, {
+  IUpdatePropertiesContainerProps,
+} from './UpdatePropertiesContainer';
+import { IPropertiesListContainerProps } from './PropertiesListContainer';
+import { emptyFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -43,12 +47,12 @@ const updateFileProperties = vi.fn();
 describe('UpdateProperties component', () => {
   // render component under test
   const setup = async (
-    props: Partial<IUpdatePropertiesProps>,
+    props: Partial<IUpdatePropertiesContainerProps>,
     renderOptions: RenderOptions = {},
   ) => {
     const utils = render(
       <SideBarContextProvider>
-        <UpdateProperties
+        <UpdatePropertiesContainer
           file={props.file ?? getMockResearchFile()}
           setIsShowingPropertySelector={setIsShowingPropertySelector}
           onSuccess={onSuccess}
@@ -195,39 +199,21 @@ describe('UpdateProperties component', () => {
         mockMapMachine: {
           ...mapMachineBaseMock,
           // properties to be added to the current file via the map state machine (ie working list, etc)
-          selectedFeatures: [
+          locationFeaturesForAddition: [
             {
+              ...emptyFeatureDataset(),
               location: { lng: -120.69195885, lat: 50.25163372 },
-              fileLocation: null,
-              fileBoundary: null,
-              pimsFeature: null,
-              parcelFeature: getMockFullyAttributedParcel('111-111-111'),
-              regionFeature: null,
-              districtFeature: null,
-              selectingComponentId: null,
-              municipalityFeature: null,
+              parcelFeatures: [getMockFullyAttributedParcel('111-111-111')],
             },
             {
+              ...emptyFeatureDataset(),
               location: { lng: -120.69195885, lat: 50.25163372 },
-              fileLocation: null,
-              fileBoundary: null,
-              pimsFeature: null,
-              parcelFeature: getMockFullyAttributedParcel('222-222-222'),
-              regionFeature: null,
-              districtFeature: null,
-              selectingComponentId: null,
-              municipalityFeature: null,
+              parcelFeatures: [getMockFullyAttributedParcel('222-222-222')],
             },
             {
+              ...emptyFeatureDataset(),
               location: { lng: -120.69195885, lat: 50.25163372 },
-              fileLocation: null,
-              fileBoundary: null,
-              pimsFeature: null,
-              parcelFeature: getMockFullyAttributedParcel('333-333-333'),
-              regionFeature: null,
-              districtFeature: null,
-              selectingComponentId: null,
-              municipalityFeature: null,
+              parcelFeatures: [getMockFullyAttributedParcel('333-333-333')],
             },
           ],
         },

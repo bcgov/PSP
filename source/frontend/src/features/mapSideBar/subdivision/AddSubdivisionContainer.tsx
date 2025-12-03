@@ -34,7 +34,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
   const [initialForm, setInitialForm] = useState<SubdivisionFormModel>(new SubdivisionFormModel());
   const formikRef = useRef<FormikProps<SubdivisionFormModel>>(null);
   const mapMachine = useMapStateMachine();
-  const selectedFeatureDataset = firstOrNull(mapMachine.selectedFeatures);
+  const selectedFeatureDataset = firstOrNull(mapMachine.locationFeaturesForAddition);
   const { setModalContent, setDisplayModal } = useModalContext();
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
 
@@ -59,15 +59,15 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
     async function loadInitialProperty() {
       // support creating a new subdivision from the map popup
       if (selectedFeatureDataset !== null) {
-        const propertyForm = PropertyForm.fromFeatureDataset(selectedFeatureDataset);
+        const propertyForm = PropertyForm.fromLocationFeatureDataset(selectedFeatureDataset);
         if (isValidString(propertyForm.pid)) {
           // TODO: This should work with multiple properties
-          const pimsFeature = selectedFeatureDataset.pimsFeature;
+          const pimsFeature = firstOrNull(selectedFeatureDataset.pimsFeatures);
           propertyForm.address = pimsFeature?.properties
             ? AddressForm.fromPimsView(pimsFeature?.properties)
             : undefined;
           const subdivisionFormModel = new SubdivisionFormModel();
-          subdivisionFormModel.sourceProperty = propertyForm.toApi();
+          subdivisionFormModel.sourceProperty = propertyForm;
           subdivisionFormModel.sourceProperty.isOwned = pimsFeature.properties.IS_OWNED;
           setInitialForm(subdivisionFormModel);
         }
@@ -139,7 +139,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
         handleSuccess(propertyOperations);
       }
     } finally {
-      mapMachine.processCreation();
+      mapMachine.processLocationFeaturesAddition();
       formikHelpers?.setSubmitting(false);
     }
   };

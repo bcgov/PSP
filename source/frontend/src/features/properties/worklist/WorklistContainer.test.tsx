@@ -6,7 +6,7 @@ import { act, render, RenderOptions, screen } from '@/utils/test-utils';
 import { useWorklistContext } from './context/WorklistContext';
 import { WorklistContainer } from './WorklistContainer';
 import { IWorklistViewProps } from './WorklistView';
-import { ParcelDataset } from '../parcelList/models';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 vi.mock('./context/WorklistContext');
 
@@ -25,7 +25,7 @@ vi.mock('leaflet', async () => {
 });
 
 // Parcel list mock
-let mockParcels: ParcelDataset[] = [];
+let mockParcels: LocationFeatureDataset[] = [];
 
 // Mocks
 const select = vi.fn();

@@ -3,14 +3,14 @@ import { FormikProps } from 'formik';
 import React from 'react';
 
 import * as MapStateMachineContext from '@/components/common/mapFSM/MapStateMachineContext';
-import * as FeatureDatasetsHook from './useFeatureDatasetsWithAddresses';
+import * as FeatureDatasetsHook from './useLocationFeatureDatasetsWithAddresses';
 import * as EditPropertiesModeHook from './useEditPropertiesMode';
-import { useEditPropertiesNotifier } from './useEditPropertiesNotifier';
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import { toast } from 'react-toastify';
-import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
-import { FeatureDatasetWithAddress } from './useFeatureDatasetsWithAddresses';
+import { LocationFeatureDatasetWithAddress } from './useLocationFeatureDatasetsWithAddresses';
 import { vi, Mock } from 'vitest';
+import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
+import { usePropertyFormSyncronizer } from './usePropertyFormSyncronizer';
 
 vi.mock('./useEditPropertiesMode', () => ({
   useEditPropertiesMode: vi.fn(),
@@ -22,7 +22,7 @@ vi.mock('./useFeatureDatasetsWithAddresses', () => ({
 const toastSuccessSpy = vi.spyOn(toast, 'success');
 const toastWarnSpy = vi.spyOn(toast, 'warn');
 
-describe('useEditPropertiesNotifier', () => {
+describe('usePropertyFormSyncronizer', () => {
   let mockProcessCreation: Mock;
   let mockFormikRef: React.RefObject<FormikProps<any>>;
 
@@ -43,36 +43,36 @@ describe('useEditPropertiesNotifier', () => {
       processCreation: mockProcessCreation,
     } as any);
 
-    (FeatureDatasetsHook.useFeatureDatasetsWithAddresses as any).mockReturnValue({
+    (FeatureDatasetsHook.useLocationFeatureDatasetsWithAddresses as any).mockReturnValue({
       featuresWithAddresses: [
-        { feature: getMockSelectedFeatureDataset() } as FeatureDatasetWithAddress,
+        { feature: getMockSelectedFeatureDataset() } as LocationFeatureDatasetWithAddress,
       ],
       bcaLoading: false,
     });
   });
 
   it('calls useEditPropertiesMode and returns featuresWithAddresses and bcaLoading', () => {
-    const { result } = renderHook(() => useEditPropertiesNotifier(mockFormikRef, 'properties'));
+    const { result } = renderHook(() => usePropertyFormSyncronizer(mockFormikRef, 'properties'));
     expect(EditPropertiesModeHook.useEditPropertiesMode).toHaveBeenCalled();
     expect(result.current.featuresWithAddresses).toEqual([
       { feature: getMockSelectedFeatureDataset() },
     ]);
-    expect(result.current.bcaLoading).toBe(false);
+    expect(result.current.isLoading).toBe(false);
   });
 
   it('uses overrideFeatures if provided', () => {
     const overrideFeatures = [{ feature: { id: 2 }, address: '456 Side St' }];
     renderHook(() =>
-      useEditPropertiesNotifier(mockFormikRef, 'properties', overrideFeatures as any),
+      usePropertyFormSyncronizer(mockFormikRef, 'properties', overrideFeatures as any),
     );
-    expect(FeatureDatasetsHook.useFeatureDatasetsWithAddresses).toHaveBeenCalledWith(
+    expect(FeatureDatasetsHook.useLocationFeatureDatasetsWithAddresses).toHaveBeenCalledWith(
       overrideFeatures,
     );
   });
 
   it('calls setFieldValue, setFieldTouched, and shows success toast when unique properties are added', () => {
     mockFormikRef.current.values = { properties: [] };
-    (FeatureDatasetsHook.useFeatureDatasetsWithAddresses as any).mockReturnValue({
+    (FeatureDatasetsHook.useLocationFeatureDatasetsWithAddresses as any).mockReturnValue({
       featuresWithAddresses: [
         { feature: { id: 1 }, address: 'A' },
         { feature: { id: 2 }, address: 'B' },
@@ -80,7 +80,7 @@ describe('useEditPropertiesNotifier', () => {
       bcaLoading: false,
     });
 
-    renderHook(() => useEditPropertiesNotifier(mockFormikRef, 'properties'));
+    renderHook(() => usePropertyFormSyncronizer(mockFormikRef, 'properties'));
 
     expect(mockFormikRef.current.setFieldValue).toHaveBeenCalledWith('properties', [
       expect.objectContaining({ address: 'A' }),
@@ -93,18 +93,18 @@ describe('useEditPropertiesNotifier', () => {
   });
 
   it('shows warning toast when duplicates are skipped', () => {
-    const mockPropertyForms = [PropertyForm.fromFeatureDataset(getMockSelectedFeatureDataset())];
+    const mockPropertyForms = [PropertyForm.fromLocationFeatureDataset(getMockSelectedFeatureDataset())];
     mockFormikRef.current.values = { properties: mockPropertyForms };
 
-    (FeatureDatasetsHook.useFeatureDatasetsWithAddresses as any).mockReturnValue({
+    (FeatureDatasetsHook.useLocationFeatureDatasetsWithAddresses as any).mockReturnValue({
       featuresWithAddresses: [
-        { feature: getMockSelectedFeatureDataset() } as FeatureDatasetWithAddress,
-        { feature: { id: 999 }, address: 'Unique' } as unknown as FeatureDatasetWithAddress,
+        { feature: getMockSelectedFeatureDataset() } as LocationFeatureDatasetWithAddress,
+        { feature: { id: 999 }, address: 'Unique' } as unknown as LocationFeatureDatasetWithAddress,
       ],
       bcaLoading: false,
     });
 
-    renderHook(() => useEditPropertiesNotifier(mockFormikRef, 'properties'));
+    renderHook(() => usePropertyFormSyncronizer(mockFormikRef, 'properties'));
 
     expect(mockFormikRef.current.setFieldValue).toHaveBeenCalled();
     expect(mockFormikRef.current.setFieldTouched).toHaveBeenCalledWith('properties', true);
@@ -115,16 +115,16 @@ describe('useEditPropertiesNotifier', () => {
 
   it('shows only warning toast if all properties are duplicates', () => {
     mockFormikRef.current.values = {
-      properties: [PropertyForm.fromFeatureDataset(getMockSelectedFeatureDataset())],
+      properties: [PropertyForm.fromLocationFeatureDataset(getMockSelectedFeatureDataset())],
     };
-    (FeatureDatasetsHook.useFeatureDatasetsWithAddresses as any).mockReturnValue({
+    (FeatureDatasetsHook.useLocationFeatureDatasetsWithAddresses as any).mockReturnValue({
       featuresWithAddresses: [
-        { feature: getMockSelectedFeatureDataset() } as FeatureDatasetWithAddress,
+        { feature: getMockSelectedFeatureDataset() } as LocationFeatureDatasetWithAddress,
       ],
       bcaLoading: false,
     });
 
-    renderHook(() => useEditPropertiesNotifier(mockFormikRef, 'properties'));
+    renderHook(() => usePropertyFormSyncronizer(mockFormikRef, 'properties'));
 
     expect(mockFormikRef.current.setFieldValue).not.toHaveBeenCalled();
     expect(mockFormikRef.current.setFieldTouched).not.toHaveBeenCalled();
@@ -136,12 +136,12 @@ describe('useEditPropertiesNotifier', () => {
   it('handles empty propertyForms gracefully', () => {
     mockFormikRef.current.values = { properties: [{ id: 1 }] };
 
-    (FeatureDatasetsHook.useFeatureDatasetsWithAddresses as any).mockReturnValue({
+    (FeatureDatasetsHook.useLocationFeatureDatasetsWithAddresses as any).mockReturnValue({
       featuresWithAddresses: [],
       bcaLoading: false,
     });
 
-    renderHook(() => useEditPropertiesNotifier(mockFormikRef, 'properties'));
+    renderHook(() => usePropertyFormSyncronizer(mockFormikRef, 'properties'));
 
     expect(mockFormikRef.current.setFieldValue).not.toHaveBeenCalled();
     expect(mockFormikRef.current.setFieldTouched).not.toHaveBeenCalled();
@@ -152,7 +152,7 @@ describe('useEditPropertiesNotifier', () => {
   it('handles undefined formikRef.current gracefully', () => {
     const emptyRef = { current: undefined } as React.RefObject<FormikProps<any>>;
 
-    renderHook(() => useEditPropertiesNotifier(emptyRef, 'properties'));
+    renderHook(() => usePropertyFormSyncronizer(emptyRef, 'properties'));
 
     expect(toastSuccessSpy).not.toHaveBeenCalled();
     expect(toastWarnSpy).not.toHaveBeenCalled();

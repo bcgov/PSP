@@ -10,8 +10,8 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
 import { useModalContext } from '@/hooks/useModalContext';
+import { usePropertyFormSyncronizer } from '@/hooks/usePropertyFormSyncronizer';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, isValidId } from '@/utils';
@@ -58,7 +58,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
   );
 
   // Get PropertyForms with addresses for all selected features
-  const { bcaLoading } = useEditPropertiesNotifier(formikRef, 'properties');
+  const { isLoading } = usePropertyFormSyncronizer(formikRef, 'properties');
 
   // Memoize the initial form with all properties
   const initialForm = useMemo(() => {
@@ -140,7 +140,6 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
         onSuccess(response.id);
       }
     } finally {
-      mapMachine.processCreation();
       formikRef.current?.setSubmitting(false);
     }
   };
@@ -176,7 +175,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
           icon={<ResearchFileIcon title="Research file Icon" fill="currentColor" />}
           footer={
             <SidebarFooter
-              isOkDisabled={formikProps?.isSubmitting || bcaLoading}
+              isOkDisabled={formikProps?.isSubmitting || isLoading}
               onSave={handleSave}
               onCancel={cancelFunc}
               displayRequiredFieldError={!formikProps.isValid && !!formikProps.submitCount}
@@ -186,7 +185,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
           onClose={cancelFunc}
         >
           <StyledFormWrapper>
-            <LoadingBackdrop show={bcaLoading} parentScreen={true} />
+            <LoadingBackdrop show={isLoading} parentScreen={true} />
             <View confirmBeforeAdd={confirmBeforeAdd} />
           </StyledFormWrapper>
           <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />

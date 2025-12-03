@@ -1,3 +1,4 @@
+import { useFormikContext } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -6,15 +7,18 @@ import { Input } from '@/components/common/form/';
 import { Section } from '@/components/common/Section/Section';
 
 import { PropertyForm } from '../../shared/models';
+import PropertiesListContainer from '../../shared/update/properties/PropertiesListContainer';
 import { ResearchFileNameGuide } from '../common/ResearchFileNameGuide';
 import { UpdateProjectsSubForm } from '../common/updateProjects/UpdateProjectsSubForm';
-import ResearchProperties from './ResearchProperties';
+import { ResearchForm } from './models';
 
 export interface IAddResearchFormProps {
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
 const AddResearchForm: React.FC<IAddResearchFormProps> = props => {
+  const { values } = useFormikContext<ResearchForm>();
+
   return (
     <StyledFormWrapper>
       <Section>
@@ -35,7 +39,15 @@ const AddResearchForm: React.FC<IAddResearchFormProps> = props => {
       <Section header="Project">
         <UpdateProjectsSubForm field="researchFileProjects" />
       </Section>
-      <ResearchProperties confirmBeforeAdd={props.confirmBeforeAdd} />
+
+      <Section header="Properties to include in this file:">
+        <PropertiesListContainer
+          properties={values.properties}
+          verifyCanRemove={(_, removeCallback) => removeCallback()}
+          needsConfirmationBeforeAdd={props.confirmBeforeAdd}
+          canUploadShapefiles={false}
+        />
+      </Section>
     </StyledFormWrapper>
   );
 };

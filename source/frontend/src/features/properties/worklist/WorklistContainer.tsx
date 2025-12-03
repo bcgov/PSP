@@ -12,7 +12,8 @@ export interface IWorklistContainerProps {
 
 export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) => {
   const { parcels, remove, clearAll } = useWorklistContext();
-  const { prepareForCreation, isEditPropertiesMode } = useMapStateMachine();
+  const { requestLocationFeatureAddition: prepareForCreation, isEditPropertiesMode } =
+    useMapStateMachine();
   const pathGenerator = usePathGenerator();
 
   // Handle creating a research file from the worklist
@@ -20,8 +21,7 @@ export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) =
     if (parcels.length === 0) {
       return;
     }
-    const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
-    prepareForCreation(featuresSets);
+    prepareForCreation(parcels);
     pathGenerator.newFile('research');
   }, [parcels, pathGenerator, prepareForCreation]);
 
@@ -30,8 +30,7 @@ export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) =
     if (parcels.length === 0) {
       return;
     }
-    const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
-    prepareForCreation(featuresSets);
+    prepareForCreation(parcels);
     pathGenerator.newFile('acquisition');
   }, [parcels, pathGenerator, prepareForCreation]);
 
@@ -40,8 +39,7 @@ export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) =
     if (parcels.length === 0) {
       return;
     }
-    const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
-    prepareForCreation(featuresSets);
+    prepareForCreation(parcels);
     pathGenerator.newFile('disposition');
   }, [parcels, pathGenerator, prepareForCreation]);
 
@@ -50,8 +48,7 @@ export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) =
     if (parcels.length === 0) {
       return;
     }
-    const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
-    prepareForCreation(featuresSets);
+    prepareForCreation(parcels);
     pathGenerator.newFile('lease');
   }, [parcels, pathGenerator, prepareForCreation]);
 
@@ -60,16 +57,14 @@ export const WorklistContainer: React.FC<IWorklistContainerProps> = ({ View }) =
     if (parcels.length === 0) {
       return;
     }
-    const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
-    prepareForCreation(featuresSets);
+    prepareForCreation(parcels);
     pathGenerator.newFile('management');
   }, [parcels, pathGenerator, prepareForCreation]);
 
   const handleAddToOpenFile = useCallback(() => {
     // If in edit properties mode, prepare the parcels for addition to an open file
     if (parcels.length > 0 && isEditPropertiesMode) {
-      const featuresSets = parcels.map(p => p.toSelectedFeatureDataset());
-      prepareForCreation(featuresSets);
+      prepareForCreation(parcels);
     }
   }, [isEditPropertiesMode, parcels, prepareForCreation]);
 

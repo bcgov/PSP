@@ -1,7 +1,7 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
+import { getMockSelectedFeatureDataset } from '@/mocks/getMockSelectedFeatureDataset';
 import { render, RenderOptions, screen } from '@/utils/test-utils';
 
 import PropertyMapSelectorSubForm, {

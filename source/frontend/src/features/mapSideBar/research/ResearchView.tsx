@@ -22,7 +22,7 @@ import FileMenuView from '../shared/FileMenuView';
 import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
-import UpdateProperties from '../shared/update/properties/UpdateProperties';
+import UpdatePropertiesContainer from '../shared/update/properties/UpdatePropertiesContainer';
 import ResearchHeader from './common/ResearchHeader';
 import ResearchGenerateContainer from './ResearchGenerateContainer';
 import ResearchRouter from './ResearchRouter';
@@ -85,7 +85,7 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = ({
     <Switch>
       <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
         {exists(researchFile) && (
-          <UpdateProperties
+          <UpdatePropertiesContainer
             file={researchFile}
             setIsShowingPropertySelector={closePropertySelector}
             onSuccess={onSuccess}

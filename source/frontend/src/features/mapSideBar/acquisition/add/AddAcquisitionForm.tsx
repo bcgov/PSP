@@ -31,12 +31,12 @@ import { exists, isValidId, isValidString } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { PropertyForm } from '../../shared/models';
+import PropertiesListContainer from '../../shared/update/properties/PropertiesListContainer';
 import { TeamMemberFormModal } from '../common/modals/AcquisitionFormModal';
 import UpdateAcquisitionOwnersSubForm from '../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
 import { UpdateAcquisitionTeamSubForm } from '../common/update/acquisitionTeam/UpdateAcquisitionTeamSubForm';
 import { ProgressStatusModel } from '../models/ProgressStatusModel';
 import { TakingTypeStatusModel } from '../models/TakingTypeStatusModel';
-import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
 import { AcquisitionForm } from './models';
 
 export interface IAddAcquisitionFormProps {
@@ -95,18 +95,16 @@ export const AddAcquisitionForm: React.FunctionComponent<IAddAcquisitionFormProp
       onSubmit={handleSubmit}
       enableReinitialize
     >
-      {formikProps => {
-        return (
-          <AddAcquisitionDetailSubForm
-            parentId={parentId}
-            formikProps={formikProps}
-            onSubmit={onSubmit}
-            showDiffMinistryRegionModal={showDiffMinistryRegionModal}
-            setShowDiffMinistryRegionModal={setShowDiffMinistryRegionModal}
-            confirmBeforeAdd={confirmBeforeAdd}
-          ></AddAcquisitionDetailSubForm>
-        );
-      }}
+      {formikProps => (
+        <AddAcquisitionDetailSubForm
+          parentId={parentId}
+          formikProps={formikProps}
+          onSubmit={onSubmit}
+          showDiffMinistryRegionModal={showDiffMinistryRegionModal}
+          setShowDiffMinistryRegionModal={setShowDiffMinistryRegionModal}
+          confirmBeforeAdd={confirmBeforeAdd}
+        />
+      )}
     </Formik>
   );
 };
@@ -134,9 +132,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
     ApiGen_Concepts_Product[] | undefined
   >(undefined);
 
-  const { values, setFieldValue } = formikProps;
-
-  const ownerSolicitorContact = values?.ownerSolicitor.contact;
+  const ownerSolicitorContact = formikProps.values.ownerSolicitor.contact;
 
   const { retrieveProjectProducts } = useProjectProvider();
   const { getOptionsByType, getByType } = useLookupCodeHelpers();
@@ -186,12 +182,12 @@ const AddAcquisitionDetailSubForm: React.FC<{
 
   React.useEffect(() => {
     if (orgPersons?.length === 0) {
-      setFieldValue('ownerSolicitor.primaryContactId', null);
+      formikProps.setFieldValue('ownerSolicitor.primaryContactId', null);
     }
     if (orgPersons?.length === 1) {
-      setFieldValue('ownerSolicitor.primaryContactId', orgPersons[0].personId);
+      formikProps.setFieldValue('ownerSolicitor.primaryContactId', orgPersons[0].personId);
     }
-  }, [orgPersons, setFieldValue]);
+  }, [formikProps, formikProps.setFieldValue, orgPersons]);
 
   React.useEffect(() => {
     if (ownerSolicitorContact?.organizationId) {
@@ -209,13 +205,13 @@ const AddAcquisitionDetailSubForm: React.FC<{
                 label="Ministry project"
                 tooltip="Sub-file has the same project as the main file and it can only be updated from the main file"
               >
-                {values?.formattedProject ?? ''}
+                {formikProps.values?.formattedProject ?? ''}
               </SectionField>
               <SectionField
                 label="Product"
                 tooltip="Sub-file has the same product as the main file and it can only be updated from the main file"
               >
-                {values?.formattedProduct ?? ''}
+                {formikProps.values?.formattedProduct ?? ''}
               </SectionField>
             </>
           ) : (
@@ -254,12 +250,12 @@ const AddAcquisitionDetailSubForm: React.FC<{
                   .call(e.target.selectedOptions)
                   .map((option: HTMLOptionElement & number) => option.value)[0];
                 if (isValidString(selectedValue) && selectedValue !== 'OTHER') {
-                  setFieldValue('fundingTypeOtherDescription', '');
+                  formikProps.setFieldValue('fundingTypeOtherDescription', '');
                 }
               }}
             />
           </SectionField>
-          {values?.fundingTypeCode === 'OTHER' && (
+          {formikProps.values?.fundingTypeCode === 'OTHER' && (
             <SectionField label="Other funding">
               <LargeInput field="fundingTypeOtherDescription" />
             </SectionField>
@@ -336,9 +332,11 @@ const AddAcquisitionDetailSubForm: React.FC<{
               : 'Properties to include in this file:'
           }
         >
-          <AcquisitionPropertiesSubForm
-            formikProps={formikProps}
-            confirmBeforeAdd={confirmBeforeAdd}
+          <PropertiesListContainer
+            properties={formikProps.values?.properties}
+            verifyCanRemove={(_, verifyCallback) => verifyCallback()}
+            needsConfirmationBeforeAdd={confirmBeforeAdd}
+            canUploadShapefiles={true}
           />
         </Section>
 
@@ -390,7 +388,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
                   ) {
                     formikProps.setFieldValue('otherSubfileInterestType', null);
                   } else {
-                    formikProps.setFieldValue('otherSubfileInterestType', '');
+                    formikProps?.setFieldValue('otherSubfileInterestType', '');
                   }
                 }}
                 required
@@ -399,7 +397,8 @@ const AddAcquisitionDetailSubForm: React.FC<{
             </SectionField>
           )}
           {isSubFile &&
-            values?.subfileInterestTypeCode === ApiGen_CodeTypes_SubfileInterestTypes.OTHER && (
+            formikProps.values?.subfileInterestTypeCode ===
+              ApiGen_CodeTypes_SubfileInterestTypes.OTHER && (
               <SectionField label="" required>
                 <LargeInput
                   field="otherSubfileInterestType"

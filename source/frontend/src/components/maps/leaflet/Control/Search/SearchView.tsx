@@ -13,13 +13,13 @@ import { MapFeatureData } from '@/components/common/mapFSM/models';
 import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
 import { Section } from '@/components/common/Section/Section';
 import { SimpleSectionHeader } from '@/components/common/SimpleSectionHeader';
+import { featureToLocationFeatureDataset } from '@/components/propertySelector/search/PropertySelectorSearchContainer';
 import { Claims } from '@/constants';
 import { PropertyFilter } from '@/features/properties/filter';
 import {
   defaultPropertyFilter,
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
-import { ParcelDataset } from '@/features/properties/parcelList/models';
 import { ParcelListContainer } from '@/features/properties/parcelList/ParcelListContainer';
 import { ParcelListView } from '@/features/properties/parcelList/ParcelListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -78,7 +78,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
     groupedFeatures
       .value()
       .flatMap(x => x)
-      .map(x => ParcelDataset.fromFullyAttributedFeature(x.feature)) ?? [];
+      .map(x => featureToLocationFeatureDataset(x.feature)) ?? [];
 
   const pimsGroupedFeatures = chain(props.searchResult?.pimsLocationFeatures.features)
     .groupBy(feature => feature?.properties?.SURVEY_PLAN_NUMBER)
@@ -104,7 +104,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
     pimsGroupedFeatures
       .value()
       .flatMap(x => x)
-      .map(x => ParcelDataset.fromPimsFeature(x.feature)) ?? [];
+      .map(x => featureToLocationFeatureDataset(x.feature)) ?? [];
 
   const menuOptions: MenuOption[] = useMemo(() => {
     const options: MenuOption[] = [];

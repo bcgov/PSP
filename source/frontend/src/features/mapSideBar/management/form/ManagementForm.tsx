@@ -13,9 +13,9 @@ import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 
 import { PropertyForm } from '../../shared/models';
+import PropertiesListContainer from '../../shared/update/properties/PropertiesListContainer';
 import { AddManagementFormYupSchema } from '../models/AddManagementFormYupSchema';
 import { ManagementFormModel } from '../models/ManagementFormModel';
-import ManagementPropertiesSubForm from './ManagementPropertiesSubForm';
 import ManagementTeamSubForm from './ManagementTeamSubForm';
 
 export interface IManagementFormProps {
@@ -107,9 +107,10 @@ const ManagementForm: React.FC<IManagementFormProps> = props => {
             </Section>
 
             <Section header="Properties to include in this file:">
-              <ManagementPropertiesSubForm
-                formikProps={formikProps}
-                confirmBeforeAdd={confirmBeforeAdd}
+              <PropertiesListContainer
+                verifyCanRemove={(_, verifyCallback) => verifyCallback()}
+                needsConfirmationBeforeAdd={confirmBeforeAdd}
+                properties={formikProps.values.fileProperties}
               />
             </Section>
 

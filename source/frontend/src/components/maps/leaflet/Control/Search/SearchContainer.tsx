@@ -4,15 +4,18 @@ import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import {
+  emptyFeatureDataset,
+  LocationFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import {
   exists,
-  featureSetToLatLngKey,
   getFeatureBoundedCenter,
   getRegionAndDistrictsResults,
+  latLngToKey,
 } from '@/utils';
 
 import { ISearchViewProps } from './SearchView';
@@ -30,7 +33,7 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
     mapFeatureData,
     mapMarkLocation,
     mapClearLocationMark,
-    prepareForCreation,
+    requestLocationFeatureAddition: requestAddition,
     isEditPropertiesMode,
   } = useMapStateMachine();
 
@@ -73,27 +76,21 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
   };
 
   // Base dataset (no region/district yet)
-  const baseDatasets = useMemo<SelectedFeatureDataset[]>(() => {
+  const baseDatasets = useMemo<LocationFeatureDataset[]>(() => {
     return (
-      mapFeatureData?.fullyAttributedFeatures.features.map<SelectedFeatureDataset>(pmbcParcel => {
+      mapFeatureData?.fullyAttributedFeatures.features.map<LocationFeatureDataset>(pmbcParcel => {
         const center = getFeatureBoundedCenter(pmbcParcel);
         return {
-          parcelFeature: pmbcParcel,
-          pimsFeature: null,
+          ...emptyFeatureDataset(),
           location: { lat: center[1], lng: center[0] },
-          regionFeature: null,
-          fileLocation: null,
-          fileBoundary: null,
-          districtFeature: null,
-          municipalityFeature: null,
-          selectingComponentId: null,
+          parcelFeatures: [pmbcParcel],
         };
       }) ?? []
     );
   }, [mapFeatureData?.fullyAttributedFeatures?.features]);
 
   // Enrich dataset with region/district info
-  const [selectedFeatureDatasets, setSelectedFeatureDatasets] = useState<SelectedFeatureDataset[]>(
+  const [locationFeatureDatasets, setLocationFeatureDatasets] = useState<LocationFeatureDataset[]>(
     [],
   );
 
@@ -102,7 +99,7 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
 
     async function fetchRegions() {
       if (baseDatasets.length === 0) {
-        setSelectedFeatureDatasets([]);
+        setLocationFeatureDatasets([]);
         return;
       }
 
@@ -111,7 +108,7 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
       if (cancelled) return;
 
       const enriched = baseDatasets.map(dataset => {
-        const key = featureSetToLatLngKey(dataset);
+        const key = latLngToKey(dataset.location);
         if (results.has(key)) {
           const { regionResult, districtResult } = results.get(key)!;
           return {
@@ -124,7 +121,7 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
         }
       });
 
-      setSelectedFeatureDatasets(enriched);
+      setLocationFeatureDatasets(enriched);
     }
 
     fetchRegions();
@@ -137,36 +134,36 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
 
   // Actions for creating new files
   const onCreateResearchFile = useCallback(() => {
-    prepareForCreation(selectedFeatureDatasets);
+    requestAddition(locationFeatureDatasets);
     pathGenerator.newFile('research');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
+  }, [pathGenerator, requestAddition, locationFeatureDatasets]);
 
   const onCreateAcquisitionFile = useCallback(() => {
-    prepareForCreation(selectedFeatureDatasets);
+    requestAddition(locationFeatureDatasets);
     pathGenerator.newFile('acquisition');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
+  }, [pathGenerator, requestAddition, locationFeatureDatasets]);
 
   const onCreateDispositionFile = useCallback(() => {
-    prepareForCreation(selectedFeatureDatasets);
+    requestAddition(locationFeatureDatasets);
     pathGenerator.newFile('disposition');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
+  }, [pathGenerator, requestAddition, locationFeatureDatasets]);
 
   const onCreateLeaseFile = useCallback(() => {
-    prepareForCreation(selectedFeatureDatasets);
+    requestAddition(locationFeatureDatasets);
     pathGenerator.newFile('lease');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
+  }, [pathGenerator, requestAddition, locationFeatureDatasets]);
 
   const onCreateManagementFile = useCallback(() => {
-    prepareForCreation(selectedFeatureDatasets);
+    requestAddition(locationFeatureDatasets);
     pathGenerator.newFile('management');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
+  }, [pathGenerator, requestAddition, locationFeatureDatasets]);
 
   const onAddToOpenFile = useCallback(() => {
     // If in edit properties mode, prepare the parcel for addition to an open file
     if (isEditPropertiesMode) {
-      prepareForCreation(selectedFeatureDatasets);
+      requestAddition(locationFeatureDatasets);
     }
-  }, [isEditPropertiesMode, prepareForCreation, selectedFeatureDatasets]);
+  }, [isEditPropertiesMode, requestAddition, locationFeatureDatasets]);
 
   return (
     <View

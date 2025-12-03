@@ -155,7 +155,7 @@ describe('AddResearchContainer component', () => {
   it('should save the form and navigate to details view when Save button is clicked', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      processCreation: vi.fn(),
+      processLocationFeaturesAddition: vi.fn(),
       refreshMapProperties: vi.fn(),
     };
 
@@ -169,7 +169,7 @@ describe('AddResearchContainer component', () => {
     await act(async () => userEvent.click(getSaveButton()));
 
     expect(onSuccess).toHaveBeenCalled();
-    expect(testMockMachine.processCreation).toHaveBeenCalled();
+    expect(testMockMachine.processLocationFeaturesAddition).toHaveBeenCalled();
     expect(testMockMachine.refreshMapProperties).toHaveBeenCalled();
   });
 

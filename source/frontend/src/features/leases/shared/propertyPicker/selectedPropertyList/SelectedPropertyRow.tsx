@@ -5,20 +5,20 @@ import { RiDragMove2Line } from 'react-icons/ri';
 import { RemoveButton, StyledIconButton } from '@/components/common/buttons';
 import { InlineInput } from '@/components/common/form/styles';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import OverflowTip from '@/components/common/OverflowTip';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { FormLeaseProperty, LeaseFormModel } from '@/features/leases/models';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import { withNameSpace } from '@/utils/formUtils';
-import { getPropertyNameFromSelectedFeatureSet, NameSourceType } from '@/utils/mapPropertyUtils';
+import { getPropertyNameFromForm, NameSourceType } from '@/utils/mapPropertyUtils';
 
 export interface ISelectedPropertyRowProps {
   index: number;
   nameSpace?: string;
   onRemove: () => void;
-  property: SelectedFeatureDataset;
+  property: PropertyForm;
   formikProps: FormikProps<LeaseFormModel>;
   showSeparator?: boolean;
 }
@@ -32,7 +32,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
   showSeparator = false,
 }) => {
   const mapMachine = useMapStateMachine();
-  const propertyName = getPropertyNameFromSelectedFeatureSet(property);
+  const propertyName = getPropertyNameFromForm(property);
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:
@@ -77,14 +77,14 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           <StyledIconButton
             title="move-pin-location"
             onClick={() => {
-              mapMachine.startReposition(property, index);
+              mapMachine.startReposition(property.toFeature());
             }}
           >
             <RiDragMove2Line size={22} />
           </StyledIconButton>
         </Col>
         <Col xs="auto" className="pr-2">
-          <ZoomToLocation geometry={property.pimsFeature.geometry} icon={ZoomIconType.single} />
+          <ZoomToLocation formProperties={[property]} icon={ZoomIconType.single} />
         </Col>
         <Col md={1} className="pl-3">
           <RemoveButton

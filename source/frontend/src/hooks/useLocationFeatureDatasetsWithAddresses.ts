@@ -1,24 +1,26 @@
 import { useEffect, useState } from 'react';
 
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { AddressForm } from '@/features/mapSideBar/shared/models';
 import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
-import { exists } from '@/utils';
+import { isEmptyOrNull } from '@/utils';
 import { pidFromFeatureSet } from '@/utils/mapPropertyUtils';
 
-export interface FeatureDatasetWithAddress {
-  feature: SelectedFeatureDataset;
+export interface LocationFeatureDatasetWithAddress {
+  feature: LocationFeatureDataset;
   address?: AddressForm;
 }
 
-export const useFeatureDatasetsWithAddresses = (features: SelectedFeatureDataset[] | null) => {
+export const useLocationFeatureDatasetsWithAddresses = (
+  features: LocationFeatureDataset[] | null,
+) => {
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
-  const [results, setResults] = useState<FeatureDatasetWithAddress[]>([]);
+  const [results, setResults] = useState<LocationFeatureDatasetWithAddress[]>([]);
 
   useEffect(() => {
     let isMounted = true;
     const fetchAddresses = async () => {
-      if (!exists(features) || features.length === 0) {
+      if (isEmptyOrNull(features)) {
         setResults([]);
         return;
       }
@@ -46,5 +48,5 @@ export const useFeatureDatasetsWithAddresses = (features: SelectedFeatureDataset
     };
   }, [features, getPrimaryAddressByPid]);
 
-  return { featuresWithAddresses: results, bcaLoading };
+  return { locationFeaturesWithAddresses: results, bcaLoading };
 };

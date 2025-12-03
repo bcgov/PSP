@@ -165,7 +165,7 @@ describe('AddLeaseContainer component', () => {
   it('saves the form with minimal data', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      processCreation: vi.fn(),
+      processLocationFeaturesAddition: vi.fn(),
       refreshMapProperties: vi.fn(),
     };
 
@@ -211,7 +211,7 @@ describe('AddLeaseContainer component', () => {
     await act(async () => userEvent.click(getByText(/Save/i)));
 
     expect(addLease).toHaveBeenCalledWith(leaseData, []);
-    expect(testMockMachine.processCreation).toHaveBeenCalled();
+    expect(testMockMachine.processLocationFeaturesAddition).toHaveBeenCalled();
     expect(onSuccess).toHaveBeenCalled();
   });
 

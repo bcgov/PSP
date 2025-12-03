@@ -15,9 +15,9 @@ import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 
 import { PropertyForm } from '../../shared/models';
+import PropertiesListContainer from '../../shared/update/properties/PropertiesListContainer';
 import { AddDispositionFormYupSchema } from '../models/AddDispositionFormYupSchema';
 import { DispositionFormModel } from '../models/DispositionFormModel';
-import DispositionPropertiesSubForm from './DispositionPropertiesSubForm';
 import DispositionTeamSubForm from './DispositionTeamSubForm';
 
 export interface IDispositionFormProps {
@@ -125,9 +125,10 @@ const DispositionForm: React.FC<IDispositionFormProps> = props => {
             </Section>
 
             <Section header="Properties to include in this file:">
-              <DispositionPropertiesSubForm
-                formikProps={formikProps}
-                confirmBeforeAdd={confirmBeforeAdd}
+              <PropertiesListContainer
+                properties={formikProps.values.fileProperties}
+                verifyCanRemove={(_, verifyCallback) => verifyCallback()}
+                needsConfirmationBeforeAdd={confirmBeforeAdd}
               />
             </Section>
 

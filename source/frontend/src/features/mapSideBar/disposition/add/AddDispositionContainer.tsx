@@ -6,8 +6,8 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
 import { useModalContext } from '@/hooks/useModalContext';
+import { usePropertyFormSyncronizer } from '@/hooks/usePropertyFormSyncronizer';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -56,7 +56,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
   );
 
   const mapMachine = useMapStateMachine();
-  const { featuresWithAddresses, bcaLoading } = useEditPropertiesNotifier(
+  const { featuresWithAddresses, isLoading } = usePropertyFormSyncronizer(
     formikRef,
     'fileProperties',
   );
@@ -66,7 +66,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
       const firstPropertyFeature = firstOrNull(featuresWithAddresses)?.feature;
 
       if (exists(firstPropertyFeature)) {
-        const firstProperty = PropertyForm.fromFeatureDataset(firstPropertyFeature);
+        const firstProperty = PropertyForm.fromLocationFeatureDataset(firstPropertyFeature);
         formikRef?.current?.setFieldValue(
           'regionCode',
           firstProperty.regionName !== 'Cannot determine' ? firstProperty.region : undefined,
@@ -84,7 +84,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
   useEffect(() => {
     const runAsync = async () => {
       const incomingProperties =
-        featuresWithAddresses?.map(f => PropertyForm.fromFeatureDataset(f.feature)) ?? [];
+        featuresWithAddresses?.map(f => PropertyForm.fromLocationFeatureDataset(f.feature)) ?? [];
       if (exists(incomingProperties) && exists(formikRef.current) && needsUserConfirmation) {
         if (incomingProperties.length > 0) {
           // Check all properties for confirmation
@@ -177,7 +177,6 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
         handleSuccess(response);
       }
     } finally {
-      mapMachine.processCreation();
       formikHelpers?.setSubmitting(false);
     }
   };
@@ -186,7 +185,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
     <View
       formikRef={formikRef}
       dispositionInitialValues={initialForm}
-      loading={loading || bcaLoading}
+      loading={loading || isLoading}
       displayFormInvalid={!isFormValid}
       confirmBeforeAdd={confirmBeforeAdd}
       onSave={handleSave}

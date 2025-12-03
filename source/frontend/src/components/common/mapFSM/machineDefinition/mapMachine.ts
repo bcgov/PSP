@@ -7,9 +7,9 @@ import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/Advan
 import { pimsBoundaryLayers } from '@/components/maps/leaflet/Control/LayersControl/LayerDefinitions';
 import { initialEnabledLayers } from '@/components/maps/leaflet/Control/LayersControl/LayersMenuLayout';
 import { defaultPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 
-import { emptyFeatureData, LocationBoundaryDataset } from '../models';
-import { SelectedFeatureDataset } from '../useLocationFeatureLoader';
+import { emptyFeatureData } from '../models';
 import { MachineContext, SideBarType } from './types';
 
 const featureViewStates = {
@@ -19,17 +19,12 @@ const featureViewStates = {
       on: {
         START_SELECTION: {
           target: 'selecting',
-          actions: [
-            assign({ selectingComponentId: (_, event: any) => event.selectingComponentId }),
-          ],
         },
         START_REPOSITION: {
           target: 'repositioning',
           actions: [
             assign({
-              selectingComponentId: (_, event: any) => event.selectingComponentId,
-              repositioningFeatureDataset: (_, event: any) => event.repositioningFeatureDataset,
-              repositioningPropertyIndex: (_, event: any) => event.repositioningPropertyIndex,
+              repositioningFeature: (_, event: any) => event.feature,
             }),
           ],
         },
@@ -39,14 +34,13 @@ const featureViewStates = {
       on: {
         FINISH_SELECTION: {
           target: 'browsing',
-          actions: [assign({ selectingComponentId: () => null })],
         },
         SET_FILE_PROPERTY_LOCATIONS: {
           actions: [
             assign({
               filePropertyLocations: (
                 _,
-                event: AnyEventObject & { locations: LocationBoundaryDataset[] },
+                event: AnyEventObject & { locations: ApiGen_Concepts_FileProperty[] },
               ) => event.locations ?? [],
             }),
           ],
@@ -59,9 +53,7 @@ const featureViewStates = {
           target: 'browsing',
           actions: [
             assign({
-              repositioningFeatureDataset: () => null,
-              repositioningPropertyIndex: () => null,
-              selectingComponentId: () => null,
+              repositioningFeature: () => null,
             }),
           ],
         },
@@ -70,7 +62,7 @@ const featureViewStates = {
             assign({
               filePropertyLocations: (
                 _,
-                event: AnyEventObject & { locations: LocationBoundaryDataset[] },
+                event: AnyEventObject & { locations: ApiGen_Concepts_FileProperty[] },
               ) => event.locations ?? [],
             }),
           ],
@@ -239,6 +231,32 @@ const mapRequestStates = {
   },
 };
 
+const locationFeatureAdditionStates = {
+  initial: 'nothingPending',
+  states: {
+    nothingPending: {
+      on: {
+        REQUEST_LOCATION_ADDITION: {
+          actions: assign({
+            locationFeaturesForAddition: (_, event: any) => event.selectedFeatures,
+          }),
+          target: 'pendingLocationFeatureAddition',
+        },
+      },
+    },
+    pendingLocationFeatureAddition: {
+      on: {
+        PROCESS_LOCATION_ADDITION: {
+          actions: assign({
+            locationFeaturesForAddition: () => null,
+          }),
+          target: 'nothingPending',
+        },
+      },
+    },
+  },
+};
+
 const selectedFeatureLoaderStates = {
   initial: 'idle',
   states: {
@@ -249,7 +267,7 @@ const selectedFeatureLoaderStates = {
             assign({
               isLoading: () => false,
               showPopup: () => false,
-              mapLocationFeatureDataset: (context: any, event: any) => {
+              mapLocationFeatureDataset: (_, event: any) => {
                 return {
                   ...event.locationDataset,
                 };
@@ -312,10 +330,9 @@ const selectedFeatureLoaderStates = {
             assign({
               isLoading: () => false,
               showPopup: () => false,
-              mapLocationFeatureDataset: (context: any, event: any) => {
+              mapLocationFeatureDataset: (_, event: any) => {
                 return {
                   ...event.data,
-                  selectingComponentId: context.selectingComponentId,
                 };
               },
             }),
@@ -396,7 +413,7 @@ const sideBarStates = {
             assign({
               filePropertyLocations: (
                 _,
-                event: AnyEventObject & { locations: LocationBoundaryDataset[] },
+                event: AnyEventObject & { locations: ApiGen_Concepts_FileProperty[] },
               ) => event.locations ?? [],
             }),
           ],
@@ -661,10 +678,7 @@ export const mapMachine = createMachine<MachineContext>({
     mapFeatureSelected: null,
     mapLocationFeatureDataset: null,
     mapMarkedLocation: null,
-    selectedFeatures: [],
-    repositioningFeatureDataset: null,
-    repositioningPropertyIndex: null,
-    selectingComponentId: null,
+    locationFeaturesForAddition: null,
     worklistSelectedMapLocation: null,
     worklistLocationFeatureDataset: null,
     isLoading: false,
@@ -680,6 +694,7 @@ export const mapMachine = createMachine<MachineContext>({
     mapLayersToRefresh: new Set(),
     currentMapBounds: null,
     isEditPropertiesMode: false,
+    repositioningFeature: null,
   },
 
   // State definitions
@@ -722,19 +737,6 @@ export const mapMachine = createMachine<MachineContext>({
         EXIT_MAP: {
           target: 'notMap',
         },
-        PREPARE_FOR_CREATION: {
-          actions: assign({
-            selectedFeatures: (
-              _,
-              event: AnyEventObject & { selectedFeatures: SelectedFeatureDataset[] },
-            ) => event.selectedFeatures,
-          }),
-        },
-        PROCESS_CREATION: {
-          actions: assign({
-            selectedFeatures: () => [],
-          }),
-        },
         SET_EDIT_PROPERTIES_MODE: {
           actions: assign({
             isEditPropertiesMode: (_, event: AnyEventObject & { isEditPropertiesMode: boolean }) =>
@@ -755,6 +757,7 @@ export const mapMachine = createMachine<MachineContext>({
         featureView: featureViewStates,
         featureDataLoader: featureDataLoaderStates,
         mapRequest: mapRequestStates,
+        locationFeatureAddition: locationFeatureAdditionStates,
         selectedFeatureLoader: selectedFeatureLoaderStates,
         sideBar: sideBarStates,
         rightSideBar: rightSideBarStates,

@@ -10,10 +10,7 @@ import ManagementIcon from '@/assets/images/management-icon.svg?react';
 import ResearchIcon from '@/assets/images/research-icon.svg?react';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import {
-  SelectedFeatureDataset,
-  WorklistLocationFeatureDataset,
-} from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
@@ -26,7 +23,7 @@ import { useLtsa } from '@/hooks/useLtsa';
 import {
   exists,
   firstOrNull,
-  getPropertyNameFromSelectedFeatureSet,
+  getPropertyNameFromLocationFeatureSet,
   isValidString,
   pidFormatter,
 } from '@/utils';
@@ -38,7 +35,7 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
 
   const {
     mapLocationFeatureDataset,
-    prepareForCreation,
+    requestLocationFeatureAddition: requestAddition,
     worklistAdd,
     isEditPropertiesMode,
     mapMarkedLocation,
@@ -158,74 +155,44 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
     mapMachine.closeQuickInfo();
   }, [mapMachine]);
 
-  // Convert to an object that can be consumed by the file creation process
-  const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
-    return {
-      selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
-      location: mapLocationFeatureDataset?.location,
-      fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
-      fileBoundary: null,
-      parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
-      pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
-      regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
-      districtFeature: mapLocationFeatureDataset?.districtFeature ?? null,
-      municipalityFeature: firstOrNull(mapLocationFeatureDataset?.municipalityFeatures),
-      isActive: true,
-      displayOrder: 0,
-    };
-  }, [
-    mapLocationFeatureDataset?.selectingComponentId,
-    mapLocationFeatureDataset?.location,
-    mapLocationFeatureDataset?.fileLocation,
-    mapLocationFeatureDataset?.parcelFeatures,
-    mapLocationFeatureDataset?.pimsFeatures,
-    mapLocationFeatureDataset?.regionFeature,
-    mapLocationFeatureDataset?.districtFeature,
-    mapLocationFeatureDataset?.municipalityFeatures,
-  ]);
-
   const onAddToWorklist = useCallback(() => {
-    const worklistDataSet: WorklistLocationFeatureDataset = {
-      ...selectedFeatureDataset,
-      fullyAttributedFeatures: {
-        type: 'FeatureCollection',
-        features: [selectedFeatureDataset.parcelFeature],
-      },
+    const worklistDataSet: LocationFeatureDataset = {
+      ...mapLocationFeatureDataset,
     };
     worklistAdd(worklistDataSet);
-  }, [selectedFeatureDataset, worklistAdd]);
+  }, [mapLocationFeatureDataset, worklistAdd]);
 
   const onCreateResearchFile = useCallback(() => {
-    prepareForCreation([selectedFeatureDataset]);
+    requestAddition([mapLocationFeatureDataset]);
     pathGenerator.newFile('research');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+  }, [pathGenerator, requestAddition, mapLocationFeatureDataset]);
 
   const onCreateAcquisitionFile = useCallback(() => {
-    prepareForCreation([selectedFeatureDataset]);
+    requestAddition([mapLocationFeatureDataset]);
     pathGenerator.newFile('acquisition');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+  }, [pathGenerator, requestAddition, mapLocationFeatureDataset]);
 
   const onCreateDispositionFile = useCallback(() => {
-    prepareForCreation([selectedFeatureDataset]);
+    requestAddition([mapLocationFeatureDataset]);
     pathGenerator.newFile('disposition');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+  }, [pathGenerator, requestAddition, mapLocationFeatureDataset]);
 
   const onCreateLeaseFile = useCallback(() => {
-    prepareForCreation([selectedFeatureDataset]);
+    requestAddition([mapLocationFeatureDataset]);
     pathGenerator.newFile('lease');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+  }, [pathGenerator, requestAddition, mapLocationFeatureDataset]);
 
   const onCreateManagementFile = useCallback(() => {
-    prepareForCreation([selectedFeatureDataset]);
+    requestAddition([mapLocationFeatureDataset]);
     pathGenerator.newFile('management');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+  }, [pathGenerator, requestAddition, mapLocationFeatureDataset]);
 
   const onAddToOpenFile = useCallback(() => {
     // If in edit properties mode, prepare the parcel for addition to an open file
     if (isEditPropertiesMode) {
-      prepareForCreation([selectedFeatureDataset]);
+      requestAddition([mapLocationFeatureDataset]);
     }
-  }, [isEditPropertiesMode, prepareForCreation, selectedFeatureDataset]);
+  }, [isEditPropertiesMode, requestAddition, mapLocationFeatureDataset]);
 
   const menuOptions: MenuOption[] = useMemo(() => {
     const options: MenuOption[] = [];
@@ -405,7 +372,7 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
           {isEmpty && exists(mapMarkedLocation) && (
             <StyledInfoWrapper>
               <SectionField label="Location">
-                {getPropertyNameFromSelectedFeatureSet(selectedFeatureDataset).value}
+                {getPropertyNameFromLocationFeatureSet(mapLocationFeatureDataset).value}
               </SectionField>
             </StyledInfoWrapper>
           )}

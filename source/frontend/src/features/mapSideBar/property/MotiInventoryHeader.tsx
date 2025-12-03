@@ -34,14 +34,14 @@ export interface IMotiInventoryHeaderProps {
 }
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
-  const parcelMapData = props.composedProperty.parcelMapFeatureCollection;
-  const geoserverMapData = props.composedProperty.pimsGeoserverFeatureCollection;
+  const parcelMapData = firstOrNull(props.composedProperty.featureDataset.parcelFeatures);
+  const geoserverMapData = firstOrNull(props.composedProperty.featureDataset.pimsFeatures);
   const apiProperty = props.composedProperty.pimsProperty;
 
   let pmbcParcel: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null = null;
 
-  if (exists(parcelMapData?.features[0])) {
-    pmbcParcel = firstOrNull(parcelMapData?.features);
+  if (exists(parcelMapData)) {
+    pmbcParcel = parcelMapData;
   }
 
   const pid = pidFormatter(props.composedProperty.pid);
@@ -61,15 +61,11 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
   }, [apiProperty]);
 
   const isDisposed = React.useMemo(() => {
-    if (
-      geoserverMapData?.features?.length &&
-      exists(geoserverMapData?.features[0]) &&
-      geoserverMapData?.features[0]?.properties?.IS_DISPOSED
-    ) {
+    if (exists(geoserverMapData?.properties?.IS_DISPOSED)) {
       return true;
     }
     return false;
-  }, [geoserverMapData?.features]);
+  }, [geoserverMapData]);
 
   return (
     <HeaderMaxWidthHeight>

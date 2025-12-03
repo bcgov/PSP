@@ -1,32 +1,32 @@
 import { Feature, Geometry } from 'geojson';
 import { useCallback, useState } from 'react';
 
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { PIMS_Property_Boundary_View } from '@/models/layers/pimsPropertyLocationView';
-import { exists, isValidString, pidFromFeatureSet, pinFromFeatureSet } from '@/utils';
+import { isEmptyOrNull, isValidString, pidFromFeatureSet, pinFromFeatureSet } from '@/utils';
 
 import { usePimsPropertyLayer } from './repositories/mapLayer/usePimsPropertyLayer';
 
 interface UseEnrichWithPimsFeaturesResult {
-  datasets: SelectedFeatureDataset[];
+  datasets: LocationFeatureDataset[];
   loading: boolean;
   error: string | null;
-  enrichWithPimsFeatures: (inputDatasets: SelectedFeatureDataset[]) => Promise<void>;
+  enrichWithPimsFeatures: (inputDatasets: LocationFeatureDataset[]) => Promise<void>;
 }
 
 /**
  * Hook that enriches SelectedFeatureDataset[] with PIMS features using findOneByPidOrPin.
  */
 export function useEnrichWithPimsFeatures(): UseEnrichWithPimsFeaturesResult {
-  const [datasets, setDatasets] = useState<SelectedFeatureDataset[]>([]);
+  const [datasets, setDatasets] = useState<LocationFeatureDataset[]>([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState<string | null>(null);
 
   const { findOneByPidOrPin } = usePimsPropertyLayer();
 
   const enrichWithPimsFeatures = useCallback(
-    async (inputDatasets: SelectedFeatureDataset[]) => {
-      if (!exists(inputDatasets) || inputDatasets.length === 0) {
+    async (inputDatasets: LocationFeatureDataset[]) => {
+      if (isEmptyOrNull(inputDatasets)) {
         setDatasets([]);
         return;
       }
@@ -36,8 +36,12 @@ export function useEnrichWithPimsFeatures(): UseEnrichWithPimsFeaturesResult {
 
       try {
         const updatedPropertyPromises = inputDatasets.map(async dataset => {
-          if (!exists(dataset.parcelFeature)) return dataset;
-          if (exists(dataset.pimsFeature)) return dataset; // already enriched
+          if (isEmptyOrNull(dataset.parcelFeatures)) {
+            return dataset;
+          }
+          if (!isEmptyOrNull(dataset.pimsFeatures)) {
+            return dataset; // already enriched
+          }
 
           const pid = pidFromFeatureSet(dataset);
           const pin = pinFromFeatureSet(dataset);
@@ -47,7 +51,7 @@ export function useEnrichWithPimsFeatures(): UseEnrichWithPimsFeaturesResult {
           try {
             const pimsFeature: Feature<Geometry, PIMS_Property_Boundary_View> | undefined =
               await findOneByPidOrPin(pid, pin);
-            dataset.pimsFeature = pimsFeature ?? null;
+            dataset.pimsFeatures = [pimsFeature];
             return dataset;
           } catch (innerErr) {
             return dataset; // leave dataset unchanged if API fails

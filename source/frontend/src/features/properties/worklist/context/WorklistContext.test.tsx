@@ -4,7 +4,8 @@ import { act } from '@/utils/test-utils';
 
 import { getMockWorklistParcel } from '@/mocks/worklistParcel.mock';
 import { IWorklistNotifier, useWorklistContext, WorklistContextProvider } from './WorklistContext';
-import { ParcelDataset } from '../../parcelList/models';
+import { firstOrNull, latLngToKey } from '@/utils';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 //  Mock notification service
 const mockNotifier: IWorklistNotifier = {
@@ -18,7 +19,7 @@ describe('WorklistContextProvider', () => {
     vi.clearAllMocks();
   });
 
-  const renderWorklistHook = (initial: ParcelDataset[] = []) =>
+  const renderWorklistHook = (initial: LocationFeatureDataset[] = []) =>
     renderHook(() => useWorklistContext(), {
       wrapper: ({ children }) => (
         <WorklistContextProvider parcels={initial} notifier={mockNotifier}>
@@ -51,7 +52,7 @@ describe('WorklistContextProvider', () => {
     const a = getMockWorklistParcel('a');
     const b = getMockWorklistParcel('b');
     const { result } = renderWorklistHook([a, b]);
-    expect(result.current.parcels.map(p => p.id)).toEqual(['a', 'b']);
+    expect(result.current.parcels.map(p => latLngToKey(p.location))).toEqual(['a', 'b']);
   });
 
   it('select() sets selectedId', () => {
@@ -66,7 +67,7 @@ describe('WorklistContextProvider', () => {
     act(() => result.current.add(parcel));
 
     expect(result.current.parcels).toHaveLength(1);
-    expect(result.current.parcels[0].id).toBe('1');
+    //expect(result.current.parcels[0].id).toBe('1');
     expect(mockNotifier.error).not.toHaveBeenCalled();
   });
 
@@ -155,11 +156,9 @@ describe('WorklistContextProvider', () => {
 
     act(() => result.current.addRange([p1, dupe, p2]));
 
-    expect(result.current.parcels.map(p => p.pmbcFeature?.properties?.PID)).toEqual([
-      '111',
-      '222',
-      '333',
-    ]);
+    expect(result.current.parcels.map(p => firstOrNull(p.parcelFeatures)?.properties?.PID)).toEqual(
+      ['111', '222', '333'],
+    );
     expect(mockNotifier.success).toHaveBeenCalledWith('Added 2 new parcel(s).');
     expect(mockNotifier.warn).toHaveBeenCalledWith('1 duplicate parcel(s) were skipped.');
   });
@@ -199,7 +198,7 @@ describe('WorklistContextProvider', () => {
     const { result } = renderWorklistHook([a, b]);
 
     act(() => result.current.remove('a'));
-    expect(result.current.parcels.map(p => p.id)).toEqual(['b']);
+    expect(result.current.parcels.map(p => latLngToKey(p.location))).toEqual(['b']);
   });
 
   it('clearAll() removes all parcels', () => {

@@ -1,6 +1,6 @@
 import { feature, featureCollection } from '@turf/turf';
-import { FeatureCollection } from 'geojson';
-import L, { LatLng } from 'leaflet';
+import { FeatureCollection, Geometry } from 'geojson';
+import L, { LatLng, LatLngLiteral } from 'leaflet';
 import find from 'lodash/find';
 import { useEffect, useMemo, useRef } from 'react';
 import { FeatureGroup, GeoJSON, Marker, Pane } from 'react-leaflet';
@@ -8,13 +8,34 @@ import { useTheme } from 'styled-components';
 import { v4 as uuidv4 } from 'uuid';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
 import { usePrevious } from '@/hooks/usePrevious';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
-import { exists } from '@/utils';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { exists, getLatLng, locationFromFileProperty } from '@/utils';
 
 import { useFilterContext } from '../../providers/FilterProvider';
 import { getDisabledDraftIcon, getDraftIcon } from './util';
+interface FileLocationBoundaryDataset {
+  readonly location: LatLngLiteral;
+  readonly propertyBoundary: Geometry | null;
+  readonly fileBoundary: Geometry | null;
+  readonly isActive?: boolean;
+}
+
+function filePropertyToFileLocationBoundaryDataset(
+  fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
+): FileLocationBoundaryDataset | null {
+  const geom = locationFromFileProperty(fileProperty);
+  const location = getLatLng(geom);
+  return exists(location)
+    ? {
+        location,
+        propertyBoundary: fileProperty?.property?.boundary ?? null,
+        fileBoundary: fileProperty?.boundary ?? null,
+        isActive: fileProperty.isActive,
+      }
+    : null;
+}
 
 export const FilePropertiesLayer: React.FunctionComponent = () => {
   const draftFeatureGroupRef = useRef<L.FeatureGroup>(null);
@@ -23,19 +44,23 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
 
   const mapMachine = useMapStateMachine();
   const mapMarkerClickFn = mapMachine.mapMarkerClick;
-  const filePropertyLocations = mapMachine.filePropertyLocations;
 
-  const draftPoints = useMemo<LocationBoundaryDataset[]>(() => {
+  const filePropertyLocations = useMemo(
+    () => mapMachine.filePropertyLocations.map(x => filePropertyToFileLocationBoundaryDataset(x)),
+    [mapMachine.filePropertyLocations],
+  );
+
+  const draftPoints = useMemo<FileLocationBoundaryDataset[]>(() => {
     return (filePropertyLocations ?? []).filter(
       dp => exists(dp?.location?.lat) && exists(dp?.location?.lng),
     );
   }, [filePropertyLocations]);
 
   // These are the boundaries for the properties
-  const draftBoundaryFeatures = useMemo<FeatureCollection>(() => {
+  const propertyBoundaryFeatures = useMemo<FeatureCollection>(() => {
     // ignore properties without a valid boundary
     const validBoundaries = (filePropertyLocations ?? [])
-      .map(pl => pl.boundary)
+      .map(pl => pl.propertyBoundary)
       .filter(exists)
       .map(boundary => feature(boundary));
 
@@ -55,17 +80,17 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
   const boundaryLayerKeyRef = useRef<string>(uuidv4());
   const fileBoundaryLayerKeyRef = useRef<string>(uuidv4());
 
-  const previousBoundaries = usePrevious(draftBoundaryFeatures);
+  const previousPropertyBoundaries = usePrevious(propertyBoundaryFeatures);
   const previousFileBoundaries = usePrevious(fileBoundaryFeatures);
 
   // We need to regenerate an unique `key` on the `<GeoJSON>` element when the underlying data changes.
   // This is to force React to re-render the GeoJSON component with the updated property boundaries.
   // https://github.com/PaulLeCam/react-leaflet/issues/332
   useEffect(() => {
-    if (previousBoundaries !== draftBoundaryFeatures) {
+    if (previousPropertyBoundaries !== propertyBoundaryFeatures) {
       boundaryLayerKeyRef.current = uuidv4();
     }
-  }, [draftBoundaryFeatures, previousBoundaries]);
+  }, [propertyBoundaryFeatures, previousPropertyBoundaries]);
 
   useEffect(() => {
     if (previousFileBoundaries !== fileBoundaryFeatures) {
@@ -138,11 +163,11 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
           </FeatureGroup>
         </Pane>
 
-        {draftBoundaryFeatures?.features?.length > 0 && (
+        {propertyBoundaryFeatures?.features?.length > 0 && (
           <Pane name="property-boundaries-pane" style={{ zIndex: 200 }}>
             <GeoJSON
               key={boundaryLayerKeyRef.current}
-              data={draftBoundaryFeatures}
+              data={propertyBoundaryFeatures}
               pathOptions={{ color: '#2A81CB', fill: false, dashArray: [12] }}
             ></GeoJSON>
           </Pane>
@@ -161,7 +186,7 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
     ),
     [
       draftPoints,
-      draftBoundaryFeatures,
+      propertyBoundaryFeatures,
       fileBoundaryFeatures,
       theme.css.pimsRed80,
       mapMarkerClickFn,

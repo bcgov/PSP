@@ -31,7 +31,7 @@ import FileMenuView from '../shared/FileMenuView';
 import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
-import UpdateProperties from '../shared/update/properties/UpdateProperties';
+import UpdatePropertiesContainer from '../shared/update/properties/UpdatePropertiesContainer';
 import ManagementHeader from './common/ManagementHeader';
 import ManagementRouter from './router/ManagementRouter';
 import ManagementStatusUpdateSolver from './tabs/fileDetails/detail/ManagementStatusUpdateSolver';
@@ -109,7 +109,7 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
     <Switch>
       <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
         {managementFile && (
-          <UpdateProperties
+          <UpdatePropertiesContainer
             file={managementFile}
             setIsShowingPropertySelector={closePropertySelector}
             onSuccess={onSuccess}
@@ -117,7 +117,7 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
             confirmBeforeAdd={confirmBeforeAdd}
             canRemove={canRemove}
             formikRef={formikRef}
-            disableProperties
+            showDisabledProperties
             confirmBeforeAddMessage={
               <>
                 <p>This property has already been added to one or more management files.</p>

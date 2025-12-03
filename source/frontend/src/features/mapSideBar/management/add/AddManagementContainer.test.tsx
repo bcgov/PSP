@@ -106,7 +106,7 @@ describe('Add Management Container component', () => {
   it('calls onSuccess when the Management is saved successfully', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      processCreation: vi.fn(),
+      processLocationFeaturesAddition: vi.fn(),
       refreshMapProperties: vi.fn(),
     };
     await setup({ mockMapMachine: testMockMachine });
@@ -119,7 +119,7 @@ describe('Add Management Container component', () => {
     });
 
     expect(onSuccess).toHaveBeenCalled();
-    expect(testMockMachine.processCreation).toHaveBeenCalled();
+    expect(testMockMachine.processLocationFeaturesAddition).toHaveBeenCalled();
     expect(testMockMachine.refreshMapProperties).toHaveBeenCalled();
   });
 
@@ -178,7 +178,7 @@ describe('Add Management Container component', () => {
 
     await act(async () => {
       const model = new ManagementFormModel();
-      model.fileProperties = selectedFeatures?.map(sf => PropertyForm.fromFeatureDataset(sf));
+      model.fileProperties = selectedFeatures?.map(sf => PropertyForm.fromLocationFeatureDataset(sf));
       await viewProps?.onSubmit(model, {
         setSubmitting: vi.fn(),
         resetForm: vi.fn(),

@@ -13,8 +13,8 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
 import { useModalContext } from '@/hooks/useModalContext';
+import { usePropertyFormSyncronizer } from '@/hooks/usePropertyFormSyncronizer';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -65,14 +65,14 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
 
   const mapMachine = useMapStateMachine();
 
-  const { featuresWithAddresses, bcaLoading } = useEditPropertiesNotifier(formikRef, 'properties');
+  const { featuresWithAddresses, isLoading } = usePropertyFormSyncronizer(formikRef, 'properties');
 
   useEffect(() => {
     if (featuresWithAddresses?.length > 0 && !isSubFile && !formikRef?.current?.values?.region) {
       const firstPropertyFeature = firstOrNull(featuresWithAddresses)?.feature;
 
       if (exists(firstPropertyFeature)) {
-        const firstProperty = PropertyForm.fromFeatureDataset(firstPropertyFeature);
+        const firstProperty = PropertyForm.fromLocationFeatureDataset(firstPropertyFeature);
         formikRef?.current?.setFieldValue(
           'region',
           firstProperty.regionName !== 'Cannot determine'
@@ -131,7 +131,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   // This is the flow for Map Marker -> right-click -> create Acquisition File
   useEffect(() => {
     const runAsync = async () => {
-      if (exists(initialForm) && exists(formikRef.current) && needsUserConfirmation) {
+      if (exists(initialForm) && exists(formikRef?.current) && needsUserConfirmation) {
         if (initialForm.properties.length > 0) {
           // Check all properties for confirmation
           const needsConfirmation = await Promise.all(
@@ -214,12 +214,12 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         handleSuccess(response);
       }
     } finally {
-      mapMachine.processCreation();
+      mapMachine.processLocationFeaturesAddition();
       formikHelpers?.setSubmitting(false);
     }
   };
 
-  const loading = addAcquisitionFileLoading || bcaLoading;
+  const loading = addAcquisitionFileLoading || isLoading;
 
   return (
     <MapSideBarLayout

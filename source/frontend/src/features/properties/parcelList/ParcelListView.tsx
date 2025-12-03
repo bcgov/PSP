@@ -1,12 +1,13 @@
 import styled from 'styled-components';
 
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
+import { latLngToKey } from '@/utils';
 
-import { ParcelDataset } from './models';
 import ParcelItem from './ParcelItem';
 
 export interface IParcelListViewProps {
-  parcels: ParcelDataset[];
+  parcels: LocationFeatureDataset[];
 }
 
 export const ParcelListView: React.FC<IParcelListViewProps> = ({ parcels }) => {
@@ -24,7 +25,7 @@ export const ParcelListView: React.FC<IParcelListViewProps> = ({ parcels }) => {
       </StyledHeader>
       {parcels.map((p, index) => (
         <ParcelItem
-          key={p.id}
+          key={latLngToKey(p.location)}
           parcel={p}
           onRemove={null}
           canAddToWorklist={true}

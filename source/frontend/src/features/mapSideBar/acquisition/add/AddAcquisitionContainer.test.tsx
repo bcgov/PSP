@@ -320,7 +320,7 @@ describe('AddAcquisitionContainer component', () => {
     let testObj: any = undefined;
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      processCreation: vi.fn(),
+      processLocationFeaturesAddition: vi.fn(),
       refreshMapProperties: vi.fn(),
     };
 
@@ -350,7 +350,7 @@ describe('AddAcquisitionContainer component', () => {
     const expectedValues = formValues.toApi();
     expect(addAcquisitionFileApi.execute).toHaveBeenCalledWith(expectedValues, []);
     expect(onSuccess).toHaveBeenCalledWith(1);
-    expect(testMockMachine.processCreation).toHaveBeenCalled();
+    expect(testMockMachine.processLocationFeaturesAddition).toHaveBeenCalled();
     expect(testMockMachine.refreshMapProperties).toHaveBeenCalled();
   });
 

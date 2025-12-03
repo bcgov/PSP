@@ -6,10 +6,8 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { useMapProperties } from '@/hooks/repositories/useMapProperties';
-import {
-  getMockLocationFeatureDataset,
-  getMockSelectedFeatureDataset,
-} from '@/mocks/featureset.mock';
+import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
+import { getMockSelectedFeatureDataset } from '@/mocks/getMockSelectedFeatureDataset';
 import { mockFAParcelLayerResponse, mockGeocoderOptions } from '@/mocks/index.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, fillInput, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
@@ -248,7 +246,7 @@ describe('MapSelectorContainer component', () => {
     const testMapMock: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       isRepositioning: true,
-      repositioningFeatureDataset: {} as any,
+      mapFeatureData: {} as any,
       mapLocationFeatureDataset: {} as any,
     };
     const mapProperties = [

@@ -8,24 +8,25 @@ import { LinkButton } from '@/components/common/buttons/LinkButton';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
-import { ParcelDataset } from '@/features/properties/parcelList/models';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 import {
   boundaryFromFileProperty,
   exists,
+  firstValidOrNull,
   latLngLiteralToGeometry,
   pimsGeomeryToGeometry,
 } from '@/utils';
 
+import { LocationFeatureDataset } from '../common/mapFSM/useLocationFeatureLoader';
 import TooltipIcon from '../common/TooltipIcon';
 
-export interface IUpdatePropertiesProps {
+export interface IZoomToLocationProps {
   formProperties?: PropertyForm[] | null;
   pimsProperties?: ApiGen_Concepts_Property[] | null;
   pimsFileProperties?: ApiGen_Concepts_FileProperty[] | null;
-  parcelDataset?: ParcelDataset | null;
+  locationFeatureDataset?: LocationFeatureDataset | null;
   featureCollection?: Feature<Geometry, GeoJsonProperties>[] | null;
   pimsFeatures?: Feature<Geometry, PIMS_Property_Location_View>[] | null;
 
@@ -38,11 +39,11 @@ export enum ZoomIconType {
   area,
 }
 
-export const ZoomToLocation: React.FunctionComponent<IUpdatePropertiesProps> = ({
+export const ZoomToLocation: React.FunctionComponent<IZoomToLocationProps> = ({
   formProperties,
   pimsProperties,
   pimsFileProperties,
-  parcelDataset,
+  locationFeatureDataset,
   featureCollection,
   geometry,
   icon,
@@ -78,20 +79,22 @@ export const ZoomToLocation: React.FunctionComponent<IUpdatePropertiesProps> = (
       });
     }
 
-    if (exists(parcelDataset?.pmbcFeature?.geometry)) {
-      const pmbcGeometry = parcelDataset.pmbcFeature.geometry;
+    const validParcelFeature = firstValidOrNull(locationFeatureDataset?.parcelFeatures, exists);
+    const validPimsFeature = firstValidOrNull(locationFeatureDataset?.pimsFeatures, exists);
+    if (exists(validParcelFeature?.geometry)) {
+      const pmbcGeometry = validParcelFeature.geometry;
       const pmbcBounds = geoJSON(pmbcGeometry)?.getBounds();
       if (exists(pmbcBounds) && pmbcBounds.isValid()) {
         propertyLocations.push(pmbcGeometry);
       }
-    } else if (exists(parcelDataset?.pimsFeature?.geometry)) {
-      const pimsFeatureGeometry = parcelDataset.pimsFeature.geometry;
+    } else if (exists(validPimsFeature?.geometry)) {
+      const pimsFeatureGeometry = validPimsFeature.geometry;
       const pimsBounds = geoJSON(pimsFeatureGeometry)?.getBounds();
       if (exists(pimsBounds) && pimsBounds.isValid()) {
         propertyLocations.push(pimsFeatureGeometry);
       }
-    } else if (exists(parcelDataset?.location)) {
-      propertyLocations.push(latLngLiteralToGeometry(parcelDataset.location));
+    } else if (exists(locationFeatureDataset?.location)) {
+      propertyLocations.push(latLngLiteralToGeometry(locationFeatureDataset.location));
     }
 
     if (exists(featureCollection)) {
@@ -114,9 +117,9 @@ export const ZoomToLocation: React.FunctionComponent<IUpdatePropertiesProps> = (
     featureCollection,
     formProperties,
     geometry,
-    parcelDataset?.location,
-    parcelDataset?.pimsFeature,
-    parcelDataset?.pmbcFeature,
+    locationFeatureDataset?.location,
+    locationFeatureDataset?.parcelFeatures,
+    locationFeatureDataset?.pimsFeatures,
     pimsFileProperties,
     pimsProperties,
   ]);

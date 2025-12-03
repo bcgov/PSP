@@ -1,5 +1,4 @@
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
-import noop from 'lodash/noop';
 import { useCallback } from 'react';
 import { Col, Row, Tab } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
@@ -21,7 +20,6 @@ import { StyledTabView } from '@/components/propertySelector/PropertySelectorTab
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
 import PropertySearchSelectorPidFormView from '@/components/propertySelector/search/PropertySelectorPidSearchView';
 import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { convertArea } from '@/utils/convertUtils';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
@@ -159,15 +157,19 @@ const AddSubdivisionView: React.FunctionComponent<
                     const allProperties = [...values.destinationProperties];
                     await properties.reduce(async (promise, property) => {
                       return promise.then(async () => {
-                        const formProperty = PropertyForm.fromFeatureDataset(property);
+                        const formProperty = PropertyForm.fromLocationFeatureDataset(property);
                         formProperty.landArea =
                           formProperty.landArea && formProperty.areaUnit
-                            ? getAreaValue(formProperty.landArea, formProperty.areaUnit)
+                            ? convertArea(
+                                formProperty.landArea,
+                                formProperty.areaUnit.toLocaleLowerCase(),
+                                ApiGen_CodeTypes_AreaUnitTypes.M2,
+                              )
                             : 0;
                         formProperty.areaUnit = ApiGen_CodeTypes_AreaUnitTypes.M2;
                         if (formProperty.pid) {
                           formProperty.address = await getPrimaryAddressByPid(formProperty.pid);
-                          allProperties.push(formProperty.toApi());
+                          allProperties.push(formProperty);
                         } else {
                           toast.error('Selected property must have a PID');
                         }
@@ -175,11 +177,9 @@ const AddSubdivisionView: React.FunctionComponent<
                     }, Promise.resolve());
                     setFieldValue('destinationProperties', allProperties);
                   }}
-                  selectedComponentId="destination-property-selector"
                   modifiedProperties={values.destinationProperties.map(dp =>
-                    PropertyForm.fromPropertyApi(dp).toFeatureDataset(),
+                    dp.toLocationFeatureDataset(),
                   )}
-                  repositionSelectedProperty={noop}
                 />
                 <FieldArray name="destinationProperties">
                   {({ remove }) => (
@@ -190,7 +190,7 @@ const AddSubdivisionView: React.FunctionComponent<
                           <Col>
                             <ZoomToLocation
                               icon={ZoomIconType.area}
-                              pimsProperties={values?.destinationProperties}
+                              formProperties={values?.destinationProperties}
                             />
                           </Col>
                         </Row>
@@ -225,10 +225,7 @@ const AddSubdivisionView: React.FunctionComponent<
   );
 };
 
-const getDraftMarkerIndex = (
-  property: ApiGen_Concepts_Property,
-  form: SubdivisionFormModel,
-): number => {
+const getDraftMarkerIndex = (property: PropertyForm, form: SubdivisionFormModel): number => {
   let index = form.destinationProperties.findIndex(
     p =>
       p.latitude === property.latitude &&

@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
 
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
-import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
+import { getMockSelectedFeatureDataset } from '@/mocks/getMockSelectedFeatureDataset';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -30,7 +30,7 @@ describe('SelectedPropertyRow component', () => {
         initialValues={{
           properties: [
             exists(renderOptions.props?.property)
-              ? PropertyForm.fromFeatureDataset(renderOptions.props?.property)
+              ? PropertyForm.fromLocationFeatureDataset(renderOptions.props?.property)
               : new PropertyForm(),
           ],
         }}
@@ -38,7 +38,7 @@ describe('SelectedPropertyRow component', () => {
         {formikProps => (
           <SelectedPropertyRow
             formikProps={formikProps}
-            property={renderOptions.props?.property ?? new PropertyForm().toFeatureDataset()}
+            property={renderOptions.props?.property ?? new PropertyForm().toLocationFeatureDataset()}
             index={renderOptions.props?.index ?? 0}
             onRemove={onRemove}
             nameSpace="properties.0"

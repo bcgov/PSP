@@ -13,7 +13,6 @@ import * as Yup from 'yup';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
 import { Claims } from '@/constants';
 import { useLeaseDetail } from '@/features/leases';
 import { AddLeaseYupSchema } from '@/features/leases/add/AddLeaseYupSchema';
@@ -32,8 +31,9 @@ import { isLeaseFile, LeaseFormModel } from '@/features/leases/models';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useQuery } from '@/hooks/use-query';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { exists, filePropertyToLocationBoundaryDataset } from '@/utils';
+import { exists } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
 import usePathGenerator from '../shared/sidebarPathGenerator';
@@ -226,11 +226,9 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
   const lease: ApiGen_Concepts_Lease | null = isLeaseFile(file) ? file : null;
 
-  const locations: LocationBoundaryDataset[] = useMemo(() => {
+  const fileProperties: ApiGen_Concepts_FileProperty[] = useMemo(() => {
     if (exists(lease?.fileProperties)) {
-      return lease?.fileProperties
-        .map(leaseProp => filePropertyToLocationBoundaryDataset(leaseProp))
-        .filter(exists);
+      return lease?.fileProperties.filter(exists);
     } else {
       return [];
     }
@@ -328,8 +326,8 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   }, [fetchLastUpdatedBy, lastUpdatedBy, leaseId, staleLastUpdatedBy]);
 
   useEffect(() => {
-    setFilePropertyLocations(locations);
-  }, [setFilePropertyLocations, locations]);
+    setFilePropertyLocations(fileProperties);
+  }, [setFilePropertyLocations, fileProperties]);
 
   const onSelectFileSummary = () => {
     if (!exists(lease)) {

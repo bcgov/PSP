@@ -1,5 +1,6 @@
 import { useInterpret, useSelector } from '@xstate/react';
 import { dequal } from 'dequal';
+import { Feature, Geometry } from 'geojson';
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
 import { useHistory } from 'react-router-dom';
@@ -12,23 +13,15 @@ import {
   defaultPropertyFilter,
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
 import { exists, firstOrNull, isValidString } from '@/utils';
 import { pidParser, pinParser } from '@/utils/propertyUtils';
 
 import { mapMachine } from './machineDefinition/mapMachine';
 import { MachineContext, SideBarType } from './machineDefinition/types';
-import {
-  LocationBoundaryDataset,
-  MapFeatureData,
-  MarkerSelected,
-  RequestedCenterTo,
-  RequestedFlyTo,
-} from './models';
-import useLocationFeatureLoader, {
-  LocationFeatureDataset,
-  SelectedFeatureDataset,
-  WorklistLocationFeatureDataset,
-} from './useLocationFeatureLoader';
+import { MapFeatureData, MarkerSelected, RequestedCenterTo, RequestedFlyTo } from './models';
+import useLocationFeatureLoader, { LocationFeatureDataset } from './useLocationFeatureLoader';
 import { useMapSearch } from './useMapSearch';
 
 export interface IMapStateMachineContext {
@@ -42,22 +35,21 @@ export interface IMapStateMachineContext {
   mapMarkedLocation: LatLngLiteral | null;
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
-  selectedFeatures: SelectedFeatureDataset[];
-  repositioningFeatureDataset: SelectedFeatureDataset | null;
-  repositioningPropertyIndex: number | null;
+  locationFeaturesForAddition: LocationFeatureDataset[] | null;
+  repositioningFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
+  pendingLocationFeaturesAddition: boolean;
   // worklist-related state
   worklistSelectedMapLocation: LatLngLiteral | null;
-  worklistLocationFeatureDataset: WorklistLocationFeatureDataset | null;
+  worklistLocationFeatureDataset: LocationFeatureDataset | null;
   showPopup: boolean;
   isLoading: boolean;
   mapSearchCriteria: IPropertyFilter | null;
   mapFeatureData: MapFeatureData;
-  filePropertyLocations: LocationBoundaryDataset[];
+  filePropertyLocations: ApiGen_Concepts_FileProperty[];
   pendingFitBounds: boolean;
   requestedFitBounds: LatLngBounds;
   isSelecting: boolean;
   isRepositioning: boolean;
-  selectingComponentId: string | null;
   isFiltering: boolean;
   isShowingMapFilter: boolean;
   isShowingMapLayers: boolean;
@@ -94,19 +86,15 @@ export interface IMapStateMachineContext {
 
   // worklist
   worklistMapClick: (latlng: LatLngLiteral) => void;
-  worklistAdd: (dataset: WorklistLocationFeatureDataset) => void;
+  worklistAdd: (dataset: LocationFeatureDataset) => void;
 
   setMapSearchCriteria: (searchCriteria: IPropertyFilter) => void;
   refreshMapProperties: () => void;
-  prepareForCreation: (selectedFeatures: SelectedFeatureDataset[]) => void;
-  processCreation: () => void;
-  startSelection: (selectingComponentId?: string) => void;
+  requestLocationFeatureAddition: (selectedFeatures: LocationFeatureDataset[]) => void;
+  processLocationFeaturesAddition: () => void;
+  startSelection: () => void;
   finishSelection: () => void;
-  startReposition: (
-    repositioningFeatureDataset: SelectedFeatureDataset,
-    index: number,
-    selectingComponentId?: string,
-  ) => void;
+  startReposition: (featureDataSet: Feature<Geometry, PIMS_Property_Location_View>) => void;
   finishReposition: () => void;
   toggleMapFilterDisplay: () => void;
   toggleMapLayerControl: () => void;
@@ -116,7 +104,7 @@ export interface IMapStateMachineContext {
   openQuickInfo: () => void;
   closeQuickInfo: () => void;
   minimizeQuickInfo: () => void;
-  setFilePropertyLocations: (locations: LocationBoundaryDataset[]) => void;
+  setFilePropertyLocations: (locations: ApiGen_Concepts_FileProperty[]) => void;
   setMapLayers: (layers: Set<string>) => void;
   setMapLayersToRefresh: (layers: Set<string>) => void;
   setDefaultMapLayers: (layers: Set<string>) => void;
@@ -217,7 +205,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
       loadWorklistLocationData: async (
         context: MachineContext,
         event: AnyEventObject & { type: 'WORKLIST_MAP_CLICK'; latlng: LatLngLiteral },
-      ): Promise<WorklistLocationFeatureDataset> => {
+      ): Promise<LocationFeatureDataset> => {
         const response = locationLoader.loadWorklistLocationDetails({ latLng: event.latlng });
         return response;
       },
@@ -335,7 +323,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   );
 
   const worklistAdd = useCallback(
-    (dataset: WorklistLocationFeatureDataset) => {
+    (dataset: LocationFeatureDataset) => {
       serviceSend({
         type: 'WORKLIST_ADD',
         dataset,
@@ -414,41 +402,32 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
-  const prepareForCreation = useCallback(
-    (selectedFeatures: SelectedFeatureDataset[]) => {
-      serviceSend({ type: 'PREPARE_FOR_CREATION', selectedFeatures });
+  const requestLocationFeatureAddition = useCallback(
+    (selectedFeatures: LocationFeatureDataset[]) => {
+      serviceSend({ type: 'REQUEST_LOCATION_ADDITION', selectedFeatures });
     },
     [serviceSend],
   );
 
-  const processCreation = useCallback(() => {
+  const processLocationFeaturesAddition = useCallback(() => {
     serviceSend({
-      type: 'PROCESS_CREATION',
+      type: 'PROCESS_LOCATION_ADDITION',
     });
   }, [serviceSend]);
 
-  const startSelection = useCallback(
-    (selectingComponentId?: string) => {
-      serviceSend({ type: 'START_SELECTION', selectingComponentId });
-    },
-    [serviceSend],
-  );
+  const startSelection = useCallback(() => {
+    serviceSend({ type: 'START_SELECTION' });
+  }, [serviceSend]);
 
   const finishSelection = useCallback(() => {
     serviceSend({ type: 'FINISH_SELECTION' });
   }, [serviceSend]);
 
   const startReposition = useCallback(
-    (
-      repositioningFeatureDataset: SelectedFeatureDataset,
-      index: number,
-      selectingComponentId?: string,
-    ) => {
+    (feature: Feature<Geometry, PIMS_Property_Location_View>) => {
       serviceSend({
         type: 'START_REPOSITION',
-        repositioningFeatureDataset,
-        repositioningPropertyIndex: index,
-        selectingComponentId,
+        feature,
       });
     },
     [serviceSend],
@@ -459,7 +438,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   }, [serviceSend]);
 
   const setFilePropertyLocations = useCallback(
-    (locations: LocationBoundaryDataset[]) => {
+    (locations: ApiGen_Concepts_FileProperty[]) => {
       serviceSend({ type: 'SET_FILE_PROPERTY_LOCATIONS', locations });
     },
     [serviceSend],
@@ -625,10 +604,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         mapMarkerSelected: state.context.mapFeatureSelected,
         mapLocationSelected: state.context.mapLocationSelected,
         mapMarkedLocation: state.context.mapMarkedLocation,
-        selectedFeatures: state.context.selectedFeatures,
+        locationFeaturesForAddition: state.context.locationFeaturesForAddition,
         mapLocationFeatureDataset: state.context.mapLocationFeatureDataset,
-        repositioningFeatureDataset: state.context.repositioningFeatureDataset,
-        repositioningPropertyIndex: state.context.repositioningPropertyIndex,
         worklistSelectedMapLocation: state.context.worklistSelectedMapLocation,
         worklistLocationFeatureDataset: state.context.worklistLocationFeatureDataset,
         showPopup: showPopup,
@@ -641,7 +618,6 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         requestedFitBounds: state.context.requestedFitBounds,
         isSelecting: state.matches({ mapVisible: { featureView: 'selecting' } }),
         isRepositioning: isRepositioning,
-        selectingComponentId: state.context.selectingComponentId,
         isFiltering: !dequal(state.context.advancedSearchCriteria, new PropertyFilterFormModel()),
         isShowingMapFilter: isShowingMapFilter,
         isShowingMapLayers: isShowingMapLayers,
@@ -657,6 +633,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         isMapVisible: state.matches({ mapVisible: {} }),
         currentMapBounds: state.context.currentMapBounds,
         isEditPropertiesMode: state.context.isEditPropertiesMode,
+        pendingLocationFeaturesAddition: state.matches({
+          mapVisible: { locationFeatureAddition: 'pendingLocationFeatureAddition' },
+        }),
+        repositioningFeature: state.context.repositioningFeature,
 
         setMapSearchCriteria,
         refreshMapProperties,
@@ -676,8 +656,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         worklistMapClick,
         worklistAdd,
         closePopup,
-        prepareForCreation,
-        processCreation,
+        requestLocationFeatureAddition,
+        processLocationFeaturesAddition,
         startSelection,
         finishSelection,
         startReposition,

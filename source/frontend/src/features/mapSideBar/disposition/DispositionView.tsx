@@ -31,7 +31,7 @@ import FileMenuView from '../shared/FileMenuView';
 import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
-import UpdateProperties from '../shared/update/properties/UpdateProperties';
+import UpdatePropertiesContainer from '../shared/update/properties/UpdatePropertiesContainer';
 import { DispositionHeader } from './common/DispositionHeader';
 import DispositionRouter from './router/DispositionRouter';
 import DispositionStatusUpdateSolver from './tabs/fileDetails/detail/DispositionStatusUpdateSolver';
@@ -109,7 +109,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
     <Switch>
       <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
         {dispositionFile && (
-          <UpdateProperties
+          <UpdatePropertiesContainer
             file={dispositionFile}
             setIsShowingPropertySelector={closePropertySelector}
             onSuccess={onSuccess}

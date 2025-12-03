@@ -2,6 +2,7 @@ import { Formik, FormikHelpers, FormikProps } from 'formik';
 import styled from 'styled-components';
 
 import { Section } from '@/components/common/Section/Section';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 
 import { LeaseFormModel } from '../models';
 import LeasePropertySelector from '../shared/propertyPicker/LeasePropertySelector';
@@ -21,12 +22,14 @@ export interface IAddLeaseFormProps {
   formikRef: React.Ref<FormikProps<LeaseFormModel>>;
   /** Initial values of the form */
   initialValues: LeaseFormModel;
+  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
 const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFormProps>> = ({
   onSubmit,
   formikRef,
   initialValues,
+  confirmBeforeAdd,
 }) => {
   return (
     <StyledFormWrapper>
@@ -39,9 +42,9 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
       >
         {formikProps => (
           <>
-            <LeaseDetailSubForm formikProps={formikProps}></LeaseDetailSubForm>
-            <LeasePropertySelector formikProps={formikProps} />
-            <AdministrationSubForm formikProps={formikProps}></AdministrationSubForm>
+            <LeaseDetailSubForm formikProps={formikProps} />
+            <LeasePropertySelector formikProps={formikProps} confirmBeforeAdd={confirmBeforeAdd} />
+            <AdministrationSubForm formikProps={formikProps} />
             <Section header="Lease & Licence Team">
               <AddLeaseTeamSubForm />
               {formikProps.errors?.team && typeof formikProps.errors?.team === 'string' && (

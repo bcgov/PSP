@@ -8,17 +8,17 @@ import DispositionIcon from '@/assets/images/disposition-icon.svg?react';
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import ManagementIcon from '@/assets/images/management-icon.svg?react';
 import ResearchIcon from '@/assets/images/research-icon.svg?react';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
 import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 import { Section } from '@/components/common/Section/Section';
 import { Claims } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
-import { ParcelDataset } from '../parcelList/models';
 import ParcelItem from '../parcelList/ParcelItem';
 
 export interface IWorklistViewProps {
-  parcels: ParcelDataset[];
+  parcels: LocationFeatureDataset[];
   canAddToOpenFile?: boolean;
   onRemove: (id: string) => void;
   onClearAll: () => void;
@@ -129,7 +129,7 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
       <ScrollArea>
         {parcels.map((p, index) => (
           <ParcelItem
-            key={p.id}
+            key={p.location.lat + '-' + p.location.lng}
             parcel={p}
             onRemove={onRemove}
             canAddToWorklist={false}

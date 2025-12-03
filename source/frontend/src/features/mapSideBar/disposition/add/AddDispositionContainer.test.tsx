@@ -98,7 +98,7 @@ describe('Add Disposition Container component', () => {
   it('calls onSuccess when the Disposition is saved successfully', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      processCreation: vi.fn(),
+      processLocationFeaturesAddition: vi.fn(),
       refreshMapProperties: vi.fn(),
     };
     const formikHelpers: Partial<FormikHelpers<DispositionFormModel>> = {
@@ -115,7 +115,7 @@ describe('Add Disposition Container component', () => {
     });
 
     expect(onSuccess).toHaveBeenCalled();
-    expect(testMockMachine.processCreation).toHaveBeenCalled();
+    expect(testMockMachine.processLocationFeaturesAddition).toHaveBeenCalled();
     expect(testMockMachine.refreshMapProperties).toHaveBeenCalled();
   });
 
@@ -178,7 +178,7 @@ describe('Add Disposition Container component', () => {
 
     await act(async () => {
       const model = new DispositionFormModel();
-      model.fileProperties = selectedFeatures.map(sf => PropertyForm.fromFeatureDataset(sf));
+      model.fileProperties = selectedFeatures.map(sf => PropertyForm.fromLocationFeatureDataset(sf));
       viewProps?.onSubmit(model, formikHelpers as FormikHelpers<DispositionFormModel>);
     });
 

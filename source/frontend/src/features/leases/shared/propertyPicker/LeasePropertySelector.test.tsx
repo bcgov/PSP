@@ -3,7 +3,6 @@ import noop from 'lodash/noop';
 import React from 'react';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { FormLeaseProperty, getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
 import { getMockPolygon } from '@/mocks/geometries.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
@@ -17,10 +16,17 @@ import * as mapUtils from '@/utils/mapPropertyUtils';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import LeasePropertySelector from './LeasePropertySelector';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
+import {
+  emptyFeatureDataset,
+  LocationFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
+
+const confirmBeforeAdd = vi.fn();
 
 describe('LeasePropertySelector component', () => {
   // render component under test
@@ -37,7 +43,7 @@ describe('LeasePropertySelector component', () => {
         onSubmit={noop}
         innerRef={formikRef}
       >
-        {props => <LeasePropertySelector formikProps={props} />}
+        {props => <LeasePropertySelector formikProps={props} confirmBeforeAdd={confirmBeforeAdd} />}
       </Formik>,
       {
         ...renderOptions,
@@ -57,7 +63,9 @@ describe('LeasePropertySelector component', () => {
             onSubmit={noop}
             innerRef={formikRef}
           >
-            {props => <LeasePropertySelector formikProps={props} />}
+            {props => (
+              <LeasePropertySelector formikProps={props} confirmBeforeAdd={confirmBeforeAdd} />
+            )}
           </Formik>,
         );
       },
@@ -161,7 +169,6 @@ describe('LeasePropertySelector component', () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       isSelecting: true,
-      selectingComponentId: undefined,
       mapLocationFeatureDataset: null,
     };
 
@@ -179,8 +186,8 @@ describe('LeasePropertySelector component', () => {
     // simulate a map click via the map state machine
     testMockMachine.isSelecting = true;
     testMockMachine.mapLocationFeatureDataset = {
+      ...emptyFeatureDataset(),
       location: { lng: -120.69195885, lat: 50.25163372 },
-      fileLocation: null,
       pimsFeatures: [
         {
           type: 'Feature',
@@ -200,15 +207,6 @@ describe('LeasePropertySelector component', () => {
         properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
         geometry: getMockPolygon(),
       },
-      districtFeature: null,
-      municipalityFeatures: null,
-      highwayFeatures: null,
-      selectingComponentId: null,
-      crownLandLeasesFeatures: null,
-      crownLandLicensesFeatures: null,
-      crownLandTenuresFeatures: null,
-      crownLandInventoryFeatures: null,
-      crownLandInclusionsFeatures: null,
     };
 
     // verify that upon map click the lease region is auto-selected based on the property region
@@ -221,7 +219,6 @@ describe('LeasePropertySelector component', () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       isSelecting: true,
-      selectingComponentId: undefined,
       mapLocationFeatureDataset: null,
     };
 
@@ -235,8 +232,8 @@ describe('LeasePropertySelector component', () => {
     // simulate a map click via the map state machine
     testMockMachine.isSelecting = true;
     testMockMachine.mapLocationFeatureDataset = {
+      ...emptyFeatureDataset(),
       location: { lng: -120.69195885, lat: 50.25163372 },
-      fileLocation: null,
       pimsFeatures: null, // no PIMS property was found - meaning this property will be added to the inventory.
       parcelFeatures: [
         {
@@ -250,15 +247,6 @@ describe('LeasePropertySelector component', () => {
         properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
         geometry: getMockPolygon(),
       },
-      districtFeature: null,
-      municipalityFeatures: null,
-      highwayFeatures: null,
-      selectingComponentId: null,
-      crownLandLeasesFeatures: null,
-      crownLandLicensesFeatures: null,
-      crownLandTenuresFeatures: null,
-      crownLandInventoryFeatures: null,
-      crownLandInclusionsFeatures: null,
     };
 
     // verify that upon map click the user gets a confirmation popup to add the property to inventory
@@ -285,20 +273,10 @@ describe('LeasePropertySelector component', () => {
 
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      selectingComponentId: undefined,
       mapLocationFeatureDataset: null,
       // provide fake logic for map marker repositioning
-      startReposition: vi.fn<
-        [
-          repositioningFeatureDataset: SelectedFeatureDataset,
-          index: number,
-          selectingComponentId?: string,
-        ],
-        void
-      >((featureSet, index, _) => {
+      startReposition: vi.fn(() => {
         testMockMachine.isRepositioning = true;
-        testMockMachine.repositioningFeatureDataset = featureSet;
-        testMockMachine.repositioningPropertyIndex = index;
       }),
     };
 
@@ -323,8 +301,8 @@ describe('LeasePropertySelector component', () => {
     // simulate file marker repositioning via the map state machine
     testMockMachine.isRepositioning = true;
     testMockMachine.mapLocationFeatureDataset = {
+      ...emptyFeatureDataset(),
       location: { lng: -120, lat: 50 }, // new lat/lng for the marker
-      fileLocation: null,
       pimsFeatures: [
         {
           type: 'Feature',
@@ -344,15 +322,6 @@ describe('LeasePropertySelector component', () => {
         properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
         geometry: getMockPolygon(),
       },
-      districtFeature: null,
-      municipalityFeatures: null,
-      highwayFeatures: null,
-      selectingComponentId: null,
-      crownLandLeasesFeatures: null,
-      crownLandLicensesFeatures: null,
-      crownLandTenuresFeatures: null,
-      crownLandInventoryFeatures: null,
-      crownLandInclusionsFeatures: null,
     };
 
     await act(async () => rerender());
