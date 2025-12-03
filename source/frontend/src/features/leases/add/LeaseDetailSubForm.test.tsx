@@ -278,11 +278,8 @@ describe('LeaseDetailSubForm component', () => {
   ])(
     'Displays the Progress statuses when needed - %s',
     async (paymentReceivable: string, show: boolean) => {
-      const {
-        getPaymentReceivableDropDown,
-        getAppraisalDropDown,
-        getLegalSurveyDropDown,
-      } = await setup({});
+      const { getPaymentReceivableDropDown, getAppraisalDropDown, getLegalSurveyDropDown } =
+        await setup({});
 
       await act(async () =>
         userEvent.selectOptions(getPaymentReceivableDropDown(), paymentReceivable),

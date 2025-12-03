@@ -6,11 +6,12 @@ import {
   LocationFeatureDataset,
   SelectedFeatureDataset,
 } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
-import { exists } from '@/utils';
+import { apiPropertyToPimsFeature, exists, getLatLng } from '@/utils';
 
 export class ParcelDataset {
   public id: string;
@@ -53,6 +54,13 @@ export class ParcelDataset {
     parcel.pimsFeature = featureSet.pimsFeature;
     parcel.regionFeature = featureSet.regionFeature;
     parcel.districtFeature = featureSet.districtFeature;
+    return parcel;
+  }
+
+  public static fromPropertyApi(apiProperty: ApiGen_Concepts_Property): ParcelDataset {
+    const parcel = new ParcelDataset();
+    parcel.pimsFeature = apiPropertyToPimsFeature(apiProperty);
+    parcel.location = getLatLng(apiProperty?.location);
     return parcel;
   }
 

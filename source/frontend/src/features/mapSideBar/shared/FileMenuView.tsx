@@ -1,6 +1,5 @@
 import cx from 'classnames';
-import { useMemo } from 'react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -10,6 +9,7 @@ import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesBu
 import { LinkButton } from '@/components/common/buttons/LinkButton';
 import OverflowTip from '@/components/common/OverflowTip';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
+import CopyToWorklist from '@/features/properties/worklist/CopyToWorklist';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { exists, getFilePropertyName, sortFileProperties } from '@/utils';
@@ -70,7 +70,7 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
         </Col>
       </StyledRow>
       <StyledMenuHeaderWrapper>
-        <Row noGutters className="w-100">
+        <Row noGutters className="w-100 d-flex align-items-center">
           <Col>
             <StyledMenuHeader>Properties</StyledMenuHeader>
           </Col>
@@ -85,8 +85,15 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
               onEdit={onEditProperties}
             />
           </Col>
-          <Col xs="auto">
-            <ZoomToLocation icon={ZoomIconType.area} pimsFileProperties={file?.fileProperties} />
+          <Col xs="auto" className="pr-3">
+            <ZoomToLocation
+              icon={ZoomIconType.area}
+              iconSize={24}
+              pimsFileProperties={file?.fileProperties}
+            />
+          </Col>
+          <Col xs="auto" className="pr-1">
+            <CopyToWorklist iconSize={24} fileProperties={file?.fileProperties ?? []} />
           </Col>
         </Row>
       </StyledMenuHeaderWrapper>
