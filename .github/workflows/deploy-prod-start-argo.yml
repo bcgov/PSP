@@ -60,7 +60,7 @@ jobs:
         id: previoustag
         uses: WyriHaximus/github-action-get-previous-tag@04e8485ecb6487243907e330d522ff60f02283ce # v1.4.0
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@5eb45e840a24f2a7748a4939f9c48adfd128ab78 # v1.3
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -99,7 +99,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@5eb45e840a24f2a7748a4939f9c48adfd128ab78 # v1.3
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -122,7 +122,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@5eb45e840a24f2a7748a4939f9c48adfd128ab78 # v1.3
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -144,7 +144,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@5eb45e840a24f2a7748a4939f9c48adfd128ab78 # v1.3
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
