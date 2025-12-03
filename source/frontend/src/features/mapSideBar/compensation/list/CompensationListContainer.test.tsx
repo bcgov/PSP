@@ -1,4 +1,5 @@
 import { createMemoryHistory } from 'history';
+
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import {
   mockAcquisitionFileResponse,
@@ -9,7 +10,12 @@ import {
   getMockApiDefaultCompensation,
   getMockDefaultCreateCompenReq,
 } from '@/mocks/compensations.mock';
+import { getMockApiLease } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -26,11 +32,6 @@ import CompensationListContainer, {
   ICompensationListContainerProps,
 } from './CompensationListContainer';
 import { ICompensationListViewProps } from './CompensationListView';
-import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
-import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
-import { getMockApiLease } from '@/mocks/lease.mock';
-import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -295,6 +296,7 @@ describe('compensation list view container', () => {
           areaUnitType: undefined,
           propertyName: '',
           location: undefined,
+          boundary: null,
           displayOrder: 0,
           property: undefined,
           propertyId: 0,
@@ -309,6 +311,7 @@ describe('compensation list view container', () => {
           areaUnitType: undefined,
           propertyName: '',
           location: undefined,
+          boundary: null,
           displayOrder: 0,
           property: undefined,
           propertyId: 0,

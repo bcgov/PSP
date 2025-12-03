@@ -10,6 +10,8 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/index';
+import TenureCleanupContainer from '@/features/mapSideBar/shared/detail/PropertyTenureCleanupContainer';
+import { TenureCleanupFieldView } from '@/features/mapSideBar/shared/detail/PropertyTenureCleanupFieldView';
 import HistoricalNumbersContainer from '@/features/mapSideBar/shared/header/HistoricalNumberContainer';
 import { HistoricalNumberFieldView } from '@/features/mapSideBar/shared/header/HistoricalNumberFieldView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -173,6 +175,17 @@ export const columns = ({
           )}
         </StyledDiv>
       );
+    },
+  },
+  {
+    Header: 'Tenure Cleanup',
+    align: 'left',
+    sortable: false,
+    minWidth: 80,
+    maxWidth: 80,
+    Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
+      const propertyArrayId = [props.row.original.id];
+      return <TenureCleanupContainer propertyIds={propertyArrayId} View={TenureCleanupFieldView} />;
     },
   },
   {

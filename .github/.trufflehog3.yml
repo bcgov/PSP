@@ -71,6 +71,18 @@ exclude: # exclude matching issues
       - "Test Data/**"
   - message: Skip ESRI itemIds everywhere (used mainly in basemaps.json)
     pattern: ("?)itemId("?):.*
+  - message: Ignore GitHub Action commit SHAs in workflow files
+    pattern: "@[0-9a-f]{40}"
+    paths:
+      - ".github/workflows/**"
+  - message: Ignore GitHub Action commit SHA comments in workflow files
+    pattern: "# v[0-9]+\\.[0-9]+\\.[0-9]+"
+    paths:
+      - ".github/workflows/**"
+  - message: Ignore high-entropy strings in GitHub workflow files (action SHAs)
+    id: high-entropy
+    paths:
+      - ".github/workflows/**"
 
 # NOTE you can also specify IDs or patterns together or without paths, e.g.
 #

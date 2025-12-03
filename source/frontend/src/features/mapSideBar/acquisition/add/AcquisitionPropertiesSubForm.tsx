@@ -9,6 +9,7 @@ import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFe
 import { Section } from '@/components/common/Section/Section';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { exists, featuresetToLocationBoundaryDataset, firstOrNull } from '@/utils';
@@ -42,6 +43,7 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
       location: mapLocationFeatureDataset?.location,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
       pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
       regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
@@ -96,7 +98,7 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
       </div>
 
       <FieldArray name="properties">
-        {({ remove }) => (
+        {({ remove, replace }) => (
           <Section header="Selected Properties">
             <AddPropertiesGuide />
             {exists(selectedFeatureDataset?.parcelFeature) && (
@@ -113,6 +115,17 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
                 nameSpace={`properties.${index}`}
                 index={index}
                 property={property.toFeatureDataset()}
+                canUploadShapefile={true}
+                onUploadShapefile={(result: UploadResponseModel | null) => {
+                  // Update the property boundary based on the uploaded shapefile
+                  if (exists(result)) {
+                    if (result.isSuccess && exists(result.boundary)) {
+                      const updatedFormProperty = new PropertyForm(property);
+                      updatedFormProperty.fileBoundary = result.boundary;
+                      replace(index, updatedFormProperty);
+                    }
+                  }
+                }}
               />
             ))}
             {formikProps.values.properties.length === 0 && <span>No Properties selected</span>}

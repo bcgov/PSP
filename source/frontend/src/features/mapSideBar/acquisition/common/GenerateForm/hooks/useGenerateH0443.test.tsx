@@ -1,4 +1,3 @@
-import { act } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { Provider } from 'react-redux';
 import configureMockStore, { MockStoreEnhanced } from 'redux-mock-store';
@@ -13,6 +12,7 @@ import { getMockPerson } from '@/mocks/contacts.mock';
 import { getMockOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { act } from '@/utils/test-utils';
 
 import { useGenerateH0443 } from './useGenerateH0443';
 
@@ -284,6 +284,7 @@ describe('useGenerateH0443 functions', () => {
           property: null,
           propertyName: null,
           location: null,
+          boundary: null,
           isActive: null,
           rowVersion: null,
         },
@@ -296,6 +297,7 @@ describe('useGenerateH0443 functions', () => {
           property: null,
           propertyName: null,
           location: null,
+          boundary: null,
           isActive: null,
           rowVersion: null,
         },
