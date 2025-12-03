@@ -1,0 +1,20 @@
+[
+  {
+    "Test Case Description": "Create a new Financial Code",
+    "FinnCodeType": "Work activity",
+    "FinnCodeValue": "AUTO-TSTFINCODE",
+    "FinnCodeDescription": "This is a Test Financial Code created by Automated programming",
+    "FinnEffectiveDate": null,
+    "FinnExpiryDate": 1739404800000,
+    "FinnDisplayOrder": 10.0
+  },
+  {
+    "Test Case Description": "Edit Financial Code",
+    "FinnCodeType": null,
+    "FinnCodeValue": "AUTO-TSTFINCODE",
+    "FinnCodeDescription": "This is a Test Financial Code created by Automated programming - Edited automated form",
+    "FinnEffectiveDate": null,
+    "FinnExpiryDate": null,
+    "FinnDisplayOrder": null
+  }
+]

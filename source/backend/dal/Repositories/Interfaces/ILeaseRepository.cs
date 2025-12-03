@@ -26,13 +26,7 @@ namespace Pims.Dal.Repositories
 
         Paged<PimsLease> GetPage(LeaseFilter filter, HashSet<short> regions);
 
-        IList<PimsLeaseDocument> GetAllLeaseDocuments(long leaseId);
-
         PimsLease Add(PimsLease lease);
-
-        PimsLeaseDocument AddLeaseDocument(PimsLeaseDocument leaseDocument);
-
-        void DeleteLeaseDocument(long leaseDocumentId);
 
         PimsLease Update(PimsLease lease, bool commitTransaction = true);
 

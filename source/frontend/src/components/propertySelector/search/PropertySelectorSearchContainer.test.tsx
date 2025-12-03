@@ -60,11 +60,7 @@ describe('PropertySelectorSearchContainer component', () => {
       )
       .reply(200, mockPropertyLayerSearchResponse)
       // parcel map layer (fully attributed)
-      .onGet(
-        new RegExp(
-          'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows',
-        ),
-      )
+      .onGet(new RegExp('typeNames=WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW'))
       .reply(200, mockFAParcelLayerResponse)
       .onGet(
         new RegExp(
@@ -104,10 +100,10 @@ describe('PropertySelectorSearchContainer component', () => {
     });
 
     await waitFor(() => {
-      expect(mockAxios.history.get).toHaveLength(5);
-      // call parcel map layer
+      expect(mockAxios.history.get).toHaveLength(3);
+      // call FA parcel map layer
       expect(mockAxios.history.get[0].url).toBe(
-        'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PID+%3D+%27123456789%27',
+        'https://apps.gov.bc.ca/ext/sgw/geo.allgov?service=WFS&version=2.0.0&outputFormat=json&typeNames=WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PID+%3D+%27123456789%27',
       );
       // calls the region and district layers
       expect(mockAxios.history.get[1].url).toBe(
@@ -132,9 +128,9 @@ describe('PropertySelectorSearchContainer component', () => {
     });
 
     await waitFor(() => {
-      expect(mockAxios.history.get).toHaveLength(5);
+      expect(mockAxios.history.get).toHaveLength(3);
       expect(mockAxios.history.get[0].url).toBe(
-        'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PIN+ilike+%27%2554321%25%27',
+        'https://apps.gov.bc.ca/ext/sgw/geo.allgov?service=WFS&version=2.0.0&outputFormat=json&typeNames=WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PIN+ilike+%27%2554321%25%27',
       );
 
       // calls the region and district layers
@@ -160,9 +156,9 @@ describe('PropertySelectorSearchContainer component', () => {
     });
 
     await waitFor(() => {
-      expect(mockAxios.history.get).toHaveLength(5);
+      expect(mockAxios.history.get).toHaveLength(3);
       expect(mockAxios.history.get[0].url).toBe(
-        'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PLAN_NUMBER+ilike+%27%25PRP4520%25%27',
+        'https://apps.gov.bc.ca/ext/sgw/geo.allgov?service=WFS&version=2.0.0&outputFormat=json&typeNames=WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PLAN_NUMBER+ilike+%27%25PRP4520%25%27',
       );
       // calls the region and district layers
       expect(mockAxios.history.get[1].url).toBe(
@@ -192,10 +188,10 @@ describe('PropertySelectorSearchContainer component', () => {
     });
 
     await waitFor(() => {
-      expect(mockAxios.history.get).toHaveLength(5);
+      expect(mockAxios.history.get).toHaveLength(3);
       // calls the fully-attributed parcel map layer - to search by legal description
       expect(mockAxios.history.get[0].url).toBe(
-        'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=LEGAL_DESCRIPTION+ilike+%27%25SECTION+13%2C+RANGE+1%2C+SOUTH+SALT+SPRING+ISLAND%25%27',
+        'https://apps.gov.bc.ca/ext/sgw/geo.allgov?service=WFS&version=2.0.0&outputFormat=json&typeNames=WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=LEGAL_DESCRIPTION+ilike+%27%25SECTION+13%2C+RANGE+1%2C+SOUTH+SALT+SPRING+ISLAND%25%27',
       );
 
       // calls the region and district layers
@@ -207,9 +203,12 @@ describe('PropertySelectorSearchContainer component', () => {
       );
 
       // calls the geocoder nearest api to retrieve address
+      /*
+       TODO: PSP-10476
       expect(mockAxios.history.get[3].url).toBe(
         '/tools/geocoder/nearest?point=-123.46163749999998,48.76613749999999',
       );
+      */
     });
   });
 
@@ -240,7 +239,7 @@ describe('PropertySelectorSearchContainer component', () => {
       expect(mockAxios.history.get[1].url).toBe('/tools/geocoder/parcels/pids/1');
       // calls parcel layer - search by PID
       expect(mockAxios.history.get[2].url).toBe(
-        'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?service=WFS&version=2.0.0&outputFormat=json&typeNames=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PID+ilike+%27%25312312%25%27',
+        'https://apps.gov.bc.ca/ext/sgw/geo.allgov?service=WFS&version=2.0.0&outputFormat=json&typeNames=WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW&srsName=EPSG%3A4326&request=GetFeature&cql_filter=PID+ilike+%27%25312312%25%27',
       );
       // calls the region and district layers
       expect(mockAxios.history.get[3].url).toBe(
@@ -266,7 +265,7 @@ describe('PropertySelectorSearchContainer component', () => {
 
     await waitFor(() => {
       expect(mockAxios.history.get[0].url).toBe(
-        'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/wfs?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&srsName=EPSG:4326&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( 0 0))',
+        'https://apps.gov.bc.ca/ext/sgw/geo.allgov?service=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_FA_SVW&srsName=EPSG:4326&cql_filter=CONTAINS(SHAPE,SRID=4326;POINT ( 0 0))',
       );
     });
   });

@@ -36,9 +36,7 @@ exports[`AdvancedFilterButton > renders as expected 1`] = `
 }
 
 .c0.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c0.btn:hover {
@@ -230,6 +228,10 @@ exports[`AdvancedFilterButton > renders as expected 1`] = `
   border-bottom-right-radius: 0;
 }
 
+.c1.btn:hover {
+  opacity: 1;
+}
+
 <div
     id="mapid"
     style="width: 500px; height: 500px;"
@@ -303,39 +305,7 @@ exports[`AdvancedFilterButton > renders as expected 1`] = `
         </div>
         <div
           class="leaflet-top leaflet-right"
-        >
-          <div
-            class="leaflet-control"
-          >
-            <div
-              class="w-100"
-            >
-              <button
-                class="c0 Button c1 btn btn-outline-secondary"
-                title="advanced-filter-button"
-                type="button"
-              >
-                <div
-                  class="Button__value"
-                >
-                  <svg
-                    fill="currentColor"
-                    height="1.6em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1.6em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"
-                    />
-                  </svg>
-                </div>
-              </button>
-            </div>
-          </div>
-        </div>
+        />
         <div
           class="leaflet-bottom leaflet-left"
         />
@@ -354,6 +324,29 @@ exports[`AdvancedFilterButton > renders as expected 1`] = `
           </div>
         </div>
       </div>
+      <button
+        class="c0 Button c1 btn btn-outline-secondary"
+        title="advanced-filter-button"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          <svg
+            fill="currentColor"
+            height="1.6em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1.6em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M487.976 0H24.028C2.71 0-8.047 25.866 7.058 40.971L192 225.941V432c0 7.831 3.821 15.17 10.237 19.662l80 55.98C298.02 518.69 320 507.493 320 487.98V225.941l184.947-184.97C520.021 25.896 509.338 0 487.976 0z"
+            />
+          </svg>
+        </div>
+      </button>
     </div>
   </div>
 </DocumentFragment>

@@ -7,8 +7,7 @@ import { RemoveIconButton } from '@/components/common/buttons';
 import EditButton from '@/components/common/buttons/EditButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { H3, StyledSectionAddButton } from '@/components/common/styles';
-import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
+import { H3, StyledLink, StyledSectionAddButton } from '@/components/common/styles';
 import { Claims } from '@/constants';
 import { DetailAcquisitionFileOwner } from '@/features/mapSideBar/acquisition/models/DetailAcquisitionFileOwner';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -165,8 +164,9 @@ export const ExpropriationForm8Details: React.FunctionComponent<
 export default ExpropriationForm8Details;
 
 const StyledForm8Border = styled.div`
-  border: solid 0.2rem ${props => props.theme.css.headerBorderColor};
+  border: solid 0.2rem ${props => props.theme.css.iconBlueHover};
   margin-bottom: 0.5rem;
+  border-radius: 0.5rem;
 `;
 
 const StyledPayeeDisplayName = styled.div`

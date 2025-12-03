@@ -54,6 +54,7 @@ describe('ContactInputView component', () => {
       field: 'test',
       setShowContactManager: setShowContactManager,
       onClear: clear,
+      canEditDetails: true,
     });
     expect(asFragment()).toMatchSnapshot();
   });
@@ -64,6 +65,7 @@ describe('ContactInputView component', () => {
       field: 'test',
       setShowContactManager: setShowContactManager,
       onClear: clear,
+      canEditDetails: true,
     });
     expect(getByText('Select from contacts')).toBeInTheDocument();
   });
@@ -75,6 +77,7 @@ describe('ContactInputView component', () => {
       setShowContactManager: setShowContactManager,
       onClear: clear,
       initialValues: { test: { firstName: 'blah', surname: 'blah2', personId: 1 } },
+      canEditDetails: true,
     });
     expect(getByText('blah blah2')).toBeInTheDocument();
   });
@@ -86,6 +89,7 @@ describe('ContactInputView component', () => {
       setShowContactManager: setShowContactManager,
       onClear: clear,
       initialValues: { test: { organizationName: 'blah org', organizationId: 1 } },
+      canEditDetails: true,
     });
     expect(getByText('blah org')).toBeInTheDocument();
   });
@@ -96,6 +100,7 @@ describe('ContactInputView component', () => {
       field: 'test',
       setShowContactManager: setShowContactManager,
       onClear: clear,
+      canEditDetails: true,
     });
     const icon = getByTitle('Select Contact');
     await act(async () => userEvent.click(icon));
@@ -108,6 +113,7 @@ describe('ContactInputView component', () => {
       field: 'test',
       setShowContactManager: setShowContactManager,
       onClear: clear,
+      canEditDetails: true,
     });
     const icon = queryByTitle('remove');
     await act(async () => userEvent.click(icon));
@@ -120,6 +126,7 @@ describe('ContactInputView component', () => {
       field: 'invalid',
       setShowContactManager: setShowContactManager,
       onClear: clear,
+      canEditDetails: true,
     });
     const icon = queryByTitle('remove');
     expect(icon).not.toBeInTheDocument();

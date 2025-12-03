@@ -7,7 +7,9 @@ namespace Pims.Dal.Entities
     /// </summary>
     public partial class PimsDispositionOfferStatusType : ITypeEntity<string>
     {
-        public PimsDispositionOfferStatusType() { }
+        public PimsDispositionOfferStatusType()
+        {
+        }
 
         public PimsDispositionOfferStatusType(string id)
         {

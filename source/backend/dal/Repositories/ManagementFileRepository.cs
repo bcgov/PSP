@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Text.RegularExpressions;
-using DocumentFormat.OpenXml.Office2010.Excel;
 using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -51,7 +50,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.Project)
                 .Include(d => d.Product)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
-                .Include(d => d.ManagementFileProgramTypeCodeNavigation)
+                .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsManagementFileProperties)
                 .Include(d => d.PimsManagementFileTeams)
@@ -68,7 +67,7 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Retrieves the management file with the specified name.
         /// </summary>
-        /// <param name="id"></param>
+        /// <param name="name"></param>
         /// <returns></returns>
         public PimsManagementFile GetByName(string name)
         {
@@ -79,7 +78,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.Project)
                 .Include(d => d.Product)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
-                .Include(d => d.ManagementFileProgramTypeCodeNavigation)
+                .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsManagementFileProperties)
                 .Include(d => d.PimsManagementFileTeams)
@@ -287,7 +286,7 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(x => x.ManagementFileId == managementFileId) ?? throw new KeyNotFoundException();
 
             Context.Entry(existingFile).CurrentValues.SetValues(managementFile);
-            Context.UpdateChild<PimsManagementFile, long, PimsManagementFileTeam, long>(p => p.PimsManagementFileTeams, managementFile.Internal_Id, managementFile.PimsManagementFileTeams.ToArray());
+            Context.UpdateChild<PimsManagementFile, long, PimsManagementFileTeam, long>(x => x.PimsManagementFileTeams, managementFile.Internal_Id, managementFile.PimsManagementFileTeams.ToArray());
 
             return existingFile;
         }
@@ -314,6 +313,63 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.Person)
                 .Include(x => x.Organization)
                 .ToList();
+        }
+
+        public List<PimsManagementFileContact> GetContacts(long managementFileId)
+        {
+            return Context.PimsManagementFileContacts
+                .AsNoTracking()
+                .Include(x => x.Person)
+                .Include(x => x.Organization)
+                .Include(x => x.PrimaryContact)
+                .Where(x => x.ManagementFileId == managementFileId)
+                .ToList();
+        }
+
+        public PimsManagementFileContact GetContact(long managementFileId, long contactId)
+        {
+            return Context.PimsManagementFileContacts
+                .AsNoTracking()
+                .Include(x => x.Person)
+                .Include(x => x.Organization)
+                .Include(x => x.PrimaryContact)
+                .Where(x => x.ManagementFileId == managementFileId && x.ManagementFileContactId == contactId)
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
+        public PimsManagementFileContact AddContact(PimsManagementFileContact contact)
+        {
+            contact.ThrowIfNull(nameof(contact));
+
+            Context.PimsManagementFileContacts.Add(contact);
+
+            return contact;
+        }
+
+        public PimsManagementFileContact UpdateContact(PimsManagementFileContact contact)
+        {
+            contact.ThrowIfNull(nameof(contact));
+
+            var existingContact = Context.PimsManagementFileContacts
+                .FirstOrDefault(x => x.ManagementFileContactId == contact.ManagementFileContactId) ?? throw new KeyNotFoundException();
+
+            // The contact cannot be updated by bussiness requirements.
+            if (existingContact.PersonId != contact.PersonId || existingContact.OrganizationId != contact.OrganizationId)
+            {
+                throw new InvalidOperationException("Property contact's contact cannot be updated");
+            }
+
+            Context.Entry(existingContact).CurrentValues.SetValues(contact);
+
+            return existingContact;
+        }
+
+        public void DeleteContact(long managementFileId, long contactId)
+        {
+            var existingContact = Context.PimsManagementFileContacts
+                .FirstOrDefault(x => x.ManagementFileId == managementFileId && x.ManagementFileContactId == contactId) ?? throw new KeyNotFoundException();
+
+            Context.PimsManagementFileContacts.Remove(existingContact);
         }
 
         /// <summary>
@@ -385,7 +441,7 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.ManagementFilePurposeCode))
             {
-                predicate = predicate.And(disp => disp.ManagementFileProgramTypeCode == filter.ManagementFilePurposeCode);
+                predicate = predicate.And(disp => disp.ManagementFilePurposeTypeCode == filter.ManagementFilePurposeCode);
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNameOrNumber))
@@ -409,7 +465,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.Project)
                 .Include(d => d.Product)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
-                .Include(d => d.ManagementFileProgramTypeCodeNavigation)
+                .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsManagementFileProperties)
                 .Include(d => d.PimsManagementFileTeams)
@@ -430,6 +486,7 @@ namespace Pims.Dal.Repositories
 
             return query;
         }
+
         #endregion
     }
 }

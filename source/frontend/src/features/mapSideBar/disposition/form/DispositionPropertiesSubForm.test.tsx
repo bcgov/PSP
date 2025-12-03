@@ -3,12 +3,13 @@ import { createRef } from 'react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
+import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
+import { PropertyForm } from '../../shared/models';
 import { DispositionFormModel } from '../models/DispositionFormModel';
 import DispositionPropertiesSubForm from './DispositionPropertiesSubForm';
-import { PropertyForm } from '../../shared/models';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -42,6 +43,9 @@ describe('DispositionPropertiesSubForm component', () => {
       },
     );
 
+    // Wait for any async effects to complete
+    await act(async () => {});
+
     return {
       ...utils,
       getFormikRef: () => ref,
@@ -51,10 +55,29 @@ describe('DispositionPropertiesSubForm component', () => {
   let testForm: DispositionFormModel;
 
   beforeEach(() => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
     testForm = new DispositionFormModel();
     testForm.fileProperties = [
-      PropertyForm.fromMapProperty({ pid: '123-456-789' }),
-      PropertyForm.fromMapProperty({ pin: '1111222' }),
+      PropertyForm.fromFeatureDataset({
+        ...mockFeatureSet,
+        pimsFeature: {
+          ...mockFeatureSet.pimsFeature,
+          properties: {
+            ...mockFeatureSet.pimsFeature?.properties,
+            PID_PADDED: '123-456-789',
+          },
+        },
+      }),
+      PropertyForm.fromFeatureDataset({
+        ...mockFeatureSet,
+        pimsFeature: {
+          ...mockFeatureSet.pimsFeature,
+          properties: {
+            ...mockFeatureSet.pimsFeature?.properties,
+            PIN: 1111222,
+          },
+        },
+      }),
     ];
   });
 
@@ -72,13 +95,6 @@ describe('DispositionPropertiesSubForm component', () => {
   it('renders list of properties', async () => {
     const { getByText } = await setup({ initialForm: testForm });
 
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 0, lng: 0 },
-        { lat: 0, lng: 0 },
-      ]);
-    });
-
     expect(getByText('PID: 123-456-789')).toBeVisible();
     expect(getByText('PIN: 1111222')).toBeVisible();
   });
@@ -88,55 +104,13 @@ describe('DispositionPropertiesSubForm component', () => {
     const pidRow = getAllByTitle('remove')[0];
     await act(async () => userEvent.click(pidRow));
 
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([{ lat: 0, lng: 0 }]);
-    });
-
     expect(queryByText('PID: 123-456-789')).toBeNull();
   });
 
   it('should display properties with svg prefixed with incrementing id', async () => {
     const { getByTitle } = await setup({ initialForm: testForm });
 
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 0, lng: 0 },
-        { lat: 0, lng: 0 },
-      ]);
-    });
-
     expect(getByTitle('1')).toBeInTheDocument();
     expect(getByTitle('2')).toBeInTheDocument();
-  });
-
-  it('should synchronize a single property with provided lat/lng', async () => {
-    const formWithProperties = testForm;
-    formWithProperties.fileProperties[0].latitude = 1;
-    formWithProperties.fileProperties[0].longitude = 2;
-    await setup({ initialForm: formWithProperties });
-
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 1, lng: 2 },
-        { lat: 0, lng: 0 },
-      ]);
-    });
-  });
-
-  it('should synchronize multiple properties with provided lat/lng', async () => {
-    const formWithProperties = testForm;
-    formWithProperties.fileProperties[0].latitude = 1;
-    formWithProperties.fileProperties[0].longitude = 2;
-    formWithProperties.fileProperties[1].latitude = 3;
-    formWithProperties.fileProperties[1].longitude = 4;
-
-    await setup({ initialForm: formWithProperties });
-
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 1, lng: 2 },
-        { lat: 3, lng: 4 },
-      ]);
-    });
   });
 });

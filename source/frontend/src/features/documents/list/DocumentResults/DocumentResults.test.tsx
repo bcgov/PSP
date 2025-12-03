@@ -1,19 +1,18 @@
-import { useKeycloak } from '@react-keycloak/web';
-import noop from 'lodash/noop';
-
 import { Claims } from '@/constants/claims';
-import { DocumentRow } from '@/features/documents/ComposedDocument';
 import { mockDocumentResponse, mockDocumentsResponse } from '@/mocks/documents.mock';
 import { cleanup, mockKeycloak, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { DocumentResults, IDocumentResultProps } from './DocumentResults';
 import { get } from 'lodash';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { DocumentRow } from '../../models/DocumentRow';
 
 const setSort = vi.fn();
 
 const onViewDetails = vi.fn();
 const onDelete = vi.fn();
 const onPreview = vi.fn();
+const onViewParent = vi.fn();
 
 // render component under test
 const setup = (renderOptions: RenderOptions & Partial<IDocumentResultProps> = { results: [] }) => {
@@ -26,6 +25,9 @@ const setup = (renderOptions: RenderOptions & Partial<IDocumentResultProps> = { 
       onViewDetails={onViewDetails}
       onDelete={onDelete}
       onPreview={onPreview}
+      onViewParent={onViewParent}
+      showParentInformation={false}
+      canEditDocuments={renderOptions?.canEditDocuments ?? true}
     />,
     {
       ...rest,
@@ -73,7 +75,9 @@ describe('Document Results Table', () => {
 
   it('matches snapshot', async () => {
     const { asFragment } = setup({
-      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      results: mockDocumentsResponse().map(x =>
+        DocumentRow.fromApi(x, ApiGen_CodeTypes_DocumentRelationType.Leases),
+      ),
     });
     expect(asFragment()).toMatchSnapshot();
   });
@@ -88,17 +92,21 @@ describe('Document Results Table', () => {
 
   it('displays document view button', async () => {
     const { getAllByTestId } = setup({
-      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      results: mockDocumentsResponse().map(x =>
+        DocumentRow.fromApi(x, ApiGen_CodeTypes_DocumentRelationType.Leases),
+      ),
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT],
     });
 
-    const viewButtons = await getAllByTestId('document-view-button');
+    const viewButtons = await getAllByTestId('document-view-button-0');
     expect(viewButtons[0]).toBeVisible();
   });
 
   it('displays document filename as link', async () => {
     const { getDocumentFileNameLink, getDocumentFileNameText } = setup({
-      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      results: mockDocumentsResponse().map(x =>
+        DocumentRow.fromApi(x, ApiGen_CodeTypes_DocumentRelationType.Leases),
+      ),
       claims: [Claims.DOCUMENT_VIEW],
     });
 
@@ -111,7 +119,9 @@ describe('Document Results Table', () => {
   it('displays document filename as plain text', async () => {
     mockKeycloak({ claims: [] });
     const { getDocumentFileNameLink, getDocumentFileNameText } = setup({
-      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      results: mockDocumentsResponse().map(x =>
+        DocumentRow.fromApi(x, ApiGen_CodeTypes_DocumentRelationType.Leases),
+      ),
     });
 
     const filenameText = await getDocumentFileNameText(20);
@@ -122,7 +132,9 @@ describe('Document Results Table', () => {
 
   it('displays document processing icon', async () => {
     const { getDocumentProcessingIcon } = setup({
-      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      results: mockDocumentsResponse().map(x =>
+        DocumentRow.fromApi(x, ApiGen_CodeTypes_DocumentRelationType.Leases),
+      ),
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
     });
 
@@ -131,7 +143,9 @@ describe('Document Results Table', () => {
 
   it('displays document PIMS ERROR processing icon', async () => {
     const { getDocumentProcessingErrorIcon } = setup({
-      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      results: mockDocumentsResponse().map(x =>
+        DocumentRow.fromApi(x, ApiGen_CodeTypes_DocumentRelationType.Leases),
+      ),
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
     });
 
@@ -140,7 +154,9 @@ describe('Document Results Table', () => {
 
   it('displays document MAYAN ERROR processing icon', async () => {
     const { getDocumentProcessingErrorIcon } = setup({
-      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      results: mockDocumentsResponse().map(x =>
+        DocumentRow.fromApi(x, ApiGen_CodeTypes_DocumentRelationType.Leases),
+      ),
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
     });
 
@@ -149,17 +165,19 @@ describe('Document Results Table', () => {
 
   it('displays document delete button', async () => {
     const { getAllByTestId } = setup({
-      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      results: mockDocumentsResponse().map(x =>
+        DocumentRow.fromApi(x, ApiGen_CodeTypes_DocumentRelationType.Leases),
+      ),
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
     });
 
-    const deleteButtons = await getAllByTestId('document-delete-button');
+    const deleteButtons = await getAllByTestId('document-delete-button-0');
     expect(deleteButtons[0]).toBeVisible();
   });
 
   it('displays default number of entries of 10', async () => {
     const largeDataset = Array.from({ length: 15 }, (id: number) =>
-      DocumentRow.fromApi(mockDocumentResponse(id)),
+      DocumentRow.fromApi(mockDocumentResponse(id), ApiGen_CodeTypes_DocumentRelationType.Leases),
     );
     const { findByText } = setup({ results: largeDataset, claims: [Claims.DOCUMENT_VIEW] });
     expect(await findByText('1 - 10 of 15')).toBeVisible();
@@ -167,7 +185,9 @@ describe('Document Results Table', () => {
 
   it('previews a document when text clicked', async () => {
     const { getDocumentFileNameLink } = setup({
-      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      results: mockDocumentsResponse().map(x =>
+        DocumentRow.fromApi(x, ApiGen_CodeTypes_DocumentRelationType.Leases),
+      ),
       claims: [Claims.DOCUMENT_VIEW],
     });
 
@@ -179,22 +199,26 @@ describe('Document Results Table', () => {
 
   it('views a document when eye icon clicked', async () => {
     const { getAllByTestId } = setup({
-      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      results: mockDocumentsResponse().map(x =>
+        DocumentRow.fromApi(x, ApiGen_CodeTypes_DocumentRelationType.Leases),
+      ),
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_EDIT],
     });
 
-    const viewButton = getAllByTestId('document-view-button')[0];
+    const viewButton = getAllByTestId('document-view-button-0')[0];
     userEvent.click(viewButton);
     expect(onViewDetails).toHaveBeenCalled();
   });
 
   it('deletes a document when delete icon clicked', async () => {
     const { getAllByTestId } = setup({
-      results: mockDocumentsResponse().map(x => DocumentRow.fromApi(x)),
+      results: mockDocumentsResponse().map(x =>
+        DocumentRow.fromApi(x, ApiGen_CodeTypes_DocumentRelationType.Leases),
+      ),
       claims: [Claims.DOCUMENT_VIEW, Claims.DOCUMENT_DELETE],
     });
 
-    const deleteButton = getAllByTestId('document-delete-button')[0];
+    const deleteButton = getAllByTestId('document-delete-button-0')[0];
     userEvent.click(deleteButton);
     expect(onDelete).toHaveBeenCalled();
   });

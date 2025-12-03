@@ -14,7 +14,7 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsDocumentQueue> SearchDocumentQueue(DocumentQueueFilter filter);
 
-        public PimsDocumentQueue Update(PimsDocumentQueue documentQueue);
+        public Task<PimsDocumentQueue> Update(PimsDocumentQueue documentQueue);
 
         public Task<PimsDocumentQueue> PollForDocument(PimsDocumentQueue documentQueue);
 

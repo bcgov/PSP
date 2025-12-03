@@ -1,8 +1,8 @@
-import { act, screen } from '@testing-library/react';
 import { createMemoryHistory } from 'history';
+import { createRef } from 'react';
 
 import { Claims } from '@/constants/claims';
-import { IContactSearchResult, fromContactSummary } from '@/interfaces';
+import { fromContactSummary, IContactSearchResult } from '@/interfaces';
 import {
   getEmptyPerson,
   getMockContactOrganizationWithOnePerson,
@@ -12,14 +12,12 @@ import { mockLookups } from '@/mocks/index.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_Contact';
+import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { mockKeycloak, renderAsync, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, mockKeycloak, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import AddLeaseStakeholderForm, { IAddLeaseStakeholderFormProps } from './AddLeaseStakeholderForm';
 import { FormStakeholder } from './models';
-import { createRef } from 'react';
-import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
-import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -120,7 +118,7 @@ describe('AddLeaseTenantForm component', () => {
     renderOptions: RenderOptions & Partial<IAddLeaseStakeholderFormProps> = {},
   ) => {
     // render component under test
-    const component = await renderAsync(
+    const component = render(
       <AddLeaseStakeholderForm
         {...{
           ...defaultRenderOptions,
@@ -133,6 +131,7 @@ describe('AddLeaseTenantForm component', () => {
         history,
       },
     );
+    await act(async () => {}); // wait for async useEffects
     return { component };
   };
 
@@ -161,17 +160,15 @@ describe('AddLeaseTenantForm component', () => {
     await act(async () => {
       await setup({ showContactManager: true });
     });
-    const modal = screen.getByText('Select a contact');
+    const modal = screen.getByText('Select Contact');
 
     expect(modal).toBeVisible();
   });
 
   it('confirming the modal sets the tenants', async () => {
-    await act(async () => {
-      await setup({ showContactManager: true });
-    });
+    await setup({ showContactManager: true });
 
-    const modal = screen.getByText('Select a contact');
+    const modal = screen.getByText('Select Contact');
     expect(modal).toBeVisible();
 
     const confirm = screen.getByText('Select');
@@ -188,11 +185,9 @@ describe('AddLeaseTenantForm component', () => {
         stakeholderType: 'OWN',
       }),
     ];
-    await act(async () => {
-      await setup({ showContactManager: true, selectedStakeholders: tenants });
-    });
+    await setup({ showContactManager: true, selectedStakeholders: tenants });
 
-    const modal = screen.getByText('Select a contact');
+    const modal = screen.getByText('Select Contact');
     expect(modal).toBeVisible();
 
     const cancel = screen.getByText('Cancel');
@@ -203,12 +198,9 @@ describe('AddLeaseTenantForm component', () => {
   });
 
   it('displays modal when prop is set', async () => {
-    await act(async () => {
-      await setup({ showContactManager: true });
-    });
+    await setup({ showContactManager: true });
 
-    const modal = screen.getByText('Select a contact');
-
+    const modal = screen.getByText('Select Contact');
     expect(modal).toBeVisible();
   });
 
@@ -223,7 +215,6 @@ describe('AddLeaseTenantForm component', () => {
     });
 
     const number = screen.getByText('1 Tenant(s) associated with this Lease/Licence');
-
     expect(number).toBeVisible();
   });
 
@@ -239,7 +230,6 @@ describe('AddLeaseTenantForm component', () => {
     });
 
     const number = screen.getByText('1 Payee(s) associated with this Lease/Licence');
-
     expect(number).toBeVisible();
   });
 
@@ -254,7 +244,6 @@ describe('AddLeaseTenantForm component', () => {
     });
 
     const summary = screen.getByText('Dairy Queen Forever! Property Management');
-
     expect(summary).toBeVisible();
   });
 
@@ -269,7 +258,6 @@ describe('AddLeaseTenantForm component', () => {
     });
 
     const contactMsg = screen.getByText('Not applicable');
-
     expect(contactMsg).toBeVisible();
   });
 
@@ -294,57 +282,6 @@ describe('AddLeaseTenantForm component', () => {
     });
 
     const contactMsg = screen.getByText('No contacts available');
-
-    expect(contactMsg).toBeVisible();
-  });
-
-  it('displays no contacts available if organization has no contacts', async () => {
-    const organization: IContactSearchResult = {
-      ...getMockContactOrganizationWithOnePerson(),
-      organization: { ...getEmptyOrganization(), organizationPersons: [] },
-      personId: undefined,
-      person: undefined,
-      surname: undefined,
-      firstName: undefined,
-      middleNames: undefined,
-    } as unknown as IContactSearchResult;
-
-    await setup({
-      selectedStakeholders: [
-        new FormStakeholder(undefined, {
-          contact: organization,
-          stakeholderType: 'OWN',
-        }),
-      ],
-    });
-
-    const contactMsg = screen.getByText('No contacts available');
-
-    expect(contactMsg).toBeVisible();
-  });
-
-  it('displays no contacts available if organization has no contacts', async () => {
-    const organization: IContactSearchResult = {
-      ...getMockContactOrganizationWithOnePerson(),
-      organization: { ...getEmptyOrganization(), organizationPersons: [] },
-      personId: undefined,
-      person: undefined,
-      surname: undefined,
-      firstName: undefined,
-      middleNames: undefined,
-    } as unknown as IContactSearchResult;
-
-    await setup({
-      selectedStakeholders: [
-        new FormStakeholder(undefined, {
-          contact: organization,
-          stakeholderType: 'OWN',
-        }),
-      ],
-    });
-
-    const contactMsg = screen.getByText('No contacts available');
-
     expect(contactMsg).toBeVisible();
   });
 
@@ -381,7 +318,6 @@ describe('AddLeaseTenantForm component', () => {
     });
 
     const contactPerson = screen.getByText('test testerson');
-
     expect(contactPerson).toBeVisible();
   });
 
@@ -423,7 +359,6 @@ describe('AddLeaseTenantForm component', () => {
     });
 
     const contactMsg = screen.getByDisplayValue('Select a contact');
-
     expect(contactMsg).toBeVisible();
   });
 

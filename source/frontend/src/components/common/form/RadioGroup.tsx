@@ -17,6 +17,8 @@ type RequiredAttributes = {
 type OptionalAttributes = {
   /** The form component label to display before the checkbox */
   label?: string;
+  /** Whether the label should be bold */
+  isLabelBold?: boolean;
   /** The form component label to display after the checkbox */
   postLabel?: string;
   /** The underlying HTML element to use when rendering the FormControl */
@@ -57,6 +59,7 @@ export const RadioGroup = ({
   field,
   radioValues,
   label,
+  isLabelBold,
   postLabel,
   placeholder,
   className,
@@ -83,7 +86,7 @@ export const RadioGroup = ({
     >
       {!!label && (
         <Form.Label>
-          {label}
+          {isLabelBold ? <b>{label}</b> : label}
           {!!toolTip && toolTipId !== undefined && toolTipId !== null && (
             <TooltipIcon toolTipId={toolTipId} toolTip={toolTip} />
           )}

@@ -1,4 +1,5 @@
 import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_CodeTypes_LeaseStakeholderTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStakeholderTypes';
 import { ApiGen_CodeTypes_LessorTypes } from '@/models/api/generated/ApiGen_CodeTypes_LessorTypes';
@@ -70,9 +71,9 @@ const emptyLease: ApiGen_Concepts_Lease = {
   leaseTeam: [],
 };
 
-export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
+export const getMockApiLease: (id?: number) => ApiGen_Concepts_Lease = (id = 1) => ({
   ...emptyLease,
-  id: 1,
+  id,
   rowVersion: 2,
   lFileNo: 'L-0000001',
   periods: [],
@@ -80,7 +81,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
   persons: [],
   organizations: [],
   paymentReceivableType: {
-    id: 'RCVBL',
+    id: ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL.toString(),
     description: 'Receivable',
     isDisabled: false,
     displayOrder: 0,
@@ -394,8 +395,7 @@ export const getMockApiLease: () => ApiGen_Concepts_Lease = () => ({
     },
   ],
   totalAllowableCompensation: null,
-  properties: [],
-  insurances: [],
+  fileProperties: [],
   leasePurposes: [
     {
       id: 10,
@@ -522,7 +522,7 @@ export const getPersonLeaseStakeholder = (
       addressComment: '',
       useOrganizationAddress: false,
       isDisabled: false,
-      propertyActivityId: 0,
+      managementActivityId: 0,
       contactMethods: [],
       personAddresses: [],
       personOrganizations: [],
@@ -1348,7 +1348,7 @@ export const getMockLeaseStakeholders = (leaseId = 1): ApiGen_Concepts_LeaseStak
       addressComment: null,
       useOrganizationAddress: false,
       isDisabled: false,
-      propertyActivityId: null,
+      managementActivityId: null,
       contactMethods: [],
       personAddresses: [],
       personOrganizations: [],
@@ -1395,7 +1395,7 @@ export const getMockLeaseStakeholders = (leaseId = 1): ApiGen_Concepts_LeaseStak
       addressComment: null,
       useOrganizationAddress: false,
       isDisabled: false,
-      propertyActivityId: null,
+      managementActivityId: null,
       contactMethods: [
         {
           id: 1,
@@ -1592,7 +1592,7 @@ export const getMockLeaseStakeholders = (leaseId = 1): ApiGen_Concepts_LeaseStak
       addressComment: null,
       useOrganizationAddress: false,
       isDisabled: false,
-      propertyActivityId: null,
+      managementActivityId: null,
       contactMethods: [],
       personAddresses: [],
       personOrganizations: [],
@@ -1639,7 +1639,7 @@ export const getMockLeaseStakeholders = (leaseId = 1): ApiGen_Concepts_LeaseStak
       addressComment: null,
       useOrganizationAddress: false,
       isDisabled: false,
-      propertyActivityId: null,
+      managementActivityId: null,
       contactMethods: [],
       personAddresses: [],
       personOrganizations: [],
@@ -1675,6 +1675,7 @@ export const getMockLeaseStakeholders = (leaseId = 1): ApiGen_Concepts_LeaseStak
 export const getMockLeaseProperties = (leaseId = 1): ApiGen_Concepts_PropertyLease[] => [
   {
     file: null,
+    isActive: null,
     leaseArea: 0,
     areaUnitType: null,
     id: 387,
@@ -1686,6 +1687,7 @@ export const getMockLeaseProperties = (leaseId = 1): ApiGen_Concepts_PropertyLea
         y: 381468.28746302053,
       },
     },
+    boundary: null,
     displayOrder: null,
     property: {
       id: 442,
@@ -1776,7 +1778,6 @@ export const getMockLeaseProperties = (leaseId = 1): ApiGen_Concepts_PropertyLea
       },
       generalLocation: null,
       historicalFileNumbers: [],
-      notes: null,
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
       surplusDeclarationDate: '0001-01-01',

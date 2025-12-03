@@ -1,24 +1,30 @@
 import { useCallback, useEffect, useState } from 'react';
 import { toast } from 'react-toastify';
 
+import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
+import { exists } from '@/utils';
 
-import { DocumentRow } from '../ComposedDocument';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
+import { DocumentRow } from '../models/DocumentRow';
+import { IUpdateDocumentsStrategy } from '../models/IUpdateDocumentsStrategy';
 import DocumentListView from './DocumentListView';
 
-interface IDocumentListContainerProps {
+export interface IDocumentListContainerProps {
   parentId: string;
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
   disableAdd?: boolean;
   addButtonText?: string;
   title?: string;
+  statusSolver?: IUpdateDocumentsStrategy | null;
   onSuccess?: () => void;
 }
 
 const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps> = props => {
+  const pathGenerator = usePathGenerator();
+
   const isMounted = useIsMounted();
 
   const [documentResults, setDocumentResults] = useState<DocumentRow[]>([]);
@@ -31,11 +37,11 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
 
   const retrieveDocuments = useCallback(async () => {
     const documents = await retrieveDocumentRelationship(props.relationshipType, props.parentId);
-    if (documents !== undefined && isMounted()) {
+    if (exists(documents) && isMounted()) {
       setDocumentResults([
         ...documents
           .filter((x): x is ApiGen_Concepts_DocumentRelationship => !!x?.document)
-          .map(x => DocumentRow.fromApi(x)),
+          .map(x => DocumentRow.fromApi(x, 'self')),
       ]);
     }
   }, [isMounted, retrieveDocumentRelationship, props.relationshipType, props.parentId]);
@@ -78,6 +84,15 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
     retrieveDocuments();
   };
 
+  const handleViewParent = async (
+    relationshipType: ApiGen_CodeTypes_DocumentRelationType,
+    parentId: number,
+  ) => {
+    pathGenerator.showFile(relationshipType, parentId);
+  };
+
+  const editDocumentsEnabled = !props.statusSolver || props.statusSolver?.canEditDocuments();
+
   return (
     <DocumentListView
       parentId={props.parentId}
@@ -85,11 +100,16 @@ const DocumentListContainer: React.FunctionComponent<IDocumentListContainerProps
       addButtonText={props.addButtonText}
       isLoading={retrieveDocumentRelationshipLoading}
       documentResults={documentResults}
+      disableAdd={props.disableAdd}
+      canEditDocuments={editDocumentsEnabled}
       onDelete={onDelete}
       onSuccess={onSuccess}
       onRefresh={handleDocumentsRefresh}
-      disableAdd={props.disableAdd}
+      onViewParent={handleViewParent}
       title={props.title}
+      showParentInformation={false}
+      relationshipTypes={[]}
+      data-testId="main-document-list"
     />
   );
 };

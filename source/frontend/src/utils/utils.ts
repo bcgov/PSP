@@ -5,6 +5,7 @@ import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 import { SelectOption } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
+import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
@@ -194,6 +195,21 @@ export function isNumber(value: unknown): value is number {
   return typeof value === 'number';
 }
 
+export function firstValidOrNull<T>(
+  array: Array<T> | null,
+  validator: (v: T | null | undefined) => v is T,
+): T | null {
+  if (exists(array) && array.length > 0) {
+    for (let i = 0; i < array.length; i++) {
+      const isValid = validator(array[i]);
+      if (isValid) {
+        return array[i];
+      }
+    }
+  }
+  return null;
+}
+
 export function truncateName(name: string, length: number): string {
   if (name.length > length) {
     return name.slice(0, length) + '...';
@@ -226,4 +242,41 @@ export default function componentLoader(lazyComponent: Promise<any>, attemptsLef
       }, 500);
     });
   });
+}
+
+export function capitalizeFirstLetter(value: string) {
+  return value.charAt(0).toUpperCase() + value.slice(1);
+}
+
+export function relationshipTypeToPathName(
+  relationshipType: ApiGen_CodeTypes_DocumentRelationType,
+) {
+  switch (relationshipType) {
+    case ApiGen_CodeTypes_DocumentRelationType.Templates:
+      return 'template';
+
+    case ApiGen_CodeTypes_DocumentRelationType.ResearchFiles:
+      return 'research';
+
+    case ApiGen_CodeTypes_DocumentRelationType.AcquisitionFiles:
+      return 'acquisition';
+
+    case ApiGen_CodeTypes_DocumentRelationType.Leases:
+      return 'lease';
+
+    case ApiGen_CodeTypes_DocumentRelationType.Projects:
+      return 'project';
+
+    case ApiGen_CodeTypes_DocumentRelationType.ManagementActivities:
+      return 'activities';
+
+    case ApiGen_CodeTypes_DocumentRelationType.ManagementFiles:
+      return 'management';
+
+    case ApiGen_CodeTypes_DocumentRelationType.DispositionFiles:
+      return 'disposition';
+
+    case ApiGen_CodeTypes_DocumentRelationType.Properties:
+      return 'property';
+  }
 }

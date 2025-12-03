@@ -167,7 +167,7 @@ exports[`Document Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            File name
+            Document name
             <div
               class="c0"
               data-testid="sort-column-fileName"

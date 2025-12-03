@@ -36,9 +36,7 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
 }
 
 .c4.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c4.btn:hover {
@@ -340,7 +338,7 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
           class="row"
         >
           <div
-            class="col-lg-7"
+            class="col-lg-5"
           >
             <div
               class="form-group"
@@ -383,7 +381,24 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
             </div>
           </div>
           <div
-            class="col-lg-5"
+            class="col-lg-4"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-ownerName"
+                name="ownerName"
+                placeholder="Owner"
+                style="word-break: break-all;"
+                title=""
+                value=""
+              />
+            </div>
+          </div>
+          <div
+            class="col-lg-3"
           >
             <div
               class="form-group"

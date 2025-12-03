@@ -1,3 +1,5 @@
+import { point } from '@turf/turf';
+
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
@@ -20,6 +22,7 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
   fileProperties: [
     {
       id: 55,
+      isActive: null,
       propertyId: 495,
       property: {
         ...getMockApiProperty(),
@@ -54,6 +57,7 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
             y: 49.27720127104871,
           },
         },
+        boundary: point([-123.128633565, 49.27720127104871]).geometry,
         rowVersion: 1,
       },
       rowVersion: 1,
@@ -67,6 +71,7 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
       isLegalOpinionObtained: null,
       file: null,
       location: null,
+      boundary: null,
     },
   ],
   requestDate: '2022-04-14T00:00:00',
@@ -150,6 +155,8 @@ export const getEmptyResearchFileProperty = (): ApiGen_Concepts_ResearchFileProp
   propertyResearchPurposeTypes: null,
   researchSummary: null,
   location: null,
+  isActive: null,
+  boundary: null,
   ...getEmptyBaseAudit(),
 });
 
@@ -161,7 +168,7 @@ export const getMockResearchFileProperty = (
   fileId,
   propertyName: 'Corner of Nakya PL',
   propertyId: 495,
-
+  isActive: null,
   propertyResearchPurposeTypes: [
     {
       id: 22,
@@ -193,4 +200,5 @@ export const getMockResearchFileProperty = (
   displayOrder: null,
   property: null,
   location: null,
+  boundary: null,
 });

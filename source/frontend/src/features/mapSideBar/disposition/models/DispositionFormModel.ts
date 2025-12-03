@@ -2,6 +2,7 @@ import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_DispositionFileProperty } from '@/models/api/generated/ApiGen_Concepts_DispositionFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { applyDisplayOrder } from '@/utils';
 import { emptyStringtoNullable, fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists, isValidIsoDateTime } from '@/utils/utils';
 
@@ -51,6 +52,8 @@ export class DispositionFormModel implements WithDispositionTeam {
   }
 
   toApi(): ApiGen_Concepts_DispositionFile {
+    const fileProperties = this.fileProperties.map(x => this.toPropertyApi(x));
+    const sortedProperties = applyDisplayOrder(fileProperties);
     return {
       id: this.id ?? 0,
       fileName: this.fileName ?? null,
@@ -84,7 +87,7 @@ export class DispositionFormModel implements WithDispositionTeam {
         .filter(x => !!x.contact && !!x.teamProfileTypeCode)
         .map(x => x.toApi(this.id || 0))
         .filter(exists),
-      fileProperties: this.fileProperties.map(x => this.toPropertyApi(x)),
+      fileProperties: sortedProperties ?? [],
       dispositionOffers: this.offers.map(x => x.toApi()),
       dispositionSale: this.sale ? this.sale.toApi() : null,
       dispositionAppraisal: this.appraisal ? this.appraisal.toApi() : null,

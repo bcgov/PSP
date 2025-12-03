@@ -47,7 +47,7 @@ export const InvoiceTotalsForm: React.FunctionComponent<IInvoiceTotalsForm> = ({
     <Section
       header={
         <SimpleSectionHeader title="Invoices Total">
-          <StyledSectionAddButton onClick={onAdd}>
+          <StyledSectionAddButton onClick={onAdd} data-testid="add-invoice-button">
             <FaPlus size="2rem" />
             &nbsp;{'Add an Invoice'}
           </StyledSectionAddButton>

@@ -4,7 +4,7 @@ import {
   fireEvent,
   render as rtlRender,
   RenderOptions as RtlRenderOptions,
-  RenderResult,
+  RenderResult as RtlRenderResult,
   waitFor,
 } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
@@ -18,6 +18,7 @@ import { vi } from 'vitest';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FilterProvider } from '@/components/maps/providers/FilterProvider';
+import { ParcelDataset } from '@/features/properties/parcelList/models';
 import { IApiError } from '@/interfaces/IApiError';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 
@@ -281,12 +282,13 @@ export interface RenderOptions extends RtlRenderOptions {
   roles?: string[];
   mockMapMachine?: IMapStateMachineContext;
   keycloakMock?: any;
+  worklistParcels?: ParcelDataset[];
 }
 
 function render(
   ui: React.ReactElement,
   options: Omit<RenderOptions, 'wrapper'> = {},
-): RenderResult {
+): RtlRenderResult {
   const {
     store,
     history,
@@ -296,6 +298,7 @@ function render(
     roles,
     mockMapMachine = mapMachineBaseMock,
     keycloakMock,
+    worklistParcels,
     ...renderOptions
   } = options;
 
@@ -317,7 +320,7 @@ function render(
 
   function AllTheProviders({ children }: PropsWithChildren) {
     return (
-      <TestCommonWrapper store={store} history={history}>
+      <TestCommonWrapper store={store} history={history} worklistParcels={worklistParcels}>
         <FilterProvider>{children}</FilterProvider>
       </TestCommonWrapper>
     );
@@ -328,7 +331,7 @@ function render(
 async function renderAsync(
   ui: React.ReactElement,
   options: Omit<RenderOptions, 'wrapper'> = {},
-): Promise<RenderResult> {
+): Promise<RtlRenderResult> {
   const {
     store,
     history,

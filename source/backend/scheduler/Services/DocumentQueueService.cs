@@ -41,11 +41,17 @@ namespace Pims.Scheduler.Services
 
         public async Task<ScheduledTaskResponseModel> UploadQueuedDocuments()
         {
-            var filter = new DocumentQueueFilter() { Quantity = _uploadQueuedDocumentsJobOptions?.CurrentValue?.BatchSize ?? 50, DocumentQueueStatusTypeCodes = new string[] { DocumentQueueStatusTypes.PENDING.ToString() }, MaxFileSize = _uploadQueuedDocumentsJobOptions?.CurrentValue?.MaxFileSize };
+            var filter = new DocumentQueueFilter() { Quantity = _uploadQueuedDocumentsJobOptions?.CurrentValue?.BatchSize ?? 50, DocumentQueueStatusTypeCodes = new string[] { DocumentQueueStatusTypes.PENDING.ToString(), DocumentQueueStatusTypes.PROCESSING.ToString() }, MaxFileSize = _uploadQueuedDocumentsJobOptions?.CurrentValue?.MaxFileSize };
             var searchResponse = await SearchQueuedDocuments(filter);
             if (searchResponse?.ScheduledTaskResponseModel != null)
             {
                 return searchResponse?.ScheduledTaskResponseModel;
+            }
+
+            if(searchResponse?.SearchResults?.Payload?.Any(s => s.DocumentQueueStatusType.Id == DocumentQueueStatusTypes.PROCESSING.ToString()) == true)
+            {
+                _logger.LogInformation("There are still documents that are actively being processed, skipping upload.");
+                return new ScheduledTaskResponseModel() { Status = TaskResponseStatusTypes.SKIPPED, Message = "There are still documents that are actively being processed, skipping upload." };
             }
 
             IEnumerable<Task<DocumentQueueResponseModel>> responses = searchResponse?.SearchResults?.Payload?.Select(qd =>

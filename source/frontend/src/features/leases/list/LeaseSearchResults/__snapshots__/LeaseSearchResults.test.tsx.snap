@@ -6,7 +6,27 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
     class="Toastify"
   />
   <div />
-  .c0 {
+  .c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 8px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.c3:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,7 +55,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
-.c3 {
+.c4 {
   border-radius: 0.4rem;
 }
 
@@ -50,7 +70,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
       <div
         class="tr"
         role="row"
-        style="display: flex; flex: 1 0 auto; min-width: 210px;"
+        style="display: flex; flex: 1 0 auto; min-width: 240px;"
       >
         <div
           class="th"
@@ -102,7 +122,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -148,7 +168,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -206,7 +226,53 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Account Type
+            <div
+              class="c0"
+              data-testid="sort-column-paymentReceivableType"
+            >
+              <svg
+                class="c1"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                style="margin-bottom: -8px;"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 320l128-128 128 128z"
+                />
+              </svg>
+              <svg
+                class="c2"
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M128 192l128 128 128-128z"
+                />
+              </svg>
+            </div>
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 75 0 auto; min-width: 30px; width: 75px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -284,7 +350,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 210px;"
+          style="display: flex; flex: 1 0 auto; min-width: 240px;"
         >
           <div
             class="td clickable"
@@ -293,15 +359,31 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <a
+              class="c3"
               href="/mapview/sidebar/lease/1"
+              rel="noopener noreferrer"
+              target="_blank"
             >
               L-123-456
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                />
+              </svg>
             </a>
           </div>
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             <span />
@@ -309,7 +391,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             TRAN-IT
@@ -339,14 +421,22 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            Payable (BCTFA as tenant)
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 75 0 auto; min-width: 30px; width: 75px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             <div
               class="w-100"
             >
               <div
-                class="c3 mx-0 my-2 border border-secondary row"
+                class="c4 mx-0 my-2 border border-secondary row"
               >
                 <div
                   class="col-md-12"
@@ -393,7 +483,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 210px;"
+          style="display: flex; flex: 1 0 auto; min-width: 240px;"
         >
           <div
             class="td clickable"
@@ -402,15 +492,31 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
             title=""
           >
             <a
+              class="c3"
               href="/mapview/sidebar/lease/2"
+              rel="noopener noreferrer"
+              target="_blank"
             >
               L-999-888
+              <svg
+                fill="currentColor"
+                height="1em"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="1em"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                />
+              </svg>
             </a>
           </div>
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             <span />
@@ -418,7 +524,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             TRAN-IT
@@ -448,14 +554,22 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="td"
             role="cell"
-            style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          >
+            Receivable
+          </div>
+          <div
+            class="td"
+            role="cell"
+            style="box-sizing: border-box; flex: 75 0 auto; min-width: 30px; width: 75px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             <div
               class="w-100"
             >
               <div
-                class="c3 mx-0 my-2 border border-secondary row"
+                class="c4 mx-0 my-2 border border-secondary row"
               >
                 <div
                   class="col-md-12"

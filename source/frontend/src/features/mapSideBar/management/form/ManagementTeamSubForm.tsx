@@ -18,7 +18,13 @@ import {
   WithManagementTeam,
 } from '../models/ManagementTeamSubFormModel';
 
-const ManagementTeamSubForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
+export interface IManagementTeamSubFormProps {
+  canEditDetails: boolean;
+}
+
+const ManagementTeamSubForm: React.FunctionComponent<IManagementTeamSubFormProps> = ({
+  canEditDetails,
+}) => {
   const { values, setFieldTouched, errors } = useFormikContext<WithManagementTeam>();
   const { getOptionsByType } = useLookupCodeHelpers();
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -43,44 +49,52 @@ const ManagementTeamSubForm: React.FunctionComponent<React.PropsWithChildren<unk
                     onChange={() => {
                       setFieldTouched(`team.${index}.contact`);
                     }}
+                    disabled={!canEditDetails}
                   />
                 </Col>
+
                 <Col xs="auto" xl="5" className="pl-0" data-testid="contact-input">
                   <ContactInputContainer
                     field={`team.${index}.contact`}
                     View={ContactInputView}
                     displayErrorAsTooltip={false}
+                    canEditDetails={canEditDetails}
                   ></ContactInputContainer>
                 </Col>
+
                 <Col xs="auto" xl="2" className="pl-0 mt-2">
-                  <RemoveButton
-                    data-testId={`team.${index}.remove-button`}
-                    onRemove={() => {
-                      setModalContent({
-                        ...getDeleteModalProps(),
-                        title: 'Remove Team Member',
-                        message: 'Do you wish to remove this team member?',
-                        okButtonText: 'Yes',
-                        cancelButtonText: 'No',
-                        handleOk: () => {
-                          arrayHelpers.remove(index);
-                          setDisplayModal(false);
-                        },
-                        handleCancel: () => {
-                          setDisplayModal(false);
-                        },
-                      });
-                      setDisplayModal(true);
-                    }}
-                  />
+                  {canEditDetails && (
+                    <RemoveButton
+                      data-testId={`team.${index}.remove-button`}
+                      onRemove={() => {
+                        setModalContent({
+                          ...getDeleteModalProps(),
+                          title: 'Remove Team Member',
+                          message: 'Do you wish to remove this team member?',
+                          okButtonText: 'Yes',
+                          cancelButtonText: 'No',
+                          handleOk: () => {
+                            arrayHelpers.remove(index);
+                            setDisplayModal(false);
+                          },
+                          handleCancel: () => {
+                            setDisplayModal(false);
+                          },
+                        });
+                        setDisplayModal(true);
+                      }}
+                    />
+                  )}
                 </Col>
               </Row>
+
               {isValidId(teamMember.contact?.organizationId) &&
                 !isValidId(teamMember.contact?.personId) && (
                   <SectionField label="Primary contact" labelWidth={{ xs: 6 }} noGutters>
                     <PrimaryContactSelector
                       field={`team.${index}.primaryContactId`}
                       contactInfo={teamMember?.contact}
+                      canEditDetails={canEditDetails}
                     ></PrimaryContactSelector>
                   </SectionField>
                 )}
@@ -93,15 +107,17 @@ const ManagementTeamSubForm: React.FunctionComponent<React.PropsWithChildren<unk
             </div>
           )}
 
-          <LinkButton
-            data-testid="add-team-member"
-            onClick={() => {
-              const member = new ManagementTeamSubFormModel();
-              arrayHelpers.push(member);
-            }}
-          >
-            + Add another team member
-          </LinkButton>
+          {canEditDetails && (
+            <LinkButton
+              data-testid="add-team-member"
+              onClick={() => {
+                const member = new ManagementTeamSubFormModel();
+                arrayHelpers.push(member);
+              }}
+            >
+              + Add another team member
+            </LinkButton>
+          )}
         </>
       )}
     />

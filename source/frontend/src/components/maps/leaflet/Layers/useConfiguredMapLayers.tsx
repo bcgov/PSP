@@ -1,37 +1,25 @@
 import { useContext, useMemo } from 'react';
 
 import { TenantContext } from '@/tenants';
+import { exists } from '@/utils';
 
-import { layersTree } from '../Control/LayersControl/DefaultLayers';
-import { ILayerItem } from '../Control/LayersControl/types';
+import { layerDefinitions } from '../Control/LayersControl/LayerDefinitions';
+import { LayerDefinition } from '../Control/LayersControl/types';
 
 export const useConfiguredMapLayers = () => {
-  const {
-    tenant: { layers: confLayers },
-  } = useContext(TenantContext);
+  const { tenant } = useContext(TenantContext);
 
-  const layers = useMemo(() => {
-    const mergedLayers = layersTree.map((parent, parentIndex) => {
-      //add any layers defined in the configuration.
-      const layer = confLayers?.find(cl => cl.key === parent.key);
+  const layerConfiguration = tenant.layers;
 
-      const layerNodes = [...(layer?.nodes ?? [])];
-      const parentNodes =
-        parent?.nodes?.filter(node => !layerNodes.find(layerNode => layerNode.id === node.id)) ??
-        [];
-      const allNodes = [...parentNodes, ...layerNodes];
-
-      return {
-        ...parent,
-        nodes: allNodes?.map((node: ILayerItem, index) => ({
-          ...node,
-          zIndex: node.zIndexAbsolute === true ? node.zIndex : (parentIndex + 1) * index,
-          opacity: node?.opacity !== undefined ? Number(node?.opacity) : 0.8,
-        })),
-      };
+  const layers = useMemo<LayerDefinition[]>(() => {
+    return layerDefinitions.map<LayerDefinition>(ld => {
+      const customConfig = layerConfiguration[ld.layerIdentifier];
+      if (exists(customConfig)) {
+        return { ...ld, ...customConfig };
+      }
+      return { ...ld };
     });
-    return mergedLayers;
-  }, [confLayers]);
+  }, [layerConfiguration]);
 
   return layers;
 };

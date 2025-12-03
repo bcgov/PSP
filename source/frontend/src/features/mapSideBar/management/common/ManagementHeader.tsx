@@ -29,31 +29,33 @@ export const ManagementHeader: React.FunctionComponent<
   const propertyIds = managementFile?.fileProperties?.map(fp => fp.propertyId) ?? [];
 
   return (
-    <StyledRow className="no-gutters">
-      <StyledLeftHeaderPane xs={7}>
+    <StyledRow className="no-gutters" data-testid="mgmt-file-header">
+      <StyledLeftHeaderPane xl="8" xs="12">
         <HeaderField
           label="File #:"
           labelWidth={{ xs: leftColumnLabel }}
           contentWidth={{ xs: leftColumnWidth }}
         >
-          M-{managementFile?.id?.toString()}
+          <div data-testid="mgmt-fileId">M-{managementFile?.id?.toString()}</div>
         </HeaderField>
         <HeaderField
-          label="File Name:"
+          label="File name:"
           labelWidth={{ xs: leftColumnLabel }}
           contentWidth={{ xs: leftColumnWidth }}
         >
-          {managementFile?.fileName}
+          <div data-testid="mgmt-file-name">{managementFile?.fileName}</div>
         </HeaderField>
         <HeaderField
           label="Ministry project:"
           labelWidth={{ xs: leftColumnLabel }}
           contentWidth={{ xs: leftColumnWidth }}
         >
-          {formatMinistryProject(
-            managementFile?.project?.code,
-            managementFile?.project?.description,
-          )}
+          <div data-testid="mgmt-file-project">
+            {formatMinistryProject(
+              managementFile?.project?.code,
+              managementFile?.project?.description,
+            )}
+          </div>
         </HeaderField>
         <HeaderField
           label="Ministry product:"
@@ -61,15 +63,22 @@ export const ManagementHeader: React.FunctionComponent<
           valueTestId={'acq-header-product-val'}
           contentWidth={{ xs: leftColumnWidth }}
         >
-          {managementFile?.product && (
-            <>
-              {managementFile.product.code} - {managementFile.product.description}
-            </>
-          )}
+          <div data-testid="mgmt-file-product">
+            {managementFile?.product && (
+              <>
+                {managementFile.product.code} - {managementFile.product.description}
+              </>
+            )}
+          </div>
         </HeaderField>
-        <HistoricalNumbersContainer propertyIds={propertyIds} View={HistoricalNumberSectionView} />
+        <HistoricalNumbersContainer
+          propertyIds={propertyIds}
+          View={HistoricalNumberSectionView}
+          labelWidth={{ xs: leftColumnLabel }}
+          contentWidth={{ xs: leftColumnWidth }}
+        />
       </StyledLeftHeaderPane>
-      <Col xs="5">
+      <Col>
         <StyledFiller>
           <AuditSection lastUpdatedBy={lastUpdatedBy} baseAudit={managementFile} />
           {exists(managementFile?.fileStatusTypeCode) && (

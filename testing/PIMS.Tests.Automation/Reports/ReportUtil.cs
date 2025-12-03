@@ -7,9 +7,9 @@ namespace PIMS.Tests.Automation.Reports
 {
     public class ReportUtil
     {
-        public static ExtentReports _extentReports;
-        public static ExtentTest _feature;
-        public static ExtentTest _scenario;
+        public static ExtentReports? _extentReports;
+        public static ExtentTest? _feature;
+        public static ExtentTest? _scenario;
 
         private static String dir = AppDomain.CurrentDomain.BaseDirectory;
         private static String reportPath = dir.Replace($"bin{Path.DirectorySeparatorChar}Debug{Path.DirectorySeparatorChar}net8.0", $"Reports{Path.DirectorySeparatorChar}Extent_Reports");
@@ -18,7 +18,7 @@ namespace PIMS.Tests.Automation.Reports
 
         public static void ExtentReportInit()
         {
-            ExtentSparkReporter spark = new ExtentSparkReporter(reportPath + $"{Path.DirectorySeparatorChar}PIMS_AutomationReport.html");
+            ExtentSparkReporter spark = new(reportPath + $"{Path.DirectorySeparatorChar}PIMS_AutomationReport.html");
             spark.Config.ReportName = "Automation Status Report";
             spark.Config.DocumentTitle = "Automation Status Report";
             spark.Config.Theme = Theme.Standard;

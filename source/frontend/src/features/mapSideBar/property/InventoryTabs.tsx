@@ -21,10 +21,16 @@ export enum InventoryTabNames {
   title = 'ltsa',
   value = 'bcassessment',
   research = 'research',
+  plan = 'plan',
   pims = 'pims',
   takes = 'takes',
   management = 'management',
   crown = 'crown',
+  other = 'other',
+  highway = 'highway',
+  pmbc = 'pmbc',
+  documents = 'documents',
+  notes = 'notes',
 }
 /**
  * Tab wrapper, provides styling and nests form components within their corresponding tabs.
@@ -41,6 +47,9 @@ export const InventoryTabs: React.FunctionComponent<
     menuIndex: string;
     id: string;
     researchId: string;
+    filePropertyId: string;
+    lat: string;
+    lng: string;
   }>();
   return (
     <TabView
@@ -57,6 +66,7 @@ export const InventoryTabs: React.FunctionComponent<
           const path = generatePath(match.path, {
             menuIndex: match.params.menuIndex,
             id: match.params.id,
+            filePropertyId: match.params.filePropertyId,
             tab,
           });
           history.push(path);
@@ -64,6 +74,14 @@ export const InventoryTabs: React.FunctionComponent<
           const path = generatePath(match.path, {
             menuIndex: match.params.menuIndex,
             researchId: match.params.researchId,
+            filePropertyId: match.params.filePropertyId,
+            tab,
+          });
+          history.push(path);
+        } else if (match.path.includes('location')) {
+          const path = generatePath(match.path, {
+            lat: match.params.lat,
+            lng: match.params.lng,
             tab,
           });
           history.push(path);

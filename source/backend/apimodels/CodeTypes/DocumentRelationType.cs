@@ -22,5 +22,7 @@ namespace Pims.Api.Models.CodeTypes
         ManagementFiles,
         [EnumMember(Value = "DispositionFiles")]
         DispositionFiles,
+        [EnumMember(Value = "Properties")]
+        Properties,
     }
 }

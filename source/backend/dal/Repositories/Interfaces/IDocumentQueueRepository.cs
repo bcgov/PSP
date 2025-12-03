@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 
@@ -18,7 +19,7 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<DocumentQueueSearchResult> GetAllByFilter(DocumentQueueFilter filter);
 
-        PimsDocumentQueue Update(PimsDocumentQueue queuedDocument, bool removeDocument = false);
+        Task<PimsDocumentQueue> Update(PimsDocumentQueue queuedDocument, bool removeDocument = false);
 
         bool Delete(PimsDocumentQueue queuedDocument);
 

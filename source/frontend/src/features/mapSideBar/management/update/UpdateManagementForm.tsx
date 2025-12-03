@@ -21,6 +21,7 @@ import { ManagementFormModel } from '../models/ManagementFormModel';
 export interface IUpdateManagementFormProps {
   formikRef: React.Ref<FormikProps<ManagementFormModel>>;
   initialValues: ManagementFormModel;
+  canEditDetails: boolean;
   onSubmit: (
     values: ManagementFormModel,
     formikHelpers: FormikHelpers<ManagementFormModel>,
@@ -31,6 +32,7 @@ export interface IUpdateManagementFormProps {
 const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
   formikRef,
   initialValues,
+  canEditDetails,
   onSubmit,
   loading,
 }) => {
@@ -43,7 +45,7 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
 
   const managementFileStatusTypesOptions = getOptionsByType(API.MANAGEMENT_FILE_STATUS_TYPES);
   const managementFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
-  const managementProgramTypesOptions = getOptionsByType(API.MANAGEMENT_FILE_PROGRAM_TYPES);
+  const managementPurposeTypesOptions = getOptionsByType(API.MANAGEMENT_FILE_PURPOSE_TYPES);
 
   const onMinistryProjectSelected = React.useCallback(
     async (param: IAutocompletePrediction[]) => {
@@ -102,9 +104,10 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
                         formikProps.setFieldValue('productId', '');
                       }
                     }}
+                    disabled={!canEditDetails}
                   />
                 </SectionField>
-                {projectProducts !== undefined && (
+                {projectProducts && (
                   <SectionField label="Product">
                     <Select
                       field="productId"
@@ -112,6 +115,7 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
                         return { label: x.code + ' ' + x.description || '', value: x.id || 0 };
                       })}
                       placeholder="Select..."
+                      disabled={!canEditDetails}
                     />
                   </SectionField>
                 )}
@@ -120,32 +124,34 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
                     field="fundingTypeCode"
                     options={managementFundingTypes}
                     placeholder="Select funding..."
+                    disabled={!canEditDetails}
                   />
                 </SectionField>
               </Section>
 
               <Section header="Management Details">
                 <SectionField label="File name" required>
-                  <Input field="fileName" />
+                  <Input field="fileName" disabled={!canEditDetails} />
                 </SectionField>
                 <SectionField label="Historical file number">
-                  <Input field="legacyFileNum" />
+                  <Input field="legacyFileNum" disabled={!canEditDetails} />
                 </SectionField>
                 <SectionField label="Purpose" required>
                   <Select
-                    field="programTypeCode"
-                    options={managementProgramTypesOptions}
+                    field="purposeTypeCode"
+                    options={managementPurposeTypesOptions}
                     placeholder="Select..."
                     required
+                    disabled={!canEditDetails}
                   />
                 </SectionField>
                 <SectionField label="Additional details">
-                  <Input field="additionalDetails" />
+                  <Input field="additionalDetails" disabled={!canEditDetails} />
                 </SectionField>
               </Section>
 
               <Section header="Management Team">
-                <ManagementTeamSubForm />
+                <ManagementTeamSubForm canEditDetails={canEditDetails} />
               </Section>
             </Container>
           </>

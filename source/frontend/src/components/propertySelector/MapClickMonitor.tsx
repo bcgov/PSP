@@ -6,12 +6,12 @@ import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { usePrevious } from '@/hooks/usePrevious';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { exists, firstOrNull, isValidId } from '@/utils';
-import { featuresetToMapProperty } from '@/utils/mapPropertyUtils';
+import { featuresetToLocationBoundaryDataset } from '@/utils/mapPropertyUtils';
 
 import { SelectedFeatureDataset } from '../common/mapFSM/useLocationFeatureLoader';
 
 interface IMapClickMonitorProps {
-  addProperty: (property: SelectedFeatureDataset) => void;
+  addProperty?: (property: SelectedFeatureDataset) => void;
   repositionProperty: (
     property: SelectedFeatureDataset,
     latLng: LatLngLiteral,
@@ -30,7 +30,9 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
   const mapMachine = useMapStateMachine();
 
   const previous = usePrevious(mapMachine.mapLocationFeatureDataset);
-  const modifiedMapProperties = modifiedProperties.map(mp => featuresetToMapProperty(mp));
+  const modifiedMapProperties = modifiedProperties.map(mp =>
+    featuresetToLocationBoundaryDataset(mp),
+  );
   useDraftMarkerSynchronizer(selectedComponentId ? [] : modifiedMapProperties); // disable the draft marker synchronizer if the selecting component is set - the parent will need to control the draft markers.
 
   useDeepCompareEffect(() => {
@@ -51,6 +53,7 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
         municipalityFeature: firstOrNull(mapMachine.mapLocationFeatureDataset.municipalityFeatures),
         selectingComponentId: mapMachine.mapLocationFeatureDataset.selectingComponentId,
         fileLocation: mapMachine.mapLocationFeatureDataset.fileLocation,
+        fileBoundary: null,
       };
       const parcelFeaturesNotInPims =
         mapMachine.mapLocationFeatureDataset.parcelFeatures?.filter(pf => {
@@ -76,7 +79,7 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
         return;
       }
 
-      addProperty(selectedFeature);
+      addProperty?.(selectedFeature);
     }
 
     if (

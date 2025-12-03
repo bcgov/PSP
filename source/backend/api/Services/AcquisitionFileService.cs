@@ -28,7 +28,7 @@ namespace Pims.Api.Services
         private readonly IUserRepository _userRepository;
         private readonly IPropertyRepository _propertyRepository;
         private readonly ILookupRepository _lookupRepository;
-        private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly INoteRelationshipRepository<PimsAcquisitionFileNote> _entityNoteRepository;
         private readonly IAcquisitionFileChecklistRepository _checklistRepository;
         private readonly IAgreementRepository _agreementRepository;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
@@ -49,7 +49,7 @@ namespace Pims.Api.Services
             IUserRepository userRepository,
             IPropertyRepository propertyRepository,
             ILookupRepository lookupRepository,
-            IEntityNoteRepository entityNoteRepository,
+            INoteRelationshipRepository<PimsAcquisitionFileNote> entityNoteRepository,
             IAcquisitionFileChecklistRepository checklistRepository,
             IAgreementRepository agreementRepository,
             ICompensationRequisitionRepository compensationRequisitionRepository,
@@ -222,9 +222,6 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Cannot set an acquisition file's region to 'cannot determine'");
             }
 
-            ValidateStaff(acquisitionFile);
-            ValidateOrganizationStaff(acquisitionFile);
-
             MatchProperties(acquisitionFile, userOverrides);
             ValidatePropertyRegions(acquisitionFile);
 
@@ -263,7 +260,7 @@ namespace Pims.Api.Services
                 ValidateDraftsOnComplete(acquisitionFile);
             }
 
-            if(currentAcquisitionStatus != AcquisitionStatusTypes.CANCEL && acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.CANCEL.ToString())
+            if (currentAcquisitionStatus != AcquisitionStatusTypes.CANCEL && acquisitionFile.AcquisitionFileStatusTypeCode == AcquisitionStatusTypes.CANCEL.ToString())
             {
                 ValidateDraftsOnCancelled(acquisitionFile);
             }
@@ -282,9 +279,6 @@ namespace Pims.Api.Services
             {
                 ValidateSubFileDependency(acquisitionFile);
             }
-
-            ValidateStaff(acquisitionFile);
-            ValidateOrganizationStaff(acquisitionFile);
 
             acquisitionFile.ThrowContractorRemovedFromTeam(_user, _userRepository, _projectRepository);
 
@@ -344,6 +338,11 @@ namespace Pims.Api.Services
                     if (existingFileProperty.PropertyName != incomingAcquisitionProperty.PropertyName)
                     {
                         existingFileProperty.PropertyName = incomingAcquisitionProperty.PropertyName;
+                        needsUpdate = true;
+                    }
+                    if (existingFileProperty.DisplayOrder != incomingAcquisitionProperty.DisplayOrder)
+                    {
+                        existingFileProperty.DisplayOrder = incomingAcquisitionProperty.DisplayOrder;
                         needsUpdate = true;
                     }
 
@@ -544,25 +543,65 @@ namespace Pims.Api.Services
             // Verify that the interest holder is still the same (person or org)
             if (currentInterestHolders.Count > 0)
             {
-                foreach (var newInterestHolder in interestHolders)
+                foreach (var incommingInterestHolder in interestHolders)
                 {
-                    if (newInterestHolder.InterestHolderId != 0)
+                    if (incommingInterestHolder.InterestHolderId != 0)
                     {
                         PimsInterestHolder currentInterestHolder = currentInterestHolders
-                            .FirstOrDefault(oldInth => oldInth.InterestHolderId == newInterestHolder.InterestHolderId);
+                            .FirstOrDefault(oldInth => oldInth.InterestHolderId == incommingInterestHolder.InterestHolderId);
 
                         // If the stakeholder has changed (person or org) it means it is actually a new stakeholder, so reset all the ids.
-                        if (newInterestHolder.PersonId != currentInterestHolder.PersonId ||
-                            newInterestHolder.OrganizationId != currentInterestHolder.OrganizationId)
+                        if (incommingInterestHolder.PersonId != currentInterestHolder?.PersonId ||
+                            incommingInterestHolder.OrganizationId != currentInterestHolder?.OrganizationId)
                         {
-                            newInterestHolder.InterestHolderId = 0;
-                            newInterestHolder.PimsInthldrPropInterests.ForEach(pi => pi.PimsInthldrPropInterestId = 0);
+                            incommingInterestHolder.InterestHolderId = 0;
+                            incommingInterestHolder.PimsInthldrPropInterests.ForEach(pi => pi.PimsInthldrPropInterestId = 0);
                         }
                     }
                 }
             }
 
             ValidateInterestHoldersDependency(acquisitionFileId, interestHolders);
+
+            // get all interest holder and related tables to be deleted
+            var deletedInthPropertyTypes = new List<PimsPropInthldrInterestTyp>();
+            var deletedInthProperties = new List<PimsInthldrPropInterest>();
+            var deletedInterestHolders = new List<PimsInterestHolder>();
+
+            foreach (var currentInterestHolder in currentInterestHolders)
+            {
+                PimsInterestHolder foundInterestHolder = interestHolders.FirstOrDefault(incdInth => incdInth.InterestHolderId == currentInterestHolder.InterestHolderId);
+                if (foundInterestHolder != null)
+                {
+                    foreach (var currentPropertyInterest in currentInterestHolder.PimsInthldrPropInterests)
+                    {
+                        PimsInthldrPropInterest foundInterestProp = foundInterestHolder.PimsInthldrPropInterests.FirstOrDefault(ihp => ihp.Internal_Id == currentPropertyInterest.Internal_Id);
+                        if (foundInterestProp != null)
+                        {
+                            foreach (var currentPropInterestType in currentPropertyInterest.PimsPropInthldrInterestTyps)
+                            {
+                                PimsPropInthldrInterestTyp foundInterestPropType = foundInterestProp.PimsPropInthldrInterestTyps.FirstOrDefault(iht => iht.Internal_Id == currentPropInterestType.Internal_Id);
+                                if (foundInterestPropType == null)
+                                {
+                                    deletedInthPropertyTypes.Add(currentPropInterestType);
+                                }
+                            }
+                        }
+                        else
+                        {
+                            deletedInthProperties.Add(currentPropertyInterest);
+                        }
+                    }
+                }
+                else
+                {
+                    deletedInterestHolders.Add(currentInterestHolder);
+                }
+            }
+            _interestHolderRepository.DeleteInterestHoldersPropertyTypes(deletedInthPropertyTypes);
+            _interestHolderRepository.DeleteInterestHoldersProperties(deletedInthProperties);
+            _interestHolderRepository.DeleteInterestHolders(deletedInterestHolders);
+
             _interestHolderRepository.UpdateAllForAcquisition(acquisitionFileId, interestHolders);
             _interestHolderRepository.CommitTransaction();
 
@@ -626,24 +665,6 @@ namespace Pims.Api.Services
             return _acqFileRepository.GetAcquisitionSubFiles(id, userRegions, contractorPersonId);
         }
 
-        private static void ValidateStaff(PimsAcquisitionFile pimsAcquisitionFile)
-        {
-            bool duplicate = pimsAcquisitionFile.PimsAcquisitionFileTeams.GroupBy(p => (p.AcqFlTeamProfileTypeCode, p.PersonId)).Any(g => g.Count() > 1);
-            if (duplicate)
-            {
-                throw new BadRequestException("Invalid Acquisition team, each team member and role combination can only be added once.");
-            }
-        }
-
-        private static void ValidateOrganizationStaff(PimsAcquisitionFile pimsAcquisitionFile)
-        {
-            bool duplicate = pimsAcquisitionFile.PimsAcquisitionFileTeams.GroupBy(p => (p.AcqFlTeamProfileTypeCode, p.OrganizationId)).Any(g => g.Count() > 1);
-            if (duplicate)
-            {
-                throw new BadRequestException("Invalid Acquisition team, each team member and role combination can only be added once.");
-            }
-        }
-
         private void MatchProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrideCodes)
         {
             foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
@@ -690,7 +711,7 @@ namespace Pims.Api.Services
                         acquisitionProperty.Property = _propertyService.PopulateNewProperty(acquisitionProperty.Property);
                     }
                 }
-                else if(!string.IsNullOrWhiteSpace(acquisitionProperty.Property.SurveyPlanNumber))
+                else if (!string.IsNullOrWhiteSpace(acquisitionProperty.Property.SurveyPlanNumber))
                 {
                     var plan = acquisitionProperty.Property.SurveyPlanNumber;
                     try
@@ -830,7 +851,7 @@ namespace Pims.Api.Services
                 },
             };
 
-            _entityNoteRepository.Add(fileNoteInstance);
+            _entityNoteRepository.AddNoteRelationship(fileNoteInstance);
         }
 
         private void PopulateAcquisitionChecklist(PimsAcquisitionFile acquisitionFile)

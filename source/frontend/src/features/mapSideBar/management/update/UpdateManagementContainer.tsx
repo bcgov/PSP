@@ -3,7 +3,7 @@ import { FormikHelpers, FormikProps } from 'formik';
 import React from 'react';
 
 import * as API from '@/constants/API';
-import { useManagementProvider } from '@/hooks/repositories/useManagementProvider';
+import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalContext } from '@/hooks/useModalContext';
@@ -33,9 +33,11 @@ export const UpdateManagementContainer = React.forwardRef<
 
   const dispositionStatusTypes = getByType(API.DISPOSITION_FILE_STATUS_TYPES);
 
+  const statusSolver = new ManagementStatusUpdateSolver(managementFile);
+
   const {
     putManagementFile: { execute: updateManagementFile, loading },
-  } = useManagementProvider();
+  } = useManagementFileRepository();
 
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<ApiGen_Concepts_ManagementFile | void>
@@ -62,6 +64,7 @@ export const UpdateManagementContainer = React.forwardRef<
             ApiGen_CodeTypes_ManagementFileStatusTypes.DRAFT.toString(),
             ApiGen_CodeTypes_ManagementFileStatusTypes.HOLD.toString(),
           ];
+
           //refresh the map properties if this disposition file was set to a final state.
           onSuccess(
             !!managementFile.fileStatusTypeCode?.id &&
@@ -93,6 +96,7 @@ export const UpdateManagementContainer = React.forwardRef<
     <View
       formikRef={formikRef}
       initialValues={ManagementFormModel.fromApi(managementFile)}
+      canEditDetails={statusSolver.canEditDetails()}
       onSubmit={async (
         values: ManagementFormModel,
         formikHelpers: FormikHelpers<ManagementFormModel>,

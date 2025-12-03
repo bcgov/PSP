@@ -3,7 +3,11 @@ import { Route } from 'react-router-dom';
 
 import { Claims } from '@/constants/claims';
 import { useApiNotes } from '@/hooks/pims-api/useApiNotes';
+import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
+import { useLtsa } from '@/hooks/useLtsa';
 import {
   mockDispositionFilePropertyResponse,
   mockDispositionFileResponse,
@@ -11,18 +15,18 @@ import {
 import { mockLookups } from '@/mocks/lookups.mock';
 import { server } from '@/mocks/msw/server';
 import { getUserMock } from '@/mocks/user.mock';
-import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { prettyFormatUTCDate } from '@/utils';
-import { RenderOptions, act, cleanup, render, userEvent } from '@/utils/test-utils';
-import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
-import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
-import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
-import { useLtsa } from '@/hooks/useLtsa';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { prettyFormatUTCDate } from '@/utils';
+import { act, cleanup, render, RenderOptions, userEvent } from '@/utils/test-utils';
 import { http, HttpResponse } from 'msw';
 import { createRef } from 'react';
 import DispositionView, { IDispositionViewProps } from './DispositionView';
+import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
+import { AxiosResponse } from 'axios';
+import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
 
 // mock auth library
 
@@ -33,13 +37,14 @@ const getNotes = vi.fn().mockResolvedValue([]);
 const onClose = vi.fn();
 const onSave = vi.fn();
 const onCancel = vi.fn();
-const onMenuChange = vi.fn();
 const onSuccess = vi.fn();
 const onUpdateProperties = vi.fn();
 const confirmBeforeAdd = vi.fn();
 const canRemove = vi.fn();
 const setIsEditing = vi.fn();
-const onEditFileProperties = vi.fn();
+const onSelectFileSummary = vi.fn();
+const onSelectProperty = vi.fn();
+const onEditProperties = vi.fn();
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
@@ -90,18 +95,27 @@ vi.mocked(useProjectProvider).mockReturnValue({
 
 vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
 
+const mockGetPropertyOperations = vi.fn();
+vi.mock('@/hooks/repositories/usePropertyOperationRepository');
+vi.mocked(usePropertyOperationRepository).mockReturnValue({
+  getPropertyOperations: { execute: mockGetPropertyOperations } as unknown as IResponseWrapper<
+    (propertyId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyOperation[], any>>
+  >,
+} as unknown as ReturnType<typeof usePropertyOperationRepository>);
+
 const DEFAULT_PROPS: IDispositionViewProps = {
   onClose,
   onSave,
   onCancel,
-  onMenuChange,
   onSuccess,
   onUpdateProperties,
   confirmBeforeAdd,
   canRemove,
   isEditing: false,
   setIsEditing,
-  onShowPropertySelector: onEditFileProperties,
+  onSelectFileSummary,
+  onSelectProperty,
+  onEditProperties,
   formikRef: createRef(),
   isFormValid: true,
   error: undefined,
@@ -245,10 +259,8 @@ describe('DispositionView component', () => {
 
   it('should display the Property Selector according to routing', async () => {
     history.replace(`/mapview/sidebar/disposition/1/property/selector`);
-    const { getByRole } = await setup();
-    const tab = getByRole('tab', { name: /Locate on Map/i });
-    expect(tab).toBeVisible();
-    expect(tab).toHaveClass('active');
+    const { getByText } = await setup();
+    expect(getByText(/Property selection/i)).toBeVisible();
   });
 
   it('should display the Property Details tab according to routing', async () => {
@@ -308,6 +320,6 @@ describe('DispositionView component', () => {
     expect(getByText('Disposition File')).toBeVisible();
     await act(async () => userEvent.click(getCloseButton()));
 
-    expect(onClose).toBeCalled();
+    expect(onClose).toHaveBeenCalled();
   });
 });

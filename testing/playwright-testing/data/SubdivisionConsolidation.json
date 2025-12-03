@@ -1,0 +1,266 @@
+[
+  {
+    "Test Case Description": "Subdivision Source - split in different PIDs",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "016-440-790",
+    "PropertyHistoryPlan": "NO_PLAN",
+    "PropertyHistoryStatus": "Retired",
+    "PropertyHistoryArea": 5941.7104
+  },
+  {
+    "Test Case Description": "Subdivision Destination - split in different PIDs",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": "015-192-008",
+    "PropertyHistoryPlan": "NO_PLAN",
+    "PropertyHistoryStatus": "Active",
+    "PropertyHistoryArea": 8200.596
+  },
+  {
+    "Test Case Description": "Subdivision Destination - split in different PIDs",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": "015-191-877",
+    "PropertyHistoryPlan": "NO_PLAN",
+    "PropertyHistoryStatus": "Active",
+    "PropertyHistoryArea": 323479.56
+  },
+  {
+    "Test Case Description": "Subdivision Source - split reusing Parent PID",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "016-334-361",
+    "PropertyHistoryPlan": "NO_PLAN",
+    "PropertyHistoryStatus": "Retired",
+    "PropertyHistoryArea": 633156.7
+  },
+  {
+    "Test Case Description": "Subdivision Destination - split reusing Parent PID",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": "016-334-361",
+    "PropertyHistoryPlan": "NO_PLAN",
+    "PropertyHistoryStatus": "Active",
+    "PropertyHistoryArea": 633156.7
+  },
+  {
+    "Test Case Description": "Subdivision Destination - split reusing Parent PID",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": "015-190-960",
+    "PropertyHistoryPlan": "NO_PLAN",
+    "PropertyHistoryStatus": "Active",
+    "PropertyHistoryArea": 633301.1
+  },
+  {
+    "Test Case Description": "Subdivision Source - Non Core Inventory Error message",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "007-650-353",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Subdivision Destination - Non Core Inventory Error message",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": "006-959-466",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Subdivision Destination - Non Core Inventory Error message",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": "009-820-795",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Consolidation Source - consolidated in different PID",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "016-372-387",
+    "PropertyHistoryPlan": "NO_PLAN",
+    "PropertyHistoryStatus": "Retired",
+    "PropertyHistoryArea": 863.1502
+  },
+  {
+    "Test Case Description": "Consolidation Source - consolidated in different PID",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "005-602-718",
+    "PropertyHistoryPlan": "NO_PLAN",
+    "PropertyHistoryStatus": "Retired",
+    "PropertyHistoryArea": 320510.62
+  },
+  {
+    "Test Case Description": "Consolidation Destination - consolidated in different PID",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": "015-801-306",
+    "PropertyHistoryPlan": "NO_PLAN",
+    "PropertyHistoryStatus": "Active",
+    "PropertyHistoryArea": 329688.28
+  },
+  {
+    "Test Case Description": "Consolidation Source - consolidating reusing Parent ID",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "015-013-430",
+    "PropertyHistoryPlan": "NO_PLAN",
+    "PropertyHistoryStatus": "Retired",
+    "PropertyHistoryArea": 274328.4
+  },
+  {
+    "Test Case Description": "Consolidation Source - consolidating reusing Parent ID",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "015-192-032",
+    "PropertyHistoryPlan": "NO_PLAN",
+    "PropertyHistoryStatus": "Retired",
+    "PropertyHistoryArea": 642614.75
+  },
+  {
+    "Test Case Description": "Consolidation Destination - consolidating reusing Parent ID",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": "015-013-430",
+    "PropertyHistoryPlan": "NO_PLAN",
+    "PropertyHistoryStatus": "Active",
+    "PropertyHistoryArea": 274328.4
+  },
+  {
+    "Test Case Description": "Consolidation Source - Destination PID is in Inventory Error message",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "015-181-197",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Consolidation Source - Destination PID is in Inventory Error message",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "017-766-036",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Consolidation Destination - Destination PID is in Inventory Error message",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": "015-281-507",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Consolidation Source - Same Source Twice Error message",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "015-181-197",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Consolidation Source - Same Source Twice Error message",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "015-181-197",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Consolidation Destination - Destination PID is in Inventory Error message",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": "015-492-915",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Consolidation Source - Missing Parent Error message",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "015-181-197",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Consolidation Source -  Missing Parent Error message",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": null,
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Consolidation Destination -  Missing Parent Error message",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": "015-492-915",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Subdivision Source - Same Destination Twice Error  message",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "015-181-197",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Subdivision Destination -  Same Destination Twice Error  message",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": "015-492-915",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Subdivision Destination -  Same Destination Twice Error  message",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": "015-492-915",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Subdivision Source - Missing Child Error message",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "015-181-197",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Subdivision Destination -  Missing Child Error message",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "017-766-036",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Subdivision Destination -  Missing Child Error message",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": null,
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Consolidation Source - Retired Parent",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "018-874-738",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Consolidation Source - Retired Parent",
+    "PropertyHistoryType": "Source",
+    "PropertyHistoryIdentifier": "015-423-841",
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  },
+  {
+    "Test Case Description": "Consolidation Source - Retired Parent",
+    "PropertyHistoryType": "Destination",
+    "PropertyHistoryIdentifier": null,
+    "PropertyHistoryPlan": null,
+    "PropertyHistoryStatus": null,
+    "PropertyHistoryArea": null
+  }
+]

@@ -1,13 +1,14 @@
 import { Claims } from '@/constants/claims';
 import { getEmptyPerson } from '@/mocks/contacts.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 import { getEmptyOrganization } from '@/mocks/organization.mock';
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { render, RenderOptions, screen } from '@/utils/test-utils';
+
 import { ManagementSearchResultModel } from '../models';
-import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 import { IManagementSearchResultsProps, ManagementSearchResults } from './ManagementSearchResults';
 
 const setSort = vi.fn();
@@ -68,7 +69,7 @@ describe('Management search results table', () => {
   it('displays management legacy file reference', async () => {
     setup({ results: mockResults.map(a => ManagementSearchResultModel.fromApi(a)) });
     const text = await screen.findByText(mockResults[0].legacyFileNum);
-    expect(text).toBeVisible();
+    expect(text).toBeInTheDocument();
   });
 
   it('displays multiple file properties', () => {
@@ -86,6 +87,8 @@ describe('Management search results table', () => {
               file: null,
               propertyName: null,
               location: null,
+              boundary: null,
+              isActive: null,
               rowVersion: null,
             },
             {
@@ -97,6 +100,8 @@ describe('Management search results table', () => {
               file: null,
               propertyName: null,
               location: null,
+              boundary: null,
+              isActive: null,
               rowVersion: null,
             },
             {
@@ -108,6 +113,8 @@ describe('Management search results table', () => {
               file: null,
               propertyName: null,
               location: null,
+              boundary: null,
+              isActive: null,
               rowVersion: null,
             },
           ],

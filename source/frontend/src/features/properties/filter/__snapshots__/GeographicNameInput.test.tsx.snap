@@ -7,18 +7,22 @@ exports[`GeographicNameInput > renders correctly 1`] = `
   />
   <div />
   <div
-    class="form-group"
+    class="GeographicNameInput"
   >
-    <input
-      autocomplete="off"
-      class="form-control"
-      data-testid="geographic-name-input"
-      field="testField"
-      id="input-testField"
-      name="testField"
-      placeholder="Search..."
-      value=""
-    />
+    <div
+      class="form-group"
+    >
+      <input
+        autocomplete="off"
+        class="form-control"
+        data-testid="geographic-name-input"
+        field="testField"
+        id="input-testField"
+        name="testField"
+        placeholder="Search..."
+        value=""
+      />
+    </div>
   </div>
 </DocumentFragment>
 `;

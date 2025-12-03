@@ -1,0 +1,83 @@
+[
+  {
+    "Test Case Description": "Fill Complete Research File",
+    "DescriptiveName": "PID 004-537-360",
+    "PropertyResearchPurpose": "Classification;Unregistered Interest",
+    "LegalOpinionRequest": "Yes",
+    "LegalOpinionObtained": "Unknown",
+    "DocumentReference": "Automation - Document Reference for Property 1",
+    "SummaryNotes": "Automation - Summary Notes for Property of Interest 1"
+  },
+  {
+    "Test Case Description": "Fill Complete Research File",
+    "DescriptiveName": "PID 014-816-563",
+    "PropertyResearchPurpose": "District Other;Research;Issue",
+    "LegalOpinionRequest": "No",
+    "LegalOpinionObtained": "Yes",
+    "DocumentReference": "Automation - Document Reference for Property 2",
+    "SummaryNotes": "Automation - Summary Notes for Property of Interest 2"
+  },
+  {
+    "Test Case Description": "Fill Complete Research File",
+    "DescriptiveName": "PID 007-095-333",
+    "PropertyResearchPurpose": "FOI",
+    "LegalOpinionRequest": "Unknown",
+    "LegalOpinionObtained": "No",
+    "DocumentReference": "Automation - Document Reference for Property 3",
+    "SummaryNotes": "Automation - Summary Notes for Property of Interest 3"
+  },
+  {
+    "Test Case Description": "Fill Complete Research File",
+    "DescriptiveName": "PIN 34431771",
+    "PropertyResearchPurpose": "Form 12",
+    "LegalOpinionRequest": "Yes",
+    "LegalOpinionObtained": "Unknown",
+    "DocumentReference": "Automation - Document Reference for Property 4",
+    "SummaryNotes": "Automation - Summary Notes for Property of Interest 4"
+  },
+  {
+    "Test Case Description": "Fill Complete Research File",
+    "DescriptiveName": "PID 001-505-360",
+    "PropertyResearchPurpose": "Disposition",
+    "LegalOpinionRequest": "No",
+    "LegalOpinionObtained": "Yes",
+    "DocumentReference": "Automation - Document Reference for Property 5",
+    "SummaryNotes": "Automation - Summary Notes for Property of Interest 5"
+  },
+  {
+    "Test Case Description": "Edit one Research Property",
+    "DescriptiveName": "Property 1 edited",
+    "PropertyResearchPurpose": "Land Issue",
+    "LegalOpinionRequest": "No",
+    "LegalOpinionObtained": "Yes",
+    "DocumentReference": "Automation - Edited Document Reference for Property 1",
+    "SummaryNotes": "Automation - Edited Summary notes for POI 1"
+  },
+  {
+    "Test Case Description": "Property Research from pin",
+    "DescriptiveName": "Selected by pin on map",
+    "PropertyResearchPurpose": "Road Closure",
+    "LegalOpinionRequest": "Yes",
+    "LegalOpinionObtained": "No",
+    "DocumentReference": "Document references will be attached on the Documents Tab",
+    "SummaryNotes": "Automation - POI Details from Research file created from a pin on a map"
+  },
+  {
+    "Test Case Description": "Minimum Property Research",
+    "DescriptiveName": "Edited Property",
+    "PropertyResearchPurpose": "District Other;Classification",
+    "LegalOpinionRequest": "No",
+    "LegalOpinionObtained": "No",
+    "DocumentReference": "Automation Minimum Research Property",
+    "SummaryNotes": "Automation - Minimum test for Property Research"
+  },
+  {
+    "Test Case Description": null,
+    "DescriptiveName": null,
+    "PropertyResearchPurpose": " ",
+    "LegalOpinionRequest": null,
+    "LegalOpinionObtained": null,
+    "DocumentReference": null,
+    "SummaryNotes": null
+  }
+]

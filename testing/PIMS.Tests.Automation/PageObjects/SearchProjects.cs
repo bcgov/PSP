@@ -47,6 +47,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchProjectShowEntries = By.CssSelector("div[class='Menu-root']");
         private By searchProjectPagination = By.CssSelector("ul[class='pagination']");
 
+        private readonly By projectHeaderProjectNameLabel = By.XPath("//label[(text()='Project:')]");
+
         public SearchProjects(IWebDriver webDriver) : base(webDriver)
         {}
 
@@ -69,7 +71,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(searchProjectNameInput);
             webDriver.FindElement(searchProjectNameInput).SendKeys(projectName);
-            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Statuses");
+            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Status");
             
             webDriver.FindElement(searchProjectButton).Click();
         }
@@ -81,7 +83,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(searchProjectNumberInput);
             webDriver.FindElement(searchProjectNumberInput).SendKeys(projectNumber);
-            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Statuses");
+            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Status");
 
             webDriver.FindElement(searchProjectButton).Click();
         }
@@ -93,7 +95,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(searchProjectRegionSelect);
             webDriver.FindElement(searchProjectRegionSelect).SendKeys(projectRegion);
-            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Statuses");
+            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Status");
 
             webDriver.FindElement(searchProjectButton).Click();
         }
@@ -111,8 +113,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFirstResult()
         {
-            WaitUntilVisible(searchProjectTotalCount);
+            var originalWindowHandle = webDriver.CurrentWindowHandle;
+
+            Wait();
             webDriver.FindElement(searchProject1stResultNbrLink).Click();
+
+            Wait();
+            var allWindowsHandle = webDriver.WindowHandles;
+            var newWindowHandle = allWindowsHandle.Where(handle => handle != originalWindowHandle).First();
+            webDriver.SwitchTo().Window(newWindowHandle);
+
+
+            WaitUntilClickable(projectHeaderProjectNameLabel);
+            AssertTrueIsDisplayed(projectHeaderProjectNameLabel);
         }
 
         public void OrderByProjectNumber()
@@ -130,7 +143,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void OrderByProjectLastUpdatedBy()
         {
             WaitUntilClickable(searchProjectLastUpdatedByOrderBttn);
-            webDriver.FindElement(searchProjectLastUpdatedByOrderBttn).Click();
+            FocusAndClick(searchProjectLastUpdatedByOrderBttn);
         }
 
         public void OrderByProjectLastUpdatedDate()

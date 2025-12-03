@@ -5,15 +5,15 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Models.Concepts.Take;
-using Pims.Core.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Api.Policies;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
+using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
-using Pims.Core.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Takes.Controllers
@@ -246,7 +246,7 @@ namespace Pims.Api.Areas.Takes.Controllers
             _logger.LogInformation("Dispatching to service: {Service}", _takeService.GetType());
 
             var take = _takeService.GetById(takeId);
-            if(take.PropertyAcquisitionFileId != acquisitionFilePropertyId)
+            if (take.PropertyAcquisitionFileId != acquisitionFilePropertyId)
             {
                 throw new BadRequestException("Invalid acquisition file property id.");
             }

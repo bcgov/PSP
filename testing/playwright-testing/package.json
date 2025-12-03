@@ -1,0 +1,22 @@
+{
+  "name": "playwright-testing",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "cross-env cucumber-js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.1.0",
+    "@playwright/test": "^1.54.1",
+    "@types/node": "^24.0.15",
+    "cross-env": "^7.0.3",
+    "playwright-bdd": "^8.3.1"
+  },
+  "dependencies": {
+    "dotenv": "^17.2.1"
+  }
+}

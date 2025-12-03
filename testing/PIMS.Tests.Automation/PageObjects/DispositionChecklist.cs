@@ -37,8 +37,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private By checklistReferralsAndConsultationsTitle = By.XPath("//h2/div/div[contains(text(),'Referrals and Consultations')]");
         private By checklistEnhancedReferralLabel = By.XPath("//label[contains(text(),'Enhanced referral (Complete/Exempt)')]");
         private By checklistEnhancedReferralContent = By.XPath("//label[contains(text(),'Enhanced referral (Complete/Exempt)')]/parent::div/following-sibling::div/div/div[2]/span");
-        private By checklistStrengthClaimAssessmentLabel = By.XPath("//label[contains(text(),'Strength and Claim assessment')]");
-        private By checklistStrengthClaimAssessmentContent = By.XPath("//label[contains(text(),'Strength and Claim assessment')]/parent::div/following-sibling::div/div/div[2]/span");
+        private By checklistStrengthClaimAssessmentLabel = By.XPath("//label[contains(text(),'Strength of Claim assessment')]");
+        private By checklistStrengthClaimAssessmentContent = By.XPath("//label[contains(text(),'Strength of Claim assessment')]/parent::div/following-sibling::div/div/div[2]/span");
         private By checklistFirstNationsConsultationLabel = By.XPath("//label[contains(text(),'First Nations consultation')]");
         private By checklistFirstNationsConsultationContent = By.XPath("//label[contains(text(),'First Nations consultation')]/parent::div/following-sibling::div/div/div[2]/span");
         private By checklistLocalGovernmentConsultationLabel = By.XPath("//label[contains(text(),'Local Government consultation')]");

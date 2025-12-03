@@ -36,9 +36,7 @@ exports[`Activities list view > renders as expected 1`] = `
 }
 
 .c9.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c9.btn:hover {
@@ -261,7 +259,7 @@ exports[`Activities list view > renders as expected 1`] = `
   color: var(--surface-color-primary-button-hover);
 }
 
-.c3 {
+.c2 {
   float: right;
   cursor: pointer;
   font-size: 3.2rem;
@@ -282,7 +280,7 @@ exports[`Activities list view > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c4 {
+.c3 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -301,12 +299,12 @@ exports[`Activities list view > renders as expected 1`] = `
   margin-left: 0.5rem;
 }
 
-.c6 {
+.c5 {
   width: 1.6rem;
   height: 1.6rem;
 }
 
-.c5 {
+.c4 {
   width: 1.6rem;
   height: 1.6rem;
 }
@@ -342,28 +340,31 @@ exports[`Activities list view > renders as expected 1`] = `
   flex-wrap: nowrap;
 }
 
-.c2 {
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: end;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: end;
-  min-height: 4.5rem;
-}
-
-.c2 .btn {
-  margin: 0;
-}
-
 .c8 {
   -webkit-box-pack: center;
   -webkit-justify-content: center;
   -ms-flex-pack: center;
   justify-content: center;
-  width: 80%;
+}
+
+.c8 > * {
+  margin: 0.5rem;
+  padding: 0 !important;
+}
+
+.c6 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  gap: 0.5rem;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  -webkit-flex-wrap: wrap;
+  -ms-flex-wrap: wrap;
+  flex-wrap: wrap;
 }
 
 <div
@@ -379,23 +380,21 @@ exports[`Activities list view > renders as expected 1`] = `
           class="align-content-end col"
         >
           <div
-            class="c2 no-gutters row"
+            class="no-gutters justify-content-between align-items-end row"
           >
             <div
-              class="align-items-end col-auto"
+              class="my-1 col-auto"
+              data-testid="ad-hoc activities"
             >
               Activities List
             </div>
-            <div
-              class="my-1 col-auto"
-            />
           </div>
         </div>
         <div
           class="pl-2 d-flex align-items-end col-auto"
         >
           <svg
-            class="c3"
+            class="c2"
             fill="currentColor"
             height="1em"
             stroke="currentColor"
@@ -423,7 +422,7 @@ exports[`Activities list view > renders as expected 1`] = `
     >
       <div
         class="table"
-        data-testid="PropertyManagementActivitiesTable"
+        data-testid="adhoc-activity-list"
         role="table"
       >
         <div
@@ -432,24 +431,24 @@ exports[`Activities list view > renders as expected 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 195px;"
+            style="display: flex; flex: 1 0 auto; min-width: 185px;"
           >
             <div
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 35 0 auto; min-width: 35px; width: 35px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
                 Activity type
                 <div
-                  class="c4"
+                  class="c3"
                   data-testid="sort-column-activityType"
                 >
                   <svg
-                    class="c5"
+                    class="c4"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -464,7 +463,7 @@ exports[`Activities list view > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c6"
+                    class="c5"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -484,18 +483,18 @@ exports[`Activities list view > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 35 0 auto; min-width: 35px; width: 35px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
                 Activity sub-type
                 <div
-                  class="c4"
-                  data-testid="sort-column-activitySubType"
+                  class="c3"
+                  data-testid="sort-column-activitySubTypes"
                 >
                   <svg
-                    class="c5"
+                    class="c4"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -510,7 +509,7 @@ exports[`Activities list view > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c6"
+                    class="c5"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -537,11 +536,11 @@ exports[`Activities list view > renders as expected 1`] = `
               >
                 Activity status
                 <div
-                  class="c4"
+                  class="c3"
                   data-testid="sort-column-activityStatusType"
                 >
                   <svg
-                    class="c5"
+                    class="c4"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -556,7 +555,7 @@ exports[`Activities list view > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c6"
+                    class="c5"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -576,18 +575,18 @@ exports[`Activities list view > renders as expected 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 50 0 auto; min-width: 50px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
-                Request added date
+                Commencement
                 <div
-                  class="c4"
+                  class="c3"
                   data-testid="sort-column-requestedAddedDate"
                 >
                   <svg
-                    class="c5"
+                    class="c4"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -602,7 +601,7 @@ exports[`Activities list view > renders as expected 1`] = `
                     />
                   </svg>
                   <svg
-                    class="c6"
+                    class="c5"
                     fill="currentColor"
                     height="1em"
                     stroke="currentColor"
@@ -642,12 +641,12 @@ exports[`Activities list view > renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 195px;"
+              style="display: flex; flex: 1 0 auto; min-width: 185px;"
             >
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 35 0 auto; min-width: 35px; width: 35px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 Activity Type Description
@@ -655,10 +654,12 @@ exports[`Activities list view > renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 35 0 auto; min-width: 35px; width: 35px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Activity Type Description
+                <div
+                  class="c6"
+                />
               </div>
               <div
                 class="td"
@@ -671,7 +672,7 @@ exports[`Activities list view > renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 50px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               />
               <div
@@ -707,20 +708,6 @@ exports[`Activities list view > renders as expected 1`] = `
                       </svg>
                     </div>
                   </button>
-                  <svg
-                    class="tooltip-icon h-24"
-                    fill="currentColor"
-                    height="2rem"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="2rem"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                    />
-                  </svg>
                 </div>
               </div>
             </div>
@@ -731,12 +718,12 @@ exports[`Activities list view > renders as expected 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 195px;"
+              style="display: flex; flex: 1 0 auto; min-width: 185px;"
             >
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 35 0 auto; min-width: 35px; width: 35px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 Activity Type Description
@@ -744,10 +731,12 @@ exports[`Activities list view > renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 45 0 auto; min-width: 45px; width: 45px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 35 0 auto; min-width: 35px; width: 35px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Activity Type Description
+                <div
+                  class="c6"
+                />
               </div>
               <div
                 class="td"
@@ -760,7 +749,7 @@ exports[`Activities list view > renders as expected 1`] = `
               <div
                 class="td"
                 role="cell"
-                style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 50 0 auto; min-width: 50px; width: 50px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               />
               <div
@@ -796,20 +785,6 @@ exports[`Activities list view > renders as expected 1`] = `
                       </svg>
                     </div>
                   </button>
-                  <svg
-                    class="tooltip-icon h-24"
-                    fill="currentColor"
-                    height="2rem"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="2rem"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                    />
-                  </svg>
                 </div>
               </div>
             </div>

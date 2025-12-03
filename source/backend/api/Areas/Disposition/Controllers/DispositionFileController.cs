@@ -389,7 +389,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [ProducesResponseType(typeof(DispositionFileSaleModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult UpdateDispositionFileSale([FromRoute]long id, [FromRoute]long saleId, [FromBody] DispositionFileSaleModel dispositionFileSale)
+        public IActionResult UpdateDispositionFileSale([FromRoute] long id, [FromRoute] long saleId, [FromBody] DispositionFileSaleModel dispositionFileSale)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",

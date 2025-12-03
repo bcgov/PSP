@@ -1,12 +1,13 @@
-import { FormDocumentType } from '@/constants/formDocumentTypes';
 import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { Api_GenerateLetter } from '@/models/generate/GenerateLetter';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
-import { isValidId } from '@/utils';
+import { firstOrNull, isValidId } from '@/utils';
 
 export const useGenerateLetter = () => {
   const { getPersonConcept, getOrganizationConcept } = useApiContacts();
@@ -16,6 +17,7 @@ export const useGenerateLetter = () => {
   } = useAcquisitionProvider();
 
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
+  const { setDisplayModal, setModalContent } = useModalContext();
 
   const generateLetter = async (
     acquisitionFileId: number,
@@ -25,9 +27,21 @@ export const useGenerateLetter = () => {
     if (file) {
       const properties = await getAcquisitionProperties(acquisitionFileId);
       file.fileProperties = properties ?? [];
-      const coordinator = file.acquisitionTeam?.find(
+      const coordinators = file.acquisitionTeam?.filter(
         team => team.teamProfileTypeCode === 'PROPCOORD',
       );
+      if (coordinators?.length > 1) {
+        setModalContent({
+          ...getCancelModalProps(),
+          cancelButtonText: null,
+          okButtonText: 'Ok',
+          title: 'Warning',
+          message:
+            'This file has more then one property coordinator. You may need to correct the generated report.',
+        });
+        setDisplayModal(true);
+      }
+      const coordinator = firstOrNull(coordinators);
       if (isValidId(coordinator?.personId)) {
         coordinator!.person = (await getPersonConcept(coordinator!.personId))?.data;
       } else if (isValidId(coordinator?.organizationId)) {
@@ -38,7 +52,7 @@ export const useGenerateLetter = () => {
       const letterData = new Api_GenerateLetter(file, coordinator);
       letterData.owners = recipients ?? letterData.owners;
       const generatedFile = await generate({
-        templateType: FormDocumentType.LETTER,
+        templateType: ApiGen_CodeTypes_FormTypes.LETTER,
         templateData: letterData,
         convertToType: null,
       });

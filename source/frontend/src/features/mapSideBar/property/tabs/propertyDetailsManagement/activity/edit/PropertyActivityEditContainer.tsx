@@ -2,18 +2,19 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
-import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
+import { useManagementActivityPropertyRepository } from '@/hooks/repositories/useManagementActivityPropertyRepository';
+import { ApiGen_CodeTypes_ManagementActivityStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementActivityStatusTypes';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { exists, isValidId } from '@/utils/utils';
 
 import useActivityContactRetriever from '../hooks';
+import { PropertyActivityFormModel } from './models';
 import { IPropertyActivityEditFormProps } from './PropertyActivityEditForm';
 
 export interface IPropertyActivityEditContainerProps {
   propertyId: number;
-  propertyActivityId?: number;
+  managementActivityId?: number;
   onClose: () => void;
   viewEnabled: boolean;
   View: React.FunctionComponent<React.PropsWithChildren<IPropertyActivityEditFormProps>>;
@@ -25,53 +26,38 @@ export interface IPropertyActivityEditContainerProps {
  */
 export const PropertyActivityEditContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyActivityEditContainerProps>
-> = ({ propertyId, propertyActivityId, onClose, viewEnabled, View }) => {
+> = ({ propertyId, managementActivityId, onClose, viewEnabled, View }) => {
   const { getSystemConstant } = useSystemConstants();
 
   const history = useHistory();
+  const [initialValues, setInitialValues] = useState<PropertyActivityFormModel | null>(null);
 
   const { setStaleLastUpdatedBy } = useContext(SideBarContext);
 
   const [show, setShow] = useState(true);
 
-  const [loadedActivity, setLoadedActivity] = useState<
-    ApiGen_Concepts_PropertyActivity | undefined
-  >();
-
-  const [subtypes, setSubtypes] = useState<ApiGen_Concepts_PropertyActivitySubtype[]>([]);
-
   const {
     fetchMinistryContacts,
     fetchPartiesContact,
     fetchProviderContact,
+    fetchRequestorContact,
     isLoading: isContactLoading,
   } = useActivityContactRetriever();
 
   const {
-    getActivitySubtypes: { execute: getSubtypes, loading: getSubtypesLoading },
     getActivity: { execute: getActivity, loading: getActivityLoading },
     createActivity: { execute: createActivity, loading: createActivityLoading },
     updateActivity: { execute: updateActivity, loading: updateActivityLoading },
-  } = usePropertyActivityRepository();
-
-  // Load the subtypes
-  const fetchSubtypes = useCallback(async () => {
-    const retrieved = await getSubtypes();
-    if (retrieved !== undefined) {
-      setSubtypes(retrieved);
-    } else {
-      setSubtypes([]);
-    }
-  }, [getSubtypes]);
-
-  useEffect(() => {
-    fetchSubtypes();
-  }, [fetchSubtypes]);
+  } = useManagementActivityPropertyRepository();
 
   // Load the activity
   const fetchActivity = useCallback(
     async (propertyId: number, activityId: number) => {
-      const retrieved = await getActivity(propertyId, activityId);
+      let formInitialValues: PropertyActivityFormModel;
+      let retrieved: ApiGen_Concepts_ManagementActivity = null;
+      if (isValidId(propertyId) && isValidId(activityId)) {
+        retrieved = await getActivity(propertyId, activityId);
+      }
       if (exists(retrieved)) {
         if (exists(retrieved.ministryContacts)) {
           for (let i = 0; i < retrieved.ministryContacts.length; i++) {
@@ -84,27 +70,38 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
           }
         }
         await fetchProviderContact(retrieved);
+        await fetchRequestorContact(retrieved);
 
-        setLoadedActivity(retrieved);
+        formInitialValues = PropertyActivityFormModel.fromApi(retrieved);
       } else {
-        setLoadedActivity(undefined);
+        formInitialValues = new PropertyActivityFormModel();
+        formInitialValues.activityStatusCode =
+          ApiGen_CodeTypes_ManagementActivityStatusTypes.NOTSTARTED;
       }
+
+      setInitialValues(formInitialValues);
     },
-    [fetchMinistryContacts, fetchPartiesContact, fetchProviderContact, getActivity],
+    [
+      fetchMinistryContacts,
+      fetchPartiesContact,
+      fetchProviderContact,
+      fetchRequestorContact,
+      getActivity,
+    ],
   );
 
   useEffect(() => {
-    if (isValidId(propertyId) && isValidId(propertyActivityId)) {
-      fetchActivity(propertyId, propertyActivityId);
+    if (!exists(initialValues)) {
+      fetchActivity(propertyId, managementActivityId);
     }
-  }, [propertyId, propertyActivityId, fetchActivity]);
+  }, [propertyId, managementActivityId, fetchActivity, initialValues]);
 
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const pstConstant = getSystemConstant(SystemConstants.PST);
   const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) * 0.01 : 0;
   const pstDecimal = pstConstant !== undefined ? parseFloat(pstConstant.value) * 0.01 : 0;
 
-  const onSave = async (model: ApiGen_Concepts_PropertyActivity) => {
+  const handleSave = async (model: ApiGen_Concepts_ManagementActivity) => {
     let result = undefined;
     if (isValidId(model.id)) {
       result = await updateActivity(propertyId, model);
@@ -114,39 +111,34 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
 
     if (exists(result)) {
       setStaleLastUpdatedBy(true);
-      history.push(`/mapview/sidebar/property/${propertyId}/management/activity/${result.id}`);
+      const backUrl = history.location.pathname.split('/activity')[0];
+      history.push(`${backUrl}/activity/${result.id}`);
     }
   };
 
   const onCancelClick = () => {
-    if (isValidId(propertyActivityId)) {
-      history.push(
-        `/mapview/sidebar/property/${propertyId}/management/activity/${propertyActivityId}`,
-      );
+    if (isValidId(managementActivityId)) {
+      const backUrl = history.location.pathname.split('/activity')[0];
+      history.push(`${backUrl}/activity/${managementActivityId}`);
     } else {
       onClose();
     }
   };
 
-  return (
+  return isValidId(propertyId) && exists(initialValues) ? (
     <View
       propertyId={propertyId}
-      activity={loadedActivity}
-      subtypes={subtypes}
+      initialValues={initialValues}
       gstConstant={gstDecimal}
       pstConstant={pstDecimal}
       onCancel={onCancelClick}
       loading={
-        getSubtypesLoading ||
-        getActivityLoading ||
-        createActivityLoading ||
-        updateActivityLoading ||
-        isContactLoading
+        getActivityLoading || createActivityLoading || updateActivityLoading || isContactLoading
       }
       show={show && viewEnabled}
       setShow={setShow}
-      onSave={onSave}
+      onSave={handleSave}
       onClose={onClose}
     />
-  );
+  ) : null;
 };

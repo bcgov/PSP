@@ -36,9 +36,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
 }
 
 .c8.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c8.btn:hover {
@@ -617,13 +615,13 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
                     >
                       <button
                         class="c8 Button c9 btn btn-link"
+                        data-testid="email-remove-button-0"
                         type="button"
                       >
                         <div
                           class="Button__value"
                         >
                           <svg
-                            data-testid="remove-button"
                             fill="currentColor"
                             height="2rem"
                             stroke="currentColor"
@@ -656,6 +654,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
                 </div>
                 <button
                   class="c8 Button btn btn-link"
+                  data-testid="add-email-button"
                   type="button"
                 >
                   <div
@@ -759,13 +758,13 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
                   >
                     <button
                       class="c8 Button c9 btn btn-link"
+                      data-testid="phone-delete-button-0"
                       type="button"
                     >
                       <div
                         class="Button__value"
                       >
                         <svg
-                          data-testid="remove-button"
                           fill="currentColor"
                           height="2rem"
                           stroke="currentColor"
@@ -797,6 +796,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
                 </div>
                 <button
                   class="c8 Button btn btn-link"
+                  data-testid="add-phone-button"
                   type="button"
                 >
                   <div
@@ -1707,9 +1707,7 @@ exports[`UpdateOrganizationForm > renders as expected 1`] = `
 }
 
 .c2.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c2.btn:hover {

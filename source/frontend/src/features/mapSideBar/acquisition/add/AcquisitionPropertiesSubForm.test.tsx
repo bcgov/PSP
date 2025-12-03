@@ -3,12 +3,13 @@ import noop from 'lodash/noop';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
+import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
-import { act, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
+import { PropertyForm } from '../../shared/models';
 import { AcquisitionPropertiesSubForm } from './AcquisitionPropertiesSubForm';
 import { AcquisitionForm } from './models';
-import { PropertyForm } from '../../shared/models';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -16,7 +17,7 @@ const customSetFilePropertyLocations = vi.fn();
 
 describe('AcquisitionProperties component', () => {
   // render component under test
-  const setup = (
+  const setup = async (
     props: {
       initialForm: AcquisitionForm;
       confirmBeforeAdd?: (propertyForm: PropertyForm) => Promise<boolean>;
@@ -45,17 +46,39 @@ describe('AcquisitionProperties component', () => {
       },
     );
 
+    // Wait for any async effects to complete
+    await act(async () => {});
+
     return { ...utils };
   };
 
   let testForm: AcquisitionForm;
 
   beforeEach(() => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
     testForm = new AcquisitionForm();
     testForm.fileName = 'Test name';
     testForm.properties = [
-      PropertyForm.fromMapProperty({ pid: '123-456-789' }),
-      PropertyForm.fromMapProperty({ pin: '1111222' }),
+      PropertyForm.fromFeatureDataset({
+        ...mockFeatureSet,
+        pimsFeature: {
+          ...mockFeatureSet.pimsFeature,
+          properties: {
+            ...mockFeatureSet.pimsFeature?.properties,
+            PID_PADDED: '123-456-789',
+          },
+        },
+      }),
+      PropertyForm.fromFeatureDataset({
+        ...mockFeatureSet,
+        pimsFeature: {
+          ...mockFeatureSet.pimsFeature,
+          properties: {
+            ...mockFeatureSet.pimsFeature?.properties,
+            PIN: 1111222,
+          },
+        },
+      }),
     ];
   });
 
@@ -65,79 +88,29 @@ describe('AcquisitionProperties component', () => {
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = setup({ initialForm: testForm });
+    const { asFragment } = await setup({ initialForm: testForm });
     await act(async () => {});
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders list of properties', async () => {
-    const { getByText } = setup({ initialForm: testForm });
-
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 0, lng: 0 },
-        { lat: 0, lng: 0 },
-      ]);
-    });
+    const { getByText } = await setup({ initialForm: testForm });
 
     expect(getByText('PID: 123-456-789')).toBeVisible();
     expect(getByText('PIN: 1111222')).toBeVisible();
   });
 
   it('should remove property from list when Remove button is clicked', async () => {
-    const { getAllByTitle, queryByText } = setup({ initialForm: testForm });
+    const { getAllByTitle, queryByText } = await setup({ initialForm: testForm });
     const pidRow = getAllByTitle('remove')[0];
     await act(async () => userEvent.click(pidRow));
-
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([{ lat: 0, lng: 0 }]);
-    });
 
     expect(queryByText('PID: 123-456-789')).toBeNull();
   });
 
   it('should display properties with svg prefixed with incrementing id', async () => {
-    const { getByTitle } = setup({ initialForm: testForm });
-
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 0, lng: 0 },
-        { lat: 0, lng: 0 },
-      ]);
-    });
-
+    const { getByTitle } = await setup({ initialForm: testForm });
     expect(getByTitle('1')).toBeInTheDocument();
     expect(getByTitle('2')).toBeInTheDocument();
-  });
-
-  it('should synchronize a single property with provided lat/lng', async () => {
-    const formWithProperties = testForm;
-    formWithProperties.properties[0].latitude = 1;
-    formWithProperties.properties[0].longitude = 2;
-    setup({ initialForm: formWithProperties });
-
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 1, lng: 2 },
-        { lat: 0, lng: 0 },
-      ]);
-    });
-  });
-
-  it('should synchronize multiple properties with provided lat/lng', async () => {
-    const formWithProperties = testForm;
-    formWithProperties.properties[0].latitude = 1;
-    formWithProperties.properties[0].longitude = 2;
-    formWithProperties.properties[1].latitude = 3;
-    formWithProperties.properties[1].longitude = 4;
-
-    setup({ initialForm: formWithProperties });
-
-    await waitFor(() => {
-      expect(customSetFilePropertyLocations).toHaveBeenCalledWith([
-        { lat: 1, lng: 2 },
-        { lat: 3, lng: 4 },
-      ]);
-    });
   });
 });

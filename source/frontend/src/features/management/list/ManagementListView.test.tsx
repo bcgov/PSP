@@ -5,6 +5,7 @@ import { Claims } from '@/constants/index';
 import { useApiManagementFile } from '@/hooks/pims-api/useApiManagementFile';
 import { getMockApiAddress } from '@/mocks/address.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { getEmptyProperty } from '@/models/defaultInitializers';
@@ -22,7 +23,6 @@ import {
 
 import ManagementListView from './ManagementListView';
 import { ManagementFilterModel } from './models';
-import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
 
 vi.mock('@/hooks/pims-api/useApiManagementFile');
 const getManagementFilesPagedApiFn = vi.fn();
@@ -126,7 +126,9 @@ describe('Management List View', () => {
             displayOrder: null,
             file: null,
             propertyName: null,
+            isActive: null,
             location: null,
+            boundary: null,
             rowVersion: null,
           },
         ],

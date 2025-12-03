@@ -1,19 +1,23 @@
 import { FieldArray, FormikProps } from 'formik';
-import { LatLngLiteral } from 'leaflet';
-import isNumber from 'lodash/isNumber';
+import { noop } from 'lodash';
+import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
-import LoadingBackdrop from '@/components/common/LoadingBackdrop';
+import { Button } from '@/components/common/buttons';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
-import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
-import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
-import { useModalContext } from '@/hooks/useModalContext';
-import { isLatLngInFeatureSetBoundary } from '@/utils';
+import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
+import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
+import { featuresetToLocationBoundaryDataset } from '@/utils';
+import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
+import { exists, firstOrNull } from '@/utils/utils';
 
-import { AddressForm, PropertyForm } from '../../shared/models';
+import { PropertyForm } from '../../shared/models';
+import AddPropertiesGuide from '../../shared/update/properties/AddPropertiesGuide';
 import { ManagementFormModel } from '../models/ManagementFormModel';
 
 export interface ManagementPropertiesSubFormProps {
@@ -23,118 +27,134 @@ export interface ManagementPropertiesSubFormProps {
 
 const ManagementPropertiesSubForm: React.FunctionComponent<ManagementPropertiesSubFormProps> = ({
   formikProps,
-  confirmBeforeAdd,
 }) => {
-  const { values } = formikProps;
-  const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
-  const { setModalContent, setDisplayModal } = useModalContext();
+  const localRef = useRef<FormikProps<ManagementFormModel>>(null);
+
+  const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
+    useMapStateMachine();
+
+  useDraftMarkerSynchronizer(
+    formikProps.values.fileProperties.map(p =>
+      featuresetToLocationBoundaryDataset(p.toFeatureDataset()),
+    ),
+  );
+
+  // Get PropertyForms with addresses for all selected features
+  const { featuresWithAddresses } = useFeatureDatasetsWithAddresses(selectedFeatures ?? []);
+
+  const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
+    return {
+      selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
+      location: mapLocationFeatureDataset?.location,
+      fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      fileBoundary: null,
+      parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
+      pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
+      regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
+      districtFeature: mapLocationFeatureDataset?.districtFeature ?? null,
+      municipalityFeature: firstOrNull(mapLocationFeatureDataset?.municipalityFeatures),
+      isActive: true,
+      displayOrder: 0,
+    };
+  }, [
+    mapLocationFeatureDataset?.selectingComponentId,
+    mapLocationFeatureDataset?.location,
+    mapLocationFeatureDataset?.fileLocation,
+    mapLocationFeatureDataset?.parcelFeatures,
+    mapLocationFeatureDataset?.pimsFeatures,
+    mapLocationFeatureDataset?.regionFeature,
+    mapLocationFeatureDataset?.districtFeature,
+    mapLocationFeatureDataset?.municipalityFeatures,
+  ]);
+
+  // Convert SelectedFeatureDataset to PropertyForm
+  const propertyForms = useMemo(
+    () =>
+      featuresWithAddresses.map(obj => {
+        const property = PropertyForm.fromFeatureDataset(obj.feature);
+        if (exists(obj.address)) {
+          property.address = obj.address;
+        }
+        return property;
+      }),
+    [featuresWithAddresses],
+  );
+
+  const handleAddToSelection = useCallback(() => {
+    prepareForCreation([selectedFeatureDataset]);
+  }, [prepareForCreation, selectedFeatureDataset]);
+
+  useEffect(() => {
+    if (exists(localRef.current) && propertyForms.length > 0) {
+      addPropertiesToCurrentFile(localRef, 'fileProperties', propertyForms, noop);
+      processCreation();
+    }
+  }, [localRef, processCreation, propertyForms]);
 
   return (
-    <>
+    <StyledComponentWrapper>
       <div className="py-2">
-        Select one or more properties that you want to include in this disposition. You can choose a
-        location from the map, or search by other criteria.
+        Select one or more properties that you want to include in this management file. You can
+        choose a location from the map, or search by other criteria.
       </div>
 
       <FieldArray name="fileProperties">
-        {({ push, remove, replace }) => (
-          <>
-            <LoadingBackdrop show={bcaLoading} />
-            <Row className="py-3 no-gutters">
-              <Col>
-                <MapSelectorContainer
-                  addSelectedProperties={(newProperties: SelectedFeatureDataset[]) => {
-                    newProperties.reduce(async (promise, property, index) => {
-                      return promise.then(async () => {
-                        const formProperty = PropertyForm.fromFeatureDataset(property);
-                        if (formProperty.pid) {
-                          const bcaSummary = await getPrimaryAddressByPid(formProperty.pid, 30000);
-                          formProperty.address = bcaSummary?.address
-                            ? AddressForm.fromBcaAddress(bcaSummary?.address)
-                            : undefined;
-                        }
-                        // auto-select file region based upon the location of the property
-                        if (
-                          values.fileProperties?.length === 0 &&
-                          index === 0 &&
-                          formProperty.regionName !== 'Cannot determine'
-                        ) {
-                          formikProps.setFieldValue(`regionCode`, formProperty.region);
-                        }
-
-                        if (await confirmBeforeAdd(formProperty)) {
-                          // Require user confirmation before adding property to file
-                          setModalContent({
-                            variant: 'warning',
-                            title: 'User Override Required',
-                            message: (
-                              <>
-                                <p>
-                                  This property has already been added to one or more disposition
-                                  files.
-                                </p>
-                                <p>Do you want to acknowledge and proceed?</p>
-                              </>
-                            ),
-                            okButtonText: 'Yes',
-                            cancelButtonText: 'No',
-                            handleOk: () => {
-                              push(formProperty);
-                              setDisplayModal(false);
-                            },
-                            handleCancel: () => setDisplayModal(false),
-                          });
-                          setDisplayModal(true);
-                        } else {
-                          // No confirmation needed - just add the property to the file
-                          push(formProperty);
-                        }
-                      });
-                    }, Promise.resolve());
-                  }}
-                  repositionSelectedProperty={(
-                    featureset: SelectedFeatureDataset,
-                    latLng: LatLngLiteral,
-                    index: number | null,
-                  ) => {
-                    // As long as the marker is repositioned within the boundary of the originally selected property simply reposition the marker without further notification.
-                    if (
-                      isNumber(index) &&
-                      index >= 0 &&
-                      isLatLngInFeatureSetBoundary(latLng, featureset)
-                    ) {
-                      const formProperty = formikProps.values.fileProperties[index];
-                      const updatedFormProperty = new PropertyForm(formProperty);
-                      updatedFormProperty.fileLocation = latLng;
-
-                      // Find property within formik values and reposition it based on incoming file marker position
-                      replace(index, updatedFormProperty);
-                    }
-                  }}
-                  modifiedProperties={values.fileProperties.map(p => p.toFeatureDataset())}
-                />
-              </Col>
-            </Row>
-            <Section header="Selected properties">
-              <SelectedPropertyHeaderRow />
-              {formikProps.values.fileProperties.map((property, index) => (
-                <SelectedPropertyRow
-                  key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
-                  onRemove={() => remove(index)}
-                  nameSpace={`fileProperties.${index}`}
-                  index={index}
-                  property={property.toFeatureDataset()}
-                />
-              ))}
-              {formikProps.values.fileProperties.length === 0 && (
-                <span>No Properties selected</span>
-              )}
-            </Section>
-          </>
+        {({ remove }) => (
+          <Section header="Selected Properties">
+            <AddPropertiesGuide />
+            {exists(selectedFeatureDataset?.parcelFeature) && (
+              <StyledButtonWrapper>
+                <Button onClick={handleAddToSelection}>Add selected property</Button>
+              </StyledButtonWrapper>
+            )}
+            <SelectedPropertyHeaderRow />
+            {formikProps.values.fileProperties.map((property, index) => (
+              <SelectedPropertyRow
+                key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
+                onRemove={() => remove(index)}
+                nameSpace={`fileProperties.${index}`}
+                index={index}
+                property={property.toFeatureDataset()}
+              />
+            ))}
+            {formikProps.values.fileProperties.length === 0 && (
+              <HeaderRow>
+                <Col md="12">
+                  <span>No Properties selected</span>
+                </Col>
+              </HeaderRow>
+            )}
+          </Section>
         )}
       </FieldArray>
-    </>
+    </StyledComponentWrapper>
   );
 };
 
 export default ManagementPropertiesSubForm;
+
+const StyledComponentWrapper = styled.div`
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 0 1.6rem 0 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+
+  button {
+    font-size: 14px;
+  }
+`;
+
+const StyledButtonWrapper = styled.div`
+  margin: 0 1.6rem;
+  padding-left: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+
+  button {
+    font-size: 14px;
+  }
+`;
+
+export const HeaderRow = styled(Row)`
+  margin: 0 1.6rem 0 1.6rem;
+`;

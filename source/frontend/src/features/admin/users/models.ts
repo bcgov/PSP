@@ -118,7 +118,7 @@ export class FormUser {
         addressComment: null,
         birthDate: null,
         nameSuffix: null,
-        propertyActivityId: null,
+        managementActivityId: null,
         useOrganizationAddress: null,
         rowVersion: null,
       },

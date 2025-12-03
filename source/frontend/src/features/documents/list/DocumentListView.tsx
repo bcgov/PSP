@@ -18,27 +18,40 @@ import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 
-import { DocumentRow } from '../ComposedDocument';
 import { DocumentViewerContext } from '../context/DocumentViewerContext';
 import { DocumentDetailModal } from '../documentDetail/DocumentDetailModal';
 import { DocumentUploadModal } from '../documentUpload/DocumentUploadModal';
 import { useDocumentProvider } from '../hooks/useDocumentProvider';
+import { DocumentRow } from '../models/DocumentRow';
 import { DocumentFilterForm } from './DocumentFilter/DocumentFilterForm';
 import { DocumentResults } from './DocumentResults/DocumentResults';
+
+export interface ParentInformationDisplay {
+  relationshipIdLabel: string;
+  relationshipTypeLabel: string;
+  searchParentIdLabel: string;
+  searchParentTypeLabel: string;
+}
 
 export interface IDocumentListViewProps {
   parentId: string;
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
+  relationshipTypes: ApiGen_CodeTypes_DocumentRelationType[];
   isLoading: boolean;
   documentResults: DocumentRow[];
   hideFilters?: boolean;
   defaultFilters?: IDocumentFilter;
   addButtonText?: string;
   disableAdd?: boolean;
+  canEditDocuments: boolean;
   title?: string;
+  showParentInformation: boolean;
+  relationshipDisplay?: ParentInformationDisplay;
+  'data-testId'?: string;
   onDelete: (relationship: ApiGen_Concepts_DocumentRelationship) => Promise<boolean | undefined>;
   onSuccess: () => void;
   onRefresh: () => void;
+  onViewParent: (relationshipType: ApiGen_CodeTypes_DocumentRelationType, parentId: number) => void;
 }
 /**
  * Page that displays document information as a list.
@@ -48,20 +61,22 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 ) => {
   const { hasClaim } = useKeycloakWrapper();
 
-  const { documentResults, isLoading, defaultFilters, hideFilters, title } = props;
+  const {
+    documentResults,
+    isLoading,
+    defaultFilters,
+    hideFilters,
+    title,
+    canEditDocuments,
+    disableAdd,
+  } = props;
 
   const [showDeleteConfirmModal, setShowDeleteConfirmModal] = useState<boolean>(false);
-
   const [documentTypes, setDocumentTypes] = useState<ApiGen_Concepts_DocumentType[]>([]);
-
-  const [sort, setSort] = React.useState<TableSort<ApiGen_Concepts_Document>>({});
-
-  const [filters, setFilters] = React.useState<IDocumentFilter>(
-    defaultFilters ?? defaultDocumentFilter,
-  );
+  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_Document>>({});
+  const [filters, setFilters] = useState<IDocumentFilter>(defaultFilters ?? defaultDocumentFilter);
 
   const { getDocumentRelationshipTypes, getDocumentTypes } = useDocumentProvider();
-
   const { setPreviewDocumentId, setShowDocumentPreview } = useContext(DocumentViewerContext);
 
   useEffect(() => {
@@ -110,7 +125,22 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
               ? filename.indexOf(filters.filename.toLowerCase() || '') > -1
               : true;
 
-          return matchesDocumentType && matchesStatus && matchesFilename;
+          const matchesParentName =
+            filters.parentName !== ''
+              ? document.parentName.toLowerCase().indexOf(filters.parentName.toLowerCase() || '') >
+                -1
+              : true;
+
+          const matchesParentType =
+            !filters.parentType || document?.relationshipType === filters.parentType;
+
+          return (
+            matchesDocumentType &&
+            matchesStatus &&
+            matchesFilename &&
+            matchesParentName &&
+            matchesParentType
+          );
         });
       }
       if (sort) {
@@ -132,9 +162,8 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
 
   const [isDetailsVisible, setIsDetailsVisible] = useState(false);
   const [isUploadVisible, setIsUploadVisible] = useState(false);
-  const [selectedDocument, setSelectedDocument] = useState<
-    ApiGen_Concepts_DocumentRelationship | undefined
-  >(undefined);
+  const [selectedDocument, setSelectedDocument] =
+    useState<ApiGen_Concepts_DocumentRelationship | null>(null);
 
   const handleModalUploadClose = () => {
     setIsUploadVisible(false);
@@ -146,8 +175,8 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   };
 
   const handleViewDetails = (document: ApiGen_Concepts_DocumentRelationship) => {
-    setIsDetailsVisible(true);
     setSelectedDocument(document);
+    setIsDetailsVisible(true);
   };
 
   const handleModalDetailsClose = () => {
@@ -180,67 +209,74 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
   };
 
   const getHeader = (): React.ReactNode => {
-    if (props.disableAdd === true) {
-      return title ?? 'Documents';
-    }
-
     return (
-      <>
-        <StyledRow className="no-gutters">
-          <Col xs="auto">
-            <span>{title ?? 'Documents'}</span>
-          </Col>
-          <Col xs="auto" className="my-1">
-            <ListHeaderActionsDiv>
-              {hasClaim([Claims.DOCUMENT_ADD]) && (
-                <StyledSectionAddButton
-                  onClick={() => setIsUploadVisible && setIsUploadVisible(true)}
-                  data-testid={props['data-testId']}
-                >
-                  <FaPlus size={'2rem'} />
-                  &nbsp;{'Add Document'}
-                </StyledSectionAddButton>
-              )}
-              <RefreshButton
-                onClick={() => props.onRefresh && props.onRefresh()}
-                type="button"
-                toolText="Refresh"
-                toolId="btn-refresh-tooltip"
-              ></RefreshButton>
-            </ListHeaderActionsDiv>
-          </Col>
-        </StyledRow>
-      </>
+      <StyledRow className="no-gutters">
+        <Col xs="auto">
+          <span>{title ?? 'Documents'}</span>
+        </Col>
+        <Col xs="auto" className="my-1">
+          <ListHeaderActionsDiv>
+            {hasClaim([Claims.DOCUMENT_ADD]) && canEditDocuments && !disableAdd && (
+              <StyledSectionAddButton
+                onClick={() => setIsUploadVisible && setIsUploadVisible(true)}
+              >
+                <FaPlus size={'2rem'} />
+                &nbsp;{'Add Document'}
+              </StyledSectionAddButton>
+            )}
+            <RefreshButton
+              onClick={() => props.onRefresh && props.onRefresh()}
+              type="button"
+              toolText="Refresh"
+              toolId="btn-refresh-tooltip"
+            ></RefreshButton>
+          </ListHeaderActionsDiv>
+        </Col>
+      </StyledRow>
     );
   };
 
   return (
     <>
-      <Section header={getHeader()} title="documents" isCollapsable initiallyExpanded>
+      <Section
+        header={getHeader()}
+        title="documents"
+        data-testid={props['data-testId']}
+        isCollapsable
+        initiallyExpanded
+      >
         {!hideFilters && (
           <DocumentFilterForm
             onSetFilter={setFilters}
             documentFilter={filters}
             documentTypes={documentTypes}
+            showParentFilter={props.showParentInformation}
+            relationshipTypes={props.relationshipTypes}
+            relationshipDisplay={props.relationshipDisplay}
           />
         )}
         <DocumentResults
           results={sortedFilteredDocuments}
           loading={isLoading}
           sort={sort}
+          canEditDocuments={canEditDocuments}
           setSort={setSort}
           onViewDetails={handleViewDetails}
+          onViewParent={props.onViewParent}
           onPreview={handlePreview}
           onDelete={handleDeleteClick}
+          showParentInformation={props.showParentInformation}
+          relationshipDisplay={props.relationshipDisplay}
         />
       </Section>
       <DocumentDetailModal
         display={isDetailsVisible}
         relationshipType={props.relationshipType}
         setDisplay={setIsDetailsVisible}
-        pimsDocument={selectedDocument ? DocumentRow.fromApi(selectedDocument) : undefined}
+        pimsDocumentRelationship={selectedDocument}
         onUpdateSuccess={onUpdateSuccess}
         onClose={handleModalDetailsClose}
+        canEdit={!props.showParentInformation}
       />
       <DocumentUploadModal
         parentId={props.parentId}

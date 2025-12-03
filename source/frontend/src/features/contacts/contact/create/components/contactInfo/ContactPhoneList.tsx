@@ -38,9 +38,13 @@ export const ContactPhoneList: React.FunctionComponent<
               key={`${field}.${index}`}
               namespace={`${field}.${index}`}
               onRemove={onRemove(array, index, arrayHelpers)}
+              index={index}
             />
           ))}
-          <LinkButton onClick={() => arrayHelpers.push(new IEditableContactMethodForm())}>
+          <LinkButton
+            onClick={() => arrayHelpers.push(new IEditableContactMethodForm())}
+            data-testid="add-phone-button"
+          >
             + Add phone number
           </LinkButton>
         </>

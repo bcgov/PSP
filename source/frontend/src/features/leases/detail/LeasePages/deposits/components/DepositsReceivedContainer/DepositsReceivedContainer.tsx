@@ -41,7 +41,7 @@ const DepositsReceivedContainer: React.FC<
           title="Deposits Received"
           addButtonText="Add a deposit"
           addButtonIcon={<FaPlus size={'2rem'} />}
-          onAdd={onAdd}
+          onButtonAction={onAdd}
           cannotAddComponent={
             <TooltipIcon
               toolTipId={`received-deposits-cannot-add-tooltip`}

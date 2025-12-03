@@ -10,7 +10,7 @@ import { UserNameTooltip } from '@/components/common/UserNameTooltip';
 import { Claims } from '@/constants/index';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_Note } from '@/models/api/generated/ApiGen_Concepts_Note';
-import { prettyFormatUTCDate } from '@/utils';
+import { exists, prettyFormatUTCDate } from '@/utils';
 
 export interface INoteDetailsFormModalProps {
   /** Whether to show the notes modal. Default: false */
@@ -34,7 +34,7 @@ export const NoteDetailsFormModal: React.FC<
   const spinner = <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
 
   const editButton =
-    keycloak.hasClaim(Claims.NOTE_EDIT) && !note?.isSystemGenerated ? (
+    keycloak.hasClaim(Claims.NOTE_EDIT) && !note?.isSystemGenerated && exists(onEdit) ? (
       <Button variant="link" aria-label="edit" onClick={() => onEdit && onEdit(note)}>
         <FaEdit size="2rem" />
       </Button>

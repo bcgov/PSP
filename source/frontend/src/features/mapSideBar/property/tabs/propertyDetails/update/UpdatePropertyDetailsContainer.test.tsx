@@ -207,7 +207,6 @@ const fakeProperty: ApiGen_Concepts_Property = {
       y: 925866.6022023489,
     },
   },
-  notes: 'I edited this Test notes for this property - again',
   rowVersion: 5,
 };
 

@@ -1,10 +1,10 @@
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.PimsSync;
-using Pims.Core.Api.Policies;
 using Pims.Api.Services;
-using Pims.Dal.Entities;
+using Pims.Core.Api.Policies;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Controllers

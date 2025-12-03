@@ -10,7 +10,7 @@ import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { exists, useAxiosErrorHandler } from '@/utils';
+import { exists, sortFileProperties, useAxiosErrorHandler } from '@/utils';
 
 import { LeaseStateContext } from './../context/LeaseContext';
 
@@ -72,7 +72,7 @@ export function useLeaseDetail(leaseId?: number) {
         const mergedLeases: ApiGen_Concepts_Lease = {
           ...leaseResponse,
           stakeholders: leaseTenants ?? [],
-          fileProperties: propertyLeases ?? [],
+          fileProperties: sortFileProperties(propertyLeases) ?? [],
           periods: leasePeriods ?? [],
           fileChecklistItems: leaseChecklistItems ?? [],
           renewals: leaseRenewals,

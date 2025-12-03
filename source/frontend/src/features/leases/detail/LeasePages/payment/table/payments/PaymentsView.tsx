@@ -78,7 +78,7 @@ export const PaymentsView: React.FunctionComponent<React.PropsWithChildren<IPaym
           <StyledSectionListHeader
             title="Payments"
             addButtonText="Add a Payment"
-            onAdd={
+            onButtonAction={
               isExercised
                 ? () => onEdit({ ...defaultFormLeasePayment, leasePeriodId: period?.id ?? 0 })
                 : undefined

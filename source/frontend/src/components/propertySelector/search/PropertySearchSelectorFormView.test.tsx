@@ -1,11 +1,15 @@
+import { Feature, Geometry } from 'geojson';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { mockPropertyLayerSearchResponse } from '@/mocks/filterData.mock';
-import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
+import {
+  emptyPmbcParcel,
+  PMBC_FullyAttributed_Feature_Properties,
+} from '@/models/layers/parcelMapBC';
 import { act, fillInput, render, RenderOptions, userEvent, waitFor } from '@/utils/test-utils';
 
-import { IMapProperty } from '../models';
 import { defaultLayerFilter } from './LayerFilter';
 import {
   IPropertySearchSelectorFormViewProps,
@@ -218,8 +222,8 @@ describe('PropertySearchSelectorFormView component', () => {
       );
       await act(async () => userEvent.click(checkbox));
       expect(checkbox).toBeChecked();
-      expect(onSelectedProperties).toHaveBeenCalledWith([
-        {
+      expect(onSelectedProperties).toHaveBeenCalledWith<SelectedFeatureDataset[][]>([
+        expect.objectContaining<SelectedFeatureDataset>({
           districtFeature: null,
           id: 'PID-006-772-331-55.706230240625004--121.60834946062499',
           location: {
@@ -228,7 +232,11 @@ describe('PropertySearchSelectorFormView component', () => {
           },
           municipalityFeature: null,
           fileLocation: null,
-          parcelFeature: {
+          fileBoundary: null,
+          parcelFeature: expect.objectContaining<Feature<
+            Geometry,
+            PMBC_FullyAttributed_Feature_Properties
+          > | null>({
             geometry: {
               coordinates: [
                 [
@@ -243,9 +251,9 @@ describe('PropertySearchSelectorFormView component', () => {
               ],
               type: 'Polygon',
             },
-            geometry_name: 'SHAPE',
             id: 'WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW.fid-674bf6f8_180d8c9b18e_7c12',
             properties: {
+              ...emptyPmbcParcel,
               FEATURE_AREA_SQM: 4478.6462,
               FEATURE_LENGTH_M: 281.3187,
               MUNICIPALITY: 'Chetwynd, District of',
@@ -265,11 +273,11 @@ describe('PropertySearchSelectorFormView component', () => {
               WHEN_UPDATED: '2019-01-09Z',
             },
             type: 'Feature',
-          },
+          }),
           pimsFeature: null,
           regionFeature: null,
           selectingComponentId: null,
-        },
+        }),
       ]);
     });
   });

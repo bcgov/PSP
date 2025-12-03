@@ -1,0 +1,30 @@
+[
+  {
+    "Test Case Description": "Create a new Property Management",
+    "PropertyContactFullName": "Adam David Neil",
+    "PropertyContactType": "Individual",
+    "PropertyPrimaryContact": "Not applicable",
+    "PropertyContactPurposeDescription": "Automated Property Contact Test 1"
+  },
+  {
+    "Test Case Description": "Create a new Property Management",
+    "PropertyContactFullName": "TestingOrganisation",
+    "PropertyContactType": "Organization",
+    "PropertyPrimaryContact": "Praveen Kumar",
+    "PropertyContactPurposeDescription": "Automated Property Contact Test 2"
+  },
+  {
+    "Test Case Description": "Create a new Property Management",
+    "PropertyContactFullName": "Deborah Luison",
+    "PropertyContactType": "Individual",
+    "PropertyPrimaryContact": "Not applicable",
+    "PropertyContactPurposeDescription": "Automated Property Contact Test 3"
+  },
+  {
+    "Test Case Description": "Update Contact Property",
+    "PropertyContactFullName": "Deborah Luison",
+    "PropertyContactType": "Individual",
+    "PropertyPrimaryContact": "Not applicable",
+    "PropertyContactPurposeDescription": "Update existing property contact"
+  }
+]

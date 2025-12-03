@@ -1,17 +1,27 @@
 import { createMemoryHistory } from 'history';
 
-import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
 import Claims from '@/constants/claims';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useExpropriationEventRepository } from '@/hooks/repositories/useExpropriationEventRepository';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { getMockExpropriationFile } from '@/mocks/index.mock';
-import { act, getMockRepositoryObj, render, RenderOptions } from '@/utils/test-utils';
+import {
+  act,
+  getMockRepositoryObj,
+  render,
+  RenderOptions,
+  waitFor,
+  within,
+} from '@/utils/test-utils';
 
 import {
   ExpropriationTabContainerView,
   IExpropriationTabContainerViewProps,
 } from './ExpropriationTabContainerView';
+import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
+import { getMockContactOrganizationWithOnePerson } from '@/mocks/contacts.mock';
+import { useGenerateExpropriationForm1 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm1';
+import { ApiGen_CodeTypes_AcquisitionFileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionFileTypeTypes';
 
 const history = createMemoryHistory();
 
@@ -26,6 +36,20 @@ const mockGetAcquisitionOwnersApi = getMockRepositoryObj([]);
 
 vi.mock('@/hooks/repositories/useInterestHolderRepository');
 const mockGetAcquisitionInterestHoldersApi = getMockRepositoryObj([]);
+
+vi.mock('@/hooks/pims-api/useApiContacts');
+const getContacts = vi.fn();
+vi.mocked(useApiContacts).mockReturnValue({
+  getContacts,
+} as unknown as ReturnType<typeof useApiContacts>);
+
+const onGenerateForm1 = vi.fn();
+vi.mock('../../common/GenerateForm/hooks/useGenerateExpropriationForm1');
+vi.mocked(useGenerateExpropriationForm1).mockReturnValue({
+  onGenerateForm1,
+} as unknown as ReturnType<typeof useGenerateExpropriationForm1>);
+
+const onError = vi.fn();
 
 describe('Expropriation Tab Container View', () => {
   const setup = async (
@@ -47,11 +71,13 @@ describe('Expropriation Tab Container View', () => {
         history: history,
       },
     );
-
     await act(async () => {});
-
     return {
       ...rendered,
+      getNatureOfInterestForm1: () =>
+        rendered.container.querySelector(`input[name="landInterest"]`) as HTMLInputElement,
+      getPurposeForm1: () =>
+        rendered.container.querySelector(`input[name="purpose"]`) as HTMLInputElement,
     };
   };
 
@@ -61,6 +87,17 @@ describe('Expropriation Tab Container View', () => {
       addExpropriationEvent: mockAddExpropriationEventsApi,
       updateExpropriationEvent: mockUpdateExpropriationEventsApi,
       deleteExpropriationEvent: mockDeleteExpropriationEventsApi,
+    });
+
+    const organization = getMockContactOrganizationWithOnePerson();
+    getContacts.mockResolvedValue({
+      data: {
+        items: [organization],
+        quantity: 1,
+        total: 1,
+        page: 1,
+        pageIndex: 0,
+      },
     });
 
     vi.mocked(useAcquisitionProvider, { partial: true }).mockReturnValue({
@@ -91,7 +128,9 @@ describe('Expropriation Tab Container View', () => {
 
   it('shows the sections for Acquisition file type "Section 3"', async () => {
     const { queryByTestId } = await setup({
-      props: { acquisitionFile: getMockExpropriationFile(EnumAcquisitionFileType.SECTN3) },
+      props: {
+        acquisitionFile: getMockExpropriationFile(ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN3),
+      },
     });
 
     expect(queryByTestId('form-1-section')).not.toBeInTheDocument();
@@ -103,7 +142,7 @@ describe('Expropriation Tab Container View', () => {
   it('displays tooltip instead of add button when file in final status', async () => {
     const { queryByTestId, queryByText } = await setup({
       props: {
-        acquisitionFile: getMockExpropriationFile(EnumAcquisitionFileType.SECTN3),
+        acquisitionFile: getMockExpropriationFile(ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN3),
         isFileFinalStatus: true,
       },
     });

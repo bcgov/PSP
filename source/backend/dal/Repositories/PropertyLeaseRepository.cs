@@ -3,9 +3,9 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
-using Pims.Dal.Entities;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
@@ -70,7 +70,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.Address)
                     .ThenInclude(p => p.ProvinceState)
                 .Include(l => l.Lease)
-                .Where(p => p.LeaseId == leaseId);
+                .Where(p => p.LeaseId == leaseId)
+                .OrderBy(pl => pl.DisplayOrder);
         }
 
         /// <summary>

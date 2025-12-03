@@ -2,11 +2,11 @@ import React from 'react';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
+import { ApiGen_Concepts_ManagementActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_ManagementActivityInvoice';
 import { formatMoney, prettyFormatDate } from '@/utils';
 
 export interface IInvoiceView {
-  activityInvoice: ApiGen_Concepts_PropertyActivityInvoice;
+  activityInvoice: ApiGen_Concepts_ManagementActivityInvoice;
   index: number;
 }
 

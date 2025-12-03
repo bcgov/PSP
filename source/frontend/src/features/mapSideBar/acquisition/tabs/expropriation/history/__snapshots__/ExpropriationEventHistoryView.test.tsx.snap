@@ -36,9 +36,7 @@ exports[`ExpropriationEventHistoryView > renders as expected 1`] = `
 }
 
 .c3.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c3.btn:hover {
@@ -295,6 +293,7 @@ exports[`ExpropriationEventHistoryView > renders as expected 1`] = `
   display: inline-block;
   margin-left: 1.5rem;
   margin-bottom: 0.5rem;
+  float: right;
 }
 
 <div

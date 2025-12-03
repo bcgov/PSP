@@ -28,6 +28,11 @@ namespace Pims.Api.Models.Concepts.File
         public GeometryModel Location { get; set; }
 
         /// <summary>
+        /// get/set - The boundary of the property in the context of this file.
+        /// </summary>
+        public NetTopologySuite.Geometries.Geometry Boundary { get; set; }
+
+        /// <summary>
         /// get/set - The order to display the relationship.
         /// </summary>
         public int? DisplayOrder { get; set; }
@@ -36,6 +41,11 @@ namespace Pims.Api.Models.Concepts.File
         /// get/set - The relationship's property.
         /// </summary>
         public PropertyModel Property { get; set; }
+
+        /// <summary>
+        /// get/set - Optional flag indicating if the relationship is active.
+        /// </summary>
+        public bool? IsActive { get; set; }
 
         /// <summary>
         /// get/set - The relationship's property id.

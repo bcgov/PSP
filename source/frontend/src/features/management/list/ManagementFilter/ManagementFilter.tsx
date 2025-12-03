@@ -105,7 +105,7 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
                   <Select
                     options={fileStatusOptions}
                     field="managementFileStatusCode"
-                    placeholder="Select file status..."
+                    placeholder="All Status"
                   />
                 </Col>
               </Row>

@@ -36,7 +36,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
   const calculatedExpiry = exists(lease) ? getCalculatedExpiry(lease, lease.renewals || []) : '';
   const isExpired = moment().isAfter(moment(calculatedExpiry, 'YYYY-MM-DD'), 'day');
   const stakeholdersLabel =
-    lease?.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL
+    lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL
       ? 'Tenant:'
       : 'Payee:';
 
@@ -93,8 +93,8 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
             <Col>
               <HistoricalNumbersContainer
                 propertyIds={propertyIds}
-                labelWidth={{ xs: 7 }}
-                contentWidth={{ xs: 5 }}
+                labelWidth={{ xs: 4 }}
+                contentWidth={{ xs: 8 }}
                 View={HistoricalNumberSectionView}
               />
             </Col>

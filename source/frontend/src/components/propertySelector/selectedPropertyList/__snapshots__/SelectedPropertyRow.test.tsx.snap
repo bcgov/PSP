@@ -6,7 +6,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c4.btn {
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,17 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c4.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+.c6.btn .Button__value {
+  width: auto;
 }
 
-.c4.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c4.btn:focus {
+.c6.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +53,31 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c4.btn.btn-primary {
+.c6.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c4.btn.btn-primary:hover,
-.c4.btn.btn-primary:active,
-.c4.btn.btn-primary:focus {
+.c6.btn.btn-primary:hover,
+.c6.btn.btn-primary:active,
+.c6.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c4.btn.btn-secondary {
+.c6.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c4.btn.btn-secondary:hover,
-.c4.btn.btn-secondary:active,
-.c4.btn.btn-secondary:focus {
+.c6.btn.btn-secondary:hover,
+.c6.btn.btn-secondary:active,
+.c6.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c4.btn.btn-info {
+.c6.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +85,66 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c4.btn.btn-info:hover,
-.c4.btn.btn-info:active,
-.c4.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c4.btn.btn-light {
+.c6.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c4.btn.btn-light:hover,
-.c4.btn.btn-light:active,
-.c4.btn.btn-light:focus {
+.c6.btn.btn-light:hover,
+.c6.btn.btn-light:active,
+.c6.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c4.btn.btn-dark {
+.c6.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c4.btn.btn-dark:hover,
-.c4.btn.btn-dark:active,
-.c4.btn.btn-dark:focus {
+.c6.btn.btn-dark:hover,
+.c6.btn.btn-dark:active,
+.c6.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c4.btn.btn-danger {
+.c6.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c4.btn.btn-danger:hover,
-.c4.btn.btn-danger:active,
-.c4.btn.btn-danger:focus {
+.c6.btn.btn-danger:hover,
+.c6.btn.btn-danger:active,
+.c6.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c4.btn.btn-warning {
+.c6.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c4.btn.btn-warning:hover,
-.c4.btn.btn-warning:active,
-.c4.btn.btn-warning:focus {
+.c6.btn.btn-warning:hover,
+.c6.btn.btn-warning:active,
+.c6.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c4.btn.btn-link {
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +168,9 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c4.btn.btn-link:hover,
-.c4.btn.btn-link:active,
-.c4.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +180,15 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   outline: none;
 }
 
-.c4.btn.btn-link:disabled,
-.c4.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c4.btn:disabled,
-.c4.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,66 +200,66 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c4.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c4.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c4.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c5.c5.btn {
+.c7.c7.btn {
   background-color: unset;
   border: none;
 }
 
-.c5.c5.btn:hover,
-.c5.c5.btn:focus,
-.c5.c5.btn:active {
+.c7.c7.btn:hover,
+.c7.c7.btn:focus,
+.c7.c7.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c5.c5.btn svg {
+.c7.c7.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c5.c5.btn svg:hover {
+.c7.c7.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c5.c5.btn.btn-primary svg {
+.c7.c7.btn.btn-primary svg {
   color: #013366;
 }
 
-.c5.c5.btn.btn-primary svg:hover {
+.c7.c7.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c5.c5.btn.btn-light svg {
+.c7.c7.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c5.c5.btn.btn-light svg:hover {
+.c7.c7.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c5.c5.btn.btn-info svg {
+.c7.c7.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c5.c5.btn.btn-info svg:hover {
+.c7.c7.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c6.c6.btn {
+.c9.c9.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -269,13 +267,13 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   line-height: unset;
 }
 
-.c6.c6.btn .text {
+.c9.c9.btn .text {
   display: none;
 }
 
-.c6.c6.btn:hover,
-.c6.c6.btn:active,
-.c6.c6.btn:focus {
+.c9.c9.btn:hover,
+.c9.c9.btn:active,
+.c9.c9.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -289,14 +287,14 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c6.c6.btn:hover .text,
-.c6.c6.btn:active .text,
-.c6.c6.btn:focus .text {
+.c9.c9.btn:hover .text,
+.c9.c9.btn:active .text,
+.c9.c9.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c3 {
+.c4 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -308,29 +306,66 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   gap: 0.8rem;
 }
 
-.c3 .form-label {
+.c4 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c2 {
+.c3 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin: 0.15rem;
+  witdh: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  line-break: break-all;
 }
 
-.c0 {
+.c1 {
   min-width: 3rem;
   min-height: 4.5rem;
 }
 
-.c1 {
+.c2 {
   font-size: 1.2rem;
 }
 
+.c0 {
+  min-height: 4.5rem;
+}
+
+.c5 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.c8 {
+  padding-left: 1.2rem;
+}
+
 <div
-    class="align-items-center mb-3 no-gutters row"
+    class="c0 align-items-center mb-3 no-gutters row"
   >
     <div
       class="col-md-3"
@@ -339,7 +374,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
         class="mb-0 d-flex align-items-center"
       >
         <svg
-          class="c0"
+          class="c1"
           height="45"
           id="Layer_2"
           viewBox="0 0 20 30"
@@ -396,7 +431,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
               </g>
             </g>
             <text
-              class="c1"
+              class="c2"
               textLength="1.25rem"
               x="7"
               y="15"
@@ -409,7 +444,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
           </title>
         </svg>
         <div
-          class="c2 pl-3"
+          class="c3 pl-3"
         />
       </div>
     </div>
@@ -417,22 +452,47 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
       class="col-md-5"
     >
       <div
-        class="c3 mb-0 w-100 input form-group"
+        class="c4 mb-0 w-100 input form-group"
       >
         <input
           class="form-control"
-          id="input-name"
-          name="name"
+          id="input-properties.0.name"
+          name="properties.0.name"
           style="word-break: break-all;"
           value=""
         />
       </div>
     </div>
     <div
-      class="pl-3 col-md-1"
+      class="ml-5 col-auto"
+    >
+      <span
+        class="tooltip-icon"
+        data-testid="tooltip-icon-no-location-tooltip"
+        id="no-location-tooltip"
+      >
+        <svg
+          class="tooltip-icon"
+          fill="currentColor"
+          height="1em"
+          stroke="currentColor"
+          stroke-width="0"
+          viewBox="0 0 512 512"
+          width="1em"
+          xmlns="http://www.w3.org/2000/svg"
+        >
+          <path
+            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+          />
+        </svg>
+      </span>
+    </div>
+    <div
+      class="c5 pl-3 col-auto"
     >
       <button
-        class="c4 Button c5 btn btn-primary"
+        class="c6 Button c7 btn btn-primary"
+        data-testid="move-pin-location-0"
         title="move-pin-location"
         type="button"
       >
@@ -454,46 +514,46 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
           </svg>
         </div>
       </button>
-    </div>
-    <div
-      class="col-md-2"
-    >
-      <button
-        class="c4 Button c6 btn btn-link"
-        type="button"
+      <div
+        class="c8"
       >
-        <div
-          class="Button__value"
+        <button
+          class="c6 Button c9 btn btn-link"
+          data-testid="delete-property-0"
+          type="button"
         >
-          <svg
-            data-testid="remove-button"
-            fill="currentColor"
-            height="2rem"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 24 24"
-            width="2rem"
-            xmlns="http://www.w3.org/2000/svg"
+          <div
+            class="Button__value"
           >
-            <title>
-              remove
-            </title>
-            <path
-              d="M0 0h24v24H0z"
-              fill="none"
-            />
-            <path
-              d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-            />
-          </svg>
-           
-          <span
-            class="text"
-          >
-            Remove
-          </span>
-        </div>
-      </button>
+            <svg
+              fill="currentColor"
+              height="2rem"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="2rem"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                remove
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+              />
+            </svg>
+             
+            <span
+              class="text"
+            >
+              Remove
+            </span>
+          </div>
+        </button>
+      </div>
     </div>
   </div>
 </DocumentFragment>

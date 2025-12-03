@@ -19,6 +19,7 @@ export const usePimsPropertyRepository = () => {
     getMatchingPropertiesApi,
     getPropertyConceptWithPidApi,
     getPropertyConceptWithPinApi,
+    getPropertiesApi,
   } = useApiProperties();
 
   const getPropertyWrapper = useApiRequestWrapper({
@@ -64,6 +65,17 @@ export const usePimsPropertyRepository = () => {
     ),
   });
 
+  const getAllPropertiesById = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (propertyIds: number[]) => await getPropertiesApi(propertyIds),
+      [getPropertiesApi],
+    ),
+    requestName: 'getAllPropertiesById',
+    onError: useAxiosErrorHandler(
+      'Failed to retrieve property information from PIMS matching filter criteria',
+    ),
+  });
+
   const updatePropertyWrapper = useApiRequestWrapper({
     requestFunction: useCallback(
       async (property: ApiGen_Concepts_Property) => await putPropertyConceptApi(property),
@@ -89,6 +101,7 @@ export const usePimsPropertyRepository = () => {
       getMatchingProperties,
       getPropertyByPidWrapper,
       getPropertyByPinWrapper,
+      getAllPropertiesById,
     }),
     [
       getPropertyWrapper,
@@ -96,6 +109,7 @@ export const usePimsPropertyRepository = () => {
       getMatchingProperties,
       getPropertyByPidWrapper,
       getPropertyByPinWrapper,
+      getAllPropertiesById,
     ],
   );
 };

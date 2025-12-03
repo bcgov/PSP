@@ -1,12 +1,21 @@
 import { LatLngBounds, LatLngLiteral } from 'leaflet';
 
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
-import { ILayerItem } from '@/components/maps/leaflet/Control/LayersControl/types';
 import { IMapSideBarViewState as IMapSideBarState } from '@/features/mapSideBar/MapSideBar';
 import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
 
-import { MapFeatureData, MarkerSelected, RequestedCenterTo, RequestedFlyTo } from '../models';
-import { LocationFeatureDataset, SelectedFeatureDataset } from '../useLocationFeatureLoader';
+import {
+  LocationBoundaryDataset,
+  MapFeatureData,
+  MarkerSelected,
+  RequestedCenterTo,
+  RequestedFlyTo,
+} from '../models';
+import {
+  LocationFeatureDataset,
+  SelectedFeatureDataset,
+  WorklistLocationFeatureDataset,
+} from '../useLocationFeatureLoader';
 
 export enum SideBarType {
   NOT_DEFINED = 'NOT_DEFINED',
@@ -27,28 +36,33 @@ export type MachineContext = {
   mapFeatureSelected: MarkerSelected | null;
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
-  selectedFeatureDataset: SelectedFeatureDataset | null;
+  mapMarkedLocation: LatLngLiteral | null;
+  selectedFeatures: SelectedFeatureDataset[];
   repositioningFeatureDataset: SelectedFeatureDataset | null;
   repositioningPropertyIndex: number | null;
   selectingComponentId: string | null;
 
   mapFeatureData: MapFeatureData;
 
+  // worklist-related state
+  worklistSelectedMapLocation: LatLngLiteral | null;
+  worklistLocationFeatureDataset: WorklistLocationFeatureDataset | null;
+
   // TODO: this is partially in the URL. Either move it completly there or remove it
   searchCriteria: IPropertyFilter | null;
   advancedSearchCriteria: PropertyFilterFormModel | null;
 
   isLoading: boolean;
-  fitToResultsAfterLoading: boolean;
   requestedFitBounds: LatLngBounds;
   requestedFlyTo: RequestedFlyTo;
   requestedCenterTo: RequestedCenterTo;
-  filePropertyLocations: LatLngLiteral[];
+  filePropertyLocations: LocationBoundaryDataset[];
   activePimsPropertyIds: number[];
-  activeLayers: ILayerItem[];
-  mapLayersToRefresh: ILayerItem[];
+  activeLayers: Set<string>;
+  mapLayersToRefresh: Set<string>;
   isFiltering: boolean;
   showDisposed: boolean;
   showRetired: boolean;
   currentMapBounds: LatLngBounds | null;
+  isEditPropertiesMode: boolean;
 };

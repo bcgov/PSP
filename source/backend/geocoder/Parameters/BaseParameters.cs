@@ -23,6 +23,7 @@ namespace Pims.Geocoder.Parameters
         /// <summary>
         /// get/set - The distance to move the accessPoint away from the curb and towards the inside of the parcel (in metres). Ignored if locationDescriptor not set to accessPoint.
         /// </summary>
+        /// <value>Default value: <c>0</c>.</value>
         public int SetBack { get; set; }
 
         /// <summary>
@@ -31,8 +32,9 @@ namespace Pims.Geocoder.Parameters
         public virtual double? MaxDistance { get; set; }
 
         /// <summary>
-        /// get/set - If true, include only basic match and address details in results. Not supported for shp, csv, and gml formats.
+        /// get/set - If <c>true</c>, include only basic match and address details in results. Not supported for shp, csv, and gml formats.
         /// </summary>
+        /// <value>Default value: <c>false</c>.</value>
         public bool Brief { get; set; }
     }
 }

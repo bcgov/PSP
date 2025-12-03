@@ -59,6 +59,7 @@ describe('PropertyResearchTabView component', () => {
 
 const fakePropertyResearch: ApiGen_Concepts_ResearchFileProperty = {
   id: 0,
+  isActive: null,
   propertyId: 1,
   property: getEmptyProperty(),
   file: getEmptyResearchFile(),
@@ -94,5 +95,6 @@ const fakePropertyResearch: ApiGen_Concepts_ResearchFileProperty = {
   fileId: 0,
   displayOrder: null,
   location: null,
+  boundary: null,
   rowVersion: null,
 };

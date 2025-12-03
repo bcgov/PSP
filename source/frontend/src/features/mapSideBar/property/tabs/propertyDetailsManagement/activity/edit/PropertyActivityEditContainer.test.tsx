@@ -3,9 +3,9 @@ import { Mock } from 'vitest';
 
 import { Claims } from '@/constants';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
-import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
-import { getMockPropertyManagementActivity } from '@/mocks/PropertyManagementActivity.mock';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { useManagementActivityPropertyRepository } from '@/hooks/repositories/useManagementActivityPropertyRepository';
+import { getMockManagementActivity } from '@/mocks/managementActivity.mock';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { act, render, RenderOptions, screen } from '@/utils/test-utils';
 
@@ -15,6 +15,7 @@ import {
   PropertyActivityEditContainer,
 } from './PropertyActivityEditContainer';
 import { IPropertyActivityEditFormProps } from './PropertyActivityEditForm';
+import { PropertyActivityFormModel } from './models';
 
 const history = createMemoryHistory();
 
@@ -24,17 +25,18 @@ const mockContactApi: ReturnType<typeof useActivityContactRetriever> = {
   fetchMinistryContacts: vi.fn(),
   fetchPartiesContact: vi.fn(),
   fetchProviderContact: vi.fn(),
+  fetchRequestorContact: vi.fn(),
   isLoading: false,
 };
 
 vi.mock('../hooks');
 vi.mocked(useActivityContactRetriever).mockReturnValue(mockContactApi);
 
-const mockPropertyActivityApi: ReturnType<typeof usePropertyActivityRepository> = {
+const mockPropertyActivityApi: ReturnType<typeof useManagementActivityPropertyRepository> = {
   createActivity: {
     error: undefined,
     response: undefined,
-    execute: vi.fn().mockResolvedValue(getMockPropertyManagementActivity(1)),
+    execute: vi.fn().mockResolvedValue(getMockManagementActivity(1)),
     loading: false,
     status: 200,
   },
@@ -59,24 +61,17 @@ const mockPropertyActivityApi: ReturnType<typeof usePropertyActivityRepository> 
     loading: false,
     status: 200,
   },
-  getActivitySubtypes: {
-    error: undefined,
-    response: undefined,
-    execute: vi.fn(),
-    loading: false,
-    status: 200,
-  },
   updateActivity: {
     error: undefined,
     response: undefined,
-    execute: vi.fn().mockResolvedValue(getMockPropertyManagementActivity(1)),
+    execute: vi.fn().mockResolvedValue(getMockManagementActivity(1)),
     loading: false,
     status: 200,
   },
 };
 
-vi.mock('@/hooks/repositories/usePropertyActivityRepository');
-vi.mocked(usePropertyActivityRepository).mockReturnValue(mockPropertyActivityApi);
+vi.mock('@/hooks/repositories/useManagementActivityPropertyRepository');
+vi.mocked(useManagementActivityPropertyRepository).mockReturnValue(mockPropertyActivityApi);
 
 describe('PropertyActivityEditContainer component', () => {
   let viewProps: IPropertyActivityEditFormProps;
@@ -95,7 +90,7 @@ describe('PropertyActivityEditContainer component', () => {
       <SideBarContextProvider>
         <PropertyActivityEditContainer
           propertyId={renderOptions?.props?.propertyId ?? 1}
-          propertyActivityId={renderOptions?.props?.propertyActivityId ?? 1}
+          managementActivityId={renderOptions?.props?.managementActivityId ?? 1}
           viewEnabled={renderOptions?.props?.viewEnabled ?? true}
           onClose={renderOptions?.props?.onClose ?? onClose}
           View={TestView}
@@ -128,13 +123,12 @@ describe('PropertyActivityEditContainer component', () => {
     await setup();
 
     expect(await screen.findByText(/Content Rendered/i)).toBeVisible();
-    expect(mockPropertyActivityApi.getActivitySubtypes.execute).toHaveBeenCalled();
     expect(mockPropertyActivityApi.getActivity.execute).toHaveBeenCalledWith(1, 1);
   });
 
   it('loads the management activity and passes as props to the view', async () => {
     (mockPropertyActivityApi.getActivity.execute as Mock).mockResolvedValue(
-      getMockPropertyManagementActivity(1),
+      getMockManagementActivity(1),
     );
 
     await setup();
@@ -142,19 +136,37 @@ describe('PropertyActivityEditContainer component', () => {
     expect(await screen.findByText(/Content Rendered/i)).toBeVisible();
     expect(viewProps.propertyId).toBe(1);
     expect(viewProps.loading).toBe(false);
-    expect(viewProps.activity).toStrictEqual(getMockPropertyManagementActivity(1));
+    expect(viewProps.initialValues).toEqual(
+      expect.objectContaining({
+        id: 1,
+        activityTypeCode: 'APPLICPERMIT',
+        activityStatusCode: 'NOTSTARTED',
+        activitySubtypeCodes: [
+          {
+            id: 100,
+            managementActivityId: 1,
+            rowVersion: 1,
+            subTypeCode: 'ACCESS',
+            subTypeCodeDescription: 'Access',
+          },
+        ],
+        requestedDate: '2023-10-17T00:00:00',
+        completionDate: '',
+        rowNumber: 1,
+      } as PropertyActivityFormModel),
+    );
   });
 
   it('loads related contact information for person and organizations', async () => {
-    const apiManagement: ApiGen_Concepts_PropertyActivity = {
-      ...getMockPropertyManagementActivity(1),
+    const apiManagement: ApiGen_Concepts_ManagementActivity = {
+      ...getMockManagementActivity(1),
       ministryContacts: [
         {
           id: 1,
           personId: 1,
           person: null,
-          propertyActivityId: 1,
-          propertyActivity: null,
+          managementActivityId: 1,
+          managementActivity: null,
           ...getEmptyBaseAudit(),
         },
       ],
@@ -165,8 +177,8 @@ describe('PropertyActivityEditContainer component', () => {
           person: null,
           organizationId: 1,
           organization: null,
-          propertyActivityId: 1,
-          propertyActivity: null,
+          managementActivityId: 1,
+          managementActivity: null,
           ...getEmptyBaseAudit(),
         },
       ],
@@ -181,7 +193,8 @@ describe('PropertyActivityEditContainer component', () => {
   });
 
   it('calls API to create new management activity and redirects to view screen', async () => {
-    const apiManagement = getMockPropertyManagementActivity(0);
+    history.location.pathname = '/mapview/sidebar/property/1/management/activity/1';
+    const apiManagement = getMockManagementActivity(0);
     await setup();
     await act(async () => viewProps.onSave(apiManagement));
 
@@ -190,8 +203,9 @@ describe('PropertyActivityEditContainer component', () => {
   });
 
   it('calls API to update an existing management activity and redirects to view screen', async () => {
+    history.location.pathname = '/mapview/sidebar/property/1/management/activity/1';
     await setup();
-    const apiManagement = getMockPropertyManagementActivity(1);
+    const apiManagement = getMockManagementActivity(1);
     await act(async () => viewProps.onSave(apiManagement));
 
     expect(mockPropertyActivityApi.updateActivity.execute).toHaveBeenCalledWith(1, apiManagement);
@@ -199,6 +213,7 @@ describe('PropertyActivityEditContainer component', () => {
   });
 
   it('navigates back to the property management view screen when form is cancelled', async () => {
+    history.location.pathname = '/mapview/sidebar/property/1/management/activity/1';
     await setup();
     await act(async () => viewProps.onCancel());
 

@@ -1,39 +1,56 @@
 import { getIn, useFormikContext } from 'formik';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { ImUpload } from 'react-icons/im';
 import { RiDragMove2Line } from 'react-icons/ri';
+import styled from 'styled-components';
 
 import { RemoveButton, StyledIconButton } from '@/components/common/buttons';
+import { Select } from '@/components/common/form';
 import { InlineInput } from '@/components/common/form/styles';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import OverflowTip from '@/components/common/OverflowTip';
+import { TooltipWrapper } from '@/components/common/TooltipWrapper';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
+import { ShapeUploadModal } from '@/features/properties/shapeUpload/ShapeUploadModal';
 import { withNameSpace } from '@/utils/formUtils';
-import { featuresetToMapProperty, getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
+import { getPropertyNameFromSelectedFeatureSet, NameSourceType } from '@/utils/mapPropertyUtils';
+
+import DisabledDraftCircleNumber from './DisabledDraftCircleNumber';
 
 export interface ISelectedPropertyRowProps {
+  property: SelectedFeatureDataset;
   index: number;
   nameSpace?: string;
   onRemove: () => void;
-  property: SelectedFeatureDataset;
+  showDisable?: boolean;
+  canUploadShapefile?: boolean;
+  onUploadShapefile?: (result: UploadResponseModel | null) => void;
 }
 
 export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowProps> = ({
+  property,
+  index,
   nameSpace,
   onRemove,
-  index,
-  property,
+  showDisable,
+  canUploadShapefile,
+  onUploadShapefile,
 }) => {
   const mapMachine = useMapStateMachine();
   const { setFieldTouched, touched } = useFormikContext();
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
+
   useEffect(() => {
     if (getIn(touched, `${nameSpace}.name`) !== true) {
       setFieldTouched(`${nameSpace}.name`);
     }
   }, [nameSpace, setFieldTouched, touched]);
 
-  const propertyName = getPropertyName(featuresetToMapProperty(property));
+  const propertyName = getPropertyNameFromSelectedFeatureSet(property);
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:
@@ -46,42 +63,107 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
       propertyIdentifier = `${propertyName.value}`;
       break;
     default:
-      propertyIdentifier = '';
       break;
   }
+
+  const handleModalUploadClose = (result: UploadResponseModel | null) => {
+    setIsUploadVisible(false);
+    onUploadShapefile?.(result);
+  };
+
   return (
-    <Row className="align-items-center mb-3 no-gutters">
-      <Col md={3}>
-        <div className="mb-0 d-flex align-items-center">
-          <DraftCircleNumber text={(index + 1).toString()} />
-          <OverflowTip fullText={propertyIdentifier} className="pl-3"></OverflowTip>
-        </div>
-      </Col>
-      <Col md={5}>
-        <InlineInput
-          className="mb-0 w-100"
-          label=""
-          field={withNameSpace(nameSpace, 'name')}
-          displayErrorTooltips={true}
-          defaultValue=""
-          errorKeys={[withNameSpace(nameSpace, 'isRetired')]}
+    <>
+      <StyledRow className="align-items-center mb-3 no-gutters">
+        <Col md={3}>
+          <div className="mb-0 d-flex align-items-center">
+            {property.isActive === false ? (
+              <DisabledDraftCircleNumber text={(index + 1).toString()} />
+            ) : (
+              <DraftCircleNumber text={(index + 1).toString()} />
+            )}
+            <OverflowTip fullText={propertyIdentifier} className="pl-3"></OverflowTip>
+          </div>
+        </Col>
+        <Col md={showDisable ? 4 : 5}>
+          <InlineInput
+            className="mb-0 w-100"
+            label=""
+            field={withNameSpace(nameSpace, 'name')}
+            displayErrorTooltips={true}
+            defaultValue=""
+            errorKeys={[withNameSpace(nameSpace, 'isRetired')]}
+          />
+        </Col>
+        <Col xs="auto" className="ml-5">
+          <ZoomToLocation geometry={property.pimsFeature.geometry} icon={ZoomIconType.single} />
+        </Col>
+        {showDisable && (
+          <Col md={2}>
+            <Select
+              className="mb-0 ml-4"
+              field={withNameSpace(nameSpace, 'isActive')}
+              options={[
+                { label: 'Inactive', value: 'false' },
+                { label: 'Active', value: 'true' },
+              ]}
+            ></Select>
+          </Col>
+        )}
+        <StyledActionsCol xs="auto" className="pl-3">
+          <StyledIconButton
+            title="move-pin-location"
+            onClick={() => {
+              mapMachine.startReposition(property, index);
+            }}
+            data-testid={'move-pin-location-' + index}
+          >
+            <RiDragMove2Line size={22} />
+          </StyledIconButton>
+          {canUploadShapefile && (
+            <TooltipWrapper tooltip="Upload shapefile" tooltipId={'upload-shapefile-' + index}>
+              <StyledIconButton
+                data-testid={'upload-shapefile-' + index}
+                onClick={() => setIsUploadVisible(true)}
+              >
+                <ImUpload size={18} />
+              </StyledIconButton>
+            </TooltipWrapper>
+          )}
+          <StyledSpacingWrapper>
+            <RemoveButton
+              onRemove={onRemove}
+              fontSize="1.4rem"
+              data-testId={'delete-property-' + index}
+            />
+          </StyledSpacingWrapper>
+        </StyledActionsCol>
+      </StyledRow>
+
+      {canUploadShapefile && (
+        <ShapeUploadModal
+          display={isUploadVisible}
+          setDisplay={setIsUploadVisible}
+          onClose={handleModalUploadClose}
+          propertyIdentifier={propertyIdentifier}
         />
-      </Col>
-      <Col md={1} className="pl-3">
-        <StyledIconButton
-          title="move-pin-location"
-          onClick={() => {
-            mapMachine.startReposition(property, index);
-          }}
-        >
-          <RiDragMove2Line size={22} />
-        </StyledIconButton>
-      </Col>
-      <Col md={2}>
-        <RemoveButton onRemove={onRemove} fontSize="1.4rem" />
-      </Col>
-    </Row>
+      )}
+    </>
   );
 };
+
+const StyledRow = styled(Row)`
+  min-height: 4.5rem;
+`;
+
+const StyledActionsCol = styled(Col)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const StyledSpacingWrapper = styled.div`
+  padding-left: 1.2rem;
+`;
 
 export default SelectedPropertyRow;

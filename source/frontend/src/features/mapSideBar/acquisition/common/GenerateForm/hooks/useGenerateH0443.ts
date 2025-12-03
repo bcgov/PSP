@@ -1,15 +1,16 @@
-import { FormDocumentType } from '@/constants/formDocumentTypes';
 import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useProperties } from '@/hooks/repositories/useProperties';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
 import { Api_GeneratePerson } from '@/models/generate/GeneratePerson';
 import { Api_GenerateProperty } from '@/models/generate/GenerateProperty';
-import { exists, isValidId } from '@/utils';
+import { exists, firstOrNull, isValidId } from '@/utils';
 
 export const useGenerateH0443 = () => {
   const { getPersonConcept, getOrganizationConcept } = useApiContacts();
@@ -23,18 +24,32 @@ export const useGenerateH0443 = () => {
 
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
 
+  const { setModalContent, setDisplayModal } = useModalContext();
+
   const generateLetter = async (acquisitionFileId: number) => {
     const file = await getAcquisitionFile(acquisitionFileId);
     if (file) {
       // Retrieve Property Coordinator
-      const propertyCoordinator = file.acquisitionTeam?.find(
+      const propertyCoordinators = file.acquisitionTeam?.filter(
         team => team.teamProfileTypeCode === 'PROPCOORD',
       );
 
       // Retrieve Property Agent
-      const propertyAgent = file.acquisitionTeam?.find(
+      const propertyAgents = file.acquisitionTeam?.filter(
         team => team.teamProfileTypeCode === 'PROPAGENT',
       );
+
+      if (propertyCoordinators?.length > 1 || propertyAgents?.length > 1) {
+        setModalContent({
+          ...getCancelModalProps(),
+          cancelButtonText: null,
+          okButtonText: 'Ok',
+          title: 'Warning',
+          message:
+            'This file has more then one property coordinator or property agent. You may need to correct the generated report.',
+        });
+        setDisplayModal(true);
+      }
 
       // Retrieve Properties
       const filePropertiesIds =
@@ -60,6 +75,8 @@ export const useGenerateH0443 = () => {
         property_agent: null,
       };
 
+      const propertyCoordinator = firstOrNull(propertyCoordinators);
+
       // Get the property coordinator by checking if it's a person or an org.
       if (propertyCoordinator) {
         if (propertyCoordinator.personId) {
@@ -83,6 +100,8 @@ export const useGenerateH0443 = () => {
           }
         }
       }
+
+      const propertyAgent = firstOrNull(propertyAgents);
 
       // Get the property agent by checking if it's a person or an org.
       if (propertyAgent) {
@@ -108,7 +127,7 @@ export const useGenerateH0443 = () => {
       }
 
       const generatedFile = await generate({
-        templateType: FormDocumentType.H0443,
+        templateType: ApiGen_CodeTypes_FormTypes.H0443,
         templateData: h0443Data,
         convertToType: null,
       });

@@ -1,0 +1,89 @@
+import * as dotenv from "dotenv";
+import { setWorldConstructor } from "@cucumber/cucumber";
+import { launchBrowser, createNewContext } from "../utils/browserSetup.js";
+
+// Import your page objects
+import LoginPage from "./pages/LoginPage.js";
+import ManagementFile from "./pages/ManagementFile.js";
+import Notes from "./pages/Notes.js";
+import SharedActivities from "./pages/SharedActivities.js";
+import SharedPagination from "./pages/SharedPagination.js";
+import SearchProperties from "./pages/SearchProperties.js";
+import SharedModal from "./pages/SharedModal.js";
+import HelpDesk from "./pages/HelpDesk.js";
+import MapLayers from "./pages/MapLayers.js";
+import WorkLists from "./pages/WorkLists.js";
+import Projects from "./pages/Projects.js";
+import ResearchFiles from "./pages/ResearchFiles.js";
+import AcquisitionDetails from "./pages/AcquisitionDetails.js";
+import LeaseLicence from "./pages/LeaseLicences.js";
+import DispositionFiles from "./pages/DispositionFiles.js";
+import ContactManager from "./pages/ContactManager.js";
+import AdminTools from "./pages/AdminTools.js";
+
+// Load environment variables from .env
+dotenv.config();
+
+class CustomWorld {
+  constructor() {
+    global.baseURL = process.env.BASE_URL;
+    this.browser = null;
+    this.context = null;
+    this.page = null;
+
+    // Page objects will be set after browser starts
+    this.loginPage = null;
+    this.managementFile = null;
+    this.notes = null;
+    this.sharedActivities = null;
+    this.sharedPagination = null;
+    this.searchProperties = null;
+    this.sharedModal = null;
+    this.helpDesk = null;
+    this.mapLayers = null;
+    this.workLists = null;
+    this.projects = null;
+    this.researchFiles = null;
+    this.acquisitionDetails = null;
+    this.leaseLicence = null;
+    this.dispositionFile = null;
+    this.contactManager = null;
+    this.adminTools = null;
+  }
+
+  async openBrowser() {
+    const browserInstance = await launchBrowser();
+    this.browser = browserInstance; // Store the browser instance on the World object
+
+    const contextInstance = await createNewContext(this.browser);
+    this.context = contextInstance; // Store the context instance on the World object
+
+    this.page = await this.context.newPage();
+
+    // Initialize page objects
+    this.loginPage = new LoginPage(this.page);
+    this.managementFile = new ManagementFile(this.page);
+    this.notes = new Notes(this.page);
+    this.sharedActivities = new SharedActivities(this.page);
+    this.sharedPagination = new SharedPagination(this.page);
+    this.searchProperties = new SearchProperties(this.page);
+    this.sharedModal = new SharedModal(this.page);
+    this.helpDesk = new HelpDesk(this.page);
+    this.mapLayers = new MapLayers(this.page);
+    this.workLists = new WorkLists(this.page);
+    this.projects = new Projects(this.page);
+    this.researchFiles = new ResearchFiles(this.page);
+    this.acquisitionDetails = new AcquisitionDetails(this.page);
+    this.leaseLicence = new LeaseLicence(this.page);
+    this.dispositionFile = new DispositionFiles(this.page);
+    this.contactManager = new ContactManager(this.page);
+    this.adminTools = new AdminTools(this.page);
+  }
+
+  async closeBrowser() {
+    await this.context?.close();
+    await this.browser?.close();
+  }
+}
+
+setWorldConstructor(CustomWorld);

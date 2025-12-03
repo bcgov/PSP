@@ -1,4 +1,7 @@
+import { point } from '@turf/turf';
 import { FormikProps } from 'formik';
+import { Geometry } from 'geojson';
+import { LatLngLiteral } from 'leaflet';
 import React, { useEffect, useRef, useState } from 'react';
 import { generatePath, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
@@ -8,7 +11,7 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useQuery } from '@/hooks/use-query';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
-import { pinParser } from '@/utils';
+import { exists, firstOrNull, pinParser } from '@/utils';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
 import SidebarFooter from '../shared/SidebarFooter';
@@ -19,6 +22,7 @@ export interface IMotiInventoryContainerProps {
   id?: number;
   pid?: string;
   pin?: string;
+  location?: LatLngLiteral;
   onClose: () => void;
 }
 
@@ -40,7 +44,14 @@ export const MotiInventoryContainer: React.FunctionComponent<
   const selectedFeatureData = mapMachine.mapLocationFeatureDataset;
 
   const formikRef = useRef<FormikProps<any>>(null);
-
+  let boundary: Geometry = null;
+  if (exists(props.id)) {
+    boundary = firstOrNull(selectedFeatureData?.pimsFeatures)?.geometry;
+  } else if (exists(props.pid || props.pin)) {
+    boundary = firstOrNull(selectedFeatureData?.parcelFeatures)?.geometry;
+  } else if (exists(props.location?.lng) && exists(props.location?.lat)) {
+    boundary = point([props.location?.lng, props.location?.lat])?.geometry;
+  }
   const composedPropertyState = useComposedProperties({
     id: props.id,
     pid:
@@ -48,16 +59,8 @@ export const MotiInventoryContainer: React.FunctionComponent<
         ? undefined
         : Number(props.pid),
     pin: pinParser(props?.pin),
-    latLng: selectedFeatureData?.location ?? undefined,
-    propertyTypes: [
-      PROPERTY_TYPES.ASSOCIATIONS,
-      PROPERTY_TYPES.LTSA,
-      PROPERTY_TYPES.PIMS_API,
-      PROPERTY_TYPES.BC_ASSESSMENT,
-      PROPERTY_TYPES.PARCEL_MAP,
-      PROPERTY_TYPES.PIMS_GEOSERVER,
-      PROPERTY_TYPES.CROWN_TENURES,
-    ],
+    boundary: boundary,
+    propertyTypes: propertyTabData,
   });
 
   useEffect(() => {
@@ -115,17 +118,12 @@ export const MotiInventoryContainer: React.FunctionComponent<
     push(path, { search: query.toString() });
   };
 
-  const handleZoom = (latitude: number, longitude: number) => {
-    mapMachine.requestFlyToLocation({ lat: latitude, lng: longitude });
-  };
-
   return (
     <MapSideBarLayout
       title="Property Information"
       header={
         <MotiInventoryHeader
           composedProperty={composedPropertyState.composedProperty}
-          onZoom={handleZoom}
           isLoading={composedPropertyState.apiWrapper?.loading}
         />
       }
@@ -158,3 +156,23 @@ const LotIcon = styled(LotSvg)`
   width: 3rem;
   height: 3rem;
 `;
+
+const propertyTabData = [
+  PROPERTY_TYPES.ASSOCIATIONS,
+  PROPERTY_TYPES.LTSA,
+  PROPERTY_TYPES.PIMS_API,
+  PROPERTY_TYPES.BC_ASSESSMENT,
+  PROPERTY_TYPES.PARCEL_MAP,
+  PROPERTY_TYPES.PIMS_GEOSERVER,
+  PROPERTY_TYPES.CROWN_TENURES,
+  PROPERTY_TYPES.CROWN_INCLUSIONS,
+  PROPERTY_TYPES.CROWN_INVENTORY,
+  PROPERTY_TYPES.CROWN_LEASES,
+  PROPERTY_TYPES.CROWN_LICENSES,
+  PROPERTY_TYPES.CROWN_SURVEYS,
+  PROPERTY_TYPES.MUNICIPALITY,
+  PROPERTY_TYPES.HIGHWAYS,
+  PROPERTY_TYPES.ALR,
+  PROPERTY_TYPES.ELECTORAL,
+  PROPERTY_TYPES.FIRST_NATION,
+];

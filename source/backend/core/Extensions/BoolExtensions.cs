@@ -9,7 +9,7 @@ namespace Pims.Core.Extensions
 
         public static string BoolToYesNoUnknown(this bool? val)
         {
-            if(val == null)
+            if (val == null)
             {
                 return "Unknown";
             }

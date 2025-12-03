@@ -3,9 +3,9 @@ import {
   AccessRequestStatus,
   PropertyDataSourceTypes,
   PropertyStatusTypes,
-  PropertyTenureTypes,
 } from '@/constants/index';
 import { BillingInfo, LtsaOrders, OrderParent } from '@/interfaces/ltsaModels';
+import { ApiGen_CodeTypes_PropertyTenureTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyTenureTypes';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
@@ -15,6 +15,7 @@ import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Con
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
+import { emptyPmbcParcel } from '@/models/layers/parcelMapBC';
 import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { getEmptyContactMethod, getEmptyPerson } from './contacts.mock';
@@ -583,7 +584,7 @@ export const mockApiProperty: ApiGen_Concepts_Property = {
     {
       id: 1,
       propertyId: 1,
-      propertyTenureTypeCode: toTypeCode(PropertyTenureTypes.HighwayRoad),
+      propertyTenureTypeCode: toTypeCode(ApiGen_CodeTypes_PropertyTenureTypes.HWYROAD),
       ...getEmptyBaseAudit(),
     },
   ],
@@ -786,6 +787,7 @@ export const mockPropertyLayerSearchResponse = {
       },
       geometry_name: 'SHAPE',
       properties: {
+        ...emptyPmbcParcel,
         PARCEL_FABRIC_POLY_ID: 1169523,
         PARCEL_NAME: 'Building Strata',
         PLAN_NUMBER: 'LMS312',
@@ -825,6 +827,7 @@ export const mockPropertyLayerSearchResponse = {
       },
       geometry_name: 'SHAPE',
       properties: {
+        ...emptyPmbcParcel,
         PARCEL_FABRIC_POLY_ID: 1994518,
         PARCEL_NAME: '006772331',
         PLAN_NUMBER: 'PGP27005',
@@ -864,6 +867,7 @@ export const mockPropertyLayerSearchResponse = {
       },
       geometry_name: 'SHAPE',
       properties: {
+        ...emptyPmbcParcel,
         PARCEL_FABRIC_POLY_ID: 2535502,
         PARCEL_NAME: '027723313',
         PLAN_NUMBER: 'KAP87881',
@@ -904,6 +908,7 @@ export const mockPropertyLayerSearchResponse = {
       },
       geometry_name: 'SHAPE',
       properties: {
+        ...emptyPmbcParcel,
         PARCEL_FABRIC_POLY_ID: 3566871,
         PARCEL_NAME: 'Building Strata',
         PLAN_NUMBER: 'LMS997',
@@ -985,6 +990,7 @@ export const mockPropertyLayerSearchResponse = {
       },
       geometry_name: 'SHAPE',
       properties: {
+        ...emptyPmbcParcel,
         PARCEL_FABRIC_POLY_ID: 3987222,
         PARCEL_NAME: 'Building Strata',
         PLAN_NUMBER: 'KAS2604',
@@ -1038,6 +1044,7 @@ export const mockPropertyLayerSearchResponse = {
       },
       geometry_name: 'SHAPE',
       properties: {
+        ...emptyPmbcParcel,
         PARCEL_FABRIC_POLY_ID: 5249775,
         PARCEL_NAME: '015772331',
         PLAN_NUMBER: 'NEP1482',
@@ -1074,6 +1081,7 @@ export const mockPropertyLayerSearchResponse = {
       },
       geometry_name: 'SHAPE',
       properties: {
+        ...emptyPmbcParcel,
         PARCEL_FABRIC_POLY_ID: 6242467,
         PARCEL_NAME: '003772331',
         PLAN_NUMBER: 'VIP18742',

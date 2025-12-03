@@ -39,7 +39,7 @@ const ManagementForm: React.FC<IManagementFormProps> = props => {
   const { retrieveProjectProducts } = useProjectProvider();
 
   const managementFundingTypes = getOptionsByType(API.ACQUISITION_FUNDING_TYPES);
-  const managementProgramTypesOptions = getOptionsByType(API.MANAGEMENT_FILE_PROGRAM_TYPES);
+  const managementPurposeTypesOptions = getOptionsByType(API.MANAGEMENT_FILE_PURPOSE_TYPES);
 
   const onMinistryProjectSelected = React.useCallback(
     async (param: IAutocompletePrediction[]) => {
@@ -69,6 +69,7 @@ const ManagementForm: React.FC<IManagementFormProps> = props => {
       initialValues={initialValues}
       validationSchema={AddManagementFormYupSchema}
       onSubmit={onSubmit}
+      enableReinitialize={true}
     >
       {formikProps => {
         return (
@@ -121,8 +122,8 @@ const ManagementForm: React.FC<IManagementFormProps> = props => {
               </SectionField>
               <SectionField label="Purpose" required>
                 <Select
-                  field="programTypeCode"
-                  options={managementProgramTypesOptions}
+                  field="purposeTypeCode"
+                  options={managementPurposeTypesOptions}
                   placeholder="Select..."
                   required
                 />
@@ -133,7 +134,7 @@ const ManagementForm: React.FC<IManagementFormProps> = props => {
             </Section>
 
             <Section header="Management Team">
-              <ManagementTeamSubForm />
+              <ManagementTeamSubForm canEditDetails={true} />
             </Section>
           </Container>
         );

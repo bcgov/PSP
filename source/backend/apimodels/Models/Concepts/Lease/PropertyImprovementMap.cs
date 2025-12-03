@@ -9,8 +9,8 @@ namespace Pims.Api.Models.Concepts.Lease
         {
             config.NewConfig<PimsPropertyImprovement, PropertyImprovementModel>()
                 .Map(dest => dest.Address, src => src.Address)
-                .Map(dest => dest.Lease, src => src.Lease)
-                .Map(dest => dest.LeaseId, src => src.LeaseId)
+                .Map(dest => dest.Property, src => src.Property)
+                .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.StructureSize, src => src.StructureSize)
                 .Map(dest => dest.ImprovementDescription, src => src.ImprovementDescription)
                 .Map(dest => dest.PropertyImprovementTypeCode, src => src.PropertyImprovementTypeCodeNavigation)
@@ -18,8 +18,8 @@ namespace Pims.Api.Models.Concepts.Lease
 
             config.NewConfig<PropertyImprovementModel, PimsPropertyImprovement>()
                 .Map(dest => dest.Address, src => src.Address)
-                .Map(dest => dest.Lease, src => src.Lease)
-                .Map(dest => dest.LeaseId, src => src.LeaseId)
+                .Map(dest => dest.Property, src => src.Property)
+                .Map(dest => dest.PropertyId, src => src.PropertyId)
                 .Map(dest => dest.StructureSize, src => src.StructureSize)
                 .Map(dest => dest.ImprovementDescription, src => src.ImprovementDescription)
                 .Map(dest => dest.PropertyImprovementTypeCode, src => src.PropertyImprovementTypeCode.Id)

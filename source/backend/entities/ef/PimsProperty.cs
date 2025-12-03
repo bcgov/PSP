@@ -24,12 +24,14 @@ namespace Pims.Dal.Entities;
 [Index("RegionCode", Name = "PRPRTY_REGION_CODE_IDX")]
 [Index("SurplusDeclarationTypeCode", Name = "PRPRTY_SURPLUS_DECLARATION_TYPE_CODE_IDX")]
 [Index("SurveyPlanNumber", Name = "PRPRTY_SURVEY_PLAN_NUMBER_IDX")]
+[Index("TaxResponsibilityTypeCode", Name = "PRPRTY_TAX_RESPONSIBILITY_TYPE_CODE_IDX")]
+[Index("UtilityResponsibilityTypeCode", Name = "PRPRTY_UTILITY_RESPONSIBILITY_TYPE_CODE_IDX")]
 [Index("VolumetricTypeCode", Name = "PRPRTY_VOLUMETRIC_TYPE_CODE_IDX")]
 [Index("VolumeUnitTypeCode", Name = "PRPRTY_VOLUME_UNIT_TYPE_CODE_IDX")]
 public partial class PimsProperty
 {
     /// <summary>
-    /// Generated surrogate primary key
+    /// System-generated unique surrogate primary key.
     /// </summary>
     [Key]
     [Column("PROPERTY_ID")]
@@ -114,6 +116,20 @@ public partial class PimsProperty
     public string PphStatusTypeCode { get; set; }
 
     /// <summary>
+    /// Foreign key to the PIMS_UTILITY_RESPONSIBILITY_TYPE table.
+    /// </summary>
+    [Column("UTILITY_RESPONSIBILITY_TYPE_CODE")]
+    [StringLength(20)]
+    public string UtilityResponsibilityTypeCode { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_TAX_RESPONSIBILITY_TYPE table.
+    /// </summary>
+    [Column("TAX_RESPONSIBILITY_TYPE_CODE")]
+    [StringLength(20)]
+    public string TaxResponsibilityTypeCode { get; set; }
+
+    /// <summary>
     /// Date the property was officially registered
     /// </summary>
     [Column("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE")]
@@ -158,7 +174,7 @@ public partial class PimsProperty
     public string LandLegalDescription { get; set; }
 
     /// <summary>
-    /// Spatial bundary of land
+    /// Spatial boundary of property.
     /// </summary>
     [Column("BOUNDARY", TypeName = "geometry")]
     public Geometry Boundary { get; set; }
@@ -195,13 +211,6 @@ public partial class PimsProperty
     /// </summary>
     [Column("SURPLUS_DECLARATION_DATE", TypeName = "datetime")]
     public DateTime? SurplusDeclarationDate { get; set; }
-
-    /// <summary>
-    /// Notes about the property
-    /// </summary>
-    [Column("NOTES")]
-    [StringLength(4000)]
-    public string Notes { get; set; }
 
     /// <summary>
     /// Municipal zoning that applies this property.
@@ -293,6 +302,13 @@ public partial class PimsProperty
     public string ReserveName { get; set; }
 
     /// <summary>
+    /// Contains the Glocal UID from ParcelMapBC.
+    /// </summary>
+    [Column("GLOBAL_UID")]
+    [StringLength(254)]
+    public string GlobalUid { get; set; }
+
+    /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -305,7 +321,7 @@ public partial class PimsProperty
     public DateTime AppCreateTimestamp { get; set; }
 
     /// <summary>
-    /// The user account that created the record.
+    /// The user that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USERID")]
@@ -313,13 +329,13 @@ public partial class PimsProperty
     public string AppCreateUserid { get; set; }
 
     /// <summary>
-    /// The GUID of the user account that created the record.
+    /// GUID of the user that created the record.
     /// </summary>
     [Column("APP_CREATE_USER_GUID")]
     public Guid? AppCreateUserGuid { get; set; }
 
     /// <summary>
-    /// The directory of the user account that created the record.
+    /// User directory of the user that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USER_DIRECTORY")]
@@ -327,13 +343,13 @@ public partial class PimsProperty
     public string AppCreateUserDirectory { get; set; }
 
     /// <summary>
-    /// The date and time the user updated the record.
+    /// The date and time the record was updated by the user.
     /// </summary>
     [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppLastUpdateTimestamp { get; set; }
 
     /// <summary>
-    /// The user account that updated the record.
+    /// The user that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USERID")]
@@ -341,13 +357,13 @@ public partial class PimsProperty
     public string AppLastUpdateUserid { get; set; }
 
     /// <summary>
-    /// The GUID of the user account that updated the record.
+    /// GUID of the user that updated the record.
     /// </summary>
     [Column("APP_LAST_UPDATE_USER_GUID")]
     public Guid? AppLastUpdateUserGuid { get; set; }
 
     /// <summary>
-    /// The directory of the user account that updated the record.
+    /// User directory of the user that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
@@ -397,10 +413,10 @@ public partial class PimsProperty
     public virtual ICollection<PimsHistoricalFileNumber> PimsHistoricalFileNumbers { get; set; } = new List<PimsHistoricalFileNumber>();
 
     [InverseProperty("Property")]
-    public virtual ICollection<PimsManagementFileProperty> PimsManagementFileProperties { get; set; } = new List<PimsManagementFileProperty>();
+    public virtual ICollection<PimsManagementActivityProperty> PimsManagementActivityProperties { get; set; } = new List<PimsManagementActivityProperty>();
 
     [InverseProperty("Property")]
-    public virtual ICollection<PimsPropPropActivity> PimsPropPropActivities { get; set; } = new List<PimsPropPropActivity>();
+    public virtual ICollection<PimsManagementFileProperty> PimsManagementFileProperties { get; set; } = new List<PimsManagementFileProperty>();
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropPropAnomalyTyp> PimsPropPropAnomalyTyps { get; set; } = new List<PimsPropPropAnomalyTyp>();
@@ -415,13 +431,25 @@ public partial class PimsProperty
     public virtual ICollection<PimsPropPropTenureTyp> PimsPropPropTenureTyps { get; set; } = new List<PimsPropPropTenureTyp>();
 
     [InverseProperty("Property")]
+    public virtual ICollection<PimsPropTenureCleanup> PimsPropTenureCleanups { get; set; } = new List<PimsPropTenureCleanup>();
+
+    [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyAcquisitionFile> PimsPropertyAcquisitionFiles { get; set; } = new List<PimsPropertyAcquisitionFile>();
 
     [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyContact> PimsPropertyContacts { get; set; } = new List<PimsPropertyContact>();
 
     [InverseProperty("Property")]
+    public virtual ICollection<PimsPropertyDocument> PimsPropertyDocuments { get; set; } = new List<PimsPropertyDocument>();
+
+    [InverseProperty("Property")]
+    public virtual ICollection<PimsPropertyImprovement> PimsPropertyImprovements { get; set; } = new List<PimsPropertyImprovement>();
+
+    [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; } = new List<PimsPropertyLease>();
+
+    [InverseProperty("Property")]
+    public virtual ICollection<PimsPropertyNote> PimsPropertyNotes { get; set; } = new List<PimsPropertyNote>();
 
     [InverseProperty("DestinationProperty")]
     public virtual ICollection<PimsPropertyOperation> PimsPropertyOperationDestinationProperties { get; set; } = new List<PimsPropertyOperation>();
@@ -462,6 +490,14 @@ public partial class PimsProperty
     [ForeignKey("SurplusDeclarationTypeCode")]
     [InverseProperty("PimsProperties")]
     public virtual PimsSurplusDeclarationType SurplusDeclarationTypeCodeNavigation { get; set; }
+
+    [ForeignKey("TaxResponsibilityTypeCode")]
+    [InverseProperty("PimsProperties")]
+    public virtual PimsTaxResponsibilityType TaxResponsibilityTypeCodeNavigation { get; set; }
+
+    [ForeignKey("UtilityResponsibilityTypeCode")]
+    [InverseProperty("PimsProperties")]
+    public virtual PimsUtilityResponsibilityType UtilityResponsibilityTypeCodeNavigation { get; set; }
 
     [ForeignKey("VolumeUnitTypeCode")]
     [InverseProperty("PimsProperties")]

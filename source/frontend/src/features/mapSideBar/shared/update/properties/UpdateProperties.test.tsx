@@ -1,17 +1,26 @@
-import { act, screen, waitFor } from '@testing-library/react';
 import axios, { AxiosError } from 'axios';
 import MockAdapter from 'axios-mock-adapter';
+import { createRef } from 'react';
 
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import { getMockApiAddress } from '@/mocks/address.mock';
+import { getMockFullyAttributedParcel } from '@/mocks/faParcelLayerResponse.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { getMockApiProperty } from '@/mocks/properties.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { getMockApiProperty, getMockApiPropertyFile } from '@/mocks/properties.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import {
+  act,
+  fillInput,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+  waitFor,
+} from '@/utils/test-utils';
 
 import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
-import { createRef } from 'react';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -33,7 +42,10 @@ const updateFileProperties = vi.fn();
 
 describe('UpdateProperties component', () => {
   // render component under test
-  const setup = (props: Partial<IUpdatePropertiesProps>, renderOptions: RenderOptions = {}) => {
+  const setup = async (
+    props: Partial<IUpdatePropertiesProps>,
+    renderOptions: RenderOptions = {},
+  ) => {
     const utils = render(
       <SideBarContextProvider>
         <UpdateProperties
@@ -55,6 +67,9 @@ describe('UpdateProperties component', () => {
       },
     );
 
+    // Wait for effects to complete
+    await act(async () => {});
+
     return {
       ...utils,
     };
@@ -70,21 +85,26 @@ describe('UpdateProperties component', () => {
   });
 
   it('renders as expected', async () => {
-    setup({});
+    await setup({});
     await act(async () => {});
     expect(document.body).toMatchSnapshot();
   });
 
   it('renders a row with an address', async () => {
-    const { getByText } = setup({
+    const { getByText } = await setup({
       file: {
         ...getMockResearchFile(),
         fileProperties: [
           {
             id: 3,
+            isActive: null,
             propertyId: 443,
             property: {
               ...getMockApiProperty(),
+              pid: undefined,
+              pin: undefined,
+              latitude: undefined,
+              longitude: undefined,
               id: 443,
               anomalies: [],
               tenures: [],
@@ -123,6 +143,7 @@ describe('UpdateProperties component', () => {
             fileId: 1,
             propertyName: null,
             location: null,
+            boundary: null,
             file: null,
           },
         ],
@@ -132,7 +153,7 @@ describe('UpdateProperties component', () => {
   });
 
   it('save button displays modal', async () => {
-    const { getByText } = setup({});
+    const { getByText } = await setup({});
     const saveButton = getByText('Save');
     await act(async () => userEvent.click(saveButton));
 
@@ -143,18 +164,104 @@ describe('UpdateProperties component', () => {
 
   it('saving and confirming the modal saves the properties', async () => {
     updateFileProperties.mockResolvedValue(getMockResearchFile());
-    const { getByText } = setup({});
+    const { getByText } = await setup({});
     const saveButton = getByText('Save');
     await act(async () => userEvent.click(saveButton));
 
     const saveConfirmButton = await screen.findByTitle('ok-modal');
     await act(async () => userEvent.click(saveConfirmButton));
 
-    await waitFor(() => {
-      expect(updateFileProperties).toHaveBeenCalled();
-      expect(setIsShowingPropertySelector).toHaveBeenCalledWith(false);
-      expect(onSuccess).toHaveBeenCalled();
-    });
+    expect(updateFileProperties).toHaveBeenCalled();
+    expect(setIsShowingPropertySelector).toHaveBeenCalledWith(false);
+    expect(onSuccess).toHaveBeenCalled();
+  });
+
+  it('should preserve the order of properties when saving', async () => {
+    updateFileProperties.mockResolvedValue(getMockResearchFile());
+    const { getByText } = await setup(
+      {
+        file: {
+          ...getMockResearchFile(),
+          fileProperties: [
+            {
+              ...getMockApiPropertyFile(),
+              // existing property
+              property: { ...getMockApiProperty(), pid: 123456789, id: 1 },
+            },
+          ],
+        },
+      },
+      {
+        mockMapMachine: {
+          ...mapMachineBaseMock,
+          // properties to be added to the current file via the map state machine (ie working list, etc)
+          selectedFeatures: [
+            {
+              location: { lng: -120.69195885, lat: 50.25163372 },
+              fileLocation: null,
+              fileBoundary: null,
+              pimsFeature: null,
+              parcelFeature: getMockFullyAttributedParcel('111-111-111'),
+              regionFeature: null,
+              districtFeature: null,
+              selectingComponentId: null,
+              municipalityFeature: null,
+            },
+            {
+              location: { lng: -120.69195885, lat: 50.25163372 },
+              fileLocation: null,
+              fileBoundary: null,
+              pimsFeature: null,
+              parcelFeature: getMockFullyAttributedParcel('222-222-222'),
+              regionFeature: null,
+              districtFeature: null,
+              selectingComponentId: null,
+              municipalityFeature: null,
+            },
+            {
+              location: { lng: -120.69195885, lat: 50.25163372 },
+              fileLocation: null,
+              fileBoundary: null,
+              pimsFeature: null,
+              parcelFeature: getMockFullyAttributedParcel('333-333-333'),
+              regionFeature: null,
+              districtFeature: null,
+              selectingComponentId: null,
+              municipalityFeature: null,
+            },
+          ],
+        },
+      },
+    );
+    const saveButton = getByText('Save');
+    await act(async () => userEvent.click(saveButton));
+
+    const saveConfirmButton = await screen.findByTitle('ok-modal');
+    await act(async () => userEvent.click(saveConfirmButton));
+
+    expect(updateFileProperties).toHaveBeenCalledWith(
+      expect.objectContaining({
+        fileProperties: expect.arrayContaining([
+          expect.objectContaining({
+            property: expect.objectContaining({ id: 1 }),
+            displayOrder: 0,
+          }),
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 111111111 }),
+            displayOrder: 1,
+          }),
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 222222222 }),
+            displayOrder: 2,
+          }),
+          expect.objectContaining({
+            property: expect.objectContaining({ pid: 333333333 }),
+            displayOrder: 3,
+          }),
+        ]),
+      }),
+      expect.any(Array),
+    );
   });
 
   it('if the update fails with a 409 the associated entities modal is displayed', async () => {
@@ -162,7 +269,7 @@ describe('UpdateProperties component', () => {
       isAxiosError: true,
       code: '409',
     } as Partial<AxiosError>);
-    const { getByText } = setup({});
+    const { getByText } = await setup({});
     const saveButton = getByText('Save');
     await act(async () => userEvent.click(saveButton));
 
@@ -176,7 +283,7 @@ describe('UpdateProperties component', () => {
   });
 
   it('cancel button cancels component if no actions taken', async () => {
-    const { getByText } = setup({});
+    const { getByText } = await setup({});
     const cancelButton = getByText('Cancel');
     await act(async () => userEvent.click(cancelButton));
 
@@ -184,7 +291,7 @@ describe('UpdateProperties component', () => {
   });
 
   it('cancel button displays modal', async () => {
-    const { getByText, container } = setup({});
+    const { getByText, container } = await setup({});
 
     await fillInput(container, 'properties.0.name', 'test property name');
 
@@ -198,7 +305,7 @@ describe('UpdateProperties component', () => {
 
   it('cancelling and confirming the modal hides this component', async () => {
     updateFileProperties.mockResolvedValue(getMockResearchFile());
-    const { getByText, container } = setup({});
+    const { getByText, container } = await setup({});
 
     await fillInput(container, 'properties.0.name', 'test property name');
 
@@ -218,9 +325,9 @@ describe('UpdateProperties component', () => {
   it('removes property index if canRemove returns true', async () => {
     updateFileProperties.mockResolvedValue(getMockResearchFile());
     const canRemove = vi.fn().mockResolvedValue(true);
-    const { getByTestId, getByText } = setup({ canRemove });
+    const { getByTestId, getByText } = await setup({ canRemove });
 
-    const removeButton = getByTestId('remove-button');
+    const removeButton = getByTestId('delete-property-0');
     await act(async () => userEvent.click(removeButton));
 
     await waitFor(() => {
@@ -232,9 +339,9 @@ describe('UpdateProperties component', () => {
   it('displays warning modal if canRemove returns false', async () => {
     updateFileProperties.mockResolvedValue(getMockResearchFile());
     const canRemove = vi.fn().mockResolvedValue(false);
-    const { getByTestId } = setup({ canRemove });
+    const { getByTestId } = await setup({ canRemove });
 
-    const removeButton = getByTestId('remove-button');
+    const removeButton = getByTestId('delete-property-0');
     await act(async () => userEvent.click(removeButton));
 
     await waitFor(() => {

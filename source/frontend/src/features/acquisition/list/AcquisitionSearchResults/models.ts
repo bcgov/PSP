@@ -1,5 +1,6 @@
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
@@ -21,6 +22,7 @@ export class AcquisitionSearchResultModel {
   project?: ApiGen_Concepts_Project;
   alternateProject?: ApiGen_Concepts_Project;
   acquisitionTeam?: ApiGen_Concepts_AcquisitionFileTeam[];
+  owners?: ApiGen_Concepts_AcquisitionFileOwner[];
   compensationRequisitions?: ApiGen_Concepts_CompensationRequisition[];
 
   static fromApi(base: ApiGen_Concepts_AcquisitionFile): AcquisitionSearchResultModel {
@@ -39,6 +41,7 @@ export class AcquisitionSearchResultModel {
     newModel.project = base.project ?? undefined;
     newModel.compensationRequisitions = base.compensationRequisitions ?? undefined;
     newModel.acquisitionTeam = base.acquisitionTeam ?? undefined;
+    newModel.owners = base.acquisitionFileOwners ?? undefined;
     return newModel;
   }
 }

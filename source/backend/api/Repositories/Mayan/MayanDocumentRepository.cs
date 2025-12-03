@@ -1,13 +1,4 @@
-using System;
-using System.Globalization;
-using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Mime;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
+using DocumentFormat.OpenXml.Wordprocessing;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
@@ -20,6 +11,16 @@ using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Models.Mayan.Metadata;
 using Pims.Api.Models.Requests.Http;
 using Polly.Registry;
+using System;
+using System.Globalization;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Mime;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 
 namespace Pims.Api.Repositories.Mayan
 {
@@ -172,6 +173,21 @@ namespace Pims.Api.Repositories.Mayan
             return response;
         }
 
+        public async Task<ExternalResponse<FileLatestModel>> TryUpdateDocumentFileAsync(long documentId, long fileId, FileLatestModel updatedDocumentDetail)
+        {
+            _logger.LogDebug("Updating document {DocumentId}...", documentId);
+
+            string authenticationToken = await _authRepository.GetTokenAsync();
+            using HttpContent content = new StringContent(JsonSerializer.Serialize(updatedDocumentDetail));
+            content.Headers.ContentType = new MediaTypeHeaderValue("application/json");
+
+            Uri endpoint = new($"{_config.BaseUri}/documents/{documentId}/files/{fileId}/");
+
+            var response = await PutAsync<FileLatestModel>(endpoint, content, authenticationToken);
+
+            return response;
+        }
+
         public async Task<ExternalResponse<QueryResponse<DocumentMetadataModel>>> TryGetDocumentMetadataAsync(long documentId, string ordering = "", int? page = null, int? pageSize = null)
         {
             _logger.LogDebug("Retrieving document metadata {documentId}...", documentId);
@@ -256,18 +272,14 @@ namespace Pims.Api.Repositories.Mayan
             _logger.LogDebug("Uploading document {documentType}...", documentType);
             string authenticationToken = await _authRepository.GetTokenAsync();
 
-            byte[] fileData;
-            using var byteReader = new BinaryReader(file.OpenReadStream());
-            fileData = byteReader.ReadBytes((int)file.OpenReadStream().Length);
-
-            // Add the file data to the content
-            using ByteArrayContent fileBytes = new(fileData);
+            using Stream stream = file.OpenReadStream();
+            using StreamContent streamContent = new StreamContent(stream);
             using MultipartFormDataContent multiContent = new MultipartFormDataContent();
-            multiContent.Add(fileBytes, "file", file.FileName);
 
             // Add the document id to the content
             using HttpContent content = new StringContent(documentType.ToString(CultureInfo.InvariantCulture));
             multiContent.Add(content, "document_type_id");
+            multiContent.Add(streamContent, "file", file.FileName);
 
             Uri endpoint = new($"{_config.BaseUri}/documents/upload/");
             ExternalResponse<DocumentDetailModel> response = await PostAsync<DocumentDetailModel>(endpoint, multiContent, authenticationToken);

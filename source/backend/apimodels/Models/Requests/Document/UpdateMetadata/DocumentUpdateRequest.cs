@@ -31,6 +31,11 @@ namespace Pims.Api.Models.Requests.Document.UpdateMetadata
         public string DocumentStatusCode { get; set; }
 
         /// <summary>
+        /// get/set - File name of the document.
+        /// </summary>
+        public string FileName { get; set; }
+
+        /// <summary>
         /// get/set - The metadata associated with document.
         /// </summary>
         public List<DocumentMetadataUpdateModel> DocumentMetadata { get; set; }

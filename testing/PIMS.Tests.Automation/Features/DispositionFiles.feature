@@ -29,7 +29,7 @@ Scenario: 04._Disposition_Offers_and_Sale_Tab
 
 Scenario: 05._Disposition_Files_Digital_Documents
 	Given I create a new Disposition File from row number 10
-	When I create Digital Documents for a "Disposition File" row number 12
+	When I create Digital Documents for a "Disposition File" from row number 12
 	And  I edit a Digital Document for a "Disposition File" from row number 13
 	Then A new Disposition file is created successfully
 
@@ -39,7 +39,7 @@ Scenario: 06._Disposition_File_Notes
 	And  I edit a Note on the Notes Tab from row number 10
 	Then A new Disposition file is created successfully
 
-Scenario: 07._Disposition_File_from_PIN
+Scenario: 07._Disposition_File_from_Parcel
 	Given I create a Disposition File from a pin on map from row number 12
 	Then A new Disposition file is created successfully
 
@@ -66,7 +66,7 @@ Scenario: 11._Disposition_File_Not_Sold_Status_Error
 	Then Disposition File without SOLD Status error appears
 
 Scenario: 12._Disposition_File_Non-Core_Inventory_Error
-	Given I create a new Disposition File from row number 14
+	Given I create a new Disposition File from row number 15
 	When I add Properties to the Disposition File
 	And I create Appraisal, Assessment, Offers and Sales Details within a Disposition File
 	And I change status of the Disposition File

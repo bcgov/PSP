@@ -1,9 +1,12 @@
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { getMockContactOrganizationWithOnePerson } from '@/mocks/contacts.mock';
 import { getMockExpropriationFile } from '@/mocks/index.mock';
-import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, findAllByText, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import ExpropriationForm9, { IExpropriationForm9Props } from './ExpropriationForm9';
+import { ExpropriationForm9Model } from '../models';
+import { FormikProps } from 'formik';
+import { createRef } from 'react';
 
 // mock auth library
 
@@ -14,18 +17,18 @@ vi.mocked(useApiContacts).mockReturnValue({
 } as unknown as ReturnType<typeof useApiContacts>);
 
 const onGenerate = vi.fn();
-const onError = vi.fn();
 
-describe('Expropriation Form 1', () => {
+describe('Expropriation Form 9', () => {
   const setup = async (
     renderOptions: RenderOptions & { props?: Partial<IExpropriationForm9Props> } = {},
   ) => {
+    const formikRef = createRef<FormikProps<ExpropriationForm9Model>>();
     const utils = render(
       <ExpropriationForm9
         {...renderOptions.props}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? getMockExpropriationFile()}
         onGenerate={onGenerate}
-        onError={onError}
+        formikRef={renderOptions.props?.formikRef ?? formikRef}
       ></ExpropriationForm9>,
       {
         ...renderOptions,
@@ -35,6 +38,7 @@ describe('Expropriation Form 1', () => {
 
     return {
       ...utils,
+      formikRef,
       getRegisteredPlanNumbers: () =>
         utils.container.querySelector(`input[name="registeredPlanNumbers"]`) as HTMLInputElement,
       getContactManagerSearchButton: () => utils.getByTestId('search'),
@@ -61,16 +65,17 @@ describe('Expropriation Form 1', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('validates form values before generating', async () => {
-    const { getByText, getByTitle } = await setup();
-    await act(async () => userEvent.click(getByTitle(/Download File/i)));
+  it('validates form 9 values before generating', async () => {
+    const { getByText, formikRef } = await setup();
+    await act(async () => formikRef.current.submitForm());
 
     expect(getByText('Expropriation authority is required')).toBeInTheDocument();
     expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
   });
 
-  it(`submits the form when Generate button is clicked`, async () => {
-    const { getByText, getByTestId, getByTitle, getRegisteredPlanNumbers } = await setup();
+  it(`submits the form when Generate form 9 button is clicked`, async () => {
+    const { getByText, getByTestId, getByTitle, getRegisteredPlanNumbers, formikRef } =
+      await setup();
 
     // pick an organization from contact manager
     await act(async () => userEvent.click(getByTitle('Select Contact')));
@@ -81,13 +86,12 @@ describe('Expropriation Form 1', () => {
     await act(async () => userEvent.click(getByTestId('selectrow-1')));
     await act(async () => userEvent.paste(getRegisteredPlanNumbers(), 'testing'));
 
-    await act(async () => userEvent.click(getByTitle(/Download File/i)));
+    await act(async () => formikRef.current.submitForm());
 
     expect(onGenerate).toHaveBeenCalled();
-    expect(onError).not.toHaveBeenCalled();
   });
 
-  it(`clears the form when Cancel button is clicked`, async () => {
+  it(`clears the form when Clear Form button is clicked`, async () => {
     const { getByText, getByTestId, getRegisteredPlanNumbers } = await setup();
 
     await act(async () => userEvent.click(getByTestId('selectrow-1')));
@@ -96,29 +100,9 @@ describe('Expropriation Form 1', () => {
     expect(getByTestId('selectrow-1')).toBeChecked();
     expect(getRegisteredPlanNumbers()).toHaveValue();
 
-    await act(async () => userEvent.click(getByText('Cancel')));
+    await act(async () => userEvent.click(getByText('Clear Form')));
 
     expect(getByTestId('selectrow-1')).not.toBeChecked();
     expect(getRegisteredPlanNumbers()).not.toHaveValue();
-  });
-
-  it(`calls onError callback when generate endpoint fails`, async () => {
-    const error = new Error('Network error');
-    onGenerate.mockRejectedValueOnce(error);
-    const { getByText, getByTestId, getByTitle, getRegisteredPlanNumbers } = await setup();
-
-    // pick an organization from contact manager
-    await act(async () => userEvent.click(getByTitle('Select Contact')));
-    await act(async () => userEvent.click(getByTestId('selectrow-O3')));
-    await act(async () => userEvent.click(getByText('Select')));
-
-    // fill other form fields
-    await act(async () => userEvent.click(getByTestId('selectrow-1')));
-    await act(async () => userEvent.paste(getRegisteredPlanNumbers(), 'testing'));
-
-    await act(async () => userEvent.click(getByTitle(/Download File/i)));
-
-    expect(onGenerate).toHaveBeenCalled();
-    expect(onError).toHaveBeenCalledWith(error);
   });
 });

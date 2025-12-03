@@ -2,12 +2,12 @@ namespace Pims.Dal.Models
 {
     public class PropertyOwnershipState
     {
-        public bool isOwned { get; set; } = false;
+        public bool IsOwned { get; set; } = false;
 
-        public bool isOtherInterest { get; set; } = false;
+        public bool IsOtherInterest { get; set; } = false;
 
-        public bool isPropertyOfInterest { get; set; } = false;
+        public bool IsPropertyOfInterest { get; set; } = false;
 
-        public bool isDisposed { get; set; } = false;
+        public bool IsDisposed { get; set; } = false;
     }
 }

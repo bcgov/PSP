@@ -110,7 +110,10 @@ const PropertyRouter = React.forwardRef<FormikProps<any>, IPropertyRouterProps>(
           <AppRoute
             path={`${stripTrailingSlash(path)}/:tab`}
             customRender={() => (
-              <PropertyContainer composedPropertyState={props.composedPropertyState} />
+              <PropertyContainer
+                composedPropertyState={props.composedPropertyState}
+                onChildSuccess={props.onSuccess}
+              />
             )}
             key={'property_tabs'}
             title={'Property Tabs'}

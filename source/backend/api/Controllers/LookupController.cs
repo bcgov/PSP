@@ -114,9 +114,9 @@ namespace Pims.Api.Controllers
                 var agreementStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAgreementStatusTypes());
                 var interestHolderInterestTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllInterestHolderInterestTypes());
                 var expropriationPaymentItemTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllExpropriationPaymentItemTypes());
-                var mgmtActivityStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityStatusTypes());
-                var mgmtActivitySubtypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivitySubtypes());
-                var mgmtActivityTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropMgmtActivityTypes());
+                var mgmtActivityStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllMgmtActivityStatusTypes());
+                var mgmtActivitySubtypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllMgmtActivitySubtypes());
+                var mgmtActivityTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllMgmtActivityTypes());
                 var dispositionStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionStatusTypes());
                 var dispositionFileFundingTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionFileFundingTypes());
                 var dispositionFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllDispositionFileStatusTypes());
@@ -133,13 +133,13 @@ namespace Pims.Api.Controllers
                 var consultationOutcomeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllConsultationOutcomeTypes());
                 var subfileInterestTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllSubfileInterestTypes());
                 var acquisitionFileProgressStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileProgressStatusTypes());
-                var acquisitionFileAppraisalStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileAppraisalStatusTypes());
-                var acquisitionFileLegalSurveyStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileLegalSurveyStatusTypes());
+                var acquisitionFileAppraisalStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllFileAppraisalStatusTypes());
+                var acquisitionFileLegalSurveyStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllFileLegalSurveyStatusTypes());
                 var acquisitionFileTakeTypesStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileTakeStatusTypes());
                 var acquisitionFileExpropiationRiskStatuses = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllAcquisitionFileExpropiationRiskStatusTypes());
                 var llTeamProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLlTeamProfileTypes());
                 var expropriationEventTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllExpropriationEventTypes());
-                var managementFileProgramTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllManagementFileProgramTypes());
+                var managementFilePurposeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllManagementFilePurposeTypes());
                 var managementFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllManagementFileStatusTypes());
                 var managementFileProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllManagementFileProfileTypes());
 
@@ -224,7 +224,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(acquisitionFileExpropiationRiskStatuses);
                 codes.AddRange(llTeamProfileTypes);
                 codes.AddRange(expropriationEventTypes);
-                codes.AddRange(managementFileProgramTypes);
+                codes.AddRange(managementFilePurposeTypes);
                 codes.AddRange(managementFileStatusTypes);
                 codes.AddRange(managementFileProfileTypes);
 

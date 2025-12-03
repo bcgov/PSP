@@ -4,9 +4,12 @@ import { readOnlyMultiSelectStyle } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
+import { ApiGen_CodeTypes_LeaseProgramTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseProgramTypes';
 import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, prettyFormatDate } from '@/utils';
+import { concatValues } from '@/utils/formUtils';
 
 export interface IDetailAdministrationProps {
   lease: ApiGen_Concepts_Lease;
@@ -31,26 +34,29 @@ export const DetailAdministration: React.FunctionComponent<
     x => x.leasePurposeTypeCode.id === ApiGen_CodeTypes_LeasePurposeTypes.OTHER,
   );
 
+  const leaseTypeDescription = concatValues(
+    [
+      lease?.type?.description,
+      lease?.type?.id === ApiGen_CodeTypes_LeaseLicenceTypes.OTHER ? lease?.otherType : null,
+    ],
+    ' - ',
+  );
+
   return (
     <>
       <Section initiallyExpanded={true} isCollapsable={true} header="Administration">
         <SectionField label="Program" labelWidth={{ xs: 3 }}>
           {lease.programName}
         </SectionField>
-        {lease.programType?.id === 'OTHER' && (
+        {lease.programType?.id === ApiGen_CodeTypes_LeaseProgramTypes.OTHER && (
           <SectionField label="Other program" labelWidth={{ xs: 3 }}>
             {lease.otherProgramType}
           </SectionField>
         )}
 
         <SectionField label="Type" labelWidth={{ xs: 3 }}>
-          {lease.type?.description}
+          {leaseTypeDescription}
         </SectionField>
-        {lease?.type?.id === 'OTHER' && (
-          <SectionField label="Other type" labelWidth={{ xs: 3 }}>
-            {lease.otherType}
-          </SectionField>
-        )}
 
         <SectionField label="Purpose(s)" labelWidth={{ xs: 3 }}>
           <Multiselect
@@ -75,10 +81,10 @@ export const DetailAdministration: React.FunctionComponent<
         <SectionField label="Effective date" labelWidth={{ xs: 3 }}>
           {prettyFormatDate(responsibilityDate)}
         </SectionField>
-        <SectionField label="MOTI contact" labelWidth={{ xs: 3 }}>
+        <SectionField label="MOTT contact" labelWidth={{ xs: 3 }}>
           {lease.motiName}
         </SectionField>
-        <SectionField label="MOTI region" labelWidth={{ xs: 3 }}>
+        <SectionField label="MOTT region" labelWidth={{ xs: 3 }}>
           {lease.region?.description}
         </SectionField>
         <SectionField

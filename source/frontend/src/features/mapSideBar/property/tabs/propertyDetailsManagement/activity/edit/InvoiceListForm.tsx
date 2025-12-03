@@ -35,7 +35,7 @@ export const InvoiceListForm: React.FunctionComponent<IInvoiceListForm> = ({
         <>
           {invoices.map((invoice, index) => (
             <InvoiceForm
-              key={`activity-${invoice.propertyActivityId}-invoice-${index}`}
+              key={`activity-${invoice.managementActivityId}-invoice-${index}`}
               namespace={`${field}.${index}`}
               index={index}
               formikProps={formikProps}

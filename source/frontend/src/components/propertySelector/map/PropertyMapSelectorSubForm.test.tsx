@@ -1,27 +1,14 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { render, RenderOptions } from '@/utils/test-utils';
+import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
+import { render, RenderOptions, screen } from '@/utils/test-utils';
 
-import { IMapProperty } from '../models';
 import PropertyMapSelectorSubForm, {
   IPropertyMapSelectorSubFormProps,
 } from './PropertyMapSelectorSubForm';
-import { PropertyForm } from '@/features/mapSideBar/shared/models';
 
 const onClickDraftMarker = vi.fn();
-
-const testProperty: IMapProperty = {
-  pid: '123-456-789',
-  pin: '1234',
-  planNumber: '123546',
-  address: 'Test address 123',
-  legalDescription: 'Test Legal Description',
-  region: 2,
-  regionName: 'South Coast',
-  district: 2,
-  districtName: 'Vancouver Island',
-};
 
 const mockStore = configureMockStore([thunk]);
 
@@ -30,10 +17,10 @@ const store = mockStore({});
 describe('PropertySelectorSubForm component', () => {
   const setup = (renderOptions: RenderOptions & IPropertyMapSelectorSubFormProps) => {
     // render component under test
-    const component = render(
+    const utils = render(
       <PropertyMapSelectorSubForm
         onClickDraftMarker={renderOptions.onClickDraftMarker}
-        selectedProperty={renderOptions.selectedProperty}
+        selectedProperty={renderOptions.selectedProperty ?? getMockSelectedFeatureDataset()}
       />,
       {
         ...renderOptions,
@@ -42,8 +29,7 @@ describe('PropertySelectorSubForm component', () => {
     );
 
     return {
-      store,
-      component,
+      ...utils,
     };
   };
 
@@ -52,26 +38,33 @@ describe('PropertySelectorSubForm component', () => {
   });
 
   it('renders as expected when provided no properties', () => {
-    const { component } = setup({
-      selectedProperty: PropertyForm.fromMapProperty(testProperty).toFeatureDataset(),
-      onClickDraftMarker,
-    });
-    expect(component.asFragment()).toMatchSnapshot();
+    const { asFragment } = setup({ onClickDraftMarker });
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders as expected when provided a list of properties', async () => {
-    const {
-      component: { getByText },
-    } = await setup({
-      selectedProperty: PropertyForm.fromMapProperty(testProperty).toFeatureDataset(),
+  it('renders as expected when provided a list of properties', () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
+    setup({
       onClickDraftMarker,
+      selectedProperty: {
+        ...mockFeatureSet,
+        parcelFeature: {
+          ...mockFeatureSet.parcelFeature,
+          properties: {
+            ...mockFeatureSet.parcelFeature?.properties,
+            PID: '123-456-789',
+            PIN: 1111222,
+            LEGAL_DESCRIPTION: 'A legal description',
+            PLAN_NUMBER: 'VIP3881',
+          },
+        },
+      },
     });
-    expect(getByText(`${testProperty.pid}`)).toBeVisible();
-    expect(getByText(`${testProperty.pin}`)).toBeVisible();
-    expect(getByText(`${testProperty.planNumber}`)).toBeVisible();
-    expect(getByText(`${testProperty.address}`)).toBeVisible();
-    expect(getByText(`${testProperty.legalDescription}`)).toBeVisible();
-    expect(getByText(`${testProperty.region} - ${testProperty.regionName}`)).toBeVisible();
-    expect(getByText(`${testProperty.district} - ${testProperty.districtName}`)).toBeVisible();
+    expect(screen.getByText('123-456-789')).toBeVisible();
+    expect(screen.getByText('1111222')).toBeVisible();
+    expect(screen.getByText('A legal description')).toBeVisible();
+    expect(screen.getByText('VIP3881')).toBeVisible();
+    expect(screen.getByText('1 - South Coast')).toBeVisible();
+    expect(screen.getByText('2 - Vancouver Island')).toBeVisible();
   });
 });

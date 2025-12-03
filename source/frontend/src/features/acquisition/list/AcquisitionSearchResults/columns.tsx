@@ -1,17 +1,19 @@
 import { chain, uniqBy } from 'lodash';
-import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import ExpandableTextList from '@/components/common/ExpandableTextList';
+import { ExternalLink } from '@/components/common/ExternalLink';
 import ExpandableFileProperties from '@/components/common/List/ExpandableFileProperties';
 import { ColumnWithProps, renderTypeCode } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { exists, isValidId, stringToFragment } from '@/utils';
+import { formatAcquisitionOwnerName } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { AcquisitionSearchResultModel } from './models';
@@ -36,9 +38,9 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
       const { hasClaim } = useKeycloakWrapper();
       if (hasClaim(Claims.ACQUISITION_VIEW)) {
         return (
-          <Link to={`/mapview/sidebar/acquisition/${props.row.original.id}`}>
+          <ExternalLink to={`/mapview/sidebar/acquisition/${props.row.original.id}`}>
             {props.row.original.fileNumber}
-          </Link>
+          </ExternalLink>
         );
       }
       return stringToFragment(props.row.original.fileNumber);
@@ -63,7 +65,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     maxWidth: 40,
   },
   {
-    Header: 'MOTI Region',
+    Header: 'MOTT region',
     accessor: 'regionCode',
     align: 'left',
     clickable: true,
@@ -163,13 +165,39 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     },
   },
   {
+    Header: 'Owner',
+    accessor: 'owners',
+    align: 'left',
+    clickable: true,
+    width: 40,
+    maxWidth: 40,
+    Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
+      return (
+        <ExpandableTextList<ApiGen_Concepts_AcquisitionFileOwner>
+          items={props.row.original.owners ?? []}
+          keyFunction={(item: ApiGen_Concepts_AcquisitionFileOwner, index: number) =>
+            `owner[${index}]-${item.acquisitionFileId}-${item.id}`
+          }
+          renderFunction={(item: ApiGen_Concepts_AcquisitionFileOwner) => (
+            <>{formatAcquisitionOwnerName(item)}</>
+          )}
+          delimiter={', '}
+          maxCollapsedLength={2}
+        />
+      );
+    },
+  },
+  {
     Header: 'Civic Address / PID / PIN',
     accessor: 'fileProperties',
     align: 'left',
+    maxWidth: 40,
     Cell: (props: CellProps<AcquisitionSearchResultModel>) => {
+      const properties = props.row.original.fileProperties?.map(x => x.property) ?? [];
+
       return (
         <ExpandableFileProperties
-          fileProperties={props.row.original.fileProperties}
+          properties={properties}
           maxDisplayCount={2}
         ></ExpandableFileProperties>
       );

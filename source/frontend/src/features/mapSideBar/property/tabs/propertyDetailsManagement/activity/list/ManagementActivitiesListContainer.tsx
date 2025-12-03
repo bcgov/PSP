@@ -1,32 +1,43 @@
 import { useCallback, useContext, useEffect, useState } from 'react';
-import { useHistory } from 'react-router-dom';
+import { generatePath } from 'react-router-dom';
 
+import { TableSort } from '@/components/Table/TableSort';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
-import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
+import ManagementStatusUpdateSolver from '@/features/mapSideBar/management/tabs/fileDetails/detail/ManagementStatusUpdateSolver';
+import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
+import { useManagementActivityPropertyRepository } from '@/hooks/repositories/useManagementActivityPropertyRepository';
+import { useFilePropertyIdFromUrl } from '@/hooks/useFilePropertyIdFromUrl';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
+import { exists, isValidId } from '@/utils';
 
 import { IManagementActivitiesListViewProps } from './ManagementActivitiesListView';
 import { PropertyActivityRow } from './models/PropertyActivityRow';
 
 export interface IPropertyManagementActivitiesListContainerProps {
+  statusSolver?: ManagementStatusUpdateSolver;
   propertyId: number;
+  isAdHoc?: boolean;
   View: React.FC<IManagementActivitiesListViewProps>;
 }
 
 const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   IPropertyManagementActivitiesListContainerProps
-> = ({ propertyId, View }) => {
-  const history = useHistory();
+> = ({ statusSolver, propertyId, isAdHoc, View }) => {
   const isMounted = useIsMounted();
   const { setModalContent, setDisplayModal } = useModalContext();
   const [propertyActivities, setPropertyActivities] = useState<PropertyActivityRow[]>([]);
   const { staleLastUpdatedBy } = useContext(SideBarContext);
+  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_ManagementActivity>>({});
+  const { showFilePropertyDetail, showPropertyDetail, addPropertyDetail, addFilePropertyDetail } =
+    usePathGenerator();
+  const { filePropertyId, fileId } = useFilePropertyIdFromUrl();
 
   const {
     getActivities: { execute: getActivities, loading },
     deleteActivity: { execute: deleteActivity, loading: deletingActivity },
-  } = usePropertyActivityRepository();
+  } = useManagementActivityPropertyRepository();
 
   const fetchPropertyActivities = useCallback(async () => {
     const response = await getActivities(propertyId);
@@ -40,10 +51,22 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
       const result = await deleteActivity(propertyId, activityId);
       if (result === true) {
         fetchPropertyActivities();
-        history.push(`/mapview/sidebar/property/${propertyId}/management`);
+        if (exists(fileId)) {
+          showFilePropertyDetail('management', fileId, filePropertyId, 'management', 'activity');
+        } else {
+          showPropertyDetail(propertyId, 'management', 'activity');
+        }
       }
     },
-    [deleteActivity, fetchPropertyActivities, history, propertyId],
+    [
+      deleteActivity,
+      fetchPropertyActivities,
+      fileId,
+      filePropertyId,
+      propertyId,
+      showFilePropertyDetail,
+      showPropertyDetail,
+    ],
   );
 
   useEffect(() => {
@@ -52,17 +75,40 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
   //TODO: remove staleLastUpdatedBy when side bar context is refactored.
 
   const onCreate = () => {
-    history.push(`/mapview/sidebar/property/${propertyId}/management/activity/new`);
+    if (exists(fileId)) {
+      addFilePropertyDetail('management', fileId, filePropertyId, 'management', 'activity', false);
+    } else {
+      addPropertyDetail(propertyId, 'management', 'activity');
+    }
   };
 
   const onView = (activityId: number) => {
-    history.push(`/mapview/sidebar/property/${propertyId}/management/activity/${activityId}`);
+    if (exists(fileId)) {
+      showFilePropertyDetail(
+        'management',
+        fileId,
+        filePropertyId,
+        'management',
+        'activity',
+        activityId,
+      );
+    } else {
+      showPropertyDetail(propertyId, 'management', 'activity', activityId);
+    }
   };
+
+  const canEditActivities = !statusSolver || statusSolver?.canEditActivities();
 
   return (
     <View
+      sort={sort}
+      setSort={setSort}
       isLoading={loading || deletingActivity}
-      propertyActivities={propertyActivities}
+      propertyActivities={
+        isAdHoc
+          ? propertyActivities.filter(pa => !isValidId(pa.managementFileId))
+          : propertyActivities.filter(pa => isValidId(pa.managementFileId))
+      }
       onCreate={onCreate}
       onView={onView}
       onDelete={async (activityId: number) => {
@@ -77,6 +123,22 @@ const PropertyManagementActivitiesListContainer: React.FunctionComponent<
           },
         });
         setDisplayModal(true);
+      }}
+      canEditActivities={canEditActivities}
+      addActivityButtonText="Add an Ad-hoc Activity"
+      activitiesListTitle="Ad-hoc Activities List"
+      getNavigationUrl={(activityRow: PropertyActivityRow) => {
+        const urlPattern = `/mapview/sidebar/:fileType/:fileId/:detailType/:detailId`;
+        const path = generatePath(urlPattern, {
+          fileType: 'management',
+          fileId: activityRow.managementFileId,
+          detailType: 'activities',
+          detailId: activityRow.activityId,
+        });
+        return {
+          title: `M-${activityRow.managementFileId}`,
+          url: path,
+        };
       }}
     />
   );

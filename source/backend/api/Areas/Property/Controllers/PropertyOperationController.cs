@@ -1,11 +1,10 @@
-
 using System.Collections.Generic;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Pims.Api.Models.Concepts.PropertyOperation;
-using Pims.Core.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Api.Policies;
 using Pims.Core.Json;
 using Pims.Core.Security;
 using Swashbuckle.AspNetCore.Annotations;
@@ -43,8 +42,9 @@ namespace Pims.Api.Areas.Property.Controllers
         #endregion
 
         #region Endpoints
+
         /// <summary>
-        /// Get the property operations related to a given property
+        /// Get the property operations related to a given property.
         /// </summary>
         /// <returns></returns>
         [HttpGet("{propertyId}/propertyOperations")]

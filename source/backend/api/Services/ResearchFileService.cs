@@ -22,7 +22,7 @@ namespace Pims.Api.Services
         private readonly IResearchFilePropertyRepository _researchFilePropertyRepository;
         private readonly IPropertyRepository _propertyRepository;
         private readonly ILookupRepository _lookupRepository;
-        private readonly IEntityNoteRepository _entityNoteRepository;
+        private readonly INoteRelationshipRepository<PimsResearchFileNote> _entityNoteRepository;
         private readonly IPropertyService _propertyService;
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly IResearchStatusSolver _researchStatusSolver;
@@ -34,7 +34,7 @@ namespace Pims.Api.Services
             IResearchFilePropertyRepository researchFilePropertyRepository,
             IPropertyRepository propertyRepository,
             ILookupRepository lookupRepository,
-            IEntityNoteRepository entityNoteRepository,
+            INoteRelationshipRepository<PimsResearchFileNote> entityNoteRepository,
             IPropertyService propertyService,
             IPropertyOperationService propertyOperationService,
             IResearchStatusSolver researchStatusSolver)
@@ -148,6 +148,11 @@ namespace Pims.Api.Services
                     if (existingProperty.PropertyName != incomingResearchProperty.PropertyName)
                     {
                         existingProperty.PropertyName = incomingResearchProperty.PropertyName;
+                        needsUpdate = true;
+                    }
+                    if (existingProperty.DisplayOrder != incomingResearchProperty.DisplayOrder)
+                    {
+                        existingProperty.DisplayOrder = incomingResearchProperty.DisplayOrder;
                         needsUpdate = true;
                     }
 
@@ -309,7 +314,7 @@ namespace Pims.Api.Services
                 },
             };
 
-            _entityNoteRepository.Add(fileNoteInstance);
+            _entityNoteRepository.AddNoteRelationship(fileNoteInstance);
         }
     }
 }

@@ -1,14 +1,11 @@
 import clsx from 'classnames';
 import React from 'react';
 import { Col } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import EditButton from '@/components/common/buttons/EditButton';
-import ContactLink from '@/components/common/ContactLink';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
-import { Section } from '@/components/common/Section/Section';
-import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import * as Styled from '@/components/common/styles';
 import { Claims } from '@/constants/index';
@@ -16,15 +13,15 @@ import DocumentListContainer from '@/features/documents/list/DocumentListContain
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
-import { formatMoney, prettyFormatDate } from '@/utils';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
+import { ApiGen_Concepts_ManagementActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_ManagementActivityInvoice';
 
+import ActivityDetailInvoiceTotalsView from './ActivityDetailInvoiceTotalsView';
+import PropertyActivityDetailsSubView from './ActivityDetailSubView';
 import { InvoiceView } from './InvoiceView';
 
 export interface IPropertyActivityDetailViewProps {
-  propertyId: number;
-  activity: ApiGen_Concepts_PropertyActivity | null;
+  activity: ApiGen_Concepts_ManagementActivity | null;
   onClose: () => void;
   loading: boolean;
   show: boolean;
@@ -38,24 +35,14 @@ export const PropertyActivityDetailView: React.FunctionComponent<
     props.setShow(false);
     props.onClose();
   };
+  const location = useLocation();
 
   const { hasClaim } = useKeycloakWrapper();
   const history = useHistory();
 
   if (props.activity !== null) {
-    const invoices: ApiGen_Concepts_PropertyActivityInvoice[] = props.activity.invoices ?? [];
+    const invoices: ApiGen_Concepts_ManagementActivityInvoice[] = props.activity.invoices ?? [];
 
-    let pretaxAmount = 0;
-    let gstAmount = 0;
-    let pstAmount = 0;
-    let totalAmount = 0;
-
-    for (let i = 0; i < invoices.length; i++) {
-      pretaxAmount += invoices[i].pretaxAmount ?? 0;
-      gstAmount += invoices[i].gstAmount ?? 0;
-      pstAmount += invoices[i].pstAmount ?? 0;
-      totalAmount += invoices[i].totalAmount ?? 0;
-    }
     return (
       <ReactVisibilitySensor
         onChange={(isVisible: boolean) => {
@@ -82,89 +69,24 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                     <EditButton
                       title="Edit Property Activity"
                       onClick={() => {
-                        history.push(
-                          `/mapview/sidebar/property/${props.propertyId}/management/activity/${props.activity?.id}/edit`,
-                        );
+                        const baseUrl = location.pathname.split('/activity')[0];
+                        history.push(`${baseUrl}/activity/${props.activity?.id}/edit`);
                       }}
                       style={{ float: 'right' }}
                     />
                   )}
                 </StyledEditWrapper>
 
-                <Section header="Activity Details">
-                  <SectionField label="Activity type" contentWidth={{ xs: 7 }}>
-                    {props.activity.activityTypeCode?.description}
-                  </SectionField>
-                  <SectionField label="Sub-type" contentWidth={{ xs: 7 }}>
-                    {props.activity.activitySubtypeCode?.description}
-                  </SectionField>
-                  <SectionField label="Activity status" contentWidth={{ xs: 7 }}>
-                    {props.activity.activityStatusTypeCode?.description}
-                  </SectionField>
-                  <SectionField label="Requested added date" contentWidth={{ xs: 7 }}>
-                    {prettyFormatDate(props.activity.requestAddedDateOnly)}
-                  </SectionField>
-                  <SectionField label="Completion date" contentWidth={{ xs: 7 }}>
-                    {prettyFormatDate(props.activity.completionDateOnly)}
-                  </SectionField>
-                  <SectionField label="Description" contentWidth={{ xs: 7 }}>
-                    {props.activity.description}
-                  </SectionField>
+                <PropertyActivityDetailsSubView activity={props.activity} />
 
-                  <SectionField label="Ministry contacts" contentWidth={{ xs: 7 }}>
-                    {props.activity.ministryContacts?.map(contact => (
-                      <>{contact.person !== null && <ContactLink person={contact.person} />}</>
-                    ))}
-                  </SectionField>
-                  <SectionField
-                    label="Requestor"
-                    contentWidth={{ xs: 7 }}
-                    tooltip="Document the source of the request by entering the name of the person, organization or other entity from which the request has been received"
-                  >
-                    {props.activity.requestSource}
-                  </SectionField>
-                  <SectionField label="Involved parties" contentWidth={{ xs: 8 }}>
-                    {props.activity.involvedParties?.map(contact => (
-                      <>
-                        {contact.person !== null && <ContactLink person={contact.person} />}
-                        {contact.organization !== null && (
-                          <ContactLink organization={contact.organization} />
-                        )}
-                      </>
-                    ))}
-                  </SectionField>
-                  <SectionField label="Service provider" contentWidth={{ xs: 7 }}>
-                    <>
-                      {props.activity.serviceProviderPerson !== null && (
-                        <ContactLink person={props.activity.serviceProviderPerson} />
-                      )}
-                      {props.activity.serviceProviderOrg !== null && (
-                        <ContactLink organization={props.activity.serviceProviderOrg} />
-                      )}
-                    </>
-                  </SectionField>
-                </Section>
-                {invoices.map((x: ApiGen_Concepts_PropertyActivityInvoice, index: number) => (
+                {invoices.map((x: ApiGen_Concepts_ManagementActivityInvoice, index: number) => (
                   <InvoiceView
-                    key={`activity-${x.propertyActivityId}-invoice-${x.id}`}
+                    key={`activity-${x.managementActivityId}-invoice-${x.id}`}
                     activityInvoice={x}
                     index={index}
                   />
                 ))}
-                <Section header="Invoices Total">
-                  <SectionField label="Total (before tax)" contentWidth={{ xs: 7 }}>
-                    {formatMoney(pretaxAmount)}
-                  </SectionField>
-                  <SectionField label="GST amount" contentWidth={{ xs: 7 }}>
-                    {formatMoney(gstAmount)}
-                  </SectionField>
-                  <SectionField label="PST amount" contentWidth={{ xs: 7 }}>
-                    {formatMoney(pstAmount)}
-                  </SectionField>
-                  <SectionField label="Total amount" contentWidth={{ xs: 7 }}>
-                    {formatMoney(totalAmount)}
-                  </SectionField>
-                </Section>
+                <ActivityDetailInvoiceTotalsView invoices={invoices} />
               </StyledSummarySection>
             </StyledFormWrapper>
 

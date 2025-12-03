@@ -35,6 +35,7 @@ public partial class PimsManagementFileTeamHist
     [Column("PRIMARY_CONTACT_ID")]
     public long? PrimaryContactId { get; set; }
 
+    [Required]
     [Column("MANAGEMENT_FILE_PROFILE_TYPE_CODE")]
     [StringLength(20)]
     public string ManagementFileProfileTypeCode { get; set; }

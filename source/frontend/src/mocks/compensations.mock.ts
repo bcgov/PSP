@@ -154,6 +154,7 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
       propertyAcquisitionFileId: 2,
       acquisitionFileProperty: {
         id: 1,
+        isActive: null,
         file: null,
         propertyName: '',
         displayOrder: 0,
@@ -166,6 +167,7 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
             y: 392268.0638614455,
           },
         },
+        boundary: null,
         rowVersion: 1,
       },
       rowVersion: 1,
@@ -177,6 +179,7 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
       propertyAcquisitionFileId: 2,
       acquisitionFileProperty: {
         id: 2,
+        isActive: null,
         file: null,
         propertyName: '',
         displayOrder: 0,
@@ -189,6 +192,7 @@ export const getMockApiCompensationWithProperty = (): ApiGen_Concepts_Compensati
             y: 392268.0638614455,
           },
         },
+        boundary: null,
         rowVersion: 1,
       },
       rowVersion: 1,
@@ -434,6 +438,7 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
   {
     file: null,
     id: 1,
+    isActive: null,
     propertyName: 'Property Test Name 1',
     location: {
       coordinate: {
@@ -441,6 +446,7 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
         y: 1139847.4977669886,
       },
     },
+    boundary: null,
     displayOrder: null,
     property: {
       id: 292,
@@ -529,7 +535,6 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
       },
       generalLocation: null,
       historicalFileNumbers: [],
-      notes: null,
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
       surplusDeclarationDate: '0001-01-01',
@@ -542,6 +547,7 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
   {
     file: null,
     id: 26,
+    isActive: null,
     propertyName: 'Property Test Name 2',
     location: {
       coordinate: {
@@ -549,6 +555,7 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
         y: 389961.4937399403,
       },
     },
+    boundary: null,
     displayOrder: null,
     property: {
       id: 443,
@@ -643,7 +650,6 @@ export const getMockCompensationPropertiesReq = (): ApiGen_Concepts_AcquisitionF
       },
       generalLocation: null,
       historicalFileNumbers: [],
-      notes: null,
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
       surplusDeclarationDate: '0001-01-01',

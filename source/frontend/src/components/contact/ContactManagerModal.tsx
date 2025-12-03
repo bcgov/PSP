@@ -1,3 +1,5 @@
+import { FaUser } from 'react-icons/fa';
+
 import GenericModal, { ModalSize } from '@/components/common/GenericModal';
 import { IContactSearchResult } from '@/interfaces';
 
@@ -24,8 +26,9 @@ export const ContactManagerModal: React.FunctionComponent<
     <GenericModal
       variant="info"
       display={props.display}
+      headerIcon={<FaUser size={20} />}
       setDisplay={props.setDisplay}
-      title="Select a contact"
+      title="Select Contact"
       message={
         <>
           <p>

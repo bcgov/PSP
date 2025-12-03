@@ -33,7 +33,7 @@ namespace Pims.Dal.Repositories
         public List<PimsPropertyResearchFile> GetAllByResearchFileId(long researchFileId)
         {
             return Context.PimsPropertyResearchFiles.AsNoTracking()
-                .Where(x => x.ResearchFileId == researchFileId)
+
                 .Include(rp => rp.PimsPrfPropResearchPurposeTyps)
                     .ThenInclude(rp => rp.PropResearchPurposeTypeCodeNavigation)
                 .Include(rp => rp.Property)
@@ -42,6 +42,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(rp => rp.DistrictCodeNavigation)
                 .Include(rp => rp.Property)
                     .ThenInclude(rp => rp.Address)
+                .Where(rp => rp.ResearchFileId == researchFileId)
+                .OrderBy(rp => rp.DisplayOrder)
                 .ToList();
         }
 

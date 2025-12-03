@@ -1,0 +1,46 @@
+[
+  {
+    "Test Case Description": "Create new Property Management",
+    "ManagementPropertyPurpose": "Active Transportation Corridor;Bridges/Trestles;Environmental Protection",
+    "ManagementUtilitiesPayable": "Yes",
+    "ManagementTaxesPayable": "No",
+    "ManagementPropertyAdditionalDetails": "Automated test - Add additional information into a property Management Tab",
+    "ManagementPropertyContactsStartRow": 1,
+    "ManagementPropertyContactsStartCount": 3,
+    "ManagementPropertyActivitiesStartRow": 1,
+    "ManagementPropertyActivitiesCount": 2
+  },
+  {
+    "Test Case Description": "Update existing Property Management",
+    "ManagementPropertyPurpose": "BC Ferries",
+    "ManagementUtilitiesPayable": "No",
+    "ManagementTaxesPayable": "Yes",
+    "ManagementPropertyAdditionalDetails": "Automated test - Update Summary section",
+    "ManagementPropertyContactsStartRow": 4,
+    "ManagementPropertyContactsStartCount": 1,
+    "ManagementPropertyActivitiesStartRow": 3,
+    "ManagementPropertyActivitiesCount": 1
+  },
+  {
+    "Test Case Description": "Clean up Property Management",
+    "ManagementPropertyPurpose": null,
+    "ManagementUtilitiesPayable": "Unknown",
+    "ManagementTaxesPayable": "Unknown",
+    "ManagementPropertyAdditionalDetails": null,
+    "ManagementPropertyContactsStartRow": 0,
+    "ManagementPropertyContactsStartCount": 0,
+    "ManagementPropertyActivitiesStartRow": 0,
+    "ManagementPropertyActivitiesCount": 0
+  },
+  {
+    "Test Case Description": "Minimum Property Management",
+    "ManagementPropertyPurpose": null,
+    "ManagementUtilitiesPayable": null,
+    "ManagementTaxesPayable": null,
+    "ManagementPropertyAdditionalDetails": null,
+    "ManagementPropertyContactsStartRow": 0,
+    "ManagementPropertyContactsStartCount": 0,
+    "ManagementPropertyActivitiesStartRow": 4,
+    "ManagementPropertyActivitiesCount": 1
+  }
+]

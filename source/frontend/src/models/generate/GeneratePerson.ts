@@ -5,8 +5,9 @@ import { formatNames } from '@/utils/personUtils';
 
 import { ApiGen_Concepts_Person } from '../api/generated/ApiGen_Concepts_Person';
 import { Api_GenerateAddress } from './GenerateAddress';
+import { Api_GenerateContact } from './GenerateOrganization';
 
-export class Api_GeneratePerson {
+export class Api_GeneratePerson implements Api_GenerateContact {
   given_name: string;
   middle_names: string;
   last_name: string;
@@ -15,8 +16,9 @@ export class Api_GeneratePerson {
   full_name_string: string;
   address: Api_GenerateAddress | null;
   phone: string;
+  title: string;
 
-  constructor(person: ApiGen_Concepts_Person | null | undefined) {
+  constructor(person: ApiGen_Concepts_Person | null | undefined, title?: string) {
     this.given_name = person?.firstName ?? '';
     this.middle_names = person?.middleNames ?? '';
     this.last_name = person?.surname ?? '';
@@ -54,5 +56,6 @@ export class Api_GeneratePerson {
       ? new Api_GenerateAddress(getApiPersonOrOrgMailingAddress(person) ?? null)
       : null;
     this.full_name_string = formatNames([this.given_name, this.middle_names, this.last_name]);
+    this.title = title ?? '';
   }
 }

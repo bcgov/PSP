@@ -1,15 +1,14 @@
 import isNumber from 'lodash/isNumber';
 
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
-import { IMapProperty } from '@/components/propertySelector/models';
-import { AreaUnitTypes } from '@/constants/index';
 import {
   fromApiOrganization,
   fromApiPerson,
   IAutocompletePrediction,
   IContactSearchResult,
 } from '@/interfaces';
-import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
@@ -19,7 +18,7 @@ import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Con
 import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { exists, isValidId, isValidIsoDateTime } from '@/utils';
+import { applyDisplayOrder, exists, isValidId, isValidIsoDateTime } from '@/utils';
 import {
   emptyStringToNull,
   fromTypeCode,
@@ -186,6 +185,10 @@ export class LeaseFormModel implements WithLeaseTeam {
   }
 
   public static toApi(formLease: LeaseFormModel): ApiGen_Concepts_Lease {
+    const fileProperties =
+      formLease.properties?.map(p => FormLeaseProperty.toApi(p)).filter(x => exists(x)) ?? [];
+    const sortedProperties = applyDisplayOrder(fileProperties);
+
     return {
       id: formLease.id ?? 0,
       lFileNo: stringToNull(formLease.lFileNo),
@@ -214,8 +217,7 @@ export class LeaseFormModel implements WithLeaseTeam {
       motiName: formLease.motiName,
       hasDigitalLicense: formLease.hasDigitalLicense ?? null,
       hasPhysicalLicense: formLease.hasPhysicalLicense ?? null,
-      fileProperties:
-        formLease.properties?.map(p => FormLeaseProperty.toApi(p)).filter(x => exists(x)) ?? [],
+      fileProperties: sortedProperties ?? [],
       isResidential: formLease.isResidential,
       isCommercialBuilding: formLease.isCommercialBuilding,
       isOtherImprovement: formLease.isOtherImprovement,
@@ -267,11 +269,12 @@ export class FormLeaseProperty {
   name?: string;
   landArea: number;
   areaUnitTypeCode: string;
+  displayOrder: number | null;
 
-  private constructor(leaseId?: number | null) {
+  constructor(leaseId?: number | null) {
     this.leaseId = leaseId ?? null;
     this.landArea = 0;
-    this.areaUnitTypeCode = AreaUnitTypes.SquareMeters;
+    this.areaUnitTypeCode = ApiGen_CodeTypes_AreaUnitTypes.M2;
   }
 
   public static fromFormLeaseProperty(baseModel?: Partial<FormLeaseProperty>): FormLeaseProperty {
@@ -286,19 +289,20 @@ export class FormLeaseProperty {
     model.rowVersion = apiPropertyLease.rowVersion ?? undefined;
     model.name = apiPropertyLease.propertyName ?? undefined;
     model.landArea = apiPropertyLease.leaseArea ?? 0;
-    model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || AreaUnitTypes.SquareMeters;
-    return model;
-  }
-
-  public static fromMapProperty(mapProperty: IMapProperty): FormLeaseProperty {
-    const model = new FormLeaseProperty();
-    model.property = PropertyForm.fromMapProperty(mapProperty);
+    model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || ApiGen_CodeTypes_AreaUnitTypes.M2;
+    model.displayOrder = apiPropertyLease.displayOrder;
     return model;
   }
 
   public static fromFeatureDataset(mapProperty: SelectedFeatureDataset): FormLeaseProperty {
     const model = new FormLeaseProperty();
     model.property = PropertyForm.fromFeatureDataset(mapProperty);
+    return model;
+  }
+
+  public static fromPropertyForm(propertyForm: PropertyForm): FormLeaseProperty {
+    const model = new FormLeaseProperty();
+    model.property = new PropertyForm(propertyForm);
     return model;
   }
 
@@ -410,7 +414,7 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     hasDigitalLicense: null,
     hasPhysicalLicense: null,
     fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeaseStatusTypes.DRAFT),
-    paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
+    paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL),
     leasePurposes: [],
     programType: null,
     type: null,
@@ -449,3 +453,6 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     totalAllowableCompensation: null,
     leaseTeam: [],
   });
+
+export const isLeaseFile = (file: object): file is ApiGen_Concepts_Lease =>
+  exists(file) && Object.hasOwn(file, 'paymentReceivableType');

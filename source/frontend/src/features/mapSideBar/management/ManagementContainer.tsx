@@ -5,7 +5,7 @@ import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { useManagementProvider } from '@/hooks/repositories/useManagementProvider';
+import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
@@ -15,10 +15,12 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isValidId, stripTrailingSlash } from '@/utils';
+import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
+import { FileTabType } from '../shared/detail/FileTabs';
 import { PropertyForm } from '../shared/models';
+import usePathGenerator from '../shared/sidebarPathGenerator';
 import { IManagementViewProps } from './ManagementView';
 
 export interface IManagementContainerProps {
@@ -51,7 +53,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     },
     updateManagementProperties,
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: loadingGetLastUpdatedBy },
-  } = useManagementProvider();
+  } = useManagementFileRepository();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
 
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -64,6 +66,8 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
   const match = useRouteMatch();
   const query = useQuery();
   const isEditing = query.get('edit') === 'true';
+  const urlPathWrapper = usePathGenerator();
+  const tabMatch = useRouteMatch<{ detailType: string; id: string }>(`${match.path}/:tab`);
 
   const setIsEditing = (value: boolean) => {
     if (value) {
@@ -90,7 +94,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
       // retrieve related entities (ie properties items) in parallel
       const fileProperties = await retrieveManagementFileProperties(managementFileId);
 
-      retrieved.fileProperties = fileProperties ?? null;
+      retrieved.fileProperties = sortFileProperties(fileProperties) ?? null;
       setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Management });
     } else {
       setFile(undefined);
@@ -106,7 +110,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     }
   }, [managementFileId, getLastUpdatedBy, setLastUpdatedBy]);
 
-  React.useEffect(() => {
+  useEffect(() => {
     if (
       !exists(lastUpdatedBy) ||
       managementFileId !== lastUpdatedBy.parentId ||
@@ -134,23 +138,51 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
 
-  const navigateToMenuRoute = (selectedIndex: number) => {
-    const route = selectedIndex === 0 ? '' : `/property/${selectedIndex}`;
-    history.push(`${stripTrailingSlash(match.url)}${route}`);
+  const pathGenerator = usePathGenerator();
+
+  const stripEditFromPath = () => {
+    if (!tabMatch) {
+      return;
+    }
+
+    urlPathWrapper.showDetails('management', managementFileId, FileTabType.FILE_DETAILS, false);
   };
 
-  const onMenuChange = (selectedIndex: number) => {
+  const onSelectFileSummary = () => {
+    if (!exists(managementFile)) {
+      return;
+    }
+
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() => navigateToMenuRoute(selectedIndex));
+        handleCancelClick(() => pathGenerator.showFile('management', managementFile.id));
         return;
       }
     }
-    navigateToMenuRoute(selectedIndex);
+    pathGenerator.showFile('management', managementFile.id);
   };
 
-  const onShowPropertySelector = () => {
-    history.push(`${stripTrailingSlash(match.url)}/property/selector`);
+  const onSelectProperty = (filePropertyId: number) => {
+    if (!exists(managementFile)) {
+      return;
+    }
+
+    if (isEditing) {
+      if (formikRef?.current?.dirty) {
+        handleCancelClick(() =>
+          pathGenerator.showFilePropertyId('management', managementFile.id, filePropertyId),
+        );
+        return;
+      }
+    }
+    // The index needs to be offset to match the menu index
+    pathGenerator.showFilePropertyId('management', managementFile.id, filePropertyId);
+  };
+
+  const onEditProperties = () => {
+    if (exists(managementFile)) {
+      pathGenerator.editProperties('management', managementFile.id);
+    }
   };
 
   const handleSaveClick = async () => {
@@ -193,10 +225,12 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
       formikRef.current?.resetForm();
     }
     setIsEditing(false);
+    stripEditFromPath();
   };
 
   const onSuccess = (refreshProperties?: boolean, refreshFile?: boolean) => {
     setIsEditing(false);
+    stripEditFromPath();
     fetchLastUpdatedBy();
     if (refreshFile) {
       fetchManagementFile();
@@ -283,8 +317,9 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
         onClose={close}
         onCancel={handleCancelClick}
         onSave={handleSaveClick}
-        onMenuChange={onMenuChange}
-        onShowPropertySelector={onShowPropertySelector}
+        onSelectFileSummary={onSelectFileSummary}
+        onSelectProperty={onSelectProperty}
+        onEditProperties={onEditProperties}
         onUpdateProperties={onUpdateProperties}
         onSuccess={onSuccess}
         confirmBeforeAdd={confirmBeforeAdd}
@@ -296,7 +331,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
           managementFile?.id === managementFileId
             ? {
                 ...managementFile,
-                fileProperties: managementFileProperties ?? null,
+                fileProperties: sortFileProperties(managementFileProperties) ?? null,
               }
             : undefined
         }

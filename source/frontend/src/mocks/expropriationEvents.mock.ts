@@ -26,7 +26,7 @@ export const getMockExpropriationEvent = (
       addressComment: null,
       useOrganizationAddress: false,
       isDisabled: false,
-      propertyActivityId: null,
+      managementActivityId: null,
       contactMethods: [],
       personAddresses: [],
       personOrganizations: [],

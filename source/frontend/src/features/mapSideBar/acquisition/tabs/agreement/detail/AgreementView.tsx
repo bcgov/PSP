@@ -52,7 +52,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
             title="Agreements"
             addButtonText="Add Agreement"
             addButtonIcon={<FaPlus size={'2rem'} />}
-            onAdd={() => {
+            onButtonAction={() => {
               history.push(`${match.url}/add`);
             }}
             isAddEnabled={!isFileFinalStatus}
@@ -207,6 +207,12 @@ function getAgreementFormName(agreementType: string | null): string {
       return 'H-179T';
     case ApiGen_CodeTypes_AgreementTypes.H0074:
       return 'H-0074';
+    case ApiGen_CodeTypes_AgreementTypes.H179FSPART:
+      return 'H-179PFS';
+    case ApiGen_CodeTypes_AgreementTypes.H179PTO:
+      return 'H-179PTO';
+    case ApiGen_CodeTypes_AgreementTypes.H179FS:
+      return 'H-179FS';
     default:
       return '';
   }

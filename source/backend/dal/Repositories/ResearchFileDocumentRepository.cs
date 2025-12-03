@@ -12,7 +12,7 @@ namespace Pims.Dal.Repositories
     /// <summary>
     /// ResearchFileDocumentRepository class, provides a service layer to interact with document research files within the datasource.
     /// </summary>
-    public class ResearchFileDocumentRepository : BaseRepository<PimsResearchFileDocument>, IResearchFileDocumentRepository
+    public class ResearchFileDocumentRepository : BaseRepository<PimsResearchFileDocument>, IDocumentRelationshipRepository<PimsResearchFileDocument>
     {
         #region Constructors
 
@@ -34,7 +34,7 @@ namespace Pims.Dal.Repositories
         /// Get a list of all the document file relationships for a given research file.
         /// </summary>
         /// <returns></returns>
-        public IList<PimsResearchFileDocument> GetAllByResearchFile(long fileId)
+        public IList<PimsResearchFileDocument> GetAllByParentId(long parentId)
         {
             return this.Context.PimsResearchFileDocuments
                 .Include(ad => ad.Document)
@@ -44,23 +44,7 @@ namespace Pims.Dal.Repositories
                 .Include(ad => ad.Document)
                     .ThenInclude(q => q.PimsDocumentQueues)
                         .ThenInclude(s => s.DocumentQueueStatusTypeCodeNavigation)
-                .Where(ad => ad.ResearchFileId == fileId)
-                .AsNoTracking()
-                .ToList();
-        }
-
-        /// <summary>
-        /// Get a list of all the document file relationships for a a given research file.
-        /// </summary>
-        /// <returns></returns>
-        public IList<PimsResearchFileDocument> GetAllByDocument(long documentId)
-        {
-            return this.Context.PimsResearchFileDocuments
-                .Include(ad => ad.Document)
-                    .ThenInclude(d => d.DocumentStatusTypeCodeNavigation)
-                .Include(ad => ad.Document)
-                    .ThenInclude(d => d.DocumentType)
-                .Where(ad => ad.DocumentId == documentId)
+                .Where(ad => ad.ResearchFileId == parentId)
                 .AsNoTracking()
                 .ToList();
         }
@@ -70,7 +54,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="researchDocument"></param>
         /// <returns></returns>
-        public PimsResearchFileDocument AddResearch(PimsResearchFileDocument researchDocument)
+        public PimsResearchFileDocument AddDocument(PimsResearchFileDocument researchDocument)
         {
             researchDocument.ThrowIfNull(nameof(researchDocument));
 
@@ -90,7 +74,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="researchDocument"></param>
         /// <returns></returns>
-        public bool DeleteResearch(PimsResearchFileDocument researchDocument)
+        public bool DeleteDocument(PimsResearchFileDocument researchDocument)
         {
             if (researchDocument == null)
             {

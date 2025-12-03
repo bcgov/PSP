@@ -9,9 +9,10 @@ import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import {
   PIMS_Property_Boundary_View,
-  PIMS_Property_Location_View,
+  PIMS_Property_Lite_View,
 } from '@/models/layers/pimsPropertyLocationView';
 import { TenantContext } from '@/tenants';
+import { exists } from '@/utils';
 
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints for the pims property location.
@@ -48,17 +49,17 @@ export const usePimsPropertyLayer = () => {
         const url = `${propertiesUrl}${
           geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''
         }`;
-        return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Location_View>>(url);
+        return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Boundary_View>>(url);
       },
       [propertiesUrl],
     ),
     requestName: 'LOAD_PROPERTIES',
   });
 
-  const loadPropertyLayerMinimal = useApiRequestWrapper({
+  const loadPropertyLocationOnlyMinimal = useApiRequestWrapper({
     requestFunction: useCallback(() => {
-      return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Location_View>>(
-        minimalPropertiesUrl,
+      return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Lite_View>>(
+        minimalPropertiesUrl + `&cql_filter= BOUNDARY IS NULL AND LOCATION IS NOT NULL`,
       );
     }, [minimalPropertiesUrl]),
     requestName: 'LOAD_PROPERTIES_MINIMAL',
@@ -116,22 +117,43 @@ export const usePimsPropertyLayer = () => {
     [findMultipleWhereContainsWrappedExecute],
   );
 
+  const findOneByPidOrPin = useCallback(
+    async (pid?: string, pin?: string) => {
+      if (!exists(pid) && !exists(pin)) {
+        return undefined;
+      }
+
+      const params: IGeoSearchParams = {
+        PID: pid,
+        PIN: pin,
+      };
+      const featureCollection = await loadPropertyLayer.execute(params);
+
+      return exists(featureCollection) && featureCollection.features?.length > 0
+        ? featureCollection.features[0]
+        : undefined;
+    },
+    [loadPropertyLayer],
+  );
+
   return useMemo(
     () => ({
       loadPropertyLayer,
-      loadPropertyLayerMinimal,
+      loadPropertyLayerMinimal: loadPropertyLocationOnlyMinimal,
       findAllByBoundary,
       findAllByBoundaryLoading: findMultipleWhereContainsWrappedLoading,
       findOneByBoundary,
       findOneByBoundaryLoading: findOneWhereContainsWrappedLoading,
+      findOneByPidOrPin,
     }),
     [
       findAllByBoundary,
       findMultipleWhereContainsWrappedLoading,
       findOneByBoundary,
+      findOneByPidOrPin,
       findOneWhereContainsWrappedLoading,
       loadPropertyLayer,
-      loadPropertyLayerMinimal,
+      loadPropertyLocationOnlyMinimal,
     ],
   );
 };

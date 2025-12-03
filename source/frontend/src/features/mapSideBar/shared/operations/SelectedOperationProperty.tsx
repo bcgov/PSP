@@ -3,8 +3,9 @@ import { Col, Row } from 'react-bootstrap';
 import { RemoveButton } from '@/components/common/buttons';
 import { InlineInput } from '@/components/common/form/styles';
 import OverflowTip from '@/components/common/OverflowTip';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
-import { AreaUnitTypes } from '@/constants';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { convertArea, formatApiAddress, formatNumber, pidFormatter } from '@/utils';
 
@@ -20,7 +21,7 @@ export const SelectedOperationProperty: React.FunctionComponent<
   ISelectedOperationPropertyProps
 > = ({ property, getMarkerIndex, nameSpace, onRemove, isEditable }) => {
   const getAreaValue = (area: number, unit: string) => {
-    const sqm = convertArea(area, unit, AreaUnitTypes.SquareMeters);
+    const sqm = convertArea(area, unit, ApiGen_CodeTypes_AreaUnitTypes.M2);
     return formatNumber(sqm, 0, 4);
   };
 
@@ -44,7 +45,10 @@ export const SelectedOperationProperty: React.FunctionComponent<
         )}
       </Col>
       <Col md={3}>{formatApiAddress(property?.address) ?? ''}</Col>
-      <Col md={1} className="d-flex justify-content-center">
+      <Col xs="auto">
+        <ZoomToLocation icon={ZoomIconType.single} pimsProperties={[property]} />
+      </Col>
+      <Col md={'auto'} className="d-flex justify-content-center pl-2">
         <RemoveButton onRemove={onRemove} />
       </Col>
     </Row>

@@ -64,12 +64,14 @@ namespace Pims.Api.Models.Concepts.Note
                 .Map(dest => dest.ManagementFileId, src => src.Parent.Id)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
 
+            // PimsProjectNote -> EntityNoteModel
             config.NewConfig<Entity.PimsProjectNote, EntityNoteModel>()
                 .Map(dest => dest.Id, src => src.ProjectNoteId)
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.Parent, src => src)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
+            // PimsProjectNote <- EntityNoteModel
             config.NewConfig<EntityNoteModel, Entity.PimsProjectNote>()
                 .Map(dest => dest.ProjectNoteId, src => src.Id)
                 .Map(dest => dest.Note, src => src.Note)
@@ -88,6 +90,20 @@ namespace Pims.Api.Models.Concepts.Note
                 .Map(dest => dest.ResearchFileNoteId, src => src.Id)
                 .Map(dest => dest.Note, src => src.Note)
                 .Map(dest => dest.ResearchFileId, src => src.Parent.Id)
+                .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
+
+            // PimsPropertyNote -> EntityNoteModel
+            config.NewConfig<Entity.PimsPropertyNote, EntityNoteModel>()
+                .Map(dest => dest.Id, src => src.PropertyNoteId)
+                .Map(dest => dest.Note, src => src.Note)
+                .Map(dest => dest.Parent, src => src)
+                .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
+
+            // PimsPropertyNote <- EntityNoteModel
+            config.NewConfig<EntityNoteModel, Entity.PimsPropertyNote>()
+                .Map(dest => dest.PropertyNoteId, src => src.Id)
+                .Map(dest => dest.Note, src => src.Note)
+                .Map(dest => dest.PropertyId, src => src.Parent.Id)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
 
             config.NewConfig<Entity.PimsProjectNote, NoteParentModel>()

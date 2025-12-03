@@ -1,11 +1,9 @@
-import { Feature, FeatureCollection, Geometry } from 'geojson';
+import { Feature, FeatureCollection, Geometry, MultiPolygon, Polygon } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { useCallback } from 'react';
 
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
-import { useCrownLandLayer } from '@/hooks/repositories/mapLayer/useCrownLandLayer';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
-import { usePimsHighwayLayer } from '@/hooks/repositories/mapLayer/useHighwayLayer';
 import { useLegalAdminBoundariesMapLayer } from '@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer';
 import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
 import { useMapProperties } from '@/hooks/repositories/useMapProperties';
@@ -55,19 +53,31 @@ export interface LocationFeatureDataset extends FeatureDataset {
 export interface SelectedFeatureDataset extends FeatureDataset {
   id?: string;
   location: LatLngLiteral;
+  fileBoundary: Polygon | MultiPolygon | null;
   parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
   pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
   regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
   districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
   municipalityFeature: Feature<Geometry, WHSE_Municipalities_Feature_Properties> | null;
+  isActive?: boolean;
+  displayOrder?: number;
+}
+
+export interface WorklistLocationFeatureDataset
+  extends Omit<FeatureDataset, 'selectingComponentId' | 'fileLocation'> {
+  fullyAttributedFeatures: FeatureCollection<
+    Geometry,
+    PMBC_FullyAttributed_Feature_Properties
+  > | null;
+  pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
+  regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
+  districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
 }
 
 const useLocationFeatureLoader = () => {
   const fullyAttributedService = useFullyAttributedParcelMapLayer();
   const adminBoundaryLayerService = useAdminBoundaryMapLayer();
   const adminLegalBoundaryLayerService = useLegalAdminBoundariesMapLayer();
-  const highwayLayerService = usePimsHighwayLayer();
-  const crownLandLayerService = useCrownLandLayer();
 
   const {
     loadProperties: { execute: loadProperties },
@@ -83,16 +93,6 @@ const useLocationFeatureLoader = () => {
   // Multiple results
   const adminLegalBoundaryLayerServiceFindOneMunicipality =
     adminLegalBoundaryLayerService.findMultipleMunicipality;
-  const highwayLayerServiceFindMultiple = highwayLayerService.findMultiple;
-
-  const crownLandLayerServiceFindMultipleLicense =
-    crownLandLayerService.findMultipleCrownLandLicense;
-  const crownLandLayerServiceFindMultipleTenure = crownLandLayerService.findMultipleCrownLandTenure;
-  const crownLandLayerServiceFindMultipleLease = crownLandLayerService.findMultipleCrownLandLease;
-  const crownLandLayerServiceFindMultipleInclusion =
-    crownLandLayerService.findMultipleCrownLandInclusion;
-  const crownLandLayerServiceFindMultipleInventory =
-    crownLandLayerService.findMultipleCrownLandInventory;
 
   const loadLocationDetails = useCallback(
     async ({
@@ -122,41 +122,14 @@ const useLocationFeatureLoader = () => {
       // call these APIs in parallel - notice there is no "await"
       // Could return multiple results
       const fullyAttributedTask = fullyAttributedServiceFindAll(latLng);
-      const highwayTask = highwayLayerServiceFindMultiple(latLng, 'GEOMETRY');
-      const crownLandLeaseTask = crownLandLayerServiceFindMultipleLease(latLng);
-      const crownLandLicensesTask = crownLandLayerServiceFindMultipleLicense(latLng);
-      const crownLandTenuresTask = crownLandLayerServiceFindMultipleTenure(latLng);
-      const crownLandInventoryTask = crownLandLayerServiceFindMultipleInventory(latLng);
-      const crownLandInclusionsTask = crownLandLayerServiceFindMultipleInclusion(latLng);
 
       // single results expected
       const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'SHAPE');
       const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'SHAPE');
       const municipalityFeatureTask = adminLegalBoundaryLayerServiceFindOneMunicipality(latLng);
 
-      const [
-        parcelFeatureCollection,
-        regionFeature,
-        districtFeature,
-        highwayFeatures,
-        crownLandLeaseFeatures,
-        crownLandLicensesFeatures,
-        crownLandTenuresFeatures,
-        crownLandInventoryFeatures,
-        crownLandInclusionsFeatures,
-        municipalityFeatures,
-      ] = await Promise.all([
-        fullyAttributedTask,
-        regionTask,
-        districtTask,
-        highwayTask,
-        crownLandLeaseTask,
-        crownLandLicensesTask,
-        crownLandTenuresTask,
-        crownLandInventoryTask,
-        crownLandInclusionsTask,
-        municipalityFeatureTask,
-      ]);
+      const [parcelFeatureCollection, regionFeature, districtFeature, municipalityFeatures] =
+        await Promise.all([fullyAttributedTask, regionTask, districtTask, municipalityFeatureTask]);
 
       let pimsLocationProperties: Feature<Geometry, PIMS_Property_Location_View>[] | undefined =
         undefined;
@@ -208,12 +181,6 @@ const useLocationFeatureLoader = () => {
       result.regionFeature = regionFeature ?? null;
       result.districtFeature = districtFeature ?? null;
       result.municipalityFeatures = municipalityFeatures ?? null;
-      result.highwayFeatures = highwayFeatures ?? null;
-      result.crownLandLeasesFeatures = crownLandLeaseFeatures ?? null;
-      result.crownLandLicensesFeatures = crownLandLicensesFeatures ?? null;
-      result.crownLandTenuresFeatures = crownLandTenuresFeatures ?? null;
-      result.crownLandInventoryFeatures = crownLandInventoryFeatures ?? null;
-      result.crownLandInclusionsFeatures = crownLandInclusionsFeatures ?? null;
 
       return result;
     },
@@ -221,20 +188,49 @@ const useLocationFeatureLoader = () => {
       adminBoundaryLayerServiceFindDistrict,
       adminBoundaryLayerServiceFindRegion,
       adminLegalBoundaryLayerServiceFindOneMunicipality,
-      crownLandLayerServiceFindMultipleInclusion,
-      crownLandLayerServiceFindMultipleInventory,
-      crownLandLayerServiceFindMultipleLease,
-      crownLandLayerServiceFindMultipleLicense,
-      crownLandLayerServiceFindMultipleTenure,
       findAllByBoundary,
       fullyAttributedServiceFindAll,
-      highwayLayerServiceFindMultiple,
       loadProperties,
+    ],
+  );
+
+  const loadWorklistLocationDetails = useCallback(
+    async ({ latLng }: { latLng: LatLngLiteral }): Promise<WorklistLocationFeatureDataset> => {
+      const result: WorklistLocationFeatureDataset = {
+        location: latLng,
+        fullyAttributedFeatures: null,
+        pimsFeature: null,
+        regionFeature: null,
+        districtFeature: null,
+      };
+
+      // call these APIs in parallel - notice there is no "await"
+      const fullyAttributedTask = fullyAttributedServiceFindAll(latLng);
+      const regionTask = adminBoundaryLayerServiceFindRegion(latLng, 'SHAPE');
+      const districtTask = adminBoundaryLayerServiceFindDistrict(latLng, 'SHAPE');
+
+      const [pmbcFeatures, regionFeature, districtFeature] = await Promise.all([
+        fullyAttributedTask,
+        regionTask,
+        districtTask,
+      ]);
+
+      result.fullyAttributedFeatures = pmbcFeatures ?? null;
+      result.regionFeature = regionFeature ?? null;
+      result.districtFeature = districtFeature ?? null;
+
+      return result;
+    },
+    [
+      adminBoundaryLayerServiceFindDistrict,
+      adminBoundaryLayerServiceFindRegion,
+      fullyAttributedServiceFindAll,
     ],
   );
 
   return {
     loadLocationDetails,
+    loadWorklistLocationDetails,
   };
 };
 

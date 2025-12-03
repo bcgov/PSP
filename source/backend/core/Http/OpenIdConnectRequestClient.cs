@@ -20,11 +20,6 @@ namespace Pims.Core.Http
     public class OpenIdConnectRequestClient : HttpRequestClient, IOpenIdConnectRequestClient
     {
         #region Variables
-        public Models.TokenModel AccessToken
-        {
-            get { return _accessToken; }
-        }
-
         private readonly JwtSecurityTokenHandler _tokenHandler;
         private Models.TokenModel _accessToken = null;
         #endregion
@@ -40,6 +35,7 @@ namespace Pims.Core.Http
         /// get - The configuration options.
         /// </summary>
         public OpenIdConnectOptions OpenIdConnectOptions { get; }
+
         #endregion
 
         #region Constructors
@@ -105,31 +101,38 @@ namespace Pims.Core.Http
         /// <returns></returns>
         public async Task<string> RequestAccessToken()
         {
-            HttpResponseMessage response;
-            if (_accessToken == null || string.IsNullOrWhiteSpace(_accessToken.AccessToken) || (!string.IsNullOrWhiteSpace(_accessToken.RefreshToken) && _tokenHandler.ReadJwtToken(_accessToken.RefreshToken).ValidTo <= DateTime.UtcNow))
+            if (IsValidToken())
             {
-                // If there is no access token, or the refresh token has expired.
-                response = await RequestToken();
+                // We have a valid token, keep on using it.
+                return $"Bearer {_accessToken.AccessToken}";
             }
-            else if (!string.IsNullOrWhiteSpace(_accessToken.AccessToken)
-                && _tokenHandler.ReadJwtToken(_accessToken.AccessToken).ValidTo <= DateTime.UtcNow
-                && !string.IsNullOrWhiteSpace(_accessToken.RefreshToken)
-                && _tokenHandler.ReadJwtToken(_accessToken.RefreshToken).ValidTo > DateTime.UtcNow)
+
+            HttpResponseMessage response;
+            if (IsValidRefreshToken())
             {
                 // If the access token has expired, but not the refresh token has not expired.
                 response = await RefreshToken(_accessToken.RefreshToken);
             }
             else
             {
-                // We have a valid token, keep on using it.
-                return $"Bearer {_accessToken.AccessToken}"; // NOSONAR
+                // If there is no access token, or the refresh token has expired.
+                response = await RequestToken();
             }
 
             // Extract the JWT token to use when making the request.
             if (response.IsSuccessStatusCode)
             {
-                using var responseStream = await response.Content.ReadAsStreamAsync();
-                _accessToken = await responseStream.DeserializeAsync<Models.TokenModel>();
+                var tokenStr = await response.Content.ReadAsStringAsync();
+
+                using (JsonDocument document = JsonDocument.Parse(tokenStr))
+                {
+                    JsonElement root = document.RootElement;
+                    string access = root.GetProperty("access_token").GetString();
+                    string refresh = root.TryGetProperty("refresh_token", out JsonElement refreshNode) ? refreshNode.ToString() : null;
+
+                    _accessToken = new Models.TokenModel(access, refresh);
+                }
+
                 return $"Bearer {_accessToken.AccessToken}";
             }
             else
@@ -183,7 +186,7 @@ namespace Pims.Core.Http
                     { "audience", audience },
                 };
                 var form = new FormUrlEncodedContent(p);
-                form.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
+                form.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
                 tokenMessage.Content = form;
                 return await this.Client.SendAsync(tokenMessage, cancellation);
             });
@@ -226,7 +229,7 @@ namespace Pims.Core.Http
                     { "refresh_token", refreshToken },
                 };
                 var form = new FormUrlEncodedContent(p);
-                form.Headers.ContentType = new System.Net.Http.Headers.MediaTypeHeaderValue("application/x-www-form-urlencoded");
+                form.Headers.ContentType = new MediaTypeHeaderValue("application/x-www-form-urlencoded");
                 tokenMessage.Content = form;
                 return await this.Client.SendAsync(tokenMessage, cancellation);
             });
@@ -304,6 +307,26 @@ namespace Pims.Core.Http
                 headers.Add("Authorization", token.ToString());
             }
             return headers;
+        }
+
+        private bool IsValidToken()
+        {
+            if (_accessToken == null || string.IsNullOrEmpty(_accessToken.AccessToken))
+            {
+                return false;
+            }
+
+            return DateTime.UtcNow < _tokenHandler.ReadJwtToken(_accessToken.AccessToken).ValidTo;
+        }
+
+        private bool IsValidRefreshToken()
+        {
+            if (_accessToken == null || string.IsNullOrEmpty(_accessToken.RefreshToken))
+            {
+                return false;
+            }
+
+            return DateTime.UtcNow < _tokenHandler.ReadJwtToken(_accessToken.RefreshToken).ValidTo;
         }
 
         #endregion

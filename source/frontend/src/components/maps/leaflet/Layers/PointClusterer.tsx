@@ -1,8 +1,7 @@
 import './PointClusterer.scss';
 
 import { BBox, Feature, FeatureCollection, Geometry, MultiPolygon, Polygon } from 'geojson';
-import L, { geoJSON, LatLng, LatLngLiteral } from 'leaflet';
-import { find } from 'lodash';
+import L, { geoJSON } from 'leaflet';
 import polylabel from 'polylabel';
 import React, { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { FeatureGroup, Marker, Polyline, useMap } from 'react-leaflet';
@@ -13,17 +12,18 @@ import useSupercluster from '@/components/maps/hooks/useSupercluster';
 import { useFilterContext } from '@/components/maps/providers/FilterProvider';
 import { ICluster } from '@/components/maps/types';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { TANTALIS_CrownSurveyParcels_Feature_Properties } from '@/models/layers/crownLand';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import {
   PIMS_Property_Boundary_View,
-  PIMS_Property_Location_View,
+  PIMS_Property_Location_Lite_View,
 } from '@/models/layers/pimsPropertyLocationView';
 import { exists } from '@/utils';
 
 import { ONE_HUNDRED_METER_PRECISION } from '../../constants';
 import SinglePropertyMarker from '../Markers/SingleMarker';
 import { Spiderfier, SpiderSet } from './Spiderfier';
-import { getDraftIcon, getMarkerIcon, pointToLayer, zoomToCluster } from './util';
+import { getMarkerIcon, pointToLayer, zoomToCluster } from './util';
 
 export type PointClustererProps = {
   bounds?: BBox;
@@ -55,13 +55,13 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const spiderfierRef =
     useRef<
       Spiderfier<
-        | PIMS_Property_Location_View
+        | PIMS_Property_Location_Lite_View
         | PIMS_Property_Boundary_View
         | PMBC_FullyAttributed_Feature_Properties
+        | TANTALIS_CrownSurveyParcels_Feature_Properties
       >
     >();
   const featureGroupRef = useRef<L.FeatureGroup>(null);
-  const draftFeatureGroupRef = useRef<L.FeatureGroup>(null);
   const filterState = useFilterContext();
 
   // TODO: Figure out if the currentCluster is needed
@@ -83,26 +83,17 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
   const [spider, setSpider] = useState<
     SpiderSet<
-      | PIMS_Property_Location_View
+      | PIMS_Property_Location_Lite_View
       | PIMS_Property_Boundary_View
       | PMBC_FullyAttributed_Feature_Properties
+      | TANTALIS_CrownSurveyParcels_Feature_Properties
     >
   >({});
 
-  const draftPoints = useMemo<LatLngLiteral[]>(() => {
-    return mapMachine.filePropertyLocations.map(x => {
-      // The values on the feature are rounded to the 4th decimal. Do the same to the draft points.
-      return {
-        lat: x.lat,
-        lng: x.lng,
-      };
-    });
-  }, [mapMachine.filePropertyLocations]);
-
-  const pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_View> =
+  const pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_Lite_View> =
     useMemo(() => {
-      let filteredFeatures = mapMachine.mapFeatureData.pimsLocationFeatures.features.filter(x =>
-        mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
+      let filteredFeatures = mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.features?.filter(
+        x => mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
       );
 
       if (!mapMachine.showRetired) {
@@ -115,36 +106,56 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
       );
 
       return {
-        type: mapMachine.mapFeatureData.pimsLocationFeatures.type,
-        features: displayableFeatures,
+        type: mapMachine.mapFeatureData.pimsLocationLiteFeatures.type,
+        features: zoom > minZoom ? displayableFeatures : [],
       };
     }, [
       mapMachine.activePimsPropertyIds,
-      mapMachine.mapFeatureData.pimsLocationFeatures.features,
-      mapMachine.mapFeatureData.pimsLocationFeatures.type,
+      mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.type,
+      mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.features,
       mapMachine.showDisposed,
       mapMachine.showRetired,
+      minZoom,
+      zoom,
     ]);
 
-  const pimsBoundaryFeatures = mapMachine.mapFeatureData.pimsBoundaryFeatures;
+  const pimsBoundaryFeatures = mapMachine.mapFeatureData?.pimsBoundaryFeatures;
 
-  const pmbcFeatures = mapMachine.mapFeatureData.fullyAttributedFeatures;
+  const pmbcFeatures = mapMachine.mapFeatureData?.fullyAttributedFeatures;
+
+  const surveyedParcelsFeatures = mapMachine.mapFeatureData?.surveyedParcelsFeatures;
 
   const featurePoints: Supercluster.PointFeature<
-    | PIMS_Property_Location_View
+    | PIMS_Property_Location_Lite_View
     | PIMS_Property_Boundary_View
     | PMBC_FullyAttributed_Feature_Properties
+    | TANTALIS_CrownSurveyParcels_Feature_Properties
   >[] = useMemo(() => {
     const pimsLocationPoints =
-      featureCollectionResponseToPointFeature<PIMS_Property_Location_View>(pimsLocationFeatures);
+      featureCollectionResponseToPointFeature<PIMS_Property_Location_Lite_View>(
+        pimsLocationFeatures,
+      );
     const pimsBoundaryPoints =
       featureCollectionResponseToPointFeature<PIMS_Property_Boundary_View>(pimsBoundaryFeatures);
+    return [...pimsLocationPoints, ...pimsBoundaryPoints];
+  }, [pimsLocationFeatures, pimsBoundaryFeatures]);
+
+  const searchPoints: Supercluster.PointFeature<
+    | PIMS_Property_Location_Lite_View
+    | PIMS_Property_Boundary_View
+    | PMBC_FullyAttributed_Feature_Properties
+    | TANTALIS_CrownSurveyParcels_Feature_Properties
+  >[] = useMemo(() => {
     const pmbcPoints =
       featureCollectionResponseToPointFeature<PMBC_FullyAttributed_Feature_Properties>(
         pmbcFeatures,
       );
-    return [...pimsLocationPoints, ...pimsBoundaryPoints, ...pmbcPoints];
-  }, [pimsLocationFeatures, pimsBoundaryFeatures, pmbcFeatures]);
+    const crownPoints =
+      featureCollectionResponseToPointFeature<TANTALIS_CrownSurveyParcels_Feature_Properties>(
+        surveyedParcelsFeatures,
+      );
+    return [...pmbcPoints, ...crownPoints];
+  }, [pmbcFeatures, surveyedParcelsFeatures]);
 
   // get clusters
   // clusters are an array of GeoJSON Feature objects, but some of them
@@ -216,31 +227,6 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   );
 
   /**
-   * Cleanup draft layers.
-   * TODO: Figure out if this is still necessary now that this does not fit the map bounds
-   */
-  useDeepCompareEffect(() => {
-    const hasDraftPoints = draftPoints.length > 0;
-    if (draftFeatureGroupRef.current && hasDraftPoints) {
-      const group: L.FeatureGroup = draftFeatureGroupRef.current;
-
-      //react-leaflet is not displaying removed drafts but the layer is still present, this
-      //causes the fitbounds calculation to be off. Fixed by manually cleaning up layers referencing removed drafts.
-      group.getLayers().forEach((l: any) => {
-        if (!find(draftPoints, vl => (l._latlng as LatLng).equals(vl))) {
-          group.removeLayer(l);
-        }
-      });
-
-      const groupBounds = group.getBounds();
-
-      if (groupBounds.isValid()) {
-        filterState.setChanged(false);
-      }
-    }
-  }, [draftFeatureGroupRef, mapInstance, draftPoints]);
-
-  /**
    * Updates the state of the cluster if the feature group has been updated.
    * TODO: Figure out if this is still necessary
    */
@@ -259,134 +245,113 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     }
   }, [featureGroupRef, mapInstance, clusters, selectedMarker, tilesLoaded]);
 
-  const mapMarkerClickFn = mapMachine.mapMarkerClick;
   const renderedPoints = useMemo(() => {
     return (
-      <>
-        <FeatureGroup ref={featureGroupRef}>
-          {/**
-           * Render all visible clusters
-           */}
-          {(clusters ?? []).map((cluster, index) => {
-            // every cluster point has coordinates
-            const [longitude, latitude] = cluster.geometry.coordinates;
+      <FeatureGroup ref={featureGroupRef}>
+        {/**
+         * Render all visible clusters
+         */}
+        {(clusters ?? []).map((cluster, index) => {
+          // every cluster point has coordinates
+          const [longitude, latitude] = cluster.geometry.coordinates;
 
-            // Only clusters have the cluster property, if so we have a cluster to render
-            if ('cluster' in cluster.properties) {
-              const clusterFeature = cluster as ClusterFeature<ClusterProperties>;
-              const { point_count: pointCount, point_count_abbreviated } =
-                clusterFeature.properties;
+          // Only clusters have the cluster property, if so we have a cluster to render
+          if ('cluster' in cluster.properties) {
+            const clusterFeature = cluster as ClusterFeature<ClusterProperties>;
+            const { point_count: pointCount, point_count_abbreviated } = clusterFeature.properties;
 
-              const sizeClass = pointCount < 100 ? 'small' : pointCount < 1000 ? 'medium' : 'large';
-              return (
-                // render the cluster marker
-                <Marker
-                  key={index}
-                  position={[latitude, longitude]}
-                  eventHandlers={{
-                    click: e => {
-                      zoomOrSpiderfy(clusterFeature);
-                      e.target.closePopup();
-                    },
-                  }}
-                  icon={
-                    new L.DivIcon({
-                      html: `<div><span>${point_count_abbreviated}</span></div>`,
-                      className: `marker-cluster marker-cluster-${sizeClass}`,
-                      iconSize: [40, 40],
-                    })
-                  }
-                />
-              );
-            } else {
-              const clusterFeature = cluster as PointFeature<
-                | PIMS_Property_Location_View
-                | PIMS_Property_Boundary_View
-                | PMBC_FullyAttributed_Feature_Properties
-              >;
-
-              const isSelected =
-                selectedMarker !== null ? clusterFeature.id === selectedMarker?.clusterId : false;
-
-              const latlng = { lat: latitude, lng: longitude };
-
-              return (
-                <SinglePropertyMarker
-                  key={index}
-                  pointFeature={clusterFeature}
-                  markerPosition={latlng}
-                  isSelected={isSelected}
-                />
-              );
-            }
-          })}
-          {/**
-           * Render markers from a spiderfied cluster click
-           */}
-          {spider.markers?.map((m, index: number) => {
-            const clusterFeature = m as PointFeature<
-              | PIMS_Property_Location_View
-              | PIMS_Property_Boundary_View
-              | PMBC_FullyAttributed_Feature_Properties
+            const sizeClass = pointCount < 100 ? 'small' : pointCount < 1000 ? 'medium' : 'large';
+            return (
+              // render the cluster marker
+              <Marker
+                key={index}
+                position={[latitude, longitude]}
+                eventHandlers={{
+                  click: e => {
+                    zoomOrSpiderfy(clusterFeature);
+                    e.target.closePopup();
+                  },
+                }}
+                icon={
+                  new L.DivIcon({
+                    html: `<div><span>${point_count_abbreviated}</span></div>`,
+                    className: `marker-cluster marker-cluster-${sizeClass}`,
+                    iconSize: [40, 40],
+                  })
+                }
+              />
+            );
+          } else {
+            const clusterFeature = cluster as PointFeature<
+              PIMS_Property_Location_Lite_View | PIMS_Property_Boundary_View
             >;
+
+            const isSelected =
+              selectedMarker !== null ? clusterFeature.id === selectedMarker?.clusterId : false;
+
+            const latlng = { lat: latitude, lng: longitude };
 
             return (
               <SinglePropertyMarker
                 key={index}
                 pointFeature={clusterFeature}
-                markerPosition={m.position}
-                isSelected={false}
+                markerPosition={latlng}
+                isSelected={isSelected}
               />
             );
-          })}
-          {/**
-           * Render lines/legs from a spiderfied cluster click
-           */}
-          {spider.lines?.map((m, index: number) => (
-            <Polyline key={index} positions={m.coords} {...m.options} />
-          ))}
-        </FeatureGroup>
-        {/**
-         * Render all of the unclustered DRAFT MARKERS.
-         **/}
-        <FeatureGroup ref={draftFeatureGroupRef}>
-          {draftPoints.map((draftPoint, index) => {
-            return (
-              <Marker
-                key={index}
-                position={draftPoint}
-                icon={getDraftIcon((index + 1).toString())}
-                zIndexOffset={500}
-                eventHandlers={{
-                  click: e => {
-                    // stop propagation of 'click' event to the underlying leaflet map
-                    e.originalEvent.preventDefault();
-                    e.originalEvent.stopPropagation();
+          }
+        })}
+        {(searchPoints ?? []).map((point, index) => {
+          // every cluster point has coordinates
+          const [longitude, latitude] = point.geometry.coordinates;
 
-                    mapMarkerClickFn({
-                      clusterId: 'NO_ID',
-                      latlng: draftPoint,
-                      pimsLocationFeature: null,
-                      pimsBoundaryFeature: null,
-                      fullyAttributedFeature: null,
-                    });
-                  },
-                }}
-              ></Marker>
-            );
-          })}
-        </FeatureGroup>
-      </>
+          // Only clusters have the cluster property, if so we have a cluster to render
+          const clusterFeature = point as PointFeature<
+            PMBC_FullyAttributed_Feature_Properties | TANTALIS_CrownSurveyParcels_Feature_Properties
+          >;
+
+          const isSelected =
+            selectedMarker !== null ? clusterFeature.id === selectedMarker?.clusterId : false;
+
+          const latlng = { lat: latitude, lng: longitude };
+
+          return (
+            <SinglePropertyMarker
+              key={index}
+              pointFeature={clusterFeature}
+              markerPosition={latlng}
+              isSelected={isSelected}
+            />
+          );
+        })}
+        {/**
+         * Render markers from a spiderfied cluster click
+         */}
+        {spider.markers?.map((m, index: number) => {
+          const clusterFeature = m as PointFeature<
+            | PIMS_Property_Location_Lite_View
+            | PIMS_Property_Boundary_View
+            | PMBC_FullyAttributed_Feature_Properties
+          >;
+
+          return (
+            <SinglePropertyMarker
+              key={index}
+              pointFeature={clusterFeature}
+              markerPosition={m.position}
+              isSelected={false}
+            />
+          );
+        })}
+        {/**
+         * Render lines/legs from a spiderfied cluster click
+         */}
+        {spider.lines?.map((m, index: number) => (
+          <Polyline key={index} positions={m.coords} {...m.options} />
+        ))}
+      </FeatureGroup>
     );
-  }, [
-    clusters,
-    draftPoints,
-    selectedMarker,
-    spider.lines,
-    spider.markers,
-    zoomOrSpiderfy,
-    mapMarkerClickFn,
-  ]);
+  }, [clusters, selectedMarker, spider.lines, spider.markers, zoomOrSpiderfy, searchPoints]);
   return renderedPoints;
 };
 
@@ -416,7 +381,7 @@ export const getFeatureLatLng = <P,>(feature: Feature<Geometry, P>) => {
 const featureCollectionResponseToPointFeature = <P,>(
   response: FeatureCollection<Geometry, P> | undefined,
 ): PointFeature<P>[] => {
-  const validFeatures = response?.features.filter(feature => !!feature?.geometry) ?? [];
+  const validFeatures = response?.features?.filter(feature => exists(feature?.geometry)) ?? [];
   const data: PointFeature<P>[] = validFeatures.map(feature => {
     return featureResponseToPointFeature(feature);
   });

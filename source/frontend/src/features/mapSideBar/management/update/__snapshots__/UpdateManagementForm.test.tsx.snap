@@ -36,9 +36,7 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
 }
 
 .c7.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c7.btn:hover {
@@ -725,8 +723,8 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
             >
               <select
                 class="form-select form-control"
-                id="input-programTypeCode"
-                name="programTypeCode"
+                id="input-purposeTypeCode"
+                name="purposeTypeCode"
                 required=""
               >
                 <option
@@ -743,20 +741,6 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-COMMBLDG"
-                  value="COMMBLDG"
-                >
-                  Commercial building
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-ENCAMP"
-                  value="ENCAMP"
-                >
-                  Encampments
-                </option>
-                <option
-                  class="option"
                   data-testid="select-option-ENGINEER"
                   value="ENGINEER"
                 >
@@ -764,73 +748,10 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
                 </option>
                 <option
                   class="option"
-                  data-testid="select-option-GOVERNMT"
-                  value="GOVERNMT"
+                  data-testid="select-option-GENERAL"
+                  value="GENERAL"
                 >
-                  Government
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-MOTTUSE"
-                  value="MOTTUSE"
-                >
-                  MOTT use
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-OILGAS"
-                  value="OILGAS"
-                >
-                  Oil/Gas
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-OTHER"
-                  value="OTHER"
-                >
-                  Other
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-PARKING"
-                  value="PARKING"
-                >
-                  Parking and/or storage
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-PUBTRANS"
-                  value="PUBTRANS"
-                >
-                  Public transportation
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-RAIL"
-                  value="RAIL"
-                >
-                  Rail
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-TRAILS"
-                  value="TRAILS"
-                >
-                  Rail trails/trails
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-RESRENTL"
-                  value="RESRENTL"
-                >
-                  Residential rentals
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-UTILITY"
-                  value="UTILITY"
-                >
-                  Utilities
+                  General
                 </option>
               </select>
             </div>
@@ -929,7 +850,7 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
             data-testid="contact-input"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"
@@ -1019,13 +940,13 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
           >
             <button
               class="c7 Button c9 btn btn-link"
+              data-testid="team.0.remove-button"
               type="button"
             >
               <div
                 class="Button__value"
               >
                 <svg
-                  data-testid="team.0.remove-button"
                   fill="currentColor"
                   height="2rem"
                   stroke="currentColor"
@@ -1098,7 +1019,7 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
             data-testid="contact-input"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"
@@ -1188,13 +1109,13 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
           >
             <button
               class="c7 Button c9 btn btn-link"
+              data-testid="team.1.remove-button"
               type="button"
             >
               <div
                 class="Button__value"
               >
                 <svg
-                  data-testid="team.1.remove-button"
                   fill="currentColor"
                   height="2rem"
                   stroke="currentColor"

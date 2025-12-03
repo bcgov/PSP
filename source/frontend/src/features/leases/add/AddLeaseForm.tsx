@@ -2,59 +2,40 @@ import { Formik, FormikHelpers, FormikProps } from 'formik';
 import styled from 'styled-components';
 
 import { Section } from '@/components/common/Section/Section';
-import { IMapProperty } from '@/components/propertySelector/models';
 
-import { FormLeaseProperty, getDefaultFormLease, LeaseFormModel } from '../models';
+import { LeaseFormModel } from '../models';
 import LeasePropertySelector from '../shared/propertyPicker/LeasePropertySelector';
 import { AddLeaseTeamSubForm } from './AddLeaseTeamSubform';
 import { AddLeaseTeamYupSchema } from './AddLeaseTeamYupSchema';
 import { AddLeaseYupSchema } from './AddLeaseYupSchema';
 import AdministrationSubForm from './AdministrationSubForm';
+import FeeDeterminationSubForm from './FeeDeterminationSubForm';
 import LeaseDetailSubForm from './LeaseDetailSubForm';
 
-interface IAddLeaseFormProps {
+export interface IAddLeaseFormProps {
+  /** Submission handler */
   onSubmit: (
     values: LeaseFormModel,
     formikHelpers: FormikHelpers<LeaseFormModel>,
   ) => void | Promise<any>;
   formikRef: React.Ref<FormikProps<LeaseFormModel>>;
-  propertyInfo: IMapProperty | null;
+  /** Initial values of the form */
+  initialValues: LeaseFormModel;
 }
 
 const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFormProps>> = ({
   onSubmit,
   formikRef,
-  propertyInfo,
+  initialValues,
 }) => {
-  const defaultFormLease = getDefaultFormLease();
-
-  // support creating a new disposition file from the map popup
-  if (propertyInfo) {
-    defaultFormLease.properties = [];
-    defaultFormLease.properties.push(FormLeaseProperty.fromMapProperty(propertyInfo));
-    // auto-select file region based upon the location of the property
-    defaultFormLease.regionId = propertyInfo.region ? propertyInfo.region.toString() : '';
-  }
-
-  const apiFormLease = LeaseFormModel.toApi(defaultFormLease);
-
-  const handleSubmit = async (
-    values: LeaseFormModel,
-    formikHelpers: FormikHelpers<LeaseFormModel>,
-  ) => {
-    return await onSubmit(values, formikHelpers);
-  };
-
   return (
     <StyledFormWrapper>
       <Formik<LeaseFormModel>
         enableReinitialize
         innerRef={formikRef}
-        initialValues={LeaseFormModel.fromApi(apiFormLease)}
+        initialValues={initialValues}
         validationSchema={AddLeaseYupSchema.concat(AddLeaseTeamYupSchema)}
-        onSubmit={(values: LeaseFormModel, formikHelpers: FormikHelpers<LeaseFormModel>) => {
-          handleSubmit(values, formikHelpers);
-        }}
+        onSubmit={onSubmit}
       >
         {formikProps => (
           <>
@@ -69,6 +50,7 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
                 </div>
               )}
             </Section>
+            <FeeDeterminationSubForm formikProps={formikProps} />
           </>
         )}
       </Formik>

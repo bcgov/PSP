@@ -1,7 +1,7 @@
 import { Form, Formik } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
+import { FaBuilding, FaUser } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import ActiveIndicator from '@/components/common/ActiveIndicator';
@@ -71,32 +71,31 @@ export const ContactFilterComponent: React.FunctionComponent<
             }
           }}
         >
-          <Row className="p-5">
-            <Col lg="6">
-              <Row className="pb-5">
-                <Col xs="auto">
-                  <RadioGroup
-                    label="Search by:"
-                    field="searchBy"
-                    radioGroupClassName="pb-3"
-                    radioValues={getRestrictedRadioValues(restrictContactType)}
-                  />
-                </Col>
-                <Col lg="auto" className="pl-0">
+          <Row>
+            <Col lg="10" className="pr-0">
+              <Row className="p-5">
+                <RadioGroup
+                  label="Search by:"
+                  isLabelBold={true}
+                  field="searchBy"
+                  radioGroupClassName="pb-3"
+                  flexDirection="row"
+                  radioValues={getRestrictedRadioValues(restrictContactType)}
+                />
+              </Row>
+              <Row>
+                <Col sm="auto"></Col>
+                <Col lg="auto" className="pr-0">
                   <StyledNameInput field="summary" placeholder="Name" />
                 </Col>
-              </Row>
-            </Col>
-            <Col lg="5">
-              <Row>
-                <Col className="pl-0">
+                <Col lg="auto" className="pr-0">
                   <StyledCityInput
                     field="municipality"
                     label="City"
                     placeholder="City of contact's address"
                   />
                 </Col>
-                <Col className="pl-4">
+                <Col lg="auto" className="pr-0">
                   {showActiveSelector && (
                     <FlexRowNoGap>
                       <ActiveFilterCheck<IContactFilter>
@@ -104,16 +103,14 @@ export const ContactFilterComponent: React.FunctionComponent<
                         setFilter={setFilter}
                       />
                       <ActiveIndicator active size={16} />
-                      <span className="ml-1">
-                        <b>Active</b> contacts only
-                      </span>
+                      <span className="ml-1">Show active only</span>
                     </FlexRowNoGap>
                   )}
                 </Col>
               </Row>
             </Col>
-            <ColButtons lg="1">
-              <Row>
+            <ColButtons>
+              <Row className="pb-10 pt-10">
                 <Col lg="auto" className="pr-0">
                   <SearchButton
                     disabled={isSubmitting}
@@ -146,8 +143,8 @@ const getRestrictedRadioValues = (restrictContactType?: RestrictContactType) => 
       {
         radioLabel: (
           <>
-            <FaRegUser size={20} />
-            <span>Individuals</span>
+            <FaUser size={20} fill="#1a5496" />
+            <span> Individuals</span>
           </>
         ),
         radioValue: 'persons',
@@ -158,8 +155,8 @@ const getRestrictedRadioValues = (restrictContactType?: RestrictContactType) => 
       {
         radioLabel: (
           <>
-            <FaRegUser size={20} />
-            <span>Organizations</span>
+            <FaUser size={20} fill="#1a5496" />
+            <span> Organizations</span>
           </>
         ),
         radioValue: 'organizations',
@@ -170,8 +167,8 @@ const getRestrictedRadioValues = (restrictContactType?: RestrictContactType) => 
       {
         radioLabel: (
           <>
-            <FaRegBuilding size={20} />
-            <span>Organizations</span>
+            <FaBuilding size={20} fill="#1a5496" />
+            <span> Organizations</span>
           </>
         ),
         radioValue: 'organizations',
@@ -179,8 +176,8 @@ const getRestrictedRadioValues = (restrictContactType?: RestrictContactType) => 
       {
         radioLabel: (
           <>
-            <FaRegUser size={20} />
-            <span>Individuals</span>
+            <FaUser size={20} fill="#1a5496" />
+            <span> Individuals</span>
           </>
         ),
         radioValue: 'persons',
@@ -188,8 +185,8 @@ const getRestrictedRadioValues = (restrictContactType?: RestrictContactType) => 
       {
         radioLabel: (
           <>
-            <FaRegBuilding size={20} />+<FaRegUser size={20} />
-            <span>All</span>
+            <FaBuilding size={20} fill="#1a5496" />+<FaUser size={20} fill="#1a5496" />
+            <span> All</span>
           </>
         ),
         radioValue: 'all',
@@ -202,7 +199,7 @@ const StyledFilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.4rem;
   padding: 1rem;
-  max-width: 85%;
+  max-width: 95%;
 `;
 
 export const StyledNameInput = styled(InlineInput)`

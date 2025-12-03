@@ -12,9 +12,12 @@ using System.Text;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using DotNetEnv;
 using HealthChecks.SqlServer;
 using HealthChecks.UI.Client;
 using Mapster;
+using Medallion.Threading;
+using Medallion.Threading.SqlServer;
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Diagnostics.HealthChecks;
@@ -56,8 +59,6 @@ using Pims.Geocoder;
 using Pims.Ltsa;
 using Polly;
 using Prometheus;
-using DotNetEnv;
-using Microsoft.IdentityModel.JsonWebTokens;
 
 namespace Pims.Api
 {
@@ -186,7 +187,7 @@ namespace Pims.Api
                     {
                         ValidateIssuerSigningKey = true,
                         ValidateIssuer = true,
-                        ValidAudiences = new List<string> { Configuration["Keycloak:ValidAudience"] },
+                        ValidAudiences = Configuration.GetSection("Keycloak:ValidAudiences").Get<string[]>(),
                         ValidateAudience = true,
                         ValidateLifetime = true,
                         ValidAlgorithms = new List<string>() { "RS256" },
@@ -228,6 +229,7 @@ namespace Pims.Api
             services.AddHttpClient("Pims.Api.Logging").AddHttpMessageHandler<LoggingHandler>();
             services.AddPimsContext(this.Environment, csBuilder.ConnectionString);
             services.AddPimsDalRepositories();
+            services.AddSingleton<IDistributedLockProvider>(new SqlDistributedSynchronizationProvider(csBuilder.ConnectionString));
             AddPimsApiRepositories(services);
             AddPimsApiServices(services);
             services.AddPimsKeycloakService();
@@ -566,7 +568,8 @@ namespace Pims.Api
             services.AddScoped<IBctfaOwnershipService, BctfaOwnershipService>();
             services.AddScoped<IExpropriationEventService, ExpropriationEventService>();
             services.AddScoped<IManagementFileService, ManagementFileService>();
-            services.AddScoped<IManagementStatusSolver, ManagementStatusSolver>();
+            services.AddScoped<IManagementActivityService, ManagementActivityService>();
+            services.AddScoped<IManagementFileStatusSolver, ManagementFileStatusSolver>();
         }
 
         /// <summary>

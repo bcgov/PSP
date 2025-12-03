@@ -40,6 +40,9 @@ public partial class PimsPropertyLeaseHist
     [Column("LEASE_AREA")]
     public float? LeaseArea { get; set; }
 
+    [Column("DISPLAY_ORDER")]
+    public int? DisplayOrder { get; set; }
+
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 

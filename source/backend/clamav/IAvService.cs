@@ -1,3 +1,4 @@
+using System.IO;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 
@@ -7,6 +8,6 @@ namespace Pims.Av
     {
         public Task ScanAsync(IFormFile file);
 
-        public Task ScanAsync(byte[] fileData);
+        public Task ScanAsync(Stream stream);
     }
 }

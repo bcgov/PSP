@@ -79,6 +79,19 @@ namespace Pims.Core.Extensions
         }
 
         /// <summary>
+        /// Generates a LambdaExpression for the specified 'Type' and 'path'.
+        /// </summary>
+        /// <param name="objectType"></param>
+        /// <param name="path"></param>
+        /// <returns></returns>
+        public static LambdaExpression MakeSelector(this Type objectType, string path)
+        {
+            var parameter = Expression.Parameter(objectType, "x");
+            var body = path.Split('.').Aggregate((Expression)parameter, Expression.PropertyOrField);
+            return Expression.Lambda(body, parameter);
+        }
+
+        /// <summary>
         /// Order the query results by the specified property names.
         /// Any property name that doesn't exist will be ignored.
         /// </summary>
@@ -121,21 +134,7 @@ namespace Pims.Core.Extensions
             }
             return query;
         }
-
         #endregion
-
-        /// <summary>
-        /// Generates a LambdaExpression for the specified 'Type' and 'path'.
-        /// </summary>
-        /// <param name="objectType"></param>
-        /// <param name="path"></param>
-        /// <returns></returns>
-        public static LambdaExpression MakeSelector(this Type objectType, string path)
-        {
-            var parameter = Expression.Parameter(objectType, "x");
-            var body = path.Split('.').Aggregate((Expression)parameter, Expression.PropertyOrField);
-            return Expression.Lambda(body, parameter);
-        }
 
         /// <summary>
         /// Check if the specified property exists in the specified type.

@@ -134,7 +134,7 @@ describe('AcquisitionContainer component', () => {
     await waitForElementToBeRemoved(spinner);
 
     mockAxios.onGet(new RegExp('acquisitionfiles/1/properties')).timeout();
-    await act(async () => viewProps.onShowPropertySelector());
+    await act(async () => viewProps.onEditProperties());
     await act(async () => {
       viewProps.canRemove(1);
     });
@@ -156,7 +156,7 @@ describe('AcquisitionContainer component', () => {
         },
       },
     ]);
-    await act(async () => viewProps.onShowPropertySelector());
+    await act(async () => viewProps.onEditProperties());
     const canRemoveResponse = await viewProps.canRemove(1);
     expect(canRemoveResponse).toBe(true);
   });
@@ -167,8 +167,8 @@ describe('AcquisitionContainer component', () => {
     const spinner = getByTestId('filter-backdrop-loading');
     await waitForElementToBeRemoved(spinner);
 
-    await act(async () => viewProps.onMenuChange(1));
-    expect(history.location.pathname).toBe('/property/1');
+    await act(async () => viewProps.onSelectProperty(1));
+    expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/1/property/1');
   });
 
   it('displays a warning if form is dirty and menu index changes', async () => {
@@ -181,9 +181,9 @@ describe('AcquisitionContainer component', () => {
     await act(async () => viewProps.setIsEditing(true));
     await act(async () => (viewProps.formikRef.current as any).setFieldValue('value', 1));
     await screen.findByText('1');
-    await act(async () => viewProps.onMenuChange(1));
+    await act(async () => viewProps.onSelectProperty(1));
 
-    expect(history.location.pathname).toBe('/property/1');
+    expect(history.location.pathname).toBe('/mapview/sidebar/acquisition/1/property/1');
     const params = new URLSearchParams(history.location.search);
     expect(params.has('edit')).toBe(true);
   });
@@ -196,7 +196,7 @@ describe('AcquisitionContainer component', () => {
     await waitForElementToBeRemoved(spinner);
 
     await act(async () => viewProps.setIsEditing(true));
-    await act(async () => viewProps.onMenuChange(1));
+    await act(async () => viewProps.onSelectProperty(1));
 
     const params = new URLSearchParams(history.location.search);
     expect(params.has('edit')).toBe(false);

@@ -1,20 +1,26 @@
 import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types';
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
+  emptyHighwayFeatures,
   emptyPimsBoundaryFeatureCollection,
   emptyPimsLocationFeatureCollection,
+  emptyPimsLocationLiteFeatureCollection,
   emptyPmbcFeatureCollection,
+  emptySurveyedParcelsFeatures,
 } from '@/components/common/mapFSM/models';
 import { defaultBounds } from '@/components/maps/constants';
 import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
-import { layersTree } from '@/components/maps/leaflet/Control/LayersControl/DefaultLayers';
+import { initialEnabledLayers } from '@/components/maps/leaflet/Control/LayersControl/LayersMenuLayout';
 
 export const mapMachineBaseMock: IMapStateMachineContext = {
   requestFlyToBounds: vi.fn(),
   mapFeatureData: {
     pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+    pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
     pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
     fullyAttributedFeatures: emptyPmbcFeatureCollection,
+    surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+    highwayPlanFeatures: emptyHighwayFeatures,
   },
   mapSideBarViewState: {
     isCollapsed: false,
@@ -40,22 +46,24 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   repositioningFeatureDataset: null,
   repositioningPropertyIndex: null,
   selectingComponentId: null,
-  selectedFeatureDataset: null,
+  selectedFeatures: [],
   showPopup: false,
   isLoading: false,
   mapSearchCriteria: null,
 
   filePropertyLocations: [],
   activePimsPropertyIds: [],
-  activeLayers: layersTree,
+  activeLayers: initialEnabledLayers,
   isSelecting: false,
   isRepositioning: false,
   isFiltering: false,
   isShowingMapFilter: false,
   isShowingMapLayers: false,
+  isShowingMapSearch: false,
+  isShowingQuickInfo: false,
   showDisposed: false,
   showRetired: false,
-  mapLayersToRefresh: [],
+  mapLayersToRefresh: new Set(),
   advancedSearchCriteria: new PropertyFilterFormModel(),
   isMapVisible: true,
   currentMapBounds: defaultBounds,
@@ -81,6 +89,8 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   setVisiblePimsProperties: vi.fn(),
   toggleMapFilterDisplay: vi.fn(),
   toggleMapLayerControl: vi.fn(),
+  toggleMapSearchControl: vi.fn(),
+  showMapSearchControl: vi.fn(),
   setShowDisposed: vi.fn(),
   setShowRetired: vi.fn(),
   setMapLayers: vi.fn(),
@@ -91,4 +101,21 @@ export const mapMachineBaseMock: IMapStateMachineContext = {
   setMapLayersToRefresh: vi.fn(),
   setAdvancedSearchCriteria: vi.fn(),
   setCurrentMapBounds: vi.fn(),
+  mapMarkedLocation: undefined,
+  mapMarkLocation: vi.fn(),
+  mapClearLocationMark: vi.fn(),
+  worklistSelectedMapLocation: null,
+  worklistLocationFeatureDataset: null,
+  isShowingWorkList: false,
+  worklistMapClick: vi.fn(),
+  toggleWorkListControl: vi.fn(),
+  isQuickInfoMinimized: false,
+  openQuickInfo: vi.fn(),
+  closeQuickInfo: vi.fn(),
+  minimizeQuickInfo: vi.fn(),
+  isEditPropertiesMode: false,
+  processCreation: vi.fn(),
+  setEditPropertiesMode: vi.fn(),
+  worklistAdd: vi.fn(),
+  setSelectedLocation: vi.fn(),
 };

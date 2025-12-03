@@ -1,5 +1,7 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.DevTools.V140.Security;
 using PIMS.Tests.Automation.Classes;
+using System.Diagnostics;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -7,11 +9,7 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Documents Tab Element
         private readonly By documentsTab = By.CssSelector("a[data-rb-event-key='documents']");
-
-        //Documents Tab List Header
-        private readonly By documentsFileTitle = By.XPath("//span[contains(text(),'File Documents')]");
-        private readonly By documentsTitle = By.XPath("//span[contains(text(),'Documents')]");
-        private readonly By addDocumentBttn = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button");
+        private readonly By propsDocumentsTab = By.CssSelector("a[data-rb-event-key='document']");
 
         //Upload Documents Dialog General Elements
         private readonly By documentsUploadHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
@@ -95,7 +93,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentLandActTypeReferenceLandsLabel = By.XPath("//label[contains(text(),'Reference/Agency Lands file #')]");
         private readonly By documentLandActTypeReferenceLandsInput = By.CssSelector("input[data-testid='metadata-input-REFAG_LANDFILE_NUMBER']");
 
-
         //Upload Legal Survey Plans Fields
         private readonly By documentLegalSurveyNbrLabel = By.XPath("//label[contains(text(),'Legal survey plan #')]");
         private readonly By documentLegalSurveyInput = By.CssSelector("input[data-testid='metadata-input-LEGAL_SURVEY_PLAN_NUMBER']");
@@ -109,7 +106,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentMinisterialOrderTypeMOInput = By.CssSelector("input[data-testid='metadata-input-MO_NUMBER']");
         private readonly By documentTypeMotiFileInput = By.CssSelector("input[data-testid='metadata-input-MOTI_FILE_NUMBER']");
         private readonly By documentPropertyIdentifierLabel = By.XPath("//label[contains(text(),'Property identifier')]");
-        private readonly By documentTypePropIdInput = By.CssSelector("input[data-testid='metadata-input-PROPERTY_IDENTIFIER']");
 
         //Upload Miscellaneous notes (LTSA) Fields
         private readonly By documentMiscNotesTypePIDLabel = By.XPath("//input[@data-testid='metadata-input-PID']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'PID')]");
@@ -177,13 +173,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentTransferAdmTypeTransferLabel = By.XPath("//label[contains(text(),'Transfer')]");
         private readonly By documentTransferAdmTypeTransferInput = By.CssSelector("input[data-testid='metadata-input-TRANSFER_NUMBER']");
 
-
-
         //View Document Details Elements
         private readonly By documentViewDocumentTypeLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Document type')]");
         private readonly By documentViewDocumentTypeContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/label[contains(text(),'Document type')]/parent::div/following-sibling::div");
-        private readonly By documenyViewDocumentNameLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'File name')]");
-        private readonly By documentViewFileNameContent = By.XPath("//div[@class='modal-body']/div/div/div/div/label[contains(text(),'File name')]/parent::div/following-sibling::div");
+        private readonly By documenyViewDocumentNameLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'File name')]");
+        private readonly By documentViewFileNameContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'File name')]/parent::div/following-sibling::div");
         private readonly By documentViewInfoSubtitle = By.XPath("//div[contains(text(),'Document Information')]");
         private readonly By documentViewDocumentInfoTooltip = By.CssSelector("span[data-testid='tooltip-icon-documentInfoToolTip']");
         private readonly By documentViewStatusLabel = By.XPath("//div[contains(text(),'Document Information')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
@@ -221,16 +215,16 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentViewOwnerContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Owner')]/parent::div/following-sibling::div");
         private readonly By documentViewPhysicalLocationContent = By.XPath("//label[contains(text(),'Physical location')]/parent::div/following-sibling::div");
         private readonly By documentViewPIDLabel = By.XPath("//label[contains(text(),'PID')]");
-        private readonly By documentViewPIDContent = By.XPath("//label[contains(text(),'PID')]/parent::div/following-sibling::div");
+        private readonly By documentViewPIDContent = By.XPath("//div[@class='pr-0 text-left col-4']/label[contains(text(),'PID')]/parent::div/following-sibling::div");
         private readonly By documentViewPINContent = By.XPath("//div[@class='pb-2 row'][1]/div/label[contains(text(),'PIN')]/parent::div/following-sibling::div");
         private readonly By documentViewPlanNumberContent = By.XPath("//label[contains(text(),'Plan #')]/parent::div/following-sibling::div");
         private readonly By documentViewPlanRevisionContent = By.XPath("//label[contains(text(),'Plan revision')]/parent::div/following-sibling::div");
         private readonly By documentViewPlanTypeContent = By.XPath("//label[contains(text(),'Plan type')]/parent::div/following-sibling::div");
         private readonly By documentViewProjectNumberContent = By.XPath("//label[contains(text(),'Project #')]/parent::div/following-sibling::div");
-        private readonly By documentViewProjectLabel = By.XPath("/label[contains(text(),'Project name')]");
-        private readonly By documentViewProjectContent = By.XPath("/label[contains(text(),'Project name')]/parent::div/following-sibling::div");
-        private readonly By documentViewPropertyIdentifierLabel = By.XPath("/label[contains(text(),'Property identifier')]");
-        private readonly By documentViewPropertyIdentifierContent = By.XPath("/label[contains(text(),'Property identifier')]/parent::div/following-sibling::div");
+        private readonly By documentViewProjectLabel = By.XPath("//label[contains(text(),'Project name')]");
+        private readonly By documentViewProjectContent = By.XPath("//label[contains(text(),'Project name')]/parent::div/following-sibling::div");
+        private readonly By documentViewPropertyIdentifierLabel = By.XPath("//label[contains(text(),'Property identifier')]");
+        private readonly By documentViewPropertyIdentifierContent = By.XPath("//label[contains(text(),'Property identifier')]/parent::div/following-sibling::div");
         private readonly By documentViewPublishedDateContent = By.XPath("//label[contains(text(),'Published date')]/parent::div/following-sibling::div");
         private readonly By documentViewReferenceAgencyContent = By.XPath("//label[contains(text(),'Reference/Agency Document #')]/parent::div/following-sibling::div");
         private readonly By documentViewReferenceLandsContent = By.XPath("//label[contains(text(),'Reference/Agency Lands file #')]/parent::div/following-sibling::div");
@@ -248,8 +242,8 @@ namespace PIMS.Tests.Automation.PageObjects
         //Document Modal Elements
         private readonly By documentModalCloseIcon = By.CssSelector("div[class='modal-close-btn']");
         private readonly By documentEditBttn = By.XPath("//div[@class='modal-body']/div/div/div/div/button");
-        private readonly By documentCancelEditButton = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div/div/button/div[contains(text(),'No')]/parent::button");
-        private readonly By documentSaveEditButton = By.XPath("//div[@class='modal-body']/div/div[2]/div/div/div/div/button/div[contains(text(),'Yes')]/parent::button");
+        private readonly By documentCancelEditButton = By.CssSelector("div[class='modal-content'] button[type='button']");
+        private readonly By documentSaveEditButton = By.CssSelector("div[class='modal-content'] button[type='submit']");
         private readonly By documentCancelEmbbedWarning = By.XPath("//div[@class='modal-footer']/div[@class='button-wrap']/p");
 
         //Document Confirmation Modal Elements
@@ -264,35 +258,86 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentDeleteContent3 = By.CssSelector("div[class='modal-body'] div strong");
         private readonly By documentDeleteOkBttn = By.CssSelector("button[title='ok-modal']");
 
-        //Documents Tab List Filters
-        private readonly By documentFilterTypeSelect = By.XPath("//select[@data-testid='document-type']");
-        private readonly By documentFilterStatusSelect = By.XPath("//select[@data-testid='document-status']");
-        private readonly By documentFilterNameInput = By.XPath("//input[@data-testid='document-filename']");
-        private readonly By documentFilterSearchBttn = By.XPath("//input[@id='input-filename']/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/button[@data-testid='search']");
-        private readonly By documentFilterResetBttn = By.XPath("//input[@id='input-filename']/parent::div/parent::div/parent::div/parent::div/following-sibling::div/div/div/button[@data-testid='reset-button']");
+        //Documents Tab Main List Filters
+        private readonly By documentFilterTypeSelect = By.CssSelector("div[data-testid='main-document-list'] select[data-testid='document-type']");
+        private readonly By documentFilterStatusSelect = By.CssSelector("div[data-testid='main-document-list'] select[data-testid='document-status']");
+        private readonly By documentFilterNameInput = By.CssSelector("div[data-testid='main-document-list'] input[data-testid='document-filename']");
+        private readonly By documentFilterSearchBttn = By.CssSelector("div[data-testid='main-document-list'] button[id='search-button']");
+        private readonly By documentFilterResetBttn = By.CssSelector("div[data-testid='main-document-list'] button[data-testid='reset-button']");
 
-        //Document List Sortable Columns Elements
-        private readonly By documentDocumentTypeSortBttn = By.CssSelector("div[data-testid='sort-column-documentType']");
-        private readonly By documentDocumentNameSortBttn = By.CssSelector("div[data-testid='sort-column-fileName']");
-        private readonly By documentDocumentStatusSortBttn = By.CssSelector("div[data-testid='sort-column-statusTypeCode']");
-
-        //Documents Tab List Results
-        private readonly By documentTableListView = By.XPath("//div[@data-testid='documentsTable']");
-        private readonly By documentTableTypeColumn = By.XPath("//div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Document type')]");
-        private readonly By documentTableNameColumn = By.XPath("//div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'File name')]");
-        private readonly By documentTableDateColumn = By.XPath("//div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Uploaded')]");
-        private readonly By documentTableStatusColumn = By.XPath("//div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Status')]");
-        private readonly By documentTableActionsColumn = By.XPath("//div[@data-testid='documentsTable']/div/div/div/div[contains(text(),'Actions')]");
+        //Main Documents Table
+        private readonly By documentsTitle = By.XPath("//span[contains(text(),'Documents')]");
+        private readonly By propDocumentsTitle = By.XPath("//span[contains(text(),'Property Documents')]");
+        private readonly By addDocumentBttn = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button");
+        private readonly By refresh1stTableBttn = By.CssSelector("div[data-testid='main-document-list'] button[id='refresh-button']");
+        private readonly By documentsTableColumnType = By.CssSelector("div[data-testid='main-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(1) div[class='sortable-column']");
+        private readonly By documentsTableColumnTypeSort = By.CssSelector("div[data-testid='main-document-list'] div[data-testid='sort-column-documentType']");
+        private readonly By documentsTableColumnName = By.CssSelector("div[data-testid='main-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(2) div[class='sortable-column']");
+        private readonly By documentsTableColumnNameSort = By.CssSelector("div[data-testid='main-document-list'] div[data-testid='sort-column-fileName']");
+        private readonly By documentsTableColumnUploaded = By.CssSelector("div[data-testid='main-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(3) div[class='sortable-column']");
+        private readonly By documentsTableColumnUploadedSort = By.CssSelector("div[data-testid='main-document-list']  div[data-testid='sort-column-appCreateTimestamp']");
+        private readonly By documentsTableColumnStatus = By.CssSelector("div[data-testid='main-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(4) div[class='sortable-column']");
+        private readonly By documentsTableColumnStatusSort = By.CssSelector("div[data-testid='main-document-list'] div[data-testid='sort-column-statusTypeCode']");
+        private readonly By documentsTableColumnActions = By.CssSelector("div[data-testid='main-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(1) div[class='sortable-column']");
         private readonly By documentTableContentTotal = By.CssSelector("div[data-testid='documentsTable'] div[class='tbody'] div[class='tr-wrapper']");
         private readonly By documentTableWaitSpinner = By.CssSelector("div[class='table-loading']");
+
+        //Documents Tab Ad-hoc List Filters
+        private readonly By adhocDocumentFilterTypeSelect = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] select[data-testid='document-type']");
+        private readonly By adhocDocumentFilterStatusSelect = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] select[data-testid='document-status']");
+        private readonly By adhocDocumentFilterNameInput = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] input[data-testid='document-filename']");
+        private readonly By adhocDocumentFilterSearchBttn = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] button[id='search-button']");
+        private readonly By adhocDocumentFilterResetBttn = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] button[data-testid='reset-button']");
+
+        //Ad-hoc Files Documents Table
+        private readonly By adhocDocumentsTitle = By.XPath("//span[contains(text(),'Related Documents')]");
+        private readonly By adhocDocumentsrefreshTableBttn = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] button[id='refresh-button']");
+        private readonly By adhocDocumentsTableColumnAssociation = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(1) div[class='sortable-column']");
+        private readonly By adhocDocumentsTableColumnAssocSort = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='sort-column-parentName']");
+        private readonly By adhocDocumentsTableColumnAssocType = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(2) div[class='sortable-column']");
+        private readonly By adhocDocumentsTableColumnAssocTypeSort = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='sort-column-relationshipType']");
+        private readonly By adhocDocumentsTableColumnType = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(3) div[class='sortable-column']");
+        private readonly By adhocDocumentsTableColumnTypeSort = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='sort-column-documentType']");
+        private readonly By adhocDocumentsTableColumnName = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(4) div[class='sortable-column']");
+        private readonly By adhocDocumentsTableColumnNameSort = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='sort-column-fileName']");
+        private readonly By adhocDocumentsTableColumnUploaded = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(5) div[class='sortable-column']");
+        private readonly By adhocDocumentsTableColumnUploadedSort = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='sort-column-appCreateTimestamp']");
+        private readonly By adhocDocumentsTableColumnStatus = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(6) div[class='sortable-column']");
+        private readonly By adhocDocumentsTableColumnStatusSort = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='sort-column-statusTypeCode']");
+        private readonly By adhocDocumentsTableColumnActions = By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(7) div[class='sortable-column']");
+
+        //Documents Tab PIMS Files List Filters
+        private readonly By PIMSDocumentFilterTypeSelect = By.CssSelector("div[data-testid='pims-files-document-list'] select[data-testid='document-type']");
+        private readonly By PIMSDocumentFilterStatusSelect = By.CssSelector("div[data-testid='pims-files-document-list'] select[data-testid='document-status']");
+        private readonly By PIMSDocumentFilterNameInput = By.CssSelector("div[data-testid='pims-files-document-list'] input[data-testid='document-filename']");
+        private readonly By PIMSDocumentFilterSearchBttn = By.CssSelector("div[data-testid='pims-files-document-list'] button[id='search-button']");
+        private readonly By PIMSDocumentFilterResetBttn = By.CssSelector("div[data-testid='pims-files-document-list'] button[data-testid='reset-button']");
+
+        //PIMS Files Documents Table
+        private readonly By PIMSDocumentsTitle = By.XPath("//span[contains(text(),'PIMS Files Documents')]");
+        private readonly By PIMSDocumentsrefreshTableBttn = By.CssSelector("div[data-testid='pims-files-document-list'] button[id='refresh-button']");
+        private readonly By PIMSDocumentsTableColumnFile = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(1) div[class='sortable-column']");
+        private readonly By PIMSDocumentsTableColumnFileSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-parentName']");
+        private readonly By PIMSDocumentsTableColumnFileType = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(2) div[class='sortable-column']");
+        private readonly By PIMSDocumentsTableColumnFileTypeSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-relationshipType']");
+        private readonly By PIMSDocumentsTableColumnType = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(3) div[class='sortable-column']");
+        private readonly By PIMSDocumentsTableColumnTypeSort = By.CssSelector("div[data-testid='pims-files-document-list']  div[data-testid='sort-column-documentType']");
+        private readonly By PIMSDocumentsTableColumnName = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(4) div[class='sortable-column']");
+        private readonly By PIMSDocumentsTableColumnNameSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-fileName']");
+        private readonly By PIMSDocumentsTableColumnUploaded = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(5) div[class='sortable-column']");
+        private readonly By PIMSDocumentsTableColumnUploadedSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-appCreateTimestamp']");
+        private readonly By PIMSDocumentsTableColumnStatus = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(6) div[class='sortable-column']");
+        private readonly By PIMSDocumentsTableColumnStatusSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-statusTypeCode']");
+        private readonly By PIMSDocumentsTableColumnActions = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(7) div[class='sortable-column']");
        
         //Activities Documents List 1st Result Elements
         private readonly By documentTableResults1stDocumentTypeContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[1]");
         private readonly By documentTableResults1stDocumentNameContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[2]/div/button/div");
         private readonly By documentTableResults1stDocumentStatusContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[4]");
         private readonly By documentTableRefreshResultsButton = By.CssSelector("button[data-testid='refresh-button']");
-        private readonly By documentTableResults1stViewBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/button[@data-testid='document-view-button']");
-        private readonly By documentTableResults1stDeleteBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/button[@data-testid='document-delete-button']");
+        private readonly By documentTableResults1stViewBttn = By.CssSelector("div[data-testid='documentsTable'] div[class='tbody'] button[data-testid='document-view-button-0']");
+        private readonly By documentTableResults1stDeleteBttn = By.CssSelector("div[data-testid='documentsTable'] div[class='tbody'] button[data-testid='document-delete-button-0']");
+
         //Documents Tab Pagination
         private readonly By documentPagination = By.XPath("//div[@class='row']/div[4]/ul[@class='pagination']");
         private readonly By documentMenuPagination = By.XPath("//div[@class='row']/div[3]/div[@class='Menu-root']");
@@ -320,9 +365,15 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(documentsTab).Click();
         }
 
+        public void NavigatePropertyDocumentsTab()
+        {
+            WaitUntilVisible(propsDocumentsTab);
+            webDriver.FindElement(propsDocumentsTab).Click();
+        }
+
         public void NavigateToFirstPageDocumentsTable()
         {
-            WaitUntilVisible(documentPaginationPrevPageLink);
+            Wait();
             FocusAndClick(documentPaginationPrevPageLink);
         }
 
@@ -330,113 +381,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilClickable(addDocumentBttn);
             FocusAndClick(addDocumentBttn); 
-        }
-
-        public void VerifyDocumentFields(string documentType)
-        {
-            VerifyGeneralUpdateDocumentForm();
-
-            switch (documentType)
-            {
-                case "Agricultural Land Commission (ALC)":
-                    VerifyALCFields();
-                    break;
-                case "BC assessment search":
-                    VerifyBCAssessmentFields();
-                    break;
-                case "Canada lands survey":
-                    VerifyCanadaLandsSurveyFields();
-                    break;
-                case "Correspondence":
-                    VerifyPhotosCorrespondenceFields();
-                    break;
-                case "Crown grant":
-                    VerifyCrownGrantFields();
-                    break;
-                case "District road register":
-                    VerifyDistrictRoadRegisterFields();
-                    break;
-                case "Field notes":
-                    VerifyFieldNotesFields();
-                    break;
-                case "Form 12":
-                    VerifyForm12Fields();
-                    break;
-                case "Gazette":
-                    VerifyGazetteFields();
-                    break;
-                case "Historical file":
-                    VerifyHistoricalFileFields();
-                    break;
-                case "Land Act Tenure/Reserves":
-                    VerifyLandActTenureFields();
-                    break;
-                case "Legal survey plan":
-                    VerifyLegalSurveyFields();
-                    break;
-                case "Ministerial order":
-                    VerifyMinisterialOrderFields();
-                    break;
-                case "Miscellaneous notes (LTSA)":
-                    VerifyMiscellaneousNotesFields();
-                    break;
-                case "MoTI plan":
-                    VerifyMOTIPlanFields();
-                    break;
-                case "Order in Council (OIC)":
-                    VerifyOICFields();
-                    break;
-                case "Other":
-                    VerifyOtherTypeFields();
-                    break;
-                case "PA plans / Design drawings":
-                    VerifyPAPlansFields();
-                    break;
-                case "Photos / Images/ Video":
-                    VerifyPhotosCorrespondenceFields();
-                    break;
-                case "Privy council":
-                    VerifyPrivyCouncilFields();
-                    break;
-                case "Title search / Historical title":
-                    VerifyTitleSearchFields();
-                    break;
-                case "Transfer of administration":
-                    VerifyTransferAdministrationFields();
-                    break;
-                default:
-                    VerifyShortDescriptorField();
-                    break;
-            }
-        }
-
-        public void VerifyDocumentsListView()
-        {
-            WaitUntilVisible(documentFilterTypeSelect);
-            
-            AssertTrueIsDisplayed(documentsTitle);
-            AssertTrueIsDisplayed(addDocumentBttn);
-            
-            AssertTrueIsDisplayed(documentFilterTypeSelect);
-            AssertTrueIsDisplayed(documentFilterStatusSelect);
-            AssertTrueIsDisplayed(documentFilterNameInput);
-            AssertTrueIsDisplayed(documentFilterSearchBttn);
-            AssertTrueIsDisplayed(documentFilterResetBttn);
-
-            AssertTrueIsDisplayed(documentTableListView);
-            AssertTrueIsDisplayed(documentTableTypeColumn);
-            AssertTrueIsDisplayed(documentTableNameColumn);
-            AssertTrueIsDisplayed(documentTableDateColumn);
-            AssertTrueIsDisplayed(documentTableStatusColumn);
-            AssertTrueIsDisplayed(documentTableActionsColumn);
-        }
-
-        public void VerifyPaginationElements()
-        {
-            AssertTrueIsDisplayed(documentPagination);
-            AssertTrueIsDisplayed(documentMenuPagination);
-            AssertTrueIsDisplayed(documentPaginationPrevPageLink);
-            AssertTrueIsDisplayed(documentPaginationNextPageLink);
         }
 
         public int DigitalDocumentsTableResultNumber()
@@ -448,19 +392,19 @@ namespace PIMS.Tests.Automation.PageObjects
         public void OrderByDocumentFileType()
         {
             Wait();
-            webDriver.FindElement(documentDocumentTypeSortBttn).Click();
+            webDriver.FindElement(documentsTableColumnTypeSort).Click();
         }
 
         public void OrderByDocumentFileName()
         {
-            WaitUntilClickable(documentDocumentNameSortBttn);
-            webDriver.FindElement(documentDocumentNameSortBttn).Click();
+            WaitUntilClickable(documentsTableColumnNameSort);
+            webDriver.FindElement(documentsTableColumnNameSort).Click();
         }
 
         public void OrderByDocumentFileStatus()
         {
-            WaitUntilClickable(documentDocumentStatusSortBttn);
-            webDriver.FindElement(documentDocumentStatusSortBttn).Click();
+            WaitUntilClickable(documentsTableColumnStatusSort);
+            webDriver.FindElement(documentsTableColumnStatusSort).Click();
         }
 
         public string FirstDocumentFileType()
@@ -603,13 +547,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ViewUploadedDocument(int index)
         {
-            WaitUntilClickable(documentTableResults1stViewBttn);
+            
+            Wait();
 
             if (index > 9)
                 FocusAndClick(documentPaginationNextPageLink);
 
-            var elementChild = (index % 10) + 1;
-            FocusAndClick(By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[" + elementChild + "]/div/div[5]/div/button[@data-testid='document-view-button']"));
+            FocusAndClick(By.CssSelector("div[data-testid='documentsTable'] div[class='tbody'] button[data-testid='document-view-button-"+ index +"']"));
         }
 
         public void Delete1stDocument()
@@ -628,7 +572,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilDisappear(documentTableWaitSpinner);
         }
 
-        public void EditDocument()
+        public void EditDocumentButton()
         {
             Wait(2000);
             FocusAndClick(documentEditBttn);
@@ -740,8 +684,8 @@ namespace PIMS.Tests.Automation.PageObjects
             if (document.PhysicalLocation != "" && webDriver.FindElements(documentHistoricFileTypePhyLocationInput).Count > 0)
                 webDriver.FindElement(documentHistoricFileTypePhyLocationInput).SendKeys(document.PhysicalLocation);
 
-            if (document.PIDNumber != "" && webDriver.FindElements(documentTypePropIdInput).Count > 0)
-                webDriver.FindElement(documentTypePropIdInput).SendKeys(document.PIDNumber);
+            if (document.PIDNumber != "" && webDriver.FindElements(documentMiscNotesTypePIDInput).Count > 0)
+                webDriver.FindElement(documentMiscNotesTypePIDInput).SendKeys(document.PIDNumber);
 
             if (document.PINNumber != "" && webDriver.FindElements(documentOtherTypePINInput).Count > 0)
                 webDriver.FindElement(documentOtherTypePINInput).SendKeys(document.PINNumber);
@@ -949,10 +893,10 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearInput(documentTypeOwnerInput);
                 webDriver.FindElement(documentTypeOwnerInput).SendKeys(document.PhysicalLocation);
             }
-            if (document.PIDNumber != "" && webDriver.FindElements(documentTypePropIdInput).Count > 0)
+            if (document.PIDNumber != "" && webDriver.FindElements(documentMiscNotesTypePIDInput).Count > 0)
             {
-                ClearInput(documentTypePropIdInput);
-                webDriver.FindElement(documentTypePropIdInput).SendKeys(document.PIDNumber);
+                ClearInput(documentMiscNotesTypePIDInput); //HEREEEEE
+                webDriver.FindElement(documentMiscNotesTypePIDInput).SendKeys(document.PIDNumber);
             }
             if (document.PINNumber != "" && webDriver.FindElements(documentOtherTypePINInput).Count > 0)
             {
@@ -1046,6 +990,238 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
+        public void VerifyDocumentFields(string documentType)
+        {
+            VerifyGeneralUpdateDocumentForm();
+
+            switch (documentType)
+            {
+                case "Agricultural Land Commission (ALC)":
+                    VerifyALCFields();
+                    break;
+                case "BC assessment search":
+                    VerifyBCAssessmentFields();
+                    break;
+                case "Canada lands survey":
+                    VerifyCanadaLandsSurveyFields();
+                    break;
+                case "Correspondence":
+                    VerifyPhotosCorrespondenceFields();
+                    break;
+                case "Crown grant":
+                    VerifyCrownGrantFields();
+                    break;
+                case "District road register":
+                    VerifyDistrictRoadRegisterFields();
+                    break;
+                case "Field notes":
+                    VerifyFieldNotesFields();
+                    break;
+                case "Form 12":
+                    VerifyForm12Fields();
+                    break;
+                case "Gazette":
+                    VerifyGazetteFields();
+                    break;
+                case "Historical file":
+                    VerifyHistoricalFileFields();
+                    break;
+                case "Land Act Tenure/Reserves":
+                    VerifyLandActTenureFields();
+                    break;
+                case "Legal survey plan":
+                    VerifyLegalSurveyFields();
+                    break;
+                case "Ministerial order":
+                    VerifyMinisterialOrderFields();
+                    break;
+                case "Miscellaneous notes (LTSA)":
+                    VerifyMiscellaneousNotesFields();
+                    break;
+                case "MoTI plan":
+                    VerifyMOTIPlanFields();
+                    break;
+                case "Order in Council (OIC)":
+                    VerifyOICFields();
+                    break;
+                case "Other":
+                    VerifyOtherTypeFields();
+                    break;
+                case "PA plans / Design drawings":
+                    VerifyPAPlansFields();
+                    break;
+                case "Photos / Images/ Video":
+                    VerifyPhotosCorrespondenceFields();
+                    break;
+                case "Privy council":
+                    VerifyPrivyCouncilFields();
+                    break;
+                case "Title search / Historical title":
+                    VerifyTitleSearchFields();
+                    break;
+                case "Transfer of administration":
+                    VerifyTransferAdministrationFields();
+                    break;
+                default:
+                    VerifyShortDescriptorField();
+                    break;
+            }
+        }
+
+        public void VerifyFileDocumentsListView()
+        {
+            WaitUntilVisible(documentFilterTypeSelect);
+
+            AssertTrueIsDisplayed(documentsTitle);
+            AssertTrueIsDisplayed(addDocumentBttn);
+            AssertTrueIsDisplayed(refresh1stTableBttn);
+
+            AssertTrueIsDisplayed(documentFilterStatusSelect);
+            AssertTrueIsDisplayed(documentFilterNameInput);
+            AssertTrueIsDisplayed(documentFilterSearchBttn);
+            AssertTrueIsDisplayed(documentFilterResetBttn);
+
+            AssertTrueIsDisplayed(documentsTableColumnType);
+            AssertTrueIsDisplayed(documentsTableColumnTypeSort);
+            AssertTrueIsDisplayed(documentsTableColumnName);
+            AssertTrueIsDisplayed(documentsTableColumnNameSort);
+            AssertTrueIsDisplayed(documentsTableColumnUploaded);
+            AssertTrueIsDisplayed(documentsTableColumnUploadedSort);
+            AssertTrueIsDisplayed(documentsTableColumnStatus);
+            AssertTrueIsDisplayed(documentsTableColumnStatusSort);
+            AssertTrueIsDisplayed(documentsTableColumnActions);
+        }
+
+        public void VerifyManagementFilesDocumentsListView()
+        {
+            Wait();
+
+            AssertTrueIsDisplayed(propDocumentsTitle);
+            AssertTrueIsDisplayed(addDocumentBttn);
+            AssertTrueIsDisplayed(refresh1stTableBttn);
+
+            AssertTrueIsDisplayed(documentFilterStatusSelect);
+            AssertTrueIsDisplayed(documentFilterNameInput);
+            AssertTrueIsDisplayed(documentFilterSearchBttn);
+            AssertTrueIsDisplayed(documentFilterResetBttn);
+
+            AssertTrueIsDisplayed(documentsTableColumnType);
+            AssertTrueIsDisplayed(documentsTableColumnTypeSort);
+            AssertTrueIsDisplayed(documentsTableColumnName);
+            AssertTrueIsDisplayed(documentsTableColumnNameSort);
+            AssertTrueIsDisplayed(documentsTableColumnUploaded);
+            AssertTrueIsDisplayed(documentsTableColumnUploadedSort);
+            AssertTrueIsDisplayed(documentsTableColumnStatus);
+            AssertTrueIsDisplayed(documentsTableColumnStatusSort);
+            AssertTrueIsDisplayed(documentsTableColumnActions);
+
+            AssertTrueIsDisplayed(adhocDocumentsTitle);
+            AssertTrueIsDisplayed(PIMSDocumentFilterTypeSelect);
+            AssertTrueIsDisplayed(PIMSDocumentFilterStatusSelect);
+            AssertTrueIsDisplayed(PIMSDocumentFilterNameInput);
+            AssertTrueIsDisplayed(PIMSDocumentFilterSearchBttn);
+            AssertTrueIsDisplayed(PIMSDocumentFilterResetBttn);
+
+            AssertTrueIsDisplayed(adhocDocumentsrefreshTableBttn);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnAssociation);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnAssocSort);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnAssocType);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnAssocTypeSort);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnType);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnTypeSort);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnName);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnNameSort);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnUploaded);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnUploadedSort);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnStatus);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnStatusSort);
+            AssertTrueIsDisplayed(adhocDocumentsTableColumnActions);
+        }
+
+        public void VerifyPropertyDocumentsListView()
+        {
+            WaitUntilVisible(propDocumentsTitle);
+
+            AssertTrueIsDisplayed(propDocumentsTitle);
+            AssertTrueIsDisplayed(addDocumentBttn);
+            AssertTrueIsDisplayed(refresh1stTableBttn);
+
+            AssertTrueIsDisplayed(documentFilterStatusSelect);
+            AssertTrueIsDisplayed(documentFilterNameInput);
+            AssertTrueIsDisplayed(documentFilterSearchBttn);
+            AssertTrueIsDisplayed(documentFilterResetBttn);
+
+            AssertTrueIsDisplayed(documentsTableColumnType);
+            AssertTrueIsDisplayed(documentsTableColumnTypeSort);
+            AssertTrueIsDisplayed(documentsTableColumnName);
+            AssertTrueIsDisplayed(documentsTableColumnNameSort);
+            AssertTrueIsDisplayed(documentsTableColumnUploaded);
+            AssertTrueIsDisplayed(documentsTableColumnUploadedSort);
+            AssertTrueIsDisplayed(documentsTableColumnStatus);
+            AssertTrueIsDisplayed(documentsTableColumnStatusSort);
+            AssertTrueIsDisplayed(documentsTableColumnActions);
+
+            AssertTrueIsDisplayed(PIMSDocumentsTitle);
+            AssertTrueIsDisplayed(PIMSDocumentFilterTypeSelect);
+            AssertTrueIsDisplayed(PIMSDocumentFilterStatusSelect);
+            AssertTrueIsDisplayed(PIMSDocumentFilterNameInput);
+            AssertTrueIsDisplayed(PIMSDocumentFilterSearchBttn);
+            AssertTrueIsDisplayed(PIMSDocumentFilterResetBttn);
+
+            AssertTrueIsDisplayed(PIMSDocumentsrefreshTableBttn);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnFile);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnFileSort);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnFileType);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnFileTypeSort);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnType);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnTypeSort);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnName);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnNameSort);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnUploaded);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnUploadedSort);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnStatus);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnStatusSort);
+            AssertTrueIsDisplayed(PIMSDocumentsTableColumnActions);
+        }
+
+        public void VerifyPaginationElements()
+        {
+            AssertTrueIsDisplayed(documentPagination);
+            AssertTrueIsDisplayed(documentMenuPagination);
+            AssertTrueIsDisplayed(documentPaginationPrevPageLink);
+            AssertTrueIsDisplayed(documentPaginationNextPageLink);
+        }
+
+        public void VerifyAdhocDocumentsList(DigitalDocument document, int index)
+        {
+            Wait();
+            WaitUntilSpinnerDisappear();
+
+            var elementIndex = index +1;
+
+            AssertTrueContentNotEquals(By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(1) button div"), "");
+            AssertTrueElementContainsAnyOf(By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(2)"), new List<string> { "ManagementActivities", "Properties" });
+            AssertTrueElementContains(By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(3)"), document.DocumentType);
+            AssertTrueContentNotEquals(By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(4) div span"), "");
+            AssertTrueContentNotEquals(By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(5) div"), "");
+            AssertTrueElementContains(By.CssSelector("div[data-testid='adhoc-properties-documents-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(6)"), document.DocumentStatus);
+        }
+
+        public void VerifyPIMSFilesDocumentsList(DigitalDocument document, int index)
+        {
+            Wait();
+            WaitUntilSpinnerDisappear();
+
+            var elementIndex = index +1;
+
+            AssertTrueContentNotEquals(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(1) button div"), "");
+            AssertTrueElementContains(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(2)"), "ManagementFiles");
+            AssertTrueElementContains(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(3)"), document.DocumentType);
+            AssertTrueContentNotEquals(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(4) div span"), "");
+            AssertTrueContentNotEquals(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(5) div"), "");
+            AssertTrueElementContains(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(6)"), document.DocumentStatus);
+        }
+
         public void VerifyDocumentDetailsViewForm(DigitalDocument document)
         {
             Wait();
@@ -1057,9 +1233,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(documentViewDocumentTypeContent, document.DocumentType);
             AssertTrueIsDisplayed(documenyViewDocumentNameLabel);
             AssertTrueContentNotEquals(documentViewFileNameContent, "");
-
-            //WaitUntilVisible(documentViewDownloadButton);
-            //AssertTrueIsDisplayed(documentViewDownloadButton);
 
             //Document Information
             AssertTrueIsDisplayed(documentViewInfoSubtitle);
@@ -1581,11 +1754,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private string TranformFormatDateDocument(string date)
         {
             if (date == "")
-            {
                 return "";
-            }
+            
             else
-            {
+            { 
                 var dateObject = DateTime.Parse(date);
                 return dateObject.ToString("G");
             }

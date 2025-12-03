@@ -2,8 +2,7 @@ import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivitySubtype } from '@/models/api/generated/ApiGen_Concepts_PropertyActivitySubtype';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { useApiManagementActivities } from '../pims-api/useApiManagementActivities';
@@ -12,28 +11,24 @@ import { useApiManagementActivities } from '../pims-api/useApiManagementActiviti
  * hook that interacts with the Management File Activity API.
  */
 export const useManagementActivityRepository = () => {
-  const { getActivitySubtypesApi, postActivityApi } = useApiManagementActivities();
-
-  const getActivitySubtypes = useApiRequestWrapper<
-    () => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivitySubtype[], any>>
-  >({
-    requestFunction: useCallback(
-      async () => await getActivitySubtypesApi(),
-      [getActivitySubtypesApi],
-    ),
-    requestName: 'RetrieveActivitySubtypes',
-    onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retrieve management activity subtypes.'),
-  });
+  const {
+    postActivityApi,
+    getPropertyActivityApi,
+    getActivityApi,
+    getActivitiesApi,
+    getFileActivitiesApi,
+    deleteActivityApi,
+    putActivityApi,
+  } = useApiManagementActivities();
 
   const addManagementActivity = useApiRequestWrapper<
     (
       managementFileId: number,
-      activity: ApiGen_Concepts_PropertyActivity,
-    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
+      activity: ApiGen_Concepts_ManagementActivity,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity, any>>
   >({
     requestFunction: useCallback(
-      async (managementFileId: number, activity: ApiGen_Concepts_PropertyActivity) =>
+      async (managementFileId: number, activity: ApiGen_Concepts_ManagementActivity) =>
         await postActivityApi(managementFileId, activity),
       [postActivityApi],
     ),
@@ -42,11 +37,109 @@ export const useManagementActivityRepository = () => {
     onError: useAxiosErrorHandler('Failed to create a management file activity.'),
   });
 
+  const getPropertyManagementActivity = useApiRequestWrapper<
+    (
+      managementActivityId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity, any>>
+  >({
+    requestFunction: useCallback(
+      async (managementActivityId: number) => await getPropertyActivityApi(managementActivityId),
+      [getPropertyActivityApi],
+    ),
+    requestName: 'GetManagementActivity',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to retrieve a management file activity.'),
+  });
+
+  const updateManagementActivity = useApiRequestWrapper<
+    (
+      managementFileId: number,
+      activity: ApiGen_Concepts_ManagementActivity,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity, any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number, activity: ApiGen_Concepts_ManagementActivity) =>
+        await putActivityApi(managementFileId, activity),
+      [putActivityApi],
+    ),
+    requestName: 'UpdateManagementActivity',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to update a management file activity.'),
+  });
+
+  const getManagementActivity = useApiRequestWrapper<
+    (
+      managementFileId: number,
+      managementActivityId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity, any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number, managementActivityId: number) =>
+        await getActivityApi(managementFileId, managementActivityId),
+      [getActivityApi],
+    ),
+    requestName: 'GetManagementActivity',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to retrieve a management file activity.'),
+  });
+
+  const getManagementActivities = useApiRequestWrapper<
+    (managementFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity[], any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number) => await getActivitiesApi(managementFileId),
+      [getActivitiesApi],
+    ),
+    requestName: 'getManagementActivities',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load property management activities list.'),
+  });
+
+  const getManagementFileActivities = useApiRequestWrapper<
+    (managementFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity[], any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number) => await getFileActivitiesApi(managementFileId),
+      [getFileActivitiesApi],
+    ),
+    requestName: 'getManagementFileActivities',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load property management file activities list.'),
+  });
+
+  const deleteManagementActivity = useApiRequestWrapper<
+    (managementFileId: number, managementActivityId: number) => Promise<AxiosResponse<boolean, any>>
+  >({
+    requestFunction: useCallback(
+      async (managementFileId: number, managementActivityId: number) =>
+        await deleteActivityApi(managementFileId, managementActivityId),
+      [deleteActivityApi],
+    ),
+    requestName: 'deleteManagementActivity',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler(
+      'Failed to delete management file activity. Refresh the page to try again.',
+    ),
+  });
+
   return useMemo(
     () => ({
-      getActivitySubtypes,
+      getPropertyManagementActivity,
       addManagementActivity,
+      updateManagementActivity,
+      getManagementActivity,
+      getManagementActivities,
+      getManagementFileActivities,
+      deleteManagementActivity,
     }),
-    [getActivitySubtypes, addManagementActivity],
+    [
+      getPropertyManagementActivity,
+      addManagementActivity,
+      updateManagementActivity,
+      getManagementActivity,
+      getManagementActivities,
+      getManagementFileActivities,
+      deleteManagementActivity,
+    ],
   );
 };

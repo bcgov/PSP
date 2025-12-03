@@ -31,14 +31,9 @@
         public string IntendedUse { get; set; } = null!;
         public string ArbitrationCity { get; set; } = null!;
 
-        public string FirstNation { get; set; } = null!;
-        public string StrategicRealEstate { get; set; } = null!;
-        public string RegionalPlanning { get; set; } = null!;
-        public string RegionalPropertyService { get; set; } = null!;
-        public string District { get; set; } = null!;
-        public string Headquarter { get; set; } = null!;
-        public string ConsultationOther { get; set; } = null!;
-        public string ConsultationOtherDetails { get; set; } = null!;
+        public int LeaseTeamStartRow { get; set; } = 0;
+        public int LeaseTeamCount { get; set; } = 0;
+        public List<TeamMember> LeaseTeam { get; set; } = new List<TeamMember>() { };
 
         public string FeeDeterminationPublicBenefit { get; set; } = null!;
         public string FeeDeterminationFinancialGain { get; set; } = null!;
@@ -128,6 +123,13 @@
         public int LeaseCompensationCount { get; set; } = 0;
         public string LeaseCompensationTotalAllowableAmount { get; set; } = null!;
         public List<Compensation> LeaseCompensations { get; set; } = new List<Compensation>() { };
+
+        public bool IsStakeholderEmpty(Stakeholder s)
+        {
+            return s == null ||
+                   (string.IsNullOrWhiteSpace(s.ContactType) &&
+                    string.IsNullOrWhiteSpace(s.Summary));
+        }
     }
 
     public class LeaseRenewal

@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
-import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { useManagementActivityPropertyRepository } from '@/hooks/repositories/useManagementActivityPropertyRepository';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { exists, isValidId } from '@/utils/utils';
 
 import useActivityContactRetriever from '../hooks';
@@ -9,7 +9,7 @@ import { IPropertyActivityDetailViewProps } from './PropertyActivityDetailView';
 
 export interface IPropertyActivityDetailContainerProps {
   propertyId: number;
-  propertyActivityId: number;
+  managementActivityId: number;
   onClose: () => void;
   viewEnabled: boolean;
   View: React.FunctionComponent<React.PropsWithChildren<IPropertyActivityDetailViewProps>>;
@@ -21,10 +21,10 @@ export interface IPropertyActivityDetailContainerProps {
  */
 export const PropertyActivityDetailContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyActivityDetailContainerProps>
-> = ({ propertyId, propertyActivityId, onClose, viewEnabled, View }) => {
+> = ({ propertyId, managementActivityId, onClose, viewEnabled, View }) => {
   const [show, setShow] = useState(true);
 
-  const [loadedActivity, setLoadedActivity] = useState<ApiGen_Concepts_PropertyActivity | null>(
+  const [loadedActivity, setLoadedActivity] = useState<ApiGen_Concepts_ManagementActivity | null>(
     null,
   );
 
@@ -32,12 +32,13 @@ export const PropertyActivityDetailContainer: React.FunctionComponent<
     fetchMinistryContacts,
     fetchPartiesContact,
     fetchProviderContact,
+    fetchRequestorContact,
     isLoading: isContactLoading,
   } = useActivityContactRetriever();
 
   const {
     getActivity: { execute: getActivity, loading: getActivityLoading },
-  } = usePropertyActivityRepository();
+  } = useManagementActivityPropertyRepository();
 
   // Load the activity
   const fetchActivity = useCallback(
@@ -55,24 +56,30 @@ export const PropertyActivityDetailContainer: React.FunctionComponent<
           }
         }
         await fetchProviderContact(retrieved);
+        await fetchRequestorContact(retrieved);
 
         setLoadedActivity(retrieved);
       } else {
         setLoadedActivity(null);
       }
     },
-    [fetchMinistryContacts, fetchPartiesContact, fetchProviderContact, getActivity],
+    [
+      fetchMinistryContacts,
+      fetchPartiesContact,
+      fetchProviderContact,
+      fetchRequestorContact,
+      getActivity,
+    ],
   );
 
   useEffect(() => {
-    if (isValidId(propertyId) && isValidId(propertyActivityId)) {
-      fetchActivity(propertyId, propertyActivityId);
+    if (isValidId(propertyId) && isValidId(managementActivityId)) {
+      fetchActivity(propertyId, managementActivityId);
     }
-  }, [propertyId, propertyActivityId, fetchActivity]);
+  }, [propertyId, managementActivityId, fetchActivity]);
 
   return (
     <View
-      propertyId={propertyId}
       activity={loadedActivity}
       onClose={onClose}
       loading={getActivityLoading || isContactLoading}

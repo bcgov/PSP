@@ -1,6 +1,7 @@
 import { CSSProperties } from 'react';
 import { Breadcrumb as BsBreadcrumb, Col } from 'react-bootstrap';
 import { FaWindowClose } from 'react-icons/fa';
+import { Link } from 'react-router-dom';
 import styled, { css } from 'styled-components';
 
 import { LoadingBackdropProps } from '@/components/common/LoadingBackdrop';
@@ -97,11 +98,12 @@ export const H2 = styled.h2`
 export const H3 = styled.h3`
   color: ${props => props.theme.css.headerTextColor};
   font-family: 'BCSans-Bold';
-  font-size: 2.2rem;
+  font-size: 1.7rem;
   border-bottom: solid 0.2rem ${props => props.theme.css.actionColor};
   width: 100%;
   text-align: left;
   margin-bottom: 1.6rem;
+  margin-top: 1.6rem;
 `;
 
 export const FilterBoxForm = styled(Form)`
@@ -138,6 +140,7 @@ export const StyledSectionAddButton = styled(StyledAddButton)`
     display: inline-block;
     margin-left: 1.5rem;
     margin-bottom: 0.5rem;
+    float: right;
   }
 `;
 
@@ -252,4 +255,27 @@ export const ListPage = styled.div`
   width: 100%;
   gap: 2.5rem;
   padding: 0;
+`;
+
+export const StyledIconWrapper = styled.div`
+  &.selected {
+    background-color: ${props => props.theme.bcTokens.themeGold100};
+  }
+
+  background-color: ${props => props.theme.css.numberBackgroundColor};
+  font-size: 1.5rem;
+  border-radius: 50%;
+  opacity: 0.8;
+  width: 3.25rem;
+  height: 3.25rem;
+  padding: 1rem;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-family: 'BCSans-Bold';
+`;
+
+export const StyledLink = styled(Link)`
+  padding: 0 0.4rem;
+  display: block;
 `;

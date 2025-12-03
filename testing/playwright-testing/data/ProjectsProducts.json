@@ -1,0 +1,189 @@
+[
+  {
+    "Test Case Description": "Complete Product 1 for Project 1",
+    "ProductCode": "AU-0001-01",
+    "ProductName": "Automated Product 001",
+    "ProductCodeName": "AU-0001-01 Automated Product 001",
+    "StartDate": 1673481600000,
+    "CostEstimate": 100.0,
+    "EstimateDate": 1673481600000,
+    "Objectives": "Regression Testing - create new products within a project",
+    "Scope": "Most common cases of creating a product"
+  },
+  {
+    "Test Case Description": "Complete Product 2 for Project 1",
+    "ProductCode": "AU-0001-02",
+    "ProductName": "Automated Product 002",
+    "ProductCodeName": "AU-0001-02 Automated Product 002",
+    "StartDate": 1676160000000,
+    "CostEstimate": 150.99,
+    "EstimateDate": 1676160000000,
+    "Objectives": "Regression Testing - create new products within a project",
+    "Scope": "Most common cases of creating a product"
+  },
+  {
+    "Test Case Description": "Complete Product 3 for Project 1",
+    "ProductCode": "AU-0001-03",
+    "ProductName": "Automated Product 003",
+    "ProductCodeName": "AU-0001-03 Automated Product 003",
+    "StartDate": 1678579200000,
+    "CostEstimate": 170.79,
+    "EstimateDate": 1678579200000,
+    "Objectives": "Regression Testing - create new products within a project",
+    "Scope": "Most common cases of creating a product"
+  },
+  {
+    "Test Case Description": "Unique Product for Project 1",
+    "ProductCode": "UNIQUE-0001",
+    "ProductName": "Unique Product from Project 3",
+    "ProductCodeName": "UNIQUE-0001 Unique Product from Project 3",
+    "StartDate": 1685318400000,
+    "CostEstimate": 150.0,
+    "EstimateDate": 1685404800000,
+    "Objectives": "Testing of a project with 1 product",
+    "Scope": null
+  },
+  {
+    "Test Case Description": "Product 1 for Project 4",
+    "ProductCode": "MULTI-0001",
+    "ProductName": "Product 1 for AU-0004",
+    "ProductCodeName": "MULTI-0001 Product 1 for AU-0004",
+    "StartDate": 1577836800000,
+    "CostEstimate": 89.95,
+    "EstimateDate": 1577923200000,
+    "Objectives": "Testing a project with several products",
+    "Scope": null
+  },
+  {
+    "Test Case Description": "Product 2 for Project 4",
+    "ProductCode": "MULTI-0002",
+    "ProductName": "Product 2 for AU-0004",
+    "ProductCodeName": "MULTI-0002 Product 2 for AU-0004",
+    "StartDate": 1580515200000,
+    "CostEstimate": 77.89,
+    "EstimateDate": 1580601600000,
+    "Objectives": null,
+    "Scope": "Several products associated to 1 project"
+  },
+  {
+    "Test Case Description": "Product 3 for Project 4",
+    "ProductCode": "MULTI-0003",
+    "ProductName": "Product 3 for AU-0004",
+    "ProductCodeName": "MULTI-0003 Product 3 for AU-0004",
+    "StartDate": 1583020800000,
+    "CostEstimate": 123.44,
+    "EstimateDate": 1583107200000,
+    "Objectives": "Testing a project with several products",
+    "Scope": null
+  },
+  {
+    "Test Case Description": "Product 4 for Project 4",
+    "ProductCode": "MULTI-0004",
+    "ProductName": "Product 4 for AU-0004",
+    "ProductCodeName": "MULTI-0004 Product 4 for AU-0004",
+    "StartDate": 1585699200000,
+    "CostEstimate": 320.12,
+    "EstimateDate": 1585785600000,
+    "Objectives": "Testing a project with several products",
+    "Scope": null
+  },
+  {
+    "Test Case Description": "Product 5 for Project 4",
+    "ProductCode": "MULTI-0005",
+    "ProductName": "Product 5 for AU-0004",
+    "ProductCodeName": "MULTI-0005 Product 5 for AU-0004",
+    "StartDate": 1588291200000,
+    "CostEstimate": 1500.0,
+    "EstimateDate": 1588377600000,
+    "Objectives": null,
+    "Scope": null
+  },
+  {
+    "Test Case Description": "Product 6 for Project 4",
+    "ProductCode": "MULTI-0006",
+    "ProductName": "Product 6 for AU-0004",
+    "ProductCodeName": "MULTI-0006 Product 6 for AU-0004",
+    "StartDate": 1590969600000,
+    "CostEstimate": 2.89,
+    "EstimateDate": 1591056000000,
+    "Objectives": "Testing a project with several products",
+    "Scope": null
+  },
+  {
+    "Test Case Description": "Product 7 for Project 4",
+    "ProductCode": "MULTI-0007",
+    "ProductName": "Product 7 for AU-0004",
+    "ProductCodeName": "MULTI-0007 Product 7 for AU-0004",
+    "StartDate": 1593561600000,
+    "CostEstimate": 5.9,
+    "EstimateDate": 1593648000000,
+    "Objectives": "Testing a project with several products",
+    "Scope": null
+  },
+  {
+    "Test Case Description": "Product 8 for Project 4",
+    "ProductCode": "MULTI-0008",
+    "ProductName": "Product 8 for AU-0004",
+    "ProductCodeName": "MULTI-0008 Product 8 for AU-0004",
+    "StartDate": 1596240000000,
+    "CostEstimate": 6.0,
+    "EstimateDate": 1596326400000,
+    "Objectives": null,
+    "Scope": "Several products associated to 1 project"
+  },
+  {
+    "Test Case Description": "Product 9 for Project 4",
+    "ProductCode": "MULTI-0009",
+    "ProductName": "Product 9 for AU-0004",
+    "ProductCodeName": "MULTI-0009 Product 9 for AU-0004",
+    "StartDate": 1598918400000,
+    "CostEstimate": 0.89,
+    "EstimateDate": 1599004800000,
+    "Objectives": "Testing a project with several products",
+    "Scope": null
+  },
+  {
+    "Test Case Description": "Product 10 for Project 4",
+    "ProductCode": "MULTI-0010",
+    "ProductName": "Product 10 for AU-0004",
+    "ProductCodeName": "MULTI-0010 Product 10 for AU-0004",
+    "StartDate": 1601510400000,
+    "CostEstimate": 10.0,
+    "EstimateDate": 1601596800000,
+    "Objectives": "Testing a project with several products",
+    "Scope": null
+  },
+  {
+    "Test Case Description": "Update for product 1",
+    "ProductCode": "UPAU-0001-01",
+    "ProductName": "Automated Product 001 - updated",
+    "ProductCodeName": "UPAU-0001-01 Automated Product 001 - updated",
+    "StartDate": 1673481600000,
+    "CostEstimate": 120.0,
+    "EstimateDate": 1676160000000,
+    "Objectives": "Updated material product",
+    "Scope": "Updated new scope - Testing"
+  },
+  {
+    "Test Case Description": "Update for product 2",
+    "ProductCode": "UPAU-0001-02",
+    "ProductName": "Automated Product 002 - updated",
+    "ProductCodeName": "UPAU-0001-02 Automated Product 002 - updated",
+    "StartDate": 1673481600000,
+    "CostEstimate": 150.75,
+    "EstimateDate": 1676160000000,
+    "Objectives": null,
+    "Scope": null
+  },
+  {
+    "Test Case Description": "Update for product 3",
+    "ProductCode": "UPAU-0001-03",
+    "ProductName": "Automated Product 003 -updated",
+    "ProductCodeName": "UPAU-0001-03 Automated Product 003 -updated",
+    "StartDate": 1673481600000,
+    "CostEstimate": 289.0,
+    "EstimateDate": 1676160000000,
+    "Objectives": null,
+    "Scope": null
+  }
+]

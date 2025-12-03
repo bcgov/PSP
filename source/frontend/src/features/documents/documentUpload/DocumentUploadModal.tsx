@@ -6,7 +6,7 @@ import GenericModal, { ModalSize } from '@/components/common/GenericModal';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { exists } from '@/utils';
 
-import { BatchUploadResponseModel } from '../ComposedDocument';
+import { BatchUploadResponseModel } from '../models';
 import DocumentUploadContainer, { IDocumentUploadContainerRef } from './DocumentUploadContainer';
 import { DocumentUploadForm } from './DocumentUploadForm';
 

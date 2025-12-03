@@ -2,10 +2,8 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Options;
-using Pims.Core.Extensions;
 using Pims.Core.Http;
 using Pims.Keycloak.Extensions;
 using Pims.Keycloak.Models;
@@ -40,13 +38,13 @@ namespace Pims.Keycloak
         public KeycloakRepository(IOpenIdConnectRequestClient client, IOptions<Configuration.KeycloakOptions> options)
         {
             this.Options = options.Value;
-            this.Options.Validate();
-            this.Options.ServiceAccount.Validate();
+            Options.Validate();
+            Options.ServiceAccount.Validate();
             _client = client;
-            _client.AuthClientOptions.Audience = this.Options.ServiceAccount.Audience ?? this.Options.Audience;
-            _client.AuthClientOptions.Authority = this.Options.ServiceAccount.Authority ?? this.Options.Authority;
-            _client.AuthClientOptions.Client = this.Options.ServiceAccount.Client;
-            _client.AuthClientOptions.Secret = this.Options.ServiceAccount.Secret;
+            _client.AuthClientOptions.Audience = Options.ServiceAccount.Audience ?? Options.Audience;
+            _client.AuthClientOptions.Authority = Options.ServiceAccount.Authority ?? Options.Authority;
+            _client.AuthClientOptions.Client = Options.ServiceAccount.Client;
+            _client.AuthClientOptions.Secret = Options.ServiceAccount.Secret;
         }
 
         /// <summary>
@@ -62,7 +60,7 @@ namespace Pims.Keycloak
 
         public async Task<List<UserModel>> GetUsersAsync(Guid id)
         {
-            var response = await _client.GetAsync($"{this.Options.ServiceAccount.Api}/{this.Options.ServiceAccount.Environment}/idir/users?guid={id.ToString().Replace("-", string.Empty)}");
+            var response = await _client.GetAsync($"{Options.ServiceAccount.Api}/{Options.ServiceAccount.Environment}/idir/users?guid={id.ToString().Replace("-", string.Empty)}");
             var result = await response.HandleResponseAsync<ResponseWrapper<UserModel>>();
 
             return result.Data.ToList();
@@ -76,47 +74,6 @@ namespace Pims.Keycloak
         public async Task<HttpResponseMessage> DeleteRoleFromUsers(string username, string roleName)
         {
             return await _client.DeleteAsync($"{GetIntegrationUrl()}/users/{Uri.EscapeDataString(username)}/roles/{Uri.EscapeDataString(roleName)}");
-        }
-
-        /// <summary>
-        /// Get an array of the groups the user for the specified 'id' is a member of.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<RoleModel[]> GetUserGroupsAsync(Guid id)
-        {
-            var response = await _client.GetAsync($"{GetIntegrationUrl()}/user-role-mappings/?username={id.ToString().Replace("-", string.Empty)}@idir");
-
-            var userRoleModel = await response.HandleResponseAsync<UserRoleModel>();
-
-            return userRoleModel.Roles.Where(r => r.Composite.HasValue && r.Composite.Value).ToArray();
-        }
-
-        /// <summary>
-        /// Get the total number of groups the user for the specified 'id' is a member of.
-        /// </summary>
-        /// <param name="id"></param>
-        /// <returns></returns>
-        public async Task<int> GetUserGroupCountAsync(Guid id)
-        {
-            var response = await GetUserGroupsAsync(id);
-            return response.Length;
-        }
-
-        /// <summary>
-        /// execute all passed operations.
-        /// </summary>
-        /// <param name="operations"></param>
-        /// <returns></returns>
-        public async Task ModifyUserRoleMappings(IEnumerable<UserRoleOperation> operations)
-        {
-            foreach (UserRoleOperation operation in operations)
-            {
-                var json = operation.Serialize();
-                using var content = new StringContent(json, Encoding.UTF8, "application/json");
-                var response = await _client.PostAsync($"{GetIntegrationUrl()}/user-role-mappings", content);
-                await response.HandleResponseAsync<UserRoleModel>();
-            }
         }
 
         public async Task<ResponseWrapper<RoleModel>> GetAllRoles()
@@ -169,7 +126,7 @@ namespace Pims.Keycloak
 
         private string GetIntegrationUrl()
         {
-            return $"{this.Options.ServiceAccount.Api}/integrations/{this.Options.ServiceAccount.Integration}/{this.Options.ServiceAccount.Environment}";
+            return $"{Options.ServiceAccount.Api}/integrations/{Options.ServiceAccount.Integration}/{Options.ServiceAccount.Environment}";
         }
         #endregion
 

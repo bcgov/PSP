@@ -20,8 +20,8 @@ import {
   userEvent,
 } from '@/utils/test-utils';
 
-import { DocumentRow } from '../ComposedDocument';
 import { DocumentListView, IDocumentListViewProps } from './DocumentListView';
+import { DocumentRow } from '../models/DocumentRow';
 
 const mockAxios = new MockAdapter(axios);
 const storeState = {
@@ -31,9 +31,14 @@ const storeState = {
 const onDelete = vi.fn().mockResolvedValue(true);
 const onSuccess = vi.fn();
 const onRefresh = vi.fn();
+const onViewParent = vi.fn();
 
 const mockDocumentRowResponse = () =>
-  mockDocumentsResponse().map(x => (x?.document ? DocumentRow.fromApi(x) : new DocumentRow()));
+  mockDocumentsResponse().map(x =>
+    x?.document
+      ? DocumentRow.fromApi(x, ApiGen_CodeTypes_DocumentRelationType.Leases)
+      : new DocumentRow(),
+  );
 
 describe('Document List View', () => {
   // render component under test
@@ -54,6 +59,10 @@ describe('Document List View', () => {
         onDelete={renderOptions?.onDelete || onDelete}
         onSuccess={renderOptions?.onSuccess || onSuccess}
         onRefresh={renderOptions?.onRefresh || onRefresh}
+        relationshipTypes={[]}
+        showParentInformation={false}
+        onViewParent={renderOptions?.onViewParent || onViewParent}
+        canEditDocuments={renderOptions?.canEditDocuments ?? true}
       />,
       {
         ...renderOptions,
@@ -170,7 +179,7 @@ describe('Document List View', () => {
       documentResults: documentRows,
       claims: [Claims.DOCUMENT_ADD, Claims.DOCUMENT_DELETE, Claims.DOCUMENT_VIEW],
     });
-    const deleteButtonTooltip = await findAllByTestId('document-delete-button');
+    const deleteButtonTooltip = await findAllByTestId('document-delete-button-0');
     await act(async () => userEvent.click(deleteButtonTooltip[0]));
 
     const continueButton = await screen.findByText('Yes');

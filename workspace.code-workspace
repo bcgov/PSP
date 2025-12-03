@@ -1,30 +1,36 @@
 {
   "folders": [
     {
-      "path": "source\\backend\\api"
+      "path": "source/backend/api"
     },
     {
-      "path": "source\\backend\\apimodels"
+      "path": "source/backend/apimodels"
     },
     {
-      "path": "source\\frontend"
+      "path": "source/frontend"
     },
     {
-      "path": "source\\database\\mssql",
+      "path": "source/database/mssql",
       "name": "database_mssql"
     },
     {
-      "path": "source\\backend"
+      "path": "source/backend"
     },
     {
       "path": "tools/TsModelGenerator"
     },
     {
       "path": "."
-    },    
+    },
+    {
+      "path": "source/backend/scheduler"
+    },
+    {
+      "path": "source/backend/tests"
+    }
   ],
   "settings": {
-    "dotnet.defaultSolution": "backend/Pims.sln",
-    "typescript.tsdk": "frontend\\node_modules\\typescript\\lib"
+    "dotnet.defaultSolution": "backend/PimsBackend.sln",
+    "typescript.tsdk": "frontend/node_modules/typescript/lib"
   }
 }

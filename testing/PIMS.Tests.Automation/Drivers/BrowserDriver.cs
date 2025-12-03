@@ -28,7 +28,7 @@ namespace PIMS.Tests.Automation.Drivers
 
         private IWebDriver CreateChromeWebDriver()
         {
-            ChromeOptions options = new ChromeOptions();
+            ChromeOptions options = new();
             options.AddArgument("start-maximized");
             options.AddExcludedArgument("enable-automation");
             options.AddArgument("--incognito");

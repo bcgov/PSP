@@ -1,12 +1,13 @@
+import { useMemo } from 'react';
+
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
-import * as Styled from '@/components/common/styles';
 import { Table } from '@/components/Table';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
-import { featuresetToMapProperty, getPropertyName } from '@/utils/mapPropertyUtils';
-import { isStrataLot } from '@/utils/propertyUtils';
+import { getPropertyNameFromSelectedFeatureSet } from '@/utils/mapPropertyUtils';
+import { isStrataCommonProperty } from '@/utils/propertyUtils';
 
-import { ILayerSearchCriteria, IMapProperty } from '../models';
+import { ILayerSearchCriteria } from '../models';
 import LayerFilter from './LayerFilter';
 import mapPropertyColumns from './mapPropertyColumns';
 
@@ -40,56 +41,57 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
   onAddressSelect,
 }) => {
   const selectedData = selectedProperties.map<IIdentifiedSelectedFeatureDataset>(x => {
-    return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
+    return { ...x, id: generatePropertyId(x) };
   });
 
-  const identifiedSearchResults = searchResults
-    .map<IIdentifiedSelectedFeatureDataset>(x => {
-      return { ...x, id: generatePropertyId(featuresetToMapProperty(x)) };
-    })
-    .sort((a, b) => {
-      const aIsStrataLot = isStrataLot(a?.parcelFeature);
-      const bIsStrataLot = isStrataLot(b?.parcelFeature);
-      if (aIsStrataLot === bIsStrataLot) return 0;
-      if (aIsStrataLot) return -1;
-      if (bIsStrataLot) return 1;
-      return 0;
-    });
+  const identifiedSearchResults = useMemo(
+    () =>
+      searchResults
+        .map<IIdentifiedSelectedFeatureDataset>(x => {
+          return { ...x, id: generatePropertyId(x) };
+        })
+        .sort((a, b) => {
+          const aIsStrataLot = isStrataCommonProperty(a?.parcelFeature);
+          const bIsStrataLot = isStrataCommonProperty(b?.parcelFeature);
+          if (aIsStrataLot === bIsStrataLot) return 0;
+          if (aIsStrataLot) return -1;
+          if (bIsStrataLot) return 1;
+          return 0;
+        }) ?? [],
+    [searchResults],
+  );
 
-  function generatePropertyId(mapProperty: IMapProperty): string {
-    const propertyName = getPropertyName(mapProperty);
-    return `${propertyName.label}-${propertyName.value}-${mapProperty.latitude}-${mapProperty.longitude}`;
+  function generatePropertyId(mapProperty: SelectedFeatureDataset): string {
+    const propertyName = getPropertyNameFromSelectedFeatureSet(mapProperty);
+    return `${propertyName.label}-${propertyName.value}-${mapProperty.location?.lat ?? 0}-${
+      mapProperty.location?.lng ?? 0
+    }`;
   }
 
   return (
-    <>
-      <Section header={undefined}>
-        <Styled.H3>Search for a property</Styled.H3>
-        <LayerFilter
-          onSearch={onSearch}
-          filter={search}
-          addressResults={addressResults}
-          onAddressChange={onAddressChange}
-          onAddressSelect={onAddressSelect}
-          loading={loading}
-        />
-      </Section>
-      <Section header={undefined}>
-        <Table<IIdentifiedSelectedFeatureDataset>
-          manualPagination={false}
-          name="map-properties"
-          columns={mapPropertyColumns}
-          data={identifiedSearchResults}
-          setSelectedRows={onSelectedProperties}
-          selectedRows={selectedData}
-          loading={loading}
-          lockPageSize={true}
-          showSelectedRowCount={true}
-          noRowsMessage={'No results found for your search criteria.'}
-          pageSize={5}
-        />
-      </Section>
-    </>
+    <Section header="Search for a property" data-testid="property-search-selector-section">
+      <LayerFilter
+        onSearch={onSearch}
+        filter={search}
+        addressResults={addressResults}
+        onAddressChange={onAddressChange}
+        onAddressSelect={onAddressSelect}
+        loading={loading}
+      />
+      <Table<IIdentifiedSelectedFeatureDataset>
+        manualPagination={false}
+        name="map-properties"
+        columns={mapPropertyColumns}
+        data={identifiedSearchResults}
+        setSelectedRows={onSelectedProperties}
+        selectedRows={selectedData}
+        loading={loading}
+        lockPageSize={true}
+        showSelectedRowCount={true}
+        noRowsMessage={'No results found for your search criteria.'}
+        pageSize={5}
+      />
+    </Section>
   );
 };
 

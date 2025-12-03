@@ -2,10 +2,10 @@ import moment from 'moment';
 import { useCallback } from 'react';
 import { Tooltip } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
-import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
 
+import { ExternalLink } from '@/components/common/ExternalLink';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ColumnWithProps, renderTypeCode, Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
@@ -27,12 +27,12 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     align: 'right',
     clickable: true,
     sortable: true,
-    width: 10,
+    width: 20,
     maxWidth: 20,
     Cell: (props: CellProps<ApiGen_Concepts_Lease>) => (
-      <Link to={`/mapview/sidebar/lease/${props.row.original.id}`}>
+      <ExternalLink to={`/mapview/sidebar/lease/${props.row.original.id}`}>
         {props.row.original.lFileNo}
-      </Link>
+      </ExternalLink>
     ),
   },
   {
@@ -40,7 +40,8 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     accessor: 'expiryDate',
     align: 'left',
     sortable: true,
-    width: 20,
+    width: 25,
+    maxWidth: 25,
     Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
       const expiryDate = getCalculatedExpiry(
         props.row.original,
@@ -78,8 +79,8 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     accessor: 'programName',
     align: 'left',
     sortable: true,
-    width: 40,
-    maxWidth: 80,
+    width: 30,
+    maxWidth: 60,
   },
   {
     Header: 'Tenant Names',
@@ -100,9 +101,18 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     },
   },
   {
+    Header: 'Account Type',
+    align: 'left',
+    sortable: true,
+    width: 25,
+    maxWidth: 25,
+    accessor: 'paymentReceivableType',
+    Cell: renderTypeCode,
+  },
+  {
     Header: 'Properties',
     align: 'left',
-
+    width: 75,
     Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
       return (
         <LeaseProperties

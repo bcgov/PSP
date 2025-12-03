@@ -52,9 +52,7 @@ exports[`DispositionView component > renders as expected 1`] = `
 }
 
 .c4.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c4.btn:hover {
@@ -235,12 +233,11 @@ exports[`DispositionView component > renders as expected 1`] = `
 }
 
 .c22 {
-  overflow: auto;
   height: 100%;
   width: 22rem;
 }
 
-.c29 {
+.c32 {
   overflow: auto;
   height: 100%;
   width: 100%;
@@ -281,6 +278,11 @@ exports[`DispositionView component > renders as expected 1`] = `
 .c7 {
   font-size: 2.4rem;
   cursor: pointer;
+}
+
+.c42 {
+  padding: 0 0.4rem;
+  display: block;
 }
 
 .c5.btn.btn-light.Button {
@@ -369,32 +371,32 @@ exports[`DispositionView component > renders as expected 1`] = `
   align-items: end;
 }
 
-.c31 {
+.c34 {
   height: 100%;
 }
 
-.c31 .tab-content {
+.c34 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
   background-color: #f2f2f2;
 }
 
-.c31 .tab-content .tab-pane {
+.c34 .tab-content .tab-pane {
   position: relative;
 }
 
-.c32 {
+.c35 {
   background-color: white;
   color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c32 .nav-tabs {
+.c35 .nav-tabs {
   height: auto;
 }
 
-.c32 .nav-item {
+.c35 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
   padding: 0.1rem 1.3rem;
@@ -402,7 +404,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   margin-left: 0.1rem;
 }
 
-.c32 .nav-item:hover {
+.c35 .nav-item:hover {
   color: #f2f2f2;
   background-color: #1e5189;
   border-color: transparent;
@@ -412,7 +414,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c32 .nav-item.active {
+.c35 .nav-item.active {
   border-radius: 0.4rem;
   color: #f2f2f2;
   background-color: #053662;
@@ -420,7 +422,7 @@ exports[`DispositionView component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c30 {
+.c33 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -437,24 +439,24 @@ exports[`DispositionView component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c33 {
+.c36 {
   background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
-.c34 {
+.c37 {
   text-align: right;
   overflow: hidden;
 }
 
-.c38 {
+.c41 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
 }
 
-.c35 {
+.c38 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -462,20 +464,147 @@ exports[`DispositionView component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c37.required::before {
+.c40.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c36 {
+.c39 {
   font-weight: bold;
 }
 
-.c39 {
-  padding: 0 0.4rem;
-  display: block;
+.c30 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin: 0.15rem;
+  witdh: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  line-break: break-all;
+}
+
+.c23 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
+  text-align: left;
+  padding: 0px;
+  margin: 0px;
+  width: 100%;
+  color: var(--surface-color-primary-button-default);
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+}
+
+.c24 {
+  width: 100%;
+  font-size: 1.4rem;
+  font-weight: normal;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+}
+
+.c24.selected {
+  font-weight: bold;
+  cursor: default;
+}
+
+.c24 div.Button__value {
+  font-size: 1.4rem;
+}
+
+.c28 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 1.4rem;
+  font-weight: normal;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+}
+
+.c28.selected {
+  font-weight: bold;
+  cursor: default;
+}
+
+.c31 {
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+  margin-right: 2rem;
+}
+
+.c29 {
+  background-color: #fcba19;
+  font-size: 1.5rem;
+  border-radius: 50%;
+  opacity: 0.8;
+  width: 2.5rem;
+  height: 2.5rem;
+  padding: 1rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c29.selected {
+  background-color: #FCBA19;
+}
+
+.c25 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: flex-end;
+  -webkit-box-align: flex-end;
+  -ms-flex-align: flex-end;
+  align-items: flex-end;
+  width: 100%;
+  border-bottom: 1px solid #606060;
+}
+
+.c26 {
+  font-weight: bold;
+  font-size: 1.6rem;
+  color: #474543;
+  line-height: 2.2rem;
+}
+
+.c27 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
 }
 
 .c16 {
@@ -517,14 +646,6 @@ exports[`DispositionView component > renders as expected 1`] = `
   padding-bottom: 1rem;
 }
 
-.c11 {
-  margin-top: 0.5rem;
-  margin-bottom: 1.5rem;
-  border-bottom-style: solid;
-  border-bottom-color: grey;
-  border-bottom-width: 0.1rem;
-}
-
 .c14 {
   height: 100%;
   display: -webkit-box;
@@ -540,93 +661,15 @@ exports[`DispositionView component > renders as expected 1`] = `
   max-width: 60rem;
 }
 
-.c23 {
-  -webkit-flex: 1;
-  -ms-flex: 1;
-  flex: 1;
-  text-align: left;
-  padding: 0px;
-  margin: 0px;
-  width: 100%;
-  color: var(--surface-color-primary-button-default);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: column;
-  -ms-flex-direction: column;
-  flex-direction: column;
-}
-
-.c25 {
-  min-height: 2.5rem;
-  line-height: 3rem;
-}
-
-.c24 {
-  font-size: 1.4rem;
-  font-weight: normal;
-  cursor: pointer;
-  padding-bottom: 0.5rem;
-}
-
-.c24.selected {
-  font-weight: bold;
-  cursor: default;
-}
-
-.c24 div.Button__value {
-  font-size: 1.4rem;
-}
-
-.c28 {
-  background-color: #fcba19;
-  font-size: 1.5rem;
-  border-radius: 50%;
-  opacity: 0.8;
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 1rem;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c28.selected {
-  background-color: #FCBA19;
-}
-
-.c26 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: flex-end;
-  -webkit-box-align: flex-end;
-  -ms-flex-align: flex-end;
-  align-items: flex-end;
-  width: 100%;
-  border-bottom: 1px solid #606060;
-}
-
-.c27 {
-  font-weight: bold;
-  font-size: 1.6rem;
-  color: #474543;
-  line-height: 2.2rem;
+.c11 {
+  margin-top: 0.5rem;
+  margin-bottom: 1.5rem;
+  border-bottom-style: solid;
+  border-bottom-color: grey;
+  border-bottom-width: 0.1rem;
+  max-height: 25rem;
+  overflow-y: auto;
+  overflow-x: hidden;
 }
 
 @media only screen and (max-width:1199px) {
@@ -681,7 +724,11 @@ exports[`DispositionView component > renders as expected 1`] = `
               />
             </svg>
           </div>
-          Disposition File
+          <div
+            data-testid="form-title"
+          >
+            Disposition File
+          </div>
         </h1>
       </div>
       <div
@@ -751,142 +798,146 @@ exports[`DispositionView component > renders as expected 1`] = `
         class="c10"
       >
         <div
-          class="c11 no-gutters row"
+          class="c11"
         >
           <div
-            class="c12 col-7"
+            class="no-gutters row"
           >
             <div
-              class="row"
+              class="c12 col-7"
             >
               <div
-                class="pr-0 text-left col-3"
-              >
-                <label
-                  class="c13"
-                >
-                  File:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-9"
-              >
-                D-FILE_NUMBER 3A8F46B
-              </div>
-            </div>
-            <div
-              class="row"
-            >
-              <div
-                class="pr-0 text-left col-3"
-              >
-                <label
-                  class="c13"
-                >
-                  Historical file #:
-                </label>
-              </div>
-              <div
-                class="pl-1 text-left col-9"
-              />
-            </div>
-          </div>
-          <div
-            class="col-5"
-          >
-            <div
-              class="c14"
-            >
-              <div
-                class="no-gutters row"
+                class="row"
               >
                 <div
-                  class="c15 col"
+                  class="pr-0 text-left col-3"
                 >
-                  <span
-                    class="c16"
+                  <label
+                    class="c13"
                   >
-                    <strong>
-                      Created: 
-                    </strong>
-                    Nov 25, 2023 by 
-                    <span
-                      class="tooltip-icon"
-                      data-testid="tooltip-icon-userNameTooltip"
-                      id="userNameTooltip"
-                    >
-                      <strong>
-                        FOUGSTER
-                      </strong>
-                    </span>
-                  </span>
+                    File:
+                  </label>
+                </div>
+                <div
+                  class="pl-1 text-left col-9"
+                >
+                  D-FILE_NUMBER 3A8F46B
                 </div>
               </div>
               <div
-                class="no-gutters row"
+                class="row"
               >
                 <div
-                  class="c15 col"
+                  class="pr-0 text-left col-3"
                 >
-                  <span
-                    class="c16"
+                  <label
+                    class="c13"
                   >
-                    <strong>
-                      Updated: 
-                    </strong>
-                    Nov 24, 2023 by 
-                    <span
-                      class="tooltip-icon"
-                      data-testid="tooltip-icon-userNameTooltip"
-                      id="userNameTooltip"
-                    >
-                      <strong>
-                        FOUGSTER
-                      </strong>
-                    </span>
-                  </span>
+                    Historical file #:
+                  </label>
                 </div>
+                <div
+                  class="pl-1 text-left col-9"
+                />
               </div>
+            </div>
+            <div
+              class="col"
+            >
               <div
-                class="c17"
+                class="c14"
               >
                 <div
-                  class="no-gutters justify-content-end align-items-end row"
+                  class="no-gutters row"
                 >
                   <div
-                    class="col"
-                  />
-                  <div
-                    class="align-self-end d-flex col-auto"
+                    class="c15 col"
                   >
                     <span
                       class="c16"
                     >
-                      <b>
-                        File:
-                      </b>
-                    </span>
-                    <div
-                      class="c18 c19"
-                    >
-                      <svg
-                        fill="currentColor"
-                        height="16"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="16"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <strong>
+                        Created: 
+                      </strong>
+                      Nov 25, 2023 by 
+                      <span
+                        class="tooltip-icon"
+                        data-testid="tooltip-icon-userNameTooltip"
+                        id="userNameTooltip"
                       >
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
-                        />
-                      </svg>
-                      DRAFT
+                        <strong>
+                          FOUGSTER
+                        </strong>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="c15 col"
+                  >
+                    <span
+                      class="c16"
+                    >
+                      <strong>
+                        Updated: 
+                      </strong>
+                      Nov 24, 2023 by 
+                      <span
+                        class="tooltip-icon"
+                        data-testid="tooltip-icon-userNameTooltip"
+                        id="userNameTooltip"
+                      >
+                        <strong>
+                          FOUGSTER
+                        </strong>
+                      </span>
+                    </span>
+                  </div>
+                </div>
+                <div
+                  class="c17"
+                >
+                  <div
+                    class="no-gutters justify-content-end align-items-end row"
+                  >
+                    <div
+                      class="col"
+                    />
+                    <div
+                      class="align-self-end d-flex col-auto"
+                    >
+                      <span
+                        class="c16"
+                      >
+                        <b>
+                          File:
+                        </b>
+                      </span>
+                      <div
+                        class="c18 c19"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="16"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="16"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M3 17.25V21h3.75L17.81 9.94l-3.75-3.75L3 17.25zM20.71 7.04a.996.996 0 0 0 0-1.41l-2.34-2.34a.996.996 0 0 0-1.41 0l-1.83 1.83 3.75 3.75 1.83-1.83z"
+                          />
+                        </svg>
+                        DRAFT
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -908,11 +959,11 @@ exports[`DispositionView component > renders as expected 1`] = `
               class="c23"
             >
               <div
-                class="c24 no-gutters selected row"
-                data-testid="menu-item-row-0"
+                class="c24 selected row"
+                data-testid="menu-item-summary"
               >
                 <div
-                  class="c25 col"
+                  class="col"
                 >
                   <span
                     title="File Details"
@@ -920,61 +971,123 @@ exports[`DispositionView component > renders as expected 1`] = `
                     File Summary
                   </span>
                 </div>
+              </div>
+              <div
+                class="c25"
+              >
                 <div
-                  class="c26"
+                  class="w-100 row no-gutters"
                 >
-                  <span
-                    class="c27"
+                  <div
+                    class="col"
                   >
-                    Properties
-                  </span>
+                    <span
+                      class="c26"
+                    >
+                      Properties
+                    </span>
+                  </div>
+                  <div
+                    class="col-auto"
+                  />
+                  <div
+                    class="col-auto"
+                  >
+                    <span
+                      class="tooltip-icon"
+                      data-testid="tooltip-icon-no-location-tooltip"
+                      id="no-location-tooltip"
+                    >
+                      <svg
+                        class="tooltip-icon"
+                        fill="currentColor"
+                        height="1em"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="1em"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                        />
+                      </svg>
+                    </span>
+                  </div>
                 </div>
               </div>
               <div
-                class="c24 no-gutters row"
-                data-testid="menu-item-row-1"
+                class="p-1"
+              />
+              <div
+                class="c27"
               >
                 <div
-                  class="col-1"
-                />
-                <div
-                  class="pr-2 col-auto"
+                  data-testid="Active-section"
                 >
+                  Active
                   <div
                     class="c28"
+                    data-testid="menu-item-row-1"
                   >
-                    1
-                  </div>
-                </div>
-                <div
-                  class="col"
-                >
-                  <button
-                    class="c4 Button btn btn-link"
-                    title="View"
-                    type="button"
-                  >
-                    <div
-                      class="Button__value"
-                    >
-                      013-852-752
+                    <div />
+                    <div>
+                      <div
+                        class="c29"
+                      >
+                        1
+                      </div>
                     </div>
-                  </button>
+                    <div
+                      class="c30"
+                    >
+                      <div
+                        class="c30"
+                        data-testid="menu-item-property-0"
+                      >
+                        013-852-752
+                      </div>
+                    </div>
+                    <div
+                      class="c31"
+                    >
+                      <span
+                        class="tooltip-icon"
+                        data-testid="tooltip-icon-no-location-tooltip"
+                        id="no-location-tooltip"
+                      >
+                        <svg
+                          class="tooltip-icon"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                      </span>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>
           </div>
           <div
-            class="c29 col"
+            class="c32 col"
           >
             <div
-              class="c30"
+              class="c33"
             >
               <div
-                class="c31"
+                class="c34"
               >
                 <nav
-                  class="c32 nav nav-tabs"
+                  class="c35 nav nav-tabs"
                   role="tablist"
                 >
                   <a
@@ -1014,13 +1127,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                     role="tabpanel"
                   >
                     <div
-                      class="c33"
+                      class="c36"
                     >
                       <div
-                        class="c34 mr-3 my-1"
+                        class="c37 mr-3 my-1"
                       />
                       <div
-                        class="c35 form-section"
+                        class="c38 form-section"
                       >
                         <div
                           class="collapse show"
@@ -1032,13 +1145,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Status:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             >
                               Draft
                             </div>
@@ -1046,10 +1159,10 @@ exports[`DispositionView component > renders as expected 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c35 form-section"
+                        class="c38 form-section"
                       >
                         <h2
-                          class="c38"
+                          class="c41"
                         >
                           <div
                             class="no-gutters row"
@@ -1071,13 +1184,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Ministry project:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                               data-testid="dsp-project"
                             >
                               00048 - CLAIMS
@@ -1090,13 +1203,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Product:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                               data-testid="dsp-product"
                             >
                               00055 AVALANCHE  &  PROGRAM REVIEW
@@ -1109,22 +1222,22 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Funding:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             />
                           </div>
                         </div>
                       </div>
                       <div
-                        class="c35 form-section"
+                        class="c38 form-section"
                       >
                         <h2
-                          class="c38"
+                          class="c41"
                         >
                           <div
                             class="no-gutters row"
@@ -1146,13 +1259,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Assigned date:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             >
                               Apr 26, 2025
                             </div>
@@ -1164,13 +1277,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Disposition completed date:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             >
                               May 28, 1956
                             </div>
@@ -1178,10 +1291,10 @@ exports[`DispositionView component > renders as expected 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c35 form-section"
+                        class="c38 form-section"
                       >
                         <h2
-                          class="c38"
+                          class="c41"
                         >
                           <div
                             class="no-gutters row"
@@ -1203,13 +1316,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Disposition file name:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             >
                               Test Disposition File
                             </div>
@@ -1221,7 +1334,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Reference number:
                                 <span>
@@ -1249,7 +1362,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             >
                               FILE_REFERENCE 8128827 3EAD56A
                             </div>
@@ -1261,13 +1374,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Disposition status:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             />
                           </div>
                           <div
@@ -1277,13 +1390,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Disposition type:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             >
                               Road Closure
                             </div>
@@ -1295,7 +1408,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Initiating document:
                                 <span>
@@ -1323,7 +1436,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             >
                               Surplus Declaration
                             </div>
@@ -1335,7 +1448,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Initiating document date:
                                 <span>
@@ -1363,7 +1476,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             >
                               Jun 29, 1917
                             </div>
@@ -1375,13 +1488,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Physical file status:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             >
                               Pending Litigation
                             </div>
@@ -1393,13 +1506,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Initiating branch:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             >
                               PLMB
                             </div>
@@ -1411,13 +1524,13 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Ministry region:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             >
                               Cannot determine
                             </div>
@@ -1425,10 +1538,10 @@ exports[`DispositionView component > renders as expected 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c35 form-section"
+                        class="c38 form-section"
                       >
                         <h2
-                          class="c38"
+                          class="c41"
                         >
                           <div
                             class="no-gutters row"
@@ -1450,16 +1563,16 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 MoTI Solicitor:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             >
                               <a
-                                class="c39"
+                                class="c42"
                                 href="/contact/P6"
                                 rel="noopener noreferrer"
                                 target="_blank"
@@ -1491,16 +1604,16 @@ exports[`DispositionView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Negotiation agent:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                             >
                               <a
-                                class="c39"
+                                class="c42"
                                 href="/contact/P9"
                                 rel="noopener noreferrer"
                                 target="_blank"

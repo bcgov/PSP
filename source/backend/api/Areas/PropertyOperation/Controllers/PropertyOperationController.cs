@@ -7,8 +7,8 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.PropertyOperation;
-using Pims.Core.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Api.Policies;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Core.Security;
@@ -76,7 +76,7 @@ namespace Pims.Api.Areas.PropertyOperation.Controllers
 
             var operationTypeCode = operations.FirstOrDefault().PropertyOperationTypeCode;
             var propertyOperations = _mapper.Map<IEnumerable<Dal.Entities.PimsPropertyOperation>>(operations);
-            if(!Enum.TryParse(operationTypeCode?.Id, out PropertyOperationTypes propertyOperationTypes))
+            if (!Enum.TryParse(operationTypeCode?.Id, out PropertyOperationTypes propertyOperationTypes))
             {
                 return BadRequest("Unsupported property operation type code.");
             }

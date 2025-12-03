@@ -133,7 +133,7 @@ const OffersAndSaleView: React.FunctionComponent<IOffersAndSaleViewProps> = ({
             title="Offers"
             addButtonText="Add Offer"
             addButtonIcon={<FaPlus size={'2rem'} />}
-            onAdd={() => {
+            onButtonAction={() => {
               history.push(`${match.url}/offers/new`);
             }}
             cannotAddComponent={

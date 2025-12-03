@@ -122,7 +122,7 @@ namespace Pims.Api.Services
             {
                 throw new InvalidOperationException("Period must be 'exercised' if payments have been made.");
             }
-            if(leasePeriodToUpdate.IsVariablePayment != period.IsVariablePayment)
+            if (leasePeriodToUpdate.IsVariablePayment != period.IsVariablePayment)
             {
                 throw new InvalidOperationException("Period payment variability may not be changed after period creation.");
             }

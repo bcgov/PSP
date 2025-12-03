@@ -12,14 +12,15 @@ namespace Pims.Dal.Entities;
 [Table("PIMS_MANAGEMENT_FILE")]
 [Index("AcquisitionFundingTypeCode", Name = "MGMTFL_ACQUISITION_FUNDING_TYPE_CODE_IDX")]
 [Index("FileName", Name = "MGMTFL_FILE_NAME_TUC", IsUnique = true)]
-[Index("ManagementFileProgramTypeCode", Name = "MGMTFL_MANAGEMENT_FILE_PROGRAM_TYPE_CODE_IDX")]
+[Index("ManagementFilePurposeTypeCode", Name = "MGMTFL_MANAGEMENT_FILE_PURPOSE_TYPE_CODE_IDX")]
 [Index("ManagementFileStatusTypeCode", Name = "MGMTFL_MANAGEMENT_FILE_STATUS_TYPE_CODE_IDX")]
 [Index("ProductId", Name = "MGMTFL_PRODUCT_ID_IDX")]
 [Index("ProjectId", Name = "MGMTFL_PROJECT_ID_IDX")]
+[Index("RegionCode", Name = "MGMTFL_REGION_CODE_IDX")]
 public partial class PimsManagementFile
 {
     /// <summary>
-    /// Generated surrogate primary key.
+    /// System-generated unique surrogate primary key.
     /// </summary>
     [Key]
     [Column("MANAGEMENT_FILE_ID")]
@@ -53,12 +54,18 @@ public partial class PimsManagementFile
     public string ManagementFileStatusTypeCode { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_MANAGEMENT_FILE_PROGRAM_TYPE table.
+    /// Foreign key to the PIMS_MANAGEMENT_FILE_PURPOSE_TYPE table.
     /// </summary>
     [Required]
-    [Column("MANAGEMENT_FILE_PROGRAM_TYPE_CODE")]
+    [Column("MANAGEMENT_FILE_PURPOSE_TYPE_CODE")]
     [StringLength(20)]
-    public string ManagementFileProgramTypeCode { get; set; }
+    public string ManagementFilePurposeTypeCode { get; set; }
+
+    /// <summary>
+    /// Foreign key to the PIMS_REGION table.
+    /// </summary>
+    [Column("REGION_CODE")]
+    public short? RegionCode { get; set; }
 
     /// <summary>
     /// Unique name given to the management file.
@@ -69,7 +76,7 @@ public partial class PimsManagementFile
     public string FileName { get; set; }
 
     /// <summary>
-    /// Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to &apos;01&apos;).   Required due to some files having t
+    /// Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTT region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to &apos;01&apos;).   Required due to some files having t
     /// </summary>
     [Column("LEGACY_FILE_NUM")]
     [StringLength(100)]
@@ -102,7 +109,7 @@ public partial class PimsManagementFile
     public DateTime AppCreateTimestamp { get; set; }
 
     /// <summary>
-    /// The user account that created the record.
+    /// The user that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USERID")]
@@ -110,13 +117,13 @@ public partial class PimsManagementFile
     public string AppCreateUserid { get; set; }
 
     /// <summary>
-    /// The GUID of the user account that created the record.
+    /// GUID of the user that created the record.
     /// </summary>
     [Column("APP_CREATE_USER_GUID")]
     public Guid? AppCreateUserGuid { get; set; }
 
     /// <summary>
-    /// The directory of the user account that created the record.
+    /// User directory of the user that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USER_DIRECTORY")]
@@ -124,13 +131,13 @@ public partial class PimsManagementFile
     public string AppCreateUserDirectory { get; set; }
 
     /// <summary>
-    /// The date and time the user updated the record.
+    /// The date and time the record was updated by the user.
     /// </summary>
     [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppLastUpdateTimestamp { get; set; }
 
     /// <summary>
-    /// The user account that updated the record.
+    /// The user that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USERID")]
@@ -138,13 +145,13 @@ public partial class PimsManagementFile
     public string AppLastUpdateUserid { get; set; }
 
     /// <summary>
-    /// The GUID of the user account that updated the record.
+    /// GUID of the user that updated the record.
     /// </summary>
     [Column("APP_LAST_UPDATE_USER_GUID")]
     public Guid? AppLastUpdateUserGuid { get; set; }
 
     /// <summary>
-    /// The directory of the user account that updated the record.
+    /// User directory of the user that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USER_DIRECTORY")]
@@ -182,13 +189,19 @@ public partial class PimsManagementFile
     [InverseProperty("PimsManagementFiles")]
     public virtual PimsAcquisitionFundingType AcquisitionFundingTypeCodeNavigation { get; set; }
 
-    [ForeignKey("ManagementFileProgramTypeCode")]
+    [ForeignKey("ManagementFilePurposeTypeCode")]
     [InverseProperty("PimsManagementFiles")]
-    public virtual PimsManagementFileProgramType ManagementFileProgramTypeCodeNavigation { get; set; }
+    public virtual PimsManagementFilePurposeType ManagementFilePurposeTypeCodeNavigation { get; set; }
 
     [ForeignKey("ManagementFileStatusTypeCode")]
     [InverseProperty("PimsManagementFiles")]
     public virtual PimsManagementFileStatusType ManagementFileStatusTypeCodeNavigation { get; set; }
+
+    [InverseProperty("ManagementFile")]
+    public virtual ICollection<PimsManagementActivity> PimsManagementActivities { get; set; } = new List<PimsManagementActivity>();
+
+    [InverseProperty("ManagementFile")]
+    public virtual ICollection<PimsManagementFileContact> PimsManagementFileContacts { get; set; } = new List<PimsManagementFileContact>();
 
     [InverseProperty("ManagementFile")]
     public virtual ICollection<PimsManagementFileDocument> PimsManagementFileDocuments { get; set; } = new List<PimsManagementFileDocument>();
@@ -202,9 +215,6 @@ public partial class PimsManagementFile
     [InverseProperty("ManagementFile")]
     public virtual ICollection<PimsManagementFileTeam> PimsManagementFileTeams { get; set; } = new List<PimsManagementFileTeam>();
 
-    [InverseProperty("ManagementFile")]
-    public virtual ICollection<PimsPropertyActivity> PimsPropertyActivities { get; set; } = new List<PimsPropertyActivity>();
-
     [ForeignKey("ProductId")]
     [InverseProperty("PimsManagementFiles")]
     public virtual PimsProduct Product { get; set; }
@@ -212,4 +222,8 @@ public partial class PimsManagementFile
     [ForeignKey("ProjectId")]
     [InverseProperty("PimsManagementFiles")]
     public virtual PimsProject Project { get; set; }
+
+    [ForeignKey("RegionCode")]
+    [InverseProperty("PimsManagementFiles")]
+    public virtual PimsRegion RegionCodeNavigation { get; set; }
 }

@@ -8,14 +8,14 @@ using Pims.Api.Areas.Acquisition.Models.Search;
 using Pims.Api.Areas.Reports.Models.Acquisition;
 using Pims.Api.Areas.Reports.Models.Agreement;
 using Pims.Api.Helpers.Constants;
-using Pims.Core.Api.Exceptions;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Helpers.Reporting;
-using Pims.Core.Api.Policies;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
+using Pims.Core.Api.Policies;
 using Pims.Core.Extensions;
-using Pims.Dal.Entities.Models;
 using Pims.Core.Security;
+using Pims.Dal.Entities.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Reports.Controllers

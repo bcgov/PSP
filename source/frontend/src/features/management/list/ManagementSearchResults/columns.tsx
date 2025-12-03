@@ -1,8 +1,8 @@
 import { chain } from 'lodash';
-import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import ExpandableTextList from '@/components/common/ExpandableTextList';
+import { ExternalLink } from '@/components/common/ExternalLink';
 import ExpandableFileProperties from '@/components/common/List/ExpandableFileProperties';
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
@@ -33,14 +33,17 @@ export const columns: ColumnWithProps<ManagementSearchResultModel>[] = [
     maxWidth: 20,
     Cell: (props: CellProps<ManagementSearchResultModel>) => {
       const { hasClaim } = useKeycloakWrapper();
-      if (hasClaim(Claims.DISPOSITION_VIEW)) {
+      const fileNumberString = `M-${props.row.original.id}`;
+
+      if (hasClaim(Claims.MANAGEMENT_VIEW)) {
         return (
-          <Link to={`/mapview/sidebar/management/${props.row.original.managementFileId}`}>
-            M-{props.row.original.managementFileId.toString()}
-          </Link>
+          <ExternalLink to={`/mapview/sidebar/management/${props.row.original.id}`}>
+            {fileNumberString}
+          </ExternalLink>
         );
       }
-      return stringToFragment(props.row.original.managementFileId.toString());
+
+      return stringToFragment(fileNumberString);
     },
   },
   {
@@ -77,7 +80,7 @@ export const columns: ColumnWithProps<ManagementSearchResultModel>[] = [
   },
   {
     Header: 'Purpose',
-    accessor: 'managementFileProgramTypeCode',
+    accessor: 'managementFilePurposeTypeCode',
     align: 'left',
     clickable: true,
     sortable: true,
@@ -150,9 +153,11 @@ export const columns: ColumnWithProps<ManagementSearchResultModel>[] = [
     accessor: 'fileProperties',
     align: 'left',
     Cell: (props: CellProps<ManagementSearchResultModel>) => {
+      const properties = props.row.original.fileProperties.map(x => x.property) ?? [];
+
       return (
         <ExpandableFileProperties
-          fileProperties={props.row.original.fileProperties}
+          properties={properties}
           maxDisplayCount={2}
         ></ExpandableFileProperties>
       );

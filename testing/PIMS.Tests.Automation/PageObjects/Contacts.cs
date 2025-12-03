@@ -6,174 +6,173 @@ namespace PIMS.Tests.Automation.PageObjects
     public class Contacts : PageObjectBase
     {
         //Contact Menu Elements
-        private By menuContactsLink = By.XPath("//body/div[@id='root']/div[2]/div[1]/div[1]/div[@data-testid='nav-tooltip-contacts']/a");
-        private By createContactLink = By.XPath("//a[contains(text(),'Add a Contact')]");
-        private By createContactButton = By.XPath("//div[contains(text(),'Add a New Contact')]/parent::button");
+        private readonly By menuContactsLink = By.XPath("//header/following-sibling::div/div/div[@data-testid='nav-tooltip-contacts']/a");
+        private readonly By createContactLink = By.XPath("//a[contains(text(),'Add a Contact')]");
+        private readonly By createContactButton = By.XPath("//div[contains(text(),'Add a New Contact')]/parent::button");
 
         //Contacts Create Elements
-        private By contactIndividualRadioBttn = By.Id("contact-individual");
-        private By contactOrganizationRadioBttn = By.Id("contact-organization");
+        private readonly By contactIndividualRadioBttn = By.Id("contact-individual");
+        private readonly By contactOrganizationRadioBttn = By.Id("contact-organization");
 
-        private By contactIndFirstNameInput = By.Id("input-firstName");
-        private By contactIndMiddleNameInput = By.Id("input-middleNames");
-        private By contactIndLastNameInput = By.Id("input-surname");
-        private By contactIndPrefNameInput = By.CssSelector("input[id='input-preferredName']");
-        private By contactIndOrgInput = By.Id("typeahead-organization");
-        private By contactIndOrgListOptions = By.CssSelector("div[id='typeahead-organization']");
-        private By contactOrgName1stOption = By.CssSelector("div[id='typeahead-organization'] a:first-child");
+        private readonly By contactIndFirstNameInput = By.Id("input-firstName");
+        private readonly By contactIndMiddleNameInput = By.Id("input-middleNames");
+        private readonly By contactIndLastNameInput = By.Id("input-surname");
+        private readonly By contactIndPrefNameInput = By.CssSelector("input[id='input-preferredName']");
+        private readonly By contactIndOrgInput = By.Id("typeahead-organization");
+        private readonly By contactIndOrgListOptions = By.CssSelector("div[id='typeahead-organization']");
+        private readonly By contactOrgName1stOption = By.CssSelector("div[id='typeahead-organization'] a:first-child");
 
-        private By contactOrgNameInput = By.Id("input-name");
-        private By contactOrgAliasInput = By.Id("input-alias");
-        private By contactOrgIncNbrInput = By.Id("input-incorporationNumber");
+        private readonly By contactOrgNameInput = By.Id("input-name");
+        private readonly By contactOrgAliasInput = By.Id("input-alias");
+        private readonly By contactOrgIncNbrInput = By.Id("input-incorporationNumber");
 
-        private By contactEmailInput1 = By.Id("input-emailContactMethods.0.value");
-        private By contactEmailSelect1 = By.Id("input-emailContactMethods.0.contactMethodTypeCode");
-        private By contactEmailAddBttn = By.XPath("//div[contains(text(), '+ Add email address')]");
-        private By contactEmailInput2 = By.Id("input-emailContactMethods.1.value");
-        private By contactEmailSelect2 = By.Id("input-emailContactMethods.1.contactMethodTypeCode");
+        private readonly By contactEmailInput1 = By.Id("input-emailContactMethods.0.value");
+        private readonly By contactEmailSelect1 = By.Id("input-emailContactMethods.0.contactMethodTypeCode");
+        private readonly By contactEmailAddBttn = By.XPath("//div[contains(text(), '+ Add email address')]");
+        private readonly By contactEmailInput2 = By.Id("input-emailContactMethods.1.value");
+        private readonly By contactEmailSelect2 = By.Id("input-emailContactMethods.1.contactMethodTypeCode");
 
-        private By contactPhoneInput1 = By.Id("input-phoneContactMethods.0.value");
-        private By contactPhoneSelect1 = By.Id("input-phoneContactMethods.0.contactMethodTypeCode");
-        private By contactPhoneAddBttn = By.XPath("//div[contains(text(), '+ Add phone number')]");
-        private By contactPhoneInput2 = By.Id("input-phoneContactMethods.1.value");
-        private By contactPhoneSelect2 = By.Id("input-phoneContactMethods.1.contactMethodTypeCode");
+        private readonly By contactPhoneInput1 = By.Id("input-phoneContactMethods.0.value");
+        private readonly By contactPhoneSelect1 = By.Id("input-phoneContactMethods.0.contactMethodTypeCode");
+        private readonly By contactPhoneAddBttn = By.XPath("//div[contains(text(), '+ Add phone number')]");
+        private readonly By contactPhoneInput2 = By.Id("input-phoneContactMethods.1.value");
+        private readonly By contactPhoneSelect2 = By.Id("input-phoneContactMethods.1.contactMethodTypeCode");
 
-        private By contactMailAddressLine1Input = By.Id("input-mailingAddress.streetAddress1");
-        private By contactMailAddressLine2Input = By.Id("input-mailingAddress.streetAddress2");
-        private By contactMailAddressLine3Input = By.Id("input-mailingAddress.streetAddress3");
-        private By contactMailCountrySelect = By.Id("input-mailingAddress.countryId");
-        private By contactMailOtherCountryInput = By.Id("input-mailingAddress.countryOther");
-        private By contactMailCityInput = By.Id("input-mailingAddress.municipality");
-        private By contactMailProvinceSelect = By.Id("input-mailingAddress.provinceId");
-        private By contactMailPostalCodeInput = By.Id("input-mailingAddress.postal");
-        private By contactIndMailAddAddressLineBttn = By.XPath("//span[contains(text(),'Mailing Address')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
-        private By contactOrgMailAddAddressLineBttn = By.XPath("//div[contains(text(),'Mailing Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
+        private readonly By contactMailAddressLine1Input = By.Id("input-mailingAddress.streetAddress1");
+        private readonly By contactMailAddressLine2Input = By.Id("input-mailingAddress.streetAddress2");
+        private readonly By contactMailAddressLine3Input = By.Id("input-mailingAddress.streetAddress3");
+        private readonly By contactMailCountrySelect = By.Id("input-mailingAddress.countryId");
+        private readonly By contactMailOtherCountryInput = By.Id("input-mailingAddress.countryOther");
+        private readonly By contactMailCityInput = By.Id("input-mailingAddress.municipality");
+        private readonly By contactMailProvinceSelect = By.Id("input-mailingAddress.provinceId");
+        private readonly By contactMailPostalCodeInput = By.Id("input-mailingAddress.postal");
+        private readonly By contactIndMailAddAddressLineBttn = By.XPath("//span[contains(text(),'Mailing Address')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
+        private readonly By contactOrgMailAddAddressLineBttn = By.XPath("//div[contains(text(),'Mailing Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
 
-
-        private By contactPropertyAddressLine1Input = By.Id("input-propertyAddress.streetAddress1");
-        private By contactPropertyAddressLine2Input = By.Id("input-propertyAddress.streetAddress2");
-        private By contactPropertyAddressLine3Input = By.Id("input-propertyAddress.streetAddress3");
-        private By contactPropertyCountrySelect = By.Id("input-propertyAddress.countryId");
-        private By contactPropertyOtherCountryInput = By.Id("input-propertyAddress.countryOther");
-        private By contactPropertyCityInput = By.Id("input-propertyAddress.municipality");
-        private By contactPropertyProvinceSelect = By.Id("input-propertyAddress.provinceId");
-        private By contactPropertyPostalCodeInput = By.Id("input-propertyAddress.postal");
-        //private By contactIndPropertyAddAddressLineBttn = By.XPath("//span[contains(text(),'Property Address')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
-        private By contactPropertyAddAddressLineBttn = By.XPath("//div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
+        private readonly By contactPropertyAddressLine1Input = By.Id("input-propertyAddress.streetAddress1");
+        private readonly By contactPropertyAddressLine2Input = By.Id("input-propertyAddress.streetAddress2");
+        private readonly By contactPropertyAddressLine3Input = By.Id("input-propertyAddress.streetAddress3");
+        private readonly By contactPropertyCountrySelect = By.Id("input-propertyAddress.countryId");
+        private readonly By contactPropertyOtherCountryInput = By.Id("input-propertyAddress.countryOther");
+        private readonly By contactPropertyCityInput = By.Id("input-propertyAddress.municipality");
+        private readonly By contactPropertyProvinceSelect = By.Id("input-propertyAddress.provinceId");
+        private readonly By contactPropertyPostalCodeInput = By.Id("input-propertyAddress.postal");
+        private readonly By contactPropertyAddAddressLineBttn = By.XPath("//div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
 
 
-        private By contactBillingAddressLine1Input = By.Id("input-billingAddress.streetAddress1");
-        private By contactBillingAddressLine2Input = By.Id("input-billingAddress.streetAddress2");
-        private By contactBillingAddressLine3Input = By.Id("input-billingAddress.streetAddress3");
-        private By contactBillingCountrySelect = By.Id("input-billingAddress.countryId");
-        private By contactBillingCityInput = By.Id("input-billingAddress.municipality");
-        private By contactBillingOtherCountryInput = By.Id("input-billingAddress.countryOther");
-        private By contactBillingProvinceSelect = By.Id("input-billingAddress.provinceId");
-        private By contactBillingPostalCodeInput = By.Id("input-billingAddress.postal");
-        //private By contactIndBillingAddAddressLineBttn = By.XPath("//span[contains(text(),'Billing Address')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
-        private By contactBillingAddAddressLineBttn = By.XPath("//div[contains(text(),'Billing Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
+        private readonly By contactBillingAddressLine1Input = By.Id("input-billingAddress.streetAddress1");
+        private readonly By contactBillingAddressLine2Input = By.Id("input-billingAddress.streetAddress2");
+        private readonly By contactBillingAddressLine3Input = By.Id("input-billingAddress.streetAddress3");
+        private readonly By contactBillingCountrySelect = By.Id("input-billingAddress.countryId");
+        private readonly By contactBillingCityInput = By.Id("input-billingAddress.municipality");
+        private readonly By contactBillingOtherCountryInput = By.Id("input-billingAddress.countryOther");
+        private readonly By contactBillingProvinceSelect = By.Id("input-billingAddress.provinceId");
+        private readonly By contactBillingPostalCodeInput = By.Id("input-billingAddress.postal");
+        private readonly By contactBillingAddAddressLineBttn = By.XPath("//div[contains(text(),'Billing Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div[contains(text(),'+ Add an address line')]");
 
+        private readonly By contactCommentTextarea = By.CssSelector("textarea[name='comment']");
 
-        private By contactCommentTextarea = By.CssSelector("textarea[name='comment']");
+        private readonly By contactSaveButton = By.XPath("//div[contains(text(),'Save')]/parent::button");
+        private readonly By contactCancelButton = By.XPath("//div[contains(text(),'Cancel')]/parent::button");
 
         //Contacts Form View Elements
-        private By contactTitle = By.XPath("//h1/div/div[contains(text(),'Contact')]");
-        private By contactEditButton = By.CssSelector("button[title='Edit Contact']");
-        private By contactDetailsSubtitle = By.XPath("//div[contains(text(),'Contact Details')]");
+        private readonly By contactTitle = By.XPath("//h1/div/div[contains(text(),'Contact')]");
+        private readonly By contactEditButton = By.CssSelector("button[title='Edit Contact']");
+        private readonly By contactDetailsSubtitle = By.XPath("//div[contains(text(),'Contact Details')]");
 
-        private By contactIndStatusSpan = By.CssSelector("span[data-testid='contact-person-status']");
-        private By contactIndFullName = By.CssSelector("div[data-testid='contact-person-fullname'] b");
-        private By contactIndPrefNameLabel = By.XPath("//label[contains(text(),'Preferred name')]");
-        private By contactIndPrefNameContent = By.CssSelector("div[data-testid='contact-person-preferred']");
-        private By contactIndLinkedOrgsLabel = By.XPath("//label[contains(text(),'Linked organization')]");
-        private By contactIndOrganizationContent = By.CssSelector("[data-testid='contact-person-organization'] a");
-        private By contactIndContactInfoSubtitle = By.XPath("//h3[contains(text(),'Contact Info')]");
+        private readonly By contactIndStatusSpan = By.CssSelector("span[data-testid='contact-person-status']");
+        private readonly By contactIndFullName = By.CssSelector("div[data-testid='contact-person-fullname'] b");
+        private readonly By contactIndPrefNameLabel = By.XPath("//label[contains(text(),'Preferred name')]");
+        private readonly By contactIndPrefNameContent = By.CssSelector("div[data-testid='contact-person-preferred']");
+        private readonly By contactIndLinkedOrgsLabel = By.XPath("//label[contains(text(),'Linked organization')]");
+        private readonly By contactIndOrganizationContent = By.CssSelector("[data-testid='contact-person-organization'] a");
+        private readonly By contactIndContactInfoSubtitle = By.XPath("//h3[contains(text(),'Contact Info')]");
 
-        private By contactOrgStatusSpan = By.CssSelector("span[data-testid='contact-organization-status']");
-        private By contactOrgName = By.CssSelector("div[data-testid='contact-organization-organizationName'] b");
-        private By contactOrgAliasLabel = By.XPath("//label[contains(text(),'Alias')]");
-        private By contactOrgAliasContent = By.CssSelector("div[data-testid='contact-organization-alias']");
-        private By contactOrgIncorpNbrLabel = By.XPath("//label[contains(text(),'Incorporation number')]");
-        private By contactOrgIncorpNbrContent = By.CssSelector("div[data-testid='contact-organization-incorporationNumber']");
-        private By contactOrgPrefContactSubtitle = By.XPath("//h3[contains(text(),'Preferred Contact')]");
+        private readonly By contactOrgStatusSpan = By.CssSelector("span[data-testid='contact-organization-status']");
+        private readonly By contactOrgName = By.CssSelector("div[data-testid='contact-organization-organizationName'] b");
+        private readonly By contactOrgAliasLabel = By.XPath("//label[contains(text(),'Alias')]");
+        private readonly By contactOrgAliasContent = By.CssSelector("div[data-testid='contact-organization-alias']");
+        private readonly By contactOrgIncorpNbrLabel = By.XPath("//label[contains(text(),'Incorporation number')]");
+        private readonly By contactOrgIncorpNbrContent = By.CssSelector("div[data-testid='contact-organization-incorporationNumber']");
+        private readonly By contactOrgPrefContactSubtitle = By.XPath("//h3[contains(text(),'Preferred Contact')]");
 
-        private By contactEmailLabel = By.XPath("//strong[contains(text(),'Email')]");
-        private By contactEmail1Content = By.XPath("(//div[@data-testid='email-value'])[1]");
-        private By contactEmailType1Content = By.XPath("(//div[@data-testid='email-value']/parent::div)[1]/div/em");
-        private By contactEmail2Content = By.XPath("(//div[@data-testid='email-value'])[2]");
-        private By contactEmailType2Content = By.XPath("(//div[@data-testid='email-value']/parent::div)[2]/div/em");
-        private By contactPhoneLabel = By.XPath("//strong[contains(text(),'Phone')]");
-        private By contactPhone1Content = By.XPath("(//div[@data-testid='phone-value'])[1]");
-        private By contactPhoneType1Content = By.XPath("(//div[@data-testid='phone-value'])[1]/following-sibling::div/em");
-        private By contactPhone2Content = By.XPath("(//div[@data-testid='phone-value'])[2]");
-        private By contactPhoneType2Content = By.XPath("(//div[@data-testid='phone-value'])[2]/following-sibling::div/em");
+        private readonly By contactEmailLabel = By.XPath("//strong[contains(text(),'Email')]");
+        private readonly By contactEmail1Content = By.XPath("(//div[@data-testid='email-value'])[1]");
+        private readonly By contactEmailType1Content = By.XPath("(//div[@data-testid='email-value']/parent::div)[1]/div/em");
+        private readonly By contactEmail2Content = By.XPath("(//div[@data-testid='email-value'])[2]");
+        private readonly By contactEmailType2Content = By.XPath("(//div[@data-testid='email-value']/parent::div)[2]/div/em");
+        private readonly By contactPhoneLabel = By.XPath("//strong[contains(text(),'Phone')]");
+        private readonly By contactPhone1Content = By.XPath("(//div[@data-testid='phone-value'])[1]");
+        private readonly By contactPhoneType1Content = By.XPath("(//div[@data-testid='phone-value'])[1]/following-sibling::div/em");
+        private readonly By contactPhone2Content = By.XPath("(//div[@data-testid='phone-value'])[2]");
+        private readonly By contactPhoneType2Content = By.XPath("(//div[@data-testid='phone-value'])[2]/following-sibling::div/em");
 
-        private By contactAddressSubtitle = By.XPath("//h2[contains(text(),'Address')]");
-        private By contactAddressMailSubtitle = By.XPath("//h3[contains(text(),'Mailing address')]");
-        private By contactAddressIndMailCounter = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div");
-        private By contactAddressIndMailAddressLine1 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[1]");
-        private By contactAddressIndMailAddressLine2 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[2]");
-        private By contactAddressIndMailAddressLine3 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[3]");
-        private By contactAddressIndMailAddressLine4 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[4]");
-        private By contactAddressIndMailAddressLine5 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[5]");
-        private By contactAddressIndMailAddressLine6 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[6]");
-        private By contactAddressMailAddressRemoveBttn = By.XPath("//h3[contains(text(),'Mailing Address')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
+        private readonly By contactAddressSubtitle = By.XPath("//h2[contains(text(),'Address')]");
+        private readonly By contactAddressMailSubtitle = By.XPath("//h3[contains(text(),'Mailing address')]");
+        private readonly By contactAddressIndMailCounter = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div");
+        private readonly By contactAddressIndMailAddressLine1 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[1]");
+        private readonly By contactAddressIndMailAddressLine2 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[2]");
+        private readonly By contactAddressIndMailAddressLine3 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[3]");
+        private readonly By contactAddressIndMailAddressLine4 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[4]");
+        private readonly By contactAddressIndMailAddressLine5 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[5]");
+        private readonly By contactAddressIndMailAddressLine6 = By.XPath("//div[1]/div/span[@data-testid='contact-person-address']/div[6]");
+        private readonly By contactAddressMailAddressRemoveBttn = By.XPath("//h3[contains(text(),'Mailing Address')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
 
-        private By contactAddressOrgMailCounter = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div");
-        private By contactAddressOrgMailAddressLine1 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[1]");
-        private By contactAddressOrgMailAddressLine2 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[2]");
-        private By contactAddressOrgMailAddressLine3 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[3]");
-        private By contactAddressOrgMailAddressLine4 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[4]");
-        private By contactAddressOrgMailAddressLine5 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[5]");
-        private By contactAddressOrgMailAddressLine6 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[6]");
-        private By contactAddressPropertyAddressRemoveBttn = By.XPath("//div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
+        private readonly By contactAddressOrgMailCounter = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div");
+        private readonly By contactAddressOrgMailAddressLine1 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[1]");
+        private readonly By contactAddressOrgMailAddressLine2 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[2]");
+        private readonly By contactAddressOrgMailAddressLine3 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[3]");
+        private readonly By contactAddressOrgMailAddressLine4 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[4]");
+        private readonly By contactAddressOrgMailAddressLine5 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[5]");
+        private readonly By contactAddressOrgMailAddressLine6 = By.XPath("//div[1]/div[@data-testid='contact-organization-address']/div[6]");
+        private readonly By contactAddressPropertyAddressRemoveBttn = By.XPath("//div[contains(text(),'Property Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
 
-        private By contactAddressPropertySubtitle = By.XPath("//h3[contains(text(),'Property address')]");
-        private By contactAddressIndPropertyCounter = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div");
-        private By contactAddressIndPropertyAddressLine1 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[1]");
-        private By contactAddressIndPropertyAddressLine2 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[2]");
-        private By contactAddressIndPropertyAddressLine3 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[3]");
-        private By contactAddressIndPropertyAddressLine4 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[4]");
-        private By contactAddressIndPropertyAddressLine5 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[5]");
-        private By contactAddressIndPropertyAddressLine6 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[6]");
-        private By contactAddressBillingAddressRemoveBttn = By.XPath("//div[contains(text(),'Billing Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
+        private readonly By contactAddressPropertySubtitle = By.XPath("//h3[contains(text(),'Property address')]");
+        private readonly By contactAddressIndPropertyCounter = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div");
+        private readonly By contactAddressIndPropertyAddressLine1 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[1]");
+        private readonly By contactAddressIndPropertyAddressLine2 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[2]");
+        private readonly By contactAddressIndPropertyAddressLine3 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[3]");
+        private readonly By contactAddressIndPropertyAddressLine4 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[4]");
+        private readonly By contactAddressIndPropertyAddressLine5 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[5]");
+        private readonly By contactAddressIndPropertyAddressLine6 = By.XPath("//div[2]/div/span[@data-testid='contact-person-address']/div[6]");
+        private readonly By contactAddressBillingAddressRemoveBttn = By.XPath("//div[contains(text(),'Billing Address')]/parent::div/parent::h2/following-sibling::div/div/div/div/div/button/div/span[contains(text(),'Remove')]/parent::div/parent::button");
 
-        private By contactAddressOrgPropertyCounter = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div");
-        private By contactAddressOrgPropertyAddressLine1 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[1]");
-        private By contactAddressOrgPropertyAddressLine2 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[2]");
-        private By contactAddressOrgPropertyAddressLine3 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[3]");
-        private By contactAddressOrgPropertyAddressLine4 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[4]");
-        private By contactAddressOrgPropertyAddressLine5 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[5]");
-        private By contactAddressOrgPropertyAddressLine6 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[6]");
+        private readonly By contactAddressOrgPropertyCounter = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div");
+        private readonly By contactAddressOrgPropertyAddressLine1 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[1]");
+        private readonly By contactAddressOrgPropertyAddressLine2 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[2]");
+        private readonly By contactAddressOrgPropertyAddressLine3 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[3]");
+        private readonly By contactAddressOrgPropertyAddressLine4 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[4]");
+        private readonly By contactAddressOrgPropertyAddressLine5 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[5]");
+        private readonly By contactAddressOrgPropertyAddressLine6 = By.XPath("//div[2]/div[@data-testid='contact-organization-address']/div[6]");
 
-        private By contactAddressBillingSubtitle = By.XPath("//h3[contains(text(),'Billing address')]");
-        private By contactAddressIndBillingCounter = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div");
-        private By contactAddressIndBillingAddressLine1 = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div[1]");
-        private By contactAddressIndBillingAddressLine2 = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div[2]");
-        private By contactAddressIndBillingAddressLine3 = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div[3]");
-        private By contactAddressIndBillingAddressLine4 = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div[4]");
-        private By contactAddressIndBillingAddressLine5 = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div[5]");
-        private By contactAddressIndBillingAddressLine6 = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div[6]");
+        private readonly By contactAddressBillingSubtitle = By.XPath("//h3[contains(text(),'Billing address')]");
+        private readonly By contactAddressIndBillingCounter = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div");
+        private readonly By contactAddressIndBillingAddressLine1 = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div[1]");
+        private readonly By contactAddressIndBillingAddressLine2 = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div[2]");
+        private readonly By contactAddressIndBillingAddressLine3 = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div[3]");
+        private readonly By contactAddressIndBillingAddressLine4 = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div[4]");
+        private readonly By contactAddressIndBillingAddressLine5 = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div[5]");
+        private readonly By contactAddressIndBillingAddressLine6 = By.XPath("//div[3]/div/span[@data-testid='contact-person-address']/div[6]");
 
-        private By contactAddressOrgBillingCounter = By.XPath("//div[3]/div[@data-testid='contact-organization-address']/div");
-        private By contactAddressOrgBillingAddressLine1 = By.XPath("//div[3]/div[@data-testid='contact-organization-address']/div[1]");
-        private By contactAddressOrgBillingAddressLine2 = By.XPath("//div[3]/div[@data-testid='contact-organization-address']/div[2]");
-        private By contactAddressOrgBillingAddressLine3 = By.XPath("//div[3]/div[@data-testid='contact-organization-address']/div[3]");
-        private By contactAddressOrgBillingAddressLine4 = By.XPath("//div[3]/div[@data-testid='contact-organization-address']/div[4]");
-        private By contactAddressOrgBillingAddressLine5 = By.XPath("//div[3]/div[@data-testid='contact-organization-address']/div[5]");
-        private By contactAddressOrgBillingAddressLine6 = By.XPath("//div[3]/div[@data-testid='contact-organization-address']/div[6]");
+        private readonly By contactAddressOrgBillingCounter = By.XPath("//div[3]/div[@data-testid='contact-organization-address']/div");
+        private readonly By contactAddressOrgBillingAddressLine1 = By.XPath("//div[3]/div[@data-testid='contact-organization-address']/div[1]");
+        private readonly By contactAddressOrgBillingAddressLine2 = By.XPath("//div[3]/div[@data-testid='contact-organization-address']/div[2]");
+        private readonly By contactAddressOrgBillingAddressLine3 = By.XPath("//div[3]/div[@data-testid='contact-organization-address']/div[3]");
+        private readonly By contactAddressOrgBillingAddressLine4 = By.XPath("//div[3]/div[@data-testid='contact-organization-address']/div[4]");
+        private readonly By contactAddressOrgBillingAddressLine5 = By.XPath("//div[3]/div[@data-testid='contact-organization-address']/div[5]");
+        private readonly By contactAddressOrgBillingAddressLine6 = By.XPath("//div[3]/div[@data-testid='contact-organization-address']/div[6]");
 
-        private By contactOrgIndividualContactsSubtitle = By.XPath("//h2[contains(text(),'Individual Contacts')]");
-        private By contactOrgIndividualContactsCount = By.CssSelector("a[data-testid='contact-organization-person']");
+        private readonly By contactOrgIndividualContactsSubtitle = By.XPath("//h2[contains(text(),'Individual Contacts')]");
+        private readonly By contactOrgIndividualContactsCount = By.CssSelector("a[data-testid='contact-organization-person']");
 
-        private By commentsSubtitle = By.XPath("//h2[contains(text(),'Comments')]");
-        private By commentsIndividualContent = By.CssSelector("div[data-testid='contact-person-comment']");
-        private By commentsOrganizationContent = By.CssSelector("div[data-testid='contact-organization-comment']");
+        private readonly By commentsSubtitle = By.XPath("//h2[contains(text(),'Comments')]");
+        private readonly By commentsIndividualContent = By.CssSelector("div[data-testid='contact-person-comment']");
+        private readonly By commentsOrganizationContent = By.CssSelector("div[data-testid='contact-organization-comment']");
 
         //Contact Modal Element
-        private By contactModal = By.CssSelector("div[class='modal-content']");
+        private readonly By contactModal = By.CssSelector("div[class='modal-content']");
 
-        private By contactsSearchTable = By.CssSelector("div[data-testid='contactsTable']");
+        private readonly By contactsSearchTable = By.CssSelector("div[data-testid='contactsTable']");
         private By contactModalContinueSaveBttn = By.XPath("//button/div[contains(text(),'Continue Save')]");
 
         private SharedModals sharedModals;
@@ -187,8 +186,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void NavigateToCreateNewContact()
         {
             Wait();
-
-            WaitUntilClickable(menuContactsLink);
             FocusAndClick(menuContactsLink);
 
             Wait();
@@ -198,14 +195,14 @@ namespace PIMS.Tests.Automation.PageObjects
         //Create new Contact Button
         public void CreateNewContactBttn()
         {
-            WaitUntilClickable(createContactButton);
+            Wait();
             FocusAndClick(createContactButton);
         }
 
         //Creates Individual Contact with all fields
         public void CreateIndividualContact(IndividualContact contact)
         {
-            WaitUntilClickable(contactIndividualRadioBttn);
+            Wait();
 
             //Choosing individual contact option
             FocusAndClick(contactIndividualRadioBttn);
@@ -840,7 +837,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Saves Contact
         public void SaveContact()
         {
-            ButtonElement("Save");
+            FocusAndClick(contactSaveButton);
 
             Wait();
             if (webDriver.FindElements(contactModal).Count > 0)
@@ -855,7 +852,8 @@ namespace PIMS.Tests.Automation.PageObjects
         //Cancel Contact
         public void CancelContact()
         {
-            ButtonElement("Cancel");
+            Wait();
+            FocusAndClick(contactCancelButton);
 
             Wait();
             sharedModals.CancelActionModal();

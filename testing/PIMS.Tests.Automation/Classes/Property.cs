@@ -20,8 +20,8 @@
         public string MunicipalZoning { get; set; } = null!;
         public List<string> Anomalies { get; set; } = new List<string>();
         public List<string> TenureStatus { get; set; } = new List<string>();
-        public string ProvincialPublicHwy { get; set; } = null!;
-        public List<string> HighwayEstablishedBy { get; set; } = new List<string>();
+        //public string ProvincialPublicHwy { get; set; } = null!;
+        //public List<string> HighwayEstablishedBy { get; set; } = new List<string>();
         public string SqrMeters { get; set; } = null!;
         public Boolean IsVolumetric { get; set; } = false;
         public string Volume { get; set; } = null!;
@@ -66,8 +66,12 @@
         public string PIN { get; set; } = null!;
         public string Address { get; set; } = null!;
         public string PlanNumber { get; set; } = null!;
-        public string LegalDescription { get; set; } = null!;
+        public string HistoricFile { get; set; } = null!;
+        public string POIName { get; set; } = null!;
+        public PropertyLatitudeLongitude LatitudeLongitude { get; set; } = new PropertyLatitudeLongitude();
+        public SurveyParcel SurveyParcel { get; set; } = new SurveyParcel();
         public List<string> MultiplePIDS { get; set; } = new List<string>();
+        public List<string> DisplayingList { get; set; } = new List<string>();
     }
 
     public class PropertyManagement
@@ -94,15 +98,16 @@
 
     public class PropertyActivity
     {
+        public int PropertyActivityPropsCount { get; set; } = 0;
         public string PropertyActivityType { get; set; } = null!;
-        public string PropertyActivitySubType { get; set; } = null!;
+        public List<string> PropertyActivitySubTypeList { get; set; } = new List<string>();
         public string PropertyActivityStatus { get; set; } = null!;
-        public string PropertyActivityRequestedDate { get; set; } = null!;
+        public string PropertyActivityCommenceDate { get; set; } = null!;
         public string PropertyActivityCompletionDate { get; set; } = null!;
         public string PropertyActivityDescription { get; set; } = null!;
-        public List<string> PropertyActivityMinistryContact { get; set; } = new List<string>();
-        public string PropertyActivityRequestedSource { get; set; } = null!;
-        public List<string> PropertyActivityInvolvedParties { get; set; } = new List<string>();
+        public List<string> PropertyActivityMinistryContactList { get; set; } = new List<string>();
+        public string PropertyActivityRequestorMngr { get; set; } = null!;
+        public List<string> PropertyActivityExtContactsList { get; set; } = new List<string>();
         public string PropertyActivityServiceProvider { get; set; } = null!;
         public int ManagementPropertyActivityInvoicesStartRow { get; set; } = 0;
         public int ManagementPropertyActivityInvoicesCount { get; set; } = 0;
@@ -115,7 +120,7 @@
 
     public class ManagementPropertyActivityInvoice
     {
-        public string PropertyActivityInvoiceNumber{ get; set; } = null!;
+        public string PropertyActivityInvoiceNumber { get; set; } = null!;
         public string PropertyActivityInvoiceDate { get; set; } = null!;
         public string PropertyActivityInvoiceDescription { get; set; } = null!;
         public string PropertyActivityInvoicePretaxAmount { get; set; } = null!;
@@ -143,5 +148,25 @@
     {
         public List<PropertyHistory> ConsolidationSource { get; set; } = new List<PropertyHistory>();
         public PropertyHistory ConsolidationDestination { get; set; } = new PropertyHistory();
+    }
+
+    public class PropertyLatitudeLongitude
+    {
+        public string LatitudeDegree { get; set; } = null!;
+        public string LatitudeMinutes { get; set; } = null!;
+        public string LatitudeSeconds { get; set; } = null!;
+        public string LatitudeDirection { get; set; } = null!;
+        public string LongitudeDegree { get; set; } = null!;
+        public string LongitudeMinutes { get; set; } = null!;
+        public string LongitudeSeconds { get; set; } = null!;
+        public string LongitudeDirection { get; set; } = null!;
+    }
+
+    public class SurveyParcel
+    {
+        public string District { get; set; } = null!;
+        public string Section{ get; set; } = null!;
+        public string Township { get; set; } = null!;
+        public string Range { get; set; } = null!;
     }
 }

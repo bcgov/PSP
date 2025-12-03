@@ -18,7 +18,9 @@ namespace Pims.Dal.Entities
 
         #region Constructors
 
-        public PimsConsultationOutcomeType() { }
+        public PimsConsultationOutcomeType()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PimsConsultationOutcomeType class.

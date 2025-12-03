@@ -2,9 +2,9 @@ import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants';
 import {
-  mockGetPropertyManagementActivityList,
-  mockGetPropertyManagementActivityNotStarted,
-} from '@/mocks/PropertyManagementActivity.mock';
+  getMockManagementActivityList,
+  getMockManagementActivityNotStarted,
+} from '@/mocks/managementActivity.mock';
 import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
 
 import PropertyManagementActivitiesListContainer, {
@@ -34,8 +34,8 @@ const mockDeleteApi = {
   loading: false,
 };
 
-vi.mock('@/hooks/repositories/usePropertyActivityRepository', () => ({
-  usePropertyActivityRepository: () => {
+vi.mock('@/hooks/repositories/useManagementActivityPropertyRepository', () => ({
+  useManagementActivityPropertyRepository: () => {
     return {
       getActivities: mockGetApi,
       deleteActivity: mockDeleteApi,
@@ -72,7 +72,7 @@ describe('ManagementActivitiesListContainer component', () => {
   });
 
   it('renders as expected', async () => {
-    mockGetApi.execute.mockResolvedValue(mockGetPropertyManagementActivityList());
+    mockGetApi.execute.mockResolvedValue(getMockManagementActivityList());
     const { asFragment } = await setup({});
     await act(async () => {});
     const fragment = await waitFor(() => asFragment());
@@ -82,7 +82,7 @@ describe('ManagementActivitiesListContainer component', () => {
   });
 
   it('Delete activity calls displays delete modal', async () => {
-    mockGetApi.execute.mockResolvedValue(mockGetPropertyManagementActivityList());
+    mockGetApi.execute.mockResolvedValue(getMockManagementActivityList());
     await setup({});
 
     await act(async () => {
@@ -94,7 +94,7 @@ describe('ManagementActivitiesListContainer component', () => {
   });
 
   it('confirming delete modal sends delete call', async () => {
-    mockGetApi.execute.mockResolvedValue([mockGetPropertyManagementActivityNotStarted()]);
+    mockGetApi.execute.mockResolvedValue([getMockManagementActivityNotStarted()]);
     setup({
       claims: [Claims.MANAGEMENT_DELETE],
     });
@@ -106,5 +106,19 @@ describe('ManagementActivitiesListContainer component', () => {
     await act(async () => userEvent.click(continueButton));
 
     expect(mockDeleteApi.execute).toHaveBeenCalledTimes(1);
+  });
+
+  it('getNavigationUrl returns correct title and url', async () => {
+    mockGetApi.execute.mockResolvedValue(getMockManagementActivityList());
+    await setup({});
+
+    // ensure viewProps populated
+    await act(async () => {});
+
+    const fakeRow = { managementFileId: 10, activityId: 5 } as any;
+    const nav = viewProps.getNavigationUrl(fakeRow);
+
+    expect(nav.title).toBe('M-10');
+    expect(nav.url).toBe('/mapview/sidebar/management/10/activities/5');
   });
 });

@@ -5,6 +5,7 @@ import { Claims, NoteTypes } from '@/constants';
 import DocumentListContainer from '@/features/documents/list/DocumentListContainer';
 import { LeaseFormModel } from '@/features/leases/models';
 import { LeaseStatusUpdateSolver } from '@/features/leases/models/LeaseStatusUpdateSolver';
+import NoteListContainer from '@/features/notes/list/NoteListContainer';
 import NoteListView from '@/features/notes/list/NoteListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
@@ -42,10 +43,13 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   const tabViews: LeaseTabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
   const stakeholderPageName =
-    lease?.paymentReceivableType.id === 'RCVBL'
+    lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL
       ? LeaseFileTabNames.tenant
       : LeaseFileTabNames.payee;
-  const stakeHolderTypeName = lease?.paymentReceivableType.id === 'RCVBL' ? 'Tenant' : 'Payee';
+  const stakeHolderTypeName =
+    lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL
+      ? 'Tenant'
+      : 'Payee';
   const statusSolver = new LeaseStatusUpdateSolver(lease?.fileStatusTypeCode);
 
   const location = useLocation();
@@ -101,7 +105,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     content: (
       <LeaseTab
         leasePage={
-          lease?.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL
+          lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL
             ? leasePages.get(LeasePageNames.PAYEE)
             : leasePages.get(LeasePageNames.TENANT)
         }
@@ -189,8 +193,8 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
 
   if (
     lease?.id &&
-    (lease.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLBCTFA ||
-      lease.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLMOTI) &&
+    (lease.paymentReceivableType?.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLBCTFA ||
+      lease.paymentReceivableType?.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLMOTI) &&
     hasClaim(Claims.COMPENSATION_REQUISITION_VIEW)
   ) {
     tabViews.push({
@@ -225,7 +229,12 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   if (lease?.id && hasClaim(Claims.NOTE_VIEW)) {
     tabViews.push({
       content: (
-        <NoteListView type={NoteTypes.Lease_File} entityId={lease?.id} onSuccess={onSuccess} />
+        <NoteListContainer
+          type={NoteTypes.Lease_File}
+          entityId={lease?.id}
+          onSuccess={onSuccess}
+          View={NoteListView}
+        />
       ),
       key: LeaseFileTabNames.notes,
       name: 'Notes',

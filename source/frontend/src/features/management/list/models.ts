@@ -80,7 +80,7 @@ export class ManagementSearchResultModel {
   project: ApiGen_Concepts_Project | null = null;
   legacyFileNum = '';
   managementFileStatusTypeCode = '';
-  managementFileProgramTypeCode = '';
+  managementFilePurposeTypeCode = '';
   managementTeam: ApiGen_Concepts_ManagementFileTeam[] = [];
   fileProperties?: ApiGen_Concepts_ManagementFileProperty[] = [];
 
@@ -93,7 +93,7 @@ export class ManagementSearchResultModel {
     newModel.project = base.project;
     newModel.legacyFileNum = base.legacyFileNum ?? '';
     newModel.managementFileStatusTypeCode = base.fileStatusTypeCode?.description ?? '';
-    newModel.managementFileProgramTypeCode = base.programTypeCode?.description ?? '';
+    newModel.managementFilePurposeTypeCode = base.purposeTypeCode?.description ?? '';
     newModel.managementTeam = base.managementTeam || [];
     newModel.fileProperties = base.fileProperties || [];
 

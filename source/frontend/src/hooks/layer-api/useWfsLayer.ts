@@ -95,7 +95,7 @@ function getUrlParams(options: IUseWfsLayerOptions): Record<string, any> {
 }
 
 // creates URL and appends query parameters
-function buildUrl(inputUrl: string, queryParams: Record<string, any> = {}): URL {
+export function buildUrl(inputUrl: string, queryParams: Record<string, any> = {}): URL {
   const baseUrl = window.location.origin;
   const urlObj = isAbsoluteUrl(inputUrl) ? new URL(inputUrl) : new URL(inputUrl, baseUrl);
   Object.keys(queryParams).forEach(k => {

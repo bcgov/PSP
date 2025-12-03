@@ -36,9 +36,7 @@ exports[`Management List View > matches snapshot 1`] = `
 }
 
 .c11.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c11.btn:hover {
@@ -271,11 +269,11 @@ exports[`Management List View > matches snapshot 1`] = `
   height: 1.6rem;
 }
 
-.c15 {
+.c17 {
   margin-top: 0.3rem;
 }
 
-.c16 {
+.c18 {
   min-width: 5rem;
   max-width: 5rem;
   margin-left: 1rem;
@@ -284,11 +282,11 @@ exports[`Management List View > matches snapshot 1`] = `
   padding: 0;
 }
 
-.c16:-moz-read-only {
+.c18:-moz-read-only {
   background: white;
 }
 
-.c16:read-only {
+.c18:read-only {
   background: white;
 }
 
@@ -363,6 +361,30 @@ exports[`Management List View > matches snapshot 1`] = `
   padding: 0;
 }
 
+.c15 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 8px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.c15:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c16 {
+  border-radius: 0.4rem;
+}
+
 .c4 {
   display: -webkit-box;
   display: -webkit-flex;
@@ -384,6 +406,10 @@ exports[`Management List View > matches snapshot 1`] = `
 
 .c4 svg {
   vertical-align: baseline;
+}
+
+.c4 svg g path {
+  fill: currentColor;
 }
 
 <div
@@ -412,11 +438,9 @@ exports[`Management List View > matches snapshot 1`] = `
               >
                 <path
                   d="M21.83 0L8.06001 0.02C6.94001 0.1 6.12001 1.02 6.01001 2.1V15.75C6.04001 16.98 6.96001 17.89 8.18001 17.99H21.77C23 17.95 23.91 17.03 24.01 15.82V2.24C23.97 1.01 23.05 0.1 21.84 0H21.83ZM20.41 10.07H16.62V13.79H14.48V10.07H10.76V7.93H14.48V4.14H16.62V7.83L16.72 7.93H20.41V10.07Z"
-                  fill="white"
                 />
                 <path
                   d="M4.48 16.24V6H2.03C1.04 6 0.04 7.13 0 8.11V21.76C0.04 22.99 0.96 23.9 2.17 24H15.82C16.75 24.07 17.99 22.94 17.99 22.03V19.51H7.83C6.43 19.51 4.49 17.64 4.49 16.24H4.48Z"
-                  fill="white"
                 />
               </g>
               <defs>
@@ -590,7 +614,7 @@ exports[`Management List View > matches snapshot 1`] = `
                           <option
                             value=""
                           >
-                            Select file status...
+                            All Status
                           </option>
                           <option
                             class="option"
@@ -698,20 +722,6 @@ exports[`Management List View > matches snapshot 1`] = `
                           </option>
                           <option
                             class="option"
-                            data-testid="select-option-COMMBLDG"
-                            value="COMMBLDG"
-                          >
-                            Commercial building
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-ENCAMP"
-                            value="ENCAMP"
-                          >
-                            Encampments
-                          </option>
-                          <option
-                            class="option"
                             data-testid="select-option-ENGINEER"
                             value="ENGINEER"
                           >
@@ -719,73 +729,10 @@ exports[`Management List View > matches snapshot 1`] = `
                           </option>
                           <option
                             class="option"
-                            data-testid="select-option-GOVERNMT"
-                            value="GOVERNMT"
+                            data-testid="select-option-GENERAL"
+                            value="GENERAL"
                           >
-                            Government
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-MOTTUSE"
-                            value="MOTTUSE"
-                          >
-                            MOTT use
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-OILGAS"
-                            value="OILGAS"
-                          >
-                            Oil/Gas
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-OTHER"
-                            value="OTHER"
-                          >
-                            Other
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-PARKING"
-                            value="PARKING"
-                          >
-                            Parking and/or storage
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-PUBTRANS"
-                            value="PUBTRANS"
-                          >
-                            Public transportation
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-RAIL"
-                            value="RAIL"
-                          >
-                            Rail
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-TRAILS"
-                            value="TRAILS"
-                          >
-                            Rail trails/trails
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-RESRENTL"
-                            value="RESRENTL"
-                          >
-                            Residential rentals
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-UTILITY"
-                            value="UTILITY"
-                          >
-                            Utilities
+                            General
                           </option>
                         </select>
                       </div>
@@ -1055,7 +1002,7 @@ exports[`Management List View > matches snapshot 1`] = `
                 Purpose
                 <div
                   class="c12"
-                  data-testid="sort-column-managementFileProgramTypeCode"
+                  data-testid="sort-column-managementFilePurposeTypeCode"
                 >
                   <svg
                     class="c13"
@@ -1179,7 +1126,27 @@ exports[`Management List View > matches snapshot 1`] = `
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                1
+                <a
+                  class="c15"
+                  href="/mapview/sidebar/management/1"
+                  rel="noopener noreferrer"
+                  target="_blank"
+                >
+                  M-1
+                  <svg
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                    />
+                  </svg>
+                </a>
               </div>
               <div
                 class="td clickable"
@@ -1211,7 +1178,7 @@ exports[`Management List View > matches snapshot 1`] = `
                 style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
-                Utilities
+                Engineering
               </div>
               <div
                 class="td clickable"
@@ -1231,7 +1198,34 @@ exports[`Management List View > matches snapshot 1`] = `
               >
                 <div
                   class="w-100"
-                />
+                >
+                  <div
+                    class="c16 mx-0 my-2 border border-secondary row"
+                  >
+                    <div
+                      class="col-md-12"
+                    >
+                      <strong
+                        class="pr-2"
+                      >
+                        Address:
+                      </strong>
+                      45 - 904 Hollywood Crescent Living in a van Down by the River Hollywood North BC, V6Z 5G7
+                    </div>
+                    <div
+                      class="col-md-auto"
+                    >
+                      <div>
+                        <strong
+                          class="pr-2"
+                        >
+                          PID:
+                        </strong>
+                         014-073-871
+                      </div>
+                    </div>
+                  </div>
+                </div>
               </div>
               <div
                 class="td clickable"
@@ -1271,19 +1265,19 @@ exports[`Management List View > matches snapshot 1`] = `
                 class="d-flex"
               >
                 <span
-                  class="c15"
+                  class="c17"
                 >
                   Show
                 </span>
                 <input
-                  class="c16 form-control"
+                  class="c18 form-control"
                   data-testid="input-page-size"
                   readonly=""
                   type="number"
                   value="10"
                 />
                 <span
-                  class="c15"
+                  class="c17"
                 >
                   Entries
                 </span>

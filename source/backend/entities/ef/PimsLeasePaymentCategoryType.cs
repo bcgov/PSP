@@ -29,13 +29,13 @@ public partial class PimsLeasePaymentCategoryType
     public string Description { get; set; }
 
     /// <summary>
-    /// Indicates that the record is disabled.
+    /// Indicates if the record is disabled and therefore not selectable or displayed.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }
 
     /// <summary>
-    /// Display order of the descriptions
+    /// Designates a preferred presentation order of the code descriptions.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }

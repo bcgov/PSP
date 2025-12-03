@@ -18,7 +18,9 @@ namespace Pims.Dal.Entities
 
         #region Constructors
 
-        public PimsDocumentQueueStatusType() { }
+        public PimsDocumentQueueStatusType()
+        {
+        }
 
         /// <summary>
         /// Create a new instance of a PimsDocumentQueueStatusType class.

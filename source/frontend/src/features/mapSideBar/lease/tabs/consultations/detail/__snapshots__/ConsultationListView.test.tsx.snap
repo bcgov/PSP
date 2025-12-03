@@ -6,7 +6,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c4.btn {
+  .c3.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,19 +35,17 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c4.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+.c3.btn .Button__value {
+  width: auto;
 }
 
-.c4.btn:hover {
+.c3.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c4.btn:focus {
+.c3.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -55,31 +53,31 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c4.btn.btn-primary {
+.c3.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c4.btn.btn-primary:hover,
-.c4.btn.btn-primary:active,
-.c4.btn.btn-primary:focus {
+.c3.btn.btn-primary:hover,
+.c3.btn.btn-primary:active,
+.c3.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c4.btn.btn-secondary {
+.c3.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c4.btn.btn-secondary:hover,
-.c4.btn.btn-secondary:active,
-.c4.btn.btn-secondary:focus {
+.c3.btn.btn-secondary:hover,
+.c3.btn.btn-secondary:active,
+.c3.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c4.btn.btn-info {
+.c3.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -87,66 +85,66 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c4.btn.btn-info:hover,
-.c4.btn.btn-info:active,
-.c4.btn.btn-info:focus {
+.c3.btn.btn-info:hover,
+.c3.btn.btn-info:active,
+.c3.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c4.btn.btn-light {
+.c3.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c4.btn.btn-light:hover,
-.c4.btn.btn-light:active,
-.c4.btn.btn-light:focus {
+.c3.btn.btn-light:hover,
+.c3.btn.btn-light:active,
+.c3.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c4.btn.btn-dark {
+.c3.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c4.btn.btn-dark:hover,
-.c4.btn.btn-dark:active,
-.c4.btn.btn-dark:focus {
+.c3.btn.btn-dark:hover,
+.c3.btn.btn-dark:active,
+.c3.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c4.btn.btn-danger {
+.c3.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c4.btn.btn-danger:hover,
-.c4.btn.btn-danger:active,
-.c4.btn.btn-danger:focus {
+.c3.btn.btn-danger:hover,
+.c3.btn.btn-danger:active,
+.c3.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c4.btn.btn-warning {
+.c3.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c4.btn.btn-warning:hover,
-.c4.btn.btn-warning:active,
-.c4.btn.btn-warning:focus {
+.c3.btn.btn-warning:hover,
+.c3.btn.btn-warning:active,
+.c3.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c4.btn.btn-link {
+.c3.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -170,9 +168,9 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c4.btn.btn-link:hover,
-.c4.btn.btn-link:active,
-.c4.btn.btn-link:focus {
+.c3.btn.btn-link:hover,
+.c3.btn.btn-link:active,
+.c3.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -182,15 +180,15 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   outline: none;
 }
 
-.c4.btn.btn-link:disabled,
-.c4.btn.btn-link.disabled {
+.c3.btn.btn-link:disabled,
+.c3.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c4.btn:disabled,
-.c4.btn:disabled:hover {
+.c3.btn:disabled,
+.c3.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -202,82 +200,82 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c4.Button .Button__icon {
+.c3.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c4.Button--icon-only:focus {
+.c3.Button--icon-only:focus {
   outline: none;
 }
 
-.c4.Button--icon-only .Button__icon {
+.c3.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c11.c11.btn {
+.c10.c10.btn {
   background-color: unset;
   border: none;
 }
 
-.c11.c11.btn:hover,
-.c11.c11.btn:focus,
-.c11.c11.btn:active {
+.c10.c10.btn:hover,
+.c10.c10.btn:focus,
+.c10.c10.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c11.c11.btn svg {
+.c10.c10.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c11.c11.btn svg:hover {
+.c10.c10.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c11.c11.btn.btn-primary svg {
+.c10.c10.btn.btn-primary svg {
   color: #013366;
 }
 
-.c11.c11.btn.btn-primary svg:hover {
+.c10.c10.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c11.c11.btn.btn-light svg {
+.c10.c10.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c11.c11.btn.btn-light svg:hover {
+.c10.c10.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c11.c11.btn.btn-info svg {
+.c10.c10.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c11.c11.btn.btn-info svg:hover {
+.c10.c10.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c12.c12.btn.btn-primary {
+.c11.c11.btn.btn-primary {
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c12.c12.btn.btn-primary svg {
+.c11.c11.btn.btn-primary svg {
   color: #aaaaaa !important;
 }
 
-.c12.c12.btn.btn-primary .text {
+.c11.c11.btn.btn-primary .text {
   display: none;
 }
 
-.c12.c12.btn.btn-primary svg:hover,
-.c12.c12.btn.btn-primary svg:active,
-.c12.c12.btn.btn-primary svg:focus {
+.c11.c11.btn.btn-primary svg:hover,
+.c11.c11.btn.btn-primary svg:active,
+.c11.c11.btn.btn-primary svg:focus {
   color: #d8292f !important;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -287,42 +285,43 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c12.c12.btn.btn-primary svg:hover .text,
-.c12.c12.btn.btn-primary svg:active .text,
-.c12.c12.btn.btn-primary svg:focus .text {
+.c11.c11.btn.btn-primary svg:hover .text,
+.c11.c11.btn.btn-primary svg:active .text,
+.c11.c11.btn.btn-primary svg:focus .text {
   display: inline;
   line-height: 2rem;
 }
 
-.c15.required::before {
+.c4.btn.btn-primary,
+.c4.btn.btn-primary:active {
+  background-color: #42814A;
+}
+
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:focus {
+  background-color: #2e8540;
+  outline-color: #2e8540;
+}
+
+.c5.c5 {
+  display: inline-block;
+  margin-left: 1.5rem;
+  margin-bottom: 0.5rem;
+  float: right;
+}
+
+.c14.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c14 {
+.c13 {
   font-weight: bold;
 }
 
-.c5.btn.btn-primary,
-.c5.btn.btn-primary:active {
-  background-color: #42814A;
-}
-
-.c5.btn.btn-primary:hover,
-.c5.btn.btn-primary:focus {
-  background-color: #2e8540;
-  outline-color: #2e8540;
-}
-
-.c6.c6 {
-  display: inline-block;
-  margin-left: 1.5rem;
-  margin-bottom: 0.5rem;
-}
-
-.c9 {
+.c8 {
   float: right;
   cursor: pointer;
   font-size: 3.2rem;
@@ -348,29 +347,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c7 {
+.c6 {
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
 }
 
-.c3 {
-  -webkit-box-pack: justify;
-  -webkit-justify-content: space-between;
-  -ms-flex-pack: justify;
-  justify-content: space-between;
-  -webkit-align-items: end;
-  -webkit-box-align: end;
-  -ms-flex-align: end;
-  align-items: end;
-  min-height: 4.5rem;
-}
-
-.c3 .btn {
-  margin: 0;
-}
-
-.c13 {
+.c12 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -393,25 +376,25 @@ exports[`ConsultationListView component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c10 {
+.c9 {
   border: solid 0.2rem var(--theme-blue-90);
   margin-bottom: 1.5rem;
   border-radius: 0.5rem;
 }
 
-.c8 svg.info {
+.c7 svg.info {
   color: #053662;
 }
 
-.c8 svg.error {
+.c7 svg.error {
   color: #CE3E39;
 }
 
-.c8 svg.ok {
+.c7 svg.ok {
   color: #2e8540;
 }
 
-.c8 svg {
+.c7 svg {
   vertical-align: baseline;
 }
 
@@ -431,18 +414,18 @@ exports[`ConsultationListView component > renders as expected 1`] = `
             class="align-content-end col"
           >
             <div
-              class="c3 no-gutters row"
+              class="no-gutters justify-content-between align-items-end row"
             >
               <div
-                class="align-items-end col-auto"
+                class="my-1 col-auto"
               >
                 Approval / Consultations
               </div>
               <div
-                class="my-1 col-auto"
+                class="col-auto"
               >
                 <button
-                  class="c4 Button c5 c6 btn btn-primary"
+                  class="c3 Button c4 c5 btn btn-primary"
                   type="button"
                 >
                   <div
@@ -473,7 +456,8 @@ exports[`ConsultationListView component > renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c7 form-section"
+          class="c6 form-section"
+          data-testid="consultation-group-section-District"
         >
           <h2
             class="c2"
@@ -485,7 +469,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="align-content-end col"
               >
                 <div
-                  class="c8 row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
@@ -517,7 +501,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="pl-2 d-flex align-items-end col-auto"
               >
                 <svg
-                  class="c9"
+                  class="c8"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -544,10 +528,11 @@ exports[`ConsultationListView component > renders as expected 1`] = `
             class="collapse"
           >
             <div
-              class="c10"
+              class="c9"
             >
               <div
                 class="c1 form-section"
+                data-testid="consultation-District-items"
               >
                 <h2
                   class="c2"
@@ -571,7 +556,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                             class="px-1 col-auto"
                           >
                             <button
-                              class="c4 Button c11 c12 btn btn-primary"
+                              class="c3 Button c10 c11 btn btn-primary"
                               data-testid="consultations[0].delete-btn"
                               title="Delete Consultation"
                               type="button"
@@ -599,10 +584,10 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                             class="px-2 col-auto"
                           >
                             <div
-                              class="c13"
+                              class="c12"
                             >
                               <button
-                                class="c4 Button c11 btn btn-primary"
+                                class="c3 Button c10 btn btn-primary"
                                 data-testid="consultations[0].edit-btn"
                                 title="Edit Consultation"
                                 type="button"
@@ -642,7 +627,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c14"
+                        class="c13"
                       >
                         Requested on:
                         <span>
@@ -670,7 +655,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c15 text-left col"
+                      class="c14 text-left col"
                     >
                       Jan 1, 2024
                     </div>
@@ -682,7 +667,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c14"
+                        class="c13"
                       >
                         Contact:
                         <span>
@@ -710,7 +695,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c15 text-left col"
+                      class="c14 text-left col"
                     />
                   </div>
                   <div
@@ -720,13 +705,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c14"
+                        class="c13"
                       >
                         Response received:
                       </label>
                     </div>
                     <div
-                      class="c15 text-left col"
+                      class="c14 text-left col"
                     >
                       Yes
                     </div>
@@ -738,13 +723,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c14"
+                        class="c13"
                       >
                         Response received on:
                       </label>
                     </div>
                     <div
-                      class="c15 text-left col"
+                      class="c14 text-left col"
                     >
                       Dec 1, 2024
                     </div>
@@ -756,7 +741,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c14"
+                        class="c13"
                       >
                         Comments:
                         <span>
@@ -784,7 +769,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c15 text-left col"
+                      class="c14 text-left col"
                     >
                       test comment
                     </div>
@@ -793,10 +778,11 @@ exports[`ConsultationListView component > renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c10"
+              class="c9"
             >
               <div
                 class="c1 form-section"
+                data-testid="consultation-District-items"
               >
                 <h2
                   class="c2"
@@ -820,7 +806,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                             class="px-1 col-auto"
                           >
                             <button
-                              class="c4 Button c11 c12 btn btn-primary"
+                              class="c3 Button c10 c11 btn btn-primary"
                               data-testid="consultations[1].delete-btn"
                               title="Delete Consultation"
                               type="button"
@@ -848,10 +834,10 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                             class="px-2 col-auto"
                           >
                             <div
-                              class="c13"
+                              class="c12"
                             >
                               <button
-                                class="c4 Button c11 btn btn-primary"
+                                class="c3 Button c10 btn btn-primary"
                                 data-testid="consultations[1].edit-btn"
                                 title="Edit Consultation"
                                 type="button"
@@ -891,7 +877,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c14"
+                        class="c13"
                       >
                         Requested on:
                         <span>
@@ -919,7 +905,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c15 text-left col"
+                      class="c14 text-left col"
                     >
                       Jan 1, 2024
                     </div>
@@ -931,7 +917,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c14"
+                        class="c13"
                       >
                         Contact:
                         <span>
@@ -959,7 +945,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c15 text-left col"
+                      class="c14 text-left col"
                     />
                   </div>
                   <div
@@ -969,13 +955,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c14"
+                        class="c13"
                       >
                         Response received:
                       </label>
                     </div>
                     <div
-                      class="c15 text-left col"
+                      class="c14 text-left col"
                     >
                       Yes
                     </div>
@@ -987,13 +973,13 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c14"
+                        class="c13"
                       >
                         Response received on:
                       </label>
                     </div>
                     <div
-                      class="c15 text-left col"
+                      class="c14 text-left col"
                     >
                       Dec 1, 2024
                     </div>
@@ -1005,7 +991,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       class="pr-0 text-left col-4"
                     >
                       <label
-                        class="c14"
+                        class="c13"
                       >
                         Comments:
                         <span>
@@ -1033,7 +1019,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                       </label>
                     </div>
                     <div
-                      class="c15 text-left col"
+                      class="c14 text-left col"
                     >
                       test comment
                     </div>
@@ -1044,7 +1030,8 @@ exports[`ConsultationListView component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c7 form-section"
+          class="c6 form-section"
+          data-testid="consultation-group-section-Engineering"
         >
           <h2
             class="c2"
@@ -1056,7 +1043,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="align-content-end col"
               >
                 <div
-                  class="c8 row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
@@ -1073,7 +1060,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="pl-2 d-flex align-items-end col-auto"
               >
                 <svg
-                  class="c9"
+                  class="c8"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -1107,7 +1094,8 @@ exports[`ConsultationListView component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c7 form-section"
+          class="c6 form-section"
+          data-testid="consultation-group-section-First Nation"
         >
           <h2
             class="c2"
@@ -1119,7 +1107,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="align-content-end col"
               >
                 <div
-                  class="c8 row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
@@ -1136,7 +1124,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="pl-2 d-flex align-items-end col-auto"
               >
                 <svg
-                  class="c9"
+                  class="c8"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -1170,7 +1158,8 @@ exports[`ConsultationListView component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c7 form-section"
+          class="c6 form-section"
+          data-testid="consultation-group-section-Headquarter (HQ)"
         >
           <h2
             class="c2"
@@ -1182,7 +1171,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="align-content-end col"
               >
                 <div
-                  class="c8 row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
@@ -1199,7 +1188,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="pl-2 d-flex align-items-end col-auto"
               >
                 <svg
-                  class="c9"
+                  class="c8"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -1233,7 +1222,8 @@ exports[`ConsultationListView component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c7 form-section"
+          class="c6 form-section"
+          data-testid="consultation-group-section-Regional Planning"
         >
           <h2
             class="c2"
@@ -1245,7 +1235,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="align-content-end col"
               >
                 <div
-                  class="c8 row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
@@ -1262,7 +1252,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="pl-2 d-flex align-items-end col-auto"
               >
                 <svg
-                  class="c9"
+                  class="c8"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -1296,7 +1286,8 @@ exports[`ConsultationListView component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c7 form-section"
+          class="c6 form-section"
+          data-testid="consultation-group-section-Regional Property Services"
         >
           <h2
             class="c2"
@@ -1308,7 +1299,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="align-content-end col"
               >
                 <div
-                  class="c8 row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
@@ -1325,7 +1316,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="pl-2 d-flex align-items-end col-auto"
               >
                 <svg
-                  class="c9"
+                  class="c8"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -1359,7 +1350,8 @@ exports[`ConsultationListView component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c7 form-section"
+          class="c6 form-section"
+          data-testid="consultation-group-section-Strategic Real Estate (SRE)"
         >
           <h2
             class="c2"
@@ -1371,7 +1363,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="align-content-end col"
               >
                 <div
-                  class="c8 row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
@@ -1388,7 +1380,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="pl-2 d-flex align-items-end col-auto"
               >
                 <svg
-                  class="c9"
+                  class="c8"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -1422,7 +1414,8 @@ exports[`ConsultationListView component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c7 form-section"
+          class="c6 form-section"
+          data-testid="consultation-group-section-Other"
         >
           <h2
             class="c2"
@@ -1434,7 +1427,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="align-content-end col"
               >
                 <div
-                  class="c8 row"
+                  class="c7 row"
                 >
                   <div
                     class="col-auto"
@@ -1451,7 +1444,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                 class="pl-2 d-flex align-items-end col-auto"
               >
                 <svg
-                  class="c9"
+                  class="c8"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"

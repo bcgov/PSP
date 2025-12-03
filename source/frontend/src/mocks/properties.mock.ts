@@ -1,13 +1,14 @@
 import { PropertyDataSourceTypes } from '@/constants/propertyDataSourceTypes';
 import { PropertyStatusTypes } from '@/constants/propertyStatusTypes';
-import { PropertyTenureTypes } from '@/constants/propertyTenureTypes';
 import { mockAcquisitionFileResponse } from '@/mocks/index.mock';
+import { ApiGen_CodeTypes_PropertyTenureTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyTenureTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
-import { toTypeCodeNullable } from '@/utils/formUtils';
+import { getEmptyBaseAudit } from '@/models/defaultInitializers';
+import { toTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 
 import { getMockApiAddress } from './address.mock';
 
@@ -46,7 +47,6 @@ const emptyProperty: ApiGen_Concepts_Property = {
   location: null,
   boundary: null,
   generalLocation: null,
-  notes: null,
   surplusDeclarationType: null,
   surplusDeclarationComment: null,
   surplusDeclarationDate: EpochIsoDateTime,
@@ -98,9 +98,24 @@ export const getMockApiProperty: () => ApiGen_Concepts_Property = () => ({
   id: 1,
   pid: 0,
   status: toTypeCodeNullable(PropertyStatusTypes.UnderAdmin),
-  dataSourceId: PropertyDataSourceTypes.PAIMS,
+  dataSource: toTypeCode(PropertyDataSourceTypes.PAIMS),
   dataSourceEffectiveDateOnly: '2021-08-30T17:28:17.655Z',
-  tenureId: PropertyTenureTypes.HighwayRoad,
+  tenures: [
+    {
+      id: 1,
+      propertyId: 1,
+      propertyTenureTypeCode: toTypeCode(ApiGen_CodeTypes_PropertyTenureTypes.HWYROAD),
+      ...getEmptyBaseAudit(),
+    },
+  ],
+  roadTypes: [
+    {
+      id: 1,
+      propertyId: 1,
+      propertyRoadTypeCode: toTypeCode('ARTERIAL'),
+      ...getEmptyBaseAudit(),
+    },
+  ],
   zoning: '',
   zoningPotential: '',
   encumbranceReason: '',
@@ -157,9 +172,16 @@ export const getMockApiProperties: () => ApiGen_Concepts_Property[] = () => [
     id: 100,
     pid: 2,
     status: toTypeCodeNullable(PropertyStatusTypes.UnderAdmin),
-    dataSourceId: PropertyDataSourceTypes.PAIMS,
+    dataSource: toTypeCodeNullable(PropertyDataSourceTypes.PAIMS),
     dataSourceEffectiveDateOnly: '2021-08-30T18:14:13.170Z',
-    tenureId: PropertyTenureTypes.HighwayRoad,
+    tenures: [
+      {
+        id: 1,
+        propertyId: 1,
+        propertyTenureTypeCode: toTypeCode(ApiGen_CodeTypes_PropertyTenureTypes.HWYROAD),
+        ...getEmptyBaseAudit(),
+      },
+    ],
     zoning: '',
     zoningPotential: '',
     encumbranceReason: '',
@@ -175,10 +197,25 @@ export const getMockApiProperties: () => ApiGen_Concepts_Property[] = () => [
   },
 ];
 
+export const getMockApiPropertyFile = (): ApiGen_Concepts_FileProperty => ({
+  id: 1,
+  fileId: 1,
+  isActive: null,
+  file: mockAcquisitionFileResponse(),
+  propertyName: 'test property name',
+  propertyId: 1,
+  property: getMockApiProperty(),
+  displayOrder: null,
+  location: null,
+  boundary: null,
+  rowVersion: null,
+});
+
 export const getMockApiPropertyFiles = (): ApiGen_Concepts_FileProperty[] => [
   {
     id: 1,
     fileId: 1,
+    isActive: null,
     file: mockAcquisitionFileResponse(),
     propertyName: 'test property name',
     propertyId: 1,
@@ -218,10 +255,12 @@ export const getMockApiPropertyFiles = (): ApiGen_Concepts_FileProperty[] => [
     },
     displayOrder: null,
     location: null,
+    boundary: null,
     rowVersion: null,
   },
   {
     id: 2,
+    isActive: null,
     propertyId: 2,
     fileId: 2,
     file: mockAcquisitionFileResponse(),
@@ -262,6 +301,7 @@ export const getMockApiPropertyFiles = (): ApiGen_Concepts_FileProperty[] => [
     displayOrder: null,
     propertyName: null,
     location: null,
+    boundary: null,
     rowVersion: null,
   },
 ];
@@ -278,6 +318,8 @@ export const getEmptyPropertyLease = (): ApiGen_Concepts_PropertyLease => {
     property: null,
     propertyId: 0,
     location: null,
+    boundary: null,
+    isActive: null,
     rowVersion: null,
   };
 };

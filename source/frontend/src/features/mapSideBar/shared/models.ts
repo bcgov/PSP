@@ -3,8 +3,8 @@ import { LatLngLiteral } from 'leaflet';
 import { isNumber } from 'lodash';
 
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
-import { IMapProperty } from '@/components/propertySelector/models';
-import { AreaUnitTypes, DistrictCodes, RegionCodes } from '@/constants';
+import { DistrictCodes, RegionCodes } from '@/constants';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { ApiGen_CodeTypes_GeoJsonTypes } from '@/models/api/generated/ApiGen_CodeTypes_GeoJsonTypes';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
@@ -14,10 +14,11 @@ import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import {
-  EmptyPropertyLocation,
+  emptyPropertyLocation,
   PIMS_Property_Location_View,
 } from '@/models/layers/pimsPropertyLocationView';
 import {
+  applyDisplayOrder,
   enumFromValue,
   exists,
   formatApiAddress,
@@ -46,7 +47,7 @@ export class FileForm {
     return {
       id: this.id ?? 0,
       fileName: this.name,
-      fileProperties: this.properties.map(x => x.toFilePropertyApi(this.id)),
+      fileProperties: applyDisplayOrder(this.properties.map(x => x.toFilePropertyApi(this.id))),
       fileNumber: null,
       fileStatusTypeCode: null,
       totalAllowableCompensation: null,
@@ -75,6 +76,7 @@ export class PropertyForm {
   public latitude?: number;
   public longitude?: number;
   public fileLocation?: LatLngLiteral;
+  public fileBoundary?: Polygon | MultiPolygon;
   public polygon?: Polygon | MultiPolygon;
   public planNumber?: string;
   public name?: string;
@@ -90,33 +92,13 @@ export class PropertyForm {
   public displayOrder?: number;
   public isOwned?: boolean;
   public landArea?: number;
-  public areaUnit?: AreaUnitTypes;
+  public areaUnit?: ApiGen_CodeTypes_AreaUnitTypes;
   public isRetired?: boolean;
   public isDisposed?: boolean;
+  public isActive?: string;
 
   public constructor(baseModel?: Partial<PropertyForm>) {
     Object.assign(this, baseModel);
-  }
-
-  public static fromMapProperty(model: IMapProperty): PropertyForm {
-    return new PropertyForm({
-      apiId: model.propertyId,
-      pid: model.pid,
-      pin: isValidId(Number(model.pin)) ? model.pin : undefined,
-      latitude: model.latitude,
-      longitude: model.longitude,
-      fileLocation: model.fileLocation,
-      polygon: model.polygon,
-      planNumber: model.planNumber,
-      region: model.region,
-      regionName: model.regionName,
-      district: model.district,
-      districtName: model.districtName,
-      legalDescription: model.legalDescription,
-      formattedAddress: model.address,
-      landArea: model.landArea,
-      areaUnit: model.areaUnit,
-    });
   }
 
   public static fromFeatureDataset(model: SelectedFeatureDataset): PropertyForm {
@@ -131,6 +113,7 @@ export class PropertyForm {
       latitude: model?.location?.lat,
       longitude: model?.location?.lng,
       fileLocation: model?.fileLocation ?? model?.location ?? undefined,
+      fileBoundary: model?.fileBoundary ?? undefined,
       planNumber:
         pimsFeature?.properties?.SURVEY_PLAN_NUMBER ?? parcelFeature?.properties?.PLAN_NUMBER ?? '',
       polygon:
@@ -152,33 +135,20 @@ export class PropertyForm {
         ? +pimsFeature?.properties?.LAND_AREA
         : parcelFeature?.properties?.FEATURE_AREA_SQM ?? 0,
       areaUnit: pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE
-        ? enumFromValue(pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE, AreaUnitTypes)
-        : AreaUnitTypes.SquareMeters,
+        ? enumFromValue(
+            pimsFeature?.properties?.PROPERTY_AREA_UNIT_TYPE_CODE,
+            ApiGen_CodeTypes_AreaUnitTypes,
+          )
+        : ApiGen_CodeTypes_AreaUnitTypes.M2,
       isRetired: pimsFeature?.properties?.IS_RETIRED ?? false,
       isDisposed: pimsFeature?.properties?.IS_DISPOSED ?? false,
       legalDescription:
         pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
         parcelFeature?.properties?.LEGAL_DESCRIPTION ??
         '',
+      isActive: model.isActive !== false ? 'true' : 'false',
+      displayOrder: model.displayOrder,
     });
-  }
-
-  public toMapProperty(): IMapProperty {
-    return {
-      pid: this.pid,
-      pin: isValidId(Number(this.pin)) ? this.pin : null,
-      latitude: this.latitude,
-      longitude: this.longitude,
-      fileLocation: this.fileLocation,
-      planNumber: this.planNumber,
-      polygon: this.polygon,
-      region: this.region,
-      regionName: this.regionName,
-      district: this.district,
-      districtName: this.districtName,
-      legalDescription: this.legalDescription,
-      address: this.address ? formatApiAddress(this.address.toApi()) : this.formattedAddress,
-    };
   }
 
   public toFeatureDataset(): SelectedFeatureDataset {
@@ -187,7 +157,7 @@ export class PropertyForm {
       selectingComponentId: null,
       pimsFeature: {
         properties: {
-          ...EmptyPropertyLocation,
+          ...emptyPropertyLocation,
           PROPERTY_ID: this.apiId,
           PID: this.pid ? +this.pid.replaceAll(/-/g, '') : null,
           PID_PADDED: this?.pid?.padStart(9, '0'),
@@ -210,6 +180,7 @@ export class PropertyForm {
       },
       location: { lat: this.latitude, lng: this.longitude },
       fileLocation: this.fileLocation ?? { lat: this.latitude, lng: this.longitude },
+      fileBoundary: this.fileBoundary ?? null,
       regionFeature: {
         properties: {
           REGION_NAME: this.regionName,
@@ -237,6 +208,7 @@ export class PropertyForm {
         geometry: null,
       },
       municipalityFeature: null,
+      isActive: this.isActive !== 'false',
     };
   }
 
@@ -251,6 +223,9 @@ export class PropertyForm {
     newForm.latitude = model.property?.latitude ?? undefined;
     newForm.longitude = model.property?.longitude ?? undefined;
     newForm.fileLocation = getLatLng(model.location) ?? undefined;
+    newForm.fileBoundary = exists(model.boundary)
+      ? (model.boundary as Polygon | MultiPolygon)
+      : undefined;
     newForm.polygon = exists(model.property?.boundary)
       ? (model.property?.boundary as Polygon | MultiPolygon)
       : undefined;
@@ -269,6 +244,7 @@ export class PropertyForm {
       : undefined;
     newForm.legalDescription = model.property?.landLegalDescription ?? undefined;
     newForm.isRetired = model.property?.isRetired ?? undefined;
+    newForm.isActive = model.isActive !== false ? 'true' : 'false';
 
     return newForm;
   }
@@ -292,7 +268,9 @@ export class PropertyForm {
     newForm.legalDescription = model?.landLegalDescription ?? undefined;
     newForm.landArea = model?.landArea ?? undefined;
     newForm.areaUnit = model?.areaUnit
-      ? AreaUnitTypes[model?.areaUnit?.id as keyof typeof AreaUnitTypes]
+      ? ApiGen_CodeTypes_AreaUnitTypes[
+          model?.areaUnit?.id as keyof typeof ApiGen_CodeTypes_AreaUnitTypes
+        ]
       : undefined;
 
     return newForm;
@@ -307,7 +285,9 @@ export class PropertyForm {
       propertyId: this.apiId ?? 0,
       propertyName: this.name ?? null,
       location: latLngToApiLocation(this.fileLocation?.lat, this.fileLocation?.lng),
+      boundary: this.fileBoundary ? this.fileBoundary : null,
       displayOrder: this.displayOrder ?? null,
+      isActive: this.isActive !== 'false',
       rowVersion: this.rowVersion ?? null,
     };
   }
@@ -351,7 +331,6 @@ export class PropertyForm {
       volumetricType: null,
       municipalZoning: null,
       generalLocation: null,
-      notes: null,
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
       historicalFileNumbers: null,

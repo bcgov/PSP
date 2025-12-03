@@ -14,7 +14,6 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import { Claims, Roles } from '@/constants';
 import * as API from '@/constants/API';
-import { isAcquisitionFile } from '@/features/mapSideBar/acquisition/add/models';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import AcquisitionFileStatusUpdateSolver from '@/features/mapSideBar/acquisition/tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -25,6 +24,7 @@ import { ApiGen_CodeTypes_LandActTypes } from '@/models/api/generated/ApiGen_Cod
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { getApiPropertyName, prettyFormatDate, prettyFormatUTCDate } from '@/utils';
+import { isAcquisitionFile } from '@/utils/fileUtils';
 import { booleanToYesNoUnknownString } from '@/utils/formUtils';
 
 import { StyledBorderSection, StyledNoTabSection } from '../styles';
@@ -109,7 +109,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
             claims={[Claims.PROPERTY_EDIT]}
             addButtonIcon={<FaPlus />}
             addButtonText="Add Take"
-            onAdd={onAdd}
+            onButtonAction={onAdd}
             cannotAddComponent={
               <TooltipIcon toolTipId={`takes-cannot-add-tooltip`} toolTip={cannotEditMessage} />
             }
@@ -196,7 +196,7 @@ export const TakesDetailView: React.FunctionComponent<ITakesDetailViewProps> = (
                     </SectionField>
                   )}
                   <SectionField
-                    label="Is this being acquired for MoTI inventory? *"
+                    label="Is this being acquired for MOTT inventory? *"
                     labelWidth={{ xs: 9 }}
                     tooltip="The property will be added to inventory"
                     className="pt-4"

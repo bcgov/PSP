@@ -65,7 +65,7 @@ export const getUserColumns = (refresh: () => void): ColumnWithProps<FormUser>[]
     sortable: true,
   },
   {
-    Header: 'User Type',
+    Header: 'User type',
     accessor: 'userTypeCode',
     align: 'left',
     clickable: true,
@@ -83,7 +83,7 @@ export const getUserColumns = (refresh: () => void): ColumnWithProps<FormUser>[]
     },
   },
   {
-    Header: 'MoTI region(s)',
+    Header: 'MOTT region(s)',
     accessor: 'regions',
     align: 'left',
     clickable: true,

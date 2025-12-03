@@ -36,9 +36,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
 }
 
 .c4.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c4.btn:hover {
@@ -1125,7 +1123,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
               <div
                 class="sortable-column"
               >
-                User Type
+                User type
               </div>
             </div>
             <div
@@ -1149,7 +1147,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
               <div
                 class="sortable-column"
               >
-                MoTI region(s)
+                MOTT region(s)
               </div>
             </div>
             <div

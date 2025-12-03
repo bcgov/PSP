@@ -68,6 +68,14 @@ public partial class PimsPropertyHist
     [StringLength(20)]
     public string PphStatusTypeCode { get; set; }
 
+    [Column("UTILITY_RESPONSIBILITY_TYPE_CODE")]
+    [StringLength(20)]
+    public string UtilityResponsibilityTypeCode { get; set; }
+
+    [Column("TAX_RESPONSIBILITY_TYPE_CODE")]
+    [StringLength(20)]
+    public string TaxResponsibilityTypeCode { get; set; }
+
     [Column("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE")]
     public DateOnly PropertyDataSourceEffectiveDate { get; set; }
 
@@ -105,10 +113,6 @@ public partial class PimsPropertyHist
 
     [Column("SURPLUS_DECLARATION_DATE", TypeName = "datetime")]
     public DateTime? SurplusDeclarationDate { get; set; }
-
-    [Column("NOTES")]
-    [StringLength(4000)]
-    public string Notes { get; set; }
 
     [Column("MUNICIPAL_ZONING")]
     [StringLength(100)]
@@ -156,6 +160,10 @@ public partial class PimsPropertyHist
     [Column("RESERVE_NAME")]
     [StringLength(100)]
     public string ReserveName { get; set; }
+
+    [Column("GLOBAL_UID")]
+    [StringLength(254)]
+    public string GlobalUid { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -225,6 +233,10 @@ public partial class PimsPropertyHist
     [Column("DESCRIPTION")]
     [StringLength(2000)]
     public string Description { get; set; }
+
+    [Column("NOTES")]
+    [StringLength(4000)]
+    public string Notes { get; set; }
 
     [Column("IS_OTHER_INTEREST")]
     public bool? IsOtherInterest { get; set; }

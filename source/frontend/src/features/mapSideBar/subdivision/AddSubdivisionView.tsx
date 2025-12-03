@@ -1,7 +1,7 @@
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
 import noop from 'lodash/noop';
 import { useCallback } from 'react';
-import { Tab } from 'react-bootstrap';
+import { Col, Row, Tab } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
@@ -15,11 +15,12 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { H2 } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSelectorContainer';
 import { StyledTabView } from '@/components/propertySelector/PropertySelectorTabsView';
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
 import PropertySearchSelectorPidFormView from '@/components/propertySelector/search/PropertySelectorPidSearchView';
-import { AreaUnitTypes } from '@/constants/areaUnitTypes';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { convertArea } from '@/utils/convertUtils';
 
@@ -77,7 +78,7 @@ const AddSubdivisionView: React.FunctionComponent<
   const history = useHistory();
 
   const getAreaValue = (area: number, unit: string): number => {
-    const sqm = convertArea(area, unit, AreaUnitTypes.SquareMeters);
+    const sqm = convertArea(area, unit, ApiGen_CodeTypes_AreaUnitTypes.M2);
     return Number(sqm.toFixed(4));
   };
 
@@ -163,7 +164,7 @@ const AddSubdivisionView: React.FunctionComponent<
                           formProperty.landArea && formProperty.areaUnit
                             ? getAreaValue(formProperty.landArea, formProperty.areaUnit)
                             : 0;
-                        formProperty.areaUnit = AreaUnitTypes.SquareMeters;
+                        formProperty.areaUnit = ApiGen_CodeTypes_AreaUnitTypes.M2;
                         if (formProperty.pid) {
                           formProperty.address = await getPrimaryAddressByPid(formProperty.pid);
                           allProperties.push(formProperty.toApi());
@@ -182,7 +183,19 @@ const AddSubdivisionView: React.FunctionComponent<
                 />
                 <FieldArray name="destinationProperties">
                   {({ remove }) => (
-                    <Section header="Selected Children" noPadding className="pt-4">
+                    <Section
+                      header={
+                        <Row>
+                          <Col xs="11">Selected Children</Col>
+                          <Col>
+                            <ZoomToLocation
+                              icon={ZoomIconType.area}
+                              pimsProperties={values?.destinationProperties}
+                            />
+                          </Col>
+                        </Row>
+                      }
+                    >
                       <SelectedOperationPropertyHeader />
                       {values.destinationProperties.map((property, index) => (
                         <SelectedOperationProperty

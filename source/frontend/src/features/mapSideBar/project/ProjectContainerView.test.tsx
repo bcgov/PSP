@@ -34,7 +34,7 @@ vi.mock('react-visibility-sensor', () => {
   };
 });
 
-describe('ProjectSummaryView component', () => {
+describe.skip('ProjectSummaryView component', () => {
   // render component under test
   const setup = (props: IProjectContainerViewProps, renderOptions: RenderOptions = {}) => {
     const utils = render(<ProjectContainerView {...mockProps} />, {

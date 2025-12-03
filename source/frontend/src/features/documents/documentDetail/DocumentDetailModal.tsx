@@ -2,16 +2,17 @@ import { FaEye } from 'react-icons/fa';
 
 import GenericModal, { ModalSize } from '@/components/common/GenericModal';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 
-import { DocumentRow } from '../ComposedDocument';
 import { DocumentDetailContainer } from './DocumentDetailContainer';
 
 export interface IDocumentDetailModalProps {
   display?: boolean;
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
+  pimsDocumentRelationship?: ApiGen_Concepts_DocumentRelationship;
+  canEdit: boolean;
   setDisplay?: (display: boolean) => void;
-  pimsDocument?: DocumentRow;
-  onUpdateSuccess: () => void;
+  onUpdateSuccess?: () => void;
   onClose: () => void;
 }
 
@@ -30,11 +31,12 @@ export const DocumentDetailModal: React.FunctionComponent<
         </>
       }
       message={
-        props.pimsDocument !== undefined && (
+        props.pimsDocumentRelationship !== undefined && (
           <DocumentDetailContainer
             relationshipType={props.relationshipType}
-            pimsDocument={props.pimsDocument}
+            pimsDocumentRelationship={props.pimsDocumentRelationship}
             onUpdateSuccess={props.onUpdateSuccess}
+            canEdit={props.canEdit}
           />
         )
       }

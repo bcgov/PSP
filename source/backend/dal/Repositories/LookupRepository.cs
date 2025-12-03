@@ -340,19 +340,19 @@ namespace Pims.Dal.Repositories
             return Context.PimsPaymentItemTypes.AsNoTracking().ToArray();
         }
 
-        public IEnumerable<PimsPropMgmtActivityStatusType> GetAllPropMgmtActivityStatusTypes()
+        public IEnumerable<PimsMgmtActivityStatusType> GetAllMgmtActivityStatusTypes()
         {
-            return Context.PimsPropMgmtActivityStatusTypes.AsNoTracking().ToArray();
+            return Context.PimsMgmtActivityStatusTypes.AsNoTracking().ToArray();
         }
 
-        public IEnumerable<PimsPropMgmtActivitySubtype> GetAllPropMgmtActivitySubtypes()
+        public IEnumerable<PimsMgmtActivitySubtype> GetAllMgmtActivitySubtypes()
         {
-            return Context.PimsPropMgmtActivitySubtypes.AsNoTracking().ToArray();
+            return Context.PimsMgmtActivitySubtypes.AsNoTracking().ToArray();
         }
 
-        public IEnumerable<PimsPropMgmtActivityType> GetAllPropMgmtActivityTypes()
+        public IEnumerable<PimsMgmtActivityType> GetAllMgmtActivityTypes()
         {
-            return Context.PimsPropMgmtActivityTypes.AsNoTracking().ToArray();
+            return Context.PimsMgmtActivityTypes.AsNoTracking().ToArray();
         }
 
         public IEnumerable<PimsAgreementStatusType> GetAllAgreementStatusTypes()
@@ -445,14 +445,14 @@ namespace Pims.Dal.Repositories
             return Context.PimsAcqFileProgessTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
         }
 
-        public IEnumerable<PimsAcqFileAppraisalType> GetAllAcquisitionFileAppraisalStatusTypes()
+        public IEnumerable<PimsFileAppraisalType> GetAllFileAppraisalStatusTypes()
         {
-            return Context.PimsAcqFileAppraisalTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+            return Context.PimsFileAppraisalTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
         }
 
-        public IEnumerable<PimsAcqFileLglSrvyType> GetAllAcquisitionFileLegalSurveyStatusTypes()
+        public IEnumerable<PimsFileLglSrvyType> GetAllFileLegalSurveyStatusTypes()
         {
-            return Context.PimsAcqFileLglSrvyTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+            return Context.PimsFileLglSrvyTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
         }
 
         public IEnumerable<PimsAcqFileTakeType> GetAllAcquisitionFileTakeStatusTypes()
@@ -480,14 +480,14 @@ namespace Pims.Dal.Repositories
             return Context.PimsManagementFileStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
         }
 
-        public IEnumerable<PimsManagementFileProgramType> GetAllManagementFileProgramTypes()
-        {
-            return Context.PimsManagementFileProgramTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
-        }
-
         public IEnumerable<PimsManagementFileProfileType> GetAllManagementFileProfileTypes()
         {
             return Context.PimsManagementFileProfileTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
+
+        public IEnumerable<PimsManagementFilePurposeType> GetAllManagementFilePurposeTypes()
+        {
+            return Context.PimsManagementFilePurposeTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
         }
         #endregion
     }

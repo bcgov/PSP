@@ -5,62 +5,63 @@ namespace PIMS.Tests.Automation.PageObjects
 {
     public class SearchDispositionFiles : PageObjectBase
     {
-        private By menuDispositionButton = By.CssSelector("div[data-testid='nav-tooltip-disposition'] a");
-        private By searcDispositionButton = By.XPath("//a[contains(text(),'Manage Disposition Files')]");
+        private readonly By menuDispositionButton = By.CssSelector("div[data-testid='nav-tooltip-disposition'] a");
+        private readonly By searcDispositionButton = By.XPath("//a[contains(text(),'Manage Disposition Files')]");
 
         //Disposition File Search Filters Elements
-        private By searchAcquisitionFileTitle = By.XPath("//h1/div/div/span[contains(text(),'Disposition Files')]");
+        private readonly By searchAcquisitionFileTitle = By.XPath("//h1/div/div/span[contains(text(),'Disposition Files')]");
 
-        private By searchDispositionFileSearchBySelect = By.Id("input-searchBy");
-        private By searchDispositionFileSearchByAddressInput = By.Id("input-address");
-        private By searchDispositionFileSearchByPIDInput = By.Id("input-pid");
-        private By searchDispositionFileNameInput = By.Id("input-fileNameOrNumberOrReference");
-        private By searchDispositionFileTeamMemberSelect = By.Id("typeahead-select-dispositionTeamMember");
-        private By searchDispositionTeamMemberOptions = By.CssSelector("div[data-testid='typeahead-select-dispositionTeamMember'] div[aria-label='menu-options']");
-        private By searchDispositionTeamMember1stOption = By.CssSelector("div[data-testid='typeahead-select-dispositionTeamMember'] div[aria-label='menu-options'] a:nth-child(1)");
-        private By searchDispositionFileStatusSelect = By.Id("input-dispositionFileStatusCode");
-        private By searchDispositionStatusSelect = By.Id("input-dispositionStatusCode");
-        private By searchDispositionTypeSelect = By.Id("input-dispositionTypeCode");
-        private By searchDispositionFileSearchButton = By.Id("search-button");
-        private By searchDispositionFileResetButton = By.Id("reset-button");
-        private By searchDispositionFileCreateNewButton = By.XPath("//button[@type='button']/div[contains(text(),'Add a Disposition File')]/parent::button");
+        private readonly By searchDispositionFileSearchBySelect = By.Id("input-searchBy");
+        private readonly By searchDispositionFileSearchByAddressInput = By.Id("input-address");
+        private readonly By searchDispositionFileSearchByPIDInput = By.Id("input-pid");
+        private readonly By searchDispositionFileSearchByPINInput = By.Id("input-pin");
+        private readonly By searchDispositionFileNameInput = By.Id("input-fileNameOrNumberOrReference");
+        private readonly By searchDispositionFileTeamMemberSelect = By.Id("typeahead-select-dispositionTeamMember");
+        private readonly By searchDispositionTeamMemberOptions = By.CssSelector("div[data-testid='typeahead-select-dispositionTeamMember'] div[aria-label='menu-options']");
+        private readonly By searchDispositionTeamMember1stOption = By.CssSelector("div[data-testid='typeahead-select-dispositionTeamMember'] div[aria-label='menu-options'] a:nth-child(1)");
+        private readonly By searchDispositionFileStatusSelect = By.Id("input-dispositionFileStatusCode");
+        private readonly By searchDispositionStatusSelect = By.Id("input-dispositionStatusCode");
+        private readonly By searchDispositionTypeSelect = By.Id("input-dispositionTypeCode");
+        private readonly By searchDispositionFileSearchButton = By.Id("search-button");
+        private readonly By searchDispositionFileResetButton = By.Id("reset-button");
+        private readonly By searchDispositionFileCreateNewButton = By.XPath("//button[@type='button']/div[contains(text(),'Add a Disposition File')]/parent::button");
 
         //Disposition Files List Elements
-        private By searchDispositionFileNumberHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Disposition file #')]");
-        private By searchDispositionOrderFileNumberBttn = By.CssSelector("div[data-testid='sort-column-fileNumber']");
-        private By searchDispositionReferenceHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Reference #')]");
-        private By searchDispositionOrderReferenceBttn = By.CssSelector("div[data-testid='sort-column-fileReference']");
-        private By searchDispositionFileNameHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Disposition file name')]");
-        private By searchDispositionOrderFileNameBttn = By.CssSelector("div[data-testid='sort-column-fileName']");
-        private By searchDispositionFileTypeHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Disposition type')]");
-        private By searchDispositionFileOrderTypeBttn = By.CssSelector("div[data-testid='sort-column-dispositionTypeCode']");
-        private By searchDispositionMOTIRegionHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTI Region')]");
-        private By searchDispositionTeamMemberHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Team member')]");
-        private By searchDispositionAddressHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address / PID / PIN')]");
-        private By searchDispositionDispositionStatusHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Disposition status')]");
-        private By searchDispositionFileOrderDispositionStatusBttn = By.CssSelector("div[data-testid='sort-column-dispositionStatusTypeCode']");
-        private By searchDispositionFileStatusHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");
-        private By searchDispositionFileOrderStatusBttn = By.CssSelector("div[data-testid='sort-column-dispositionFileStatusTypeCode']");
+        private readonly By searchDispositionFileNumberHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Disposition file #')]");
+        private readonly By searchDispositionOrderFileNumberBttn = By.CssSelector("div[data-testid='sort-column-fileNumber']");
+        private readonly By searchDispositionReferenceHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Reference #')]");
+        private readonly By searchDispositionOrderReferenceBttn = By.CssSelector("div[data-testid='sort-column-fileReference']");
+        private readonly By searchDispositionFileNameHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Disposition file name')]");
+        private readonly By searchDispositionOrderFileNameBttn = By.CssSelector("div[data-testid='sort-column-fileName']");
+        private readonly By searchDispositionFileTypeHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Disposition type')]");
+        private readonly By searchDispositionFileOrderTypeBttn = By.CssSelector("div[data-testid='sort-column-dispositionTypeCode']");
+        private readonly By searchDispositionMOTIRegionHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTT region')]");
+        private readonly By searchDispositionTeamMemberHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Team member')]");
+        private readonly By searchDispositionAddressHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address / PID / PIN')]");
+        private readonly By searchDispositionDispositionStatusHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Disposition status')]");
+        private readonly By searchDispositionFileOrderDispositionStatusBttn = By.CssSelector("div[data-testid='sort-column-dispositionStatusTypeCode']");
+        private readonly By searchDispositionFileStatusHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");
+        private readonly By searchDispositionFileOrderStatusBttn = By.CssSelector("div[data-testid='sort-column-dispositionFileStatusTypeCode']");
         
-        private By searchDispositionFileTableContent = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private readonly By searchDispositionFileTableContent = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']");
 
         //Search Disposition File Pagination
-        private By searchDispositionFilePaginationMenu = By.CssSelector("div[class='Menu-root']");
-        private By searchDispositionPaginationList = By.CssSelector("ul[class='pagination']");
+        private readonly By searchDispositionFilePaginationMenu = By.CssSelector("div[class='Menu-root']");
+        private readonly By searchDispositionPaginationList = By.CssSelector("ul[class='pagination']");
 
         //Disposition 1st Result Elements
-        private By searchDispositionFile1stResult = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
-        private By searchDispositionFile1stResultLink = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable'] a");
-        private By searchDispositionFile1stResultReference = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(2)");
-        private By searchDispositionFile1stResultName = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(3)");
-        private By searchDispositionFile1stResultType = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(4)");
-        private By searchDispositionFile1stResultMOTIRegion = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div:nth-child(5)");
-        private By searchDispositionFile1stResultTeamMember = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(6) span");
-        private By searchDispositionFile1stResultAddress = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td'] div[class='w-100'] div");
-        private By searchDispositionFile1stResultStatus = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(8)");
-        private By searchDispositionFile1stResultStatusFile = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(9)");
+        private readonly By searchDispositionFile1stResult = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1)");
+        private readonly By searchDispositionFile1stResultLink = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable'] a");
+        private readonly By searchDispositionFile1stResultReference = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(2)");
+        private readonly By searchDispositionFile1stResultName = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(3)");
+        private readonly By searchDispositionFile1stResultType = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(4)");
+        private readonly By searchDispositionFile1stResultMOTIRegion = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div:nth-child(5)");
+        private readonly By searchDispositionFile1stResultTeamMember = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(6) span");
+        private readonly By searchDispositionFile1stResultAddress = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td'] div[class='w-100'] div");
+        private readonly By searchDispositionFile1stResultStatus = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(8)");
+        private readonly By searchDispositionFile1stResultStatusFile = By.CssSelector("div[data-testid='dispositionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(9)");
 
-        private By searchDispositionFileHeaderCode = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div");
+        private readonly By searchDispositionFileHeaderCode = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div");
 
         public SearchDispositionFiles(IWebDriver webDriver) : base(webDriver)
         {}
@@ -73,16 +74,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Wait(3000);
             FocusAndClick(searcDispositionButton);
-        }
-
-        public void SearchDispositionFileByDFile(string DFile)
-        {
-            WaitUntilTableSpinnerDisappear();
-
-            WaitUntilVisible(searchDispositionFileNameInput);
-            webDriver.FindElement(searchDispositionFileNameInput).SendKeys(DFile);
-
-            FocusAndClick(searchDispositionFileSearchButton);
         }
 
         public void SearchLastDispositionFile()
@@ -103,52 +94,83 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OrderByDispositionFileNumber()
         {
+            Wait(2000);
             WaitUntilClickable(searchDispositionOrderFileNumberBttn);
             webDriver.FindElement(searchDispositionOrderFileNumberBttn).Click();
         }
 
         public void OrderByDispositionFileReferenceNumber()
         {
+            Wait(2000);
             WaitUntilClickable(searchDispositionOrderReferenceBttn);
             webDriver.FindElement(searchDispositionOrderReferenceBttn).Click();
         }
 
         public void OrderByDispositionFileName()
         {
+            Wait(2000);
             WaitUntilClickable(searchDispositionOrderFileNameBttn);
             webDriver.FindElement(searchDispositionOrderFileNameBttn).Click();
         }
 
         public void OrderByDispositionFileType()
         {
+            Wait(2000);
             WaitUntilClickable(searchDispositionFileOrderTypeBttn);
             webDriver.FindElement(searchDispositionFileOrderTypeBttn).Click();
         }
 
         public void OrderByDispositionStatus()
         {
+            Wait(2000);
             WaitUntilClickable(searchDispositionFileOrderDispositionStatusBttn);
             FocusAndClick(searchDispositionFileOrderDispositionStatusBttn);
         }
 
         public void OrderByDispositionFileStatus()
         {
+            Wait(2000);
             WaitUntilClickable(searchDispositionFileOrderStatusBttn);
             webDriver.FindElement(searchDispositionFileOrderStatusBttn).Click();
         }
 
         public void SelectFirstOption()
         {
+            Wait(2000);
             WaitUntilClickable(searchDispositionFile1stResultLink);
             webDriver.FindElement(searchDispositionFile1stResultLink).Click();
 
-            WaitUntilClickable(searchDispositionFileHeaderCode);
+            Wait();
             AssertTrueIsDisplayed(searchDispositionFileHeaderCode);
         }
 
-        public void FilterDispositionFiles(string pid = "", string name = "", string teamMember = "", string status = "", string dispStatus = "", string type = "")
+        public void SelectLastOption()
         {
-            Wait(10000);
+            var originalWindowHandle = webDriver.CurrentWindowHandle;
+
+            Wait(2000);
+            WaitUntilClickable(searchDispositionOrderFileNumberBttn);
+            webDriver.FindElement(searchDispositionOrderFileNumberBttn).Click();
+
+            Wait(2000);
+            webDriver.FindElement(searchDispositionOrderFileNumberBttn).Click();
+
+            Wait();
+            webDriver.FindElement(searchDispositionFile1stResultLink).Click();
+
+            Wait();
+            var allWindowsHandle = webDriver.WindowHandles;
+            var newWindowHandle = allWindowsHandle.Where(handle => handle != originalWindowHandle).First();
+            webDriver.SwitchTo().Window(newWindowHandle);
+
+            Wait();
+            AssertTrueIsDisplayed(searchDispositionFileHeaderCode);
+        }
+
+        public void FilterDispositionFiles(string pid = "", string pin = "", string address = "", string name = "", string teamMember = "",
+            string status = "", string dispStatus = "", string type = "")
+        {
+            Wait();
             webDriver.FindElement(searchDispositionFileResetButton).Click();
 
             Wait();
@@ -158,14 +180,26 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(searchDispositionFileSearchByPIDInput).SendKeys(pid);
             }
 
-            if(name != "")
+            if (pin != "")
+            {
+                ChooseSpecificSelectOption(searchDispositionFileSearchBySelect, "PIN");
+                webDriver.FindElement(searchDispositionFileSearchByPINInput).SendKeys(pin);
+            }
+
+            if (address != "")
+            {
+                ChooseSpecificSelectOption(searchDispositionFileSearchBySelect, "Address");
+                webDriver.FindElement(searchDispositionFileSearchByAddressInput).SendKeys(address);
+            }
+
+            if (name != "")
                 webDriver.FindElement(searchDispositionFileNameInput).SendKeys(name);
 
             if (teamMember != "")
             {
                 webDriver.FindElement(searchDispositionFileTeamMemberSelect).SendKeys(teamMember);
                 WaitUntilVisible(searchDispositionTeamMemberOptions);
-                webDriver.FindElement(searchDispositionTeamMember1stOption).Click();
+                FocusAndClick(searchDispositionTeamMember1stOption);
             }
 
             if(status != "")

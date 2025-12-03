@@ -7,6 +7,7 @@ import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 // LINK: @backend/apimodels/Models/Mayan/Document/FileLatestModel.cs
 export interface ApiGen_Mayan_FileLatest {
   id: number;
+  document_id: number;
   comment: string | null;
   encoding: string | null;
   file: string | null;

@@ -7,11 +7,12 @@ import { InlineInput } from '@/components/common/form/styles';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import OverflowTip from '@/components/common/OverflowTip';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { FormLeaseProperty, LeaseFormModel } from '@/features/leases/models';
 import { withNameSpace } from '@/utils/formUtils';
-import { featuresetToMapProperty, getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
+import { getPropertyNameFromSelectedFeatureSet, NameSourceType } from '@/utils/mapPropertyUtils';
 
 export interface ISelectedPropertyRowProps {
   index: number;
@@ -31,7 +32,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
   showSeparator = false,
 }) => {
   const mapMachine = useMapStateMachine();
-  const propertyName = getPropertyName(featuresetToMapProperty(property));
+  const propertyName = getPropertyNameFromSelectedFeatureSet(property);
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:
@@ -82,8 +83,15 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
             <RiDragMove2Line size={22} />
           </StyledIconButton>
         </Col>
-        <Col md={2}>
-          <RemoveButton onRemove={onRemove} fontSize="1.4rem" />
+        <Col xs="auto" className="pr-2">
+          <ZoomToLocation geometry={property.pimsFeature.geometry} icon={ZoomIconType.single} />
+        </Col>
+        <Col md={1} className="pl-3">
+          <RemoveButton
+            onRemove={onRemove}
+            fontSize="1.4rem"
+            data-testId={'delete-property-' + index}
+          />
         </Col>
       </Row>
       <Row className="align-items-center mb-3 no-gutters">
