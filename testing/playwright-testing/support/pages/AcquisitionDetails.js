@@ -1,10 +1,6 @@
 const { expect } = require("@playwright/test");
 const {
   clickAndWaitFor,
-  fillTypeahead,
-  textEqualsIfNotEmpty,
-  textNotEmpty,
-  listEquals,
 } = require("../../support/common.js");
 
 class AcquisitionDetails {

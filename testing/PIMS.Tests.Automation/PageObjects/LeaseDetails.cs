@@ -103,7 +103,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsProgramSelector = By.Id("input-programTypeCode");
         private readonly By licenseDetailsOtherProgramLabel = By.XPath("//label[contains(text(),'Other Program')]");
         private readonly By licenseDetailsOtherProgramInput = By.Id("input-otherProgramTypeDescription");
-        private readonly By licenseDetailsOtherProgramContent = By.Id("input-otherProgramType");
         private readonly By licenseDetailsTypeLabel = By.XPath("//label[contains(text(),'Type')]");
         private readonly By licenseDetailsTypeSelector = By.Id("input-leaseTypeCode");
         private readonly By licenseDetailsTypeContent = By.XPath("//div[contains(text(),'Administration')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Type')]/parent::div/following-sibling::div");
@@ -724,6 +723,19 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsTeamSubtitle);
             AssertTrueIsDisplayed(licenseDetailsTeamAddMemberLink);
 
+            //Fee Determination
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationPublicBenefitLabel);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationPublicBenefitInput);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationFinancialGainLabel);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationFinancialGainInput);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationSuggestedFeeLabel);
+            AssertTrueIsDisplayed(licenseDetaulsFeeDeterminationSuggestedFeeTooltip);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationSuggestedFeeContent);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationNotesLabel);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationNotesTooltip);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationNotesInput);
+
             //Buttons
             AssertTrueIsDisplayed(licenseDetailsSaveButton);
             AssertTrueIsDisplayed(licenseDetailsCancelButton);
@@ -903,10 +915,10 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsProgramViewLabel);
 
             if(lease.Program != "")
-                //AssertTrueContentEquals(licenseDetailsProgramContent, lease.Program);
+                AssertTrueContentEquals(licenseDetailsProgramContent, lease.Program);
 
             if (lease.ProgramOther != "")
-                //AssertTrueElementValueEquals(licenseDetailsOtherProgramContent, lease.ProgramOther);
+                AssertTrueElementValueEquals(licenseDetailsProgramContent, "Other - " + lease.ProgramOther);
 
             AssertTrueIsDisplayed(licenseDetailsTypeLabel);
             if(lease.AdminType != "")

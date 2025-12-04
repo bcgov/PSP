@@ -1,7 +1,5 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.DevTools.V140.Security;
 using PIMS.Tests.Automation.Classes;
-using System.Diagnostics;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -23,6 +21,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentGeneralUpdateDocumentSelect = By.CssSelector("div[class='modal-content'] select[id='input-documentTypeId']");
         private readonly By documentGeneralUpdateStatusLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Status')]");
         private readonly By documentUploadStatusSelect = By.Id("input-documentStatusCode");
+        private readonly By documentUpdateNameInput = By.Id("input-fileName");
         private readonly By documentUpdateDetailsSubtitle = By.XPath("//h3[contains(text(),'Details')]");
 
         //Upload Documents Agricultural Land Comission
@@ -1018,6 +1017,18 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearInput(documentPrivyCouncilTypePrivyInput);
                 webDriver.FindElement(documentPrivyCouncilTypePrivyInput).SendKeys(document.YearPrivyCouncil);
             }
+        }
+
+        public void UpdateDocumentName(string documentName)
+        {
+            Wait();
+            string fullString = webDriver.FindElement(documentUpdateNameInput).GetAttribute("value");
+            char separator = '.';
+
+            int indexOfSeparator = fullString.IndexOf(separator);
+            string docFormat = fullString.Substring(indexOfSeparator);
+
+            webDriver.FindElement(documentUpdateNameInput).SendKeys(documentName + docFormat);
         }
 
         public void VerifyDocumentFields(string documentType)

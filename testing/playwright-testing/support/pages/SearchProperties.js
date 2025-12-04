@@ -44,12 +44,23 @@ class SearchProperties {
     await this.page.getByTestId("search").click();
   }
 
-  async searchPropertyByLegalDescription(legalDescription) {
+  async searchPropertyByHistoricalFile(historicalFile) {
     await this.page
       .locator("#input-searchBy")
-      .selectOption({ label: "Legal Description" });
-    await this.page.locator("#input-legalDescription").fill("");
-    await this.page.locator("#input-legalDescription").fill(legalDescription);
+      .selectOption({ label: "Historical File #" });
+    await this.page.locator("#input-historical").fill("");
+    await this.page.locator("#input-historical").fill(historicalFile);
+    await this.page.getByTestId("search").click();
+  }
+
+  async searchPropertyByPOIName(poiName) {
+    await this.page
+      .locator("#input-searchBy")
+      .selectOption({ label: "POI Name" });
+    await this.page.getByTestId("geographic-name-input").fill("");
+    await this.page.getByTestId("geographic-name-input").fill(poiName);
+    await expect(this.page.locator("input[data-testid='geographic-name-input'] ul[class='suggestionList']")).toBeVisible();
+    await this.page.locator("input[data-testid='geographic-name-input'] ul[class='suggestionList']").click();
     await this.page.getByTestId("search").click();
   }
 
@@ -87,13 +98,48 @@ class SearchProperties {
     await this.page.getByTestId("search").click();
   }
 
+  async searchPropertyBySurveyParcel(surveyParcel) {
+    await this.page
+      .locator("#input-searchBy")
+      .selectOption({ label: "Survey Parcel" });
+    await this.page.locator("input-district").selectOption({ label: surveyParcel.DistrictInput });
+
+    if(surveyParcel.DistrictLot != null) {
+      await this.page.locator("#input-radio-district-lot").click();
+      await this.page.locator("#input-districtLot").fill(surveyParcel.DistrictLot);
+    }
+    else {
+      await this.page.locator("#input-section").fill(surveyParcel.Section);
+      await this.page.locator("#input-township").fill(surveyParcel.Township);
+      await this.page.locator("#input-range").fill(surveyParcel.Range);
+    }
+
+    await this.page.getByTestId("search").click();
+  }
+
+  async selectPropertyByProject(project) {
+    await this.page
+      .locator("#input-searchBy")
+      .selectOption({ label: "Project" });
+    await this.page.locator("#typeahead-project").fill("");
+    await this.page.locator("#typeahead-project").fill(project);
+    await this.page.locator("div[id='typeahead-project'] a").click();
+    await this.page.getByTestId("search").click();
+  }
+
   async resetSearch() {
     await this.page.getByTestId("reset-button").click();
   }
 
-  async selectNthSearchResult(index) {
+  async selectNthPMBCSearchResult(index) {
     await this.page
-      .locator(`div[data-testid="search-property-${index}"]`)
+      .locator(`div[data-testid="pmbc-search-results-section"] div[data-testid="search-property-${index}"]`)
+      .click();
+  }
+
+  async selectNthPIMSSearchResult(index) {
+    await this.page
+      .locator(`div[data-testid="pims-search-results-section"] div[data-testid="search-property-${index}"]`)
       .click();
   }
 
@@ -114,6 +160,12 @@ class SearchProperties {
     await this.page
       .locator("div[class='leaflet-pane leaflet-marker-pane'] img")
       .click();
+  }
+
+  async addPropertyToWorklistFromQuickInfo() {
+    await this.page.getByTestId("quick-info-more-options").click();
+    await expect(this.page.locator("div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']")).toBeVisible();
+    await this.page.locator("div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']").click();
   }
 
   async verifySearchControlForm() {
