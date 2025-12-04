@@ -140,7 +140,7 @@ jobs:
           echo ${{ github.event.pull_request.number }} > ./pr/NR
           cp ${{env.working-directory}}/TestResults/coverage.opencover.xml ./pr
 
-      - uses: actions/upload-artifact@ea165f8d6e97d1f4ee2e4b716d54f39b900e94a2 # v4.6.2
+      - uses: actions/upload-artifact@ea165f8d65b6e75b540449e92b4886f43607fa02 # v4.6.2
         if: ${{ env.solution-name == 'PimsUnitTest.sln' }}
         with:
           name: pr-codecov
