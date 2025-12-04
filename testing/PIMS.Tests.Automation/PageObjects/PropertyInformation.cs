@@ -30,7 +30,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Property Information Tabs Elements
         private readonly By propertyInformationTabsTotal = By.CssSelector("nav[role='tablist'] a");
-        private readonly By propertyInformationTitleTab = By.XPath("//a[contains(text(),'Title')]");
+        private readonly By propertyInformationTitleTab = By.CssSelector("a[data-rb-event-key='ltsa']");
         private readonly By propertyInformationValueTab = By.XPath("//a[contains(text(),'Value')]");
 
         //Property Information Header Elements
@@ -45,7 +45,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyInformationHeaderPIDContent = By.XPath("//label[contains(text(),'PID')]/parent::div/following-sibling::div");
         //private readonly By propertyInformationHeaderLandTypeLabel = By.XPath("//button[@title='Zoom into parcel']/parent::div/preceding-sibling::div/div/div/div/label[contains(text(),'Land parcel type')]");
         //private readonly By propertyInformationHeaderLandTypeContent = By.XPath("//button[@title='Zoom into parcel']/parent::div/preceding-sibling::div/div/div/div[2]");
-        private readonly By propertyInformationHeaderZoomBttn = By.CssSelector("button[title='Fit boundaries button']");
+        private readonly By propertyInformationHeaderZoomBttn = By.CssSelector("button[title='Fit boundaries']");
 
         //Title Tab Elements
         private readonly By propertyTitleInfo = By.XPath("//div[contains(text(),'This data was retrieved from LTSA')]");

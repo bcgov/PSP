@@ -14,7 +14,6 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import { Claims, Roles } from '@/constants';
 import * as API from '@/constants/API';
-import { isAcquisitionFile } from '@/features/mapSideBar/acquisition/add/models';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import AcquisitionFileStatusUpdateSolver from '@/features/mapSideBar/acquisition/tabs/fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -25,6 +24,7 @@ import { ApiGen_CodeTypes_LandActTypes } from '@/models/api/generated/ApiGen_Cod
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Take } from '@/models/api/generated/ApiGen_Concepts_Take';
 import { getApiPropertyName, prettyFormatDate, prettyFormatUTCDate } from '@/utils';
+import { isAcquisitionFile } from '@/utils/fileUtils';
 import { booleanToYesNoUnknownString } from '@/utils/formUtils';
 
 import { StyledBorderSection, StyledNoTabSection } from '../styles';

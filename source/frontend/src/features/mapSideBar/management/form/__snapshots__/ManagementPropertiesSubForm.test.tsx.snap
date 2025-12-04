@@ -212,54 +212,54 @@ exports[`ManagementPropertiesSubForm component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c18.c18.btn {
+.c19.c19.btn {
   background-color: unset;
   border: none;
 }
 
-.c18.c18.btn:hover,
-.c18.c18.btn:focus,
-.c18.c18.btn:active {
+.c19.c19.btn:hover,
+.c19.c19.btn:focus,
+.c19.c19.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c18.c18.btn svg {
+.c19.c19.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c18.c18.btn svg:hover {
+.c19.c19.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c18.c18.btn.btn-primary svg {
+.c19.c19.btn.btn-primary svg {
   color: #013366;
 }
 
-.c18.c18.btn.btn-primary svg:hover {
+.c19.c19.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c18.c18.btn.btn-light svg {
+.c19.c19.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c18.c18.btn.btn-light svg:hover {
+.c19.c19.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c18.c18.btn.btn-info svg {
+.c19.c19.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c18.c18.btn.btn-info svg:hover {
+.c19.c19.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c19.c19.btn {
+.c21.c21.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -267,13 +267,13 @@ exports[`ManagementPropertiesSubForm component > renders as expected 1`] = `
   line-height: unset;
 }
 
-.c19.c19.btn .text {
+.c21.c21.btn .text {
   display: none;
 }
 
-.c19.c19.btn:hover,
-.c19.c19.btn:active,
-.c19.c19.btn:focus {
+.c21.c21.btn:hover,
+.c21.c21.btn:active,
+.c21.c21.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -287,9 +287,9 @@ exports[`ManagementPropertiesSubForm component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c19.c19.btn:hover .text,
-.c19.c19.btn:active .text,
-.c19.c19.btn:focus .text {
+.c21.c21.btn:hover .text,
+.c21.c21.btn:active .text,
+.c21.c21.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -366,6 +366,28 @@ exports[`ManagementPropertiesSubForm component > renders as expected 1`] = `
 
 .c13 {
   min-height: 4.5rem;
+}
+
+.c18 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.c20 {
+  padding-left: 1.2rem;
 }
 
 .c3 {
@@ -732,10 +754,10 @@ exports[`ManagementPropertiesSubForm component > renders as expected 1`] = `
             </button>
           </div>
           <div
-            class="pl-3 col-md-1"
+            class="c18 pl-3 col-auto"
           >
             <button
-              class="c11 Button c18 btn btn-primary"
+              class="c11 Button c19 btn btn-primary"
               data-testid="move-pin-location-0"
               title="move-pin-location"
               type="button"
@@ -758,46 +780,46 @@ exports[`ManagementPropertiesSubForm component > renders as expected 1`] = `
                 </svg>
               </div>
             </button>
-          </div>
-          <div
-            class="col-md-1"
-          >
-            <button
-              class="c11 Button c19 btn btn-link"
-              data-testid="delete-property-0"
-              type="button"
+            <div
+              class="c20"
             >
-              <div
-                class="Button__value"
+              <button
+                class="c11 Button c21 btn btn-link"
+                data-testid="delete-property-0"
+                type="button"
               >
-                <svg
-                  fill="currentColor"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div
+                  class="Button__value"
                 >
-                  <title>
-                    remove
-                  </title>
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                  />
-                </svg>
-                 
-                <span
-                  class="text"
-                >
-                  Remove
-                </span>
-              </div>
-            </button>
+                  <svg
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>
+                      remove
+                    </title>
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                   
+                  <span
+                    class="text"
+                  >
+                    Remove
+                  </span>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
         <div
@@ -929,10 +951,10 @@ exports[`ManagementPropertiesSubForm component > renders as expected 1`] = `
             </button>
           </div>
           <div
-            class="pl-3 col-md-1"
+            class="c18 pl-3 col-auto"
           >
             <button
-              class="c11 Button c18 btn btn-primary"
+              class="c11 Button c19 btn btn-primary"
               data-testid="move-pin-location-1"
               title="move-pin-location"
               type="button"
@@ -955,46 +977,46 @@ exports[`ManagementPropertiesSubForm component > renders as expected 1`] = `
                 </svg>
               </div>
             </button>
-          </div>
-          <div
-            class="col-md-1"
-          >
-            <button
-              class="c11 Button c19 btn btn-link"
-              data-testid="delete-property-1"
-              type="button"
+            <div
+              class="c20"
             >
-              <div
-                class="Button__value"
+              <button
+                class="c11 Button c21 btn btn-link"
+                data-testid="delete-property-1"
+                type="button"
               >
-                <svg
-                  fill="currentColor"
-                  height="2rem"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 24 24"
-                  width="2rem"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div
+                  class="Button__value"
                 >
-                  <title>
-                    remove
-                  </title>
-                  <path
-                    d="M0 0h24v24H0z"
-                    fill="none"
-                  />
-                  <path
-                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                  />
-                </svg>
-                 
-                <span
-                  class="text"
-                >
-                  Remove
-                </span>
-              </div>
-            </button>
+                  <svg
+                    fill="currentColor"
+                    height="2rem"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="2rem"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>
+                      remove
+                    </title>
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                    />
+                  </svg>
+                   
+                  <span
+                    class="text"
+                  >
+                    Remove
+                  </span>
+                </div>
+              </button>
+            </div>
           </div>
         </div>
       </div>

@@ -8,6 +8,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Main Menu Elements
         private readonly By managementMainMenu = By.XPath("//div[@data-testid= 'nav-tooltip-management']");
         private readonly By managementMainMenuListViewLink = By.XPath("//a[contains(text(),'Manage Management Files')]");
+        private readonly By managementMainMenuActsListViewLink = By.XPath("//a[contains(text(),'Manage Management Activities')]");
 
         //Management List View - Search Section Elements
         private readonly By searchManagementFileTitle = By.XPath("//h1/div/div/span[contains(text(),'Management Files')]");

@@ -193,6 +193,11 @@ namespace Pims.Api.Models.Concepts.Property
         /// get/set - Property Historical File numbers.
         /// </summary>
         public IList<HistoricalFileNumberModel> HistoricalFileNumbers { get; set; }
+
+        /// <summary>
+        /// get/set - Property tenure cleanup.
+        /// </summary>
+        public IList<PropertyTenureCleanupModel> TenureCleanups { get; set; }
         #endregion
 
         #region Surplus
@@ -201,6 +206,7 @@ namespace Pims.Api.Models.Concepts.Property
         public string SurplusDeclarationComment { get; set; }
 
         public DateOnly SurplusDeclarationDate { get; set; }
+
         #endregion
 
         #endregion

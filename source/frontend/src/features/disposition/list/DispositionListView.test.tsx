@@ -129,6 +129,7 @@ describe('Disposition List View', () => {
             location: null,
             isActive: null,
             rowVersion: null,
+            boundary: null,
           },
         ],
       },

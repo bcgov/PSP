@@ -125,6 +125,16 @@ namespace Pims.Api.Models.Concepts.Lease
         public CodeTypeModel<string> ProgramType { get; set; }
 
         /// <summary>
+        /// get/set - The acquisition file appraisal status type.
+        /// </summary>
+        public CodeTypeModel<string> FileAppraisalStatusTypeCode { get; set; }
+
+        /// <summary>
+        /// get/set - The acquisition file Legal Survey status type.
+        /// </summary>
+        public CodeTypeModel<string> FileLegalSurveyStatusTypeCode { get; set; }
+
+        /// <summary>
         /// get/set - Notes accompanying Lease.
         /// </summary>
         public string ReturnNotes { get; set; }
