@@ -26,18 +26,5 @@
     },
     "Project": "TestProject1402",
     "TotalPropertiesCount": 8
-  },
-  {
-    "Test Case Description": "Strata pop-up testing",
-    "PID": null,
-    "PIN": null,
-    "Address": null,
-    "PlanNumber": "VIS5197",
-    "HistoricalFile": null,
-    "POIName": null,
-    "Coordinates": null,
-    "SurveyParcel": null,
-    "Project": null,
-    "TotalPropertiesCount": 1
   }
 ]
