@@ -25,7 +25,7 @@ export const MapsearchParcelsLayer: React.FunctionComponent = () => {
     [mapFeatureData?.pimsBoundaryFeatures.features],
   );
 
-  const draftBoundaryFeatures = useMemo<FeatureCollection>(() => {
+  const boundaryFeatures = useMemo<FeatureCollection>(() => {
     // ignore properties without a valid boundary
     const validBoundaries = (searchValidBoundaries ?? [])
       .map(pl => pl.geometry)
@@ -36,20 +36,20 @@ export const MapsearchParcelsLayer: React.FunctionComponent = () => {
   }, [searchValidBoundaries]);
 
   const geojsonKeyRef = useRef<string>(uuidv4());
-  const previousBoundaries = usePrevious(draftBoundaryFeatures);
+  const previousBoundaries = usePrevious(boundaryFeatures);
 
   useEffect(() => {
-    if (previousBoundaries !== draftBoundaryFeatures) {
+    if (previousBoundaries !== boundaryFeatures) {
       geojsonKeyRef.current = uuidv4();
     }
-  }, [draftBoundaryFeatures, previousBoundaries]);
+  }, [boundaryFeatures, previousBoundaries]);
 
   return (
     <React.Fragment>
-      {draftBoundaryFeatures?.features?.length > 0 && (
+      {boundaryFeatures?.features?.length > 0 && (
         <GeoJSON
           key={geojsonKeyRef.current}
-          data={draftBoundaryFeatures}
+          data={boundaryFeatures}
           pathOptions={{ color: '#2A81CB', fill: false, dashArray: [12] }}
         ></GeoJSON>
       )}

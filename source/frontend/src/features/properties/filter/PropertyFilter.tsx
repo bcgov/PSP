@@ -63,7 +63,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   }, [defaultFilter, propertyFilter]);
 
   const changeFilter = (values: IPropertyFilter) => {
-    onChange?.(values);
+    onChange?.({ ...values });
   };
 
   const resetFilter = () => {

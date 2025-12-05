@@ -246,7 +246,6 @@ export const useMapSearch = () => {
           findPropertyIdsByProjectTask,
         ]);
 
-        debugger;
         const validPropertyFeatures = properties.features?.filter(feature =>
           projectPropertyIds.includes(feature.properties.PROPERTY_ID),
         );
