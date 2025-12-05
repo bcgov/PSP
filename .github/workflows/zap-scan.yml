@@ -13,7 +13,7 @@ jobs:
       HTML_ZAP_REPORT: zap-report.html
     steps:
       - name: ZAP Scan
-        uses: zaproxy/action-full-scan@v0.2.0
+        uses: zaproxy/action-full-scan@68d7520aa6d6171629a505cef70eb3c3c61ea0cd #v0.2.0
         with:
           target: "https://dev-pims.th.gov.bc.ca/"
           cmd_options: "-r ${{ env.HTML_ZAP_REPORT }} -x ${{ env.ZAP_REPORT }}"
