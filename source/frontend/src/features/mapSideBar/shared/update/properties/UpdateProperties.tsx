@@ -161,7 +161,8 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
     return {
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
-      location: mapLocationFeatureDataset?.location,
+      location:
+        mapLocationFeatureDataset?.location ?? mapLocationFeatureDataset?.fileLocation ?? null,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
       fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
