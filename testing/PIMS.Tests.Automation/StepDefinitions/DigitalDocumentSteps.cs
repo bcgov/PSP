@@ -33,7 +33,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void DocumentTabCreate(string fileType, int rowNumber)
         {
             //Access the documents tab
-            if(fileType == "Management File")
+            if(fileType != "Management Activity")
                 digitalDocumentsTab.NavigateDocumentsTab();
 
             //Verify Initial List View

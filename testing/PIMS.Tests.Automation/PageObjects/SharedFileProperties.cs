@@ -152,10 +152,10 @@ namespace PIMS.Tests.Automation.PageObjects
             while (webDriver.FindElements(propertiesFileConfirmationModal).Count() > 0)
             {
 
-                if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the disposition file that are not in the MoTT Inventory"))
+                if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the disposition file that are not in the MOTT Inventory"))
                 {
                     Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                    Assert.Equal("You have added one or more properties to the disposition file that are not in the MoTT Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
+                    Assert.Equal("You have added one or more properties to the disposition file that are not in the MOTT Inventory. Do you want to proceed?", sharedModals.SecondaryModalContent());
                     sharedModals.SecondaryModalClickOKBttn();
                 }
                 else if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the management file that are not in the MOTT Inventory"))

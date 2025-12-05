@@ -55,7 +55,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementActExtContactsDeleteBttns = By.XPath("//label[contains(text(),'External contacts')]/parent::div/following-sibling::div/div/div/button");
         private readonly By managementActInvolvedPartiesContent = By.XPath("//label[contains(text(),'External contacts')]/parent::div/following-sibling::div/a/span");
         private readonly By managementActDetailsActivityExternalContactsLabel = By.XPath("//label[contains(text(),'External contacts')]");
-        private readonly By managementActDetailsActivityExternalContactsInput = By.XPath("//label[contains(text(),'External contacts')]/parent::div/following-sibling::div/div/div/div/div/div//div[contains(text(),'Select from contacts')]");
+        private readonly By managementActDetailsActivityExternalContactsInput = By.XPath("//label[contains(text(),'External contacts')]/parent::div/following-sibling::div/div/div/div/div/div/div[contains(text(),'Select from contacts')]");
         private readonly By managementActDetailsActivityExternalContactsAddBttn = By.XPath("//label[contains(text(),'External contacts')]/parent::div/following-sibling::div/div/div/div/div/div/button");
         private readonly By managementActDetailsActivityExternalContactsCount = By.XPath("//label[contains(text(),'External contacts')]/parent::div/following-sibling::div/a");
         private readonly By managementActServiceProviderLabel = By.XPath("//label[contains(text(),'Service provider')]");

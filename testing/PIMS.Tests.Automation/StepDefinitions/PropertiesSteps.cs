@@ -53,6 +53,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Search for an invalid Address with the Search Bar
             PopulateSearchProperty(rowNumber);
             searchProperties.SearchProperty(PID: searchProperty.PID);
+
+            //Select founded property
+            searchProperties.SelectFirstPMBCResult();
         }
 
         [StepDefinition(@"I review a Property's Information from row number (.*)")]

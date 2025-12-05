@@ -150,7 +150,11 @@ namespace Pims.Dal.Repositories
                 var field = filter.Sort.FirstOrDefault()?.Split(" ")?.FirstOrDefault();
                 var direction = filter.Sort.FirstOrDefault()?.Split(" ")?.LastOrDefault();
 
-                if (field == "ActivityStatus")
+                if (field == "Description")
+                {
+                    query = direction == "asc" ? query.OrderBy(x => x.Description) : query.OrderByDescending(c => c.Description);
+                }
+                else if (field == "ActivityStatus")
                 {
                     query = direction == "asc" ? query.OrderBy(c => c.MgmtActivityStatusTypeCodeNavigation.Description) : query.OrderByDescending(c => c.MgmtActivityStatusTypeCodeNavigation.Description);
                 }

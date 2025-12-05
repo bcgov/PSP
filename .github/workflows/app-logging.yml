@@ -29,7 +29,7 @@ jobs:
       working-directory: ./openshift/4.0/templates/Logging
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Set ENV variable
         run: |
           if [[ ${{github.event.ref}} == 'refs/heads/test' ]]; then
@@ -47,7 +47,7 @@ jobs:
         run: docker-compose -f docker-compose.yml up -d
         working-directory: ${{env.working-directory}}
       - name: Sleep for 180 seconds
-        uses: jakejarvis/wait-action@master
+        uses: jakejarvis/wait-action@919fc193e07906705e5b7a50f90ea9e74d20b2b0 #v0.1.1
         with:
           time: "180s"
       - name: Check Extracted Logs
