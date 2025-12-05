@@ -2,6 +2,8 @@ import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 
+import { getMockApiProperty } from './properties.mock';
+
 export const getEmptyFileProperty = (): ApiGen_Concepts_FileProperty => {
   return {
     id: 0,
@@ -36,4 +38,23 @@ export const getEmptyLeaseFileProperty = (): ApiGen_Concepts_PropertyLease => {
   };
 
   return a;
+};
+
+export const getMockApiFileProperty = (
+  id = 1,
+  property = getMockApiProperty(),
+): ApiGen_Concepts_FileProperty => {
+  return {
+    id: id,
+    isActive: true,
+    propertyId: property?.id ?? 0,
+    fileId: 1,
+    ...getEmptyBaseAudit(),
+    property: property ?? null,
+    file: null,
+    propertyName: 'Mock Property Name',
+    location: null,
+    boundary: null,
+    displayOrder: 1,
+  };
 };

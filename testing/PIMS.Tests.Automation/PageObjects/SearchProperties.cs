@@ -350,6 +350,12 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(search1stPIMSResult).Click();
         }
 
+        public void SelectFirstPMBCResult()
+        {
+            Wait();
+            webDriver.FindElement(search1stPMBCResult).Click();
+        }
+
         public void NavigatePropertyListView()
         {
             Wait(10000);

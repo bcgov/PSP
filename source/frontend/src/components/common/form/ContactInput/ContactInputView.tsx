@@ -80,12 +80,7 @@ const ContactInputView: React.FunctionComponent<IContactInputViewProps> = ({
               >
                 {text}
                 {isValidString(contactInfo?.id) && canEditDetails && (
-                  <StyledRemoveLinkButton
-                    onClick={() => {
-                      onClear();
-                    }}
-                    title="remove"
-                  >
+                  <StyledRemoveLinkButton onClick={() => onClear()} title="remove">
                     <MdClose size="2rem" />
                   </StyledRemoveLinkButton>
                 )}
