@@ -30,15 +30,21 @@ class WorkLists {
   }
 
   async countItemsOnWorklist() {
-    const countWorklistItems = await this.page.locator("//button[@id='worklistControlButton']/following-sibling::div").textContent();
+    const countWorklistItems = await this.page
+      .locator("//button[@id='worklistControlButton']/following-sibling::div")
+      .textContent();
     return countWorklistItems;
   }
 
   async deleteNthElementWorklist(index) {
-    const propertyItem = await this.page.locator(`div[data-testid='search-property-${index}']`);
+    const propertyItem = await this.page.locator(
+      `div[data-testid='search-property-${index}']`
+    );
     await propertyItem.hover();
 
-    const deleteBttn = await this.page.locator(`div[data-testid='search-property-${index}'] button[title='Delete parcel from list']`);
+    const deleteBttn = await this.page.locator(
+      `div[data-testid='search-property-${index}'] button[title='Delete parcel from list']`
+    );
     await expect(deleteBttn).toBeVisible();
     await deleteBttn.click();
   }

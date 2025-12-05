@@ -59,8 +59,16 @@ class SearchProperties {
       .selectOption({ label: "POI Name" });
     await this.page.getByTestId("geographic-name-input").fill("");
     await this.page.getByTestId("geographic-name-input").fill(poiName);
-    await expect(this.page.locator("input[data-testid='geographic-name-input'] ul[class='suggestionList']")).toBeVisible();
-    await this.page.locator("input[data-testid='geographic-name-input'] ul[class='suggestionList']").click();
+    await expect(
+      this.page.locator(
+        "input[data-testid='geographic-name-input'] ul[class='suggestionList']"
+      )
+    ).toBeVisible();
+    await this.page
+      .locator(
+        "input[data-testid='geographic-name-input'] ul[class='suggestionList']"
+      )
+      .click();
     await this.page.getByTestId("search").click();
   }
 
@@ -102,13 +110,16 @@ class SearchProperties {
     await this.page
       .locator("#input-searchBy")
       .selectOption({ label: "Survey Parcel" });
-    await this.page.locator("input-district").selectOption({ label: surveyParcel.DistrictInput });
+    await this.page
+      .locator("input-district")
+      .selectOption({ label: surveyParcel.DistrictInput });
 
-    if(surveyParcel.DistrictLot != null) {
+    if (surveyParcel.DistrictLot != null) {
       await this.page.locator("#input-radio-district-lot").click();
-      await this.page.locator("#input-districtLot").fill(surveyParcel.DistrictLot);
-    }
-    else {
+      await this.page
+        .locator("#input-districtLot")
+        .fill(surveyParcel.DistrictLot);
+    } else {
       await this.page.locator("#input-section").fill(surveyParcel.Section);
       await this.page.locator("#input-township").fill(surveyParcel.Township);
       await this.page.locator("#input-range").fill(surveyParcel.Range);
@@ -133,13 +144,17 @@ class SearchProperties {
 
   async selectNthPMBCSearchResult(index) {
     await this.page
-      .locator(`div[data-testid="pmbc-search-results-section"] div[data-testid="search-property-${index}"]`)
+      .locator(
+        `div[data-testid="pmbc-search-results-section"] div[data-testid="search-property-${index}"]`
+      )
       .click();
   }
 
   async selectNthPIMSSearchResult(index) {
     await this.page
-      .locator(`div[data-testid="pims-search-results-section"] div[data-testid="search-property-${index}"]`)
+      .locator(
+        `div[data-testid="pims-search-results-section"] div[data-testid="search-property-${index}"]`
+      )
       .click();
   }
 
@@ -164,8 +179,16 @@ class SearchProperties {
 
   async addPropertyToWorklistFromQuickInfo() {
     await this.page.getByTestId("quick-info-more-options").click();
-    await expect(this.page.locator("div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']")).toBeVisible();
-    await this.page.locator("div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']").click();
+    await expect(
+      this.page.locator(
+        "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']"
+      )
+    ).toBeVisible();
+    await this.page
+      .locator(
+        "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']"
+      )
+      .click();
   }
 
   async verifySearchControlForm() {
