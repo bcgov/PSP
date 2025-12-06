@@ -29,7 +29,7 @@ import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/uti
 
 import { SideBarContext } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
-import { PropertyForm } from '../shared/models';
+import { FileForm, PropertyForm } from '../shared/models';
 import usePathGenerator from '../shared/sidebarPathGenerator';
 import { IAcquisitionViewProps } from './AcquisitionView';
 
@@ -315,9 +315,8 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     [getPropertyAssociations, acquisitionFileId],
   );
 
-  const onUpdateProperties = (
-    file: ApiGen_Concepts_File,
-  ): Promise<ApiGen_Concepts_File | undefined> => {
+  const onUpdateProperties = (fileForm: FileForm): Promise<ApiGen_Concepts_File | undefined> => {
+    const file = fileForm.toApi();
     // The backend does not update the product or project so its safe to send nulls even if there might be data for those fields.
     return withUserOverride(
       (userOverrideCodes: UserOverrideCode[]) => {

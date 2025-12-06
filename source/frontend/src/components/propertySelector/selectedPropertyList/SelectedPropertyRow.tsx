@@ -78,7 +78,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
       <StyledRow className="align-items-center mb-3 no-gutters">
         <Col md={3}>
           <div className="mb-0 d-flex align-items-center">
-            {property.isActive === 'false' ? (
+            {property?.isActive === 'false' ? (
               <DisabledDraftCircleNumber text={(index + 1).toString()} />
             ) : (
               <DraftCircleNumber text={(index + 1).toString()} />

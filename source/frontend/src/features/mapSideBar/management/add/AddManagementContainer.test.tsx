@@ -178,7 +178,7 @@ describe('Add Management Container component', () => {
 
     await act(async () => {
       const model = new ManagementFormModel();
-      model.fileProperties = selectedFeatures?.map(sf => PropertyForm.fromLocationFeatureDataset(sf));
+      model.properties = selectedFeatures?.map(sf => PropertyForm.fromLocationFeatureDataset(sf));
       await viewProps?.onSubmit(model, {
         setSubmitting: vi.fn(),
         resetForm: vi.fn(),

@@ -4,9 +4,10 @@ import { Route, Switch, useRouteMatch } from 'react-router-dom';
 
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import { Claims, Roles } from '@/constants';
-import LeaseUpdatePropertySelector from '@/features/leases/shared/propertyPicker/LeaseUpdatePropertySelector';
+import { LeaseFormModel } from '@/features/leases/models';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, stripTrailingSlash } from '@/utils';
 
@@ -18,8 +19,10 @@ import MapSideBarLayout from '../layout/MapSideBarLayout';
 import { InventoryTabNames } from '../property/InventoryTabs';
 import FilePropertyRouter from '../router/FilePropertyRouter';
 import FileMenuView from '../shared/FileMenuView';
+import { FileForm, PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
+import UpdatePropertiesContainer from '../shared/update/properties/UpdatePropertiesContainer';
 import LeaseHeader from './common/LeaseHeader';
 import { LeaseContainerState } from './LeaseContainer';
 import LeaseGenerateContainer from './LeaseGenerateContainer';
@@ -42,6 +45,10 @@ export interface ILeaseViewProps {
   formikRef: React.RefObject<FormikProps<any>>;
   isFormValid: boolean;
   lease?: ApiGen_Concepts_Lease;
+  setIsShowingPropertySelector: (isShowing: boolean) => void;
+  onUpdateProperties: (file: FileForm) => Promise<ApiGen_Concepts_File | undefined>;
+  confirmBeforeAddProperty: (propertyForm: PropertyForm) => Promise<boolean>;
+  canRemoveProperty: (propertyId: number) => Promise<boolean>;
 }
 
 export const LeaseView: React.FunctionComponent<ILeaseViewProps> = ({
@@ -61,6 +68,10 @@ export const LeaseView: React.FunctionComponent<ILeaseViewProps> = ({
   formikRef,
   isFormValid,
   lease,
+  setIsShowingPropertySelector,
+  onUpdateProperties,
+  confirmBeforeAddProperty,
+  canRemoveProperty,
 }) => {
   // match for the current route
   const currentRoute = useRouteMatch();
@@ -74,7 +85,29 @@ export const LeaseView: React.FunctionComponent<ILeaseViewProps> = ({
   return (
     <Switch>
       <Route path={`${stripTrailingSlash(currentRoute.path)}/property/selector`}>
-        {exists(lease) && <LeaseUpdatePropertySelector lease={lease} />}
+        {exists(lease) && (
+          <UpdatePropertiesContainer
+            formFile={LeaseFormModel.fromApi(lease)}
+            setIsShowingPropertySelector={setIsShowingPropertySelector}
+            onSuccess={onPropertyUpdateSuccess}
+            updateFileProperties={onUpdateProperties}
+            confirmBeforeAdd={confirmBeforeAddProperty}
+            confirmBeforeAddMessage={
+              <>
+                <p>
+                  You have selected a property not previously in the inventory. Do you want to add
+                  this property to the lease?
+                </p>
+                <p>Do you want to acknowledge and proceed?</p>
+              </>
+            }
+            canRemove={canRemoveProperty}
+            canUploadShapefiles={false}
+            canReposition={true}
+            formikRef={formikRef}
+            showArea={true}
+          />
+        )}
       </Route>
       <Route>
         <MapSideBarLayout

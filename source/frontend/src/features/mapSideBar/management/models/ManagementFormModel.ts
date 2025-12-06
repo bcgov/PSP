@@ -19,7 +19,7 @@ export class ManagementFormModel implements WithManagementTeam {
   productId: string | null = null;
   fundingTypeCode: string | null = null;
   purposeTypeCode: string | null = null;
-  fileProperties: PropertyForm[] = [];
+  properties: PropertyForm[] = [];
   team: ManagementTeamSubFormModel[] = [];
 
   constructor(
@@ -34,7 +34,7 @@ export class ManagementFormModel implements WithManagementTeam {
   }
 
   toApi(): ApiGen_Concepts_ManagementFile {
-    const fileProperties = this.fileProperties.map(x => this.toPropertyApi(x));
+    const fileProperties = this.properties.map(x => this.toPropertyApi(x));
     const sortedProperties = applyDisplayOrder(fileProperties);
     return {
       id: this.id ?? 0,
@@ -87,7 +87,7 @@ export class ManagementFormModel implements WithManagementTeam {
     managementForm.fileName = model.fileName ?? '';
     managementForm.team =
       model.managementTeam?.map(x => ManagementTeamSubFormModel.fromApi(x)) || [];
-    managementForm.fileProperties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
+    managementForm.properties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
 
     return managementForm;
   }

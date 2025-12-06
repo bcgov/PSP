@@ -66,20 +66,18 @@ export const AddLeaseYupSchema = Yup.object().shape({
   properties: Yup.array().of(
     Yup.object().shape({
       name: Yup.string().max(250, 'Property name must be at most ${max} characters'),
-      property: Yup.object().shape({
-        isRetired: Yup.boolean().when('id', {
-          is: (id: number) => !isValidId(id),
-          then: Yup.boolean().notOneOf(
-            [true],
-            'Selected property is retired and can not be added to the file',
-          ),
-          otherwise: Yup.boolean().nullable(),
-        }),
-        isDisposed: Yup.boolean().notOneOf(
+      isRetired: Yup.boolean().when('id', {
+        is: (id: number) => !isValidId(id),
+        then: Yup.boolean().notOneOf(
           [true],
-          'Selected property is disposed and can not be added to the file',
+          'Selected property is retired and can not be added to the file',
         ),
+        otherwise: Yup.boolean().nullable(),
       }),
+      isDisposed: Yup.boolean().notOneOf(
+        [true],
+        'Selected property is disposed and can not be added to the file',
+      ),
     }),
   ),
   consultations: Yup.array().of(

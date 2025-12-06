@@ -110,7 +110,7 @@ const ManagementForm: React.FC<IManagementFormProps> = props => {
               <PropertiesListContainer
                 verifyCanRemove={(_, verifyCallback) => verifyCallback()}
                 needsConfirmationBeforeAdd={confirmBeforeAdd}
-                properties={formikProps.values.fileProperties}
+                properties={formikProps.values.properties}
               />
             </Section>
 

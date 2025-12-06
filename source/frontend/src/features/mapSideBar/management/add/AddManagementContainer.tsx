@@ -56,10 +56,7 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
 
   const mapMachine = useMapStateMachine();
 
-  const { featuresWithAddresses, isLoading } = usePropertyFormSyncronizer(
-    formikRef,
-    'fileProperties',
-  );
+  const { featuresWithAddresses, isLoading } = usePropertyFormSyncronizer(formikRef, 'properties');
 
   const initialForm = useMemo(() => {
     const managementForm = new ManagementFormModel();

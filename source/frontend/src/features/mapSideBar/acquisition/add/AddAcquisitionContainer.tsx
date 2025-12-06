@@ -41,7 +41,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const { execute: getPropertyAssociations } = usePropertyAssociations();
-  const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
+  const [showFirstTimeConfirmation, setShowFirstTimeConfirmation] = useState<boolean>(true);
 
   const {
     getAcquisitionFile: { execute: getAcquisitionFile, response: parentAcquisitionFile },
@@ -65,7 +65,71 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
 
   const mapMachine = useMapStateMachine();
 
-  const { featuresWithAddresses, isLoading } = usePropertyFormSyncronizer(formikRef, 'properties');
+  //Verifies that the property does not belong to another acquisition file already
+  const confirmProperty = useCallback(
+    async (propertyForm: PropertyForm) => {
+      if (isValidId(propertyForm.apiId)) {
+        const response = await getPropertyAssociations(propertyForm.apiId);
+        const acquisitionAssociations = response?.acquisitionAssociations ?? [];
+        const otherAcqFiles = acquisitionAssociations.filter(a => exists(a.id));
+        return otherAcqFiles.length > 0;
+      } else {
+        // the property is not in PIMS db -> no need to confirm
+        return false;
+      }
+    },
+    [getPropertyAssociations],
+  );
+
+  // Require user confirmation before adding a property to file
+  // This is the flow for Map Marker -> right-click -> create Acquisition File
+  const confirmBeforeAdd = useCallback(
+    async (newPropertyForms: PropertyForm[], isValidCallback: (isValid: boolean) => void) => {
+      const needsConfirmation = await Promise.all(
+        newPropertyForms.map(formProperty => confirmProperty(formProperty)),
+      );
+      if (showFirstTimeConfirmation && needsConfirmation.some(x => x === true)) {
+        setModalContent({
+          variant: 'warning',
+          title: 'User Override Required',
+          message: (
+            <>
+              <p>
+                One or more properties have already been added to one or more acquisition files.
+              </p>
+              <p>Do you want to acknowledge and proceed?</p>
+            </>
+          ),
+          okButtonText: 'Yes',
+          cancelButtonText: 'No',
+          handleOk: () => {
+            // allow the property to be added to the file being created
+            isValidCallback(true);
+            setDisplayModal(false);
+            // show the user confirmation modal only once when creating a file
+            setShowFirstTimeConfirmation(false);
+          },
+          handleCancel: () => {
+            // clear out the properties array as the user did not agree to the popup
+            isValidCallback(false);
+            setDisplayModal(false);
+            // show the user confirmation modal only once when creating a file
+            setShowFirstTimeConfirmation(false);
+          },
+        });
+        setDisplayModal(true);
+      } else {
+        isValidCallback(true);
+      }
+    },
+    [confirmProperty, showFirstTimeConfirmation, setDisplayModal, setModalContent],
+  );
+
+  const { featuresWithAddresses, isLoading } = usePropertyFormSyncronizer(
+    formikRef,
+    'properties',
+    confirmBeforeAdd,
+  );
 
   useEffect(() => {
     if (featuresWithAddresses?.length > 0 && !isSubFile && !formikRef?.current?.values?.region) {
@@ -110,73 +174,6 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
       onClose();
     }
   }, [isSubFile, onClose, parentId]);
-
-  // Warn user that property is part of an existing acquisition file
-  const confirmBeforeAdd = useCallback(
-    async (propertyForm: PropertyForm) => {
-      if (isValidId(propertyForm.apiId)) {
-        const response = await getPropertyAssociations(propertyForm.apiId);
-        const acquisitionAssociations = response?.acquisitionAssociations ?? [];
-        const otherAcqFiles = acquisitionAssociations.filter(a => exists(a.id));
-        return otherAcqFiles.length > 0;
-      } else {
-        // the property is not in PIMS db -> no need to confirm
-        return false;
-      }
-    },
-    [getPropertyAssociations],
-  );
-
-  // Require user confirmation before adding a property to file
-  // This is the flow for Map Marker -> right-click -> create Acquisition File
-  useEffect(() => {
-    const runAsync = async () => {
-      if (exists(initialForm) && exists(formikRef?.current) && needsUserConfirmation) {
-        if (initialForm.properties.length > 0) {
-          // Check all properties for confirmation
-          const needsConfirmation = await Promise.all(
-            initialForm.properties.map(formProperty => confirmBeforeAdd(formProperty)),
-          );
-          if (needsConfirmation.some(confirm => confirm)) {
-            setModalContent({
-              variant: 'warning',
-              title: 'User Override Required',
-              message: (
-                <>
-                  <p>
-                    One or more properties have already been added to one or more acquisition files.
-                  </p>
-                  <p>Do you want to acknowledge and proceed?</p>
-                </>
-              ),
-              okButtonText: 'Yes',
-              cancelButtonText: 'No',
-              handleOk: () => {
-                // allow the property to be added to the file being created
-                formikRef.current.resetForm();
-                formikRef.current.setFieldValue('properties', initialForm.properties);
-                setDisplayModal(false);
-                // show the user confirmation modal only once when creating a file
-                setNeedsUserConfirmation(false);
-              },
-              handleCancel: () => {
-                // clear out the properties array as the user did not agree to the popup
-                initialForm.properties.splice(0, initialForm.properties.length);
-                formikRef.current.resetForm();
-                formikRef.current.setFieldValue('properties', initialForm.properties);
-                setDisplayModal(false);
-                // show the user confirmation modal only once when creating a file
-                setNeedsUserConfirmation(false);
-              },
-            });
-            setDisplayModal(true);
-          }
-        }
-      }
-    };
-
-    runAsync();
-  }, [confirmBeforeAdd, initialForm, needsUserConfirmation, setDisplayModal, setModalContent]);
 
   const checkState = useCallback(() => {
     return (isSubFile || formikRef?.current?.dirty) && !formikRef?.current?.isSubmitting;
@@ -260,7 +257,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
             );
           }}
           validationSchema={AddAcquisitionFileYupSchema}
-          confirmBeforeAdd={confirmBeforeAdd}
+          confirmBeforeAdd={confirmProperty}
         />
       </StyledFormWrapper>
       <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />

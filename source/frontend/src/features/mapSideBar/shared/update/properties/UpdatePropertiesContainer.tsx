@@ -1,6 +1,6 @@
 import axios, { AxiosError } from 'axios';
 import { Formik, FormikProps } from 'formik';
-import { useContext, useRef, useState } from 'react';
+import { useCallback, useContext, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
 import GenericModal from '@/components/common/GenericModal';
@@ -19,20 +19,21 @@ import PropertiesListContainer from './PropertiesListContainer';
 import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 
 export interface IUpdatePropertiesContainerProps {
-  file: ApiGen_Concepts_File;
+  formFile: FileForm;
   setIsShowingPropertySelector: (isShowing: boolean) => void;
   onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   updateFileProperties: (
-    file: ApiGen_Concepts_File,
+    file: FileForm,
     userOverrideCodes: UserOverrideCode[],
   ) => Promise<ApiGen_Concepts_File | undefined>;
   canRemove: (propertyId: number) => Promise<boolean>;
-  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
-  confirmBeforeAddMessage?: React.ReactNode;
+  canAdd: (propertyForm: PropertyForm) => Promise<boolean>;
+  confirmAddMessage: React.ReactNode;
   formikRef?: React.RefObject<FormikProps<any>>;
   showDisabledProperties?: boolean;
   canUploadShapefiles?: boolean;
   canReposition?: boolean;
+  showArea?: boolean;
 }
 
 export const UpdatePropertiesContainer: React.FunctionComponent<
@@ -40,16 +41,49 @@ export const UpdatePropertiesContainer: React.FunctionComponent<
 > = props => {
   const localRef = useRef<FormikProps<FileForm>>(null);
   const formikRef = props.formikRef ? props.formikRef : localRef;
-  const formFile = FileForm.fromApi(props.file);
+  const canAdd = props.canAdd;
+  const confirmAddMessage = props.confirmAddMessage;
 
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
   const [showAssociatedEntityWarning, setShowAssociatedEntityWarning] = useState<boolean>(false);
   const [isValid, setIsValid] = useState<boolean>(true);
-  const { setModalContent, setDisplayModal } = useModalContext();
+  const { setModalContent, setDisplayModal, modalProps } = useModalContext();
   const { resetFilePropertyLocations } = useContext(SideBarContext);
 
-  // Sets the state of the Map FSM to allow to edit properties
-  const { isLoading } = usePropertyFormSyncronizer(formikRef, 'properties');
+  // Require user confirmation before adding a property to file
+  const confirmBeforeAdd = useCallback(
+    async (newPropertyForms: PropertyForm[], isValidCallback: (isValid: boolean) => void) => {
+      const needsConfirmation = await Promise.all(
+        newPropertyForms.map(formProperty => canAdd(formProperty)),
+      );
+      debugger;
+      if (needsConfirmation.some(x => x === true) && !modalProps.display) {
+        setModalContent({
+          variant: 'warning',
+          title: 'User Override Required',
+          message: confirmAddMessage,
+          okButtonText: 'Yes',
+          cancelButtonText: 'No',
+          handleOk: () => {
+            // allow the property to be added to the file being created
+            isValidCallback(true);
+            setDisplayModal(false);
+          },
+          handleCancel: () => {
+            // clear out the properties array as the user did not agree to the popup
+            isValidCallback(false);
+            setDisplayModal(false);
+          },
+        });
+        setDisplayModal(true);
+      } else {
+        isValidCallback(true);
+      }
+    },
+    [modalProps.display, canAdd, setModalContent, confirmAddMessage, setDisplayModal],
+  );
+
+  const { isLoading } = usePropertyFormSyncronizer(formikRef, 'properties', confirmBeforeAdd);
 
   const handleSaveClick = async () => {
     await formikRef?.current?.validateForm();
@@ -96,13 +130,13 @@ export const UpdatePropertiesContainer: React.FunctionComponent<
     props.setIsShowingPropertySelector(false);
   };
 
-  const saveFile = async (file: ApiGen_Concepts_File) => {
+  const saveFile = async (fileForm: FileForm) => {
     try {
-      const response = await props.updateFileProperties(file, []);
+      const response = await props.updateFileProperties(fileForm, []);
 
       formikRef?.current?.setSubmitting(false);
       if (isValidId(response?.id)) {
-        if (file.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
+        if (response.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
           toast.warn(
             'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
             { autoClose: 15000 },
@@ -144,25 +178,22 @@ export const UpdatePropertiesContainer: React.FunctionComponent<
       >
         <Formik<FileForm>
           innerRef={formikRef}
-          initialValues={formFile}
+          initialValues={props.formFile}
           validationSchema={UpdatePropertiesYupSchema}
           onSubmit={async (values: FileForm) => {
-            const file: ApiGen_Concepts_File = values.toApi();
-            await saveFile(file);
+            await saveFile(values);
           }}
         >
           {formikProps => (
-            <>
-              <PropertiesListContainer
-                properties={formikProps.values.properties}
-                verifyCanRemove={onRemoveClick}
-                needsConfirmationBeforeAdd={() => Promise.resolve(true)}
-                canUploadShapefiles={props.canUploadShapefiles}
-                canReposition={props.canReposition}
-                showDisabledProperties={props.showDisabledProperties}
-              />
-              {formikProps.values.properties.length}
-            </>
+            <PropertiesListContainer
+              properties={formikProps.values.properties}
+              verifyCanRemove={onRemoveClick}
+              needsConfirmationBeforeAdd={() => Promise.resolve(true)}
+              canUploadShapefiles={props.canUploadShapefiles}
+              canReposition={props.canReposition}
+              showDisabledProperties={props.showDisabledProperties}
+              showArea={props.showArea}
+            />
           )}
         </Formik>
       </MapSideBarLayout>

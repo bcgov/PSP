@@ -1,7 +1,6 @@
 import { AxiosError } from 'axios';
-import { dequal } from 'dequal';
 import { FormikHelpers, FormikProps } from 'formik';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -13,14 +12,12 @@ import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { useEditPropertiesMode } from '@/hooks/useEditPropertiesMode';
-import { useEnrichWithPimsFeatures } from '@/hooks/useEnrichWithPimsFeatures';
 import { useModalContext } from '@/hooks/useModalContext';
 import { usePropertyFormSyncronizer } from '@/hooks/usePropertyFormSyncronizer';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, firstOrNull, isValidId } from '@/utils';
+import { exists, isValidId } from '@/utils';
 
 import { useAddLease } from '../hooks/useAddLease';
 import { getDefaultFormLease, LeaseFormModel } from '../models';
@@ -44,59 +41,20 @@ export const AddLeaseContainer: React.FunctionComponent<
   const {
     addLease: { execute: addLease, loading: addLeaseLoading },
   } = useAddLease();
-  const {
-    datasets,
-    loading: pimsFeatureLoading,
-    enrichWithPimsFeatures,
-  } = useEnrichWithPimsFeatures();
 
   const [isValid, setIsValid] = useState<boolean>(true);
 
   // Support creating a new lease file from the worklist/quick-info
   const mapMachine = useMapStateMachine();
-  const selectedFeatureDatasets = mapMachine.locationFeaturesForAddition;
-  const prevSelectedRef = useRef<typeof mapMachine.locationFeaturesForAddition>();
-  const processCreation = mapMachine.processLocationFeaturesAddition;
-
-  useEditPropertiesMode();
 
   // track whether we've already shown the confirmation modal for this session
   const hasWarnedRef = useRef(false);
 
-  // Enrich selected features with PIMS features
-  // This will add pimsFeature to each SelectedFeatureDataset if it exists
-  useEffect(() => {
-    if (
-      selectedFeatureDatasets?.length > 0 &&
-      !dequal(prevSelectedRef.current, selectedFeatureDatasets)
-    ) {
-      hasWarnedRef.current = false; // reset the warning for new selection
-      prevSelectedRef.current = selectedFeatureDatasets;
-      enrichWithPimsFeatures(selectedFeatureDatasets);
-    }
-  }, [selectedFeatureDatasets, enrichWithPimsFeatures]);
-
   // Get PropertyForms with addresses for all selected features
   const { featuresWithAddresses, isLoading } = usePropertyFormSyncronizer(formikRef, 'properties');
 
-  const initialForm = useMemo<LeaseFormModel>(() => {
-    const leaseForm = getDefaultFormLease();
+  const initialForm = getDefaultFormLease();
 
-    if (featuresWithAddresses?.length > 0) {
-      // auto-select file region based upon the location of the property
-      const firstProperty = firstOrNull(
-        featuresWithAddresses?.map(f => PropertyForm.fromLocationFeatureDataset(f.feature)),
-      );
-      if (exists(firstProperty)) {
-        leaseForm.regionId =
-          firstProperty?.regionName !== 'Cannot determine'
-            ? firstProperty?.region?.toString()
-            : undefined;
-      }
-    }
-
-    return leaseForm;
-  }, [featuresWithAddresses]);
   const confirmBeforeAdd = useCallback(
     async (propertyForm: PropertyForm) => !isValidId(propertyForm?.apiId),
     [],
@@ -105,10 +63,13 @@ export const AddLeaseContainer: React.FunctionComponent<
   // Require user confirmation before adding non-inventory properties to a lease.
   useEffect(() => {
     const runAsync = async () => {
-      if (exists(initialForm.properties) && exists(formikRef.current) && !hasWarnedRef.current) {
+      const incomingProperties =
+        featuresWithAddresses?.map(f => PropertyForm.fromLocationFeatureDataset(f.feature)) ?? [];
+
+      if (exists(incomingProperties) && exists(formikRef.current) && !hasWarnedRef.current) {
         // Check all properties for confirmation
-        const needsConfirmation = await Promise.all(
-          initialForm.properties.map(formProperty => confirmBeforeAdd(formProperty?.property)),
+        const needsConfirmation = incomingProperties.some(
+          async feature => await confirmBeforeAdd(feature),
         );
         if (needsConfirmation) {
           hasWarnedRef.current = true; // mark as shown
@@ -138,7 +99,13 @@ export const AddLeaseContainer: React.FunctionComponent<
     };
 
     runAsync();
-  }, [confirmBeforeAdd, initialForm.properties, setDisplayModal, setModalContent]);
+  }, [
+    confirmBeforeAdd,
+    featuresWithAddresses,
+    initialForm.properties,
+    setDisplayModal,
+    setModalContent,
+  ]);
 
   const saveLeaseFile = async (
     leaseFormModel: LeaseFormModel,
@@ -154,7 +121,6 @@ export const AddLeaseContainer: React.FunctionComponent<
         handleSuccess(response);
       }
     } finally {
-      mapMachine.processLocationFeaturesAddition();
       formikHelpers.setSubmitting(false);
     }
   };
@@ -190,7 +156,7 @@ export const AddLeaseContainer: React.FunctionComponent<
     return formikRef?.current?.dirty && !formikRef?.current?.isSubmitting;
   }, [formikRef]);
 
-  const loading = addLeaseLoading || isLoading || pimsFeatureLoading;
+  const loading = addLeaseLoading || isLoading;
 
   return (
     <MapSideBarLayout

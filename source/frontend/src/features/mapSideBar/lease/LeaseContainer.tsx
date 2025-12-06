@@ -1,3 +1,4 @@
+import { AxiosError } from 'axios';
 import { FormikProps } from 'formik';
 import React, {
   useCallback,
@@ -8,7 +9,8 @@ import React, {
   useRef,
   useState,
 } from 'react';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useRouteMatch } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import * as Yup from 'yup';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -29,13 +31,18 @@ import LeaseStakeholderContainer from '@/features/leases/detail/LeasePages/stake
 import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import { isLeaseFile, LeaseFormModel } from '@/features/leases/models';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
+import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useQuery } from '@/hooks/use-query';
+import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { exists } from '@/utils';
+import { UserOverrideCode } from '@/models/api/UserOverrideCode';
+import { exists, isValidId } from '@/utils';
 
 import { SideBarContext } from '../context/sidebarContext';
+import { PropertyForm } from '../shared/models';
 import usePathGenerator from '../shared/sidebarPathGenerator';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
 import { ILeaseViewProps } from './LeaseView';
@@ -211,9 +218,14 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   } = useContext(SideBarContext);
 
   const query = useQuery();
+  const match = useRouteMatch();
   const history = useHistory();
   const [isValid, setIsValid] = useState<boolean>(true);
   const { setModalContent, setDisplayModal } = useModalContext();
+
+  const withUserOverride = useApiUserOverride<
+    (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
+  >('Failed to update Lease File');
 
   const pathSolver = usePathGenerator();
 
@@ -223,6 +235,8 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   const {
     getLastUpdatedBy: { execute: getLastUpdatedBy, loading: getLastUpdatedByLoading },
   } = useLeaseRepository();
+
+  const { updateLeaseProperties } = usePropertyLeaseRepository();
 
   const lease: ApiGen_Concepts_Lease | null = isLeaseFile(file) ? file : null;
 
@@ -373,7 +387,6 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       } else {
         query.delete('edit');
       }
-
       setContainerState({
         isEditing: value,
       });
@@ -386,14 +399,69 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     setIsPropertyEditing(query.get('edit') === 'true');
   }, [query, setIsPropertyEditing]);
 
-  const onPropertyUpdate = () => {
+  const onSuccess = () => {
     setIsPropertyEditing(false);
     refresh();
   };
 
+  const closePropertySelector = () => {
+    onSuccess();
+    history.push(`${match.url}`);
+  };
+
+  /*
+  useEffect(() => {
+    setIsPropertyEditing(query.get('edit') === 'true');
+  }, [query, setIsPropertyEditing]);
+  */
+
+  const confirmBeforeAdd = async (propertyForm: PropertyForm): Promise<boolean> => {
+    return !isValidId(propertyForm.apiId);
+  };
+
+  const onUpdateProperties = async (updatedFormFile: LeaseFormModel) => {
+    return withUserOverride(
+      (userOverrideCodes: UserOverrideCode[]) => {
+        const updatedFile = LeaseFormModel.toApi(updatedFormFile);
+        return updateLeaseProperties
+          .execute(updatedFile, userOverrideCodes)
+          .then(async response => {
+            formikRef.current?.setSubmitting(false);
+            if (isValidId(response?.id)) {
+              if (
+                updatedFile.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)
+              ) {
+                toast.warn(
+                  'Address could not be retrieved for this property, it will have to be provided manually in property details tab',
+                  { autoClose: 15000 },
+                );
+              }
+              formikRef.current?.resetForm();
+              closePropertySelector();
+            }
+          });
+      },
+      [],
+      (axiosError: AxiosError<IApiError>) => {
+        setModalContent({
+          variant: 'error',
+          title: 'Error',
+          message: axiosError?.response?.data.error,
+          okButtonText: 'Close',
+          handleOk: async () => {
+            formikRef.current?.resetForm();
+            await getCompleteLease();
+            setDisplayModal(false);
+          },
+        });
+        setDisplayModal(true);
+      },
+    );
+  };
+
   // UI components
   if (loading || getLastUpdatedByLoading) {
-    return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
+    return <LoadingBackdrop show={true} parentScreen={true} />;
   }
 
   return (
@@ -405,7 +473,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       onSelectFileSummary={onSelectFileSummary}
       onSelectProperty={onSelectProperty}
       onEditProperties={onEditProperties}
-      onPropertyUpdateSuccess={onPropertyUpdate}
+      onPropertyUpdateSuccess={onSuccess}
       onChildSuccess={onChildSuccess}
       refreshLease={refresh}
       setLease={setLease}
@@ -414,7 +482,11 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       setContainerState={setContainerState}
       isFormValid={isValid}
       lease={lease}
-    ></View>
+      setIsShowingPropertySelector={closePropertySelector}
+      onUpdateProperties={onUpdateProperties}
+      confirmBeforeAddProperty={confirmBeforeAdd}
+      canRemoveProperty={() => Promise.resolve(true)}
+    />
   );
 };
 
