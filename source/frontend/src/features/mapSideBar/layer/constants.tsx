@@ -64,7 +64,6 @@ export const getDynamicFeatureConfig: (feature: Feature) => ContentConfig = (fea
   */
   const config: ContentConfig = {};
   Object.keys(feature.properties).forEach(key => {
-    console.log(key);
     config[key] = {
       label: key.charAt(0).toUpperCase() + key.slice(1).toLowerCase().replaceAll('_', ' '),
       display: (data: { [key: string]: any }) => data[key],

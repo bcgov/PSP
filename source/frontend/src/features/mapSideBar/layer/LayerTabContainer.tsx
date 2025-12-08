@@ -59,7 +59,6 @@ function buildLayerData({
   group?: string;
 }): LayerData[] {
   if (!exists(features) || !features?.length) return [];
-  console.log('features', features);
   return features.map((feature, index) => ({
     title: (
       <>

@@ -33,7 +33,6 @@ export const LayerContent: React.FC<React.PropsWithChildren<IContentProps>> = ({
   data,
 }) => {
   const rows = React.useMemo(() => keys(config), [config]);
-  console.log(data);
   return (
     <StyledFormSection>
       {rows === undefined || rows.length === 0 ? (
