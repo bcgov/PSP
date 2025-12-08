@@ -13,17 +13,17 @@ import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_Fil
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { isValidId } from '@/utils';
 
-import { FileForm, PropertyForm } from '../../models';
+import { FileForm, PropertyForm, WithFormProperties } from '../../models';
 import SidebarFooter from '../../SidebarFooter';
 import PropertiesListContainer from './PropertiesListContainer';
 import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 
 export interface IUpdatePropertiesContainerProps {
-  formFile: FileForm;
+  formFile: WithFormProperties;
   setIsShowingPropertySelector: (isShowing: boolean) => void;
   onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
   updateFileProperties: (
-    file: FileForm,
+    file: WithFormProperties,
     userOverrideCodes: UserOverrideCode[],
   ) => Promise<ApiGen_Concepts_File | undefined>;
   canRemove: (propertyId: number) => Promise<boolean>;
@@ -52,11 +52,13 @@ export const UpdatePropertiesContainer: React.FunctionComponent<
 
   // Require user confirmation before adding a property to file
   const confirmBeforeAdd = useCallback(
-    async (newPropertyForms: PropertyForm[], isValidCallback: (isValid: boolean) => void) => {
+    async (
+      newPropertyForms: PropertyForm[],
+      isValidCallback: (isValid: boolean, newProperties: PropertyForm[]) => void,
+    ) => {
       const needsConfirmation = await Promise.all(
         newPropertyForms.map(formProperty => canAdd(formProperty)),
       );
-      debugger;
       if (needsConfirmation.some(x => x === true) && !modalProps.display) {
         setModalContent({
           variant: 'warning',
@@ -66,24 +68,24 @@ export const UpdatePropertiesContainer: React.FunctionComponent<
           cancelButtonText: 'No',
           handleOk: () => {
             // allow the property to be added to the file being created
-            isValidCallback(true);
+            isValidCallback(true, newPropertyForms);
             setDisplayModal(false);
           },
           handleCancel: () => {
             // clear out the properties array as the user did not agree to the popup
-            isValidCallback(false);
+            isValidCallback(false, []);
             setDisplayModal(false);
           },
         });
         setDisplayModal(true);
       } else {
-        isValidCallback(true);
+        isValidCallback(true, newPropertyForms);
       }
     },
     [modalProps.display, canAdd, setModalContent, confirmAddMessage, setDisplayModal],
   );
 
-  const { isLoading } = usePropertyFormSyncronizer(formikRef, 'properties', confirmBeforeAdd);
+  const { isLoading } = usePropertyFormSyncronizer(formikRef, confirmBeforeAdd);
 
   const handleSaveClick = async () => {
     await formikRef?.current?.validateForm();
@@ -176,7 +178,7 @@ export const UpdatePropertiesContainer: React.FunctionComponent<
           />
         }
       >
-        <Formik<FileForm>
+        <Formik<WithFormProperties>
           innerRef={formikRef}
           initialValues={props.formFile}
           validationSchema={UpdatePropertiesYupSchema}
@@ -188,7 +190,6 @@ export const UpdatePropertiesContainer: React.FunctionComponent<
             <PropertiesListContainer
               properties={formikProps.values.properties}
               verifyCanRemove={onRemoveClick}
-              needsConfirmationBeforeAdd={() => Promise.resolve(true)}
               canUploadShapefiles={props.canUploadShapefiles}
               canReposition={props.canReposition}
               showDisabledProperties={props.showDisabledProperties}

@@ -12,7 +12,6 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 
-import { PropertyForm } from '../../shared/models';
 import PropertiesListContainer from '../../shared/update/properties/PropertiesListContainer';
 import { AddManagementFormYupSchema } from '../models/AddManagementFormYupSchema';
 import { ManagementFormModel } from '../models/ManagementFormModel';
@@ -25,11 +24,10 @@ export interface IManagementFormProps {
     values: ManagementFormModel,
     formikHelpers: FormikHelpers<ManagementFormModel>,
   ) => void | Promise<any>;
-  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
 const ManagementForm: React.FC<IManagementFormProps> = props => {
-  const { initialValues, onSubmit, confirmBeforeAdd, formikRef } = props;
+  const { initialValues, onSubmit, formikRef } = props;
 
   const [projectProducts, setProjectProducts] = useState<ApiGen_Concepts_Product[] | undefined>(
     undefined,
@@ -109,7 +107,6 @@ const ManagementForm: React.FC<IManagementFormProps> = props => {
             <Section header="Properties to include in this file:">
               <PropertiesListContainer
                 verifyCanRemove={(_, verifyCallback) => verifyCallback()}
-                needsConfirmationBeforeAdd={confirmBeforeAdd}
                 properties={formikProps.values.properties}
               />
             </Section>

@@ -12,7 +12,6 @@ import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
-import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/utils';
@@ -21,6 +20,7 @@ import { SideBarContext } from '../context/sidebarContext';
 import { PropertyForm } from '../shared/models';
 import usePathGenerator from '../shared/sidebarPathGenerator';
 import { IDispositionViewProps } from './DispositionView';
+import { DispositionFormModel } from './models/DispositionFormModel';
 
 export interface IDispositionContainerProps {
   dispositionFileId: number;
@@ -245,7 +245,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
   };
 
   const onUpdateProperties = (
-    file: ApiGen_Concepts_File,
+    file: DispositionFormModel,
   ): Promise<ApiGen_Concepts_File | undefined> => {
     // The backend does not update the product or project so its safe to send nulls even if there might be data for those fields.
     return withUserOverride(
@@ -253,7 +253,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         return updateDispositionProperties
           .execute(
             {
-              ...(file as ApiGen_Concepts_DispositionFile),
+              ...file.toApi(),
               productId: null,
               projectId: null,
               fileChecklistItems: [],
@@ -358,7 +358,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
             : undefined
         }
         isEditing={isEditing}
-      ></View>
+      />
     </>
   );
 };

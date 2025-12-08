@@ -409,12 +409,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     history.push(`${match.url}`);
   };
 
-  /*
-  useEffect(() => {
-    setIsPropertyEditing(query.get('edit') === 'true');
-  }, [query, setIsPropertyEditing]);
-  */
-
+  // Properties that are not in PIMS need confirmation
   const confirmBeforeAdd = async (propertyForm: PropertyForm): Promise<boolean> => {
     return !isValidId(propertyForm.apiId);
   };

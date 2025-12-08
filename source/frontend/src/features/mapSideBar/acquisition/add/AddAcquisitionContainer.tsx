@@ -41,12 +41,14 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const { execute: getPropertyAssociations } = usePropertyAssociations();
-  const [showFirstTimeConfirmation, setShowFirstTimeConfirmation] = useState<boolean>(true);
+  const [needsFirstTimeConfirmation, setNeedsFirstTimeConfirmation] = useState<boolean>(true);
 
   const {
     getAcquisitionFile: { execute: getAcquisitionFile, response: parentAcquisitionFile },
     addAcquisitionFile: { execute: addAcquisitionFile, loading: addAcquisitionFileLoading },
   } = useAcquisitionProvider();
+
+  const mapMachine = useMapStateMachine();
 
   // Check for parent acquisition file id for sub-files
   const params = useQuery();
@@ -62,8 +64,6 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
 
     fetchParentFile();
   }, [getAcquisitionFile, parentAcquisitionFile, parentId]);
-
-  const mapMachine = useMapStateMachine();
 
   //Verifies that the property does not belong to another acquisition file already
   const confirmProperty = useCallback(
@@ -82,13 +82,17 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   );
 
   // Require user confirmation before adding a property to file
-  // This is the flow for Map Marker -> right-click -> create Acquisition File
   const confirmBeforeAdd = useCallback(
-    async (newPropertyForms: PropertyForm[], isValidCallback: (isValid: boolean) => void) => {
+    async (
+      newPropertyForms: PropertyForm[],
+      isValidCallback: (isValid: boolean, newProperties: PropertyForm[]) => void,
+    ) => {
       const needsConfirmation = await Promise.all(
         newPropertyForms.map(formProperty => confirmProperty(formProperty)),
       );
-      if (showFirstTimeConfirmation && needsConfirmation.some(x => x === true)) {
+      if (needsFirstTimeConfirmation && needsConfirmation.some(x => x === true)) {
+        // show the user confirmation modal only once when creating a file
+        setNeedsFirstTimeConfirmation(false);
         setModalContent({
           variant: 'warning',
           title: 'User Override Required',
@@ -104,30 +108,24 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
           cancelButtonText: 'No',
           handleOk: () => {
             // allow the property to be added to the file being created
-            isValidCallback(true);
+            isValidCallback(true, newPropertyForms);
             setDisplayModal(false);
-            // show the user confirmation modal only once when creating a file
-            setShowFirstTimeConfirmation(false);
           },
           handleCancel: () => {
-            // clear out the properties array as the user did not agree to the popup
-            isValidCallback(false);
+            isValidCallback(false, []);
             setDisplayModal(false);
-            // show the user confirmation modal only once when creating a file
-            setShowFirstTimeConfirmation(false);
           },
         });
         setDisplayModal(true);
       } else {
-        isValidCallback(true);
+        isValidCallback(true, newPropertyForms);
       }
     },
-    [confirmProperty, showFirstTimeConfirmation, setDisplayModal, setModalContent],
+    [confirmProperty, needsFirstTimeConfirmation, setDisplayModal, setModalContent],
   );
 
   const { featuresWithAddresses, isLoading } = usePropertyFormSyncronizer(
     formikRef,
-    'properties',
     confirmBeforeAdd,
   );
 
@@ -211,7 +209,6 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         handleSuccess(response);
       }
     } finally {
-      mapMachine.processLocationFeaturesAddition();
       formikHelpers?.setSubmitting(false);
     }
   };
@@ -257,7 +254,6 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
             );
           }}
           validationSchema={AddAcquisitionFileYupSchema}
-          confirmBeforeAdd={confirmProperty}
         />
       </StyledFormWrapper>
       <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />

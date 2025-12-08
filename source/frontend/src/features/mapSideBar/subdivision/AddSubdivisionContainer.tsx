@@ -37,6 +37,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
   const selectedFeatureDataset = firstOrNull(mapMachine.locationFeaturesForAddition);
   const { setModalContent, setDisplayModal } = useModalContext();
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   const {
     addPropertyOperationApi: { execute: addPropertyOperation, loading },
@@ -58,7 +59,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
 
     async function loadInitialProperty() {
       // support creating a new subdivision from the map popup
-      if (selectedFeatureDataset !== null) {
+      if (selectedFeatureDataset !== null && isFirstLoad) {
         const propertyForm = PropertyForm.fromLocationFeatureDataset(selectedFeatureDataset);
         if (isValidString(propertyForm.pid)) {
           // TODO: This should work with multiple properties
@@ -72,8 +73,9 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
           setInitialForm(subdivisionFormModel);
         }
       }
+      setIsFirstLoad(false);
     }
-  }, [selectedFeatureDataset, getAddress]);
+  }, [selectedFeatureDataset, getAddress, isFirstLoad]);
 
   useEffect(() => {
     if (exists(initialForm) && exists(formikRef.current)) {

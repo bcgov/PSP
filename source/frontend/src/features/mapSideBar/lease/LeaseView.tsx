@@ -91,8 +91,13 @@ export const LeaseView: React.FunctionComponent<ILeaseViewProps> = ({
             setIsShowingPropertySelector={setIsShowingPropertySelector}
             onSuccess={onPropertyUpdateSuccess}
             updateFileProperties={onUpdateProperties}
-            confirmBeforeAdd={confirmBeforeAddProperty}
-            confirmBeforeAddMessage={
+            canRemove={canRemoveProperty}
+            canUploadShapefiles={false}
+            canReposition={true}
+            formikRef={formikRef}
+            showArea={true}
+            canAdd={confirmBeforeAddProperty}
+            confirmAddMessage={
               <>
                 <p>
                   You have selected a property not previously in the inventory. Do you want to add
@@ -101,11 +106,6 @@ export const LeaseView: React.FunctionComponent<ILeaseViewProps> = ({
                 <p>Do you want to acknowledge and proceed?</p>
               </>
             }
-            canRemove={canRemoveProperty}
-            canUploadShapefiles={false}
-            canReposition={true}
-            formikRef={formikRef}
-            showArea={true}
           />
         )}
       </Route>

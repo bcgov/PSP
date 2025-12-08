@@ -1,10 +1,10 @@
 import { FormikProps, getIn } from 'formik';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect } from 'react';
 import { toast } from 'react-toastify';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
-import { PropertyForm } from '@/features/mapSideBar/shared/models';
+import { PropertyForm, WithFormProperties } from '@/features/mapSideBar/shared/models';
 import { exists, isEmptyOrNull } from '@/utils';
 import { arePropertyFormsEqual } from '@/utils/mapPropertyUtils';
 
@@ -15,12 +15,11 @@ import { useLocationFeatureDatasetsWithAddresses } from './useLocationFeatureDat
  * Notifies the map state machine to enter/exit edit properties mode.
  * Use this hook in any component that needs to toggle edit properties mode on mount/unmount.
  */
-export function usePropertyFormSyncronizer<T extends { [key: string]: any }>(
+export function usePropertyFormSyncronizer<T extends WithFormProperties>(
   formikRef: React.RefObject<FormikProps<T>>,
-  fieldName: keyof T,
   validateNewProperties: (
     newProperties: PropertyForm[],
-    validateCallback: (isValid: boolean) => void,
+    validateCallback: (isValid: boolean, newProperties: PropertyForm[]) => void,
   ) => void,
   overrideFeatures?: LocationFeatureDataset[],
 ) {
@@ -34,26 +33,21 @@ export function usePropertyFormSyncronizer<T extends { [key: string]: any }>(
   const { locationFeaturesWithAddresses: featuresWithAddresses, bcaLoading } =
     useLocationFeatureDatasetsWithAddresses(overrideFeatures ?? locationFeaturesForAddition);
 
-  const [pendingConfirmation, setPendingConfirmation] = useState<PropertyForm[] | null>(null);
-
   // if we are listening to property add notifications we must tell the state machine we are in edit mode.
   useEditPropertiesMode();
 
+  const fieldName = 'properties';
+
   const validationCallback = useCallback(
-    (isValid: boolean) => {
-      debugger;
-      if (isValid && !isEmptyOrNull(pendingConfirmation)) {
-        const existingProperties = getIn(formikRef?.current?.values, fieldName as string) ?? [];
-        formikRef.current?.setFieldValue(fieldName as string, [
-          ...existingProperties,
-          ...pendingConfirmation,
-        ]);
-        formikRef.current?.setFieldTouched(fieldName as string, true);
-        toast.success(`Added ${pendingConfirmation.length} new property(s) to the file.`);
+    (isValid: boolean, newProperties: PropertyForm[]) => {
+      if (isValid && !isEmptyOrNull(newProperties)) {
+        const existingProperties = getIn(formikRef?.current?.values, fieldName) ?? [];
+        formikRef.current?.setFieldValue(fieldName, [...existingProperties, ...newProperties]);
+        formikRef.current?.setFieldTouched(fieldName, true);
+        toast.success(`Added ${newProperties.length} new property(s) to the file.`);
       }
-      setPendingConfirmation(null);
     },
-    [fieldName, formikRef, pendingConfirmation],
+    [fieldName, formikRef],
   );
 
   // This effect willbe called whenever there are new locations pending addition.
@@ -83,7 +77,6 @@ export function usePropertyFormSyncronizer<T extends { [key: string]: any }>(
 
       // If there are unique properties request a confirmation
       if (uniqueNewProperties.length > 0) {
-        setPendingConfirmation(uniqueNewProperties);
         validateNewProperties(uniqueNewProperties, validationCallback);
       }
       if (duplicatesSkipped > 0) {

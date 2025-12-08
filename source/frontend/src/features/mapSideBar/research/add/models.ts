@@ -3,10 +3,10 @@ import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/Api
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { applyDisplayOrder } from '@/utils';
 
-import { PropertyForm } from '../../shared/models';
+import { PropertyForm, WithFormProperties } from '../../shared/models';
 import { ResearchFileProjectFormModel } from '../common/models';
 
-export class ResearchForm {
+export class ResearchForm implements WithFormProperties {
   public id?: number;
   public name: string;
   public properties: PropertyForm[];

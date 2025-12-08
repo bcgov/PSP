@@ -13,7 +13,6 @@ import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
-import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/utils';
 
@@ -22,6 +21,7 @@ import { FileTabType } from '../shared/detail/FileTabs';
 import { PropertyForm } from '../shared/models';
 import usePathGenerator from '../shared/sidebarPathGenerator';
 import { IManagementViewProps } from './ManagementView';
+import { ManagementFormModel } from './models/ManagementFormModel';
 
 export interface IManagementContainerProps {
   managementFileId: number;
@@ -241,7 +241,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
   };
 
   const onUpdateProperties = (
-    file: ApiGen_Concepts_File,
+    file: ManagementFormModel,
   ): Promise<ApiGen_Concepts_File | undefined> => {
     // The backend does not update the product or project so its safe to send nulls even if there might be data for those fields.
     return withUserOverride(
@@ -249,7 +249,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
         return updateManagementProperties
           .execute(
             {
-              ...(file as ApiGen_Concepts_ManagementFile),
+              ...file.toApi(),
               productId: null,
               projectId: null,
               fileStatusTypeCode: null,
@@ -320,7 +320,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
         onSelectFileSummary={onSelectFileSummary}
         onSelectProperty={onSelectProperty}
         onEditProperties={onEditProperties}
-        onUpdateProperties={onUpdateProperties}
+        updateFileProperties={onUpdateProperties}
         onSuccess={onSuccess}
         confirmBeforeAdd={confirmBeforeAdd}
         canRemove={canRemove}

@@ -24,7 +24,6 @@ import AddPropertiesGuide from './AddPropertiesGuide';
 export interface IPropertiesListContainerProps {
   properties: PropertyForm[];
   verifyCanRemove: (propertyId: number, removeCallback: () => void) => void;
-  needsConfirmationBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   confirmBeforeAddMessage?: React.ReactNode;
   showDisabledProperties?: boolean;
   canUploadShapefiles?: boolean;

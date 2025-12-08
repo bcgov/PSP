@@ -39,6 +39,7 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
   const selectedFeatureDataset = mapMachine.mapLocationFeatureDataset;
   const { setModalContent, setDisplayModal } = useModalContext();
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   const {
     addPropertyOperationApi: { execute: addPropertyOperation, loading },
@@ -60,7 +61,7 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
     loadInitialProperty();
 
     async function loadInitialProperty() {
-      if (selectedFeatureDataset !== null) {
+      if (selectedFeatureDataset !== null && isFirstLoad) {
         const propertyForm = PropertyForm.fromLocationFeatureDataset(selectedFeatureDataset);
         if (isValidString(propertyForm.pid)) {
           const pimsFeature = firstOrNull(selectedFeatureDataset.pimsFeatures);
@@ -74,8 +75,9 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
           setInitialForm(consolidationFormModel);
         }
       }
+      setIsFirstLoad(false);
     }
-  }, [selectedFeatureDataset, getAddress]);
+  }, [selectedFeatureDataset, getAddress, isFirstLoad]);
 
   useEffect(() => {
     if (exists(initialForm) && exists(formikRef.current)) {

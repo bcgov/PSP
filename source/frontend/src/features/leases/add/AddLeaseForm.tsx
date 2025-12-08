@@ -2,7 +2,6 @@ import { Formik, FormikHelpers, FormikProps } from 'formik';
 import styled from 'styled-components';
 
 import { Section } from '@/components/common/Section/Section';
-import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import PropertiesListContainer from '@/features/mapSideBar/shared/update/properties/PropertiesListContainer';
 
 import { LeaseFormModel } from '../models';
@@ -22,14 +21,12 @@ export interface IAddLeaseFormProps {
   formikRef: React.Ref<FormikProps<LeaseFormModel>>;
   /** Initial values of the form */
   initialValues: LeaseFormModel;
-  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
 const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFormProps>> = ({
   onSubmit,
   formikRef,
   initialValues,
-  confirmBeforeAdd,
 }) => {
   return (
     <StyledFormWrapper>
@@ -51,7 +48,6 @@ const AddLeaseForm: React.FunctionComponent<React.PropsWithChildren<IAddLeaseFor
               <PropertiesListContainer
                 properties={formikProps.values.properties}
                 verifyCanRemove={(_, callback) => callback()}
-                needsConfirmationBeforeAdd={confirmBeforeAdd}
                 showArea
               />
             </Section>

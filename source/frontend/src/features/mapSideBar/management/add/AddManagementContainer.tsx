@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
@@ -32,14 +32,16 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
   const formikRef = useRef<FormikProps<ManagementFormModel>>(null);
   const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
-  const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
+  const [needsFirstTimeConfirmation, setNeedsFirstTimeConfirmation] = useState<boolean>(true);
+  const mapMachine = useMapStateMachine();
+  const initialForm = new ManagementFormModel();
 
   const {
     addManagementFileApi: { execute: addManagementFileApi, loading },
   } = useManagementFileRepository();
 
   // Warn user that property is part of an existing management file
-  const confirmBeforeAdd = useCallback(
+  const confirmProperty = useCallback(
     async (propertyForm: PropertyForm): Promise<boolean> => {
       if (isValidId(propertyForm.apiId)) {
         const response = await getPropertyAssociations(propertyForm.apiId);
@@ -54,73 +56,48 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
     [getPropertyAssociations],
   );
 
-  const mapMachine = useMapStateMachine();
-
-  const { featuresWithAddresses, isLoading } = usePropertyFormSyncronizer(formikRef, 'properties');
-
-  const initialForm = useMemo(() => {
-    const managementForm = new ManagementFormModel();
-    return managementForm;
-  }, []);
-
   // Require user confirmation before adding a property to file
-  // This is the flow for Map Marker -> right-click -> create Management File
-  useEffect(() => {
-    const runAsync = async () => {
-      const incomingProperties =
-        featuresWithAddresses?.map(f => PropertyForm.fromLocationFeatureDataset(f.feature)) ?? [];
-      if (exists(incomingProperties) && exists(formikRef.current) && needsUserConfirmation) {
-        if (incomingProperties.length > 0) {
-          // Check all properties for confirmation
-          const needsConfirmation = await Promise.all(
-            incomingProperties.map(formProperty => confirmBeforeAdd(formProperty)),
-          );
-          if (needsConfirmation.some(confirm => confirm)) {
-            setModalContent({
-              variant: 'warning',
-              title: 'User Override Required',
-              message: (
-                <>
-                  <p>
-                    One or more properties have already been added to one or more management files.
-                  </p>
-                  <p>Do you want to acknowledge and proceed?</p>
-                </>
-              ),
-              okButtonText: 'Yes',
-              cancelButtonText: 'No',
-              handleOk: () => {
-                // allow the property to be added to the file being created
-                formikRef.current.resetForm();
-                formikRef.current.setFieldValue('properties', incomingProperties);
-                setDisplayModal(false);
-                // show the user confirmation modal only once when creating a file
-                setNeedsUserConfirmation(false);
-              },
-              handleCancel: () => {
-                // clear out the properties array as the user did not agree to the popup
-                incomingProperties.splice(0, incomingProperties.length);
-                formikRef.current.resetForm();
-                formikRef.current.setFieldValue('properties', incomingProperties);
-                setDisplayModal(false);
-                // show the user confirmation modal only once when creating a file
-                setNeedsUserConfirmation(false);
-              },
-            });
-            setDisplayModal(true);
-          }
-        }
+  const confirmBeforeAdd = useCallback(
+    async (
+      newPropertyForms: PropertyForm[],
+      isValidCallback: (isValid: boolean, newProperties: PropertyForm[]) => void,
+    ) => {
+      const needsConfirmation = await Promise.all(
+        newPropertyForms.map(formProperty => confirmProperty(formProperty)),
+      );
+      if (needsFirstTimeConfirmation && needsConfirmation.some(x => x === true)) {
+        // show the user confirmation modal only once when creating a file
+        setNeedsFirstTimeConfirmation(false);
+        setModalContent({
+          variant: 'warning',
+          title: 'User Override Required',
+          message: (
+            <>
+              <p>One or more properties have already been added to one or more management files.</p>
+              <p>Do you want to acknowledge and proceed?</p>
+            </>
+          ),
+          okButtonText: 'Yes',
+          cancelButtonText: 'No',
+          handleOk: () => {
+            // allow the property to be added to the file being created
+            isValidCallback(true, newPropertyForms);
+            setDisplayModal(false);
+          },
+          handleCancel: () => {
+            isValidCallback(false, []);
+            setDisplayModal(false);
+          },
+        });
+        setDisplayModal(true);
+      } else {
+        isValidCallback(true, newPropertyForms);
       }
-    };
+    },
+    [confirmProperty, needsFirstTimeConfirmation, setDisplayModal, setModalContent],
+  );
 
-    runAsync();
-  }, [
-    confirmBeforeAdd,
-    featuresWithAddresses,
-    needsUserConfirmation,
-    setDisplayModal,
-    setModalContent,
-  ]);
+  const { isLoading } = usePropertyFormSyncronizer(formikRef, confirmBeforeAdd);
 
   const handleCancel = useCallback(() => onClose(), [onClose]);
 
@@ -170,7 +147,6 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
       managementInitialValues={initialForm}
       loading={loading || isLoading}
       displayFormInvalid={!isFormValid}
-      confirmBeforeAdd={confirmBeforeAdd}
       onSave={handleSave}
       onCancel={handleCancel}
       onSubmit={(

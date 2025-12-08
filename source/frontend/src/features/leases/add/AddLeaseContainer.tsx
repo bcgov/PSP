@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
-import { useCallback, useEffect, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -51,61 +51,48 @@ export const AddLeaseContainer: React.FunctionComponent<
   const hasWarnedRef = useRef(false);
 
   // Get PropertyForms with addresses for all selected features
-  const { featuresWithAddresses, isLoading } = usePropertyFormSyncronizer(formikRef, 'properties');
 
   const initialForm = getDefaultFormLease();
 
-  const confirmBeforeAdd = useCallback(
-    async (propertyForm: PropertyForm) => !isValidId(propertyForm?.apiId),
-    [],
-  );
+  const confirmProperty = async (propertyForm: PropertyForm) => !isValidId(propertyForm?.apiId);
 
   // Require user confirmation before adding non-inventory properties to a lease.
-  useEffect(() => {
-    const runAsync = async () => {
-      const incomingProperties =
-        featuresWithAddresses?.map(f => PropertyForm.fromLocationFeatureDataset(f.feature)) ?? [];
-
-      if (exists(incomingProperties) && exists(formikRef.current) && !hasWarnedRef.current) {
-        // Check all properties for confirmation
-        const needsConfirmation = incomingProperties.some(
-          async feature => await confirmBeforeAdd(feature),
-        );
-        if (needsConfirmation) {
-          hasWarnedRef.current = true; // mark as shown
-
-          setModalContent({
-            variant: 'info',
-            title: 'Not inventory property',
-            message:
-              'You have selected a property not previously in the inventory. Do you want to add this property to the lease?',
-            okButtonText: 'Add',
-            cancelButtonText: 'Cancel',
-            handleOk: () => {
-              // allow the PIMS properties to be added to the lease being created
-              setDisplayModal(false);
-              formikRef.current?.setFieldValue('properties', initialForm.properties);
-            },
-            handleCancel: () => {
-              // clear out the properties array as the user did not agree to the popup
-              initialForm.properties.splice(0, initialForm.properties.length);
-              formikRef.current?.setFieldValue('properties', []);
-              setDisplayModal(false);
-            },
-          });
-          setDisplayModal(true);
-        }
+  const confirmBeforeAdd = useCallback(
+    async (
+      newProperties: PropertyForm[],
+      isValidCallback: (isValid: boolean, newProperties: PropertyForm[]) => void,
+    ) => {
+      // Check all properties for confirmation
+      const needsConfirmation = newProperties.some(async feature => await confirmProperty(feature));
+      if (needsConfirmation && exists(formikRef.current) && !hasWarnedRef.current) {
+        hasWarnedRef.current = true; // mark as shown
+        setModalContent({
+          variant: 'info',
+          title: 'Not inventory property',
+          message:
+            'You have selected a property not previously in the inventory. Do you want to add this property to the lease?',
+          okButtonText: 'Add',
+          cancelButtonText: 'Cancel',
+          handleOk: () => {
+            // allow the PIMS properties to be added to the lease being created
+            setDisplayModal(false);
+            isValidCallback(true, newProperties);
+          },
+          handleCancel: () => {
+            // clear out the properties array as the user did not agree to the popup
+            setDisplayModal(false);
+            isValidCallback(false, []);
+          },
+        });
+        setDisplayModal(true);
+      } else {
+        isValidCallback(true, newProperties);
       }
-    };
+    },
+    [setDisplayModal, setModalContent],
+  );
 
-    runAsync();
-  }, [
-    confirmBeforeAdd,
-    featuresWithAddresses,
-    initialForm.properties,
-    setDisplayModal,
-    setModalContent,
-  ]);
+  const { isLoading } = usePropertyFormSyncronizer(formikRef, confirmBeforeAdd);
 
   const saveLeaseFile = async (
     leaseFormModel: LeaseFormModel,
@@ -194,7 +181,6 @@ export const AddLeaseContainer: React.FunctionComponent<
         }
         formikRef={formikRef}
         initialValues={initialForm}
-        confirmBeforeAdd={confirmBeforeAdd}
       />
       <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
     </MapSideBarLayout>

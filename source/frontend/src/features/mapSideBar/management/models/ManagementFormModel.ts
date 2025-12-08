@@ -6,10 +6,10 @@ import { applyDisplayOrder } from '@/utils';
 import { fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists } from '@/utils/utils';
 
-import { PropertyForm } from '../../shared/models';
+import { PropertyForm, WithFormProperties } from '../../shared/models';
 import { ManagementTeamSubFormModel, WithManagementTeam } from './ManagementTeamSubFormModel';
 
-export class ManagementFormModel implements WithManagementTeam {
+export class ManagementFormModel implements WithManagementTeam, WithFormProperties {
   fileName: string | null = '';
   additionalDetails: string | null = '';
   filePurpose: string | null = '';

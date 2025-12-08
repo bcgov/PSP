@@ -36,7 +36,11 @@ import {
 } from '@/utils';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 
-export class FileForm {
+export interface WithFormProperties {
+  properties: PropertyForm[];
+}
+
+export class FileForm implements WithFormProperties {
   public id?: number;
   public name: string;
   public properties: PropertyForm[];

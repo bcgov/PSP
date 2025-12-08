@@ -30,7 +30,6 @@ import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, isValidId, isValidString } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { PropertyForm } from '../../shared/models';
 import PropertiesListContainer from '../../shared/update/properties/PropertiesListContainer';
 import { TeamMemberFormModal } from '../common/modals/AcquisitionFormModal';
 import UpdateAcquisitionOwnersSubForm from '../common/update/acquisitionOwners/UpdateAcquisitionOwnersSubForm';
@@ -53,7 +52,6 @@ export interface IAddAcquisitionFormProps {
     formikHelpers: FormikHelpers<AcquisitionForm>,
     userOverrides: UserOverrideCode[],
   ) => void | Promise<any>;
-  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
 export const AddAcquisitionForm: React.FunctionComponent<IAddAcquisitionFormProps> = ({
@@ -61,7 +59,6 @@ export const AddAcquisitionForm: React.FunctionComponent<IAddAcquisitionFormProp
   initialValues,
   validationSchema,
   onSubmit,
-  confirmBeforeAdd,
   formikRef,
 }) => {
   const [showDiffMinistryRegionModal, setShowDiffMinistryRegionModal] =
@@ -102,7 +99,6 @@ export const AddAcquisitionForm: React.FunctionComponent<IAddAcquisitionFormProp
           onSubmit={onSubmit}
           showDiffMinistryRegionModal={showDiffMinistryRegionModal}
           setShowDiffMinistryRegionModal={setShowDiffMinistryRegionModal}
-          confirmBeforeAdd={confirmBeforeAdd}
         />
       )}
     </Formik>
@@ -119,14 +115,12 @@ const AddAcquisitionDetailSubForm: React.FC<{
   ) => void | Promise<any>;
   showDiffMinistryRegionModal: boolean;
   setShowDiffMinistryRegionModal: React.Dispatch<React.SetStateAction<boolean>>;
-  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }> = ({
   parentId,
   formikProps,
   onSubmit,
   showDiffMinistryRegionModal,
   setShowDiffMinistryRegionModal,
-  confirmBeforeAdd,
 }) => {
   const [projectProducts, setProjectProducts] = React.useState<
     ApiGen_Concepts_Product[] | undefined
@@ -335,7 +329,6 @@ const AddAcquisitionDetailSubForm: React.FC<{
           <PropertiesListContainer
             properties={formikProps.values?.properties}
             verifyCanRemove={(_, verifyCallback) => verifyCallback()}
-            needsConfirmationBeforeAdd={confirmBeforeAdd}
             canUploadShapefiles={true}
           />
         </Section>

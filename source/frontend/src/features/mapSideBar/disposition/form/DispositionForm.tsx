@@ -14,7 +14,6 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 
-import { PropertyForm } from '../../shared/models';
 import PropertiesListContainer from '../../shared/update/properties/PropertiesListContainer';
 import { AddDispositionFormYupSchema } from '../models/AddDispositionFormYupSchema';
 import { DispositionFormModel } from '../models/DispositionFormModel';
@@ -27,11 +26,10 @@ export interface IDispositionFormProps {
     values: DispositionFormModel,
     formikHelpers: FormikHelpers<DispositionFormModel>,
   ) => void | Promise<any>;
-  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
 const DispositionForm: React.FC<IDispositionFormProps> = props => {
-  const { initialValues, onSubmit, confirmBeforeAdd, formikRef } = props;
+  const { initialValues, onSubmit, formikRef } = props;
 
   const [projectProducts, setProjectProducts] = useState<ApiGen_Concepts_Product[] | undefined>(
     undefined,
@@ -126,9 +124,8 @@ const DispositionForm: React.FC<IDispositionFormProps> = props => {
 
             <Section header="Properties to include in this file:">
               <PropertiesListContainer
-                properties={formikProps.values.fileProperties}
+                properties={formikProps.values.properties}
                 verifyCanRemove={(_, verifyCallback) => verifyCallback()}
-                needsConfirmationBeforeAdd={confirmBeforeAdd}
               />
             </Section>
 

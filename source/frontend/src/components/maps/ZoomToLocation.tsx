@@ -52,7 +52,9 @@ export const ZoomToLocation: React.FunctionComponent<IZoomToLocationProps> = ({
 
   const bounds: LatLngBounds | null = useMemo(() => {
     const propertyLocations: Geometry[] =
-      formProperties?.map(p => p?.polygon ?? latLngLiteralToGeometry(p?.fileLocation)) || [];
+      formProperties?.map(
+        p => p?.polygon ?? latLngLiteralToGeometry({ lat: p?.latitude, lng: p?.longitude }),
+      ) || [];
 
     if (exists(geometry)) {
       propertyLocations.push(geometry);

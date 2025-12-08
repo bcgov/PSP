@@ -6,17 +6,12 @@ import styled from 'styled-components';
 import { Input } from '@/components/common/form/';
 import { Section } from '@/components/common/Section/Section';
 
-import { PropertyForm } from '../../shared/models';
 import PropertiesListContainer from '../../shared/update/properties/PropertiesListContainer';
 import { ResearchFileNameGuide } from '../common/ResearchFileNameGuide';
 import { UpdateProjectsSubForm } from '../common/updateProjects/UpdateProjectsSubForm';
 import { ResearchForm } from './models';
 
-export interface IAddResearchFormProps {
-  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
-}
-
-const AddResearchForm: React.FC<IAddResearchFormProps> = props => {
+const AddResearchForm: React.FC = () => {
   const { values } = useFormikContext<ResearchForm>();
 
   return (
@@ -44,8 +39,6 @@ const AddResearchForm: React.FC<IAddResearchFormProps> = props => {
         <PropertiesListContainer
           properties={values.properties}
           verifyCanRemove={(_, removeCallback) => removeCallback()}
-          needsConfirmationBeforeAdd={props.confirmBeforeAdd}
-          canUploadShapefiles={false}
         />
       </Section>
     </StyledFormWrapper>

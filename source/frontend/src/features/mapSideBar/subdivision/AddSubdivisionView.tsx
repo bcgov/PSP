@@ -129,7 +129,10 @@ const AddSubdivisionView: React.FunctionComponent<
                   <Tab eventKey="parent-property" title="Parent Property Search">
                     <PropertySelectorPidSearchComponent
                       setSelectProperty={selectedProperty =>
-                        setFieldValue('sourceProperty', selectedProperty)
+                        setFieldValue(
+                          'sourceProperty',
+                          PropertyForm.fromPropertyApi(selectedProperty),
+                        )
                       }
                       PropertySelectorPidSearchView={PropertySearchSelectorPidFormView}
                     />

@@ -29,7 +29,16 @@ const PropertyMapSelectorFormView: React.FunctionComponent<IPropertyMapSelectorF
         selectedProperty={lastSelectedProperty}
       />
 
-      <MapClickMonitor onNewLocation={onNewLocation} />
+      <MapClickMonitor
+        onNewLocation={(
+          locationDataset: LocationFeatureDataset,
+          hasMultipleProperties: boolean,
+        ) => {
+          if (mapMachine.isSelecting) {
+            onNewLocation(locationDataset, hasMultipleProperties);
+          }
+        }}
+      />
     </Section>
   );
 };

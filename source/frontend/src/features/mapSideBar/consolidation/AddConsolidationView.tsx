@@ -124,7 +124,9 @@ const AddConsolidationView: React.FunctionComponent<
                       <StyledTabView activeKey="parent-property">
                         <Tab eventKey="parent-property" title="Parent Property Search">
                           <PropertySelectorPidSearchComponent
-                            setSelectProperty={selectedProperty => push(selectedProperty)}
+                            setSelectProperty={selectedProperty =>
+                              push(PropertyForm.fromPropertyApi(selectedProperty))
+                            }
                             PropertySelectorPidSearchView={PropertySearchSelectorPidFormView}
                           />
                         </Tab>
@@ -137,7 +139,7 @@ const AddConsolidationView: React.FunctionComponent<
                             onRemove={() => remove(index)}
                             nameSpace={`sourceProperties.${index}`}
                             getMarkerIndex={property => getDraftMarkerIndex(property, values)}
-                            key={`destination-property-${property.pid}-${property.latitude}-${property.longitude}`}
+                            key={`source-property-${property.pid}-${property.latitude}-${property.longitude}`}
                           />
                         ))}
                         {errors.sourceProperties && (
