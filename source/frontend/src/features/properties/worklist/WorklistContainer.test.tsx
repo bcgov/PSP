@@ -3,7 +3,7 @@ import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockWorklistParcel } from '@/mocks/worklistParcel.mock';
 import { act, render, RenderOptions, screen } from '@/utils/test-utils';
 
-import { useWorklistContext } from './context/WorklistContext';
+import { LocationDatasetWithId, useWorklistContext } from './context/WorklistContext';
 import { WorklistContainer } from './WorklistContainer';
 import { IWorklistViewProps } from './WorklistView';
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
@@ -25,7 +25,7 @@ vi.mock('leaflet', async () => {
 });
 
 // Parcel list mock
-let mockParcels: LocationFeatureDataset[] = [];
+let mockParcels: LocationDatasetWithId[] = [];
 
 // Mocks
 const select = vi.fn();
@@ -55,8 +55,8 @@ describe('WorklistContainer', () => {
     // clear the array in place (without assigning a new empty array instance)
     mockParcels.length = 0;
     mockParcels.push(
-      getMockWorklistParcel({}, { lat: 49.0, lng: -123.0 }),
-      getMockWorklistParcel({}, { lat: 50.0, lng: -122.0 }),
+      getMockWorklistParcel('parcel-1', {}, { lat: 49.0, lng: -123.0 }),
+      getMockWorklistParcel('parcel-2', {}, { lat: 50.0, lng: -122.0 }),
     );
   });
 

@@ -17,16 +17,13 @@ import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { Claims } from '@/constants';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import {
-  exists,
-  getPropertyNameFromLocationFeatureSet,
-  latLngToKey,
-  NameSourceType,
-} from '@/utils';
+import { exists, getPropertyNameFromLocationFeatureSet, NameSourceType } from '@/utils';
+
+import { LocationDatasetWithId } from '../worklist/context/WorklistContext';
 
 export interface IParcelItemProps {
   canAddToWorklist: boolean;
-  parcel: LocationFeatureDataset;
+  parcel: LocationDatasetWithId;
   onRemove: (id: string) => void | null;
   parcelIndex: number;
 }
@@ -194,11 +191,11 @@ export function ParcelItem({ parcel, onRemove, canAddToWorklist, parcelIndex }: 
           {exists(onRemove) && (
             <RemoveIconButton
               title="Delete parcel from list"
-              data-testId={`delete-list-parcel-${latLngToKey(parcel.location) ?? 'unknown'}`}
+              data-testId={`delete-list-parcel-${parcel.id}`}
               onRemove={e => {
                 e.preventDefault();
                 e.stopPropagation();
-                onRemove(latLngToKey(parcel.location));
+                onRemove(parcel.id);
               }}
             />
           )}

@@ -60,7 +60,7 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
   const propertyBoundaryFeatures = useMemo<FeatureCollection>(() => {
     // ignore properties without a valid boundary
     const validBoundaries = (filePropertyLocations ?? [])
-      .map(pl => pl.propertyBoundary)
+      .map(pl => pl?.propertyBoundary)
       .filter(exists)
       .map(boundary => feature(boundary));
 
@@ -70,7 +70,7 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
   // These are the user-uploaded shapes in the context of the file (can be different than the property boundaries that mirror PMBC)
   const fileBoundaryFeatures = useMemo<FeatureCollection>(() => {
     const validBoundaries = (filePropertyLocations ?? [])
-      .map(pl => pl.fileBoundary)
+      .map(pl => pl?.fileBoundary)
       .filter(exists)
       .map(boundary => feature(boundary));
 

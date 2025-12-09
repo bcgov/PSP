@@ -21,7 +21,7 @@ import {
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
 import { ParcelListContainer } from '@/features/properties/parcelList/ParcelListContainer';
-import { ParcelListView } from '@/features/properties/parcelList/ParcelListView';
+import { SearchItemListView } from '@/features/properties/parcelList/ParcelListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
@@ -191,7 +191,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
         initiallyExpanded
         data-testid="pmbc-search-results-section"
       >
-        <ParcelListContainer View={ParcelListView} parcels={propertyProjections} />
+        <ParcelListContainer View={SearchItemListView} parcels={propertyProjections} />
       </Section>
       <Section
         className="my-0 py-0"
@@ -204,7 +204,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
         initiallyExpanded
         data-testid="pims-search-results-section"
       >
-        <ParcelListContainer View={ParcelListView} parcels={pimsPropertyProjections} />
+        <ParcelListContainer View={SearchItemListView} parcels={pimsPropertyProjections} />
       </Section>
       {exists(props.searchResult?.highwayPlanFeatures) &&
         props.searchResult.highwayPlanFeatures.features.length > 0 && (

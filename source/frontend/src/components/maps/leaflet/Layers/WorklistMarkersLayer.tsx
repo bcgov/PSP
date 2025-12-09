@@ -1,9 +1,8 @@
 import React, { useMemo } from 'react';
 import { Marker } from 'react-leaflet';
 
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { useWorklistContext } from '@/features/properties/worklist/context/WorklistContext';
-import { exists, firstOrNull, latLngToKey } from '@/utils';
+import { exists, firstOrNull } from '@/utils';
 
 import { getNotOwnerMarkerIcon } from './util';
 
@@ -12,7 +11,7 @@ export const WorklistMarkersLayer: React.FunctionComponent = () => {
 
   // Now, lat/long properties in the worklist will display on the map as markers.
   // But must not have a Feature.
-  const validLocations = useMemo<LocationFeatureDataset[]>(
+  const validLocations = useMemo(
     () =>
       (parcels ?? []).filter(p => !exists(firstOrNull(p?.parcelFeatures)) && exists(p?.location)),
     [parcels],
@@ -21,11 +20,7 @@ export const WorklistMarkersLayer: React.FunctionComponent = () => {
   return (
     <React.Fragment>
       {validLocations.map(vp => (
-        <Marker
-          key={latLngToKey(vp.location)}
-          position={vp.location}
-          icon={getNotOwnerMarkerIcon(true)}
-        />
+        <Marker key={vp.id} position={vp.location} icon={getNotOwnerMarkerIcon(true)} />
       ))}
     </React.Fragment>
   );

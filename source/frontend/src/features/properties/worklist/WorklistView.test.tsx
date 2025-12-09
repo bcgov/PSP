@@ -21,7 +21,9 @@ describe('WorklistView', () => {
   const setup = (renderOptions: RenderOptions & { props?: Partial<IWorklistViewProps> } = {}) => {
     return render(
       <WorklistView
-        parcels={renderOptions.props?.parcels ?? [getMockWorklistParcel({ PID: '123456789' })]}
+        parcels={
+          renderOptions.props?.parcels ?? [getMockWorklistParcel('parcel-1', { PID: '123456789' })]
+        }
         onRemove={onRemove}
         onClearAll={onClearAll}
         onCreateAcquisitionFile={onCreateAcquisitionFile}
@@ -47,8 +49,8 @@ describe('WorklistView', () => {
     const { asFragment } = setup({
       props: {
         parcels: [
-          getMockWorklistParcel({ PID: '123456789' }, { lat: 1, lng: 1 }),
-          getMockWorklistParcel({ PIN: 99999999 }, { lat: 2, lng: 2 }),
+          getMockWorklistParcel('parcel-1', { PID: '123456789' }),
+          getMockWorklistParcel('parcel-2', { PIN: 99999999 }),
         ],
       },
     });

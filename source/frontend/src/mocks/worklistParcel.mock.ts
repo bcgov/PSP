@@ -1,10 +1,8 @@
 import * as turf from '@turf/turf';
 import { LatLngLiteral } from 'leaflet';
 
-import {
-  emptyFeatureDataset,
-  LocationFeatureDataset,
-} from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { emptyFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { LocationDatasetWithId } from '@/features/properties/worklist/context/WorklistContext';
 import {
   emptyPmbcParcel,
   PMBC_FullyAttributed_Feature_Properties,
@@ -13,17 +11,19 @@ import { exists } from '@/utils';
 
 // Factory for ParcelFeature using
 export const getMockWorklistParcel = (
+  customId: string,
   props: Partial<PMBC_FullyAttributed_Feature_Properties> = {},
   coords?: LatLngLiteral,
-): LocationFeatureDataset => {
+): LocationDatasetWithId => {
   const geometry = exists(coords) ? [coords.lng, coords.lat] : [0, 0];
   const geoFeature = turf.point<PMBC_FullyAttributed_Feature_Properties>(geometry, {
     ...emptyPmbcParcel,
     ...props,
   });
 
-  const parcel: LocationFeatureDataset = {
+  const parcel: LocationDatasetWithId = {
     ...emptyFeatureDataset(),
+    id: customId,
     location: coords,
     parcelFeatures: [geoFeature],
   };
