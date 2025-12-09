@@ -55,8 +55,8 @@ describe('WorklistContainer', () => {
     // clear the array in place (without assigning a new empty array instance)
     mockParcels.length = 0;
     mockParcels.push(
-      getMockWorklistParcel('parcel-1', {}, { lat: 49.0, lng: -123.0 }),
-      getMockWorklistParcel('parcel-2', {}, { lat: 50.0, lng: -122.0 }),
+      getMockWorklistParcel({}, { lat: 49.0, lng: -123.0 }),
+      getMockWorklistParcel({}, { lat: 50.0, lng: -122.0 }),
     );
   });
 

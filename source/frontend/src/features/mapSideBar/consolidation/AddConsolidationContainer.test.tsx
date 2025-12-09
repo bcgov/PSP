@@ -11,6 +11,7 @@ import { ConsolidationFormModel } from './AddConsolidationModel';
 import AddConsolidationContainer, {
   IAddConsolidationContainerProps,
 } from './AddConsolidationContainer';
+import { PropertyForm } from '../shared/models';
 
 const history = createMemoryHistory();
 
@@ -145,7 +146,7 @@ describe('Add Consolidation Container component', () => {
 
     mockAddPropertyOperation.execute.mockResolvedValue([{}]);
     const model = new ConsolidationFormModel();
-    model.sourceProperties = [{} as ApiGen_Concepts_Property];
+    model.sourceProperties = [new PropertyForm()];
     await act(async () => {
       viewProps?.onSubmit(model, {} as any);
     });
@@ -158,8 +159,9 @@ describe('Add Consolidation Container component', () => {
 
     mockAddPropertyOperation.execute.mockResolvedValue([{ destinationProperty: { id: 1 } }]);
     const model = new ConsolidationFormModel();
-    model.sourceProperties = [{} as ApiGen_Concepts_Property];
-    model.destinationProperty = { id: 1 } as ApiGen_Concepts_Property;
+    model.sourceProperties = [new PropertyForm()];
+    model.destinationProperty = new PropertyForm();
+    model.destinationProperty.id = 1;
     await act(async () => {
       viewProps?.onSubmit(model, {} as any);
     });

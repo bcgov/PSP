@@ -37,6 +37,7 @@ import {
 import { useAddLease } from '../hooks/useAddLease';
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
 import AddLeaseForm from './AddLeaseForm';
+import { emptyFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 const retrieveUserInfo = vi.fn();
 vi.mock('@/hooks/repositories/useUserInfoRepository');
@@ -211,7 +212,6 @@ describe('AddLeaseContainer component', () => {
     await act(async () => userEvent.click(getByText(/Save/i)));
 
     expect(addLease).toHaveBeenCalledWith(leaseData, []);
-    expect(testMockMachine.processLocationFeaturesAddition).toHaveBeenCalled();
     expect(onSuccess).toHaveBeenCalled();
   });
 
@@ -325,21 +325,16 @@ describe('AddLeaseContainer component', () => {
   it('should pre-populate the region if a property is selected', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      selectedFeatures: [
+      locationFeaturesForAddition: [
         {
+          ...emptyFeatureDataset(),
           location: { lng: -120.69195885, lat: 50.25163372 },
-          fileLocation: null,
-          fileBoundary: null,
-          pimsFeature: null,
-          parcelFeature: getMockFullyAttributedParcel('1'),
+          parcelFeatures: [getMockFullyAttributedParcel('1')],
           regionFeature: {
             type: 'Feature',
             properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
             geometry: getMockPolygon(),
           },
-          districtFeature: null,
-          selectingComponentId: null,
-          municipalityFeature: null,
         },
       ],
     };

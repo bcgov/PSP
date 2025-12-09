@@ -1,4 +1,4 @@
-import { FormikProps } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import { createRef } from 'react';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
@@ -6,30 +6,27 @@ import thunk from 'redux-thunk';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import { FileForm, PropertyForm } from '../../models';
-import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
+import { FileForm, PropertyForm, WithFormProperties } from '../../models';
 import PropertiesListContainer from './PropertiesListContainer';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
 
 const mockStore = configureMockStore([thunk]);
 
 const customSetFilePropertyLocations = vi.fn();
 
 const verifyCanRemove = vi.fn();
-const confirmBeforeAdd = vi.fn();
 
 describe('PropertiesListContainer component', () => {
   const setup = async (
     props: { properties: PropertyForm[] },
     renderOptions: RenderOptions = {},
   ) => {
-    const ref = createRef<FormikProps<FileForm>>();
+    const ref = createRef<FormikProps<WithFormProperties>>();
     const utils = render(
-      <PropertiesListContainer
-        properties={props.properties}
-        verifyCanRemove={verifyCanRemove}
-        needsConfirmationBeforeAdd={confirmBeforeAdd}
-      />,
+      <Formik innerRef={ref} initialValues={{ properties: [] }} onSubmit={vi.fn()}>
+        <PropertiesListContainer properties={props.properties} verifyCanRemove={verifyCanRemove} />
+      </Formik>,
       {
         ...renderOptions,
         store: mockStore({}),
@@ -53,7 +50,7 @@ describe('PropertiesListContainer component', () => {
   let testForm: FileForm;
 
   beforeEach(() => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
+    const mockFeatureSet = getMockLocationFeatureDataset();
     testForm = new FileForm();
     testForm.properties = [
       PropertyForm.fromLocationFeatureDataset({
@@ -104,11 +101,12 @@ describe('PropertiesListContainer component', () => {
   });
 
   it('should remove property from list when Remove button is clicked', async () => {
-    const { getAllByTitle, queryByText } = await setup({ properties: testForm.properties });
+    const { getAllByTitle } = await setup({ properties: testForm.properties });
     const pidRow = getAllByTitle('remove')[0];
     await act(async () => userEvent.click(pidRow));
 
-    expect(queryByText('PID: 123-456-789')).toBeNull();
+    const theCallbackFn = expect.any(Function); // Expect a function
+    expect(verifyCanRemove).toHaveBeenCalledWith(testForm.properties[0].apiId, theCallbackFn);
   });
 
   it('should display properties with svg prefixed with incrementing id', async () => {

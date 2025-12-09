@@ -41,14 +41,14 @@ export const MotiInventoryContainer: React.FunctionComponent<
 
   const { setModalContent, setDisplayModal } = useModalContext();
   const mapMachine = useMapStateMachine();
-  const selectedFeatureData = mapMachine.mapLocationFeatureDataset;
+  const locationFeatureDataset = mapMachine.mapLocationFeatureDataset;
 
   const formikRef = useRef<FormikProps<any>>(null);
   let boundary: Geometry = null;
   if (exists(props.id)) {
-    boundary = firstOrNull(selectedFeatureData?.pimsFeatures)?.geometry;
+    boundary = firstOrNull(locationFeatureDataset?.pimsFeatures)?.geometry;
   } else if (exists(props.pid || props.pin)) {
-    boundary = firstOrNull(selectedFeatureData?.parcelFeatures)?.geometry;
+    boundary = firstOrNull(locationFeatureDataset?.parcelFeatures)?.geometry;
   } else if (exists(props.location?.lng) && exists(props.location?.lat)) {
     boundary = point([props.location?.lng, props.location?.lat])?.geometry;
   }

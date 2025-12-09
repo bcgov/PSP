@@ -129,7 +129,7 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
       <ScrollArea>
         {parcels.map((p, index) => (
           <ParcelItem
-            key={p.location.lat + '-' + p.location.lng}
+            key={p.location?.lat + '-' + p.location?.lng}
             parcel={p}
             onRemove={onRemove}
             canAddToWorklist={false}

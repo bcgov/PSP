@@ -160,6 +160,7 @@ export class PropertyForm {
         pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
         parcelFeature?.properties?.LEGAL_DESCRIPTION ??
         '',
+      address: pimsFeature ? AddressForm.fromPimsView(pimsFeature?.properties) : undefined,
     });
   }
 

@@ -69,12 +69,11 @@ describe('AdministrationSubForm component', () => {
   });
 
   it('clears other type description when lease type is changed from Other to another value', async () => {
+    const leaseForm = getDefaultFormLease();
+    leaseForm.leaseTypeCode = ApiGen_CodeTypes_LeaseLicenceTypes.OTHER;
+    leaseForm.otherLeaseTypeDescription = 'Some other type';
     const { container, findByText, formikRef } = await setup({
-      initialValues: {
-        ...getDefaultFormLease(),
-        leaseTypeCode: ApiGen_CodeTypes_LeaseLicenceTypes.OTHER,
-        otherLeaseTypeDescription: 'Some other type',
-      },
+      initialValues: leaseForm,
     });
 
     expect(formikRef.current?.values.otherLeaseTypeDescription).toBe('Some other type');
@@ -165,12 +164,11 @@ describe('AdministrationSubForm component', () => {
   });
 
   it('clears other program description when program type is changed from Other to another value', async () => {
+    const leaseForm = getDefaultFormLease();
+    leaseForm.programTypeCode = ApiGen_CodeTypes_LeaseLicenceTypes.OTHER;
+    leaseForm.otherProgramTypeDescription = 'Some other program';
     const { container, formikRef } = await setup({
-      initialValues: {
-        ...getDefaultFormLease(),
-        programTypeCode: ApiGen_CodeTypes_LeaseProgramTypes.OTHER,
-        otherProgramTypeDescription: 'Some other program',
-      },
+      initialValues: leaseForm,
     });
 
     expect(formikRef.current?.values.otherProgramTypeDescription).toBe('Some other program');

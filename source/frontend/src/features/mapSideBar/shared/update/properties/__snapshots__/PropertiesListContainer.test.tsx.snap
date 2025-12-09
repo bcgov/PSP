@@ -1,0 +1,1152 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PropertiesListContainer component > renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c8.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c8.btn .Button__value {
+  width: auto;
+}
+
+.c8.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c8.btn:focus {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.c8.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c8.btn.btn-primary:hover,
+.c8.btn.btn-primary:active,
+.c8.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c8.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c8.btn.btn-secondary:hover,
+.c8.btn.btn-secondary:active,
+.c8.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c8.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c8.btn.btn-info:hover,
+.c8.btn.btn-info:active,
+.c8.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c8.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c8.btn.btn-light:hover,
+.c8.btn.btn-light:active,
+.c8.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c8.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c8.btn.btn-dark:hover,
+.c8.btn.btn-dark:active,
+.c8.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c8.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c8.btn.btn-danger:hover,
+.c8.btn.btn-danger:active,
+.c8.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c8.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c8.btn.btn-warning:hover,
+.c8.btn.btn-warning:active,
+.c8.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c8.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c8.btn.btn-link:hover,
+.c8.btn.btn-link:active,
+.c8.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c8.btn.btn-link:disabled,
+.c8.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c8.btn:disabled,
+.c8.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.c8.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c8.Button--icon-only:focus {
+  outline: none;
+}
+
+.c8.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c0 {
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+}
+
+.c0 button {
+  font-size: 14px;
+}
+
+.c1 {
+  font-size: 16px;
+  color: #1a5a96;
+  font-style: italic;
+  font-weight: bold;
+  -webkit-text-decoration: none solid rgb(26,90,150);
+  text-decoration: none solid rgb(26,90,150);
+  line-height: 24px;
+  margin-bottom: 1rem;
+}
+
+.c5 {
+  padding: 1.5rem 1.8rem;
+  border-radius: 4px;
+  background-color: #f0f7fc;
+  margin-bottom: 2rem;
+  font-size: 14px;
+  color: #053662;
+  -webkit-text-decoration: none solid rgb(49,49,50);
+  text-decoration: none solid rgb(49,49,50);
+  line-height: 24px;
+}
+
+.c4 {
+  float: right;
+  cursor: pointer;
+  color: #1a5a96;
+  font-size: 2.8rem;
+}
+
+.c3 {
+  margin-right: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.c2 {
+  cursor: pointer;
+}
+
+.c7 {
+  font-weight: normal;
+}
+
+.c6 {
+  font-weight: bold;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2 no-gutters row"
+      >
+        <div
+          class="col"
+        >
+          <svg
+            class="c3"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+            />
+          </svg>
+          New workflow
+        </div>
+        <div
+          class="col-1"
+        >
+          <svg
+            class="c4"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M0 0h24v24H0z"
+              fill="none"
+            />
+            <path
+              d="m7 14 5-5 5 5z"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c5 collapse show"
+    >
+      <ol>
+        <li
+          class="c6"
+        >
+          <div>
+            Find a Property
+          </div>
+          <div
+            class="c7"
+          >
+            Navigate to an area of the map OR use 
+            <button
+              class="c8 Button d-inline-block btn btn-link"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                Search
+              </div>
+            </button>
+          </div>
+        </li>
+        <li
+          class="c6"
+        >
+          <div>
+            Select a property
+          </div>
+          <div
+            class="c7"
+          >
+            Click on the map and the selection will be highlighed
+          </div>
+        </li>
+        <li
+          class="c6"
+        >
+          <div>
+            Add it to this file
+          </div>
+          <div
+            class="c7"
+          >
+            Click "Add selected" property button when it appears below
+          </div>
+        </li>
+      </ol>
+    </div>
+  </div>
+  .c2.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c2.btn .Button__value {
+  width: auto;
+}
+
+.c2.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c2.btn:focus {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.c2.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c2.btn.btn-primary:hover,
+.c2.btn.btn-primary:active,
+.c2.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c2.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c2.btn.btn-secondary:hover,
+.c2.btn.btn-secondary:active,
+.c2.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c2.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c2.btn.btn-info:hover,
+.c2.btn.btn-info:active,
+.c2.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c2.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c2.btn.btn-light:hover,
+.c2.btn.btn-light:active,
+.c2.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c2.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c2.btn.btn-dark:hover,
+.c2.btn.btn-dark:active,
+.c2.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c2.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c2.btn.btn-danger:hover,
+.c2.btn.btn-danger:active,
+.c2.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c2.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c2.btn.btn-warning:hover,
+.c2.btn.btn-warning:active,
+.c2.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c2.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c2.btn.btn-link:hover,
+.c2.btn.btn-link:active,
+.c2.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c2.btn.btn-link:disabled,
+.c2.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c2.btn:disabled,
+.c2.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.c2.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c2.Button--icon-only:focus {
+  outline: none;
+}
+
+.c2.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c11.c11.btn {
+  font-size: 1.4rem;
+  color: #aaaaaa;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c11.c11.btn .text {
+  display: none;
+}
+
+.c11.c11.btn:hover,
+.c11.c11.btn:active,
+.c11.c11.btn:focus {
+  color: #d8292f;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+}
+
+.c11.c11.btn:hover .text,
+.c11.c11.btn:active .text,
+.c11.c11.btn:focus .text {
+  display: inline;
+  line-height: 2rem;
+}
+
+.c8 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: baseline;
+  -webkit-box-align: baseline;
+  -ms-flex-align: baseline;
+  align-items: baseline;
+  gap: 0.8rem;
+}
+
+.c8 .form-label {
+  -webkit-flex-shrink: 0;
+  -ms-flex-negative: 0;
+  flex-shrink: 0;
+}
+
+.c1 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c0 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c3 {
+  margin: 0;
+  padding: 1.6rem;
+  font-size: 1.6rem;
+  color: #9F9D9C;
+  border-bottom: 0.2rem solid #606060;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.25rem;
+  font-family: 'BcSans-Bold';
+}
+
+.c7 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin: 0.15rem;
+  witdh: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  line-break: break-all;
+}
+
+.c5 {
+  min-width: 3rem;
+  min-height: 4.5rem;
+}
+
+.c6 {
+  font-size: 1.2rem;
+}
+
+.c4 {
+  min-height: 4.5rem;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.c10 {
+  padding-left: 1.2rem;
+}
+
+<div
+    class="c0 form-section"
+  >
+    <h2
+      class="c1"
+    >
+      <div
+        class="no-gutters row"
+      >
+        <div
+          class="align-content-end col"
+        >
+          <div
+            class="row"
+          >
+            <div
+              class="col-11"
+            >
+              Selected Properties
+            </div>
+            <div
+              class="col"
+            >
+              <button
+                class="c2 Button btn btn-link"
+                title="Fit boundaries"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  <svg
+                    fill="currentColor"
+                    height="18"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 256 256"
+                    width="18"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M216,48V88a8,8,0,0,1-16,0V56H168a8,8,0,0,1,0-16h40A8,8,0,0,1,216,48ZM88,200H56V168a8,8,0,0,0-16,0v40a8,8,0,0,0,8,8H88a8,8,0,0,0,0-16Zm120-40a8,8,0,0,0-8,8v32H168a8,8,0,0,0,0,16h40a8,8,0,0,0,8-8V168A8,8,0,0,0,208,160ZM88,40H48a8,8,0,0,0-8,8V88a8,8,0,0,0,16,0V56H88a8,8,0,0,0,0-16Z"
+                    />
+                  </svg>
+                </div>
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </h2>
+    <div
+      class="collapse show"
+    >
+      <div
+        class="c3 no-gutters row"
+      >
+        <div
+          class="col-md-3"
+        >
+          Identifier
+        </div>
+        <div
+          class="col-md-9"
+        >
+          Provide a descriptive name for this land
+          <span
+            class="tooltip-icon"
+            data-testid="tooltip-icon-property-selector-tooltip"
+            id="property-selector-tooltip"
+          >
+            <svg
+              class="tooltip-icon"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 512 512"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+              />
+            </svg>
+          </span>
+        </div>
+      </div>
+      <div
+        class="c4 align-items-center mb-3 no-gutters row"
+      >
+        <div
+          class="col-md-3"
+        >
+          <div
+            class="mb-0 d-flex align-items-center"
+          >
+            <svg
+              class="c5"
+              height="45"
+              id="Layer_2"
+              viewBox="0 0 20 30"
+              width="30"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <style />
+              </defs>
+              <g
+                id="PDF_preview"
+              >
+                <path
+                  class="cls-1"
+                  d="M.02,9.77c.4,7.19,9.81,20.23,9.81,20.23,0,0,9.14-13.08,9.43-20.23C19.79-3.33-.7-3.19,.02,9.77Zm9.61,5.13c-3.31,0-6-2.69-6-6S6.32,2.91,9.63,2.91s6,2.69,6,6-2.68,6-6,6Z"
+                  fill="#2a81cb"
+                />
+              </g>
+              <svg
+                height="16"
+                overflow="visible"
+                preserveAspectRatio="none"
+                version="1.2"
+                viewBox="0 0 22 21"
+                width="16"
+                x="2"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                y="2"
+              >
+                <g
+                  transform="translate(1, 1)"
+                >
+                  <defs>
+                    <path
+                      d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                      id="path-1648484224573577"
+                      vector-effect="non-scaling-stroke"
+                    />
+                  </defs>
+                  <g
+                    transform="translate(0, 0)"
+                  >
+                    <path
+                      class="path-2"
+                      d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                      fill="rgb(252, 186, 25)"
+                      stroke="rgb(255, 255, 255)"
+                      stroke-linecap="butt"
+                      stroke-linejoin="miter"
+                      stroke-width="1"
+                      vector-effect="non-scaling-stroke"
+                    />
+                  </g>
+                </g>
+                <text
+                  class="c6"
+                  textLength="1.25rem"
+                  x="7"
+                  y="15"
+                >
+                  1
+                </text>
+              </svg>
+              <title>
+                1
+              </title>
+            </svg>
+            <div
+              class="c7 pl-3"
+            >
+              PID: 123-456-789
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-md-5"
+        >
+          <div
+            class="c8 mb-0 w-100 input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-properties.0.name"
+              name="properties.0.name"
+              style="word-break: break-all;"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="ml-5 col-auto"
+        >
+          <button
+            class="c2 Button btn btn-link"
+            title="Fit boundaries"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              <svg
+                fill="currentColor"
+                height="18"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="18"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+        <div
+          class="c9 pl-3 col-auto"
+        >
+          <div
+            class="c10"
+          >
+            <button
+              class="c2 Button c11 btn btn-link"
+              data-testid="delete-property-0"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                <svg
+                  fill="currentColor"
+                  height="2rem"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="2rem"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    remove
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                 
+                <span
+                  class="text"
+                >
+                  Remove
+                </span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+      <div
+        class="c4 align-items-center mb-3 no-gutters row"
+      >
+        <div
+          class="col-md-3"
+        >
+          <div
+            class="mb-0 d-flex align-items-center"
+          >
+            <svg
+              class="c5"
+              height="45"
+              id="Layer_2"
+              viewBox="0 0 20 30"
+              width="30"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <defs>
+                <style />
+              </defs>
+              <g
+                id="PDF_preview"
+              >
+                <path
+                  class="cls-1"
+                  d="M.02,9.77c.4,7.19,9.81,20.23,9.81,20.23,0,0,9.14-13.08,9.43-20.23C19.79-3.33-.7-3.19,.02,9.77Zm9.61,5.13c-3.31,0-6-2.69-6-6S6.32,2.91,9.63,2.91s6,2.69,6,6-2.68,6-6,6Z"
+                  fill="#2a81cb"
+                />
+              </g>
+              <svg
+                height="16"
+                overflow="visible"
+                preserveAspectRatio="none"
+                version="1.2"
+                viewBox="0 0 22 21"
+                width="16"
+                x="2"
+                xmlns="http://www.w3.org/2000/svg"
+                xmlns:xlink="http://www.w3.org/1999/xlink"
+                y="2"
+              >
+                <g
+                  transform="translate(1, 1)"
+                >
+                  <defs>
+                    <path
+                      d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                      id="path-1648484224573577"
+                      vector-effect="non-scaling-stroke"
+                    />
+                  </defs>
+                  <g
+                    transform="translate(0, 0)"
+                  >
+                    <path
+                      class="path-2"
+                      d="M9.5 0 C14.743192732693075 0 19 4.25680726730706 19 9.5 C19 14.74319273269294 14.743192732693075 19 9.5 19 C4.256807267306925 19 0 14.74319273269294 0 9.5 C0 4.25680726730706 4.256807267306925 0 9.5 0 Z"
+                      fill="rgb(252, 186, 25)"
+                      stroke="rgb(255, 255, 255)"
+                      stroke-linecap="butt"
+                      stroke-linejoin="miter"
+                      stroke-width="1"
+                      vector-effect="non-scaling-stroke"
+                    />
+                  </g>
+                </g>
+                <text
+                  class="c6"
+                  textLength="1.25rem"
+                  x="7"
+                  y="15"
+                >
+                  2
+                </text>
+              </svg>
+              <title>
+                2
+              </title>
+            </svg>
+            <div
+              class="c7 pl-3"
+            >
+              PIN: 1111222
+            </div>
+          </div>
+        </div>
+        <div
+          class="col-md-5"
+        >
+          <div
+            class="c8 mb-0 w-100 input form-group"
+          >
+            <input
+              class="form-control"
+              id="input-properties.1.name"
+              name="properties.1.name"
+              style="word-break: break-all;"
+              value=""
+            />
+          </div>
+        </div>
+        <div
+          class="ml-5 col-auto"
+        >
+          <button
+            class="c2 Button btn btn-link"
+            title="Fit boundaries"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              <svg
+                fill="currentColor"
+                height="18"
+                stroke="currentColor"
+                stroke-width="0"
+                viewBox="0 0 512 512"
+                width="18"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
+                />
+              </svg>
+            </div>
+          </button>
+        </div>
+        <div
+          class="c9 pl-3 col-auto"
+        >
+          <div
+            class="c10"
+          >
+            <button
+              class="c2 Button c11 btn btn-link"
+              data-testid="delete-property-1"
+              type="button"
+            >
+              <div
+                class="Button__value"
+              >
+                <svg
+                  fill="currentColor"
+                  height="2rem"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="2rem"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <title>
+                    remove
+                  </title>
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                  />
+                </svg>
+                 
+                <span
+                  class="text"
+                >
+                  Remove
+                </span>
+              </div>
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

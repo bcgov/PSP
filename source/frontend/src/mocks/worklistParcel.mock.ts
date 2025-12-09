@@ -13,7 +13,6 @@ import { exists } from '@/utils';
 
 // Factory for ParcelFeature using
 export const getMockWorklistParcel = (
-  id: string,
   props: Partial<PMBC_FullyAttributed_Feature_Properties> = {},
   coords?: LatLngLiteral,
 ): LocationFeatureDataset => {

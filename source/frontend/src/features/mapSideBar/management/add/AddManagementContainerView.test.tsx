@@ -56,7 +56,6 @@ describe('Add Management Container View', () => {
         onCancel={onCancel}
         onSave={onSave}
         onSubmit={onSubmit}
-        confirmBeforeAdd={confirmBeforeAdd}
       />,
       {
         ...renderOptions,

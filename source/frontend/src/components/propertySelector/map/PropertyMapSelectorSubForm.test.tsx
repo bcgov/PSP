@@ -1,12 +1,12 @@
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { getMockSelectedFeatureDataset } from '@/mocks/getMockSelectedFeatureDataset';
 import { render, RenderOptions, screen } from '@/utils/test-utils';
 
 import PropertyMapSelectorSubForm, {
   IPropertyMapSelectorSubFormProps,
 } from './PropertyMapSelectorSubForm';
+import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
 
 const onClickDraftMarker = vi.fn();
 
@@ -20,7 +20,7 @@ describe('PropertySelectorSubForm component', () => {
     const utils = render(
       <PropertyMapSelectorSubForm
         onClickDraftMarker={renderOptions.onClickDraftMarker}
-        selectedProperty={renderOptions.selectedProperty ?? getMockSelectedFeatureDataset()}
+        selectedProperty={renderOptions.selectedProperty ?? getMockLocationFeatureDataset()}
       />,
       {
         ...renderOptions,
@@ -43,21 +43,23 @@ describe('PropertySelectorSubForm component', () => {
   });
 
   it('renders as expected when provided a list of properties', () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
+    const mockFeatureSet = getMockLocationFeatureDataset();
     setup({
       onClickDraftMarker,
       selectedProperty: {
         ...mockFeatureSet,
-        parcelFeature: {
-          ...mockFeatureSet.parcelFeature,
-          properties: {
-            ...mockFeatureSet.parcelFeature?.properties,
-            PID: '123-456-789',
-            PIN: 1111222,
-            LEGAL_DESCRIPTION: 'A legal description',
-            PLAN_NUMBER: 'VIP3881',
+        parcelFeatures: [
+          {
+            ...mockFeatureSet.parcelFeatures[0],
+            properties: {
+              ...mockFeatureSet.parcelFeatures[0]?.properties,
+              PID: '123-456-789',
+              PIN: 1111222,
+              LEGAL_DESCRIPTION: 'A legal description',
+              PLAN_NUMBER: 'VIP3881',
+            },
           },
-        },
+        ],
       },
     });
     expect(screen.getByText('123-456-789')).toBeVisible();

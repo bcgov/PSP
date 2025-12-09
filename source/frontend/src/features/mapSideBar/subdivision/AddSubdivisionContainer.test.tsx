@@ -20,6 +20,7 @@ import AddSubdivisionContainer from './AddSubdivisionContainer';
 import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { Input } from '@/components/common/form';
+import { PropertyForm } from '../shared/models';
 
 const history = createMemoryHistory();
 
@@ -137,7 +138,7 @@ describe('Add Subdivision Container component', () => {
 
     mockAddPropertyOperation.execute.mockResolvedValue([{}]);
     const model = new SubdivisionFormModel();
-    model.destinationProperties = [{} as ApiGen_Concepts_Property];
+    model.destinationProperties = [new PropertyForm()];
     await act(async () => {
       viewProps?.onSubmit(model, {} as any);
     });
@@ -148,10 +149,12 @@ describe('Add Subdivision Container component', () => {
   it('Calls onSuccess when the submit operation completes successfully when the response contains a viable property to navigate', async () => {
     await setup({});
 
-    mockAddPropertyOperation.execute.mockResolvedValue([{}]);
+    mockAddPropertyOperation.execute.mockResolvedValue([{ sourceProperty: { id: 1 } }]);
     const model = new SubdivisionFormModel();
-    model.destinationProperties = [{} as ApiGen_Concepts_Property];
-    model.sourceProperty = { id: 1 } as ApiGen_Concepts_Property;
+    model.destinationProperties = [new PropertyForm()];
+    model.sourceProperty = new PropertyForm();
+    model.sourceProperty.id = 1;
+
     await act(async () => {
       viewProps?.onSubmit(model, {} as any);
     });

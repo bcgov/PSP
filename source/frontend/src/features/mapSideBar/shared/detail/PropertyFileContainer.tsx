@@ -255,7 +255,6 @@ export const PropertyFileContainer: React.FunctionComponent<
         featureDataset?.crownLandInventoryFeatures?.length +
         featureDataset?.crownLandLeasesFeatures?.length +
         featureDataset?.crownLandLicensesFeatures?.length +
-        featureDataset?.crownLandLicensesFeatures?.length +
         featureDataset?.crownLandTenuresFeatures?.length >
       0
     ) {

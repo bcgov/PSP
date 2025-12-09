@@ -2,7 +2,7 @@ import { createContext, ReactNode, useCallback, useContext, useState } from 'rea
 import { toast } from 'react-toastify';
 
 import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
-import { areFeatureDatasetsEqual, areLocationFeatureDatasetsEqual, latLngToKey } from '@/utils';
+import { areLocationFeatureDatasetsEqual, latLngToKey } from '@/utils';
 
 export interface IWorklistNotifier {
   error: (msg: string) => void;
@@ -55,7 +55,7 @@ export function WorklistContextProvider({
   const add = useCallback(
     (parcel: LocationFeatureDataset) => {
       setParcels(prev => {
-        const alreadyExists = prev.some(p => areFeatureDatasetsEqual(p, parcel));
+        const alreadyExists = prev.some(p => areLocationFeatureDatasetsEqual(p, parcel));
         if (alreadyExists) {
           notifier.error('Duplicate parcel detected. Add to worklist skipped.');
           return prev;

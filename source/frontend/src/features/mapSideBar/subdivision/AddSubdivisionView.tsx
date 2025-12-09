@@ -163,11 +163,7 @@ const AddSubdivisionView: React.FunctionComponent<
                         const formProperty = PropertyForm.fromLocationFeatureDataset(property);
                         formProperty.landArea =
                           formProperty.landArea && formProperty.areaUnit
-                            ? convertArea(
-                                formProperty.landArea,
-                                formProperty.areaUnit.toLocaleLowerCase(),
-                                ApiGen_CodeTypes_AreaUnitTypes.M2,
-                              )
+                            ? getAreaValue(formProperty.landArea, formProperty.areaUnit)
                             : 0;
                         formProperty.areaUnit = ApiGen_CodeTypes_AreaUnitTypes.M2;
                         if (formProperty.pid) {

@@ -23,7 +23,10 @@ import {
   pinFromFeatureSet,
   PropertyName,
 } from './mapPropertyUtils';
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import {
+  emptyFeatureDataset,
+  LocationFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
 
 describe('mapPropertyUtils', () => {
@@ -31,151 +34,154 @@ describe('mapPropertyUtils', () => {
     [{}, { label: NameSourceType.NONE, value: '' }],
     [
       {
-        ...getMockLocationFeatureDataset(),
+        ...emptyFeatureDataset(),
         location: null,
-        pimsFeature: {} as any,
-        parcelFeature: { properties: { PID: undefined } } as any,
+        pimsFeatures: [] as any,
+        parcelFeatures: [{ properties: { PID: undefined } }] as any,
       },
       { label: NameSourceType.NONE, value: '' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
+        ...emptyFeatureDataset(),
         location: null,
-        pimsFeature: {} as any,
-        parcelFeature: { properties: { PID: '' } } as any,
+        pimsFeatures: [] as any,
+        parcelFeatures: [{ properties: { PID: '' } }] as any,
       },
       { label: NameSourceType.NONE, value: '' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
-        pimsFeature: {} as any,
-        parcelFeature: { properties: { PID: '000-000-001' } } as any,
+        ...emptyFeatureDataset(),
+        pimsFeatures: [] as any,
+        parcelFeatures: [{ properties: { PID: '000-000-001' } }] as any,
       },
       { label: NameSourceType.PID, value: '000-000-001' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
-        pimsFeature: {} as any,
-        parcelFeature: {
-          properties: {
-            PID: '000-000-001',
-            PIN: 1,
-            PLAN_NUMBER: 'PB1000',
+        ...emptyFeatureDataset(),
+        pimsFeatures: [] as any,
+        parcelFeatures: [
+          {
+            properties: {
+              PID: '000-000-001',
+              PIN: 1,
+              PLAN_NUMBER: 'PB1000',
+            },
           },
-        } as any,
+        ] as any,
       },
       { label: NameSourceType.PID, value: '000-000-001' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
+        ...emptyFeatureDataset(),
         location: null,
-        pimsFeature: {} as any,
-        parcelFeature: { properties: { PIN: undefined } } as any,
+        pimsFeatures: [] as any,
+        parcelFeatures: [{ properties: { PIN: undefined } }] as any,
       },
       { label: NameSourceType.NONE, value: '' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
+        ...emptyFeatureDataset(),
         location: null,
-        pimsFeature: {} as any,
-        parcelFeature: { properties: { PIN: '' } } as any,
+        pimsFeatures: [] as any,
+        parcelFeatures: [{ properties: { PIN: '' } }] as any,
       },
       { label: NameSourceType.NONE, value: '' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
-        pimsFeature: {} as any,
-        parcelFeature: { properties: { PIN: 111112 } } as any,
+        ...emptyFeatureDataset(),
+        pimsFeatures: [] as any,
+        parcelFeatures: [{ properties: { PIN: 111112 } }] as any,
       },
       { label: NameSourceType.PIN, value: '111112' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
-        pimsFeature: {} as any,
-        parcelFeature: {
-          properties: {
-            PIN: 1,
-            PLAN_NUMBER: 'PB1000',
+        ...emptyFeatureDataset(),
+        pimsFeatures: [] as any,
+        parcelFeatures: [
+          {
+            properties: {
+              PIN: 1,
+              PLAN_NUMBER: 'PB1000',
+            },
           },
-        } as any,
+        ] as any,
       },
       { label: NameSourceType.PIN, value: '1' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
+        ...emptyFeatureDataset(),
         location: null,
-        pimsFeature: {} as any,
-        parcelFeature: { properties: { PLAN_NUMBER: undefined } } as any,
+        pimsFeatures: [] as any,
+        parcelFeatures: [{ properties: { PLAN_NUMBER: undefined } }] as any,
       },
       { label: NameSourceType.NONE, value: '' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
+        ...emptyFeatureDataset(),
         location: null,
-        pimsFeature: {} as any,
-        parcelFeature: { properties: { PLAN_NUMBER: '' } } as any,
+        pimsFeatures: [] as any,
+        parcelFeatures: [{ properties: { PLAN_NUMBER: '' } }] as any,
       },
       { label: NameSourceType.NONE, value: '' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
-        pimsFeature: {} as any,
-        parcelFeature: { properties: { PLAN_NUMBER: '1' } } as any,
+        ...emptyFeatureDataset(),
+        pimsFeatures: [] as any,
+        parcelFeatures: [{ properties: { PLAN_NUMBER: '1' } }] as any,
       },
       { label: NameSourceType.PLAN, value: '1' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
-        pimsFeature: {} as any,
-        parcelFeature: { properties: { PLAN_NUMBER: 'PB1000' } } as any,
+        ...emptyFeatureDataset(),
+        pimsFeatures: [] as any,
+        parcelFeatures: [{ properties: { PLAN_NUMBER: 'PB1000' } }] as any,
       },
       { label: NameSourceType.PLAN, value: 'PB1000' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
+        ...emptyFeatureDataset(),
         location: { lat: 1, lng: 2 },
-        fileLocation: null,
-        pimsFeature: {} as any,
-        parcelFeature: {} as any,
+        pimsFeatures: [] as any,
+        parcelFeatures: [] as any,
       },
       { label: NameSourceType.LOCATION, value: '2.000000, 1.000000' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
+        ...emptyFeatureDataset(),
         location: null,
-        pimsFeature: { properties: { STREET_ADDRESS_1: undefined } } as any,
-        parcelFeature: {} as any,
+        pimsFeature: [{ properties: { STREET_ADDRESS_1: undefined } }] as any,
+        parcelFeature: [] as any,
       },
       { label: NameSourceType.NONE, value: '' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
+        ...emptyFeatureDataset(),
         location: null,
-        pimsFeature: { properties: { STREET_ADDRESS_1: '' } } as any,
-        parcelFeature: {} as any,
+        pimsFeatures: [{ properties: { STREET_ADDRESS_1: '' } }] as any,
+        parcelFeatures: [] as any,
       },
       { label: NameSourceType.NONE, value: '' },
     ],
     [
       {
-        ...getMockLocationFeatureDataset(),
+        ...emptyFeatureDataset(),
         location: null,
-        pimsFeature: { properties: { STREET_ADDRESS_1: '1234 fake st' } } as any,
-        parcelFeature: {} as any,
+        pimsFeatures: [{ properties: { STREET_ADDRESS_1: '1234 fake st' } }] as any,
+        parcelFeatures: [] as any,
       },
       { label: NameSourceType.ADDRESS, value: '1234 fake st' },
     ],
@@ -250,23 +256,23 @@ describe('mapPropertyUtils', () => {
     [
       {
         ...getMockLocationFeatureDataset(),
-        pimsFeature: { properties: { PID_PADDED: '123-456-789' } } as any,
+        pimsFeatures: [{ properties: { PID_PADDED: '123-456-789' } }] as any,
       },
       '123-456-789',
     ],
     [
       {
         ...getMockLocationFeatureDataset(),
-        pimsFeature: {} as any,
-        parcelFeature: { properties: { PID: '9999' } } as any,
+        pimsFeatures: [] as any,
+        parcelFeatures: [{ properties: { PID: '9999' } }] as any,
       },
       '9999',
     ],
     [
       {
         ...getMockLocationFeatureDataset(),
-        pimsFeature: {} as any,
-        parcelFeature: {} as any,
+        pimsFeatures: [] as any,
+        parcelFeatures: [] as any,
       },
       null,
     ],
@@ -280,30 +286,30 @@ describe('mapPropertyUtils', () => {
 
   it.each([
     [
-      { ...getMockLocationFeatureDataset(), pimsFeature: { properties: { PIN: 1234 } } as any },
+      { ...getMockLocationFeatureDataset(), pimsFeatures: [{ properties: { PIN: 1234 } }] as any },
       '1234',
     ],
     [
       {
         ...getMockLocationFeatureDataset(),
-        pimsFeature: {} as any,
-        parcelFeature: { properties: { PIN: 9999 } } as any,
+        pimsFeatures: [] as any,
+        parcelFeatures: [{ properties: { PIN: 9999 } }] as any,
       },
       '9999',
     ],
     [
       {
         ...getMockLocationFeatureDataset(),
-        pimsFeature: {} as any,
-        parcelFeature: {} as any,
+        pimsFeatures: [] as any,
+        parcelFeatures: [] as any,
       },
       null,
     ],
     [
       {
         ...getMockLocationFeatureDataset(),
-        pimsFeature: { properties: { pin: '4321' } } as any,
-        parcelFeature: { properties: { pid: 1234 } } as any,
+        pimsFeatures: [{ properties: { pin: '4321' } }] as any,
+        parcelFeatures: [{ properties: { pid: 1234 } }] as any,
       },
       null,
     ],
@@ -357,15 +363,17 @@ describe('mapPropertyUtils', () => {
       { lat: 44, lng: -77 },
       {
         ...getMockLocationFeatureDataset(),
-        pimsFeature: polygon([
-          [
-            [-81, 41],
-            [-81, 47],
-            [-72, 47],
-            [-72, 41],
-            [-81, 41],
-          ],
-        ]) as Feature<Geometry, PIMS_Property_Location_View> | null,
+        pimsFeatures: [
+          polygon([
+            [
+              [-81, 41],
+              [-81, 47],
+              [-72, 47],
+              [-72, 41],
+              [-81, 41],
+            ],
+          ]) as Feature<Geometry, PIMS_Property_Location_View> | null,
+        ],
       },
       true,
     ],
@@ -373,15 +381,17 @@ describe('mapPropertyUtils', () => {
       { lat: 44, lng: 80 },
       {
         ...getMockLocationFeatureDataset(),
-        pimsFeature: polygon([
-          [
-            [-81, 41],
-            [-81, 47],
-            [-72, 47],
-            [-72, 41],
-            [-81, 41],
-          ],
-        ]) as Feature<Geometry, PIMS_Property_Location_View> | null,
+        pimsFeatures: [
+          polygon([
+            [
+              [-81, 41],
+              [-81, 47],
+              [-72, 47],
+              [-72, 41],
+              [-81, 41],
+            ],
+          ]) as Feature<Geometry, PIMS_Property_Location_View> | null,
+        ],
       },
       false,
     ],
@@ -389,16 +399,18 @@ describe('mapPropertyUtils', () => {
       { lat: 44, lng: -77 },
       {
         ...getMockLocationFeatureDataset(),
-        pimsFeature: null,
-        parcelFeature: polygon([
-          [
-            [-81, 41],
-            [-81, 47],
-            [-72, 47],
-            [-72, 41],
-            [-81, 41],
-          ],
-        ]) as Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null,
+        pimsFeatures: null,
+        parcelFeatures: [
+          polygon([
+            [
+              [-81, 41],
+              [-81, 47],
+              [-72, 47],
+              [-72, 41],
+              [-81, 41],
+            ],
+          ]) as Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null,
+        ],
       },
       true,
     ],
@@ -406,16 +418,18 @@ describe('mapPropertyUtils', () => {
       { lat: 44, lng: 80 },
       {
         ...getMockLocationFeatureDataset(),
-        pimsFeature: null,
-        parcelFeature: polygon([
-          [
-            [-81, 41],
-            [-81, 47],
-            [-72, 47],
-            [-72, 41],
-            [-81, 41],
-          ],
-        ]) as Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null,
+        pimsFeatures: null,
+        parcelFeatures: [
+          polygon([
+            [
+              [-81, 41],
+              [-81, 47],
+              [-72, 47],
+              [-72, 41],
+              [-81, 41],
+            ],
+          ]) as Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null,
+        ],
       },
       false,
     ],

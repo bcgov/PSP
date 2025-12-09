@@ -15,6 +15,7 @@ import {
   boundaryFromFileProperty,
   exists,
   firstValidOrNull,
+  isEmptyOrNull,
   latLngLiteralToGeometry,
   pimsGeomeryToGeometry,
 } from '@/utils';
@@ -51,10 +52,19 @@ export const ZoomToLocation: React.FunctionComponent<IZoomToLocationProps> = ({
   const { requestFlyToBounds } = useMapStateMachine();
 
   const bounds: LatLngBounds | null = useMemo(() => {
-    const propertyLocations: Geometry[] =
-      formProperties?.map(
-        p => p?.polygon ?? latLngLiteralToGeometry({ lat: p?.latitude, lng: p?.longitude }),
+    const propertyLocations: Geometry[] = [];
+    const points =
+      formProperties?.map(p =>
+        p?.polygon ?? (p.latitude && p.longitude)
+          ? latLngLiteralToGeometry({ lat: p?.latitude, lng: p?.longitude })
+          : null,
       ) || [];
+
+    if (!isEmptyOrNull(points)) {
+      points.forEach(point => {
+        propertyLocations.push(point);
+      });
+    }
 
     if (exists(geometry)) {
       propertyLocations.push(geometry);

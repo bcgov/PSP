@@ -9,26 +9,28 @@ import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import { toast } from 'react-toastify';
 import { LocationFeatureDatasetWithAddress } from './useLocationFeatureDatasetsWithAddresses';
 import { vi, Mock } from 'vitest';
-import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
+import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
 import { usePropertyFormSyncronizer } from './usePropertyFormSyncronizer';
 
 vi.mock('./useEditPropertiesMode', () => ({
   useEditPropertiesMode: vi.fn(),
 }));
-vi.mock('./useFeatureDatasetsWithAddresses', () => ({
-  useFeatureDatasetsWithAddresses: vi.fn(),
+vi.mock('./useLocationFeatureDatasetsWithAddresses', () => ({
+  useLocationFeatureDatasetsWithAddresses: vi.fn(),
 }));
 
 const toastSuccessSpy = vi.spyOn(toast, 'success');
 const toastWarnSpy = vi.spyOn(toast, 'warn');
 
 describe('usePropertyFormSyncronizer', () => {
-  let mockProcessCreation: Mock;
+  let mockProcessLocationAddition: Mock;
+  let validateNewProperties: Mock;
+
   let mockFormikRef: React.RefObject<FormikProps<any>>;
 
   beforeEach(() => {
     vi.clearAllMocks();
-    mockProcessCreation = vi.fn();
+    mockProcessLocationAddition = vi.fn();
 
     mockFormikRef = {
       current: {
@@ -38,32 +40,25 @@ describe('usePropertyFormSyncronizer', () => {
       },
     } as unknown as React.RefObject<FormikProps<any>>;
 
+    validateNewProperties = vi.fn();
+
     vi.spyOn(MapStateMachineContext, 'useMapStateMachine').mockReturnValue({
-      selectedFeatures: [getMockSelectedFeatureDataset()],
-      processCreation: mockProcessCreation,
+      processLocationFeaturesAddition: mockProcessLocationAddition,
+      pendingLocationFeaturesAddition: true,
     } as any);
 
     (FeatureDatasetsHook.useLocationFeatureDatasetsWithAddresses as any).mockReturnValue({
-      featuresWithAddresses: [
-        { feature: getMockSelectedFeatureDataset() } as LocationFeatureDatasetWithAddress,
+      locationFeaturesWithAddresses: [
+        { feature: getMockLocationFeatureDataset() } as LocationFeatureDatasetWithAddress,
       ],
       bcaLoading: false,
     });
   });
 
-  it('calls useEditPropertiesMode and returns featuresWithAddresses and bcaLoading', () => {
-    const { result } = renderHook(() => usePropertyFormSyncronizer(mockFormikRef, 'properties'));
-    expect(EditPropertiesModeHook.useEditPropertiesMode).toHaveBeenCalled();
-    expect(result.current.featuresWithAddresses).toEqual([
-      { feature: getMockSelectedFeatureDataset() },
-    ]);
-    expect(result.current.isLoading).toBe(false);
-  });
-
   it('uses overrideFeatures if provided', () => {
     const overrideFeatures = [{ feature: { id: 2 }, address: '456 Side St' }];
     renderHook(() =>
-      usePropertyFormSyncronizer(mockFormikRef, 'properties', overrideFeatures as any),
+      usePropertyFormSyncronizer(mockFormikRef, validateNewProperties, overrideFeatures as any),
     );
     expect(FeatureDatasetsHook.useLocationFeatureDatasetsWithAddresses).toHaveBeenCalledWith(
       overrideFeatures,
@@ -73,14 +68,37 @@ describe('usePropertyFormSyncronizer', () => {
   it('calls setFieldValue, setFieldTouched, and shows success toast when unique properties are added', () => {
     mockFormikRef.current.values = { properties: [] };
     (FeatureDatasetsHook.useLocationFeatureDatasetsWithAddresses as any).mockReturnValue({
-      featuresWithAddresses: [
+      locationFeaturesWithAddresses: [
         { feature: { id: 1 }, address: 'A' },
         { feature: { id: 2 }, address: 'B' },
       ],
       bcaLoading: false,
     });
 
-    renderHook(() => usePropertyFormSyncronizer(mockFormikRef, 'properties'));
+    // mocked validator
+    validateNewProperties.mockImplementation(
+      (
+        newProperties: PropertyForm[],
+        validateCallback: (isValid: boolean, newProperties: PropertyForm[]) => void,
+      ) => {
+        validateCallback(true, newProperties);
+      },
+    );
+
+    renderHook(() => usePropertyFormSyncronizer(mockFormikRef, validateNewProperties));
+
+    const callBackFn = expect.any(Function);
+    expect(validateNewProperties).toHaveBeenCalledWith(
+      expect.arrayContaining([
+        expect.objectContaining({
+          address: 'A',
+        }),
+        expect.objectContaining({
+          address: 'B',
+        }),
+      ]),
+      callBackFn,
+    );
 
     expect(mockFormikRef.current.setFieldValue).toHaveBeenCalledWith('properties', [
       expect.objectContaining({ address: 'A' }),
@@ -89,59 +107,58 @@ describe('usePropertyFormSyncronizer', () => {
     expect(mockFormikRef.current.setFieldTouched).toHaveBeenCalledWith('properties', true);
     expect(toastSuccessSpy).toHaveBeenCalledWith('Added 2 new property(s) to the file.');
     expect(toastWarnSpy).not.toHaveBeenCalled();
-    expect(mockProcessCreation).toHaveBeenCalled();
+    expect(mockProcessLocationAddition).toHaveBeenCalled();
   });
 
   it('shows warning toast when duplicates are skipped', () => {
-    const mockPropertyForms = [PropertyForm.fromLocationFeatureDataset(getMockSelectedFeatureDataset())];
+    const mockPropertyForms = [
+      PropertyForm.fromLocationFeatureDataset(getMockLocationFeatureDataset()),
+    ];
     mockFormikRef.current.values = { properties: mockPropertyForms };
 
     (FeatureDatasetsHook.useLocationFeatureDatasetsWithAddresses as any).mockReturnValue({
-      featuresWithAddresses: [
-        { feature: getMockSelectedFeatureDataset() } as LocationFeatureDatasetWithAddress,
+      locationFeaturesWithAddresses: [
+        { feature: getMockLocationFeatureDataset() } as LocationFeatureDatasetWithAddress,
         { feature: { id: 999 }, address: 'Unique' } as unknown as LocationFeatureDatasetWithAddress,
       ],
       bcaLoading: false,
     });
 
-    renderHook(() => usePropertyFormSyncronizer(mockFormikRef, 'properties'));
+    renderHook(() => usePropertyFormSyncronizer(mockFormikRef, validateNewProperties));
 
-    expect(mockFormikRef.current.setFieldValue).toHaveBeenCalled();
-    expect(mockFormikRef.current.setFieldTouched).toHaveBeenCalledWith('properties', true);
-    expect(toastSuccessSpy).toHaveBeenCalledWith('Added 1 new property(s) to the file.');
     expect(toastWarnSpy).toHaveBeenCalledWith('Skipped 1 duplicate property(s).');
-    expect(mockProcessCreation).toHaveBeenCalled();
+    expect(mockProcessLocationAddition).toHaveBeenCalled();
   });
 
   it('shows only warning toast if all properties are duplicates', () => {
     mockFormikRef.current.values = {
-      properties: [PropertyForm.fromLocationFeatureDataset(getMockSelectedFeatureDataset())],
+      properties: [PropertyForm.fromLocationFeatureDataset(getMockLocationFeatureDataset())],
     };
     (FeatureDatasetsHook.useLocationFeatureDatasetsWithAddresses as any).mockReturnValue({
-      featuresWithAddresses: [
-        { feature: getMockSelectedFeatureDataset() } as LocationFeatureDatasetWithAddress,
+      locationFeaturesWithAddresses: [
+        { feature: getMockLocationFeatureDataset() } as LocationFeatureDatasetWithAddress,
       ],
       bcaLoading: false,
     });
 
-    renderHook(() => usePropertyFormSyncronizer(mockFormikRef, 'properties'));
+    renderHook(() => usePropertyFormSyncronizer(mockFormikRef, validateNewProperties));
 
     expect(mockFormikRef.current.setFieldValue).not.toHaveBeenCalled();
     expect(mockFormikRef.current.setFieldTouched).not.toHaveBeenCalled();
     expect(toastSuccessSpy).not.toHaveBeenCalled();
     expect(toastWarnSpy).toHaveBeenCalledWith('Skipped 1 duplicate property(s).');
-    expect(mockProcessCreation).toHaveBeenCalled();
+    expect(mockProcessLocationAddition).toHaveBeenCalled();
   });
 
   it('handles empty propertyForms gracefully', () => {
     mockFormikRef.current.values = { properties: [{ id: 1 }] };
 
     (FeatureDatasetsHook.useLocationFeatureDatasetsWithAddresses as any).mockReturnValue({
-      featuresWithAddresses: [],
+      locationFeaturesWithAddresses: [],
       bcaLoading: false,
     });
 
-    renderHook(() => usePropertyFormSyncronizer(mockFormikRef, 'properties'));
+    renderHook(() => usePropertyFormSyncronizer(mockFormikRef, validateNewProperties));
 
     expect(mockFormikRef.current.setFieldValue).not.toHaveBeenCalled();
     expect(mockFormikRef.current.setFieldTouched).not.toHaveBeenCalled();
@@ -152,7 +169,7 @@ describe('usePropertyFormSyncronizer', () => {
   it('handles undefined formikRef.current gracefully', () => {
     const emptyRef = { current: undefined } as React.RefObject<FormikProps<any>>;
 
-    renderHook(() => usePropertyFormSyncronizer(emptyRef, 'properties'));
+    renderHook(() => usePropertyFormSyncronizer(emptyRef, validateNewProperties));
 
     expect(toastSuccessSpy).not.toHaveBeenCalled();
     expect(toastWarnSpy).not.toHaveBeenCalled();

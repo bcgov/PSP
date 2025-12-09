@@ -2,7 +2,6 @@ import { Feature, Geometry } from 'geojson';
 import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { mockPropertyLayerSearchResponse } from '@/mocks/filterData.mock';
 import {
   emptyPmbcParcel,
@@ -16,6 +15,10 @@ import {
   PropertySearchSelectorFormView,
 } from './PropertySearchSelectorFormView';
 import { featureToLocationFeatureDataset } from './PropertySelectorSearchContainer';
+import {
+  emptyFeatureDataset,
+  LocationFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -222,61 +225,56 @@ describe('PropertySearchSelectorFormView component', () => {
       );
       await act(async () => userEvent.click(checkbox));
       expect(checkbox).toBeChecked();
-      expect(onSelectedProperties).toHaveBeenCalledWith<SelectedFeatureDataset[][]>([
-        expect.objectContaining<SelectedFeatureDataset>({
+      expect(onSelectedProperties).toHaveBeenCalledWith<LocationFeatureDataset[][]>([
+        expect.objectContaining<LocationFeatureDataset>({
+          ...emptyFeatureDataset(),
           districtFeature: null,
-          id: 'PID-006-772-331-55.706230240625004--121.60834946062499',
           location: {
             lat: 55.706230240625004,
             lng: -121.60834946062499,
           },
-          municipalityFeature: null,
-          fileLocation: null,
-          fileBoundary: null,
-          parcelFeature: expect.objectContaining<Feature<
-            Geometry,
-            PMBC_FullyAttributed_Feature_Properties
-          > | null>({
-            geometry: {
-              coordinates: [
-                [
-                  [-121.60861991, 55.70650025],
-                  [-121.60861925, 55.70588252],
-                  [-121.60728684, 55.7061924],
-                  [-121.60718833, 55.70627546],
-                  [+-121.60718846, 55.70643785],
-                  [-121.60729988, 55.70650069],
-                  [-121.60861991, 55.70650025],
+          parcelFeatures: expect.arrayContaining([
+            expect.objectContaining<Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>>({
+              geometry: {
+                coordinates: [
+                  [
+                    [-121.60861991, 55.70650025],
+                    [-121.60861925, 55.70588252],
+                    [-121.60728684, 55.7061924],
+                    [-121.60718833, 55.70627546],
+                    [+-121.60718846, 55.70643785],
+                    [-121.60729988, 55.70650069],
+                    [-121.60861991, 55.70650025],
+                  ],
                 ],
-              ],
-              type: 'Polygon',
-            },
-            id: 'WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW.fid-674bf6f8_180d8c9b18e_7c12',
-            properties: {
-              ...emptyPmbcParcel,
-              FEATURE_AREA_SQM: 4478.6462,
-              FEATURE_LENGTH_M: 281.3187,
-              MUNICIPALITY: 'Chetwynd, District of',
-              OBJECTID: 601612446,
-              OWNER_TYPE: 'Private',
-              PARCEL_CLASS: 'Subdivision',
-              PARCEL_FABRIC_POLY_ID: 1994518,
-              PARCEL_NAME: '006772331',
-              PARCEL_START_DATE: null,
-              PARCEL_STATUS: 'Active',
-              PID: '006772331',
-              PID_NUMBER: 6772331,
-              PIN: 10514131,
-              PLAN_NUMBER: 'PGP27005',
-              REGIONAL_DISTRICT: 'Peace River Regional District',
-              SE_ANNO_CAD_DATA: null,
-              WHEN_UPDATED: '2019-01-09Z',
-            },
-            type: 'Feature',
-          }),
-          pimsFeature: null,
+                type: 'Polygon',
+              },
+              id: 'WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW.fid-674bf6f8_180d8c9b18e_7c12',
+              properties: {
+                ...emptyPmbcParcel,
+                FEATURE_AREA_SQM: 4478.6462,
+                FEATURE_LENGTH_M: 281.3187,
+                MUNICIPALITY: 'Chetwynd, District of',
+                OBJECTID: 601612446,
+                OWNER_TYPE: 'Private',
+                PARCEL_CLASS: 'Subdivision',
+                PARCEL_FABRIC_POLY_ID: 1994518,
+                PARCEL_NAME: '006772331',
+                PARCEL_START_DATE: null,
+                PARCEL_STATUS: 'Active',
+                PID: '006772331',
+                PID_NUMBER: 6772331,
+                PIN: 10514131,
+                PLAN_NUMBER: 'PGP27005',
+                REGIONAL_DISTRICT: 'Peace River Regional District',
+                SE_ANNO_CAD_DATA: null,
+                WHEN_UPDATED: '2019-01-09Z',
+              },
+              type: 'Feature',
+            }),
+          ]),
+          pimsFeatures: null,
           regionFeature: null,
-          selectingComponentId: null,
         }),
       ]);
     });

@@ -138,7 +138,3 @@ export const getMockLocationFeatureDataset = (): LocationFeatureDataset => ({
   ],
   highwayFeatures: getMockISSResult().features,
 });
-
-export const getMockSelectedFeatureDataset = (): LocationFeatureDataset => {
-  return getMockLocationFeatureDataset();
-};

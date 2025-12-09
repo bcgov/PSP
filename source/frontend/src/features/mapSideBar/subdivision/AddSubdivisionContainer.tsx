@@ -138,7 +138,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
       const response = await addPropertyOperation(propertyOperations, userOverrideCodes);
 
       if (response?.length) {
-        handleSuccess(propertyOperations);
+        handleSuccess(response);
       }
     } finally {
       mapMachine.processLocationFeaturesAddition();

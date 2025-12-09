@@ -32,9 +32,7 @@ describe('AddResearchForm component', () => {
         initialValues={renderOptions.initialValues}
         validationSchema={AddResearchFileYupSchema}
       >
-        {formikProps => (
-          <AddResearchForm confirmBeforeAdd={renderOptions.confirmBeforeAdd ?? vi.fn()} />
-        )}
+        {formikProps => <AddResearchForm />}
       </Formik>,
       {
         ...renderOptions,

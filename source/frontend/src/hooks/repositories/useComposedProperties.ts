@@ -152,11 +152,14 @@ export const useComposedProperties = ({
     findMultipleCrownLandLeaseLoading,
   } = useCrownLandLayer();
   const [crownResponse, setCrownResponse] = useState<{
-    crownTenureFeatures: Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties>[];
-    crownLeaseFeatures: Feature<Geometry, TANTALIS_CrownLandLeases_Feature_Properties>[];
-    crownLicenseFeatures: Feature<Geometry, TANTALIS_CrownLandLicenses_Feature_Properties>[];
-    crownInclusionFeatures: Feature<Geometry, TANTALIS_CrownLandInclusions_Feature_Properties>[];
-    crownInventoryFeatures: Feature<Geometry, TANTALIS_CrownLandInventory_Feature_Properties>[];
+    crownLandTenuresFeatures: Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties>[];
+    crownLandLeasesFeatures: Feature<Geometry, TANTALIS_CrownLandLeases_Feature_Properties>[];
+    crownLandLicensesFeatures: Feature<Geometry, TANTALIS_CrownLandLicenses_Feature_Properties>[];
+    crownLandInclusionsFeatures: Feature<
+      Geometry,
+      TANTALIS_CrownLandInclusions_Feature_Properties
+    >[];
+    crownLandInventoryFeatures: Feature<Geometry, TANTALIS_CrownLandInventory_Feature_Properties>[];
   }>();
   const [highwayResponse, setHighwayResponse] = useState<
     Feature<Geometry, ISS_ProvincialPublicHighway>[] | undefined
@@ -339,11 +342,11 @@ export const useComposedProperties = ({
             : Promise.resolve(undefined),
         ]);
         setCrownResponse({
-          crownTenureFeatures: crownTenures ?? [],
-          crownLeaseFeatures: crownLeases ?? [],
-          crownLicenseFeatures: crownLicenses ?? [],
-          crownInclusionFeatures: crownInclusions ?? [],
-          crownInventoryFeatures: crownInventory ?? [],
+          crownLandTenuresFeatures: crownTenures ?? [],
+          crownLandLeasesFeatures: crownLeases ?? [],
+          crownLandLicensesFeatures: crownLicenses ?? [],
+          crownLandInclusionsFeatures: crownInclusions ?? [],
+          crownLandInventoryFeatures: crownInventory ?? [],
         });
         setHighwayResponse(highway);
         setMunicipalityResponse(municipality);

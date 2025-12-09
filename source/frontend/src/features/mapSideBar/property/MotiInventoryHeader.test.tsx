@@ -9,6 +9,7 @@ import { act, render, RenderOptions, RenderResult } from '@/utils/test-utils';
 
 import { ComposedProperty } from './ComposedProperty';
 import { IMotiInventoryHeaderProps, MotiInventoryHeader } from './MotiInventoryHeader';
+import { emptyFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 const defaultComposedProperty: ComposedProperty = {
   pid: undefined,
@@ -17,21 +18,12 @@ const defaultComposedProperty: ComposedProperty = {
   ltsaOrders: undefined,
   pimsProperty: undefined,
   propertyAssociations: undefined,
-  parcelMapFeatureCollection: undefined,
-  pimsGeoserverFeatureCollection: undefined,
-  bcAssessmentSummary: undefined,
-  crownTenureFeatures: undefined,
+  featureDataset: {
+    ...emptyFeatureDataset(),
+  },
   planNumber: undefined,
   spcpOrder: undefined,
-  crownInclusionFeatures: undefined,
-  crownInventoryFeatures: undefined,
-  crownLeaseFeatures: undefined,
-  crownLicenseFeatures: undefined,
-  highwayFeatures: undefined,
-  municipalityFeatures: undefined,
-  firstNationFeatures: undefined,
-  alrFeatures: undefined,
-  electoralFeatures: undefined,
+  bcAssessmentSummary: undefined,
 };
 
 vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
@@ -143,9 +135,9 @@ describe('MotiInventoryHeader component', () => {
     const result = await setup({
       composedProperty: {
         ...defaultComposedProperty,
-        pimsGeoserverFeatureCollection: {
-          type: 'FeatureCollection',
-          features: [testProperty],
+        featureDataset: {
+          ...emptyFeatureDataset(),
+          pimsFeatures: [testProperty],
         },
       },
       isLoading: false,

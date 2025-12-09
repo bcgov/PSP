@@ -223,7 +223,7 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
 
   return lease ? (
     <View
-      initialValues={{ ...new LeaseFormModel(), ...LeaseFormModel.fromApi(lease) }}
+      initialValues={LeaseFormModel.fromApi(lease)}
       selectedContacts={selectedContacts}
       setSelectedStakeholders={setSelectedStakeholdersWithPersonData}
       selectedStakeholders={stakeholders}

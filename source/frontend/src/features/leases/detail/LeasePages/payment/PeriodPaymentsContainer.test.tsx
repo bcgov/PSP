@@ -44,18 +44,16 @@ const mockGetLeasePeriods = {
   loading: false,
 };
 
-const defaultLeaseWithPeriodsPayments: LeaseFormModel = {
-  ...new LeaseFormModel(),
-  periods: [
-    {
-      ...defaultFormLeasePeriod,
-      expiryDate: '2020-01-01',
-      startDate: '2020-01-01',
-      statusTypeCode: toTypeCodeNullable(LeasePeriodStatusTypes.EXERCISED),
-      payments: [{ ...defaultTestFormLeasePayment }],
-    },
-  ],
-};
+const defaultLeaseWithPeriodsPayments: LeaseFormModel = new LeaseFormModel();
+defaultLeaseWithPeriodsPayments.periods = [
+  {
+    ...defaultFormLeasePeriod,
+    expiryDate: '2020-01-01',
+    startDate: '2020-01-01',
+    statusTypeCode: toTypeCodeNullable(LeasePeriodStatusTypes.EXERCISED),
+    payments: [{ ...defaultTestFormLeasePayment }],
+  },
+];
 
 vi.mock('@/hooks/repositories/useUserInfoRepository');
 vi.mock('@/hooks/repositories/useLeasePeriodRepository');

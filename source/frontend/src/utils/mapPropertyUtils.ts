@@ -103,7 +103,7 @@ export const getPropertyNameFromForm = (propertyForm: PropertyForm | null): Prop
       value:
         formatSplitAddress(
           address.streetAddress1,
-          address.streetAddress1,
+          address.streetAddress2,
           address.streetAddress3,
           address.municipality,
           address.province,

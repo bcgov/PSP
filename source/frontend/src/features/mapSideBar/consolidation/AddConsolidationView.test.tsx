@@ -5,7 +5,6 @@ import { createRef } from 'react';
 import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSelectorContainer';
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
 import Claims from '@/constants/claims';
-import { getMockSelectedFeatureDataset } from '@/mocks/getMockSelectedFeatureDataset';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
@@ -14,6 +13,8 @@ import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-util
 
 import { ConsolidationFormModel } from './AddConsolidationModel';
 import AddConsolidationView, { IAddConsolidationViewProps } from './AddConsolidationView';
+import { PropertyForm } from '../shared/models';
+import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
 
 const history = createMemoryHistory();
 
@@ -97,19 +98,21 @@ describe('Add Consolidation View', () => {
   });
 
   it('calls getPrimaryAddressByPid when destination property is activated', async () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
+    const mockFeatureSet = getMockLocationFeatureDataset();
     await setup();
     await act(async () => {
       mapSelectorProps.addSelectedProperties([
         {
           ...mockFeatureSet,
-          pimsFeature: {
-            ...mockFeatureSet.pimsFeature,
-            properties: {
-              ...mockFeatureSet.pimsFeature?.properties,
-              PID_PADDED: '123-456-789',
+          pimsFeatures: [
+            {
+              ...mockFeatureSet.pimsFeatures[0],
+              properties: {
+                ...mockFeatureSet.pimsFeatures[0]?.properties,
+                PID_PADDED: '123-456-789',
+              },
             },
-          },
+          ],
         },
       ]);
     });
@@ -117,19 +120,21 @@ describe('Add Consolidation View', () => {
   });
 
   it('does not call for address if property has no pid', async () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
+    const mockFeatureSet = getMockLocationFeatureDataset();
     await setup();
     await act(async () => {
       mapSelectorProps.addSelectedProperties([
         {
           ...mockFeatureSet,
-          pimsFeature: {
-            ...mockFeatureSet.pimsFeature,
-            properties: {
-              ...mockFeatureSet.pimsFeature?.properties,
-              PID_PADDED: undefined,
+          pimsFeatures: [
+            {
+              ...mockFeatureSet.pimsFeatures[0],
+              properties: {
+                ...mockFeatureSet.pimsFeatures[0]?.properties,
+                PID_PADDED: undefined,
+              },
             },
-          },
+          ],
         },
       ]);
     });
@@ -150,7 +155,8 @@ describe('Add Consolidation View', () => {
 
   it('selected source properties can be removed', async () => {
     const initialFormModel = new ConsolidationFormModel();
-    initialFormModel.sourceProperties = [{ ...getMockApiProperty(), pid: 111111111 }];
+    const initialProperty = { ...getMockApiProperty(), pid: 111111111 };
+    initialFormModel.sourceProperties = [PropertyForm.fromPropertyApi(initialProperty)];
 
     const { getByTitle, queryByText } = await setup({
       props: {
@@ -167,7 +173,8 @@ describe('Add Consolidation View', () => {
 
   it('selected destination property can be removed', async () => {
     const initialFormModel = new ConsolidationFormModel();
-    initialFormModel.destinationProperty = { ...getMockApiProperty(), pid: 111111111 };
+    const initialProperty = { ...getMockApiProperty(), pid: 111111111 };
+    initialFormModel.destinationProperty = PropertyForm.fromPropertyApi(initialProperty);
     initialFormModel.sourceProperties = [];
     const { getByTitle, queryByText } = await setup({
       props: {

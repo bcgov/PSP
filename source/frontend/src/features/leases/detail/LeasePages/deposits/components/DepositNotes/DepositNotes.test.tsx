@@ -47,35 +47,40 @@ describe('DepositNotes component', () => {
     onEdit.mockReset();
   });
   it('renders as expected', async () => {
+    const leaseForm = new LeaseFormModel();
+    leaseForm.returnNotes = 'security deposit notes';
     const { asFragment } = await setup({
-      lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
+      lease: leaseForm,
       claims: [],
     });
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders the lease notes', async () => {
+    const leaseForm = new LeaseFormModel();
+    leaseForm.returnNotes = 'security deposit notes';
     const { getByDisplayValue } = await setup({
-      lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
+      lease: leaseForm,
       claims: [],
     });
     expect(getByDisplayValue('security deposit notes')).toBeVisible();
   });
 
   it('notes are only editable via correct claims', async () => {
+    const leaseForm = new LeaseFormModel();
+    leaseForm.returnNotes = 'security deposit notes';
     const { queryByTestId } = setup({
-      lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
+      lease: leaseForm,
       claims: [],
     });
     expect(queryByTestId('edit-notes')).toBeNull();
   });
 
   it('displays notes in read only form by default', async () => {
+    const leaseForm = new LeaseFormModel();
+    leaseForm.returnNotes = 'security deposit notes';
     const { container } = await setup({
-      lease: {
-        ...new LeaseFormModel(),
-        returnNotes: 'security deposit notes',
-      },
+      lease: leaseForm,
       disabled: true,
       claims: [Claims.LEASE_EDIT],
     });
@@ -84,8 +89,10 @@ describe('DepositNotes component', () => {
   });
 
   it('edit button allows notes field to be edited', async () => {
+    const leaseForm = new LeaseFormModel();
+    leaseForm.returnNotes = 'security deposit notes';
     const { getByTestId } = await setup({
-      lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
+      lease: leaseForm,
       claims: [Claims.LEASE_EDIT],
       disabled: true,
     });
@@ -95,8 +102,10 @@ describe('DepositNotes component', () => {
   });
 
   it('edited notes can be saved', async () => {
+    const leaseForm = new LeaseFormModel();
+    leaseForm.returnNotes = 'security deposit notes';
     const { container, getByText } = await setup({
-      lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
+      lease: leaseForm,
       claims: [Claims.LEASE_EDIT],
       disabled: false,
     });
@@ -107,8 +116,10 @@ describe('DepositNotes component', () => {
   });
 
   it('edited notes can be cancelled', async () => {
+    const leaseForm = new LeaseFormModel();
+    leaseForm.returnNotes = 'security deposit notes';
     const { getByText } = await setup({
-      lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
+      lease: leaseForm,
       claims: [Claims.LEASE_EDIT],
       disabled: false,
     });
@@ -118,8 +129,10 @@ describe('DepositNotes component', () => {
   });
 
   it('edit button does not display if file in final state', async () => {
+    const leaseForm = new LeaseFormModel();
+    leaseForm.returnNotes = 'security deposit notes';
     const { queryByTestId } = await setup({
-      lease: { ...new LeaseFormModel(), returnNotes: 'security deposit notes' },
+      lease: leaseForm,
       claims: [Claims.LEASE_EDIT],
       isFileFinalStatus: true,
     });

@@ -49,10 +49,10 @@ describe('WorklistContextProvider', () => {
   });
 
   it('respects initial parcels', () => {
-    const a = getMockWorklistParcel('a');
-    const b = getMockWorklistParcel('b');
+    const a = getMockWorklistParcel({}, { lat: 0, lng: 1 });
+    const b = getMockWorklistParcel({}, { lat: 2, lng: 3 });
     const { result } = renderWorklistHook([a, b]);
-    expect(result.current.parcels.map(p => latLngToKey(p.location))).toEqual(['a', 'b']);
+    expect(result.current.parcels.map(p => latLngToKey(p.location))).toEqual(['0-1', '2-3']);
   });
 
   it('select() sets selectedId', () => {
@@ -62,7 +62,7 @@ describe('WorklistContextProvider', () => {
   });
 
   it('add() adds a unique parcel', () => {
-    const parcel = getMockWorklistParcel('1', { PID: '123456789' });
+    const parcel = getMockWorklistParcel({ PID: '123456789' });
     const { result } = renderWorklistHook();
     act(() => result.current.add(parcel));
 
@@ -72,8 +72,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('add() prevents duplicate by internal ID and calls notifier.error', () => {
-    const parcel = getMockWorklistParcel('1');
-    const duplicate = getMockWorklistParcel('1');
+    const parcel = getMockWorklistParcel({}, { lat: 0, lng: 1 });
+    const duplicate = getMockWorklistParcel({}, { lat: 0, lng: 1 });
 
     const { result } = renderWorklistHook();
 
@@ -87,8 +87,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('add() prevents duplicate by PID and calls notifier.error', () => {
-    const parcel = getMockWorklistParcel('1', { PID: '123456789' });
-    const duplicate = getMockWorklistParcel('2', { PID: '123456789' });
+    const parcel = getMockWorklistParcel({ PID: '123456789' });
+    const duplicate = getMockWorklistParcel({ PID: '123456789' });
 
     const { result } = renderWorklistHook();
 
@@ -102,8 +102,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('add() prevents duplicate by PIN and calls notifier.error', () => {
-    const parcel = getMockWorklistParcel('p1', { PIN: 999999999 });
-    const duplicate = getMockWorklistParcel('p2', { PIN: 999999999 });
+    const parcel = getMockWorklistParcel({ PIN: 999999999 });
+    const duplicate = getMockWorklistParcel({ PIN: 999999999 });
 
     const { result } = renderWorklistHook();
 
@@ -117,8 +117,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('add() prevents duplicate by PLAN_NUMBER (fallback) and calls notifier.error', () => {
-    const parcel = getMockWorklistParcel('plan1', { PLAN_NUMBER: 'SP-12345' });
-    const duplicate = getMockWorklistParcel('plan2', { PLAN_NUMBER: 'SP-12345' });
+    const parcel = getMockWorklistParcel({ PLAN_NUMBER: 'SP-12345' });
+    const duplicate = getMockWorklistParcel({ PLAN_NUMBER: 'SP-12345' });
 
     const { result } = renderWorklistHook();
 
@@ -132,8 +132,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('add() prevents duplicate by lat/lng (no PID/PIN)', () => {
-    const parcel = getMockWorklistParcel('loc1', {}, { lat: 49.1, lng: -123.1 });
-    const duplicate = getMockWorklistParcel('loc2', {}, { lat: 49.1, lng: -123.1 });
+    const parcel = getMockWorklistParcel({}, { lat: 49.1, lng: -123.1 });
+    const duplicate = getMockWorklistParcel({}, { lat: 49.1, lng: -123.1 });
 
     const { result } = renderWorklistHook();
 
@@ -147,10 +147,10 @@ describe('WorklistContextProvider', () => {
   });
 
   it('addRange() adds only unique parcels and warns on duplicates', () => {
-    const existing = getMockWorklistParcel('base', { PID: '111' });
-    const p1 = getMockWorklistParcel('a', { PID: '222' });
-    const p2 = getMockWorklistParcel('b', { PID: '333' });
-    const dupe = getMockWorklistParcel('dupe', { PID: '111' });
+    const existing = getMockWorklistParcel({ PID: '111' });
+    const p1 = getMockWorklistParcel({ PID: '222' });
+    const p2 = getMockWorklistParcel({ PID: '333' });
+    const dupe = getMockWorklistParcel({ PID: '111' });
 
     const { result } = renderWorklistHook([existing]);
 
@@ -164,8 +164,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('addRange() notifies only success when no duplicates', () => {
-    const p1 = getMockWorklistParcel('a', { PID: '123' });
-    const p2 = getMockWorklistParcel('b', { PID: '456' });
+    const p1 = getMockWorklistParcel({ PID: '123' });
+    const p2 = getMockWorklistParcel({ PID: '456' });
 
     const { result } = renderWorklistHook();
 
@@ -177,11 +177,8 @@ describe('WorklistContextProvider', () => {
   });
 
   it('addRange() notifies only warn when all are duplicates', () => {
-    const existing = getMockWorklistParcel('a', { PID: '123' });
-    const dupes = [
-      getMockWorklistParcel('b', { PID: '123' }),
-      getMockWorklistParcel('c', { PID: '123' }),
-    ];
+    const existing = getMockWorklistParcel({ PID: '123' });
+    const dupes = [getMockWorklistParcel({ PID: '123' }), getMockWorklistParcel({ PID: '123' })];
 
     const { result } = renderWorklistHook([existing]);
 
@@ -193,17 +190,17 @@ describe('WorklistContextProvider', () => {
   });
 
   it('remove() deletes parcel by ID', () => {
-    const a = getMockWorklistParcel('a', { PID: '111' });
-    const b = getMockWorklistParcel('b', { PID: '222' });
+    const a = getMockWorklistParcel({ PID: '111' }, { lat: 0, lng: 0 });
+    const b = getMockWorklistParcel({ PID: '222' }, { lat: 1, lng: 1 });
     const { result } = renderWorklistHook([a, b]);
 
-    act(() => result.current.remove('a'));
-    expect(result.current.parcels.map(p => latLngToKey(p.location))).toEqual(['b']);
+    act(() => result.current.remove('1-1'));
+    expect(result.current.parcels.map(p => latLngToKey(p.location))).toEqual(['0-0']);
   });
 
   it('clearAll() removes all parcels', () => {
-    const a = getMockWorklistParcel('a');
-    const b = getMockWorklistParcel('b');
+    const a = getMockWorklistParcel();
+    const b = getMockWorklistParcel();
     const { result } = renderWorklistHook([a, b]);
 
     act(() => result.current.clearAll());

@@ -1,6 +1,6 @@
 import { AxiosError } from 'axios';
 import { FormikHelpers, FormikProps } from 'formik';
-import { useCallback, useRef, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -17,7 +17,7 @@ import { usePropertyFormSyncronizer } from '@/hooks/usePropertyFormSyncronizer';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isValidId } from '@/utils';
+import { exists, firstOrNull, isValidId } from '@/utils';
 
 import { useAddLease } from '../hooks/useAddLease';
 import { getDefaultFormLease, LeaseFormModel } from '../models';
@@ -51,7 +51,6 @@ export const AddLeaseContainer: React.FunctionComponent<
   const hasWarnedRef = useRef(false);
 
   // Get PropertyForms with addresses for all selected features
-
   const initialForm = getDefaultFormLease();
 
   const confirmProperty = async (propertyForm: PropertyForm) => !isValidId(propertyForm?.apiId);
@@ -92,7 +91,26 @@ export const AddLeaseContainer: React.FunctionComponent<
     [setDisplayModal, setModalContent],
   );
 
-  const { isLoading } = usePropertyFormSyncronizer(formikRef, confirmBeforeAdd);
+  const { featuresWithAddresses, isLoading } = usePropertyFormSyncronizer(
+    formikRef,
+    confirmBeforeAdd,
+  );
+
+  useEffect(() => {
+    if (featuresWithAddresses?.length > 0 && !formikRef?.current?.values?.regionId) {
+      const firstPropertyFeature = firstOrNull(featuresWithAddresses)?.feature;
+
+      if (exists(firstPropertyFeature)) {
+        const firstProperty = PropertyForm.fromLocationFeatureDataset(firstPropertyFeature);
+        formikRef?.current?.setFieldValue(
+          'regionId',
+          firstProperty.regionName !== 'Cannot determine'
+            ? firstProperty.region?.toString()
+            : undefined,
+        );
+      }
+    }
+  }, [featuresWithAddresses]);
 
   const saveLeaseFile = async (
     leaseFormModel: LeaseFormModel,

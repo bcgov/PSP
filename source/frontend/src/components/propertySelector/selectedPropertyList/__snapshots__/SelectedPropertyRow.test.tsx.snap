@@ -6,7 +6,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c6.btn {
+  .c7.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +35,17 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c6.btn .Button__value {
+.c7.btn .Button__value {
   width: auto;
 }
 
-.c6.btn:hover {
+.c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c6.btn:focus {
+.c7.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +53,31 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c6.btn.btn-primary {
+.c7.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c6.btn.btn-primary:hover,
-.c6.btn.btn-primary:active,
-.c6.btn.btn-primary:focus {
+.c7.btn.btn-primary:hover,
+.c7.btn.btn-primary:active,
+.c7.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c6.btn.btn-secondary {
+.c7.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c6.btn.btn-secondary:hover,
-.c6.btn.btn-secondary:active,
-.c6.btn.btn-secondary:focus {
+.c7.btn.btn-secondary:hover,
+.c7.btn.btn-secondary:active,
+.c7.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c6.btn.btn-info {
+.c7.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +85,66 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c6.btn.btn-info:hover,
-.c6.btn.btn-info:active,
-.c6.btn.btn-info:focus {
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c6.btn.btn-light {
+.c7.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c6.btn.btn-light:hover,
-.c6.btn.btn-light:active,
-.c6.btn.btn-light:focus {
+.c7.btn.btn-light:hover,
+.c7.btn.btn-light:active,
+.c7.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c6.btn.btn-dark {
+.c7.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c6.btn.btn-dark:hover,
-.c6.btn.btn-dark:active,
-.c6.btn.btn-dark:focus {
+.c7.btn.btn-dark:hover,
+.c7.btn.btn-dark:active,
+.c7.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c6.btn.btn-danger {
+.c7.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c6.btn.btn-danger:hover,
-.c6.btn.btn-danger:active,
-.c6.btn.btn-danger:focus {
+.c7.btn.btn-danger:hover,
+.c7.btn.btn-danger:active,
+.c7.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c6.btn.btn-warning {
+.c7.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c6.btn.btn-warning:hover,
-.c6.btn.btn-warning:active,
-.c6.btn.btn-warning:focus {
+.c7.btn.btn-warning:hover,
+.c7.btn.btn-warning:active,
+.c7.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c6.btn.btn-link {
+.c7.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +168,9 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c6.btn.btn-link:hover,
-.c6.btn.btn-link:active,
-.c6.btn.btn-link:focus {
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +180,15 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   outline: none;
 }
 
-.c6.btn.btn-link:disabled,
-.c6.btn.btn-link.disabled {
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c6.btn:disabled,
-.c6.btn:disabled:hover {
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,66 +200,19 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c6.Button .Button__icon {
+.c7.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c6.Button--icon-only:focus {
+.c7.Button--icon-only:focus {
   outline: none;
 }
 
-.c6.Button--icon-only .Button__icon {
+.c7.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c7.c7.btn {
-  background-color: unset;
-  border: none;
-}
-
-.c7.c7.btn:hover,
-.c7.c7.btn:focus,
-.c7.c7.btn:active {
-  background-color: unset;
-  outline: none;
-  box-shadow: none;
-}
-
-.c7.c7.btn svg {
-  -webkit-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
-}
-
-.c7.c7.btn svg:hover {
-  -webkit-transition: all 0.3s ease-in;
-  transition: all 0.3s ease-in;
-}
-
-.c7.c7.btn.btn-primary svg {
-  color: #013366;
-}
-
-.c7.c7.btn.btn-primary svg:hover {
-  color: #013366;
-}
-
-.c7.c7.btn.btn-light svg {
-  color: var(--surface-color-primary-button-default);
-}
-
-.c7.c7.btn.btn-light svg:hover {
-  color: #CE3E39;
-}
-
-.c7.c7.btn.btn-info svg {
-  color: var(--surface-color-primary-button-default);
-}
-
-.c7.c7.btn.btn-info svg:hover {
-  color: var(--surface-color-primary-button-hover);
-}
-
-.c9.c9.btn {
+.c8.c8.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -267,13 +220,13 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   line-height: unset;
 }
 
-.c9.c9.btn .text {
+.c8.c8.btn .text {
   display: none;
 }
 
-.c9.c9.btn:hover,
-.c9.c9.btn:active,
-.c9.c9.btn:focus {
+.c8.c8.btn:hover,
+.c8.c8.btn:active,
+.c8.c8.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -287,9 +240,9 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c9.c9.btn:hover .text,
-.c9.c9.btn:active .text,
-.c9.c9.btn:focus .text {
+.c8.c8.btn:hover .text,
+.c8.c8.btn:active .text,
+.c8.c8.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -360,7 +313,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   justify-content: flex-end;
 }
 
-.c8 {
+.c6 {
   padding-left: 1.2rem;
 }
 
@@ -490,35 +443,11 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
     <div
       class="c5 pl-3 col-auto"
     >
-      <button
-        class="c6 Button c7 btn btn-primary"
-        data-testid="move-pin-location-0"
-        title="move-pin-location"
-        type="button"
-      >
-        <div
-          class="Button__value"
-        >
-          <svg
-            fill="currentColor"
-            height="22"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 24 24"
-            width="22"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M11 11V5.82843L9.17157 7.65685L7.75736 6.24264L12 2L16.2426 6.24264L14.8284 7.65685L13 5.82843V11H18.1716L16.3431 9.17157L17.7574 7.75736L22 12L17.7574 16.2426L16.3431 14.8284L18.1716 13H13V18.1716L14.8284 16.3431L16.2426 17.7574L12 22L7.75736 17.7574L9.17157 16.3431L11 18.1716V13H5.82843L7.65685 14.8284L6.24264 16.2426L2 12L6.24264 7.75736L7.65685 9.17157L5.82843 11H11Z"
-            />
-          </svg>
-        </div>
-      </button>
       <div
-        class="c8"
+        class="c6"
       >
         <button
-          class="c6 Button c9 btn btn-link"
+          class="c7 Button c8 btn btn-link"
           data-testid="delete-property-0"
           type="button"
         >

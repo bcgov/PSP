@@ -29,6 +29,8 @@ import { SideBarContextProvider } from '../context/sidebarContext';
 import { PropertyForm } from '../shared/models';
 import ManagementContainer, { IManagementContainerProps } from './ManagementContainer';
 import { IManagementViewProps } from './ManagementView';
+import ManagementForm from './form/ManagementForm';
+import { ManagementFormModel } from './models/ManagementFormModel';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -154,7 +156,7 @@ describe('ManagementContainer component', () => {
     await waitForElementToBeRemoved(spinner);
 
     await act(async () => {
-      await viewProps.onUpdateProperties(mockManagementFileApi);
+      await viewProps.updateFileProperties(ManagementFormModel.fromApi(mockManagementFileApi), []);
     });
     expect(spinner).not.toBeVisible();
     expect(
@@ -186,7 +188,7 @@ describe('ManagementContainer component', () => {
     const errorMessage = 'You cannot add a property that is outside of your user account region';
     mockAxios.onPut(new RegExp('managementfiles/1/properties')).reply(400, { error: errorMessage });
     await act(async () => {
-      await viewProps.onUpdateProperties(mockManagementFileApi);
+      await viewProps.updateFileProperties(ManagementFormModel.fromApi(mockManagementFileApi), []);
     });
     expect(spinner).not.toBeVisible();
     expect(await screen.findByText(errorMessage)).toBeVisible();
@@ -333,7 +335,10 @@ describe('ManagementContainer component', () => {
     });
 
     await act(async () => {
-      await viewProps.onUpdateProperties(mockManagementFileResponse());
+      await viewProps.updateFileProperties(
+        ManagementFormModel.fromApi(mockManagementFileResponse()),
+        [],
+      );
     });
 
     expect(
