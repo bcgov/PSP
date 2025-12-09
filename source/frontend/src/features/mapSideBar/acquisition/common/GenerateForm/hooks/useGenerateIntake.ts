@@ -5,21 +5,26 @@ import { useDocumentGenerationRepository } from '@/features/documents/hooks/useD
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
+import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_HistoricalFileNumberTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { Api_GenerateAcquisitionPropertyIntake } from '@/models/generate/acquisition/GenerateAcquisitionPropertyIntake';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { firstOrNull, isValidId, isValidString } from '@/utils';
 
 export const useGenerateIntake = () => {
+  const keycloak = useKeycloakWrapper();
   const {
     getAcquisitionFile: { execute: getAcquisitionFile },
-    //getAcquisitionProperties: { execute: getAcquisitionProperties },
   } = useAcquisitionProvider();
 
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
-  const fullyAttrubutedRepository = useFullyAttributedParcelMapLayer();
+  const fullyAttributedRepository = useFullyAttributedParcelMapLayer();
+  const { getPropertyHistoricalNumbers } = useHistoricalNumberRepository();
+  const getHistoricalExecute = getPropertyHistoricalNumbers.execute;
 
   const generateAcquisitionIntake = async (
     acquisitionFileId: number,
@@ -34,10 +39,18 @@ export const useGenerateIntake = () => {
       > | null = null;
 
       if (isValidId(selectedProperty?.property.pid)) {
-        fullyAttributedResult = await fullyAttrubutedRepository.findByPid(
+        fullyAttributedResult = await fullyAttributedRepository.findByPid(
           selectedProperty.property.pid.toString(),
+          true,
         );
       }
+
+      const historicalNumbers = await getHistoricalExecute(selectedProperty.property.id);
+      const lisHistoricalNumbers =
+        historicalNumbers?.filter(
+          x =>
+            x.historicalFileNumberTypeCode.id === ApiGen_CodeTypes_HistoricalFileNumberTypes.LISNO,
+        ) ?? [];
 
       const fullyAttributed = firstOrNull(fullyAttributedResult.features)?.properties;
       const pimsProperty = selectedProperty.property;
@@ -77,7 +90,12 @@ export const useGenerateIntake = () => {
         electoralFeatures: undefined,
       };
 
-      const intakeData = new Api_GenerateAcquisitionPropertyIntake(file, composedProperty);
+      const intakeData = new Api_GenerateAcquisitionPropertyIntake(
+        file,
+        composedProperty,
+        lisHistoricalNumbers,
+        keycloak,
+      );
 
       const generatedFile = await generate({
         templateType: ApiGen_CodeTypes_FormTypes.FORMINTAKE,
