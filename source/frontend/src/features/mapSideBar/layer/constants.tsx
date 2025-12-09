@@ -195,7 +195,7 @@ export const highwayLayerConfig: ContentConfig = {
     label: 'Plan annotation',
     display: (data: { [key: string]: any }) => data.PLAN_ANNOTATION,
   },
-  MOTI_PLAN: { label: 'MOTI plan', display: (data: { [key: string]: any }) => data.MOTI_PLAN },
+  MOTI_PLAN: { label: 'MOTT plan', display: (data: { [key: string]: any }) => data.MOTI_PLAN },
   VETTING_STATUS: {
     label: 'Vetting Status',
     display: (data: { [key: string]: any }) => data.VETTING_STATUS,
@@ -205,7 +205,7 @@ export const highwayLayerConfig: ContentConfig = {
     label: 'Pending classification',
     display: (data: { [key: string]: any }) => data.PENDING_CLASSIFICATION,
   },
-  MOTI_FILE: { label: 'MOTI file', display: (data: { [key: string]: any }) => data.MOTI_FILE },
+  MOTI_FILE: { label: 'MOTT file', display: (data: { [key: string]: any }) => data.MOTI_FILE },
   GAZETTE_PUBLISHED_DATE: {
     label: 'Gazette published date',
     display: (data: { [key: string]: any }) => data.GAZETTE_PUBLISHED_DATE,
