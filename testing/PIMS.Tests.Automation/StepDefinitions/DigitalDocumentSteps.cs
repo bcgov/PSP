@@ -247,6 +247,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Pick 1st available digital document
             digitalDocumentsTab.View1stDocument();
             digitalDocumentsTab.EditDocumentButton();
+            digitalDocumentsTab.UpdateDocumentName(digitalDocumentList[0].DocumentName);
             digitalDocumentsTab.UpdateNewDocumentType(digitalDocumentList[0]);
 
             //Cancel digital document's details
@@ -541,6 +542,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             digitalDocument.DocumentType = ExcelDataContext.ReadData(rowNumber, "DocumentType");
             digitalDocument.DocumentStatus = ExcelDataContext.ReadData(rowNumber, "DocumentStatus");
+            digitalDocument.DocumentName = ExcelDataContext.ReadData(rowNumber, "DocumentName");
             digitalDocument.ApplicationNumber = ExcelDataContext.ReadData(rowNumber, "ApplicationNumber");
             digitalDocument.CanadaLandSurvey = ExcelDataContext.ReadData(rowNumber, "CanadaLandSurvey");
             digitalDocument.CivicAddress = ExcelDataContext.ReadData(rowNumber, "CivicAddress");
