@@ -1,4 +1,5 @@
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
+import { isEmpty } from 'lodash';
 import React from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
@@ -7,6 +8,7 @@ import styled from 'styled-components';
 import { Form } from '@/components/common/form/Form';
 import GenericModal from '@/components/common/GenericModal';
 import OverflowTip from '@/components/common/OverflowTip';
+import { StyledNoData } from '@/features/documents/commonStyles';
 import { Api_GenerateOwner } from '@/models/generate/GenerateOwner';
 import { withNameSpace } from '@/utils/formUtils';
 
@@ -109,6 +111,9 @@ const GenerateLetterRecipientsModal: React.FunctionComponent<
                     </Form.Group>
                   )}
                 />
+                {isEmpty(recipientList) && (
+                  <StyledNoData className="m-4">No recipients availiable</StyledNoData>
+                )}
               </StyledDiv>
               {Object.values(formikProps.errors).length > 0 && (
                 <div className="invalid-feedback" data-testid="missing-recipient-error">

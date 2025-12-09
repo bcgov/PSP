@@ -6,7 +6,7 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_HistoricalFileNumber } from '@/models/api/generated/ApiGen_Concepts_HistoricalFileNumber';
 import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { firstOrNull } from '@/utils';
+import { exists, firstOrNull } from '@/utils';
 
 import { Api_GenerateProduct } from '../GenerateProduct';
 import { Api_GenerateProject } from '../GenerateProject';
@@ -31,10 +31,9 @@ export class Api_GenerateAcquisitionPropertyIntake {
     keycloak: IKeycloak,
   ) {
     this.user_full_name =
-      keycloak.displayName ??
-      (!!keycloak.firstName && !!keycloak.surname
+      exists(keycloak.firstName) && exists(keycloak.surname)
         ? `${keycloak.firstName} ${keycloak.surname}`
-        : '');
+        : '';
     this.file_number = file?.fileNumber ?? '';
     this.project = new Api_GenerateProject(file?.project ?? null);
     this.product = new Api_GenerateProduct(file?.product ?? null);
