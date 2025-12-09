@@ -1,7 +1,4 @@
-﻿using AventStack.ExtentReports.Model;
-using OpenQA.Selenium;
-using PIMS.Tests.Automation.Classes;
-using static System.Runtime.InteropServices.JavaScript.JSType;
+﻿using OpenQA.Selenium;
 using Boolean = System.Boolean;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -14,7 +11,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Search filters
         //Management List View - Search Section Elements
-        private readonly By searchManagementFileTitle = By.XPath("//h1/div/div/span[contains(text(),'Management Files')]");
+        private readonly By searchManagementFileTitle = By.XPath("//h1/div/div/span[contains(text(),'Management Activities')]");
         private readonly By managementListSearchByLabel = By.XPath("//strong[contains(text(),'Search by')]");
         private readonly By managementListSearchBySelect = By.Id("input-searchBy");
         private readonly By managementListSearchByAddressInput = By.Id("input-address");
@@ -32,17 +29,17 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementListImportActsOverview = By.CssSelector("*[data-testid='excel-icon-overview']");
         private readonly By managementListImportInvoiceReports = By.CssSelector("*[data-testid='excel-icon-invoices']");
 
-        private readonly By managementListColumnDescription = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[class='columnheader']:nth-child(1)");
+        private readonly By managementListColumnDescription = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(1)");
         private readonly By managementListDescriptionSort = By.CssSelector("div[data-testid='sort-column-description']");
-        private readonly By managementListColumnFileName = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[class='columnheader']:nth-child(2)");
+        private readonly By managementListColumnFileName = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(2)");
         private readonly By managementListFileNameSort = By.CssSelector("div[data-testid='sort-column-fileName']");
-        private readonly By managementListColumnHistoricalFile = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[class='columnheader']:nth-child(3)");
+        private readonly By managementListColumnHistoricalFile = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(3)");
         private readonly By managementListHistoricalFileSort = By.CssSelector("div[data-testid='sort-column-legacyFileNum']");
-        private readonly By managementListColumnAddress = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[class='columnheader']:nth-child(4)");
-        private readonly By managementListColumnType = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[class='columnheader']:nth-child(5)");
+        private readonly By managementListColumnAddress = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(4)");
+        private readonly By managementListColumnType = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(5)");
         private readonly By managementListTypeSort = By.CssSelector("div[data-testid='sort-column-activityType']");
-        private readonly By managementListColumnSubtype = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[class='columnheader']:nth-child(6)");
-        private readonly By managementListColumnStatus= By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[class='columnheader']:nth-child(7)");
+        private readonly By managementListColumnSubtype = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(6)");
+        private readonly By managementListColumnStatus= By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(7)");
         private readonly By managementListStatusSort = By.CssSelector("div[data-testid='sort-column-activityStatus']");
 
         private readonly By managementListViewDescription1stRecord = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(1)");
@@ -85,8 +82,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OrderByActHistoricalFileNbr()
         {
-            WaitUntilClickable(managementListColumnHistoricalFile);
-            webDriver.FindElement(managementListColumnHistoricalFile).Click();
+            WaitUntilClickable(managementListHistoricalFileSort);
+            webDriver.FindElement(managementListHistoricalFileSort).Click();
         }
 
         public void OrderByActType()

@@ -33,6 +33,7 @@ export interface IZoomToLocationProps {
 
   geometry?: Geometry | null;
   icon: ZoomIconType;
+  iconSize?: string | number;
 }
 
 export enum ZoomIconType {
@@ -48,6 +49,7 @@ export const ZoomToLocation: React.FunctionComponent<IZoomToLocationProps> = ({
   featureCollection,
   geometry,
   icon,
+  iconSize,
 }) => {
   const { requestFlyToBounds } = useMapStateMachine();
 
@@ -154,8 +156,8 @@ export const ZoomToLocation: React.FunctionComponent<IZoomToLocationProps> = ({
       <>
         {isValid === true ? (
           <LinkButton title="Fit boundaries" onClick={fitBoundaries} disabled={!isValid}>
-            {icon === ZoomIconType.single && <FaSearchPlus size={18} />}
-            {icon === ZoomIconType.area && <PiCornersOut size={18} />}
+            {icon === ZoomIconType.single && <FaSearchPlus size={iconSize ?? 18} />}
+            {icon === ZoomIconType.area && <PiCornersOut size={iconSize ?? 18} />}
           </LinkButton>
         ) : (
           <TooltipIcon

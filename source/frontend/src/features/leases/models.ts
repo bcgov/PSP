@@ -21,6 +21,7 @@ import { applyDisplayOrder, enumFromValue, exists, isValidId, isValidIsoDateTime
 import {
   emptyStringToNull,
   fromTypeCode,
+  fromTypeCodeNullable,
   stringToNull,
   stringToNumberOrNull,
   toTypeCodeNullable,
@@ -83,6 +84,9 @@ export class LeaseFormModel extends FileForm implements WithLeaseTeam {
   paymentReceivableTypeCode = '';
   purposes: LeasePurposeModel[] = [];
   purposeOtherDescription: string | null = '';
+  // Progress Statuses
+  appraisalStatusType: string | null = null;
+  legalSurveyStatusType: string | null = null;
   responsibilityTypeCode = '';
   initiatorTypeCode = '';
   leaseTypeCode = '';
@@ -143,6 +147,10 @@ export class LeaseFormModel extends FileForm implements WithLeaseTeam {
         x => x.leasePurposeTypeCode.id === ApiGen_CodeTypes_LeasePurposeTypes.OTHER,
       ) ?? null;
     leaseDetail.purposeOtherDescription = otherPurpose ? otherPurpose.purposeOtherDescription : '';
+    leaseDetail.appraisalStatusType = fromTypeCodeNullable(apiModel.fileAppraisalStatusTypeCode);
+    leaseDetail.legalSurveyStatusType = fromTypeCodeNullable(
+      apiModel.fileLegalSurveyStatusTypeCode,
+    );
 
     leaseDetail.responsibilityTypeCode = fromTypeCode(apiModel?.responsibilityType) || '';
     leaseDetail.initiatorTypeCode = fromTypeCode(apiModel?.initiatorType) || '';
@@ -204,6 +212,8 @@ export class LeaseFormModel extends FileForm implements WithLeaseTeam {
       amount: parseFloat(formLease.amount?.toString() ?? '') || 0.0,
       paymentReceivableType: toTypeCodeNullable(formLease.paymentReceivableTypeCode) ?? null,
       leasePurposes: formLease.purposes?.map(x => x.toApi(formLease.id ?? 0)) ?? [],
+      fileAppraisalStatusTypeCode: toTypeCodeNullable(formLease.appraisalStatusType),
+      fileLegalSurveyStatusTypeCode: toTypeCodeNullable(formLease.legalSurveyStatusType),
       responsibilityType: toTypeCodeNullable(formLease.responsibilityTypeCode) ?? null,
       initiatorType: toTypeCodeNullable(formLease.initiatorTypeCode) ?? null,
       fileStatusTypeCode: toTypeCodeNullable(formLease.statusTypeCode) ?? null,
@@ -364,6 +374,8 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeaseStatusTypes.DRAFT),
     paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL),
     leasePurposes: [],
+    fileAppraisalStatusTypeCode: null,
+    fileLegalSurveyStatusTypeCode: null,
     programType: null,
     type: null,
     initiatorType: null,

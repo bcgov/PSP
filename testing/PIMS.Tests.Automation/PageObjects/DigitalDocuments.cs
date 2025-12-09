@@ -1,7 +1,5 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.DevTools.V140.Security;
 using PIMS.Tests.Automation.Classes;
-using System.Diagnostics;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -23,6 +21,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentGeneralUpdateDocumentSelect = By.CssSelector("div[class='modal-content'] select[id='input-documentTypeId']");
         private readonly By documentGeneralUpdateStatusLabel = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Status')]");
         private readonly By documentUploadStatusSelect = By.Id("input-documentStatusCode");
+        private readonly By documentUpdateNameInput = By.Id("input-fileName");
         private readonly By documentUpdateDetailsSubtitle = By.XPath("//h3[contains(text(),'Details')]");
 
         //Upload Documents Agricultural Land Comission
@@ -268,6 +267,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Main Documents Table
         private readonly By documentsTitle = By.XPath("//span[contains(text(),'Documents')]");
         private readonly By propDocumentsTitle = By.XPath("//span[contains(text(),'Property Documents')]");
+        private readonly By fileDocumentsTitle = By.XPath("//span[contains(text(),'File Documents')]");
         private readonly By addDocumentBttn = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button");
         private readonly By refresh1stTableBttn = By.CssSelector("div[data-testid='main-document-list'] button[id='refresh-button']");
         private readonly By documentsTableColumnType = By.CssSelector("div[data-testid='main-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(1) div[class='sortable-column']");
@@ -329,7 +329,30 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By PIMSDocumentsTableColumnStatus = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(6) div[class='sortable-column']");
         private readonly By PIMSDocumentsTableColumnStatusSort = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='sort-column-statusTypeCode']");
         private readonly By PIMSDocumentsTableColumnActions = By.CssSelector("div[data-testid='pims-files-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(7) div[class='sortable-column']");
-       
+
+        //Documents Activities Filters
+        private readonly By activitiesFilterTypeSelect = By.CssSelector("div[data-testid='document-activity-list'] select[data-testid='document-type']");
+        private readonly By activitiesFilterStatusSelect = By.CssSelector("div[data-testid='document-activity-list'] select[data-testid='document-status']");
+        private readonly By activitiesFilterNameInput = By.CssSelector("div[data-testid='document-activity-list'] input[data-testid='document-filename']");
+        private readonly By activitiesFilterSearchBttn = By.CssSelector("div[data-testid='document-activity-list'] button[id='search-button']");
+        private readonly By activitiesFilterResetBttn = By.CssSelector("div[data-testid='document-activity-list'] button[data-testid='reset-button']");
+
+        //Related Activities Documents Table
+        private readonly By activitiesDocumentsTitle = By.XPath("//span[contains(text(),'Related Documents')]");
+        private readonly By activitiesDocumentsrefreshBttn = By.CssSelector("div[data-testid='document-activity-list'] button[id='refresh-button']");
+        private readonly By activitiesDocumentsRelationColumn = By.CssSelector("div[data-testid='document-activity-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(1) div[class='sortable-column']");
+        private readonly By activitiesDocumentsColumnRelationType = By.CssSelector("div[data-testid='document-activity-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(2) div[class='sortable-column']");
+        private readonly By activitiesDocumentsColumnRelationTypeSort = By.CssSelector("div[data-testid='document-activity-list']  div[data-testid='sort-column-relationshipType']");
+        private readonly By activitiesDocumentsColumnType = By.CssSelector("div[data-testid='document-activity-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(3) div[class='sortable-column']");
+        private readonly By activitiesDocumentsColumnTypeSort = By.CssSelector("div[data-testid='document-activity-list']  div[data-testid='sort-column-documentType']");
+        private readonly By activitiesDocumentsColumnName = By.CssSelector("div[data-testid='document-activity-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(4) div[class='sortable-column']");
+        private readonly By activitiesDocumentsColumnNameSort = By.CssSelector("div[data-testid='document-activity-list']  div[data-testid='sort-column-fileName']");
+        private readonly By activitiesDocumentsUploaded = By.CssSelector("div[data-testid='document-activity-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(5) div[class='sortable-column']");
+        private readonly By activitiesDocumentsUploadedSort = By.CssSelector("div[data-testid='document-activity-list']  div[data-testid='sort-column-appCreateTimestamp']");
+        private readonly By activitiesDocumentsColumnStatus = By.CssSelector("div[data-testid='document-activity-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(6) div[class='sortable-column']");
+        private readonly By activitiesDocumentsStatusSort = By.CssSelector("div[data-testid='document-activity-list']  div[data-testid='sort-column-statusTypeCode']");
+        private readonly By activitiesDocumentsColumnActions = By.CssSelector("div[data-testid='document-activity-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(7) div[class='sortable-column']");
+
         //Activities Documents List 1st Result Elements
         private readonly By documentTableResults1stDocumentTypeContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[1]");
         private readonly By documentTableResults1stDocumentNameContent = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[2]/div/button/div");
@@ -405,6 +428,12 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilClickable(documentsTableColumnStatusSort);
             webDriver.FindElement(documentsTableColumnStatusSort).Click();
+        }
+
+        public void OrderByActivityRelatedDocumentsType()
+        {
+            Wait();
+            FocusAndClick(activitiesDocumentsColumnTypeSort);
         }
 
         public string FirstDocumentFileType()
@@ -990,6 +1019,18 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
+        public void UpdateDocumentName(string documentName)
+        {
+            Wait();
+            string fullString = webDriver.FindElement(documentUpdateNameInput).GetAttribute("value");
+            char separator = '.';
+
+            int indexOfSeparator = fullString.IndexOf(separator);
+            string docFormat = fullString.Substring(indexOfSeparator);
+
+            webDriver.FindElement(documentUpdateNameInput).SendKeys(documentName + docFormat);
+        }
+
         public void VerifyDocumentFields(string documentType)
         {
             VerifyGeneralUpdateDocumentForm();
@@ -1096,7 +1137,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
 
-            AssertTrueIsDisplayed(propDocumentsTitle);
+            AssertTrueIsDisplayed(documentsTitle);
             AssertTrueIsDisplayed(addDocumentBttn);
             AssertTrueIsDisplayed(refresh1stTableBttn);
 
@@ -1184,6 +1225,50 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(PIMSDocumentsTableColumnActions);
         }
 
+        public void VerifyActivityDocumentsListView()
+        {
+            WaitUntilVisible(fileDocumentsTitle);
+
+            AssertTrueIsDisplayed(fileDocumentsTitle);
+            AssertTrueIsDisplayed(addDocumentBttn);
+            AssertTrueIsDisplayed(refresh1stTableBttn);
+
+            AssertTrueIsDisplayed(documentFilterStatusSelect);
+            AssertTrueIsDisplayed(documentFilterNameInput);
+            AssertTrueIsDisplayed(documentFilterSearchBttn);
+            AssertTrueIsDisplayed(documentFilterResetBttn);
+
+            AssertTrueIsDisplayed(documentsTableColumnType);
+            AssertTrueIsDisplayed(documentsTableColumnTypeSort);
+            AssertTrueIsDisplayed(documentsTableColumnName);
+            AssertTrueIsDisplayed(documentsTableColumnNameSort);
+            AssertTrueIsDisplayed(documentsTableColumnUploaded);
+            AssertTrueIsDisplayed(documentsTableColumnUploadedSort);
+            AssertTrueIsDisplayed(documentsTableColumnStatus);
+            AssertTrueIsDisplayed(documentsTableColumnStatusSort);
+            AssertTrueIsDisplayed(documentsTableColumnActions);
+
+            AssertTrueIsDisplayed(activitiesDocumentsTitle);
+            AssertTrueIsDisplayed(activitiesDocumentsrefreshBttn);
+            AssertTrueIsDisplayed(activitiesFilterTypeSelect);
+            AssertTrueIsDisplayed(activitiesFilterStatusSelect);
+            AssertTrueIsDisplayed(activitiesFilterNameInput);
+            AssertTrueIsDisplayed(activitiesFilterSearchBttn);
+            AssertTrueIsDisplayed(activitiesFilterResetBttn);
+
+            AssertTrueIsDisplayed(activitiesDocumentsRelationColumn);
+            AssertTrueIsDisplayed(activitiesDocumentsColumnRelationType);
+            AssertTrueIsDisplayed(activitiesDocumentsColumnType);
+            AssertTrueIsDisplayed(activitiesDocumentsColumnTypeSort);
+            AssertTrueIsDisplayed(activitiesDocumentsColumnName);
+            AssertTrueIsDisplayed(activitiesDocumentsColumnNameSort);
+            AssertTrueIsDisplayed(activitiesDocumentsUploaded);
+            AssertTrueIsDisplayed(activitiesDocumentsUploadedSort);
+            AssertTrueIsDisplayed(activitiesDocumentsColumnStatus);
+            AssertTrueIsDisplayed(activitiesDocumentsStatusSort);
+            AssertTrueIsDisplayed(activitiesDocumentsColumnActions);
+        }
+
         public void VerifyPaginationElements()
         {
             AssertTrueIsDisplayed(documentPagination);
@@ -1220,6 +1305,11 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentNotEquals(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(4) div span"), "");
             AssertTrueContentNotEquals(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(5) div"), "");
             AssertTrueElementContains(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(6)"), document.DocumentStatus);
+        }
+
+        public void VerifyActivityRelatedDocumentsList()
+        {
+
         }
 
         public void VerifyDocumentDetailsViewForm(DigitalDocument document)

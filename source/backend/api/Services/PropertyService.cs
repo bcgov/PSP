@@ -26,6 +26,7 @@ namespace Pims.Api.Services
         private readonly ILogger _logger;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IHistoricalNumberRepository _historicalNumberRepository;
+        private readonly IPropertyTenureCleanupRepository _tenureCleanupRepository;
         private readonly IPropertyContactRepository _propertyContactRepository;
         private readonly IManagementActivityRepository _managementActivityRepository;
         private readonly ICoordinateTransformService _coordinateService;
@@ -39,6 +40,7 @@ namespace Pims.Api.Services
             ILogger<PropertyService> logger,
             IPropertyRepository propertyRepository,
             IHistoricalNumberRepository historicalNumberRepository,
+            IPropertyTenureCleanupRepository propertyTenureCleanupRepository,
             IPropertyContactRepository propertyContactRepository,
             IManagementActivityRepository managementActivityRepository,
             ICoordinateTransformService coordinateService,
@@ -51,6 +53,7 @@ namespace Pims.Api.Services
             _logger = logger;
             _propertyRepository = propertyRepository;
             _historicalNumberRepository = historicalNumberRepository;
+            _tenureCleanupRepository = propertyTenureCleanupRepository;
             _propertyContactRepository = propertyContactRepository;
             _managementActivityRepository = managementActivityRepository;
             _coordinateService = coordinateService;
@@ -487,6 +490,15 @@ namespace Pims.Api.Services
             _historicalNumberRepository.CommitTransaction();
 
             return GetHistoricalNumbersForPropertyId(propertyId);
+        }
+
+        public IList<PimsPropTenureCleanup> GetTenureCleanupsForPropertyId(long propertyId)
+        {
+
+            _logger.LogInformation("Retrieving all tenure cleanups for property with id {id}", propertyId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            return _tenureCleanupRepository.GetAllByPropertyId(propertyId);
         }
 
         /// <inheritdoc />

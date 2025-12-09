@@ -27,7 +27,13 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { exists, firstOrNull, formatApiAddress, formatSplitAddress, pidFormatter } from '@/utils';
+import {
+  emptyPropertyLocation,
+  PIMS_Property_Location_View,
+} from '@/models/layers/pimsPropertyLocationView';
+
+import { formatApiAddress, formatSplitAddress, pidFormatter } from './propertyUtils';
+import { exists, firstOrNull } from './utils';
 
 export enum NameSourceType {
   PID = 'PID',
@@ -521,4 +527,42 @@ export async function getRegionAndDistrictsResults(
 
   // Convert back into a Map
   return new Map(results);
+}
+
+export function apiFilePropertyToPimsFeature(
+  fileProperty: ApiGen_Concepts_FileProperty | undefined | null,
+): Feature<Geometry, PIMS_Property_Location_View> | null {
+  const property = fileProperty?.property;
+  if (!exists(property)) {
+    return null;
+  }
+
+  const feature: Feature<Geometry, PIMS_Property_Location_View> = {
+    type: 'Feature',
+    geometry: property.boundary ?? null,
+    properties: {
+      ...emptyPropertyLocation,
+      // core fields
+      PROPERTY_ID: property.id ?? null,
+      PID: property.pid ?? null,
+      PID_PADDED: property.pid?.toString().padStart(9, '0') ?? null,
+      PIN: property.pin ?? null,
+      SURVEY_PLAN_NUMBER: property.planNumber ?? null,
+      LAND_AREA: property.landArea ?? null,
+      LAND_LEGAL_DESCRIPTION: property.landLegalDescription ?? null,
+      // address fields
+      STREET_ADDRESS_1: property.address?.streetAddress1 ?? null,
+      STREET_ADDRESS_2: property.address?.streetAddress2 ?? null,
+      STREET_ADDRESS_3: property.address?.streetAddress3 ?? null,
+      MUNICIPALITY_NAME: property.address?.municipality ?? null,
+      POSTAL_CODE: property.address?.postal ?? null,
+      REGION_CODE: property.region?.id ?? null,
+      DISTRICT_CODE: property.district?.id ?? null,
+      // status fields
+      IS_OWNED: property.isOwned ?? null,
+      IS_RETIRED: property.isRetired ?? null,
+    },
+  };
+
+  return feature;
 }

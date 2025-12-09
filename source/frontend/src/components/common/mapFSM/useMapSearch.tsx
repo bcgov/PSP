@@ -350,6 +350,7 @@ export const useMapSearch = () => {
           filter?.TOWNSHIP,
           filter?.RANGE,
           filter?.DISTRICT,
+          filter?.DISTRICT_LOT,
         );
 
         const validCrownSurveyFeatures = response?.features?.filter(feature =>

@@ -5,6 +5,7 @@ env:
   Users__0__Password: ${{ secrets.USER_1_PASSWORD }}
   Users__1__User: ${{ secrets.USER_2_USERNAME }}
   Users__1__Password: ${{ secrets.USER_2_PASSWORD }}
+  npm_config_ignore_scripts: true
 on:
   workflow_dispatch
   #push:
@@ -22,15 +23,15 @@ jobs:
 
     steps:
       - name: Checkout repository
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
       - name: Setup Node.js
-        uses: actions/setup-node@v4
+        uses: actions/setup-node@49933ea5f5257e8e3239177f8295fda8298b857f # v4
         with:
-          node-version: '20'
+          node-version: "20"
 
       - name: Install Dependencies
-        run: npm install
+        run: npm ci
 
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps

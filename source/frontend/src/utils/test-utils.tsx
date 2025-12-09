@@ -372,6 +372,7 @@ async function renderAsync(
 
 // simulate scrolling down using the keyboard arrows
 export async function focusOptionMultiselect(
+  selector: string,
   container: HTMLElement,
   option: Option,
   options: readonly Option[],
@@ -382,16 +383,12 @@ export async function focusOptionMultiselect(
       userEvent.keyboard('{ArrowDown}');
     });
   }
-  expect(
-    container.querySelector('.multiselect-container .optionContainer li.option.highlight')!
-      .textContent,
-  ).toEqual(option.text);
+  const query = `${selector} .optionContainer li.option.highlight`;
+  expect(container.querySelector(query)!.textContent).toEqual(option.text);
 
   await waitFor(async () => {
     await act(async () => {
-      userEvent.click(
-        container.querySelector('.multiselect-container .optionContainer li.option.highlight')!,
-      );
+      userEvent.click(container.querySelector(query)!);
     });
   });
 }

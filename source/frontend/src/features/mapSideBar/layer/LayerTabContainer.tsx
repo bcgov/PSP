@@ -11,6 +11,7 @@ import {
   electoralLayerConfig,
   firstNationsLayerConfig,
   getDynamicFeatureConfig,
+  highwayLayerConfig,
   municipalityLayerConfig,
   parcelLayerConfig,
   pimsLayerConfig,
@@ -186,8 +187,8 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
         features: featureDataset?.highwayFeatures,
         titlePrefix: 'Highway Research',
         tab: InventoryTabNames.highway,
-        config: {},
-        dynamicConfig: true,
+        config: highwayLayerConfig,
+        dynamicConfig: false,
       }),
     ];
   }, [composedProperty]);

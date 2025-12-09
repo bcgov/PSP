@@ -233,7 +233,8 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           isValidString(geoFilter?.SECTION?.toString()) ||
           isValidString(geoFilter?.RANGE?.toString()) ||
           isValidString(geoFilter?.TOWNSHIP?.toString()) ||
-          isValidString(geoFilter?.DISTRICT?.toString())
+          isValidString(geoFilter?.DISTRICT?.toString()) ||
+          isValidString(geoFilter?.DISTRICT_LOT?.toString())
         ) {
           geoFilter.forceExactMatch = false;
           const response = mapSearch.searchBySurveyParcel(geoFilter);
@@ -705,6 +706,7 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
     TOWNSHIP: filter.township,
     RANGE: filter.range,
     DISTRICT: filter.district,
+    DISTRICT_LOT: filter.districtLot,
     PROJECT: filter.project?.id,
     latitude: filter.latitude,
     longitude: filter.longitude,

@@ -63,6 +63,8 @@ namespace Pims.Api.Services
 
         IList<PimsHistoricalFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsHistoricalFileNumber> pimsHistoricalNumbers);
 
+        IList<PimsPropTenureCleanup> GetTenureCleanupsForPropertyId(long propertyId);
+
         /// <summary>
         /// Returns the spatial location and boundary polygons in lat/long (4326) for a given property.
         /// The spatial values will be modified in-place.
