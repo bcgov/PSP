@@ -3,62 +3,45 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
 using Microsoft.EntityFrameworkCore;
-using NetTopologySuite.Geometries;
 
 namespace Pims.Dal.Entities;
 
-/// <summary>
-/// Associates a property with an acquisition file.
-/// </summary>
-[Table("PIMS_PROPERTY_ACQUISITION_FILE")]
-[Index("AcquisitionFileId", Name = "PRACQF_ACQUISITION_FILE_ID_IDX")]
-[Index("PropertyId", Name = "PRACQF_PROPERTY_ID_IDX")]
-[Index("PropertyId", "AcquisitionFileId", Name = "PRACQF_PROP_ACQ_TUC", IsUnique = true)]
-public partial class PimsPropertyAcquisitionFile
+[Table("PIMS_NOTICE_OF_CLAIM")]
+[Index("AcquisitionFileId", Name = "NTCCLM_ACQUISITION_FILE_ID_IDX")]
+[Index("ManagementFileId", Name = "NTCCLM_MANAGEMENT_FILE_ID_IDX")]
+public partial class PimsNoticeOfClaim
 {
     /// <summary>
     /// System-generated unique surrogate primary key.
     /// </summary>
     [Key]
-    [Column("PROPERTY_ACQUISITION_FILE_ID")]
-    public long PropertyAcquisitionFileId { get; set; }
+    [Column("NOTICE_OF_CLAIM_ID")]
+    public long NoticeOfClaimId { get; set; }
 
     /// <summary>
-    /// Foreign key to the ACQUISTION_FILE table.
+    /// Foreign key to the PIMS_ACQUISITION_FILE table.
     /// </summary>
     [Column("ACQUISITION_FILE_ID")]
-    public long AcquisitionFileId { get; set; }
+    public long? AcquisitionFileId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PROPERTY table.
+    /// Foreign key to the PIMS_MANAGEMENT_FILE table.
     /// </summary>
-    [Column("PROPERTY_ID")]
-    public long PropertyId { get; set; }
+    [Column("MANAGEMENT_FILE_ID")]
+    public long? ManagementFileId { get; set; }
 
     /// <summary>
-    /// Descriptive reference for the property associated with the acquisition file.
+    /// Comments, update, or instructions about this notice of claim.
     /// </summary>
-    [Column("PROPERTY_NAME")]
-    [StringLength(500)]
-    public string PropertyName { get; set; }
+    [Column("COMMENT")]
+    [StringLength(4000)]
+    public string Comment { get; set; }
 
     /// <summary>
-    /// Geospatial location (pin) of property
+    /// Date that the Notice of Claim was received.
     /// </summary>
-    [Column("LOCATION", TypeName = "geometry")]
-    public Geometry Location { get; set; }
-
-    /// <summary>
-    /// Spatial boundary of property.  Supports upload of custom shape file by user.
-    /// </summary>
-    [Column("BOUNDARY", TypeName = "geometry")]
-    public Geometry Boundary { get; set; }
-
-    /// <summary>
-    /// Designates a preferred presentation order of the code descriptions.
-    /// </summary>
-    [Column("DISPLAY_ORDER")]
-    public int? DisplayOrder { get; set; }
+    [Column("RECEIVED_DT")]
+    public DateOnly? ReceivedDt { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -131,7 +114,6 @@ public partial class PimsPropertyAcquisitionFile
     /// <summary>
     /// The user or proxy account that created the record.
     /// </summary>
-    [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
@@ -151,19 +133,10 @@ public partial class PimsPropertyAcquisitionFile
     public string DbLastUpdateUserid { get; set; }
 
     [ForeignKey("AcquisitionFileId")]
-    [InverseProperty("PimsPropertyAcquisitionFiles")]
+    [InverseProperty("PimsNoticeOfClaims")]
     public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
 
-    [InverseProperty("PropertyAcquisitionFile")]
-    public virtual ICollection<PimsInthldrPropInterest> PimsInthldrPropInterests { get; set; } = new List<PimsInthldrPropInterest>();
-
-    [InverseProperty("PropertyAcquisitionFile")]
-    public virtual ICollection<PimsPropAcqFlCompReq> PimsPropAcqFlCompReqs { get; set; } = new List<PimsPropAcqFlCompReq>();
-
-    [InverseProperty("PropertyAcquisitionFile")]
-    public virtual ICollection<PimsTake> PimsTakes { get; set; } = new List<PimsTake>();
-
-    [ForeignKey("PropertyId")]
-    [InverseProperty("PimsPropertyAcquisitionFiles")]
-    public virtual PimsProperty Property { get; set; }
+    [ForeignKey("ManagementFileId")]
+    [InverseProperty("PimsNoticeOfClaims")]
+    public virtual PimsManagementFile ManagementFile { get; set; }
 }

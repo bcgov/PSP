@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_MANAGEMENT_ACTIVITY_INVOICE_HIST")]
-[Index("ManagementActivityInvoiceHistId", "EndDateHist", Name = "PIMS_MAAINV_H_UK", IsUnique = true)]
-public partial class PimsManagementActivityInvoiceHist
+[Table("PIMS_NOTICE_OF_CLAIM_HIST")]
+[Index("NoticeOfClaimHistId", "EndDateHist", Name = "PIMS_NTCCLM_H_UK", IsUnique = true)]
+public partial class PimsNoticeOfClaimHist
 {
     [Key]
-    [Column("_MANAGEMENT_ACTIVITY_INVOICE_HIST_ID")]
-    public long ManagementActivityInvoiceHistId { get; set; }
+    [Column("_NOTICE_OF_CLAIM_HIST_ID")]
+    public long NoticeOfClaimHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,46 +20,21 @@ public partial class PimsManagementActivityInvoiceHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("MANAGEMENT_ACTIVITY_INVOICE_ID")]
-    public long ManagementActivityInvoiceId { get; set; }
+    [Column("NOTICE_OF_CLAIM_ID")]
+    public long NoticeOfClaimId { get; set; }
 
-    [Column("MANAGEMENT_ACTIVITY_ID")]
-    public long ManagementActivityId { get; set; }
+    [Column("ACQUISITION_FILE_ID")]
+    public long? AcquisitionFileId { get; set; }
 
-    [Column("INVOICE_DT")]
-    public DateOnly InvoiceDt { get; set; }
+    [Column("MANAGEMENT_FILE_ID")]
+    public long? ManagementFileId { get; set; }
 
-    [Column("INVOICE_NUM")]
-    [StringLength(50)]
-    public string InvoiceNum { get; set; }
+    [Column("COMMENT")]
+    [StringLength(4000)]
+    public string Comment { get; set; }
 
-    [Column("DESCRIPTION")]
-    [StringLength(1000)]
-    public string Description { get; set; }
-
-    [Column("PRETAX_AMT", TypeName = "money")]
-    public decimal PretaxAmt { get; set; }
-
-    [Column("GST_AMT", TypeName = "money")]
-    public decimal? GstAmt { get; set; }
-
-    [Column("PST_AMT", TypeName = "money")]
-    public decimal? PstAmt { get; set; }
-
-    [Column("TOTAL_AMT", TypeName = "money")]
-    public decimal? TotalAmt { get; set; }
-
-    [Column("IS_PST_REQUIRED")]
-    public bool IsPstRequired { get; set; }
-
-    [Column("IS_PAYMENT_APPROVED")]
-    public bool IsPaymentApproved { get; set; }
-
-    [Column("IS_PAYMENT_FORWARDED")]
-    public bool IsPaymentForwarded { get; set; }
-
-    [Column("IS_DISABLED")]
-    public bool? IsDisabled { get; set; }
+    [Column("RECEIVED_DT")]
+    public DateOnly? ReceivedDt { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -99,7 +74,6 @@ public partial class PimsManagementActivityInvoiceHist
     [Column("DB_CREATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime DbCreateTimestamp { get; set; }
 
-    [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
