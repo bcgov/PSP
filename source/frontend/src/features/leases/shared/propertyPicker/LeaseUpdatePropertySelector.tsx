@@ -73,7 +73,8 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
   const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
     return {
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
-      location: mapLocationFeatureDataset?.location,
+      location:
+        mapLocationFeatureDataset?.location ?? mapLocationFeatureDataset?.fileLocation ?? null,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
       pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),

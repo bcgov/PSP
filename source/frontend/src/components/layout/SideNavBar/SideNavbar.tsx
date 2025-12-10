@@ -7,7 +7,6 @@ import AcquisitionFileIcon from '@/assets/images/acquisition-icon.svg?react';
 import AdminIcon from '@/assets/images/admin-icon.svg?react';
 import ContactIcon from '@/assets/images/contact-icon.svg?react';
 import DispositionIcon from '@/assets/images/disposition-icon.svg?react';
-import DocumentIcon from '@/assets/images/document-icon.svg?react';
 import HomeIcon from '@/assets/images/home-icon.svg?react';
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import ManagementIcon from '@/assets/images/management-icon.svg?react';
@@ -238,16 +237,6 @@ export const SideNavBar = () => {
           showText={expanded}
           claims={[Claims.CONTACT_VIEW]}
           isNavActive={isContacts != null}
-        />
-
-        <NavIcon
-          onClick={() => {
-            history.push('/documents/list');
-          }}
-          icon={<DocumentIcon width="24px" height="24px" />}
-          text="Document Search"
-          showText={expanded}
-          isNavActive={isDocumentSearch != null}
         />
 
         <NavIcon
