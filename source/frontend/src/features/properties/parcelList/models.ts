@@ -37,7 +37,8 @@ export class ParcelDataset {
     const parcel = new ParcelDataset();
     const center = getFeatureBoundedCenter(feature);
     parcel.pmbcFeature = feature;
-    parcel.location = { lat: center[1], lng: center[0] };
+    parcel.location =
+      exists(center) && center.length >= 2 ? { lat: center[1], lng: center[0] } : undefined;
     return parcel;
   }
 
@@ -45,7 +46,8 @@ export class ParcelDataset {
     const parcel = new ParcelDataset();
     const center = getFeatureBoundedCenter(feature);
     parcel.pimsFeature = feature;
-    parcel.location = { lat: center[1], lng: center[0] };
+    parcel.location =
+      exists(center) && center.length >= 2 ? { lat: center[1], lng: center[0] } : undefined;
     return parcel;
   }
 
