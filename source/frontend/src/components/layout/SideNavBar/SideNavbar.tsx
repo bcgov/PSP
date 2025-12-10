@@ -142,16 +142,6 @@ export const SideNavBar = () => {
     [location],
   );
 
-  const isDocumentSearch = useMemo(
-    () =>
-      matchPath(location.pathname, {
-        path: ['/documents/list'],
-        exact: true,
-        strict: true,
-      }),
-    [location],
-  );
-
   return (
     <Styled.ZIndexWrapper>
       <Styled.SideNavBar className={clsx({ expanded: expanded })}>
