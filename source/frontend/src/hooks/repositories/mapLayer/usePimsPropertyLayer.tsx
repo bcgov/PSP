@@ -43,7 +43,6 @@ export const usePimsPropertyLayer = () => {
           PID: params?.PID,
           PID_PADDED: params?.PID_PADDED,
           PIN: params?.PIN,
-          PROJECT: params?.PROJECT,
           SURVEY_PLAN_NUMBER: params?.SURVEY_PLAN_NUMBER,
           HISTORICAL_FILE_NUMBER_STR: params?.HISTORICAL_FILE_NUMBER_STR,
         };
@@ -65,7 +64,6 @@ export const usePimsPropertyLayer = () => {
           PID: params?.PID,
           PID_PADDED: params?.PID_PADDED,
           PIN: params?.PIN,
-          PROJECT: params?.PROJECT,
           SURVEY_PLAN_NUMBER: params?.SURVEY_PLAN_NUMBER,
           HISTORICAL_FILE_NUMBER_STR: params?.HISTORICAL_FILE_NUMBER_STR,
         };
