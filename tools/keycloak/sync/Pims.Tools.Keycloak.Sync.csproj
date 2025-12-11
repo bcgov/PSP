@@ -8,6 +8,7 @@
     <AssemblyVersion>1.0.0.0</AssemblyVersion>
     <ProjectGuid>951EEA85-8BCA-4D88-9CA5-0453F447DFC5</ProjectGuid>
     <Configurations>Debug;Release</Configurations>
+    <NoWarn>NU1605</NoWarn>
   </PropertyGroup>
 
   <ItemGroup>
@@ -60,7 +61,7 @@
   </ItemGroup>
 
   <ItemGroup>
-  <ProjectReference Include="..\..\..\source\backend\keycloak\Pims.Keycloak.csproj" />
+    <ProjectReference Include="..\..\..\source\backend\keycloak\Pims.Keycloak.csproj" />
     <ProjectReference Include="..\..\..\source\backend\apimodels\Pims.Api.Models.csproj" />
   </ItemGroup>
 
