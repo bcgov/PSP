@@ -31,8 +31,9 @@ import FileMenuView from '../shared/FileMenuView';
 import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
-import UpdateProperties from '../shared/update/properties/UpdateProperties';
+import UpdatePropertiesContainer from '../shared/update/properties/UpdatePropertiesContainer';
 import { DispositionHeader } from './common/DispositionHeader';
+import { DispositionFormModel } from './models/DispositionFormModel';
 import DispositionRouter from './router/DispositionRouter';
 import DispositionStatusUpdateSolver from './tabs/fileDetails/detail/DispositionStatusUpdateSolver';
 
@@ -44,7 +45,7 @@ export interface IDispositionViewProps {
   onSelectProperty: (propertyId: number) => void;
   onEditProperties: () => void;
   onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
-  onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
+  onUpdateProperties: (file: DispositionFormModel) => Promise<ApiGen_Concepts_File | undefined>;
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
   isEditing: boolean;
@@ -109,15 +110,15 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
     <Switch>
       <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
         {dispositionFile && (
-          <UpdateProperties
-            file={dispositionFile}
+          <UpdatePropertiesContainer
+            formFile={DispositionFormModel.fromApi(dispositionFile)}
             setIsShowingPropertySelector={closePropertySelector}
             onSuccess={onSuccess}
             updateFileProperties={onUpdateProperties}
-            confirmBeforeAdd={confirmBeforeAdd}
+            canAdd={confirmBeforeAdd}
             canRemove={canRemove}
             formikRef={formikRef}
-            confirmBeforeAddMessage={
+            confirmAddMessage={
               <>
                 <p>This property has already been added to one or more disposition files.</p>
                 <p>Do you want to acknowledge and proceed?</p>

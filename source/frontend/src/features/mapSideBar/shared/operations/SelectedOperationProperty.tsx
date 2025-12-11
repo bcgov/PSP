@@ -6,12 +6,13 @@ import OverflowTip from '@/components/common/OverflowTip';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { convertArea, formatApiAddress, formatNumber, pidFormatter } from '@/utils';
+import { convertArea, formatFormAddress, formatNumber, pidFormatter } from '@/utils';
+
+import { PropertyForm } from '../models';
 
 interface ISelectedOperationPropertyProps {
-  property: ApiGen_Concepts_Property;
-  getMarkerIndex: (property: ApiGen_Concepts_Property) => number;
+  property: PropertyForm;
+  getMarkerIndex: (property: PropertyForm) => number;
   nameSpace: string;
   onRemove: () => void;
   isEditable?: boolean;
@@ -41,12 +42,12 @@ export const SelectedOperationProperty: React.FunctionComponent<
         {isEditable ? (
           <InlineInput className="w-75" field={`${nameSpace}.landArea`} />
         ) : (
-          getAreaValue(property.landArea ?? 0, property.areaUnit?.id ?? '')
+          getAreaValue(property.landArea ?? 0, property.areaUnit ?? '')
         )}
       </Col>
-      <Col md={3}>{formatApiAddress(property?.address) ?? ''}</Col>
+      <Col md={3}>{formatFormAddress(property?.address) ?? ''}</Col>
       <Col xs="auto">
-        <ZoomToLocation icon={ZoomIconType.single} pimsProperties={[property]} />
+        <ZoomToLocation icon={ZoomIconType.single} formProperties={[property]} />
       </Col>
       <Col md={'auto'} className="d-flex justify-content-center pl-2">
         <RemoveButton onRemove={onRemove} />

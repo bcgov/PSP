@@ -1,4 +1,4 @@
-import { FeatureCollection, Geometry } from 'geojson';
+import { Feature, Geometry } from 'geojson';
 import moment from 'moment';
 
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
@@ -61,12 +61,10 @@ export class Api_GenerateNotice {
 
     this.properties = properties.filter(exists).map(p => {
       const parcelMapFeatures =
-        (
-          p.parcelMapFeatureCollection as FeatureCollection<
-            Geometry,
-            PMBC_FullyAttributed_Feature_Properties
-          >
-        )?.features ?? [];
+        (p.featureDataset.parcelFeatures as Feature<
+          Geometry,
+          PMBC_FullyAttributed_Feature_Properties
+        >[]) ?? [];
 
       return new Api_GenerateProperty(p.pimsProperty, firstOrNull(parcelMapFeatures)?.properties);
     });

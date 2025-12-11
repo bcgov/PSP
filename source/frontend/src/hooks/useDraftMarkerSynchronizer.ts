@@ -1,16 +1,17 @@
 import debounce from 'lodash/debounce';
-import { useCallback, useEffect, useRef } from 'react';
+import { useCallback, useRef } from 'react';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
-import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import useIsMounted from '@/hooks/util/useIsMounted';
+
+import useDeepCompareEffect from './util/useDeepCompareEffect';
 
 /**
  * A hook that automatically syncs any updates to the lat/lngs of the parcel form with the map.
  * @param modifiedProperties array that contains the properties to be drawn.
  */
-const useDraftMarkerSynchronizer = (modifiedProperties: LocationBoundaryDataset[]) => {
+const useDraftMarkerSynchronizer = (modifiedProperties: PropertyForm[]) => {
   const isMounted = useIsMounted();
 
   const { setFilePropertyLocations } = useMapStateMachine();
@@ -20,9 +21,9 @@ const useDraftMarkerSynchronizer = (modifiedProperties: LocationBoundaryDataset[
    * @param modifiedProperties the current properties
    */
   const synchronizeMarkers = useCallback(
-    (modifiedProperties: LocationBoundaryDataset[]) => {
+    (modifiedProperties: PropertyForm[]) => {
       if (isMounted()) {
-        const filePropertyLocations = modifiedProperties;
+        const filePropertyLocations = modifiedProperties.map(x => x.toFilePropertyApi());
         if (filePropertyLocations.length > 0) {
           setFilePropertyLocations(filePropertyLocations);
         } else {
@@ -34,7 +35,7 @@ const useDraftMarkerSynchronizer = (modifiedProperties: LocationBoundaryDataset[
   );
 
   const synchronize = useRef(
-    debounce((modifiedProperties: LocationBoundaryDataset[]) => {
+    debounce((modifiedProperties: PropertyForm[]) => {
       synchronizeMarkers(modifiedProperties);
     }, 400),
   ).current;
@@ -42,10 +43,6 @@ const useDraftMarkerSynchronizer = (modifiedProperties: LocationBoundaryDataset[
   useDeepCompareEffect(() => {
     synchronize(modifiedProperties);
   }, [modifiedProperties, synchronize]);
-
-  useEffect(() => {
-    return () => setFilePropertyLocations([]);
-  }, [setFilePropertyLocations]);
 };
 
 export default useDraftMarkerSynchronizer;

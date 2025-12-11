@@ -14,11 +14,11 @@ import { Section } from '@/components/common/Section/Section';
 import { Claims } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 
-import { ParcelDataset } from '../parcelList/models';
 import ParcelItem from '../parcelList/ParcelItem';
+import { LocationDatasetWithId } from './context/WorklistContext';
 
 export interface IWorklistViewProps {
-  parcels: ParcelDataset[];
+  parcels: LocationDatasetWithId[];
   canAddToOpenFile?: boolean;
   onRemove: (id: string) => void;
   onClearAll: () => void;

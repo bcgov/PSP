@@ -1,9 +1,10 @@
-import { ParcelDataset } from './models';
-import { IParcelListViewProps } from './ParcelListView';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+
+import { ISearchItemListViewProps } from './ParcelListView';
 
 export interface IParcelListContainwerProps {
-  View: React.FC<IParcelListViewProps>;
-  parcels: ParcelDataset[];
+  View: React.FC<ISearchItemListViewProps>;
+  parcels: LocationFeatureDataset[];
 }
 
 export const ParcelListContainer: React.FC<IParcelListContainwerProps> = ({ parcels, View }) => {

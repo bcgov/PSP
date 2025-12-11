@@ -7,7 +7,6 @@ import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 
 import MapSideBarLayout from '../../layout/MapSideBarLayout';
-import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
 import { StyledFormWrapper } from '../../shared/styles';
 import DispositionForm from '../form/DispositionForm';
@@ -24,7 +23,6 @@ export interface IAddDispositionContainerViewProps {
   ) => void | Promise<any>;
   onCancel: () => void;
   onSave: () => void;
-  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
 const AddDispositionContainerView: React.FunctionComponent<IAddDispositionContainerViewProps> = ({
@@ -35,7 +33,6 @@ const AddDispositionContainerView: React.FunctionComponent<IAddDispositionContai
   onSubmit,
   onSave,
   onCancel,
-  confirmBeforeAdd,
 }) => {
   const history = useHistory();
 
@@ -64,7 +61,6 @@ const AddDispositionContainerView: React.FunctionComponent<IAddDispositionContai
           formikRef={formikRef}
           initialValues={dispositionInitialValues}
           onSubmit={onSubmit}
-          confirmBeforeAdd={confirmBeforeAdd}
         />
       </StyledFormWrapper>
       <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />

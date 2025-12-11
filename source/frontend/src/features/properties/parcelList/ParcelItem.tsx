@@ -10,26 +10,26 @@ import ManagementIcon from '@/assets/images/management-icon.svg?react';
 import ResearchIcon from '@/assets/images/research-icon.svg?react';
 import { RemoveIconButton } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { WorklistLocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
 import OverflowTip from '@/components/common/OverflowTip';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { Claims } from '@/constants';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { exists, getPropertyNameFromSelectedFeatureSet, NameSourceType } from '@/utils';
+import { exists, getPropertyNameFromLocationFeatureSet, NameSourceType } from '@/utils';
 
-import { ParcelDataset } from './models';
+import { LocationDatasetWithId } from '../worklist/context/WorklistContext';
 
 export interface IParcelItemProps {
   canAddToWorklist: boolean;
-  parcel: ParcelDataset;
+  parcel: LocationDatasetWithId;
   onRemove: (id: string) => void | null;
   parcelIndex: number;
 }
 
 export function ParcelItem({ parcel, onRemove, canAddToWorklist, parcelIndex }: IParcelItemProps) {
-  const propertyName = getPropertyNameFromSelectedFeatureSet(parcel.toSelectedFeatureDataset());
+  const propertyName = getPropertyNameFromLocationFeatureSet(parcel);
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:
@@ -45,70 +45,60 @@ export function ParcelItem({ parcel, onRemove, canAddToWorklist, parcelIndex }: 
       break;
   }
 
-  const { prepareForCreation, isEditPropertiesMode, worklistAdd, setSelectedLocation } =
-    useMapStateMachine();
+  const {
+    requestLocationFeatureAddition: prepareForCreation,
+    isEditPropertiesMode,
+    worklistAdd,
+    setSelectedLocation,
+  } = useMapStateMachine();
 
   const canAddToOpenFile = isEditPropertiesMode;
 
   const pathGenerator = usePathGenerator();
 
   const handleSelect = useCallback(() => {
-    setSelectedLocation(parcel.toLocationFeatureDataset());
+    setSelectedLocation(parcel);
   }, [parcel, setSelectedLocation]);
 
   const onAddToWorklist = useCallback(() => {
-    const featuresSet = parcel.toSelectedFeatureDataset();
+    const featuresSet = parcel;
 
-    const worklistDataSet: WorklistLocationFeatureDataset = {
+    const worklistDataSet: LocationFeatureDataset = {
       ...featuresSet,
-      fullyAttributedFeatures: null,
     };
-
-    if (exists(featuresSet.parcelFeature)) {
-      worklistDataSet.fullyAttributedFeatures = {
-        type: 'FeatureCollection',
-        features: [featuresSet.parcelFeature],
-      };
-    }
 
     worklistAdd(worklistDataSet);
   }, [parcel, worklistAdd]);
 
   const handleCreateResearchFile = useCallback(() => {
-    const featuresSet = parcel.toSelectedFeatureDataset();
-    prepareForCreation([featuresSet]);
+    prepareForCreation([parcel]);
     pathGenerator.newFile('research');
   }, [parcel, pathGenerator, prepareForCreation]);
 
   const handleCreateAcquisitionFile = useCallback(() => {
-    const featuresSet = parcel.toSelectedFeatureDataset();
-    prepareForCreation([featuresSet]);
+    prepareForCreation([parcel]);
     pathGenerator.newFile('acquisition');
   }, [parcel, pathGenerator, prepareForCreation]);
 
   const handleCreateDispositionFile = useCallback(() => {
-    const featuresSet = parcel.toSelectedFeatureDataset();
-    prepareForCreation([featuresSet]);
+    prepareForCreation([parcel]);
     pathGenerator.newFile('disposition');
   }, [parcel, pathGenerator, prepareForCreation]);
 
   const handleCreateLeaseFile = useCallback(() => {
-    const featuresSet = parcel.toSelectedFeatureDataset();
-    prepareForCreation([featuresSet]);
+    prepareForCreation([parcel]);
     pathGenerator.newFile('lease');
   }, [parcel, pathGenerator, prepareForCreation]);
 
   const handleCreateManagementFile = useCallback(() => {
-    const featuresSet = parcel.toSelectedFeatureDataset();
-    prepareForCreation([featuresSet]);
+    prepareForCreation([parcel]);
     pathGenerator.newFile('management');
   }, [parcel, pathGenerator, prepareForCreation]);
 
   const handleAddToOpenFile = useCallback(() => {
     // If in edit properties mode, prepare the parcels for addition to an open file
     if (isEditPropertiesMode) {
-      const featuresSet = parcel.toSelectedFeatureDataset();
-      prepareForCreation([featuresSet]);
+      prepareForCreation([parcel]);
     }
   }, [isEditPropertiesMode, parcel, prepareForCreation]);
 
@@ -197,11 +187,11 @@ export function ParcelItem({ parcel, onRemove, canAddToWorklist, parcelIndex }: 
       </StyledPidCol>
       <StyledButtonCol>
         <ButtonContainer>
-          <ZoomToLocation icon={ZoomIconType.single} parcelDataset={parcel} />
+          <ZoomToLocation icon={ZoomIconType.single} locationFeatureDataset={parcel} />
           {exists(onRemove) && (
             <RemoveIconButton
               title="Delete parcel from list"
-              data-testId={`delete-list-parcel-${parcel.id ?? 'unknown'}`}
+              data-testId={`delete-list-parcel-${parcel.id}`}
               onRemove={e => {
                 e.preventDefault();
                 e.stopPropagation();

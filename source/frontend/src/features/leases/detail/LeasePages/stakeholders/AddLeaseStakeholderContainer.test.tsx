@@ -239,10 +239,9 @@ describe('AddLeaseTenantContainer component', () => {
     expect(viewProps.selectedStakeholders).toHaveLength(1);
 
     await act(async () => {
-      viewProps.onSubmit({
-        ...LeaseFormModel.fromApi(getMockApiLease()),
-        stakeholders: viewProps.selectedStakeholders,
-      });
+      const leaseForm = LeaseFormModel.fromApi(getMockApiLease());
+      leaseForm.stakeholders = viewProps.selectedStakeholders;
+      viewProps.onSubmit(leaseForm);
     });
     expect(viewProps.saveCallback).not.toBeUndefined();
   });
@@ -259,10 +258,9 @@ describe('AddLeaseTenantContainer component', () => {
     expect(viewProps.selectedStakeholders).toHaveLength(1);
 
     await act(async () => {
-      viewProps.onSubmit({
-        ...LeaseFormModel.fromApi(getMockApiLease()),
-        stakeholders: viewProps.selectedStakeholders,
-      });
+      const leaseForm = LeaseFormModel.fromApi(getMockApiLease());
+      leaseForm.stakeholders = viewProps.selectedStakeholders;
+      viewProps.onSubmit(leaseForm);
     });
 
     expect(viewProps.saveCallback).not.toBeUndefined();
@@ -288,11 +286,10 @@ describe('AddLeaseTenantContainer component', () => {
     await waitForEffects();
 
     await act(async () => {
-      viewProps.onSubmit({
-        ...new LeaseFormModel(),
-        stakeholders: [{ personId: 1 }],
-        id: 1,
-      });
+      const leaseForm = new LeaseFormModel();
+      leaseForm.stakeholders = [{ personId: 1 }];
+      leaseForm.id = 1;
+      viewProps.onSubmit(leaseForm);
     });
 
     expect(mockLeaseStakeholderApi.updateLeaseStakeholders.execute).toHaveBeenCalledTimes(1);
@@ -314,11 +311,10 @@ describe('AddLeaseTenantContainer component', () => {
     await waitForEffects();
 
     await act(async () => {
-      viewProps.onSubmit({
-        ...new LeaseFormModel(),
-        stakeholders: [{ personId: 1, organizationId: 2 }],
-        id: 1,
-      });
+      const leaseForm = new LeaseFormModel();
+      leaseForm.stakeholders = [{ personId: 1, organizationId: 2 }];
+      leaseForm.id = 1;
+      viewProps.onSubmit(leaseForm);
     });
 
     expect(mockLeaseStakeholderApi.updateLeaseStakeholders.execute).toHaveBeenCalledTimes(1);
@@ -367,11 +363,10 @@ describe('AddLeaseTenantContainer component', () => {
     await waitForEffects();
 
     await act(async () => {
-      viewProps.onSubmit({
-        ...new LeaseFormModel(),
-        stakeholders: [{ personId: 1 }],
-        id: 1,
-      });
+      const leaseForm = new LeaseFormModel();
+      leaseForm.stakeholders = [{ personId: 1 }];
+      leaseForm.id = 1;
+      viewProps.onSubmit(leaseForm);
     });
 
     expect(mockLeaseStakeholderApi.updateLeaseStakeholders.execute).toHaveBeenCalledTimes(1);
@@ -401,11 +396,10 @@ describe('AddLeaseTenantContainer component', () => {
     await waitForEffects();
 
     await act(async () => {
-      viewProps.onSubmit({
-        ...new LeaseFormModel(),
-        stakeholders: [{ personId: 1 }],
-        id: 1,
-      });
+      const leaseForm = new LeaseFormModel();
+      leaseForm.stakeholders = [{ personId: 1 }];
+      leaseForm.id = 1;
+      viewProps.onSubmit(leaseForm);
     });
 
     expect(mockLeaseStakeholderApi.updateLeaseStakeholders.execute).toHaveBeenCalledTimes(1);

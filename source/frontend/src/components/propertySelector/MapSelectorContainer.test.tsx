@@ -6,10 +6,7 @@ import configureMockStore from 'redux-mock-store';
 import thunk from 'redux-thunk';
 
 import { useMapProperties } from '@/hooks/repositories/useMapProperties';
-import {
-  getMockLocationFeatureDataset,
-  getMockSelectedFeatureDataset,
-} from '@/mocks/featureset.mock';
+import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
 import { mockFAParcelLayerResponse, mockGeocoderOptions } from '@/mocks/index.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { act, fillInput, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
@@ -32,12 +29,7 @@ vi.mocked(useMapProperties).mockReturnValue({
     error: null,
     response: { features: [] } as any,
     execute: vi.fn().mockResolvedValue({
-      features: [
-        {
-          ...getMockSelectedFeatureDataset().pimsFeature,
-          properties: {},
-        },
-      ],
+      features: getMockLocationFeatureDataset().pimsFeatures,
     }),
     loading: false,
     status: 200,
@@ -51,9 +43,8 @@ describe('MapSelectorContainer component', () => {
       <Formik initialValues={{ properties: [] }} onSubmit={noop}>
         <MapSelectorContainer
           addSelectedProperties={onSelectedProperties}
-          repositionSelectedProperty={onRepositionSelectedProperty}
           modifiedProperties={
-            renderOptions.modifiedProperties ?? [{ ...getMockSelectedFeatureDataset() }]
+            renderOptions.modifiedProperties ?? [{ ...getMockLocationFeatureDataset() }]
           }
         />
       </Formik>,
@@ -109,23 +100,25 @@ describe('MapSelectorContainer component', () => {
   });
 
   it('displays all selected property attributes', async () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
+    const mockFeatureSet = getMockLocationFeatureDataset();
     const { getByText } = await setup({
       modifiedProperties: [
         {
           ...mockFeatureSet,
-          pimsFeature: {
-            ...mockFeatureSet.pimsFeature,
-            properties: {
-              ...mockFeatureSet.pimsFeature?.properties,
-              PID: 123456789,
-              SURVEY_PLAN_NUMBER: 'SPS22411',
-              LAND_LEGAL_DESCRIPTION: 'Test Legal Description',
-              STREET_ADDRESS_1: 'Test address 123',
-              REGION_CODE: 1,
-              DISTRICT_CODE: 5,
+          pimsFeatures: [
+            {
+              ...mockFeatureSet.pimsFeatures[0],
+              properties: {
+                ...mockFeatureSet.pimsFeatures[0]?.properties,
+                PID: 123456789,
+                SURVEY_PLAN_NUMBER: 'SPS22411',
+                LAND_LEGAL_DESCRIPTION: 'Test Legal Description',
+                STREET_ADDRESS_1: 'Test address 123',
+                REGION_CODE: 1,
+                DISTRICT_CODE: 5,
+              },
             },
-          },
+          ],
           regionFeature: {
             ...mockFeatureSet.regionFeature,
             properties: {
@@ -155,23 +148,25 @@ describe('MapSelectorContainer component', () => {
   });
 
   it('selected properties display a warning if added', async () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
+    const mockFeatureSet = getMockLocationFeatureDataset();
     const { getByText, getByTitle, findByTestId, container } = await setup({
       modifiedProperties: [
         {
           ...mockFeatureSet,
-          pimsFeature: {
-            ...mockFeatureSet.pimsFeature,
-            properties: {
-              ...mockFeatureSet.pimsFeature?.properties,
-              PID: 123456789,
-              SURVEY_PLAN_NUMBER: 'SPS22411',
-              LAND_LEGAL_DESCRIPTION: 'Test Legal Description',
-              STREET_ADDRESS_1: 'Test address 123',
-              REGION_CODE: 1,
-              DISTRICT_CODE: 5,
+          pimsFeatures: [
+            {
+              ...mockFeatureSet.pimsFeatures[0],
+              properties: {
+                ...mockFeatureSet.pimsFeatures[0]?.properties,
+                PID: 123456789,
+                SURVEY_PLAN_NUMBER: 'SPS22411',
+                LAND_LEGAL_DESCRIPTION: 'Test Legal Description',
+                STREET_ADDRESS_1: 'Test address 123',
+                REGION_CODE: 1,
+                DISTRICT_CODE: 5,
+              },
             },
-          },
+          ],
         },
       ],
     });
@@ -192,105 +187,5 @@ describe('MapSelectorContainer component', () => {
     await act(async () => userEvent.click(addButton));
 
     expect(onSelectedProperties).toHaveBeenCalled();
-  });
-
-  it('selected properties display a warning if added multiple times', async () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
-    const { getByText, getByTitle, findByTestId, container } = await setup({
-      modifiedProperties: [
-        {
-          ...mockFeatureSet,
-          pimsFeature: {
-            ...mockFeatureSet.pimsFeature,
-            properties: {
-              ...mockFeatureSet.pimsFeature?.properties,
-              PID_PADDED: '009-727-493',
-              SURVEY_PLAN_NUMBER: 'SPS22411',
-              LAND_LEGAL_DESCRIPTION: 'Test Legal Description',
-              STREET_ADDRESS_1: 'Test address 123',
-              REGION_CODE: 1,
-              DISTRICT_CODE: 5,
-            },
-          },
-        },
-      ],
-    });
-
-    const searchTab = getByText('Search');
-    await act(async () => userEvent.click(searchTab));
-    await act(async () => {
-      fillInput(container, 'searchBy', 'pid', 'select');
-    });
-    await fillInput(container, 'pid', '009-727-493');
-    const searchButton = getByTitle('search');
-
-    await act(async () => userEvent.click(searchButton));
-
-    const checkbox = await findByTestId(
-      'selectrow-PID-009-727-493-48.76613749999999--123.46163749999998',
-    );
-    expect(checkbox).toBeVisible();
-
-    await act(async () => userEvent.click(checkbox));
-    const addButton = getByText('Add to selection');
-    await act(async () => userEvent.click(addButton));
-
-    const toast = await screen.findAllByText(
-      'A property that the user is trying to select has already been added to the selected properties list',
-    );
-    expect(toast[0]).toBeVisible();
-  });
-
-  it(`calls "repositionSelectedProperty" callback when file marker has been repositioned`, async () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
-
-    // simulate file marker repositioning via the map state machine
-    const testMapMock: IMapStateMachineContext = {
-      ...mapMachineBaseMock,
-      isRepositioning: true,
-      repositioningFeatureDataset: {} as any,
-      mapLocationFeatureDataset: {} as any,
-    };
-    const mapProperties = [
-      {
-        ...mockFeatureSet,
-        pimsFeature: {
-          ...mockFeatureSet.pimsFeature,
-          properties: {
-            ...mockFeatureSet.pimsFeature?.properties,
-            PID_PADDED: '009-727-493',
-            SURVEY_PLAN_NUMBER: 'SPS22411',
-            LAND_LEGAL_DESCRIPTION: 'Test Legal Description',
-            STREET_ADDRESS_1: 'Test address 123',
-            REGION_CODE: 1,
-            DISTRICT_CODE: 5,
-          },
-        },
-      },
-    ];
-
-    const { rerender } = await setup({
-      modifiedProperties: mapProperties,
-      mockMapMachine: testMapMock,
-    });
-
-    // simulate file marker repositioning via the map state machine
-    await act(async () => {
-      testMapMock.isRepositioning = true;
-      testMapMock.repositioningFeatureDataset = getMockSelectedFeatureDataset();
-      testMapMock.mapLocationFeatureDataset = getMockLocationFeatureDataset();
-    });
-
-    rerender(
-      <Formik initialValues={{ properties: [] }} onSubmit={noop}>
-        <MapSelectorContainer
-          addSelectedProperties={onSelectedProperties}
-          repositionSelectedProperty={onRepositionSelectedProperty}
-          modifiedProperties={mapProperties}
-        />
-      </Formik>,
-    );
-
-    expect(onRepositionSelectedProperty).toHaveBeenCalled();
   });
 });

@@ -3,6 +3,7 @@ import { AxiosResponse } from 'axios';
 import { Feature, FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { useCallback, useEffect, useMemo, useState } from 'react';
 
+import { emptyFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
 import { LtsaOrders, SpcpOrder } from '@/interfaces/ltsaModels';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
@@ -151,11 +152,14 @@ export const useComposedProperties = ({
     findMultipleCrownLandLeaseLoading,
   } = useCrownLandLayer();
   const [crownResponse, setCrownResponse] = useState<{
-    crownTenureFeatures: Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties>[];
-    crownLeaseFeatures: Feature<Geometry, TANTALIS_CrownLandLeases_Feature_Properties>[];
-    crownLicenseFeatures: Feature<Geometry, TANTALIS_CrownLandLicenses_Feature_Properties>[];
-    crownInclusionFeatures: Feature<Geometry, TANTALIS_CrownLandInclusions_Feature_Properties>[];
-    crownInventoryFeatures: Feature<Geometry, TANTALIS_CrownLandInventory_Feature_Properties>[];
+    crownLandTenuresFeatures: Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties>[];
+    crownLandLeasesFeatures: Feature<Geometry, TANTALIS_CrownLandLeases_Feature_Properties>[];
+    crownLandLicensesFeatures: Feature<Geometry, TANTALIS_CrownLandLicenses_Feature_Properties>[];
+    crownLandInclusionsFeatures: Feature<
+      Geometry,
+      TANTALIS_CrownLandInclusions_Feature_Properties
+    >[];
+    crownLandInventoryFeatures: Feature<Geometry, TANTALIS_CrownLandInventory_Feature_Properties>[];
   }>();
   const [highwayResponse, setHighwayResponse] = useState<
     Feature<Geometry, ISS_ProvincialPublicHighway>[] | undefined
@@ -227,19 +231,8 @@ export const useComposedProperties = ({
     spcpOrder: undefined,
     pimsProperty: undefined,
     propertyAssociations: undefined,
-    parcelMapFeatureCollection: undefined,
-    pimsGeoserverFeatureCollection: undefined,
     bcAssessmentSummary: undefined,
-    crownTenureFeatures: undefined,
-    crownLeaseFeatures: undefined,
-    crownLicenseFeatures: undefined,
-    crownInclusionFeatures: undefined,
-    crownInventoryFeatures: undefined,
-    highwayFeatures: undefined,
-    municipalityFeatures: undefined,
-    firstNationFeatures: undefined,
-    electoralFeatures: undefined,
-    alrFeatures: undefined,
+    featureDataset: emptyFeatureDataset(),
   });
 
   const typeCheckWrapper = useDeepCompareCallback(
@@ -349,11 +342,11 @@ export const useComposedProperties = ({
             : Promise.resolve(undefined),
         ]);
         setCrownResponse({
-          crownTenureFeatures: crownTenures ?? [],
-          crownLeaseFeatures: crownLeases ?? [],
-          crownLicenseFeatures: crownLicenses ?? [],
-          crownInclusionFeatures: crownInclusions ?? [],
-          crownInventoryFeatures: crownInventory ?? [],
+          crownLandTenuresFeatures: crownTenures ?? [],
+          crownLandLeasesFeatures: crownLeases ?? [],
+          crownLandLicensesFeatures: crownLicenses ?? [],
+          crownLandInclusionsFeatures: crownInclusions ?? [],
+          crownLandInventoryFeatures: crownInventory ?? [],
         });
         setHighwayResponse(highway);
         setMunicipalityResponse(municipality);
@@ -397,16 +390,19 @@ export const useComposedProperties = ({
       spcpOrder: getStrataPlanCommonProperty.response,
       pimsProperty: getPropertyWrapper.response,
       propertyAssociations: getPropertyAssociationsWrapper.response,
-      parcelMapFeatureCollection: parcelResponse,
-      pimsGeoserverFeatureCollection:
-        getPropertyWfsWrapper.response ?? getPropertyByBoundaryWfsWrapper.response,
       bcAssessmentSummary: getSummaryWrapper.response,
-      ...crownResponse,
-      highwayFeatures: highwayResponse,
-      municipalityFeatures: municipalityResponse,
-      electoralFeatures: electoralResponse,
-      alrFeatures: alrResponse,
-      firstNationFeatures: firstNationsResponse,
+      featureDataset: {
+        ...emptyFeatureDataset(),
+        ...crownResponse,
+        pimsFeatures: getPropertyWfsWrapper.response?.features,
+        pimsBoundaryFeatures: getPropertyByBoundaryWfsWrapper.response?.features,
+        parcelFeatures: parcelResponse?.features,
+        highwayFeatures: highwayResponse,
+        municipalityFeatures: municipalityResponse,
+        electoralFeatures: electoralResponse,
+        alrFeatures: alrResponse,
+        firstNationFeatures: firstNationsResponse,
+      },
     });
   }, [
     setComposedProperty,

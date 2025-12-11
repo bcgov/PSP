@@ -10,8 +10,10 @@ import { vi } from 'vitest';
 import css from '@/assets/scss/_variables.module.scss';
 import ModalContainer from '@/components/common/ModalContainer';
 import { ModalContextProvider } from '@/contexts/modalContext';
-import { ParcelDataset } from '@/features/properties/parcelList/models';
-import { WorklistContextProvider } from '@/features/properties/worklist/context/WorklistContext';
+import {
+  LocationDatasetWithId,
+  WorklistContextProvider,
+} from '@/features/properties/worklist/context/WorklistContext';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { TenantConsumer, TenantProvider } from '@/tenants';
 
@@ -24,7 +26,7 @@ interface TestProviderWrapperParams {
   claims?: string[];
   roles?: string[];
   history?: MemoryHistory;
-  worklistParcels?: ParcelDataset[];
+  worklistParcels?: LocationDatasetWithId[];
 }
 
 /**
@@ -58,7 +60,7 @@ const TestCommonWrapper: React.FunctionComponent<
             <TestRouterWrapper history={history}>
               <ThemeProvider theme={{ tenant, css, bcTokens }}>
                 <ModalContextProvider>
-                  <WorklistContextProvider parcels={worklistParcels ?? []}>
+                  <WorklistContextProvider initialParcels={worklistParcels ?? []}>
                     <ToastContainer
                       autoClose={5000}
                       hideProgressBar

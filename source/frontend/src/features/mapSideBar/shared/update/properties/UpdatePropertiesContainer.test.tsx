@@ -20,7 +20,16 @@ import {
   waitFor,
 } from '@/utils/test-utils';
 
-import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
+import UpdatePropertiesContainer, {
+  IUpdatePropertiesContainerProps,
+} from './UpdatePropertiesContainer';
+import { IPropertiesListContainerProps } from './PropertiesListContainer';
+import { emptyFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { ResearchForm } from '@/features/mapSideBar/research/add/models';
+import React from 'react';
+import { FormikProps, getIn } from 'formik';
+import { PropertyForm, WithFormProperties } from '../../models';
+import { map } from 'lodash';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -40,22 +49,24 @@ const setIsShowingPropertySelector = vi.fn();
 const onSuccess = vi.fn();
 const updateFileProperties = vi.fn();
 
-describe('UpdateProperties component', () => {
+describe('UpdatePropertiesContainer component', () => {
   // render component under test
   const setup = async (
-    props: Partial<IUpdatePropertiesProps>,
+    props: Partial<IUpdatePropertiesContainerProps>,
     renderOptions: RenderOptions = {},
   ) => {
+    const formikRef = React.createRef<FormikProps<WithFormProperties>>();
     const utils = render(
       <SideBarContextProvider>
-        <UpdateProperties
-          file={props.file ?? getMockResearchFile()}
+        <UpdatePropertiesContainer
+          formFile={props.formFile ?? ResearchForm.fromApi(getMockResearchFile())}
           setIsShowingPropertySelector={setIsShowingPropertySelector}
           onSuccess={onSuccess}
           updateFileProperties={updateFileProperties}
-          confirmBeforeAdd={props.confirmBeforeAdd ?? vi.fn()}
+          canAdd={props.canAdd ?? vi.fn()}
           canRemove={props.canRemove ?? vi.fn()}
-          formikRef={createRef() as any}
+          formikRef={formikRef}
+          confirmAddMessage={'Test Update Properties'}
         />
       </SideBarContextProvider>,
       {
@@ -72,6 +83,7 @@ describe('UpdateProperties component', () => {
 
     return {
       ...utils,
+      formikRef,
     };
   };
 
@@ -92,7 +104,7 @@ describe('UpdateProperties component', () => {
 
   it('renders a row with an address', async () => {
     const { getByText } = await setup({
-      file: {
+      formFile: ResearchForm.fromApi({
         ...getMockResearchFile(),
         fileProperties: [
           {
@@ -145,9 +157,14 @@ describe('UpdateProperties component', () => {
             location: null,
             boundary: null,
             file: null,
+            isLegalOpinionRequired: false,
+            isLegalOpinionObtained: false,
+            documentReference: '',
+            researchSummary: '',
+            propertyResearchPurposeTypes: [],
           },
         ],
-      },
+      }),
     });
     expect(getByText(/45 - 904 Ho/, { exact: false })).toBeVisible();
   });
@@ -178,61 +195,55 @@ describe('UpdateProperties component', () => {
 
   it('should preserve the order of properties when saving', async () => {
     updateFileProperties.mockResolvedValue(getMockResearchFile());
-    const { getByText } = await setup(
+    const { getByText, formikRef } = await setup({
+      formFile: ResearchForm.fromApi({
+        ...getMockResearchFile(),
+        fileProperties: [
+          {
+            ...getMockApiPropertyFile(),
+            // existing property
+            property: { ...getMockApiProperty(), pid: 123456789, id: 1 },
+            isLegalOpinionRequired: false,
+            isLegalOpinionObtained: false,
+            documentReference: '',
+            researchSummary: '',
+            propertyResearchPurposeTypes: [],
+            file: null,
+          },
+        ],
+      }),
+    });
+
+    // properties to be added to the current file via the map state machine (ie working list, etc)
+    const formPropertiesForAddition = [
       {
-        file: {
-          ...getMockResearchFile(),
-          fileProperties: [
-            {
-              ...getMockApiPropertyFile(),
-              // existing property
-              property: { ...getMockApiProperty(), pid: 123456789, id: 1 },
-            },
-          ],
-        },
+        ...emptyFeatureDataset(),
+        location: { lng: -120.69195885, lat: 50.25163372 },
+        parcelFeatures: [getMockFullyAttributedParcel('111-111-111')],
       },
       {
-        mockMapMachine: {
-          ...mapMachineBaseMock,
-          // properties to be added to the current file via the map state machine (ie working list, etc)
-          selectedFeatures: [
-            {
-              location: { lng: -120.69195885, lat: 50.25163372 },
-              fileLocation: null,
-              fileBoundary: null,
-              pimsFeature: null,
-              parcelFeature: getMockFullyAttributedParcel('111-111-111'),
-              regionFeature: null,
-              districtFeature: null,
-              selectingComponentId: null,
-              municipalityFeature: null,
-            },
-            {
-              location: { lng: -120.69195885, lat: 50.25163372 },
-              fileLocation: null,
-              fileBoundary: null,
-              pimsFeature: null,
-              parcelFeature: getMockFullyAttributedParcel('222-222-222'),
-              regionFeature: null,
-              districtFeature: null,
-              selectingComponentId: null,
-              municipalityFeature: null,
-            },
-            {
-              location: { lng: -120.69195885, lat: 50.25163372 },
-              fileLocation: null,
-              fileBoundary: null,
-              pimsFeature: null,
-              parcelFeature: getMockFullyAttributedParcel('333-333-333'),
-              regionFeature: null,
-              districtFeature: null,
-              selectingComponentId: null,
-              municipalityFeature: null,
-            },
-          ],
-        },
+        ...emptyFeatureDataset(),
+        location: { lng: -120.69195885, lat: 50.25163372 },
+        parcelFeatures: [getMockFullyAttributedParcel('222-222-222')],
       },
-    );
+      {
+        ...emptyFeatureDataset(),
+        location: { lng: -120.69195885, lat: 50.25163372 },
+        parcelFeatures: [getMockFullyAttributedParcel('333-333-333')],
+      },
+    ].map(x => PropertyForm.fromLocationFeatureDataset(x));
+
+    const fieldName = 'properties';
+    const existingProperties = getIn(formikRef?.current?.values, fieldName) ?? [];
+
+    await act(async () => {
+      formikRef.current?.setFieldValue(fieldName, [
+        ...existingProperties,
+        ...formPropertiesForAddition,
+      ]);
+      await formikRef.current?.setFieldTouched(fieldName, true);
+    });
+
     const saveButton = getByText('Save');
     await act(async () => userEvent.click(saveButton));
 
@@ -241,23 +252,11 @@ describe('UpdateProperties component', () => {
 
     expect(updateFileProperties).toHaveBeenCalledWith(
       expect.objectContaining({
-        fileProperties: expect.arrayContaining([
-          expect.objectContaining({
-            property: expect.objectContaining({ id: 1 }),
-            displayOrder: 0,
-          }),
-          expect.objectContaining({
-            property: expect.objectContaining({ pid: 111111111 }),
-            displayOrder: 1,
-          }),
-          expect.objectContaining({
-            property: expect.objectContaining({ pid: 222222222 }),
-            displayOrder: 2,
-          }),
-          expect.objectContaining({
-            property: expect.objectContaining({ pid: 333333333 }),
-            displayOrder: 3,
-          }),
+        properties: expect.arrayContaining([
+          expect.objectContaining({ id: 1 }),
+          expect.objectContaining({ pid: '111-111-111' }),
+          expect.objectContaining({ pid: '222-222-222' }),
+          expect.objectContaining({ pid: '333-333-333' }),
         ]),
       }),
       expect.any(Array),

@@ -66,26 +66,26 @@ describe('DepositsContainer', () => {
     vi.restoreAllMocks();
   });
   it('renders as expected', () => {
+    const leaseForm = new LeaseFormModel();
+    leaseForm.returnNotes =
+      'Tenant no longer has a dog, deposit returned, less fee for carpet cleaning';
+    leaseForm.securityDeposits = getMockDeposits().map(s => FormLeaseDeposit.fromApi(s));
     const result = setup({
-      lease: {
-        ...new LeaseFormModel(),
-        returnNotes: 'Tenant no longer has a dog, deposit returned, less fee for carpet cleaning',
-        securityDeposits: getMockDeposits().map(s => FormLeaseDeposit.fromApi(s)),
-      },
+      lease: leaseForm,
     });
     expect(result.asFragment()).toMatchSnapshot();
   });
 
   it('saves deposit notes', async () => {
     mockAxios.onPost().reply(200, {});
+    const leaseForm = new LeaseFormModel();
+    leaseForm.statusTypeCode = ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE;
+    leaseForm.id = 1;
+    leaseForm.returnNotes =
+      'Tenant no longer has a dog, deposit returned, less fee for carpet cleaning';
+    leaseForm.securityDeposits = getMockDeposits().map(s => FormLeaseDeposit.fromApi(s));
     const { getByText, getByTestId, container } = setup({
-      lease: {
-        ...new LeaseFormModel(),
-        statusTypeCode: ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE,
-        id: 1,
-        returnNotes: 'Tenant no longer has a dog, deposit returned, less fee for carpet cleaning',
-        securityDeposits: getMockDeposits().map(s => FormLeaseDeposit.fromApi(s)),
-      },
+      lease: leaseForm,
       claims: [Claims.LEASE_EDIT],
     });
     const editButton = getByTestId('edit-comments');
@@ -99,14 +99,13 @@ describe('DepositsContainer', () => {
   });
 
   it('cancels an edited deposit note', async () => {
+    const leaseForm = new LeaseFormModel();
+    leaseForm.statusTypeCode = ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE;
+    leaseForm.id = 1;
+    leaseForm.returnNotes = '';
+    leaseForm.securityDeposits = getMockDeposits().map(s => FormLeaseDeposit.fromApi(s));
     const { getByText, getByTestId, container } = await setup({
-      lease: {
-        ...new LeaseFormModel(),
-        statusTypeCode: ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE,
-        id: 1,
-        returnNotes: '',
-        securityDeposits: getMockDeposits().map(s => FormLeaseDeposit.fromApi(s)),
-      },
+      lease: leaseForm,
       claims: [Claims.LEASE_EDIT],
     });
     const editButton = getByTestId('edit-comments');

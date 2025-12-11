@@ -23,6 +23,7 @@ import {
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { AcquisitionContainer, IAcquisitionContainerProps } from './AcquisitionContainer';
 import { IAcquisitionViewProps } from './AcquisitionView';
+import { FileForm } from '../shared/models';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -253,7 +254,7 @@ describe('AcquisitionContainer component', () => {
     });
 
     await act(async () => {
-      await viewProps.onUpdateProperties(mockAcquisitionFileResponse());
+      await viewProps.onUpdateProperties(FileForm.fromApi(mockAcquisitionFileResponse()));
     });
 
     expect(

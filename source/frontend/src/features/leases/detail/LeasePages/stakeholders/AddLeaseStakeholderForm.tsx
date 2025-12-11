@@ -1,4 +1,5 @@
 import { Formik, FormikProps } from 'formik';
+import { useMemo } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import { Prompt } from 'react-router';
 import { Link } from 'react-router-dom';
@@ -68,6 +69,13 @@ export const AddLeaseStakeholderForm: React.FunctionComponent<
     setSelectedStakeholders(remainingContacts);
     setSelectedContacts(remainingContacts);
   };
+
+  const initialVals: LeaseFormModel = useMemo(() => {
+    const enhancedValues = initialValues ?? new LeaseFormModel();
+    enhancedValues.stakeholders = selectedStakeholders;
+    return enhancedValues;
+  }, [initialValues, selectedStakeholders]);
+
   return (
     <StyledSummarySection>
       <Section
@@ -106,11 +114,7 @@ export const AddLeaseStakeholderForm: React.FunctionComponent<
           }}
           innerRef={formikRef}
           enableReinitialize
-          initialValues={{
-            ...new LeaseFormModel(),
-            ...initialValues,
-            stakeholders: selectedStakeholders,
-          }}
+          initialValues={initialVals}
         >
           {formikProps => (
             <>

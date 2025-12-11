@@ -6,14 +6,14 @@ import { applyDisplayOrder } from '@/utils';
 import { emptyStringtoNullable, fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists, isValidIsoDateTime } from '@/utils/utils';
 
-import { PropertyForm } from '../../shared/models';
+import { PropertyForm, WithFormProperties } from '../../shared/models';
 import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';
 import { DispositionOfferFormModel } from '../tabs/offersAndSale/dispositionOffer/models/DispositionOfferFormModel';
 import { DispositionAppraisalFormModel } from './DispositionAppraisalFormModel';
 import { DispositionSaleFormModel } from './DispositionSaleFormModel';
 import { DispositionTeamSubFormModel, WithDispositionTeam } from './DispositionTeamSubFormModel';
 
-export class DispositionFormModel implements WithDispositionTeam {
+export class DispositionFormModel implements WithDispositionTeam, WithFormProperties {
   fileName: string | null = '';
   fileStatusTypeCode: string | null = null;
   referenceNumber: string | null = '';
@@ -31,7 +31,7 @@ export class DispositionFormModel implements WithDispositionTeam {
   initiatingDocumentTypeOther: string | null = '';
   initiatingDocumentDate: string | null = null;
   regionCode: string | null = null;
-  fileProperties: PropertyForm[] = [];
+  properties: PropertyForm[] = [];
   team: DispositionTeamSubFormModel[] = [];
   offers: DispositionOfferFormModel[] = [];
   fileChecklist: ChecklistItemFormModel[] = [];
@@ -52,7 +52,7 @@ export class DispositionFormModel implements WithDispositionTeam {
   }
 
   toApi(): ApiGen_Concepts_DispositionFile {
-    const fileProperties = this.fileProperties.map(x => this.toPropertyApi(x));
+    const fileProperties = this.properties.map(x => this.toPropertyApi(x));
     const sortedProperties = applyDisplayOrder(fileProperties);
     return {
       id: this.id ?? 0,
@@ -135,7 +135,7 @@ export class DispositionFormModel implements WithDispositionTeam {
 
     dispositionForm.team =
       model.dispositionTeam?.map(x => DispositionTeamSubFormModel.fromApi(x)) || [];
-    dispositionForm.fileProperties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
+    dispositionForm.properties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
 
     return dispositionForm;
   }

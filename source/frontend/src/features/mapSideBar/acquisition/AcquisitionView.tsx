@@ -29,10 +29,10 @@ import { InventoryTabNames } from '../property/InventoryTabs';
 import FilePropertyRouter from '../router/FilePropertyRouter';
 import { FileTabType } from '../shared/detail/FileTabs';
 import FileMenuView from '../shared/FileMenuView';
-import { PropertyForm } from '../shared/models';
+import { FileForm, PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
-import UpdateProperties from '../shared/update/properties/UpdateProperties';
+import UpdatePropertiesContainer from '../shared/update/properties/UpdatePropertiesContainer';
 import { AcquisitionContainerState } from './AcquisitionContainer';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionGenerateContainer from './common/GenerateForm/AcquisitionGenerateContainer';
@@ -48,7 +48,7 @@ export interface IAcquisitionViewProps {
   onSelectProperty: (propertyId: number) => void;
   onEditProperties: () => void;
   onSuccess: () => void;
-  onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
+  onUpdateProperties: (file: FileForm) => Promise<ApiGen_Concepts_File | undefined>;
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
   isEditing: boolean;
@@ -87,6 +87,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   const acquisitionFile: ApiGen_Concepts_AcquisitionFile = {
     ...file,
   } as unknown as ApiGen_Concepts_AcquisitionFile;
+  const formFile = FileForm.fromApi(acquisitionFile);
 
   // match for property menu routes - eg /property/1/ltsa
   const fileMatch = matchPath<Record<string, string>>(location.pathname, `${match.path}/:tab`);
@@ -117,14 +118,14 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
   return (
     <Switch>
       <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
-        {file && (
-          <UpdateProperties
-            file={file}
+        {formFile && (
+          <UpdatePropertiesContainer
+            formFile={formFile}
             setIsShowingPropertySelector={closePropertySelector}
             onSuccess={onSuccess}
             updateFileProperties={onUpdateProperties}
-            confirmBeforeAdd={confirmBeforeAdd}
-            confirmBeforeAddMessage={
+            canAdd={confirmBeforeAdd}
+            confirmAddMessage={
               <>
                 <p>This property has already been added to one or more acquisition files.</p>
                 <p>Do you want to acknowledge and proceed?</p>
@@ -132,6 +133,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
             }
             canRemove={canRemove}
             canUploadShapefiles={true}
+            canReposition={true}
             formikRef={formikRef}
           />
         )}

@@ -25,6 +25,7 @@ import {
 import { SideBarContextProvider } from '../context/sidebarContext';
 import DispositionContainer, { IDispositionContainerProps } from './DispositionContainer';
 import { IDispositionViewProps } from './DispositionView';
+import { DispositionFormModel } from './models/DispositionFormModel';
 
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
@@ -144,7 +145,9 @@ describe('DispositionContainer component', () => {
     await waitForElementToBeRemoved(spinner);
 
     await act(async () => {
-      await viewProps.onUpdateProperties(mockDispositionFileApi);
+      await viewProps.onUpdateProperties(
+        DispositionFormModel.fromApi(mockDispositionFileResponse()),
+      );
     });
     expect(spinner).not.toBeVisible();
     expect(
@@ -163,7 +166,9 @@ describe('DispositionContainer component', () => {
       .onPut(new RegExp('dispositionfiles/1/properties'))
       .reply(400, { error: errorMessage });
     await act(async () => {
-      await viewProps.onUpdateProperties(mockDispositionFileApi);
+      await viewProps.onUpdateProperties(
+        DispositionFormModel.fromApi(mockDispositionFileResponse()),
+      );
     });
     expect(spinner).not.toBeVisible();
     expect(await screen.findByText(errorMessage)).toBeVisible();
@@ -284,7 +289,9 @@ describe('DispositionContainer component', () => {
     });
 
     await act(async () => {
-      await viewProps.onUpdateProperties(mockDispositionFileResponse());
+      await viewProps.onUpdateProperties(
+        DispositionFormModel.fromApi(mockDispositionFileResponse()),
+      );
     });
 
     expect(

@@ -220,20 +220,20 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   margin-right: 0;
 }
 
-.c32.c32.btn {
+.c31.c31.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c32.c32.btn .text {
+.c31.c31.btn .text {
   display: none;
 }
 
-.c32.c32.btn:hover,
-.c32.c32.btn:active,
-.c32.c32.btn:focus {
+.c31.c31.btn:hover,
+.c31.c31.btn:active,
+.c31.c31.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -247,9 +247,9 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   flex-direction: row;
 }
 
-.c32.c32.btn:hover .text,
-.c32.c32.btn:active .text,
-.c32.c32.btn:focus .text {
+.c31.c31.btn:hover .text,
+.c31.c31.btn:active .text,
+.c31.c31.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -286,7 +286,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   margin-bottom: 2.4rem;
 }
 
-.c33 {
+.c32 {
   color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
@@ -409,7 +409,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   overflow-y: auto;
 }
 
-.c35 {
+.c34 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -419,7 +419,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   z-index: 10;
 }
 
-.c34 {
+.c33 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -433,11 +433,11 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   cursor: pointer;
 }
 
-.c34.is-invalid {
+.c33.is-invalid {
   border: #CE3E39 solid 0.1rem;
 }
 
-.c30 {
+.c29 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -451,11 +451,11 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   cursor: default;
 }
 
-.c30.is-invalid {
+.c29.is-invalid {
   border: #CE3E39 solid 0.1rem;
 }
 
-.c31.c31.btn {
+.c30.c30.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
   padding-top: 0.8rem;
@@ -469,13 +469,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   line-height: unset;
 }
 
-.c31.c31.btn .text {
+.c30.c30.btn .text {
   display: none;
 }
 
-.c31.c31.btn:hover,
-.c31.c31.btn:active,
-.c31.c31.btn:focus {
+.c30.c30.btn:hover,
+.c30.c30.btn:active,
+.c30.c30.btn:focus {
   color: #CE3E39;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -508,7 +508,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   font-weight: bold;
 }
 
-.c28 {
+.c27 {
   margin: 0;
   padding: 1.6rem;
   font-size: 1.6rem;
@@ -519,18 +519,18 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   font-family: 'BcSans-Bold';
 }
 
-.c20 {
+.c19 {
   margin: 0 1.6rem 0 1.6rem;
   padding: 1.6rem;
   text-align: left;
   text-underline-offset: 2px;
 }
 
-.c20 button {
+.c19 button {
   font-size: 14px;
 }
 
-.c21 {
+.c20 {
   font-size: 16px;
   color: #1a5a96;
   font-style: italic;
@@ -541,7 +541,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   margin-bottom: 1rem;
 }
 
-.c25 {
+.c24 {
   padding: 1.5rem 1.8rem;
   border-radius: 4px;
   background-color: #f0f7fc;
@@ -553,42 +553,31 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   line-height: 24px;
 }
 
-.c24 {
+.c23 {
   float: right;
   cursor: pointer;
   color: #1a5a96;
   font-size: 2.8rem;
 }
 
-.c23 {
+.c22 {
   margin-right: 1.5rem;
   font-size: 1.3rem;
 }
 
-.c22 {
+.c21 {
   cursor: pointer;
 }
 
-.c27 {
+.c26 {
   font-weight: normal;
 }
 
-.c26 {
+.c25 {
   font-weight: bold;
 }
 
-.c19 {
-  margin: 0 1.6rem 0 1.6rem;
-  padding: 0 1.6rem 0 1.6rem;
-  text-align: left;
-  text-underline-offset: 2px;
-}
-
-.c19 button {
-  font-size: 14px;
-}
-
-.c29 input.form-control {
+.c28 input.form-control {
   min-width: 50rem;
   max-width: 100%;
 }
@@ -1661,43 +1650,137 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                   class="c19"
                 >
                   <div
-                    class="py-2"
+                    class="c20"
                   >
-                    Select one or more properties that you want to include in this acquisition. You can choose a location from the map, or search by other criteria.
+                    <div
+                      class="c21 no-gutters row"
+                    >
+                      <div
+                        class="col"
+                      >
+                        <svg
+                          class="c22"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                        New workflow
+                      </div>
+                      <div
+                        class="col-1"
+                      >
+                        <svg
+                          class="c23"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="m7 14 5-5 5 5z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                   <div
-                    class="c13 form-section"
+                    class="c24 collapse show"
                   >
-                    <h2
-                      class="c14"
-                    >
-                      <div
-                        class="no-gutters row"
+                    <ol>
+                      <li
+                        class="c25"
                       >
-                        <div
-                          class="align-content-end col"
-                        >
-                          Selected Properties
+                        <div>
+                          Find a Property
                         </div>
-                      </div>
-                    </h2>
-                    <div
-                      class="collapse show"
-                    >
-                      <div
-                        class="c20"
-                      >
                         <div
-                          class="c21"
+                          class="c26"
                         >
-                          <div
-                            class="c22 no-gutters row"
+                          Navigate to an area of the map OR use 
+                          <button
+                            class="c4 Button d-inline-block btn btn-link"
+                            type="button"
                           >
                             <div
-                              class="col"
+                              class="Button__value"
+                            >
+                              Search
+                            </div>
+                          </button>
+                        </div>
+                      </li>
+                      <li
+                        class="c25"
+                      >
+                        <div>
+                          Select a property
+                        </div>
+                        <div
+                          class="c26"
+                        >
+                          Click on the map and the selection will be highlighed
+                        </div>
+                      </li>
+                      <li
+                        class="c25"
+                      >
+                        <div>
+                          Add it to this file
+                        </div>
+                        <div
+                          class="c26"
+                        >
+                          Click "Add selected" property button when it appears below
+                        </div>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+                <div
+                  class="c13 form-section"
+                >
+                  <h2
+                    class="c14"
+                  >
+                    <div
+                      class="no-gutters row"
+                    >
+                      <div
+                        class="align-content-end col"
+                      >
+                        <div
+                          class="row"
+                        >
+                          <div
+                            class="col-11"
+                          >
+                            Selected Properties
+                          </div>
+                          <div
+                            class="col"
+                          >
+                            <span
+                              class="tooltip-icon"
+                              data-testid="tooltip-icon-no-location-tooltip"
+                              id="no-location-tooltip"
                             >
                               <svg
-                                class="c23"
+                                class="tooltip-icon"
                                 fill="currentColor"
                                 height="1em"
                                 stroke="currentColor"
@@ -1710,123 +1793,52 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                                   d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
                                 />
                               </svg>
-                              New workflow
-                            </div>
-                            <div
-                              class="col-1"
-                            >
-                              <svg
-                                class="c24"
-                                fill="currentColor"
-                                height="1em"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 24 24"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
-                                  d="m7 14 5-5 5 5z"
-                                />
-                              </svg>
-                            </div>
+                            </span>
                           </div>
                         </div>
-                        <div
-                          class="c25 collapse show"
-                        >
-                          <ol>
-                            <li
-                              class="c26"
-                            >
-                              <div>
-                                Find a Property
-                              </div>
-                              <div
-                                class="c27"
-                              >
-                                Navigate to an area of the map OR use 
-                                <button
-                                  class="c4 Button d-inline-block btn btn-link"
-                                  type="button"
-                                >
-                                  <div
-                                    class="Button__value"
-                                  >
-                                    Search
-                                  </div>
-                                </button>
-                              </div>
-                            </li>
-                            <li
-                              class="c26"
-                            >
-                              <div>
-                                Select a property
-                              </div>
-                              <div
-                                class="c27"
-                              >
-                                Click on the map and the selection will be highlighed
-                              </div>
-                            </li>
-                            <li
-                              class="c26"
-                            >
-                              <div>
-                                Add it to this file
-                              </div>
-                              <div
-                                class="c27"
-                              >
-                                Click "Add selected" property button when it appears below
-                              </div>
-                            </li>
-                          </ol>
-                        </div>
+                      </div>
+                    </div>
+                  </h2>
+                  <div
+                    class="collapse show"
+                  >
+                    <div
+                      class="c27 no-gutters row"
+                    >
+                      <div
+                        class="col-md-3"
+                      >
+                        Identifier
                       </div>
                       <div
-                        class="c28 no-gutters row"
+                        class="col-md-9"
                       >
-                        <div
-                          class="col-md-3"
+                        Provide a descriptive name for this land
+                        <span
+                          class="tooltip-icon"
+                          data-testid="tooltip-icon-property-selector-tooltip"
+                          id="property-selector-tooltip"
                         >
-                          Identifier
-                        </div>
-                        <div
-                          class="col-md-9"
-                        >
-                          Provide a descriptive name for this land
-                          <span
+                          <svg
                             class="tooltip-icon"
-                            data-testid="tooltip-icon-property-selector-tooltip"
-                            id="property-selector-tooltip"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <svg
-                              class="tooltip-icon"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 512 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                              />
-                            </svg>
-                          </span>
-                        </div>
+                            <path
+                              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                            />
+                          </svg>
+                        </span>
                       </div>
-                      <span>
-                        No Properties selected
-                      </span>
                     </div>
+                    <span>
+                      No Properties selected
+                    </span>
                   </div>
                 </div>
               </div>
@@ -1866,7 +1878,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                     class="c16 required text-left col"
                   >
                     <div
-                      class="c29 input form-group"
+                      class="c28 input form-group"
                     >
                       <input
                         class="form-control"
@@ -1917,7 +1929,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                     class="c16 text-left col"
                   >
                     <div
-                      class="c29 input form-group"
+                      class="c28 input form-group"
                     >
                       <input
                         class="form-control"
@@ -2374,11 +2386,11 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           class="col"
                         >
                           <div
-                            class="c30"
+                            class="c29"
                           >
                             Bob Billy Smith
                             <button
-                              class="c4 Button c31 btn btn-link"
+                              class="c4 Button c30 btn btn-link"
                               title="remove"
                               type="button"
                             >
@@ -2454,7 +2466,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                     class="pl-0 mt-2 col-xl-2 col-auto"
                   >
                     <button
-                      class="c4 Button c32 btn btn-link"
+                      class="c4 Button c31 btn btn-link"
                       data-testid="team.0.remove-button"
                       type="button"
                     >
@@ -2571,11 +2583,11 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           class="col"
                         >
                           <div
-                            class="c30"
+                            class="c29"
                           >
                             Stinky Cheese
                             <button
-                              class="c4 Button c31 btn btn-link"
+                              class="c4 Button c30 btn btn-link"
                               title="remove"
                               type="button"
                             >
@@ -2651,7 +2663,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                     class="pl-0 mt-2 col-xl-2 col-auto"
                   >
                     <button
-                      class="c4 Button c32 btn btn-link"
+                      class="c4 Button c31 btn btn-link"
                       data-testid="team.1.remove-button"
                       type="button"
                     >
@@ -2722,7 +2734,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 class="collapse show"
               >
                 <p
-                  class="c33"
+                  class="c32"
                 >
                   Each property in this sub-file should be impacted by the sub-interest(s) in this section
                 </p>
@@ -2763,7 +2775,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           class="col"
                         >
                           <div
-                            class="c34"
+                            class="c33"
                           >
                             Select from contacts
                           </div>
@@ -2837,7 +2849,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           class="col"
                         >
                           <div
-                            class="c34"
+                            class="c33"
                           >
                             Select from contacts
                           </div>
@@ -2924,7 +2936,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
         class=""
       >
         <div
-          class="c35 justify-content-end pt-4 p-0 no-gutters row"
+          class="c34 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"
@@ -3222,7 +3234,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c31 {
+.c30 {
   color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
@@ -3345,7 +3357,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c33 {
+.c32 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -3355,7 +3367,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   z-index: 10;
 }
 
-.c32 {
+.c31 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -3369,7 +3381,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c32.is-invalid {
+.c31.is-invalid {
   border: #CE3E39 solid 0.1rem;
 }
 
@@ -3399,7 +3411,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c29 {
+.c28 {
   margin: 0;
   padding: 1.6rem;
   font-size: 1.6rem;
@@ -3410,18 +3422,18 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c21 {
+.c20 {
   margin: 0 1.6rem 0 1.6rem;
   padding: 1.6rem;
   text-align: left;
   text-underline-offset: 2px;
 }
 
-.c21 button {
+.c20 button {
   font-size: 14px;
 }
 
-.c22 {
+.c21 {
   font-size: 16px;
   color: #1a5a96;
   font-style: italic;
@@ -3432,7 +3444,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   margin-bottom: 1rem;
 }
 
-.c26 {
+.c25 {
   padding: 1.5rem 1.8rem;
   border-radius: 4px;
   background-color: #f0f7fc;
@@ -3444,42 +3456,31 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   line-height: 24px;
 }
 
-.c25 {
+.c24 {
   float: right;
   cursor: pointer;
   color: #1a5a96;
   font-size: 2.8rem;
 }
 
-.c24 {
+.c23 {
   margin-right: 1.5rem;
   font-size: 1.3rem;
 }
 
-.c23 {
+.c22 {
   cursor: pointer;
 }
 
-.c28 {
+.c27 {
   font-weight: normal;
 }
 
-.c27 {
+.c26 {
   font-weight: bold;
 }
 
-.c20 {
-  margin: 0 1.6rem 0 1.6rem;
-  padding: 0 1.6rem 0 1.6rem;
-  text-align: left;
-  text-underline-offset: 2px;
-}
-
-.c20 button {
-  font-size: 14px;
-}
-
-.c30 input.form-control {
+.c29 input.form-control {
   min-width: 50rem;
   max-width: 100%;
 }
@@ -4544,43 +4545,137 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                   class="c20"
                 >
                   <div
-                    class="py-2"
+                    class="c21"
                   >
-                    Select one or more properties that you want to include in this acquisition. You can choose a location from the map, or search by other criteria.
+                    <div
+                      class="c22 no-gutters row"
+                    >
+                      <div
+                        class="col"
+                      >
+                        <svg
+                          class="c23"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 512 512"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                          />
+                        </svg>
+                        New workflow
+                      </div>
+                      <div
+                        class="col-1"
+                      >
+                        <svg
+                          class="c24"
+                          fill="currentColor"
+                          height="1em"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="1em"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="m7 14 5-5 5 5z"
+                          />
+                        </svg>
+                      </div>
+                    </div>
                   </div>
                   <div
-                    class="c13 form-section"
+                    class="c25 collapse show"
                   >
-                    <h2
-                      class="c14"
-                    >
-                      <div
-                        class="no-gutters row"
+                    <ol>
+                      <li
+                        class="c26"
                       >
-                        <div
-                          class="align-content-end col"
-                        >
-                          Selected Properties
+                        <div>
+                          Find a Property
                         </div>
-                      </div>
-                    </h2>
-                    <div
-                      class="collapse show"
-                    >
-                      <div
-                        class="c21"
-                      >
                         <div
-                          class="c22"
+                          class="c27"
                         >
-                          <div
-                            class="c23 no-gutters row"
+                          Navigate to an area of the map OR use 
+                          <button
+                            class="c4 Button d-inline-block btn btn-link"
+                            type="button"
                           >
                             <div
-                              class="col"
+                              class="Button__value"
+                            >
+                              Search
+                            </div>
+                          </button>
+                        </div>
+                      </li>
+                      <li
+                        class="c26"
+                      >
+                        <div>
+                          Select a property
+                        </div>
+                        <div
+                          class="c27"
+                        >
+                          Click on the map and the selection will be highlighed
+                        </div>
+                      </li>
+                      <li
+                        class="c26"
+                      >
+                        <div>
+                          Add it to this file
+                        </div>
+                        <div
+                          class="c27"
+                        >
+                          Click "Add selected" property button when it appears below
+                        </div>
+                      </li>
+                    </ol>
+                  </div>
+                </div>
+                <div
+                  class="c13 form-section"
+                >
+                  <h2
+                    class="c14"
+                  >
+                    <div
+                      class="no-gutters row"
+                    >
+                      <div
+                        class="align-content-end col"
+                      >
+                        <div
+                          class="row"
+                        >
+                          <div
+                            class="col-11"
+                          >
+                            Selected Properties
+                          </div>
+                          <div
+                            class="col"
+                          >
+                            <span
+                              class="tooltip-icon"
+                              data-testid="tooltip-icon-no-location-tooltip"
+                              id="no-location-tooltip"
                             >
                               <svg
-                                class="c24"
+                                class="tooltip-icon"
                                 fill="currentColor"
                                 height="1em"
                                 stroke="currentColor"
@@ -4593,123 +4688,52 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                                   d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
                                 />
                               </svg>
-                              New workflow
-                            </div>
-                            <div
-                              class="col-1"
-                            >
-                              <svg
-                                class="c25"
-                                fill="currentColor"
-                                height="1em"
-                                stroke="currentColor"
-                                stroke-width="0"
-                                viewBox="0 0 24 24"
-                                width="1em"
-                                xmlns="http://www.w3.org/2000/svg"
-                              >
-                                <path
-                                  d="M0 0h24v24H0z"
-                                  fill="none"
-                                />
-                                <path
-                                  d="m7 14 5-5 5 5z"
-                                />
-                              </svg>
-                            </div>
+                            </span>
                           </div>
                         </div>
-                        <div
-                          class="c26 collapse show"
-                        >
-                          <ol>
-                            <li
-                              class="c27"
-                            >
-                              <div>
-                                Find a Property
-                              </div>
-                              <div
-                                class="c28"
-                              >
-                                Navigate to an area of the map OR use 
-                                <button
-                                  class="c4 Button d-inline-block btn btn-link"
-                                  type="button"
-                                >
-                                  <div
-                                    class="Button__value"
-                                  >
-                                    Search
-                                  </div>
-                                </button>
-                              </div>
-                            </li>
-                            <li
-                              class="c27"
-                            >
-                              <div>
-                                Select a property
-                              </div>
-                              <div
-                                class="c28"
-                              >
-                                Click on the map and the selection will be highlighed
-                              </div>
-                            </li>
-                            <li
-                              class="c27"
-                            >
-                              <div>
-                                Add it to this file
-                              </div>
-                              <div
-                                class="c28"
-                              >
-                                Click "Add selected" property button when it appears below
-                              </div>
-                            </li>
-                          </ol>
-                        </div>
+                      </div>
+                    </div>
+                  </h2>
+                  <div
+                    class="collapse show"
+                  >
+                    <div
+                      class="c28 no-gutters row"
+                    >
+                      <div
+                        class="col-md-3"
+                      >
+                        Identifier
                       </div>
                       <div
-                        class="c29 no-gutters row"
+                        class="col-md-9"
                       >
-                        <div
-                          class="col-md-3"
+                        Provide a descriptive name for this land
+                        <span
+                          class="tooltip-icon"
+                          data-testid="tooltip-icon-property-selector-tooltip"
+                          id="property-selector-tooltip"
                         >
-                          Identifier
-                        </div>
-                        <div
-                          class="col-md-9"
-                        >
-                          Provide a descriptive name for this land
-                          <span
+                          <svg
                             class="tooltip-icon"
-                            data-testid="tooltip-icon-property-selector-tooltip"
-                            id="property-selector-tooltip"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
                           >
-                            <svg
-                              class="tooltip-icon"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 512 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                              />
-                            </svg>
-                          </span>
-                        </div>
+                            <path
+                              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                            />
+                          </svg>
+                        </span>
                       </div>
-                      <span>
-                        No Properties selected
-                      </span>
                     </div>
+                    <span>
+                      No Properties selected
+                    </span>
                   </div>
                 </div>
               </div>
@@ -4749,7 +4773,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                     class="c16 required text-left col"
                   >
                     <div
-                      class="c30 input form-group"
+                      class="c29 input form-group"
                     >
                       <input
                         class="form-control"
@@ -4800,7 +4824,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                     class="c16 text-left col"
                   >
                     <div
-                      class="c30 input form-group"
+                      class="c29 input form-group"
                     >
                       <input
                         class="form-control"
@@ -5093,7 +5117,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 class="collapse show"
               >
                 <p
-                  class="c31"
+                  class="c30"
                 >
                   Each property in this file should be owned by the owner(s) in this section
                 </p>
@@ -5134,7 +5158,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                           class="col"
                         >
                           <div
-                            class="c32"
+                            class="c31"
                           >
                             Select from contacts
                           </div>
@@ -5208,7 +5232,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                           class="col"
                         >
                           <div
-                            class="c32"
+                            class="c31"
                           >
                             Select from contacts
                           </div>
@@ -5295,7 +5319,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
         class=""
       >
         <div
-          class="c33 justify-content-end pt-4 p-0 no-gutters row"
+          class="c32 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"

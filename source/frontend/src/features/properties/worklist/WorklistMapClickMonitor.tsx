@@ -1,9 +1,12 @@
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import {
+  emptyFeatureDataset,
+  LocationFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { usePrevious } from '@/hooks/usePrevious';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { exists } from '@/utils';
 
-import { ParcelDataset } from '../parcelList/models';
 import { useWorklistContext } from './context/WorklistContext';
 
 export const WorklistMapClickMonitor: React.FunctionComponent<unknown> = () => {
@@ -18,16 +21,20 @@ export const WorklistMapClickMonitor: React.FunctionComponent<unknown> = () => {
       previous !== undefined
     ) {
       // Loop over the location featurecollection, adding it to the worklist if the parcelFeature is not there already
-      const worklistParcels: ParcelDataset[] = [];
+      const worklistParcels: LocationFeatureDataset[] = [];
 
-      if (exists(worklistLocationFeatureDataset.fullyAttributedFeatures)) {
+      if (exists(worklistLocationFeatureDataset.parcelFeatures)) {
         const pmbcParcels =
-          worklistLocationFeatureDataset.fullyAttributedFeatures?.features
+          worklistLocationFeatureDataset.parcelFeatures
             ?.map(pmbcFeature => {
-              const newParcel = ParcelDataset.fromFullyAttributedFeature(pmbcFeature);
-              newParcel.location = worklistLocationFeatureDataset.location;
-              newParcel.regionFeature = worklistLocationFeatureDataset.regionFeature;
-              newParcel.districtFeature = worklistLocationFeatureDataset.districtFeature;
+              const newParcel: LocationFeatureDataset = {
+                ...emptyFeatureDataset(),
+                parcelFeatures: [pmbcFeature],
+                location: worklistLocationFeatureDataset.location,
+                regionFeature: worklistLocationFeatureDataset.regionFeature,
+                districtFeature: worklistLocationFeatureDataset.districtFeature,
+              };
+
               return newParcel;
             })
             .filter(exists) ?? [];
@@ -35,24 +42,34 @@ export const WorklistMapClickMonitor: React.FunctionComponent<unknown> = () => {
         worklistParcels.push(...pmbcParcels);
       }
 
-      if (exists(worklistLocationFeatureDataset.pimsFeature)) {
-        const pimsParcel = ParcelDataset.fromPimsFeature(
-          worklistLocationFeatureDataset.pimsFeature,
-        );
-        pimsParcel.location = worklistLocationFeatureDataset.location;
-        pimsParcel.regionFeature = worklistLocationFeatureDataset.regionFeature;
-        pimsParcel.districtFeature = worklistLocationFeatureDataset.districtFeature;
+      if (exists(worklistLocationFeatureDataset.pimsFeatures)) {
+        const pimsParcels =
+          worklistLocationFeatureDataset.pimsFeatures
+            ?.map(pimsFeature => {
+              const newParcel: LocationFeatureDataset = {
+                ...emptyFeatureDataset(),
+                pimsFeatures: [pimsFeature],
+                location: worklistLocationFeatureDataset.location,
+                regionFeature: worklistLocationFeatureDataset.regionFeature,
+                districtFeature: worklistLocationFeatureDataset.districtFeature,
+              };
 
-        worklistParcels.push(pimsParcel);
+              return newParcel;
+            })
+            .filter(exists) ?? [];
+
+        worklistParcels.push(...pimsParcels);
       }
 
       if (worklistParcels.length > 0) {
         addRange(worklistParcels);
       } else {
         // We didn't find any parcel-map properties - add a lat/long location to the worklist
-        const latLongParcel = new ParcelDataset();
-        latLongParcel.location = worklistLocationFeatureDataset.location;
-        latLongParcel.pmbcFeature = null;
+        const latLongParcel: LocationFeatureDataset = {
+          ...emptyFeatureDataset(),
+          location: worklistLocationFeatureDataset.location,
+        };
+
         add(latLongParcel);
       }
     }

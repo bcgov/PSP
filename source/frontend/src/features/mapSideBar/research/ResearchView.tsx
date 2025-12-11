@@ -22,7 +22,8 @@ import FileMenuView from '../shared/FileMenuView';
 import { PropertyForm } from '../shared/models';
 import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
-import UpdateProperties from '../shared/update/properties/UpdateProperties';
+import UpdatePropertiesContainer from '../shared/update/properties/UpdatePropertiesContainer';
+import { ResearchForm } from './add/models';
 import ResearchHeader from './common/ResearchHeader';
 import ResearchGenerateContainer from './ResearchGenerateContainer';
 import ResearchRouter from './ResearchRouter';
@@ -42,7 +43,7 @@ export interface IResearchViewProps {
   onSelectFileSummary: () => void;
   onSelectProperty: (propertyId: number) => void;
   onEditProperties: () => void;
-  onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
+  onUpdateProperties: (file: ResearchForm) => Promise<ApiGen_Concepts_File | undefined>;
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
   onSuccess: () => void;
@@ -85,13 +86,13 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = ({
     <Switch>
       <Route path={`${stripTrailingSlash(match.path)}/property/selector`}>
         {exists(researchFile) && (
-          <UpdateProperties
-            file={researchFile}
+          <UpdatePropertiesContainer
+            formFile={ResearchForm.fromApi(researchFile)}
             setIsShowingPropertySelector={closePropertySelector}
             onSuccess={onSuccess}
             updateFileProperties={onUpdateProperties}
-            confirmBeforeAdd={confirmBeforeAdd}
-            confirmBeforeAddMessage={
+            canAdd={confirmBeforeAdd}
+            confirmAddMessage={
               <>
                 <p>This property has already been added to one or more research files.</p>
                 <p>Do you want to acknowledge and proceed?</p>

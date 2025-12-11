@@ -13,15 +13,15 @@ import { MapFeatureData } from '@/components/common/mapFSM/models';
 import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
 import { Section } from '@/components/common/Section/Section';
 import { SimpleSectionHeader } from '@/components/common/SimpleSectionHeader';
+import { featureToLocationFeatureDataset } from '@/components/propertySelector/search/PropertySelectorSearchContainer';
 import { Claims } from '@/constants';
 import { PropertyFilter } from '@/features/properties/filter';
 import {
   defaultPropertyFilter,
   IPropertyFilter,
 } from '@/features/properties/filter/IPropertyFilter';
-import { ParcelDataset } from '@/features/properties/parcelList/models';
 import { ParcelListContainer } from '@/features/properties/parcelList/ParcelListContainer';
-import { ParcelListView } from '@/features/properties/parcelList/ParcelListView';
+import { SearchItemListView } from '@/features/properties/parcelList/ParcelListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
@@ -78,7 +78,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
     groupedFeatures
       .value()
       .flatMap(x => x)
-      .map(x => ParcelDataset.fromFullyAttributedFeature(x.feature)) ?? [];
+      .map(x => featureToLocationFeatureDataset(x.feature)) ?? [];
 
   const pimsGroupedFeatures = chain(props.searchResult?.pimsLocationFeatures.features)
     .groupBy(feature => feature?.properties?.SURVEY_PLAN_NUMBER)
@@ -104,7 +104,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
     pimsGroupedFeatures
       .value()
       .flatMap(x => x)
-      .map(x => ParcelDataset.fromPimsFeature(x.feature)) ?? [];
+      .map(x => featureToLocationFeatureDataset(x.feature)) ?? [];
 
   const menuOptions: MenuOption[] = useMemo(() => {
     const options: MenuOption[] = [];
@@ -191,7 +191,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
         initiallyExpanded
         data-testid="pmbc-search-results-section"
       >
-        <ParcelListContainer View={ParcelListView} parcels={propertyProjections} />
+        <ParcelListContainer View={SearchItemListView} parcels={propertyProjections} />
       </Section>
       <Section
         className="my-0 py-0"
@@ -204,7 +204,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
         initiallyExpanded
         data-testid="pims-search-results-section"
       >
-        <ParcelListContainer View={ParcelListView} parcels={pimsPropertyProjections} />
+        <ParcelListContainer View={SearchItemListView} parcels={pimsPropertyProjections} />
       </Section>
       {exists(props.searchResult?.highwayPlanFeatures) &&
         props.searchResult.highwayPlanFeatures.features.length > 0 && (

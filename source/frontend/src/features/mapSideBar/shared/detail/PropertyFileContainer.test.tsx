@@ -161,13 +161,13 @@ describe('PropertyFileContainer component', () => {
       .reply(200, getMockCrownTenuresLayerResponse());
     await setup();
 
-    expect(viewProps?.tabViews).toHaveLength(6);
     expect(viewProps?.tabViews[0].key).toBe(InventoryTabNames.title);
     expect(viewProps?.tabViews[1].key).toBe(InventoryTabNames.value);
     expect(viewProps?.tabViews[2].key).toBe(InventoryTabNames.property);
     expect(viewProps?.tabViews[3].key).toBe(InventoryTabNames.pims);
     expect(viewProps?.tabViews[4].key).toBe(InventoryTabNames.crown);
     expect(viewProps?.tabViews[5].key).toBe(InventoryTabNames.highway);
+    expect(viewProps?.tabViews).toHaveLength(6);
   });
 
   it('does not call lease endpoints when user does not have lease permissions', async () => {

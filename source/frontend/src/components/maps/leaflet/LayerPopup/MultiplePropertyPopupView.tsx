@@ -7,14 +7,11 @@ import styled from 'styled-components';
 
 import { LinkButton, StyledIconButton } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import {
-  LocationFeatureDataset,
-  WorklistLocationFeatureDataset,
-} from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { StyledScrollable } from '@/features/documents/commonStyles';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { exists, firstOrNull } from '@/utils';
+import { exists } from '@/utils';
 import { isStrataCommonProperty, pidFormatter } from '@/utils/propertyUtils';
 
 export interface IMultiplePropertyPopupView {
@@ -48,17 +45,7 @@ export const MultiplePropertyPopupView: React.FC<
   };
 
   const onAddAllToWorklist = () => {
-    const worklistDataSet: WorklistLocationFeatureDataset = {
-      fullyAttributedFeatures: {
-        features: featureDataset.parcelFeatures,
-        type: 'FeatureCollection',
-      },
-      pimsFeature: firstOrNull(featureDataset.pimsFeatures),
-      regionFeature: featureDataset.regionFeature,
-      districtFeature: featureDataset.districtFeature,
-      location: featureDataset.location,
-    };
-    mapMachine.worklistAdd(worklistDataSet);
+    mapMachine.worklistAdd(featureDataset);
   };
 
   const groupedFeatures = chain(featureDataset?.parcelFeatures)

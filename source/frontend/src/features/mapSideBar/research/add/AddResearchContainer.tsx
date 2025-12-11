@@ -1,5 +1,5 @@
 import { Formik, FormikProps } from 'formik';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -10,8 +10,8 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
 import { useModalContext } from '@/hooks/useModalContext';
+import { usePropertyFormSyncronizer } from '@/hooks/usePropertyFormSyncronizer';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, isValidId } from '@/utils';
@@ -21,13 +21,12 @@ import SidebarFooter from '../../shared/SidebarFooter';
 import { StyledFormWrapper } from '../../shared/styles';
 import { useAddResearch } from '../hooks/useAddResearch';
 import { AddResearchFileYupSchema } from './AddResearchFileYupSchema';
-import { IAddResearchFormProps } from './AddResearchForm';
 import { ResearchForm } from './models';
 
 export interface IAddResearchContainerProps {
   onClose: () => void;
   onSuccess: (newResearchId: number) => void;
-  View: React.FC<IAddResearchFormProps>;
+  View: React.FC;
 }
 
 export const AddResearchContainer: React.FunctionComponent<IAddResearchContainerProps> = props => {
@@ -39,10 +38,12 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
   const { execute: getPropertyAssociations } = usePropertyAssociations();
   const { addResearchFile } = useAddResearch();
 
-  const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
+  const [needsFirstTimeConfirmation, setNeedsFirstTimeConfirmation] = useState<boolean>(true);
+
+  const initialForm = new ResearchForm();
 
   // Warn user that property is part of an existing research file
-  const confirmBeforeAdd = useCallback(
+  const confirmProperty = useCallback(
     async (propertyForm: PropertyForm): Promise<boolean> => {
       if (isValidId(propertyForm.apiId)) {
         const response = await getPropertyAssociations(propertyForm.apiId);
@@ -57,68 +58,54 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     [getPropertyAssociations],
   );
 
-  // Get PropertyForms with addresses for all selected features
-  const { bcaLoading } = useEditPropertiesNotifier(formikRef, 'properties');
-
-  // Memoize the initial form with all properties
-  const initialForm = useMemo(() => {
-    return new ResearchForm();
-  }, []);
-
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to add Research File');
 
   // Require user confirmation before adding a property to file
-  // This is the flow for Map Marker -> right-click -> create Research File
-  useEffect(() => {
-    const runAsync = async () => {
-      if (exists(initialForm) && exists(formikRef.current) && needsUserConfirmation) {
-        if (initialForm.properties.length > 0) {
-          // Check all properties for confirmation
-          const needsConfirmation = await Promise.all(
-            initialForm.properties.map(formProperty => confirmBeforeAdd(formProperty)),
-          );
-          if (needsConfirmation.some(confirm => confirm)) {
-            setModalContent({
-              variant: 'warning',
-              title: 'User Override Required',
-              message: (
-                <>
-                  <p>
-                    One or more properties have already been added to one or more research files.
-                  </p>
-                  <p>Do you want to acknowledge and proceed?</p>
-                </>
-              ),
-              okButtonText: 'Yes',
-              cancelButtonText: 'No',
-              handleOk: () => {
-                // allow the properties to be added to the file being created
-                formikRef.current.resetForm();
-                formikRef.current.setFieldValue('properties', initialForm.properties);
-                setDisplayModal(false);
-                // show the user confirmation modal only once when creating a file
-                setNeedsUserConfirmation(false);
-              },
-              handleCancel: () => {
-                // clear out the properties array as the user did not agree to the popup
-                initialForm.properties.splice(0, initialForm.properties.length);
-                formikRef.current.resetForm();
-                formikRef.current.setFieldValue('properties', initialForm.properties);
-                setDisplayModal(false);
-                // show the user confirmation modal only once when creating a file
-                setNeedsUserConfirmation(false);
-              },
-            });
-            setDisplayModal(true);
-          }
-        }
+  const confirmBeforeAdd = useCallback(
+    async (
+      newPropertyForms: PropertyForm[],
+      isValidCallback: (isValid: boolean, newProperties: PropertyForm[]) => void,
+    ) => {
+      const needsConfirmation = await Promise.all(
+        newPropertyForms.map(formProperty => confirmProperty(formProperty)),
+      );
+      if (needsFirstTimeConfirmation && needsConfirmation.some(x => x === true)) {
+        // show the user confirmation modal only once when creating a file
+        setNeedsFirstTimeConfirmation(false);
+        setModalContent({
+          variant: 'warning',
+          title: 'User Override Required',
+          message: (
+            <>
+              <p>One or more properties have already been added to one or more research files.</p>
+              <p>Do you want to acknowledge and proceed?</p>
+            </>
+          ),
+          okButtonText: 'Yes',
+          cancelButtonText: 'No',
+          handleOk: () => {
+            // allow the properties to be added to the file being created
+            isValidCallback(true, newPropertyForms);
+            setDisplayModal(false);
+          },
+          handleCancel: () => {
+            // clear out the properties array as the user did not agree to the popup
+            isValidCallback(false, []);
+            setDisplayModal(false);
+          },
+        });
+        setDisplayModal(true);
+      } else {
+        isValidCallback(true, newPropertyForms);
       }
-    };
+    },
+    [confirmProperty, needsFirstTimeConfirmation, setDisplayModal, setModalContent],
+  );
 
-    runAsync();
-  }, [confirmBeforeAdd, initialForm, needsUserConfirmation, setDisplayModal, setModalContent]);
+  // Get PropertyForms with addresses for all selected features
+  const { isLoading } = usePropertyFormSyncronizer(formikRef, confirmBeforeAdd);
 
   const saveResearchFile = async (
     researchFile: ApiGen_Concepts_ResearchFile,
@@ -140,7 +127,6 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
         onSuccess(response.id);
       }
     } finally {
-      mapMachine.processCreation();
       formikRef.current?.setSubmitting(false);
     }
   };
@@ -176,7 +162,7 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
           icon={<ResearchFileIcon title="Research file Icon" fill="currentColor" />}
           footer={
             <SidebarFooter
-              isOkDisabled={formikProps?.isSubmitting || bcaLoading}
+              isOkDisabled={formikProps?.isSubmitting || isLoading}
               onSave={handleSave}
               onCancel={cancelFunc}
               displayRequiredFieldError={!formikProps.isValid && !!formikProps.submitCount}
@@ -186,8 +172,8 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
           onClose={cancelFunc}
         >
           <StyledFormWrapper>
-            <LoadingBackdrop show={bcaLoading} parentScreen={true} />
-            <View confirmBeforeAdd={confirmBeforeAdd} />
+            <LoadingBackdrop show={isLoading} parentScreen={true} />
+            <View />
           </StyledFormWrapper>
           <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />
         </MapSideBarLayout>

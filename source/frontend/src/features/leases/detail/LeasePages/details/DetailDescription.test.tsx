@@ -29,13 +29,12 @@ describe('DetailDescription component', () => {
     };
   };
   it('renders the lease description', () => {
+    const formLease = new LeaseFormModel();
+    formLease.description = 'lease description';
     const {
       component: { getByDisplayValue },
     } = setup({
-      lease: {
-        ...new LeaseFormModel(),
-        description: 'lease description',
-      },
+      lease: formLease,
     });
     expect(getByDisplayValue('lease description')).toBeVisible();
   });

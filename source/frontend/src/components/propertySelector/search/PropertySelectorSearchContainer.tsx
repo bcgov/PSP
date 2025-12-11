@@ -5,7 +5,10 @@ import isNumber from 'lodash/isNumber';
 import { useCallback, useRef, useState } from 'react';
 import { toast } from 'react-toastify';
 
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import {
+  emptyFeatureDataset,
+  LocationFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
@@ -29,15 +32,15 @@ interface RegionDistrictResult {
 }
 
 export interface IPropertySelectorSearchContainerProps {
-  selectedProperties: SelectedFeatureDataset[];
-  setSelectedProperties: (properties: SelectedFeatureDataset[]) => void;
+  selectedProperties: LocationFeatureDataset[];
+  setSelectedProperties: (properties: LocationFeatureDataset[]) => void;
 }
 
 export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchContainerProps> = ({
   selectedProperties,
   setSelectedProperties,
 }) => {
-  const [searchResults, setSearchResults] = useState<SelectedFeatureDataset[]>([]);
+  const [searchResults, setSearchResults] = useState<LocationFeatureDataset[]>([]);
   const [addressResults, setAddressResults] = useState<IGeocoderResponse[]>([]);
 
   const {
@@ -113,7 +116,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
       */
 
       // match the region and district for all found properties
-      const dataset: SelectedFeatureDataset[] = result.features.map(p =>
+      const dataset: LocationFeatureDataset[] = result.features.map(p =>
         featureToLocationFeatureDataset(p),
       );
       const regionDistrictTasks = getRegionAndDisctricts(dataset, findRegion, findDistrict);
@@ -132,7 +135,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
       const addressResults = await Promise.all(getAddressTasks);
       */
 
-      const locations = result.features.map<SelectedFeatureDataset>(p => {
+      const locations = result.features.map<LocationFeatureDataset>(p => {
         const foundProperty = featureToLocationFeatureDataset(p);
         const latLngKey = propertyToLatLngKey(foundProperty);
         if (exists(regionDistrictResults[latLngKey])) {
@@ -189,7 +192,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
 
       const responses = await Promise.all(findByPidCalls);
 
-      let propertyResults: SelectedFeatureDataset[] = [];
+      let propertyResults: LocationFeatureDataset[] = [];
       responses?.forEach((item: FeatureCollection<Geometry, GeoJsonProperties> | undefined) => {
         if (item) {
           item.features.forEach(feature => {
@@ -272,24 +275,16 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
 
 export const featureToLocationFeatureDataset = (feature: Feature<Geometry, GeoJsonProperties>) => {
   const center = getFeatureBoundedCenter(feature);
-
-  // TODO: This looks funky. Why is this reconstructing a location dataset from a feature?
-  const locationDataSet: SelectedFeatureDataset = {
-    parcelFeature: feature as Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>,
-    pimsFeature: null,
+  const locationDataSet: LocationFeatureDataset = {
+    ...emptyFeatureDataset(),
+    parcelFeatures: [feature as Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>],
     location: { lat: center[1], lng: center[0] },
-    regionFeature: null,
-    fileLocation: null,
-    fileBoundary: null,
-    districtFeature: null,
-    municipalityFeature: null,
-    selectingComponentId: null,
   };
   return locationDataSet;
 };
 
 function getRegionAndDisctricts(
-  properties: SelectedFeatureDataset[],
+  properties: LocationFeatureDataset[],
   regionSearch: (
     latlng: LatLngLiteral,
     geometryName?: string | undefined,
@@ -337,7 +332,7 @@ function getRegionAndDisctricts(
   return taskDictionary;
 }
 
-function propertyToLatLngKey(property: SelectedFeatureDataset | null | undefined) {
+function propertyToLatLngKey(property: LocationFeatureDataset | null | undefined) {
   if (exists(property.location)) {
     const latLng: LatLngLiteral = {
       lat: property.location.lat,

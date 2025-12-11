@@ -416,6 +416,28 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
+.c27 {
+  margin: 0;
+  padding: 1.6rem;
+  font-size: 1.6rem;
+  color: #9F9D9C;
+  border-bottom: 0.2rem solid #606060;
+  margin-bottom: 0.9rem;
+  padding-bottom: 0.25rem;
+  font-family: 'BcSans-Bold';
+}
+
+.c15.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c14 {
+  font-weight: bold;
+}
+
 .c19 {
   margin: 0 1.6rem 0 1.6rem;
   padding: 1.6rem;
@@ -478,26 +500,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
 }
 
 .c25 {
-  font-weight: bold;
-}
-
-.c27 {
-  font-size: 1.6rem;
-  color: #9F9D9C;
-  border-bottom: 0.2rem solid #606060;
-  margin-bottom: 0.9rem;
-  padding-bottom: 0.25rem;
-  font-family: 'BcSans-Bold';
-}
-
-.c15.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c14 {
   font-weight: bold;
 }
 
@@ -1189,12 +1191,12 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                     class="c27 no-gutters row"
                   >
                     <div
-                      class="col-3"
+                      class="col-md-3"
                     >
                       Identifier
                     </div>
                     <div
-                      class="col-md-6"
+                      class="col-md-9"
                     >
                       Provide a descriptive name for this land
                       <span

@@ -3,8 +3,13 @@ import { renderHook } from '@testing-library/react-hooks';
 import { act } from '@/utils/test-utils';
 
 import { getMockWorklistParcel } from '@/mocks/worklistParcel.mock';
-import { IWorklistNotifier, useWorklistContext, WorklistContextProvider } from './WorklistContext';
-import { ParcelDataset } from '../../parcelList/models';
+import {
+  IWorklistNotifier,
+  LocationDatasetWithId,
+  useWorklistContext,
+  WorklistContextProvider,
+} from './WorklistContext';
+import { firstOrNull } from '@/utils';
 
 //  Mock notification service
 const mockNotifier: IWorklistNotifier = {
@@ -18,10 +23,10 @@ describe('WorklistContextProvider', () => {
     vi.clearAllMocks();
   });
 
-  const renderWorklistHook = (initial: ParcelDataset[] = []) =>
+  const renderWorklistHook = (initial: LocationDatasetWithId[] = []) =>
     renderHook(() => useWorklistContext(), {
       wrapper: ({ children }) => (
-        <WorklistContextProvider parcels={initial} notifier={mockNotifier}>
+        <WorklistContextProvider initialParcels={initial} notifier={mockNotifier}>
           {children}
         </WorklistContextProvider>
       ),
@@ -63,26 +68,13 @@ describe('WorklistContextProvider', () => {
   it('add() adds a unique parcel', () => {
     const parcel = getMockWorklistParcel('1', { PID: '123456789' });
     const { result } = renderWorklistHook();
+
+    expect(result.current.parcels).toHaveLength(0);
     act(() => result.current.add(parcel));
 
     expect(result.current.parcels).toHaveLength(1);
-    expect(result.current.parcels[0].id).toBe('1');
+    expect(result.current.parcels[0].parcelFeatures[0].properties.PID).toBe('123456789');
     expect(mockNotifier.error).not.toHaveBeenCalled();
-  });
-
-  it('add() prevents duplicate by internal ID and calls notifier.error', () => {
-    const parcel = getMockWorklistParcel('1');
-    const duplicate = getMockWorklistParcel('1');
-
-    const { result } = renderWorklistHook();
-
-    act(() => result.current.add(parcel));
-    act(() => result.current.add(duplicate));
-
-    expect(result.current.parcels).toHaveLength(1);
-    expect(mockNotifier.error).toHaveBeenCalledWith(
-      'Duplicate parcel detected. Add to worklist skipped.',
-    );
   });
 
   it('add() prevents duplicate by PID and calls notifier.error', () => {
@@ -155,11 +147,9 @@ describe('WorklistContextProvider', () => {
 
     act(() => result.current.addRange([p1, dupe, p2]));
 
-    expect(result.current.parcels.map(p => p.pmbcFeature?.properties?.PID)).toEqual([
-      '111',
-      '222',
-      '333',
-    ]);
+    expect(result.current.parcels.map(p => firstOrNull(p.parcelFeatures)?.properties?.PID)).toEqual(
+      ['111', '222', '333'],
+    );
     expect(mockNotifier.success).toHaveBeenCalledWith('Added 2 new parcel(s).');
     expect(mockNotifier.warn).toHaveBeenCalledWith('1 duplicate parcel(s) were skipped.');
   });

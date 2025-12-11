@@ -27,6 +27,7 @@ import { AcquisitionOwnerFormModel, OwnerAddressFormModel } from '../common/mode
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
 import AddAcquisitionForm from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
+import { emptyFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 const history = createMemoryHistory();
 
@@ -255,13 +256,10 @@ describe('AddAcquisitionContainer component', () => {
   it('should pre-populate the region if a property is selected', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      selectedFeatures: [
+      locationFeaturesForAddition: [
         {
+          ...emptyFeatureDataset(),
           location: { lng: -120.69195885, lat: 50.25163372 },
-          fileLocation: null,
-          fileBoundary: null,
-          pimsFeature: null,
-          parcelFeature: null,
           regionFeature: {
             type: 'Feature',
             properties: { ...emptyRegion, REGION_NUMBER: 1, REGION_NAME: 'South Coast Region' },
@@ -270,9 +268,6 @@ describe('AddAcquisitionContainer component', () => {
               coordinates: [[[-120.69195885, 50.25163372]]],
             },
           },
-          districtFeature: null,
-          municipalityFeature: null,
-          selectingComponentId: null,
         },
       ],
     };
@@ -287,13 +282,10 @@ describe('AddAcquisitionContainer component', () => {
   it('should not pre-populate the region if a property is selected and the region cannot be determined', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      selectedFeatures: [
+      locationFeaturesForAddition: [
         {
+          ...emptyFeatureDataset(),
           location: { lng: -120.69195885, lat: 50.25163372 },
-          fileLocation: null,
-          fileBoundary: null,
-          pimsFeature: null,
-          parcelFeature: null,
           regionFeature: {
             type: 'Feature',
             properties: { ...emptyRegion, REGION_NUMBER: 4 },
@@ -302,9 +294,6 @@ describe('AddAcquisitionContainer component', () => {
               coordinates: [[[-120.69195885, 50.25163372]]],
             },
           },
-          districtFeature: null,
-          municipalityFeature: null,
-          selectingComponentId: null,
         },
       ],
     };
@@ -320,7 +309,6 @@ describe('AddAcquisitionContainer component', () => {
     let testObj: any = undefined;
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      processCreation: vi.fn(),
       refreshMapProperties: vi.fn(),
     };
 
@@ -350,7 +338,6 @@ describe('AddAcquisitionContainer component', () => {
     const expectedValues = formValues.toApi();
     expect(addAcquisitionFileApi.execute).toHaveBeenCalledWith(expectedValues, []);
     expect(onSuccess).toHaveBeenCalledWith(1);
-    expect(testMockMachine.processCreation).toHaveBeenCalled();
     expect(testMockMachine.refreshMapProperties).toHaveBeenCalled();
   });
 
@@ -425,51 +412,37 @@ describe('AddAcquisitionContainer component', () => {
     let testObj: any = undefined;
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      selectedFeatures: [
+      pendingLocationFeaturesAddition: true,
+      locationFeaturesForAddition: [
         {
+          ...emptyFeatureDataset(),
           location: { lng: -120.69195885, lat: 50.25163372 },
-          fileLocation: null,
-          fileBoundary: null,
-          pimsFeature: null,
-          parcelFeature: getMockFullyAttributedParcel('111-111-111'),
+          parcelFeatures: [getMockFullyAttributedParcel('111-111-111')],
           regionFeature: feature(getMockPolygon(), {
             ...emptyRegion,
             REGION_NUMBER: 1,
             REGION_NAME: 'South Coast Region',
           }),
-          districtFeature: null,
-          selectingComponentId: null,
-          municipalityFeature: null,
         },
         {
+          ...emptyFeatureDataset(),
           location: { lng: -120.69195885, lat: 50.25163372 },
-          fileLocation: null,
-          fileBoundary: null,
-          pimsFeature: null,
-          parcelFeature: getMockFullyAttributedParcel('222-222-222'),
+          parcelFeatures: [getMockFullyAttributedParcel('222-222-222')],
           regionFeature: feature(getMockPolygon(), {
             ...emptyRegion,
             REGION_NUMBER: 1,
             REGION_NAME: 'South Coast Region',
           }),
-          districtFeature: null,
-          selectingComponentId: null,
-          municipalityFeature: null,
         },
         {
+          ...emptyFeatureDataset(),
           location: { lng: -120.69195885, lat: 50.25163372 },
-          fileLocation: null,
-          fileBoundary: null,
-          pimsFeature: null,
-          parcelFeature: getMockFullyAttributedParcel('333-333-333'),
+          parcelFeatures: [getMockFullyAttributedParcel('333-333-333')],
           regionFeature: feature(getMockPolygon(), {
             ...emptyRegion,
             REGION_NUMBER: 1,
             REGION_NAME: 'South Coast Region',
           }),
-          districtFeature: null,
-          selectingComponentId: null,
-          municipalityFeature: null,
         },
       ],
     };

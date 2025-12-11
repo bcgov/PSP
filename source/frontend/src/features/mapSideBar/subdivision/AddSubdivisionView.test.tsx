@@ -5,13 +5,15 @@ import { createRef } from 'react';
 import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSelectorContainer';
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
 import Claims from '@/constants/claims';
-import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes/lookupCodesSlice';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 import { SubdivisionFormModel } from './AddSubdivisionModel';
 import AddSubdivisionView, { IAddSubdivisionViewProps } from './AddSubdivisionView';
+import { PropertyForm } from '../shared/models';
+import { getMockLocationFeatureDataset } from '@/mocks/featureset.mock';
+import { pidFormatter } from '@/utils';
 
 const history = createMemoryHistory();
 
@@ -93,19 +95,21 @@ describe('Add Subdivision View', () => {
   });
 
   it('calls getPrimaryAddressByPid when destination property is activated', async () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
+    const mockFeatureSet = getMockLocationFeatureDataset();
     await setup();
     await act(async () => {
       mapSelectorProps.addSelectedProperties([
         {
           ...mockFeatureSet,
-          pimsFeature: {
-            ...mockFeatureSet.pimsFeature,
-            properties: {
-              ...mockFeatureSet.pimsFeature?.properties,
-              PID_PADDED: '123-456-789',
+          pimsFeatures: [
+            {
+              ...mockFeatureSet.pimsFeatures[0],
+              properties: {
+                ...mockFeatureSet.pimsFeatures[0]?.properties,
+                PID_PADDED: '123-456-789',
+              },
             },
-          },
+          ],
         },
       ]);
     });
@@ -113,19 +117,21 @@ describe('Add Subdivision View', () => {
   });
 
   it('does not call for address if property has no pid', async () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
+    const mockFeatureSet = getMockLocationFeatureDataset();
     await setup();
     await act(async () => {
       mapSelectorProps.addSelectedProperties([
         {
           ...mockFeatureSet,
-          pimsFeature: {
-            ...mockFeatureSet.pimsFeature,
-            properties: {
-              ...mockFeatureSet.pimsFeature?.properties,
-              PID_PADDED: undefined,
+          pimsFeatures: [
+            {
+              ...mockFeatureSet.pimsFeatures[0],
+              properties: {
+                ...mockFeatureSet.pimsFeatures[0]?.properties,
+                PID_PADDED: undefined,
+              },
             },
-          },
+          ],
         },
       ]);
     });
@@ -139,13 +145,16 @@ describe('Add Subdivision View', () => {
     await act(async () => {
       pidSelectorProps.setSelectProperty(property);
     });
-    const text = await screen.findByText(property.pid?.toString() ?? '');
+    const text = await screen.findByText(pidFormatter(property?.pid.toString()));
     expect(text).toBeVisible();
   });
 
   it('selected source property can be removed', async () => {
     const initialFormModel = new SubdivisionFormModel();
-    initialFormModel.sourceProperty = { ...getMockApiProperty(), pid: 111111111 };
+    initialFormModel.sourceProperty = PropertyForm.fromPropertyApi({
+      ...getMockApiProperty(),
+      pid: 111111111,
+    });
     initialFormModel.destinationProperties = [];
 
     const { getByTitle, queryByText } = await setup({
@@ -163,7 +172,9 @@ describe('Add Subdivision View', () => {
 
   it('selected destination properties can be removed', async () => {
     const initialFormModel = new SubdivisionFormModel();
-    initialFormModel.destinationProperties = [{ ...getMockApiProperty(), pid: 111111111 }];
+    initialFormModel.destinationProperties = [
+      PropertyForm.fromPropertyApi({ ...getMockApiProperty(), pid: 111111111 }),
+    ];
 
     const { getByTitle, queryByText } = await setup({
       props: {
@@ -179,7 +190,7 @@ describe('Add Subdivision View', () => {
   });
 
   it('property area only has at most 4 digits', async () => {
-    const mockFeatureSet = getMockSelectedFeatureDataset();
+    const mockFeatureSet = getMockLocationFeatureDataset();
     const initialFormModel = new SubdivisionFormModel();
     getPrimaryAddressByPid.mockImplementation(() => Promise.resolve(undefined));
 
@@ -193,14 +204,16 @@ describe('Add Subdivision View', () => {
       mapSelectorProps.addSelectedProperties([
         {
           ...mockFeatureSet,
-          pimsFeature: {
-            ...mockFeatureSet.pimsFeature,
-            properties: {
-              ...mockFeatureSet.pimsFeature?.properties,
-              PID_PADDED: '123-456-789',
-              LAND_AREA: 1.12345,
+          pimsFeatures: [
+            {
+              ...mockFeatureSet.pimsFeatures[0],
+              properties: {
+                ...mockFeatureSet.pimsFeatures[0]?.properties,
+                PID_PADDED: '123-456-789',
+                LAND_AREA: 1.12345,
+              },
             },
-          },
+          ],
         },
       ]);
     });

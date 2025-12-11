@@ -1,5 +1,4 @@
 import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
-import noop from 'lodash/noop';
 import { useCallback } from 'react';
 import { Tab } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
@@ -20,7 +19,6 @@ import { StyledTabView } from '@/components/propertySelector/PropertySelectorTab
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
 import PropertySearchSelectorPidFormView from '@/components/propertySelector/search/PropertySelectorPidSearchView';
 import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
-import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { convertArea, exists } from '@/utils';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
@@ -126,7 +124,9 @@ const AddConsolidationView: React.FunctionComponent<
                       <StyledTabView activeKey="parent-property">
                         <Tab eventKey="parent-property" title="Parent Property Search">
                           <PropertySelectorPidSearchComponent
-                            setSelectProperty={selectedProperty => push(selectedProperty)}
+                            setSelectProperty={selectedProperty =>
+                              push(PropertyForm.fromPropertyApi(selectedProperty))
+                            }
                             PropertySelectorPidSearchView={PropertySearchSelectorPidFormView}
                           />
                         </Tab>
@@ -139,7 +139,7 @@ const AddConsolidationView: React.FunctionComponent<
                             onRemove={() => remove(index)}
                             nameSpace={`sourceProperties.${index}`}
                             getMarkerIndex={property => getDraftMarkerIndex(property, values)}
-                            key={`destination-property-${property.pid}-${property.latitude}-${property.longitude}`}
+                            key={`source-property-${property.pid}-${property.latitude}-${property.longitude}`}
                           />
                         ))}
                         {errors.sourceProperties && (
@@ -156,10 +156,10 @@ const AddConsolidationView: React.FunctionComponent<
                 <p>Select the child property to which parent properties were consolidated:</p>
                 <MapSelectorComponent
                   addSelectedProperties={async properties => {
-                    const allProperties: ApiGen_Concepts_Property[] = [];
+                    const allProperties: PropertyForm[] = [];
                     await properties.reduce(async (promise, property) => {
                       return promise.then(async () => {
-                        const formProperty = PropertyForm.fromFeatureDataset(property);
+                        const formProperty = PropertyForm.fromLocationFeatureDataset(property);
                         formProperty.landArea =
                           formProperty.landArea && formProperty.areaUnit
                             ? convertArea(
@@ -171,7 +171,7 @@ const AddConsolidationView: React.FunctionComponent<
                         formProperty.areaUnit = ApiGen_CodeTypes_AreaUnitTypes.M2;
                         if (formProperty.pid) {
                           formProperty.address = await getPrimaryAddressByPid(formProperty.pid);
-                          allProperties.push(formProperty.toApi());
+                          allProperties.push(formProperty);
                         } else {
                           toast.error('Selected property must have a PID');
                         }
@@ -179,9 +179,7 @@ const AddConsolidationView: React.FunctionComponent<
                     }, Promise.resolve());
                     setFieldValue('destinationProperty', allProperties[0]);
                   }}
-                  selectedComponentId="destination-property-selector"
                   modifiedProperties={[]}
-                  repositionSelectedProperty={noop}
                 />
                 <Section header="Selected Child" noPadding className="pt-4">
                   <SelectedOperationPropertyHeader />
@@ -208,10 +206,7 @@ const AddConsolidationView: React.FunctionComponent<
   );
 };
 
-const getDraftMarkerIndex = (
-  property: ApiGen_Concepts_Property,
-  form: ConsolidationFormModel,
-): number => {
+const getDraftMarkerIndex = (property: PropertyForm, form: ConsolidationFormModel): number => {
   const index = form.sourceProperties.findIndex(
     p =>
       p.latitude === property.latitude &&

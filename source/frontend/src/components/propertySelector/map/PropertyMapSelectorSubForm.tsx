@@ -1,12 +1,13 @@
 import { Col, Form, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { SelectProperty } from '@/components/common/mapping/SelectProperty';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { DistrictCodes, RegionCodes } from '@/constants';
 import {
   addressFromFeatureSet,
+  firstOrNull,
   isNumber,
   pidFormatter,
   pidFromFeatureSet,
@@ -16,7 +17,7 @@ import {
 
 export interface IPropertyMapSelectorSubFormProps {
   onClickDraftMarker: () => void;
-  selectedProperty?: SelectedFeatureDataset;
+  selectedProperty?: LocationFeatureDataset;
 }
 
 export const PropertyMapSelectorSubForm: React.FunctionComponent<
@@ -26,8 +27,8 @@ export const PropertyMapSelectorSubForm: React.FunctionComponent<
   const pin = pinFromFeatureSet(selectedProperty);
   const planNumber = planFromFeatureSet(selectedProperty);
   const legalDescription =
-    selectedProperty?.pimsFeature?.properties?.LAND_LEGAL_DESCRIPTION ??
-    selectedProperty?.parcelFeature?.properties?.LEGAL_DESCRIPTION ??
+    firstOrNull(selectedProperty?.pimsFeatures)?.properties?.LAND_LEGAL_DESCRIPTION ??
+    firstOrNull(selectedProperty?.parcelFeatures)?.properties?.LEGAL_DESCRIPTION ??
     '';
   const address = addressFromFeatureSet(selectedProperty);
   const region = isNumber(selectedProperty?.regionFeature?.properties?.REGION_NUMBER)

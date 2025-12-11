@@ -24,6 +24,7 @@ import { SideBarContextProvider } from '../../context/sidebarContext';
 import { useAddResearch } from '../hooks/useAddResearch';
 import AddResearchContainer, { IAddResearchContainerProps } from './AddResearchContainer';
 import AddResearchForm from './AddResearchForm';
+import { emptyFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 const mockStore = configureMockStore([thunk]);
 
@@ -110,17 +111,12 @@ describe('AddResearchContainer component', () => {
     const { findByText } = await setup({
       mockMapMachine: {
         ...mapMachineBaseMock,
-        selectedFeatures: [
+        pendingLocationFeaturesAddition: true,
+        locationFeaturesForAddition: [
           {
+            ...emptyFeatureDataset(),
             location: { lat: 0, lng: 0 },
-            fileLocation: null,
-            fileBoundary: null,
-            pimsFeature: null,
-            parcelFeature: selectedFeature,
-            regionFeature: null,
-            districtFeature: null,
-            selectingComponentId: null,
-            municipalityFeature: undefined,
+            parcelFeatures: [selectedFeature],
           },
         ],
       },
@@ -155,7 +151,7 @@ describe('AddResearchContainer component', () => {
   it('should save the form and navigate to details view when Save button is clicked', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      processCreation: vi.fn(),
+      processLocationFeaturesAddition: vi.fn(),
       refreshMapProperties: vi.fn(),
     };
 
@@ -169,7 +165,6 @@ describe('AddResearchContainer component', () => {
     await act(async () => userEvent.click(getSaveButton()));
 
     expect(onSuccess).toHaveBeenCalled();
-    expect(testMockMachine.processCreation).toHaveBeenCalled();
     expect(testMockMachine.refreshMapProperties).toHaveBeenCalled();
   });
 
@@ -177,39 +172,22 @@ describe('AddResearchContainer component', () => {
     const { getNameTextbox, getSaveButton } = await setup({
       mockMapMachine: {
         ...mapMachineBaseMock,
-        selectedFeatures: [
+        pendingLocationFeaturesAddition: true,
+        locationFeaturesForAddition: [
           {
+            ...emptyFeatureDataset(),
             location: { lng: -120.69195885, lat: 50.25163372 },
-            fileLocation: null,
-            fileBoundary: null,
-            pimsFeature: null,
-            parcelFeature: getMockFullyAttributedParcel('111-111-111'),
-            regionFeature: null,
-            districtFeature: null,
-            selectingComponentId: null,
-            municipalityFeature: null,
+            parcelFeatures: [getMockFullyAttributedParcel('111-111-111')],
           },
           {
+            ...emptyFeatureDataset(),
             location: { lng: -120.69195885, lat: 50.25163372 },
-            fileLocation: null,
-            fileBoundary: null,
-            pimsFeature: null,
-            parcelFeature: getMockFullyAttributedParcel('222-222-222'),
-            regionFeature: null,
-            districtFeature: null,
-            selectingComponentId: null,
-            municipalityFeature: null,
+            parcelFeatures: [getMockFullyAttributedParcel('222-222-222')],
           },
           {
+            ...emptyFeatureDataset(),
             location: { lng: -120.69195885, lat: 50.25163372 },
-            fileLocation: null,
-            fileBoundary: null,
-            pimsFeature: null,
-            parcelFeature: getMockFullyAttributedParcel('333-333-333'),
-            regionFeature: null,
-            districtFeature: null,
-            selectingComponentId: null,
-            municipalityFeature: null,
+            parcelFeatures: [getMockFullyAttributedParcel('333-333-333')],
           },
         ],
       },

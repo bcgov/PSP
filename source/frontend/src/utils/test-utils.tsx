@@ -18,7 +18,7 @@ import { vi } from 'vitest';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { FilterProvider } from '@/components/maps/providers/FilterProvider';
-import { ParcelDataset } from '@/features/properties/parcelList/models';
+import { LocationDatasetWithId } from '@/features/properties/worklist/context/WorklistContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 
@@ -282,7 +282,7 @@ export interface RenderOptions extends RtlRenderOptions {
   roles?: string[];
   mockMapMachine?: IMapStateMachineContext;
   keycloakMock?: any;
-  worklistParcels?: ParcelDataset[];
+  worklistParcels?: LocationDatasetWithId[];
 }
 
 function render(

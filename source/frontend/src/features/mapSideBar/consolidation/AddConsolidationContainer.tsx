@@ -36,9 +36,10 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
   );
   const formikRef = useRef<FormikProps<ConsolidationFormModel>>(null);
   const mapMachine = useMapStateMachine();
-  const selectedFeatureDataset = firstOrNull(mapMachine.selectedFeatures);
+  const selectedFeatureDataset = mapMachine.mapLocationFeatureDataset;
   const { setModalContent, setDisplayModal } = useModalContext();
   const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
+  const [isFirstLoad, setIsFirstLoad] = useState(true);
 
   const {
     addPropertyOperationApi: { execute: addPropertyOperation, loading },
@@ -60,22 +61,23 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
     loadInitialProperty();
 
     async function loadInitialProperty() {
-      if (selectedFeatureDataset !== null) {
-        const propertyForm = PropertyForm.fromFeatureDataset(selectedFeatureDataset);
+      if (selectedFeatureDataset !== null && isFirstLoad) {
+        const propertyForm = PropertyForm.fromLocationFeatureDataset(selectedFeatureDataset);
         if (isValidString(propertyForm.pid)) {
-          const pimsFeature = selectedFeatureDataset.pimsFeature;
+          const pimsFeature = firstOrNull(selectedFeatureDataset.pimsFeatures);
           propertyForm.address = pimsFeature?.properties
             ? AddressForm.fromPimsView(pimsFeature?.properties)
             : undefined;
           // TODO: Remove this once the conversion is cleaner
           propertyForm.isOwned = pimsFeature?.properties.IS_OWNED;
           const consolidationFormModel = new ConsolidationFormModel();
-          consolidationFormModel.sourceProperties = [propertyForm.toApi()];
+          consolidationFormModel.sourceProperties = [propertyForm];
           setInitialForm(consolidationFormModel);
         }
       }
+      setIsFirstLoad(false);
     }
-  }, [selectedFeatureDataset, getAddress]);
+  }, [selectedFeatureDataset, getAddress, isFirstLoad]);
 
   useEffect(() => {
     if (exists(initialForm) && exists(formikRef.current)) {
@@ -141,7 +143,7 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
         handleSuccess(response);
       }
     } finally {
-      mapMachine.processCreation();
+      mapMachine.processLocationFeaturesAddition();
       formikHelpers?.setSubmitting(false);
     }
   };

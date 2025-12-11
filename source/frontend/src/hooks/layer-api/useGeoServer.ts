@@ -3,6 +3,10 @@ import { Feature, FeatureCollection, Geometry, Point } from 'geojson';
 import { useCallback, useContext } from 'react';
 
 import CustomAxios from '@/customAxios';
+import {
+  PIMS_Property_Boundary_View,
+  PIMS_Property_Location_View,
+} from '@/models/layers/pimsPropertyLocationView';
 import { TenantContext } from '@/tenants';
 import { useAxiosErrorHandler } from '@/utils';
 
@@ -28,7 +32,9 @@ export const useGeoServer = () => {
         return null;
       }
       const wfsUrl = buildUrl(baseUrl, { PROPERTY_ID: id });
-      const { data } = await CustomAxios().get<FeatureCollection>(wfsUrl);
+      const { data } = await CustomAxios().get<
+        FeatureCollection<Geometry, PIMS_Property_Location_View>
+      >(wfsUrl);
       return data.features?.length ? (data.features[0] as Feature<Point>) : null;
     },
     [baseUrl],
@@ -37,7 +43,9 @@ export const useGeoServer = () => {
     requestFunction: useCallback(
       async (id: number) => {
         const wfsUrl = buildUrl(baseUrl, { PROPERTY_ID: id });
-        return await CustomAxios().get<FeatureCollection>(wfsUrl);
+        return await CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Location_View>>(
+          wfsUrl,
+        );
       },
       [baseUrl],
     ),
@@ -47,7 +55,7 @@ export const useGeoServer = () => {
   const getPropertyByBoundaryWfsWrapper = useApiRequestWrapper({
     requestFunction: useCallback(
       async (boundary: Geometry) => {
-        return await CustomAxios().get<FeatureCollection>(
+        return await CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Boundary_View>>(
           `${baseBoundaryUrl}&cql_filter=INTERSECTS(GEOMETRY,SRID=4326;${geojsonToWKT(boundary)})`,
         );
       },

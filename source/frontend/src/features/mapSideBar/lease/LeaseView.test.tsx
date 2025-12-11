@@ -35,6 +35,8 @@ import { usePropertyOperationRepository } from '@/hooks/repositories/useProperty
 import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
 import { AxiosResponse } from 'axios';
+import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
+import { FileForm, PropertyForm } from '../shared/models';
 
 vi.mock('@/hooks/repositories/useNoteRepository');
 vi.mock('@/hooks/pims-api/useApiNotes');
@@ -104,6 +106,11 @@ vi.mocked(usePropertyOperationRepository).mockReturnValue({
   >,
 } as unknown as ReturnType<typeof usePropertyOperationRepository>);
 
+const setIsShowingPropertySelectorMock = vi.fn();
+const onUpdatePropertiesMock = vi.fn();
+const confirmBeforeAddPropertyMock = vi.fn();
+const canRemovePropertyMock = vi.fn();
+
 const history = createMemoryHistory();
 
 describe('LeaseView component', () => {
@@ -142,6 +149,10 @@ describe('LeaseView component', () => {
               fileProperties: getMockLeaseProperties(1),
             }
           }
+          setIsShowingPropertySelector={setIsShowingPropertySelectorMock}
+          onUpdateProperties={onUpdatePropertiesMock}
+          confirmBeforeAddProperty={confirmBeforeAddPropertyMock}
+          canRemoveProperty={canRemovePropertyMock}
         />
       </Route>,
       {

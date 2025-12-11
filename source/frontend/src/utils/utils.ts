@@ -170,6 +170,10 @@ export function exists<T>(value: T | null | undefined): value is T {
   return value === (value ?? !value);
 }
 
+export function isEmptyOrNull<T>(array: Array<T> | null | undefined): array is null {
+  return !(exists(array) && !isEmpty(array));
+}
+
 /**
  * Returns true id an identifier belongs to an existing entry on the backend
  * @param value the paraneter to be assessed

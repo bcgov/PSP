@@ -20,6 +20,7 @@ import { exists, isValidId, sortFileProperties, stripTrailingSlash } from '@/uti
 import { SideBarContext } from '../context/sidebarContext';
 import { PropertyForm } from '../shared/models';
 import usePathGenerator from '../shared/sidebarPathGenerator';
+import { ResearchForm } from './add/models';
 import { useGetResearch } from './hooks/useGetResearch';
 import { useUpdateResearchProperties } from './hooks/useUpdateResearchProperties';
 import { IResearchViewProps } from './ResearchView';
@@ -250,15 +251,10 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     [getPropertyAssociations, researchFileId],
   );
 
-  const onUpdateProperties = (
-    file: ApiGen_Concepts_File,
-  ): Promise<ApiGen_Concepts_File | undefined> => {
+  const onUpdateProperties = (file: ResearchForm): Promise<ApiGen_Concepts_File | undefined> => {
     return withUserOverride(
       (userOverrideCodes: UserOverrideCode[]) => {
-        return updateResearchFileProperties(
-          file as ApiGen_Concepts_ResearchFile,
-          userOverrideCodes,
-        ).then(response => {
+        return updateResearchFileProperties(file.toApi(), userOverrideCodes).then(response => {
           onSuccess();
           return response;
         });

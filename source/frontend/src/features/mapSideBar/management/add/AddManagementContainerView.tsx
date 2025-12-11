@@ -7,7 +7,6 @@ import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 
 import MapSideBarLayout from '../../layout/MapSideBarLayout';
-import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
 import { StyledFormWrapper } from '../../shared/styles';
 import ManagementForm from '../form/ManagementForm';
@@ -24,7 +23,6 @@ export interface IAddManagementContainerViewProps {
   ) => void | Promise<any>;
   onCancel: () => void;
   onSave: () => void;
-  confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
 const AddManagementContainerView: React.FunctionComponent<IAddManagementContainerViewProps> = ({
@@ -35,7 +33,6 @@ const AddManagementContainerView: React.FunctionComponent<IAddManagementContaine
   onSubmit,
   onSave,
   onCancel,
-  confirmBeforeAdd,
 }) => {
   const history = useHistory();
 
@@ -64,7 +61,6 @@ const AddManagementContainerView: React.FunctionComponent<IAddManagementContaine
           formikRef={formikRef}
           initialValues={managementInitialValues}
           onSubmit={onSubmit}
-          confirmBeforeAdd={confirmBeforeAdd}
         />
       </StyledFormWrapper>
       <ConfirmNavigation navigate={history.push} shouldBlockNavigation={checkState} />

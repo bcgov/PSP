@@ -4,7 +4,6 @@ import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { getMockFullyAttributedParcel } from '@/mocks/faParcelLayerResponse.mock';
 import { getMockPolygon } from '@/mocks/geometries.mock';
@@ -25,6 +24,10 @@ import { PropertyForm } from '../../shared/models';
 import { ManagementFormModel } from '../models/ManagementFormModel';
 import AddManagementContainer, { IAddManagementContainerProps } from './AddManagementContainer';
 import { IAddManagementContainerViewProps } from './AddManagementContainerView';
+import {
+  emptyFeatureDataset,
+  LocationFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 const history = createMemoryHistory();
 
@@ -106,7 +109,6 @@ describe('Add Management Container component', () => {
   it('calls onSuccess when the Management is saved successfully', async () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
-      processCreation: vi.fn(),
       refreshMapProperties: vi.fn(),
     };
     await setup({ mockMapMachine: testMockMachine });
@@ -119,7 +121,6 @@ describe('Add Management Container component', () => {
     });
 
     expect(onSuccess).toHaveBeenCalled();
-    expect(testMockMachine.processCreation).toHaveBeenCalled();
     expect(testMockMachine.refreshMapProperties).toHaveBeenCalled();
   });
 
@@ -127,58 +128,43 @@ describe('Add Management Container component', () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
     };
-    const selectedFeatures: SelectedFeatureDataset[] = [
+    const selectedFeatures: LocationFeatureDataset[] = [
       {
+        ...emptyFeatureDataset(),
         location: { lng: -120.69195885, lat: 50.25163372 },
-        fileLocation: null,
-        fileBoundary: null,
-        pimsFeature: null,
-        parcelFeature: getMockFullyAttributedParcel('111-111-111'),
+        parcelFeatures: [getMockFullyAttributedParcel('111-111-111')],
         regionFeature: feature(getMockPolygon(), {
           ...emptyRegion,
           REGION_NUMBER: 1,
           REGION_NAME: 'South Coast Region',
         }),
-        districtFeature: null,
-        selectingComponentId: null,
-        municipalityFeature: null,
       },
       {
+        ...emptyFeatureDataset(),
         location: { lng: -120.69195885, lat: 50.25163372 },
-        fileLocation: null,
-        fileBoundary: null,
-        pimsFeature: null,
-        parcelFeature: getMockFullyAttributedParcel('222-222-222'),
+        parcelFeatures: [getMockFullyAttributedParcel('222-222-222')],
         regionFeature: feature(getMockPolygon(), {
           ...emptyRegion,
           REGION_NUMBER: 1,
           REGION_NAME: 'South Coast Region',
         }),
-        districtFeature: null,
-        selectingComponentId: null,
-        municipalityFeature: null,
       },
       {
+        ...emptyFeatureDataset(),
         location: { lng: -120.69195885, lat: 50.25163372 },
-        fileLocation: null,
-        fileBoundary: null,
-        pimsFeature: null,
-        parcelFeature: getMockFullyAttributedParcel('333-333-333'),
+        parcelFeatures: [getMockFullyAttributedParcel('333-333-333')],
         regionFeature: feature(getMockPolygon(), {
           ...emptyRegion,
           REGION_NUMBER: 1,
           REGION_NAME: 'South Coast Region',
         }),
-        districtFeature: null,
-        selectingComponentId: null,
-        municipalityFeature: null,
       },
     ];
     await setup({ mockMapMachine: testMockMachine });
 
     await act(async () => {
       const model = new ManagementFormModel();
-      model.fileProperties = selectedFeatures?.map(sf => PropertyForm.fromFeatureDataset(sf));
+      model.properties = selectedFeatures?.map(sf => PropertyForm.fromLocationFeatureDataset(sf));
       await viewProps?.onSubmit(model, {
         setSubmitting: vi.fn(),
         resetForm: vi.fn(),

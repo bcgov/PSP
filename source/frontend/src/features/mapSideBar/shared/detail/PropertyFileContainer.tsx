@@ -178,15 +178,19 @@ export const PropertyFileContainer: React.FunctionComponent<
         <PropertyDetailsTabView
           property={{
             ...toFormValues(composedProperties.apiWrapper?.response),
-            electoralDistrict: firstOrNull(composedProperties?.composedProperty?.electoralFeatures),
-            isALR: composedProperties?.composedProperty?.alrFeatures?.length > 0,
+            electoralDistrict: firstOrNull(
+              composedProperties?.composedProperty?.featureDataset?.electoralFeatures,
+            ),
+            isALR: composedProperties?.composedProperty?.featureDataset?.alrFeatures?.length > 0,
             firstNations: {
               bandName:
-                firstOrNull(composedProperties?.composedProperty?.firstNationFeatures)?.properties
-                  .BAND_NAME || '',
+                firstOrNull(
+                  composedProperties?.composedProperty?.featureDataset?.firstNationFeatures,
+                )?.properties.BAND_NAME || '',
               reserveName:
-                firstOrNull(composedProperties?.composedProperty?.firstNationFeatures)?.properties
-                  .ENGLISH_NAME || '',
+                firstOrNull(
+                  composedProperties?.composedProperty?.featureDataset?.firstNationFeatures,
+                )?.properties.ENGLISH_NAME || '',
             },
           }}
           loading={composedProperties?.composedLoading ?? false}
@@ -219,7 +223,8 @@ export const PropertyFileContainer: React.FunctionComponent<
 
   if (exists(composedProperties?.composedProperty)) {
     const composedProperty = composedProperties?.composedProperty;
-    if (composedProperty?.parcelMapFeatureCollection?.features?.length > 0) {
+    const featureDataset = composedProperty?.featureDataset;
+    if (featureDataset?.parcelFeatures?.length > 0) {
       tabViews.push({
         content: (
           <LayerTabContainer
@@ -232,10 +237,7 @@ export const PropertyFileContainer: React.FunctionComponent<
         name: 'PMBC',
       });
     }
-    if (
-      composedProperty?.pimsGeoserverFeatureCollection?.features?.length > 0 &&
-      !exists(composedProperty?.id)
-    ) {
+    if (featureDataset?.pimsFeatures?.length > 0 && !exists(composedProperty?.id)) {
       tabViews.push({
         content: (
           <LayerTabContainer
@@ -249,12 +251,11 @@ export const PropertyFileContainer: React.FunctionComponent<
       });
     }
     if (
-      composedProperty?.crownInclusionFeatures?.length +
-        composedProperty?.crownInventoryFeatures?.length +
-        composedProperty?.crownLeaseFeatures?.length +
-        composedProperty?.crownLeaseFeatures?.length +
-        composedProperty?.crownLicenseFeatures?.length +
-        composedProperty?.crownTenureFeatures?.length >
+      featureDataset?.crownLandInclusionsFeatures?.length +
+        featureDataset?.crownLandInventoryFeatures?.length +
+        featureDataset?.crownLandLeasesFeatures?.length +
+        featureDataset?.crownLandLicensesFeatures?.length +
+        featureDataset?.crownLandTenuresFeatures?.length >
       0
     ) {
       tabViews.push({
@@ -269,7 +270,7 @@ export const PropertyFileContainer: React.FunctionComponent<
         name: 'Crown',
       });
     }
-    if (composedProperty?.highwayFeatures?.length > 0) {
+    if (composedProperty?.featureDataset?.highwayFeatures?.length > 0) {
       tabViews.push({
         content: (
           <LayerTabContainer
@@ -282,7 +283,7 @@ export const PropertyFileContainer: React.FunctionComponent<
         name: 'HWY',
       });
     }
-    if (composedProperty?.municipalityFeatures?.length > 0) {
+    if (composedProperty?.featureDataset?.municipalityFeatures?.length > 0) {
       tabViews.push({
         content: (
           <LayerTabContainer

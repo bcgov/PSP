@@ -1,6 +1,5 @@
 import isNumber from 'lodash/isNumber';
 
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import {
   fromApiOrganization,
   fromApiPerson,
@@ -18,7 +17,7 @@ import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Con
 import { EpochIsoDateTime, UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
-import { applyDisplayOrder, exists, isValidId, isValidIsoDateTime } from '@/utils';
+import { applyDisplayOrder, enumFromValue, exists, isValidId, isValidIsoDateTime } from '@/utils';
 import {
   emptyStringToNull,
   fromTypeCode,
@@ -28,7 +27,7 @@ import {
   toTypeCodeNullable,
 } from '@/utils/formUtils';
 
-import { PropertyForm } from '../mapSideBar/shared/models';
+import { FileForm, PropertyForm } from '../mapSideBar/shared/models';
 import { ChecklistItemFormModel } from '../mapSideBar/shared/tabs/checklist/update/models';
 import { FormLeaseDeposit } from './detail/LeasePages/deposits/models/FormLeaseDeposit';
 import { FormLeaseDepositReturn } from './detail/LeasePages/deposits/models/FormLeaseDepositReturn';
@@ -73,8 +72,7 @@ export class FormLeaseRenewal {
   }
 }
 
-export class LeaseFormModel implements WithLeaseTeam {
-  id?: number;
+export class LeaseFormModel extends FileForm implements WithLeaseTeam {
   lFileNo = '';
   psFileNo = '';
   tfaFileNumber = '';
@@ -115,7 +113,7 @@ export class LeaseFormModel implements WithLeaseTeam {
   project?: IAutocompletePrediction;
   productId: number | null;
   tenantNotes: string[] = [];
-  properties: FormLeaseProperty[] = [];
+  properties: PropertyForm[] = [];
   securityDeposits: FormLeaseDeposit[] = [];
   securityDepositReturns: FormLeaseDepositReturn[] = [];
   periods: FormLeasePeriod[] = [];
@@ -165,7 +163,8 @@ export class LeaseFormModel implements WithLeaseTeam {
     leaseDetail.motiName = apiModel?.motiName || '';
     leaseDetail.hasDigitalLicense = apiModel?.hasDigitalLicense ?? undefined;
     leaseDetail.hasPhysicalLicense = apiModel?.hasPhysicalLicense ?? undefined;
-    leaseDetail.properties = apiModel?.fileProperties?.map(p => FormLeaseProperty.fromApi(p)) ?? [];
+    leaseDetail.properties =
+      apiModel?.fileProperties?.map(p => LeaseFormModel.fromLeasePropertyApi(p)) ?? [];
     leaseDetail.isResidential = apiModel?.isResidential || false;
     leaseDetail.isCommercialBuilding = apiModel?.isCommercialBuilding || false;
     leaseDetail.isOtherImprovement = apiModel?.isOtherImprovement || false;
@@ -194,9 +193,9 @@ export class LeaseFormModel implements WithLeaseTeam {
 
   public static toApi(formLease: LeaseFormModel): ApiGen_Concepts_Lease {
     const fileProperties =
-      formLease.properties?.map(p => FormLeaseProperty.toApi(p)).filter(x => exists(x)) ?? [];
+      formLease.properties?.map(p => LeaseFormModel.toLeasePropertyApi(p)).filter(x => exists(x)) ??
+      [];
     const sortedProperties = applyDisplayOrder(fileProperties);
-
     return {
       id: formLease.id ?? 0,
       lFileNo: stringToNull(formLease.lFileNo),
@@ -256,86 +255,35 @@ export class LeaseFormModel implements WithLeaseTeam {
       fileChecklistItems: formLease.fileChecklist?.map(ck => ck.toApi()) ?? [],
       isExpired: false,
       programName: null,
-      renewalCount: formLease.renewals.length,
+      renewalCount: formLease.renewals?.length,
       totalAllowableCompensation: null,
       ...getEmptyBaseAudit(formLease.rowVersion),
     };
   }
 
-  public static getPropertiesAsForm(leaseForm: LeaseFormModel): PropertyForm[] {
-    return leaseForm.properties
-      .map(property => {
-        return property.property;
-      })
-      .filter(exists);
-  }
-}
-
-export class FormLeaseProperty {
-  id?: number;
-  property?: PropertyForm;
-  leaseId: number | null;
-  rowVersion?: number;
-  name?: string;
-  landArea: number;
-  areaUnitTypeCode: string;
-  displayOrder: number | null;
-
-  constructor(leaseId?: number | null) {
-    this.leaseId = leaseId ?? null;
-    this.landArea = 0;
-    this.areaUnitTypeCode = ApiGen_CodeTypes_AreaUnitTypes.M2;
-  }
-
-  public static fromFormLeaseProperty(baseModel?: Partial<FormLeaseProperty>): FormLeaseProperty {
-    const model = Object.assign(new FormLeaseProperty(), baseModel);
-    return model;
-  }
-
-  public static fromApi(apiPropertyLease: ApiGen_Concepts_PropertyLease): FormLeaseProperty {
-    const model = new FormLeaseProperty(apiPropertyLease.file?.id);
-    model.property = PropertyForm.fromApi(apiPropertyLease);
-    model.id = apiPropertyLease.id;
-    model.rowVersion = apiPropertyLease.rowVersion ?? undefined;
-    model.name = apiPropertyLease.propertyName ?? undefined;
-    model.landArea = apiPropertyLease.leaseArea ?? 0;
-    model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || ApiGen_CodeTypes_AreaUnitTypes.M2;
-    model.displayOrder = apiPropertyLease.displayOrder;
-    return model;
-  }
-
-  public static fromFeatureDataset(mapProperty: SelectedFeatureDataset): FormLeaseProperty {
-    const model = new FormLeaseProperty();
-    model.property = PropertyForm.fromFeatureDataset(mapProperty);
-    return model;
-  }
-
-  public static fromPropertyForm(propertyForm: PropertyForm): FormLeaseProperty {
-    const model = new FormLeaseProperty();
-    model.property = new PropertyForm(propertyForm);
-    return model;
-  }
-
-  public static toApi(formLeaseProperty: FormLeaseProperty): ApiGen_Concepts_PropertyLease | null {
-    if (!exists(formLeaseProperty?.property)) {
-      return null;
-    }
-
-    const apiFileProperty = formLeaseProperty?.property?.toFilePropertyApi(
-      formLeaseProperty.leaseId,
+  private static fromLeasePropertyApi(
+    apiPropertyLease: ApiGen_Concepts_PropertyLease,
+  ): PropertyForm {
+    const propertyForm = PropertyForm.fromApi(apiPropertyLease);
+    propertyForm.landArea = apiPropertyLease.leaseArea ?? 0;
+    propertyForm.areaUnit = enumFromValue(
+      apiPropertyLease.areaUnitType?.id ?? ApiGen_CodeTypes_AreaUnitTypes.M2,
+      ApiGen_CodeTypes_AreaUnitTypes,
     );
+    return propertyForm;
+  }
 
-    return {
+  private static toLeasePropertyApi(property: PropertyForm): ApiGen_Concepts_PropertyLease {
+    const apiFileProperty = property.toFilePropertyApi();
+    const leaseFileProperty: ApiGen_Concepts_PropertyLease = {
       ...apiFileProperty,
-      id: formLeaseProperty.id ?? 0,
-      file: null,
-      propertyName: formLeaseProperty.name ?? null,
-      leaseArea: isNumber(formLeaseProperty.landArea) ? formLeaseProperty.landArea : 0,
-      areaUnitType: isNumber(formLeaseProperty.landArea)
-        ? toTypeCodeNullable(formLeaseProperty.areaUnitTypeCode) ?? null
+      leaseArea: isNumber(property.landArea) ? property.landArea : 0,
+      areaUnitType: isNumber(property.landArea)
+        ? toTypeCodeNullable(property.areaUnit) ?? null
         : null,
-      ...getEmptyBaseAudit(formLeaseProperty.rowVersion),
+      file: null,
     };
+    return leaseFileProperty;
   }
 }
 

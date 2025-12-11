@@ -85,7 +85,7 @@ describe('Update lease container component', () => {
     setup({});
 
     mockAxios.onPut().reply(200, { ...getMockApiLease(), id: 1 });
-    await act(async () => viewProps.onSubmit({ ...getDefaultFormLease() }));
+    await act(async () => viewProps.onSubmit(getDefaultFormLease()));
 
     expect(JSON.parse(mockAxios.history.put[0].data)).toEqual(expectedLease);
     expect(onEdit).toHaveBeenCalledWith(false);
@@ -99,7 +99,7 @@ describe('Update lease container component', () => {
       error: 'Retired property can not be selected',
       type: 'BusinessRuleViolationException',
     });
-    await act(async () => viewProps.onSubmit({ ...getDefaultFormLease() }));
+    await act(async () => viewProps.onSubmit(getDefaultFormLease()));
 
     expect(await screen.findByText(/Retired property can not be selected/i)).toBeVisible();
     expect(await screen.findByText(/Close/i)).toBeVisible();
@@ -113,7 +113,7 @@ describe('Update lease container component', () => {
       error: 'This property cannot be deleted because it is part of a subdivision or consolidation',
       type: 'BusinessRuleViolationException',
     });
-    await act(async () => viewProps.onSubmit({ ...getDefaultFormLease() }));
+    await act(async () => viewProps.onSubmit(getDefaultFormLease()));
 
     expect(
       await screen.findByText(
@@ -134,7 +134,7 @@ describe('Update lease container component', () => {
       error: 'test message',
       errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
     });
-    await act(async () => viewProps.onSubmit({ ...getDefaultFormLease() }));
+    await act(async () => viewProps.onSubmit(getDefaultFormLease()));
 
     expect(await screen.findByText(/test message/i)).toBeVisible();
     expect(await screen.findByText(/Yes/i)).toBeVisible();
@@ -149,7 +149,7 @@ describe('Update lease container component', () => {
       error: 'test message',
       errorCode: UserOverrideCode.PROPERTY_OF_INTEREST_TO_INVENTORY,
     });
-    await act(async () => viewProps.onSubmit({ ...getDefaultFormLease() }));
+    await act(async () => viewProps.onSubmit(getDefaultFormLease()));
     const button = await screen.findByText('Yes');
     await act(async () => userEvent.click(button));
 
@@ -159,12 +159,11 @@ describe('Update lease container component', () => {
   it(`triggers the modal for ARCHIVED status update`, async () => {
     const { formikRef, findByText } = setup();
 
-    await act(async () =>
-      viewProps.onSubmit({
-        ...getDefaultFormLease(),
-        statusTypeCode: ApiGen_CodeTypes_LeaseStatusTypes.ARCHIVED,
-      }),
-    );
+    await act(async () => {
+      const formLease = getDefaultFormLease();
+      formLease.statusTypeCode = ApiGen_CodeTypes_LeaseStatusTypes.ARCHIVED;
+      viewProps.onSubmit(formLease);
+    });
 
     await act(async () => formikRef.current?.submitForm());
 

@@ -153,12 +153,8 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     [mapMachine.mapFeatureData],
   );
 
-  const {
-    mapLocationFeatureDataset,
-    repositioningFeatureDataset,
-    isRepositioning,
-    setDefaultMapLayers,
-  } = mapMachine;
+  const { mapLocationFeatureDataset, repositioningFeature, isRepositioning, setDefaultMapLayers } =
+    mapMachine;
 
   // Initialize layers
   useEffect(() => {
@@ -171,10 +167,9 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     activeFeatureLayer?.clearLayers();
 
     if (isRepositioning) {
-      const pimsFeature = repositioningFeatureDataset?.pimsFeature;
-      if (exists(pimsFeature)) {
+      if (exists(repositioningFeature)) {
         // File marker repositioning is active - highlight the property and the corresponding boundary when user triggers the relocate action.
-        activeFeatureLayer?.addData(pimsFeature);
+        activeFeatureLayer?.addData(repositioningFeature);
       }
     } else if (exists(mapLocationFeatureDataset)) {
       if (firstOrNull(mapLocationFeatureDataset.parcelFeatures) !== null) {
@@ -182,7 +177,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         activeFeatureLayer?.addData(activeFeature);
       }
     }
-  }, [activeFeatureLayer, isRepositioning, mapLocationFeatureDataset, repositioningFeatureDataset]);
+  }, [activeFeatureLayer, isRepositioning, mapLocationFeatureDataset, repositioningFeature]);
 
   useEffect(() => {
     if (hasPendingFlyTo && isMapReady) {

@@ -89,29 +89,33 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
   }, [activeTab]);
 
   const layersData = useMemo(() => {
-    if (!composedProperty) return [];
+    if (!exists(composedProperty?.featureDataset)) {
+      return [];
+    }
+
+    const featureDataset = composedProperty?.featureDataset;
     const crownFeaturesTotal =
-      (composedProperty.crownTenureFeatures?.length || 0) +
-      (composedProperty.crownLeaseFeatures?.length || 0) +
-      (composedProperty.crownInclusionFeatures?.length || 0) +
-      (composedProperty.crownInventoryFeatures?.length || 0) +
-      (composedProperty.crownLicenseFeatures?.length || 0);
+      (featureDataset.crownLandTenuresFeatures?.length || 0) +
+      (featureDataset.crownLandLeasesFeatures?.length || 0) +
+      (featureDataset.crownLandInclusionsFeatures?.length || 0) +
+      (featureDataset.crownLandInventoryFeatures?.length || 0) +
+      (featureDataset.crownLandLicensesFeatures?.length || 0);
 
     return [
       ...buildLayerData({
-        features: composedProperty.pimsGeoserverFeatureCollection?.features,
+        features: featureDataset?.pimsFeatures,
         titlePrefix: 'PIMS data',
         tab: InventoryTabNames.pims,
         config: pimsLayerConfig,
       }),
       ...buildLayerData({
-        features: composedProperty.parcelMapFeatureCollection?.features,
+        features: featureDataset?.parcelFeatures,
         titlePrefix: 'LTSA ParcelMap data',
         tab: InventoryTabNames.pmbc,
         config: parcelLayerConfig,
       }),
       ...buildLayerData({
-        features: composedProperty.crownTenureFeatures,
+        features: featureDataset?.crownLandTenuresFeatures,
         titlePrefix: 'Crown Land Tenures',
         tab: InventoryTabNames.crown,
         config: {},
@@ -119,7 +123,7 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
         totalCount: crownFeaturesTotal,
       }),
       ...buildLayerData({
-        features: composedProperty.crownLicenseFeatures,
+        features: featureDataset?.crownLandLicensesFeatures,
         titlePrefix: 'Crown Land Licenses',
         tab: InventoryTabNames.crown,
         config: {},
@@ -127,7 +131,7 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
         totalCount: crownFeaturesTotal,
       }),
       ...buildLayerData({
-        features: composedProperty.crownLeaseFeatures,
+        features: featureDataset?.crownLandLeasesFeatures,
         titlePrefix: 'Crown Land Tenures',
         tab: InventoryTabNames.crown,
         config: {},
@@ -135,7 +139,7 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
         totalCount: crownFeaturesTotal,
       }),
       ...buildLayerData({
-        features: composedProperty.crownInventoryFeatures,
+        features: featureDataset?.crownLandInventoryFeatures,
         titlePrefix: 'Crown Land Inventory',
         tab: InventoryTabNames.crown,
         config: {},
@@ -143,7 +147,7 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
         totalCount: crownFeaturesTotal,
       }),
       ...buildLayerData({
-        features: composedProperty.crownInclusionFeatures,
+        features: featureDataset?.crownLandInclusionsFeatures,
         titlePrefix: 'Crown Land Inclusions',
         tab: InventoryTabNames.crown,
         config: {},
@@ -151,21 +155,21 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
         totalCount: crownFeaturesTotal,
       }),
       ...buildLayerData({
-        features: composedProperty.municipalityFeatures,
+        features: featureDataset?.municipalityFeatures,
         titlePrefix: 'Municipality Information',
         tab: InventoryTabNames.other,
         config: municipalityLayerConfig,
         group: 'municipality',
       }),
       ...buildLayerData({
-        features: composedProperty.alrFeatures,
+        features: featureDataset?.alrFeatures,
         titlePrefix: 'ALR Information',
         tab: InventoryTabNames.other,
         config: alrLayerConfig,
         group: 'alr',
       }),
       ...buildLayerData({
-        features: composedProperty.firstNationFeatures,
+        features: featureDataset?.firstNationFeatures,
 
         titlePrefix: 'First Nations Information',
         tab: InventoryTabNames.other,
@@ -173,14 +177,14 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
         group: 'first_nations',
       }),
       ...buildLayerData({
-        features: composedProperty.electoralFeatures,
+        features: featureDataset?.electoralFeatures,
         titlePrefix: 'Electoral District Information',
         tab: InventoryTabNames.other,
         config: electoralLayerConfig,
         group: 'electoral',
       }),
       ...buildLayerData({
-        features: composedProperty.highwayFeatures,
+        features: featureDataset?.highwayFeatures,
         titlePrefix: 'Highway Research',
         tab: InventoryTabNames.highway,
         config: highwayLayerConfig,

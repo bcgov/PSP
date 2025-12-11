@@ -142,11 +142,10 @@ describe('LeaseDetailSubForm component', () => {
 
   it('checks that expiry date must be later than start date', async () => {
     // start date is not mandatory for DRAFT leases
+    const leaseForm = getDefaultFormLease();
+    leaseForm.statusTypeCode = ApiGen_CodeTypes_LeaseStatusTypes.DRAFT;
     const { queryByText, container } = await setup({
-      initialValues: {
-        ...getDefaultFormLease(),
-        statusTypeCode: ApiGen_CodeTypes_LeaseStatusTypes.DRAFT,
-      },
+      initialValues: leaseForm,
     });
 
     await act(async () => {
@@ -296,11 +295,10 @@ describe('LeaseDetailSubForm component', () => {
   );
 
   it('displays a confirmation modal when user changes the status from "Discarded" to a new status', async () => {
+    const leaseForm = getDefaultFormLease();
+    leaseForm.statusTypeCode = ApiGen_CodeTypes_LeaseStatusTypes.DISCARD;
     const { getByTestId, getCancellationReason, getStatusDropDown, formikRef } = await setup({
-      initialValues: {
-        ...getDefaultFormLease(),
-        statusTypeCode: ApiGen_CodeTypes_LeaseStatusTypes.DISCARD,
-      },
+      initialValues: leaseForm,
     });
 
     expect(formikRef.current).not.toBeNull();
@@ -331,11 +329,10 @@ describe('LeaseDetailSubForm component', () => {
   });
 
   it(`doesn't clear the cancellation reason textbox if the user cancels the confirmation modal`, async () => {
+    const leaseForm = getDefaultFormLease();
+    leaseForm.statusTypeCode = ApiGen_CodeTypes_LeaseStatusTypes.DISCARD;
     const { getByTestId, getCancellationReason, getStatusDropDown, formikRef } = await setup({
-      initialValues: {
-        ...getDefaultFormLease(),
-        statusTypeCode: ApiGen_CodeTypes_LeaseStatusTypes.DISCARD,
-      },
+      initialValues: leaseForm,
     });
 
     expect(formikRef.current).not.toBeNull();
@@ -376,11 +373,10 @@ describe('LeaseDetailSubForm component', () => {
   });
 
   it('displays a confirmation modal when user changes the status from "Terminated" to a new status', async () => {
+    const leaseForm = getDefaultFormLease();
+    leaseForm.statusTypeCode = ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED;
     const { getByTestId, getTerminationReason, getStatusDropDown, formikRef } = await setup({
-      initialValues: {
-        ...getDefaultFormLease(),
-        statusTypeCode: ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED,
-      },
+      initialValues: leaseForm,
     });
 
     expect(formikRef.current).not.toBeNull();
@@ -411,11 +407,10 @@ describe('LeaseDetailSubForm component', () => {
   });
 
   it(`doesn't clear the termination reason textbox if the user cancels the confirmation modal`, async () => {
+    const leaseForm = getDefaultFormLease();
+    leaseForm.statusTypeCode = ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED;
     const { getByTestId, getTerminationReason, getStatusDropDown, formikRef } = await setup({
-      initialValues: {
-        ...getDefaultFormLease(),
-        statusTypeCode: ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED,
-      },
+      initialValues: leaseForm,
     });
 
     expect(formikRef.current).not.toBeNull();

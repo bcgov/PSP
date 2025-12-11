@@ -1,25 +1,29 @@
+import { Feature, Geometry } from 'geojson';
 import { useMemo } from 'react';
 
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import { Table } from '@/components/Table';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
-import { getPropertyNameFromSelectedFeatureSet } from '@/utils/mapPropertyUtils';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { firstOrNull } from '@/utils';
+import { getPropertyNameFromLocationFeatureSet } from '@/utils/mapPropertyUtils';
 import { isStrataCommonProperty } from '@/utils/propertyUtils';
 
 import { ILayerSearchCriteria } from '../models';
 import LayerFilter from './LayerFilter';
 import mapPropertyColumns from './mapPropertyColumns';
 
-export interface IIdentifiedSelectedFeatureDataset extends SelectedFeatureDataset {
+export interface IIdentifiedLocationFeatureDataset extends LocationFeatureDataset {
   id: string;
+  firstParcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
 }
 
 export interface IPropertySearchSelectorFormViewProps {
-  onSelectedProperties: (properties: SelectedFeatureDataset[]) => void;
-  selectedProperties: SelectedFeatureDataset[];
+  onSelectedProperties: (properties: LocationFeatureDataset[]) => void;
+  selectedProperties: LocationFeatureDataset[];
   onSearch: (search: ILayerSearchCriteria) => void;
-  searchResults: SelectedFeatureDataset[];
+  searchResults: LocationFeatureDataset[];
   search?: ILayerSearchCriteria;
   loading: boolean;
   addressResults?: IGeocoderResponse[];
@@ -40,29 +44,41 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
   onAddressChange,
   onAddressSelect,
 }) => {
-  const selectedData = selectedProperties.map<IIdentifiedSelectedFeatureDataset>(x => {
-    return { ...x, id: generatePropertyId(x) };
-  });
-
-  const identifiedSearchResults = useMemo(
+  const selectedData = useMemo(
     () =>
-      searchResults
-        .map<IIdentifiedSelectedFeatureDataset>(x => {
-          return { ...x, id: generatePropertyId(x) };
-        })
-        .sort((a, b) => {
-          const aIsStrataLot = isStrataCommonProperty(a?.parcelFeature);
-          const bIsStrataLot = isStrataCommonProperty(b?.parcelFeature);
-          if (aIsStrataLot === bIsStrataLot) return 0;
-          if (aIsStrataLot) return -1;
-          if (bIsStrataLot) return 1;
-          return 0;
-        }) ?? [],
+      selectedProperties.map<IIdentifiedLocationFeatureDataset>(x => ({
+        ...x,
+        id: generatePropertyId(x),
+        firstParcelFeature: firstOrNull(x.parcelFeatures),
+      })),
+    [selectedProperties],
+  );
+
+  const searchData = useMemo(
+    () =>
+      searchResults.map<IIdentifiedLocationFeatureDataset>(x => ({
+        ...x,
+        id: generatePropertyId(x),
+        firstParcelFeature: firstOrNull(x.parcelFeatures),
+      })),
     [searchResults],
   );
 
-  function generatePropertyId(mapProperty: SelectedFeatureDataset): string {
-    const propertyName = getPropertyNameFromSelectedFeatureSet(mapProperty);
+  const identifiedSearchResults = useMemo(() => {
+    return (
+      searchData.sort((a, b) => {
+        const aIsStrataLot = isStrataCommonProperty(a?.firstParcelFeature);
+        const bIsStrataLot = isStrataCommonProperty(b?.firstParcelFeature);
+        if (aIsStrataLot === bIsStrataLot) return 0;
+        if (aIsStrataLot) return -1;
+        if (bIsStrataLot) return 1;
+        return 0;
+      }) ?? []
+    );
+  }, [searchData]);
+
+  function generatePropertyId(mapProperty: LocationFeatureDataset): string {
+    const propertyName = getPropertyNameFromLocationFeatureSet(mapProperty);
     return `${propertyName.label}-${propertyName.value}-${mapProperty.location?.lat ?? 0}-${
       mapProperty.location?.lng ?? 0
     }`;
@@ -78,7 +94,7 @@ export const PropertySearchSelectorFormView: React.FunctionComponent<
         onAddressSelect={onAddressSelect}
         loading={loading}
       />
-      <Table<IIdentifiedSelectedFeatureDataset>
+      <Table<IIdentifiedLocationFeatureDataset>
         manualPagination={false}
         name="map-properties"
         columns={mapPropertyColumns}

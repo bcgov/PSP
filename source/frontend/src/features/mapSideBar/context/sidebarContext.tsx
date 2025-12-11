@@ -6,7 +6,7 @@ import { Api_LastUpdatedBy } from '@/models/api/File';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
-import { exists, filePropertyToLocationBoundaryDataset } from '@/utils';
+import { exists } from '@/utils';
 
 export interface TypedFile extends ApiGen_Concepts_File {
   fileType: ApiGen_CodeTypes_FileTypes;
@@ -120,9 +120,7 @@ export const SideBarContextProvider = (props: ISideBarContextProviderProps) => {
 
   const resetFilePropertyLocations = useCallback(() => {
     if (exists(fileProperties)) {
-      const propertyLocations = fileProperties
-        .map(x => filePropertyToLocationBoundaryDataset(x))
-        .filter(exists);
+      const propertyLocations = fileProperties.filter(exists);
 
       exists(setFilePropertyLocations) && setFilePropertyLocations(propertyLocations);
     } else {

@@ -1,13 +1,16 @@
 import * as turf from '@turf/turf';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
-import { WorklistLocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { emptyPmbcParcel } from '@/models/layers/parcelMapBC';
 import { render, RenderOptions } from '@/utils/test-utils';
 
 import { WorklistMapClickMonitor } from './WorklistMapClickMonitor';
 import { useWorklistContext } from './context/WorklistContext';
+import {
+  emptyFeatureDataset,
+  LocationFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 
 vi.mock('./context/WorklistContext');
 
@@ -28,7 +31,7 @@ vi.mocked(useWorklistContext, { partial: true }).mockReturnValue({
 });
 
 // Shared mock state
-let mockPrevious: WorklistLocationFeatureDataset = undefined;
+let mockPrevious: LocationFeatureDataset = undefined;
 
 describe('WorklistMapClickMonitor', () => {
   const setup = (renderOptions: RenderOptions = {}) => {
@@ -47,11 +50,8 @@ describe('WorklistMapClickMonitor', () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       worklistLocationFeatureDataset: {
+        ...emptyFeatureDataset(),
         location: { lat: 49, lng: -123 },
-        districtFeature: null,
-        regionFeature: null,
-        fullyAttributedFeatures: null,
-        pimsFeature: null,
       },
     };
 
@@ -62,24 +62,20 @@ describe('WorklistMapClickMonitor', () => {
 
   it('adds range when new dataset has valid features', () => {
     mockPrevious = {
+      ...emptyFeatureDataset(),
       location: { lat: 49, lng: -123 },
-      districtFeature: null,
-      regionFeature: null,
-      fullyAttributedFeatures: null,
-      pimsFeature: null,
     };
 
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       worklistLocationFeatureDataset: {
+        ...emptyFeatureDataset(),
         location: { lat: 49.2, lng: -123.1 },
-        districtFeature: null,
-        regionFeature: null,
-        fullyAttributedFeatures: turf.featureCollection([
+
+        parcelFeatures: turf.featureCollection([
           turf.point([-123.1, 49.2], { ...emptyPmbcParcel }),
           turf.point([-75.3, 39.9], { ...emptyPmbcParcel }),
-        ]),
-        pimsFeature: null,
+        ]).features,
       },
     };
 
@@ -90,27 +86,22 @@ describe('WorklistMapClickMonitor', () => {
 
   it('adds single parcel by lat/lng when no features exist', () => {
     mockPrevious = {
+      ...emptyFeatureDataset(),
       location: { lat: 49, lng: -123 },
-      districtFeature: null,
-      regionFeature: null,
-      fullyAttributedFeatures: null,
-      pimsFeature: null,
     };
 
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
       worklistLocationFeatureDataset: {
+        ...emptyFeatureDataset(),
         location: { lat: 50, lng: -123 },
-        districtFeature: null,
-        regionFeature: null,
-        fullyAttributedFeatures: turf.featureCollection([]),
-        pimsFeature: null,
+        parcelFeatures: [],
       },
     };
 
     setup({ mockMapMachine: testMockMachine });
     expect(add).toHaveBeenCalledWith(
-      expect.objectContaining<Partial<WorklistLocationFeatureDataset>>({
+      expect.objectContaining<Partial<LocationFeatureDataset>>({
         location: { lat: 50, lng: -123 },
       }),
     );
@@ -118,14 +109,11 @@ describe('WorklistMapClickMonitor', () => {
   });
 
   it('does not re-add if same dataset is passed again', () => {
-    const dataset: WorklistLocationFeatureDataset = {
+    const dataset: LocationFeatureDataset = {
+      ...emptyFeatureDataset(),
       location: { lat: 49, lng: -123 },
-      districtFeature: null,
-      regionFeature: null,
-      fullyAttributedFeatures: turf.featureCollection([
-        turf.point([-123, 49], { ...emptyPmbcParcel }),
-      ]),
-      pimsFeature: null,
+      parcelFeatures: turf.featureCollection([turf.point([-123, 49], { ...emptyPmbcParcel })])
+        .features,
     };
 
     mockPrevious = dataset;

@@ -1,4 +1,4 @@
-import { Feature, FeatureCollection, Geometry, MultiPolygon, Polygon } from 'geojson';
+import { Feature, FeatureCollection, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { useCallback } from 'react';
 
@@ -7,6 +7,8 @@ import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/
 import { useLegalAdminBoundariesMapLayer } from '@/hooks/repositories/mapLayer/useLegalAdminBoundariesMapLayer';
 import { usePimsPropertyLayer } from '@/hooks/repositories/mapLayer/usePimsPropertyLayer';
 import { useMapProperties } from '@/hooks/repositories/useMapProperties';
+import { ADM_IndianReserveBands_Feature_Properties } from '@/models/layers/admIndianReserveBands';
+import { WHSE_AgriculturalLandReservePoly_Feature_Properties } from '@/models/layers/alcAgriculturalReserve';
 import {
   TANTALIS_CrownLandInclusions_Feature_Properties,
   TANTALIS_CrownLandInventory_Feature_Properties,
@@ -14,23 +16,22 @@ import {
   TANTALIS_CrownLandLicenses_Feature_Properties,
   TANTALIS_CrownLandTenures_Feature_Properties,
 } from '@/models/layers/crownLand';
+import { EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties } from '@/models/layers/electoralBoundaries';
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { WHSE_Municipalities_Feature_Properties } from '@/models/layers/municipalities';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import {
+  PIMS_Property_Boundary_View,
+  PIMS_Property_Location_View,
+} from '@/models/layers/pimsPropertyLocationView';
 import { exists, isValidId } from '@/utils';
 
 export interface FeatureDataset {
-  selectingComponentId: string | null;
-  location: LatLngLiteral;
-  fileLocation: LatLngLiteral | null;
-}
-
-export interface LocationFeatureDataset extends FeatureDataset {
   parcelFeatures: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>[] | null;
   pimsFeatures: Feature<Geometry, PIMS_Property_Location_View>[] | null;
+  pimsBoundaryFeatures: Feature<Geometry, PIMS_Property_Boundary_View>[] | null;
   regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
   districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
   municipalityFeatures: Feature<Geometry, WHSE_Municipalities_Feature_Properties>[] | null;
@@ -42,36 +43,41 @@ export interface LocationFeatureDataset extends FeatureDataset {
   crownLandTenuresFeatures:
     | Feature<Geometry, TANTALIS_CrownLandTenures_Feature_Properties>[]
     | null;
+
   crownLandInventoryFeatures:
     | Feature<Geometry, TANTALIS_CrownLandInventory_Feature_Properties>[]
     | null;
   crownLandInclusionsFeatures:
     | Feature<Geometry, TANTALIS_CrownLandInclusions_Feature_Properties>[]
     | null;
+
+  electoralFeatures: Feature<Geometry, EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties>[] | null;
+  alrFeatures: Feature<Geometry, WHSE_AgriculturalLandReservePoly_Feature_Properties>[] | null;
+  firstNationFeatures: Feature<Geometry, ADM_IndianReserveBands_Feature_Properties>[] | null;
 }
 
-export interface SelectedFeatureDataset extends FeatureDataset {
-  id?: string;
+export function emptyFeatureDataset(): FeatureDataset {
+  return {
+    parcelFeatures: null,
+    pimsFeatures: null,
+    pimsBoundaryFeatures: null,
+    regionFeature: null,
+    districtFeature: null,
+    municipalityFeatures: null,
+    highwayFeatures: null,
+    crownLandLeasesFeatures: null,
+    crownLandLicensesFeatures: null,
+    crownLandTenuresFeatures: null,
+    crownLandInventoryFeatures: null,
+    crownLandInclusionsFeatures: null,
+    electoralFeatures: null,
+    alrFeatures: null,
+    firstNationFeatures: null,
+  };
+}
+
+export interface LocationFeatureDataset extends FeatureDataset {
   location: LatLngLiteral;
-  fileBoundary: Polygon | MultiPolygon | null;
-  parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
-  pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
-  regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
-  districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
-  municipalityFeature: Feature<Geometry, WHSE_Municipalities_Feature_Properties> | null;
-  isActive?: boolean;
-  displayOrder?: number;
-}
-
-export interface WorklistLocationFeatureDataset
-  extends Omit<FeatureDataset, 'selectingComponentId' | 'fileLocation'> {
-  fullyAttributedFeatures: FeatureCollection<
-    Geometry,
-    PMBC_FullyAttributed_Feature_Properties
-  > | null;
-  pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
-  regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
-  districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
 }
 
 const useLocationFeatureLoader = () => {
@@ -103,20 +109,8 @@ const useLocationFeatureLoader = () => {
       pimsPropertyId?: number | null;
     }): Promise<LocationFeatureDataset> => {
       const result: LocationFeatureDataset = {
-        selectingComponentId: null,
+        ...emptyFeatureDataset(),
         location: latLng,
-        fileLocation: latLng,
-        pimsFeatures: null,
-        parcelFeatures: null,
-        regionFeature: null,
-        districtFeature: null,
-        municipalityFeatures: null,
-        highwayFeatures: null,
-        crownLandLeasesFeatures: null,
-        crownLandLicensesFeatures: null,
-        crownLandTenuresFeatures: null,
-        crownLandInventoryFeatures: null,
-        crownLandInclusionsFeatures: null,
       };
 
       // call these APIs in parallel - notice there is no "await"
@@ -195,13 +189,10 @@ const useLocationFeatureLoader = () => {
   );
 
   const loadWorklistLocationDetails = useCallback(
-    async ({ latLng }: { latLng: LatLngLiteral }): Promise<WorklistLocationFeatureDataset> => {
-      const result: WorklistLocationFeatureDataset = {
+    async ({ latLng }: { latLng: LatLngLiteral }): Promise<LocationFeatureDataset> => {
+      const result: LocationFeatureDataset = {
+        ...emptyFeatureDataset(),
         location: latLng,
-        fullyAttributedFeatures: null,
-        pimsFeature: null,
-        regionFeature: null,
-        districtFeature: null,
       };
 
       // call these APIs in parallel - notice there is no "await"
@@ -215,7 +206,7 @@ const useLocationFeatureLoader = () => {
         districtTask,
       ]);
 
-      result.fullyAttributedFeatures = pmbcFeatures ?? null;
+      result.parcelFeatures = pmbcFeatures.features ?? null;
       result.regionFeature = regionFeature ?? null;
       result.districtFeature = districtFeature ?? null;
 

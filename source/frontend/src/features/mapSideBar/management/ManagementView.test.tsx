@@ -50,7 +50,7 @@ const onClose = vi.fn();
 const onSave = vi.fn();
 const onCancel = vi.fn();
 const onSuccess = vi.fn();
-const onUpdateProperties = vi.fn();
+const updateFileProperties = vi.fn();
 const confirmBeforeAdd = vi.fn();
 const canRemove = vi.fn();
 const setIsEditing = vi.fn();
@@ -125,7 +125,7 @@ const DEFAULT_PROPS: IManagementViewProps = {
   onSelectProperty,
   onEditProperties,
   onSuccess,
-  onUpdateProperties,
+  updateFileProperties,
   confirmBeforeAdd,
   canRemove,
   isEditing: false,

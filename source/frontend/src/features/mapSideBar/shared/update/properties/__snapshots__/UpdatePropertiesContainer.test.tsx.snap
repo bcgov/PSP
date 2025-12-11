@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`UpdateProperties component > renders as expected 1`] = `
+exports[`UpdatePropertiesContainer component > renders as expected 1`] = `
 .c4.btn {
   display: -webkit-box;
   display: -webkit-flex;
