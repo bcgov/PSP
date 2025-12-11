@@ -62,6 +62,12 @@ public partial class PimsPropertyLease
     public Geometry Location { get; set; }
 
     /// <summary>
+    /// Spatial boundary of property.  Supports upload of custom shape file by user.
+    /// </summary>
+    [Column("BOUNDARY", TypeName = "geometry")]
+    public Geometry Boundary { get; set; }
+
+    /// <summary>
     /// Designates a preferred presentation order of the code descriptions.
     /// </summary>
     [Column("DISPLAY_ORDER")]

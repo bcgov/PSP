@@ -17,6 +17,9 @@ namespace Pims.Dal.Entities;
 [Index("ProductId", Name = "MGMTFL_PRODUCT_ID_IDX")]
 [Index("ProjectId", Name = "MGMTFL_PROJECT_ID_IDX")]
 [Index("RegionCode", Name = "MGMTFL_REGION_CODE_IDX")]
+[Index("ResponsiblePayerOrganizationId", Name = "MGMTFL_RESPONSIBLE_PAYER_ORGANIZATION_ID_IDX")]
+[Index("ResponsiblePayerPersonId", Name = "MGMTFL_RESPONSIBLE_PAYER_PERSON_ID_IDX")]
+[Index("ResponsiblePayerPrimaryContactId", Name = "MGMTFL_RESPONSIBLE_PAYER_PRIMARY_CONTACT_ID_IDX")]
 public partial class PimsManagementFile
 {
     /// <summary>
@@ -66,6 +69,24 @@ public partial class PimsManagementFile
     /// </summary>
     [Column("REGION_CODE")]
     public short? RegionCode { get; set; }
+
+    /// <summary>
+    /// Foreign key for the responsible payer to the PIMS_PERSON table.
+    /// </summary>
+    [Column("RESPONSIBLE_PAYER_PERSON_ID")]
+    public long? ResponsiblePayerPersonId { get; set; }
+
+    /// <summary>
+    /// Foreign key for the responsible payer organization to the PIMS_ORGANIZATION table.
+    /// </summary>
+    [Column("RESPONSIBLE_PAYER_ORGANIZATION_ID")]
+    public long? ResponsiblePayerOrganizationId { get; set; }
+
+    /// <summary>
+    /// Foreign key for the responsible payer primary contact for the organization to the PIMS_PERSON table.
+    /// </summary>
+    [Column("RESPONSIBLE_PAYER_PRIMARY_CONTACT_ID")]
+    public long? ResponsiblePayerPrimaryContactId { get; set; }
 
     /// <summary>
     /// Unique name given to the management file.
@@ -215,6 +236,9 @@ public partial class PimsManagementFile
     [InverseProperty("ManagementFile")]
     public virtual ICollection<PimsManagementFileTeam> PimsManagementFileTeams { get; set; } = new List<PimsManagementFileTeam>();
 
+    [InverseProperty("ManagementFile")]
+    public virtual ICollection<PimsNoticeOfClaim> PimsNoticeOfClaims { get; set; } = new List<PimsNoticeOfClaim>();
+
     [ForeignKey("ProductId")]
     [InverseProperty("PimsManagementFiles")]
     public virtual PimsProduct Product { get; set; }
@@ -226,4 +250,16 @@ public partial class PimsManagementFile
     [ForeignKey("RegionCode")]
     [InverseProperty("PimsManagementFiles")]
     public virtual PimsRegion RegionCodeNavigation { get; set; }
+
+    [ForeignKey("ResponsiblePayerOrganizationId")]
+    [InverseProperty("PimsManagementFiles")]
+    public virtual PimsOrganization ResponsiblePayerOrganization { get; set; }
+
+    [ForeignKey("ResponsiblePayerPersonId")]
+    [InverseProperty("PimsManagementFileResponsiblePayerPeople")]
+    public virtual PimsPerson ResponsiblePayerPerson { get; set; }
+
+    [ForeignKey("ResponsiblePayerPrimaryContactId")]
+    [InverseProperty("PimsManagementFileResponsiblePayerPrimaryContacts")]
+    public virtual PimsPerson ResponsiblePayerPrimaryContact { get; set; }
 }

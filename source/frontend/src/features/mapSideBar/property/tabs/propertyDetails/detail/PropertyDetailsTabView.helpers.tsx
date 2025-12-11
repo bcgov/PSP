@@ -22,6 +22,7 @@ export type IPropertyDetailsForm = ExtendOverride<
     isVolumetricParcel: string; // radio buttons only support string values, not booleans
     anomalies: ApiGen_Base_CodeType<string>[];
     tenures: ApiGen_Base_CodeType<string>[];
+    tenureCleanups: ApiGen_Base_CodeType<string>[];
     roadTypes: ApiGen_Base_CodeType<string>[];
   }
 >;
@@ -37,6 +38,7 @@ export function toFormValues(apiData?: ApiGen_Concepts_Property): IPropertyDetai
     },
     anomalies: apiData?.anomalies?.map(a => a.propertyAnomalyTypeCode).filter(exists) ?? [],
     tenures: apiData?.tenures?.map(t => t.propertyTenureTypeCode).filter(exists) ?? [],
+    tenureCleanups: apiData?.tenureCleanups?.map(t => t.tenureCleanupTypeCode).filter(exists) ?? [],
     roadTypes: apiData?.roadTypes?.map(a => a.propertyRoadTypeCode).filter(exists) ?? [],
     isVolumetricParcel: booleanToString(apiData?.isVolumetricParcel),
     electoralDistrict: undefined,
