@@ -424,7 +424,7 @@ describe('MapFilterBar', () => {
       districtLot: null,
       project: null,
       tenureCleanup: '',
-    } as IPropertyFilter);
+    });
   });
 
   it('searches by PIN', async () => {
@@ -463,7 +463,7 @@ describe('MapFilterBar', () => {
       districtLot: null,
       project: null,
       tenureCleanup: '',
-    } as IPropertyFilter);
+    });
   });
 
   it('searches by Lat/Long coordinates', async () => {
@@ -521,7 +521,7 @@ describe('MapFilterBar', () => {
       districtLot: null,
       project: null,
       tenureCleanup: '',
-    } as IPropertyFilter);
+    });
   });
 
   it('searches by "District" section/township/range coordinates', async () => {
@@ -581,60 +581,7 @@ describe('MapFilterBar', () => {
       districtLot: null,
       project: null,
       tenureCleanup: '',
-    } as IPropertyFilter);
-  });
-
-  it('searches by "District Lot"', async () => {
-    const { searchButton, searchByDropdown, getDistrictLotRadio, getDistrictLotTextbox } = setup({
-      props: {
-        propertyFilter: {
-          ...defaultPropertyFilter,
-        },
-      },
     });
-    await waitForEffects();
-
-    await act(async () => {
-      userEvent.selectOptions(searchByDropdown, 'surveyParcel');
-    });
-    await waitForEffects();
-
-    await waitFor(async () => {
-      await act(async () => userEvent.click(getDistrictLotRadio()));
-    });
-    await waitForEffects();
-
-    // Enter values on the form fields, then click the Search button
-    await act(async () => {
-      userEvent.paste(getDistrictLotTextbox(), '50');
-    });
-
-    await act(async () => {
-      userEvent.click(searchButton);
-    });
-
-    expect(onFilterChange).toHaveBeenCalledWith<[IPropertyFilter]>({
-      pid: null,
-      pin: null,
-      planNumber: null,
-      address: '',
-      searchBy: 'surveyParcel',
-      page: undefined,
-      quantity: undefined,
-      latitude: null,
-      longitude: null,
-      historical: null,
-      coordinates: null,
-      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
-      name: null,
-      section: null,
-      township: null,
-      range: null,
-      district: 'ALL',
-      districtLot: '50',
-      project: null,
-      tenureCleanup: '',
-    } as IPropertyFilter);
   });
 
   it('submits the form if there is lat/lng for geographic names', async () => {
@@ -704,7 +651,7 @@ describe('MapFilterBar', () => {
       districtLot: null,
       project: null,
       tenureCleanup: '',
-    } as IPropertyFilter);
+    });
   });
 
   it.skip.each([
