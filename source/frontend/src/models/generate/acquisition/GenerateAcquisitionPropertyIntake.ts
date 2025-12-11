@@ -1,4 +1,5 @@
 import { FeatureCollection, Geometry } from 'geojson';
+import moment from 'moment';
 
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
 import { IKeycloak } from '@/hooks/useKeycloakWrapper';
@@ -19,6 +20,7 @@ export class Api_GenerateAcquisitionPropertyIntake {
   project_name: string;
   project_number: string;
   today: UtcIsoDateTime;
+  date_generated: string;
   property: Api_GenerateProperty;
   property_historical_lis: string;
   file_number: string;
@@ -34,6 +36,7 @@ export class Api_GenerateAcquisitionPropertyIntake {
       exists(keycloak.firstName) && exists(keycloak.surname)
         ? `${keycloak.firstName} ${keycloak.surname}`
         : '';
+    this.date_generated = moment().format('DD/M/YYYY');
     this.file_number = file?.fileNumber ?? '';
     this.project = new Api_GenerateProject(file?.project ?? null);
     this.product = new Api_GenerateProduct(file?.product ?? null);
