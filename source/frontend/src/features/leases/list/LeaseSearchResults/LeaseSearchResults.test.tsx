@@ -36,6 +36,12 @@ const mockResults: ApiGen_Concepts_Lease[] = [
     id: 1,
     lFileNo: 'L-123-456',
     programName: 'TRAN-IT',
+    paymentReceivableType: {
+      id: 'PYBLBCTFA',
+      description: 'Payable (BCTFA as tenant)',
+      isDisabled: false,
+      displayOrder: 1,
+    },
     stakeholders: [
       {
         ...getEmptyLeaseStakeholder(),
@@ -59,6 +65,12 @@ const mockResults: ApiGen_Concepts_Lease[] = [
     id: 2,
     lFileNo: 'L-999-888',
     programName: 'TRAN-IT',
+    paymentReceivableType: {
+      id: 'RCVBL',
+      description: 'Receivable',
+      isDisabled: false,
+      displayOrder: 1,
+    },
     stakeholders: [
       {
         ...getEmptyLeaseStakeholder(),
@@ -88,6 +100,14 @@ describe('Lease Search Results Table', () => {
   it('matches snapshot', async () => {
     const { asFragment } = setup({ results: mockResults });
     expect(asFragment()).toMatchSnapshot();
+  });
+
+  it('displays lease account type (payable/receivable)', async () => {
+    const { tableRows, findByText } = setup({ results: mockResults });
+
+    expect(tableRows.length).toBe(2);
+    expect(await findByText('Payable (BCTFA as tenant)')).toBeVisible();
+    expect(await findByText('Receivable')).toBeVisible();
   });
 
   it('displays a message when no matching records found', async () => {

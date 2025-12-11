@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims, NoteTypes } from '@/constants';
-import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
   InventoryTabNames,
   InventoryTabs,
@@ -25,11 +24,14 @@ import { ApiGen_Concepts_Association } from '@/models/api/generated/ApiGen_Conce
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
-import { exists, isPlanNumberSPCP, isValidId } from '@/utils';
+import { exists, firstOrNull, isPlanNumberSPCP, isValidId } from '@/utils';
 
+import { LayerTabCollapsedView } from '../layer/LayerTabCollapsedView';
+import { LayerTabContainer } from '../layer/LayerTabContainer';
+import { LayerTabView } from '../layer/LayerTabView';
 import PropertyDocumentsTab from '../shared/tabs/PropertyDocumentsTab';
-import CrownDetailsTabView from './tabs/crown/CrownDetailsTabView';
 import LtsaPlanTabView from './tabs/ltsa/LtsaPlanTabView';
+import { toFormValues } from './tabs/propertyDetails/detail/PropertyDetailsTabView.helpers';
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 
 export interface IPropertyContainerProps {
@@ -122,10 +124,6 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     composedPropertyState?.pid?.toString() ??
     composedPropertyState?.apiWrapper?.response?.pid?.toString();
 
-  const retrievedPin =
-    composedPropertyState?.pin?.toString() ??
-    composedPropertyState?.apiWrapper?.response?.pin?.toString();
-
   const retrievedPlanNumber =
     composedPropertyState?.planNumber?.toString() ??
     composedPropertyState?.apiWrapper?.response?.planNumber?.toString();
@@ -161,23 +159,6 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     });
   }
 
-  if (exists(composedPropertyState.composedProperty?.crownTenureFeatures)) {
-    tabViews.push({
-      content: (
-        <CrownDetailsTabView
-          crownFeatures={composedPropertyState.composedProperty?.crownTenureFeatures}
-        />
-      ),
-      key: InventoryTabNames.crown,
-      name: 'Crown',
-    });
-
-    // Show crown land by default when no other information was found
-    if (exists(retrievedPin) && !exists(retrievedPid)) {
-      defaultTab = InventoryTabNames.crown;
-    }
-  }
-
   tabViews.push({
     content: (
       <BcAssessmentTabView
@@ -191,9 +172,6 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     name: 'Value',
   });
 
-  // TODO: PSP-4406 this should have a loading flag
-  const propertyViewForm = usePropertyDetails(composedPropertyState.apiWrapper?.response);
-
   if (showPropertyInfoTab) {
     // After API property object has been received, we query relevant map layers to find
     // additional information which we store in a different model (IPropertyDetailsForm)
@@ -201,7 +179,21 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     tabViews.push({
       content: (
         <PropertyDetailsTabView
-          property={propertyViewForm}
+          property={{
+            ...toFormValues(composedPropertyState?.apiWrapper?.response),
+            electoralDistrict: firstOrNull(
+              composedPropertyState?.composedProperty?.electoralFeatures,
+            ),
+            isALR: composedPropertyState?.composedProperty?.alrFeatures?.length > 0,
+            firstNations: {
+              bandName:
+                firstOrNull(composedPropertyState?.composedProperty?.firstNationFeatures)
+                  ?.properties.BAND_NAME || '',
+              reserveName:
+                firstOrNull(composedPropertyState?.composedProperty?.firstNationFeatures)
+                  ?.properties.ENGLISH_NAME || '',
+            },
+          }}
           loading={composedPropertyState.apiWrapper?.loading ?? false}
         />
       ),
@@ -247,6 +239,95 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
     defaultTab = InventoryTabNames.management;
   }
 
+  if (exists(composedPropertyState?.composedProperty)) {
+    const composedProperty = composedPropertyState?.composedProperty;
+    if (composedProperty?.parcelMapFeatureCollection?.features?.length > 0) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedPropertyState?.composedProperty}
+            activeTab={InventoryTabNames.pmbc}
+            View={LayerTabView}
+          />
+        ),
+        key: InventoryTabNames.pmbc,
+        name: 'PMBC',
+      });
+    }
+    if (
+      composedProperty?.pimsGeoserverFeatureCollection?.features?.length > 0 &&
+      !exists(composedProperty?.id)
+    ) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedPropertyState?.composedProperty}
+            activeTab={InventoryTabNames.pims}
+            View={LayerTabView}
+          />
+        ),
+        key: InventoryTabNames.pims,
+        name: 'PIMS',
+      });
+    }
+    if (
+      composedProperty?.crownInclusionFeatures?.length +
+        composedProperty?.crownInventoryFeatures?.length +
+        composedProperty?.crownLeaseFeatures?.length +
+        composedProperty?.crownLeaseFeatures?.length +
+        composedProperty?.crownLicenseFeatures?.length +
+        composedProperty?.crownTenureFeatures?.length >
+      0
+    ) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedPropertyState?.composedProperty}
+            activeTab={InventoryTabNames.crown}
+            View={LayerTabView}
+          />
+        ),
+        key: InventoryTabNames.crown,
+        name: 'Crown',
+      });
+    }
+    if (composedProperty?.highwayFeatures?.length > 0) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedPropertyState?.composedProperty}
+            activeTab={InventoryTabNames.highway}
+            View={LayerTabView}
+          />
+        ),
+        key: InventoryTabNames.highway,
+        name: 'HWY',
+      });
+    }
+    if (
+      composedProperty?.municipalityFeatures?.length > 0 ||
+      composedProperty?.electoralFeatures?.length > 0 ||
+      composedProperty?.alrFeatures?.length > 0 ||
+      (composedProperty?.firstNationFeatures?.length > 0 &&
+        !composedPropertyState.alrLoading &&
+        !composedPropertyState.electoralLoading &&
+        !composedPropertyState.electoralLoading &&
+        !composedPropertyState.firstNationsLoading)
+    ) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedPropertyState?.composedProperty}
+            activeTab={InventoryTabNames.other}
+            View={LayerTabCollapsedView}
+          />
+        ),
+        key: InventoryTabNames.other,
+        name: 'Other',
+      });
+    }
+  }
+
   if (exists(composedPropertyState.apiWrapper?.response) && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({
       content: (
@@ -255,7 +336,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
           onSuccess={onChildSuccess}
         />
       ),
-      key: InventoryTabNames.document,
+      key: InventoryTabNames.documents,
       name: 'Documents',
     });
   }
@@ -287,14 +368,13 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
   const activeTab = Object.values(InventoryTabNames).find(t => t === params.tab) ?? defaultTab;
 
   useEffect(() => {
-    if (activeTab === InventoryTabNames.document || activeTab === InventoryTabNames.notes) {
+    if (activeTab === InventoryTabNames.documents || activeTab === InventoryTabNames.notes) {
       setFullWidthSideBar(true);
     } else {
       setFullWidthSideBar(false);
     }
     return () => setFullWidthSideBar(false);
   }, [activeTab, setFullWidthSideBar]);
-
   return (
     <InventoryTabs
       loading={composedPropertyState.composedLoading ?? LeaseAssociationInfo.loading ?? false}

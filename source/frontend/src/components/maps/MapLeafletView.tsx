@@ -1,15 +1,8 @@
 import axios from 'axios';
-import { Feature, GeoJsonProperties, Geometry } from 'geojson';
-import {
-  geoJSON,
-  LatLng,
-  LatLngBounds,
-  LeafletEvent,
-  Map as LeafletMap,
-  Popup as LeafletPopup,
-} from 'leaflet';
+import { geoJSON, LatLngBounds, LeafletEvent, LeafletMouseEvent, Map, Popup } from 'leaflet';
 import { isEqual } from 'lodash';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import {
   LayerGroup,
   MapContainer as LeafletMapContainer,
@@ -17,30 +10,47 @@ import {
   ScaleControl,
   TileLayer,
 } from 'react-leaflet';
+import styled from 'styled-components';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, MAX_ZOOM } from '@/constants/strings';
+import {
+  MAP_MAX_NATIVE_ZOOM,
+  MAP_MAX_ZOOM,
+  MAP_MIN_MARKER_ZOOM,
+  MAX_ZOOM,
+} from '@/constants/strings';
+import { useWorklistContext } from '@/features/properties/worklist/context/WorklistContext';
+import WorklistMapClickMonitor from '@/features/properties/worklist/WorklistMapClickMonitor';
+import RightSideContainer from '@/features/rightSideLayout/RightSideContainer';
 import { useTenant } from '@/tenants';
-import { exists, firstOrNull } from '@/utils';
+import { exists, firstOrNull, isEmptyMapFeatureData } from '@/utils';
 
-import { DEFAULT_MAP_ZOOM, defaultBounds, defaultLatLng } from './constants';
-import AdvancedFilterButton from './leaflet/Control/AdvancedFilter/AdvancedFilterButton';
+import { defaultBounds, defaultLatLng } from './constants';
 import BasemapToggle, { BasemapToggleEvent } from './leaflet/Control/BaseMapToggle/BasemapToggle';
 import { BaseLayer, isVectorBasemap } from './leaflet/Control/BaseMapToggle/types';
+import Control from './leaflet/Control/Control';
 import LayersControl from './leaflet/Control/LayersControl/LayersControl';
 import { initialEnabledLayers } from './leaflet/Control/LayersControl/LayersMenuLayout';
 import { LegendControl } from './leaflet/Control/Legend/LegendControl';
+import { PropertyQuickInfoContainer } from './leaflet/Control/Search/PropertyQuickInfoContainer';
+import SearchControl from './leaflet/Control/SearchControl/SearchControl';
+import WorklistControl from './leaflet/Control/WorklistControl/WorklistControl';
 import { ZoomOutButton } from './leaflet/Control/ZoomOut/ZoomOutButton';
 import { LocationPopupContainer } from './leaflet/LayerPopup/LocationPopupContainer';
 import { FilePropertiesLayer } from './leaflet/Layers/FilePropertiesLayer';
+import HighwayParcelsLayer from './leaflet/Layers/HighwayParcelsLayer';
 import { LeafletLayerListener } from './leaflet/Layers/LeafletLayerListener';
+import MapsearchParcelsLayer from './leaflet/Layers/MapsearchParcelsLayer';
 import { MarkerLayer } from './leaflet/Layers/MarkerLayer';
+import WorklistMarkersLayer from './leaflet/Layers/WorklistMarkersLayer';
+import WorklistParcelsLayer from './leaflet/Layers/WorklistParcelsLayer';
 import { MapEvents } from './leaflet/MapEvents/MapEvents';
 import * as Styled from './leaflet/styles';
 import { EsriVectorTileLayer } from './leaflet/VectorTileLayer/EsriVectorTileLayer';
 
 export type MapLeafletViewProps = {
   parentWidth: number | undefined;
+  defaultZoom?: number;
 };
 
 type BaseLayerFile = {
@@ -53,19 +63,22 @@ type BaseLayerFile = {
  */
 const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = ({
   parentWidth,
+  defaultZoom,
 }) => {
   const [baseLayers, setBaseLayers] = useState<BaseLayer[]>([]);
   const [activeBasemap, setActiveBasemap] = useState<BaseLayer | null>(null);
-  const [zoom, setZoom] = useState(DEFAULT_MAP_ZOOM);
+  const [zoom, setZoom] = useState(defaultZoom);
   const [isMapReady, setIsMapReady] = useState(false);
 
-  // a reference to the layer popup
-  const popupRef = useRef<LeafletPopup>(null);
-
-  const mapRef = useRef<LeafletMap | null>(null);
+  const popupRef = useRef<Popup>(null);
+  const mapRef = useRef<Map | null>(null);
 
   const [activeFeatureLayer, setActiveFeatureLayer] = useState<L.GeoJSON>();
   const { doubleClickInterval } = useTenant();
+
+  const { parcels } = useWorklistContext();
+  const isWorklistActive = useMemo(() => parcels?.length > 0, [parcels?.length]);
+  const worklistItemCount = useMemo(() => parcels?.length ?? 0, [parcels?.length]);
 
   // add geojson layer to the map
   if (!!mapRef.current && !activeFeatureLayer) {
@@ -74,13 +87,23 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
   const timer = useRef(null);
 
-  const handleMapClickEvent = (latlng: LatLng) => {
+  const handleMapClickEvent = (event: LeafletMouseEvent) => {
     if (timer?.current !== null) {
       return;
     }
+
+    const latlng = event?.latlng;
+    const isCtrlKeyPressed = event?.originalEvent?.ctrlKey ?? false;
+
     timer.current = setTimeout(() => {
-      mapMachine.mapClick(latlng);
       timer.current = null;
+      // CTRL + click adds the clicked location to the property working list; otherwise treat it as a regular map-click
+      if (isCtrlKeyPressed) {
+        mapMachine.worklistMapClick(latlng);
+      } else {
+        mapMachine.mapMarkLocation(latlng);
+        mapMachine.mapClick(latlng);
+      }
     }, doubleClickInterval ?? 250);
   };
 
@@ -125,6 +148,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
     zoom,
   ]);
 
+  const isSearchActive = useMemo(
+    () => !isEmptyMapFeatureData(mapMachine.mapFeatureData),
+    [mapMachine.mapFeatureData],
+  );
+
   const {
     mapLocationFeatureDataset,
     repositioningFeatureDataset,
@@ -148,20 +176,10 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         // File marker repositioning is active - highlight the property and the corresponding boundary when user triggers the relocate action.
         activeFeatureLayer?.addData(pimsFeature);
       }
-    } else {
-      // Not repositioning - highlight parcels on map click as usual workflow
-      if (mapLocationFeatureDataset !== null) {
-        const location = mapLocationFeatureDataset.location;
-
-        let activeFeature: Feature<Geometry, GeoJsonProperties> = {
-          geometry: { coordinates: [location.lng, location.lat], type: 'Point' },
-          type: 'Feature',
-          properties: {},
-        };
-        if (firstOrNull(mapLocationFeatureDataset.parcelFeatures) !== null) {
-          activeFeature = mapLocationFeatureDataset.parcelFeatures[0];
-          activeFeatureLayer?.addData(activeFeature);
-        }
+    } else if (exists(mapLocationFeatureDataset)) {
+      if (firstOrNull(mapLocationFeatureDataset.parcelFeatures) !== null) {
+        const activeFeature = mapLocationFeatureDataset.parcelFeatures[0];
+        activeFeatureLayer?.addData(activeFeature);
       }
     }
   }, [activeFeatureLayer, isRepositioning, mapLocationFeatureDataset, repositioningFeatureDataset]);
@@ -182,11 +200,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
   }, [isMapReady, hasPendingFlyTo, requestedFlyTo, mapMachineProcessFlyTo]);
 
   useEffect(() => {
-    if (hasPendingCenterTo && isMapReady && requestedCenterTo.location) {
+    if (hasPendingCenterTo && isMapReady && exists(requestedCenterTo?.location)) {
       mapRef.current?.setView(requestedCenterTo.location);
     }
-    mapMachineProcessCenterTo();
-  }, [hasPendingCenterTo, isMapReady, mapMachineProcessCenterTo, requestedCenterTo.location]);
+    mapMachineProcessCenterTo && mapMachineProcessCenterTo();
+  }, [hasPendingCenterTo, isMapReady, mapMachineProcessCenterTo, requestedCenterTo?.location]);
 
   useEffect(() => {
     mapRef.current?.invalidateSize();
@@ -228,14 +246,14 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 
       <LeafletMapContainer
         center={[defaultLatLng.lat, defaultLatLng.lng]}
-        zoom={DEFAULT_MAP_ZOOM}
+        zoom={zoom}
         maxZoom={MAP_MAX_ZOOM}
         closePopupOnClick={false}
         ref={handleMapCreated}
         doubleClickZoom
       >
         <MapEvents
-          click={e => handleMapClickEvent(e.latlng)}
+          click={handleMapClickEvent}
           dblclick={() => handleDoubleClickEvent()}
           zoomend={e => handleZoomUpdate(e.sourceTarget.getZoom())}
           moveend={handleBounds}
@@ -266,7 +284,7 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
           <LeafletLayerListener pane="dataLayers" />
         </Pane>
 
-        {mapMachine.showPopup && !mapMachine.isRepositioning && (
+        {mapMachine.showPopup && (
           // Draws the popup on top of the map
           <LocationPopupContainer ref={popupRef} />
         )}
@@ -274,16 +292,47 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         <LegendControl />
         <ZoomOutButton />
         <ScaleControl position="bottomleft" metric={true} imperial={false} />
-        <AdvancedFilterButton
-          onToggle={mapMachine.toggleMapFilterDisplay}
-          active={mapMachine.isFiltering}
-        />
-        <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
+        <Control position="topright">
+          <Row noGutters className="flex-nowrap">
+            <StyledRightSideCol xs="auto">
+              <LayersControl onToggle={mapMachine.toggleMapLayerControl} />
+              <SearchControl active={isSearchActive} onToggle={mapMachine.toggleMapSearchControl} />
+              <WorklistControl
+                active={isWorklistActive}
+                itemCount={worklistItemCount}
+                onToggle={mapMachine.toggleWorkListControl}
+              />
+            </StyledRightSideCol>
+            <Col xs="auto">
+              <RightSideContainer />
+            </Col>
+          </Row>
+        </Control>
+
+        <Control position="bottomright">
+          <PropertyQuickInfoContainer />
+        </Control>
+
         <MarkerLayer
+          minZoom={MAP_MIN_MARKER_ZOOM}
           zoom={zoom}
           maxZoom={MAP_MAX_ZOOM}
           bounds={mapMachine.currentMapBounds ?? defaultBounds}
         />
+
+        <Pane name="worklistParcels" style={{ zIndex: 500 }}>
+          <WorklistMarkersLayer />
+          <WorklistParcelsLayer />
+          <WorklistMapClickMonitor />
+        </Pane>
+
+        <Pane name="searchlistParcels" style={{ zIndex: 400 }}>
+          <MapsearchParcelsLayer />
+        </Pane>
+
+        <Pane name="highwaylistParcels" style={{ zIndex: 300 }}>
+          <HighwayParcelsLayer />
+        </Pane>
 
         {/* Client-side "layer" to highlight file property boundaries (when in the context of a file) */}
         <Pane name="fileProperties" style={{ zIndex: 600 }}>
@@ -295,3 +344,11 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
 };
 
 export default MapLeafletView;
+
+const StyledRightSideCol = styled(Col)`
+  display: flex;
+  flex-direction: column;
+  gap: 1.1rem;
+  align-items: center;
+  margin-bottom: 0.5rem;
+`;

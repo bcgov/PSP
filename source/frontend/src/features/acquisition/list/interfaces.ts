@@ -9,6 +9,7 @@ export interface ApiGen_Concepts_AcquisitionFilter {
   acquisitionTeamMemberPersonId: string;
   acquisitionTeamMemberOrganizationId: string;
   projectNameOrNumber: string;
+  ownerName: string;
   searchBy: string;
   pin: string;
   pid: string;
@@ -16,10 +17,11 @@ export interface ApiGen_Concepts_AcquisitionFilter {
 }
 
 export class AcquisitionFilterModel {
-  acquisitionFileStatusTypeCode = 'ACTIVE';
+  acquisitionFileStatusTypeCode = '';
   acquisitionFileNameOrNumber = '';
   acquisitionTeamMembers: MultiSelectOption[] = [];
   projectNameOrNumber = '';
+  ownerName = '';
   searchBy = 'address';
   pin = '';
   pid = '';
@@ -35,6 +37,7 @@ export class AcquisitionFilterModel {
         'O',
       ),
       projectNameOrNumber: this.projectNameOrNumber,
+      ownerName: this.ownerName,
       searchBy: this.searchBy,
       pin: this.pin,
       pid: this.pid,
@@ -50,6 +53,7 @@ export class AcquisitionFilterModel {
     newModel.acquisitionFileStatusTypeCode = model.acquisitionFileStatusTypeCode;
     newModel.acquisitionFileNameOrNumber = model.acquisitionFileNameOrNumber;
     newModel.projectNameOrNumber = model.projectNameOrNumber;
+    newModel.ownerName = model.ownerName;
     newModel.searchBy = model.searchBy;
     newModel.pin = model.pin;
     newModel.pid = model.pid;

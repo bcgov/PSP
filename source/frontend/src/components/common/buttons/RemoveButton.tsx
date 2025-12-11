@@ -1,4 +1,4 @@
-import React, { CSSProperties } from 'react';
+import React, { CSSProperties, MouseEventHandler } from 'react';
 import { ButtonProps } from 'react-bootstrap';
 import { FaTrash } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
@@ -14,16 +14,19 @@ interface IRemoveButtonProps extends ButtonProps {
   fontSize?: string;
   icon?: React.ReactNode;
   style?: CSSProperties | null;
-  onRemove: () => void;
+  onRemove: MouseEventHandler;
 }
 
 export const RemoveButton: React.FunctionComponent<
   React.PropsWithChildren<IRemoveButtonProps>
 > = props => {
   return (
-    <StyledRemoveLinkButton $fontSize={props.fontSize} onClick={props.onRemove}>
-      <MdClose data-testid={props['data-testId'] ?? 'remove-button'} size="2rem" title="remove" />{' '}
-      <span className="text">{props.label ?? 'Remove'}</span>
+    <StyledRemoveLinkButton
+      $fontSize={props.fontSize}
+      onClick={props.onRemove}
+      data-testid={props['data-testId'] ?? 'remove-button'}
+    >
+      <MdClose size="2rem" title="remove" /> <span className="text">{props.label ?? 'Remove'}</span>
     </StyledRemoveLinkButton>
   );
 };

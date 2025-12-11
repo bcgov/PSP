@@ -66,9 +66,22 @@ describe('Acquisition Filter', () => {
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
-        acquisitionFileStatusTypeCode: 'ACTIVE',
+        acquisitionFileStatusTypeCode: '',
         acquisitionFileNameOrNumber: 'an acquisition file name',
         projectNameOrNumber: '',
+      }),
+    );
+  });
+
+  it('searches by acquisition file Owner name', async () => {
+    const { container, searchButton } = setup();
+
+    fillInput(container, 'ownerName', 'DOE');
+    await act(async () => userEvent.click(searchButton));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({
+        ownerName: 'DOE',
       }),
     );
   });
@@ -81,7 +94,7 @@ describe('Acquisition Filter', () => {
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
-        acquisitionFileStatusTypeCode: 'ACTIVE',
+        acquisitionFileStatusTypeCode: '',
         acquisitionFileNameOrNumber: '',
         projectNameOrNumber: 'Hwy 14 improvements',
       }),

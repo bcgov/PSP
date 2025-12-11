@@ -39,6 +39,7 @@ const ManagementSummaryActivitiesListView: React.FunctionComponent<
         setSort={setSort}
         loading={isLoading}
         columns={[...createActivityTableColumns(), activityNavigationColumn(getNavigationUrl)]}
+        dataTestId="mgmt-activity-list-readonly"
       ></ManagementActivitiesList>
     </Section>
   );

@@ -11,7 +11,11 @@ import {
   RequestedCenterTo,
   RequestedFlyTo,
 } from '../models';
-import { LocationFeatureDataset, SelectedFeatureDataset } from '../useLocationFeatureLoader';
+import {
+  LocationFeatureDataset,
+  SelectedFeatureDataset,
+  WorklistLocationFeatureDataset,
+} from '../useLocationFeatureLoader';
 
 export enum SideBarType {
   NOT_DEFINED = 'NOT_DEFINED',
@@ -33,12 +37,16 @@ export type MachineContext = {
   mapLocationSelected: LatLngLiteral | null;
   mapLocationFeatureDataset: LocationFeatureDataset | null;
   mapMarkedLocation: LatLngLiteral | null;
-  selectedFeatureDataset: SelectedFeatureDataset | null;
+  selectedFeatures: SelectedFeatureDataset[];
   repositioningFeatureDataset: SelectedFeatureDataset | null;
   repositioningPropertyIndex: number | null;
   selectingComponentId: string | null;
 
   mapFeatureData: MapFeatureData;
+
+  // worklist-related state
+  worklistSelectedMapLocation: LatLngLiteral | null;
+  worklistLocationFeatureDataset: WorklistLocationFeatureDataset | null;
 
   // TODO: this is partially in the URL. Either move it completly there or remove it
   searchCriteria: IPropertyFilter | null;
@@ -56,4 +64,5 @@ export type MachineContext = {
   showDisposed: boolean;
   showRetired: boolean;
   currentMapBounds: LatLngBounds | null;
+  isEditPropertiesMode: boolean;
 };

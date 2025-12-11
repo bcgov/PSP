@@ -1,10 +1,13 @@
+import { FormikProps, getIn } from 'formik';
 import { Feature, Geometry } from 'geojson';
+import { toast } from 'react-toastify';
 
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { firstOrNull } from '@/utils';
+import { arePropertyFormsEqual, firstOrNull } from '@/utils';
 
 import { exists, isNumber, isValidString } from './utils';
 
@@ -149,3 +152,34 @@ export function isStrataCommonProperty(
     feature.properties.OWNER_TYPE === 'Unclassified'
   );
 }
+
+export const addPropertiesToCurrentFile = <T extends { [key: string]: any }>(
+  formikRef: React.RefObject<FormikProps<T>>,
+  fieldName: keyof T,
+  propertyForms: PropertyForm[],
+  notifyAddComplete: () => void,
+) => {
+  const existingProperties = getIn(formikRef?.current?.values, fieldName as string) ?? [];
+  const uniqueProperties = propertyForms.filter(newProperty => {
+    return !existingProperties.some((existingProperty: PropertyForm) =>
+      arePropertyFormsEqual(existingProperty, newProperty),
+    );
+  });
+
+  const duplicatesSkipped = propertyForms.length - uniqueProperties.length;
+
+  // If there are unique properties, add them to the formik values
+  if (uniqueProperties.length > 0) {
+    formikRef.current?.setFieldValue(fieldName as string, [
+      ...existingProperties,
+      ...uniqueProperties,
+    ]);
+    formikRef.current?.setFieldTouched(fieldName as string, true);
+    toast.success(`Added ${uniqueProperties.length} new property(s) to the file.`);
+  }
+
+  if (duplicatesSkipped > 0) {
+    toast.warn(`Skipped ${duplicatesSkipped} duplicate property(s).`);
+  }
+  notifyAddComplete();
+};

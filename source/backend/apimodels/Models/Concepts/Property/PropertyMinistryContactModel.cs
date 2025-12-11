@@ -13,9 +13,9 @@ namespace Pims.Api.Models.Concepts.Property
 
         public PersonModel Person { get; set; }
 
-        public long PropertyActivityId { get; set; }
+        public long ManagementActivityId { get; set; }
 
-        public PropertyActivityModel PropertyActivity { get; set; }
+        public ManagementActivityModel ManagementActivity { get; set; }
 
         #endregion
     }

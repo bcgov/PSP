@@ -7,25 +7,44 @@ import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '
 
 import { ApiGen_CodeTypes_ManagementFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementFileStatusTypes';
 import ManagementSummaryView, { IManagementSummaryViewProps } from './ManagementSummaryView';
-import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
+import {
+  mockManagementFileContactsResponse,
+  mockManagementFileResponse,
+} from '@/mocks/managementFiles.mock';
+import ManagementStatusUpdateSolver from './ManagementStatusUpdateSolver';
 
 // mock auth library
 
 const onEdit = vi.fn();
+const onAddContact = vi.fn();
+const onEditContact = vi.fn();
+const onDeleteContact = vi.fn();
 
 const mockManagementFileApi = mockManagementFileResponse();
+const mockManagementFileContacts = mockManagementFileContactsResponse();
+const mockFileStatusSolver = new ManagementStatusUpdateSolver(mockManagementFileApi);
 
 describe('ManagementSummaryView component', () => {
   // render component under test
-  const setup = (
-    props: Partial<IManagementSummaryViewProps>,
-    renderOptions: RenderOptions = {},
+  const setup = async (
+    renderOptions: RenderOptions & { props?: Partial<IManagementSummaryViewProps> },
   ) => {
     const utils = render(
-      <ManagementSummaryView managementFile={props.managementFile} onEdit={onEdit} />,
+      <ManagementSummaryView
+        managementFile={renderOptions?.props?.managementFile ?? mockManagementFileApi}
+        managementFileContacts={
+          renderOptions?.props?.managementFileContacts ?? mockManagementFileContacts
+        }
+        fileStatusSolver={renderOptions?.props?.fileStatusSolver ?? mockFileStatusSolver}
+        isLoading={false}
+        onFileEdit={onEdit}
+        onAddContact={onAddContact}
+        onEditContact={onEditContact}
+        onDeleteContact={onDeleteContact}
+      />,
       {
-        useMockAuthentication: true,
         ...renderOptions,
+        useMockAuthentication: true,
       },
     );
 
@@ -40,19 +59,15 @@ describe('ManagementSummaryView component', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = setup({
-      managementFile: mockManagementFileApi,
-    });
+    const { asFragment } = await setup({});
     await waitForEffects();
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('renders the edit button for users with management edit permissions', async () => {
-    const { getByTitle, queryByTestId } = setup(
-      { managementFile: mockManagementFileApi },
-      { claims: [Claims.MANAGEMENT_EDIT] },
-    );
+    const { getByTitle, queryByTestId } = await setup({ claims: [Claims.MANAGEMENT_EDIT] });
     await waitForEffects();
+
     const editButton = getByTitle('Edit management file');
     expect(editButton).toBeVisible();
     const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
@@ -62,13 +77,11 @@ describe('ManagementSummaryView component', () => {
   });
 
   it('does not render the edit button for users that do not have management edit permissions', async () => {
-    const { queryByTitle, queryByTestId } = setup(
-      {
-        managementFile: mockManagementFileResponse(),
-      },
-      { claims: [] },
-    );
+    const { queryByTitle, queryByTestId } = await setup({
+      claims: [],
+    });
     await waitForEffects();
+
     const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
     const editButton = queryByTitle('Edit management file');
     expect(editButton).toBeNull();
@@ -81,16 +94,22 @@ describe('ManagementSummaryView component', () => {
   ])(
     'renders the warning icon for management files in non-editable status - %s',
     async (_: string, fileStatus: ApiGen_CodeTypes_ManagementFileStatusTypes) => {
-      const { queryByTitle, queryByTestId } = setup(
-        {
-          managementFile: {
-            ...mockManagementFileResponse(),
-            fileStatusTypeCode: toTypeCode(fileStatus),
-          },
+      const mockManagementFile = {
+        ...mockManagementFileResponse(),
+        fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_ManagementFileStatusTypes.COMPLETE),
+      };
+      const mockFileStatusSolver = new ManagementStatusUpdateSolver(mockManagementFile);
+
+      const { queryByTitle, queryByTestId } = await setup({
+        props: {
+          managementFile: mockManagementFile,
+          fileStatusSolver: mockFileStatusSolver,
         },
-        { claims: [Claims.MANAGEMENT_EDIT] },
-      );
+        claims: [Claims.MANAGEMENT_EDIT],
+        roles: [Roles.MANAGEMENT_FUNCTIONAL],
+      });
       await waitForEffects();
+
       const editButton = queryByTitle('Edit management file');
       const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
       expect(editButton).toBeNull();
@@ -99,16 +118,22 @@ describe('ManagementSummaryView component', () => {
   );
 
   it('it does not render the warning icon for management files in non-editable status for Admins', async () => {
-    const { queryByTitle, queryByTestId } = setup(
-      {
-        managementFile: {
-          ...mockManagementFileResponse(),
-          fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_ManagementFileStatusTypes.COMPLETE),
-        },
+    const mockManagementFile = {
+      ...mockManagementFileResponse(),
+      fileStatusTypeCode: toTypeCode(ApiGen_CodeTypes_ManagementFileStatusTypes.COMPLETE),
+    };
+    const mockFileStatusSolver = new ManagementStatusUpdateSolver(mockManagementFile);
+
+    const { queryByTitle, queryByTestId } = await setup({
+      props: {
+        managementFile: mockManagementFile,
+        fileStatusSolver: mockFileStatusSolver,
       },
-      { claims: [Claims.MANAGEMENT_EDIT], roles: [Roles.SYSTEM_ADMINISTRATOR] },
-    );
+      claims: [Claims.MANAGEMENT_EDIT],
+      roles: [Roles.SYSTEM_ADMINISTRATOR],
+    });
     await waitForEffects();
+
     const editButton = queryByTitle('Edit management file');
     const icon = queryByTestId('tooltip-icon-1-summary-cannot-edit-tooltip');
     expect(editButton).toBeVisible();
@@ -117,8 +142,8 @@ describe('ManagementSummaryView component', () => {
 
   it('renders management team member person', async () => {
     const apiMock = mockManagementFileResponse();
-    const { findByText } = setup(
-      {
+    const { findByText } = await setup({
+      props: {
         managementFile: {
           ...apiMock,
           managementTeam: [
@@ -153,8 +178,8 @@ describe('ManagementSummaryView component', () => {
           ],
         },
       },
-      { claims: [] },
-    );
+      claims: [],
+    });
     await waitForEffects();
     expect(await findByText(/Negotiation agent/)).toBeVisible();
     expect(await findByText(/Bob Billy Smith/)).toBeVisible();
@@ -162,8 +187,8 @@ describe('ManagementSummaryView component', () => {
 
   it('renders management team member organization', async () => {
     const apiMock = mockManagementFileApi;
-    const { findByText } = setup(
-      {
+    const { findByText } = await setup({
+      props: {
         managementFile: {
           ...apiMock,
           managementTeam: [
@@ -200,9 +225,11 @@ describe('ManagementSummaryView component', () => {
           ],
         },
       },
-      { claims: [] },
-    );
+
+      claims: [],
+    });
     await waitForEffects();
+
     expect(await findByText(/Negotiation agent/)).toBeVisible();
     expect(await findByText(/Test Organization/)).toBeVisible();
     expect(await findByText(/No contacts available/)).toBeVisible();
@@ -210,8 +237,8 @@ describe('ManagementSummaryView component', () => {
 
   it('renders management team member organization and primary contact', async () => {
     const apiMock = mockManagementFileApi;
-    const { findByText } = setup(
-      {
+    const { findByText } = await setup({
+      props: {
         managementFile: {
           ...apiMock,
           managementTeam: [
@@ -261,9 +288,10 @@ describe('ManagementSummaryView component', () => {
           ],
         },
       },
-      { claims: [] },
-    );
+      claims: [],
+    });
     await waitForEffects();
+
     expect(await findByText(/Negotiation agent/)).toBeVisible();
     expect(await findByText(/Test Organization/)).toBeVisible();
     expect(await findByText(/Primary contact/)).toBeVisible();
@@ -271,11 +299,14 @@ describe('ManagementSummaryView component', () => {
   });
 
   it('renders the project and product', async () => {
-    const { queryByTestId } = setup({
-      managementFile: mockManagementFileApi,
+    const { queryByTestId } = await setup({
+      props: {
+        managementFile: mockManagementFileApi,
+      },
     });
 
     await waitForEffects();
+
     expect(queryByTestId('management-project')).toHaveTextContent('00048 - CLAIMS');
     expect(queryByTestId('management-product')).toHaveTextContent(
       '00055 AVALANCHE & PROGRAM REVIEW',

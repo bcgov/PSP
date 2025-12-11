@@ -150,6 +150,11 @@ namespace Pims.Api.Services
                         existingProperty.PropertyName = incomingResearchProperty.PropertyName;
                         needsUpdate = true;
                     }
+                    if (existingProperty.DisplayOrder != incomingResearchProperty.DisplayOrder)
+                    {
+                        existingProperty.DisplayOrder = incomingResearchProperty.DisplayOrder;
+                        needsUpdate = true;
+                    }
 
                     var incomingGeom = incomingResearchProperty.Location;
                     var existingGeom = existingProperty.Location;

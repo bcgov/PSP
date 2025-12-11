@@ -2,8 +2,8 @@ import styled from 'styled-components';
 
 import { SectionField } from '@/components/common/Section/SectionField';
 
-import { ComposedDocument } from '../ComposedDocument';
 import DownloadDocumentButton from '../DownloadDocumentButton';
+import { ComposedDocument } from '../models/ComposedDocument';
 
 interface IDocumentDetailHeaderProps {
   document: ComposedDocument;
@@ -19,16 +19,12 @@ const DocumentDetailHeader: React.FunctionComponent<
     <div className="pb-4">
       <SectionField label={'File name'} labelWidth={{ xs: 4 }} className="pb-3">
         <StyledFileNameRow>
-          <div>
-            <label>{documentFileName}</label>
-          </div>
-          <div>
-            <DownloadDocumentButton
-              mayanDocumentId={mayanDocumentId}
-              mayanFileId={props.document.mayanFileId}
-              isFileAvailable={!!props.document?.documentDetail?.file_latest?.id}
-            />
-          </div>
+          <DownloadDocumentButton
+            mayanDocumentId={mayanDocumentId}
+            mayanFileId={props.document.mayanFileId}
+            isFileAvailable={!!props.document?.documentDetail?.file_latest?.id}
+          />
+          <label>{documentFileName}</label>
         </StyledFileNameRow>
       </SectionField>
     </div>
@@ -43,7 +39,7 @@ const StyledFileNameRow = styled('div')`
   word-break: break-all;
 
   div:first-child {
-    flex-grow: 1;
+    margin-right: 0.5rem;
   }
 
   label {

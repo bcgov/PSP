@@ -1,0 +1,40 @@
+name: FT Smoke Test
+env:
+  Base_url: ${{ vars.BASE_URL }}
+  Users__0__User: ${{ secrets.USER_1_USERNAME }}
+  Users__0__Password: ${{ secrets.USER_1_PASSWORD }}
+  Users__1__User: ${{ secrets.USER_2_USERNAME }}
+  Users__1__Password: ${{ secrets.USER_2_PASSWORD }}
+  npm_config_ignore_scripts: true
+on:
+  workflow_dispatch
+  #push:
+  #  branches: [master, dev, test]
+  #pull_request:
+  #  branches: [master, dev, test]
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-22.04
+
+    defaults:
+      run:
+        working-directory: ./testing/playwright-testing
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@49933ea5f5257e8e3239177f8295fda8298b857f # v4
+        with:
+          node-version: "20"
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
+      - name: 🚀 Run Cucumber Smoke Tests
+        run: npx cucumber-js --tags @smokeTest

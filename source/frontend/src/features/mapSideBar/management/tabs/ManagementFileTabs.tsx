@@ -12,6 +12,7 @@ import { SideBarContext } from '../../context/sidebarContext';
 import usePathGenerator from '../../shared/sidebarPathGenerator';
 import ManagementDocumentsTab from '../../shared/tabs/ManagementDocumentsTab';
 import ActivitiesTab from './activities/ActivitiesTab';
+import ManagementSummaryContainer from './fileDetails/detail/ManagementSummaryContainer';
 import ManagementSummaryView from './fileDetails/detail/ManagementSummaryView';
 import ManagementFileNotesTab from './notes/ManagementFileNotesTab';
 
@@ -51,7 +52,11 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
 
   tabViews.push({
     content: (
-      <ManagementSummaryView managementFile={managementFile} onEdit={() => setIsEditing(true)} />
+      <ManagementSummaryContainer
+        managementFile={managementFile}
+        onFileEdit={() => setIsEditing(true)}
+        View={ManagementSummaryView}
+      />
     ),
     key: FileTabType.FILE_DETAILS,
     name: 'File Details',

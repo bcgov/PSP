@@ -14,12 +14,14 @@ export interface IContactListForm {
   field: string;
   contactType: RestrictContactType;
   formikProps: FormikProps<ManagementActivityFormModel>;
+  dataTestId?: string;
 }
 
 export const ContactListForm: React.FunctionComponent<IContactListForm> = ({
   field,
   contactType = RestrictContactType.ALL,
   formikProps,
+  dataTestId,
 }) => {
   // clear out existing values instead of removing last item from array
   const onRemove = (array: Array<any>, index: number, arrayHelpers: ArrayHelpers) => {
@@ -51,7 +53,12 @@ export const ContactListForm: React.FunctionComponent<IContactListForm> = ({
               )}
             </Row>
           ))}
-          <LinkButton onClick={() => arrayHelpers.push(null)}>+ Add contact</LinkButton>
+          <LinkButton
+            data-testid={dataTestId ?? 'add-contact'}
+            onClick={() => arrayHelpers.push(null)}
+          >
+            + Add contact
+          </LinkButton>
         </>
       )}
     </FieldArray>

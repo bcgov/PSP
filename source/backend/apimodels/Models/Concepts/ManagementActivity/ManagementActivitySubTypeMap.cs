@@ -9,16 +9,16 @@ namespace Pims.Api.Models.Models.Concepts.ManagementActivity
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsPropActivityMgmtActivity, ManagementActivitySubTypeModel>()
-                .Map(dest => dest.Id, src => src.PropActvtyMgmtActvtyTypId)
-                .Map(dest => dest.ManagementActivityId, src => src.PimsPropertyActivityId)
-                .Map(dest => dest.ManagementActivitySubtypeCode, src => src.PropMgmtActivitySubtypeCodeNavigation)
+            config.NewConfig<Entity.PimsMgmtActivityActivitySubtyp, ManagementActivitySubTypeModel>()
+                .Map(dest => dest.Id, src => src.MgmtActivityActivitySubtypId)
+                .Map(dest => dest.ManagementActivityId, src => src.ManagementActivityId)
+                .Map(dest => dest.ManagementActivitySubtypeCode, src => src.MgmtActivitySubtypeCodeNavigation)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
 
-            config.NewConfig<ManagementActivitySubTypeModel, Entity.PimsPropActivityMgmtActivity>()
-                .Map(dest => dest.PropActvtyMgmtActvtyTypId, src => src.Id)
-                .Map(dest => dest.PimsPropertyActivityId, src => src.ManagementActivityId)
-                .Map(dest => dest.PropMgmtActivitySubtypeCode, src => src.ManagementActivitySubtypeCode.Id)
+            config.NewConfig<ManagementActivitySubTypeModel, Entity.PimsMgmtActivityActivitySubtyp>()
+                .Map(dest => dest.MgmtActivityActivitySubtypId, src => src.Id)
+                .Map(dest => dest.ManagementActivityId, src => src.ManagementActivityId)
+                .Map(dest => dest.MgmtActivitySubtypeCode, src => src.ManagementActivitySubtypeCode.Id)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }
     }

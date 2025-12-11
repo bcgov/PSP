@@ -46,7 +46,7 @@ exports[`Acquisition Search Results Table > matches snapshot 1`] = `
       <div
         class="tr"
         role="row"
-        style="display: flex; flex: 1 0 auto; min-width: 235px;"
+        style="display: flex; flex: 1 0 auto; min-width: 265px;"
       >
         <div
           class="th"
@@ -195,7 +195,7 @@ exports[`Acquisition Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            MOTI Region
+            MOTT region
           </div>
         </div>
         <div
@@ -226,7 +226,19 @@ exports[`Acquisition Search Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 100 0 auto; min-width: 30px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Owner
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 40 0 auto; min-width: 30px; width: 40px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"

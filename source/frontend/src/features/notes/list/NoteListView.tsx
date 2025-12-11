@@ -115,6 +115,8 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
           addButtonText="Add a Note"
           addButtonIcon={<FaPlus size={'2rem'} />}
           onButtonAction={openAddNotes}
+          title-data-testId="notes-header"
+          button-data-testId="note-add-button"
         />
       );
     } else {
@@ -123,7 +125,13 @@ export const NoteListView: React.FunctionComponent<React.PropsWithChildren<INote
   };
 
   return (
-    <Section header={getHeader()} title="notes" isCollapsable initiallyExpanded>
+    <Section
+      header={getHeader()}
+      title="notes"
+      isCollapsable
+      initiallyExpanded
+      data-testid="main-notes-section"
+    >
       <NoteResults
         results={notes}
         loading={loading}

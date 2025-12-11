@@ -84,13 +84,52 @@ namespace Pims.Dal.Repositories
                             Context.UpdateChild<PimsInthldrPropInterest, long, PimsPropInthldrInterestTyp, long>(p => p.PimsPropInthldrInterestTyps, ihp.PimsInthldrPropInterestId, ihp.PimsPropInthldrInterestTyps.ToArray());
                         }
                     });
+                    Context.CommitTransaction();
+
                     Context.UpdateChild<PimsInterestHolder, long, PimsInthldrPropInterest, long>(p => p.PimsInthldrPropInterests, ih.InterestHolderId, ih.PimsInthldrPropInterests.ToArray());
+                    Context.CommitTransaction();
                 }
             });
 
             Context.UpdateChild<PimsAcquisitionFile, long, PimsInterestHolder, long>(p => p.PimsInterestHolders, acquisitionFileId, interestHolders.ToArray());
 
             return GetInterestHoldersByAcquisitionFile(acquisitionFileId);
+        }
+
+        public bool DeleteInterestHoldersPropertyTypes(ICollection<PimsPropInthldrInterestTyp> inthldPropTypes)
+        {
+            inthldPropTypes.ForEach(ihpt =>
+            {
+                Context.PimsPropInthldrInterestTyps.Remove(new PimsPropInthldrInterestTyp() { Internal_Id = ihpt.Internal_Id });
+            });
+
+            Context.CommitTransaction();
+
+            return true;
+        }
+
+        public bool DeleteInterestHoldersProperties(ICollection<PimsInthldrPropInterest> interestHolderProperties)
+        {
+            interestHolderProperties.ForEach(ihp =>
+            {
+                DeleteInterestHoldersPropertyTypes(ihp.PimsPropInthldrInterestTyps);
+                Context.PimsInthldrPropInterests.Remove(new PimsInthldrPropInterest() { Internal_Id = ihp.Internal_Id });
+            });
+            Context.CommitTransaction();
+
+            return true;
+        }
+
+        public bool DeleteInterestHolders(ICollection<PimsInterestHolder> interestHolders)
+        {
+            interestHolders.ForEach(ih =>
+            {
+                DeleteInterestHoldersProperties(ih.PimsInthldrPropInterests);
+                Context.PimsInterestHolders.Remove(new PimsInterestHolder() { Internal_Id = ih.Internal_Id });
+            });
+            Context.CommitTransaction();
+
+            return true;
         }
 
         #endregion

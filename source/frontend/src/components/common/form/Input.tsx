@@ -136,6 +136,7 @@ export const Input: React.FC<React.PropsWithChildren<InputProps>> = ({
           as={asElement}
           name={field}
           style={{ ...style, wordBreak: 'break-all' }}
+          required={required}
           disabled={disabled}
           custom={custom}
           isInvalid={!!touch && (!!error || extraErrors.length > 0)}

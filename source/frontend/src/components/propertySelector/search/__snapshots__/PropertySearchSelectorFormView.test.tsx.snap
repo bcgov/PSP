@@ -36,9 +36,7 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
 }
 
 .c5.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c5.btn:hover {
@@ -260,6 +258,7 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
 
 <div
     class="c0 form-section"
+    data-testid="property-search-selector-section"
   >
     <h2
       class="c1"

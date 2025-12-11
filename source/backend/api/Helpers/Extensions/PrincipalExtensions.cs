@@ -42,7 +42,7 @@ namespace Pims.Core.Extensions
             ArgumentNullException.ThrowIfNull(userRepository);
 
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
-            return pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
+            return pimsUser?.PimsRegionUsers?.Select(r => r.RegionCode)?.ToHashSet();
         }
     }
 }

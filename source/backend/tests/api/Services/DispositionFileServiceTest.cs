@@ -260,12 +260,18 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
             // Act
             Action act = () => service.Add(dispFile, new List<UserOverrideCode>() { UserOverrideCode.AddPropertyToInventory });
 
             // Assert
-            act.Should().Throw<BadRequestException>();
-            repository.Verify(x => x.Add(It.IsAny<PimsDispositionFile>()), Times.Never);
+            act.Should().NotThrow<BadRequestException>();
+            repository.Verify(x => x.Add(It.IsAny<PimsDispositionFile>()), Times.Once);
             propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsDispositionFileProperty>()), Times.Never);
         }
 
@@ -450,7 +456,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(1, dispFile, new List<UserOverrideCode>());
 
             // Assert
-            act.Should().Throw<BadRequestException>();
+            act.Should().NotThrow<BadRequestException>();
         }
 
         [Fact]
@@ -1071,7 +1077,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<UserOverrideException>();
-            exception.WithMessage("You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
+            exception.WithMessage("You have added one or more properties to the disposition file that are not in the MOTT Inventory. Do you want to proceed?");
         }
 
         [Fact]

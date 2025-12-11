@@ -36,9 +36,7 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
 }
 
 .c3.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c3.btn:hover {
@@ -243,6 +241,11 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
   float: right;
 }
 
+.c9 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c1 {
   margin: 1.6rem;
   padding: 1.6rem;
@@ -260,11 +263,6 @@ exports[`Form 8 Detail View component > renders as expected 1`] = `
 
 .c6 {
   font-weight: bold;
-}
-
-.c9 {
-  padding: 0 0.4rem;
-  display: block;
 }
 
 .c0 {

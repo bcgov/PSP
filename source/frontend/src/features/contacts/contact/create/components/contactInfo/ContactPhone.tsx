@@ -13,6 +13,7 @@ export { useContactInfoHelpers };
 export interface IContactPhone {
   namespace?: string;
   onRemove?: () => void;
+  index: number;
 }
 
 /**
@@ -22,6 +23,7 @@ export interface IContactPhone {
 export const ContactPhone: React.FunctionComponent<React.PropsWithChildren<IContactPhone>> = ({
   namespace,
   onRemove,
+  index,
 }) => {
   const { phoneTypes } = useContactInfoHelpers();
 
@@ -38,7 +40,13 @@ export const ContactPhone: React.FunctionComponent<React.PropsWithChildren<ICont
         />
       </Col>
       <Col md={2} className="pl-0 pt-2">
-        {onRemove && <RemoveButton fontSize="1.3rem" onRemove={onRemove} />}
+        {onRemove && (
+          <RemoveButton
+            fontSize="1.3rem"
+            onRemove={onRemove}
+            data-testId={`phone-delete-button-${index}`}
+          />
+        )}
       </Col>
     </Row>
   );

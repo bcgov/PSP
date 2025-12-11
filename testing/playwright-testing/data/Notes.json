@@ -1,0 +1,50 @@
+[
+  {
+    "Test case Description": "Research File - Create new notes",
+    "Notes": "Automation Functional Testing - Note 1;Automation Functional Testing - Note 2;Automation Functional Testing - Note 3;Automation Functional Testing - Note 4;Automation Functional Testing - Note 5;Automation Functional Testing - Note 6;Automation Functional Testing - Note 7;Automation Functional Testing - Note 8;Automation Functional Testing - Note 9;Automation Functional Testing - Note 10;Automation Functional Testing - Note 11;Automation Functional Testing - Note 12"
+  },
+  {
+    "Test case Description": "Research File - Edit Note",
+    "Notes": "Automation Functional Testing - Note 1 edited to test notes from research file is working successfully."
+  },
+  {
+    "Test case Description": "Acquisition File - Create new notes",
+    "Notes": "Automation Functional Testing - Note 1;Automation Functional Testing - Note 2;Automation Functional Testing - Note 3;Automation Functional Testing - Note 4;Automation Functional Testing - Note 5;Automation Functional Testing - Note 6;Automation Functional Testing - Note 7;Automation Functional Testing - Note 8;Automation Functional Testing - Note 9;Automation Functional Testing - Note 10;Automation Functional Testing - Note 11;Automation Functional Testing - Note 12"
+  },
+  {
+    "Test case Description": "Acquisition File - Edit Notes",
+    "Notes": "Automation Functional Testing - Note edited to test notes from acquisition file is working successfully."
+  },
+  {
+    "Test case Description": "Leases - Create new notes",
+    "Notes": "Leases Automation Functional Testing - Note 1;Leases Automation Functional Testing - Note 2;Leases Automation Functional Testing - Note 3;Leases Automation Functional Testing - Note 4;Leases Automation Functional Testing - Note 5;Leases Automation Functional Testing - Note 6;Leases Automation Functional Testing - Note 7;Leases Automation Functional Testing - Note 8;Leases Automation Functional Testing - Note 9;Leases Automation Functional Testing - Note 10;Leases Automation Functional Testing - Note 11;Leases Automation Functional Testing - Note 12"
+  },
+  {
+    "Test case Description": "Projects - Create Notes",
+    "Notes": "Automation Functional Testing for notes on Projects - Note 1;Automation Functional Testing for notes on Projects  - Note 2;Automation Functional Testing for notes on Projects  - Note 3;Automation Functional Testing for notes on Projects - Note 4;Automation Functional Testing for notes on Projects  - Note 5;Automation Functional Testing for notes on Projects  - Note 6;Automation Functional Testing for notes on Projects - Note 7;Automation Functional Testing for notes on Projects  - Note 8;Automation Functional Testing for notes on Projects  - Note 9;Automation Functional Testing for notes on Projects - Note 10;Automation Functional Testing for notes on Projects  - Note 11;Automation Functional Testing for notes on Projects  - Note 12"
+  },
+  {
+    "Test case Description": "Projects - Edit Notes",
+    "Notes": "Automation Functional Testing for notes on Projects - Updating a note"
+  },
+  {
+    "Test case Description": "Research File - Minimum Note",
+    "Notes": "Automation Functional Testing - Minimum Note Test"
+  },
+  {
+    "Test case Description": "Disposition File - Create new notes",
+    "Notes": "Automation Functional Testing - Note 1;Automation Functional Testing - Note 2;Automation Functional Testing - Note 3;Automation Functional Testing - Note 4;Automation Functional Testing - Note 5;Automation Functional Testing - Note 6;Automation Functional Testing - Note 7;Automation Functional Testing - Note 8;Automation Functional Testing - Note 9;Automation Functional Testing - Note 10;Automation Functional Testing - Note 11;Automation Functional Testing - Note 12"
+  },
+  {
+    "Test case Description": "Disposition File - Edit Note",
+    "Notes": "Automation Testing from a Disposition File - Updated note"
+  },
+  {
+    "Test case Description": "Management File - Create new notes",
+    "Notes": "Automation Functional Testing - Note 1;Automation Functional Testing - Note 2;Automation Functional Testing - Note 3;Automation Functional Testing - Note 4;Automation Functional Testing - Note 5;Automation Functional Testing - Note 6;Automation Functional Testing - Note 7;Automation Functional Testing - Note 8;Automation Functional Testing - Note 9;Automation Functional Testing - Note 10;Automation Functional Testing - Note 11;Automation Functional Testing - Note 12"
+  },
+  {
+    "Test case Description": "Management File - Edit note",
+    "Notes": "Automation Testing from a Management File - Updated note"
+  }
+]

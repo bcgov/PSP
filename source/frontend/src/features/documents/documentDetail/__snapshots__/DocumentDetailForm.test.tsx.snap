@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`DocumentDetailForm component > renders as expected 1`] = `
-.c10.btn {
+.c9.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -30,19 +30,17 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c10.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+.c9.btn .Button__value {
+  width: auto;
 }
 
-.c10.btn:hover {
+.c9.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c10.btn:focus {
+.c9.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -50,31 +48,31 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c10.btn.btn-primary {
+.c9.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c10.btn.btn-primary:hover,
-.c10.btn.btn-primary:active,
-.c10.btn.btn-primary:focus {
+.c9.btn.btn-primary:hover,
+.c9.btn.btn-primary:active,
+.c9.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c10.btn.btn-secondary {
+.c9.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c10.btn.btn-secondary:hover,
-.c10.btn.btn-secondary:active,
-.c10.btn.btn-secondary:focus {
+.c9.btn.btn-secondary:hover,
+.c9.btn.btn-secondary:active,
+.c9.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c10.btn.btn-info {
+.c9.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -82,66 +80,66 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c10.btn.btn-info:hover,
-.c10.btn.btn-info:active,
-.c10.btn.btn-info:focus {
+.c9.btn.btn-info:hover,
+.c9.btn.btn-info:active,
+.c9.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c10.btn.btn-light {
+.c9.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c10.btn.btn-light:hover,
-.c10.btn.btn-light:active,
-.c10.btn.btn-light:focus {
+.c9.btn.btn-light:hover,
+.c9.btn.btn-light:active,
+.c9.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c10.btn.btn-dark {
+.c9.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c10.btn.btn-dark:hover,
-.c10.btn.btn-dark:active,
-.c10.btn.btn-dark:focus {
+.c9.btn.btn-dark:hover,
+.c9.btn.btn-dark:active,
+.c9.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c10.btn.btn-danger {
+.c9.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c10.btn.btn-danger:hover,
-.c10.btn.btn-danger:active,
-.c10.btn.btn-danger:focus {
+.c9.btn.btn-danger:hover,
+.c9.btn.btn-danger:active,
+.c9.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c10.btn.btn-warning {
+.c9.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c10.btn.btn-warning:hover,
-.c10.btn.btn-warning:active,
-.c10.btn.btn-warning:focus {
+.c9.btn.btn-warning:hover,
+.c9.btn.btn-warning:active,
+.c9.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c10.btn.btn-link {
+.c9.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -165,9 +163,9 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c10.btn.btn-link:hover,
-.c10.btn.btn-link:active,
-.c10.btn.btn-link:focus {
+.c9.btn.btn-link:hover,
+.c9.btn.btn-link:active,
+.c9.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -177,15 +175,15 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   outline: none;
 }
 
-.c10.btn.btn-link:disabled,
-.c10.btn.btn-link.disabled {
+.c9.btn.btn-link:disabled,
+.c9.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c10.btn:disabled,
-.c10.btn:disabled:hover {
+.c9.btn:disabled,
+.c9.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -197,19 +195,19 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c10.Button .Button__icon {
+.c9.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c10.Button--icon-only:focus {
+.c9.Button--icon-only:focus {
   outline: none;
 }
 
-.c10.Button--icon-only .Button__icon {
+.c9.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c6 {
+.c3 {
   width: 100%;
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -218,31 +216,31 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c5 {
+.c2 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
 }
 
-.c4 {
+.c1 {
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
 }
 
-.c2.required::before {
+.c6.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c1 {
+.c5 {
   font-weight: bold;
 }
 
-.c9 {
+.c8 {
   font-weight: 700;
   font-size: 1.7rem;
   margin-bottom: 1rem;
@@ -252,7 +250,7 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   border-bottom: solid 0.1rem var(--theme-blue-90);
 }
 
-.c7 {
+.c4 {
   overflow-x: hidden;
   max-height: 50rem;
 }
@@ -261,29 +259,7 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
   padding: 1rem;
 }
 
-.c3 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  word-break: break-all;
-}
-
-.c3 div:first-child {
-  -webkit-box-flex: 1;
-  -webkit-flex-grow: 1;
-  -ms-flex-positive: 1;
-  flex-grow: 1;
-}
-
-.c3 label {
-  margin-right: 1rem;
-}
-
-.c8 {
+.c7 {
   color: black;
   font-style: italic;
 }
@@ -298,63 +274,10 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
       class="c0"
     >
       <div
-        class="pb-4"
-      >
-        <div
-          class="pb-3 row"
-        >
-          <div
-            class="pr-0 text-left col-4"
-          >
-            <label
-              class="c1"
-            >
-              File name
-              :
-            </label>
-          </div>
-          <div
-            class="c2 text-left col"
-          >
-            <div
-              class="c3"
-            >
-              <div>
-                <label>
-                  NewFile.doc
-                </label>
-              </div>
-              <div>
-                <span
-                  class="tooltip-icon"
-                  data-testid="tooltip-icon-document-not-available-tooltip"
-                  id="document-not-available-tooltip"
-                >
-                  <svg
-                    class="tooltip-icon"
-                    fill="currentColor"
-                    height="1em"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 512 512"
-                    width="1em"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                    />
-                  </svg>
-                </span>
-              </div>
-            </div>
-          </div>
-        </div>
-      </div>
-      <div
-        class="c4 form-section"
+        class="c1 form-section"
       >
         <h2
-          class="c5"
+          class="c2"
         >
           <div
             class="no-gutters row"
@@ -383,7 +306,6 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
                   />
                 </svg>
               </span>
-               
             </div>
           </div>
         </h2>
@@ -391,7 +313,7 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
           class="collapse show"
         >
           <div
-            class="c6 c7"
+            class="c3 c4"
           >
             <div
               class="pb-2 row"
@@ -400,14 +322,44 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c1"
+                  class="c5"
+                >
+                  File name
+                  :
+                </label>
+              </div>
+              <div
+                class="c6 required text-left col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-fileName"
+                    name="fileName"
+                    style="word-break: break-all;"
+                    title="NewFile.doc"
+                    value="NewFile.doc"
+                  />
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-4"
+              >
+                <label
+                  class="c5"
                 >
                   Document type
                   :
                 </label>
               </div>
               <div
-                class="c2 required text-left col"
+                class="c6 required text-left col"
               >
                 <div
                   class="mb-0 form-group"
@@ -762,10 +714,10 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               />
               <div
-                class="c2 text-left col"
+                class="c6 text-left col"
               >
                 <div
-                  class="c8"
+                  class="c7"
                 />
               </div>
             </div>
@@ -776,14 +728,14 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c1"
+                  class="c5"
                 >
                   Status
                   :
                 </label>
               </div>
               <div
-                class="c2 text-left col"
+                class="c6 text-left col"
               >
                 <div
                   class="form-group"
@@ -852,7 +804,7 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
               </div>
             </div>
             <h3
-              class="c9"
+              class="c8"
             >
               Details
             </h3>
@@ -863,14 +815,14 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
                 class="pr-0 text-left col-4"
               >
                 <label
-                  class="c1"
+                  class="c5"
                 >
                   Tag Foo
                   :
                 </label>
               </div>
               <div
-                class="c2 text-left col"
+                class="c6 text-left col"
               >
                 <div
                   class="input form-group"
@@ -903,7 +855,7 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
                 class="col-auto"
               >
                 <button
-                  class="c10 Button px-5 btn btn-secondary"
+                  class="c9 Button px-5 btn btn-secondary"
                   type="button"
                 >
                   <div
@@ -917,7 +869,7 @@ exports[`DocumentDetailForm component > renders as expected 1`] = `
                 class="col-auto"
               >
                 <button
-                  class="c10 Button px-5 btn btn-primary"
+                  class="c9 Button px-5 btn btn-primary"
                   type="submit"
                 >
                   <div

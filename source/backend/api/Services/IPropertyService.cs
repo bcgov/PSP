@@ -33,17 +33,17 @@ namespace Pims.Api.Services
 
         PropertyManagementModel UpdatePropertyManagement(PimsProperty property);
 
-        IList<PimsPropertyActivity> GetActivities(long propertyId);
+        IList<PimsManagementActivity> GetActivities(long propertyId);
 
-        IList<PimsPropertyActivity> GetFileActivities(long managementFileId);
+        IList<PimsManagementActivity> GetFileActivities(long managementFileId);
 
-        PimsPropertyActivity GetActivity(long activityId);
+        PimsManagementActivity GetActivity(long activityId);
 
-        IEnumerable<PimsPropertyActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds);
+        IEnumerable<PimsManagementActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds);
 
-        PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity);
+        PimsManagementActivity CreateActivity(PimsManagementActivity managementActivity);
 
-        PimsPropertyActivity UpdateActivity(PimsPropertyActivity propertyActivity);
+        PimsManagementActivity UpdateActivity(PimsManagementActivity managementActivity);
 
         bool DeleteActivity(long activityId);
 

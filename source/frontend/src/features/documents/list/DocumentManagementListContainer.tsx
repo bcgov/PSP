@@ -2,16 +2,16 @@ import { useCallback, useEffect, useMemo, useState } from 'react';
 
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
-import { useManagementProvider } from '@/hooks/repositories/useManagementProvider';
+import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { exists, getFilePropertyName, relationshipTypeToPathName } from '@/utils';
 
-import { DocumentRow } from '../ComposedDocument';
 import { useDocumentRelationshipProvider } from '../hooks/useDocumentRelationshipProvider';
+import { DocumentRow } from '../models/DocumentRow';
 import { IDocumentListContainerProps } from './DocumentListContainer';
 import DocumentListView from './DocumentListView';
 import { DocRelation } from './models';
@@ -27,7 +27,7 @@ const DocumentManagementListContainer: React.FunctionComponent<
   const [propertyDocuments, setPropertyDocuments] = useState<DocumentRow[]>([]);
 
   const [managementActivities, setManagementActivities] = useState<
-    ApiGen_Concepts_PropertyActivity[]
+    ApiGen_Concepts_ManagementActivity[]
   >([]);
 
   const [managementProperties, setManagementProperties] = useState<
@@ -40,7 +40,7 @@ const DocumentManagementListContainer: React.FunctionComponent<
 
   const {
     getManagementProperties: { execute: getProperties, loading: propertiesLoading },
-  } = useManagementProvider();
+  } = useManagementFileRepository();
 
   const { retrieveDocumentRelationship, retrieveDocumentRelationshipLoading } =
     useDocumentRelationshipProvider();
@@ -60,7 +60,7 @@ const DocumentManagementListContainer: React.FunctionComponent<
   }, [getProperties, props.parentId, isMounted]);
 
   const retrieveActivitiesDocuments = useCallback(
-    async (activities: ApiGen_Concepts_PropertyActivity[]) => {
+    async (activities: ApiGen_Concepts_ManagementActivity[]) => {
       if (!exists(activities)) {
         return;
       }
@@ -189,6 +189,7 @@ const DocumentManagementListContainer: React.FunctionComponent<
         searchParentIdLabel: 'Association Name',
         searchParentTypeLabel: 'Association Type',
       }}
+      data-testId="adhoc-properties-documents-list"
       canEditDocuments={false}
     />
   );

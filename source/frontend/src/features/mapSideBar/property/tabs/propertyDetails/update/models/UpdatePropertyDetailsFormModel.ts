@@ -136,7 +136,6 @@ export class UpdatePropertyDetailsFormModel {
   pin?: number;
   planNumber?: string;
   municipalZoning?: string;
-  notes?: string;
 
   isOwned: boolean;
 
@@ -194,7 +193,6 @@ export class UpdatePropertyDetailsFormModel {
     model.pin = base.pin ?? undefined;
     model.planNumber = base.planNumber ?? undefined;
     model.municipalZoning = base.municipalZoning ?? undefined;
-    model.notes = base.notes ?? undefined;
     model.isRetired = base.isRetired;
     model.pphStatusTypeCode =
       base.pphStatusTypeCode ?? ApiGen_CodeTypes_PropertyPPHStatusTypes.UNKNOWN.toString();
@@ -254,7 +252,6 @@ export class UpdatePropertyDetailsFormModel {
       pin: this.pin ?? null,
       planNumber: this.planNumber ?? null,
       municipalZoning: this.municipalZoning ?? null,
-      notes: this.notes ?? null,
       isRetired: this.isRetired ?? false,
       pphStatusTypeCode: this.pphStatusTypeCode ?? null,
       isRwyBeltDomPatent: this.isRwyBeltDomPatent ?? null,

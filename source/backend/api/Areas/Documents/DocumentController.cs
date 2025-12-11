@@ -15,6 +15,7 @@ using Pims.Core.Exceptions;
 using Pims.Core.Json;
 using Pims.Core.Security;
 using Swashbuckle.AspNetCore.Annotations;
+using DocumentTypeModel = Pims.Api.Models.Concepts.Document.DocumentTypeModel;
 
 namespace Pims.Api.Controllers
 {
@@ -56,18 +57,19 @@ namespace Pims.Api.Controllers
         [HttpGet("types")]
         [HasPermission(Permissions.DocumentView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(List<Models.Concepts.Document.DocumentTypeModel>), 200)]
+        [ProducesResponseType(typeof(List<DocumentTypeModel>), 200)]
         [SwaggerOperation(Tags = new[] { "document-types" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetDocumentTypes()
+        public IActionResult GetAllDocumentTypes()
         {
             var documentTypes = _documentService.GetPimsDocumentTypes();
-            var mappedDocumentTypes = _mapper.Map<List<Models.Concepts.Document.DocumentTypeModel>>(documentTypes);
+            var mappedDocumentTypes = _mapper.Map<List<DocumentTypeModel>>(documentTypes);
+
             return new JsonResult(mappedDocumentTypes);
         }
 
         /// <summary>
-        /// Updates document's type, status and metadata.
+        /// Updates document's name, type, status and metadata.
         /// </summary>
         /// <param name="documentId">Used to identify document.</param>
         /// <param name="updateRequest">Contains information about the document metadata.</param>
@@ -78,7 +80,7 @@ namespace Pims.Api.Controllers
         [ProducesResponseType(typeof(DocumentUpdateResponse), 200)]
         [SwaggerOperation(Tags = new[] { "documents" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public async Task<IActionResult> UpdateDocument(long documentId, [FromBody] DocumentUpdateRequest updateRequest)
+        public async Task<IActionResult> UpdateDocument([FromRoute]long documentId, [FromBody] DocumentUpdateRequest updateRequest)
         {
             if (documentId != updateRequest.DocumentId)
             {

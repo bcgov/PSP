@@ -16,6 +16,8 @@ export interface IActivitiesFilterProps {
   setFilter: (filter: Api_ManagementActivityFilter) => void;
   activityStatusOptions: SelectOption[];
   activityTypesOptions: SelectOption[];
+  fileStatusOptions: SelectOption[];
+  managementPurposeOptions: SelectOption[];
 }
 
 export const ActivitiesFilter: React.FC<IActivitiesFilterProps> = ({
@@ -23,6 +25,8 @@ export const ActivitiesFilter: React.FC<IActivitiesFilterProps> = ({
   setFilter,
   activityStatusOptions,
   activityTypesOptions,
+  fileStatusOptions,
+  managementPurposeOptions,
 }) => {
   const onSearchSubmit = async (
     values: ManagementActivityFilterModel,
@@ -87,6 +91,29 @@ export const ActivitiesFilter: React.FC<IActivitiesFilterProps> = ({
                     placeholder="Select activity status..."
                   />
                 </Col>
+                <Col xl="6">
+                  <Select
+                    options={activityTypesOptions}
+                    field="activityTypeCode"
+                    placeholder="Select activity type..."
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col xl="6">
+                  <Select
+                    options={fileStatusOptions}
+                    field="managementFileStatusCode"
+                    placeholder="All management file statuses"
+                  />
+                </Col>
+                <Col xl="6">
+                  <Select
+                    options={managementPurposeOptions}
+                    field="managementFilePurposeCode"
+                    placeholder="Select management purpose..."
+                  />
+                </Col>
               </Row>
             </Col>
             <Col xl="5">
@@ -99,13 +126,6 @@ export const ActivitiesFilter: React.FC<IActivitiesFilterProps> = ({
                 </Col>
               </Row>
               <Row>
-                <Col xl="6">
-                  <Select
-                    options={activityTypesOptions}
-                    field="activityTypeCode"
-                    placeholder="Select activity type..."
-                  />
-                </Col>
                 <Col xl="6">
                   <Input
                     field="projectNameOrNumber"

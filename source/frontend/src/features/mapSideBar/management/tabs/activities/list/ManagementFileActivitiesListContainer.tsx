@@ -8,7 +8,7 @@ import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator'
 import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 
 import ManagementStatusUpdateSolver from '../../fileDetails/detail/ManagementStatusUpdateSolver';
 
@@ -25,7 +25,7 @@ const ManagementFileActivitiesListContainer: React.FunctionComponent<
   const { setModalContent, setDisplayModal } = useModalContext();
   const [propertyActivities, setPropertyActivities] = useState<PropertyActivityRow[]>([]);
   const { staleLastUpdatedBy } = useContext(SideBarContext);
-  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_PropertyActivity>>({});
+  const [sort, setSort] = useState<TableSort<ApiGen_Concepts_ManagementActivity>>({});
 
   const pathGenerator = usePathGenerator();
 
@@ -72,6 +72,7 @@ const ManagementFileActivitiesListContainer: React.FunctionComponent<
       isLoading={loading || deletingActivity}
       propertyActivities={propertyActivities}
       canEditActivities={canEditActivities}
+      addActivityButtonText="Add an Activity"
       setSort={setSort}
       sort={sort}
       onCreate={onCreate}

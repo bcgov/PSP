@@ -31,7 +31,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Search Research File List Elements
         private readonly By searchResearchFileNbrLabel = By.XPath("//div[contains(text(),'File #')]");
         private readonly By searchResearchFileNameLabel = By.XPath("//div[contains(text(),'File name')]");
-        private readonly By searchResearchFileRegionLabel = By.XPath("//div[contains(text(),'MOTI Region')]");
+        private readonly By searchResearchFileRegionLabel = By.XPath("//div[contains(text(),'MOTT region')]");
         private readonly By searchResearchFileCreatedByLabel = By.XPath("//div[contains(text(),'Created by')]");
         private readonly By searchResearchFileCreatedDateLabel = By.XPath("//div[contains(text(),'Created date')]");
         private readonly By searchResearchFileUpdatedByLabel = By.XPath("//div[contains(text(),'Last updated by')]");

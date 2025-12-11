@@ -31,9 +31,7 @@ exports[`UpdateNoteFormModal component > renders as expected 1`] = `
 }
 
 .c4.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c4.btn:hover {
@@ -434,13 +432,16 @@ exports[`UpdateNoteFormModal component > renders as expected 1`] = `
             >
               <div
                 class="mr-2 col-md-2"
+                data-testid="notes-created-label"
               >
                 Created:
               </div>
               <div
                 class="col"
               >
-                <span>
+                <span
+                  data-testid="notes-created-date"
+                >
                   <strong>
                     Jul 20, 2022
                   </strong>
@@ -463,13 +464,16 @@ exports[`UpdateNoteFormModal component > renders as expected 1`] = `
             >
               <div
                 class="mr-2 col-md-2"
+                data-testid="notes-updated-label"
               >
                 Last updated:
               </div>
               <div
                 class="col"
               >
-                <span>
+                <span
+                  data-testid="notes-updated-date"
+                >
                   <strong>
                     Jul 20, 2022
                   </strong>

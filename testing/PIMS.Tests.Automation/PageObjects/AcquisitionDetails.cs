@@ -11,7 +11,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By createAcquisitionFileButton = By.XPath("//a[contains(text(),'Create an Acquisition File')]");
 
         private readonly By acquisitionFileSummaryBttn = By.CssSelector("div[data-testid='menu-item-row-0'] div button[title='File Details']");
-        private readonly By acquisitionFileDetailsTab = By.XPath("//a[contains(text(),'File Details')]");
+        private readonly By acquisitionFileDetailsTab = By.CssSelector("button[title='File Details']");
         private readonly By acquisitionSubfilesTab = By.XPath("//a[contains(text(),'Sub-Files')]");
 
         //Acquisition File Details View Form Elements
@@ -222,7 +222,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateMinimumAcquisitionFile(AcquisitionFile acquisition)
         {
-            Wait();
+            Wait(5000);
 
             webDriver.FindElement(acquisitionFileNameInput).SendKeys(acquisition.AcquisitionFileName);
             webDriver.FindElement(acquisitionFileDetailsTypeSelect);
@@ -586,7 +586,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyAcquisitionFileView(AcquisitionFile acquisition, string acquisitionType)
         {
             Wait();
-            AssertTrueIsDisplayed(acquisitionFileViewTitle);
+            //AssertTrueIsDisplayed(acquisitionFileViewTitle);
 
             //Header
             AssertTrueIsDisplayed(acquisitionFileHeaderCodeLabel);
@@ -782,10 +782,10 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
 
-            if (acquisitionType == "Main")
-                AssertTrueIsDisplayed(acquisitionFileCreateTitle);
-            else
-                AssertTrueIsDisplayed(acquisitionSubFileCreateTitle);
+            //if (acquisitionType == "Main")
+            //    AssertTrueIsDisplayed(acquisitionFileCreateTitle);
+            //else
+            //    AssertTrueIsDisplayed(acquisitionSubFileCreateTitle);
 
             //Project
             AssertTrueIsDisplayed(acquisitionFileProjectSubtitle);

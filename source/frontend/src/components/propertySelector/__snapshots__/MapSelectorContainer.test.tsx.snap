@@ -36,9 +36,7 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
 }
 
 .c14.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c14.btn:hover {
@@ -481,7 +479,9 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
                   </div>
                   <div
                     class="c9 text-left col"
-                  />
+                  >
+                    000-002-500
+                  </div>
                 </div>
                 <div
                   class="pb-2 row"
@@ -513,7 +513,9 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
                   </div>
                   <div
                     class="c9 text-left col"
-                  />
+                  >
+                    VIP3881
+                  </div>
                 </div>
                 <div
                   class="pb-2 row"
@@ -545,7 +547,9 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
                   </div>
                   <div
                     class="c9 text-left col"
-                  />
+                  >
+                    1 - South Coast
+                  </div>
                 </div>
                 <div
                   class="pb-2 row"
@@ -561,7 +565,9 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
                   </div>
                   <div
                     class="c9 text-left col"
-                  />
+                  >
+                    2 - Vancouver Island
+                  </div>
                 </div>
                 <div
                   class="row"
@@ -591,6 +597,7 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
       >
         <div
           class="c3 form-section"
+          data-testid="property-search-selector-section"
         >
           <h2
             class="c10"

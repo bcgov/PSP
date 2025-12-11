@@ -1,0 +1,313 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`LayerTabView > matches snapshot (empty layersData) 1`] = `
+.c0.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c0.btn .Button__value {
+  width: auto;
+}
+
+.c0.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c0.btn:focus {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.c0.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c0.btn.btn-primary:hover,
+.c0.btn.btn-primary:active,
+.c0.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c0.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c0.btn.btn-secondary:hover,
+.c0.btn.btn-secondary:active,
+.c0.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c0.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c0.btn.btn-info:hover,
+.c0.btn.btn-info:active,
+.c0.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c0.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c0.btn.btn-light:hover,
+.c0.btn.btn-light:active,
+.c0.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c0.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c0.btn.btn-dark:hover,
+.c0.btn.btn-dark:active,
+.c0.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c0.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c0.btn.btn-danger:hover,
+.c0.btn.btn-danger:active,
+.c0.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c0.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c0.btn.btn-warning:hover,
+.c0.btn.btn-warning:active,
+.c0.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c0.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c0.btn.btn-link:hover,
+.c0.btn.btn-link:active,
+.c0.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c0.btn.btn-link:disabled,
+.c0.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c0.btn:disabled,
+.c0.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.c0.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c0.Button--icon-only:focus {
+  outline: none;
+}
+
+.c0.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+<div>
+  <div
+    class="Toastify"
+  />
+  <div />
+  <div
+    class="justify-content-around row no-gutters"
+  >
+    <div
+      class="col-1"
+    >
+      <button
+        class="c0 Button Button--disabled btn btn-link"
+        disabled=""
+        title="previous page"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          <svg
+            fill="currentColor"
+            height="36"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="36"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m14 7-5 5 5 5V7z"
+            />
+            <path
+              d="M24 0v24H0V0h24z"
+              fill="none"
+            />
+          </svg>
+        </div>
+      </button>
+    </div>
+    <div
+      class="d-flex align-items-center col-auto"
+    >
+      <b>
+        <span
+          class="tooltip-icon"
+          data-testid="tooltip-icon-layer-tab-tooltip"
+          id="layer-tab-tooltip"
+        >
+          <svg
+            class="tooltip-icon"
+            fill="currentColor"
+            height="1em"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 512 512"
+            width="1em"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+            />
+          </svg>
+        </span>
+      </b>
+    </div>
+    <div
+      class="d-flex justify-content-end col-1"
+    >
+      <button
+        class="c0 Button Button--disabled btn btn-link"
+        disabled=""
+        title="next page"
+        type="button"
+      >
+        <div
+          class="Button__value"
+        >
+          <svg
+            fill="currentColor"
+            height="36"
+            stroke="currentColor"
+            stroke-width="0"
+            viewBox="0 0 24 24"
+            width="36"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="m10 17 5-5-5-5v10z"
+            />
+            <path
+              d="M0 24V0h24v24H0z"
+              fill="none"
+            />
+          </svg>
+        </div>
+      </button>
+    </div>
+  </div>
+  <p>
+    No Layer Data exists.
+  </p>
+</div>
+`;

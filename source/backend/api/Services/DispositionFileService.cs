@@ -72,7 +72,6 @@ namespace Pims.Api.Services
 
             dispositionFile.DispositionStatusTypeCode ??= DispositionStatusTypes.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= DispositionFileStatusTypes.ACTIVE.ToString();
-            ValidateStaff(dispositionFile);
 
             MatchProperties(dispositionFile, userOverrides);
             ValidatePropertyRegions(dispositionFile);
@@ -533,6 +532,11 @@ namespace Pims.Api.Services
                         existingProperty.PropertyName = incomingDispositionProperty.PropertyName;
                         needsUpdate = true;
                     }
+                    if (existingProperty.DisplayOrder != incomingDispositionProperty.DisplayOrder)
+                    {
+                        existingProperty.DisplayOrder = incomingDispositionProperty.DisplayOrder;
+                        needsUpdate = true;
+                    }
 
                     var incomingGeom = incomingDispositionProperty.Location;
                     var existingGeom = existingProperty.Location;
@@ -596,15 +600,6 @@ namespace Pims.Api.Services
             return 0;
         }
 
-        private static void ValidateStaff(PimsDispositionFile dispositionFile)
-        {
-            bool duplicate = dispositionFile.PimsDispositionFileTeams.GroupBy(p => p.DspFlTeamProfileTypeCode).Any(g => g.Count() > 1);
-            if (duplicate)
-            {
-                throw new BadRequestException("Invalid Disposition team, each team member and role combination can only be added once.");
-            }
-        }
-
         private static void ValidateDispositionOfferStatus(PimsDispositionFile dispositionFile, PimsDispositionOffer newOffer)
         {
             bool offerAlreadyAccepted = dispositionFile.PimsDispositionOffers.Any(x => x.DispositionOfferStatusTypeCode == EnumDispositionOfferStatusTypeCode.ACCCEPTED.ToString() && x.DispositionOfferId != newOffer.DispositionOfferId);
@@ -637,7 +632,6 @@ namespace Pims.Api.Services
                 }
             }
 
-            ValidateStaff(incomingDispositionFile);
             incomingDispositionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
 
             // From here on - these checks result in warnings that require user confirmation
@@ -745,7 +739,7 @@ namespace Pims.Api.Services
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MOTI Inventory. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MOTT Inventory. Do you want to proceed?");
                         }
                     }
                 }
@@ -773,7 +767,7 @@ namespace Pims.Api.Services
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTT Inventory. Do you want to proceed?");
                         }
                     }
                 }
@@ -786,7 +780,7 @@ namespace Pims.Api.Services
                     }
                     else
                     {
-                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTI Inventory. Do you want to proceed?");
+                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTT Inventory. Do you want to proceed?");
                     }
                 }
             }

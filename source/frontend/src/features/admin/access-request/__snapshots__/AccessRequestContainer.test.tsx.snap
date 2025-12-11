@@ -42,9 +42,7 @@ exports[`AccessRequestContainer component > makes a request based on the access 
 }
 
 .c5.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c5.btn:hover {
@@ -417,12 +415,12 @@ exports[`AccessRequestContainer component > makes a request based on the access 
             class="form-control"
             id="input-email"
             name="email"
-            placeholder="test@test.com"
+            placeholder="devin.smith@gov.bc.ca"
             readonly=""
             style="word-break: break-all;"
-            title="test@test.com"
+            title=""
             type="email"
-            value="test@test.com"
+            value=""
           />
         </div>
       </div>
@@ -667,7 +665,7 @@ exports[`AccessRequestContainer component > makes a request based on the access 
         <label
           class="c0"
         >
-          MoTI Region:
+          MOTT region:
         </label>
       </div>
       <div
@@ -684,7 +682,7 @@ exports[`AccessRequestContainer component > makes a request based on the access 
             <option
               value=""
             >
-              Select MoTI Region
+              Select MOTT region
             </option>
             <option
               class="option"
@@ -845,9 +843,7 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
 }
 
 .c5.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c5.btn:hover {
@@ -1220,7 +1216,7 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
             class="form-control"
             id="input-email"
             name="email"
-            placeholder="test@test.com"
+            placeholder="devin.smith@gov.bc.ca"
             readonly=""
             style="word-break: break-all;"
             title="test@test.com"
@@ -1470,7 +1466,7 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
         <label
           class="c0"
         >
-          MoTI Region:
+          MOTT region:
         </label>
       </div>
       <div
@@ -1487,7 +1483,7 @@ exports[`AccessRequestContainer component > makes a request when no id is provid
             <option
               value=""
             >
-              Select MoTI Region
+              Select MOTT region
             </option>
             <option
               class="option"

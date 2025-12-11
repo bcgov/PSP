@@ -2,17 +2,17 @@ import * as React from 'react';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
+import { ApiGen_Concepts_ManagementActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_ManagementActivityInvoice';
 import { formatMoney } from '@/utils';
 
 interface IActivityDetailInvoiceTotalsViewProps {
-  invoices: ApiGen_Concepts_PropertyActivityInvoice[];
+  invoices: ApiGen_Concepts_ManagementActivityInvoice[];
 }
 
 const ActivityDetailInvoiceTotalsView: React.FunctionComponent<
   IActivityDetailInvoiceTotalsViewProps
 > = props => {
-  const invoices: ApiGen_Concepts_PropertyActivityInvoice[] = props.invoices ?? [];
+  const invoices: ApiGen_Concepts_ManagementActivityInvoice[] = props.invoices ?? [];
 
   let pretaxAmount = 0;
   let gstAmount = 0;

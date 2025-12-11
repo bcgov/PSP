@@ -12,6 +12,7 @@ using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
 using Pims.Core.Security;
 using Xunit;
+using Pims.Api.Models.CodeTypes;
 
 namespace Pims.Dal.Test.Repositories
 {
@@ -195,6 +196,130 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.Should().HaveCount(1);
         }
+
+        [Fact]
+        public void GetOwner_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionOwners = new List<PimsAcquisitionOwner>() { new PimsAcquisitionOwner()
+                {
+                    AcquisitionFileId = acqFile.AcquisitionFileId,
+                    GivenName = "JOHN",
+                    LastNameAndCorpName = "DOE",
+                    ContactEmailAddr = "john.doe@hotmail.com",
+                }
+            };
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+            var filter = new AcquisitionFilter() { OwnerName = "DOE" };
+
+            // Act
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetOwner_Rep_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsInterestHolders = new List<PimsInterestHolder>() { new PimsInterestHolder()
+                {
+                    AcquisitionFileId = acqFile.AcquisitionFileId,
+                    InterestHolderTypeCode = InterestHolderTypes.AOREP.ToString(),
+                    PersonId = 1000,
+                    Person = new PimsPerson()
+                    {
+                        Surname = "DOE",
+                        FirstName = "JOHN",
+                    },
+                }
+            };
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+            var filter = new AcquisitionFilter() { OwnerName = "DOE" };
+
+            // Act
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetOwner_Solicitor_Person_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsInterestHolders = new List<PimsInterestHolder>() { new PimsInterestHolder()
+                {
+                    AcquisitionFileId = acqFile.AcquisitionFileId,
+                    InterestHolderTypeCode = InterestHolderTypes.AOSLCTR.ToString(),
+                    PersonId = 1000,
+                    Person = new PimsPerson()
+                    {
+                        Surname = "DOE",
+                        FirstName = "JOHN",
+                    },
+                }
+            };
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+            var filter = new AcquisitionFilter() { OwnerName = "DOE" };
+
+            // Act
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetOwner_Solicitor_Org_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsInterestHolders = new List<PimsInterestHolder>() { new PimsInterestHolder()
+                {
+                    AcquisitionFileId = acqFile.AcquisitionFileId,
+                    InterestHolderTypeCode = InterestHolderTypes.AOSLCTR.ToString(),
+                    OrganizationId = 1000,
+                    Organization = new PimsOrganization()
+                    {
+                        OrganizationName = "DAIRY QUEEN",
+                    },
+                }
+            };
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+            var filter = new AcquisitionFilter() { OwnerName = "DAIRY" };
+
+            // Act
+            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
         #endregion
 
         #region Add

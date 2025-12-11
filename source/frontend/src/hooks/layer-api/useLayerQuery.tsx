@@ -1,3 +1,4 @@
+import { geojsonToWKT } from '@terraformer/wkt';
 import { AxiosResponse } from 'axios';
 import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
@@ -48,6 +49,15 @@ export interface IUserLayerQuery {
    */
   findByPlanNumber: (planNumber: string, allBy?: boolean) => Promise<FeatureCollection | undefined>;
   findByPlanNumberLoading: boolean;
+  /**
+   * function to find GeoJSON shape matching the passed planNumber matching on the SURVE_PLAN field.
+   * @param planNumber
+   */
+  findBySurveyPlanNumber: (
+    planNumber: string,
+    allBy?: boolean,
+  ) => Promise<FeatureCollection | undefined>;
+  findBySurveyPlanNumberLoading: boolean;
 
   /**
    * Function to query spatial layers and return layer metadata for the supplied location (x, y)
@@ -69,6 +79,14 @@ export interface IUserLayerQuery {
       sortBy?: string,
     ) => Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>>
   >;
+  findMultipleWhereContainsBoundaryWrapped: IResponseWrapper<
+    (
+      boundary: Geometry,
+      geometryName?: string,
+      spatialReferenceId?: number,
+      sortBy?: string,
+    ) => Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>>
+  >;
   findMultipleWhereContainsWrapped: IResponseWrapper<
     (
       latlng: LatLngLiteral,
@@ -83,6 +101,11 @@ export interface IUserLayerQuery {
       geometryName?: string,
       spatialReferenceId?: number,
       sortBy?: string,
+    ) => Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>>
+  >;
+  findMultipleRawWrapped: IResponseWrapper<
+    (
+      searchParams: URLSearchParams,
     ) => Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>>
   >;
 }
@@ -177,6 +200,22 @@ export const useLayerQuery = (
   });
 
   // NOTE: sortby is used here to ensure that if there are multiple features at a given location the non-retired feature will be returned first.
+  const findMultipleRawWrapped = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (
+        searchParams: URLSearchParams,
+      ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
+        const data = await wfsAxios2({ authenticated, withCredentials }).get<
+          FeatureCollection<Geometry, GeoJsonProperties>
+        >(`${baseAllUrl}&${searchParams.toString()}`);
+        return data;
+      },
+      [authenticated, withCredentials, baseAllUrl],
+    ),
+    requestName: `findMultipleRawWrapped-${baseAllUrl}`,
+  });
+
+  // NOTE: sortby is used here to ensure that if there are multiple features at a given location the non-retired feature will be returned first.
   const findMultipleWhereContainsWrapped = useApiRequestWrapper({
     requestFunction: useCallback(
       async (
@@ -199,6 +238,32 @@ export const useLayerQuery = (
       [authenticated, withCredentials, baseAllUrl],
     ),
     requestName: `findMultipleWhereContainsWrapped-${baseAllUrl}`,
+  });
+
+  // NOTE: sortby is used here to ensure that if there are multiple features at a given location the non-retired feature will be returned first.
+  const findMultipleWhereContainsBoundaryWrapped = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (
+        boundary: Geometry,
+        geometryName = 'SHAPE',
+        spatialReferenceId = 4326,
+        sortBy = '',
+      ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
+        const data = await wfsAxios2({ authenticated, withCredentials }).get<
+          FeatureCollection<Geometry, GeoJsonProperties>
+        >(
+          `${baseAllUrl}${
+            sortBy ? '&' + sortBy : ''
+          }&cql_filter=INTERSECTS(${geometryName},SRID=${spatialReferenceId};${geojsonToWKT(
+            boundary,
+          )})`,
+        );
+
+        return data;
+      },
+      [authenticated, withCredentials, baseAllUrl],
+    ),
+    requestName: `findMultipleWhereContainsBoundaryWrapped-${baseAllUrl}`,
   });
 
   const findOneWhereExactWrapped = useApiRequestWrapper({
@@ -257,6 +322,17 @@ export const useLayerQuery = (
     requestName: 'planNumber',
   });
 
+  const { execute: findBySurveyPlanNumber, loading: findBySurveyPlanNumberLoading } =
+    useApiRequestWrapper({
+      requestFunction: useCallback(
+        async (planNumber: string, allBy?: boolean): Promise<AxiosResponse<FeatureCollection>> => {
+          return executeWfs({ SURVEY_PLAN: planNumber }, allBy);
+        },
+        [executeWfs],
+      ),
+      requestName: 'surveyPlanNumber',
+    });
+
   const findOneMetadataByLocation = useCallback(
     async (
       latlng: LatLngLiteral,
@@ -286,9 +362,13 @@ export const useLayerQuery = (
     findByPinLoading,
     findByPlanNumber,
     findByPlanNumberLoading,
+    findBySurveyPlanNumber,
+    findBySurveyPlanNumberLoading,
     findOneMetadataByLocation,
     findOneWhereContainsWrapped,
     findMultipleWhereContainsWrapped,
+    findMultipleWhereContainsBoundaryWrapped,
     findOneWhereExactWrapped,
+    findMultipleRawWrapped,
   };
 };

@@ -69,38 +69,38 @@ const GenerateLetterRecipientsModal: React.FunctionComponent<
                   name={withNameSpace('recipients')}
                   render={() => (
                     <Form.Group>
-                      {recipientList.map((rec: LetterRecipientModel, index: number) => (
+                      {recipientList.map((recipient: LetterRecipientModel, index: number) => (
                         <Form.Check
                           id={`recipient-${index}`}
                           type="checkbox"
                           name="recipients"
-                          key={rec.id}
+                          key={recipient.id}
                         >
                           <Form.Check.Input
                             id={'recipient-' + index}
                             type="checkbox"
                             name="recipients"
-                            value={rec.id}
+                            value={recipient.id}
                             onChange={formikProps.handleChange}
                           />
                           <Form.Check.Label className="w-100" htmlFor={'recipient-' + index}>
-                            {rec.interestType === 'OWNR' && (
+                            {recipient.interestType === 'OWNR' && (
                               <>
-                                <OverflowTip fullText={rec.generateModel?.owner_string} />
-                                <span className="type">{rec.getInterestTypeString()}</span>
+                                <OverflowTip fullText={recipient.generateModel?.owner_string} />
+                                <span className="type">{recipient.getInterestTypeString()}</span>
                               </>
                             )}
-                            {rec.interestType !== 'OWNR' && rec.getContactRouteParam() && (
+                            {recipient.interestType !== 'OWNR' && recipient.getContactRouteParam() && (
                               <StyledLinkWrapper>
                                 <StyledLink
                                   target="_blank"
                                   rel="noopener noreferrer"
-                                  to={`/contact/${rec.getContactRouteParam()}`}
+                                  to={`/contact/${recipient.getContactRouteParam()}`}
                                 >
-                                  <span>{rec.getDisplayName()}</span>
+                                  <span>{recipient.getDisplayName()}</span>
                                   <FaExternalLinkAlt className="ml-2" size="1rem" />
                                 </StyledLink>
-                                <span className="type">{rec.getInterestTypeString()}</span>
+                                <span className="type">{recipient.getInterestTypeString()}</span>
                               </StyledLinkWrapper>
                             )}
                           </Form.Check.Label>

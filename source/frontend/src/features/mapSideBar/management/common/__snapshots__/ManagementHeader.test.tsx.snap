@@ -59,6 +59,7 @@ exports[`ManagementHeader component > renders as expected when no data is provid
 
 <div
     class="c0 no-gutters row"
+    data-testid="mgmt-file-header"
   >
     <div
       class="c1 col-xl-8 col-12"
@@ -78,7 +79,11 @@ exports[`ManagementHeader component > renders as expected when no data is provid
         <div
           class="pl-1 text-left col-8"
         >
-          M-
+          <div
+            data-testid="mgmt-fileId"
+          >
+            M-
+          </div>
         </div>
       </div>
       <div
@@ -90,12 +95,16 @@ exports[`ManagementHeader component > renders as expected when no data is provid
           <label
             class="c2"
           >
-            File Name:
+            File name:
           </label>
         </div>
         <div
           class="pl-1 text-left col-8"
-        />
+        >
+          <div
+            data-testid="mgmt-file-name"
+          />
+        </div>
       </div>
       <div
         class="row"
@@ -111,7 +120,11 @@ exports[`ManagementHeader component > renders as expected when no data is provid
         </div>
         <div
           class="pl-1 text-left col-8"
-        />
+        >
+          <div
+            data-testid="mgmt-file-project"
+          />
+        </div>
       </div>
       <div
         class="row"
@@ -128,7 +141,11 @@ exports[`ManagementHeader component > renders as expected when no data is provid
         <div
           class="pl-1 text-left col-8"
           data-testid="acq-header-product-val"
-        />
+        >
+          <div
+            data-testid="mgmt-file-product"
+          />
+        </div>
       </div>
       <div
         class="row"

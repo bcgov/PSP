@@ -1,7 +1,7 @@
 import clsx from 'classnames';
 import React from 'react';
 import { Col } from 'react-bootstrap';
-import { useHistory } from 'react-router-dom';
+import { useHistory, useLocation } from 'react-router-dom';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import EditButton from '@/components/common/buttons/EditButton';
@@ -13,16 +13,15 @@ import DocumentListContainer from '@/features/documents/list/DocumentListContain
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
-import { ApiGen_Concepts_PropertyActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_PropertyActivityInvoice';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
+import { ApiGen_Concepts_ManagementActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_ManagementActivityInvoice';
 
 import ActivityDetailInvoiceTotalsView from './ActivityDetailInvoiceTotalsView';
 import PropertyActivityDetailsSubView from './ActivityDetailSubView';
 import { InvoiceView } from './InvoiceView';
 
 export interface IPropertyActivityDetailViewProps {
-  propertyId: number;
-  activity: ApiGen_Concepts_PropertyActivity | null;
+  activity: ApiGen_Concepts_ManagementActivity | null;
   onClose: () => void;
   loading: boolean;
   show: boolean;
@@ -36,12 +35,13 @@ export const PropertyActivityDetailView: React.FunctionComponent<
     props.setShow(false);
     props.onClose();
   };
+  const location = useLocation();
 
   const { hasClaim } = useKeycloakWrapper();
   const history = useHistory();
 
   if (props.activity !== null) {
-    const invoices: ApiGen_Concepts_PropertyActivityInvoice[] = props.activity.invoices ?? [];
+    const invoices: ApiGen_Concepts_ManagementActivityInvoice[] = props.activity.invoices ?? [];
 
     return (
       <ReactVisibilitySensor
@@ -69,9 +69,8 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                     <EditButton
                       title="Edit Property Activity"
                       onClick={() => {
-                        history.push(
-                          `/mapview/sidebar/property/${props.propertyId}/management/activity/${props.activity?.id}/edit`,
-                        );
+                        const baseUrl = location.pathname.split('/activity')[0];
+                        history.push(`${baseUrl}/activity/${props.activity?.id}/edit`);
                       }}
                       style={{ float: 'right' }}
                     />
@@ -80,9 +79,9 @@ export const PropertyActivityDetailView: React.FunctionComponent<
 
                 <PropertyActivityDetailsSubView activity={props.activity} />
 
-                {invoices.map((x: ApiGen_Concepts_PropertyActivityInvoice, index: number) => (
+                {invoices.map((x: ApiGen_Concepts_ManagementActivityInvoice, index: number) => (
                   <InvoiceView
-                    key={`activity-${x.propertyActivityId}-invoice-${x.id}`}
+                    key={`activity-${x.managementActivityId}-invoice-${x.id}`}
                     activityInvoice={x}
                     index={index}
                   />

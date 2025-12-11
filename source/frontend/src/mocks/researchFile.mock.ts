@@ -1,3 +1,5 @@
+import { point } from '@turf/turf';
+
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
@@ -55,6 +57,7 @@ export const getMockResearchFile = (): ApiGen_Concepts_ResearchFile => ({
             y: 49.27720127104871,
           },
         },
+        boundary: point([-123.128633565, 49.27720127104871]).geometry,
         rowVersion: 1,
       },
       rowVersion: 1,

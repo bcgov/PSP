@@ -1,0 +1,98 @@
+[
+  {
+    "Test Case Description": "Activity 1 for AF with Compensation",
+    "ActCodeDescription": "4022 - Mortgage Penalty (MOR PEN)",
+    "ActAmount": 128.89,
+    "ActGSTEligible": "Yes",
+    "ActGSTAmount": 6.44,
+    "ActTotalAmount": 135.33
+  },
+  {
+    "Test Case Description": "Activity 2 for AF with Compensation",
+    "ActCodeDescription": "4029 - Property Tax (neg)",
+    "ActAmount": 1200000.0,
+    "ActGSTEligible": "No",
+    "ActGSTAmount": null,
+    "ActTotalAmount": 1200000.0
+  },
+  {
+    "Test Case Description": "Activity 3 for AF with Compensation",
+    "ActCodeDescription": "4026 - Disturbance (DISTURB)",
+    "ActAmount": 56789.98,
+    "ActGSTEligible": "Yes",
+    "ActGSTAmount": 2839.5,
+    "ActTotalAmount": 59629.48
+  },
+  {
+    "Test Case Description": "Activity 1 for AF Update Compensation",
+    "ActCodeDescription": "4000 - Land",
+    "ActAmount": 1000.0,
+    "ActGSTEligible": "No",
+    "ActGSTAmount": null,
+    "ActTotalAmount": 1000.0
+  },
+  {
+    "Test Case Description": "Activity for Minimum Compensation",
+    "ActCodeDescription": "4021 - Tenants Allowance (TENANT)",
+    "ActAmount": 10000.0,
+    "ActGSTEligible": "Yes",
+    "ActGSTAmount": 500.0,
+    "ActTotalAmount": 10500.0
+  },
+  {
+    "Test Case Description": "Activity 1 for Lease with Compensation",
+    "ActCodeDescription": "4036 - 5% Owner Occupier Allowance (5PRC OWN)",
+    "ActAmount": 5000.0,
+    "ActGSTEligible": "Yes",
+    "ActGSTAmount": 250.0,
+    "ActTotalAmount": 5250.0
+  },
+  {
+    "Test Case Description": "Activity 2 for Lease with Compensation",
+    "ActCodeDescription": "4012 - Severance Value (SEV VAL)",
+    "ActAmount": 1200.89,
+    "ActGSTEligible": "No",
+    "ActGSTAmount": null,
+    "ActTotalAmount": 1200.89
+  },
+  {
+    "Test Case Description": "Activity 3 for Lease with Compensation",
+    "ActCodeDescription": "4016 - License",
+    "ActAmount": 50500.0,
+    "ActGSTEligible": "Yes",
+    "ActGSTAmount": 2525.0,
+    "ActTotalAmount": 53025.0
+  },
+  {
+    "Test Case Description": "Activity 1 for Lease Update Compensation",
+    "ActCodeDescription": "4000 - Land",
+    "ActAmount": 1505.99,
+    "ActGSTEligible": "No",
+    "ActGSTAmount": null,
+    "ActTotalAmount": 1505.99
+  },
+  {
+    "Test Case Description": "Activity 1 for Main Compensation",
+    "ActCodeDescription": "4026 - Disturbance (DISTURB)",
+    "ActAmount": 56789.98,
+    "ActGSTEligible": "Yes",
+    "ActGSTAmount": 2839.5,
+    "ActTotalAmount": 59629.48
+  },
+  {
+    "Test Case Description": "Activity 1 for Subfile",
+    "ActCodeDescription": "4022 - Mortgage Penalty (MOR PEN)",
+    "ActAmount": 10000.0,
+    "ActGSTEligible": "Yes",
+    "ActGSTAmount": 500.0,
+    "ActTotalAmount": 10500.0
+  },
+  {
+    "Test Case Description": "Activity 2 for Subfile",
+    "ActCodeDescription": "4029 - Property Tax (neg)",
+    "ActAmount": 2000.0,
+    "ActGSTEligible": "No",
+    "ActGSTAmount": null,
+    "ActTotalAmount": 2000.0
+  }
+]

@@ -1,0 +1,20 @@
+[
+  {
+    "Test Case Description": "Inserting Property Historical File from Property Information",
+    "PropertyHistoricalFileNumber": "A1-000",
+    "PropertyHistoricalFileType": "PS",
+    "PropertyHistoricalFileOtherDetails": null
+  },
+  {
+    "Test Case Description": "Inserting Property Historical File from Property Information",
+    "PropertyHistoricalFileNumber": "A1",
+    "PropertyHistoricalFileType": "LIS",
+    "PropertyHistoricalFileOtherDetails": null
+  },
+  {
+    "Test Case Description": "Inserting Property Historical File from Property Information",
+    "PropertyHistoricalFileNumber": "A2",
+    "PropertyHistoricalFileType": "Other",
+    "PropertyHistoricalFileOtherDetails": "Other type of Historical File"
+  }
+]

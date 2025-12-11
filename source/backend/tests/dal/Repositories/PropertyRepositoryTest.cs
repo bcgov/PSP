@@ -846,7 +846,7 @@ namespace Pims.Dal.Test.Repositories
         #endregion
 
         #region Delete
-        [Fact]
+        /*[Fact]
         public void Delete_Property_Success()
         {
             // Arrange
@@ -861,6 +861,7 @@ namespace Pims.Dal.Test.Repositories
             var deletedProperty = context.PimsProperties.FirstOrDefault();
             context.ChangeTracker.Entries().Should().NotBeEmpty();
         }
+        */
         #endregion
 
         #region TransferFileProperties

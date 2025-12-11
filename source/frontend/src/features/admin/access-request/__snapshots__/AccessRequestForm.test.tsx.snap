@@ -36,9 +36,7 @@ exports[`AccessRequestForm component > renders as expected 1`] = `
 }
 
 .c5.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c5.btn:hover {
@@ -661,7 +659,7 @@ exports[`AccessRequestForm component > renders as expected 1`] = `
         <label
           class="c0"
         >
-          MoTI Region:
+          MOTT region:
         </label>
       </div>
       <div
@@ -678,7 +676,7 @@ exports[`AccessRequestForm component > renders as expected 1`] = `
             <option
               value=""
             >
-              Select MoTI Region
+              Select MOTT region
             </option>
             <option
               class="option"

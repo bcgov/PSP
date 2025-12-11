@@ -1,0 +1,50 @@
+[
+  {
+    "Test Case Description": "1st Form 8",
+    "ExpPaymentItem": "Market Value",
+    "ExpPaymentAmount": 78990.0,
+    "ExpPaymentGSTApplicable": "Yes",
+    "ExpPaymentGSTAmount": 3949.5,
+    "ExpPaymentTotalAmount": 82939.5
+  },
+  {
+    "Test Case Description": "1st Form 8",
+    "ExpPaymentItem": "Total Amount of Advance Taking",
+    "ExpPaymentAmount": 789.39,
+    "ExpPaymentGSTApplicable": "Yes",
+    "ExpPaymentGSTAmount": 39.47,
+    "ExpPaymentTotalAmount": 828.86
+  },
+  {
+    "Test Case Description": "1st Form 8",
+    "ExpPaymentItem": "Temporary SRW",
+    "ExpPaymentAmount": 2000.0,
+    "ExpPaymentGSTApplicable": "No",
+    "ExpPaymentGSTAmount": 0.0,
+    "ExpPaymentTotalAmount": 2000.0
+  },
+  {
+    "Test Case Description": "2nd Form 8",
+    "ExpPaymentItem": "Permanent SRW",
+    "ExpPaymentAmount": 8989.87,
+    "ExpPaymentGSTApplicable": "No",
+    "ExpPaymentGSTAmount": 0.0,
+    "ExpPaymentTotalAmount": 8989.87
+  },
+  {
+    "Test Case Description": "Update Form 8 Payment",
+    "ExpPaymentItem": "Loss of Site Improvements",
+    "ExpPaymentAmount": 1800.48,
+    "ExpPaymentGSTApplicable": "Yes",
+    "ExpPaymentGSTAmount": 90.02,
+    "ExpPaymentTotalAmount": 1890.5
+  },
+  {
+    "Test Case Description": "Minimum Form8 Test",
+    "ExpPaymentItem": "Disturbance Damages",
+    "ExpPaymentAmount": 1000.0,
+    "ExpPaymentGSTApplicable": "No",
+    "ExpPaymentGSTAmount": 0.0,
+    "ExpPaymentTotalAmount": 1000.0
+  }
+]

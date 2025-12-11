@@ -67,7 +67,7 @@ namespace Pims.Api.Models.Concepts.Person
         /// <summary>
         /// get/set - The person's property activity id.
         /// </summary>
-        public long? PropertyActivityId { get; set; }
+        public long? ManagementActivityId { get; set; }
 
         /// <summary>
         /// get/set - The person's contact methods.

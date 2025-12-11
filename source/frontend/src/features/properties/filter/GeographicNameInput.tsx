@@ -85,7 +85,13 @@ export const GeographicNameInput: React.FC<React.PropsWithChildren<IGeographicNa
     return (
       <ul className="suggestionList">
         {options.map((x: Feature<Geometry, IGeographicNamesProperties>, index: number) => (
-          <li key={x.id ?? index} onClick={() => suggestionSelected(x)}>
+          <li
+            key={x.id ?? index}
+            onClick={e => {
+              suggestionSelected(x);
+              e.stopPropagation();
+            }}
+          >
             {[
               x?.properties?.name,
               x?.properties?.featureType,
@@ -101,7 +107,13 @@ export const GeographicNameInput: React.FC<React.PropsWithChildren<IGeographicNa
 
   return (
     <div className="GeographicNameInput">
-      <ClickAwayListener onClickAway={() => setOptions([])}>
+      <ClickAwayListener
+        onClickAway={e => {
+          if (e.type === 'click') {
+            setOptions([]);
+          }
+        }}
+      >
         <Form.Group controlId={`input-${field}`}>
           <TooltipWrapper
             tooltipId={`${field}-input-tooltip`}

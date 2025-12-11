@@ -5,7 +5,7 @@ import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_P
 import { exists } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
-import { StyledLink } from '../maps/leaflet/LayerPopup/styles';
+import { StyledLink } from './styles';
 
 type ContactPersonLink = {
   person: ApiGen_Concepts_Person;

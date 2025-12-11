@@ -6,6 +6,7 @@ export interface LayerDefinition extends WMSOptions {
   url: string;
   cql_filter?: string;
   zIndexAbsolute?: boolean;
+  legendUrl?: string;
 }
 
 interface BaseLayerItem {

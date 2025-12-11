@@ -27,9 +27,7 @@ import UpdateCompensationRequisitionContainer, {
   UpdateCompensationRequisitionContainerProps,
 } from './UpdateCompensationRequisitionContainer';
 import { CompensationRequisitionFormProps } from './UpdateCompensationRequisitionForm';
-import { PayeeType } from '../../acquisition/models/PayeeTypeModel';
 import { PayeeOption } from '../../acquisition/models/PayeeOptionModel';
-import { getLeaseStakeholders } from '@/hooks/pims-api/useApiLeaseStakeholders';
 import { getMockApiDefaultCompensation, getMockCompReqAcqPayee } from '@/mocks/compensations.mock';
 import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
 

@@ -8,6 +8,7 @@ import { LeaseFormModel } from '@/features/leases/models';
 import { LeasePageProps } from '@/features/mapSideBar/lease/LeaseContainer';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_Concepts_LeaseStakeholder } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholder';
 
 import AddLeaseStakeholderContainer from './AddLeaseStakeholderContainer';
@@ -24,7 +25,10 @@ const TenantContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
 }) => {
   const { lease } = useContext(LeaseStateContext);
   const getIsPayableLease = () => {
-    return lease?.paymentReceivableType.id !== 'RCVBL' ? true : false;
+    return lease?.paymentReceivableType?.id !==
+      ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL.toString()
+      ? true
+      : false;
   };
   const {
     getLeaseStakeholders: { execute: getLeaseStakeholders, loading, response: stakeholders },

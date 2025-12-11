@@ -24,6 +24,10 @@ import { createRef } from 'react';
 import { SideBarContextProvider } from '../context/sidebarContext';
 import { FileTabType } from '../shared/detail/FileTabs';
 import AcquisitionView, { IAcquisitionViewProps } from './AcquisitionView';
+import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
+import { AxiosResponse } from 'axios';
 
 // mock auth library
 
@@ -38,6 +42,14 @@ vi.mock('@/features/mapSideBar/hooks/usePropertyDetails', () => {
     usePropertyDetails: vi.fn(),
   };
 });
+
+const mockGetPropertyOperations = vi.fn();
+vi.mock('@/hooks/repositories/usePropertyOperationRepository');
+vi.mocked(usePropertyOperationRepository).mockReturnValue({
+  getPropertyOperations: { execute: mockGetPropertyOperations } as unknown as IResponseWrapper<
+    (propertyId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyOperation[], any>>
+  >,
+} as unknown as ReturnType<typeof usePropertyOperationRepository>);
 
 const onClose = vi.fn();
 const onSave = vi.fn();
@@ -122,6 +134,9 @@ describe('AcquisitionView component', () => {
         ...renderOptions,
       },
     );
+
+    // Wait for effects to complete
+    await act(async () => {});
 
     return {
       ...utils,
@@ -237,10 +252,8 @@ describe('AcquisitionView component', () => {
 
   it('should display the Property Selector according to routing', async () => {
     history.replace(`/mapview/sidebar/acquisition/1/property/selector`);
-    const { getByRole } = await setup();
-    const tab = getByRole('tab', { name: /Locate on Map/i });
-    expect(tab).toBeVisible();
-    expect(tab).toHaveClass('active');
+    const { getByText } = await setup();
+    expect(getByText(/Property selection/i)).toBeVisible();
   });
 
   it('should display the Property Details tab according to routing', async () => {

@@ -195,6 +195,21 @@ export function isNumber(value: unknown): value is number {
   return typeof value === 'number';
 }
 
+export function firstValidOrNull<T>(
+  array: Array<T> | null,
+  validator: (v: T | null | undefined) => v is T,
+): T | null {
+  if (exists(array) && array.length > 0) {
+    for (let i = 0; i < array.length; i++) {
+      const isValid = validator(array[i]);
+      if (isValid) {
+        return array[i];
+      }
+    }
+  }
+  return null;
+}
+
 export function truncateName(name: string, length: number): string {
   if (name.length > length) {
     return name.slice(0, length) + '...';

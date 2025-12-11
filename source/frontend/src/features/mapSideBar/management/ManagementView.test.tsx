@@ -28,11 +28,17 @@ import {
   render,
   RenderOptions,
   userEvent,
+  waitForEffects,
 } from '@/utils/test-utils';
 
+import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { ApiGen_CodeTypes_ManagementFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementFileStatusTypes';
 import { toTypeCode } from '@/utils/formUtils';
 import ManagementView, { IManagementViewProps } from './ManagementView';
+import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
+import { AxiosResponse } from 'axios';
 
 // mock auth library
 
@@ -98,6 +104,18 @@ vi.mocked(useProjectProvider, { partial: true }).mockReturnValue({
 });
 
 vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
+
+vi.mock('@/hooks/pims-api/useApiManagementFile');
+vi.mock('@/hooks/pims-api/useApiManagementFileContact');
+vi.mock('@/hooks/repositories/useManagementFileRepository');
+
+const mockGetPropertyOperations = vi.fn();
+vi.mock('@/hooks/repositories/usePropertyOperationRepository');
+vi.mocked(usePropertyOperationRepository).mockReturnValue({
+  getPropertyOperations: { execute: mockGetPropertyOperations } as unknown as IResponseWrapper<
+    (propertyId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyOperation[], any>>
+  >,
+} as unknown as ReturnType<typeof usePropertyOperationRepository>);
 
 const DEFAULT_PROPS: IManagementViewProps = {
   onClose,
@@ -176,6 +194,12 @@ describe('ManagementView component', () => {
       updatePropertyHistoricalNumbers: getMockRepositoryObj([]),
     });
 
+    vi.mocked(useManagementFileRepository, { partial: true }).mockReturnValue({
+      putManagementFile: getMockRepositoryObj(),
+      getAllManagementFileContacts: getMockRepositoryObj([]),
+      deleteManagementContact: getMockRepositoryObj(),
+    });
+
     history.replace(`/mapview/sidebar/management/1`);
   });
 
@@ -191,6 +215,7 @@ describe('ManagementView component', () => {
 
   it('renders the underlying form', async () => {
     const { getAllByText, getByText } = await setup();
+    await waitForEffects();
     const testManagementFile = mockManagementFileResponse();
 
     expect(getByText('Management File')).toBeVisible();
@@ -243,7 +268,7 @@ describe('ManagementView component', () => {
 
   it(`should redirect to the File Details page when accessing a non-existing property index`, async () => {
     history.replace(`/mapview/sidebar/management/1/property/99999`);
-    const { getByRole, findByText } = await setup();
+    const { getByRole } = await setup();
     const tab = getByRole('tab', { name: /File details/i });
     expect(tab).toBeVisible();
     expect(tab).toHaveClass('active');
@@ -251,10 +276,8 @@ describe('ManagementView component', () => {
 
   it('should display the Property Selector according to routing', async () => {
     history.replace(`/mapview/sidebar/management/1/property/selector`);
-    const { getByRole } = await setup();
-    const tab = getByRole('tab', { name: /Locate on Map/i });
-    expect(tab).toBeVisible();
-    expect(tab).toHaveClass('active');
+    const { getByText } = await setup();
+    expect(getByText(/Property selection/i)).toBeVisible();
   });
 
   it('should display the Property Details tab according to routing', async () => {
@@ -292,7 +315,9 @@ describe('ManagementView component', () => {
 
   it(`should display property edit title when editing`, async () => {
     history.replace(`/mapview/sidebar/management/1?edit=true`);
+
     const { getByText } = await setup({ ...DEFAULT_PROPS, isEditing: true } as any);
+    await waitForEffects();
     expect(getByText('Update Management File')).toBeVisible();
   });
 

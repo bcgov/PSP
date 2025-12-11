@@ -21,6 +21,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchAcquisitionFileTeamMember1stOption = By.CssSelector("div[id='multiselect-acquisitionTeamMembers'] ul[class='optionContainer'] li:nth-child(1)");
         private readonly By searchAcquisitionFileStatusSelect = By.Id("input-acquisitionFileStatusTypeCode");
         private readonly By searchAcquisitionFileProjectInput = By.Id("input-projectNameOrNumber");
+        private readonly By searchAcquisitionFileOwnerInput = By.Id("input-ownerName");
         private readonly By searchAcquisitionFileSearchButton = By.Id("search-button");
         private readonly By searchAcquisitionFileResetButton = By.Id("reset-button");
         private readonly By searchAcquisitionFileCreateNewButton = By.XPath("//div[contains(text(),'Create an Acquisition File')]/parent::button");
@@ -32,7 +33,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchAcquisitionOrderLegacyNumberBttn = By.CssSelector("div[data-testid='sort-column-legacyFileNumber']");
         private readonly By searchAcquisitionFileNameHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Acquisition file name')]");
         private readonly By searchAcquisitionOrderFileNameBttn = By.CssSelector("div[data-testid='sort-column-fileName']");
-        private readonly By searchAcquisitionFileMOTIRegionHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTI Region')]");
+        private readonly By searchAcquisitionFileMOTIRegionHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTT region')]");
         private readonly By searchAcquisitionFileProjectHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Project')]");
         private readonly By searchAcquisitionFileAddressHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address')]");
         private readonly By searchAcquisitionFileStatusHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");
@@ -50,7 +51,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchAcquisitionFile1stResultMOTIRegion = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(4)");
         private readonly By searchAcquisitionFile1stResultProject = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(5)");
         private readonly By searchAcquisitionFile1stResultAddress = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td'] div[class='w-100'] div");
-        private readonly By searchAcquisitionFile1stResultStatus = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(8)");
+        private readonly By searchAcquisitionFile1stResultStatus = By.CssSelector("div[data-testid='acquisitionFilesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[class='td clickable']:nth-child(9)");
 
         private readonly By searchAcquisitionFileHeaderCode = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div[1]");
        
@@ -66,18 +67,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Wait(3000);
             FocusAndClick(searchAcquisitionButton);
-        }
-
-        public void SearchAcquisitionFileByAFile(string AFile)
-        {
-            WaitUntilTableSpinnerDisappear();
-
-            WaitUntilVisible(searchAcquisitionFileNameInput);
-            webDriver.FindElement(searchAcquisitionFileNameInput).SendKeys(AFile);
-            ChooseSpecificSelectOption(searchAcquisitionFileStatusSelect, "All Status");
-
-            Wait(2000);
-            FocusAndClick(searchAcquisitionFileSearchButton);
         }
 
         public void OrderByAcquisitionFileNumber()
@@ -101,14 +90,23 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFirstOption()
         {
+            var originalWindowHandle = webDriver.CurrentWindowHandle;
+
             WaitUntilClickable(searchAcquisitionFile1stResultLink);
             webDriver.FindElement(searchAcquisitionFile1stResultLink).Click();
 
+            Wait();
+            var allWindowsHandle = webDriver.WindowHandles;
+            var newWindowHandle = allWindowsHandle.Where(handle => handle != originalWindowHandle).First();
+            webDriver.SwitchTo().Window(newWindowHandle);
+                
+            
             WaitUntilClickable(searchAcquisitionFileHeaderCode);
-            Assert.True(webDriver.FindElement(searchAcquisitionFileHeaderCode).Displayed);
+            AssertTrueIsDisplayed(searchAcquisitionFileHeaderCode);
         }
 
-        public void FilterAcquisitionFiles(string pid = "", string pin = "", string address = "", string name = "", string teamMember = "", string status = "", string project = "")
+        public void FilterAcquisitionFiles(string pid = "", string pin = "", string address = "", string name = "", string teamMember = "",
+            string status = "", string project = "", string owner = "")
         {
             Wait(5000);
             webDriver.FindElement(searchAcquisitionFileResetButton).Click();
@@ -145,7 +143,10 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseSpecificSelectOption(searchAcquisitionFileStatusSelect, status);
 
             if (project != "")
-                webDriver.FindElement(searchAcquisitionFileProjectInput).SendKeys(project);
+                webDriver.FindElement(searchAcquisitionFileOwnerInput).SendKeys(project);
+
+            if(owner != "")
+                webDriver.FindElement(searchAcquisitionFileTeamMemberSelect).SendKeys(owner);
 
             webDriver.FindElement(searchAcquisitionFileSearchButton).Click();
         }
@@ -193,6 +194,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchAcquisitionFileStatusSelect);
             AssertTrueIsDisplayed(searchAcquisitionFileNameInput);
             AssertTrueIsDisplayed(searchAcquisitionFileProjectInput);
+            AssertTrueIsDisplayed(searchAcquisitionFileOwnerInput);
             AssertTrueIsDisplayed(searchAcquisitionFileSearchButton);
             AssertTrueIsDisplayed(searchAcquisitionFileResetButton);
             AssertTrueIsDisplayed(searchAcquisitionFileCreateNewButton);

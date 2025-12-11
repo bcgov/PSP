@@ -1,18 +1,14 @@
 using System;
-using System.Collections.Generic;
-using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Concepts.Property;
 using Pims.Api.Services;
-using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Policies;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Core.Security;
-using Pims.Dal.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Management.Controllers
@@ -54,7 +50,7 @@ namespace Pims.Api.Areas.Management.Controllers
         [HttpGet("{managementActivityId:long}")]
         [HasPermission(Permissions.ManagementView, Permissions.ActivityView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(PropertyActivityModel), 200)]
+        [ProducesResponseType(typeof(ManagementActivityModel), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult GetManagementActivity(long managementActivityId)
@@ -68,7 +64,7 @@ namespace Pims.Api.Areas.Management.Controllers
 
             var activity = _propertyService.GetActivity(managementActivityId);
 
-            return new JsonResult(_mapper.Map<PropertyActivityModel>(activity));
+            return new JsonResult(_mapper.Map<ManagementActivityModel>(activity));
         }
     }
 }

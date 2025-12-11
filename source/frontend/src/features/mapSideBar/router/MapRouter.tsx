@@ -6,9 +6,10 @@ import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types'
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import Claims from '@/constants/claims';
 import { AddLeaseContainer } from '@/features/leases';
+import AddLeaseForm from '@/features/leases/add/AddLeaseForm';
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
 import MotiInventoryContainer from '@/features/mapSideBar/property/MotiInventoryContainer';
-import { isValidId } from '@/utils';
+import { exists, isValidId } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
 import AcquisitionContainer from '../acquisition/AcquisitionContainer';
@@ -33,6 +34,7 @@ import AddProjectForm from '../project/add/AddProjectForm';
 import ProjectContainer from '../project/ProjectContainer';
 import ProjectContainerView from '../project/ProjectContainerView';
 import AddResearchContainer from '../research/add/AddResearchContainer';
+import AddResearchForm from '../research/add/AddResearchForm';
 import ResearchContainer from '../research/ResearchContainer';
 import ResearchView from '../research/ResearchView';
 import AddSubdivisionContainer from '../subdivision/AddSubdivisionContainer';
@@ -158,7 +160,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
 
       openSidebar(sidebarType);
     } else {
-      closeSidebar();
+      exists(closeSidebar) && closeSidebar();
     }
   }, [
     isAcquisition,
@@ -193,6 +195,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
             onSuccess={(newResearchId: number) => {
               history.replace(`/mapview/sidebar/research/${newResearchId}`);
             }}
+            View={AddResearchForm}
           />
         )}
         claim={Claims.RESEARCH_ADD}
@@ -301,6 +304,19 @@ export const MapRouter: React.FunctionComponent = memo(() => {
         title={'Property Information - Non Inventory'}
       />
       <AppRoute
+        path={`/mapview/sidebar/location/lat/:lat/lng/:lng`}
+        customRender={({ match }) => {
+          return (
+            <MotiInventoryContainer
+              onClose={onClose}
+              location={{ lat: match.params.lat, lng: match.params.lng }}
+            />
+          );
+        }}
+        key={'LatLngLocation'}
+        title={'Map Location Information'}
+      />
+      <AppRoute
         path={`/mapview/sidebar/lease/new`}
         customRender={() => (
           <AddLeaseContainer
@@ -308,6 +324,7 @@ export const MapRouter: React.FunctionComponent = memo(() => {
             onSuccess={(newLeaseId: number) => {
               history.replace(`/mapview/sidebar/lease/${newLeaseId}`);
             }}
+            View={AddLeaseForm}
           />
         )}
         claim={Claims.LEASE_ADD}

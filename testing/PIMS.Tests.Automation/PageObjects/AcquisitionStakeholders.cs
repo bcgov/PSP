@@ -50,7 +50,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditStakeholderInterestsButton()
         {
-            Wait(2000);
+            Wait();
             webDriver.FindElement(stakeholderInterestsEditBttn).Click();
         }
 

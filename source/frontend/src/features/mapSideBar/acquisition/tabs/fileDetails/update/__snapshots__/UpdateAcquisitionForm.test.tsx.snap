@@ -36,9 +36,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
 }
 
 .c9.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c9.btn:hover {
@@ -1948,7 +1946,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
             data-testid="contact-input"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"
@@ -2038,13 +2036,13 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           >
             <button
               class="c9 Button c11 btn btn-link"
+              data-testid="team.0.remove-button"
               type="button"
             >
               <div
                 class="Button__value"
               >
                 <svg
-                  data-testid="team.0.remove-button"
                   fill="currentColor"
                   height="2rem"
                   stroke="currentColor"
@@ -2145,7 +2143,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
             data-testid="contact-input"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"
@@ -2235,13 +2233,13 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
           >
             <button
               class="c9 Button c11 btn btn-link"
+              data-testid="team.1.remove-button"
               type="button"
             >
               <div
                 class="Button__value"
               >
                 <svg
-                  data-testid="team.1.remove-button"
                   fill="currentColor"
                   height="2rem"
                   stroke="currentColor"
@@ -2320,13 +2318,13 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
             >
               <button
                 class="c9 Button c11 btn btn-link"
+                data-testid="owners[0]-remove-button"
                 type="button"
               >
                 <div
                   class="Button__value"
                 >
                   <svg
-                    data-testid="owners[0]-remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"
@@ -2712,13 +2710,13 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                     >
                       <button
                         class="c9 Button c19 btn btn-link"
+                        data-testid="remove-button"
                         type="button"
                       >
                         <div
                           class="Button__value"
                         >
                           <svg
-                            data-testid="remove-button"
                             fill="currentColor"
                             height="2rem"
                             stroke="currentColor"
@@ -3069,13 +3067,13 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
             >
               <button
                 class="c9 Button c11 btn btn-link"
+                data-testid="owners[1]-remove-button"
                 type="button"
               >
                 <div
                   class="Button__value"
                 >
                   <svg
-                    data-testid="owners[1]-remove-button"
                     fill="currentColor"
                     height="2rem"
                     stroke="currentColor"
@@ -3512,13 +3510,13 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
                     >
                       <button
                         class="c9 Button c19 btn btn-link"
+                        data-testid="remove-button"
                         type="button"
                       >
                         <div
                           class="Button__value"
                         >
                           <svg
-                            data-testid="remove-button"
                             fill="currentColor"
                             height="2rem"
                             stroke="currentColor"
@@ -3885,7 +3883,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
             class="c3 text-left col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"
@@ -4005,7 +4003,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
             class="c3 text-left col"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"

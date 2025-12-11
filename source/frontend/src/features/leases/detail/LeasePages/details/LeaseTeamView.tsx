@@ -3,7 +3,7 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
+import { StyledLink } from '@/components/common/styles';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
@@ -18,7 +18,10 @@ export const LeaseTeamView: React.FunctionComponent<React.PropsWithChildren<ILea
     <Section header="Lease & Licence Team">
       {lease.leaseTeam.map((teamMember, index) => (
         <React.Fragment key={`lease-team-${teamMember?.id ?? index}`}>
-          <SectionField label={teamMember?.teamProfileType.description || ''}>
+          <SectionField
+            label={teamMember?.teamProfileType.description || ''}
+            valueTestId={`teamMember[${index}]`}
+          >
             <StyledLink
               target="_blank"
               rel="noopener noreferrer"
@@ -37,7 +40,7 @@ export const LeaseTeamView: React.FunctionComponent<React.PropsWithChildren<ILea
             </StyledLink>
           </SectionField>
           {exists(teamMember?.organizationId) && (
-            <SectionField label="Primary contact">
+            <SectionField label="Primary contact" valueTestId={`primaryContact[${index}]`}>
               {teamMember?.primaryContactId ? (
                 <StyledLink
                   target="_blank"

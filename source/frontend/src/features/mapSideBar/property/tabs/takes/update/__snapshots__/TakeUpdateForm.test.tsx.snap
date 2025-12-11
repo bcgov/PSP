@@ -696,7 +696,7 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
                     <label
                       class="c4"
                     >
-                      Is this being acquired for MoTI inventory? *:
+                      Is this being acquired for MOTT inventory? *:
                       <span>
                         <span
                           class="tooltip-icon"

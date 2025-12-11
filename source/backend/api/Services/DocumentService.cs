@@ -29,6 +29,7 @@ using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
 using Polly;
 
@@ -143,6 +144,15 @@ namespace Pims.Api.Services
                     throw new InvalidDataException("The requested category relationship does not exist");
             }
             return documentTypeRepository.GetByCategory(categoryType);
+        }
+
+        public Paged<PimsDocument> GetPage(DocumentSearchFilterModel filter)
+        {
+            Logger.LogInformation("Searching for documents...");
+
+            User.ThrowIfNotAuthorized(Permissions.DocumentView);
+
+            return documentRepository.GetPageDeep(filter);
         }
 
         public async Task<DocumentUploadResponse> UploadDocumentSync(DocumentUploadRequest uploadRequest)
@@ -297,6 +307,32 @@ namespace Pims.Api.Services
                 }
 
                 existingDocument.DocumentTypeId = updateRequest.DocumentTypeId;
+                documentRepository.Update(existingDocument);
+                documentRepository.CommitTransaction();
+            }
+
+            if (existingDocument.FileName != updateRequest.FileName && existingDocument.MayanId.HasValue)
+            {
+                var updateExtension = Path.GetExtension(updateRequest.FileName);
+                var existingExtension = Path.GetExtension(existingDocument.FileName);
+                if (updateExtension != existingExtension)
+                {
+                    throw new BadRequestException("Updating a document's extension is not supported.");
+                }
+                var currentMayanDocument = await documentStorageRepository.TryGetDocumentAsync(existingDocument.MayanId.Value);
+                if (currentMayanDocument.Payload?.FileLatest?.Id == null || currentMayanDocument.Status != ExternalResponseStatus.Success)
+                {
+                    throw GetMayanResponseError(currentMayanDocument.Message);
+                }
+
+                currentMayanDocument.Payload.FileLatest.FileName = updateRequest.FileName;
+                ExternalResponse<FileLatestModel> result = await documentStorageRepository.TryUpdateDocumentFileAsync(existingDocument.MayanId.Value, currentMayanDocument.Payload.FileLatest.Id, currentMayanDocument.Payload.FileLatest);
+                if (result.Status != ExternalResponseStatus.Success)
+                {
+                    throw GetMayanResponseError(result.Message);
+                }
+
+                existingDocument.FileName = result.Payload.FileName;
                 documentRepository.Update(existingDocument);
                 documentRepository.CommitTransaction();
             }
