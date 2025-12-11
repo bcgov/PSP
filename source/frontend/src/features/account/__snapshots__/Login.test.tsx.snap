@@ -31,9 +31,7 @@ exports[`login > login renders correctly 1`] = `
 }
 
 .c2.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c2.btn:hover {
@@ -348,7 +346,7 @@ exports[`login > login renders correctly 1`] = `
           className="logo-title col-md-6 col-16"
         >
           <h1>
-            MOTI Property Information Management System (PIMS)
+            MOTT Property Information Management System (PIMS)
           </h1>
         </div>
       </div>
@@ -397,7 +395,7 @@ exports[`login > login renders correctly 1`] = `
             className="message-body"
           >
             <p>
-              PIMS enables users to track and manage information relating to the property interests of the MOTI and BCTFA.
+              PIMS enables users to track and manage information relating to the property interests of the MOTT and BCTFA.
             </p>
             <hr
               className="spacer"

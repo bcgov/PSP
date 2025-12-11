@@ -115,7 +115,7 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                 </Col>
               </Row>
               <Row>
-                <Col lg="7">
+                <Col lg="5">
                   <Multiselect
                     field="acquisitionTeamMembers"
                     displayValue="text"
@@ -125,7 +125,10 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                     selectionLimit={1}
                   />
                 </Col>
-                <Col lg="5">
+                <Col lg="4">
+                  <Input field="ownerName" placeholder="Owner" />
+                </Col>
+                <Col lg="3">
                   <Select
                     options={acquisitionStatusOptions}
                     field="acquisitionFileStatusTypeCode"

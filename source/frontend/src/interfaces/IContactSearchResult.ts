@@ -194,7 +194,7 @@ export function toPerson(baseModel?: IContactSearchResult): ApiGen_Concepts_Pers
     addressComment: null,
     birthDate: null,
     nameSuffix: null,
-    propertyActivityId: null,
+    managementActivityId: null,
     useOrganizationAddress: null,
   };
 }

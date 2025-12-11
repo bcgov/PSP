@@ -2,7 +2,7 @@ import ExpandableTextList from '@/components/common/ExpandableTextList';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyLease } from '@/models/api/generated/ApiGen_Concepts_PropertyLease';
 import { exists, isValidString } from '@/utils';
-import { getPropertyName } from '@/utils/mapPropertyUtils';
+import { getApiPropertyName } from '@/utils/mapPropertyUtils';
 
 export interface ILeaseHeaderAddressesProps {
   propertyLeases?: ApiGen_Concepts_PropertyLease[];
@@ -42,14 +42,7 @@ const getFormattedAddress = (property: ApiGen_Concepts_Property | null | undefin
   } else {
     return isValidString(address?.municipality)
       ? address!.municipality
-      : `${
-          getPropertyName({
-            pid: property.pid?.toString(),
-            pin: property.pin?.toString(),
-            latitude: property.latitude ?? undefined,
-            longitude: property.longitude ?? undefined,
-          }).value
-        } - Address not available in PIMS`;
+      : `${getApiPropertyName(property).value} - Address not available in PIMS`;
   }
 };
 

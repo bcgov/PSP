@@ -13,7 +13,7 @@ namespace Pims.Dal.Entities;
 public partial class PimsChklstItemStatusType
 {
     /// <summary>
-    /// Codified version of the various checklist item status types.
+    /// Code value of the checklist item status types.
     /// </summary>
     [Key]
     [Column("CHKLST_ITEM_STATUS_TYPE_CODE")]
@@ -21,7 +21,7 @@ public partial class PimsChklstItemStatusType
     public string ChklstItemStatusTypeCode { get; set; }
 
     /// <summary>
-    /// Description of the various checklist item status type.
+    /// Description of the checklist item status types.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -29,13 +29,13 @@ public partial class PimsChklstItemStatusType
     public string Description { get; set; }
 
     /// <summary>
-    /// Display order of the codes.
+    /// Designates a preferred presentation order of the code descriptions.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }
 
     /// <summary>
-    /// Indicates if the code value is inactive.
+    /// Indicates if the record is disabled and therefore not selectable or displayed.
     /// </summary>
     [Column("IS_DISABLED")]
     public bool IsDisabled { get; set; }

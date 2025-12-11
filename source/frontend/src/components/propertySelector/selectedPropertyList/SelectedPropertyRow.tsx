@@ -1,21 +1,19 @@
 import { getIn, useFormikContext } from 'formik';
-import { geoJSON } from 'leaflet';
-import { useCallback, useEffect } from 'react';
+import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaSearchPlus } from 'react-icons/fa';
 import { RiDragMove2Line } from 'react-icons/ri';
 import styled from 'styled-components';
 
-import { LinkButton, RemoveButton, StyledIconButton } from '@/components/common/buttons';
+import { RemoveButton, StyledIconButton } from '@/components/common/buttons';
 import { Select } from '@/components/common/form';
 import { InlineInput } from '@/components/common/form/styles';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import OverflowTip from '@/components/common/OverflowTip';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
-import { exists } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
-import { featuresetToMapProperty, getPropertyName, NameSourceType } from '@/utils/mapPropertyUtils';
+import { getPropertyNameFromSelectedFeatureSet, NameSourceType } from '@/utils/mapPropertyUtils';
 
 import DisabledDraftCircleNumber from './DisabledDraftCircleNumber';
 
@@ -42,16 +40,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
     }
   }, [nameSpace, setFieldTouched, touched]);
 
-  const onZoomToProperty = useCallback(() => {
-    const geom = property.pimsFeature.geometry;
-    const bounds = geoJSON(geom).getBounds();
-
-    if (exists(bounds) && bounds.isValid()) {
-      mapMachine.requestFlyToBounds(bounds);
-    }
-  }, [mapMachine, property.pimsFeature.geometry]);
-
-  const propertyName = getPropertyName(featuresetToMapProperty(property));
+  const propertyName = getPropertyNameFromSelectedFeatureSet(property);
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:
@@ -88,10 +77,8 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           errorKeys={[withNameSpace(nameSpace, 'isRetired')]}
         />
       </Col>
-      <Col xs="auto">
-        <LinkButton onClick={onZoomToProperty}>
-          <FaSearchPlus size={18} className="ml-4" />
-        </LinkButton>
+      <Col xs="auto" className="ml-5">
+        <ZoomToLocation geometry={property.pimsFeature.geometry} icon={ZoomIconType.single} />
       </Col>
       {showDisable && (
         <Col md={2}>
@@ -111,12 +98,17 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           onClick={() => {
             mapMachine.startReposition(property, index);
           }}
+          data-testid={'move-pin-location-' + index}
         >
           <RiDragMove2Line size={22} />
         </StyledIconButton>
       </Col>
       <Col md={1}>
-        <RemoveButton onRemove={onRemove} fontSize="1.4rem" />
+        <RemoveButton
+          onRemove={onRemove}
+          fontSize="1.4rem"
+          data-testId={'delete-property-' + index}
+        />
       </Col>
     </StyledRow>
   );

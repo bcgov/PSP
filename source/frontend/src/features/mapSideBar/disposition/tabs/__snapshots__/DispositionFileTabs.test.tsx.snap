@@ -82,6 +82,11 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
+.c8 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c6.required::before {
   content: '*';
   position: absolute;
@@ -91,11 +96,6 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
 
 .c5 {
   font-weight: bold;
-}
-
-.c8 {
-  padding: 0 0.4rem;
-  display: block;
 }
 
 <div

@@ -75,7 +75,7 @@ describe('AddLeaseTeamSubForm component', () => {
     await act(async () => userEvent.click(addRow));
     await act(async () => userEvent.click(getByTestId('team.0.remove-button')));
 
-    expect(getByText(/Are you sure you want to remove this row/i)).toBeVisible();
+    expect(getByText(/Do you wish to remove this team member/i)).toBeVisible();
   });
 
   it(`removes the team member upon user confirmation`, async () => {
@@ -86,7 +86,7 @@ describe('AddLeaseTeamSubForm component', () => {
     await act(async () => userEvent.click(addRow));
     await act(async () => userEvent.click(getByTestId('team.0.remove-button')));
 
-    expect(getByText(/Are you sure you want to remove this row/i)).toBeVisible();
+    expect(getByText(/Do you wish to remove this team member/i)).toBeVisible();
 
     await act(async () => userEvent.click(getByTitle('ok-modal')));
     expect(getByName('team.0.contactTypeCode')).toBeNull();
@@ -100,7 +100,7 @@ describe('AddLeaseTeamSubForm component', () => {
     await act(async () => userEvent.click(addRow));
     await act(async () => userEvent.click(getByTestId('team.0.remove-button')));
 
-    expect(getByText(/Are you sure you want to remove this row/i)).toBeVisible();
+    expect(getByText(/Do you wish to remove this team member/i)).toBeVisible();
 
     await act(async () => userEvent.click(getByTitle('cancel-modal')));
     expect(getByName('team.0.contactTypeCode')).toBeVisible();

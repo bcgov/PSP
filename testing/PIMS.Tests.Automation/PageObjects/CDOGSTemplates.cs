@@ -5,42 +5,42 @@ namespace PIMS.Tests.Automation.PageObjects
     public class CDOGSTemplates : PageObjectBase
     {
         //Admin Tools - CDOGS Menu Elements
-        private By adminToolsTemplatesLink = By.XPath("//a[contains(text(),'Manage Form Document Templates')]");
-        private By adminToolsTemplateTypeSelect = By.CssSelector("select[class='form-select form-control']");
+        private readonly By adminToolsTemplatesLink = By.XPath("//a[contains(text(),'Manage Form Document Templates')]");
+        private readonly By adminToolsTemplateTypeSelect = By.CssSelector("select[class='form-select form-control']");
 
         //Admin Tools - CDOGS List View Elements
-        private By CDOGSDocumentsTitle = By.XPath("//div[contains(text(),'Documents')]");
-        private By CDOGSAddTemplateBttn = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button");
+        private readonly By CDOGSDocumentsTitle = By.XPath("//div[contains(text(),'Documents')]");
+        private readonly By CDOGSAddTemplateBttn = By.XPath("//button[@data-testid='refresh-button']/preceding-sibling::button");
 
         //CDOGS List Filters
-        private By CDOGSFilterTypeSelect = By.CssSelector("select[data-testid='document-type']");
-        private By CDOGSFilterStatusSelect = By.CssSelector("select[data-testid='document-status']");
-        private By CDOGSFilterNameInput = By.CssSelector("input[data-testid='document-filename']");
-        private By CDOGSFilterSearchBttn = By.CssSelector("button[data-testid='search']");
-        private By CDOGSFilterResetBttn = By.CssSelector("button[data-testid='reset-button']");
+        private readonly By CDOGSFilterTypeSelect = By.CssSelector("select[data-testid='document-type']");
+        private readonly By CDOGSFilterStatusSelect = By.CssSelector("select[data-testid='document-status']");
+        private readonly By CDOGSFilterNameInput = By.CssSelector("input[data-testid='document-filename']");
+        private readonly By CDOGSFilterSearchBttn = By.CssSelector("button[data-testid='search']");
+        private readonly By CDOGSFilterResetBttn = By.CssSelector("button[data-testid='reset-button']");
 
         //Documents List Results
-        private By CDOGSTableResults = By.CssSelector("div[data-testid='documentsTable']");
-        private By CDOGSTableTypeColumn = By.XPath("//div[contains(text(),'Document type')]");
-        private By CDOGSTableNameColumn = By.XPath("//div[contains(text(),'File name')]");
-        private By CDOGSTableDateColumn = By.XPath("//div[contains(text(),'Uploaded')]");
-        private By CDOGSTableStatusColumn = By.XPath("//div[contains(text(),'Status')]");
-        private By CDOGSTableActionsColumn = By.XPath("//div[contains(text(),'Actions')]");
+        private readonly By CDOGSTableResults = By.CssSelector("div[data-testid='documentsTable']");
+        private readonly By CDOGSTableTypeColumn = By.XPath("//div[contains(text(),'Document type')]");
+        private readonly By CDOGSTableNameColumn = By.XPath("//div[contains(text(),'Document name')]");
+        private readonly By CDOGSTableDateColumn = By.XPath("//div[contains(text(),'Uploaded')]");
+        private readonly By CDOGSTableStatusColumn = By.XPath("//div[contains(text(),'Status')]");
+        private readonly By CDOGSTableActionsColumn = By.XPath("//div[contains(text(),'Actions')]");
 
-        private By CDOGSPagination = By.XPath("//ul[@class='pagination']");
-        private By CDOGSMenuPagination = By.XPath("//div[@class='Menu-root']");
+        private readonly By CDOGSPagination = By.XPath("//ul[@class='pagination']");
+        private readonly By CDOGSMenuPagination = By.XPath("//div[@class='Menu-root']");
 
         //Documents List 1st Result Elements
-        private By CDOGStTableResults1stDownloadBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/div/button[@data-testid='document-download-button']");
-        private By CDOGSTableResults1stViewBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-view-button']");
-        private By CDOGSTableResults1stDeleteBttn = By.Id("document-delete-0");
+        private readonly By CDOGStTableResults1stDownloadBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/div/button[@data-testid='document-download-button']");
+        private readonly By CDOGSTableResults1stViewBttn = By.XPath("//div[@data-testid='documentsTable']/div[@class='tbody']/div[1]/div/div[5]/div/div/button[@data-testid='document-view-button']");
+        private readonly By CDOGSTableResults1stDeleteBttn = By.Id("document-delete-0");
 
         //Document Delete Document Confirmation Modal Elements
-        private By documentDeleteHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
-        private By documentDeleteContent1 = By.CssSelector("div[class='modal-body'] div div:nth-child(1)");
-        private By documentDeteleContent2 = By.CssSelector("div[class='modal-body'] div:nth-child(3)");
-        private By documentDeleteContent3 = By.CssSelector("div[class='modal-body'] div strong");
-        private By documentDeleteOkBttn = By.CssSelector("button[title='ok-modal']");
+        private readonly By documentDeleteHeader = By.CssSelector("div[class='modal-header'] div[class='modal-title h4']");
+        private readonly By documentDeleteContent1 = By.CssSelector("div[class='modal-body'] div div:nth-child(1)");
+        private readonly By documentDeteleContent2 = By.CssSelector("div[class='modal-body'] div:nth-child(3)");
+        private readonly By documentDeleteContent3 = By.CssSelector("div[class='modal-body'] div strong");
+        private readonly By documentDeleteOkBttn = By.CssSelector("button[title='ok-modal']");
 
         public CDOGSTemplates(IWebDriver webDriver) : base(webDriver)
         {}

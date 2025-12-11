@@ -328,7 +328,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             for (int i = startRow; i <= startRow + rowsCount; i++)
             {
-                Product product = new Product();
+                Product product = new();
                 product.ProductCode = ExcelDataContext.ReadData(i, "ProductCode");
                 product.ProductName = ExcelDataContext.ReadData(i, "ProductName");
                 product.ProductCodeName = ExcelDataContext.ReadData(i, "ProductCodeName");

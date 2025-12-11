@@ -36,9 +36,7 @@ exports[`AccessRequestPage > renders correctly 1`] = `
 }
 
 .c7.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c7.btn:hover {
@@ -474,7 +472,7 @@ exports[`AccessRequestPage > renders correctly 1`] = `
                   class="form-control"
                   id="input-email"
                   name="email"
-                  placeholder="test@test.com"
+                  placeholder=""
                   readonly=""
                   style="word-break: break-all;"
                   title="test@test.com"
@@ -647,7 +645,7 @@ exports[`AccessRequestPage > renders correctly 1`] = `
               <label
                 class="c2"
               >
-                MoTI Region:
+                MOTT region:
               </label>
             </div>
             <div
@@ -664,7 +662,7 @@ exports[`AccessRequestPage > renders correctly 1`] = `
                   <option
                     value=""
                   >
-                    Select MoTI Region
+                    Select MOTT region
                   </option>
                 </select>
               </div>

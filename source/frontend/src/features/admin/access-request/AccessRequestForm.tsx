@@ -103,8 +103,8 @@ export const AccessRequestForm: React.FunctionComponent<
             <StyledTooltipIcon className="tooltip-icon" />
           </TooltipWrapper>
         </SectionField>
-        <SectionField label="MoTI Region" labelWidth={{ xs: 2 }} required>
-          <Select field="regionCodeId" options={selectRegions} placeholder="Select MoTI Region" />
+        <SectionField label="MOTT region" labelWidth={{ xs: 2 }} required>
+          <Select field="regionCodeId" options={selectRegions} placeholder="Select MOTT region" />
         </SectionField>
         <SectionField label="Comments" labelWidth={{ xs: 2 }}>
           <TextArea

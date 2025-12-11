@@ -1,0 +1,52 @@
+[
+  {
+    "Test Case Description": "Create AF with Compensation",
+    "StakeholderType": "Non-Interest Payee",
+    "StakeholderContactType": "Individual",
+    "PayeeName": "Agnes Anne Griko",
+    "InterestHolder": null,
+    "StakeholderPrimaryContact": null,
+    "InterestType": null,
+    "StakeholderIndex": 0
+  },
+  {
+    "Test Case Description": "Create AF with Compensation",
+    "StakeholderType": "Interest",
+    "StakeholderContactType": "Organization",
+    "PayeeName": null,
+    "InterestHolder": "Amix Real Estate Holdings Ltd.",
+    "StakeholderPrimaryContact": "Cortney Ortiz",
+    "InterestType": "Lease",
+    "StakeholderIndex": 0
+  },
+  {
+    "Test Case Description": "Create AF with Expropriation",
+    "StakeholderType": "Non-Interest Payee",
+    "StakeholderContactType": "Organization",
+    "PayeeName": "Budget Truck and Car Rental",
+    "InterestHolder": null,
+    "StakeholderPrimaryContact": null,
+    "InterestType": null,
+    "StakeholderIndex": 0
+  },
+  {
+    "Test Case Description": "Create AF with Expropriation",
+    "StakeholderType": "Interest",
+    "StakeholderContactType": "Individual",
+    "PayeeName": null,
+    "InterestHolder": "Andreas Michael Matusza",
+    "StakeholderPrimaryContact": null,
+    "InterestType": "Life Estate",
+    "StakeholderIndex": 0
+  },
+  {
+    "Test Case Description": "Create Minimum AF",
+    "StakeholderType": "Interest",
+    "StakeholderContactType": "Individual",
+    "PayeeName": null,
+    "InterestHolder": "Ali Thomson",
+    "StakeholderPrimaryContact": null,
+    "InterestType": "Equitable Charge",
+    "StakeholderIndex": 0
+  }
+]

@@ -110,9 +110,9 @@ class ResearchStatusUpdateSolver {
     switch (statusCode) {
       case ApiGen_CodeTypes_ResearchFileStatusTypes.ACTIVE:
       case ApiGen_CodeTypes_ResearchFileStatusTypes.INACTIVE:
-      case ApiGen_CodeTypes_ResearchFileStatusTypes.CLOSED:
         isProtected = false;
         break;
+      case ApiGen_CodeTypes_ResearchFileStatusTypes.CLOSED:
       case ApiGen_CodeTypes_ResearchFileStatusTypes.ARCHIVED:
         isProtected = true;
         break;

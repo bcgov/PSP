@@ -1,15 +1,14 @@
 import isNumber from 'lodash/isNumber';
 
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
-import { IMapProperty } from '@/components/propertySelector/models';
-import { AreaUnitTypes } from '@/constants/index';
 import {
   fromApiOrganization,
   fromApiPerson,
   IAutocompletePrediction,
   IContactSearchResult,
 } from '@/interfaces';
-import { ApiGen_CodeTypes_LeaseAccountTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseAccountTypes';
+import { ApiGen_CodeTypes_AreaUnitTypes } from '@/models/api/generated/ApiGen_CodeTypes_AreaUnitTypes';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
@@ -272,10 +271,10 @@ export class FormLeaseProperty {
   areaUnitTypeCode: string;
   displayOrder: number | null;
 
-  private constructor(leaseId?: number | null) {
+  constructor(leaseId?: number | null) {
     this.leaseId = leaseId ?? null;
     this.landArea = 0;
-    this.areaUnitTypeCode = AreaUnitTypes.SquareMeters;
+    this.areaUnitTypeCode = ApiGen_CodeTypes_AreaUnitTypes.M2;
   }
 
   public static fromFormLeaseProperty(baseModel?: Partial<FormLeaseProperty>): FormLeaseProperty {
@@ -290,20 +289,20 @@ export class FormLeaseProperty {
     model.rowVersion = apiPropertyLease.rowVersion ?? undefined;
     model.name = apiPropertyLease.propertyName ?? undefined;
     model.landArea = apiPropertyLease.leaseArea ?? 0;
-    model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || AreaUnitTypes.SquareMeters;
+    model.areaUnitTypeCode = apiPropertyLease.areaUnitType?.id || ApiGen_CodeTypes_AreaUnitTypes.M2;
     model.displayOrder = apiPropertyLease.displayOrder;
-    return model;
-  }
-
-  public static fromMapProperty(mapProperty: IMapProperty): FormLeaseProperty {
-    const model = new FormLeaseProperty();
-    model.property = PropertyForm.fromMapProperty(mapProperty);
     return model;
   }
 
   public static fromFeatureDataset(mapProperty: SelectedFeatureDataset): FormLeaseProperty {
     const model = new FormLeaseProperty();
     model.property = PropertyForm.fromFeatureDataset(mapProperty);
+    return model;
+  }
+
+  public static fromPropertyForm(propertyForm: PropertyForm): FormLeaseProperty {
+    const model = new FormLeaseProperty();
+    model.property = new PropertyForm(propertyForm);
     return model;
   }
 
@@ -415,7 +414,7 @@ export const getDefaultFormLease: () => LeaseFormModel = () =>
     hasDigitalLicense: null,
     hasPhysicalLicense: null,
     fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeaseStatusTypes.DRAFT),
-    paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeaseAccountTypes.RCVBL),
+    paymentReceivableType: toTypeCodeNullable(ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL),
     leasePurposes: [],
     programType: null,
     type: null,

@@ -193,11 +193,6 @@ namespace Pims.Api.Models.Concepts.Property
         /// get/set - Property Historical File numbers.
         /// </summary>
         public IList<HistoricalFileNumberModel> HistoricalFileNumbers { get; set; }
-
-        /// <summary>
-        /// get/set - The property notes.
-        /// </summary>
-        public string Notes { get; set; }
         #endregion
 
         #region Surplus

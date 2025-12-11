@@ -5,7 +5,7 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { TableSort } from '@/components/Table/TableSort';
 import Claims from '@/constants/claims';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 
 import ManagementActivitiesList, {
   activityActionColumn,
@@ -16,10 +16,12 @@ import { PropertyActivityRow } from './models/PropertyActivityRow';
 export interface IManagementActivitiesListViewProps {
   isLoading: boolean;
   propertyActivities: PropertyActivityRow[];
-  sort: TableSort<ApiGen_Concepts_PropertyActivity>;
+  sort: TableSort<ApiGen_Concepts_ManagementActivity>;
   canEditActivities: boolean;
+  addActivityButtonText?: string;
+  activitiesListTitle?: string;
   getNavigationUrl?: (row: PropertyActivityRow) => { title: string; url: string };
-  setSort: React.Dispatch<React.SetStateAction<TableSort<ApiGen_Concepts_PropertyActivity>>>;
+  setSort: React.Dispatch<React.SetStateAction<TableSort<ApiGen_Concepts_ManagementActivity>>>;
   onCreate?: () => void;
   onView?: (activityId: number) => void;
   onDelete?: (activityId: number) => void;
@@ -30,6 +32,8 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
   propertyActivities,
   sort,
   canEditActivities,
+  addActivityButtonText,
+  activitiesListTitle,
   setSort,
   onCreate,
   onView,
@@ -43,11 +47,13 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
         canEditActivities ? (
           <SectionListHeader
             claims={[Claims.MANAGEMENT_EDIT]}
-            title="Activities List"
-            addButtonText="Add an Activity"
+            title={activitiesListTitle ?? 'Activities List'}
+            addButtonText={addActivityButtonText ?? 'Add an Activity'}
             addButtonIcon={<BiListPlus size={'2.5rem'} />}
             onButtonAction={onCreate}
             isAddEnabled={canEditActivities}
+            button-data-testId="add-activity-button"
+            title-data-testId="ad-hoc activities"
           />
         ) : (
           'Activities List'
@@ -63,6 +69,7 @@ const ManagementActivitiesListView: React.FunctionComponent<IManagementActivitie
           ...createActivityTableColumns(),
           activityActionColumn(canEditActivities, onView, onDelete),
         ]}
+        dataTestId="adhoc-activity-list"
       ></ManagementActivitiesList>
     </Section>
   );

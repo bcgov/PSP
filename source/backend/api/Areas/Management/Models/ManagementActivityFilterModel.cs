@@ -42,6 +42,16 @@ namespace Pims.Api.Areas.Management.Models
         /// </summary>
         public string ProjectNameOrNumber { get; set; }
 
+        /// <summary>
+        /// get/set - The management file status code.
+        /// </summary>
+        public string ManagementFileStatusCode { get; set; }
+
+        /// <summary>
+        /// get/set - The management file purpose.
+        /// </summary>
+        public string ManagementFilePurposeCode { get; set; }
+
         public ManagementActivityFilterModel()
         {
         }
@@ -58,6 +68,8 @@ namespace Pims.Api.Areas.Management.Models
             ActivityTypeCode = filter.GetStringValue(nameof(ActivityTypeCode));
             ActivityStatusCode = filter.GetStringValue(nameof(ActivityStatusCode));
             ProjectNameOrNumber = filter.GetStringValue(nameof(ProjectNameOrNumber));
+            ManagementFileStatusCode = filter.GetStringValue(nameof(ManagementFileStatusCode));
+            ManagementFilePurposeCode = filter.GetStringValue(nameof(ManagementFilePurposeCode));
         }
 
         /// <summary>
@@ -78,6 +90,8 @@ namespace Pims.Api.Areas.Management.Models
                 ActivityTypeCode = model.ActivityTypeCode,
                 ActivityStatusCode = model.ActivityStatusCode,
                 ProjectNameOrNumber = model.ProjectNameOrNumber,
+                ManagementFileStatusCode = model.ManagementFileStatusCode,
+                ManagementFilePurposeCode = model.ManagementFilePurposeCode,
 
                 Sort = model.Sort,
             };

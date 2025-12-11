@@ -15,14 +15,23 @@ import { useTenant } from '@/tenants';
 export const useLegalAdminBoundariesMapLayer = () => {
   const { alrLayerUrl, municipalLayerUrl } = useTenant();
 
-  const { findMultipleWhereContainsWrapped: findOneAlrWrapped_ } = useLayerQuery(alrLayerUrl);
+  const {
+    findMultipleWhereContainsWrapped: findOneAlrWrapped_,
+    findMultipleWhereContainsBoundaryWrapped: findMultipleAlrBoundaryWrapped_,
+  } = useLayerQuery(alrLayerUrl);
+  const findMultipleAlrBoundaryWrappedExecute = findMultipleAlrBoundaryWrapped_.execute;
+  const findMultipleAlrBoundaryWrappedLoading = findMultipleAlrBoundaryWrapped_.loading;
   const findOneAlrWrappedExecute = findOneAlrWrapped_.execute;
   const findOneAlrWrappedLoading = findOneAlrWrapped_.loading;
 
   const {
     findMultipleWhereContainsWrapped: findOneMunicipalWrapped_,
     findMultipleWhereContainsWrapped: findMultipleMunicipalWrapped_,
+    findMultipleWhereContainsBoundaryWrapped: findMultipleMunicipalBoundaryWrapped_,
   } = useLayerQuery(municipalLayerUrl);
+
+  const findMultipleMunicipalBoundaryWrappedExecute = findMultipleMunicipalBoundaryWrapped_.execute;
+  const findMultipleMunicipalBoundaryWrappedLoading = findMultipleMunicipalBoundaryWrapped_.loading;
 
   const findMultipleMunicipalWrappedExecute = findMultipleMunicipalWrapped_.execute;
   const findMultipleMunicipalWrappedLoading = findMultipleMunicipalWrapped_.loading;
@@ -47,6 +56,21 @@ export const useLegalAdminBoundariesMapLayer = () => {
         : undefined;
     },
     [findOneAlrWrappedExecute],
+  );
+
+  const findMultipleAgriculturalReserveBoundary = useCallback(
+    async (boundary: Geometry, geometryName?: string, spatialReferenceId?: number) => {
+      const featureCollection = await findMultipleAlrBoundaryWrappedExecute(
+        boundary,
+        geometryName,
+        spatialReferenceId,
+      );
+
+      return featureCollection as
+        | FeatureCollection<Geometry, WHSE_AgriculturalLandReservePoly_Feature_Properties>
+        | undefined;
+    },
+    [findMultipleAlrBoundaryWrappedExecute],
   );
 
   const findOneMunicipality = useCallback(
@@ -87,20 +111,47 @@ export const useLegalAdminBoundariesMapLayer = () => {
     [findMultipleMunicipalWrappedExecute],
   );
 
+  const findMultipleMunicipalityBoundary = useCallback(
+    async (boundary: Geometry, geometryName?: string, spatialReferenceId?: number) => {
+      const featureCollection = await findMultipleMunicipalBoundaryWrappedExecute(
+        boundary,
+        geometryName,
+        spatialReferenceId,
+      );
+
+      // TODO: Enhance useLayerQuery to allow generics to match the Property types
+      const forceCasted = featureCollection as
+        | FeatureCollection<Geometry, WHSE_Municipalities_Feature_Properties>
+        | undefined;
+      return forceCasted !== undefined && forceCasted.features.length > 0
+        ? forceCasted.features
+        : undefined;
+    },
+    [findMultipleMunicipalBoundaryWrappedExecute],
+  );
+
   return useMemo(
     () => ({
       findOneAgriculturalReserve,
       findOneAgriculturalReserveLoading: findOneAlrWrappedLoading,
+      findMultipleAgriculturalReserveBoundary,
+      findMultipleAgriculturalReserveLoading: findMultipleAlrBoundaryWrappedLoading,
       findMultipleMunicipality,
       findMultipleMunicipalLoading: findMultipleMunicipalWrappedLoading,
+      findMultipleMunicipalityBoundary,
+      findMultipleMunicipalBoundaryLoading: findMultipleMunicipalBoundaryWrappedLoading,
       findOneMunicipality,
       findOneMunicipalLoading: findOneMunicipalWrappedLoading,
     }),
     [
       findOneAgriculturalReserve,
       findOneAlrWrappedLoading,
+      findMultipleAgriculturalReserveBoundary,
+      findMultipleAlrBoundaryWrappedLoading,
       findMultipleMunicipality,
       findMultipleMunicipalWrappedLoading,
+      findMultipleMunicipalityBoundary,
+      findMultipleMunicipalBoundaryWrappedLoading,
       findOneMunicipality,
       findOneMunicipalWrappedLoading,
     ],

@@ -9,6 +9,8 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { ApiGen_CodeTypes_LeaseLicenceTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseLicenceTypes';
+import { ApiGen_CodeTypes_LeaseProgramTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseProgramTypes';
 import { ApiGen_CodeTypes_LeasePurposeTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePurposeTypes';
 import { isValidString } from '@/utils';
 
@@ -37,11 +39,17 @@ const AdministrationSubForm: React.FunctionComponent<
 
   //clear the associated other fields if the corresponding type has its value changed from other to something else.
   useEffect(() => {
-    if (isValidString(leaseTypeCode) && leaseTypeCode !== 'OTHER') {
+    if (
+      isValidString(leaseTypeCode) &&
+      leaseTypeCode !== ApiGen_CodeTypes_LeaseLicenceTypes.OTHER
+    ) {
       setFieldValue('otherLeaseTypeDescription', '');
     }
 
-    if (isValidString(programTypeCode) && programTypeCode !== 'OTHER') {
+    if (
+      isValidString(programTypeCode) &&
+      programTypeCode !== ApiGen_CodeTypes_LeaseProgramTypes.OTHER
+    ) {
       setFieldValue('otherProgramTypeDescription', '');
     }
 
@@ -117,12 +125,12 @@ const AdministrationSubForm: React.FunctionComponent<
         title="Help with choosing the agreement Program, Type and Purpose"
         guideBody={guideBodyContent()}
       ></FormGuideContainer>
-      <SectionField label="MOTI contact" labelWidth={{ xs: 3 }} contentWidth={{ xs: 6 }}>
+      <SectionField label="MOTT contact" labelWidth={{ xs: 3 }} contentWidth={{ xs: 6 }}>
         <InlineInput field="motiName" />
       </SectionField>
 
       <SectionField
-        label="MOTI region"
+        label="MOTT region"
         labelWidth={{ xs: 3 }}
         contentWidth={{ xs: 'auto' }}
         required
@@ -137,7 +145,7 @@ const AdministrationSubForm: React.FunctionComponent<
           required
         />
       </SectionField>
-      {values?.programTypeCode === 'OTHER' && (
+      {values?.programTypeCode === ApiGen_CodeTypes_LeaseProgramTypes.OTHER && (
         <SectionField
           label="Other Program"
           labelWidth={{ xs: 3 }}
@@ -150,7 +158,7 @@ const AdministrationSubForm: React.FunctionComponent<
       <SectionField label="Type" labelWidth={{ xs: 3 }} contentWidth={{ xs: 9 }} required>
         <Select field="leaseTypeCode" options={types} placeholder="Select type" required />
       </SectionField>
-      {values?.leaseTypeCode === 'OTHER' && (
+      {values?.leaseTypeCode === ApiGen_CodeTypes_LeaseLicenceTypes.OTHER && (
         <SectionField
           label="Describe other"
           labelWidth={{ xs: 3 }}

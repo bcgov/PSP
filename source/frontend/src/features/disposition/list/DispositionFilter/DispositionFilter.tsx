@@ -106,7 +106,7 @@ export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
                   <Select
                     options={fileStatusOptions}
                     field="dispositionFileStatusCode"
-                    placeholder="Select file status..."
+                    placeholder="All Status"
                   />
                 </Col>
               </Row>

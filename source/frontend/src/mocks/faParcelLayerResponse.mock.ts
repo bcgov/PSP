@@ -1,6 +1,11 @@
-import { FeatureCollection, GeoJsonProperties, Geometry } from 'geojson';
+import { Feature, FeatureCollection, Geometry } from 'geojson';
 
-export const mockFAParcelLayerResponse: FeatureCollection<Geometry, GeoJsonProperties> = {
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+
+export const mockFAParcelLayerResponse: FeatureCollection<
+  Geometry,
+  PMBC_FullyAttributed_Feature_Properties
+> & { [name: string]: any } = {
   type: 'FeatureCollection',
   features: [
     {
@@ -22,7 +27,6 @@ export const mockFAParcelLayerResponse: FeatureCollection<Geometry, GeoJsonPrope
           ],
         ],
       },
-      geometry_name: 'SHAPE',
       properties: {
         GLOBAL_UID: '{4C4D758A-1261-44C1-8835-0FEB93150495}',
         PARCEL_NAME: '009727493',
@@ -30,6 +34,7 @@ export const mockFAParcelLayerResponse: FeatureCollection<Geometry, GeoJsonPrope
         PLAN_NUMBER: 'NO_PLAN',
         PIN: null,
         PID: '9727493',
+        PID_FORMATTED: '009-727-493',
         PID_NUMBER: 9727493,
         SOURCE_PARCEL_ID: null,
         PARCEL_STATUS: 'ACTIVE',
@@ -56,6 +61,8 @@ export const mockFAParcelLayerResponse: FeatureCollection<Geometry, GeoJsonPrope
         FEATURE_LENGTH_M: 702,
         OBJECTID: 551,
         SE_ANNO_CAD_DATA: null,
+        PARCEL_FABRIC_POLY_ID: 5156389,
+        SHAPE: null,
       },
       bbox: [-123.4627, 48.7652, -123.46, 48.7672],
     },
@@ -71,80 +78,143 @@ export const mockFAParcelLayerResponse: FeatureCollection<Geometry, GeoJsonPrope
     },
   },
   bbox: [-132.1709, 48.3528, -114.6927, 56.8488],
-} as unknown as FeatureCollection<Geometry, GeoJsonProperties>;
+};
 
-export const mockFAParcelLayerResponseMultiPolygon: FeatureCollection<Geometry, GeoJsonProperties> =
-  {
-    type: 'FeatureCollection',
-    features: [
-      {
-        type: 'Feature',
-        id: 'PMBC_PARCEL_POLYGON_FABRIC.551',
-        geometry: {
-          type: 'MultiPolygon',
-          coordinates: [
+export const mockFAParcelLayerResponseMultiPolygon: FeatureCollection<
+  Geometry,
+  PMBC_FullyAttributed_Feature_Properties
+> & { [name: string]: any } = {
+  type: 'FeatureCollection',
+  features: [
+    {
+      type: 'Feature',
+      id: 'PMBC_PARCEL_POLYGON_FABRIC.551',
+      geometry: {
+        type: 'MultiPolygon',
+        coordinates: [
+          [
             [
-              [
-                [-123.46, 48.767],
-                [-123.4601, 48.7668],
-                [-123.461, 48.7654],
-                [-123.4623, 48.7652],
-                [-123.4627, 48.7669],
-                [-123.4602, 48.7672],
-                [-123.4601, 48.7672],
-                [-123.4601, 48.7672],
-                [-123.46, 48.767],
-              ],
+              [-123.46, 48.767],
+              [-123.4601, 48.7668],
+              [-123.461, 48.7654],
+              [-123.4623, 48.7652],
+              [-123.4627, 48.7669],
+              [-123.4602, 48.7672],
+              [-123.4601, 48.7672],
+              [-123.4601, 48.7672],
+              [-123.46, 48.767],
             ],
           ],
-        },
-        geometry_name: 'SHAPE',
-        properties: {
-          GLOBAL_UID: '{4C4D758A-1261-44C1-8835-0FEB93150495}',
-          PARCEL_NAME: '009727493',
-          PLAN_ID: 3,
-          PLAN_NUMBER: 'NO_PLAN',
-          PIN: null,
-          PID: '9727493',
-          PID_NUMBER: 9727493,
-          SOURCE_PARCEL_ID: null,
-          PARCEL_STATUS: 'ACTIVE',
-          PARCEL_CLASS: 'SUBDIVISION',
-          OWNER_TYPE: 'CROWN PROVINCIAL',
-          PARCEL_START_DATE: null,
-          SURVEY_DESIGNATION_1: 'PART 13',
-          SURVEY_DESIGNATION_2: 'SOUTH SALT SPRING,1',
-          SURVEY_DESIGNATION_3: '',
-          LEGAL_DESCRIPTION:
-            'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
-          MUNICIPALITY: '0163',
-          REGIONAL_DISTRICT: '0005',
-          IS_REMAINDER_IND: 'NO',
-          GEOMETRY_SOURCE: 'MODIFIED-ICIS',
-          POSITIONAL_ERROR: 2,
-          ERROR_REPORTED_BY: 'DATACOMPILATION',
-          CAPTURE_METHOD: 'UNKNOWN',
-          COMPILED_IND: '1',
-          STATED_AREA: null,
-          WHEN_CREATED: '2016-01-06T17:44:42Z',
-          WHEN_UPDATED: '2019-01-05T10:21:32Z',
-          FEATURE_AREA_SQM: 29217,
-          FEATURE_LENGTH_M: 702,
-          OBJECTID: 551,
-          SE_ANNO_CAD_DATA: null,
-        },
-        bbox: [-123.4627, 48.7652, -123.46, 48.7672],
+        ],
       },
-    ],
-    totalFeatures: 1,
-    numberMatched: 1,
-    numberReturned: 1,
-    timeStamp: '2022-06-10T20:15:54.003Z',
-    crs: {
-      type: 'name',
       properties: {
-        name: 'urn:ogc:def:crs:EPSG::4326',
+        GLOBAL_UID: '{4C4D758A-1261-44C1-8835-0FEB93150495}',
+        PARCEL_NAME: '009727493',
+        PLAN_ID: 3,
+        PLAN_NUMBER: 'NO_PLAN',
+        PIN: null,
+        PID: '9727493',
+        PID_FORMATTED: '009-727-493',
+        PID_NUMBER: 9727493,
+        SOURCE_PARCEL_ID: null,
+        PARCEL_STATUS: 'ACTIVE',
+        PARCEL_CLASS: 'SUBDIVISION',
+        OWNER_TYPE: 'CROWN PROVINCIAL',
+        PARCEL_START_DATE: null,
+        SURVEY_DESIGNATION_1: 'PART 13',
+        SURVEY_DESIGNATION_2: 'SOUTH SALT SPRING,1',
+        SURVEY_DESIGNATION_3: '',
+        LEGAL_DESCRIPTION:
+          'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
+        MUNICIPALITY: '0163',
+        REGIONAL_DISTRICT: '0005',
+        IS_REMAINDER_IND: 'NO',
+        GEOMETRY_SOURCE: 'MODIFIED-ICIS',
+        POSITIONAL_ERROR: 2,
+        ERROR_REPORTED_BY: 'DATACOMPILATION',
+        CAPTURE_METHOD: 'UNKNOWN',
+        COMPILED_IND: '1',
+        STATED_AREA: null,
+        WHEN_CREATED: '2016-01-06T17:44:42Z',
+        WHEN_UPDATED: '2019-01-05T10:21:32Z',
+        FEATURE_AREA_SQM: 29217,
+        FEATURE_LENGTH_M: 702,
+        OBJECTID: 551,
+        SE_ANNO_CAD_DATA: null,
+        PARCEL_FABRIC_POLY_ID: 0,
+        SHAPE: null,
       },
+      bbox: [-123.4627, 48.7652, -123.46, 48.7672],
     },
-    bbox: [-132.1709, 48.3528, -114.6927, 56.8488],
-  } as unknown as FeatureCollection<Geometry, GeoJsonProperties>;
+  ],
+  totalFeatures: 1,
+  numberMatched: 1,
+  numberReturned: 1,
+  timeStamp: '2022-06-10T20:15:54.003Z',
+  crs: {
+    type: 'name',
+    properties: {
+      name: 'urn:ogc:def:crs:EPSG::4326',
+    },
+  },
+  bbox: [-132.1709, 48.3528, -114.6927, 56.8488],
+};
+
+export const getMockFullyAttributedParcel = (
+  pid: string,
+): Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> => ({
+  type: 'Feature',
+  geometry: {
+    type: 'Polygon',
+    coordinates: [
+      [
+        [-123.46, 48.767],
+        [-123.4601, 48.7668],
+        [-123.461, 48.7654],
+        [-123.4623, 48.7652],
+        [-123.4627, 48.7669],
+        [-123.4602, 48.7672],
+        [-123.4601, 48.7672],
+        [-123.4601, 48.7672],
+        [-123.46, 48.767],
+      ],
+    ],
+  },
+  properties: {
+    GLOBAL_UID: '{4C4D758A-1261-44C1-8835-0FEB93150495}',
+    PARCEL_NAME: 'MOCK_PARCEL',
+    PLAN_ID: 3,
+    PLAN_NUMBER: 'NO_PLAN',
+    PIN: null,
+    PID: pid ?? '111111111',
+    PID_FORMATTED: pid ?? '111111111',
+    PID_NUMBER: pid ? parseInt(pid, 10) : 111111111,
+    SOURCE_PARCEL_ID: null,
+    PARCEL_STATUS: 'ACTIVE',
+    PARCEL_CLASS: 'SUBDIVISION',
+    OWNER_TYPE: 'CROWN PROVINCIAL',
+    PARCEL_START_DATE: null,
+    SURVEY_DESIGNATION_1: 'PART 13',
+    SURVEY_DESIGNATION_2: 'SOUTH SALT SPRING,1',
+    SURVEY_DESIGNATION_3: '',
+    LEGAL_DESCRIPTION:
+      'THAT PART OF SECTION 13, RANGE 1, SOUTH SALT SPRING ISLAND, COWICHAN DISTRICT',
+    MUNICIPALITY: '0163',
+    REGIONAL_DISTRICT: '0005',
+    IS_REMAINDER_IND: 'NO',
+    GEOMETRY_SOURCE: 'MODIFIED-ICIS',
+    POSITIONAL_ERROR: 2,
+    ERROR_REPORTED_BY: 'DATACOMPILATION',
+    CAPTURE_METHOD: 'UNKNOWN',
+    COMPILED_IND: '1',
+    STATED_AREA: null,
+    WHEN_CREATED: '2016-01-06T17:44:42Z',
+    WHEN_UPDATED: '2019-01-05T10:21:32Z',
+    FEATURE_AREA_SQM: 29217,
+    FEATURE_LENGTH_M: 702,
+    OBJECTID: 551,
+    SE_ANNO_CAD_DATA: null,
+    PARCEL_FABRIC_POLY_ID: 0,
+    SHAPE: null,
+  },
+});

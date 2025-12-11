@@ -31,9 +31,7 @@ exports[`SideNavbar display and logic > renders 1`] = `
 }
 
 .c4.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c4.btn:hover {
@@ -276,6 +274,11 @@ exports[`SideNavbar display and logic > renders 1`] = `
 
 .c1 .nav-link {
   padding: 0.8rem 1.6rem;
+}
+
+.c1 .nav-link:hover {
+  -webkit-text-decoration: none;
+  text-decoration: none;
 }
 
 .c0 {

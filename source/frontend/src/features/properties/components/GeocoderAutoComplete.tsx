@@ -101,7 +101,13 @@ export const GeocoderAutoComplete: React.FC<
       return (
         <ul className="suggestionList">
           {options.map((x: IGeocoderResponse, index: number) => (
-            <li key={index} onClick={() => suggestionSelected(x)}>
+            <li
+              key={index}
+              onClick={e => {
+                suggestionSelected(x);
+                e.stopPropagation();
+              }}
+            >
               {x.fullAddress}
             </li>
           ))}
@@ -113,7 +119,13 @@ export const GeocoderAutoComplete: React.FC<
 
   return (
     <div className="GeocoderAutoComplete">
-      <ClickAwayListener onClickAway={() => setOptions([])}>
+      <ClickAwayListener
+        onClickAway={e => {
+          if (e.type === 'click') {
+            setOptions([]);
+          }
+        }}
+      >
         <Form.Group
           controlId={`input-${field}`}
           className={classNames(required ? 'required' : '', outerClassName)}

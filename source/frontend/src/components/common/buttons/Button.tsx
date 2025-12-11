@@ -76,7 +76,7 @@ const StyledButton = styled(BootstrapButton)`
     letter-spacing: 0.1rem;
     cursor: pointer;
     .Button__value {
-      width: max-content;
+      width: auto;
     }
 
     &:hover {

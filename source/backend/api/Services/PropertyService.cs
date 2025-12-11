@@ -27,9 +27,10 @@ namespace Pims.Api.Services
         private readonly IPropertyRepository _propertyRepository;
         private readonly IHistoricalNumberRepository _historicalNumberRepository;
         private readonly IPropertyContactRepository _propertyContactRepository;
-        private readonly IPropertyActivityRepository _propertyActivityRepository;
+        private readonly IManagementActivityRepository _managementActivityRepository;
         private readonly ICoordinateTransformService _coordinateService;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
+        private readonly IDocumentFileService _documentFileService;
         private readonly IMapper _mapper;
         private readonly ILookupRepository _lookupRepository;
 
@@ -39,9 +40,10 @@ namespace Pims.Api.Services
             IPropertyRepository propertyRepository,
             IHistoricalNumberRepository historicalNumberRepository,
             IPropertyContactRepository propertyContactRepository,
-            IPropertyActivityRepository propertyActivityRepository,
+            IManagementActivityRepository managementActivityRepository,
             ICoordinateTransformService coordinateService,
             IPropertyLeaseRepository propertyLeaseRepository,
+            IDocumentFileService documentFileService,
             IMapper mapper,
             ILookupRepository lookupRepository)
         {
@@ -50,9 +52,10 @@ namespace Pims.Api.Services
             _propertyRepository = propertyRepository;
             _historicalNumberRepository = historicalNumberRepository;
             _propertyContactRepository = propertyContactRepository;
-            _propertyActivityRepository = propertyActivityRepository;
+            _managementActivityRepository = managementActivityRepository;
             _coordinateService = coordinateService;
             _propertyLeaseRepository = propertyLeaseRepository;
+            _documentFileService = documentFileService;
             _mapper = mapper;
             _lookupRepository = lookupRepository;
         }
@@ -228,89 +231,81 @@ namespace Pims.Api.Services
             return GetPropertyManagement(newProperty.Internal_Id);
         }
 
-        public IList<PimsPropertyActivity> GetActivities(long propertyId)
+        public IList<PimsManagementActivity> GetActivities(long propertyId)
         {
             _logger.LogInformation("Getting property management activities for property with id {propertyId}", propertyId);
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementView, Permissions.PropertyView);
 
-            return _propertyActivityRepository.GetActivitiesByProperty(propertyId);
+            return _managementActivityRepository.GetActivitiesByProperty(propertyId);
         }
 
-        public IList<PimsPropertyActivity> GetFileActivities(long managementFileId)
+        public IList<PimsManagementActivity> GetFileActivities(long managementFileId)
         {
             _logger.LogInformation("Getting property management activities for management file with id {managementFileId}", managementFileId);
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementView, Permissions.PropertyView);
 
-            return _propertyActivityRepository.GetActivitiesByManagementFile(managementFileId);
+            return _managementActivityRepository.GetActivitiesByManagementFile(managementFileId);
         }
 
-        public PimsPropertyActivity GetActivity(long activityId)
+        public PimsManagementActivity GetActivity(long activityId)
         {
             _logger.LogInformation("Retrieving property Activity with Id: {ActivityId}", activityId);
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementView, Permissions.PropertyView);
 
-            return _propertyActivityRepository.GetActivity(activityId);
+            return _managementActivityRepository.GetActivity(activityId);
         }
 
-        public IEnumerable<PimsPropertyActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds)
+        public IEnumerable<PimsManagementActivity> GetActivitiesByPropertyIds(IEnumerable<long> propertyIds)
         {
             _logger.LogInformation("Retrieving multiple property Activities... {propertyIds}", propertyIds);
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementView, Permissions.PropertyView);
 
-            var managementFilePropertyIds = _propertyActivityRepository.GetActivitiesByPropertyIds(propertyIds);
+            var managementFilePropertyIds = _managementActivityRepository.GetActivitiesByPropertyIds(propertyIds);
 
             return managementFilePropertyIds;
         }
 
-        public PimsPropertyActivity CreateActivity(PimsPropertyActivity propertyActivity)
+        public PimsManagementActivity CreateActivity(PimsManagementActivity managementActivity)
         {
             _logger.LogInformation("Creating property Activity...");
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementAdd, Permissions.PropertyEdit);
 
-            if (propertyActivity.PropMgmtActivityStatusTypeCode == null)
+            if (managementActivity.MgmtActivityStatusTypeCode == null)
             {
-                propertyActivity.PropMgmtActivityStatusTypeCode = "NOTSTARTED";
+                managementActivity.MgmtActivityStatusTypeCode = ManagementActivityStatusTypes.NOTSTARTED.ToString();
             }
 
-            var propertyActivityResult = _propertyActivityRepository.Create(propertyActivity);
-            _propertyActivityRepository.CommitTransaction();
+            var managementActivityResult = _managementActivityRepository.Create(managementActivity);
+            _managementActivityRepository.CommitTransaction();
 
-            return propertyActivityResult;
+            return managementActivityResult;
         }
 
-        public PimsPropertyActivity UpdateActivity(PimsPropertyActivity propertyActivity)
+        public PimsManagementActivity UpdateActivity(PimsManagementActivity managementActivity)
         {
-            propertyActivity.ThrowIfNull(nameof(propertyActivity));
-            _logger.LogInformation("Updating property Activity with Id: {ActivityId}", propertyActivity.Internal_Id);
+            managementActivity.ThrowIfNull(nameof(managementActivity));
+            _logger.LogInformation("Updating property Activity with Id: {ActivityId}", managementActivity.Internal_Id);
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementEdit, Permissions.PropertyEdit);
 
-            var propertyActivityResult = _propertyActivityRepository.Update(propertyActivity);
-            _propertyActivityRepository.CommitTransaction();
+            var managementActivityResult = _managementActivityRepository.Update(managementActivity);
+            _managementActivityRepository.CommitTransaction();
 
-            return propertyActivityResult;
+            return managementActivityResult;
         }
 
         public bool DeleteFileActivity(long managementFileId, long activityId)
         {
-            _logger.LogInformation("Deleting Management Activity with id {activityId}", activityId);
+            _logger.LogInformation("Deleting Management Activity with id {activityId} for file {managementFileId}", activityId, managementFileId);
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementDelete, Permissions.PropertyEdit);
 
-            var propertyManagementActivity = _propertyActivityRepository.GetActivity(activityId);
+            var managementActivity = _managementActivityRepository.GetActivity(activityId);
 
-            if (propertyManagementActivity.ManagementFileId != managementFileId)
+            if (managementActivity.ManagementFileId != managementFileId)
             {
                 throw new BadRequestException("Activity with the given id does not match the management file id");
             }
 
-            if (!propertyManagementActivity.PropMgmtActivityStatusTypeCode.Equals(PropertyActivityStatusTypeCode.NOTSTARTED.ToString()))
-            {
-                throw new BadRequestException($"PropertyManagementActivity can not be deleted since it has already started");
-            }
-
-            var success = _propertyActivityRepository.TryDeleteByFile(activityId, managementFileId);
-            _propertyRepository.CommitTransaction();
-
-            return success;
+            return DeleteActivity(activityId);
         }
 
         public bool DeleteActivity(long activityId)
@@ -318,14 +313,20 @@ namespace Pims.Api.Services
             _logger.LogInformation("Deleting Management Activity with id {activityId}", activityId);
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementDelete, Permissions.PropertyEdit);
 
-            var propertyManagementActivity = _propertyActivityRepository.GetActivity(activityId);
+            var propertyManagementActivity = _managementActivityRepository.GetActivity(activityId);
 
-            if (!propertyManagementActivity.PropMgmtActivityStatusTypeCode.Equals(PropertyActivityStatusTypeCode.NOTSTARTED.ToString()))
+            if (!propertyManagementActivity.MgmtActivityStatusTypeCode.Equals(ManagementActivityStatusTypeCode.NOTSTARTED.ToString()))
             {
-                throw new BadRequestException($"PropertyManagementActivity can not be deleted since it has already started");
+                throw new BadRequestException($"PropertyManagementActivity can not be deleted given it has already started");
             }
 
-            var success = _propertyActivityRepository.TryDelete(activityId);
+            var activityDocuments = _documentFileService.GetFileDocuments<PimsMgmtActivityDocument>(FileType.ManagementActivity, activityId);
+            if (activityDocuments.Count > 0)
+            {
+                throw new BadRequestException($"PropertyManagementActivity can not be deleted. There is at least one document related to it.");
+            }
+
+            var success = _managementActivityRepository.TryDelete(activityId);
             _propertyRepository.CommitTransaction();
 
             return success;

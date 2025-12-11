@@ -150,7 +150,6 @@ export const getEmptyProperty = (): ApiGen_Concepts_Property => ({
   location: null,
   boundary: null,
   generalLocation: null,
-  notes: null,
   surplusDeclarationType: null,
   surplusDeclarationComment: null,
   surplusDeclarationDate: EpochIsoDateTime,

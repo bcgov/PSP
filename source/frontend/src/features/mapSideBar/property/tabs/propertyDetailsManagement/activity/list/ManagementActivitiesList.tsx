@@ -16,8 +16,8 @@ import { TableSort } from '@/components/Table/TableSort';
 import Claims from '@/constants/claims';
 import { PropertyManagementActivityStatusTypes } from '@/constants/propertyMgmtActivityStatusTypes';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { ApiGen_Concepts_ManagementActivitySubType } from '@/models/api/generated/ApiGen_Concepts_ManagementActivitySubType';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { stringToFragment } from '@/utils/columnUtils';
 import { prettyFormatDate } from '@/utils/dateUtils';
 import { exists } from '@/utils/utils';
@@ -28,8 +28,9 @@ export interface IManagementActivitiesListProps {
   loading: boolean;
   propertyActivities: PropertyActivityRow[];
   columns: Column<PropertyActivityRow>[];
-  sort: TableSort<ApiGen_Concepts_PropertyActivity>;
-  setSort: (value: TableSort<ApiGen_Concepts_PropertyActivity>) => void;
+  sort: TableSort<ApiGen_Concepts_ManagementActivity>;
+  setSort: (value: TableSort<ApiGen_Concepts_ManagementActivity>) => void;
+  dataTestId?: string;
 }
 
 export function createActivityTableColumns() {
@@ -184,6 +185,7 @@ const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesLis
   columns,
   sort,
   setSort,
+  dataTestId,
   ...rest
 }) => {
   const location = useLocation();
@@ -201,7 +203,7 @@ const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesLis
   return (
     <Table<PropertyActivityRow>
       loading={loading}
-      name="PropertyManagementActivitiesTable"
+      name={dataTestId}
       manualSortBy={true}
       totalItems={propertyActivities.length}
       columns={columns}
@@ -218,7 +220,7 @@ const ManagementActivitiesList: React.FunctionComponent<IManagementActivitiesLis
 
 const sortedActivities = (
   propertyActivities: PropertyActivityRow[],
-  sort: TableSort<ApiGen_Concepts_PropertyActivity>,
+  sort: TableSort<ApiGen_Concepts_ManagementActivity>,
 ) => {
   if (propertyActivities?.length > 0) {
     let items: PropertyActivityRow[] = [...propertyActivities];

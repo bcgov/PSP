@@ -36,9 +36,7 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
 }
 
 .c2.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c2.btn:hover {

@@ -21,6 +21,8 @@ export const SelectedPropertyHeaderRow: React.FunctionComponent<
 };
 
 export const HeaderRow = styled(Row)`
+  margin: 0;
+  padding: 1.6rem;
   font-size: 1.6rem;
   color: ${props => props.theme.bcTokens.themeGray70};
   border-bottom: 0.2rem solid ${props => props.theme.css.borderOutlineColor};

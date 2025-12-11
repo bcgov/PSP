@@ -5,14 +5,17 @@ import { Col, Row } from 'react-bootstrap';
 import { FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
-import { StyledIconButton } from '@/components/common/buttons';
+import { LinkButton, StyledIconButton } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import {
+  LocationFeatureDataset,
+  WorklistLocationFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { StyledScrollable } from '@/features/documents/commonStyles';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { exists } from '@/utils';
-import { isStrataCommonProperty } from '@/utils/propertyUtils';
+import { exists, firstOrNull } from '@/utils';
+import { isStrataCommonProperty, pidFormatter } from '@/utils/propertyUtils';
 
 export interface IMultiplePropertyPopupView {
   featureDataset: LocationFeatureDataset | null;
@@ -42,6 +45,20 @@ export const MultiplePropertyPopupView: React.FC<
     if (exists(selectedProperty?.feature)) {
       onSelectProperty(selectedProperty.feature);
     }
+  };
+
+  const onAddAllToWorklist = () => {
+    const worklistDataSet: WorklistLocationFeatureDataset = {
+      fullyAttributedFeatures: {
+        features: featureDataset.parcelFeatures,
+        type: 'FeatureCollection',
+      },
+      pimsFeature: firstOrNull(featureDataset.pimsFeatures),
+      regionFeature: featureDataset.regionFeature,
+      districtFeature: featureDataset.districtFeature,
+      location: featureDataset.location,
+    };
+    mapMachine.worklistAdd(worklistDataSet);
   };
 
   const groupedFeatures = chain(featureDataset?.parcelFeatures)
@@ -86,11 +103,12 @@ export const MultiplePropertyPopupView: React.FC<
             index={index}
           >
             {property.isStrataLot && <Col>Common Property ({property.plan})</Col>}
-            {property.pid && <Col>PID: {property.pid} </Col>}
+            {property.pid && <Col>PID: {pidFormatter(property.pid)} </Col>}
             {property.pin && <Col>PIN: {property.pin} </Col>}
           </StyledRow>
         ))}
       </StyledScrollable>
+      <LinkButton onClick={onAddAllToWorklist}>+ Add all to worklist</LinkButton>
     </StyledContainer>
   );
 };

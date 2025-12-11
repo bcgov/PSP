@@ -1,11 +1,16 @@
 using System;
+using System.Drawing;
 using System.Linq;
 using System.Security.Claims;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.Concepts.Document;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
+using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
 {
@@ -51,7 +56,8 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.PimsProjectDocuments)
                 .Include(d => d.PimsFormTypes)
                 .Include(d => d.PimsLeaseDocuments)
-                .Include(d => d.PimsPropertyActivityDocuments)
+                .Include(d => d.PimsManagementFileDocuments)
+                .Include(d => d.PimsMgmtActivityDocuments)
                 .Include(d => d.PimsDispositionFileDocuments)
                 .Where(d => d.DocumentId == documentId)
                 .AsNoTracking()
@@ -111,47 +117,52 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.PimsProjectDocuments)
                 .Include(d => d.PimsFormTypes)
                 .Include(d => d.PimsLeaseDocuments)
-                .Include(d => d.PimsPropertyActivityDocuments)
+                .Include(d => d.PimsManagementFileDocuments)
+                .Include(d => d.PimsMgmtActivityDocuments)
                 .Include(d => d.PimsDispositionFileDocuments)
                 .Where(d => d.DocumentId == document.Internal_Id)
-                .AsNoTracking()
                 .FirstOrDefault();
 
-            foreach (var pimsResearchFileDocument in documentToDelete.PimsResearchFileDocuments)
+            if(documentToDelete.PimsResearchFileDocuments.Count > 0)
             {
-                Context.PimsResearchFileDocuments.Remove(new PimsResearchFileDocument() { Internal_Id = pimsResearchFileDocument.Internal_Id });
+                Context.PimsResearchFileDocuments.RemoveRange(documentToDelete.PimsResearchFileDocuments);
             }
 
-            foreach (var pimsAcquisitionFileDocument in documentToDelete.PimsAcquisitionFileDocuments)
+            if (documentToDelete.PimsAcquisitionFileDocuments.Count > 0)
             {
-                Context.PimsAcquisitionFileDocuments.Remove(new PimsAcquisitionFileDocument() { Internal_Id = pimsAcquisitionFileDocument.Internal_Id });
+                Context.PimsAcquisitionFileDocuments.RemoveRange(documentToDelete.PimsAcquisitionFileDocuments);
             }
 
-            foreach (var pimsProjectDocument in documentToDelete.PimsProjectDocuments)
+            if(documentToDelete.PimsProjectDocuments.Count > 0)
             {
-                Context.PimsProjectDocuments.Remove(new PimsProjectDocument() { Internal_Id = pimsProjectDocument.Internal_Id });
+                Context.PimsProjectDocuments.RemoveRange(documentToDelete.PimsProjectDocuments);
             }
 
-            foreach (var pimsLeaseDocument in documentToDelete.PimsLeaseDocuments)
+            if(documentToDelete.PimsLeaseDocuments.Count > 0)
             {
-                Context.PimsLeaseDocuments.Remove(new PimsLeaseDocument() { Internal_Id = pimsLeaseDocument.Internal_Id });
+                Context.PimsLeaseDocuments.RemoveRange(documentToDelete.PimsLeaseDocuments);
             }
 
-            foreach (var pimsPropertyActivityDocument in documentToDelete.PimsPropertyActivityDocuments)
+            if (documentToDelete.PimsManagementFileDocuments.Count > 0)
             {
-                Context.PimsPropertyActivityDocuments.Remove(new PimsPropertyActivityDocument() { Internal_Id = pimsPropertyActivityDocument.Internal_Id });
+                Context.PimsManagementFileDocuments.RemoveRange(documentToDelete.PimsManagementFileDocuments);
             }
 
-            foreach (var pimsDispositionFileDocument in documentToDelete.PimsDispositionFileDocuments)
+            if (documentToDelete.PimsMgmtActivityDocuments.Count > 0)
             {
-                Context.PimsDispositionFileDocuments.Remove(new PimsDispositionFileDocument() { Internal_Id = pimsDispositionFileDocument.Internal_Id });
+                Context.PimsMgmtActivityDocuments.RemoveRange(documentToDelete.PimsMgmtActivityDocuments);
             }
 
-            foreach (var pimsFormTypeDocument in documentToDelete.PimsFormTypes)
+            if(documentToDelete.PimsDispositionFileDocuments.Count > 0)
+            {
+                Context.PimsDispositionFileDocuments.RemoveRange(documentToDelete.PimsDispositionFileDocuments);
+            }
+
+            foreach (var pimsFormTypeDocument in documentToDelete.PimsFormTypes.ToList())
             {
                 var updatedFormType = pimsFormTypeDocument;
                 updatedFormType.DocumentId = null;
-                Context.Entry(pimsFormTypeDocument).Property(x => x.DocumentId).IsModified = true;
+                Context.Entry(updatedFormType).Property(x => x.DocumentId).IsModified = true;
             }
 
             if (commitTransaction)
@@ -159,7 +170,7 @@ namespace Pims.Dal.Repositories
                 Context.CommitTransaction(); // TODO: required to enforce delete order. Can be removed when cascade deletes are implemented.
             }
 
-            Context.PimsDocuments.Remove(new PimsDocument() { Internal_Id = document.Internal_Id });
+            Context.PimsDocuments.Remove(documentToDelete);
 
             return true;
         }
@@ -186,7 +197,8 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.PimsProjectDocuments)
                 .Include(d => d.PimsFormTypes)
                 .Include(d => d.PimsLeaseDocuments)
-                .Include(d => d.PimsPropertyActivityDocuments)
+                .Include(d => d.PimsManagementFileDocuments)
+                .Include(d => d.PimsMgmtActivityDocuments)
                 .Include(d => d.PimsDispositionFileDocuments)
                 .Where(d => d.DocumentId == documentId)
                 .AsNoTracking()
@@ -197,8 +209,93 @@ namespace Pims.Dal.Repositories
                     documentRelationships.PimsProjectDocuments.Count +
                     documentRelationships.PimsFormTypes.Count +
                     documentRelationships.PimsLeaseDocuments.Count +
-                    documentRelationships.PimsPropertyActivityDocuments.Count +
+                    documentRelationships.PimsManagementFileDocuments.Count +
+                    documentRelationships.PimsMgmtActivityDocuments.Count +
                     documentRelationships.PimsDispositionFileDocuments.Count;
+        }
+
+        public Paged<PimsDocument> GetPageDeep(DocumentSearchFilterModel filter)
+        {
+            // RECOMMENDED - use a log scope to group all potential SQL statements generated by EF for this method call
+            using var scope = Logger.QueryScope();
+
+            IQueryable<PimsDocument> query = GetCommonQueryDeep(filter);
+
+            var skip = (filter.Page - 1) * filter.Quantity;
+            var pageItems = query.Skip(skip).Take(filter.Quantity).ToList();
+
+            return new Paged<PimsDocument>(pageItems, filter.Page, filter.Quantity, query.Count());
+        }
+
+        private IQueryable<PimsDocument> GetCommonQueryDeep(DocumentSearchFilterModel filter, bool excludeTemplates = true)
+        {
+            var predicate = PredicateBuilder.New<PimsDocument>(doc => true);
+
+            if (!string.IsNullOrWhiteSpace(filter.DocumentName))
+            {
+                predicate = predicate.And(x => EF.Functions.Like(x.FileName, $"%{filter.DocumentName}%"));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.DocumentTypTypeCode))
+            {
+                int typeCodeId = int.Parse(filter.DocumentTypTypeCode);
+                predicate = predicate.And(acq => acq.DocumentTypeId == typeCodeId);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.DocumentStatusTypeCode))
+            {
+                predicate = predicate.And(acq => acq.DocumentStatusTypeCode == filter.DocumentStatusTypeCode);
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Pid))
+            {
+                var pidValue = filter.Pid.Replace("-", string.Empty).Trim().TrimStart('0');
+                predicate = predicate.And(pd => pd.PimsPropertyDocuments.Any(p => p != null && EF.Functions.Like(p.Property.Pid.ToString(), $"%{pidValue}%")));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Pin))
+            {
+                var pinValue = filter.Pin.Replace("-", string.Empty).Trim().TrimStart('0');
+                predicate = predicate.And(pd => pd.PimsPropertyDocuments.Any(p => p != null && EF.Functions.Like(p.Property.Pin.ToString(), $"%{pinValue}%")));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.Plan))
+            {
+                predicate = predicate.And(pd => pd.PimsPropertyDocuments.Any(p => p != null && EF.Functions.Like(p.Property.SurveyPlanNumber.ToString(), $"%{filter.Plan}%")));
+            }
+
+            if(excludeTemplates)
+            {
+                var templateCodeType = Context.PimsDocumentTyps.FirstOrDefault(x => x.DocumentType == "CDOGTEMP");
+                predicate = predicate.And(x => x.DocumentTypeId != templateCodeType.DocumentTypeId);
+            }
+
+            var query = Context.PimsDocuments.AsNoTracking()
+                .Include(s => s.DocumentStatusTypeCodeNavigation)
+                .Include(t => t.DocumentType)
+                .Include(q => q.PimsDocumentQueues)
+                    .ThenInclude(x => x.DocumentQueueStatusTypeCodeNavigation)
+                .Include(x => x.PimsAcquisitionFileDocuments)
+                    .ThenInclude(y => y.AcquisitionFile)
+                .Include(x => x.PimsDispositionFileDocuments)
+                    .ThenInclude(y => y.DispositionFile)
+                .Include(x => x.PimsLeaseDocuments)
+                    .ThenInclude(y => y.Lease)
+                .Include(x => x.PimsManagementFileDocuments)
+                    .ThenInclude(y => y.ManagementFile)
+                .Include(x => x.PimsMgmtActivityDocuments)
+                    .ThenInclude(y => y.ManagementActivity)
+                .Include(x => x.PimsProjectDocuments)
+                    .ThenInclude(y => y.Project)
+                .Include(x => x.PimsPropertyDocuments)
+                    .ThenInclude(y => y.Property)
+                        .ThenInclude(z => z.Address)
+                            .ThenInclude(a => a.Country)
+                .Include(x => x.PimsResearchFileDocuments)
+                    .ThenInclude(y => y.ResearchFile)
+                .Where(predicate);
+
+            return query;
         }
 
         #endregion

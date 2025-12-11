@@ -1,4 +1,5 @@
 import EditButton from '@/components/common/buttons/EditButton';
+import { ExpandableTextCard } from '@/components/common/ExpandableTextArea';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
@@ -105,7 +106,7 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
         <SectionField label="Ministry project">
           {detail.researchFileProjects.map((formattedName, i) => (
             <div key={`project-key-${i}`}>{formattedName}</div>
-          ))}
+          )) ?? ''}
         </SectionField>
       </Section>
       <Section header="Roads">
@@ -114,7 +115,7 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
       </Section>
       <Section header="Research Request">
         <SectionField label="Research purpose">
-          {detail.researchFilePurposes.join(', ')}
+          {detail.researchFilePurposes?.join(', ') ?? ''}
         </SectionField>
         <SectionField label="Request date"> {prettyFormatDate(detail.requestDate)}</SectionField>
         <SectionField label="Source of request">{detail.requestSourceTypeDescription}</SectionField>
@@ -124,8 +125,8 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
             {detail.requestorOrganization ?? 'none'}
           </SectionField>
         )}
-        <SectionField label="Description of request" />
-        {detail.requestDescription}
+        <SectionField label="Description of request"></SectionField>
+        <ExpandableTextCard text={detail.requestDescription ?? ''} />
       </Section>
       <Section header="Result">
         <SectionField label="Research completed on">
@@ -134,12 +135,12 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
             : 'not complete'}
         </SectionField>
         <SectionField label="Result of request" />
-        {detail.researchResult}
+        <ExpandableTextCard text={detail.researchResult ?? ''} />
       </Section>
       <Section header="Expropriation">
         <SectionField label="Expropriation?">{detail.isExpropriation ? 'Yes' : 'No'}</SectionField>
         <SectionField label="Expropriation comments" />
-        {detail.expropriationNotes}
+        <ExpandableTextCard text={detail.expropriationNotes ?? ''} />
       </Section>
     </StyledSummarySection>
   );

@@ -1,51 +1,39 @@
 import { AxiosError } from 'axios';
+import { dequal } from 'dequal';
 import { FieldArray, FieldArrayRenderProps, Formik, FormikProps } from 'formik';
-import { geoJSON, LatLngLiteral } from 'leaflet';
-import isNumber from 'lodash/isNumber';
-import { useCallback, useContext, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { PiCornersOut } from 'react-icons/pi';
 import { toast } from 'react-toastify';
+import styled from 'styled-components';
 
-import { LinkButton } from '@/components/common/buttons';
+import { Button } from '@/components/common/buttons';
 import GenericModal, { ModalProps } from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
-import TooltipWrapper from '@/components/common/TooltipWrapper';
-import MapSelectorContainer from '@/components/propertySelector/MapSelectorContainer';
-import { IMapProperty } from '@/components/propertySelector/models';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { ModalContext } from '@/contexts/modalContext';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
-import { AddressForm } from '@/features/mapSideBar/shared/models';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
+import AddPropertiesGuide from '@/features/mapSideBar/shared/update/properties/AddPropertiesGuide';
 import { UpdatePropertiesYupSchema } from '@/features/mapSideBar/shared/update/properties/UpdatePropertiesYupSchema';
-import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
-import { useBcaAddress } from '@/features/properties/map/hooks/useBcaAddress';
-import { useProperties } from '@/hooks/repositories/useProperties';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { useEnrichWithPimsFeatures } from '@/hooks/useEnrichWithPimsFeatures';
+import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { getCancelModalProps } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import {
-  exists,
-  isLatLngInFeatureSetBoundary,
-  isValidId,
-  isValidString,
-  latLngLiteralToGeometry,
-} from '@/utils';
+import { arePropertyFormsEqual, exists, firstOrNull, isValidId } from '@/utils';
 
 import { useLeaseDetail } from '../../hooks/useLeaseDetail';
 import { FormLeaseProperty, LeaseFormModel } from '../../models';
 import SelectedPropertyHeaderRow from './selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from './selectedPropertyList/SelectedPropertyRow';
-
 interface LeaseUpdatePropertySelectorProp {
   lease: ApiGen_Concepts_Lease;
 }
@@ -53,157 +41,160 @@ interface LeaseUpdatePropertySelectorProp {
 export const LeaseUpdatePropertySelector: React.FunctionComponent<
   LeaseUpdatePropertySelectorProp
 > = ({ lease }) => {
+  const pathSolver = usePathGenerator();
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
+  const [isValid, setIsValid] = useState<boolean>(true);
+  const hasWarnedRef = useRef(false);
 
-  const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
-
+  const { setModalContent, setDisplayModal } = useContext(ModalContext);
   const { resetFilePropertyLocations } = useContext(SideBarContext);
 
-  const [isValid, setIsValid] = useState<boolean>(true);
-  const { getPropertiesFromView: getProperties } = useProperties();
-  const { setModalContent, setDisplayModal } = useContext(ModalContext);
-  const { getPrimaryAddressByPid, bcaLoading } = useBcaAddress();
-
-  const pathSolver = usePathGenerator();
-
-  const { updateLeaseProperties } = usePropertyLeaseRepository();
-
+  const formikRef = useRef<FormikProps<LeaseFormModel>>();
   const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
 
+  const {
+    datasets,
+    loading: pimsFeatureLoading,
+    enrichWithPimsFeatures,
+  } = useEnrichWithPimsFeatures();
+  const { updateLeaseProperties } = usePropertyLeaseRepository();
   const { getCompleteLease } = useLeaseDetail(lease?.id ?? undefined);
 
-  const mapMachine = useMapStateMachine();
+  const {
+    refreshMapProperties,
+    setEditPropertiesMode,
+    selectedFeatures,
+    processCreation,
+    mapLocationFeatureDataset,
+    prepareForCreation,
+  } = useMapStateMachine();
+  const prevSelectedRef = useRef<typeof selectedFeatures>();
+
+  const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
+    return {
+      selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
+      location:
+        mapLocationFeatureDataset?.location ?? mapLocationFeatureDataset?.fileLocation ?? null,
+      fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
+      pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
+      regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
+      districtFeature: mapLocationFeatureDataset?.districtFeature ?? null,
+      municipalityFeature: firstOrNull(mapLocationFeatureDataset?.municipalityFeatures),
+      isActive: true,
+      displayOrder: 0,
+    };
+  }, [
+    mapLocationFeatureDataset?.selectingComponentId,
+    mapLocationFeatureDataset?.location,
+    mapLocationFeatureDataset?.fileLocation,
+    mapLocationFeatureDataset?.parcelFeatures,
+    mapLocationFeatureDataset?.pimsFeatures,
+    mapLocationFeatureDataset?.regionFeature,
+    mapLocationFeatureDataset?.districtFeature,
+    mapLocationFeatureDataset?.municipalityFeatures,
+  ]);
 
   const withUserOverride = useApiUserOverride<
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to update Lease File Properties');
 
-  const addProperties = useCallback((properties: FormLeaseProperty[]) => {
-    const formikProps = formikRef.current;
-    if (arrayHelpersRef.current !== null && properties.length > 0) {
-      properties.forEach((leaseProperty, index) => {
-        const property = leaseProperty?.property;
-        if (
-          formikProps.values.properties?.length === 0 &&
-          index === 0 &&
-          property !== undefined &&
-          property.regionName !== 'Cannot determine'
-        ) {
-          formikProps.setFieldValue('regionId', property.region ? property.region.toString() : '');
-        }
-
-        arrayHelpersRef.current && arrayHelpersRef.current.push(leaseProperty);
+  const addPropertiesToCurrentFile = useCallback(
+    (
+      formikRef: React.RefObject<FormikProps<LeaseFormModel>>,
+      leasePropertyForms: FormLeaseProperty[],
+    ) => {
+      const existingProperties = formikRef.current?.values?.properties ?? [];
+      const uniqueProperties = leasePropertyForms.filter(newProperty => {
+        return !existingProperties.some(existingProperty =>
+          arePropertyFormsEqual(existingProperty.property, newProperty.property),
+        );
       });
-    }
-  }, []);
 
-  const searchProperty = async (
-    newProperty: IMapProperty,
-  ): Promise<ApiGen_Concepts_PropertyView[] | undefined> => {
-    const params: IPropertyFilter = {
-      pid: exists(newProperty.pid) ? newProperty.pid.toString() : '',
-      pin: exists(newProperty.pin) ? newProperty.pin.toString() : '',
-      searchBy: exists(newProperty.pid) ? 'pid' : 'pin',
-      address: '',
-      page: undefined,
-      quantity: undefined,
-      latitude: undefined,
-      longitude: undefined,
-      historical: '',
-      ownership: '',
-      coordinates: null,
-      name: '',
-    };
+      const duplicatesSkipped = leasePropertyForms.length - uniqueProperties.length;
 
-    const result = await getProperties.execute(params);
-    return result?.items ?? undefined;
-  };
-  const fitBoundaries = () => {
-    const fileProperties = formikRef?.current?.values?.properties;
-
-    if (exists(fileProperties)) {
-      const locations = fileProperties.map(
-        p => p?.property?.polygon ?? latLngLiteralToGeometry(p?.property?.fileLocation),
-      );
-      const bounds = geoJSON(locations).getBounds();
-
-      if (exists(bounds) && bounds.isValid()) {
-        mapMachine.requestFlyToBounds(bounds);
+      // If there are unique properties, add them to the formik values
+      if (uniqueProperties.length > 0) {
+        formikRef.current?.setFieldValue('properties', [
+          ...existingProperties,
+          ...uniqueProperties,
+        ]);
+        formikRef.current?.setFieldTouched('properties', true);
+        toast.success(`Added ${uniqueProperties.length} new property(s) to the file.`);
       }
+
+      if (duplicatesSkipped > 0) {
+        toast.warn(`Skipped ${duplicatesSkipped} duplicate property(s).`);
+      }
+    },
+    [],
+  );
+
+  // Enrich selected features with PIMS features
+  // This will add pimsFeature to each SelectedFeatureDataset if it exists
+  useEffect(() => {
+    if (selectedFeatures?.length > 0 && !dequal(prevSelectedRef.current, selectedFeatures)) {
+      hasWarnedRef.current = false; // reset the warning for new selection
+      prevSelectedRef.current = selectedFeatures;
+      enrichWithPimsFeatures(selectedFeatures);
     }
-  };
+  }, [selectedFeatures, enrichWithPimsFeatures]);
 
-  const confirmAdd = useCallback(
-    (propertiesToConfirm: FormLeaseProperty[]) => {
-      setDisplayModal(false);
-      addProperties(propertiesToConfirm);
-    },
-    [setDisplayModal, addProperties],
-  );
+  // Get FormLeaseProperties with addresses for all selected features
+  const { featuresWithAddresses, bcaLoading } = useFeatureDatasetsWithAddresses(datasets);
 
-  const cancelAdd = useCallback(() => {
-    setDisplayModal(false);
-  }, [setDisplayModal]);
-
-  const getAddModalProps = useCallback<(properties: FormLeaseProperty[]) => ModalProps>(
-    (properties: FormLeaseProperty[]) => {
-      return {
-        variant: 'info',
-        title: 'Not inventory property',
-        message:
-          'You have selected a property not previously in the inventory. Do you want to add this property to the lease?',
-        display: false,
-        okButtonText: 'Add',
-        cancelButtonText: 'Cancel',
-        handleOk: () => confirmAdd(properties),
-        handleCancel: cancelAdd,
-      };
-    },
-    [confirmAdd, cancelAdd],
-  );
-
-  const processAddedProperties = async (newProperties: SelectedFeatureDataset[]) => {
-    let needsWarning = false;
-    const newFormProperties: FormLeaseProperty[] = [];
-
-    await newProperties.reduce(async (promise, property) => {
-      return promise.then(async () => {
-        const formProperty = FormLeaseProperty.fromFeatureDataset(property);
-
-        const bcaSummary = formProperty?.property?.pid
-          ? await getPrimaryAddressByPid(formProperty?.property?.pid, 30000)
-          : undefined;
-
-        // Retrieve the pims id of the property if it exists
-        if (exists(formProperty.property) && !isValidId(formProperty.property.apiId)) {
-          needsWarning = true;
-
-          formProperty.property.address = bcaSummary?.address
-            ? AddressForm.fromBcaAddress(bcaSummary?.address)
-            : undefined;
-
-          if (
-            isValidString(formProperty?.property?.pid) ||
-            isValidString(formProperty?.property?.pin)
-          ) {
-            const result = await searchProperty(formProperty.property.toMapProperty());
-            if (result !== undefined && result.length > 0) {
-              formProperty.property.apiId = result[0].id;
-            }
-          }
+  // Convert SelectedFeatureDataset to FormLeaseProperty
+  const propertyForms = useMemo<FormLeaseProperty[]>(
+    () =>
+      featuresWithAddresses.map(obj => {
+        const formProperty = FormLeaseProperty.fromFeatureDataset(obj.feature);
+        if (exists(obj.address)) {
+          formProperty.property.address = obj.address;
         }
+        return formProperty;
+      }),
+    [featuresWithAddresses],
+  );
 
-        newFormProperties.push(formProperty);
-      });
-    }, Promise.resolve());
+  // This effect is used to update the file properties when "add to open file" is clicked in the worklist.
+  useEffect(() => {
+    if (exists(formikRef.current) && propertyForms.length > 0 && !hasWarnedRef.current) {
+      const needsWarning = propertyForms.some(
+        formProperty => exists(formProperty.property) && !isValidId(formProperty.property.apiId),
+      );
 
-    if (needsWarning) {
-      setModalContent(getAddModalProps(newFormProperties));
-      setDisplayModal(true);
-    } else {
-      addProperties(newFormProperties);
+      if (needsWarning) {
+        hasWarnedRef.current = true; // mark as shown
+        setModalContent({
+          variant: 'info',
+          title: 'Not inventory property',
+          message:
+            'You have selected a property not previously in the inventory. Do you want to add this property to the lease?',
+          okButtonText: 'Add',
+          cancelButtonText: 'Cancel',
+          handleOk: () => {
+            setDisplayModal(false);
+            addPropertiesToCurrentFile(formikRef, propertyForms);
+          },
+          handleCancel: () => {
+            setDisplayModal(false);
+          },
+        });
+        setDisplayModal(true);
+      } else {
+        // If no warning is needed, simply add the properties to the current file.
+        addPropertiesToCurrentFile(formikRef, propertyForms);
+      }
+      processCreation();
     }
-  };
+  }, [
+    formikRef,
+    propertyForms,
+    setModalContent,
+    setDisplayModal,
+    addPropertiesToCurrentFile,
+    processCreation,
+  ]);
 
   const cancelRemove = useCallback(() => {
     setDisplayModal(false);
@@ -247,6 +238,7 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
     }
+    processCreation();
     resetFilePropertyLocations();
     pathSolver.showFile('lease', lease.id);
   };
@@ -302,7 +294,7 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
             }
             formikRef.current?.resetForm();
             await getCompleteLease();
-            mapMachine.refreshMapProperties();
+            refreshMapProperties();
             pathSolver.showFile('lease', lease.id);
           }
         });
@@ -327,9 +319,21 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
 
   const initialValues = LeaseFormModel.fromApi(lease);
 
+  const handleAddToSelection = useCallback(() => {
+    prepareForCreation([selectedFeatureDataset]);
+  }, [prepareForCreation, selectedFeatureDataset]);
+
+  useEffect(() => {
+    // Set the map state machine to edit properties mode so that the map selector knows what mode it is in.
+    setEditPropertiesMode(true);
+    return () => {
+      setEditPropertiesMode(false);
+    };
+  }, [setEditPropertiesMode]);
+
   return (
     <>
-      <LoadingBackdrop show={bcaLoading} />
+      <LoadingBackdrop show={bcaLoading || pimsFeatureLoading} />
       <MapSideBarLayout
         title={'Property selection'}
         icon={undefined}
@@ -347,8 +351,12 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
           initialValues={initialValues}
           validationSchema={UpdatePropertiesYupSchema}
           onSubmit={async (values: LeaseFormModel) => {
-            const file: ApiGen_Concepts_Lease = LeaseFormModel.toApi(values);
-            await saveFile(file);
+            try {
+              const file: ApiGen_Concepts_Lease = LeaseFormModel.toApi(values);
+              await saveFile(file);
+            } finally {
+              processCreation();
+            }
           }}
         >
           {formikProps => (
@@ -358,49 +366,23 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
                 arrayHelpersRef.current = arrayHelpers;
                 return (
                   <>
-                    <Row className="py-3 no-gutters">
-                      <Col>
-                        <MapSelectorContainer
-                          addSelectedProperties={processAddedProperties}
-                          repositionSelectedProperty={(
-                            featureset: SelectedFeatureDataset,
-                            latLng: LatLngLiteral,
-                            index: number | null,
-                          ) => {
-                            // As long as the marker is repositioned within the boundary of the originally selected property simply reposition the marker without further notification.
-                            if (
-                              isNumber(index) &&
-                              index >= 0 &&
-                              isLatLngInFeatureSetBoundary(latLng, featureset)
-                            ) {
-                              const formProperty = formikProps.values.properties[index];
-                              const updatedFormProperty =
-                                FormLeaseProperty.fromFormLeaseProperty(formProperty);
-                              updatedFormProperty.property.fileLocation = latLng;
-
-                              // Find property within formik values and reposition it based on incoming file marker position
-                              arrayHelpers.replace(index, updatedFormProperty);
-                            }
-                          }}
-                          modifiedProperties={LeaseFormModel.getPropertiesAsForm(
-                            formikProps.values,
-                          ).map(p => p.toFeatureDataset())}
-                        />
-                      </Col>
-                    </Row>
+                    <AddPropertiesGuide />
+                    {exists(selectedFeatureDataset?.parcelFeature) ||
+                    exists(selectedFeatureDataset?.pimsFeature) ||
+                    exists(selectedFeatureDataset?.location) ? (
+                      <StyledButtonWrapper>
+                        <Button onClick={handleAddToSelection}>Add selected property</Button>
+                      </StyledButtonWrapper>
+                    ) : null}
                     <Section
                       header={
                         <Row>
                           <Col xs="11">Selected Properties</Col>
                           <Col>
-                            <TooltipWrapper
-                              tooltip="Fit map to the file properties"
-                              tooltipId="property-selector-tooltip"
-                            >
-                              <LinkButton title="Fit boundaries button" onClick={fitBoundaries}>
-                                <PiCornersOut size={18} className="mr-2" />
-                              </LinkButton>
-                            </TooltipWrapper>
+                            <ZoomToLocation
+                              icon={ZoomIconType.area}
+                              formProperties={formikProps.values.properties.map(lp => lp.property)}
+                            />
                           </Col>
                         </Row>
                       }
@@ -456,3 +438,14 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
 };
 
 export default LeaseUpdatePropertySelector;
+
+const StyledButtonWrapper = styled.div`
+  margin: 0 1.6rem;
+  padding-left: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+
+  button {
+    font-size: 14px;
+  }
+`;

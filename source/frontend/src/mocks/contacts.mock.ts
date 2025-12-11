@@ -310,7 +310,7 @@ export const getEmptyPerson = (): ApiGen_Concepts_Person => {
     addressComment: null,
     useOrganizationAddress: null,
     isDisabled: false,
-    propertyActivityId: null,
+    managementActivityId: null,
     contactMethods: null,
     personAddresses: null,
     personOrganizations: null,

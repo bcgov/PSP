@@ -1,4 +1,5 @@
-import { Feature, FeatureCollection, Point } from 'geojson';
+import { geojsonToWKT } from '@terraformer/wkt';
+import { Feature, FeatureCollection, Geometry, Point } from 'geojson';
 import { useCallback, useContext } from 'react';
 
 import CustomAxios from '@/customAxios';
@@ -19,6 +20,7 @@ function buildUrl(inputUrl: string, cqlFilter: Record<string, any>) {
 export const useGeoServer = () => {
   const { tenant } = useContext(TenantContext);
   const baseUrl = tenant.propertiesUrl || '';
+  const baseBoundaryUrl = tenant.boundaryLayerUrl || '';
 
   const getPropertyWfs = useCallback(
     async function (id: number): Promise<Feature<Point> | null> {
@@ -42,6 +44,18 @@ export const useGeoServer = () => {
     requestName: 'getPropertyWfs',
     onError: useAxiosErrorHandler('Failed to retrieve property information from BC Data Warehouse'),
   });
+  const getPropertyByBoundaryWfsWrapper = useApiRequestWrapper({
+    requestFunction: useCallback(
+      async (boundary: Geometry) => {
+        return await CustomAxios().get<FeatureCollection>(
+          `${baseBoundaryUrl}&cql_filter=INTERSECTS(GEOMETRY,SRID=4326;${geojsonToWKT(boundary)})`,
+        );
+      },
+      [baseBoundaryUrl],
+    ),
+    requestName: 'getPropertyBoundaryWfs',
+    onError: useAxiosErrorHandler('Failed to retrieve property information from BC Data Warehouse'),
+  });
 
-  return { getPropertyWfs, getPropertyWfsWrapper };
+  return { getPropertyWfs, getPropertyWfsWrapper, getPropertyByBoundaryWfsWrapper };
 };

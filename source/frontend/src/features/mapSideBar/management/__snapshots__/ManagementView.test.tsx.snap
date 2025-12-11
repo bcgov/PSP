@@ -52,9 +52,7 @@ exports[`ManagementView component > renders as expected 1`] = `
 }
 
 .c4.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c4.btn:hover {
@@ -235,12 +233,11 @@ exports[`ManagementView component > renders as expected 1`] = `
 }
 
 .c22 {
-  overflow: auto;
   height: 100%;
   width: 22rem;
 }
 
-.c29 {
+.c32 {
   overflow: auto;
   height: 100%;
   width: 100%;
@@ -281,6 +278,11 @@ exports[`ManagementView component > renders as expected 1`] = `
 .c7 {
   font-size: 2.4rem;
   cursor: pointer;
+}
+
+.c43 {
+  padding: 0 0.4rem;
+  display: block;
 }
 
 .c5.btn.btn-light.Button {
@@ -369,32 +371,32 @@ exports[`ManagementView component > renders as expected 1`] = `
   align-items: end;
 }
 
-.c31 {
+.c34 {
   height: 100%;
 }
 
-.c31 .tab-content {
+.c34 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
   background-color: #f2f2f2;
 }
 
-.c31 .tab-content .tab-pane {
+.c34 .tab-content .tab-pane {
   position: relative;
 }
 
-.c32 {
+.c35 {
   background-color: white;
   color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c32 .nav-tabs {
+.c35 .nav-tabs {
   height: auto;
 }
 
-.c32 .nav-item {
+.c35 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
   padding: 0.1rem 1.3rem;
@@ -402,7 +404,7 @@ exports[`ManagementView component > renders as expected 1`] = `
   margin-left: 0.1rem;
 }
 
-.c32 .nav-item:hover {
+.c35 .nav-item:hover {
   color: #f2f2f2;
   background-color: #1e5189;
   border-color: transparent;
@@ -412,7 +414,7 @@ exports[`ManagementView component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c32 .nav-item.active {
+.c35 .nav-item.active {
   border-radius: 0.4rem;
   color: #f2f2f2;
   background-color: #053662;
@@ -420,7 +422,7 @@ exports[`ManagementView component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c30 {
+.c33 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -437,24 +439,30 @@ exports[`ManagementView component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c33 {
+.c42 {
+  float: right;
+  cursor: pointer;
+  font-size: 3.2rem;
+}
+
+.c36 {
   background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
-.c34 {
+.c37 {
   text-align: right;
   overflow: hidden;
 }
 
-.c38 {
+.c41 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
 }
 
-.c35 {
+.c38 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -462,23 +470,39 @@ exports[`ManagementView component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c37.required::before {
+.c40.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c36 {
+.c39 {
   font-weight: bold;
 }
 
-.c39 {
-  padding: 0 0.4rem;
-  display: block;
+.c30 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin: 0.15rem;
+  witdh: 100%;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  line-break: break-all;
 }
 
 .c23 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-flex: 1;
   -ms-flex: 1;
   flex: 1;
@@ -487,10 +511,6 @@ exports[`ManagementView component > renders as expected 1`] = `
   margin: 0px;
   width: 100%;
   color: var(--surface-color-primary-button-default);
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
   -webkit-flex-direction: column;
   -ms-flex-direction: column;
   flex-direction: column;
@@ -514,6 +534,29 @@ exports[`ManagementView component > renders as expected 1`] = `
 }
 
 .c28 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  font-size: 1.4rem;
+  font-weight: normal;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+}
+
+.c28.selected {
+  font-weight: bold;
+  cursor: default;
+}
+
+.c31 {
+  -webkit-align-self: flex-end;
+  -ms-flex-item-align: end;
+  align-self: flex-end;
+  margin-right: 2rem;
+}
+
+.c29 {
   background-color: #fcba19;
   font-size: 1.5rem;
   border-radius: 50%;
@@ -535,7 +578,7 @@ exports[`ManagementView component > renders as expected 1`] = `
   align-items: center;
 }
 
-.c28.selected {
+.c29.selected {
   background-color: #FCBA19;
 }
 
@@ -692,7 +735,11 @@ exports[`ManagementView component > renders as expected 1`] = `
               </defs>
             </svg>
           </div>
-          Management File
+          <div
+            data-testid="form-title"
+          >
+            Management File
+          </div>
         </h1>
       </div>
       <div
@@ -763,6 +810,7 @@ exports[`ManagementView component > renders as expected 1`] = `
       >
         <div
           class="c11 no-gutters row"
+          data-testid="mgmt-file-header"
         >
           <div
             class="c12 col-xl-8 col-12"
@@ -782,7 +830,11 @@ exports[`ManagementView component > renders as expected 1`] = `
               <div
                 class="pl-1 text-left col-8"
               >
-                M-1
+                <div
+                  data-testid="mgmt-fileId"
+                >
+                  M-1
+                </div>
               </div>
             </div>
             <div
@@ -794,13 +846,17 @@ exports[`ManagementView component > renders as expected 1`] = `
                 <label
                   class="c13"
                 >
-                  File Name:
+                  File name:
                 </label>
               </div>
               <div
                 class="pl-1 text-left col-8"
               >
-                Test Management File
+                <div
+                  data-testid="mgmt-file-name"
+                >
+                  Test Management File
+                </div>
               </div>
             </div>
             <div
@@ -818,7 +874,11 @@ exports[`ManagementView component > renders as expected 1`] = `
               <div
                 class="pl-1 text-left col-8"
               >
-                00048 - CLAIMS
+                <div
+                  data-testid="mgmt-file-project"
+                >
+                  00048 - CLAIMS
+                </div>
               </div>
             </div>
             <div
@@ -837,7 +897,11 @@ exports[`ManagementView component > renders as expected 1`] = `
                 class="pl-1 text-left col-8"
                 data-testid="acq-header-product-val"
               >
-                00055 - AVALANCHE  &  PROGRAM REVIEW
+                <div
+                  data-testid="mgmt-file-product"
+                >
+                  00055 - AVALANCHE  &  PROGRAM REVIEW
+                </div>
               </div>
             </div>
             <div
@@ -1010,15 +1074,13 @@ exports[`ManagementView component > renders as expected 1`] = `
                   >
                     <button
                       class="c4 Button btn btn-link"
-                      data-testid="fit-file-properties-boundaries"
-                      title="Fit boundaries button"
+                      title="Fit boundaries"
                       type="button"
                     >
                       <div
                         class="Button__value"
                       >
                         <svg
-                          class="mr-2"
                           fill="currentColor"
                           height="18"
                           stroke="currentColor"
@@ -1042,83 +1104,75 @@ exports[`ManagementView component > renders as expected 1`] = `
               <div
                 class="c27"
               >
-                Active
                 <div
-                  class="c24 no-gutters row"
-                  data-testid="menu-item-row-1"
+                  data-testid="Active-section"
                 >
+                  Active
                   <div
-                    class="col-1"
-                  />
-                  <div
-                    class="pr-2 col-auto"
+                    class="c28"
+                    data-testid="menu-item-row-1"
                   >
-                    <div
-                      class="c28"
-                    >
-                      1
+                    <div />
+                    <div>
+                      <div
+                        class="c29"
+                      >
+                        1
+                      </div>
                     </div>
-                  </div>
-                  <div
-                    class="col"
-                  >
-                    <button
-                      class="c4 Button btn btn-link"
-                      data-testid="menu-item-property-0"
-                      title="View"
-                      type="button"
+                    <div
+                      class="c30"
                     >
                       <div
-                        class="Button__value"
+                        class="c30"
+                        data-testid="menu-item-property-0"
                       >
                         013-852-752
                       </div>
-                    </button>
-                  </div>
-                  <div
-                    class="col-auto"
-                  >
-                    <button
-                      class="c4 Button btn btn-link"
-                      data-testid="menu-item-zoom-0"
-                      title="Zoom to property"
-                      type="button"
+                    </div>
+                    <div
+                      class="c31"
                     >
-                      <div
-                        class="Button__value"
+                      <button
+                        class="c4 Button btn btn-link"
+                        title="Fit boundaries"
+                        type="button"
                       >
-                        <svg
-                          class="mr-2"
-                          fill="currentColor"
-                          height="18"
-                          stroke="currentColor"
-                          stroke-width="0"
-                          viewBox="0 0 512 512"
-                          width="18"
-                          xmlns="http://www.w3.org/2000/svg"
+                        <div
+                          class="Button__value"
                         >
-                          <path
-                            d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
-                          />
-                        </svg>
-                      </div>
-                    </button>
+                          <svg
+                            fill="currentColor"
+                            height="18"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="18"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
+                            />
+                          </svg>
+                        </div>
+                      </button>
+                    </div>
                   </div>
                 </div>
               </div>
             </div>
           </div>
           <div
-            class="c29 col"
+            class="c32 col"
           >
             <div
-              class="c30"
+              class="c33"
             >
               <div
-                class="c31"
+                class="c34"
               >
                 <nav
-                  class="c32 nav nav-tabs"
+                  class="c35 nav nav-tabs"
                   role="tablist"
                 >
                   <a
@@ -1149,13 +1203,13 @@ exports[`ManagementView component > renders as expected 1`] = `
                     role="tabpanel"
                   >
                     <div
-                      class="c33"
+                      class="c36"
                     >
                       <div
-                        class="c34 mr-3 my-1"
+                        class="c37 mr-3 my-1"
                       />
                       <div
-                        class="c35 form-section"
+                        class="c38 form-section"
                       >
                         <div
                           class="collapse show"
@@ -1167,13 +1221,14 @@ exports[`ManagementView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Status:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
+                              data-testid="management-status"
                             >
                               Draft
                             </div>
@@ -1181,10 +1236,10 @@ exports[`ManagementView component > renders as expected 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c35 form-section"
+                        class="c38 form-section"
                       >
                         <h2
-                          class="c38"
+                          class="c41"
                         >
                           <div
                             class="no-gutters row"
@@ -1206,13 +1261,13 @@ exports[`ManagementView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Ministry project:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                               data-testid="management-project"
                             >
                               00048 - CLAIMS
@@ -1225,13 +1280,13 @@ exports[`ManagementView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Product:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
                               data-testid="management-product"
                             >
                               00055 AVALANCHE  &  PROGRAM REVIEW
@@ -1244,22 +1299,23 @@ exports[`ManagementView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Funding:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
+                              data-testid="management-funding"
                             />
                           </div>
                         </div>
                       </div>
                       <div
-                        class="c35 form-section"
+                        class="c38 form-section"
                       >
                         <h2
-                          class="c38"
+                          class="c41"
                         >
                           <div
                             class="no-gutters row"
@@ -1281,13 +1337,14 @@ exports[`ManagementView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Management file name:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
+                              data-testid="management-file-name"
                             >
                               Test Management File
                             </div>
@@ -1299,13 +1356,14 @@ exports[`ManagementView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Historical file number:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
+                              data-testid="management-legacy-file-number"
                             >
                               legacyfile321
                             </div>
@@ -1317,13 +1375,14 @@ exports[`ManagementView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Purpose:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
+                              data-testid="management-purpose"
                             >
                               Engineering
                             </div>
@@ -1335,13 +1394,14 @@ exports[`ManagementView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Additional details:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
+                              data-testid="management-additional-details"
                             >
                               ADDITIONAL DETAILS
                             </div>
@@ -1349,10 +1409,146 @@ exports[`ManagementView component > renders as expected 1`] = `
                         </div>
                       </div>
                       <div
-                        class="c35 form-section"
+                        class="c38 form-section"
                       >
                         <h2
-                          class="c38"
+                          class="c41"
+                        >
+                          <div
+                            class="no-gutters row"
+                          >
+                            <div
+                              class="align-content-end col"
+                            >
+                              <div
+                                class="no-gutters justify-content-between align-items-end row"
+                              >
+                                <div
+                                  class="my-1 col-auto"
+                                >
+                                  Management Contact
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="pl-2 d-flex align-items-end col-auto"
+                            >
+                              <svg
+                                class="c42"
+                                fill="currentColor"
+                                height="1em"
+                                stroke="currentColor"
+                                stroke-width="0"
+                                viewBox="0 0 24 24"
+                                width="1em"
+                                xmlns="http://www.w3.org/2000/svg"
+                              >
+                                <title>
+                                  collapse-section
+                                </title>
+                                <path
+                                  d="M0 0h24v24H0z"
+                                  fill="none"
+                                />
+                                <path
+                                  d="m7 14 5-5 5 5z"
+                                />
+                              </svg>
+                            </div>
+                          </div>
+                        </h2>
+                        <div
+                          class="collapse show"
+                        >
+                          <div
+                            class="table"
+                            data-testid="ManagementFileContactsContactsTable"
+                            role="table"
+                          >
+                            <div
+                              class="thead thead-light"
+                            >
+                              <div
+                                class="tr"
+                                role="row"
+                                style="display: flex; flex: 1 0 auto; min-width: 210px;"
+                              >
+                                <div
+                                  class="th"
+                                  colspan="1"
+                                  role="columnheader"
+                                  style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                >
+                                  <div
+                                    class="sortable-column"
+                                  >
+                                    Contact
+                                  </div>
+                                </div>
+                                <div
+                                  class="th"
+                                  colspan="1"
+                                  role="columnheader"
+                                  style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                >
+                                  <div
+                                    class="sortable-column"
+                                  >
+                                    Primary Contact
+                                  </div>
+                                </div>
+                                <div
+                                  class="th"
+                                  colspan="1"
+                                  role="columnheader"
+                                  style="box-sizing: border-box; flex: 60 0 auto; min-width: 60px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                >
+                                  <div
+                                    class="sortable-column"
+                                  >
+                                    Purpose
+                                  </div>
+                                </div>
+                                <div
+                                  class="th"
+                                  colspan="1"
+                                  role="columnheader"
+                                  style="box-sizing: border-box; flex: 25 0 auto; min-width: 30px; width: 25px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                                >
+                                  <div
+                                    class="sortable-column"
+                                  >
+                                    Actions
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <div
+                              class="no-rows-message"
+                            >
+                              No contacts found
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="align-self-center col-auto"
+                            />
+                            <div
+                              class="ml-auto align-self-center col-auto"
+                            />
+                            <div
+                              class="align-self-center col-auto"
+                            />
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="c38 form-section"
+                      >
+                        <h2
+                          class="c41"
                         >
                           <div
                             class="no-gutters row"
@@ -1374,16 +1570,17 @@ exports[`ManagementView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 MoTI Solicitor:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
+                              data-testid="management-team-member-0"
                             >
                               <a
-                                class="c39"
+                                class="c43"
                                 href="/contact/P6"
                                 rel="noopener noreferrer"
                                 target="_blank"
@@ -1415,16 +1612,17 @@ exports[`ManagementView component > renders as expected 1`] = `
                               class="pr-0 text-left col-5"
                             >
                               <label
-                                class="c36"
+                                class="c39"
                               >
                                 Negotiation agent:
                               </label>
                             </div>
                             <div
-                              class="c37 text-left col"
+                              class="c40 text-left col"
+                              data-testid="management-team-member-1"
                             >
                               <a
-                                class="c39"
+                                class="c43"
                                 href="/contact/P6"
                                 rel="noopener noreferrer"
                                 target="_blank"

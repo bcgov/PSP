@@ -2,9 +2,9 @@ import { useCallback, useContext, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
-import { usePropertyActivityRepository } from '@/hooks/repositories/usePropertyActivityRepository';
+import { useManagementActivityPropertyRepository } from '@/hooks/repositories/useManagementActivityPropertyRepository';
 import { ApiGen_CodeTypes_ManagementActivityStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementActivityStatusTypes';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
 import { exists, isValidId } from '@/utils/utils';
 
@@ -14,7 +14,7 @@ import { IPropertyActivityEditFormProps } from './PropertyActivityEditForm';
 
 export interface IPropertyActivityEditContainerProps {
   propertyId: number;
-  propertyActivityId?: number;
+  managementActivityId?: number;
   onClose: () => void;
   viewEnabled: boolean;
   View: React.FunctionComponent<React.PropsWithChildren<IPropertyActivityEditFormProps>>;
@@ -26,7 +26,7 @@ export interface IPropertyActivityEditContainerProps {
  */
 export const PropertyActivityEditContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyActivityEditContainerProps>
-> = ({ propertyId, propertyActivityId, onClose, viewEnabled, View }) => {
+> = ({ propertyId, managementActivityId, onClose, viewEnabled, View }) => {
   const { getSystemConstant } = useSystemConstants();
 
   const history = useHistory();
@@ -40,6 +40,7 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
     fetchMinistryContacts,
     fetchPartiesContact,
     fetchProviderContact,
+    fetchRequestorContact,
     isLoading: isContactLoading,
   } = useActivityContactRetriever();
 
@@ -47,13 +48,16 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
     getActivity: { execute: getActivity, loading: getActivityLoading },
     createActivity: { execute: createActivity, loading: createActivityLoading },
     updateActivity: { execute: updateActivity, loading: updateActivityLoading },
-  } = usePropertyActivityRepository();
+  } = useManagementActivityPropertyRepository();
 
   // Load the activity
   const fetchActivity = useCallback(
     async (propertyId: number, activityId: number) => {
       let formInitialValues: PropertyActivityFormModel;
-      const retrieved = await getActivity(propertyId, activityId);
+      let retrieved: ApiGen_Concepts_ManagementActivity = null;
+      if (isValidId(propertyId) && isValidId(activityId)) {
+        retrieved = await getActivity(propertyId, activityId);
+      }
       if (exists(retrieved)) {
         if (exists(retrieved.ministryContacts)) {
           for (let i = 0; i < retrieved.ministryContacts.length; i++) {
@@ -66,6 +70,7 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
           }
         }
         await fetchProviderContact(retrieved);
+        await fetchRequestorContact(retrieved);
 
         formInitialValues = PropertyActivityFormModel.fromApi(retrieved);
       } else {
@@ -73,23 +78,30 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
         formInitialValues.activityStatusCode =
           ApiGen_CodeTypes_ManagementActivityStatusTypes.NOTSTARTED;
       }
+
       setInitialValues(formInitialValues);
     },
-    [fetchMinistryContacts, fetchPartiesContact, fetchProviderContact, getActivity],
+    [
+      fetchMinistryContacts,
+      fetchPartiesContact,
+      fetchProviderContact,
+      fetchRequestorContact,
+      getActivity,
+    ],
   );
 
   useEffect(() => {
-    if (isValidId(propertyId) && initialValues === null) {
-      fetchActivity(propertyId, propertyActivityId);
+    if (!exists(initialValues)) {
+      fetchActivity(propertyId, managementActivityId);
     }
-  }, [propertyId, propertyActivityId, fetchActivity, initialValues]);
+  }, [propertyId, managementActivityId, fetchActivity, initialValues]);
 
   const gstConstant = getSystemConstant(SystemConstants.GST);
   const pstConstant = getSystemConstant(SystemConstants.PST);
   const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) * 0.01 : 0;
   const pstDecimal = pstConstant !== undefined ? parseFloat(pstConstant.value) * 0.01 : 0;
 
-  const handleSave = async (model: ApiGen_Concepts_PropertyActivity) => {
+  const handleSave = async (model: ApiGen_Concepts_ManagementActivity) => {
     let result = undefined;
     if (isValidId(model.id)) {
       result = await updateActivity(propertyId, model);
@@ -99,15 +111,15 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
 
     if (exists(result)) {
       setStaleLastUpdatedBy(true);
-      history.push(`/mapview/sidebar/property/${propertyId}/management/activity/${result.id}`);
+      const backUrl = history.location.pathname.split('/activity')[0];
+      history.push(`${backUrl}/activity/${result.id}`);
     }
   };
 
   const onCancelClick = () => {
-    if (isValidId(propertyActivityId)) {
-      history.push(
-        `/mapview/sidebar/property/${propertyId}/management/activity/${propertyActivityId}`,
-      );
+    if (isValidId(managementActivityId)) {
+      const backUrl = history.location.pathname.split('/activity')[0];
+      history.push(`${backUrl}/activity/${managementActivityId}`);
     } else {
       onClose();
     }

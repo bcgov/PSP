@@ -1,0 +1,149 @@
+[
+  {
+    "Test Case Description": "Complete new AF",
+    "TeamMemberRole": "MoTI Solicitor",
+    "TeamMemberContactName": "Devin Smith",
+    "TeamMemberContactType": "Individual",
+    "TeamMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "Complete new AF",
+    "TeamMemberRole": "Expropriation agent",
+    "TeamMemberContactName": "Carol A Swift",
+    "TeamMemberContactType": "Individual",
+    "TeamMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "Complete new AF",
+    "TeamMemberRole": "Negotiation agent",
+    "TeamMemberContactName": "Alejandro Sanchez",
+    "TeamMemberContactType": "Individual",
+    "TeamMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "Complete new AF",
+    "TeamMemberRole": "Property coordinator",
+    "TeamMemberContactName": "TestingOrganisation",
+    "TeamMemberContactType": "Organization",
+    "TeamMemberPrimaryContact": "Praveen Kumar"
+  },
+  {
+    "Test Case Description": "Complete new AF",
+    "TeamMemberRole": "Property analyst",
+    "TeamMemberContactName": "ISLAND SAVINGS TEST CREDIT UNION",
+    "TeamMemberContactType": "Organization",
+    "TeamMemberPrimaryContact": "SHINDO GREWAL"
+  },
+  {
+    "Test Case Description": "Edit existing AF",
+    "TeamMemberRole": "Property agent",
+    "TeamMemberContactName": "Amanda Helen Gaylard",
+    "TeamMemberContactType": "Individual",
+    "TeamMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "AF with H120",
+    "TeamMemberRole": "MoTI Solicitor",
+    "TeamMemberContactName": "Aihong Cai",
+    "TeamMemberContactType": "Individual",
+    "TeamMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "AF with Expropriation",
+    "TeamMemberRole": "Property agent",
+    "TeamMemberContactName": "ISLAND SAVINGS TEST CREDIT UNION",
+    "TeamMemberContactType": "Organization",
+    "TeamMemberPrimaryContact": "Amin Devji"
+  },
+  {
+    "Test Case Description": "AF with Expropriation",
+    "TeamMemberRole": "MoTI Solicitor",
+    "TeamMemberContactName": "LINDA SUSAN SCHOBER",
+    "TeamMemberContactType": "Individual",
+    "TeamMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "AF Minimum",
+    "TeamMemberRole": "MoTI Solicitor",
+    "TeamMemberContactName": "Joe Ellicott",
+    "TeamMemberContactType": "Individual",
+    "TeamMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "Complete new DF",
+    "TeamMemberRole": "Listing Agent",
+    "TeamMemberContactName": "Abma Monica",
+    "TeamMemberContactType": "Individual",
+    "TeamMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "Complete new DF",
+    "TeamMemberRole": "MoTI Solicitor",
+    "TeamMemberContactName": "Bernadette Kent",
+    "TeamMemberContactType": "Individual",
+    "TeamMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "Complete new DF",
+    "TeamMemberRole": "MoTI Lead",
+    "TeamMemberContactName": "Charles Allan Lewis",
+    "TeamMemberContactType": "Individual",
+    "TeamMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "Complete new DF",
+    "TeamMemberRole": "Negotiation agent",
+    "TeamMemberContactName": "TestingOrganisation",
+    "TeamMemberContactType": "Organization",
+    "TeamMemberPrimaryContact": "Sue Tairaku"
+  },
+  {
+    "Test Case Description": "Complete new DF",
+    "TeamMemberRole": "Property agent",
+    "TeamMemberContactName": "Can Am Auctions Ltd.",
+    "TeamMemberContactType": "Organization",
+    "TeamMemberPrimaryContact": "No contacts available"
+  },
+  {
+    "Test Case Description": "Complete new DF",
+    "TeamMemberRole": "Property analyst",
+    "TeamMemberContactName": "Hall's Tire Stores Ltd.",
+    "TeamMemberContactType": "Organization",
+    "TeamMemberPrimaryContact": "Adolf Regner"
+  },
+  {
+    "Test Case Description": "Complete new DF",
+    "TeamMemberRole": "Property coordinator",
+    "TeamMemberContactName": "Test West Coast Nissan Ltd.",
+    "TeamMemberContactType": "Organization",
+    "TeamMemberPrimaryContact": "No contacts available"
+  },
+  {
+    "Test Case Description": "Edit existing DF",
+    "TeamMemberRole": "Listing Agent",
+    "TeamMemberContactName": "Aaron Dale Bregg",
+    "TeamMemberContactType": "Individual",
+    "TeamMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "Complete new LL",
+    "TeamMemberRole": "Land operations manager",
+    "TeamMemberContactName": "TestingOrganisation",
+    "TeamMemberContactType": "Organization",
+    "TeamMemberPrimaryContact": "Praveen Kumar"
+  },
+  {
+    "Test Case Description": "Complete new LL",
+    "TeamMemberRole": "Land project manager",
+    "TeamMemberContactName": "Alejandro Sanchez",
+    "TeamMemberContactType": "Individual",
+    "TeamMemberPrimaryContact": null
+  },
+  {
+    "Test Case Description": "Update LL",
+    "TeamMemberRole": "MoTT contact",
+    "TeamMemberContactName": "TestingOrganisation",
+    "TeamMemberContactType": "Organization",
+    "TeamMemberPrimaryContact": "Sue Tairaku"
+  }
+]

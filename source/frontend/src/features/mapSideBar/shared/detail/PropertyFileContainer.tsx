@@ -3,7 +3,6 @@ import { useParams } from 'react-router-dom';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { Claims, NoteTypes } from '@/constants';
-import { usePropertyDetails } from '@/features/mapSideBar/hooks/usePropertyDetails';
 import {
   IInventoryTabsProps,
   InventoryTabNames,
@@ -26,11 +25,13 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
-import { exists, getLatLng, isPlanNumberSPCP, isValidId } from '@/utils';
+import { exists, firstOrNull, isPlanNumberSPCP, isValidId } from '@/utils';
 
+import { LayerTabContainer } from '../../layer/LayerTabContainer';
+import { LayerTabView } from '../../layer/LayerTabView';
 import { getLeaseInfo, LeaseAssociationInfo } from '../../property/PropertyContainer';
-import CrownDetailsTabView from '../../property/tabs/crown/CrownDetailsTabView';
 import LtsaPlanTabView from '../../property/tabs/ltsa/LtsaPlanTabView';
+import { toFormValues } from '../../property/tabs/propertyDetails/detail/PropertyDetailsTabView.helpers';
 import { PropertyManagementTabView } from '../../property/tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
 import PropertyResearchTabView from '../../property/tabs/propertyResearch/detail/PropertyResearchTabView';
 import ResearchStatusUpdateSolver from '../../research/tabs/fileDetails/ResearchStatusUpdateSolver';
@@ -53,8 +54,7 @@ export const PropertyFileContainer: React.FunctionComponent<
   const pid = props.fileProperty?.property?.pid ?? undefined;
   const id = props.fileProperty?.property?.id ?? undefined;
   const planNumber = props.fileProperty?.property?.planNumber ?? undefined;
-  const location = props.fileProperty?.property?.location ?? undefined;
-  const latLng = useMemo(() => getLatLng(location) ?? undefined, [location]);
+  const boundary = props.fileProperty?.property?.boundary ?? undefined;
   const { hasClaim } = useKeycloakWrapper();
 
   const { setFullWidthSideBar } = useMapStateMachine();
@@ -62,14 +62,8 @@ export const PropertyFileContainer: React.FunctionComponent<
   const composedProperties = useComposedProperties({
     pid,
     id,
-    latLng,
-    propertyTypes: [
-      PROPERTY_TYPES.ASSOCIATIONS,
-      PROPERTY_TYPES.LTSA,
-      PROPERTY_TYPES.PIMS_API,
-      PROPERTY_TYPES.BC_ASSESSMENT,
-      PROPERTY_TYPES.CROWN_TENURES,
-    ],
+    boundary,
+    propertyTypes: propertyFileTabData,
   });
 
   const { getLease } = useLeaseRepository();
@@ -105,10 +99,6 @@ export const PropertyFileContainer: React.FunctionComponent<
     ],
   );
 
-  // After API property object has been received, we query relevant map layers to find
-  // additional information which we store in a different model (IPropertyDetailsForm)
-  const propertyViewForm = usePropertyDetails(composedProperties.apiWrapper?.response);
-
   const tabViews: TabInventoryView[] = [];
   const ltsaWrapper = composedProperties.ltsaWrapper;
 
@@ -137,18 +127,6 @@ export const PropertyFileContainer: React.FunctionComponent<
       ),
       key: InventoryTabNames.plan,
       name: 'Plan',
-    });
-  }
-
-  if (exists(composedProperties.composedProperty?.crownTenureFeatures)) {
-    tabViews.push({
-      content: (
-        <CrownDetailsTabView
-          crownFeatures={composedProperties.composedProperty?.crownTenureFeatures}
-        />
-      ),
-      key: InventoryTabNames.crown,
-      name: 'Crown',
     });
   }
 
@@ -198,8 +176,20 @@ export const PropertyFileContainer: React.FunctionComponent<
     tabViews.push({
       content: (
         <PropertyDetailsTabView
-          property={propertyViewForm}
-          loading={composedProperties?.apiWrapper?.loading ?? false}
+          property={{
+            ...toFormValues(composedProperties.apiWrapper?.response),
+            electoralDistrict: firstOrNull(composedProperties?.composedProperty?.electoralFeatures),
+            isALR: composedProperties?.composedProperty?.alrFeatures?.length > 0,
+            firstNations: {
+              bandName:
+                firstOrNull(composedProperties?.composedProperty?.firstNationFeatures)?.properties
+                  .BAND_NAME || '',
+              reserveName:
+                firstOrNull(composedProperties?.composedProperty?.firstNationFeatures)?.properties
+                  .ENGLISH_NAME || '',
+            },
+          }}
+          loading={composedProperties?.composedLoading ?? false}
         />
       ),
       key: InventoryTabNames.property,
@@ -227,6 +217,86 @@ export const PropertyFileContainer: React.FunctionComponent<
     });
   }
 
+  if (exists(composedProperties?.composedProperty)) {
+    const composedProperty = composedProperties?.composedProperty;
+    if (composedProperty?.parcelMapFeatureCollection?.features?.length > 0) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedProperties?.composedProperty}
+            activeTab={InventoryTabNames.pmbc}
+            View={LayerTabView}
+          />
+        ),
+        key: InventoryTabNames.pmbc,
+        name: 'PMBC',
+      });
+    }
+    if (
+      composedProperty?.pimsGeoserverFeatureCollection?.features?.length > 0 &&
+      !exists(composedProperty?.id)
+    ) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedProperties?.composedProperty}
+            activeTab={InventoryTabNames.pims}
+            View={LayerTabView}
+          />
+        ),
+        key: InventoryTabNames.pims,
+        name: 'PIMS',
+      });
+    }
+    if (
+      composedProperty?.crownInclusionFeatures?.length +
+        composedProperty?.crownInventoryFeatures?.length +
+        composedProperty?.crownLeaseFeatures?.length +
+        composedProperty?.crownLeaseFeatures?.length +
+        composedProperty?.crownLicenseFeatures?.length +
+        composedProperty?.crownTenureFeatures?.length >
+      0
+    ) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedProperties?.composedProperty}
+            activeTab={InventoryTabNames.crown}
+            View={LayerTabView}
+          />
+        ),
+        key: InventoryTabNames.crown,
+        name: 'Crown',
+      });
+    }
+    if (composedProperty?.highwayFeatures?.length > 0) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedProperties?.composedProperty}
+            activeTab={InventoryTabNames.highway}
+            View={LayerTabView}
+          />
+        ),
+        key: InventoryTabNames.highway,
+        name: 'HWY',
+      });
+    }
+    if (composedProperty?.municipalityFeatures?.length > 0) {
+      tabViews.push({
+        content: (
+          <LayerTabContainer
+            composedProperty={composedProperties?.composedProperty}
+            activeTab={InventoryTabNames.other}
+            View={LayerTabView}
+          />
+        ),
+        key: InventoryTabNames.other,
+        name: 'Other',
+      });
+    }
+  }
+
   if (props.fileContext === ApiGen_CodeTypes_FileTypes.Acquisition) {
     tabViews.push({
       content: (
@@ -248,7 +318,7 @@ export const PropertyFileContainer: React.FunctionComponent<
           onSuccess={props.onChildSuccess}
         />
       ),
-      key: InventoryTabNames.document,
+      key: InventoryTabNames.documents,
       name: 'Property Documents',
     });
   }
@@ -283,7 +353,7 @@ export const PropertyFileContainer: React.FunctionComponent<
     Object.values(InventoryTabNames).find(t => t === params.tab) ?? props.defaultTab;
 
   useEffect(() => {
-    if (activeTab === InventoryTabNames.document || activeTab === InventoryTabNames.notes) {
+    if (activeTab === InventoryTabNames.documents || activeTab === InventoryTabNames.notes) {
       setFullWidthSideBar(true);
     } else {
       setFullWidthSideBar(false);
@@ -300,5 +370,22 @@ export const PropertyFileContainer: React.FunctionComponent<
     />
   );
 };
+
+const propertyFileTabData = [
+  PROPERTY_TYPES.ASSOCIATIONS,
+  PROPERTY_TYPES.LTSA,
+  PROPERTY_TYPES.PIMS_API,
+  PROPERTY_TYPES.BC_ASSESSMENT,
+  PROPERTY_TYPES.PARCEL_MAP,
+  PROPERTY_TYPES.PIMS_GEOSERVER,
+  PROPERTY_TYPES.CROWN_TENURES,
+  PROPERTY_TYPES.CROWN_INCLUSIONS,
+  PROPERTY_TYPES.CROWN_INVENTORY,
+  PROPERTY_TYPES.CROWN_LEASES,
+  PROPERTY_TYPES.CROWN_LICENSES,
+  PROPERTY_TYPES.CROWN_SURVEYS,
+  PROPERTY_TYPES.MUNICIPALITY,
+  PROPERTY_TYPES.HIGHWAYS,
+];
 
 export default PropertyFileContainer;

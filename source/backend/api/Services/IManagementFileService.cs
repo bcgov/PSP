@@ -22,5 +22,15 @@ namespace Pims.Api.Services
         PimsManagementFile UpdateProperties(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> userOverrides);
 
         Paged<PimsManagementFile> GetPage(ManagementFilter filter);
+
+        IEnumerable<PimsManagementFileContact> GetContacts(long id);
+
+        PimsManagementFileContact GetContact(long managementFileId, long contactId);
+
+        PimsManagementFileContact AddContact(PimsManagementFileContact contact);
+
+        PimsManagementFileContact UpdateContact(PimsManagementFileContact contact);
+
+        bool DeleteContact(long managementFileId, long contactId);
     }
 }

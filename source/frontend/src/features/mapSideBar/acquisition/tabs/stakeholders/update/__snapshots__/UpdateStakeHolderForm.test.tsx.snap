@@ -36,9 +36,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
 }
 
 .c7.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c7.btn:hover {
@@ -294,6 +292,11 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
   line-height: 2rem;
 }
 
+.c3 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c6 {
   position: relative;
   border-radius: 0.4rem;
@@ -371,14 +374,20 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
 }
 
 .c11 {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  margin: 0.15rem;
+  witdh: 100%;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
-}
-
-.c3 {
-  padding: 0 0.4rem;
-  display: block;
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
+  -webkit-box-orient: vertical;
+  word-break: break-all;
+  line-break: break-all;
 }
 
 <div
@@ -438,7 +447,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="form-group"
+                  class="input form-group"
                 >
                   <div
                     class="row"
@@ -1070,7 +1079,7 @@ exports[`UpdateStakeHolderForm component > renders as expected 1`] = `
                 class="col"
               >
                 <div
-                  class="form-group"
+                  class="input form-group"
                 >
                   <div
                     class="row"

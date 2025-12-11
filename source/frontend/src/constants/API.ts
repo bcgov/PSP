@@ -31,6 +31,11 @@ export interface IGeoSearchParams {
   HISTORICAL_FILE_NUMBER_STR?: string;
   BBOX?: string;
   GEOGRAPHIC_NAME?: string;
+  SECTION?: number | string;
+  TOWNSHIP?: number | string;
+  RANGE?: number | string;
+  DISTRICT?: string;
+  PROJECT?: number | string;
   latitude?: number | string;
   longitude?: number | string;
 
@@ -103,9 +108,9 @@ export const DISPOSITION_CHECKLIST_ITEM_STATUS_TYPES = 'PimsChklstItemStatusType
 export const AGREEMENT_TYPES = 'PimsAgreementType';
 export const INTEREST_HOLDER_TYPES = 'PimsInterestHolderInterestType';
 export const PAYMENT_ITEM_TYPES = 'PimsPaymentItemType';
-export const PROP_MGMT_ACTIVITY_STATUS_TYPES = 'PimsPropMgmtActivityStatusType';
-export const PROP_MGMT_ACTIVITY_SUBTYPES_TYPES = 'PimsPropMgmtActivitySubtype';
-export const PROP_MGMT_ACTIVITY_TYPES = 'PimsPropMgmtActivityType';
+export const MGMT_ACTIVITY_STATUS_TYPES = 'PimsMgmtActivityStatusType';
+export const MGMT_ACTIVITY_SUBTYPES_TYPES = 'PimsMgmtActivitySubtype';
+export const MGMT_ACTIVITY_TYPES = 'PimsMgmtActivityType';
 export const AGREEMENT_STATUS_TYPES = 'PimsAgreementStatusType';
 export const DISPOSITION_STATUS_TYPES = 'PimsDispositionStatusType';
 export const DISPOSITION_TYPES = 'PimsDispositionType';
@@ -122,8 +127,8 @@ export const LEASE_CHECKLIST_ITEM_STATUS_TYPES = 'PimsChklstItemStatusType';
 export const LEASE_PAYMENT_CATEGORY_TYPES = 'PimsLeasePaymentCategoryType';
 export const SUBFILE_INTEREST_TYPES = 'PimsSubfileInterestType';
 export const ACQUISITION_PROGRESS_STATUS_TYPES = 'PimsAcqFileProgessType';
-export const ACQUISITION_APPRAISAL_STATUS_TYPES = 'PimsAcqFileAppraisalType';
-export const ACQUISITION_LEGALSURVEY_STATUS_TYPES = 'PimsAcqFileLglSrvyType';
+export const FILE_APPRAISAL_STATUS_TYPES = 'PimsFileAppraisalType';
+export const FILE_LEGALSURVEY_STATUS_TYPES = 'PimsFileLglSrvyType';
 export const ACQUISITION_TAKING_STATUS_TYPES = 'PimsAcqFileTakeType';
 export const ACQUISITION_EXPROPIATIONRISK_STATUS_TYPES = 'PimsAcqFileExpropRiskType';
 export const LEASE_TEAM_PROFILE_TYPES = 'PimsLlTeamProfileType';

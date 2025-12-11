@@ -36,7 +36,7 @@ export const LeaseHeader: React.FC<ILeaseHeaderProps> = ({ lease, lastUpdatedBy 
   const calculatedExpiry = exists(lease) ? getCalculatedExpiry(lease, lease.renewals || []) : '';
   const isExpired = moment().isAfter(moment(calculatedExpiry, 'YYYY-MM-DD'), 'day');
   const stakeholdersLabel =
-    lease?.paymentReceivableType.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL
+    lease?.paymentReceivableType?.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL
       ? 'Tenant:'
       : 'Payee:';
 

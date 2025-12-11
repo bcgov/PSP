@@ -69,7 +69,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(searchProjectNameInput);
             webDriver.FindElement(searchProjectNameInput).SendKeys(projectName);
-            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Statuses");
+            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Status");
             
             webDriver.FindElement(searchProjectButton).Click();
         }
@@ -81,7 +81,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(searchProjectNumberInput);
             webDriver.FindElement(searchProjectNumberInput).SendKeys(projectNumber);
-            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Statuses");
+            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Status");
 
             webDriver.FindElement(searchProjectButton).Click();
         }
@@ -93,7 +93,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(searchProjectRegionSelect);
             webDriver.FindElement(searchProjectRegionSelect).SendKeys(projectRegion);
-            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Statuses");
+            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Status");
 
             webDriver.FindElement(searchProjectButton).Click();
         }
@@ -130,7 +130,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void OrderByProjectLastUpdatedBy()
         {
             WaitUntilClickable(searchProjectLastUpdatedByOrderBttn);
-            webDriver.FindElement(searchProjectLastUpdatedByOrderBttn).Click();
+            FocusAndClick(searchProjectLastUpdatedByOrderBttn);
         }
 
         public void OrderByProjectLastUpdatedDate()

@@ -6,13 +6,16 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Table to provide multiple acquisition take types for an acquisition file.
+/// </summary>
 [Table("PIMS_ACQ_FILE_ACQ_FL_TAKE_TYP")]
 [Index("AcquisitionFileId", Name = "AQFATT_ACQUISITION_FILE_ID_IDX")]
 [Index("AcqFileTakeTypeCode", Name = "AQFATT_ACQ_FILE_TAKE_TYPE_CODE_IDX")]
 public partial class PimsAcqFileAcqFlTakeTyp
 {
     /// <summary>
-    /// Generated surrogate primary key.
+    /// System-generated unique surrogate primary key.
     /// </summary>
     [Key]
     [Column("ACQ_FILE_ACQ_FL_TAKE_TYPE_ID")]
@@ -44,7 +47,7 @@ public partial class PimsAcqFileAcqFlTakeTyp
     public DateTime AppCreateTimestamp { get; set; }
 
     /// <summary>
-    /// The user account that created the record.
+    /// The user that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USERID")]
@@ -52,13 +55,13 @@ public partial class PimsAcqFileAcqFlTakeTyp
     public string AppCreateUserid { get; set; }
 
     /// <summary>
-    /// The GUID of the user account that created the record.
+    /// GUID of the user that created the record.
     /// </summary>
     [Column("APP_CREATE_USER_GUID")]
     public Guid? AppCreateUserGuid { get; set; }
 
     /// <summary>
-    /// The directory of the user account that created the record.
+    /// User directory of the user that created the record.
     /// </summary>
     [Required]
     [Column("APP_CREATE_USER_DIRECTORY")]
@@ -66,13 +69,13 @@ public partial class PimsAcqFileAcqFlTakeTyp
     public string AppCreateUserDirectory { get; set; }
 
     /// <summary>
-    /// The date and time the user updated the record.
+    /// The date and time the record was updated by the user.
     /// </summary>
     [Column("APP_LAST_UPDATE_TIMESTAMP", TypeName = "datetime")]
     public DateTime AppLastUpdateTimestamp { get; set; }
 
     /// <summary>
-    /// The user account that updated the record.
+    /// The user that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USERID")]
@@ -80,13 +83,13 @@ public partial class PimsAcqFileAcqFlTakeTyp
     public string AppLastUpdateUserid { get; set; }
 
     /// <summary>
-    /// The GUID of the user account that updated the record.
+    /// GUID of the user that updated the record.
     /// </summary>
     [Column("APP_LAST_UPDATE_USER_GUID")]
     public Guid? AppLastUpdateUserGuid { get; set; }
 
     /// <summary>
-    /// The directory of the user account that updated the record.
+    /// User directory of the user that updated the record.
     /// </summary>
     [Required]
     [Column("APP_LAST_UPDATE_USER_DIRECTORY")]

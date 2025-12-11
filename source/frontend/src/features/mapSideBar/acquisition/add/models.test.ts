@@ -1,9 +1,9 @@
-import { EnumAcquisitionFileType } from '@/constants/acquisitionFileType';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 
 import { AcquisitionTeamFormModel } from '../common/models';
 import { AcquisitionForm } from './models';
+import { ApiGen_CodeTypes_AcquisitionFileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionFileTypeTypes';
 
 describe('Create acquisition model tests', () => {
   describe('fromParentFileApi', () => {
@@ -17,7 +17,7 @@ describe('Create acquisition model tests', () => {
         estimatedCompletionDate: '2025-01-01',
         possessionDate: '2025-03-15',
         acquisitionTypeCode: {
-          id: EnumAcquisitionFileType.SECTN6,
+          id: ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN6,
           description: 'Section 6 Expropriation',
           isDisabled: false,
           displayOrder: null,
@@ -112,7 +112,7 @@ describe('Create acquisition model tests', () => {
       expect(model.deliveryDate).toBe('2023-07-31');
       expect(model.estimatedCompletionDate).toBe('2025-01-01');
       expect(model.possessionDate).toBe('2025-03-15');
-      expect(model.acquisitionType).toBe(EnumAcquisitionFileType.SECTN6);
+      expect(model.acquisitionType).toBe(ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN6);
       expect(model.region).toBe('1');
       expect(model.team).toHaveLength(1);
     });

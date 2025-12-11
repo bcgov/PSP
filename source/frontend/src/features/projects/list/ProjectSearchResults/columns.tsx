@@ -1,6 +1,6 @@
-import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
+import { ExternalLink } from '@/components/common/ExternalLink';
 import { ColumnWithProps } from '@/components/Table';
 import { UtcDateCell } from '@/components/Table/DateCell';
 
@@ -16,9 +16,9 @@ export const columns: ColumnWithProps<ProjectSearchResultModel>[] = [
     width: 5,
     maxWidth: 20,
     Cell: (props: CellProps<ProjectSearchResultModel>) => (
-      <Link to={`/mapview/sidebar/project/${props.row.original.id}`}>
+      <ExternalLink to={`/mapview/sidebar/project/${props.row.original.id}`}>
         {props.row.original.code}
-      </Link>
+      </ExternalLink>
     ),
   },
   {
@@ -30,9 +30,9 @@ export const columns: ColumnWithProps<ProjectSearchResultModel>[] = [
     width: 45,
     maxWidth: 45,
     Cell: (props: CellProps<ProjectSearchResultModel>) => (
-      <Link to={`/mapview/sidebar/project/${props.row.original.id}`}>
+      <ExternalLink to={`/mapview/sidebar/project/${props.row.original.id}`}>
         {props.row.original.description}
-      </Link>
+      </ExternalLink>
     ),
   },
   {

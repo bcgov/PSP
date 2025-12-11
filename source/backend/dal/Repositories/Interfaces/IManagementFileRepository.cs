@@ -21,5 +21,15 @@ namespace Pims.Dal.Repositories
         long GetRowVersion(long id);
 
         Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter);
+
+        List<PimsManagementFileContact> GetContacts(long managementFileId);
+
+        PimsManagementFileContact GetContact(long managementFileId, long contactId);
+
+        PimsManagementFileContact AddContact(PimsManagementFileContact contact);
+
+        PimsManagementFileContact UpdateContact(PimsManagementFileContact contact);
+
+        void DeleteContact(long managementFileId, long contactId);
     }
 }

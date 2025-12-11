@@ -31,7 +31,7 @@ namespace Pims.Api.Services
         private readonly IDocumentQueueRepository _documentQueueRepository;
         private readonly IDocumentRelationshipRepository<PimsAcquisitionFileDocument> _acquisitionFileDocumentRepository;
         private readonly IDocumentRelationshipRepository<PimsResearchFileDocument> _researchFileDocumentRepository;
-        private readonly IDocumentRelationshipRepository<PimsPropertyActivityDocument> _propertyActivityDocumentRepository;
+        private readonly IDocumentRelationshipRepository<PimsMgmtActivityDocument> _managementActivityDocumentRepository;
         private readonly IDocumentRelationshipRepository<PimsLeaseDocument> _leaseFileDocumentRepository;
         private readonly IDocumentRelationshipRepository<PimsProjectDocument> _projectDocumentRepository;
         private readonly IDocumentRelationshipRepository<PimsDispositionFileDocument> _dispositionFileDocumentRepository;
@@ -47,7 +47,7 @@ namespace Pims.Api.Services
             IDocumentRelationshipRepository<PimsResearchFileDocument> researchFileDocumentRepository,
             IDocumentRelationshipRepository<PimsLeaseDocument> leaseFileDocumentRepository,
             IDocumentRelationshipRepository<PimsProjectDocument> projectDocumentRepository,
-            IDocumentRelationshipRepository<PimsPropertyActivityDocument> propertyActivityDocumentRepository,
+            IDocumentRelationshipRepository<PimsMgmtActivityDocument> managementActivityDocumentRepository,
             IDocumentRelationshipRepository<PimsDispositionFileDocument> dispositionFileDocumentRepository,
             IDocumentRelationshipRepository<PimsManagementFileDocument> managementFileDocumentRepository,
             IDocumentRelationshipRepository<PimsPropertyDocument> propertyDocumentRepository,
@@ -60,7 +60,7 @@ namespace Pims.Api.Services
             _researchFileDocumentRepository = researchFileDocumentRepository;
             _leaseFileDocumentRepository = leaseFileDocumentRepository;
             _projectDocumentRepository = projectDocumentRepository;
-            _propertyActivityDocumentRepository = propertyActivityDocumentRepository;
+            _managementActivityDocumentRepository = managementActivityDocumentRepository;
             _dispositionFileDocumentRepository = dispositionFileDocumentRepository;
             _managementFileDocumentRepository = managementFileDocumentRepository;
             _propertyDocumentRepository = propertyDocumentRepository;
@@ -89,7 +89,7 @@ namespace Pims.Api.Services
                     return _leaseFileDocumentRepository.GetAllByParentId(fileId).Select(f => f as T).ToArray();
                 case FileType.ManagementActivity:
                     User.ThrowIfNotAuthorized(Permissions.ManagementView);
-                    return _propertyActivityDocumentRepository.GetAllByParentId(fileId).Select(f => f as T).ToArray();
+                    return _managementActivityDocumentRepository.GetAllByParentId(fileId).Select(f => f as T).ToArray();
                 case FileType.ManagementFile:
                     User.ThrowIfNotAuthorized(Permissions.ManagementView);
                     return _managementFileDocumentRepository.GetAllByParentId(fileId).Select(f => f as T).ToArray();
@@ -132,11 +132,11 @@ namespace Pims.Api.Services
             await UploadDocument(leaseId, uploadRequest, _leaseFileDocumentRepository);
         }
 
-        public async Task UploadPropertyActivityDocument(long propertyActivityId, DocumentUploadRequest uploadRequest)
+        public async Task UploadManagementActivityDocument(long managementActivityId, DocumentUploadRequest uploadRequest)
         {
-            Logger.LogInformation("Uploading document for single Property Activity");
+            Logger.LogInformation("Uploading document for single Management Activity");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.ManagementEdit);
-            await UploadDocument(propertyActivityId, uploadRequest, _propertyActivityDocumentRepository);
+            await UploadDocument(managementActivityId, uploadRequest, _managementActivityDocumentRepository);
         }
 
         public async Task UploadManagementFileDocument(long managementFileId, DocumentUploadRequest uploadRequest)
@@ -188,11 +188,11 @@ namespace Pims.Api.Services
             return await DeletePropertyDocumentAsync(leaseDocument, _leaseFileDocumentRepository);
         }
 
-        public async Task<ExternalResponse<string>> DeletePropertyActivityDocumentAsync(PimsPropertyActivityDocument propertyActivityDocument)
+        public async Task<ExternalResponse<string>> DeleteManagementActivityDocumentAsync(PimsMgmtActivityDocument managementActivityDocument)
         {
-            Logger.LogInformation("Deleting PIMS document for single Property Activity");
+            Logger.LogInformation("Deleting PIMS document for single Management Activity");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.ManagementEdit);
-            return await DeletePropertyDocumentAsync(propertyActivityDocument, _propertyActivityDocumentRepository);
+            return await DeletePropertyDocumentAsync(managementActivityDocument, _managementActivityDocumentRepository);
         }
 
         public async Task<ExternalResponse<string>> DeleteManagementFileDocumentAsync(PimsManagementFileDocument managementFileDocument)

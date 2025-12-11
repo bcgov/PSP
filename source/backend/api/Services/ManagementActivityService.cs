@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -21,7 +22,7 @@ namespace Pims.Api.Services
             _managementActivityRepository = managementActivityRepository;
         }
 
-        public Paged<PimsPropertyActivity> GetPage(ManagementActivityFilter filter, bool? all = false)
+        public Paged<PimsManagementActivity> GetPage(ManagementActivityFilter filter, bool? all = false)
         {
             _logger.LogInformation("Searching for management files...");
             _logger.LogDebug("Management file search with filter: {filter}", filter);
@@ -31,6 +32,22 @@ namespace Pims.Api.Services
             filter.Quantity = all.HasValue && all.Value ? _managementActivityRepository.Count() : filter.Quantity;
 
             return _managementActivityRepository.GetPageDeep(filter);
+        }
+
+        public IList<PimsManagementActivity> SearchManagementActivities(ManagementActivityFilter filter)
+        {
+            _logger.LogInformation("Searching all management activities matching the filter: {filter} ", filter);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementView);
+
+            return _managementActivityRepository.SearchManagementActivities(filter);
+        }
+
+        public IList<PimsManagementActivityInvoice> SearchManagementActivityInvoices(ManagementActivityFilter filter)
+        {
+            _logger.LogInformation("Searching all management activity invoices matching the filter: {filter} ", filter);
+            _user.ThrowIfNotAuthorized(Permissions.ManagementView);
+
+            return _managementActivityRepository.SearchManagementActivityInvoices(filter);
         }
     }
 }

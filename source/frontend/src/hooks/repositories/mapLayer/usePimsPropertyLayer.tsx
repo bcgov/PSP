@@ -9,9 +9,10 @@ import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import {
   PIMS_Property_Boundary_View,
-  PIMS_Property_Location_View,
+  PIMS_Property_Lite_View,
 } from '@/models/layers/pimsPropertyLocationView';
 import { TenantContext } from '@/tenants';
+import { exists } from '@/utils';
 
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints for the pims property location.
@@ -48,17 +49,38 @@ export const usePimsPropertyLayer = () => {
         const url = `${propertiesUrl}${
           geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''
         }`;
-        return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Location_View>>(url);
+        return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Boundary_View>>(url);
       },
       [propertiesUrl],
     ),
     requestName: 'LOAD_PROPERTIES',
   });
 
-  const loadPropertyLayerMinimal = useApiRequestWrapper({
+  const loadPropertyBoundaryLayer = useApiRequestWrapper({
+    requestFunction: useCallback(
+      (params?: IGeoSearchParams) => {
+        const geoserver_params = {
+          STREET_ADDRESS_1: params?.STREET_ADDRESS_1,
+          PID: params?.PID,
+          PID_PADDED: params?.PID_PADDED,
+          PIN: params?.PIN,
+          SURVEY_PLAN_NUMBER: params?.SURVEY_PLAN_NUMBER,
+          HISTORICAL_FILE_NUMBER_STR: params?.HISTORICAL_FILE_NUMBER_STR,
+        };
+        const url = `${boundaryLayerUrl}&srsName=EPSG:4326${
+          geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''
+        }`;
+        return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Boundary_View>>(url);
+      },
+      [boundaryLayerUrl],
+    ),
+    requestName: 'LOAD_PROPERTIES_BOUNDARY',
+  });
+
+  const loadPropertyLocationOnlyMinimal = useApiRequestWrapper({
     requestFunction: useCallback(() => {
-      return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Location_View>>(
-        minimalPropertiesUrl,
+      return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Lite_View>>(
+        minimalPropertiesUrl + `&cql_filter= BOUNDARY IS NULL AND LOCATION IS NOT NULL`,
       );
     }, [minimalPropertiesUrl]),
     requestName: 'LOAD_PROPERTIES_MINIMAL',
@@ -116,22 +138,45 @@ export const usePimsPropertyLayer = () => {
     [findMultipleWhereContainsWrappedExecute],
   );
 
+  const findOneByPidOrPin = useCallback(
+    async (pid?: string, pin?: string) => {
+      if (!exists(pid) && !exists(pin)) {
+        return undefined;
+      }
+
+      const params: IGeoSearchParams = {
+        PID: pid,
+        PIN: pin,
+      };
+      const featureCollection = await loadPropertyLayer.execute(params);
+
+      return exists(featureCollection) && featureCollection.features?.length > 0
+        ? featureCollection.features[0]
+        : undefined;
+    },
+    [loadPropertyLayer],
+  );
+
   return useMemo(
     () => ({
       loadPropertyLayer,
-      loadPropertyLayerMinimal,
+      loadPropertyBoundaryLayer,
+      loadPropertyLayerMinimal: loadPropertyLocationOnlyMinimal,
       findAllByBoundary,
       findAllByBoundaryLoading: findMultipleWhereContainsWrappedLoading,
       findOneByBoundary,
       findOneByBoundaryLoading: findOneWhereContainsWrappedLoading,
+      findOneByPidOrPin,
     }),
     [
       findAllByBoundary,
       findMultipleWhereContainsWrappedLoading,
       findOneByBoundary,
+      findOneByPidOrPin,
       findOneWhereContainsWrappedLoading,
+      loadPropertyBoundaryLayer,
       loadPropertyLayer,
-      loadPropertyLayerMinimal,
+      loadPropertyLocationOnlyMinimal,
     ],
   );
 };

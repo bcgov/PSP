@@ -36,9 +36,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
 }
 
 .c5.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c5.btn:hover {
@@ -305,6 +303,7 @@ exports[`Lease Documents Page > renders as expected 1`] = `
 
 <div
     class="c0 form-section"
+    data-testid="main-document-list"
   >
     <h2
       class="c1"

@@ -6,9 +6,7 @@ import styled from 'styled-components';
 import DraftSvg from '@/assets/images/pins/icon-draft.svg';
 import RelocationSvg from '@/assets/images/pins/icon-relocate.svg';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { FilterContentContainer } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentContainer';
-import { FilterContentForm } from '@/components/maps/leaflet/Control/AdvancedFilter/FilterContentForm';
-import { LayersMenu } from '@/components/maps/leaflet/Control/LayersControl/LayersMenu';
+import { DEFAULT_MAP_ZOOM } from '@/components/maps/constants';
 import MapView from '@/components/maps/MapView';
 import { FilterProvider } from '@/components/maps/providers/FilterProvider';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
@@ -16,7 +14,6 @@ import MapSideBar from '@/features/mapSideBar/MapSideBar';
 import CompensationRequisitionRouter from '@/features/mapSideBar/router/CompensationRequisitionRouter';
 import ManagementFileActivityRouter from '@/features/mapSideBar/router/ManagementFileActivityRouter';
 import PropertyActivityRouter from '@/features/mapSideBar/router/PropertyActivityRouter';
-import RightSideLayout from '@/features/rightSideLayout/RightSideLayout';
 import { usePimsPropertyRepository } from '@/hooks/repositories/usePimsPropertyRepository';
 import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
 
@@ -26,15 +23,13 @@ enum MapCursors {
   DEFAULT = 'default',
 }
 
-const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () => {
+const MapContainer: React.FC<
+  React.PropsWithChildren<MapContainerProps & { defaultZoom?: number }>
+> = ({ defaultZoom }) => {
   const [showActionBar, setShowActionBar] = useState(false);
   const {
     isSelecting,
-    isShowingMapFilter,
-    isShowingMapLayers,
     isRepositioning,
-    toggleMapFilterDisplay,
-    toggleMapLayerControl,
     setVisiblePimsProperties,
     advancedSearchCriteria,
     isMapVisible,
@@ -78,27 +73,9 @@ const MapContainer: React.FC<React.PropsWithChildren<MapContainerProps>> = () =>
       </SideBarContextProvider>
       {!showActionBar && (
         <FilterProvider>
-          <MapView />
+          <MapView defaultZoom={defaultZoom ?? DEFAULT_MAP_ZOOM} />
         </FilterProvider>
       )}
-      <RightSideLayout
-        isOpen={isShowingMapFilter}
-        toggle={toggleMapFilterDisplay}
-        title="Filter By:"
-        closeTooltipText="Close Advanced Map Filters"
-        data-testId="advanced-filter-sidebar"
-      >
-        <FilterContentContainer View={FilterContentForm} />
-      </RightSideLayout>
-      <RightSideLayout
-        title="View Layer By:"
-        closeTooltipText="Close Map Layers"
-        data-testId="map-layers-sidebar"
-        isOpen={isShowingMapLayers}
-        toggle={toggleMapLayerControl}
-      >
-        <LayersMenu />
-      </RightSideLayout>
     </StyleMapView>
   );
 };
@@ -108,6 +85,7 @@ const StyleMapView = styled.div`
   display: flex;
   flex-direction: row;
   width: 100%;
+  min-width: 135rem; // any smaller and the right and left side bars conflict
   &.draft-cursor,
   &.draft-cursor .leaflet-grab,
   &.draft-cursor .leaflet-interactive {

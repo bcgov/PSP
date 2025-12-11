@@ -1,0 +1,35 @@
+[
+  {
+    "Test Case Description": "Create new Activity in a MF",
+    "PropertyActivityInvoiceNumber": "8989-000",
+    "PropertyActivityInvoiceDate": 1735776000000,
+    "PropertyActivityInvoiceDescription": "Automated invoice 8989-000 for Activity in a Management File",
+    "PropertyActivityInvoicePretaxAmount": 1780.0,
+    "PropertyActivityInvoiceGSTAmount": 89.0,
+    "PropertyActivityInvoicePSTApplicable": "No",
+    "PropertyActivityInvoicePSTAmount": 0.0,
+    "PropertyActivityInvoiceTotalAmount": 1869.0
+  },
+  {
+    "Test Case Description": "Create new Activity in a MF",
+    "PropertyActivityInvoiceNumber": "7878-00978",
+    "PropertyActivityInvoiceDate": 1731283200000,
+    "PropertyActivityInvoiceDescription": "Automated invoice 7878-00978 for Activity in a Management File",
+    "PropertyActivityInvoicePretaxAmount": 50.0,
+    "PropertyActivityInvoiceGSTAmount": 2.5,
+    "PropertyActivityInvoicePSTApplicable": "Yes",
+    "PropertyActivityInvoicePSTAmount": 3.5,
+    "PropertyActivityInvoiceTotalAmount": 56.0
+  },
+  {
+    "Test Case Description": "Update existing Activity from MF",
+    "PropertyActivityInvoiceNumber": "7800-00098",
+    "PropertyActivityInvoiceDate": 1733961600000,
+    "PropertyActivityInvoiceDescription": "Update an existing activity",
+    "PropertyActivityInvoicePretaxAmount": 127.9,
+    "PropertyActivityInvoiceGSTAmount": 6.4,
+    "PropertyActivityInvoicePSTApplicable": "No",
+    "PropertyActivityInvoicePSTAmount": 0.0,
+    "PropertyActivityInvoiceTotalAmount": 134.3
+  }
+]

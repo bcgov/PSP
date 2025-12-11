@@ -1,11 +1,10 @@
+import { Feature, Geometry } from 'geojson';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { AiOutlineExclamationCircle } from 'react-icons/ai';
-import { FaSearchPlus } from 'react-icons/fa';
 import { HiCube } from 'react-icons/hi2';
 import styled from 'styled-components';
 
-import { StyledIconButton } from '@/components/common/buttons';
 import {
   HeaderContentCol,
   HeaderField,
@@ -14,11 +13,17 @@ import {
 import { StyledFiller } from '@/components/common/HeaderField/styles';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { InlineFlexDiv } from '@/components/common/styles';
-import TooltipWrapper from '@/components/common/TooltipWrapper';
-import { IMapProperty } from '@/components/propertySelector/models';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { ComposedProperty } from '@/features/mapSideBar/property/ComposedProperty';
-import { exists, formatApiAddress, pidFormatter } from '@/utils';
-import { mapFeatureToProperty } from '@/utils/mapPropertyUtils';
+import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import {
+  exists,
+  firstOrNull,
+  formatApiAddress,
+  pidFormatter,
+  pinFromFullyAttributedFeature,
+  planFromFullyAttributedFeature,
+} from '@/utils';
 
 import HistoricalNumbersContainer from '../shared/header/HistoricalNumberContainer';
 import { HistoricalNumberSectionView } from '../shared/header/HistoricalNumberSectionView';
@@ -26,22 +31,25 @@ import { HistoricalNumberSectionView } from '../shared/header/HistoricalNumberSe
 export interface IMotiInventoryHeaderProps {
   isLoading: boolean;
   composedProperty: ComposedProperty;
-  onZoom?: (latitude: number, longitude: number) => void;
 }
 
 export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderProps> = props => {
   const parcelMapData = props.composedProperty.parcelMapFeatureCollection;
-  const geoserverMapData = props.composedProperty.geoserverFeatureCollection;
+  const geoserverMapData = props.composedProperty.pimsGeoserverFeatureCollection;
   const apiProperty = props.composedProperty.pimsProperty;
 
-  let property: IMapProperty | null = null;
+  let pmbcParcel: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null = null;
 
   if (exists(parcelMapData?.features[0])) {
-    property = mapFeatureToProperty(parcelMapData?.features[0]);
+    pmbcParcel = firstOrNull(parcelMapData?.features);
   }
 
   const pid = pidFormatter(props.composedProperty.pid);
-  const pin = props.composedProperty?.pin ?? apiProperty?.pin ?? property?.pin ?? '-';
+  const pin =
+    props.composedProperty?.pin ??
+    apiProperty?.pin ??
+    pinFromFullyAttributedFeature(pmbcParcel) ??
+    '-';
 
   const isLoading = props.isLoading;
 
@@ -63,19 +71,6 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
     return false;
   }, [geoserverMapData?.features]);
 
-  let latitude: number | null = null;
-  let longitude: number | null = null;
-
-  if (exists(apiProperty)) {
-    latitude = apiProperty.latitude ?? null;
-    longitude = apiProperty.longitude ?? null;
-  } else if (exists(property)) {
-    latitude = property.latitude ?? null;
-    longitude = property.longitude ?? null;
-  }
-
-  const hasLocation = exists(longitude) && exists(latitude);
-
   return (
     <HeaderMaxWidthHeight>
       <LoadingBackdrop show={isLoading} parentScreen={true} />
@@ -93,7 +88,7 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
             {exists(apiProperty?.address) ? formatApiAddress(apiProperty!.address) : '-'}
           </HeaderField>
           <HeaderField label="Plan #:" labelWidth={{ xs: 3 }} contentWidth={{ xs: 9 }}>
-            {property?.planNumber}
+            {planFromFullyAttributedFeature(pmbcParcel)}
           </HeaderField>
           {exists(apiProperty) && (
             <HistoricalNumbersContainer
@@ -119,18 +114,11 @@ export const MotiInventoryHeader: React.FunctionComponent<IMotiInventoryHeaderPr
           </StyledFiller>
         </Col>
         <Col xs="auto" className="d-flex p-0 align-items-center justify-content-end">
-          {hasLocation && (
-            <TooltipWrapper tooltipId="property-zoom-map" tooltip="Zoom into parcel">
-              <StyledIconButton
-                variant="info"
-                disabled={!props.onZoom}
-                title="Zoom into parcel"
-                onClick={() => props?.onZoom && props?.onZoom(latitude, longitude)}
-              >
-                <FaSearchPlus size={22} />
-              </StyledIconButton>
-            </TooltipWrapper>
-          )}
+          <ZoomToLocation
+            icon={ZoomIconType.single}
+            featureCollection={[pmbcParcel]}
+            pimsProperties={[apiProperty]}
+          />
         </Col>
       </Row>
       <StyledDivider />

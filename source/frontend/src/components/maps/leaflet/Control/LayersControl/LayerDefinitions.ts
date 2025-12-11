@@ -366,6 +366,8 @@ export const layerDefinitions: LayerDefinition[] = [
     styles: '7943',
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
     maxZoom: MAP_MAX_ZOOM,
+    legendUrl:
+      'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&style=7943',
   },
   {
     layerIdentifier: 'pmbc_parcel_by_owner',
@@ -377,6 +379,8 @@ export const layerDefinitions: LayerDefinition[] = [
     styles: '6616',
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
     maxZoom: MAP_MAX_ZOOM,
+    legendUrl:
+      'https://openmaps.gov.bc.ca/geo/pub/WHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW/ows?service=WMS&version=1.3.0&request=GetLegendGraphic&format=image%2Fpng&width=20&height=20&layer=pub%3AWHSE_CADASTRE.PMBC_PARCEL_FABRIC_POLY_SVW&style=6616',
   },
   {
     layerIdentifier: 'bctfa_property',
@@ -428,6 +432,17 @@ export const layerDefinitions: LayerDefinition[] = [
     transparent: true,
     format: 'image/png',
     zIndex: 4,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
+  },
+  {
+    layerIdentifier: 'crownSurveyParcels',
+    layers: 'pub:WHSE_TANTALIS.TA_SURVEY_PARCELS_SVW',
+    url: 'https://openmaps.gov.bc.ca/geo/pub/WHSE_TANTALIS.TA_SURVEY_PARCELS_SVW/ows?',
+    transparent: true,
+    format: 'image/png',
+    zIndex: 5,
+    id: 'crownSurveyPlans',
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
     maxZoom: MAP_MAX_ZOOM,
   },

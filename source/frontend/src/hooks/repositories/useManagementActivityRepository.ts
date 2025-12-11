@@ -2,7 +2,7 @@ import { AxiosResponse } from 'axios';
 import { useCallback, useMemo } from 'react';
 
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import { useApiManagementActivities } from '../pims-api/useApiManagementActivities';
@@ -24,11 +24,11 @@ export const useManagementActivityRepository = () => {
   const addManagementActivity = useApiRequestWrapper<
     (
       managementFileId: number,
-      activity: ApiGen_Concepts_PropertyActivity,
-    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
+      activity: ApiGen_Concepts_ManagementActivity,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity, any>>
   >({
     requestFunction: useCallback(
-      async (managementFileId: number, activity: ApiGen_Concepts_PropertyActivity) =>
+      async (managementFileId: number, activity: ApiGen_Concepts_ManagementActivity) =>
         await postActivityApi(managementFileId, activity),
       [postActivityApi],
     ),
@@ -38,10 +38,12 @@ export const useManagementActivityRepository = () => {
   });
 
   const getPropertyManagementActivity = useApiRequestWrapper<
-    (propertyActivityId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
+    (
+      managementActivityId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity, any>>
   >({
     requestFunction: useCallback(
-      async (propertyActivityId: number) => await getPropertyActivityApi(propertyActivityId),
+      async (managementActivityId: number) => await getPropertyActivityApi(managementActivityId),
       [getPropertyActivityApi],
     ),
     requestName: 'GetManagementActivity',
@@ -52,11 +54,11 @@ export const useManagementActivityRepository = () => {
   const updateManagementActivity = useApiRequestWrapper<
     (
       managementFileId: number,
-      activity: ApiGen_Concepts_PropertyActivity,
-    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
+      activity: ApiGen_Concepts_ManagementActivity,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity, any>>
   >({
     requestFunction: useCallback(
-      async (managementFileId: number, activity: ApiGen_Concepts_PropertyActivity) =>
+      async (managementFileId: number, activity: ApiGen_Concepts_ManagementActivity) =>
         await putActivityApi(managementFileId, activity),
       [putActivityApi],
     ),
@@ -68,12 +70,12 @@ export const useManagementActivityRepository = () => {
   const getManagementActivity = useApiRequestWrapper<
     (
       managementFileId: number,
-      propertyActivityId: number,
-    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity, any>>
+      managementActivityId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity, any>>
   >({
     requestFunction: useCallback(
-      async (managementFileId: number, propertyActivityId: number) =>
-        await getActivityApi(managementFileId, propertyActivityId),
+      async (managementFileId: number, managementActivityId: number) =>
+        await getActivityApi(managementFileId, managementActivityId),
       [getActivityApi],
     ),
     requestName: 'GetManagementActivity',
@@ -82,7 +84,7 @@ export const useManagementActivityRepository = () => {
   });
 
   const getManagementActivities = useApiRequestWrapper<
-    (managementFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity[], any>>
+    (managementFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity[], any>>
   >({
     requestFunction: useCallback(
       async (managementFileId: number) => await getActivitiesApi(managementFileId),
@@ -94,7 +96,7 @@ export const useManagementActivityRepository = () => {
   });
 
   const getManagementFileActivities = useApiRequestWrapper<
-    (managementFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyActivity[], any>>
+    (managementFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_ManagementActivity[], any>>
   >({
     requestFunction: useCallback(
       async (managementFileId: number) => await getFileActivitiesApi(managementFileId),
@@ -106,11 +108,11 @@ export const useManagementActivityRepository = () => {
   });
 
   const deleteManagementActivity = useApiRequestWrapper<
-    (managementFileId: number, propertyActivityId: number) => Promise<AxiosResponse<boolean, any>>
+    (managementFileId: number, managementActivityId: number) => Promise<AxiosResponse<boolean, any>>
   >({
     requestFunction: useCallback(
-      async (managementFileId: number, propertyActivityId: number) =>
-        await deleteActivityApi(managementFileId, propertyActivityId),
+      async (managementFileId: number, managementActivityId: number) =>
+        await deleteActivityApi(managementFileId, managementActivityId),
       [deleteActivityApi],
     ),
     requestName: 'deleteManagementActivity',

@@ -4,10 +4,11 @@ import { Claims } from '@/constants';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
 import useActivityContactRetriever from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/hooks';
 import { useManagementActivityRepository } from '@/hooks/repositories/useManagementActivityRepository';
+import { getMockManagementActivity } from '@/mocks/managementActivity.mock';
 import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
-import { getMockPropertyManagementActivity } from '@/mocks/PropertyManagementActivity.mock';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { act, getMockRepositoryObj, render, RenderOptions, screen } from '@/utils/test-utils';
 
@@ -17,7 +18,6 @@ import {
 } from './ManagementActivityEditContainer';
 import { IManagementActivityEditFormProps } from './ManagementActivityEditForm';
 import { ManagementActivityFormModel } from './models';
-import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 
 const history = createMemoryHistory();
 
@@ -28,13 +28,14 @@ const mockContactApi: ReturnType<typeof useActivityContactRetriever> = {
   fetchMinistryContacts: vi.fn(),
   fetchPartiesContact: vi.fn(),
   fetchProviderContact: vi.fn(),
+  fetchRequestorContact: vi.fn(),
   isLoading: false,
 };
 
 vi.mock('@/hooks/repositories/useManagementActivityRepository');
-const mockGetManagementActivity = getMockRepositoryObj(getMockPropertyManagementActivity(1));
-const mockAddManagementActivity = getMockRepositoryObj(getMockPropertyManagementActivity(1));
-const mockUpdateManagementActivity = getMockRepositoryObj(getMockPropertyManagementActivity(1));
+const mockGetManagementActivity = getMockRepositoryObj(getMockManagementActivity(1));
+const mockAddManagementActivity = getMockRepositoryObj(getMockManagementActivity(1));
+const mockUpdateManagementActivity = getMockRepositoryObj(getMockManagementActivity(1));
 
 describe('ManagementActivityEditContainer component', () => {
   let viewProps: IManagementActivityEditFormProps;
@@ -126,7 +127,7 @@ describe('ManagementActivityEditContainer component', () => {
         activityProperties: [
           {
             id: 15,
-            propertyActivityId: 1,
+            managementActivityId: 1,
             propertyId: 1,
             rowVersion: 1,
           },
@@ -146,15 +147,15 @@ describe('ManagementActivityEditContainer component', () => {
   });
 
   it('loads related contact information for person and organizations', async () => {
-    const apiManagement: ApiGen_Concepts_PropertyActivity = {
-      ...getMockPropertyManagementActivity(1),
+    const apiManagement: ApiGen_Concepts_ManagementActivity = {
+      ...getMockManagementActivity(1),
       ministryContacts: [
         {
           id: 1,
           personId: 1,
           person: null,
-          propertyActivityId: 1,
-          propertyActivity: null,
+          managementActivityId: 1,
+          managementActivity: null,
           ...getEmptyBaseAudit(),
         },
       ],
@@ -165,8 +166,8 @@ describe('ManagementActivityEditContainer component', () => {
           person: null,
           organizationId: 1,
           organization: null,
-          propertyActivityId: 1,
-          propertyActivity: null,
+          managementActivityId: 1,
+          managementActivity: null,
           ...getEmptyBaseAudit(),
         },
       ],
@@ -181,7 +182,7 @@ describe('ManagementActivityEditContainer component', () => {
   });
 
   it('calls API to create new management activity and redirects to view screen', async () => {
-    const apiManagement = getMockPropertyManagementActivity(0);
+    const apiManagement = getMockManagementActivity(0);
     await setup();
     await act(async () => viewProps.onSave(apiManagement));
 
@@ -191,7 +192,7 @@ describe('ManagementActivityEditContainer component', () => {
 
   it('calls API to update an existing management activity and redirects to view screen', async () => {
     await setup();
-    const apiManagement = getMockPropertyManagementActivity(1);
+    const apiManagement = getMockManagementActivity(1);
     await act(async () => viewProps.onSave(apiManagement));
 
     expect(mockUpdateManagementActivity.execute).toHaveBeenCalledWith(1, apiManagement);

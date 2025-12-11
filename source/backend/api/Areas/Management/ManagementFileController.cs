@@ -7,10 +7,12 @@ using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Concepts.ManagementFile;
 using Pims.Api.Services;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Policies;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
 using Swashbuckle.AspNetCore.Annotations;
 
@@ -28,10 +30,9 @@ namespace Pims.Api.Areas.Management.Controllers
     public class ManagementFileController : ControllerBase
     {
         #region Variables
-        private readonly IManagementFileService _managementService;
+        private readonly IManagementFileService _managementFileService;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        private readonly IPropertyService _propertyService;
 
         #endregion
 
@@ -44,10 +45,9 @@ namespace Pims.Api.Areas.Management.Controllers
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
         ///
-        public ManagementFileController(IPropertyService propertyService, IManagementFileService managementService, IMapper mapper, ILogger<ManagementFileController> logger)
+        public ManagementFileController(IManagementFileService managementService, IMapper mapper, ILogger<ManagementFileController> logger)
         {
-            _propertyService = propertyService;
-            _managementService = managementService;
+            _managementFileService = managementService;
             _mapper = mapper;
             _logger = logger;
         }
@@ -74,9 +74,9 @@ namespace Pims.Api.Areas.Management.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            _logger.LogInformation("Dispatching to service: {Service}", _managementService.GetType());
+            _logger.LogInformation("Dispatching to service: {Service}", _managementFileService.GetType());
 
-            var managementFile = _managementService.GetById(id);
+            var managementFile = _managementFileService.GetById(id);
             return new JsonResult(_mapper.Map<ManagementFileModel>(managementFile));
         }
 
@@ -100,10 +100,10 @@ namespace Pims.Api.Areas.Management.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            _logger.LogInformation("Dispatching to service: {Service}", _managementService.GetType());
+            _logger.LogInformation("Dispatching to service: {Service}", _managementFileService.GetType());
 
             var managementFileEntity = _mapper.Map<Dal.Entities.PimsManagementFile>(model);
-            var managementFile = _managementService.Add(managementFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
+            var managementFile = _managementFileService.Add(managementFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
 
             return new JsonResult(_mapper.Map<ManagementFileModel>(managementFile));
         }
@@ -124,10 +124,10 @@ namespace Pims.Api.Areas.Management.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            _logger.LogInformation("Dispatching to service: {Service}", _managementService.GetType());
+            _logger.LogInformation("Dispatching to service: {Service}", _managementFileService.GetType());
 
             var managementFileEntity = _mapper.Map<Dal.Entities.PimsManagementFile>(model);
-            var managementFile = _managementService.Update(id, managementFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
+            var managementFile = _managementFileService.Update(id, managementFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
 
             return new JsonResult(_mapper.Map<ManagementFileModel>(managementFile));
         }
@@ -151,7 +151,7 @@ namespace Pims.Api.Areas.Management.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var lastUpdated = _managementService.GetLastUpdateInformation(id);
+            var lastUpdated = _managementFileService.GetLastUpdateInformation(id);
             return new JsonResult(lastUpdated);
         }
 
@@ -174,7 +174,7 @@ namespace Pims.Api.Areas.Management.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var managementfileProperties = _managementService.GetProperties(id);
+            var managementfileProperties = _managementFileService.GetProperties(id);
 
             return new JsonResult(_mapper.Map<IEnumerable<ManagementFilePropertyModel>>(managementfileProperties));
         }
@@ -199,7 +199,7 @@ namespace Pims.Api.Areas.Management.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            var team = _managementService.GetTeamMembers();
+            var team = _managementFileService.GetTeamMembers();
 
             return new JsonResult(_mapper.Map<IEnumerable<ManagementFileTeamModel>>(team));
         }
@@ -216,9 +216,104 @@ namespace Pims.Api.Areas.Management.Controllers
         public IActionResult UpdateManagementFileProperties([FromBody] ManagementFileModel managementFileModel, [FromQuery] string[] userOverrideCodes)
         {
             var managementFileEntity = _mapper.Map<Dal.Entities.PimsManagementFile>(managementFileModel);
-            var managementFile = _managementService.UpdateProperties(managementFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
+            var managementFile = _managementFileService.UpdateProperties(managementFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
             return new JsonResult(_mapper.Map<ManagementFileModel>(managementFile));
         }
+
+        /// <summary>
+        /// Get the contacts for the Management File.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/contacts")]
+        [HasPermission(Permissions.ManagementView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(List<ManagementFileContactModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "managementfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetManagementFileContacts([FromRoute]long id)
+        {
+            var contacts = _managementFileService.GetContacts(id);
+
+            return new JsonResult(_mapper.Map<List<ManagementFileContactModel>>(contacts));
+        }
+
+        /// <summary>
+        /// Get the contact for the Management File with 'fileId' and contact with "contactId".
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{managementFileId:long}/contacts/{contactId:long}")]
+        [HasPermission(Permissions.PropertyView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ManagementFileContactModel), 200)]
+        [SwaggerOperation(Tags = new[] { "managementfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetManagementFileContact([FromRoute]long managementFileId, [FromRoute]long contactId)
+        {
+            var contact = _managementFileService.GetContact(managementFileId, contactId);
+
+            return new JsonResult(_mapper.Map<ManagementFileContactModel>(contact));
+        }
+
+        /// <summary>
+        /// Create the specified Management file contact.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPost("{managementFileId:long}/contacts")]
+        [HasPermission(Permissions.ManagementEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ManagementFileContactModel), 200)]
+        [SwaggerOperation(Tags = new[] { "managementfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult CreateContact([FromRoute]long managementFileId, [FromBody]ManagementFileContactModel contactModel)
+        {
+            if (managementFileId != contactModel.ManagementFileId)
+            {
+                throw new BadRequestException("Invalid ManagementFileId.");
+            }
+            var contactEntity = _mapper.Map<PimsManagementFileContact>(contactModel);
+            var newContact = _managementFileService.AddContact(contactEntity);
+
+            return new JsonResult(_mapper.Map<ManagementFileContactModel>(newContact));
+        }
+
+        /// <summary>
+        /// Update the specified Management File contact.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{managementFileId:long}/contacts/{contactId:long}")]
+        [HasPermission(Permissions.ManagementEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(ManagementFileContactModel), 200)]
+        [SwaggerOperation(Tags = new[] { "managementfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdateContact([FromRoute]long managementFileId, [FromRoute]long contactId, [FromBody]ManagementFileContactModel contactModel)
+        {
+            if (managementFileId != contactModel.ManagementFileId || contactId != contactModel.Id)
+            {
+                throw new BadRequestException("Invalid contact identifiers.");
+            }
+            var contactEntity = _mapper.Map<PimsManagementFileContact>(contactModel);
+            var updatedContact = _managementFileService.UpdateContact(contactEntity);
+
+            return new JsonResult(_mapper.Map<ManagementFileContactModel>(updatedContact));
+        }
+
+        /// <summary>
+        /// Deletes the Management File Contact by ContactId.
+        /// </summary>
+        /// <returns></returns>
+        [HttpDelete("{managementFileId:long}/contacts/{contactId:long}")]
+        [HasPermission(Permissions.ManagementEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(bool), 200)]
+        [SwaggerOperation(Tags = new[] { "managementfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult DeleteContact([FromRoute] long managementFileId, [FromRoute] long contactId)
+        {
+            var result = _managementFileService.DeleteContact(managementFileId, contactId);
+            return new JsonResult(result);
+        }
+
         #endregion
     }
 }

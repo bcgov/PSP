@@ -114,10 +114,6 @@ public partial class PimsPropertyHist
     [Column("SURPLUS_DECLARATION_DATE", TypeName = "datetime")]
     public DateTime? SurplusDeclarationDate { get; set; }
 
-    [Column("NOTES")]
-    [StringLength(4000)]
-    public string Notes { get; set; }
-
     [Column("MUNICIPAL_ZONING")]
     [StringLength(100)]
     public string MunicipalZoning { get; set; }
@@ -164,6 +160,10 @@ public partial class PimsPropertyHist
     [Column("RESERVE_NAME")]
     [StringLength(100)]
     public string ReserveName { get; set; }
+
+    [Column("GLOBAL_UID")]
+    [StringLength(254)]
+    public string GlobalUid { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
@@ -233,6 +233,10 @@ public partial class PimsPropertyHist
     [Column("DESCRIPTION")]
     [StringLength(2000)]
     public string Description { get; set; }
+
+    [Column("NOTES")]
+    [StringLength(4000)]
+    public string Notes { get; set; }
 
     [Column("IS_OTHER_INTEREST")]
     public bool? IsOtherInterest { get; set; }

@@ -62,6 +62,7 @@ export const PropertyNoteSummaryView: React.FunctionComponent<IPropertyNotesSumm
       title="notes"
       isCollapsable
       initiallyExpanded
+      data-testid="property-notes-summary"
     >
       <NoteResults
         results={notes}

@@ -97,7 +97,7 @@ namespace Pims.Dal.Helpers.Extensions
                 ownershipBuilder = isRetired ? PredicateBuilder.New<PimsPropertyVw>(p => p.IsRetired == true) : PredicateBuilder.New<PimsPropertyVw>(p => false);
                 if (filter.Ownership.Contains("isCoreInventory"))
                 {
-                    ownershipBuilder = ownershipBuilder.Or(p => p.IsOwned && p.IsRetired != true);
+                    ownershipBuilder = ownershipBuilder.Or(p => p.IsOwned == true && p.IsRetired != true);
                 }
                 if (filter.Ownership.Contains("isPropertyOfInterest"))
                 {

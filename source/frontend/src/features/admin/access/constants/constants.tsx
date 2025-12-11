@@ -66,7 +66,7 @@ export const getAccessRequestColumns = (
     minWidth: 200,
   },
   {
-    Header: 'MoTI Region',
+    Header: 'MOTT region',
     accessor: 'regionName',
     align: 'left',
     minWidth: 200,

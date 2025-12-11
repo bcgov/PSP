@@ -1,26 +1,18 @@
 import cx from 'classnames';
-import { geoJSON, latLngBounds } from 'leaflet';
-import { useCallback, useMemo } from 'react';
+import { useMemo } from 'react';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaCaretRight, FaSearchPlus } from 'react-icons/fa';
-import { PiCornersOut } from 'react-icons/pi';
+import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { RestrictedEditControl } from '@/components/common/buttons';
 import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesButton';
 import { LinkButton } from '@/components/common/buttons/LinkButton';
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
+import OverflowTip from '@/components/common/OverflowTip';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
-import {
-  boundaryFromFileProperty,
-  exists,
-  getFilePropertyName,
-  getLatLng,
-  locationFromFileProperty,
-  sortFileProperties,
-} from '@/utils';
+import { exists, getFilePropertyName, sortFileProperties } from '@/utils';
 
 import { cannotEditMessage } from '../acquisition/common/constants';
 
@@ -49,35 +41,6 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
   // respect the order of properties as set by the user creating the file
   const sortedProperties = sortFileProperties(file?.fileProperties ?? []);
   const isSummary = useMemo(() => !exists(currentFilePropertyId), [currentFilePropertyId]);
-  const mapMachine = useMapStateMachine();
-
-  const fitBoundaries = () => {
-    const fileProperties = file?.fileProperties;
-
-    if (exists(fileProperties)) {
-      const locations = fileProperties
-        .map(fileProp => locationFromFileProperty(fileProp))
-        .map(geom => getLatLng(geom))
-        .filter(exists);
-      const bounds = latLngBounds(locations);
-
-      if (exists(bounds) && bounds.isValid()) {
-        mapMachine.requestFlyToBounds(bounds);
-      }
-    }
-  };
-
-  const onZoomToProperty = useCallback(
-    (property: ApiGen_Concepts_FileProperty) => {
-      const geom = boundaryFromFileProperty(property);
-      const bounds = geoJSON(geom).getBounds();
-
-      if (exists(bounds) && bounds.isValid()) {
-        mapMachine.requestFlyToBounds(bounds);
-      }
-    },
-    [mapMachine],
-  );
 
   const activeProperties = [];
   const inactiveProperties = [];
@@ -123,13 +86,7 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
             />
           </Col>
           <Col xs="auto">
-            <LinkButton
-              title="Fit boundaries button"
-              data-testid="fit-file-properties-boundaries"
-              onClick={fitBoundaries}
-            >
-              <PiCornersOut size={18} className="mr-2" />
-            </LinkButton>
+            <ZoomToLocation icon={ZoomIconType.area} pimsFileProperties={file?.fileProperties} />
           </Col>
         </Row>
       </StyledMenuHeaderWrapper>
@@ -140,17 +97,20 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
           .map(
             (labelledProperties: { label: string; properties: ApiGen_Concepts_FileProperty[] }) => {
               return (
-                <React.Fragment key={`menu-label-${labelledProperties.label}`}>
+                <div
+                  data-testid={`${labelledProperties.label}-section`}
+                  key={`menu-label-${labelledProperties.label}`}
+                >
                   {labelledProperties.label}
                   {sortedProperties
                     .filter(sp => labelledProperties.properties.includes(sp))
                     .map((fileProperty: ApiGen_Concepts_FileProperty, index: number) => {
                       const propertyName = getFilePropertyName(fileProperty);
                       return (
-                        <StyledRow
+                        <StyledPropertyRowWrapper
                           key={`menu-item-row-${fileProperty?.id ?? index}`}
                           data-testid={`menu-item-row-${fileProperty?.id ?? index}`}
-                          className={cx('no-gutters', {
+                          className={cx({
                             selected: currentFilePropertyId === fileProperty?.id,
                           })}
                           onClick={() => {
@@ -159,10 +119,11 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                             }
                           }}
                         >
-                          <Col xs="1">
+                          <div>
                             {currentFilePropertyId === fileProperty?.id && <FaCaretRight />}
-                          </Col>
-                          <Col xs="auto" className="pr-2">
+                          </div>
+
+                          <div>
                             {fileProperty?.isActive !== false ? (
                               <StyledIconWrapper
                                 className={cx({
@@ -176,32 +137,31 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                                 {sortedProperties.indexOf(fileProperty) + 1}
                               </StyledDisabledIconWrapper>
                             )}
-                          </Col>
-                          <Col>
+                          </div>
+
+                          <OverflowTip>
                             {currentFilePropertyId === fileProperty?.id ? (
-                              <span title="View">{propertyName.value}</span>
-                            ) : (
-                              <LinkButton data-testid={`menu-item-property-${index}`} title="View">
+                              <OverflowTip fullText={propertyName.value}>
                                 {propertyName.value}
-                              </LinkButton>
+                              </OverflowTip>
+                            ) : (
+                              <OverflowTip
+                                fullText={propertyName.value}
+                                valueTestId={`menu-item-property-${index}`}
+                              ></OverflowTip>
                             )}
-                          </Col>
-                          <Col xs="auto">
-                            <LinkButton
-                              onClick={(event: React.MouseEvent<SVGElement>) => {
-                                event.stopPropagation();
-                                onZoomToProperty(fileProperty);
-                              }}
-                              data-testid={`menu-item-zoom-${index}`}
-                              title="Zoom to property"
-                            >
-                              <FaSearchPlus size={18} className="mr-2" />
-                            </LinkButton>
-                          </Col>
-                        </StyledRow>
+                          </OverflowTip>
+
+                          <StyledPropertyRowZoom>
+                            <ZoomToLocation
+                              icon={ZoomIconType.single}
+                              pimsProperties={[fileProperty?.property]}
+                            />
+                          </StyledPropertyRowZoom>
+                        </StyledPropertyRowWrapper>
                       );
                     })}
-                </React.Fragment>
+                </div>
               );
             },
           )}
@@ -232,6 +192,7 @@ const StyledDisabledIconWrapper = styled.div`
 `;
 
 export const StyledMenuWrapper = styled.div`
+  display: flex;
   flex: 1;
   text-align: left;
   padding: 0px;
@@ -239,7 +200,6 @@ export const StyledMenuWrapper = styled.div`
   width: 100%;
   color: ${props => props.theme.css.linkColor};
 
-  display: flex;
   flex-direction: column;
 `;
 
@@ -259,6 +219,24 @@ const StyledRow = styled(Row)`
   div.Button__value {
     font-size: 1.4rem;
   }
+`;
+
+const StyledPropertyRowWrapper = styled.div`
+  display: flex;
+  &.selected {
+    font-weight: bold;
+    cursor: default;
+  }
+
+  font-size: 1.4rem;
+  font-weight: normal;
+  cursor: pointer;
+  padding-bottom: 0.5rem;
+`;
+
+const StyledPropertyRowZoom = styled.div`
+  align-self: flex-end;
+  margin-right: 2rem;
 `;
 
 const StyledIconWrapper = styled.div`

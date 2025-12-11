@@ -8,7 +8,6 @@ namespace PIMS.Tests.Automation.PageObjects
         //Main Menu Elements
         private readonly By managementMainMenu = By.XPath("//div[@data-testid= 'nav-tooltip-management']");
         private readonly By managementMainMenuListViewLink = By.XPath("//a[contains(text(),'Manage Management Files')]");
-        private readonly By managementMainMenuCreateLink = By.XPath("//a[contains(text(),'Create Management File')]");
 
         //Management List View - Search Section Elements
         private readonly By searchManagementFileTitle = By.XPath("//h1/div/div/span[contains(text(),'Management Files')]");
@@ -28,7 +27,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementListResetButton = By.Id("reset-button");
 
         //Management List View - Table Elements
-        private readonly By managementListViewTable = By.XPath("//div[@data-testid='managementFilesTable']");
         private readonly By managementListViewMgmtFileColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Management file #')]");
         private readonly By managementListViewFileNameColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'File name')]");
         private readonly By managementListViewOrderByFileName = By.CssSelector("div[data-testid='sort-column-fileName']");
@@ -36,7 +34,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementListViewOrderByHistFile = By.CssSelector("div[data-testid='sort-column-legacyFileNum']");
         private readonly By managementListViewProjectColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Project')]");
         private readonly By managementListViewPurposeColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Purpose')]");
-        private readonly By managementListViewOrderByPurpose = By.CssSelector("div[data-testid='sort-column-managementFileProgramTypeCode']");
+        private readonly By managementListViewOrderByPurpose = By.CssSelector("div[data-testid='sort-column-managementFilePurposeTypeCode']");
         private readonly By managementListViewTeamMemberColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Team member')]");
         private readonly By managementListViewAddressColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address / PID / PIN')]");
         private readonly By managementListViewStatusColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");
@@ -55,7 +53,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private readonly By managementFileHeaderCode = By.XPath("//label[contains(text(),'File #')]/parent::div/following-sibling::div");
 
-        //Search Leases Pagination
+        //Search Management Pagination
         private readonly By searchMgmtPaginationMenu = By.CssSelector("div[class='Menu-root']");
         private readonly By searchMgmtPaginationList = By.CssSelector("ul[class='pagination']");
 

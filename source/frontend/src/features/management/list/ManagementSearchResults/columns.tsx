@@ -1,8 +1,8 @@
 import { chain } from 'lodash';
-import { Link } from 'react-router-dom';
 import { CellProps } from 'react-table';
 
 import ExpandableTextList from '@/components/common/ExpandableTextList';
+import { ExternalLink } from '@/components/common/ExternalLink';
 import ExpandableFileProperties from '@/components/common/List/ExpandableFileProperties';
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
@@ -37,9 +37,9 @@ export const columns: ColumnWithProps<ManagementSearchResultModel>[] = [
 
       if (hasClaim(Claims.MANAGEMENT_VIEW)) {
         return (
-          <Link to={`/mapview/sidebar/management/${props.row.original.id}`}>
+          <ExternalLink to={`/mapview/sidebar/management/${props.row.original.id}`}>
             {fileNumberString}
-          </Link>
+          </ExternalLink>
         );
       }
 

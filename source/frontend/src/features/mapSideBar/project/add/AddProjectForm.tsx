@@ -81,7 +81,7 @@ const AddProjectForm = React.forwardRef<FormikProps<ProjectForm>, IAddProjectFor
                     placeholder="Select..."
                   />
                 </SectionField>
-                <SectionField label="MoTI region" required labelWidth={{ xs: 2 }}>
+                <SectionField label="MOTT region" required labelWidth={{ xs: 2 }}>
                   <UserRegionSelectContainer field="region" placeholder="Select region..." />
                 </SectionField>
                 <SectionField label="Project summary" labelWidth={{ xs: 12 }}>

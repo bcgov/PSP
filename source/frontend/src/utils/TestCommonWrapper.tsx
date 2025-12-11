@@ -10,6 +10,8 @@ import { vi } from 'vitest';
 import css from '@/assets/scss/_variables.module.scss';
 import ModalContainer from '@/components/common/ModalContainer';
 import { ModalContextProvider } from '@/contexts/modalContext';
+import { ParcelDataset } from '@/features/properties/parcelList/models';
+import { WorklistContextProvider } from '@/features/properties/worklist/context/WorklistContext';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { TenantConsumer, TenantProvider } from '@/tenants';
 
@@ -22,6 +24,7 @@ interface TestProviderWrapperParams {
   claims?: string[];
   roles?: string[];
   history?: MemoryHistory;
+  worklistParcels?: ParcelDataset[];
 }
 
 /**
@@ -30,7 +33,7 @@ interface TestProviderWrapperParams {
  */
 const TestCommonWrapper: React.FunctionComponent<
   React.PropsWithChildren<TestProviderWrapperParams>
-> = ({ children, store, claims, roles, organizations, history }) => {
+> = ({ children, store, claims, roles, organizations, history, worklistParcels }) => {
   if (!!roles || !!claims || !!organizations) {
     vi.mocked(useKeycloak).mockReturnValue({
       keycloak: {
@@ -55,16 +58,18 @@ const TestCommonWrapper: React.FunctionComponent<
             <TestRouterWrapper history={history}>
               <ThemeProvider theme={{ tenant, css, bcTokens }}>
                 <ModalContextProvider>
-                  <ToastContainer
-                    autoClose={5000}
-                    hideProgressBar
-                    newestOnTop={false}
-                    closeOnClick={false}
-                    rtl={false}
-                    pauseOnFocusLoss={false}
-                  />
-                  <ModalContainer />
-                  {children}
+                  <WorklistContextProvider parcels={worklistParcels ?? []}>
+                    <ToastContainer
+                      autoClose={5000}
+                      hideProgressBar
+                      newestOnTop={false}
+                      closeOnClick={false}
+                      rtl={false}
+                      pauseOnFocusLoss={false}
+                    />
+                    <ModalContainer />
+                    {children}
+                  </WorklistContextProvider>
                 </ModalContextProvider>
               </ThemeProvider>
             </TestRouterWrapper>

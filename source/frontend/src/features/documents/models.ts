@@ -1,0 +1,162 @@
+import { IApiError, isApiError } from '@/interfaces/IApiError';
+import { ApiGen_Concepts_DocumentMetadataUpdate } from '@/models/api/generated/ApiGen_Concepts_DocumentMetadataUpdate';
+import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
+import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
+import { ApiGen_Requests_DocumentUpdateRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUpdateRequest';
+import { ApiGen_Requests_DocumentUploadRelationshipResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRelationshipResponse';
+import { ApiGen_Requests_DocumentUploadRequest } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRequest';
+import { exists } from '@/utils';
+import { stringToNumber } from '@/utils/formUtils';
+
+import { ComposedDocument } from './models/ComposedDocument';
+
+export class BatchUploadFormModel {
+  public documents: DocumentUploadFormData[] = [];
+}
+
+export class BatchUploadResponseModel {
+  public readonly fileName: string;
+  public readonly isSuccess: boolean;
+  public readonly errorMessage: string;
+
+  constructor(
+    fileName: string,
+    apiResponse: ApiGen_Requests_DocumentUploadRelationshipResponse | IApiError | undefined,
+  ) {
+    this.fileName = fileName;
+    if (exists(apiResponse)) {
+      if (isApiError(apiResponse)) {
+        this.isSuccess = false;
+        this.errorMessage = (apiResponse as IApiError).error;
+      } else {
+        this.isSuccess = true;
+      }
+    } else {
+      this.isSuccess = false;
+      this.errorMessage = 'Network error, please try again or contact your system administrator';
+    }
+  }
+}
+
+export class DocumentUploadFormData {
+  public documentTypeId: string;
+  public documentStatusCode: string;
+  public documentMetadata: Record<string, string>;
+  public isDocumentTypeChanged = false;
+  public mayanMetadata: ApiGen_Mayan_DocumentTypeMetadataType[];
+  public file: File | null;
+
+  public constructor(
+    initialStatus: string,
+    documentType: string,
+    metadata: ApiGen_Mayan_DocumentTypeMetadataType[],
+  ) {
+    this.documentStatusCode = initialStatus;
+    this.documentTypeId = documentType;
+    this.file = null;
+    this.setMayanMetadata(metadata);
+  }
+
+  public setMayanMetadata(metadata: ApiGen_Mayan_DocumentTypeMetadataType[]) {
+    this.mayanMetadata = metadata;
+    this.documentMetadata = {};
+
+    metadata.forEach(metaType => {
+      this.documentMetadata[metaType.metadata_type?.id?.toString() || '-'] = '';
+    });
+  }
+
+  public toRequestApi(
+    documentTypes: ApiGen_Concepts_DocumentType[],
+  ): ApiGen_Requests_DocumentUploadRequest {
+    const documentType = documentTypes.find(x => x.id === Number(this.documentTypeId));
+    const metadata: ApiGen_Concepts_DocumentMetadataUpdate[] = [];
+    for (const key in this.documentMetadata) {
+      const value = this.documentMetadata[key];
+      metadata.push({
+        metadataTypeId: Number(key),
+        value: value,
+        id: 0,
+      });
+    }
+
+    return {
+      documentTypeId: documentType?.id,
+      documentId: null,
+      documentStatusCode: this.documentStatusCode,
+      file: this.file,
+      documentMetadata: metadata,
+      documentTypeMayanId: documentType?.mayanId,
+    };
+  }
+}
+
+export class DocumentUpdateFormData {
+  public documentId: number;
+  public mayanDocumentId: number;
+  public fileName: string;
+  public documentStatusCode: string;
+  public documentMetadata: Record<string, string>;
+  public documentTypeId = '';
+
+  public static fromApi(
+    composedDocument: ComposedDocument,
+    metadataTypes: ApiGen_Mayan_DocumentTypeMetadataType[],
+  ): DocumentUpdateFormData {
+    const model = new DocumentUpdateFormData();
+    model.fileName =
+      composedDocument?.documentDetail?.file_latest?.filename ??
+      composedDocument?.pimsDocumentRelationship?.document?.fileName;
+    model.documentId = composedDocument.pimsDocumentRelationship?.document?.id || 0;
+    model.mayanDocumentId =
+      composedDocument.pimsDocumentRelationship?.document?.mayanDocumentId || 0;
+    model.documentStatusCode =
+      composedDocument.pimsDocumentRelationship?.document?.statusTypeCode?.id?.toString() || '';
+    model.documentMetadata = {};
+    metadataTypes.forEach(metaType => {
+      const foundMetadata = composedDocument.mayanMetadata?.find(
+        currentMeta => currentMeta?.metadata_type?.id === metaType.metadata_type?.id,
+      );
+      model.documentMetadata[metaType.metadata_type?.id?.toString() || '-'] =
+        foundMetadata?.value ?? '';
+    });
+    const documentTypeLabel = composedDocument.pimsDocumentRelationship?.document?.documentType?.id;
+
+    model.documentTypeId = documentTypeLabel?.toString() || '';
+
+    return model;
+  }
+
+  public static toRequestApi(
+    formData: DocumentUpdateFormData,
+  ): ApiGen_Requests_DocumentUpdateRequest {
+    const metadata: ApiGen_Concepts_DocumentMetadataUpdate[] = [];
+
+    for (const key in formData.documentMetadata) {
+      const value = formData.documentMetadata[key];
+      const metadataTypeId = Number(key);
+      metadata.push({
+        value: value,
+        metadataTypeId: metadataTypeId,
+        id: 0,
+      });
+    }
+
+    return {
+      fileName: formData.fileName,
+      documentId: formData.documentId,
+      mayanDocumentId: formData.mayanDocumentId,
+      documentTypeId: stringToNumber(formData.documentTypeId),
+      documentStatusCode: formData.documentStatusCode,
+      documentMetadata: metadata,
+    };
+  }
+
+  private constructor() {
+    this.documentId = -1;
+    this.mayanDocumentId = -1;
+    this.documentTypeId = '';
+    this.documentStatusCode = '';
+    this.documentMetadata = {};
+  }
+}

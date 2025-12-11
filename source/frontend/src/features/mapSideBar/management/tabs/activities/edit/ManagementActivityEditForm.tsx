@@ -1,13 +1,14 @@
 import clsx from 'classnames';
 import { Formik, FormikProps } from 'formik';
 import React, { ChangeEvent, useCallback, useEffect, useRef, useState } from 'react';
-import { Col } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import ReactVisibilitySensor from 'react-visibility-sensor';
 
 import { CancelConfirmationModal } from '@/components/common/CancelConfirmationModal';
-import { FastDatePicker, Input, Multiselect, Select } from '@/components/common/form';
+import { FastDatePicker, Multiselect, Select } from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
+import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { TextArea } from '@/components/common/form/TextArea';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -18,9 +19,9 @@ import { TrayHeaderContent } from '@/components/common/styles';
 import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import {
-  PROP_MGMT_ACTIVITY_STATUS_TYPES,
-  PROP_MGMT_ACTIVITY_SUBTYPES_TYPES,
-  PROP_MGMT_ACTIVITY_TYPES,
+  MGMT_ACTIVITY_STATUS_TYPES,
+  MGMT_ACTIVITY_SUBTYPES_TYPES,
+  MGMT_ACTIVITY_TYPES,
 } from '@/constants/API';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
 import { ManagementActivitySubTypeModel } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/models/ManagementActivitySubType';
@@ -30,8 +31,8 @@ import { useModalManagement } from '@/hooks/useModalManagement';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_CodeTypes_ManagementActivityStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementActivityStatusTypes';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
+import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
-import { ApiGen_Concepts_PropertyActivity } from '@/models/api/generated/ApiGen_Concepts_PropertyActivity';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { exists, isValidId } from '@/utils';
 import { mapLookupCode } from '@/utils/mapLookupCode';
@@ -51,7 +52,7 @@ export interface IManagementActivityEditFormProps {
   loading: boolean;
   show: boolean;
   setShow: (show: boolean) => void;
-  onSave: (model: ApiGen_Concepts_PropertyActivity) => Promise<void>;
+  onSave: (model: ApiGen_Concepts_ManagementActivity) => Promise<void>;
 }
 
 export const ManagementActivityEditForm: React.FunctionComponent<
@@ -76,16 +77,12 @@ export const ManagementActivityEditForm: React.FunctionComponent<
   const [showConfirmModal, openConfirmModal, closeConfirmModal] = useModalManagement();
   const lookupCodes = useLookupCodeHelpers();
 
-  const activityTypeOptions = lookupCodes
-    .getByType(PROP_MGMT_ACTIVITY_TYPES)
-    .map(c => mapLookupCode(c));
+  const activityTypeOptions = lookupCodes.getByType(MGMT_ACTIVITY_TYPES).map(c => mapLookupCode(c));
 
-  const activitySubTypeCodes: ILookupCode[] = lookupCodes.getByType(
-    PROP_MGMT_ACTIVITY_SUBTYPES_TYPES,
-  );
+  const activitySubTypeCodes: ILookupCode[] = lookupCodes.getByType(MGMT_ACTIVITY_SUBTYPES_TYPES);
 
   const activityStatusOptions = lookupCodes
-    .getByType(PROP_MGMT_ACTIVITY_STATUS_TYPES)
+    .getByType(MGMT_ACTIVITY_STATUS_TYPES)
     .map(c => mapLookupCode(c));
 
   const onActivityTypeChange = async (changeEvent: ChangeEvent<HTMLInputElement>) => {
@@ -227,28 +224,56 @@ export const ManagementActivityEditForm: React.FunctionComponent<
                             field="ministryContacts"
                             formikProps={formikProps}
                             contactType={RestrictContactType.ONLY_INDIVIDUALS}
+                            dataTestId="ministry-contacts-add-link"
                           />
                         </SectionField>
                         <SectionField
-                          label="Contact manager"
-                          contentWidth={{ xs: 7 }}
+                          label="Requestor"
+                          contentWidth={{ xs: 8 }}
                           tooltip="Document the source of the request by entering the name of the person, organization or other entity from which the request has been received"
                         >
-                          <Input field="requestedSource" />
+                          <Row className="no-gutters pr-4 mr-2">
+                            <Col className="col-11">
+                              <ContactInputContainer
+                                field="requestor"
+                                View={ContactInputView}
+                                restrictContactType={RestrictContactType.ALL}
+                              />
+                            </Col>
+                          </Row>
                         </SectionField>
+
+                        {isValidId(formikProps.values.requestor?.organizationId) &&
+                          !isValidId(formikProps.values.requestor?.personId) && (
+                            <SectionField label="Primary contact" labelWidth={{ xl: 4 }}>
+                              <Row className="no-gutters pr-4 mr-17">
+                                <Col className="col-11">
+                                  <PrimaryContactSelector
+                                    field="requestorOrgPrimaryContact"
+                                    contactInfo={formikProps.values.requestor}
+                                  ></PrimaryContactSelector>
+                                </Col>
+                              </Row>
+                            </SectionField>
+                          )}
                         <SectionField label="External contacts" contentWidth={{ xs: 8 }}>
                           <ContactListForm
                             field="involvedParties"
                             formikProps={formikProps}
                             contactType={RestrictContactType.ALL}
+                            dataTestId="external-contacts-add-link"
                           />
                         </SectionField>
-                        <SectionField label="Service provider" contentWidth={{ xs: 7 }}>
-                          <ContactInputContainer
-                            field="serviceProvider"
-                            View={ContactInputView}
-                            restrictContactType={RestrictContactType.ALL}
-                          />
+                        <SectionField label="Service provider" contentWidth={{ xs: 8 }}>
+                          <Row className="no-gutters pr-4 mr-2">
+                            <Col className="col-11">
+                              <ContactInputContainer
+                                field="serviceProvider"
+                                View={ContactInputView}
+                                restrictContactType={RestrictContactType.ALL}
+                              />
+                            </Col>
+                          </Row>
                         </SectionField>
                       </Section>
                       <InvoiceListForm

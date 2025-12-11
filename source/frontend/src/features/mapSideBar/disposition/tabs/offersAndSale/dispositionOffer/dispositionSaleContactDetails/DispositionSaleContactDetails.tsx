@@ -2,7 +2,7 @@ import { FaExternalLinkAlt } from 'react-icons/fa';
 import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 
-import { StyledLink } from '@/components/maps/leaflet/LayerPopup/styles';
+import { StyledLink } from '@/components/common/styles';
 import { ApiGen_Concepts_DispositionSalePurchaser } from '@/models/api/generated/ApiGen_Concepts_DispositionSalePurchaser';
 import { ApiGen_Concepts_DispositionSalePurchaserAgent } from '@/models/api/generated/ApiGen_Concepts_DispositionSalePurchaserAgent';
 import { ApiGen_Concepts_DispositionSalePurchaserSolicitor } from '@/models/api/generated/ApiGen_Concepts_DispositionSalePurchaserSolicitor';

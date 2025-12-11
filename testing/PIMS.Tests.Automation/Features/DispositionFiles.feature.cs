@@ -289,7 +289,7 @@ this.ScenarioInitialize(scenarioInfo);
  await testRunner.GivenAsync("I create a new Disposition File from row number 10", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 32
- await testRunner.WhenAsync("I create Digital Documents for a \"Disposition File\" row number 12", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("I create Digital Documents for a \"Disposition File\" from row number 12", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 33
  await testRunner.AndAsync("I edit a Digital Document for a \"Disposition File\" from row number 13", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
@@ -335,14 +335,14 @@ this.ScenarioInitialize(scenarioInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [Xunit.SkippableFactAttribute(DisplayName="07._Disposition_File_from_PIN")]
+        [Xunit.SkippableFactAttribute(DisplayName="07._Disposition_File_from_Parcel")]
         [Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [Xunit.TraitAttribute("Description", "07._Disposition_File_from_PIN")]
-        public async global::System.Threading.Tasks.Task _07__Disposition_File_From_PIN()
+        [Xunit.TraitAttribute("Description", "07._Disposition_File_from_Parcel")]
+        public async global::System.Threading.Tasks.Task _07__Disposition_File_From_Parcel()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07._Disposition_File_from_PIN", null, tagsOfScenario, argumentsOfScenario, featureTags);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07._Disposition_File_from_Parcel", null, tagsOfScenario, argumentsOfScenario, featureTags);
 #line 42
 this.ScenarioInitialize(scenarioInfo);
 #line hidden

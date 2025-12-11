@@ -5,8 +5,10 @@ import { exists } from '@/utils/utils';
 
 export class DetailAcquisitionFileOwner {
   isPrimary?: boolean;
+  ownerId?: number;
   ownerName?: string;
   ownerOtherName?: string;
+  ownerAddress?: ApiGen_Concepts_Address;
   ownerDisplayAddress?: string;
   ownerContactEmail?: string;
   ownerContactPhone?: string;
@@ -14,8 +16,10 @@ export class DetailAcquisitionFileOwner {
   static fromApi(owner: ApiGen_Concepts_AcquisitionFileOwner): DetailAcquisitionFileOwner {
     return {
       isPrimary: owner.isPrimaryContact,
+      ownerId: owner.id || undefined,
       ownerName: formatAcquisitionOwnerName(owner),
       ownerOtherName: owner.otherName?.trim() || '',
+      ownerAddress: owner.address,
       ownerDisplayAddress: getFormattedAddress(owner.address),
       ownerContactEmail: owner.contactEmailAddr || '',
       ownerContactPhone: owner.contactPhoneNum || '',

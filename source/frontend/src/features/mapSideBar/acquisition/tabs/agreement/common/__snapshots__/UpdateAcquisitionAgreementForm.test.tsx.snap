@@ -36,9 +36,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
 }
 
 .c12.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c12.btn:hover {
@@ -833,6 +831,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
         >
           <button
             class="c12 Button btn btn-secondary"
+            data-testid="cancel-button"
             type="button"
           >
             <div
@@ -847,6 +846,7 @@ exports[`UpdateAcquisitionAgreementView component > renders as expected 1`] = `
         >
           <button
             class="c12 Button Button--disabled mr-9 btn btn-primary"
+            data-testid="save-button"
             disabled=""
             type="button"
           >

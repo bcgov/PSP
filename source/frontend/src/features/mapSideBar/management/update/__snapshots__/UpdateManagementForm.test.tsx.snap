@@ -36,9 +36,7 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
 }
 
 .c7.btn .Button__value {
-  width: -webkit-max-content;
-  width: -moz-max-content;
-  width: max-content;
+  width: auto;
 }
 
 .c7.btn:hover {
@@ -852,7 +850,7 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
             data-testid="contact-input"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"
@@ -942,13 +940,13 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
           >
             <button
               class="c7 Button c9 btn btn-link"
+              data-testid="team.0.remove-button"
               type="button"
             >
               <div
                 class="Button__value"
               >
                 <svg
-                  data-testid="team.0.remove-button"
                   fill="currentColor"
                   height="2rem"
                   stroke="currentColor"
@@ -1021,7 +1019,7 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
             data-testid="contact-input"
           >
             <div
-              class="form-group"
+              class="input form-group"
             >
               <div
                 class="row"
@@ -1111,13 +1109,13 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
           >
             <button
               class="c7 Button c9 btn btn-link"
+              data-testid="team.1.remove-button"
               type="button"
             >
               <div
                 class="Button__value"
               >
                 <svg
-                  data-testid="team.1.remove-button"
                   fill="currentColor"
                   height="2rem"
                   stroke="currentColor"
