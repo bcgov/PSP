@@ -41,7 +41,6 @@ export class Api_GenerateAcquisitionPropertyIntake {
     this.project = new Api_GenerateProject(file?.project ?? null);
     this.product = new Api_GenerateProduct(file?.product ?? null);
 
-    this.file_number = file?.fileNumber ?? '';
     this.project_name = this.project?.name ?? '';
     this.project_number = this.project?.number ?? '';
 
