@@ -16,10 +16,12 @@ import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { ModalContext } from '@/contexts/modalContext';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import AddPropertiesGuide from '@/features/mapSideBar/shared/update/properties/AddPropertiesGuide';
 import { UpdatePropertiesYupSchema } from '@/features/mapSideBar/shared/update/properties/UpdatePropertiesYupSchema';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useEnrichWithPimsFeatures } from '@/hooks/useEnrichWithPimsFeatures';
@@ -401,6 +403,18 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
                               index={index}
                               property={property.toFeatureDataset()}
                               showSeparator={index < formikProps.values.properties.length - 1}
+                              canUploadShapefile={true}
+                              onUploadShapefile={(result: UploadResponseModel | null) => {
+                                // Update the property boundary based on the uploaded shapefile
+                                if (exists(result)) {
+                                  if (result.isSuccess && exists(result.boundary)) {
+                                    const updatedFormProperty = new PropertyForm(property);
+                                    updatedFormProperty.fileBoundary = result.boundary;
+                                    leaseProperty.property = updatedFormProperty;
+                                    arrayHelpers.replace(index, leaseProperty);
+                                  }
+                                }
+                              }}
                             />
                           );
                         }

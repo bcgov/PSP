@@ -13,6 +13,7 @@ import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { ModalContext } from '@/contexts/modalContext';
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import AddPropertiesGuide from '@/features/mapSideBar/shared/update/properties/AddPropertiesGuide';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { exists, featuresetToLocationBoundaryDataset, firstOrNull } from '@/utils';
@@ -179,6 +180,18 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
                       index={index}
                       property={property.toFeatureDataset()}
                       showSeparator={index < formikProps.values.properties.length - 1}
+                      canUploadShapefile={true}
+                      onUploadShapefile={(result: UploadResponseModel | null) => {
+                        // Update the property boundary based on the uploaded shapefile
+                        if (exists(result)) {
+                          if (result.isSuccess && exists(result.boundary)) {
+                            const updatedFormProperty = new PropertyForm(property);
+                            updatedFormProperty.fileBoundary = result.boundary;
+                            leaseProperty.property = updatedFormProperty;
+                            arrayHelpers.replace(index, leaseProperty);
+                          }
+                        }
+                      }}
                     />
                   );
                 }
