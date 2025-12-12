@@ -50,14 +50,8 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.Latitude, src => src.Location.Coordinate.Y)
                 .Map(dest => dest.Longitude, src => src.Location.Coordinate.X)
                 .Map(dest => dest.SurplusDeclarationComment, src => src.SurplusDeclarationComment)
-                .Map(
-                    dest => dest.SurplusDeclarationDate,
-                    src => src.SurplusDeclarationDate.ToNullableDateOnly()
-                )
-                .Map(
-                    dest => dest.SurplusDeclarationType,
-                    src => src.SurplusDeclarationTypeCodeNavigation
-                )
+                .Map(dest => dest.SurplusDeclarationDate, src => src.SurplusDeclarationDate.ToNullableDateOnly())
+                .Map(dest => dest.SurplusDeclarationType, src => src.SurplusDeclarationTypeCodeNavigation)
                 .Map(dest => dest.HistoricalFileNumbers, src => src.PimsHistoricalFileNumbers)
                 .Map(dest => dest.TenureCleanups, src => src.PimsPropTenureCleanups)
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
@@ -80,6 +74,9 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.IsRwyBeltDomPatent, src => src.IsRwyBeltDomPatent)
                 .Map(dest => dest.PphStatusTypeCode, src => src.PphStatusTypeCode)
                 .Map(dest => dest.IsOwned, src => src.IsOwned)
+                .Map(dest => dest.SurplusDeclarationTypeCode, src => src.SurplusDeclarationType.Id)
+                .Map(dest => dest.SurplusDeclarationComment, src => src.SurplusDeclarationComment)
+                .Map(dest => dest.SurplusDeclarationDate, src => src.SurplusDeclarationDate.ToNullableDateTime())
                 // multi-selects
                 .Map(dest => dest.PimsPropPropAnomalyTyps, src => src.Anomalies)
                 .Map(dest => dest.PimsPropPropTenureTyps, src => src.Tenures)

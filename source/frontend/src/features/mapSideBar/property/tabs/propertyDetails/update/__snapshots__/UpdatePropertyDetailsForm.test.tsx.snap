@@ -246,6 +246,28 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   line-height: 2rem;
 }
 
+.c16 .react-datepicker__calendar-icon {
+  width: 2.4rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  margin-right: 1.2rem;
+  right: 0;
+  fill: var(--surface-color-primary-button-default);
+  pointer-events: none;
+}
+
+.c16 .react-datepicker__view-calendar-icon input {
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
+}
+
+.c17.c17.form-control.is-valid {
+  background-image: none;
+}
+
+.c17.c17.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
 .c9 {
   margin-left: 0.5rem;
   cursor: pointer;
@@ -2586,6 +2608,163 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
                   </div>
                 </div>
               </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+          >
+            Surplus Declaration
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Surplus declaration type:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col-auto"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-surplusDeclarationType"
+                name="surplusDeclarationType"
+              >
+                <option
+                  value=""
+                >
+                  Please Select
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-EXPIRED"
+                  value="EXPIRED"
+                >
+                  Expired
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NO"
+                  value="NO"
+                >
+                  No
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-UNKNOWN"
+                  value="UNKNOWN"
+                >
+                  Unknown
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-YES"
+                  value="YES"
+                >
+                  Yes
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Surplus declaration date:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col-auto"
+          >
+            <div
+              class="c16 form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c17 form-control date-picker"
+                    id="datepicker-surplusDeclarationDate"
+                    name="surplusDeclarationDate"
+                    placeholder="MMM DD, YYYY"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c4"
+            >
+              Comment:
+            </label>
+          </div>
+          <div
+            class="c5 text-left col"
+          >
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-suplusDelarationComment"
+                name="suplusDelarationComment"
+                rows="5"
+                style="word-break: break-all;"
+                title=""
+              />
             </div>
           </div>
         </div>

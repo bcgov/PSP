@@ -6004,6 +6004,34 @@ export const mockLookups: ILookupCode[] = [
     displayOrder: 7,
     type: 'PimsManagementFilePurposeType',
   },
+  {
+    id: 'EXPIRED',
+    name: 'Expired',
+    isDisabled: false,
+    displayOrder: null,
+    type: 'PimsSurplusDeclarationType',
+  },
+  {
+    id: 'NO',
+    name: 'No',
+    isDisabled: false,
+    displayOrder: null,
+    type: 'PimsSurplusDeclarationType',
+  },
+  {
+    id: 'UNKNOWN',
+    name: 'Unknown',
+    isDisabled: false,
+    displayOrder: null,
+    type: 'PimsSurplusDeclarationType',
+  },
+  {
+    id: 'YES',
+    name: 'Yes',
+    isDisabled: false,
+    displayOrder: null,
+    type: 'PimsSurplusDeclarationType',
+  },
 ];
 
 export const getMockLookUpsByType = (codeType: string): SelectOption[] => {
