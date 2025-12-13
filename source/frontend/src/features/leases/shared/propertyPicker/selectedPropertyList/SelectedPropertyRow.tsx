@@ -5,18 +5,20 @@ import { ImUpload } from 'react-icons/im';
 import { RiDragMove2Line } from 'react-icons/ri';
 import styled from 'styled-components';
 
+import RemoveShapeIcon from '@/assets/images/remove-shape-icon.svg?react';
 import { RemoveButton, StyledIconButton } from '@/components/common/buttons';
 import { InlineInput } from '@/components/common/form/styles';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import OverflowTip from '@/components/common/OverflowTip';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import AreaContainer from '@/components/measurements/AreaContainer';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
 import { FormLeaseProperty, LeaseFormModel } from '@/features/leases/models';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import { ShapeUploadModal } from '@/features/properties/shapeUpload/ShapeUploadModal';
+import { exists } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 import { getPropertyNameFromSelectedFeatureSet, NameSourceType } from '@/utils/mapPropertyUtils';
 
@@ -24,11 +26,12 @@ export interface ISelectedPropertyRowProps {
   index: number;
   nameSpace?: string;
   onRemove: () => void;
-  property: SelectedFeatureDataset;
+  property: PropertyForm;
   formikProps: FormikProps<LeaseFormModel>;
   showSeparator?: boolean;
   canUploadShapefile?: boolean;
   onUploadShapefile?: (result: UploadResponseModel | null) => void;
+  onRemoveShapefile?: () => void;
 }
 
 export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowProps> = ({
@@ -40,10 +43,13 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
   showSeparator = false,
   canUploadShapefile,
   onUploadShapefile,
+  onRemoveShapefile,
 }) => {
+  const hasCustomBoundary = exists(property.fileBoundary);
+  const featureSet = property.toFeatureDataset();
   const mapMachine = useMapStateMachine();
   const [isUploadVisible, setIsUploadVisible] = useState(false);
-  const propertyName = getPropertyNameFromSelectedFeatureSet(property);
+  const propertyName = getPropertyNameFromSelectedFeatureSet(featureSet);
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:
@@ -93,19 +99,26 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           <StyledIconButton
             title="move-pin-location"
             onClick={() => {
-              mapMachine.startReposition(property, index);
+              mapMachine.startReposition(featureSet, index);
             }}
           >
             <RiDragMove2Line size={22} />
           </StyledIconButton>
-          <ZoomToLocation geometry={property.pimsFeature.geometry} icon={ZoomIconType.single} />
-          {canUploadShapefile && (
+          <ZoomToLocation geometry={featureSet.pimsFeature.geometry} icon={ZoomIconType.single} />
+          {canUploadShapefile && !hasCustomBoundary && (
             <TooltipWrapper tooltip="Upload shapefile" tooltipId={'upload-shapefile-' + index}>
               <StyledIconButton
                 data-testid={'upload-shapefile-' + index}
                 onClick={() => setIsUploadVisible(true)}
               >
                 <ImUpload size={18} />
+              </StyledIconButton>
+            </TooltipWrapper>
+          )}
+          {canUploadShapefile && hasCustomBoundary && (
+            <TooltipWrapper tooltip="Remove shape" tooltipId={'remove-shape-' + index}>
+              <StyledIconButton data-testid={'remove-shape-' + index} onClick={onRemoveShapefile}>
+                <RemoveShapeIcon width="1.8rem" height="1.8rem" />
               </StyledIconButton>
             </TooltipWrapper>
           )}

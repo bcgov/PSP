@@ -2,7 +2,9 @@ import { FormikProps, getIn } from 'formik';
 import { Feature, Geometry } from 'geojson';
 import { toast } from 'react-toastify';
 
+import { ModalContent } from '@/components/common/GenericModal';
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import { ApiGen_Concepts_Address } from '@/models/api/generated/ApiGen_Concepts_Address';
 import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
@@ -182,4 +184,66 @@ export const addPropertiesToCurrentFile = <T extends { [key: string]: any }>(
     toast.warn(`Skipped ${duplicatesSkipped} duplicate property(s).`);
   }
   notifyAddComplete();
+};
+
+/**
+ * Adds the uploaded shape boundary to the property form.
+ * @param property The property form to update.
+ * @param uploadResponse The upload response containing the new boundary.
+ * @returns The updated property form with the new boundary.
+ */
+export const addShapeToProperty = (
+  property: PropertyForm,
+  uploadResponse: UploadResponseModel,
+): PropertyForm => {
+  // Update the property boundary based on the uploaded shapefile
+  if (exists(uploadResponse) && uploadResponse.isSuccess && exists(uploadResponse.boundary)) {
+    const updatedFormProperty = new PropertyForm(property);
+    updatedFormProperty.fileBoundary = uploadResponse.boundary;
+    return updatedFormProperty;
+  } else {
+    // return the original property if no update is made
+    return property;
+  }
+};
+
+/**
+ * Removes the shape boundary from the property form.
+ * @param property The property form to update.
+ * @returns The updated property form with the boundary removed.
+ */
+export const removeShapeFromProperty = (property: PropertyForm): PropertyForm => {
+  const updatedFormProperty = new PropertyForm(property);
+  updatedFormProperty.fileBoundary = null;
+  return updatedFormProperty;
+};
+
+/**
+ * Prompts the user for confirmation before removing the shape boundary from the property form.
+ * @param property The property form to update.
+ * @param setModalContent Function to set the modal content.
+ * @param setDisplayModal Function to control the display of the modal.
+ * @param onConfirm Callback function to execute upon confirmation of shape removal.
+ */
+export const removeShapeFromPropertyWithConfirmation = (
+  property: PropertyForm,
+  setModalContent: (modalProps?: ModalContent) => void,
+  setDisplayModal: (display: boolean) => void,
+  onConfirm: (updatedProperty: PropertyForm) => void,
+): void => {
+  setModalContent({
+    variant: 'info',
+    title: 'Confirm shape removal',
+    message: 'Are you sure you want to remove this uploaded shape?',
+    handleOk: () => {
+      const updatedFormProperty = removeShapeFromProperty(property);
+      onConfirm(updatedFormProperty);
+      setDisplayModal(false);
+    },
+    handleCancel: () => setDisplayModal(false),
+    okButtonText: 'Remove',
+    cancelButtonText: 'Cancel',
+  });
+
+  setDisplayModal(true);
 };
