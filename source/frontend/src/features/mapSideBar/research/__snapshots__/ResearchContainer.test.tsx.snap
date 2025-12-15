@@ -449,6 +449,21 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c42 {
+  border: none;
+}
+
+.c42 .card-body {
+  padding: 0;
+}
+
+.c43 {
+  overflow: hidden;
+  white-space: break-spaces;
+  word-break: break-word;
+  text-align: justify;
+}
+
 .c30 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -641,21 +656,6 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 
 .c12 {
   max-width: 60rem;
-}
-
-.c42 {
-  border: none;
-}
-
-.c42 .card-body {
-  padding: 0;
-}
-
-.c43 {
-  overflow: hidden;
-  white-space: break-spaces;
-  word-break: break-word;
-  text-align: justify;
 }
 
 @media only screen and (max-width:1199px) {
