@@ -13,7 +13,11 @@ class Projects {
       "div[data-testid='side-tray']"
     );
 
-    clickAndWaitFor(this.page, "div[data-testid='nav-tooltip-project'] a", "//a[text()='Create Project']");
+    clickAndWaitFor(
+      this.page,
+      "div[data-testid='nav-tooltip-project'] a",
+      "//a[text()='Create Project']"
+    );
     await this.page.locator("//a[text()='Create Project']").click();
   }
 
