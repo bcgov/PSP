@@ -368,7 +368,7 @@ exports[`Property list view > matches snapshot 1`] = `
         class="pb-2 row"
       >
         <div
-          class="col-10"
+          class="col-12"
         >
           <div
             class="c1 p-3"
@@ -552,7 +552,7 @@ exports[`Property list view > matches snapshot 1`] = `
         class="row"
       >
         <div
-          class="col-10"
+          class="col-12"
         >
           <div
             class="c1 p-3"
@@ -740,7 +740,7 @@ exports[`Property list view > matches snapshot 1`] = `
                         <li
                           class="option    "
                         >
-                          Section 42 Roads
+                          Section 42 roads (maybe)
                         </li>
                         <li
                           class="option    "

@@ -367,6 +367,9 @@ public partial class PimsAcquisitionFile
     public virtual ICollection<PimsInterestHolder> PimsInterestHolders { get; set; } = new List<PimsInterestHolder>();
 
     [InverseProperty("AcquisitionFile")]
+    public virtual ICollection<PimsNoticeOfClaim> PimsNoticeOfClaims { get; set; } = new List<PimsNoticeOfClaim>();
+
+    [InverseProperty("AcquisitionFile")]
     public virtual ICollection<PimsPropertyAcquisitionFile> PimsPropertyAcquisitionFiles { get; set; } = new List<PimsPropertyAcquisitionFile>();
 
     [ForeignKey("PrntAcquisitionFileId")]

@@ -12,7 +12,7 @@ namespace Pims.Dal.Entities;
 [Table("PIMS_PROPERTY_IMPROVEMENT")]
 [Index("PropertyId", Name = "PIMPRV_PROPERTY_ID_IDX")]
 [Index("PropertyImprovementTypeCode", Name = "PIMPRV_PROPERTY_IMPROVEMENT_TYPE_CODE_IDX")]
-[Index("PropertyId", "PropertyImprovementTypeCode", Name = "PIMPRV_PROP_IMPRV_TUC", IsUnique = true)]
+[Index("PropertyId", "PropertyImprovementId", Name = "PIMPRV_PROP_IMPRV_TUC", IsUnique = true)]
 public partial class PimsPropertyImprovement
 {
     /// <summary>

@@ -93,6 +93,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTyps)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.PimsPropTenureCleanups)
+                    .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                 .Include(p => p.PimsPropPropPurposes)
                     .ThenInclude(t => t.PropertyPurposeTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -142,6 +144,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTyps)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.PimsPropTenureCleanups)
+                    .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.VolumetricTypeCodeNavigation)
                 .Include(p => p.VolumeUnitTypeCodeNavigation)
@@ -200,6 +204,8 @@ namespace Pims.Dal.Repositories
                         .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                     .Include(p => p.PimsPropPropTenureTyps)
                         .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                    .Include(p => p.PimsPropTenureCleanups)
+                        .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                     .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                     .Include(p => p.VolumetricTypeCodeNavigation)
                     .Include(p => p.VolumeUnitTypeCodeNavigation)
@@ -241,6 +247,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTyps)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.PimsPropTenureCleanups)
+                    .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.VolumetricTypeCodeNavigation)
                 .Include(p => p.VolumeUnitTypeCodeNavigation)
@@ -282,6 +290,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTyps)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.PimsPropTenureCleanups)
+                    .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.VolumetricTypeCodeNavigation)
                 .Include(p => p.VolumeUnitTypeCodeNavigation)
@@ -410,6 +420,7 @@ namespace Pims.Dal.Repositories
             Context.UpdateChild<PimsProperty, long, PimsPropPropAnomalyTyp, long>(p => p.PimsPropPropAnomalyTyps, propertyId, property.PimsPropPropAnomalyTyps.ToArray());
             Context.UpdateChild<PimsProperty, long, PimsPropPropRoadTyp, long>(p => p.PimsPropPropRoadTyps, propertyId, property.PimsPropPropRoadTyps.ToArray());
             Context.UpdateChild<PimsProperty, long, PimsPropPropTenureTyp, long>(p => p.PimsPropPropTenureTyps, propertyId, property.PimsPropPropTenureTyps.ToArray());
+            Context.UpdateChild<PimsProperty, long, PimsPropTenureCleanup, long>(p => p.PimsPropTenureCleanups, propertyId, property.PimsPropTenureCleanups.ToArray());
 
             return existingProperty;
         }
@@ -454,6 +465,7 @@ namespace Pims.Dal.Repositories
             }
 
             Context.PimsPropPropTenureTyps.RemoveRange(property.PimsPropPropTenureTyps);
+            Context.PimsPropTenureCleanups.RemoveRange(property.PimsPropTenureCleanups);
             Context.PimsPropPropAnomalyTyps.RemoveRange(property.PimsPropPropAnomalyTyps);
             Context.PimsPropPropPurposes.RemoveRange(property.PimsPropPropPurposes);
             Context.PimsPropPropRoadTyps.RemoveRange(property.PimsPropPropRoadTyps);
