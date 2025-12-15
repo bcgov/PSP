@@ -30,11 +30,12 @@ class WorkLists {
   }
 
   async countItemsOnWorklist(propertyCountData) {
-    const countWorklistItems = await this.page
-      .locator("//button[@id='worklistControlButton']/following-sibling::div");
-    await countWorklistItems.waitFor({state: "visible"});
+    const countWorklistItems = await this.page.locator(
+      "//button[@id='worklistControlButton']/following-sibling::div"
+    );
+    await countWorklistItems.waitFor({ state: "visible" });
     const worklistItemNumber = await countWorklistItems.textContent();
-    return  worklistItemNumber == propertyCountData;
+    return worklistItemNumber == propertyCountData;
   }
 
   async deleteNthElementWorklist(index) {

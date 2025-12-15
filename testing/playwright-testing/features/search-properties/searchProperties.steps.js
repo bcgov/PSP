@@ -1,4 +1,4 @@
-const { Given, When, Then, setDefaultTimeout} = require("@cucumber/cucumber");
+const { Given, When, Then, setDefaultTimeout } = require("@cucumber/cucumber");
 const searchPropertiesJson = require("../../data/SearchProperties.json");
 
 let searchPropertiesData = [];
@@ -8,7 +8,8 @@ Given("I navigate to the Search Control", async function () {
   await this.searchProperties.navigateSearchProperties();
 });
 
-Given("I search for several properties from row number {int} and add to the worklist",
+Given(
+  "I search for several properties from row number {int} and add to the worklist",
   async function (rowNbr) {
     searchPropertiesData = searchPropertiesJson[rowNbr];
     if (searchPropertiesData.PID != "") {
@@ -57,7 +58,7 @@ Given("I search for several properties from row number {int} and add to the work
       await this.searchProperties.searchPropertyByPOIName(
         searchPropertiesData.POIName
       );
-    //await this.searchProperties.closePropertyLeaflet();
+      //await this.searchProperties.closePropertyLeaflet();
       await this.searchProperties.selectPinOnMap();
       await this.searchProperties.addPropertyToWorklistFromQuickInfo();
       await this.searchProperties.resetSearch();
@@ -92,4 +93,3 @@ Given("I search for several properties from row number {int} and add to the work
     }
   }
 );
-

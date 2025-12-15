@@ -63,7 +63,11 @@ class AdminTools {
   }
 
   async navigateHome() {
-    await this.page.locator("//div[@data-testid='nav-tooltip-pimspropertylistview']/preceding-sibling::div[@data-testid='nav-tooltip-mapview']/a").click();
+    await this.page
+      .locator(
+        "//div[@data-testid='nav-tooltip-pimspropertylistview']/preceding-sibling::div[@data-testid='nav-tooltip-mapview']/a"
+      )
+      .click();
   }
 
   async verifyManageUsersListView() {

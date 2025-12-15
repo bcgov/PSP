@@ -140,10 +140,15 @@ class SearchProperties {
   }
 
   async resetSearch() {
-    await this.page.getByTestId("search-control-filters-section").getByTestId("reset-button").click();
+    await this.page
+      .getByTestId("search-control-filters-section")
+      .getByTestId("reset-button")
+      .click();
 
-    const quickInfoCloseBttn = await this.page.locator("div[data-testid='quick-info-header'] *[data-testid='close-icon']");
-    if(await quickInfoCloseBttn.isVisible()) {
+    const quickInfoCloseBttn = await this.page.locator(
+      "div[data-testid='quick-info-header'] *[data-testid='close-icon']"
+    );
+    if (await quickInfoCloseBttn.isVisible()) {
       await quickInfoCloseBttn.click();
     }
   }
@@ -165,15 +170,19 @@ class SearchProperties {
   }
 
   async closePropertyLeaflet() {
-    const closeLeafketBttn = await this.page.location("div[data-testid='leaflet-buttons-section'] *[data-testid='close-leaflet-button']")
-    await closeLeafketBttn.waitFor({status: "visible"});
+    const closeLeafketBttn = await this.page.location(
+      "div[data-testid='leaflet-buttons-section'] *[data-testid='close-leaflet-button']"
+    );
+    await closeLeafketBttn.waitFor({ status: "visible" });
     await closeLeafketBttn.click();
   }
 
   async selectPinOnMap() {
-    const pinOnMap = await this.page.locator("div[class='leaflet-pane leaflet-marker-pane'] img:first-child");
-    await pinOnMap.waitFor({status: "visible"});
-    await pinOnMap.click({force: true});
+    const pinOnMap = await this.page.locator(
+      "div[class='leaflet-pane leaflet-marker-pane'] img:first-child"
+    );
+    await pinOnMap.waitFor({ status: "visible" });
+    await pinOnMap.click({ force: true });
   }
 
   async quickInfoAddPropertyToOpenFile() {
@@ -225,9 +234,11 @@ class SearchProperties {
       "button[data-testid='quick-info-more-options']",
       "div[aria-labelledby='dropdown-ellipsis']"
     );
-    await this.page.locator(
+    await this.page
+      .locator(
         "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']"
-      ).waitFor({status:"visible"});
+      )
+      .waitFor({ status: "visible" });
     await this.page
       .locator(
         "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']"

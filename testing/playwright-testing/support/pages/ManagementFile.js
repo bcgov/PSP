@@ -26,17 +26,20 @@ class ManagementFile {
       .click();
   }
 
-  async createMinimumManagementDetails(mgmtFile)
-  {
-      //Management File Name
-      const managementFileNameInput = await this.page.locator("#input-fileName");
-      expect(managementFileNameInput).toBeVisible();
-      await this.page(managementFileNameInput).fill(mgmtFile.ManagementName);
+  async createMinimumManagementDetails(mgmtFile) {
+    //Management File Name
+    const managementFileNameInput = await this.page.locator("#input-fileName");
+    expect(managementFileNameInput).toBeVisible();
+    await this.page(managementFileNameInput).fill(mgmtFile.ManagementName);
 
-      //Purpose
-      const managementFilePurposeSelect = await this.page.locator("#input-purposeTypeCode");
-      expect(managementFilePurposeSelect).toBeVisible();
-      await this.page(managementFilePurposeSelect).selectOption({label: mgmtFile.ManagementPurpose});
+    //Purpose
+    const managementFilePurposeSelect = await this.page.locator(
+      "#input-purposeTypeCode"
+    );
+    expect(managementFilePurposeSelect).toBeVisible();
+    await this.page(managementFilePurposeSelect).selectOption({
+      label: mgmtFile.ManagementPurpose,
+    });
   }
 
   async verifyInitManagementFileDetailsPage() {
