@@ -1,4 +1,5 @@
 const { expect } = require("@playwright/test");
+const { clickAndWaitFor } = require("../common.js");
 
 class SearchProperties {
   constructor(page) {
@@ -61,18 +62,18 @@ class SearchProperties {
     await this.page.getByTestId("geographic-name-input").fill(poiName);
     await expect(
       this.page.locator(
-        "input[data-testid='geographic-name-input'] ul[class='suggestionList']"
+        "//input[@data-testid='geographic-name-input']/following-sibling::ul[@class='suggestionList']"
       )
     ).toBeVisible();
     await this.page
       .locator(
-        "input[data-testid='geographic-name-input'] ul[class='suggestionList']"
+        "//input[@data-testid='geographic-name-input']/following-sibling::ul[@class='suggestionList']/li[1]"
       )
       .click();
     await this.page.getByTestId("search").click();
   }
 
-  async selectPropertyByLongLant(coordinates) {
+  async searchPropertyByLongLant(coordinates) {
     await this.page
       .locator("#input-searchBy")
       .selectOption({ label: "Lat/Long" });
@@ -111,7 +112,7 @@ class SearchProperties {
       .locator("#input-searchBy")
       .selectOption({ label: "Survey Parcel" });
     await this.page
-      .locator("input-district")
+      .locator("#input-district")
       .selectOption({ label: surveyParcel.DistrictInput });
 
     if (surveyParcel.DistrictLot != null) {
@@ -128,7 +129,7 @@ class SearchProperties {
     await this.page.getByTestId("search").click();
   }
 
-  async selectPropertyByProject(project) {
+  async searchPropertyByProject(project) {
     await this.page
       .locator("#input-searchBy")
       .selectOption({ label: "Project" });
@@ -139,7 +140,12 @@ class SearchProperties {
   }
 
   async resetSearch() {
-    await this.page.getByTestId("reset-button").click();
+    await this.page.getByTestId("search-control-filters-section").getByTestId("reset-button").click();
+
+    const quickInfoCloseBttn = await this.page.locator("div[data-testid='quick-info-header'] *[data-testid='close-icon']");
+    if(await quickInfoCloseBttn.isVisible()) {
+      await quickInfoCloseBttn.click();
+    }
   }
 
   async selectNthPMBCSearchResult(index) {
@@ -158,9 +164,51 @@ class SearchProperties {
       .click();
   }
 
-  async addPropertyInfoToOpenFile() {
+  async closePropertyLeaflet() {
+    const closeLeafketBttn = await this.page.location("div[data-testid='leaflet-buttons-section'] *[data-testid='close-leaflet-button']")
+    await closeLeafketBttn.waitFor({status: "visible"});
+    await closeLeafketBttn.click();
+  }
+
+  async selectPinOnMap() {
+    const pinOnMap = await this.page.locator("div[class='leaflet-pane leaflet-marker-pane'] img:first-child");
+    await pinOnMap.waitFor({status: "visible"});
+    await pinOnMap.click({force: true});
+  }
+
+  async quickInfoAddPropertyToOpenFile() {
     await this.page.locator("#dropdown-ellipsis").click();
     await this.page.locator("a[aria-label='Add to Open File']").click();
+  }
+
+  async quickInfoAddWorklist() {
+    await this.page.locator("#dropdown-ellipsis").click();
+    await this.page.locator("a[aria-label='Add to Worklist']").click();
+  }
+
+  async quickInfoCreateResearchFile() {
+    await this.page.locator("#dropdown-ellipsis").click();
+    await this.page.locator("a[aria-label='Create Research File']").click();
+  }
+
+  async quickInfoCreateAcquisitionFile() {
+    await this.page.locator("#dropdown-ellipsis").click();
+    await this.page.locator("a[aria-label='Create Acquisition File']").click();
+  }
+
+  async quickInfoCreateManagementFile() {
+    await this.page.locator("#dropdown-ellipsis").click();
+    await this.page.locator("a[aria-label='Create Management File']").click();
+  }
+
+  async quickInfoCreateLeaseFile() {
+    await this.page.locator("#dropdown-ellipsis").click();
+    await this.page.locator("a[aria-label='Create Lease File']").click();
+  }
+
+  async quickInfoCreateDispositionFile() {
+    await this.page.locator("#dropdown-ellipsis").click();
+    await this.page.locator("a[aria-label='Create Disposition File']").click();
   }
 
   async addPropertyInfoToWorklist() {
@@ -171,19 +219,15 @@ class SearchProperties {
     await this.page.locator("a[aria-label='Add to Worklist']").click();
   }
 
-  async selectPinOnMap() {
-    await this.page
-      .locator("div[class='leaflet-pane leaflet-marker-pane'] img")
-      .click();
-  }
-
   async addPropertyToWorklistFromQuickInfo() {
-    await this.page.getByTestId("quick-info-more-options").click();
-    await expect(
-      this.page.locator(
+    clickAndWaitFor(
+      this.page,
+      "button[data-testid='quick-info-more-options']",
+      "div[aria-labelledby='dropdown-ellipsis']"
+    );
+    await this.page.locator(
         "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']"
-      )
-    ).toBeVisible();
+      ).waitFor({status:"visible"});
     await this.page
       .locator(
         "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']"
@@ -201,11 +245,6 @@ class SearchProperties {
       .locator("div[data-testid='search-sidebar'] p")
       .textContent();
     expect(searchTitle).toEqual("Search");
-
-    const pimsPropsListBttn = await this.page.locator(
-      "//button/div[text()='Search PIMS information']"
-    );
-    expect(pimsPropsListBttn).toBeVisible();
 
     const searchPropsTypesSelect = await this.page.locator("#input-searchBy");
     expect(searchPropsTypesSelect).toBeVisible();

@@ -2,11 +2,11 @@
   {
     "Test Case Description": "Worklist testing",
     "PID": "028-928-563",
-    "PIN": 4361431.0,
-    "Address": "1253 bradshaw",
+    "PIN": "4361431",
+    "Address": "4989 victoria",
     "PlanNumber": "VAP20162",
     "HistoricalFile": "123-456999",
-    "POIName": "Prince George",
+    "POIName": "Stanley",
     "Coordinates": {
       "LatitudeDegree": 49,
       "LatitudeMinutes": 54,
@@ -19,11 +19,12 @@
     },
     "SurveyParcel": {
       "DistrictInput": "ALBERNI DISTRICT",
-      "DistrictLot": 90,
+      "DistrictLot": "90",
       "Section": null,
       "Township": null,
       "Range": null
     },
-    "Project": "TestProject1402"
+    "Project": "TestProject1402",
+    "TotalPropertiesCount": 9
   }
 ]
