@@ -56,6 +56,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
 
   const anomalies = property?.anomalies;
   const tenureStatus = property?.tenures;
+  const tenureCleanups = property?.tenureCleanups;
   const roadType = property?.roadTypes;
   const address = property?.address;
   const query = useQuery();
@@ -153,7 +154,7 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
         <SectionField label="Coordinates">{`${getPrettyLatLng(property?.location)}`}</SectionField>
       </Section>
 
-      <Section header="Tenure Status">
+      <Section header="Tenure">
         <SectionField label="Tenure status">
           <Multiselect
             disable
@@ -161,6 +162,17 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
             hidePlaceholder
             placeholder=""
             selectedValues={tenureStatus}
+            displayValue="description"
+            style={readOnlyMultiSelectStyle}
+          />
+        </SectionField>
+        <SectionField label="Tenure cleanup">
+          <Multiselect
+            disable
+            disablePreSelectedValues
+            hidePlaceholder
+            placeholder=""
+            selectedValues={tenureCleanups}
             displayValue="description"
             style={readOnlyMultiSelectStyle}
           />

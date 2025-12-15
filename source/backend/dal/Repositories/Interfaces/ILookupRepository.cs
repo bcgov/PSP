@@ -178,6 +178,8 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsManagementFileProfileType> GetAllManagementFileProfileTypes();
 
+        IEnumerable<PimsTenureCleanupType> GetAllTenureCleanupTypes();
+        
         IEnumerable<PimsSurplusDeclarationType> GetAllSurplusDeclarationTypes();
     }
 }

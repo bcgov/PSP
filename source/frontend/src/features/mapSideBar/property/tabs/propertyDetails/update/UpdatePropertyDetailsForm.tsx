@@ -35,6 +35,7 @@ import {
   PropertyTenureFormModel,
   UpdatePropertyDetailsFormModel,
 } from './models';
+import { PropertyTenureCleanupFormModel } from './models/PropertyTenureCleanupFormModel';
 import UpdateHistoricalNumbersSubForm from './UpdateHistoricalNumbersSubForm';
 
 export interface IUpdatePropertyDetailsFormProps {
@@ -58,6 +59,9 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   const pphTypeOptions = getOptionsByType(API.PPH_STATUS_TYPES);
   const anomalyOptions = getByType(API.PROPERTY_ANOMALY_TYPES).map(x =>
     PropertyAnomalyFormModel.fromLookup(x),
+  );
+  const tenureCleanupTypes = getByType(API.TENURE_CLEANUP_TYPES).map(x =>
+    PropertyTenureCleanupFormModel.fromLookup(x),
   );
   const tenureOptions = getByType(API.PROPERTY_TENURE_TYPES).map(x =>
     PropertyTenureFormModel.fromLookup(x),
@@ -265,7 +269,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
         </SectionField>
       </Section>
 
-      <Section header="Tenure Status">
+      <Section header="Tenure">
         <SectionField label="Tenure status">
           <Multiselect
             field="tenures"
@@ -273,6 +277,15 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
             placeholder=""
             hidePlaceholder
             options={tenureOptions}
+          />
+        </SectionField>
+        <SectionField label="Tenure cleanup">
+          <Multiselect
+            field="tenureCleanups"
+            options={tenureCleanupTypes}
+            displayValue="typeDescription"
+            placeholder=""
+            hidePlaceholder
           />
         </SectionField>
         {isHighwayRoad && (

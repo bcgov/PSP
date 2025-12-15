@@ -80,6 +80,7 @@ namespace Pims.Api.Models.Concepts.Property
                 // multi-selects
                 .Map(dest => dest.PimsPropPropAnomalyTyps, src => src.Anomalies)
                 .Map(dest => dest.PimsPropPropTenureTyps, src => src.Tenures)
+                .Map(dest => dest.PimsPropTenureCleanups, src => src.TenureCleanups)
                 .Map(dest => dest.PimsPropPropRoadTyps, src => src.RoadTypes)
                 .Map(dest => dest.LandArea, src => src.LandArea)
                 .Map(dest => dest.PropertyAreaUnitTypeCode, src => src.AreaUnit.Id)

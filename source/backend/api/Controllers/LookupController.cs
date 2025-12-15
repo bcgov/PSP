@@ -142,6 +142,7 @@ namespace Pims.Api.Controllers
                 var managementFilePurposeTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllManagementFilePurposeTypes());
                 var managementFileStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllManagementFileStatusTypes());
                 var managementFileProfileTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllManagementFileProfileTypes());
+                var tenureCleanupTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllTenureCleanupTypes());
                 var surplusDeclarationTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllSurplusDeclarationTypes());
 
                 var codes = new List<object>();
@@ -228,6 +229,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(managementFilePurposeTypes);
                 codes.AddRange(managementFileStatusTypes);
                 codes.AddRange(managementFileProfileTypes);
+                codes.AddRange(tenureCleanupTypes);
                 codes.AddRange(surplusDeclarationTypes);
 
                 var response = new JsonResult(codes);
