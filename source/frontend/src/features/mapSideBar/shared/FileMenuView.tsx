@@ -44,8 +44,11 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
 
   const activeProperties = [];
   const inactiveProperties = [];
+  const retiredProperties = [];
   sortedProperties.forEach(p => {
-    if (p.isActive !== false) {
+    if (p.property?.isRetired) {
+      retiredProperties.push(p);
+    } else if (p.isActive !== false) {
       activeProperties.push(p);
     } else {
       inactiveProperties.push(p);
@@ -54,6 +57,7 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
   const labelledProperties: { label: string; properties: ApiGen_Concepts_FileProperty[] }[] = [
     { label: 'Active', properties: activeProperties },
     { label: 'Inactive', properties: inactiveProperties },
+    { label: 'Retired', properties: retiredProperties },
   ];
 
   return (
@@ -131,7 +135,11 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                           </div>
 
                           <div>
-                            {fileProperty?.isActive !== false ? (
+                            {fileProperty?.property?.isRetired ? (
+                              <StyledDisabledIconWrapper>
+                                {sortedProperties.indexOf(fileProperty) + 1}
+                              </StyledDisabledIconWrapper>
+                            ) : fileProperty?.isActive !== false ? (
                               <StyledIconWrapper
                                 className={cx({
                                   selected: currentFilePropertyId === fileProperty?.id,

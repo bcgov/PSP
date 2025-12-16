@@ -99,14 +99,18 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
         </Col>
         {showDisable && (
           <Col md={2}>
-            <Select
-              className="mb-0 ml-4"
-              field={withNameSpace(nameSpace, 'isActive')}
-              options={[
-                { label: 'Inactive', value: 'false' },
-                { label: 'Active', value: 'true' },
-              ]}
-            ></Select>
+            {property?.pimsFeature?.properties?.IS_RETIRED ? (
+              <div className="mb-0 ml-7">Retired</div>
+            ) : (
+              <Select
+                className="mb-0 ml-4"
+                field={withNameSpace(nameSpace, 'isActive')}
+                options={[
+                  { label: 'Inactive', value: 'false' },
+                  { label: 'Active', value: 'true' },
+                ]}
+              ></Select>
+            )}
           </Col>
         )}
         <StyledActionsCol xs="auto" className="pl-3">
@@ -138,7 +142,6 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           </StyledSpacingWrapper>
         </StyledActionsCol>
       </StyledRow>
-
       {canUploadShapefile && (
         <ShapeUploadModal
           display={isUploadVisible}
