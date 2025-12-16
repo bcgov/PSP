@@ -447,13 +447,13 @@ namespace Pims.Api.Services
                 filePropertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
             }
 
-            // apply similar logic to the boundary
+            // update boundary
             var boundaryGeom = incomingFileProperty.Boundary;
-            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS && filePropertyToUpdate is PimsPropertyAcquisitionFile acquisitionFilePropertyToUpdate)
+            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
             {
                 _coordinateService.TransformGeometry(boundaryGeom.SRID, SpatialReference.BCALBERS, boundaryGeom);
-                acquisitionFilePropertyToUpdate.Boundary = boundaryGeom;
             }
+            filePropertyToUpdate.Boundary = boundaryGeom;
         }
 
         public IList<PimsHistoricalFileNumber> GetHistoricalNumbersForPropertyId(long propertyId)
