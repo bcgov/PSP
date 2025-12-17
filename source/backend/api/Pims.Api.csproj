@@ -64,11 +64,11 @@
     <PackageReference Include="System.Text.RegularExpressions" Version="4.3.1" />
     <PackageReference Include="System.Drawing.Common" Version="8.0.11" />
     <PackageReference Include="System.Security.Cryptography.Xml" Version="8.0.2" />
-    <PackageReference Include="KubernetesClient" Version="15.0.0" />
+    <PackageReference Include="KubernetesClient" Version="18.0.13" />
     <PackageReference Include="Npgsql" Version="8.0.5" />
     <PackageReference Include="System.Data.SqlClient" Version="4.8.6" />
     <!-- TODO: updated version has a critical vulnerability -->
-    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.4.9" />
+    <PackageReference Include="System.Linq.Dynamic.Core" Version="1.7.1" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\apimodels\Pims.Api.Models.csproj" />
