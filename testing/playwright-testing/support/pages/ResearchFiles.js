@@ -9,8 +9,14 @@ class ResearchFiles {
   async navigateCreateResearch() {
     clickAndWaitFor(
       this.page,
-      "div[data-testid='nav-tooltip-research'] a",
+      "div[data-testid='nav-tooltip-project'] a",
       "div[data-testid='side-tray']"
+    );
+
+    clickAndWaitFor(
+      this.page,
+      "div[data-testid='nav-tooltip-research'] a",
+      "//a[text()='Create a Research File']"
     );
     await this.page.locator("//a[text()='Create a Research File']").click();
   }
@@ -22,6 +28,12 @@ class ResearchFiles {
       "div[data-testid='side-tray']"
     );
     await this.page.locator("//a[text()='Manage Research Files']").click();
+  }
+
+  async createMinimumResearchFile(fileName) {
+    const researchFileName = await this.page.locator("#input-name");
+    expect(researchFileName).toBeVisible();
+    await this.page(researchFileName).fill(fileName);
   }
 
   async verifyCreateResearchFileForm() {
@@ -167,6 +179,51 @@ class ResearchFiles {
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();
     await expect(this.page.locator("ul[class='pagination']")).toBeVisible();
+  }
+
+  async saveResearchFile() {
+    Wait();
+    ButtonElement("Save");
+
+    Wait();
+    while (webDriver.FindElements(researchFileConfirmationModal).Count() > 0) {
+      if (sharedModals.ModalHeader() == "Confirm changes") {
+        Assert.Equal("Confirm changes", sharedModals.ModalHeader());
+        Assert.Equal(
+          "You have made changes to the properties in this file.",
+          sharedModals.ConfirmationModalText1()
+        );
+        Assert.Equal(
+          "Do you want to save these changes?",
+          sharedModals.ConfirmationModalText2()
+        );
+        sharedModals.ModalClickOKBttn();
+      } else if (sharedModals.ModalHeader() == "User Override Required") {
+        Assert.Equal("User Override Required", sharedModals.ModalHeader());
+        Assert.Contains(
+          "The selected property already exists in the system's inventory. However, the record is missing spatial details.",
+          sharedModals.ModalContent()
+        );
+        Assert.Contains(
+          "To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.",
+          sharedModals.ModalContent()
+        );
+        sharedModals.ModalClickOKBttn();
+      } else if (sharedModals.ModalHeader() == "Confirm status change") {
+        Assert.Equal("Confirm status change", sharedModals.ModalHeader());
+        Assert.Contains(
+          "If you save it, only the administrator can turn it back on. You will still see it in the management table.",
+          sharedModals.ConfirmationModalParagraph1()
+        );
+        Assert.Equal(
+          "Do you want to acknowledge and proceed?",
+          sharedModals.ConfirmationModalParagraph2()
+        );
+        sharedModals.ModalClickOKBttn();
+      }
+
+      Wait();
+    }
   }
 
   async cancelCreateResearchFile() {
