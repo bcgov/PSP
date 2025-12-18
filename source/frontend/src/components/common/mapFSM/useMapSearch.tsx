@@ -45,6 +45,7 @@ export const useMapSearch = () => {
 
   const loadPimsPropertiesMinimal = pimsPropertyLayerService.loadPropertyLayerMinimal.execute;
   const loadPimsProperties = pimsPropertyLayerService.loadPropertyLayer.execute;
+  const loadPimsPropertiesBoundary = pimsPropertyLayerService.loadPropertyBoundaryLayer.execute;
   const pmbcServiceFindByPin = fullyAttributedService.findByPin;
   const pmbcServiceFindByPid = fullyAttributedService.findByPid;
   const pmbcServiceFindByPlanNumber = fullyAttributedService.findByPlanNumber;
@@ -230,6 +231,7 @@ export const useMapSearch = () => {
         let findPropertyIdsByProjectTask: Promise<number[]> | undefined = undefined;
 
         const loadPropertiesTask = loadPimsProperties(filter);
+        const loadPropertiesBoundariesTask = loadPimsPropertiesBoundary(filter);
 
         if (exists(filter?.PROJECT)) {
           findPropertyIdsByProjectTask = getMatchingProperties.execute({
@@ -238,32 +240,43 @@ export const useMapSearch = () => {
           });
         }
 
-        const [properties, projectPropertyIds] = await Promise.all([
+        const [properties, propertiesBoundaries, projectPropertyIds] = await Promise.all([
           loadPropertiesTask,
+          loadPropertiesBoundariesTask,
           findPropertyIdsByProjectTask,
         ]);
 
-        const validFeatures = properties.features?.filter(
+        const validPropertyFeatures = properties.features?.filter(feature =>
+          projectPropertyIds.includes(feature.properties.PROPERTY_ID),
+        );
+
+        const validBoundaryFeatures = propertiesBoundaries.features?.filter(
           feature =>
             !!feature?.geometry && projectPropertyIds.includes(feature.properties.PROPERTY_ID),
         );
 
         result = {
-          pimsLocationFeatures: exists(validFeatures)
+          pimsLocationFeatures: exists(validPropertyFeatures)
             ? {
                 type: 'FeatureCollection',
-                bbox: bbox({ type: 'FeatureCollection', features: validFeatures }),
-                features: validFeatures,
+                bbox: bbox({ type: 'FeatureCollection', features: validPropertyFeatures }),
+                features: validPropertyFeatures,
               }
             : emptyPimsLocationFeatureCollection,
           pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
-          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          pimsBoundaryFeatures: exists(validBoundaryFeatures)
+            ? {
+                type: 'FeatureCollection',
+                bbox: bbox({ type: 'FeatureCollection', features: validBoundaryFeatures }),
+                features: validBoundaryFeatures,
+              }
+            : emptyPimsBoundaryFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           highwayPlanFeatures: emptyHighwayFeatures,
           surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
         };
 
-        if ((validFeatures?.length ?? 0) === 0) {
+        if ((validBoundaryFeatures?.length ?? 0) === 0) {
           toast.info('No search results found');
         }
       } catch (error) {
@@ -272,7 +285,7 @@ export const useMapSearch = () => {
 
       return result;
     },
-    [loadPimsProperties, getMatchingProperties],
+    [loadPimsProperties, loadPimsPropertiesBoundary, getMatchingProperties],
   );
 
   const searchByHistorical = useCallback(
@@ -350,6 +363,7 @@ export const useMapSearch = () => {
           filter?.TOWNSHIP,
           filter?.RANGE,
           filter?.DISTRICT,
+          filter?.DISTRICT_LOT,
         );
 
         const validCrownSurveyFeatures = response?.features?.filter(feature =>

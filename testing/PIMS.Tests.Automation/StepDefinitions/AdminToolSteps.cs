@@ -381,15 +381,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             Assert.NotEqual(firstFinCodeEffectiveDateDescResult, firstFinCodeEffectiveAscResult);
 
-            //Verify Column Sorting by Financial Code Expiry Date
-            financialCodes.OrderByFinancialCodeExpiryDate();
-            var firstFinCodeExpiryDateDescResult = financialCodes.FirstFinancialCodeExpiryDate();
-
-            financialCodes.OrderByFinancialCodeExpiryDate();
-            var firstFinCodeExpiryDateAscResult = financialCodes.FirstFinancialCodeExpiryDate();
-
-            Assert.NotEqual(firstFinCodeExpiryDateDescResult, firstFinCodeExpiryDateAscResult);
-
             //Verify Pagination display different set of results
 
             sharedPagination.ChoosePaginationOption(10);

@@ -12,11 +12,11 @@ jobs:
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
-        uses: actions/checkout@v4
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
         with:
           fetch-depth: 0
 
-      - uses: actions/setup-node@v3
+      - uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3
         with:
           node-version: "20"
 
@@ -43,7 +43,7 @@ jobs:
 
       # This is so we can use a "Card Message" template for notifications and replace it with relevant values; e.g. __RELEASEVERSION__ etc
       # Template found in: .github/notifications/
-      - uses: bluwy/substitute-string-action@v1
+      - uses: bluwy/substitute-string-action@5555829ee1ce323d60e0d11a93eecffad3ecf713
         id: sub
         with:
           _input-file: .github/notifications/release_template.json

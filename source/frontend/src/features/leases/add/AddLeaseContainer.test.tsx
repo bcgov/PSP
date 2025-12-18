@@ -329,6 +329,7 @@ describe('AddLeaseContainer component', () => {
         {
           location: { lng: -120.69195885, lat: 50.25163372 },
           fileLocation: null,
+          fileBoundary: null,
           pimsFeature: null,
           parcelFeature: getMockFullyAttributedParcel('1'),
           regionFeature: {

@@ -19,15 +19,15 @@ jobs:
       security-events: write
     env:
       working-directory: ./openshift/4.0/templates/base-images
-      image-name: nodejs-14-ubi8
-      tag: ${{secrets.NODEJS14_BASE_TAG}} # 1-35
+      image-name: nodejs-20-ubi9
+      tag: ${{secrets.NODEJS20_BASE_TAG}} # Node 20 base tag secret
       OPENSHIFT_NAMESPACE: 3cd915-tools
-      output-filename: nodejs14.txt
+      output-filename: nodejs20.txt
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Authenticate and set context
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
         env:
           OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}} # service account gitaction in openshift will be used here!
           OPENSHIFT_NAMESPACE: 3cd915-tools
@@ -39,7 +39,7 @@ jobs:
           openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
 
       - name: Login to OpenShift Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7 # v1.14.1
         with:
           registry: ${{secrets.OPENSHIFT_REGISTRY}}
           username: ${{ secrets.OC_USERNAME_SA }}
@@ -51,9 +51,9 @@ jobs:
         run: |
           docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}
         working-directory: ${{env.working-directory}}
-      - name: Scan nodejs14 Base Image with Aqua Trivy
+      - name: Scan nodejs20 Base Image with Aqua Trivy
         id: scan
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 #v0.33.1
         with:
           image-ref: "${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}"
           format: "table"
@@ -64,7 +64,7 @@ jobs:
           output: ${{env.output-filename}}
       - if: failure() && steps.scan.outcome == 'failure'
         name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.output-filename}}
@@ -78,15 +78,15 @@ jobs:
     runs-on: ubuntu-22.04
     env:
       working-directory: ./source/frontend
-      image-name: nodejs-14-ubi8
-      tag: ${{secrets.NODEJS14_BASE_TAG}}
+      image-name: nodejs-20-ubi9
+      tag: ${{secrets.NODEJS20_BASE_TAG}}
       OPENSHIFT_NAMESPACE: 3cd915-tools
-      output-filename: nodejs14.txt
+      output-filename: nodejs20.txt
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Download artifact
         id: artifact
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.image-name}}
@@ -104,7 +104,7 @@ jobs:
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
-        uses: peter-evans/find-comment@v1
+        uses: peter-evans/find-comment@d2dae40ed151c634e4189471272b57e76ec19ba8 #v1.3.0
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -132,7 +132,7 @@ jobs:
 
       - name: Update PR Comment
         if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae #v1.4.5
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -158,9 +158,9 @@ jobs:
       output-filename: nginx-base.txt
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Authenticate and set context
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
         env:
           OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
           OPENSHIFT_NAMESPACE: 3cd915-tools
@@ -172,7 +172,7 @@ jobs:
           openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
 
       - name: Login to OpenShift Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7 # v1.14.1
         with:
           registry: ${{secrets.OPENSHIFT_REGISTRY}}
           username: ${{ secrets.OC_USERNAME_SA }}
@@ -184,7 +184,7 @@ jobs:
         working-directory: ${{env.working-directory}}
       - name: Scan Nginx Runtime Base Image with Aqua Trivy
         id: scan
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 #v0.33.1
         with:
           image-ref: "${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}"
           format: "table"
@@ -195,7 +195,7 @@ jobs:
           output: ${{env.output-filename}}
       - if: failure() && steps.scan.outcome == 'failure'
         name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.output-filename}}
@@ -212,10 +212,10 @@ jobs:
       tag: ${{secrets.NGINX_BASE_TAG}}
       output-filename: nginx-base.txt
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Download artifact
         id: artifact
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.image-name}}
@@ -234,7 +234,7 @@ jobs:
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
-        uses: peter-evans/find-comment@v1
+        uses: peter-evans/find-comment@d2dae40ed151c634e4189471272b57e76ec19ba8 #v1.3.0
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -262,7 +262,7 @@ jobs:
 
       - name: Update PR Comment
         if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae #v1.4.5
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -289,9 +289,9 @@ jobs:
       output-filename: pims-app.txt
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Authenticate and set context
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
         env:
           # These can be stored in secrets, if desired.
           OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
@@ -304,7 +304,7 @@ jobs:
           openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
 
       - name: Login to OpenShift Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7 # v1.14.1
         with:
           registry: ${{secrets.OPENSHIFT_REGISTRY}}
           username: ${{ secrets.OC_USERNAME_SA }}
@@ -317,7 +317,7 @@ jobs:
         working-directory: ${{env.working-directory}}
       - name: Scan PIMS React Frontend Image with Aqua Trivy
         id: scan
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 #v0.33.1
         with:
           image-ref: "${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}"
           format: "table"
@@ -328,7 +328,7 @@ jobs:
           output: ${{env.output-filename}}
       - if: failure() && steps.scan.outcome == 'failure'
         name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.output-filename}}
@@ -345,10 +345,10 @@ jobs:
       tag: latest
       output-filename: pims-app.txt
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Download artifact
         id: artifact
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.image-name}}
@@ -367,7 +367,7 @@ jobs:
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
-        uses: peter-evans/find-comment@v1
+        uses: peter-evans/find-comment@d2dae40ed151c634e4189471272b57e76ec19ba8 #v1.3.0
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -395,7 +395,7 @@ jobs:
 
       - name: Update PR Comment
         if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae #v1.4.5
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -414,16 +414,16 @@ jobs:
       contents: read
       security-events: write
     env:
-      working-directory: ./openshift/4.0/templates/base-images/dotnet50
+      working-directory: ./openshift/4.0/templates/base-images/dotnet80
       image-name: dotnet-aspnet
-      tag: "5.0"
+      tag: "8.0"
       OPENSHIFT_NAMESPACE: 3cd915-tools
       output-filename: dotnet-aspnet.txt
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Authenticate and set context
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
         env:
           # These can be stored in secrets, if desired.
           OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
@@ -436,18 +436,18 @@ jobs:
           openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
 
       - name: Login to OpenShift Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7 # v1.14.1
         with:
           registry: ${{secrets.OPENSHIFT_REGISTRY}}
           username: ${{ secrets.OC_USERNAME_SA }}
           password: ${{ secrets.OPENSHIFT_TOKEN }}
-      - name: Pull aspnet dotnet5 runtime Base Image
+      - name: Pull aspnet dotnet8 runtime Base Image
         run: |
           docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}
         working-directory: ${{env.working-directory}}
-      - name: Scan dotnet5 SDK and runtime Image with Aqua Trivy
+      - name: Scan dotnet8 runtime Image with Aqua Trivy
         id: scan
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 #v0.33.1
         with:
           image-ref: "${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}"
           format: "table"
@@ -458,7 +458,7 @@ jobs:
           output: ${{env.output-filename}}
       - if: failure() && steps.scan.outcome == 'failure'
         name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.output-filename}}
@@ -470,15 +470,15 @@ jobs:
     needs: aspnet-runtime
     runs-on: ubuntu-22.04
     env:
-      working-directory: ./openshift/4.0/templates/base-images/dotnet50
+      working-directory: ./openshift/4.0/templates/base-images/dotnet80
       image-name: dotnet-aspnet
-      tag: "5.0"
+      tag: "8.0"
       output-filename: dotnet-aspnet.txt
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Download artifact
         id: artifact
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.image-name}}
@@ -497,7 +497,7 @@ jobs:
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
-        uses: peter-evans/find-comment@v1
+        uses: peter-evans/find-comment@d2dae40ed151c634e4189471272b57e76ec19ba8 #v1.3.0
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -525,7 +525,7 @@ jobs:
 
       - name: Update PR Comment
         if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae #v1.4.5
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -536,7 +536,7 @@ jobs:
           reactions: confused
 
   dotnet-sdk:
-    name: dotnet5-sdk
+    name: dotnet8-sdk
     if: github.event.pull_request.head.repo.full_name == github.repository
     runs-on: ubuntu-22.04
     permissions:
@@ -544,16 +544,16 @@ jobs:
       contents: read
       security-events: write
     env:
-      working-directory: ./openshift/4.0/templates/base-images/dotnet50
+      working-directory: ./openshift/4.0/templates/base-images/dotnet80
       image-name: dotnet-sdk
-      tag: "5.0"
+      tag: "8.0"
       OPENSHIFT_NAMESPACE: 3cd915-tools
       output-filename: dotnet-sdk.txt
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Authenticate and set context
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
         env:
           # These can be stored in secrets, if desired.
           OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
@@ -566,18 +566,18 @@ jobs:
           openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
 
       - name: Login to OpenShift Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7 # v1.14.1
         with:
           registry: ${{secrets.OPENSHIFT_REGISTRY}}
           username: ${{ secrets.OC_USERNAME_SA }}
           password: ${{ secrets.OPENSHIFT_TOKEN }}
-      - name: Pull aspnet dotnet5 runtime Base Image
+      - name: Pull dotnet8 sdk Base Image
         run: |
           docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}
         working-directory: ${{env.working-directory}}
-      - name: Scan dotnet5 SDK and runtime Image with Aqua Trivy
+      - name: Scan dotnet8 SDK Image with Aqua Trivy
         id: scan
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 #v0.33.1
         with:
           image-ref: "${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}"
           format: "table"
@@ -588,7 +588,7 @@ jobs:
           output: ${{env.output-filename}}
       - if: failure() && steps.scan.outcome == 'failure'
         name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.output-filename}}
@@ -600,15 +600,15 @@ jobs:
     needs: dotnet-sdk
     runs-on: ubuntu-22.04
     env:
-      working-directory: ./openshift/4.0/templates/base-images/dotnet50
+      working-directory: ./openshift/4.0/templates/base-images/dotnet80
       image-name: dotnet-sdk
-      tag: "5.0"
+      tag: "8.0"
       output-filename: dotnet-sdk.txt
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Download artifact
         id: artifact
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@cc203385981b70ca67e1cc392babf9cc229d5806 # v4.1.9
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.image-name}}
@@ -627,7 +627,7 @@ jobs:
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
-        uses: peter-evans/find-comment@v1
+        uses: peter-evans/find-comment@d2dae40ed151c634e4189471272b57e76ec19ba8 #v1.3.0
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -655,7 +655,7 @@ jobs:
 
       - name: Update PR Comment
         if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae #v1.4.5
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -682,9 +682,9 @@ jobs:
       output-filename: pims-api.txt
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Authenticate and set context
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
         env:
           # These can be stored in secrets, if desired.
           OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
@@ -697,7 +697,7 @@ jobs:
           openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
 
       - name: Login to OpenShift Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7 # v1.14.1
         with:
           registry: ${{secrets.OPENSHIFT_REGISTRY}}
           username: ${{ secrets.OC_USERNAME_SA }}
@@ -708,7 +708,7 @@ jobs:
         working-directory: ${{env.working-directory}}
       - name: Scan PIMS Backend API Image with Aqua Trivy
         id: scan
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 #v0.33.1
         with:
           image-ref: "${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}"
           format: "table"
@@ -719,7 +719,7 @@ jobs:
           output: ${{env.output-filename}}
       - if: failure() && steps.scan.outcome == 'failure'
         name: Upload artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.output-filename}}
@@ -736,10 +736,10 @@ jobs:
       tag: latest
       output-filename: pims-api.txt
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Download artifact
         id: artifact
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@cc203385b9a7c381b8a2e5499f0855a5ab64e0b4 # v4.1.9
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.image-name}}
@@ -758,7 +758,7 @@ jobs:
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
-        uses: peter-evans/find-comment@v1
+        uses: peter-evans/find-comment@d2dae40ed151c634e4189471272b57e76ec19ba8 #v1.3.0
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -786,7 +786,7 @@ jobs:
 
       - name: Update PR Comment
         if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae #v1.4.5
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}
@@ -813,9 +813,9 @@ jobs:
       output-filename: pims-logging.txt
 
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Authenticate and set context
-        uses: redhat-actions/oc-login@v1
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
         env:
           # These can be stored in secrets, if desired.
           OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
@@ -828,7 +828,7 @@ jobs:
           openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
 
       - name: Login to OpenShift Container Registry
-        uses: docker/login-action@v1
+        uses: docker/login-action@dd4fa0671be5250ee6f50aedf4cb05514abda2c7 # v1.14.1
         with:
           registry: ${{secrets.OPENSHIFT_REGISTRY}}
           username: ${{ secrets.OC_USERNAME_SA }}
@@ -839,7 +839,7 @@ jobs:
         working-directory: ${{env.working-directory}}
       - name: Scan PIMS Logging Image with Aqua Trivy
         id: scan
-        uses: aquasecurity/trivy-action@master
+        uses: aquasecurity/trivy-action@b6643a29fecd7f34b3597bc6acb0a98b03d33ff8 #v0.33.1
         with:
           image-ref: "${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}"
           format: "table"
@@ -850,7 +850,7 @@ jobs:
           output: ${{env.output-filename}}
       - if: failure() && steps.scan.outcome == 'failure'
         name: Upload OWASP ZAP scan artifact
-        uses: actions/upload-artifact@v4
+        uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.output-filename}}
@@ -868,10 +868,10 @@ jobs:
       tag: latest
       output-filename: pims-logging.txt
     steps:
-      - uses: actions/checkout@v4
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
       - name: Download artifact
         id: artifact
-        uses: actions/download-artifact@master
+        uses: actions/download-artifact@cc203385b9a7c381b8a2e5499f0855a5ab64e0b4 # v4.1.9
         with:
           name: ${{env.image-name}}_scan_report
           path: ./${{env.image-name}}
@@ -889,7 +889,7 @@ jobs:
           fi
       - name: Find Comment
         if: github.event_name == 'pull_request'
-        uses: peter-evans/find-comment@v1
+        uses: peter-evans/find-comment@d2dae40ed151c634e4189471272b57e76ec19ba8 #v1.3.0
         id: fc
         with:
           issue-number: ${{ github.event.pull_request.number }}
@@ -917,138 +917,7 @@ jobs:
 
       - name: Update PR Comment
         if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
-        uses: peter-evans/create-or-update-comment@v1
-        with:
-          comment-id: ${{ steps.fc.outputs.comment-id }}
-          issue-number: ${{ github.event.pull_request.number }}
-          body: |
-            ## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
-            ``` echo "${{ steps.get-comment-body.outputs.body }}"```
-          edit-mode: replace
-          reactions: confused
-
-  jenkins-agent-dotnet:
-    if: github.event.pull_request.head.repo.full_name == github.repository
-    name: jenkins-agent-dotnet
-    runs-on: ubuntu-22.04
-    permissions:
-      actions: read
-      contents: read
-      security-events: write
-      pull-requests: write
-    env:
-      working-directory: ./openshift/4.0/templates/jenkins-slaves/jenkins-slave-zap
-      image-name: jenkins-agent-dotnet
-      tag: latest
-      OPENSHIFT_NAMESPACE: 3cd915-tools
-      output-filename: jenkins-agent-dotnet.txt
-
-    steps:
-      - uses: actions/checkout@v4
-      - name: Authenticate and set context
-        uses: redhat-actions/oc-login@v1
-        env:
-          # These can be stored in secrets, if desired.
-          OPENSHIFT_USER: ${{secrets.OC_USERNAME_SA}}
-          OPENSHIFT_NAMESPACE: 3cd915-tools
-          SERVER_URL: ${{secrets.OPENSHIFT_SERVER}}
-          OPENSHIFT_REGISTRY: ${{secrets.OPENSHIFT_REGISTRY}}
-
-        with:
-          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
-          openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
-
-      - name: Login to OpenShift Container Registry
-        uses: docker/login-action@v1
-        with:
-          registry: ${{ secrets.OPENSHIFT_REGISTRY }}
-          username: ${{ secrets.OC_USERNAME_SA }}
-          password: ${{ secrets.OPENSHIFT_TOKEN }}
-      - name: Pull jenkins-agent-dotnet Image
-        run: |
-          docker pull ${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}
-        working-directory: ${{env.working-directory}}
-      - name: Scan jenkins-agent-dotnet with Aqua Trivy
-        id: scan
-        uses: aquasecurity/trivy-action@master
-        with:
-          image-ref: "${{secrets.OPENSHIFT_REGISTRY}}/${{env.OPENSHIFT_NAMESPACE}}/${{env.image-name}}:${{env.tag}}"
-          format: "table"
-          exit-code: "1"
-          ignore-unfixed: true
-          vuln-type: "os,library"
-          severity: "CRITICAL,HIGH"
-          output: ${{env.output-filename}}
-      - if: failure() && steps.scan.outcome == 'failure'
-        name: Upload jenkins agent scan artifact
-        uses: actions/upload-artifact@v4
-        with:
-          name: ${{env.image-name}}_scan_report
-          path: ./${{env.output-filename}}
-          retention-days: 3
-          if-no-files-found: error
-
-  comment_agent_pr:
-    # this action will leave a comment in response to credential scans performed on pull requests
-    if: always() && needs.jenkins-agent-dotnet.result == 'failure' && github.event_name == 'pull_request' && github.event.pull_request.head.repo.full_name == github.repository
-    needs: jenkins-agent-dotnet
-    runs-on: ubuntu-22.04
-    env:
-      working-directory: ./openshift/4.0/templates/jenkins-slaves/jenkins-slave-zap
-      image-name: jenkins-agent-dotnet
-      tag: latest
-      output-filename: jenkins-agent-dotnet.txt
-    steps:
-      - uses: actions/checkout@v4
-      - name: Download artifact
-        id: artifact
-        uses: actions/download-artifact@master
-        with:
-          name: ${{env.image-name}}_scan_report
-          path: ./${{env.image-name}}
-      - name: Get comment body
-        id: get-comment-body
-        if: steps.artifact.outcome == 'success'
-        run: |
-          cd ${{env.image-name}}/
-          if [ -s ${{env.output-filename}} ]; then
-          body="$(cat ${{env.output-filename}})"
-          body="${body//'%'/'%25'}"
-          body="${body//$'\n'/'%0A'}"
-          body="${body//$'\r'/'%0D'}"
-          echo "::set-output name=body::$body"
-          fi
-      - name: Find Comment
-        if: github.event_name == 'pull_request'
-        uses: peter-evans/find-comment@v1
-        id: fc
-        with:
-          issue-number: ${{ github.event.pull_request.number }}
-          comment-author: "github-actions[bot]"
-          body-includes: ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
-
-      - name: Comment on PR
-        if: steps.fc.outputs.comment-id == '' && steps.get-comment-body.outcome != 'failure'
-        env:
-          GITHUB_TOKEN: ${{secrets.GITHUB_TOKEN}}
-        run: |
-          cd ${{env.image-name}}/
-          if [ -s ${{env.output-filename}} ]; then
-          commentPR () {
-            gh pr comment $PRNUM -b "${1}"
-          }
-          PRNUM=${{ github.event.pull_request.number }}
-          PRBODY=$(cat ${{env.output-filename}})
-          INDENTED='## ${{secrets.OPENSHIFT_REGISTRY}}/${{env.image-name}}:${{env.tag}} vulnerability report
-          ```'${PRBODY}'```';
-            commentPR "$INDENTED"
-          else
-            echo "No vulnerability detected in this image"
-          fi
-
-      - name: Update PR Comment
-        if: github.event_name == 'pull_request' && steps.fc.outputs.comment-id != ''
-        uses: peter-evans/create-or-update-comment@v1
+        uses: peter-evans/create-or-update-comment@a35cf36e5301d70b76f316e867e7788a55a31dae #v1.4.5
         with:
           comment-id: ${{ steps.fc.outputs.comment-id }}
           issue-number: ${{ github.event.pull_request.number }}

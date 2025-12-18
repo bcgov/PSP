@@ -368,7 +368,7 @@ exports[`Property list view > matches snapshot 1`] = `
         class="pb-2 row"
       >
         <div
-          class="col-10"
+          class="col-12"
         >
           <div
             class="c1 p-3"
@@ -552,28 +552,30 @@ exports[`Property list view > matches snapshot 1`] = `
         class="row"
       >
         <div
-          class="col-10"
+          class="col-12"
         >
           <div
             class="c1 p-3"
           >
             <div
-              class="row"
+              class="pb-2 row"
             >
               <div
-                class="col-xl-1"
+                class="pr-0 text-left col-2"
               >
-                <strong>
-                  View by:
-                </strong>
+                <label
+                  class="c2"
+                >
+                  Ownership:
+                </label>
               </div>
               <div
-                class="col-auto"
+                class="c3 text-left col"
               >
                 <div>
                   <div
                     class="multiselect-container multiSelectContainer  "
-                    id="properties-selector"
+                    id="ownership-selector"
                     style="width: auto; color: black;"
                   >
                     <div
@@ -655,7 +657,7 @@ exports[`Property list view > matches snapshot 1`] = `
                       <input
                         autocomplete="off"
                         class="searchBox "
-                        id="properties-selector_input"
+                        id="ownership-selector_input"
                         name="search_name_input"
                         placeholder=""
                         type="text"
@@ -677,6 +679,73 @@ exports[`Property list view > matches snapshot 1`] = `
                           class="option    "
                         >
                           Retired
+                        </li>
+                      </ul>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="pb-2 row"
+            >
+              <div
+                class="pr-0 text-left col-2"
+              >
+                <label
+                  class="c2"
+                >
+                  Tenure Cleanup:
+                </label>
+              </div>
+              <div
+                class="c3 text-left col"
+              >
+                <div>
+                  <div
+                    class="multiselect-container multiSelectContainer  "
+                    id="tenure-cleanup-selector"
+                    style="width: auto; color: black;"
+                  >
+                    <div
+                      class="search-wrapper searchWrapper "
+                      style="background: white; border: 1px solid #606060;"
+                    >
+                      <input
+                        autocomplete="off"
+                        class="searchBox "
+                        id="tenure-cleanup-selector_input"
+                        name="search_name_input"
+                        placeholder="Select Tenure Cleanup"
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                    <div
+                      class="optionListContainer displayNone"
+                    >
+                      <ul
+                        class="optionContainer"
+                      >
+                        <li
+                          class="option  highlightOption highlight  "
+                        >
+                          Form 12
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Needs Survey
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          Section 42 roads (maybe)
+                        </li>
+                        <li
+                          class="option    "
+                        >
+                          TBD
                         </li>
                       </ul>
                     </div>
@@ -759,7 +828,7 @@ exports[`Property list view > matches snapshot 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 525px;"
+            style="display: flex; flex: 1 0 auto; min-width: 605px;"
           >
             <div
               class="th"
@@ -945,6 +1014,18 @@ exports[`Property list view > matches snapshot 1`] = `
                     />
                   </svg>
                 </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 80 0 auto; min-width: 80px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Tenure Cleanup
               </div>
             </div>
             <div

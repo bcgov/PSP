@@ -73,8 +73,10 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
   const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
     return {
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
-      location: mapLocationFeatureDataset?.location,
+      location:
+        mapLocationFeatureDataset?.location ?? mapLocationFeatureDataset?.fileLocation ?? null,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
       pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
       regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
@@ -366,11 +368,13 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
                 return (
                   <>
                     <AddPropertiesGuide />
-                    {exists(selectedFeatureDataset?.parcelFeature) && (
+                    {exists(selectedFeatureDataset?.parcelFeature) ||
+                    exists(selectedFeatureDataset?.pimsFeature) ||
+                    exists(selectedFeatureDataset?.location) ? (
                       <StyledButtonWrapper>
                         <Button onClick={handleAddToSelection}>Add selected property</Button>
                       </StyledButtonWrapper>
-                    )}
+                    ) : null}
                     <Section
                       header={
                         <Row>

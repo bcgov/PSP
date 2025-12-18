@@ -41,6 +41,7 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
       location: mapLocationFeatureDataset?.location,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
       pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
       regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
@@ -89,11 +90,14 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
   return (
     <Section header="Properties to include in this file:">
       <AddPropertiesGuide />
-      {exists(selectedFeatureDataset?.parcelFeature) && (
+      {exists(selectedFeatureDataset?.parcelFeature) ||
+      exists(selectedFeatureDataset?.pimsFeature) ||
+      exists(selectedFeatureDataset?.location) ? (
         <StyledButtonWrapper>
           <Button onClick={handleAddToSelection}>Add selected property</Button>
         </StyledButtonWrapper>
-      )}
+      ) : null}
+
       <FieldArray name="properties">
         {({ remove }) => (
           <Section header="Selected Properties">

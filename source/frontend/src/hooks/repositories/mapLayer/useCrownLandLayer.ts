@@ -201,30 +201,39 @@ export const useCrownLandLayer = () => {
       township?: number | string,
       range?: number | string,
       district?: string,
+      districtLot?: string,
     ): Promise<FeatureCollection<Geometry, TANTALIS_CrownSurveyParcels_Feature_Properties>> => {
       let sectionQuery = '';
       let townshipQuery = '';
       let rangeQuery = '';
       let districtQuery = '';
-      if (isValidString(section?.toString())) {
-        if (isValidString(range?.toString())) {
-          sectionQuery = `(PARCEL_LEGAL_DESCRIPTION ilike '%SECTION ${section},%' OR (PARCEL_LEGAL_DESCRIPTION ilike '%SECTIONS%' AND PARCEL_LEGAL_DESCRIPTION ilike '%${section},%'))`;
-        } else {
-          sectionQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%SECTION ${section},%'`;
-        }
-      }
-      if (isValidString(township?.toString())) {
-        townshipQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%TOWNSHIP ${township},%'`;
-      }
-      if (isValidString(range?.toString())) {
-        rangeQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%RANGE ${range},%'`;
-      }
-      if (isValidString(district)) {
+      let districtLotQuery = '';
+
+      if (isValidString(district) && district !== 'ALL') {
         const districtSearchString = district.replace('DISTRICT', 'DIST');
+
         districtQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%${districtSearchString}%'`;
       }
 
-      const query = [sectionQuery, townshipQuery, rangeQuery, districtQuery]
+      if (isValidString(districtLot)) {
+        districtLotQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%DISTRICT LOT ${districtLot},%' OR (PARCEL_LEGAL_DESCRIPTION ilike '%SECTIONS%' AND PARCEL_LEGAL_DESCRIPTION ilike '%${districtLot},%')`;
+      } else {
+        if (isValidString(section?.toString())) {
+          if (isValidString(range?.toString())) {
+            sectionQuery = `(PARCEL_LEGAL_DESCRIPTION ilike '%SECTION ${section},%' OR (PARCEL_LEGAL_DESCRIPTION ilike '%SECTIONS%' AND PARCEL_LEGAL_DESCRIPTION ilike '%${section},%'))`;
+          } else {
+            sectionQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%SECTION ${section},%'`;
+          }
+        }
+        if (isValidString(township?.toString())) {
+          townshipQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%TOWNSHIP ${township},%'`;
+        }
+        if (isValidString(range?.toString())) {
+          rangeQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%RANGE ${range},%'`;
+        }
+      }
+
+      const query = [districtQuery, sectionQuery, townshipQuery, rangeQuery, districtLotQuery]
         .filter(x => isValidString(x))
         .join(' AND ');
 

@@ -280,6 +280,7 @@ export const featureToLocationFeatureDataset = (feature: Feature<Geometry, GeoJs
     location: { lat: center[1], lng: center[0] },
     regionFeature: null,
     fileLocation: null,
+    fileBoundary: null,
     districtFeature: null,
     municipalityFeature: null,
     selectingComponentId: null,

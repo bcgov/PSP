@@ -68,6 +68,7 @@ export const mockManagementFileResponse = (
       fileId: id,
       propertyName: null,
       location: null,
+      boundary: null,
       displayOrder: null,
       isActive: true,
       property: {
@@ -201,6 +202,7 @@ export const mockManagementFileResponse = (
         },
         generalLocation: null,
         historicalFileNumbers: [],
+        tenureCleanups: [],
         surplusDeclarationType: null,
         surplusDeclarationComment: null,
         surplusDeclarationDate: '0001-01-01',
@@ -303,6 +305,7 @@ export const mockManagementFilePropertiesResponse =
       propertyName: null,
       displayOrder: null,
       location: null,
+      boundary: null,
       property: {
         ...getEmptyProperty(),
         id: 227,

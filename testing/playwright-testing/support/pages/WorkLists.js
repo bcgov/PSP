@@ -28,6 +28,28 @@ class WorkLists {
     ).toBeVisible();
     await expect(this.page.getByTestId("search-property-0")).toBeVisible();
   }
+
+  async countItemsOnWorklist(propertyCountData) {
+    const countWorklistItems = await this.page.locator(
+      "//button[@id='worklistControlButton']/following-sibling::div"
+    );
+    await countWorklistItems.waitFor({ state: "visible" });
+    const worklistItemNumber = await countWorklistItems.textContent();
+    return worklistItemNumber == propertyCountData;
+  }
+
+  async deleteNthElementWorklist(index) {
+    const propertyItem = await this.page.locator(
+      `div[data-testid='search-property-${index}']`
+    );
+    await propertyItem.hover();
+
+    const deleteBttn = await this.page.locator(
+      `div[data-testid='search-property-${index}'] button[title='Delete parcel from list']`
+    );
+    await expect(deleteBttn).toBeVisible();
+    await deleteBttn.click();
+  }
 }
 
 module.exports = WorkLists;

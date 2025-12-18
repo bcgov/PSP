@@ -19,6 +19,7 @@ import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPro
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import { useEditPropertiesMode } from '@/hooks/useEditPropertiesMode';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
@@ -45,6 +46,7 @@ export interface IUpdatePropertiesProps {
   confirmBeforeAddMessage?: React.ReactNode;
   formikRef?: React.RefObject<FormikProps<any>>;
   disableProperties?: boolean;
+  canUploadShapefiles?: boolean;
 }
 
 export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> = props => {
@@ -159,8 +161,10 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
     return {
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
-      location: mapLocationFeatureDataset?.location,
+      location:
+        mapLocationFeatureDataset?.location ?? mapLocationFeatureDataset?.fileLocation ?? null,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
       pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
       regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
@@ -188,7 +192,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
     <>
       <LoadingBackdrop show={bcaLoading} />
       <MapSideBarLayout
-        title={'Property selection'}
+        title="Property selection"
         icon={undefined}
         footer={
           <SidebarFooter
@@ -201,11 +205,13 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
       >
         <>
           <AddPropertiesGuide />
-          {exists(selectedFeatureDataset?.parcelFeature) && (
+          {exists(selectedFeatureDataset?.parcelFeature) ||
+          exists(selectedFeatureDataset?.pimsFeature) ||
+          exists(selectedFeatureDataset?.location) ? (
             <StyledButtonWrapper>
               <Button onClick={handleAddToSelection}>Add selected property</Button>
             </StyledButtonWrapper>
-          )}
+          ) : null}
           <Formik<FileForm>
             innerRef={formikRef}
             initialValues={formFile}
@@ -280,6 +286,17 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                         index={index}
                         property={property.toFeatureDataset()}
                         showDisable={props.disableProperties}
+                        canUploadShapefile={props.canUploadShapefiles}
+                        onUploadShapefile={(result: UploadResponseModel | null) => {
+                          // Update the property boundary based on the uploaded shapefile
+                          if (exists(result)) {
+                            if (result.isSuccess && exists(result.boundary)) {
+                              const updatedFormProperty = new PropertyForm(property);
+                              updatedFormProperty.fileBoundary = result.boundary;
+                              replace(index, updatedFormProperty);
+                            }
+                          }
+                        }}
                       />
                     ))}
                     {formikProps.values.properties.length === 0 && (

@@ -47,6 +47,7 @@ const ManagementPropertiesSubForm: React.FunctionComponent<ManagementPropertiesS
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
       location: mapLocationFeatureDataset?.location,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
       pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
       regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
@@ -101,11 +102,14 @@ const ManagementPropertiesSubForm: React.FunctionComponent<ManagementPropertiesS
         {({ remove }) => (
           <Section header="Selected Properties">
             <AddPropertiesGuide />
-            {exists(selectedFeatureDataset?.parcelFeature) && (
+            {exists(selectedFeatureDataset?.parcelFeature) ||
+            exists(selectedFeatureDataset?.pimsFeature) ||
+            exists(selectedFeatureDataset?.location) ? (
               <StyledButtonWrapper>
                 <Button onClick={handleAddToSelection}>Add selected property</Button>
               </StyledButtonWrapper>
-            )}
+            ) : null}
+
             <SelectedPropertyHeaderRow />
             {formikProps.values.fileProperties.map((property, index) => (
               <SelectedPropertyRow

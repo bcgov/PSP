@@ -6,7 +6,10 @@ import { toast } from 'react-toastify';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
-import { IPropertyFilter } from '@/features/properties/filter/IPropertyFilter';
+import {
+  defaultPropertyFilter,
+  IPropertyFilter,
+} from '@/features/properties/filter/IPropertyFilter';
 import { useAdminBoundaryMapLayer } from '@/hooks/repositories/mapLayer/useAdminBoundaryMapLayer';
 import {
   exists,
@@ -34,17 +37,9 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
     isEditPropertiesMode,
   } = useMapStateMachine();
 
-  const [propertySearchFilter, setPropertySearchFilter] = useState<IPropertyFilter | null>(null);
-
   const pathGenerator = usePathGenerator();
 
   const { findDistrict, findRegion } = useAdminBoundaryMapLayer();
-
-  useEffect(() => {
-    if (propertySearchFilter !== null && !dequal(mapSearchCriteria, propertySearchFilter)) {
-      setMapSearchCriteria(propertySearchFilter);
-    }
-  }, [propertySearchFilter, mapSearchCriteria, setMapSearchCriteria]);
 
   const handleMapFilterChange = (filter: IPropertyFilter) => {
     if (['coordinates', 'name', 'address'].includes(filter.searchBy)) {
@@ -67,8 +62,10 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
         mapClick(latLng);
       }
     } else {
-      mapClearLocationMark();
-      setPropertySearchFilter(filter);
+      if (filter !== null && !dequal(mapSearchCriteria, filter)) {
+        mapClearLocationMark();
+        setMapSearchCriteria(filter);
+      }
     }
   };
 
@@ -83,6 +80,7 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
           location: { lat: center[1], lng: center[0] },
           regionFeature: null,
           fileLocation: null,
+          fileBoundary: null,
           districtFeature: null,
           municipalityFeature: null,
           selectingComponentId: null,
@@ -169,7 +167,7 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
 
   return (
     <View
-      propertyFilter={propertySearchFilter}
+      propertyFilter={mapSearchCriteria ?? defaultPropertyFilter}
       onFilterChange={handleMapFilterChange}
       searchResult={mapFeatureData}
       canAddToOpenFile={isEditPropertiesMode}

@@ -354,11 +354,11 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 foreach (string payee in compensation.CompensationPayee)
                 {
-                    Wait(2000);
+                    Wait();
                     webDriver.FindElement(requisitionPayeeLabel).Click();
                     FocusAndClick(requisitionPayeeMultiselect);
 
-                    Wait(2000);
+                    Wait();
                     ChooseMultiSelectSpecificOption(requisitionPayeeOptions, payee);
                     webDriver.FindElement(requisitionPayeeLabel).Click();
                 }

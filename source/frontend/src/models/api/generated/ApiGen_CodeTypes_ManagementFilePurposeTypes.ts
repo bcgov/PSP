@@ -11,6 +11,7 @@ export enum ApiGen_CodeTypes_ManagementFilePurposeTypes {
   ENGINEER = 'ENGINEER',
   GENERAL = 'GENERAL',
   GOVERNMT = 'GOVERNMT',
+  LITIGATN = 'LITIGATN',
   MOTTUSE = 'MOTTUSE',
   OILGAS = 'OILGAS',
   OTHER = 'OTHER',

@@ -20,6 +20,7 @@ import {
 import { exists } from '@/utils/utils';
 
 import { PropertyAnomalyFormModel, PropertyRoadFormModel, PropertyTenureFormModel } from '.';
+import { PropertyTenureCleanupFormModel } from './PropertyTenureCleanupFormModel';
 
 export class AddressFormModel {
   id?: number;
@@ -176,6 +177,7 @@ export class UpdatePropertyDetailsFormModel {
   // multi-selects
   anomalies?: PropertyAnomalyFormModel[];
   tenures?: PropertyTenureFormModel[];
+  tenureCleanups?: PropertyTenureCleanupFormModel[];
   roadTypes?: PropertyRoadFormModel[];
 
   // map layer metadata for this property location (lat,lng)
@@ -239,6 +241,7 @@ export class UpdatePropertyDetailsFormModel {
     // multi-selects
     model.anomalies = base.anomalies?.map(e => PropertyAnomalyFormModel.fromApi(e));
     model.tenures = base.tenures?.map(e => PropertyTenureFormModel.fromApi(e));
+    model.tenureCleanups = base.tenureCleanups?.map(e => PropertyTenureCleanupFormModel.fromApi(e));
     model.roadTypes = base.roadTypes?.map(e => PropertyRoadFormModel.fromApi(e));
 
     return model;
@@ -275,6 +278,7 @@ export class UpdatePropertyDetailsFormModel {
       // multi-selects
       anomalies: this.anomalies?.map(e => e.toApi()) ?? null,
       tenures: this.tenures?.map(e => e.toApi()) ?? null,
+      tenureCleanups: this.tenureCleanups?.map(e => e.toApi()) ?? null,
       roadTypes: this.roadTypes?.map(e => e.toApi()) ?? null,
 
       boundary: null,

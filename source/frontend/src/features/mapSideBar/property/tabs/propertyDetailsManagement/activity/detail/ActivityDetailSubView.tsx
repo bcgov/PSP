@@ -37,6 +37,7 @@ const PropertyActivityDetailsSubView: React.FunctionComponent<
           selectedValues={selectedSubTypes}
           displayValue="description"
           style={readOnlyMultiSelectStyle}
+          data-testid="activitySubTypes"
         />
       </SectionField>
       <SectionField label="Activity status" contentWidth={{ xs: 7 }}>

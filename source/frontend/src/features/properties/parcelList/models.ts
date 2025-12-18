@@ -6,11 +6,12 @@ import {
   LocationFeatureDataset,
   SelectedFeatureDataset,
 } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
-import { exists } from '@/utils';
+import { apiPropertyToPimsFeature, exists, getFeatureBoundedCenter, getLatLng } from '@/utils';
 
 export class ParcelDataset {
   public id: string;
@@ -35,13 +36,19 @@ export class ParcelDataset {
     feature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null,
   ) {
     const parcel = new ParcelDataset();
+    const center = getFeatureBoundedCenter(feature);
     parcel.pmbcFeature = feature;
+    parcel.location =
+      exists(center) && center.length >= 2 ? { lat: center[1], lng: center[0] } : undefined;
     return parcel;
   }
 
   public static fromPimsFeature(feature: Feature<Geometry, PIMS_Property_Location_View> | null) {
     const parcel = new ParcelDataset();
+    const center = getFeatureBoundedCenter(feature);
     parcel.pimsFeature = feature;
+    parcel.location =
+      exists(center) && center.length >= 2 ? { lat: center[1], lng: center[0] } : undefined;
     return parcel;
   }
 
@@ -56,11 +63,19 @@ export class ParcelDataset {
     return parcel;
   }
 
+  public static fromPropertyApi(apiProperty: ApiGen_Concepts_Property): ParcelDataset {
+    const parcel = new ParcelDataset();
+    parcel.pimsFeature = apiPropertyToPimsFeature(apiProperty);
+    parcel.location = getLatLng(apiProperty?.location);
+    return parcel;
+  }
+
   public toSelectedFeatureDataset(): SelectedFeatureDataset {
     return {
       selectingComponentId: null,
       location: this.location ?? { lat: 0, lng: 0 },
       fileLocation: this.location ?? null,
+      fileBoundary: null,
       id: this.id,
       parcelFeature: this.pmbcFeature ?? null,
       pimsFeature: this.pimsFeature ?? null,

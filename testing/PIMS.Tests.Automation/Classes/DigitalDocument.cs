@@ -4,6 +4,7 @@
     {
         public string DocumentType { get; set; } = null!;
         public string DocumentStatus { get; set; } = null!;
+        public string DocumentName { get; set; } = null!;
         public string ApplicationNumber { get; set; } = null!;
         public string CanadaLandSurvey { get; set; } = null!;
         public string CivicAddress { get; set; } = null!;

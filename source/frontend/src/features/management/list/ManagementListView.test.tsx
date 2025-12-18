@@ -134,6 +134,7 @@ describe('Management List View', () => {
             propertyName: null,
             isActive: null,
             location: null,
+            boundary: null,
             rowVersion: null,
           },
         ],
