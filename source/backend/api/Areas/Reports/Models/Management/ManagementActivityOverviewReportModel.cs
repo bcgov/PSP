@@ -182,13 +182,13 @@ namespace Pims.Api.Areas.Reports.Models.Management
         {
             if (activity is not null)
             {
-                var activityRegions = activity.PimsManagementActivityProperties
+                ICollection<string> activityRegions = activity.PimsManagementActivityProperties
                         .Select(map => map?.Property?.RegionCodeNavigation?.Description)
                         .Where(s => !string.IsNullOrWhiteSpace(s))
-                        .Distinct();
+                        .Distinct().ToList();
                 if (activity?.ManagementFile?.RegionCode != null)
                 {
-                    activityRegions = activityRegions.Concat(activity?.ManagementFile?.RegionCodeNavigation?.Description);
+                    activityRegions = activityRegions.Concat(activity?.ManagementFile?.RegionCodeNavigation?.Description).ToList();
                 }
                 return string.Join("|", activityRegions);
             }
