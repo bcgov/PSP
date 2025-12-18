@@ -1,3 +1,4 @@
+//PIMSContext.cs
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text.Json;
@@ -43,7 +44,7 @@ namespace Pims.Dal
             : base(options)
         {
             _httpContextAccessor = httpContextAccessor;
-            _serializerOptions = serializerOptions.Value;
+            _serializerOptions = serializerOptions?.Value;
         }
 
         /// <summary>
@@ -68,7 +69,7 @@ namespace Pims.Dal
             {
                 entry.UpdateAppAuditProperties(username, key, directory);
 
-                if (entry.State == EntityState.Deleted)
+                if (entry.State == EntityState.Deleted && Database.IsRelational())
                 {
                     entry.State = EntityState.Detached;
                     string user = username;
@@ -79,6 +80,8 @@ namespace Pims.Dal
                         $"EXECUTE dbo.PIM_DELETION_HISTORY @prmUserID={user}, @prmHstSchema={schema}, @prmBizSchema={schema}, @prmBizTblNm={tableName}, @prmPKValue={primarykey}, @modeDebug={0}"
                     );
                 }
+
+                // For in-memory or non-relational providers, let EF handle the delete normally.
             }
 
             return base.SaveChanges();
