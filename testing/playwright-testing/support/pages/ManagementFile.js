@@ -5,6 +5,7 @@ class ManagementFile {
   constructor(page) {
     this.page = page;
   }
+
   async navigateManagementMainMenu() {
     clickAndWaitFor(
       this.page,
@@ -25,7 +26,23 @@ class ManagementFile {
       .click();
   }
 
-  async validateInitManagementFileDetailsPage() {
+  async createMinimumManagementDetails(mgmtFile) {
+    //Management File Name
+    const managementFileNameInput = await this.page.locator("#input-fileName");
+    expect(managementFileNameInput).toBeVisible();
+    await this.page(managementFileNameInput).fill(mgmtFile.ManagementName);
+
+    //Purpose
+    const managementFilePurposeSelect = await this.page.locator(
+      "#input-purposeTypeCode"
+    );
+    expect(managementFilePurposeSelect).toBeVisible();
+    await this.page(managementFilePurposeSelect).selectOption({
+      label: mgmtFile.ManagementPurpose,
+    });
+  }
+
+  async verifyInitManagementFileDetailsPage() {
     await this.page
       .getByRole("h1", { name: "Create Management File" })
       .isVisible();
