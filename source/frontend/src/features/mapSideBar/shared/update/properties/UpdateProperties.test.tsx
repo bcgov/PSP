@@ -293,6 +293,7 @@ describe('UpdateProperties component', () => {
               districtFeature: null,
               selectingComponentId: null,
               municipalityFeature: null,
+              fileBoundary: null,
             },
           ],
         },
