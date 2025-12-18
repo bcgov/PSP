@@ -462,7 +462,7 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
             // Act
-            var result = service.Update(1, managementFile, new List<UserOverrideCode>());
+            service.Update(1, managementFile, new List<UserOverrideCode>());
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<PimsManagementFile>()), Times.Once);
@@ -539,7 +539,7 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
             // Act
-            var result = service.Update(1, managementFile, new List<UserOverrideCode>());
+            service.Update(1, managementFile, new List<UserOverrideCode>());
 
             // Assert
             repository.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<PimsManagementFile>()), Times.Once);
