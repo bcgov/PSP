@@ -11,7 +11,7 @@ import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDist
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
-import { apiPropertyToPimsFeature, exists, getLatLng } from '@/utils';
+import { apiPropertyToPimsFeature, exists, getFeatureBoundedCenter, getLatLng } from '@/utils';
 
 export class ParcelDataset {
   public id: string;
@@ -36,13 +36,19 @@ export class ParcelDataset {
     feature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null,
   ) {
     const parcel = new ParcelDataset();
+    const center = getFeatureBoundedCenter(feature);
     parcel.pmbcFeature = feature;
+    parcel.location =
+      exists(center) && center.length >= 2 ? { lat: center[1], lng: center[0] } : undefined;
     return parcel;
   }
 
   public static fromPimsFeature(feature: Feature<Geometry, PIMS_Property_Location_View> | null) {
     const parcel = new ParcelDataset();
+    const center = getFeatureBoundedCenter(feature);
     parcel.pimsFeature = feature;
+    parcel.location =
+      exists(center) && center.length >= 2 ? { lat: center[1], lng: center[0] } : undefined;
     return parcel;
   }
 
