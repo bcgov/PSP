@@ -152,8 +152,12 @@ const ManagementForm: React.FC<IManagementFormProps> = props => {
             </Section>
 
             <Section header="Notice of Claim">
-              <FastDatePicker formikProps={formikProps} field="noticeOfClaim.receivedDate" />
-              <TextArea field="noticeOfClaim.comment" />
+              <SectionField label="Received date">
+                <FastDatePicker formikProps={formikProps} field="noticeOfClaim.receivedDate" />
+              </SectionField>
+              <SectionField label="Comment">
+                <TextArea field="noticeOfClaim.comment" />
+              </SectionField>
             </Section>
           </Container>
         );
