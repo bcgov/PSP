@@ -12,7 +12,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import defaultTenant from '@/tenants/config/defaultTenant';
 import { useTenant } from '@/tenants/useTenant';
 import { toTypeCodeNullable } from '@/utils/formUtils';
-import { act, fakeText, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
