@@ -29,11 +29,13 @@ class WorkLists {
     await expect(this.page.getByTestId("search-property-0")).toBeVisible();
   }
 
-  async countItemsOnWorklist() {
-    const countWorklistItems = await this.page
-      .locator("//button[@id='worklistControlButton']/following-sibling::div")
-      .textContent();
-    return countWorklistItems;
+  async countItemsOnWorklist(propertyCountData) {
+    const countWorklistItems = await this.page.locator(
+      "//button[@id='worklistControlButton']/following-sibling::div"
+    );
+    await countWorklistItems.waitFor({ state: "visible" });
+    const worklistItemNumber = await countWorklistItems.textContent();
+    return worklistItemNumber == propertyCountData;
   }
 
   async deleteNthElementWorklist(index) {

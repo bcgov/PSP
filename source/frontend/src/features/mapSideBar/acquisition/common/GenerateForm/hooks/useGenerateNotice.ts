@@ -41,11 +41,11 @@ export const useGenerateNotice = () => {
       pimsProperties.forEach(pimsProperty => {
         if (isValidId(pimsProperty?.property?.pid)) {
           fullyAttributedTasks.push(
-            fullyAttrubutedRepository.findByPid(pimsProperty.property.pid.toString()),
+            fullyAttrubutedRepository.findByPid(pimsProperty.property.pid.toString(), true),
           );
         } else if (isValidId(pimsProperty?.property?.pin)) {
           fullyAttributedTasks.push(
-            fullyAttrubutedRepository.findByPin(pimsProperty.property.pin.toString()),
+            fullyAttrubutedRepository.findByPin(pimsProperty.property.pin.toString(), true),
           );
         }
       });

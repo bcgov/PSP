@@ -514,6 +514,7 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
       </div>
       <div
         class="c4 d-flex col-auto"
+        data-testid="leaflet-buttons-section"
       >
         <span>
           <button
@@ -552,6 +553,7 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
         />
         <svg
           class="c8"
+          data-testid="close-leaflet-button"
           fill="currentColor"
           height="1em"
           stroke="currentColor"

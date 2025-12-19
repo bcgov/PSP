@@ -1,47 +1,45 @@
 import { Formik } from 'formik';
 import noop from 'lodash/noop';
-import { act } from 'react-dom/test-utils';
-import configureMockStore from 'redux-mock-store';
-import thunk from 'redux-thunk';
 
-import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
-import { render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ResearchForm } from './models';
 import ResearchProperties from './ResearchProperties';
 
-const mockStore = configureMockStore([thunk]);
-
 let testForm: ResearchForm;
 
-const store = mockStore({});
-const setDraftProperties = vi.fn();
-
 describe('ResearchProperties component', () => {
-  const setup = (
+  const setup = async (
     renderOptions: RenderOptions & {
       initialForm: ResearchForm;
       confirmBeforeAdd?: (propertyForm: PropertyForm) => Promise<boolean>;
-    } & Partial<IMapStateMachineContext>,
+    },
   ) => {
     // render component under test
-    const component = render(
+    const rendered = render(
       <Formik initialValues={renderOptions.initialForm} onSubmit={noop}>
         <ResearchProperties confirmBeforeAdd={vi.fn()} />
       </Formik>,
       {
         ...renderOptions,
-        store: store,
+        store: {
+          [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+        },
         claims: [],
         useMockAuthentication: true,
       },
     );
 
+    await act(async () => {});
+
     return {
-      store,
-      component,
+      ...rendered,
     };
   };
 
@@ -75,30 +73,28 @@ describe('ResearchProperties component', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
-    setDraftProperties.mockReset();
   });
 
-  it('renders as expected when provided no properties', async () => {
-    const { component } = setup({ initialForm: testForm });
-    await act(async () => {});
-    expect(component.asFragment()).toMatchSnapshot();
+  it('renders as expected', async () => {
+    const { asFragment } = await setup({ initialForm: testForm });
+    expect(asFragment()).toMatchSnapshot();
   });
 
-  it('renders as expected when provided a list of properties', async () => {
-    const {
-      component: { getByText },
-    } = await setup({ initialForm: testForm });
+  it('renders list of properties', async () => {
+    const { getByText } = await setup({ initialForm: testForm });
 
-    await act(async () => {});
     expect(getByText('PID: 123-456-789')).toBeVisible();
     expect(getByText('PIN: 1111222')).toBeVisible();
   });
 
-  it('properties can be removed', async () => {
-    const {
-      component: { getAllByTitle, queryByText },
-    } = await setup({ initialForm: testForm });
-    const pidRow = getAllByTitle('remove')[0];
+  it('renders empty list', async () => {
+    const { getByText } = await setup({ initialForm: new ResearchForm() });
+    expect(getByText('No Properties selected')).toBeVisible();
+  });
+
+  it('should remove property from list when Remove button is clicked', async () => {
+    const { getByTestId, queryByText } = await setup({ initialForm: testForm });
+    const pidRow = getByTestId('delete-property-0');
 
     await act(async () => {
       userEvent.click(pidRow);
@@ -108,33 +104,48 @@ describe('ResearchProperties component', () => {
   });
 
   it('properties are prefixed by svg with incrementing id', async () => {
-    const {
-      component: { getByTitle },
-    } = await setup({ initialForm: testForm });
+    const { getByTitle } = await setup({ initialForm: testForm });
 
-    await act(async () => {});
     expect(getByTitle('1')).toBeInTheDocument();
     expect(getByTitle('2')).toBeInTheDocument();
   });
 
-  it.skip('properties with lat/lng are synchronized', async () => {
-    const formWithProperties = testForm;
-    formWithProperties.properties[0].latitude = 1;
-    formWithProperties.properties[0].longitude = 2;
-    await setup({ initialForm: formWithProperties });
+  it('adds lat/long based properties to the file', async () => {
+    const { getByText } = await setup({
+      initialForm: new ResearchForm(),
+      mockMapMachine: {
+        ...mapMachineBaseMock,
+        // this "fakes" a click on the map to add lat/long based properties
+        mapLocationFeatureDataset: {
+          selectingComponentId: null,
+          location: { lat: 50.25163372, lng: -120.69195885 },
+          fileLocation: null,
+          pimsFeatures: [],
+          parcelFeatures: [],
+          regionFeature: null,
+          districtFeature: null,
+          municipalityFeatures: [],
+          highwayFeatures: [],
+          crownLandLeasesFeatures: [],
+          crownLandLicensesFeatures: [],
+          crownLandTenuresFeatures: [],
+          crownLandInventoryFeatures: [],
+          crownLandInclusionsFeatures: [],
+        },
+      },
+    });
 
-    //TODO: correct assertions.
-  });
+    const addButton = getByText('Add selected property');
+    expect(addButton).toBeVisible();
+    await act(async () => userEvent.click(addButton));
 
-  it.skip('multiple properties with lat/lng are synchronized', async () => {
-    const formWithProperties = testForm;
-    formWithProperties.properties[0].latitude = 1;
-    formWithProperties.properties[0].longitude = 2;
-    formWithProperties.properties[1].latitude = 3;
-    formWithProperties.properties[1].longitude = 4;
-
-    await setup({ initialForm: formWithProperties });
-
-    //TODO: correct assertions.
+    // Verify that the map machine was called to prepare the lat/long property for addition to the file
+    expect(mapMachineBaseMock.prepareForCreation).toHaveBeenCalledWith(
+      expect.arrayContaining([
+        expect.objectContaining<Partial<SelectedFeatureDataset>>({
+          location: { lat: 50.25163372, lng: -120.69195885 },
+        }),
+      ]),
+    );
   });
 });
