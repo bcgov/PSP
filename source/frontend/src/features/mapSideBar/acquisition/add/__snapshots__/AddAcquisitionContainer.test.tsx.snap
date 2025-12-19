@@ -650,6 +650,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
       </div>
       <div
         class="c3 d-flex col-auto"
+        data-testid="leaflet-buttons-section"
       >
         <span>
           <button
@@ -688,6 +689,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
         />
         <svg
           class="c7"
+          data-testid="close-leaflet-button"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -3541,6 +3543,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
       </div>
       <div
         class="c3 d-flex col-auto"
+        data-testid="leaflet-buttons-section"
       >
         <span>
           <button
@@ -3579,6 +3582,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
         />
         <svg
           class="c7"
+          data-testid="close-leaflet-button"
           fill="currentColor"
           height="1em"
           stroke="currentColor"

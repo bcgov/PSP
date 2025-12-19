@@ -1,5 +1,5 @@
 const { expect } = require("@playwright/test");
-const { clickAndWaitFor } = require("../../support/common.js");
+const { clickAndWaitFor, clickSaveButton } = require("../../support/common.js");
 
 class DispositionFiles {
   constructor(page) {
@@ -18,10 +18,59 @@ class DispositionFiles {
   async navigateDispositionListView() {
     clickAndWaitFor(
       this.page,
-      "div[data-testid='nav-tooltip-disposition'] a",
+      "div[data-testid='nav-tooltip-leases&licences'] a",
       "div[data-testid='side-tray']"
     );
+
+    clickAndWaitFor(
+      this.page,
+      "div[data-testid='nav-tooltip-disposition'] a",
+      "//a[text()='Manage Disposition Files']"
+    );
     await this.page.locator("//a[text()='Manage Disposition Files']").click();
+  }
+
+  async createMinimumDispositionFile(dispositionFile) {
+    const dispositionFileDetailsNameInput = await this.page.locator(
+      "#input-fileName"
+    );
+    expect(dispositionFileDetailsNameInput).toBeVisible();
+    await this.page(dispositionFileDetailsNameInput).fill(
+      dispositionFile.DispositionFileName
+    );
+
+    const dispositionFileDetailsStatusSelect = await this.page.locator(
+      "#input-dispositionStatusTypeCode"
+    );
+    expect(dispositionFileDetailsStatusSelect).toBeVisible();
+    await this.page(dispositionFileDetailsStatusSelect).selectOption({
+      label: dispositionFile.DispositionStatus,
+    });
+
+    const dispositionFileDetailsTypeSelect = await this.page.locator(
+      "#input-dispositionTypeCode"
+    );
+    expect(dispositionFileDetailsTypeSelect).toBeVisible();
+    await this.page(dispositionFileDetailsTypeSelect).selectOption({
+      label: dispositionFile.DispositionType,
+    });
+
+    if (disposition.DispositionType === "Other Transfer") {
+      const dispositionFileDetailsOtherTransferTypeInput =
+        await this.page.locator("#input-dispositionTypeOther");
+      expect(dispositionFileDetailsOtherTransferTypeInput).toBeVisible();
+      await this.page(dispositionFileDetailsOtherTransferTypeInput).fill(
+        dispositionFile.DispositionOtherTransferType
+      );
+    }
+
+    const dispositionFileDetailsMOTIRegionSelect = await this.page.locator(
+      "#input-regionCode"
+    );
+    expect(dispositionFileDetailsMOTIRegionSelect).toBeVisible();
+    await this.page(dispositionFileDetailsMOTIRegionSelect).selectOption({
+      label: dispositionFile.DispositionMOTIRegion,
+    });
   }
 
   async verifyCreateDispositionForm() {
@@ -266,6 +315,72 @@ class DispositionFiles {
 
     await expect(this.page.getByTestId("input-page-size")).toBeVisible();
     await expect(this.page.locator("ul[class='pagination']")).toBeVisible();
+  }
+
+  async saveDispositionFile() {
+    clickSaveButton();
+
+    const dispositionFileConfirmationModal = await this.page.locator(
+      "div[class='modal-content']"
+    );
+    expect(dispositionFileConfirmationModal).toBeVisible();
+
+    while (dispositionFileConfirmationModal.count() > 0) {
+      if (
+        this.sharedModal
+          .mainModalContent()
+          .includes("You are changing this file to a non-editable state")
+      ) {
+        await expect(this.sharedModal.mainModalHeader()).toBe(
+          "User Override Required"
+        );
+        await expect(this.sharedModal.mainModalContent()).toBe(
+          "You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?"
+        );
+        await this.sharedModal.mainModalClickOKBttn();
+      } else if (
+        this.sharedModal
+          .mainModalContent()
+          .includes("The Ministry region has been changed")
+      ) {
+        await expect(this.sharedModal.mainModalHeader()).toBe(
+          "User Override Required"
+        );
+        await expect(this.sharedModal.mainModalContent()).toBe(
+          "The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation."
+        );
+        await this.sharedModals.mainModalClickOKBttn();
+      } else if (this.sharedModal.ModalHeader() == "Confirm status change") {
+        await expect(this.sharedModal.mainModalContent()).toBe(
+          "Confirm status change"
+        );
+        await expect(this.sharedModal.modalParagraph1()).toContainText(
+          "If you save it, only the administrator can turn it back on. You will still see it in the management table."
+        );
+        await expect(this.sharedModal.modalParagraph2()).toBe(
+          "Do you want to acknowledge and proceed?"
+        );
+        await this.sharedModals.mainModalClickOKBttn();
+      }
+
+      if (
+        this.sharedModal
+          .mainModalContent()
+          .includes(
+            "You are completing this Disposition File with owned PIMS inventory properties"
+          )
+      ) {
+        await expect(this.sharedModal.mainModalHeader()).toBe(
+          "User Override Required"
+        );
+        await expect(this.sharedModal.mainModalContent()).toBe(
+          "You are completing this Disposition File with owned PIMS inventory properties. All properties will be removed from the PIMS inventory (any Other Interests will remain). Do you wish to proceed?"
+        );
+        await this.sharedModal.mainModalClickOKBttn();
+      } else if (sharedModals.ModalHeader() == "Error") {
+        break;
+      }
+    }
   }
 
   async cancelCreateDispositionFile() {

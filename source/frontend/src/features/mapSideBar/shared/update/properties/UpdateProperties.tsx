@@ -161,7 +161,8 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
     return {
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
-      location: mapLocationFeatureDataset?.location,
+      location:
+        mapLocationFeatureDataset?.location ?? mapLocationFeatureDataset?.fileLocation ?? null,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
       fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
@@ -191,7 +192,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
     <>
       <LoadingBackdrop show={bcaLoading} />
       <MapSideBarLayout
-        title={'Property selection'}
+        title="Property selection"
         icon={undefined}
         footer={
           <SidebarFooter
@@ -204,11 +205,13 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
       >
         <>
           <AddPropertiesGuide />
-          {exists(selectedFeatureDataset?.parcelFeature) && (
+          {exists(selectedFeatureDataset?.parcelFeature) ||
+          exists(selectedFeatureDataset?.pimsFeature) ||
+          exists(selectedFeatureDataset?.location) ? (
             <StyledButtonWrapper>
               <Button onClick={handleAddToSelection}>Add selected property</Button>
             </StyledButtonWrapper>
-          )}
+          ) : null}
           <Formik<FileForm>
             innerRef={formikRef}
             initialValues={formFile}

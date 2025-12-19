@@ -555,6 +555,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
       </div>
       <div
         class="c3 d-flex col-auto"
+        data-testid="leaflet-buttons-section"
       >
         <span>
           <button
@@ -593,6 +594,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
         />
         <svg
           class="c7"
+          data-testid="close-leaflet-button"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
