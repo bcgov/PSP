@@ -19,10 +19,8 @@ import {
   RenderOptions,
   act,
   fakeText,
-  fillInput,
   render,
   userEvent,
-  waitForEffects,
 } from '@/utils/test-utils';
 
 import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
@@ -402,7 +400,7 @@ describe('UpdatePropertyDetailsContainer component', () => {
   });
 
   it('sends the surplus declaration information', async () => {
-    const { findByTitle, formikRef, getSurplusDeclarationTypeDropDown, getSurplusDeclarationComment, getSurplusDeclarationDate } = setup();
+    const { formikRef, getSurplusDeclarationTypeDropDown, getSurplusDeclarationComment, getSurplusDeclarationDate } = setup();
     await act(async () => {});
 
     await act(async () => userEvent.paste(getSurplusDeclarationComment(), 'SURPLUS COMMENT'));
@@ -426,7 +424,7 @@ describe('UpdatePropertyDetailsContainer component', () => {
   });
 
   it('Displays character limit error for Surplus Comment', async () => {
-    const { container, formikRef, findByText, getSurplusDeclarationComment } = setup();
+    const { formikRef, findByText, getSurplusDeclarationComment } = setup();
     await act(async () => {});
 
     await act(async () => userEvent.paste(getSurplusDeclarationComment(), fakeText(3000)));
