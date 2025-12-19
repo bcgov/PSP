@@ -120,22 +120,22 @@ export const FileActivityDetailView: React.FunctionComponent<
                   />
                 ))}
                 <ActivityDetailInvoiceTotalsView invoices={invoices} />
+
+                <DocumentListContainer
+                  title="File Documents"
+                  parentId={props.activity?.id.toString() ?? ''}
+                  addButtonText="Add a Management Document"
+                  relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementActivities}
+                  disableAdd={!props.canEditDocuments}
+                />
+                <DocumentActivityListContainer
+                  title={'Related Documents'}
+                  parentId={props.activity?.id.toString() ?? ''}
+                  relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementActivities}
+                  disableAdd={true}
+                />
               </StyledSummarySection>
             </StyledFormWrapper>
-
-            <DocumentListContainer
-              title="File Documents"
-              parentId={props.activity?.id.toString() ?? ''}
-              addButtonText="Add a Management Document"
-              relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementActivities}
-              disableAdd={!props.canEditDocuments}
-            />
-            <DocumentActivityListContainer
-              title={'Related Documents'}
-              parentId={props.activity?.id.toString() ?? ''}
-              relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementActivities}
-              disableAdd={true}
-            />
           </Styled.TrayContent>
         </Styled.PopupTray>
       </ReactVisibilitySensor>

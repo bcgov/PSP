@@ -42,6 +42,17 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
   display: block;
 }
 
+.c4.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c3 {
+  font-weight: bold;
+}
+
 .c6 {
   float: right;
   cursor: pointer;
@@ -58,13 +69,6 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
   overflow: hidden;
 }
 
-.c5 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c2 {
   margin: 1.6rem;
   padding: 1.6rem;
@@ -73,15 +77,11 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
   border-radius: 0.5rem;
 }
 
-.c4.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c3 {
+.c5 {
   font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c9 {
@@ -146,6 +146,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Project
           </div>
@@ -222,6 +223,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Management Details
           </div>
@@ -296,6 +298,22 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
             <label
               class="c3"
             >
+              Responsible payer:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
               Additional details:
             </label>
           </div>
@@ -319,6 +337,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             <div
               class="no-gutters justify-content-between align-items-end row"
@@ -687,6 +706,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Management Team
           </div>

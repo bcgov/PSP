@@ -442,6 +442,10 @@ namespace Pims.Dal.Repositories
             existingProperty.AdditionalDetails = property.AdditionalDetails;
             existingProperty.IsUtilitiesPayable = property.IsUtilitiesPayable;
             existingProperty.IsTaxesPayable = property.IsTaxesPayable;
+            existingProperty.ResponsiblePayerPersonId = property.ResponsiblePayerPersonId;
+            existingProperty.ResponsiblePayerOrganizationId = property.ResponsiblePayerOrganizationId;
+            existingProperty.ResponsiblePayerPrimaryContactId = property.ResponsiblePayerPrimaryContactId;
+
             Context.Update(existingProperty);
 
             // update direct relationships - Property Purposes

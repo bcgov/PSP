@@ -67,19 +67,19 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
   overflow: hidden;
 }
 
-.c5 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c4 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c5 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c7.required::before {
@@ -159,6 +159,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   Project
                 </div>
@@ -200,6 +201,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   Roads
                 </div>
@@ -257,6 +259,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   Research Request
                 </div>
@@ -389,6 +392,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   Result
                 </div>
@@ -469,6 +473,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   Expropriation
                 </div>

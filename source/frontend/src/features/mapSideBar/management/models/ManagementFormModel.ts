@@ -1,10 +1,15 @@
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
+import {
+  fromApiOrganization,
+  fromApiPerson,
+  IContactSearchResult,
+} from '@/interfaces/IContactSearchResult';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { applyDisplayOrder } from '@/utils';
-import { fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
-import { exists } from '@/utils/utils';
+import { fromTypeCode, toNullableId, toTypeCodeNullable } from '@/utils/formUtils';
+import { exists, isValidId } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ManagementTeamSubFormModel, WithManagementTeam } from './ManagementTeamSubFormModel';
@@ -19,6 +24,8 @@ export class ManagementFormModel implements WithManagementTeam {
   productId: string | null = null;
   fundingTypeCode: string | null = null;
   purposeTypeCode: string | null = null;
+  responsiblePayer: IContactSearchResult | null = null;
+  responsiblePayerPrimaryContactId: number | null = null;
   fileProperties: PropertyForm[] = [];
   team: ManagementTeamSubFormModel[] = [];
 
@@ -36,6 +43,9 @@ export class ManagementFormModel implements WithManagementTeam {
   toApi(): ApiGen_Concepts_ManagementFile {
     const fileProperties = this.fileProperties.map(x => this.toPropertyApi(x));
     const sortedProperties = applyDisplayOrder(fileProperties);
+    const personId = this.responsiblePayer?.personId ?? null;
+    const organizationId = !personId ? this.responsiblePayer?.organizationId ?? null : null;
+
     return {
       id: this.id ?? 0,
       fileName: this.fileName ?? null,
@@ -51,6 +61,14 @@ export class ManagementFormModel implements WithManagementTeam {
       productId: this.productId ? Number(this.productId) : null,
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
       purposeTypeCode: toTypeCodeNullable(this.purposeTypeCode),
+      responsiblePayerPersonId: toNullableId(personId),
+      responsiblePayerPerson: null,
+      responsiblePayerOrganizationId: toNullableId(organizationId),
+      responsiblePayerOrganization: null,
+      responsiblePayerPrimaryContactId: isValidId(personId)
+        ? null
+        : toNullableId(this.responsiblePayerPrimaryContactId),
+      responsiblePayerPrimaryContact: null,
       managementTeam: this.team
         .filter(x => !!x.contact && !!x.teamProfileTypeCode)
         .map(x => x.toApi(this.id || 0))
@@ -88,6 +106,16 @@ export class ManagementFormModel implements WithManagementTeam {
     managementForm.team =
       model.managementTeam?.map(x => ManagementTeamSubFormModel.fromApi(x)) || [];
     managementForm.fileProperties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
+
+    const contact: IContactSearchResult | undefined = exists(model.responsiblePayerPerson)
+      ? fromApiPerson(model.responsiblePayerPerson)
+      : exists(model.responsiblePayerOrganization)
+      ? fromApiOrganization(model.responsiblePayerOrganization)
+      : undefined;
+
+    managementForm.responsiblePayerPrimaryContactId = model.responsiblePayerPrimaryContactId;
+
+    managementForm.responsiblePayer = contact;
 
     return managementForm;
   }

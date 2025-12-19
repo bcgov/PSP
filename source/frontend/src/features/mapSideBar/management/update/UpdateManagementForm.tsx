@@ -3,13 +3,18 @@ import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
 import { ProjectSelector, Select, SelectOption } from '@/components/common/form';
+import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
+import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { Input } from '@/components/common/form/Input';
+import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from '@/constants/API';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { isOrganizationSummary } from '@/interfaces';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { exists } from '@/utils/utils';
@@ -144,6 +149,28 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
                     required
                     disabled={!canEditDetails}
                   />
+                </SectionField>
+                <SectionField label="Responsible payer">
+                  <ContactInputContainer
+                    field="responsiblePayer"
+                    View={ContactInputView}
+                    restrictContactType={RestrictContactType.ALL}
+                    displayErrorAsTooltip={false}
+                    required={false}
+                  />
+                  {exists(formikProps.values.responsiblePayer) &&
+                    isOrganizationSummary(formikProps.values.responsiblePayer) && (
+                      <SectionField
+                        label="Primary contact"
+                        labelWidth={{ xs: 4 }}
+                        contentWidth={{ xs: 6 }}
+                      >
+                        <PrimaryContactSelector
+                          field={`responsiblePayerPrimaryContactId`}
+                          contactInfo={formikProps.values.responsiblePayer}
+                        />
+                      </SectionField>
+                    )}
                 </SectionField>
                 <SectionField label="Additional details">
                   <Input field="additionalDetails" disabled={!canEditDetails} />

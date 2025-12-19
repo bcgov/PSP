@@ -318,19 +318,19 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
   margin-bottom: unset;
 }
 
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c1 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c5.required::before {
@@ -395,6 +395,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Property Address
           </div>
@@ -1162,6 +1163,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Property Attributes
           </div>
@@ -1800,6 +1802,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Tenure
           </div>
@@ -2327,6 +2330,7 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Measurements
           </div>

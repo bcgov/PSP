@@ -212,6 +212,12 @@ export const mockManagementFileResponse = (
       rowVersion: 1,
     },
   ],
+  responsiblePayerPersonId: null,
+  responsiblePayerPerson: null,
+  responsiblePayerOrganizationId: null,
+  responsiblePayerOrganization: null,
+  responsiblePayerPrimaryContactId: null,
+  responsiblePayerPrimaryContact: null,
   managementTeam: [
     {
       id: 9,

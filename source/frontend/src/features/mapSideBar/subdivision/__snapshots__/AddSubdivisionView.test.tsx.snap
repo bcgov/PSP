@@ -257,13 +257,6 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c18 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c12 {
   margin: 1.6rem;
   padding: 1.6rem;
@@ -276,6 +269,13 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c18 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c14 {
@@ -647,6 +647,7 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
                     >
                       <div
                         class="align-content-end col"
+                        style="overflow: hidden;"
                       >
                         Selected Parent
                       </div>
@@ -712,6 +713,7 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
                     >
                       <div
                         class="align-content-end col"
+                        style="overflow: hidden;"
                       >
                         <div
                           class="row"

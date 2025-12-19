@@ -455,19 +455,19 @@ exports[`ManagementView component > renders as expected 1`] = `
   overflow: hidden;
 }
 
-.c41 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c38 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c41 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c40.required::before {
@@ -1273,6 +1273,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Project
                             </div>
@@ -1349,6 +1350,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Management Details
                             </div>
@@ -1423,6 +1425,22 @@ exports[`ManagementView component > renders as expected 1`] = `
                               <label
                                 class="c39"
                               >
+                                Responsible payer:
+                              </label>
+                            </div>
+                            <div
+                              class="c40 text-left col"
+                            />
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c39"
+                              >
                                 Additional details:
                               </label>
                             </div>
@@ -1446,6 +1464,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               <div
                                 class="no-gutters justify-content-between align-items-end row"
@@ -1582,6 +1601,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Management Team
                             </div>

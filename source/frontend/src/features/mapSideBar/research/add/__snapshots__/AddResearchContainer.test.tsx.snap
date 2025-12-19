@@ -356,19 +356,19 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   z-index: 10;
 }
 
-.c21 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c13 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c21 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c15 {
@@ -735,6 +735,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Project
                   </div>
@@ -767,6 +768,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Properties to include in this file:
                   </div>
@@ -891,6 +893,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                     >
                       <div
                         class="align-content-end col"
+                        style="overflow: hidden;"
                       >
                         Selected Properties
                       </div>

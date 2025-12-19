@@ -359,19 +359,19 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
   padding-top: 1rem;
 }
 
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c1 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c4.required::before {
@@ -449,6 +449,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Research File Information
           </div>
@@ -672,6 +673,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Project
           </div>
@@ -704,6 +706,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Roads
           </div>
@@ -783,6 +786,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Research Request
           </div>
@@ -1154,6 +1158,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Result
           </div>
@@ -1252,6 +1257,7 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Expropriation
           </div>

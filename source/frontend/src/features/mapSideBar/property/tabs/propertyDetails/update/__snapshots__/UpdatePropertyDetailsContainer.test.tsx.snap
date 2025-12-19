@@ -335,19 +335,19 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
   margin-bottom: unset;
 }
 
-.c3 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c2 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c3 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c6.required::before {
@@ -415,6 +415,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Property Address
             </div>
@@ -1182,6 +1183,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Property Attributes
             </div>
@@ -1820,6 +1822,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Tenure
             </div>
@@ -2357,6 +2360,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Measurements
             </div>
