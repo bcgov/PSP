@@ -71,6 +71,7 @@ namespace Pims.Dal.Entities
             this.PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(dataSourceEffectiveDate);
             this.PropertyStatusTypeCodeNavigation = status ?? throw new ArgumentNullException(nameof(status));
             this.PropertyStatusTypeCode = status.Id;
+            SurplusDeclarationTypeCode = "UNKNOWN";
         }
         #endregion
     }

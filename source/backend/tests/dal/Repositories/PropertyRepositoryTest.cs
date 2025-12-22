@@ -52,6 +52,7 @@ namespace Pims.Dal.Test.Repositories
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
             _helper.CreatePimsContext(user, true);
+            _helper.InitializeDatabase(user);
             return _helper.CreateRepository<PropertyRepository>();
         }
 
@@ -171,8 +172,10 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+
             var property = EntityHelper.CreateProperty(100);
-            property.Internal_Id = 1;
+            property.PropertyId = 1;
+
             _helper.AddAndSaveChanges(property);
 
             // Act
