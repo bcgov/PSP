@@ -250,4 +250,75 @@ describe('SelectedPropertyRow component', () => {
       }),
     );
   });
+
+  it('does not render status dropdown when property is retired', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
+    mockFeatureSet.parcelFeature = {} as any;
+    mockFeatureSet.pimsFeature = {
+      ...mockFeatureSet.pimsFeature,
+      properties: {
+        ...mockFeatureSet.pimsFeature?.properties,
+        IS_RETIRED: true,
+      },
+    } as any;
+
+    await setup({ props: { property: mockFeatureSet, showDisable: true } });
+
+    // Retired properties show text instead of dropdown
+    expect(screen.queryByRole('combobox')).toBeNull();
+    expect(screen.getByText('Retired')).toBeInTheDocument();
+  });
+
+  it('renders status dropdown when property is not retired', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
+    mockFeatureSet.parcelFeature = {} as any;
+    mockFeatureSet.pimsFeature = {
+      ...mockFeatureSet.pimsFeature,
+      properties: {
+        ...mockFeatureSet.pimsFeature?.properties,
+        IS_RETIRED: false,
+      },
+    } as any;
+
+    await setup({ props: { property: mockFeatureSet, showDisable: true } });
+
+    expect(screen.getByRole('combobox')).toBeInTheDocument();
+  });
+
+  it('renders status dropdown when property is active', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
+    mockFeatureSet.parcelFeature = {} as any;
+    mockFeatureSet.pimsFeature = {
+      ...mockFeatureSet.pimsFeature,
+      properties: {
+        ...mockFeatureSet.pimsFeature?.properties,
+        IS_RETIRED: false,
+      },
+    } as any;
+    mockFeatureSet.isActive = true;
+
+    await setup({ props: { property: mockFeatureSet, showDisable: true } });
+
+    expect(screen.getByRole('combobox')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Active')).toBeInTheDocument();
+  });
+
+  it('renders status dropdown when property is inactive', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
+    mockFeatureSet.parcelFeature = {} as any;
+    mockFeatureSet.pimsFeature = {
+      ...mockFeatureSet.pimsFeature,
+      properties: {
+        ...mockFeatureSet.pimsFeature?.properties,
+        IS_RETIRED: false,
+      },
+    } as any;
+    mockFeatureSet.isActive = false;
+
+    await setup({ props: { property: mockFeatureSet, showDisable: true } });
+
+    expect(screen.getByRole('combobox')).toBeInTheDocument();
+    expect(screen.getByDisplayValue('Inactive')).toBeInTheDocument();
+  });
+
 });
