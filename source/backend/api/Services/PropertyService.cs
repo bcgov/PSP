@@ -418,18 +418,18 @@ namespace Pims.Api.Services
             where T : IFilePropertyEntity
         {
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-            var geom = fileProperty.Location;
-            if (geom is not null && geom.SRID != SpatialReference.BCALBERS)
+            var incomingLocation = fileProperty.Location;
+            if (incomingLocation is not null && incomingLocation.SRID != SpatialReference.BCALBERS)
             {
-                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                var newCoords = _coordinateService.TransformCoordinates(incomingLocation.SRID, SpatialReference.BCALBERS, incomingLocation.Coordinate);
                 fileProperty.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
             }
 
-            // apply similar logic to the boundary
-            var boundaryGeom = fileProperty.Boundary;
-            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
+            // update property shape/boundary as well
+            var incomingBoundary = fileProperty.Boundary;
+            if (incomingBoundary is not null && incomingBoundary.SRID != SpatialReference.BCALBERS)
             {
-                _coordinateService.TransformGeometry(boundaryGeom.SRID, SpatialReference.BCALBERS, boundaryGeom);
+                _coordinateService.TransformGeometry(incomingBoundary.SRID, SpatialReference.BCALBERS, incomingBoundary);
             }
 
             return fileProperty;
@@ -440,20 +440,32 @@ namespace Pims.Api.Services
             where T : IFilePropertyEntity
         {
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-            var geom = incomingFileProperty.Location;
-            if (geom is not null && geom.SRID != SpatialReference.BCALBERS)
+            var incomingLocation = incomingFileProperty.Location;
+            if (incomingLocation is not null)
             {
-                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
-                filePropertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
+                if (incomingLocation.SRID != SpatialReference.BCALBERS)
+                {
+                    var newCoords = _coordinateService.TransformCoordinates(incomingLocation.SRID, SpatialReference.BCALBERS, incomingLocation.Coordinate);
+                    filePropertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
+                }
+                else
+                {
+                    filePropertyToUpdate.Location = incomingLocation;
+                }
             }
+        }
 
-            // update boundary
-            var boundaryGeom = incomingFileProperty.Boundary;
-            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
+        /// <inheritdoc />
+        public void UpdateFilePropertyBoundary<T>(T incomingFileProperty, T filePropertyToUpdate)
+            where T : IFilePropertyEntity
+        {
+            // update property shape/boundary
+            var incomingBoundary = incomingFileProperty.Boundary;
+            if (incomingBoundary is not null && incomingBoundary.SRID != SpatialReference.BCALBERS)
             {
-                _coordinateService.TransformGeometry(boundaryGeom.SRID, SpatialReference.BCALBERS, boundaryGeom);
+                _coordinateService.TransformGeometry(incomingBoundary.SRID, SpatialReference.BCALBERS, incomingBoundary);
             }
-            filePropertyToUpdate.Boundary = boundaryGeom;
+            filePropertyToUpdate.Boundary = incomingBoundary;
         }
 
         public IList<PimsHistoricalFileNumber> GetHistoricalNumbersForPropertyId(long propertyId)

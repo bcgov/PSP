@@ -1,4 +1,4 @@
-using NetTopologySuite.Geometries;
+using System;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
@@ -8,35 +8,36 @@ namespace Pims.Api.Services
         public bool CanEditFilePropertyLocation<T>(T incomingFileProperty, T existingFileProperty)
             where T : IFilePropertyEntity
         {
-            if (HasLocationChanged(incomingFileProperty.Location, existingFileProperty.Location))
-            {
-                return true;
-            }
+            ArgumentNullException.ThrowIfNull(incomingFileProperty, nameof(incomingFileProperty));
+            ArgumentNullException.ThrowIfNull(existingFileProperty, nameof(existingFileProperty));
 
-            if (HasBoundaryChanged(incomingFileProperty.Boundary, existingFileProperty.Boundary))
+            if (existingFileProperty.Location is null)
             {
-                return true;
+                // Can add a new location
+                return incomingFileProperty.Location is not null;
             }
-
-            return false;
+            else
+            {
+                // Cannot delete an existing location
+                return incomingFileProperty.Location is not null && !incomingFileProperty.Location.EqualsExact(existingFileProperty.Location);
+            }
         }
 
-        private static bool HasLocationChanged(Geometry incomingLocation, Geometry existingLocation)
+        public bool CanEditFilePropertyBoundary<T>(T incomingFileProperty, T existingFileProperty)
+            where T : IFilePropertyEntity
         {
-            if (existingLocation is null || (incomingLocation is not null && !existingLocation.EqualsExact(incomingLocation)))
-            {
-                return true;
-            }
-            return false;
-        }
+            ArgumentNullException.ThrowIfNull(incomingFileProperty, nameof(incomingFileProperty));
+            ArgumentNullException.ThrowIfNull(existingFileProperty, nameof(existingFileProperty));
 
-        private static bool HasBoundaryChanged(Geometry incomingBoundary, Geometry existingBoundary)
-        {
-            if (existingBoundary is null || (incomingBoundary is not null && !existingBoundary.EqualsExact(incomingBoundary)))
+            if (existingFileProperty.Boundary is null && incomingFileProperty.Boundary is null)
+            {
+                // No change
+                return false;
+            }
+            else
             {
                 return true;
             }
-            return false;
         }
     }
 }

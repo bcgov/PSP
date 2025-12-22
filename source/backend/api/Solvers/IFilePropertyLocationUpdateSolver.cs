@@ -6,5 +6,8 @@ namespace Pims.Api.Services
     {
         bool CanEditFilePropertyLocation<T>(T incomingFileProperty, T existingFileProperty)
             where T : IFilePropertyEntity;
+
+        bool CanEditFilePropertyBoundary<T>(T incomingFileProperty, T existingFileProperty)
+            where T : IFilePropertyEntity;
     }
 }
