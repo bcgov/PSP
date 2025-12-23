@@ -277,7 +277,9 @@ describe('SelectedPropertyRow component', () => {
       },
     } as any;
 
-    await setup({ props: { property: mockFeatureSet, showDisable: true } });
+    await setup({
+      props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet), showDisable: true },
+    });
 
     // Retired properties show text instead of dropdown
     expect(screen.queryByRole('combobox')).toBeNull();
@@ -295,7 +297,9 @@ describe('SelectedPropertyRow component', () => {
       },
     } as any;
 
-    await setup({ props: { property: mockFeatureSet, showDisable: true } });
+    await setup({
+      props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet), showDisable: true },
+    });
 
     expect(screen.getByRole('combobox')).toBeInTheDocument();
   });
@@ -312,7 +316,9 @@ describe('SelectedPropertyRow component', () => {
     } as any;
     mockFeatureSet.isActive = true;
 
-    await setup({ props: { property: mockFeatureSet, showDisable: true } });
+    await setup({
+      props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet), showDisable: true },
+    });
 
     expect(screen.getByRole('combobox')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Active')).toBeInTheDocument();
@@ -330,10 +336,11 @@ describe('SelectedPropertyRow component', () => {
     } as any;
     mockFeatureSet.isActive = false;
 
-    await setup({ props: { property: mockFeatureSet, showDisable: true } });
+    await setup({
+      props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet), showDisable: true },
+    });
 
     expect(screen.getByRole('combobox')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Inactive')).toBeInTheDocument();
   });
-
 });

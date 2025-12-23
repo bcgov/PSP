@@ -728,6 +728,10 @@ namespace Pims.Api.Test.Services
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+
             // Act
             service.UpdateProperties(managementFile, new List<UserOverrideCode>());
 
@@ -761,10 +765,15 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
             propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsManagementFileProperty>(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>()));
+            propertyService.Setup(x => x.UpdateFilePropertyBoundary<PimsManagementFileProperty>(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>()));
 
             var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
 
             var propertyActivityRepository = this._helper.GetService<Mock<IManagementActivityRepository>>();
             propertyActivityRepository.Setup(x => x.GetActivitiesByManagementFile(It.IsAny<long>())).Returns(new List<PimsManagementActivity>());
@@ -777,6 +786,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsManagementFileProperty>()), Times.Once);
             propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false), Times.Once);
             propertyService.Verify(x => x.UpdateFilePropertyLocation<PimsManagementFileProperty>(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>()), Times.Once);
+            propertyService.Verify(x => x.UpdateFilePropertyBoundary<PimsManagementFileProperty>(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>()), Times.Once);
         }
 
         [Fact]
@@ -806,10 +816,15 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
             propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsManagementFileProperty>(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>()));
+            propertyService.Setup(x => x.UpdateFilePropertyBoundary<PimsManagementFileProperty>(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>()));
 
             var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
 
             var propertyActivityRepository = this._helper.GetService<Mock<IManagementActivityRepository>>();
             propertyActivityRepository.Setup(x => x.GetActivitiesByManagementFile(It.IsAny<long>())).Returns(new List<PimsManagementActivity>());
@@ -863,6 +878,10 @@ namespace Pims.Api.Test.Services
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+
             var propertyActivityRepository = this._helper.GetService<Mock<IManagementActivityRepository>>();
             propertyActivityRepository.Setup(x => x.GetActivitiesByManagementFile(It.IsAny<long>())).Returns(new List<PimsManagementActivity>());
 
@@ -915,6 +934,10 @@ namespace Pims.Api.Test.Services
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+
             var propertyActivityRepository = this._helper.GetService<Mock<IManagementActivityRepository>>();
             propertyActivityRepository.Setup(x => x.GetActivitiesByManagementFile(It.IsAny<long>())).Returns(new List<PimsManagementActivity>());
 
@@ -964,10 +987,16 @@ namespace Pims.Api.Test.Services
             propertyActivityRepository.Setup(x => x.GetActivitiesByManagementFile(It.IsAny<long>())).Returns(new List<PimsManagementActivity>());
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsManagementFileProperty>(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>()));
+            propertyService.Setup(x => x.UpdateFilePropertyBoundary<PimsManagementFileProperty>(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>()));
 
             var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
 
             // Act
             service.UpdateProperties(managementFile, new List<UserOverrideCode>() { UserOverrideCode.ManagingPropertyNotInventoried });
@@ -975,6 +1004,7 @@ namespace Pims.Api.Test.Services
             // Assert
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsManagementFileProperty>()), Times.Once);
             propertyService.Verify(x => x.UpdateFilePropertyLocation<PimsManagementFileProperty>(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>()), Times.Once);
+            propertyService.Verify(x => x.UpdateFilePropertyBoundary<PimsManagementFileProperty>(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>()), Times.Once);
         }
 
         [Fact]
@@ -1006,6 +1036,10 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
 
             // Act
             service.UpdateProperties(managementFile, new List<UserOverrideCode>());
@@ -1054,6 +1088,10 @@ namespace Pims.Api.Test.Services
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+
             // Act
             service.UpdateProperties(updatedManagementFile, new List<UserOverrideCode>());
 
@@ -1100,6 +1138,10 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
 
             // Act
             Action act = () => service.UpdateProperties(updatedManagementFile, new List<UserOverrideCode>());
@@ -1158,6 +1200,10 @@ namespace Pims.Api.Test.Services
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+
             // Act
             service.UpdateProperties(managementFile, new List<UserOverrideCode>());
 
@@ -1199,6 +1245,10 @@ namespace Pims.Api.Test.Services
             var entityNoteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsManagementFileNote>>>();
             entityNoteRepository.Setup(x => x.AddNoteRelationship(Capture.In<PimsManagementFileNote>(note))).Returns(new PimsManagementFileNote());
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+
             // Act
             service.UpdateProperties(managementFile, new List<UserOverrideCode>());
 
@@ -1233,6 +1283,10 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes?>())).Returns(false);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
 
             // Act
             Action act = () => service.UpdateProperties(managementFile, new List<UserOverrideCode>());
@@ -1275,6 +1329,10 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
 
             // Act
             Action act = () => service.UpdateProperties(managementFile, new List<UserOverrideCode>());
@@ -1333,6 +1391,10 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
 
             // Act
             Action act = () => service.UpdateProperties(managementFile, new List<UserOverrideCode>());
