@@ -27,6 +27,37 @@ export interface IFileMenuProps {
   onEditProperties: () => void;
 }
 
+const getFilePropertyIndex = (
+  fileProperty: ApiGen_Concepts_FileProperty,
+  fileProperties: ApiGen_Concepts_FileProperty[],
+): number | null => {
+  if (
+    !(
+      exists(fileProperty.location) ||
+      exists(fileProperty.boundary) ||
+      exists(fileProperty.property.location) ||
+      exists(fileProperty.property.boundary)
+    )
+  ) {
+    return null;
+  }
+  let index = 0;
+  for (const p of fileProperties) {
+    if (
+      exists(p.location) ||
+      exists(p.boundary) ||
+      exists(p.property.location) ||
+      exists(p.property.boundary)
+    ) {
+      index++;
+    }
+    if (p.id === fileProperty.id) {
+      return index;
+    }
+  }
+  return null;
+};
+
 const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>> = ({
   file,
   currentFilePropertyId,
@@ -117,6 +148,10 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                     .filter(sp => labelledProperties.properties.includes(sp))
                     .map((fileProperty: ApiGen_Concepts_FileProperty, index: number) => {
                       const propertyName = getFilePropertyName(fileProperty);
+                      const filePropertyIndex = getFilePropertyIndex(
+                        fileProperty,
+                        sortedProperties,
+                      );
                       return (
                         <StyledPropertyRowWrapper
                           key={`menu-item-row-${fileProperty?.id ?? index}`}
@@ -135,23 +170,23 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                           </div>
 
                           <div>
-                            {fileProperty?.property?.isRetired ? (
+                            {filePropertyIndex) &&fileProperty?.property?.isRetired ? (
                               <StyledDisabledIconWrapper>
                                 {sortedProperties.indexOf(fileProperty) + 1}
                               </StyledDisabledIconWrapper>
                             ) : fileProperty?.isActive !== false ? (
-                              <StyledIconWrapper
-                                className={cx({
-                                  selected: currentFilePropertyId === fileProperty?.id,
-                                })}
-                              >
-                                {sortedProperties.indexOf(fileProperty) + 1}
-                              </StyledIconWrapper>
-                            ) : (
-                              <StyledDisabledIconWrapper>
-                                {sortedProperties.indexOf(fileProperty) + 1}
-                              </StyledDisabledIconWrapper>
-                            )}
+                                <StyledIconWrapper
+                                  className={cx({
+                                    selected: currentFilePropertyId === fileProperty?.id,
+                                  })}
+                                >
+                                  {filePropertyIndex}
+                                </StyledIconWrapper>
+                              ) : (
+                                <StyledDisabledIconWrapper>
+                                  {filePropertyIndex}
+                                </StyledDisabledIconWrapper>
+                              ))}
                           </div>
 
                           <OverflowTip>
