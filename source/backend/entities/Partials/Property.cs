@@ -49,28 +49,26 @@ namespace Pims.Dal.Entities
         /// <param name="dataSourceEffectiveDate"></param>
         public PimsProperty(int pid, PimsPropertyType type, PimsAddress address, PimsPropPropTenureTyp tenure, PimsAreaUnitType areaUnit, PimsDataSourceType dataSource, DateTime dataSourceEffectiveDate, PimsPropertyStatusType status)
         {
-            this.Pid = pid > 0 ? pid : null;
-            this.PropertyTypeCodeNavigation = type ?? throw new ArgumentNullException(nameof(type));
-            this.PropertyTypeCode = type.Id;
-            this.Address = address ?? throw new ArgumentNullException(nameof(address));
-            this.AddressId = address.AddressId;
-            this.RegionCodeNavigation = address.RegionCodeNavigation ?? throw new ArgumentException($"Argument '{nameof(address)}.{nameof(address.RegionCodeNavigation)}' is required.", nameof(address));
-            this.RegionCode = address.RegionCode.Value;
-            this.DistrictCodeNavigation = address.DistrictCodeNavigation ?? throw new ArgumentException($"Argument '{nameof(address)}.{nameof(address.DistrictCode)}' is required.", nameof(address));
-            this.DistrictCode = address.DistrictCode.Value;
-            this.PimsPropPropTenureTyps = new List<PimsPropPropTenureTyp>() { tenure };
-            this.PropertyAreaUnitTypeCodeNavigation = areaUnit ?? throw new ArgumentNullException(nameof(areaUnit));
-            this.PropertyAreaUnitTypeCode = areaUnit.Id;
+            Pid = pid > 0 ? pid : null;
+            PropertyTypeCodeNavigation = type ?? throw new ArgumentNullException(nameof(type));
+            PropertyTypeCode = type.Id;
+            Address = address ?? throw new ArgumentNullException(nameof(address));
+            AddressId = address.AddressId;
+            RegionCode = address.RegionCode.Value;
+            DistrictCode = address.DistrictCode.Value;
+            PimsPropPropTenureTyps = new List<PimsPropPropTenureTyp>() { tenure };
+            PropertyAreaUnitTypeCodeNavigation = areaUnit ?? throw new ArgumentNullException(nameof(areaUnit));
+            PropertyAreaUnitTypeCode = areaUnit.Id;
             if (address.Longitude.HasValue && address.Latitude.HasValue)
             {
-                this.Location = new Point((double)address.Longitude.Value, (double)address.Latitude.Value) { SRID = 4326 };
+                Location = new Point((double)address.Longitude.Value, (double)address.Latitude.Value) { SRID = 4326 };
             }
 
-            this.PropertyDataSourceTypeCodeNavigation = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
-            this.PropertyDataSourceTypeCode = dataSource.Id;
-            this.PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(dataSourceEffectiveDate);
-            this.PropertyStatusTypeCodeNavigation = status ?? throw new ArgumentNullException(nameof(status));
-            this.PropertyStatusTypeCode = status.Id;
+            PropertyDataSourceTypeCodeNavigation = dataSource ?? throw new ArgumentNullException(nameof(dataSource));
+            PropertyDataSourceTypeCode = dataSource.Id;
+            PropertyDataSourceEffectiveDate = DateOnly.FromDateTime(dataSourceEffectiveDate);
+            PropertyStatusTypeCodeNavigation = status ?? throw new ArgumentNullException(nameof(status));
+            PropertyStatusTypeCode = status.Id;
             SurplusDeclarationTypeCode = "UNKNOWN";
         }
         #endregion
