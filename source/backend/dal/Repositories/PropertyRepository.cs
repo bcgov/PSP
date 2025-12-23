@@ -97,6 +97,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                 .Include(p => p.PimsPropPropPurposes)
                     .ThenInclude(t => t.PropertyPurposeTypeCodeNavigation)
+                .Include(p => p.SurplusDeclarationTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.VolumetricTypeCodeNavigation)
                 .Include(p => p.VolumeUnitTypeCodeNavigation)
@@ -144,6 +145,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTyps)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.SurplusDeclarationTypeCodeNavigation)
                 .Include(p => p.PimsPropTenureCleanups)
                     .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -204,6 +206,7 @@ namespace Pims.Dal.Repositories
                         .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                     .Include(p => p.PimsPropPropTenureTyps)
                         .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                    .Include(p => p.SurplusDeclarationTypeCodeNavigation)
                     .Include(p => p.PimsPropTenureCleanups)
                         .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                     .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -247,6 +250,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTyps)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.SurplusDeclarationTypeCodeNavigation)
                 .Include(p => p.PimsPropTenureCleanups)
                     .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -290,6 +294,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTyps)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.SurplusDeclarationTypeCodeNavigation)
                 .Include(p => p.PimsPropTenureCleanups)
                     .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -381,9 +386,6 @@ namespace Pims.Dal.Repositories
             property.AddressId = existingProperty.AddressId;
             property.PropertyDataSourceEffectiveDate = existingProperty.PropertyDataSourceEffectiveDate;
             property.PropertyDataSourceTypeCode = existingProperty.PropertyDataSourceTypeCode;
-            property.SurplusDeclarationTypeCode = existingProperty.SurplusDeclarationTypeCode;
-            property.SurplusDeclarationComment = existingProperty.SurplusDeclarationComment;
-            property.SurplusDeclarationDate = existingProperty.SurplusDeclarationDate;
             property.IsRetired = existingProperty.IsRetired;
 
             if (property.PphStatusTypeCode != existingProperty.PphStatusTypeCode
