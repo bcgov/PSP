@@ -53,6 +53,34 @@ export interface IUpdatePropertiesProps {
   canUploadShapefiles?: boolean;
 }
 
+const getPropertyIndex = (property: PropertyForm, properties: PropertyForm[]): number | null => {
+  if (
+    !(
+      exists(property.fileLocation) ||
+      exists(property.fileBoundary) ||
+      exists(property.latitude) ||
+      exists(property.longitude)
+    )
+  ) {
+    return null;
+  }
+  let index = 0;
+  for (const p of properties) {
+    if (
+      exists(p.fileLocation) ||
+      exists(p.fileBoundary) ||
+      exists(p.latitude) ||
+      exists(p.longitude)
+    ) {
+      if (p === property) {
+        return index;
+      }
+      index++;
+    }
+  }
+  return null;
+};
+
 export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> = props => {
   const localRef = useRef<FormikProps<FileForm>>(null);
   const formikRef = props.formikRef ? props.formikRef : localRef;
@@ -276,37 +304,39 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                       </Col>
                     </Row>
                     <SelectedPropertyHeaderRow />
-                    {formikProps.values.properties.map((property, index) => (
-                      <SelectedPropertyRow
-                        key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
-                        onRemove={async () => {
-                          if (!property.apiId || (await props.canRemove(property.apiId))) {
-                            remove(index);
-                          } else {
-                            setShowAssociatedEntityWarning(true);
-                          }
-                        }}
-                        nameSpace={`properties.${index}`}
-                        index={index}
-                        property={property}
-                        showDisable={props.disableProperties}
-                        canUploadShapefile={props.canUploadShapefiles}
-                        onUploadShapefile={(result: UploadResponseModel | null) => {
-                          const updatedFormProperty = addShapeToProperty(property, result);
-                          replace(index, updatedFormProperty);
-                        }}
-                        onRemoveShapefile={() => {
-                          removeShapeFromPropertyWithConfirmation(
-                            property,
-                            setModalContent,
-                            setDisplayModal,
-                            updatedProperty => {
-                              replace(index, updatedProperty);
-                            },
-                          );
-                        }}
-                      />
-                    ))}
+                    {formikProps.values.properties.map((property, index) => {
+                      const propertyIndex = getPropertyIndex(
+                        property,
+                        formikProps.values.properties,
+                      );
+                      return (
+                        <SelectedPropertyRow
+                          key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
+                          onRemove={async () => {
+                            if (!property.apiId || (await props.canRemove(property.apiId))) {
+                              remove(index);
+                            } else {
+                              setShowAssociatedEntityWarning(true);
+                            }
+                          }}
+                          nameSpace={`properties.${index}`}
+                          index={propertyIndex}
+                          property={property.toFeatureDataset()}
+                          showDisable={props.disableProperties}
+                          canUploadShapefile={props.canUploadShapefiles}
+                          onUploadShapefile={(result: UploadResponseModel | null) => {
+                            // Update the property boundary based on the uploaded shapefile
+                            if (exists(result)) {
+                              if (result.isSuccess && exists(result.boundary)) {
+                                const updatedFormProperty = new PropertyForm(property);
+                                updatedFormProperty.fileBoundary = result.boundary;
+                                replace(index, updatedFormProperty);
+                              }
+                            }
+                          }}
+                        />
+                      );
+                    })}
                     {formikProps.values.properties.length === 0 && (
                       <span>No Properties selected</span>
                     )}
