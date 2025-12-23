@@ -2856,13 +2856,12 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
               class="c6 text-left col"
             >
               <div
-                class="textarea input form-group"
+                class="input form-group"
               >
                 <textarea
                   class="form-control"
                   id="input-suplusDelarationComment"
                   name="suplusDelarationComment"
-                  rows="5"
                   style="word-break: break-all;"
                   title=""
                 />

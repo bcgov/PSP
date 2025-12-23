@@ -401,7 +401,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
           <FastDatePicker field="surplusDeclarationDate" formikProps={formikProps} />
         </SectionField>
         <SectionField label="Comment">
-          <TextArea rows={5} field="suplusDelarationComment" />
+          <Input as="textarea" field="suplusDelarationComment" />
         </SectionField>
       </Section>
     </StyledSummarySection>

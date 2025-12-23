@@ -521,7 +521,7 @@ namespace Pims.Dal.Test.Repositories
                 DistrictCode = 1,
                 CountryId = 1,
             };
-            var propertyOne = EntityHelper.CreateProperty(100, isCoreInventory: true);
+            var propertyOne = EntityHelper.CreateProperty(100, isCoreInventory: true, address: propertyOneAddress);
             var lease = EntityHelper.CreateLease(1, addProperty: false);
 
             lease.PimsLeaseLeasePurposes.Add(new PimsLeaseLeasePurpose()
