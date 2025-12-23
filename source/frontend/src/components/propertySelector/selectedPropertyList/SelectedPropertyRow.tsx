@@ -82,12 +82,16 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
       <StyledRow className="align-items-center mb-3 no-gutters">
         <Col md={3}>
           <div className="mb-0 d-flex align-items-center">
-            {featureSet.isActive === false ? (
-              <DisabledDraftCircleNumber text={(index + 1).toString()} />
-            ) : (
-              <DraftCircleNumber text={(index + 1).toString()} />
-            )}
-            <OverflowTip fullText={propertyIdentifier} className="pl-3"></OverflowTip>
+            {exists(index) &&
+              (featureSet.isActive === false ? (
+                <DisabledDraftCircleNumber text={(index! + 1).toString()} />
+              ) : (
+                <DraftCircleNumber text={(index! + 1).toString()} />
+              ))}
+            <OverflowTip
+              fullText={propertyIdentifier}
+              className={exists(index) ? 'pl-3' : ''}
+            ></OverflowTip>
           </div>
         </Col>
         <Col md={showDisable ? 4 : 5}>
