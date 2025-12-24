@@ -152,47 +152,32 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   const history = useHistory();
 
   // Helper function for property navigation logic
-  const handlePropertyNavigation = (context: MachineContext, preferPims = true): void => {
+  const handlePropertyNavigation = (context: MachineContext): void => {
     const selectedFeatureData = context.mapLocationFeatureDataset;
     const pimsFeature = firstOrNull(selectedFeatureData?.pimsFeatures);
     const parcelFeature = firstOrNull(selectedFeatureData?.parcelFeatures);
 
-    if (preferPims) {
-      // Prioritize PIMS first
-      if (exists(pimsFeature?.properties?.PROPERTY_ID)) {
-        history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
-      } else if (exists(parcelFeature?.properties?.PID)) {
-        const parsedPid = pidParser(parcelFeature.properties.PID);
-        history.push(`/mapview/sidebar/non-inventory-property/pid/${parsedPid}`);
-      } else if (exists(parcelFeature?.properties?.PIN)) {
-        const parsedPin = pinParser(parcelFeature.properties.PIN);
-        history.push(`/mapview/sidebar/non-inventory-property/pin/${parsedPin}`);
-      } else if (
-        exists(selectedFeatureData?.location?.lat) &&
-        exists(selectedFeatureData?.location?.lng)
-      ) {
-        history.push(
-          `/mapview/sidebar/location/lat/${selectedFeatureData?.location?.lat}/lng/${selectedFeatureData?.location?.lng}`,
-        );
-      }
-    } else {
-      // Prefer PMBC first, fallback to PIMS
-      if (exists(parcelFeature?.properties?.PID)) {
-        const parsedPid = pidParser(parcelFeature.properties.PID);
-        history.push(`/mapview/sidebar/non-inventory-property/pid/${parsedPid}`);
-      } else if (exists(parcelFeature?.properties?.PIN)) {
-        const parsedPin = pinParser(parcelFeature.properties.PIN);
-        history.push(`/mapview/sidebar/non-inventory-property/pin/${parsedPin}`);
-      } else if (exists(pimsFeature?.properties?.PROPERTY_ID)) {
-        history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
-      } else if (
-        exists(selectedFeatureData?.location?.lat) &&
-        exists(selectedFeatureData?.location?.lng)
-      ) {
-        history.push(
-          `/mapview/sidebar/location/lat/${selectedFeatureData?.location?.lat}/lng/${selectedFeatureData?.location?.lng}`,
-        );
-      }
+    if (exists(pimsFeature?.properties?.PROPERTY_ID)) {
+      history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}/details`);
+      return;
+    }
+
+    if (exists(parcelFeature?.properties?.PID)) {
+      const parsedPid = pidParser(parcelFeature.properties.PID);
+      history.push(`/mapview/sidebar/non-inventory-property/pid/${parsedPid}/ltsa`);
+      return;
+    }
+
+    if (exists(parcelFeature?.properties?.PIN)) {
+      const parsedPin = pinParser(parcelFeature.properties.PIN);
+      history.push(`/mapview/sidebar/non-inventory-property/pin/${parsedPin}/ltsa`);
+      return;
+    }
+
+    if (exists(selectedFeatureData?.location?.lat) && exists(selectedFeatureData?.location?.lng)) {
+      history.push(
+        `/mapview/sidebar/location/lat/${selectedFeatureData?.location?.lat}/lng/${selectedFeatureData?.location?.lng}`,
+      );
     }
   };
 
@@ -206,22 +191,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           return;
         }
 
-        handlePropertyNavigation(context, true);
+        handlePropertyNavigation(context);
       },
       showQuickInfoProperty: context => {
-        const sidebarIsPimsProperty =
-          context.mapSideBarState?.type === SideBarType.PROPERTY_INFORMATION;
-        const selectedFeatureData = context.mapLocationFeatureDataset;
-        const pimsFeature = firstOrNull(selectedFeatureData?.pimsFeatures);
-
-        // If already viewing PIMS property info and have PIMS data, stay in PIMS
-        if (sidebarIsPimsProperty && exists(pimsFeature?.properties?.PROPERTY_ID)) {
-          history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
-          return;
-        }
-
-        // Otherwise prefer PMBC property (parcel), then fallback to PIMS
-        handlePropertyNavigation(context, false);
+        handlePropertyNavigation(context);
       },
     },
     services: {
