@@ -2,8 +2,15 @@ import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { ProjectSelector, Select, SelectOption } from '@/components/common/form';
+import {
+  FastDatePicker,
+  ProjectSelector,
+  Select,
+  SelectOption,
+  TextArea,
+} from '@/components/common/form';
 import { Input } from '@/components/common/form/Input';
+import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
@@ -131,10 +138,22 @@ const ManagementForm: React.FC<IManagementFormProps> = props => {
               <SectionField label="Additional details">
                 <Input field="additionalDetails" />
               </SectionField>
+              <SectionField label="Ministry region" required>
+                <UserRegionSelectContainer
+                  field="regionCode"
+                  placeholder="Select region..."
+                  required
+                />
+              </SectionField>
             </Section>
 
             <Section header="Management Team">
               <ManagementTeamSubForm canEditDetails={true} />
+            </Section>
+
+            <Section header="Notice of Claim">
+              <FastDatePicker formikProps={formikProps} field="noticeOfClaim.receivedDate" />
+              <TextArea field="noticeOfClaim.comment" />
             </Section>
           </Container>
         );

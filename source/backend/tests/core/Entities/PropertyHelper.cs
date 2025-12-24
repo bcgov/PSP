@@ -37,10 +37,10 @@ namespace Pims.Core.Test
                 PropertyId = pid,
                 Pin = pin,
                 ConcurrencyControlNumber = 1,
-                Location = noLocation != true ? new NetTopologySuite.Geometries.Point(0, 0) { SRID = SpatialReference.BCALBERS } : null,
-                SurplusDeclarationTypeCode = "SURPLUS",
+                Location = noLocation != true ? new Point(0, 0) { SRID = SpatialReference.BCALBERS } : null,
                 IsRetired = false,
                 SurveyPlanNumber = surveyPlanNumber,
+                SurplusDeclarationTypeCode = SurplusDeclarationTypes.UNKNOWN.ToString(),
             };
 
             if (lease != null)
@@ -122,6 +122,7 @@ namespace Pims.Core.Test
             property.Location = location;
             property.IsRetired = isRetired;
             context.PimsProperties.Add(property);
+
             return property;
         }
 

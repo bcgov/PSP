@@ -4,6 +4,7 @@ import { Col, Form, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
 import { EditButton } from '@/components/common/buttons/EditButton';
+import ExpandableTextCard from '@/components/common/ExpandableTextArea';
 import { readOnlyMultiSelectStyle } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
@@ -23,7 +24,7 @@ import { useQuery } from '@/hooks/use-query';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_CodeTypes_PropertyTenureTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyTenureTypes';
-import { exists } from '@/utils';
+import { exists, prettyFormatDate } from '@/utils';
 import { booleanToYesNoUnknownString, stringToBoolean } from '@/utils/formUtils';
 import { getPrettyLatLng } from '@/utils/mapPropertyUtils';
 
@@ -256,6 +257,22 @@ export const PropertyDetailsTabView: React.FunctionComponent<IPropertyDetailsTab
         )}
       </Section>
       <OperationContainer propertyId={property?.id} View={OperationSectionView} />
+
+      <Section header="Surplus Declaration">
+        <SectionField label="Surplus declaration type" valueTestId="surplusDeclarationType">
+          {property.surplusDeclarationType?.description ?? ''}
+        </SectionField>
+        <SectionField label="Surplus declaration date" valueTestId="surplusDeclarationDate">
+          {prettyFormatDate(property.surplusDeclarationDate ?? '')}
+        </SectionField>
+        <SectionField
+          label="Comment"
+          contentWidth={{ xs: 12 }}
+          valueTestId="surplusDeclarationComment"
+        >
+          <ExpandableTextCard text={property.surplusDeclarationComment ?? ''} maxHeight={200} />
+        </SectionField>
+      </Section>
     </StyledSummarySection>
   );
 };

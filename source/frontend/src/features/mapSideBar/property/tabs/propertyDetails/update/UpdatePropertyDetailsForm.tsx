@@ -6,7 +6,14 @@ import { MdClose } from 'react-icons/md';
 import styled from 'styled-components';
 
 import { LinkButton, RemoveButton } from '@/components/common/buttons';
-import { Input, Multiselect, Select, Text, TextArea } from '@/components/common/form';
+import {
+  FastDatePicker,
+  Input,
+  Multiselect,
+  Select,
+  Text,
+  TextArea,
+} from '@/components/common/form';
 import { RadioGroup } from '@/components/common/form/RadioGroup';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';
 import { Section } from '@/components/common/Section/Section';
@@ -65,6 +72,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
   const provinceOptions = getOptionsByType(API.PROVINCE_TYPES);
   const regionOptions = getOptionsByType(API.REGION_TYPES);
   const districtOptions = getOptionsByType(API.DISTRICT_TYPES);
+  const surplusDeclarationOptions = getOptionsByType(API.SURPLUS_DECLARATION_TYPES);
 
   // multi-selects
   const tenureStatus = getIn(values, 'tenures') as PropertyTenureFormModel[];
@@ -318,6 +326,7 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
           </SectionField>
         </Section>
       )}
+
       <Section header="Measurements">
         <SectionField label="Area" labelWidth={{ xs: 2 }}>
           <AreaContainer
@@ -378,6 +387,22 @@ export const UpdatePropertyDetailsForm: React.FunctionComponent<
             </Row>
           </SectionField>
         )}
+      </Section>
+
+      <Section header="Surplus Declaration">
+        <SectionField label="Surplus declaration type" contentWidth={{ xs: 'auto' }}>
+          <Select
+            field="surplusDeclarationType"
+            options={surplusDeclarationOptions}
+            placeholder="Please Select"
+          />
+        </SectionField>
+        <SectionField label="Surplus declaration date" contentWidth={{ xs: 'auto' }}>
+          <FastDatePicker field="surplusDeclarationDate" formikProps={formikProps} />
+        </SectionField>
+        <SectionField label="Comment">
+          <Input as="textarea" field="suplusDelarationComment" />
+        </SectionField>
       </Section>
     </StyledSummarySection>
   );
