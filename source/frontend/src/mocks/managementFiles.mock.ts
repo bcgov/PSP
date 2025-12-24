@@ -287,6 +287,7 @@ export const mockManagementFileResponse = (
     isDisabled: false,
     displayOrder: 10,
   },
+  noticeOfClaim: [],
   appCreateTimestamp: '2023-11-25T20:48:26.693',
   appLastUpdateTimestamp: '2023-11-24T20:48:26.693',
   appLastUpdateUserid: 'FOUGSTER',
