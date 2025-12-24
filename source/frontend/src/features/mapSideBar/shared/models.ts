@@ -25,6 +25,7 @@ import {
   formatBcaAddress,
   getLatLng,
   isValidId,
+  isValidIsoDateTime,
   latLngToApiLocation,
   pidFromFeatureSet,
   pidParser,
@@ -96,6 +97,9 @@ export class PropertyForm {
   public isRetired?: boolean;
   public isDisposed?: boolean;
   public isActive?: string;
+  public surplusDeclarationType: string | null = null;
+  public surplusDeclarationDate: string | null = null;
+  public suplusDelarationComment: string | null = null;
 
   public constructor(baseModel?: Partial<PropertyForm>) {
     Object.assign(this, baseModel);
@@ -331,11 +335,13 @@ export class PropertyForm {
       volumetricType: null,
       municipalZoning: null,
       generalLocation: null,
-      surplusDeclarationType: null,
-      surplusDeclarationComment: null,
+      surplusDeclarationType: toTypeCodeNullable(this.surplusDeclarationType),
+      surplusDeclarationComment: this.suplusDelarationComment,
+      surplusDeclarationDate: isValidIsoDateTime(this.surplusDeclarationDate)
+        ? this.surplusDeclarationDate
+        : null,
       historicalFileNumbers: null,
       tenureCleanups: null,
-      surplusDeclarationDate: EpochIsoDateTime,
     };
   }
 }
