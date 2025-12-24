@@ -6,9 +6,9 @@ import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
 import { ApiGen_Concepts_File } from './ApiGen_Concepts_File';
 import { ApiGen_Concepts_ManagementFileProperty } from './ApiGen_Concepts_ManagementFileProperty';
 import { ApiGen_Concepts_ManagementFileTeam } from './ApiGen_Concepts_ManagementFileTeam';
+import { ApiGen_Concepts_NoticeOfClaim } from './ApiGen_Concepts_NoticeOfClaim';
 import { ApiGen_Concepts_Organization } from './ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from './ApiGen_Concepts_Person';
-import { ApiGen_Concepts_NoticeOfClaim } from './ApiGen_Concepts_NoticeOfClaim';
 import { ApiGen_Concepts_Product } from './ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
 
