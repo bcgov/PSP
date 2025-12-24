@@ -1694,6 +1694,59 @@ exports[`ManagementView component > renders as expected 1`] = `
                           </div>
                         </div>
                       </div>
+                      <div
+                        class="c38 form-section"
+                      >
+                        <h2
+                          class="c41"
+                        >
+                          <div
+                            class="no-gutters row"
+                          >
+                            <div
+                              class="align-content-end col"
+                            >
+                              Notice of Claim
+                            </div>
+                          </div>
+                        </h2>
+                        <div
+                          class="collapse show"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c39"
+                              >
+                                Received date:
+                              </label>
+                            </div>
+                            <div
+                              class="c40 text-left col"
+                            />
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c39"
+                              >
+                                Comment:
+                              </label>
+                            </div>
+                            <div
+                              class="c40 text-left col"
+                            />
+                          </div>
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>

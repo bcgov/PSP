@@ -1,3 +1,4 @@
+import { first } from 'lodash';
 import { Fragment } from 'react';
 import { FaExternalLinkAlt, FaUserPlus } from 'react-icons/fa';
 
@@ -14,7 +15,7 @@ import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/cons
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_ManagementFileContact } from '@/models/api/generated/ApiGen_Concepts_ManagementFileContact';
-import { isValidId } from '@/utils';
+import { exists, isValidId, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import ManagementFileContactsList from './contacts/ManagementFileContactsList';
@@ -57,6 +58,10 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
   const productName = managementFile.product
     ? managementFile.product?.code + ' ' + managementFile.product?.description
     : '';
+
+  const noticeOfClaim = exists(managementFile?.noticeOfClaim)
+    ? first(managementFile.noticeOfClaim)
+    : null;
 
   return (
     <StyledSummarySection>
@@ -191,6 +196,12 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
             )}
           </Fragment>
         ))}
+      </Section>
+      <Section header="Notice of Claim">
+        <SectionField label="Received date">
+          {prettyFormatDate(noticeOfClaim?.receivedDate)}
+        </SectionField>
+        <SectionField label="Comment">{noticeOfClaim?.comment}</SectionField>
       </Section>
     </StyledSummarySection>
   );

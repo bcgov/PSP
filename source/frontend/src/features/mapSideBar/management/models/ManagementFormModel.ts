@@ -1,6 +1,9 @@
+import { first } from 'lodash';
+
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
+import { ApiGen_Concepts_NoticeOfClaim } from '@/models/api/generated/ApiGen_Concepts_NoticeOfClaim';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { applyDisplayOrder } from '@/utils';
 import { fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
@@ -22,6 +25,7 @@ export class ManagementFormModel implements WithManagementTeam {
   purposeTypeCode: string | null = null;
   fileProperties: PropertyForm[] = [];
   team: ManagementTeamSubFormModel[] = [];
+  noticeOfClaim: ApiGen_Concepts_NoticeOfClaim;
 
   constructor(
     readonly id: number | null = null,
@@ -59,6 +63,7 @@ export class ManagementFormModel implements WithManagementTeam {
         .filter(exists),
       fileProperties: sortedProperties ?? [],
       ...getEmptyBaseAudit(this.rowVersion),
+      noticeOfClaim: exists(this.noticeOfClaim) ? [this.noticeOfClaim] : [],
     };
   }
 
@@ -91,6 +96,7 @@ export class ManagementFormModel implements WithManagementTeam {
     managementForm.team =
       model.managementTeam?.map(x => ManagementTeamSubFormModel.fromApi(x)) || [];
     managementForm.fileProperties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
+    managementForm.noticeOfClaim = exists(model.noticeOfClaim) ? first(model.noticeOfClaim) : null;
 
     return managementForm;
   }

@@ -62,6 +62,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(d => d.PrimaryContact)
                 .Include(d => d.PimsManagementFileTeams)
                     .ThenInclude(d => d.ManagementFileProfileTypeCodeNavigation)
+                .Include(r => r.PimsNoticeOfClaims)
                 .FirstOrDefault(d => d.ManagementFileId == id) ?? throw new KeyNotFoundException();
         }
 
@@ -91,6 +92,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(d => d.PrimaryContact)
                 .Include(d => d.PimsManagementFileTeams)
                     .ThenInclude(d => d.ManagementFileProfileTypeCodeNavigation)
+                .Include(r => r.PimsNoticeOfClaims)
                 .FirstOrDefault(d => d.FileName == name);
         }
 
@@ -289,6 +291,7 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingFile).CurrentValues.SetValues(managementFile);
             Context.UpdateChild<PimsManagementFile, long, PimsManagementFileTeam, long>(x => x.PimsManagementFileTeams, managementFile.Internal_Id, managementFile.PimsManagementFileTeams.ToArray());
+            Context.UpdateChild<PimsManagementFile, long, PimsNoticeOfClaim, long>(x => x.PimsNoticeOfClaims, managementFile.Internal_Id, managementFile.PimsNoticeOfClaims.ToArray());
 
             return existingFile;
         }

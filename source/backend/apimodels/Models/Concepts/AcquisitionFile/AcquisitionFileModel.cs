@@ -4,6 +4,7 @@ using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.CompensationRequisition;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Models.Concepts.InterestHolder;
+using Pims.Api.Models.Concepts.NoticeOfClaim;
 using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Models.Concepts.Project;
 
@@ -167,6 +168,11 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// get/set - A list of compensation requisitions related to the acquisition file.
         /// </summary>
         public IList<CompensationRequisitionModel> CompensationRequisitions { get; set; }
+
+        /// <summary>
+        /// get/set - The notice of claims associated with this acquisition file, if any.
+        /// </summary>
+        public IList<NoticeOfClaimModel> NoticeOfClaim { get; set; }
 
         #endregion
     }

@@ -3,6 +3,7 @@ using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Models.Concepts.Project;
+using Pims.Api.Models.Concepts.NoticeOfClaim;
 
 namespace Pims.Api.Models.Concepts.ManagementFile
 {
@@ -69,6 +70,11 @@ namespace Pims.Api.Models.Concepts.ManagementFile
         /// get/set - A list of management file team relationships.
         /// </summary>
         public IList<ManagementFileTeamModel> ManagementTeam { get; set; }
+
+        /// <summary>
+        /// get/set - The notice of claim associated with this management file, if any.
+        /// </summary>
+        public IList<NoticeOfClaimModel> NoticeOfClaim { get; set; }
 
         #endregion
     }

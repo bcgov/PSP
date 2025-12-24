@@ -2,7 +2,13 @@ import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { ProjectSelector, Select, SelectOption } from '@/components/common/form';
+import {
+  FastDatePicker,
+  ProjectSelector,
+  Select,
+  SelectOption,
+  TextArea,
+} from '@/components/common/form';
 import { Input } from '@/components/common/form/Input';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -160,6 +166,10 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
 
               <Section header="Management Team">
                 <ManagementTeamSubForm canEditDetails={canEditDetails} />
+              </Section>
+              <Section header="Notice of Claim">
+                <FastDatePicker formikProps={formikProps} field="noticeOfClaim.receivedDate" />
+                <TextArea field="noticeOfClaim.comment" />
               </Section>
             </Container>
           </>
