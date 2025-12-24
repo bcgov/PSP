@@ -846,7 +846,6 @@ exports[`ResearchProperties component > renders as expected 1`] = `
               </div>
             </div>
           </div>
-          <div />
           <div
             class="c12 align-items-center mb-3 no-gutters row"
           >
@@ -1068,7 +1067,6 @@ exports[`ResearchProperties component > renders as expected 1`] = `
               </div>
             </div>
           </div>
-          <div />
         </div>
       </div>
     </div>

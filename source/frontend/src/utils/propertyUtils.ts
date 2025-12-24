@@ -214,7 +214,7 @@ export const addShapeToProperty = (
  */
 export const removeShapeFromProperty = (property: PropertyForm): PropertyForm => {
   const updatedFormProperty = new PropertyForm(property);
-  updatedFormProperty.fileBoundary = null;
+  updatedFormProperty.fileBoundary = undefined;
   return updatedFormProperty;
 };
 

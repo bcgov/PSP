@@ -1003,7 +1003,6 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
           <hr
             class="my-3"
           />
-          <div />
           <div
             class="align-items-center my-3 no-gutters row"
           >
@@ -1325,7 +1324,6 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
               </div>
             </div>
           </div>
-          <div />
         </div>
       </div>
     </div>

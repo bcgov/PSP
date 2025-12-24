@@ -34,8 +34,9 @@ vi.mocked(ShapeUploadModal).mockImplementation((props: IShapeUploadModalProps) =
           const fakeResult = new UploadResponseModel('fakefile.shp');
           fakeResult.isSuccess = true;
           fakeResult.boundary = getMockPolygon();
-
-          props.onClose && props.onClose(fakeResult);
+          if (typeof props.onClose === 'function') {
+            props.onClose(fakeResult);
+          }
         }}
       >
         close
@@ -207,7 +208,7 @@ describe('SelectedPropertyRow component', () => {
   });
 
   // New tests for shapefile upload functionality
-  it('renders upload button when canUploadShapefile is true', async () => {
+  it('renders upload button when canUploadShapefile is true and property has no custom shape', async () => {
     const mockFeatureSet = getMockSelectedFeatureDataset();
     await setup({
       props: {
@@ -264,6 +265,37 @@ describe('SelectedPropertyRow component', () => {
         isSuccess: true,
       }),
     );
+  });
+
+  it('renders Delete Shape button instead of upload button when property has a custom shape', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
+    mockFeatureSet.fileBoundary = getMockPolygon();
+
+    await setup({
+      props: {
+        property: PropertyForm.fromFeatureDataset(mockFeatureSet),
+        canUploadShapefile: true,
+      },
+    });
+    expect(screen.getByTestId('remove-shape-0')).toBeInTheDocument();
+  });
+
+  it('calls onRemoveShapefile when Delete Shape button is clicked', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
+    mockFeatureSet.fileBoundary = getMockPolygon();
+
+    const onRemoveShapefile = vi.fn();
+    await setup({
+      props: {
+        property: PropertyForm.fromFeatureDataset(mockFeatureSet),
+        canUploadShapefile: true,
+        onRemoveShapefile,
+      },
+    });
+
+    const deleteBtn = screen.getByTestId('remove-shape-0');
+    await act(async () => userEvent.click(deleteBtn));
+    expect(onRemoveShapefile).toHaveBeenCalled();
   });
 
   it('does not render status dropdown when property is retired', async () => {

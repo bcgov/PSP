@@ -2,15 +2,44 @@ import { Formik, FormikProps } from 'formik';
 import { createRef } from 'react';
 
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import {
+  IShapeUploadModalProps,
+  ShapeUploadModal,
+} from '@/features/properties/shapeUpload/ShapeUploadModal';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
+import { getMockPolygon } from '@/mocks/geometries.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { PropertyForm } from '../../shared/models';
 import { DispositionFormModel } from '../models/DispositionFormModel';
 import DispositionPropertiesSubForm from './DispositionPropertiesSubForm';
+
+// Mock ShapeUploadModal in order to control its behavior in tests
+vi.mock('@/features/properties/shapeUpload/ShapeUploadModal');
+vi.mocked(ShapeUploadModal).mockImplementation((props: IShapeUploadModalProps) => {
+  return props.display ? (
+    <div data-testid="shape-upload-modal">
+      <span data-testid="prop-id">{props.propertyIdentifier}</span>
+      <button
+        data-testid="modal-close"
+        onClick={() => {
+          const fakeResult = new UploadResponseModel('fakefile.shp');
+          fakeResult.isSuccess = true;
+          fakeResult.boundary = getMockPolygon();
+          if (typeof props.onClose === 'function') {
+            props.onClose(fakeResult);
+          }
+        }}
+      >
+        close
+      </button>
+    </div>
+  ) : null;
+});
 
 const confirmBeforeAdd = vi.fn();
 
@@ -19,9 +48,9 @@ describe('DispositionPropertiesSubForm component', () => {
     props: { initialForm: DispositionFormModel },
     renderOptions: RenderOptions = {},
   ) => {
-    const ref = createRef<FormikProps<DispositionFormModel>>();
+    const formikRef = createRef<FormikProps<DispositionFormModel>>();
     const utils = render(
-      <Formik innerRef={ref} initialValues={props.initialForm} onSubmit={vi.fn()}>
+      <Formik innerRef={formikRef} initialValues={props.initialForm} onSubmit={vi.fn()}>
         {formikProps => (
           <DispositionPropertiesSubForm
             formikProps={formikProps}
@@ -43,7 +72,7 @@ describe('DispositionPropertiesSubForm component', () => {
 
     return {
       ...utils,
-      getFormikRef: () => ref,
+      formikRef,
     };
   };
 
@@ -152,5 +181,46 @@ describe('DispositionPropertiesSubForm component', () => {
         }),
       ]),
     );
+  });
+
+  it('updates property boundary when shapefile is uploaded', async () => {
+    const { formikRef } = await setup({ initialForm: testForm });
+
+    const uploadButton = screen.getByTestId('upload-shapefile-0');
+    await act(async () => userEvent.click(uploadButton));
+
+    // Modal should be displayed
+    expect(screen.getByTestId('shape-upload-modal')).toBeVisible();
+
+    const closeButton = screen.getByTestId('modal-close');
+    await act(async () => userEvent.click(closeButton));
+
+    // Modal should be closed
+    expect(screen.queryByTestId('shape-upload-modal')).toBeNull();
+
+    // Verify that the property boundary was updated in the formik values
+    expect(formikRef.current?.values.fileProperties[0].fileBoundary).toEqual(getMockPolygon());
+  });
+
+  it('removes custom property boundary when Remove Shape is clicked', async () => {
+    const { formikRef } = await setup({
+      initialForm: testForm,
+    });
+
+    // Manually set a custom boundary on the first property
+    act(() => {
+      formikRef.current?.setFieldValue('fileProperties[0].fileBoundary', getMockPolygon());
+    });
+
+    const removeButton = screen.getByTestId('remove-shape-0');
+    await act(async () => userEvent.click(removeButton));
+
+    // confirm removal in modal
+    expect(screen.getByText(/Are you sure you want to remove this uploaded shape/i)).toBeVisible();
+    const confirmButton = await screen.findByTitle('ok-modal');
+    await act(async () => userEvent.click(confirmButton));
+
+    // Verify that the property boundary was removed in the formik values
+    expect(formikRef.current?.values.fileProperties[0].fileBoundary).toBeUndefined();
   });
 });
