@@ -13,10 +13,7 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
-import {
-  emptyPropertyLocation,
-  PIMS_Property_Location_View,
-} from '@/models/layers/pimsPropertyLocationView';
+import { emptyProperty, PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import {
   applyDisplayOrder,
   enumFromValue,
@@ -157,7 +154,7 @@ export class PropertyForm {
       selectingComponentId: null,
       pimsFeature: {
         properties: {
-          ...emptyPropertyLocation,
+          ...emptyProperty,
           PROPERTY_ID: this.apiId,
           PID: this.pid ? +this.pid.replaceAll(/-/g, '') : null,
           PID_PADDED: this?.pid?.padStart(9, '0'),
@@ -361,7 +358,7 @@ export class AddressForm {
     return newForm;
   }
 
-  public static fromPimsView(model: PIMS_Property_Location_View): AddressForm {
+  public static fromPimsView(model: PIMS_Property_View): AddressForm {
     const newForm = new AddressForm();
     newForm.id = model.ADDRESS_ID ?? undefined;
     newForm.streetAddress1 = model.STREET_ADDRESS_1 ?? undefined;

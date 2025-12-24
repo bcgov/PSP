@@ -195,7 +195,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         } else if (event.type === 'MAP_MARKER_CLICK') {
           result = await locationLoader.loadLocationDetails({
             latLng: event.featureSelected.latlng,
-            pimsPropertyId: event.featureSelected?.pimsLocationFeature?.PROPERTY_ID ?? null,
+            pimsPropertyId: event.featureSelected?.pimsFeature?.PROPERTY_ID ?? null,
           });
           // TODO: verify that this is still needed
           // In the case of the map marker being clicked, we must use the search result properties, as the minimal layer does not have the necessary feature data.

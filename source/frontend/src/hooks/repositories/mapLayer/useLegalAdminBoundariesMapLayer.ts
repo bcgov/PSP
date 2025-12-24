@@ -51,7 +51,7 @@ export const useLegalAdminBoundariesMapLayer = () => {
       const forceCasted = featureCollection as
         | FeatureCollection<Geometry, WHSE_AgriculturalLandReservePoly_Feature_Properties>
         | undefined;
-      return forceCasted !== undefined && forceCasted.features.length > 0
+      return forceCasted !== undefined && forceCasted.features?.length > 0
         ? forceCasted.features[0]
         : undefined;
     },
@@ -85,7 +85,7 @@ export const useLegalAdminBoundariesMapLayer = () => {
       const forceCasted = featureCollection as
         | FeatureCollection<Geometry, WHSE_Municipalities_Feature_Properties>
         | undefined;
-      return forceCasted !== undefined && forceCasted.features.length > 0
+      return forceCasted !== undefined && forceCasted.features?.length > 0
         ? forceCasted.features[0]
         : undefined;
     },
@@ -104,7 +104,7 @@ export const useLegalAdminBoundariesMapLayer = () => {
       const forceCasted = featureCollection as
         | FeatureCollection<Geometry, WHSE_Municipalities_Feature_Properties>
         | undefined;
-      return forceCasted !== undefined && forceCasted.features.length > 0
+      return forceCasted !== undefined && forceCasted.features?.length > 0
         ? forceCasted.features
         : undefined;
     },
@@ -123,7 +123,7 @@ export const useLegalAdminBoundariesMapLayer = () => {
       const forceCasted = featureCollection as
         | FeatureCollection<Geometry, WHSE_Municipalities_Feature_Properties>
         | undefined;
-      return forceCasted !== undefined && forceCasted.features.length > 0
+      return forceCasted !== undefined && forceCasted.features?.length > 0
         ? forceCasted.features
         : undefined;
     },

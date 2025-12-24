@@ -150,7 +150,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
                 properties: {
                   STREET_ADDRESS_1: addressResults[i]?.fullAddress,
                 },
-              } as Feature<Geometry, PIMS_Property_Location_View>);
+              } as Feature<Geometry, PIMS_Property_View>);
         }
         */
         return foundProperty;

@@ -2,9 +2,8 @@ import { SideBarType } from '@/components/common/mapFSM/machineDefinition/types'
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import {
   emptyHighwayFeatures,
-  emptyPimsBoundaryFeatureCollection,
-  emptyPimsLocationFeatureCollection,
-  emptyPimsLocationLiteFeatureCollection,
+  emptyPimsFeatureCollection,
+  emptyPimsLiteFeatureCollection,
   emptyPmbcFeatureCollection,
   emptySurveyedParcelsFeatures,
 } from '@/components/common/mapFSM/models';
@@ -15,9 +14,8 @@ import { initialEnabledLayers } from '@/components/maps/leaflet/Control/LayersCo
 export const mapMachineBaseMock: IMapStateMachineContext = {
   requestFlyToBounds: vi.fn(),
   mapFeatureData: {
-    pimsLocationFeatures: emptyPimsLocationFeatureCollection,
-    pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
-    pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+    pimsFeatures: emptyPimsFeatureCollection,
+    pimsLiteFeatures: emptyPimsLiteFeatureCollection,
     fullyAttributedFeatures: emptyPmbcFeatureCollection,
     surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
     highwayPlanFeatures: emptyHighwayFeatures,

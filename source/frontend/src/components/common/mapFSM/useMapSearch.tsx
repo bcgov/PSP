@@ -15,18 +15,17 @@ import { defaultPropertyFilterCriteria } from '@/models/api/ProjectFilterCriteri
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
 import {
-  emptyPropertyLocation,
+  emptyProperty,
   PIMS_Property_Lite_View,
-  PIMS_Property_Location_View,
-} from '@/models/layers/pimsPropertyLocationView';
+  PIMS_Property_View,
+} from '@/models/layers/pimsPropertyView';
 import { exists } from '@/utils';
 
 import {
   emptyFeatureData,
   emptyHighwayFeatures,
-  emptyPimsBoundaryFeatureCollection,
-  emptyPimsLocationFeatureCollection,
-  emptyPimsLocationLiteFeatureCollection,
+  emptyPimsFeatureCollection,
+  emptyPimsLiteFeatureCollection,
   emptyPmbcFeatureCollection,
   emptySurveyedParcelsFeatures,
   MapFeatureData,
@@ -79,7 +78,7 @@ export const useMapSearch = () => {
           toast.info(`Property found`);
           result = {
             ...emptyFeatureData,
-            pimsBoundaryFeatures: {
+            pimsFeatures: {
               type: 'FeatureCollection',
               features: [pimsPropertyFeature],
             },
@@ -134,9 +133,7 @@ export const useMapSearch = () => {
           );
         }
 
-        let planNumberInventoryData:
-          | FeatureCollection<Geometry, PIMS_Property_Location_View>
-          | undefined;
+        let planNumberInventoryData: FeatureCollection<Geometry, PIMS_Property_View> | undefined;
         try {
           planNumberInventoryData = await loadPropertiesTask;
         } catch {
@@ -160,9 +157,7 @@ export const useMapSearch = () => {
 
         const planHighwayData = await findByHighwayPlanNumberTask;
 
-        const validFeatures = planNumberInventoryData?.features?.filter(
-          feature => !!feature?.geometry,
-        );
+        const validFeatures = planNumberInventoryData?.features?.filter(feature => exists(feature));
 
         const attributedFeatures: FeatureCollection<
           Geometry,
@@ -175,20 +170,17 @@ export const useMapSearch = () => {
                 bbox: planNumberPmbcData?.bbox,
               }
             : null;
-        const validPmbcFeatures = attributedFeatures?.features?.filter(
-          feature => !!feature?.geometry,
-        );
+        const validPmbcFeatures = attributedFeatures?.features?.filter(feature => exists(feature));
 
         result = {
-          pimsLocationFeatures: exists(validFeatures)
+          pimsFeatures: exists(validFeatures)
             ? {
                 type: planNumberInventoryData.type,
                 bbox: planNumberInventoryData.bbox,
                 features: validFeatures,
               }
-            : emptyPimsLocationFeatureCollection,
-          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
-          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+            : emptyPimsFeatureCollection,
+          pimsLiteFeatures: emptyPimsLiteFeatureCollection,
           fullyAttributedFeatures: exists(validPmbcFeatures)
             ? {
                 type: attributedFeatures.type,
@@ -249,15 +241,14 @@ export const useMapSearch = () => {
         );
 
         result = {
-          pimsLocationFeatures: exists(validFeatures)
+          pimsFeatures: exists(validFeatures)
             ? {
                 type: 'FeatureCollection',
                 bbox: bbox({ type: 'FeatureCollection', features: validFeatures }),
                 features: validFeatures,
               }
-            : emptyPimsLocationFeatureCollection,
-          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
-          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+            : emptyPimsFeatureCollection,
+          pimsLiteFeatures: emptyPimsLiteFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           highwayPlanFeatures: emptyHighwayFeatures,
           surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
@@ -282,7 +273,7 @@ export const useMapSearch = () => {
         const loadPropertiesTask = loadPimsProperties(filter);
 
         let historicalNumberInventoryData:
-          | FeatureCollection<Geometry, PIMS_Property_Location_View>
+          | FeatureCollection<Geometry, PIMS_Property_View>
           | undefined;
         try {
           historicalNumberInventoryData = await loadPropertiesTask;
@@ -309,18 +300,17 @@ export const useMapSearch = () => {
           historicalNumberInventoryData?.features &&
           historicalNumberInventoryData?.features?.length > 0
         ) {
-          const validFeatures = historicalNumberInventoryData.features.filter(
-            feature => !!feature?.geometry,
+          const validFeatures = historicalNumberInventoryData.features.filter(feature =>
+            exists(feature),
           );
 
           result = {
-            pimsLocationFeatures: {
+            pimsFeatures: {
               type: historicalNumberInventoryData.type,
               bbox: historicalNumberInventoryData.bbox,
               features: validFeatures,
             },
-            pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
-            pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+            pimsLiteFeatures: emptyPimsLiteFeatureCollection,
             fullyAttributedFeatures: emptyPmbcFeatureCollection,
             surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
             highwayPlanFeatures: emptyHighwayFeatures,
@@ -358,9 +348,8 @@ export const useMapSearch = () => {
         );
 
         result = {
-          pimsLocationFeatures: emptyPimsLocationFeatureCollection,
-          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
-          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          pimsFeatures: emptyPimsFeatureCollection,
+          pimsLiteFeatures: emptyPimsLiteFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           surveyedParcelsFeatures: exists(validCrownSurveyFeatures)
             ? {
@@ -410,9 +399,7 @@ export const useMapSearch = () => {
           findByPidTask = pmbcServiceFindByPid(filter?.PID);
         }
 
-        let pidPinInventoryData:
-          | FeatureCollection<Geometry, PIMS_Property_Location_View>
-          | undefined;
+        let pidPinInventoryData: FeatureCollection<Geometry, PIMS_Property_View> | undefined;
         try {
           pidPinInventoryData = await loadPropertiesTask;
         } catch {
@@ -443,24 +430,19 @@ export const useMapSearch = () => {
           features: [...(pinPmbcData?.features || []), ...(pidPmbcData?.features || [])],
           bbox: pinPmbcData?.bbox || pidPmbcData?.bbox,
         };
-        const validPimsFeatures = pidPinInventoryData.features.filter(
-          feature => !!feature?.geometry,
-        );
+        const validPimsFeatures = pidPinInventoryData.features.filter(feature => exists(feature));
 
         //filter out any pmbc features that do not have geometry, or are part of the pims feature result set.
-        const validPmbcFeatures = attributedFeatures.features.filter(
-          feature => !!feature?.geometry,
-        );
+        const validPmbcFeatures = attributedFeatures.features.filter(feature => exists(feature));
         result = {
-          pimsLocationFeatures: validPimsFeatures.length
+          pimsFeatures: validPimsFeatures.length
             ? {
                 type: pidPinInventoryData.type,
                 bbox: pidPinInventoryData.bbox,
                 features: validPimsFeatures,
               }
-            : emptyPimsLocationFeatureCollection,
-          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
-          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+            : emptyPimsFeatureCollection,
+          pimsLiteFeatures: emptyPimsLiteFeatureCollection,
           fullyAttributedFeatures: validPmbcFeatures
             ? {
                 type: attributedFeatures.type,
@@ -526,7 +508,7 @@ export const useMapSearch = () => {
         );
 
         result = {
-          pimsLocationLiteFeatures: {
+          pimsLiteFeatures: {
             type: pidPinInventoryData.type,
             bbox: pidPinInventoryData.bbox,
             features: validFeatures.map(vf => ({
@@ -534,22 +516,20 @@ export const useMapSearch = () => {
               geometry: vf.geometry ?? vf?.properties?.LOCATION,
               id: vf.id,
               properties: {
-                ...emptyPropertyLocation,
+                ...emptyProperty,
                 ...vf.properties,
               },
             })),
           },
-          pimsLocationFeatures: emptyPimsLocationFeatureCollection,
-          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          pimsFeatures: emptyPimsFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
           highwayPlanFeatures: emptyHighwayFeatures,
         };
       } else {
         result = {
-          pimsLocationFeatures: emptyPimsLocationFeatureCollection,
-          pimsLocationLiteFeatures: emptyPimsLocationFeatureCollection,
-          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          pimsFeatures: emptyPimsFeatureCollection,
+          pimsLiteFeatures: emptyPimsLiteFeatureCollection,
           fullyAttributedFeatures: emptyPmbcFeatureCollection,
           surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
           highwayPlanFeatures: emptyHighwayFeatures,

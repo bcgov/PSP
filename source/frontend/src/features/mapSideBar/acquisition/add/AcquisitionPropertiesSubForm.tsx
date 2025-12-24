@@ -101,7 +101,8 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
         {({ remove, replace }) => (
           <Section header="Selected Properties">
             <AddPropertiesGuide />
-            {exists(selectedFeatureDataset?.parcelFeature) && (
+            {(exists(selectedFeatureDataset?.location) ||
+              exists(selectedFeatureDataset?.parcelFeature)) && (
               <StyledButtonWrapper>
                 <Button onClick={handleAddToSelection}>Add selected property</Button>
               </StyledButtonWrapper>

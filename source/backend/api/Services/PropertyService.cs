@@ -377,7 +377,7 @@ namespace Pims.Api.Services
 
         public void UpdateLocation(PimsProperty incomingProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes, bool allowRetired = false)
         {
-            if (propertyToUpdate.Location == null || propertyToUpdate.Boundary == null)
+            if ((incomingProperty.Location != null || incomingProperty.Boundary != null) && (propertyToUpdate.Location == null || propertyToUpdate.Boundary == null))
             {
                 if (overrideCodes.Contains(UserOverrideCode.AddLocationToProperty))
                 {

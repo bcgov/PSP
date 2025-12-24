@@ -157,22 +157,15 @@ const mapRequestStates = {
             requestedFitBounds: (context: MachineContext) => {
               const fullyAttributedFeatures =
                 context?.mapFeatureData?.fullyAttributedFeatures?.features ?? [];
-              const pimsBoundaryFeatures =
-                context?.mapFeatureData?.pimsBoundaryFeatures?.features ?? [];
-              const pimsLocationFeatures =
-                context?.mapFeatureData?.pimsLocationFeatures?.features ?? [];
+              const pimsFeatures = context?.mapFeatureData?.pimsFeatures?.features ?? [];
 
               // business logic, if there are file properties, use those, otherwise, zoom to a single feature if there is only one, or all features if there are more than one.
-              if (pimsLocationFeatures.length + fullyAttributedFeatures.length === 1) {
+              if (pimsFeatures.length + fullyAttributedFeatures.length === 1) {
                 // if there is exactly one pims or pmbc feature, use that feature
-                const features = [...pimsLocationFeatures, ...fullyAttributedFeatures];
+                const features = [...pimsFeatures, ...fullyAttributedFeatures];
                 return geoJSON(features[0]).getBounds();
               } else {
-                const features = [
-                  ...pimsBoundaryFeatures,
-                  ...pimsLocationFeatures,
-                  ...fullyAttributedFeatures,
-                ];
+                const features = [...pimsFeatures, ...fullyAttributedFeatures];
                 const featureCollection = { features: features } as FeatureCollection<
                   Geometry,
                   any

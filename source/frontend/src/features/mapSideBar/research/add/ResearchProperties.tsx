@@ -90,7 +90,8 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
   return (
     <Section header="Properties to include in this file:">
       <AddPropertiesGuide />
-      {exists(selectedFeatureDataset?.parcelFeature) && (
+      {(exists(selectedFeatureDataset?.location) ||
+        exists(selectedFeatureDataset?.parcelFeature)) && (
         <StyledButtonWrapper>
           <Button onClick={handleAddToSelection}>Add selected property</Button>
         </StyledButtonWrapper>

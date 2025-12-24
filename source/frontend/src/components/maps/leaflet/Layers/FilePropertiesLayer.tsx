@@ -126,8 +126,7 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
                       mapMarkerClickFn({
                         clusterId: 'NO_ID',
                         latlng: draftPoint.location,
-                        pimsLocationFeature: null,
-                        pimsBoundaryFeature: null,
+                        pimsFeature: null,
                         fullyAttributedFeature: null,
                       });
                     },

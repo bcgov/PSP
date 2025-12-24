@@ -627,6 +627,13 @@ exports[`DispositionPropertiesSubForm component > renders as expected 1`] = `
           </div>
         </div>
         <div
+          class="py-3 no-gutters row"
+        >
+          <div
+            class="col"
+          />
+        </div>
+        <div
           class="c12 no-gutters row"
         >
           <div

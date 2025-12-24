@@ -102,7 +102,8 @@ const ManagementPropertiesSubForm: React.FunctionComponent<ManagementPropertiesS
         {({ remove }) => (
           <Section header="Selected Properties">
             <AddPropertiesGuide />
-            {exists(selectedFeatureDataset?.parcelFeature) && (
+            {(exists(selectedFeatureDataset?.location) ||
+              exists(selectedFeatureDataset?.parcelFeature)) && (
               <StyledButtonWrapper>
                 <Button onClick={handleAddToSelection}>Add selected property</Button>
               </StyledButtonWrapper>
