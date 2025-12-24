@@ -17,7 +17,7 @@ import {
   stringToNull,
   toTypeCodeNullable,
 } from '@/utils/formUtils';
-import { exists } from '@/utils/utils';
+import { exists, isValidIsoDateTime } from '@/utils/utils';
 
 import { PropertyAnomalyFormModel, PropertyRoadFormModel, PropertyTenureFormModel } from '.';
 import { PropertyTenureCleanupFormModel } from './PropertyTenureCleanupFormModel';
@@ -187,6 +187,10 @@ export class UpdatePropertyDetailsFormModel {
   electoralDistrict?: GeoJsonProperties;
   firstNations?: GeoJsonProperties;
 
+  surplusDeclarationType: string | null = null;
+  surplusDeclarationDate: string | null = null;
+  suplusDelarationComment: string | null = null;
+
   static fromApi(base: ApiGen_Concepts_Property): UpdatePropertyDetailsFormModel {
     const model = new UpdatePropertyDetailsFormModel();
     model.id = base.id;
@@ -236,6 +240,12 @@ export class UpdatePropertyDetailsFormModel {
     model.regionTypeCode = fromTypeCode(base.region) ?? undefined;
     model.regionTypeCodeDescription = base.region?.description ?? undefined;
 
+    model.surplusDeclarationType = fromTypeCode(base.surplusDeclarationType);
+    model.surplusDeclarationDate = isValidIsoDateTime(base.surplusDeclarationDate)
+      ? base.surplusDeclarationDate
+      : null;
+    model.suplusDelarationComment = base.surplusDeclarationComment ?? '';
+
     model.isOwned = base.isOwned;
 
     // multi-selects
@@ -274,6 +284,11 @@ export class UpdatePropertyDetailsFormModel {
       region: toTypeCodeNullable(this.regionTypeCode),
       address: exists(this.address) ? this.address.toApi() : null,
       generalLocation: stringToNull(this.generalLocation),
+      surplusDeclarationType: toTypeCodeNullable(this.surplusDeclarationType),
+      surplusDeclarationDate: isValidIsoDateTime(this.surplusDeclarationDate)
+        ? this.surplusDeclarationDate
+        : null,
+      surplusDeclarationComment: this.suplusDelarationComment ? this.suplusDelarationComment : null,
       isOwned: this.isOwned,
       // multi-selects
       anomalies: this.anomalies?.map(e => e.toApi()) ?? null,
@@ -287,10 +302,8 @@ export class UpdatePropertyDetailsFormModel {
       pphStatusUpdateUserid: null,
       pphStatusUpdateTimestamp: null,
       pphStatusUpdateUserGuid: null,
-      surplusDeclarationType: null,
-      surplusDeclarationComment: null,
+
       historicalFileNumbers: null,
-      surplusDeclarationDate: EpochIsoDateTime,
     };
   }
 }

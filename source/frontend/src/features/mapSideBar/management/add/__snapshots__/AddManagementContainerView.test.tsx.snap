@@ -224,6 +224,28 @@ exports[`Add Management Container View > matches snapshot 1`] = `
   font-size: 2.4rem;
 }
 
+.c29 .react-datepicker__calendar-icon {
+  width: 2.4rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  margin-right: 1.2rem;
+  right: 0;
+  fill: var(--surface-color-primary-button-default);
+  pointer-events: none;
+}
+
+.c29 .react-datepicker__view-calendar-icon input {
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
+}
+
+.c30.c30.form-control.is-valid {
+  background-image: none;
+}
+
+.c30.c30.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
 .c1 {
   color: #474543;
   font-family: 'BCSans-Bold';
@@ -333,7 +355,7 @@ exports[`Add Management Container View > matches snapshot 1`] = `
   align-items: end;
 }
 
-.c29 {
+.c31 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -1204,6 +1226,67 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                 </button>
               </div>
             </div>
+            <div
+              class="c13 form-section"
+            >
+              <h2
+                class="c14"
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="align-content-end col"
+                  >
+                    Notice of Claim
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="c29 form-group"
+                >
+                  <div
+                    class="react-datepicker-wrapper d-block"
+                  >
+                    <div
+                      class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                    >
+                      <svg
+                        class="react-datepicker__calendar-icon"
+                        viewBox="0 0 448 512"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                        />
+                      </svg>
+                      <input
+                        autocomplete="off"
+                        class="c30 form-control date-picker"
+                        id="datepicker-noticeOfClaim.receivedDate"
+                        name="noticeOfClaim.receivedDate"
+                        placeholder="MMM DD, YYYY"
+                        type="text"
+                        value=""
+                      />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="textarea input form-group"
+                >
+                  <textarea
+                    class="form-control"
+                    id="input-noticeOfClaim.comment"
+                    name="noticeOfClaim.comment"
+                    style="word-break: break-all;"
+                  />
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -1211,7 +1294,7 @@ exports[`Add Management Container View > matches snapshot 1`] = `
         class=""
       >
         <div
-          class="c29 justify-content-end pt-4 p-0 no-gutters row"
+          class="c31 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"
