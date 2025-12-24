@@ -73,6 +73,37 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
   const sortedProperties = sortFileProperties(file?.fileProperties ?? []);
   const isSummary = useMemo(() => !exists(currentFilePropertyId), [currentFilePropertyId]);
 
+  const renderPropertyIcon = (
+    fileProperty: ApiGen_Concepts_FileProperty,
+    filePropertyIndex: number | null,
+  ) => {
+    if (!exists(filePropertyIndex)) {
+      return null;
+    }
+
+    if (fileProperty?.property?.isRetired) {
+      return (
+        <StyledDisabledIconWrapper>
+          {sortedProperties.indexOf(fileProperty) + 1}
+        </StyledDisabledIconWrapper>
+      );
+    }
+
+    if (fileProperty?.isActive !== false) {
+      return (
+        <StyledIconWrapper
+          className={cx({
+            selected: currentFilePropertyId === fileProperty?.id,
+          })}
+        >
+          {filePropertyIndex}
+        </StyledIconWrapper>
+      );
+    }
+
+    return <StyledDisabledIconWrapper>{filePropertyIndex}</StyledDisabledIconWrapper>;
+  };
+
   const activeProperties = [];
   const inactiveProperties = [];
   const retiredProperties = [];
@@ -169,25 +200,7 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                             {currentFilePropertyId === fileProperty?.id && <FaCaretRight />}
                           </div>
 
-                          <div>
-                            {filePropertyIndex) &&fileProperty?.property?.isRetired ? (
-                              <StyledDisabledIconWrapper>
-                                {sortedProperties.indexOf(fileProperty) + 1}
-                              </StyledDisabledIconWrapper>
-                            ) : fileProperty?.isActive !== false ? (
-                                <StyledIconWrapper
-                                  className={cx({
-                                    selected: currentFilePropertyId === fileProperty?.id,
-                                  })}
-                                >
-                                  {filePropertyIndex}
-                                </StyledIconWrapper>
-                              ) : (
-                                <StyledDisabledIconWrapper>
-                                  {filePropertyIndex}
-                                </StyledDisabledIconWrapper>
-                              ))}
-                          </div>
+                          <div>{renderPropertyIcon(fileProperty, filePropertyIndex)}</div>
 
                           <OverflowTip>
                             {currentFilePropertyId === fileProperty?.id ? (
