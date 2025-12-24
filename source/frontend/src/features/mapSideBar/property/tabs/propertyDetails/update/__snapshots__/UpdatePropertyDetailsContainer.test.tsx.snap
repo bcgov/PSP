@@ -2729,6 +2729,7 @@ exports[`UpdatePropertyDetailsContainer component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Surplus Declaration
             </div>

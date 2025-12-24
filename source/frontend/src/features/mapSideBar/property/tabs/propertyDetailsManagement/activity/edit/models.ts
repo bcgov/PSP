@@ -66,6 +66,12 @@ export class ActivityInvoiceFormModel {
   managementActivity = '';
   rowVersion = 0;
 
+  constructor(responsiblePayerSet: boolean = null) {
+    if (exists(responsiblePayerSet)) {
+      this.isPaymentForwarded = responsiblePayerSet;
+    }
+  }
+
   toApi(managementActivityId: number): ApiGen_Concepts_ManagementActivityInvoice {
     return {
       id: this.id,
