@@ -94,7 +94,6 @@ namespace Pims.Api.Areas.Management.Models.Search
             this.ManagementFilePurposeCode = filter.GetStringValue(nameof(this.ManagementFilePurposeCode));
             this.TeamMemberPersonId = filter.GetLongNullValue(nameof(this.TeamMemberPersonId));
             this.TeamMemberOrganizationId = filter.GetLongNullValue(nameof(this.TeamMemberOrganizationId));
-            this.ManagementRegionCd = filter.GetLongNullValue(nameof(this.ManagementRegionCd));
 
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
         }
@@ -123,7 +122,6 @@ namespace Pims.Api.Areas.Management.Models.Search
                 ManagementFilePurposeCode = model.ManagementFilePurposeCode,
                 TeamMemberPersonId = model.TeamMemberPersonId,
                 TeamMemberOrganizationId = model.TeamMemberOrganizationId,
-                ManagementRegionCode = model.ManagementRegionCd,
 
                 Sort = model.Sort,
             };

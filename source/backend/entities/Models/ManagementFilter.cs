@@ -40,11 +40,6 @@ namespace Pims.Dal.Entities.Models
         public string ManagementFilePurposeCode { get; set; }
 
         /// <summary>
-        /// get/set - The region of the management file.
-        /// </summary>
-        public long? ManagementRegionCode { get; set; }
-
-        /// <summary>
         /// get/set - The MOTI project name or the project number, search for both simultaneously.
         /// </summary>
         public string ProjectNameOrNumber { get; set; }

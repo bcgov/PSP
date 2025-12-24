@@ -467,11 +467,6 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(disp => disp.PimsManagementFileTeams.Any(x => x.OrganizationId == filter.TeamMemberOrganizationId.Value));
             }
 
-            if (filter.ManagementRegionCode.HasValue)
-            {
-                predicate = predicate.And(disp => disp.RegionCode == filter.ManagementRegionCode);
-            }
-
             var query = this.Context.PimsManagementFiles.AsNoTracking()
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.Project)

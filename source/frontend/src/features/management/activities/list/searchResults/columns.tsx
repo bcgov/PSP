@@ -65,7 +65,7 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
     accessor: 'regionCodes',
     align: 'left',
     clickable: true,
-    sortable: true,
+    sortable: false,
     width: 20,
     maxWidth: 40,
   },
