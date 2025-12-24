@@ -1,3 +1,5 @@
+import { uniq } from 'lodash';
+
 import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { ApiGen_Concepts_ManagementActivityProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementActivityProperty';
 import { ApiGen_Concepts_ManagementActivitySubType } from '@/models/api/generated/ApiGen_Concepts_ManagementActivitySubType';
@@ -16,6 +18,7 @@ export class ManagementActivitySearchResultModel {
   description = '';
   properties: ApiGen_Concepts_Property[] = [];
   activivityProperty: ApiGen_Concepts_ManagementActivityProperty | null;
+  regionCodes: string[] = [];
 
   static fromApi(base: ApiGen_Concepts_ManagementActivity): ManagementActivitySearchResultModel {
     const newModel = new ManagementActivitySearchResultModel();
@@ -32,6 +35,9 @@ export class ManagementActivitySearchResultModel {
     newModel.activityStatus = base.activityStatusTypeCode?.description ?? '';
     newModel.description = base.description ?? '';
     newModel.activivityProperty = base.activityProperties ? base.activityProperties[0] : null;
+    newModel.regionCodes = base.managementFile?.regionCode?.description
+      ? [base.managementFile?.regionCode?.description]
+      : uniq(base.activityProperties.map(ap => ap?.property?.region?.description).filter(x => x));
 
     return newModel;
   }

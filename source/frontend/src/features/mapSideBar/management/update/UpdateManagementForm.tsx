@@ -2,11 +2,18 @@ import { Formik, FormikHelpers, FormikProps } from 'formik';
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 
-import { ProjectSelector, Select, SelectOption } from '@/components/common/form';
+import {
+  FastDatePicker,
+  ProjectSelector,
+  Select,
+  SelectOption,
+  TextArea,
+} from '@/components/common/form';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { Input } from '@/components/common/form/Input';
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
+import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -175,10 +182,21 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
                 <SectionField label="Additional details">
                   <Input field="additionalDetails" disabled={!canEditDetails} />
                 </SectionField>
+                <SectionField label="Ministry region" required>
+                  <UserRegionSelectContainer
+                    field="regionCode"
+                    placeholder="Select region..."
+                    required
+                  />
+                </SectionField>
               </Section>
 
               <Section header="Management Team">
                 <ManagementTeamSubForm canEditDetails={canEditDetails} />
+              </Section>
+              <Section header="Notice of Claim">
+                <FastDatePicker formikProps={formikProps} field="noticeOfClaim.receivedDate" />
+                <TextArea field="noticeOfClaim.comment" />
               </Section>
             </Container>
           </>

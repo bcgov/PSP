@@ -473,6 +473,14 @@ const AddAcquisitionDetailSubForm: React.FC<{
             ></TextArea>
           </SectionField>
         </Section>
+        <Section header="Notice of Claim">
+          <SectionField label="Received date">
+            <FastDatePicker formikProps={formikProps} field="noticeOfClaim.receivedDate" />
+          </SectionField>
+          <SectionField label="Comment">
+            <TextArea field="noticeOfClaim.comment" />
+          </SectionField>
+        </Section>
       </Container>
 
       <TeamMemberFormModal

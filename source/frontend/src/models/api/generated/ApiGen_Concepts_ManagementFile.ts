@@ -8,6 +8,7 @@ import { ApiGen_Concepts_ManagementFileProperty } from './ApiGen_Concepts_Manage
 import { ApiGen_Concepts_ManagementFileTeam } from './ApiGen_Concepts_ManagementFileTeam';
 import { ApiGen_Concepts_Organization } from './ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from './ApiGen_Concepts_Person';
+import { ApiGen_Concepts_NoticeOfClaim } from './ApiGen_Concepts_NoticeOfClaim';
 import { ApiGen_Concepts_Product } from './ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
 
@@ -16,6 +17,7 @@ export interface ApiGen_Concepts_ManagementFile extends ApiGen_Concepts_File {
   filePurpose: string | null;
   additionalDetails: string | null;
   legacyFileNum: string | null;
+  regionCode: ApiGen_Base_CodeType<number> | null;
   projectId: number | null;
   project: ApiGen_Concepts_Project | null;
   productId: number | null;
@@ -30,4 +32,5 @@ export interface ApiGen_Concepts_ManagementFile extends ApiGen_Concepts_File {
   responsiblePayerPrimaryContact: ApiGen_Concepts_Person | null;
   fileProperties: ApiGen_Concepts_ManagementFileProperty[] | null;
   managementTeam: ApiGen_Concepts_ManagementFileTeam[] | null;
+  noticeOfClaim: ApiGen_Concepts_NoticeOfClaim[] | null;
 }

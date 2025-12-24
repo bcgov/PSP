@@ -250,6 +250,28 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
   font-size: 2.4rem;
 }
 
+.c11 .react-datepicker__calendar-icon {
+  width: 2.4rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  margin-right: 1.2rem;
+  right: 0;
+  fill: var(--surface-color-primary-button-default);
+  pointer-events: none;
+}
+
+.c11 .react-datepicker__view-calendar-icon input {
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
+}
+
+.c12.c12.form-control.is-valid {
+  background-image: none;
+}
+
+.c12.c12.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
 .c6 {
   position: relative;
   border-radius: 0.4rem;
@@ -880,6 +902,46 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
             </div>
           </div>
         </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c2"
+            >
+              Ministry region:
+            </label>
+          </div>
+          <div
+            class="c3 required text-left col"
+          >
+            <div
+              class="required d-flex form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-regionCode"
+                name="regionCode"
+                required=""
+              >
+                <option
+                  value=""
+                >
+                  Select region...
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-1"
+                  value="1"
+                >
+                  South Coast Region
+                </option>
+              </select>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div
@@ -1251,6 +1313,68 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
             + Add another team member
           </div>
         </button>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+            style="overflow: hidden;"
+          >
+            Notice of Claim
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="c11 form-group"
+        >
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+            >
+              <svg
+                class="react-datepicker__calendar-icon"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                />
+              </svg>
+              <input
+                autocomplete="off"
+                class="c12 form-control date-picker"
+                id="datepicker-noticeOfClaim.receivedDate"
+                name="noticeOfClaim.receivedDate"
+                placeholder="MMM DD, YYYY"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="textarea input form-group"
+        >
+          <textarea
+            class="form-control"
+            id="input-noticeOfClaim.comment"
+            name="noticeOfClaim.comment"
+            style="word-break: break-all;"
+          />
+        </div>
       </div>
     </div>
   </div>

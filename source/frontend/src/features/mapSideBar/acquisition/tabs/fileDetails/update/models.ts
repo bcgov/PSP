@@ -1,9 +1,12 @@
+import { first } from 'lodash';
+
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { ChecklistItemFormModel } from '@/features/mapSideBar/shared/tabs/checklist/update/models';
 import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { ApiGen_Concepts_NoticeOfClaim } from '@/models/api/generated/ApiGen_Concepts_NoticeOfClaim';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { fromTypeCode, fromTypeCodeNullable, toTypeCodeNullable } from '@/utils/formUtils';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
@@ -72,6 +75,7 @@ export class UpdateAcquisitionSummaryFormModel
   ];
   otherInterestHolders: ApiGen_Concepts_InterestHolder[] = [];
   legacyStakeholders: string[] = [];
+  noticeOfClaim: ApiGen_Concepts_NoticeOfClaim;
 
   toApi(): ApiGen_Concepts_AcquisitionFile {
     return {
@@ -137,6 +141,7 @@ export class UpdateAcquisitionSummaryFormModel
       product: null,
       project: null,
       totalAllowableCompensation: null,
+      noticeOfClaim: exists(this.noticeOfClaim) ? [this.noticeOfClaim] : [],
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
@@ -201,6 +206,7 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.ownerRepresentatives = interestHolders?.filter(
       x => x.interestTypeCode === InterestHolderType.OWNER_REPRESENTATIVE,
     ) ?? [new InterestHolderForm(InterestHolderType.OWNER_REPRESENTATIVE, model.id)];
+    newForm.noticeOfClaim = exists(model.noticeOfClaim) ? first(model.noticeOfClaim) : null;
 
     newForm.otherInterestHolders =
       model.acquisitionFileInterestHolders?.filter(

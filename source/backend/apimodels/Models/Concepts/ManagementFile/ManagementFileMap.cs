@@ -1,5 +1,7 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using Mapster;
+using Pims.Api.Models.Concepts.NoticeOfClaim;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.ManagementFile
@@ -14,6 +16,7 @@ namespace Pims.Api.Models.Concepts.ManagementFile
                 .Map(dest => dest.FileName, src => src.FileName)
                 .Map(dest => dest.AdditionalDetails, src => src.AdditionalDetails)
                 .Map(dest => dest.FilePurpose, src => src.FilePurpose)
+                .Map(dest => dest.RegionCode, src => src.RegionCodeNavigation)
                 .Map(dest => dest.LegacyFileNum, src => src.LegacyFileNum)
                 .Map(dest => dest.ProjectId, src => src.ProjectId)
                 .Map(dest => dest.Project, src => src.Project)
@@ -29,7 +32,8 @@ namespace Pims.Api.Models.Concepts.ManagementFile
                 .Map(dest => dest.ResponsiblePayerPrimaryContactId, src => src.ResponsiblePayerPrimaryContactId)
                 .Map(dest => dest.ResponsiblePayerPrimaryContact, src => src.ResponsiblePayerPrimaryContact)
                 .Map(dest => dest.ManagementTeam, src => src.PimsManagementFileTeams)
-                .Map(dest => dest.FileProperties, src => src.PimsManagementFileProperties);
+                .Map(dest => dest.FileProperties, src => src.PimsManagementFileProperties)
+                .Map(dest => dest.NoticeOfClaim, src => src.PimsNoticeOfClaims);
 
             config.NewConfig<ManagementFileModel, Entity.PimsManagementFile>()
                 .PreserveReference(true)
@@ -37,6 +41,7 @@ namespace Pims.Api.Models.Concepts.ManagementFile
                 .Map(dest => dest.FileName, src => src.FileName)
                 .Map(dest => dest.AdditionalDetails, src => src.AdditionalDetails)
                 .Map(dest => dest.FilePurpose, src => src.FilePurpose)
+                .Map(dest => dest.RegionCode, src => src.RegionCode.Id)
                 .Map(dest => dest.LegacyFileNum, src => src.LegacyFileNum)
                 .Map(dest => dest.ProjectId, src => src.ProjectId)
                 .Map(dest => dest.ProductId, src => src.ProductId)
@@ -47,7 +52,8 @@ namespace Pims.Api.Models.Concepts.ManagementFile
                 .Map(dest => dest.AcquisitionFundingTypeCode, src => src.FundingTypeCode != null ? src.FundingTypeCode.Id : null)
                 .Map(dest => dest.ManagementFilePurposeTypeCode, src => src.PurposeTypeCode != null ? src.PurposeTypeCode.Id : null)
                 .Map(dest => dest.PimsManagementFileTeams, src => src.ManagementTeam)
-                .Map(dest => dest.PimsManagementFileProperties, src => src.FileProperties.ToImmutableList());
+                .Map(dest => dest.PimsManagementFileProperties, src => src.FileProperties.ToImmutableList())
+                .Map(dest => dest.PimsNoticeOfClaims, src => src.NoticeOfClaim == null ? new List<NoticeOfClaimModel>() : src.NoticeOfClaim);
         }
     }
 }
