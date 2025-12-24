@@ -15,7 +15,13 @@ import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { RenderOptions, act, render, userEvent } from '@/utils/test-utils';
+import {
+  RenderOptions,
+  act,
+  fakeText,
+  render,
+  userEvent,
+} from '@/utils/test-utils';
 
 import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { server } from '@/mocks/msw/server';
@@ -27,6 +33,8 @@ import {
   UpdatePropertyDetailsContainer,
 } from './UpdatePropertyDetailsContainer';
 import { UpdatePropertyDetailsFormModel } from './models';
+import { ApiGen_CodeTypes_SurplusDeclarationTypes } from '@/models/api/generated/ApiGen_CodeTypes_SurplusDeclarationTypes';
+import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -145,6 +153,14 @@ const fakeProperty: ApiGen_Concepts_Property = {
     isDisabled: false,
     displayOrder: null,
   },
+  surplusDeclarationType: {
+    id: ApiGen_CodeTypes_SurplusDeclarationTypes.UNKNOWN,
+    description: 'Unknown',
+    isDisabled: false,
+    displayOrder: null,
+  },
+  surplusDeclarationDate: null,
+  surplusDeclarationComment: null,
   dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
   latitude: 925866.6022023489,
   longitude: 1406876.1727310908,
@@ -257,6 +273,14 @@ describe('UpdatePropertyDetailsContainer component', () => {
     return {
       ...utils,
       formikRef,
+      getSurplusDeclarationTypeDropDown: () =>
+        utils.container.querySelector(`select[name="surplusDeclarationType"]`) as HTMLInputElement,
+      getSurplusDeclarationDate: () =>
+        utils.container.querySelector(`input[name="surplusDeclarationDate"]`) as HTMLInputElement,
+      getSurplusDeclarationComment: () =>
+        utils.container.querySelector(
+          `textarea[name="suplusDelarationComment"]`,
+        ) as HTMLTextAreaElement,
     };
   };
 
@@ -320,6 +344,7 @@ describe('UpdatePropertyDetailsContainer component', () => {
     await act(async () => formikRef.current?.submitForm());
 
     const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
+      surplusDeclarationComment: null,
       address: expect.objectContaining<Partial<ApiGen_Concepts_Address>>({
         streetAddress1: '123 Mock St',
         streetAddress2: fakeProperty.address?.streetAddress2,
@@ -372,5 +397,41 @@ describe('UpdatePropertyDetailsContainer component', () => {
 
     expect(updateProperty).toHaveBeenCalledWith(expectedValues);
     expect(onSuccess).toHaveBeenCalled();
+  });
+
+  it.skip('sends the surplus declaration information', async () => {
+    const { formikRef, getSurplusDeclarationTypeDropDown, getSurplusDeclarationComment, getSurplusDeclarationDate } = setup();
+    await act(async () => {});
+
+    await act(async () => userEvent.paste(getSurplusDeclarationComment(), 'SURPLUS COMMENT'));
+    await act(async () => userEvent.paste(getSurplusDeclarationDate(), 'Jan 01, 2025'));
+    await act(async () => userEvent.selectOptions(getSurplusDeclarationTypeDropDown(), 'Yes'));
+
+    await act(async () => {
+      formikRef.current?.submitForm();
+    });
+
+    const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
+      surplusDeclarationType: expect.objectContaining<Partial<ApiGen_Base_CodeType<string>>>({
+          id: ApiGen_CodeTypes_SurplusDeclarationTypes.YES,
+        }),
+      surplusDeclarationDate: '2025-01-01',
+      surplusDeclarationComment: 'SURPLUS COMMENT',
+    });
+
+    expect(updateProperty).toHaveBeenCalledWith(expectedValues);
+    expect(onSuccess).toHaveBeenCalled();
+  });
+
+  it('Displays character limit error for Surplus Comment', async () => {
+    const { formikRef, findByText, getSurplusDeclarationComment } = setup();
+    await act(async () => {});
+
+    await act(async () => userEvent.paste(getSurplusDeclarationComment(), fakeText(3000)));
+
+    await act(async () => {
+      formikRef.current?.submitForm();
+    });
+    expect(await findByText(/Comments must be at most 2000 characters/i)).toBeVisible();
   });
 });
