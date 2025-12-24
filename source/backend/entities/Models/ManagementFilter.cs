@@ -15,6 +15,11 @@ namespace Pims.Dal.Entities.Models
         public string Pin { get; set; }
 
         /// <summary>
+        /// get/set - The region to search by.
+        /// </summary>
+        public string RegionCode { get; set; }
+
+        /// <summary>
         /// get/set - The address to search by.
         /// </summary>
         public string Address { get; set; }

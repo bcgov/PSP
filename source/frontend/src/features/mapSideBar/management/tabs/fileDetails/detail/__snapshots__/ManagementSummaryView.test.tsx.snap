@@ -306,6 +306,22 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
             ADDITIONAL DETAILS
           </div>
         </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-5"
+          >
+            <label
+              class="c3"
+            >
+              Ministry region:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          />
+        </div>
       </div>
     </div>
     <div

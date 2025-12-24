@@ -18,6 +18,7 @@ export class ManagementFormModel implements WithManagementTeam {
   filePurpose: string | null = '';
   legacyFileNum: string | null = '';
   fileStatusTypeCode: string | null = null;
+  regionCode: string | null = null;
   project: IAutocompletePrediction | null = null;
   productId: string | null = null;
   fundingTypeCode: string | null = null;
@@ -47,6 +48,7 @@ export class ManagementFormModel implements WithManagementTeam {
       filePurpose: this.filePurpose ?? null,
       fileNumber: this.fileNumber ?? null,
       legacyFileNum: this.legacyFileNum ?? null,
+      regionCode: exists(this.regionCode) ? toTypeCodeNullable(Number(this.regionCode)) : null,
       fileStatusTypeCode: toTypeCodeNullable(this.fileStatusTypeCode),
       totalAllowableCompensation: null,
       project: null,
@@ -90,6 +92,7 @@ export class ManagementFormModel implements WithManagementTeam {
     managementForm.fundingTypeCode = fromTypeCode(model.fundingTypeCode) ?? '';
     managementForm.purposeTypeCode = fromTypeCode(model.purposeTypeCode) ?? '';
     managementForm.fileName = model.fileName ?? '';
+    managementForm.regionCode = fromTypeCode(model.regionCode)?.toString() ?? '';
     managementForm.team =
       model.managementTeam?.map(x => ManagementTeamSubFormModel.fromApi(x)) || [];
     managementForm.fileProperties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];

@@ -127,6 +127,9 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
         >
           {managementFile.additionalDetails}
         </SectionField>
+        <SectionField label="Ministry region" labelWidth={{ xs: '5' }}>
+          {managementFile?.regionCode?.description}
+        </SectionField>
       </Section>
 
       <Section
