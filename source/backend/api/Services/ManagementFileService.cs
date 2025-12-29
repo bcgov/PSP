@@ -30,6 +30,7 @@ namespace Pims.Api.Services
         private readonly IManagementFileStatusSolver _managementStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly IManagementActivityRepository _managementActivityRepository;
+        private readonly IFilePropertyLocationUpdateSolver _propertyLocationSolver;
 
         public ManagementFileService(
             ClaimsPrincipal user,
@@ -42,7 +43,8 @@ namespace Pims.Api.Services
             INoteRelationshipRepository<PimsManagementFileNote> entityNoteRepository,
             IManagementFileStatusSolver managementStatusSolver,
             IPropertyOperationService propertyOperationService,
-            IManagementActivityRepository managementActivityRepository)
+            IManagementActivityRepository managementActivityRepository,
+            IFilePropertyLocationUpdateSolver propertyLocationSolver)
         {
             _user = user;
             _logger = logger;
@@ -55,6 +57,7 @@ namespace Pims.Api.Services
             _managementStatusSolver = managementStatusSolver;
             _propertyOperationService = propertyOperationService;
             _managementActivityRepository = managementActivityRepository;
+            _propertyLocationSolver = propertyLocationSolver;
         }
 
         public PimsManagementFile Add(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> userOverrides)
@@ -223,11 +226,15 @@ namespace Pims.Api.Services
                         needsUpdate = true;
                     }
 
-                    var incomingGeom = incomingManagementProperty.Location;
-                    var existingGeom = existingProperty.Location;
-                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    if (_propertyLocationSolver.CanEditFilePropertyLocation(incomingManagementProperty, existingProperty))
                     {
                         _propertyService.UpdateFilePropertyLocation(incomingManagementProperty, existingProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (_propertyLocationSolver.CanEditFilePropertyBoundary(incomingManagementProperty, existingProperty))
+                    {
+                        _propertyService.UpdateFilePropertyBoundary(incomingManagementProperty, existingProperty);
                         needsUpdate = true;
                     }
 

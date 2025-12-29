@@ -26,6 +26,7 @@ namespace Pims.Api.Services
         private readonly IPropertyService _propertyService;
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly IResearchStatusSolver _researchStatusSolver;
+        private readonly IFilePropertyLocationUpdateSolver _propertyLocationSolver;
 
         public ResearchFileService(
             ClaimsPrincipal user,
@@ -37,7 +38,8 @@ namespace Pims.Api.Services
             INoteRelationshipRepository<PimsResearchFileNote> entityNoteRepository,
             IPropertyService propertyService,
             IPropertyOperationService propertyOperationService,
-            IResearchStatusSolver researchStatusSolver)
+            IResearchStatusSolver researchStatusSolver,
+            IFilePropertyLocationUpdateSolver propertyLocationSolver)
         {
             _user = user;
             _logger = logger;
@@ -49,6 +51,7 @@ namespace Pims.Api.Services
             _propertyService = propertyService;
             _propertyOperationService = propertyOperationService;
             _researchStatusSolver = researchStatusSolver;
+            _propertyLocationSolver = propertyLocationSolver;
         }
 
         public PimsResearchFile GetById(long id)
@@ -156,11 +159,15 @@ namespace Pims.Api.Services
                         needsUpdate = true;
                     }
 
-                    var incomingGeom = incomingResearchProperty.Location;
-                    var existingGeom = existingProperty.Location;
-                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    if (_propertyLocationSolver.CanEditFilePropertyLocation(incomingResearchProperty, existingProperty))
                     {
                         _propertyService.UpdateFilePropertyLocation(incomingResearchProperty, existingProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (_propertyLocationSolver.CanEditFilePropertyBoundary(incomingResearchProperty, existingProperty))
+                    {
+                        _propertyService.UpdateFilePropertyBoundary(incomingResearchProperty, existingProperty);
                         needsUpdate = true;
                     }
 

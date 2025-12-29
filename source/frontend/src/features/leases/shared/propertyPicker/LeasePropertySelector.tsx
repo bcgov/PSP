@@ -13,10 +13,15 @@ import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { ModalContext } from '@/contexts/modalContext';
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import AddPropertiesGuide from '@/features/mapSideBar/shared/update/properties/AddPropertiesGuide';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { exists, featuresetToLocationBoundaryDataset, firstOrNull } from '@/utils';
-import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
+import {
+  addPropertiesToCurrentFile,
+  addShapeToProperty,
+  removeShapeFromPropertyWithConfirmation,
+} from '@/utils/propertyUtils';
 
 import { LeaseFormModel } from '../../models';
 import SelectedPropertyHeaderRow from './selectedPropertyList/SelectedPropertyHeaderRow';
@@ -177,8 +182,25 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
                       onRemove={() => onRemoveClick(index)}
                       nameSpace={`properties.${index}`}
                       index={index}
-                      property={property.toFeatureDataset()}
+                      property={property}
                       showSeparator={index < formikProps.values.properties.length - 1}
+                      canUploadShapefile={true}
+                      onUploadShapefile={(result: UploadResponseModel | null) => {
+                        const updatedFormProperty = addShapeToProperty(property, result);
+                        leaseProperty.property = updatedFormProperty;
+                        arrayHelpers.replace(index, leaseProperty);
+                      }}
+                      onRemoveShapefile={() => {
+                        removeShapeFromPropertyWithConfirmation(
+                          property,
+                          setModalContent,
+                          setDisplayModal,
+                          updatedProperty => {
+                            leaseProperty.property = updatedProperty;
+                            arrayHelpers.replace(index, leaseProperty);
+                          },
+                        );
+                      }}
                     />
                   );
                 }

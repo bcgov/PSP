@@ -847,7 +847,6 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
             </div>
           </div>
         </div>
-        <div />
         <div
           class="c13 align-items-center mb-3 no-gutters row"
         >
@@ -1069,7 +1068,6 @@ exports[`AcquisitionProperties component > renders as expected 1`] = `
             </div>
           </div>
         </div>
-        <div />
       </div>
     </div>
   </div>

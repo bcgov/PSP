@@ -34,8 +34,9 @@ vi.mocked(ShapeUploadModal).mockImplementation((props: IShapeUploadModalProps) =
           const fakeResult = new UploadResponseModel('fakefile.shp');
           fakeResult.isSuccess = true;
           fakeResult.boundary = getMockPolygon();
-
-          props.onClose && props.onClose(fakeResult);
+          if (typeof props.onClose === 'function') {
+            props.onClose(fakeResult);
+          }
         }}
       >
         close
@@ -57,20 +58,21 @@ describe('SelectedPropertyRow component', () => {
         initialValues={{
           properties: [
             exists(renderOptions.props?.property)
-              ? PropertyForm.fromFeatureDataset(renderOptions.props?.property)
+              ? renderOptions.props?.property
               : new PropertyForm(),
           ],
         }}
       >
         {() => (
           <SelectedPropertyRow
-            property={renderOptions.props?.property ?? new PropertyForm().toFeatureDataset()}
+            property={renderOptions.props?.property ?? new PropertyForm()}
             index={renderOptions.props?.index ?? 0}
             onRemove={onRemove}
             showDisable={renderOptions.props?.showDisable ?? false}
             nameSpace="properties.0"
             canUploadShapefile={renderOptions.props?.canUploadShapefile ?? false}
             onUploadShapefile={renderOptions.props?.onUploadShapefile ?? vi.fn()}
+            onRemoveShapefile={renderOptions.props?.onRemoveShapefile ?? vi.fn()}
           />
         )}
       </Formik>,
@@ -116,7 +118,7 @@ describe('SelectedPropertyRow component', () => {
         PID_PADDED: '111-111-111',
       },
     };
-    await setup({ props: { property: mockFeatureSet } });
+    await setup({ props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet) } });
     expect(screen.getByText('PID: 111-111-111')).toBeVisible();
   });
 
@@ -131,7 +133,7 @@ describe('SelectedPropertyRow component', () => {
         PIN: 1234,
       },
     };
-    await setup({ props: { property: mockFeatureSet } });
+    await setup({ props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet) } });
     expect(screen.getByText('PIN: 1234')).toBeVisible();
   });
 
@@ -147,7 +149,7 @@ describe('SelectedPropertyRow component', () => {
         PIN: undefined,
       },
     };
-    await setup({ props: { property: mockFeatureSet } });
+    await setup({ props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet) } });
     expect(screen.getByText('Plan #: VIP123')).toBeVisible();
   });
 
@@ -157,7 +159,7 @@ describe('SelectedPropertyRow component', () => {
     mockFeatureSet.parcelFeature = {} as any;
     mockFeatureSet.location = { lat: 4, lng: 5 };
 
-    await setup({ props: { property: mockFeatureSet } });
+    await setup({ props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet) } });
     expect(screen.getByText('5.000000, 4.000000')).toBeVisible();
   });
 
@@ -175,7 +177,7 @@ describe('SelectedPropertyRow component', () => {
         STREET_ADDRESS_1: 'a test address',
       },
     };
-    await setup({ props: { property: mockFeatureSet } });
+    await setup({ props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet) } });
     expect(screen.getByText('Address: a test address')).toBeVisible();
   });
 
@@ -185,7 +187,9 @@ describe('SelectedPropertyRow component', () => {
     mockFeatureSet.parcelFeature = {} as any;
     mockFeatureSet.isActive = false;
 
-    await setup({ props: { property: mockFeatureSet, showDisable: true } });
+    await setup({
+      props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet), showDisable: true },
+    });
 
     expect(screen.getByDisplayValue('Inactive')).toBeInTheDocument();
   });
@@ -196,21 +200,33 @@ describe('SelectedPropertyRow component', () => {
     mockFeatureSet.parcelFeature = {} as any;
     mockFeatureSet.isActive = true;
 
-    await setup({ props: { property: mockFeatureSet, showDisable: true } });
+    await setup({
+      props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet), showDisable: true },
+    });
 
     expect(screen.getByDisplayValue('Active')).toBeInTheDocument();
   });
 
   // New tests for shapefile upload functionality
-  it('renders upload button when canUploadShapefile is true', async () => {
+  it('renders upload button when canUploadShapefile is true and property has no custom shape', async () => {
     const mockFeatureSet = getMockSelectedFeatureDataset();
-    await setup({ props: { property: mockFeatureSet, canUploadShapefile: true } });
+    await setup({
+      props: {
+        property: PropertyForm.fromFeatureDataset(mockFeatureSet),
+        canUploadShapefile: true,
+      },
+    });
     expect(screen.getByTestId('upload-shapefile-0')).toBeInTheDocument();
   });
 
   it('does not render upload button when canUploadShapefile is false or undefined', async () => {
     const mockFeatureSet = getMockSelectedFeatureDataset();
-    await setup({ props: { property: mockFeatureSet, canUploadShapefile: false } });
+    await setup({
+      props: {
+        property: PropertyForm.fromFeatureDataset(mockFeatureSet),
+        canUploadShapefile: false,
+      },
+    });
     expect(screen.queryByTestId('upload-shapefile-0')).toBeNull();
   });
 
@@ -228,7 +244,7 @@ describe('SelectedPropertyRow component', () => {
     const onUploadShapefile = vi.fn();
     await setup({
       props: {
-        property: mockFeatureSet,
+        property: PropertyForm.fromFeatureDataset(mockFeatureSet),
         canUploadShapefile: true,
         onUploadShapefile,
       },
@@ -251,6 +267,37 @@ describe('SelectedPropertyRow component', () => {
     );
   });
 
+  it('renders Delete Shape button instead of upload button when property has a custom shape', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
+    mockFeatureSet.fileBoundary = getMockPolygon();
+
+    await setup({
+      props: {
+        property: PropertyForm.fromFeatureDataset(mockFeatureSet),
+        canUploadShapefile: true,
+      },
+    });
+    expect(screen.getByTestId('remove-shape-0')).toBeInTheDocument();
+  });
+
+  it('calls onRemoveShapefile when Delete Shape button is clicked', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
+    mockFeatureSet.fileBoundary = getMockPolygon();
+
+    const onRemoveShapefile = vi.fn();
+    await setup({
+      props: {
+        property: PropertyForm.fromFeatureDataset(mockFeatureSet),
+        canUploadShapefile: true,
+        onRemoveShapefile,
+      },
+    });
+
+    const deleteBtn = screen.getByTestId('remove-shape-0');
+    await act(async () => userEvent.click(deleteBtn));
+    expect(onRemoveShapefile).toHaveBeenCalled();
+  });
+
   it('does not render status dropdown when property is retired', async () => {
     const mockFeatureSet = getMockSelectedFeatureDataset();
     mockFeatureSet.parcelFeature = {} as any;
@@ -262,7 +309,9 @@ describe('SelectedPropertyRow component', () => {
       },
     } as any;
 
-    await setup({ props: { property: mockFeatureSet, showDisable: true } });
+    await setup({
+      props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet), showDisable: true },
+    });
 
     // Retired properties show text instead of dropdown
     expect(screen.queryByRole('combobox')).toBeNull();
@@ -280,7 +329,9 @@ describe('SelectedPropertyRow component', () => {
       },
     } as any;
 
-    await setup({ props: { property: mockFeatureSet, showDisable: true } });
+    await setup({
+      props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet), showDisable: true },
+    });
 
     expect(screen.getByRole('combobox')).toBeInTheDocument();
   });
@@ -297,7 +348,9 @@ describe('SelectedPropertyRow component', () => {
     } as any;
     mockFeatureSet.isActive = true;
 
-    await setup({ props: { property: mockFeatureSet, showDisable: true } });
+    await setup({
+      props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet), showDisable: true },
+    });
 
     expect(screen.getByRole('combobox')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Active')).toBeInTheDocument();
@@ -315,10 +368,11 @@ describe('SelectedPropertyRow component', () => {
     } as any;
     mockFeatureSet.isActive = false;
 
-    await setup({ props: { property: mockFeatureSet, showDisable: true } });
+    await setup({
+      props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet), showDisable: true },
+    });
 
     expect(screen.getByRole('combobox')).toBeInTheDocument();
     expect(screen.getByDisplayValue('Inactive')).toBeInTheDocument();
   });
-
 });
