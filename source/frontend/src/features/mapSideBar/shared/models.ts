@@ -135,6 +135,9 @@ export class PropertyForm {
         : DistrictCodes.Unknown,
       districtName: model?.districtFeature?.properties?.DISTRICT_NAME ?? 'Cannot determine',
       formattedAddress: 'unknown',
+      address: exists(pimsFeature?.properties?.STREET_ADDRESS_1)
+        ? AddressForm.fromPimsView(pimsFeature?.properties)
+        : undefined,
       landArea: pimsFeature?.properties?.LAND_AREA
         ? +pimsFeature?.properties?.LAND_AREA
         : parcelFeature?.properties?.FEATURE_AREA_SQM ?? 0,
