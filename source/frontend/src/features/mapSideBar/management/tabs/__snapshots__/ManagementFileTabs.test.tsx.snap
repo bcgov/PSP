@@ -360,6 +360,22 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                   ADDITIONAL DETAILS
                 </div>
               </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-5"
+                >
+                  <label
+                    class="c5"
+                  >
+                    Ministry region:
+                  </label>
+                </div>
+                <div
+                  class="c6 text-left col"
+                />
+              </div>
             </div>
           </div>
           <div

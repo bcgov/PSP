@@ -27,6 +27,11 @@ namespace Pims.Api.Models.Concepts.ManagementFile
         public string LegacyFileNum { get; set; }
 
         /// <summary>
+        /// get/set - The MOTI region that this management file falls under.
+        /// </summary>
+        public CodeTypeModel<short> RegionCode { get; set; }
+
+        /// <summary>
         /// get/set - The project's id.
         /// </summary>
         public long? ProjectId { get; set; }

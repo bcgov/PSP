@@ -116,6 +116,7 @@ export const DispositionView: React.FunctionComponent<IDispositionViewProps> = (
             updateFileProperties={onUpdateProperties}
             confirmBeforeAdd={confirmBeforeAdd}
             canRemove={canRemove}
+            canUploadShapefiles={true}
             formikRef={formikRef}
             confirmBeforeAddMessage={
               <>

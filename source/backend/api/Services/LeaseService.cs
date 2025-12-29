@@ -42,6 +42,7 @@ namespace Pims.Api.Services
         private readonly ICompReqFinancialService _compReqFinancialService;
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly ILeaseStatusSolver _leaseStatusSolver;
+        private readonly IFilePropertyLocationUpdateSolver _propertyLocationSolver;
 
         public LeaseService(
             ClaimsPrincipal user,
@@ -61,7 +62,8 @@ namespace Pims.Api.Services
             ILookupRepository lookupRepository,
             ICompReqFinancialService compReqFinancialService,
             IPropertyOperationService propertyOperationService,
-            ILeaseStatusSolver leaseStatusSolver)
+            ILeaseStatusSolver leaseStatusSolver,
+            IFilePropertyLocationUpdateSolver propertyLocationSolver)
             : base(user, logger)
         {
             _logger = logger;
@@ -82,6 +84,7 @@ namespace Pims.Api.Services
             _compReqFinancialService = compReqFinancialService;
             _propertyOperationService = propertyOperationService;
             _leaseStatusSolver = leaseStatusSolver;
+            _propertyLocationSolver = propertyLocationSolver;
         }
 
         public PimsLease GetById(long leaseId)
@@ -321,12 +324,16 @@ namespace Pims.Api.Services
                 {
                     var existingFileProperty = currentFileProperties.FirstOrDefault(x => x.Internal_Id == incomingLeaseProperty.Internal_Id);
 
-                    var incomingGeom = incomingLeaseProperty?.Location;
-                    var existingGeom = existingFileProperty?.Location;
-                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    if (_propertyLocationSolver.CanEditFilePropertyLocation(incomingLeaseProperty, existingFileProperty))
                     {
                         _propertyService.UpdateFilePropertyLocation(incomingLeaseProperty, existingFileProperty);
                         incomingLeaseProperty.Location = existingFileProperty?.Location;
+                    }
+
+                    if (_propertyLocationSolver.CanEditFilePropertyBoundary(incomingLeaseProperty, existingFileProperty))
+                    {
+                        _propertyService.UpdateFilePropertyBoundary(incomingLeaseProperty, existingFileProperty);
+                        incomingLeaseProperty.Boundary = existingFileProperty?.Boundary;
                     }
                 }
                 else

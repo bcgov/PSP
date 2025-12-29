@@ -59,6 +59,9 @@ namespace Pims.Api.Services
         void UpdateFilePropertyLocation<T>(T incomingFileProperty, T filePropertyToUpdate)
             where T : IFilePropertyEntity;
 
+        void UpdateFilePropertyBoundary<T>(T incomingFileProperty, T filePropertyToUpdate)
+            where T : IFilePropertyEntity;
+
         IList<PimsHistoricalFileNumber> GetHistoricalNumbersForPropertyId(long propertyId);
 
         IList<PimsHistoricalFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsHistoricalFileNumber> pimsHistoricalNumbers);

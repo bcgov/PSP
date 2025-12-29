@@ -25,6 +25,11 @@ namespace Pims.Api.Areas.Management.Models.Search
         public string Address { get; set; }
 
         /// <summary>
+        /// get/set - The region to search by.
+        /// </summary>
+        public string RegionCode { get; set; }
+
+        /// <summary>
         /// get/set - The management file name or the file number or the legacy reference number, search for all simultaneously.
         /// </summary>
         public string FileNameOrNumberOrReference { get; set; }
@@ -53,6 +58,11 @@ namespace Pims.Api.Areas.Management.Models.Search
         /// get/set - The MOTI Organization id to search by for management team members.
         /// </summary>
         public long? TeamMemberOrganizationId { get; set; }
+
+        /// <summary>
+        /// get/set - The ministry region of the file.
+        /// </summary>
+        public long? ManagementRegionCd { get; set; }
         #endregion
 
         #region Constructors
@@ -76,6 +86,7 @@ namespace Pims.Api.Areas.Management.Models.Search
 
             this.Pid = filter.GetStringValue(nameof(this.Pid));
             this.Pin = filter.GetStringValue(nameof(this.Pin));
+            this.RegionCode = filter.GetStringValue(nameof(this.RegionCode));
             this.Address = filter.GetStringValue(nameof(this.Address));
             this.FileNameOrNumberOrReference = filter.GetStringValue(nameof(this.FileNameOrNumberOrReference));
             this.ManagementFileStatusCode = filter.GetStringValue(nameof(this.ManagementFileStatusCode));
@@ -103,6 +114,7 @@ namespace Pims.Api.Areas.Management.Models.Search
 
                 Pid = model.Pid,
                 Pin = model.Pin,
+                RegionCode = model.RegionCode,
                 Address = model.Address,
                 FileNameOrNumberOrReference = model.FileNameOrNumberOrReference,
                 ManagementFileStatusCode = model.ManagementFileStatusCode,

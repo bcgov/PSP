@@ -21,5 +21,10 @@ namespace Pims.Dal.Entities
         /// Geo-spatial location (pin) of property.
         /// </summary>
         public Geometry Location { get; set; }
+
+        /// <summary>
+        /// Spatial boundary of property. Supports upload of custom shape file by user.
+        /// </summary>
+        public Geometry Boundary { get; set; }
     }
 }
