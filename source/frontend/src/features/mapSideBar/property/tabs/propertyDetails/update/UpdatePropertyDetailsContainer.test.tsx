@@ -15,13 +15,7 @@ import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyBaseAudit, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import {
-  RenderOptions,
-  act,
-  fakeText,
-  render,
-  userEvent,
-} from '@/utils/test-utils';
+import { RenderOptions, act, fakeText, render, userEvent } from '@/utils/test-utils';
 
 import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { server } from '@/mocks/msw/server';
@@ -400,7 +394,12 @@ describe('UpdatePropertyDetailsContainer component', () => {
   });
 
   it.skip('sends the surplus declaration information', async () => {
-    const { formikRef, getSurplusDeclarationTypeDropDown, getSurplusDeclarationComment, getSurplusDeclarationDate } = setup();
+    const {
+      formikRef,
+      getSurplusDeclarationTypeDropDown,
+      getSurplusDeclarationComment,
+      getSurplusDeclarationDate,
+    } = setup();
     await act(async () => {});
 
     await act(async () => userEvent.paste(getSurplusDeclarationComment(), 'SURPLUS COMMENT'));
@@ -413,8 +412,8 @@ describe('UpdatePropertyDetailsContainer component', () => {
 
     const expectedValues = expect.objectContaining<Partial<ApiGen_Concepts_Property>>({
       surplusDeclarationType: expect.objectContaining<Partial<ApiGen_Base_CodeType<string>>>({
-          id: ApiGen_CodeTypes_SurplusDeclarationTypes.YES,
-        }),
+        id: ApiGen_CodeTypes_SurplusDeclarationTypes.YES,
+      }),
       surplusDeclarationDate: '2025-01-01',
       surplusDeclarationComment: 'SURPLUS COMMENT',
     });

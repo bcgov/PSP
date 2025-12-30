@@ -239,18 +239,19 @@ describe('PropertyDetailsTabView component', () => {
         id: ApiGen_CodeTypes_SurplusDeclarationTypes.YES,
         description: 'Yes',
         isDisabled: false,
-        displayOrder: 0
+        displayOrder: 0,
       },
       surplusDeclarationDate: '2025-01-01T18:00',
-      surplusDeclarationComment: 'SURPLUS DECLARATION COMMMENT GOES HERE'
+      surplusDeclarationComment: 'SURPLUS DECLARATION COMMMENT GOES HERE',
     };
 
     const { getByTestId } = await setup({ property });
     expect(getByTestId('surplusDeclarationType')).toHaveTextContent('Yes');
     expect(getByTestId('surplusDeclarationDate')).toHaveTextContent('Jan 1, 2025');
-    expect(getByTestId('surplusDeclarationComment')).toHaveTextContent('SURPLUS DECLARATION COMMMENT GOES HERE');
+    expect(getByTestId('surplusDeclarationComment')).toHaveTextContent(
+      'SURPLUS DECLARATION COMMMENT GOES HERE',
+    );
   });
-
 });
 
 export const mockPropertyInfo: ApiGen_Concepts_Property = {
