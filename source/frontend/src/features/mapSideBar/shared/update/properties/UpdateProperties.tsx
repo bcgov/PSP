@@ -28,7 +28,6 @@ import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, firstOrNull, isLatLngInFeatureSetBoundary, isNumber, isValidId } from '@/utils';
 import {
   addPropertiesToCurrentFile,
-  addShapeToProperty,
   removeShapeFromPropertyWithConfirmation,
 } from '@/utils/propertyUtils';
 
@@ -321,7 +320,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                           }}
                           nameSpace={`properties.${index}`}
                           index={propertyIndex}
-                          property={property.toFeatureDataset()}
+                          property={property}
                           showDisable={props.disableProperties}
                           canUploadShapefile={props.canUploadShapefiles}
                           onUploadShapefile={(result: UploadResponseModel | null) => {
@@ -333,6 +332,16 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                                 replace(index, updatedFormProperty);
                               }
                             }
+                          }}
+                          onRemoveShapefile={() => {
+                            removeShapeFromPropertyWithConfirmation(
+                              property,
+                              setModalContent,
+                              setDisplayModal,
+                              updatedProperty => {
+                                replace(index, updatedProperty);
+                              },
+                            );
                           }}
                         />
                       );
