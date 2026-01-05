@@ -12,7 +12,7 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import { StyledNoData } from '@/features/documents/commonStyles';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
-import { formatApiAddress } from '@/utils';
+import { exists, formatApiAddress } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
@@ -113,6 +113,9 @@ const NoticeSelectorModal: React.FunctionComponent<
                           </Form.Check.Label>
                         </Form.Check>
                       ))}
+                      asfasd
+                      {!exists(ownerDetailList) ||
+                        (ownerDetailList.length === 0 && <>No Owner information</>)}
                     </Form.Group>
                   )}
                 />

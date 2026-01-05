@@ -26,7 +26,11 @@ import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, firstOrNull, isLatLngInFeatureSetBoundary, isNumber, isValidId } from '@/utils';
-import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
+import {
+  addPropertiesToCurrentFile,
+  addShapeToProperty,
+  removeShapeFromPropertyWithConfirmation,
+} from '@/utils/propertyUtils';
 
 import { FileForm, PropertyForm } from '../../models';
 import SidebarFooter from '../../SidebarFooter';
@@ -161,7 +165,8 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
     return {
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
-      location: mapLocationFeatureDataset?.location,
+      location:
+        mapLocationFeatureDataset?.location ?? mapLocationFeatureDataset?.fileLocation ?? null,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
       fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
@@ -191,7 +196,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
     <>
       <LoadingBackdrop show={bcaLoading} />
       <MapSideBarLayout
-        title={'Property selection'}
+        title="Property selection"
         icon={undefined}
         footer={
           <SidebarFooter
@@ -204,11 +209,13 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
       >
         <>
           <AddPropertiesGuide />
-          {exists(selectedFeatureDataset?.parcelFeature) && (
+          {exists(selectedFeatureDataset?.parcelFeature) ||
+          exists(selectedFeatureDataset?.pimsFeature) ||
+          exists(selectedFeatureDataset?.location) ? (
             <StyledButtonWrapper>
               <Button onClick={handleAddToSelection}>Add selected property</Button>
             </StyledButtonWrapper>
-          )}
+          ) : null}
           <Formik<FileForm>
             innerRef={formikRef}
             initialValues={formFile}
@@ -281,18 +288,22 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                         }}
                         nameSpace={`properties.${index}`}
                         index={index}
-                        property={property.toFeatureDataset()}
+                        property={property}
                         showDisable={props.disableProperties}
                         canUploadShapefile={props.canUploadShapefiles}
                         onUploadShapefile={(result: UploadResponseModel | null) => {
-                          // Update the property boundary based on the uploaded shapefile
-                          if (exists(result)) {
-                            if (result.isSuccess && exists(result.boundary)) {
-                              const updatedFormProperty = new PropertyForm(property);
-                              updatedFormProperty.fileBoundary = result.boundary;
-                              replace(index, updatedFormProperty);
-                            }
-                          }
+                          const updatedFormProperty = addShapeToProperty(property, result);
+                          replace(index, updatedFormProperty);
+                        }}
+                        onRemoveShapefile={() => {
+                          removeShapeFromPropertyWithConfirmation(
+                            property,
+                            setModalContent,
+                            setDisplayModal,
+                            updatedProperty => {
+                              replace(index, updatedProperty);
+                            },
+                          );
                         }}
                       />
                     ))}

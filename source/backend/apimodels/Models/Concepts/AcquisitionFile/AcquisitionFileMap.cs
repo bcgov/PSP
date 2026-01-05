@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using Mapster;
 using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.NoticeOfClaim;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -50,6 +52,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.FileChecklistItems, src => src.PimsAcquisitionChecklistItems)
                 .Map(dest => dest.LegacyStakeholders, src => src.GetLegacyInterestHolders())
                 .Map(dest => dest.CompensationRequisitions, src => src.PimsCompensationRequisitions)
+                .Map(dest => dest.NoticeOfClaim, src => src.PimsNoticeOfClaims)
                 .Inherits<IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<AcquisitionFileModel, PimsAcquisitionFile>()
@@ -87,6 +90,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.PimsAcquisitionOwners, src => src.AcquisitionFileOwners)
                 .Map(dest => dest.PimsInterestHolders, src => src.AcquisitionFileInterestHolders)
                 .Map(dest => dest.PimsAcquisitionChecklistItems, src => src.FileChecklistItems)
+                .Map(dest => dest.PimsNoticeOfClaims, src => src.NoticeOfClaim == null ? new List<NoticeOfClaimModel>() : src.NoticeOfClaim)
                 .Inherits<BaseAuditModel, IBaseAppEntity>();
 
             config.NewConfig<PimsAcquisitionFileHist, PimsAcquisitionFile>()

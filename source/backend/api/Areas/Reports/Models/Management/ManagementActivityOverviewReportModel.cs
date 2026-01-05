@@ -23,6 +23,10 @@ namespace Pims.Api.Areas.Reports.Models.Management
         [CsvHelper.Configuration.Attributes.Name("Properties")]
         public string Properties { get; set; }
 
+        [DisplayName("Regions")]
+        [CsvHelper.Configuration.Attributes.Name("Regions")]
+        public string Regions { get; set; }
+
         [DisplayName("Funding")]
         [CsvHelper.Configuration.Attributes.Name("Funding")]
         public string Funding { get; set; }
@@ -79,13 +83,21 @@ namespace Pims.Api.Areas.Reports.Models.Management
         [CsvHelper.Configuration.Attributes.Name("External Contacts")]
         public string ExternalContacts { get; set; }
 
-        [DisplayName("Invoices total (before tax)")]
-        [CsvHelper.Configuration.Attributes.Name("Invoices total (before tax)")]
+        [DisplayName("All Invoices Total (before tax)")]
+        [CsvHelper.Configuration.Attributes.Name("All Invoices Total (before tax)")]
         public decimal InvoicesPreTaxTotal { get; set; }
 
-        [DisplayName("Invoices total")]
-        [CsvHelper.Configuration.Attributes.Name("Invoices total")]
+        [DisplayName("Approved Invoices Total (before tax)")]
+        [CsvHelper.Configuration.Attributes.Name("Approved Invoices Total (before tax)")]
+        public decimal ApprovedInvoicesPreTaxTotal { get; set; }
+
+        [DisplayName("All Invoices Total")]
+        [CsvHelper.Configuration.Attributes.Name("All Invoices Total")]
         public decimal InvoicesTotal { get; set; }
+
+        [DisplayName("Approved Invoices Total")]
+        [CsvHelper.Configuration.Attributes.Name("Approved Invoices Total")]
+        public decimal ApprovedInvoicesTotal { get; set; }
 
         public ManagementActivityOverviewReportModel(PimsManagementActivity activity)
         {
@@ -94,6 +106,7 @@ namespace Pims.Api.Areas.Reports.Models.Management
             ManagementFileName = GetNullableString(activity.ManagementFile?.FileName);
             LegacyFileNum = GetNullableString(activity.ManagementFile?.LegacyFileNum);
             Properties = GetPropertiesAsString(activity);
+            Regions = GetRegionsAsString(activity);
             Funding = GetNullableString(activity.ManagementFile?.AcquisitionFundingTypeCodeNavigation?.Description);
             Purpose = GetNullableString(activity.ManagementFile?.ManagementFilePurposeTypeCodeNavigation?.Description);
             CreatedBy = GetNullableString(activity.ManagementFile?.AppCreateUserid);
@@ -110,6 +123,12 @@ namespace Pims.Api.Areas.Reports.Models.Management
             ExternalContacts = GetExternalContactsAsString(activity.PimsMgmtActInvolvedParties);
             InvoicesPreTaxTotal = activity.PimsManagementActivityInvoices?.Sum(i => i.PretaxAmt) ?? 0;
             InvoicesTotal = activity.PimsManagementActivityInvoices?.Sum(i => i.TotalAmt ?? 0) ?? 0;
+            ApprovedInvoicesPreTaxTotal = activity.PimsManagementActivityInvoices?
+                .Where(i => i.IsPaymentApproved)
+                .Sum(i => i.PretaxAmt) ?? 0;
+            ApprovedInvoicesTotal = activity.PimsManagementActivityInvoices?
+                .Where(i => i.IsPaymentApproved)
+                .Sum(i => i.TotalAmt ?? 0) ?? 0;
         }
 
         private static string GetNullableString(string value)
@@ -168,6 +187,22 @@ namespace Pims.Api.Areas.Reports.Models.Management
                         .Select(c => c?.Person?.GetFullName() ?? GetNullableString(c?.Organization?.Name))
                         .Where(s => !string.IsNullOrWhiteSpace(s))
                         .Distinct());
+            }
+            return string.Empty;
+        }
+
+        private static string GetRegionsAsString(PimsManagementActivity activity)
+        {
+            if (activity is not null)
+            {
+                List<string> activityRegions = activity.PimsManagementActivityProperties
+                        .Select(map => map?.Property?.RegionCodeNavigation?.Description)
+                        .Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                if (activity.ManagementFile?.RegionCode != null)
+                {
+                    activityRegions.Add(activity.ManagementFile.RegionCodeNavigation?.Description);
+                }
+                return string.Join("|", activityRegions.Distinct());
             }
             return string.Empty;
         }

@@ -48,6 +48,12 @@ public partial class PimsManagementFileProperty
     public Geometry Location { get; set; }
 
     /// <summary>
+    /// Spatial boundary of property.  Supports upload of custom shape file by user.
+    /// </summary>
+    [Column("BOUNDARY", TypeName = "geometry")]
+    public Geometry Boundary { get; set; }
+
+    /// <summary>
     /// Indicates if the record is disabled.
     /// </summary>
     [Column("IS_ACTIVE")]

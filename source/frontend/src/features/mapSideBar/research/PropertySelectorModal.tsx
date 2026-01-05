@@ -16,6 +16,7 @@ export interface IPropertySelectorModalProps {
   availiableProperties: ApiGen_Concepts_FileProperty[];
   onSelectOk: (selectedProperties: ApiGen_Concepts_FileProperty[]) => void;
   onCancelClick: () => void;
+  isSingleSelect?: boolean;
 }
 
 interface PropertySelectorForm {
@@ -25,7 +26,7 @@ interface PropertySelectorForm {
 const PropertySelectorModal: React.FunctionComponent<
   React.PropsWithChildren<IPropertySelectorModalProps>
 > = props => {
-  const { isOpened, onCancelClick, availiableProperties, onSelectOk } = props;
+  const { isOpened, onCancelClick, availiableProperties, onSelectOk, isSingleSelect } = props;
 
   const formikRef = useRef<FormikProps<PropertySelectorForm>>(null);
 
@@ -44,6 +45,8 @@ const PropertySelectorModal: React.FunctionComponent<
     formikHelpers.resetForm();
     formikHelpers.setSubmitting(false);
   };
+
+  const selectType = isSingleSelect ? 'radio' : 'checkbox';
 
   return (
     <Formik<PropertySelectorForm>
@@ -73,13 +76,13 @@ const PropertySelectorModal: React.FunctionComponent<
                         (propertyFile: ApiGen_Concepts_FileProperty, index: number) => (
                           <Form.Check
                             id={`propertyFile-${index}`}
-                            type="checkbox"
+                            type={selectType}
                             name="propertyIds"
                             key={propertyFile.id}
                           >
                             <Form.Check.Input
                               id={`propertyFile-${index}`}
-                              type="checkbox"
+                              type={selectType}
                               name="propertyIds"
                               value={propertyFile.id}
                               onChange={formikProps.handleChange}

@@ -11,7 +11,7 @@ import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isValidId } from '@/utils';
+import { exists, firstOrNull, isValidId } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ManagementFormModel } from '../models/ManagementFormModel';
@@ -60,6 +60,20 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
     formikRef,
     'fileProperties',
   );
+
+  useEffect(() => {
+    if (featuresWithAddresses?.length > 0 && !formikRef?.current?.values?.regionCode) {
+      const firstPropertyFeature = firstOrNull(featuresWithAddresses)?.feature;
+
+      if (exists(firstPropertyFeature)) {
+        const firstProperty = PropertyForm.fromFeatureDataset(firstPropertyFeature);
+        formikRef?.current?.setFieldValue(
+          'regionCode',
+          firstProperty.regionName !== 'Cannot determine' ? firstProperty.region : undefined,
+        );
+      }
+    }
+  }, [featuresWithAddresses]);
 
   const initialForm = useMemo(() => {
     const managementForm = new ManagementFormModel();

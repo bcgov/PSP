@@ -5,30 +5,33 @@ import { ImUpload } from 'react-icons/im';
 import { RiDragMove2Line } from 'react-icons/ri';
 import styled from 'styled-components';
 
+import RemoveShapeIcon from '@/assets/images/remove-shape-icon.svg?react';
 import { RemoveButton, StyledIconButton } from '@/components/common/buttons';
 import { Select } from '@/components/common/form';
 import { InlineInput } from '@/components/common/form/styles';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import OverflowTip from '@/components/common/OverflowTip';
 import { TooltipWrapper } from '@/components/common/TooltipWrapper';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import { ShapeUploadModal } from '@/features/properties/shapeUpload/ShapeUploadModal';
+import { exists } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 import { getPropertyNameFromSelectedFeatureSet, NameSourceType } from '@/utils/mapPropertyUtils';
 
 import DisabledDraftCircleNumber from './DisabledDraftCircleNumber';
 
 export interface ISelectedPropertyRowProps {
-  property: SelectedFeatureDataset;
+  property: PropertyForm;
   index: number;
   nameSpace?: string;
   onRemove: () => void;
   showDisable?: boolean;
   canUploadShapefile?: boolean;
   onUploadShapefile?: (result: UploadResponseModel | null) => void;
+  onRemoveShapefile?: () => void;
 }
 
 export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowProps> = ({
@@ -39,7 +42,10 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
   showDisable,
   canUploadShapefile,
   onUploadShapefile,
+  onRemoveShapefile,
 }) => {
+  const hasCustomBoundary = exists(property.fileBoundary);
+  const featureSet = property.toFeatureDataset();
   const mapMachine = useMapStateMachine();
   const { setFieldTouched, touched } = useFormikContext();
   const [isUploadVisible, setIsUploadVisible] = useState(false);
@@ -50,7 +56,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
     }
   }, [nameSpace, setFieldTouched, touched]);
 
-  const propertyName = getPropertyNameFromSelectedFeatureSet(property);
+  const propertyName = getPropertyNameFromSelectedFeatureSet(featureSet);
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:
@@ -76,7 +82,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
       <StyledRow className="align-items-center mb-3 no-gutters">
         <Col md={3}>
           <div className="mb-0 d-flex align-items-center">
-            {property.isActive === false ? (
+            {featureSet.isActive === false ? (
               <DisabledDraftCircleNumber text={(index + 1).toString()} />
             ) : (
               <DraftCircleNumber text={(index + 1).toString()} />
@@ -95,37 +101,48 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           />
         </Col>
         <Col xs="auto" className="ml-5">
-          <ZoomToLocation geometry={property.pimsFeature.geometry} icon={ZoomIconType.single} />
+          <ZoomToLocation geometry={featureSet.pimsFeature.geometry} icon={ZoomIconType.single} />
         </Col>
         {showDisable && (
           <Col md={2}>
-            <Select
-              className="mb-0 ml-4"
-              field={withNameSpace(nameSpace, 'isActive')}
-              options={[
-                { label: 'Inactive', value: 'false' },
-                { label: 'Active', value: 'true' },
-              ]}
-            ></Select>
+            {featureSet?.pimsFeature?.properties?.IS_RETIRED ? (
+              <div className="mb-0 ml-7">Retired</div>
+            ) : (
+              <Select
+                className="mb-0 ml-4"
+                field={withNameSpace(nameSpace, 'isActive')}
+                options={[
+                  { label: 'Inactive', value: 'false' },
+                  { label: 'Active', value: 'true' },
+                ]}
+              ></Select>
+            )}
           </Col>
         )}
         <StyledActionsCol xs="auto" className="pl-3">
           <StyledIconButton
             title="move-pin-location"
             onClick={() => {
-              mapMachine.startReposition(property, index);
+              mapMachine.startReposition(featureSet, index);
             }}
             data-testid={'move-pin-location-' + index}
           >
             <RiDragMove2Line size={22} />
           </StyledIconButton>
-          {canUploadShapefile && (
+          {canUploadShapefile && !hasCustomBoundary && (
             <TooltipWrapper tooltip="Upload shapefile" tooltipId={'upload-shapefile-' + index}>
               <StyledIconButton
                 data-testid={'upload-shapefile-' + index}
                 onClick={() => setIsUploadVisible(true)}
               >
                 <ImUpload size={18} />
+              </StyledIconButton>
+            </TooltipWrapper>
+          )}
+          {canUploadShapefile && hasCustomBoundary && (
+            <TooltipWrapper tooltip="Remove shape" tooltipId={'remove-shape-' + index}>
+              <StyledIconButton data-testid={'remove-shape-' + index} onClick={onRemoveShapefile}>
+                <RemoveShapeIcon width="1.8rem" height="1.8rem" />
               </StyledIconButton>
             </TooltipWrapper>
           )}
@@ -138,7 +155,6 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           </StyledSpacingWrapper>
         </StyledActionsCol>
       </StyledRow>
-
       {canUploadShapefile && (
         <ShapeUploadModal
           display={isUploadVisible}

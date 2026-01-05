@@ -137,6 +137,8 @@ export const ACQUISITION_EXPROPRIATION_EVENT_TYPES = 'PimsExpropOwnerHistoryType
 export const MANAGEMENT_FILE_STATUS_TYPES = 'PimsManagementFileStatusType';
 export const MANAGEMENT_FILE_PURPOSE_TYPES = 'PimsManagementFilePurposeType';
 export const MANAGEMENT_TEAM_PROFILE_TYPES = 'PimsManagementFileProfileType';
+export const TENURE_CLEANUP_TYPES = 'PimsTenureCleanupType';
+export const SURPLUS_DECLARATION_TYPES = 'PimsSurplusDeclarationType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

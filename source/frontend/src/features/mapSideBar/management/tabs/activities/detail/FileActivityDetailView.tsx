@@ -59,6 +59,7 @@ export const FileActivityDetailView: React.FunctionComponent<
       propertyName: null,
       rowVersion: null,
       isActive: null,
+      isRetired: false,
     }));
 
   if (props.activity !== null) {

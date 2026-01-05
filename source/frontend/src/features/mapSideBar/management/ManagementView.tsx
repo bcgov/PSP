@@ -116,6 +116,7 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
             updateFileProperties={onUpdateProperties}
             confirmBeforeAdd={confirmBeforeAdd}
             canRemove={canRemove}
+            canUploadShapefiles={true}
             formikRef={formikRef}
             disableProperties
             confirmBeforeAddMessage={

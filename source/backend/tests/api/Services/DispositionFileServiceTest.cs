@@ -935,6 +935,10 @@ namespace Pims.Api.Test.Services
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+
             // Act
             service.UpdateProperties(dspFile, new List<UserOverrideCode>());
 
@@ -976,6 +980,10 @@ namespace Pims.Api.Test.Services
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+
             // Act
             service.UpdateProperties(dspFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
@@ -984,6 +992,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsDispositionFileProperty>()), Times.Once);
             propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false), Times.Once);
             propertyService.Verify(x => x.UpdateFilePropertyLocation<PimsDispositionFileProperty>(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>()), Times.Once);
+            propertyService.Verify(x => x.UpdateFilePropertyBoundary<PimsDispositionFileProperty>(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>()), Times.Once);
         }
 
         [Fact]
@@ -1020,6 +1029,10 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
 
             // Act
             var updatedDispositionFile = service.UpdateProperties(dspFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
@@ -1071,6 +1084,10 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
 
             // Act
             Action act = () => service.UpdateProperties(dspFile, new List<UserOverrideCode>());
@@ -1124,6 +1141,10 @@ namespace Pims.Api.Test.Services
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+
             // Act
             service.UpdateProperties(dspFile, new List<UserOverrideCode>() { UserOverrideCode.DisposingPropertyNotInventoried });
 
@@ -1175,12 +1196,17 @@ namespace Pims.Api.Test.Services
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+
             // Act
             service.UpdateProperties(dspFile, new List<UserOverrideCode>() { UserOverrideCode.DisposingPropertyNotInventoried });
 
             // Assert
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsDispositionFileProperty>()), Times.Once);
             propertyService.Verify(x => x.UpdateFilePropertyLocation<PimsDispositionFileProperty>(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>()), Times.Once);
+            propertyService.Verify(x => x.UpdateFilePropertyBoundary<PimsDispositionFileProperty>(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>()), Times.Once);
         }
 
         [Fact]
@@ -1212,6 +1238,10 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
 
             // Act
             service.UpdateProperties(dspFile, new List<UserOverrideCode>());
@@ -1260,6 +1290,10 @@ namespace Pims.Api.Test.Services
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+
             // Act
             service.UpdateProperties(updatedDspFile, new List<UserOverrideCode>());
 
@@ -1306,6 +1340,10 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
 
             // Act
             Action act = () => service.UpdateProperties(updatedDspFile, new List<UserOverrideCode>());
@@ -1387,6 +1425,10 @@ namespace Pims.Api.Test.Services
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+
             // Act
             service.UpdateProperties(dspFile, new List<UserOverrideCode>());
 
@@ -1424,6 +1466,10 @@ namespace Pims.Api.Test.Services
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(false);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+
             // Act
             Action act = () => service.UpdateProperties(dspFile, new List<UserOverrideCode>());
 
@@ -1460,6 +1506,10 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
 
             // Act
             Action act = () => service.UpdateProperties(dspFile, new List<UserOverrideCode>());
@@ -1506,6 +1556,10 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
 
             // Act
             Action act = () => service.UpdateProperties(dspFile, new List<UserOverrideCode>());

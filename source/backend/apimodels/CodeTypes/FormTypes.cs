@@ -62,5 +62,8 @@ namespace Pims.Api.Models.CodeTypes
 
         [EnumMember(Value = "LETTER")]
         LETTER,
+
+        [EnumMember(Value = "FORMINTAKE")]
+        FORMINTAKE,
     }
 }

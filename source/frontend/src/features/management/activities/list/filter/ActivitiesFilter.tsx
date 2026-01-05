@@ -5,6 +5,7 @@ import { Col, Row } from 'react-bootstrap';
 import { ResetButton } from '@/components/common/buttons';
 import { SearchButton } from '@/components/common/buttons/SearchButton';
 import { Input, Select, SelectOption } from '@/components/common/form';
+import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { ColButtons, FilterBoxForm } from '@/components/common/styles';
 import { Api_ManagementActivityFilter } from '@/models/api/ManagementActivityFilter';
@@ -131,6 +132,11 @@ export const ActivitiesFilter: React.FC<IActivitiesFilterProps> = ({
                     field="projectNameOrNumber"
                     placeholder="Enter a project name or number..."
                   />
+                </Col>
+              </Row>
+              <Row>
+                <Col xl="6">
+                  <UserRegionSelectContainer field="regionCode" placeholder="All Regions" />
                 </Col>
               </Row>
             </Col>

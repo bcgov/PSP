@@ -116,6 +116,7 @@ export interface IMapStateMachineContext {
   openQuickInfo: () => void;
   closeQuickInfo: () => void;
   minimizeQuickInfo: () => void;
+  showQuickInfoProperty: () => void;
   setFilePropertyLocations: (locations: LocationBoundaryDataset[]) => void;
   setMapLayers: (layers: Set<string>) => void;
   setMapLayersToRefresh: (layers: Set<string>) => void;
@@ -150,6 +151,36 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
   const mapSearch = useMapSearch();
   const history = useHistory();
 
+  // Helper function for property navigation logic
+  const handlePropertyNavigation = (context: MachineContext): void => {
+    const selectedFeatureData = context.mapLocationFeatureDataset;
+    const pimsFeature = firstOrNull(selectedFeatureData?.pimsFeatures);
+    const parcelFeature = firstOrNull(selectedFeatureData?.parcelFeatures);
+
+    if (exists(pimsFeature?.properties?.PROPERTY_ID)) {
+      history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}/details`);
+      return;
+    }
+
+    if (exists(parcelFeature?.properties?.PID)) {
+      const parsedPid = pidParser(parcelFeature.properties.PID);
+      history.push(`/mapview/sidebar/non-inventory-property/pid/${parsedPid}/ltsa`);
+      return;
+    }
+
+    if (exists(parcelFeature?.properties?.PIN)) {
+      const parsedPin = pinParser(parcelFeature.properties.PIN);
+      history.push(`/mapview/sidebar/non-inventory-property/pin/${parsedPin}/ltsa`);
+      return;
+    }
+
+    if (exists(selectedFeatureData?.location?.lat) && exists(selectedFeatureData?.location?.lng)) {
+      history.push(
+        `/mapview/sidebar/location/lat/${selectedFeatureData?.location?.lat}/lng/${selectedFeatureData?.location?.lng}`,
+      );
+    }
+  };
+
   const service = useInterpret(mapMachine, {
     actions: {
       navigateToProperty: context => {
@@ -160,25 +191,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
           return;
         }
 
-        const pimsFeature = firstOrNull(selectedFeatureData?.pimsFeatures);
-        const parcelFeature = firstOrNull(selectedFeatureData?.parcelFeatures);
-
-        if (exists(pimsFeature?.properties?.PROPERTY_ID)) {
-          history.push(`/mapview/sidebar/property/${pimsFeature.properties.PROPERTY_ID}`);
-        } else if (exists(parcelFeature?.properties?.PID)) {
-          const parsedPid = pidParser(parcelFeature.properties.PID);
-          history.push(`/mapview/sidebar/non-inventory-property/pid/${parsedPid}`);
-        } else if (exists(parcelFeature?.properties?.PIN)) {
-          const parsedPin = pinParser(parcelFeature.properties.PIN);
-          history.push(`/mapview/sidebar/non-inventory-property/pin/${parsedPin}`);
-        } else if (
-          exists(selectedFeatureData?.location?.lat) &&
-          exists(selectedFeatureData?.location?.lng)
-        ) {
-          history.push(
-            `/mapview/sidebar/location/lat/${selectedFeatureData?.location?.lat}/lng/${selectedFeatureData?.location?.lng}`,
-          );
-        }
+        handlePropertyNavigation(context);
+      },
+      showQuickInfoProperty: context => {
+        handlePropertyNavigation(context);
       },
     },
     services: {
@@ -569,6 +585,10 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     [serviceSend],
   );
 
+  const showQuickInfoProperty = useCallback(() => {
+    serviceSend({ type: 'SHOW_QUICK_INFO_PROPERTY' });
+  }, [serviceSend]);
+
   const isRepositioning = useMemo(() => {
     return state.matches({ mapVisible: { featureView: 'repositioning' } });
   }, [state]);
@@ -704,6 +724,7 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         setAdvancedSearchCriteria,
         setCurrentMapBounds,
         setEditPropertiesMode,
+        showQuickInfoProperty,
       }}
     >
       {children}

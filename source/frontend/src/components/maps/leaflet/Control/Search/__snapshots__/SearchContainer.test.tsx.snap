@@ -309,6 +309,7 @@ exports[`SearchContainer component > renders as expected 1`] = `
   >
     <div
       class="c1 form-section my-0 pt-0"
+      data-testid="search-control-filters-section"
     >
       <div
         class="collapse show"

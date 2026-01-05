@@ -49,6 +49,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.Project)
                 .Include(d => d.Product)
+                .Include(d => d.RegionCodeNavigation)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
                 .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
@@ -61,6 +62,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(d => d.PrimaryContact)
                 .Include(d => d.PimsManagementFileTeams)
                     .ThenInclude(d => d.ManagementFileProfileTypeCodeNavigation)
+                .Include(r => r.PimsNoticeOfClaims)
                 .FirstOrDefault(d => d.ManagementFileId == id) ?? throw new KeyNotFoundException();
         }
 
@@ -77,6 +79,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.Project)
                 .Include(d => d.Product)
+                .Include(d => d.RegionCodeNavigation)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
                 .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
@@ -89,6 +92,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(d => d.PrimaryContact)
                 .Include(d => d.PimsManagementFileTeams)
                     .ThenInclude(d => d.ManagementFileProfileTypeCodeNavigation)
+                .Include(r => r.PimsNoticeOfClaims)
                 .FirstOrDefault(d => d.FileName == name);
         }
 
@@ -287,6 +291,7 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingFile).CurrentValues.SetValues(managementFile);
             Context.UpdateChild<PimsManagementFile, long, PimsManagementFileTeam, long>(x => x.PimsManagementFileTeams, managementFile.Internal_Id, managementFile.PimsManagementFileTeams.ToArray());
+            Context.UpdateChild<PimsManagementFile, long, PimsNoticeOfClaim, long>(x => x.PimsNoticeOfClaims, managementFile.Internal_Id, managementFile.PimsNoticeOfClaims.ToArray());
 
             return existingFile;
         }
@@ -417,6 +422,11 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(acq => acq.PimsManagementFileProperties.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pin.ToString(), $"%{pinValue}%")));
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.RegionCode))
+            {
+                predicate = predicate.And(acq => acq.RegionCode.ToString() == filter.RegionCode);
+            }
+
             if (!string.IsNullOrWhiteSpace(filter.Address))
             {
                 predicate = predicate.And(disp => disp.PimsManagementFileProperties.Any(pd => pd != null &&
@@ -464,6 +474,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.Project)
                 .Include(d => d.Product)
+                .Include(d => d.RegionCodeNavigation)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
                 .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)

@@ -18,6 +18,11 @@ namespace Pims.Api.Areas.Management.Models
         public string Pin { get; set; }
 
         /// <summary>
+        /// get/set - The Region identifier to search by.
+        /// </summary>
+        public string RegionCode { get; set; }
+
+        /// <summary>
         /// get/set - The address to search by.
         /// </summary>
         public string Address { get; set; }
@@ -63,6 +68,7 @@ namespace Pims.Api.Areas.Management.Models
 
             Pid = filter.GetStringValue(nameof(Pid));
             Pin = filter.GetStringValue(nameof(Pin));
+            RegionCode = filter.GetStringValue(nameof(RegionCode));
             Address = filter.GetStringValue(nameof(Address));
             FileNameOrNumberOrReference = filter.GetStringValue(nameof(FileNameOrNumberOrReference));
             ActivityTypeCode = filter.GetStringValue(nameof(ActivityTypeCode));
@@ -85,6 +91,7 @@ namespace Pims.Api.Areas.Management.Models
 
                 Pid = model.Pid,
                 Pin = model.Pin,
+                RegionCode = model.RegionCode,
                 Address = model.Address,
                 FileNameOrNumberOrReference = model.FileNameOrNumberOrReference,
                 ActivityTypeCode = model.ActivityTypeCode,

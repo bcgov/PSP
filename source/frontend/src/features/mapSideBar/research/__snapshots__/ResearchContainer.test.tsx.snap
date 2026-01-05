@@ -449,6 +449,21 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   font-weight: bold;
 }
 
+.c42 {
+  border: none;
+}
+
+.c42 .card-body {
+  padding: 0;
+}
+
+.c43 {
+  overflow: hidden;
+  white-space: break-spaces;
+  word-break: break-word;
+  text-align: justify;
+}
+
 .c30 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
@@ -643,21 +658,6 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   max-width: 60rem;
 }
 
-.c42 {
-  border: none;
-}
-
-.c42 .card-body {
-  padding: 0;
-}
-
-.c43 {
-  overflow: hidden;
-  white-space: break-spaces;
-  word-break: break-word;
-  text-align: justify;
-}
-
 @media only screen and (max-width:1199px) {
   .c0.expanded {
     min-width: 70rem;
@@ -713,6 +713,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
         </div>
         <div
           class="c3 d-flex col-auto"
+          data-testid="leaflet-buttons-section"
         >
           <span>
             <button
@@ -751,6 +752,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
           />
           <svg
             class="c7"
+            data-testid="close-leaflet-button"
             fill="currentColor"
             height="1em"
             stroke="currentColor"

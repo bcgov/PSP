@@ -1,6 +1,6 @@
 using System;
 using System.Collections.Generic;
-using System.Data.SqlClient;
+using Microsoft.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
@@ -570,6 +570,7 @@ namespace Pims.Api
             services.AddScoped<IManagementFileService, ManagementFileService>();
             services.AddScoped<IManagementActivityService, ManagementActivityService>();
             services.AddScoped<IManagementFileStatusSolver, ManagementFileStatusSolver>();
+            services.AddScoped<IFilePropertyLocationUpdateSolver, FilePropertyLocationUpdateSolver>();
         }
 
         /// <summary>

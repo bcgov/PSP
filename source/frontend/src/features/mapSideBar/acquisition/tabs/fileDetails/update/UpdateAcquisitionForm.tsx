@@ -439,6 +439,10 @@ const AcquisitionDetailSubForm: React.FC<{
           ></TextArea>
         </SectionField>
       </Section>
+      <Section header="Notice of Claim">
+        <FastDatePicker formikProps={formikProps} field="noticeOfClaim.receivedDate" />
+        <TextArea field="noticeOfClaim.comment" />
+      </Section>
     </Container>
   );
 };

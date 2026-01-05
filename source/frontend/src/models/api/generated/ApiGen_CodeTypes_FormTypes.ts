@@ -21,4 +21,5 @@ export enum ApiGen_CodeTypes_FormTypes {
   H179T = 'H179T',
   H179FS = 'H179FS',
   LETTER = 'LETTER',
+  FORMINTAKE = 'FORMINTAKE',
 }
