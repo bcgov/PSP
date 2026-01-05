@@ -2,11 +2,12 @@ import { point } from '@turf/turf';
 import { FormikProps } from 'formik';
 import { Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { generatePath, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import LotSvg from '@/assets/images/icon-lot.svg?react';
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useQuery } from '@/hooks/use-query';
@@ -118,6 +119,11 @@ export const MotiInventoryContainer: React.FunctionComponent<
     push(path, { search: query.toString() });
   };
 
+  const shouldBlockNavigation = useCallback(
+    () => formikRef.current?.dirty && !formikRef.current?.isSubmitting,
+    [],
+  );
+
   return (
     <MapSideBarLayout
       title="Property Information"
@@ -146,6 +152,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
         onSuccess={onSuccess}
         ref={formikRef}
       />
+      <ConfirmNavigation navigate={push} shouldBlockNavigation={shouldBlockNavigation} />
     </MapSideBarLayout>
   );
 };
