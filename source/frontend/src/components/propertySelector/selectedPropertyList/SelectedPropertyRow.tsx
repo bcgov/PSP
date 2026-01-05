@@ -109,7 +109,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
         </RestrictedWidthCol>
         {showDisable && (
           <Col md={2} className="mr-3">
-            {!featureSet?.pimsFeature?.properties?.IS_RETIRED ? (
+            {featureSet?.pimsFeature?.properties?.IS_RETIRED ? (
               <div className="mb-0 ml-7">Retired</div>
             ) : (
               <Select
