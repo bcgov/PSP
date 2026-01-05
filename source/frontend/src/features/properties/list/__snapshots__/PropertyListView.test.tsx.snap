@@ -549,7 +549,7 @@ exports[`Property list view > matches snapshot 1`] = `
         />
       </div>
       <div
-        class="row"
+        class="pb-1 row"
       >
         <div
           class="col-12"
@@ -828,13 +828,14 @@ exports[`Property list view > matches snapshot 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 605px;"
+            style="display: flex; flex: 1 0 auto; min-width: 270px;"
           >
             <div
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 7%; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              width="7%"
             >
               <div
                 class="sortable-column"
@@ -846,7 +847,8 @@ exports[`Property list view > matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 35px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 7%; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              width="7%"
             >
               <div
                 class="sortable-column"
@@ -858,7 +860,8 @@ exports[`Property list view > matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 60 0 auto; min-width: 40px; width: 60px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 9%; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              width="9%"
             >
               <div
                 class="sortable-column"
@@ -870,7 +873,8 @@ exports[`Property list view > matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 200 0 auto; min-width: 200px; width: 200px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30%; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              width="30%"
             >
               <div
                 class="sortable-column"
@@ -882,7 +886,8 @@ exports[`Property list view > matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 50px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 12%; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              width="12%"
             >
               <div
                 class="sortable-column"
@@ -928,7 +933,8 @@ exports[`Property list view > matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 50 0 auto; min-width: 20px; width: 50px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 7%; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              width="7%"
             >
               <div
                 class="sortable-column"
@@ -974,7 +980,8 @@ exports[`Property list view > matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 100 0 auto; min-width: 100px; width: 100px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 12%; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              width="12%"
             >
               <div
                 class="sortable-column"
@@ -1020,7 +1027,8 @@ exports[`Property list view > matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 80 0 auto; min-width: 80px; width: 80px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 10%; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              width="10%"
             >
               <div
                 class="sortable-column"
@@ -1032,7 +1040,8 @@ exports[`Property list view > matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 40 0 auto; min-width: 40px; width: 40px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 6%; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              width="6%"
             >
               <div
                 class="sortable-column"
