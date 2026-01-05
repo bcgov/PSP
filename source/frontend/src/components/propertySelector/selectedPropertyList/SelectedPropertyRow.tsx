@@ -104,16 +104,16 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
             errorKeys={[withNameSpace(nameSpace, 'isRetired')]}
           />
         </Col>
-        <Col xs="auto" className="ml-5">
+        <RestrictedWidthCol xs="auto" className="ml-5">
           <ZoomToLocation geometry={featureSet.pimsFeature.geometry} icon={ZoomIconType.single} />
-        </Col>
+        </RestrictedWidthCol>
         {showDisable && (
-          <Col md={2}>
-            {featureSet?.pimsFeature?.properties?.IS_RETIRED ? (
+          <Col md={2} className="mr-3">
+            {!featureSet?.pimsFeature?.properties?.IS_RETIRED ? (
               <div className="mb-0 ml-7">Retired</div>
             ) : (
               <Select
-                className="mb-0 ml-4"
+                className="mb-0 ml-3"
                 field={withNameSpace(nameSpace, 'isActive')}
                 options={[
                   { label: 'Inactive', value: 'false' },
@@ -123,7 +123,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
             )}
           </Col>
         )}
-        <StyledActionsCol xs="auto" className="pl-3">
+        <StyledActionsCol xs="auto">
           <StyledIconButton
             title="move-pin-location"
             onClick={() => {
@@ -180,6 +180,11 @@ const StyledActionsCol = styled(Col)`
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+`;
+
+const RestrictedWidthCol = styled(Col)`
+  max-width: 3rem;
+  min-width: 3rem;
 `;
 
 const StyledSpacingWrapper = styled.div`
