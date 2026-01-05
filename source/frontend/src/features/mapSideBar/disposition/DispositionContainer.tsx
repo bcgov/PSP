@@ -3,6 +3,7 @@ import { FormikProps } from 'formik';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
@@ -322,6 +323,11 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     [dispositionFileId, getPropertyAssociations],
   );
 
+  const shouldBlockNavigation = useCallback(
+    () => formikRef.current?.dirty && !formikRef.current?.isSubmitting,
+    [],
+  );
+
   // UI components
   const loading =
     loadingDispositionFile ||
@@ -359,6 +365,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         }
         isEditing={isEditing}
       ></View>
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
     </>
   );
 };

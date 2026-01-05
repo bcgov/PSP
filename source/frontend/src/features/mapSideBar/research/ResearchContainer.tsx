@@ -3,6 +3,7 @@ import { FormikProps } from 'formik';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
@@ -280,6 +281,11 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     );
   };
 
+  const shouldBlockNavigation = useCallback(
+    () => formikRef.current?.dirty && !formikRef.current?.isSubmitting,
+    [],
+  );
+
   // UI components
   if (
     loadingResearchFile ||
@@ -291,23 +297,26 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
   }
 
   return (
-    <View
-      researchFile={researchFile as unknown as ApiGen_Concepts_ResearchFile}
-      formikRef={formikRef}
-      isEditing={isEditing}
-      setEditMode={setIsEditing}
-      onClose={onClose}
-      onSave={handleSaveClick}
-      onCancel={handleCancelClick}
-      onSelectFileSummary={onSelectFileSummary}
-      onSelectProperty={onSelectProperty}
-      onEditProperties={onEditProperties}
-      onUpdateProperties={onUpdateProperties}
-      confirmBeforeAdd={confirmBeforeAdd}
-      canRemove={canRemove}
-      onSuccess={onSuccess}
-      isFormValid={isValid}
-    />
+    <>
+      <View
+        researchFile={researchFile as unknown as ApiGen_Concepts_ResearchFile}
+        formikRef={formikRef}
+        isEditing={isEditing}
+        setEditMode={setIsEditing}
+        onClose={onClose}
+        onSave={handleSaveClick}
+        onCancel={handleCancelClick}
+        onSelectFileSummary={onSelectFileSummary}
+        onSelectProperty={onSelectProperty}
+        onEditProperties={onEditProperties}
+        onUpdateProperties={onUpdateProperties}
+        confirmBeforeAdd={confirmBeforeAdd}
+        canRemove={canRemove}
+        onSuccess={onSuccess}
+        isFormValid={isValid}
+      />
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
+    </>
   );
 };
 

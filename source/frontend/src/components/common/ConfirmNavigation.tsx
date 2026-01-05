@@ -34,8 +34,11 @@ const ConfirmNavigation = ({ when, navigate, shouldBlockNavigation }: Props) => 
     if (confirmedNavigation && lastLocation) {
       // Navigate to the previous blocked location with your navigate function
       navigate(lastLocation.pathname);
+      // Reset state after navigation so future navigation can be blocked again
+      setConfirmedNavigation(false);
+      setLastLocation(null);
     }
-  }, [confirmedNavigation, lastLocation, navigate]);
+  }, [confirmedNavigation, lastLocation, navigate, setConfirmedNavigation, setLastLocation]);
 
   return <Prompt when={when} message={handleBlockedNavigation} />;
 };

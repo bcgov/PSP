@@ -11,6 +11,7 @@ import React, {
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
@@ -249,6 +250,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
       isEditing: false,
       activeEditForm: undefined,
     });
+    setIsPropertyEditing(false);
   };
 
   const handleSaveClick = async () => {
@@ -276,6 +278,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
             if (typeof onCancelConfirm === 'function') {
               onCancelConfirm();
             }
+            // onCancelConfirm && onCancelConfirm();
           },
           handleCancel: () => setDisplayModal(false),
         });
@@ -286,8 +289,6 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     } else {
       handleCancelConfirm();
     }
-
-    setIsPropertyEditing(false);
   };
 
   const fetchLastUpdatedBy = useCallback(async () => {
@@ -393,30 +394,38 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     refresh();
   };
 
+  const shouldBlockNavigation = useCallback(
+    () => formikRef.current?.dirty && !formikRef.current?.isSubmitting,
+    [],
+  );
+
   // UI components
   if (loading || getLastUpdatedByLoading) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 
   return (
-    <View
-      setIsEditing={setIsPropertyEditing}
-      onClose={close}
-      onSave={handleSaveClick}
-      onCancel={handleCancelClick}
-      onSelectFileSummary={onSelectFileSummary}
-      onSelectProperty={onSelectProperty}
-      onEditProperties={onEditProperties}
-      onPropertyUpdateSuccess={onPropertyUpdate}
-      onChildSuccess={onChildSuccess}
-      refreshLease={refresh}
-      setLease={setLease}
-      formikRef={formikRef}
-      containerState={containerState}
-      setContainerState={setContainerState}
-      isFormValid={isValid}
-      lease={lease}
-    ></View>
+    <>
+      <View
+        setIsEditing={setIsPropertyEditing}
+        onClose={close}
+        onSave={handleSaveClick}
+        onCancel={handleCancelClick}
+        onSelectFileSummary={onSelectFileSummary}
+        onSelectProperty={onSelectProperty}
+        onEditProperties={onEditProperties}
+        onPropertyUpdateSuccess={onPropertyUpdate}
+        onChildSuccess={onChildSuccess}
+        refreshLease={refresh}
+        setLease={setLease}
+        formikRef={formikRef}
+        containerState={containerState}
+        setContainerState={setContainerState}
+        isFormValid={isValid}
+        lease={lease}
+      ></View>
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
+    </>
   );
 };
 

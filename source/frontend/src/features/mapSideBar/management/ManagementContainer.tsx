@@ -3,6 +3,7 @@ import { FormikProps } from 'formik';
 import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
@@ -302,6 +303,11 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     [managementFileId, getPropertyAssociations],
   );
 
+  const shouldBlockNavigation = useCallback(
+    () => formikRef.current?.dirty && !formikRef.current?.isSubmitting,
+    [],
+  );
+
   // UI components
   const loading =
     loadingManagementFile ||
@@ -337,6 +343,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
         }
         isEditing={isEditing}
       ></View>
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
     </>
   );
 };

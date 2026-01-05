@@ -11,6 +11,7 @@ import React, {
 } from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
@@ -353,6 +354,11 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     );
   };
 
+  const shouldBlockNavigation = useCallback(
+    () => formikRef.current?.dirty && !formikRef.current?.isSubmitting,
+    [],
+  );
+
   // UI components
   if (
     loadingAcquisitionFile ||
@@ -364,25 +370,28 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   }
 
   return (
-    <View
-      isEditing={isEditing}
-      setIsEditing={setIsEditing}
-      containerState={containerState}
-      setContainerState={setContainerState}
-      onClose={close}
-      onCancel={handleCancelClick}
-      onSave={handleSaveClick}
-      onSelectFileSummary={onSelectFileSummary}
-      onSelectProperty={onSelectProperty}
-      onEditProperties={onEditProperties}
-      onUpdateProperties={onUpdateProperties}
-      onSuccess={onSuccess}
-      confirmBeforeAdd={confirmBeforeAdd}
-      canRemove={canRemove}
-      formikRef={formikRef}
-      isFormValid={isValid}
-      error={error}
-    />
+    <>
+      <View
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        containerState={containerState}
+        setContainerState={setContainerState}
+        onClose={close}
+        onCancel={handleCancelClick}
+        onSave={handleSaveClick}
+        onSelectFileSummary={onSelectFileSummary}
+        onSelectProperty={onSelectProperty}
+        onEditProperties={onEditProperties}
+        onUpdateProperties={onUpdateProperties}
+        onSuccess={onSuccess}
+        confirmBeforeAdd={confirmBeforeAdd}
+        canRemove={canRemove}
+        formikRef={formikRef}
+        isFormValid={isValid}
+        error={error}
+      />
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
+    </>
   );
 };
 
