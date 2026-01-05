@@ -76,6 +76,7 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
   const renderPropertyIcon = (
     fileProperty: ApiGen_Concepts_FileProperty,
     filePropertyIndex: number | null,
+    sortedProperties: ApiGen_Concepts_FileProperty[],
   ) => {
     if (!exists(filePropertyIndex)) {
       return null;
@@ -200,7 +201,9 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                             {currentFilePropertyId === fileProperty?.id && <FaCaretRight />}
                           </div>
 
-                          <div>{renderPropertyIcon(fileProperty, filePropertyIndex)}</div>
+                          <div>
+                            {renderPropertyIcon(fileProperty, filePropertyIndex, sortedProperties)}
+                          </div>
 
                           <OverflowTip>
                             {currentFilePropertyId === fileProperty?.id ? (
