@@ -382,19 +382,19 @@ exports[`Add Management Container View > matches snapshot 1`] = `
   overflow-y: auto;
 }
 
-.c14 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c13 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c14 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c16.required::before {
@@ -640,6 +640,7 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Project
                   </div>
@@ -842,6 +843,7 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Properties to include in this file:
                   </div>
@@ -869,6 +871,7 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                       >
                         <div
                           class="align-content-end col"
+                          style="overflow: hidden;"
                         >
                           Selected Properties
                         </div>
@@ -1043,6 +1046,7 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Management Details
                   </div>
@@ -1258,6 +1262,7 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Management Team
                   </div>
@@ -1290,6 +1295,7 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Notice of Claim
                   </div>

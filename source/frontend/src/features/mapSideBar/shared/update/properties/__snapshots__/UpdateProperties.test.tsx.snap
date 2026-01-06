@@ -329,19 +329,19 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   border-bottom: solid 0.5rem #3470B1;
 }
 
-.c19 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c18 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c19 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c20 {
@@ -763,6 +763,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   <div
                     class="row"

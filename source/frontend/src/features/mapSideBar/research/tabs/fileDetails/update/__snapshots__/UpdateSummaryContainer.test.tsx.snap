@@ -414,19 +414,19 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   padding-top: 1rem;
 }
 
-.c3 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c2 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c3 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c5.required::before {
@@ -507,6 +507,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Research File Information
             </div>
@@ -730,6 +731,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Project
             </div>
@@ -883,6 +885,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Roads
             </div>
@@ -962,6 +965,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Research Request
             </div>
@@ -1333,6 +1337,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Result
             </div>
@@ -1431,6 +1436,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Expropriation
             </div>

@@ -101,6 +101,11 @@ namespace Pims.Dal.Repositories
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.VolumetricTypeCodeNavigation)
                 .Include(p => p.VolumeUnitTypeCodeNavigation)
+                .Include(p => p.ResponsiblePayerPerson)
+                    .ThenInclude(x => x.PimsPersonOrganizations)
+                        .ThenInclude(y => y.Organization)
+                .Include(p => p.ResponsiblePayerOrganization)
+                .Include(p => p.ResponsiblePayerPrimaryContact)
                 .Include(p => p.Address)
                     .ThenInclude(a => a.RegionCodeNavigation)
                 .Include(p => p.Address)
@@ -444,6 +449,10 @@ namespace Pims.Dal.Repositories
             existingProperty.AdditionalDetails = property.AdditionalDetails;
             existingProperty.IsUtilitiesPayable = property.IsUtilitiesPayable;
             existingProperty.IsTaxesPayable = property.IsTaxesPayable;
+            existingProperty.ResponsiblePayerPersonId = property.ResponsiblePayerPersonId;
+            existingProperty.ResponsiblePayerOrganizationId = property.ResponsiblePayerOrganizationId;
+            existingProperty.ResponsiblePayerPrimaryContactId = property.ResponsiblePayerPrimaryContactId;
+
             Context.Update(existingProperty);
 
             // update direct relationships - Property Purposes

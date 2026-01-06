@@ -248,19 +248,19 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
   font-size: 3.2rem;
 }
 
-.c3 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c2 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c3 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c5.required::before {
@@ -350,6 +350,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Requisition Details
             </div>
@@ -581,6 +582,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               <div
                 class="d-flex align-items-center"
@@ -774,6 +776,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Financial Coding
             </div>
@@ -1079,6 +1082,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Payment
             </div>
@@ -1400,6 +1404,7 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Activities
             </div>
