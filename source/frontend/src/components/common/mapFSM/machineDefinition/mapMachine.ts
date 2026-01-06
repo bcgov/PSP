@@ -722,6 +722,9 @@ export const mapMachine = createMachine<MachineContext>({
         EXIT_MAP: {
           target: 'notMap',
         },
+        SHOW_QUICK_INFO_PROPERTY: {
+          actions: 'showQuickInfoProperty',
+        },
         PREPARE_FOR_CREATION: {
           actions: assign({
             selectedFeatures: (

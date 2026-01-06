@@ -212,54 +212,54 @@ exports[`ResearchProperties component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c18.c18.btn {
+.c19.c19.btn {
   background-color: unset;
   border: none;
 }
 
-.c18.c18.btn:hover,
-.c18.c18.btn:focus,
-.c18.c18.btn:active {
+.c19.c19.btn:hover,
+.c19.c19.btn:focus,
+.c19.c19.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c18.c18.btn svg {
+.c19.c19.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c18.c18.btn svg:hover {
+.c19.c19.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c18.c18.btn.btn-primary svg {
+.c19.c19.btn.btn-primary svg {
   color: #013366;
 }
 
-.c18.c18.btn.btn-primary svg:hover {
+.c19.c19.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c18.c18.btn.btn-light svg {
+.c19.c19.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c18.c18.btn.btn-light svg:hover {
+.c19.c19.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c18.c18.btn.btn-info svg {
+.c19.c19.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c18.c18.btn.btn-info svg:hover {
+.c19.c19.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c20.c20.btn {
+.c21.c21.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -267,13 +267,13 @@ exports[`ResearchProperties component > renders as expected 1`] = `
   line-height: unset;
 }
 
-.c20.c20.btn .text {
+.c21.c21.btn .text {
   display: none;
 }
 
-.c20.c20.btn:hover,
-.c20.c20.btn:active,
-.c20.c20.btn:focus {
+.c21.c21.btn:hover,
+.c21.c21.btn:active,
+.c21.c21.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -287,9 +287,9 @@ exports[`ResearchProperties component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c20.c20.btn:hover .text,
-.c20.c20.btn:active .text,
-.c20.c20.btn:focus .text {
+.c21.c21.btn:hover .text,
+.c21.c21.btn:active .text,
+.c21.c21.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -368,7 +368,7 @@ exports[`ResearchProperties component > renders as expected 1`] = `
   min-height: 4.5rem;
 }
 
-.c17 {
+.c18 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -386,7 +386,12 @@ exports[`ResearchProperties component > renders as expected 1`] = `
   justify-content: flex-end;
 }
 
-.c19 {
+.c17 {
+  max-width: 3rem;
+  min-width: 3rem;
+}
+
+.c20 {
   padding-left: 1.2rem;
 }
 
@@ -729,7 +734,7 @@ exports[`ResearchProperties component > renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="ml-5 col-auto"
+              class="c17 ml-5 col-auto"
             >
               <button
                 class="c10 Button btn btn-link"
@@ -756,10 +761,10 @@ exports[`ResearchProperties component > renders as expected 1`] = `
               </button>
             </div>
             <div
-              class="c17 pl-3 col-auto"
+              class="c18 col-auto"
             >
               <button
-                class="c10 Button c18 btn btn-primary"
+                class="c10 Button c19 btn btn-primary"
                 data-testid="move-pin-location-0"
                 title="move-pin-location"
                 type="button"
@@ -783,7 +788,7 @@ exports[`ResearchProperties component > renders as expected 1`] = `
                 </div>
               </button>
               <button
-                class="c10 Button c18 btn btn-primary"
+                class="c10 Button c19 btn btn-primary"
                 data-testid="upload-shapefile-0"
                 type="button"
               >
@@ -807,10 +812,10 @@ exports[`ResearchProperties component > renders as expected 1`] = `
                 </div>
               </button>
               <div
-                class="c19"
+                class="c20"
               >
                 <button
-                  class="c10 Button c20 btn btn-link"
+                  class="c10 Button c21 btn btn-link"
                   data-testid="delete-property-0"
                   type="button"
                 >
@@ -950,7 +955,7 @@ exports[`ResearchProperties component > renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="ml-5 col-auto"
+              class="c17 ml-5 col-auto"
             >
               <button
                 class="c10 Button btn btn-link"
@@ -977,10 +982,10 @@ exports[`ResearchProperties component > renders as expected 1`] = `
               </button>
             </div>
             <div
-              class="c17 pl-3 col-auto"
+              class="c18 col-auto"
             >
               <button
-                class="c10 Button c18 btn btn-primary"
+                class="c10 Button c19 btn btn-primary"
                 data-testid="move-pin-location-1"
                 title="move-pin-location"
                 type="button"
@@ -1004,7 +1009,7 @@ exports[`ResearchProperties component > renders as expected 1`] = `
                 </div>
               </button>
               <button
-                class="c10 Button c18 btn btn-primary"
+                class="c10 Button c19 btn btn-primary"
                 data-testid="upload-shapefile-1"
                 type="button"
               >
@@ -1028,10 +1033,10 @@ exports[`ResearchProperties component > renders as expected 1`] = `
                 </div>
               </button>
               <div
-                class="c19"
+                class="c20"
               >
                 <button
-                  class="c10 Button c20 btn btn-link"
+                  class="c10 Button c21 btn btn-link"
                   data-testid="delete-property-1"
                   type="button"
                 >

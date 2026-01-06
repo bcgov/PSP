@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
-using MoreLinq;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 
@@ -84,13 +83,21 @@ namespace Pims.Api.Areas.Reports.Models.Management
         [CsvHelper.Configuration.Attributes.Name("External Contacts")]
         public string ExternalContacts { get; set; }
 
-        [DisplayName("Invoices total (before tax)")]
-        [CsvHelper.Configuration.Attributes.Name("Invoices total (before tax)")]
+        [DisplayName("All Invoices Total (before tax)")]
+        [CsvHelper.Configuration.Attributes.Name("All Invoices Total (before tax)")]
         public decimal InvoicesPreTaxTotal { get; set; }
 
-        [DisplayName("Invoices total")]
-        [CsvHelper.Configuration.Attributes.Name("Invoices total")]
+        [DisplayName("Approved Invoices Total (before tax)")]
+        [CsvHelper.Configuration.Attributes.Name("Approved Invoices Total (before tax)")]
+        public decimal ApprovedInvoicesPreTaxTotal { get; set; }
+
+        [DisplayName("All Invoices Total")]
+        [CsvHelper.Configuration.Attributes.Name("All Invoices Total")]
         public decimal InvoicesTotal { get; set; }
+
+        [DisplayName("Approved Invoices Total")]
+        [CsvHelper.Configuration.Attributes.Name("Approved Invoices Total")]
+        public decimal ApprovedInvoicesTotal { get; set; }
 
         public ManagementActivityOverviewReportModel(PimsManagementActivity activity)
         {
@@ -116,6 +123,12 @@ namespace Pims.Api.Areas.Reports.Models.Management
             ExternalContacts = GetExternalContactsAsString(activity.PimsMgmtActInvolvedParties);
             InvoicesPreTaxTotal = activity.PimsManagementActivityInvoices?.Sum(i => i.PretaxAmt) ?? 0;
             InvoicesTotal = activity.PimsManagementActivityInvoices?.Sum(i => i.TotalAmt ?? 0) ?? 0;
+            ApprovedInvoicesPreTaxTotal = activity.PimsManagementActivityInvoices?
+                .Where(i => i.IsPaymentApproved)
+                .Sum(i => i.PretaxAmt) ?? 0;
+            ApprovedInvoicesTotal = activity.PimsManagementActivityInvoices?
+                .Where(i => i.IsPaymentApproved)
+                .Sum(i => i.TotalAmt ?? 0) ?? 0;
         }
 
         private static string GetNullableString(string value)
