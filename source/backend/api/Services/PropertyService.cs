@@ -34,6 +34,7 @@ namespace Pims.Api.Services
         private readonly IDocumentFileService _documentFileService;
         private readonly IMapper _mapper;
         private readonly ILookupRepository _lookupRepository;
+        private readonly IPropertyImprovementRepository _propertyImprovementRepository;
 
         public PropertyService(
             ClaimsPrincipal user,
@@ -47,7 +48,8 @@ namespace Pims.Api.Services
             IPropertyLeaseRepository propertyLeaseRepository,
             IDocumentFileService documentFileService,
             IMapper mapper,
-            ILookupRepository lookupRepository)
+            ILookupRepository lookupRepository,
+            IPropertyImprovementRepository propertyImprovementRepository)
         {
             _user = user;
             _logger = logger;
@@ -61,6 +63,7 @@ namespace Pims.Api.Services
             _documentFileService = documentFileService;
             _mapper = mapper;
             _lookupRepository = lookupRepository;
+            _propertyImprovementRepository = propertyImprovementRepository;
         }
 
         public PimsProperty GetById(long id)
@@ -232,6 +235,56 @@ namespace Pims.Api.Services
             _propertyRepository.CommitTransaction();
 
             return GetPropertyManagement(newProperty.Internal_Id);
+        }
+
+        public IEnumerable<PimsPropertyImprovement> GetImprovementsByPropertyId(long propertyId)
+        {
+            _logger.LogInformation("Getting property improvements on propertyId {propertyId}", propertyId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            return _propertyImprovementRepository.GetByPropertyId(propertyId);
+        }
+
+        public PimsPropertyImprovement AddPropertyImprovement(PimsPropertyImprovement propertyImprovement)
+        {
+            _logger.LogInformation("Adding property improvements on propertyId {propertyId}", propertyImprovement.PropertyId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+            propertyImprovement.ThrowIfNull(nameof(propertyImprovement));
+
+            _propertyImprovementRepository.Add(propertyImprovement);
+            _propertyImprovementRepository.CommitTransaction();
+
+            return propertyImprovement;
+        }
+
+        public PimsPropertyImprovement GetPropertyImprovementByID(long propertyId, long propertyImprovementId)
+        {
+            _logger.LogInformation("Getting property improvement by Id {propertyId} and {propertyImprovementId}", propertyImprovementId, propertyImprovementId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            return _propertyImprovementRepository.Get(propertyId, propertyImprovementId);
+        }
+
+        public PimsPropertyImprovement UpdatePropertyImprovement(long propertyId, PimsPropertyImprovement propertyImprovement)
+        {
+            _logger.LogInformation("Updating property improvement by Id {propertyId} and {propertyImprovement}", propertyId, propertyImprovement.PropertyImprovementId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            var updatedImprovement = _propertyImprovementRepository.Update(propertyId, propertyImprovement);
+            _propertyImprovementRepository.CommitTransaction();
+
+            return updatedImprovement;
+        }
+
+        public bool DeletePropertyImprovement(long propertyId, long propertyImprovementId)
+        {
+            _logger.LogInformation("Deleting property improvement by Id {propertyId} and {propertyImprovement}", propertyId, propertyImprovementId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            bool deleteResult = _propertyImprovementRepository.TryDelete(propertyId, propertyImprovementId);
+            _propertyImprovementRepository.CommitTransaction();
+
+            return deleteResult;
         }
 
         public IList<PimsManagementActivity> GetActivities(long propertyId)

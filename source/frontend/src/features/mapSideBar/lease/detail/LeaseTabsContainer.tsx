@@ -123,22 +123,6 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
   tabViews.push({
     content: (
       <LeaseTab
-        leasePage={leasePages.get(LeasePageNames.IMPROVEMENTS)}
-        onEdit={() =>
-          setContainerState({ activeEditForm: LeasePageNames.IMPROVEMENTS, isEditing: true })
-        }
-        isEditing={isEditing}
-        formikRef={formikRef}
-        onSuccess={onSuccess}
-      />
-    ),
-    key: LeaseFileTabNames.improvements,
-    name: 'Improvements',
-  });
-
-  tabViews.push({
-    content: (
-      <LeaseTab
         leasePage={leasePages.get(LeasePageNames.INSURANCE)}
         onEdit={() =>
           setContainerState({ activeEditForm: LeasePageNames.INSURANCE, isEditing: true })

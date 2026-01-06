@@ -10,7 +10,6 @@ using Pims.Core.Api.Policies;
 using Pims.Core.Json;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
-using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Property.Controllers

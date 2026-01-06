@@ -33,6 +33,8 @@ import PropertyDocumentsTab from '../shared/tabs/PropertyDocumentsTab';
 import LtsaPlanTabView from './tabs/ltsa/LtsaPlanTabView';
 import { toFormValues } from './tabs/propertyDetails/detail/PropertyDetailsTabView.helpers';
 import { PropertyManagementTabView } from './tabs/propertyDetailsManagement/detail/PropertyManagementTabView';
+import PropertyImprovementsListContainer from './tabs/propertyImprovements/list/PropertyImprovementsListContainer';
+import PropertyImprovementsListView from './tabs/propertyImprovements/list/PropertyImprovementsListView';
 
 export interface IPropertyContainerProps {
   composedPropertyState: ComposedPropertyState;
@@ -237,6 +239,22 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
       name: 'Management',
     });
     defaultTab = InventoryTabNames.management;
+  }
+
+  if (exists(composedPropertyState.apiWrapper?.response)) {
+    // After API property object has been received, we query relevant map layers to find
+    // additional information which we store in a different model (IPropertyDetailsForm)
+    tabViews.push({
+      content: (
+        <PropertyImprovementsListContainer
+          propertyId={composedPropertyState.apiWrapper?.response.id}
+          View={PropertyImprovementsListView}
+        />
+      ),
+      key: InventoryTabNames.improvements,
+      name: 'Improvements',
+    });
+    defaultTab = InventoryTabNames.improvements;
   }
 
   if (exists(composedPropertyState?.composedProperty)) {

@@ -21,7 +21,6 @@ import LeaseChecklistContainer from '@/features/leases/detail/LeasePages/checkli
 import DepositsContainer from '@/features/leases/detail/LeasePages/deposits/DepositsContainer';
 import DetailContainer from '@/features/leases/detail/LeasePages/details/DetailContainer';
 import DocumentsPage from '@/features/leases/detail/LeasePages/documents/DocumentsPage';
-import { ImprovementsContainer } from '@/features/leases/detail/LeasePages/improvements/ImprovementsContainer';
 import InsuranceContainer from '@/features/leases/detail/LeasePages/insurance/InsuranceContainer';
 import PeriodPaymentsContainer from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsContainer';
 import { PeriodPaymentsYupSchema } from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsYupSchema';
@@ -87,7 +86,6 @@ export enum LeasePageNames {
   PAYEE = 'payee',
   EDIT_PAYEE = 'edit-payee',
   PAYMENTS = 'payments',
-  IMPROVEMENTS = 'improvements',
   INSURANCE = 'insurance',
   DEPOSIT = 'deposit',
   SURPLUS = 'surplus',
@@ -133,14 +131,6 @@ export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
       title: 'Payments',
       validation: PeriodPaymentsYupSchema,
       componentView: PeriodPaymentsView,
-    },
-  ],
-  [
-    LeasePageNames.IMPROVEMENTS,
-    {
-      pageName: LeasePageNames.IMPROVEMENTS,
-      component: ImprovementsContainer,
-      title: 'Improvements',
     },
   ],
   [
