@@ -214,8 +214,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -249,8 +249,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -284,8 +284,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -319,8 +319,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -354,8 +354,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -396,8 +396,8 @@ namespace Pims.Dal.Repositories
             .Select(rdh => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = rdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = rdh.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = rdh.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -438,8 +438,8 @@ namespace Pims.Dal.Repositories
             .Select(sdh => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = sdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = sdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = sdh.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = sdh.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = sdh.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -473,8 +473,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -515,14 +515,34 @@ namespace Pims.Dal.Repositories
             .Select(rdh => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = rdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = rdh.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = rdh.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
             .Take(1)
             .ToList();
             lastUpdatedByAggregate.AddRange(periodPaymentHistoryLastUpdatedBy);
+
+            // Lease Deleted Renewals
+            // This is needed to get the renewals last-updated-by when deleted
+            var deletedRenewals = this.Context.PimsLeaseRenewalHists.AsNoTracking()
+            .Where(aph => aph.LeaseId == leaseId)
+            .GroupBy(aph => aph.LeaseRenewalId)
+            .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var renewalHistoryLastUpdatedBy = deletedRenewals
+            .Select(aph => new LastUpdatedByModel()
+            {
+                ParentId = leaseId,
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
+                AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(renewalHistoryLastUpdatedBy);
 
             // Lease Documents
             var documentsUpdatedBy = this.Context.PimsLeaseDocuments.AsNoTracking()
@@ -550,8 +570,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -586,8 +606,8 @@ namespace Pims.Dal.Repositories
                 .Select(anh => new LastUpdatedByModel()
                 {
                     ParentId = leaseId,
-                    AppLastUpdateUserid = anh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                    AppLastUpdateUserGuid = anh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                    AppLastUpdateUserid = anh.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = anh.AppLastUpdateUserGuid,
                     AppLastUpdateTimestamp = anh.EndDateHist ?? DateTime.UnixEpoch,
                 })
                 .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
