@@ -1,6 +1,5 @@
 import { AxiosError } from 'axios';
-import { FormikProps } from 'formik';
-import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 import ConfirmNavigation from '@/components/common/ConfirmNavigation';
@@ -10,7 +9,8 @@ import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssocia
 import { useResearchRepository } from '@/hooks/repositories/useResearchRepository';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { useFormikCancel } from '@/hooks/useFormikCancel';
+import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
@@ -62,8 +62,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
 
   const [isValid, setIsValid] = useState<boolean>(true);
   const { setModalContent, setDisplayModal } = useModalContext();
-
-  const formikRef = useRef<FormikProps<any>>(null);
+  const { formikRef, handleCancelClick } = useFormikCancel<any>();
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
@@ -158,7 +157,10 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
 
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() => pathGenerator.showFile('research', researchFile.id));
+        handleCancelClick(() => {
+          setIsEditing(false);
+          pathGenerator.showFile('research', researchFile.id);
+        });
         return;
       }
     }
@@ -172,9 +174,10 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
 
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() =>
-          pathGenerator.showFilePropertyId('research', researchFile.id, filePropertyId),
-        );
+        handleCancelClick(() => {
+          setIsEditing(false);
+          pathGenerator.showFilePropertyId('research', researchFile.id, filePropertyId);
+        });
         return;
       }
     }
@@ -202,33 +205,9 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     }
   };
 
-  const handleCancelClick = (onCancelConfirm?: () => void) => {
-    if (formikRef !== undefined) {
-      if (formikRef.current?.dirty) {
-        setModalContent({
-          ...getCancelModalProps(),
-          handleOk: () => {
-            handleCancelConfirm();
-            setDisplayModal(false);
-            onCancelConfirm && onCancelConfirm();
-          },
-          handleCancel: () => setDisplayModal(false),
-        });
-        setDisplayModal(true);
-      } else {
-        handleCancelConfirm();
-      }
-    } else {
-      handleCancelConfirm();
-    }
-  };
-
-  const handleCancelConfirm = () => {
-    if (formikRef !== undefined) {
-      formikRef.current?.resetForm();
-    }
-    setIsEditing(false);
-  };
+  const handleCancel = useCallback(() => {
+    handleCancelClick(() => setIsEditing(false));
+  }, [handleCancelClick, setIsEditing]);
 
   //TODO: add this if we need this check for the research file.
   const canRemove = async () => true;
@@ -281,10 +260,10 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     );
   };
 
-  const shouldBlockNavigation = useCallback(
-    () => formikRef.current?.dirty && !formikRef.current?.isSubmitting,
-    [],
-  );
+  const shouldBlockNavigation = useCallback(() => {
+    const current = formikRef.current;
+    return !!current && current.dirty && !current.isSubmitting;
+  }, [formikRef]);
 
   // UI components
   if (
@@ -305,7 +284,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
         setEditMode={setIsEditing}
         onClose={onClose}
         onSave={handleSaveClick}
-        onCancel={handleCancelClick}
+        onCancel={handleCancel}
         onSelectFileSummary={onSelectFileSummary}
         onSelectProperty={onSelectProperty}
         onEditProperties={onEditProperties}

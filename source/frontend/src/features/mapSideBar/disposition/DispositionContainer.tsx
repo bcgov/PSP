@@ -1,6 +1,5 @@
 import { AxiosError } from 'axios';
-import { FormikProps } from 'formik';
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
 import ConfirmNavigation from '@/components/common/ConfirmNavigation';
@@ -10,7 +9,8 @@ import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvi
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { useFormikCancel } from '@/hooks/useFormikCancel';
+import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
@@ -65,21 +65,24 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
   const mapMachine = useMapStateMachine();
 
-  const formikRef = useRef<FormikProps<any>>(null);
+  const { formikRef, handleCancelClick } = useFormikCancel<any>();
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
   const query = useQuery();
   const isEditing = query.get('edit') === 'true';
 
-  const setIsEditing = (value: boolean) => {
-    if (value) {
-      query.set('edit', value.toString());
-    } else {
-      query.delete('edit');
-    }
-    history.push({ search: query.toString() });
-  };
+  const setIsEditing = useCallback(
+    (value: boolean) => {
+      if (value) {
+        query.set('edit', value.toString());
+      } else {
+        query.delete('edit');
+      }
+      history.push({ search: query.toString() });
+    },
+    [query, history],
+  );
 
   const isPropertySelector = useMemo(
     () =>
@@ -162,7 +165,10 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() => pathGenerator.showFile('disposition', dispositionFile.id));
+        handleCancelClick(() => {
+          setIsEditing(false);
+          pathGenerator.showFile('disposition', dispositionFile.id);
+        });
         return;
       }
     }
@@ -176,9 +182,10 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() =>
-          pathGenerator.showFilePropertyId('disposition', dispositionFile.id, filePropertyId),
-        );
+        handleCancelClick(() => {
+          setIsEditing(false);
+          pathGenerator.showFilePropertyId('disposition', dispositionFile.id, filePropertyId);
+        });
         return;
       }
     }
@@ -204,34 +211,6 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
       formikRef.current?.setSubmitting(true);
       formikRef.current?.submitForm();
     }
-  };
-
-  const handleCancelClick = (onCancelConfirm?: () => void) => {
-    if (formikRef !== undefined) {
-      if (formikRef.current?.dirty) {
-        setModalContent({
-          ...getCancelModalProps(),
-          handleOk: () => {
-            handleCancelConfirm();
-            setDisplayModal(false);
-            onCancelConfirm && onCancelConfirm();
-          },
-          handleCancel: () => setDisplayModal(false),
-        });
-        setDisplayModal(true);
-      } else {
-        handleCancelConfirm();
-      }
-    } else {
-      handleCancelConfirm();
-    }
-  };
-
-  const handleCancelConfirm = () => {
-    if (formikRef !== undefined) {
-      formikRef.current?.resetForm();
-    }
-    setIsEditing(false);
   };
 
   const onSuccess = (refreshProperties?: boolean, refreshFile?: boolean) => {
@@ -325,8 +304,12 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
 
   const shouldBlockNavigation = useCallback(
     () => formikRef.current?.dirty && !formikRef.current?.isSubmitting,
-    [],
+    [formikRef],
   );
+
+  const handleCancel = useCallback(() => {
+    handleCancelClick(() => setIsEditing(false));
+  }, [handleCancelClick, setIsEditing]);
 
   // UI components
   const loading =
@@ -342,7 +325,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
       <View
         setIsEditing={setIsEditing}
         onClose={close}
-        onCancel={handleCancelClick}
+        onCancel={handleCancel}
         onSave={handleSaveClick}
         onSelectFileSummary={onSelectFileSummary}
         onSelectProperty={onSelectProperty}
