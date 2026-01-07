@@ -18,8 +18,8 @@ VALUES
   -- File Initiation
   (N'FILEINIT',  N'CURRTITL',   N'Current title',                                      1, NULL),
   (N'FILEINIT',  N'BCASSESS',   N'BC Assessment',                                      2, NULL),
-  (N'FILEINIT',  N'INITDOC',    N'Initiating Document',                                3, 'Document that started the disposition process - Surplus declaration, H0222 etc.'),
-  (N'FILEINIT',  N'PRAPPFEE',   N'Proof of Application Fee',                           4, 'Proof of receiving application fee (e.g.: for road closure).'),
+  (N'FILEINIT',  N'INITDOC',    N'Initiating Document',                                3, N'Document that started the disposition process - Surplus declaration, H0222 etc.'),
+  (N'FILEINIT',  N'PRAPPFEE',   N'Proof of Application Fee',                           4, N'Proof of receiving application fee (e.g.: for road closure).'),
   
   -- Disposition Preparation
   (N'DISPPREP',  N'APPRAISAL',  N'Appraisal',                                          5, NULL),
@@ -37,18 +37,18 @@ VALUES
   (N'REFRCONS',  N'ADVERTCMP',  N'Advertising completed',                             15, N'The intent to dispose property has been advertised, if applicable (e.g. for road closures).'),
   
   -- Direct Sale or Road Closure
-  (N'DIRCTSAL',  N'SRVINSSENT', N'Survey instructions issued to Applicant',           16, N'Letter/notification to applicant issuing survey instructions, if applicable (e.g. Road closure).'),
-  (N'DIRCTSAL',  N'LGLSURVAPP', N'Legal survey received and approved',                17, N'Survey is needed to proceed with appraisal. For Road closure this is commissioned by the applicant.'),
-  (N'DIRCTSAL',  N'RDCLOSCMP',  N'Road closure plan completed',                       18, NULL),
-  (N'DIRCTSAL',  N'CONSPLNCMP', N'Consolidation plan completed',                      19, NULL),
-  (N'DIRCTSAL',  N'APPCPYSENT', N'Copy of appraisal sent to buyer(s)',                20, NULL),
-  (N'DIRCTSAL',  N'GAZNOTSGND', N'Gazette notice signed by District Highway Manager', 21, NULL),
-  (N'DIRCTSAL',  N'GAZNOTPUBD', N'Gazette notice published in BC Gazette',            22, NULL),
-  (N'DIRCTSAL',  N'SGNDFRMAXF', N'Signed Form A transfer',                            23, NULL),
-  (N'DIRCTSAL',  N'SGNDXFRPPH', N'Signed Transfer Closed PPH Between Gov. Agencies',  24, 'Signed Transfer of Discontinued and Closed Provincial Public Highway Lands To The Minister Responsible'),
-  (N'DIRCTSAL',  N'UTILCOAPP',  N'Utility company referral',                          25, NULL),
-  (N'DIRCTSAL',  N'ADJLOREF',   N'Adjacent landowner referral',                       26, NULL),
-  (N'DIRCTSAL',  N'ADCOMPLT',   N'Advertising completed',                             27, NULL),
+  (N'DIRCTSAL',  N'UTILCOAPP',  N'Utility company referral',                          16, NULL),
+  (N'DIRCTSAL',  N'ADJLOREF',   N'Adjacent landowner referral',                       17, NULL),
+  (N'DIRCTSAL',  N'ADCOMPLT',   N'Advertising completed',                             18, NULL),
+  (N'DIRCTSAL',  N'SRVINSSENT', N'Survey instructions issued to Applicant',           19, N'Letter/notification to applicant issuing survey instructions, if applicable (e.g. Road closure).'),
+  (N'DIRCTSAL',  N'LGLSURVAPP', N'Legal survey received and approved',                20, N'Survey is needed to proceed with appraisal. For Road closure this is commissioned by the applicant.'),
+  (N'DIRCTSAL',  N'RDCLOSCMP',  N'Road closure plan completed',                       21, NULL),
+  (N'DIRCTSAL',  N'CONSPLNCMP', N'Consolidation plan completed',                      22, NULL),
+  (N'DIRCTSAL',  N'APPCPYSENT', N'Copy of appraisal sent to buyer(s)',                23, NULL),
+  (N'DIRCTSAL',  N'GAZNOTSGND', N'Gazette notice signed by District Highway Manager', 24, NULL),
+  (N'DIRCTSAL',  N'GAZNOTPUBD', N'Gazette notice published in BC Gazette',            25, NULL),
+  (N'DIRCTSAL',  N'SGNDFRMAXF', N'Signed Form A transfer',                            26, NULL),
+  (N'DIRCTSAL',  N'SGNDXFRPPH', N'Signed Transfer Closed PPH Between Gov. Agencies',  27, N'Signed Transfer of Discontinued and Closed Provincial Public Highway Lands To The Minister Responsible'),
   
   -- Sale Information
   (N'SALEINFO', N'SGNDLSTAGRE', N'Signed Listing agreement',                          28, N'Copy of documentation to show completion of, or exemption from, this referral.'),
@@ -66,7 +66,8 @@ GO
 
 -- Disable the STRNTHCLM code value
 UPDATE PIMS_DSP_CHKLST_ITEM_TYPE
-SET    IS_DISABLED = 1
+SET    EXPIRY_DATE                = CAST('2025-01-01' AS DATE)
      , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
 WHERE  DSP_CHKLST_SECTION_TYPE_CODE = 'REFRCONS'
    AND DSP_CHKLST_ITEM_TYPE_CODE    = 'STRNTHCLM'
+GO

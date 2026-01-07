@@ -47,36 +47,6 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Alter table dbo.PIMS_DSP_CHKLST_SECTION_TYPE
-PRINT N'Alter table dbo.PIMS_DSP_CHKLST_SECTION_TYPE'
-GO
-ALTER TABLE [dbo].[PIMS_DSP_CHKLST_SECTION_TYPE]
-	ADD [IS_DISABLED] bit NOT NULL CONSTRAINT [DSPSCT_IS_DISABLED_DEF] DEFAULT (CONVERT([bit],(0)))
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Indicates if the record is disabled and therefore not selectable or displayed.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_DSP_CHKLST_SECTION_TYPE', 
-	@level2type = N'Column', @level2name = N'IS_DISABLED'
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-
--- Alter table dbo.PIMS_DSP_CHKLST_ITEM_TYPE
-PRINT N'Alter table dbo.PIMS_DSP_CHKLST_ITEM_TYPE'
-GO
-ALTER TABLE [dbo].[PIMS_DSP_CHKLST_ITEM_TYPE]
-	ADD [IS_DISABLED] bit NOT NULL CONSTRAINT [DSPCIT_IS_DISABLED_DEF] DEFAULT (CONVERT([bit],(0)))
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Indicates if the record is disabled and therefore not selectable or displayed.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_DSP_CHKLST_ITEM_TYPE', 
-	@level2type = N'Column', @level2name = N'IS_DISABLED'
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-
 -- Alter table dbo.PIMS_PROPERTY
 PRINT N'Alter table dbo.PIMS_PROPERTY'
 GO
@@ -103,7 +73,6 @@ BEGIN TRY
       "DISPLAY_ORDER",
       "EFFECTIVE_DATE",
       "EXPIRY_DATE",
-      "IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER")
     select "DSP_CHKLST_ITEM_TYPE_CODE",
       "DSP_CHKLST_SECTION_TYPE_CODE",
@@ -113,7 +82,6 @@ BEGIN TRY
       "DISPLAY_ORDER",
       "EFFECTIVE_DATE",
       "EXPIRY_DATE",
-      "IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER"
     from inserted;
 
@@ -142,14 +110,12 @@ BEGIN TRY
       "DISPLAY_ORDER",
       "EFFECTIVE_DATE",
       "EXPIRY_DATE",
-      "IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER")
     select "DSP_CHKLST_SECTION_TYPE_CODE",
       "DESCRIPTION",
       "DISPLAY_ORDER",
       "EFFECTIVE_DATE",
       "EXPIRY_DATE",
-      "IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER"
     from inserted;
 
@@ -187,7 +153,6 @@ BEGIN TRY
       "DISPLAY_ORDER" = inserted."DISPLAY_ORDER",
       "EFFECTIVE_DATE" = inserted."EFFECTIVE_DATE",
       "EXPIRY_DATE" = inserted."EXPIRY_DATE",
-      "IS_DISABLED" = inserted."IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER"
     , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
     , DB_LAST_UPDATE_USERID = user_name()
@@ -226,7 +191,6 @@ BEGIN TRY
       "DISPLAY_ORDER" = inserted."DISPLAY_ORDER",
       "EFFECTIVE_DATE" = inserted."EFFECTIVE_DATE",
       "EXPIRY_DATE" = inserted."EXPIRY_DATE",
-      "IS_DISABLED" = inserted."IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER"
     , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
     , DB_LAST_UPDATE_USERID = user_name()

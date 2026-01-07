@@ -14354,7 +14354,6 @@ CREATE TABLE [dbo].[PIMS_DSP_CHKLST_SECTION_TYPE]  (
 	[DISPLAY_ORDER]               	int NULL,
 	[EFFECTIVE_DATE]              	date NOT NULL CONSTRAINT [DSPSCT_EFFECTIVE_DATE_DEF]  DEFAULT (getutcdate()),
 	[EXPIRY_DATE]                 	date NULL,
-	[IS_DISABLED]                 	bit NOT NULL CONSTRAINT [DSPSCT_IS_DISABLED_DEF]  DEFAULT (CONVERT([bit],(0))),
 	[CONCURRENCY_CONTROL_NUMBER]  	bigint NOT NULL CONSTRAINT [DSPSCT_CONCURRENCY_CONTROL_NUMBER_DEF]  DEFAULT ((1)),
 	[DB_CREATE_TIMESTAMP]         	datetime NOT NULL CONSTRAINT [DSPSCT_DB_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
 	[DB_CREATE_USERID]            	nvarchar(30) NOT NULL CONSTRAINT [DSPSCT_DB_CREATE_USERID_DEF]  DEFAULT (user_name()),
@@ -14392,12 +14391,6 @@ EXEC sp_addextendedproperty
 	@level0type = N'Schema', @level0name = N'dbo', 
 	@level1type = N'Table', @level1name = N'PIMS_DSP_CHKLST_SECTION_TYPE', 
 	@level2type = N'Column', @level2name = N'EXPIRY_DATE'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Indicates if the record is disabled and therefore not selectable or displayed.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_DSP_CHKLST_SECTION_TYPE', 
-	@level2type = N'Column', @level2name = N'IS_DISABLED'
 GO
 EXEC sp_addextendedproperty 
 	@name = N'MS_Description', @value = N'Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o' , 
@@ -14444,7 +14437,6 @@ CREATE TABLE [dbo].[PIMS_DSP_CHKLST_ITEM_TYPE]  (
 	[DISPLAY_ORDER]               	int NULL,
 	[EFFECTIVE_DATE]              	date NOT NULL CONSTRAINT [DSPCIT_EFFECTIVE_DATE_DEF]  DEFAULT (getutcdate()),
 	[EXPIRY_DATE]                 	date NULL,
-	[IS_DISABLED]                 	bit NOT NULL CONSTRAINT [DSPCIT_IS_DISABLED_DEF]  DEFAULT (CONVERT([bit],(0))),
 	[CONCURRENCY_CONTROL_NUMBER]  	bigint NOT NULL CONSTRAINT [DSPCIT_CONCURRENCY_CONTROL_NUMBER_DEF]  DEFAULT ((1)),
 	[DB_CREATE_TIMESTAMP]         	datetime NOT NULL CONSTRAINT [DSPCIT_DB_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
 	[DB_CREATE_USERID]            	nvarchar(30) NOT NULL CONSTRAINT [DSPCIT_DB_CREATE_USERID_DEF]  DEFAULT (user_name()),
@@ -14500,12 +14492,6 @@ EXEC sp_addextendedproperty
 	@level0type = N'Schema', @level0name = N'dbo', 
 	@level1type = N'Table', @level1name = N'PIMS_DSP_CHKLST_ITEM_TYPE', 
 	@level2type = N'Column', @level2name = N'EXPIRY_DATE'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Indicates if the record is disabled and therefore not selectable or displayed.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_DSP_CHKLST_ITEM_TYPE', 
-	@level2type = N'Column', @level2name = N'IS_DISABLED'
 GO
 EXEC sp_addextendedproperty 
 	@name = N'MS_Description', @value = N'Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o' , 
@@ -39009,7 +38995,6 @@ BEGIN TRY
       "DISPLAY_ORDER",
       "EFFECTIVE_DATE",
       "EXPIRY_DATE",
-      "IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER")
     select "DSP_CHKLST_ITEM_TYPE_CODE",
       "DSP_CHKLST_SECTION_TYPE_CODE",
@@ -39019,7 +39004,6 @@ BEGIN TRY
       "DISPLAY_ORDER",
       "EFFECTIVE_DATE",
       "EXPIRY_DATE",
-      "IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER"
     from inserted;
 
@@ -39178,14 +39162,12 @@ BEGIN TRY
       "DISPLAY_ORDER",
       "EFFECTIVE_DATE",
       "EXPIRY_DATE",
-      "IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER")
     select "DSP_CHKLST_SECTION_TYPE_CODE",
       "DESCRIPTION",
       "DISPLAY_ORDER",
       "EFFECTIVE_DATE",
       "EXPIRY_DATE",
-      "IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER"
     from inserted;
 
@@ -45041,7 +45023,6 @@ BEGIN TRY
       "DISPLAY_ORDER" = inserted."DISPLAY_ORDER",
       "EFFECTIVE_DATE" = inserted."EFFECTIVE_DATE",
       "EXPIRY_DATE" = inserted."EXPIRY_DATE",
-      "IS_DISABLED" = inserted."IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER"
     , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
     , DB_LAST_UPDATE_USERID = user_name()
@@ -45190,7 +45171,6 @@ BEGIN TRY
       "DISPLAY_ORDER" = inserted."DISPLAY_ORDER",
       "EFFECTIVE_DATE" = inserted."EFFECTIVE_DATE",
       "EXPIRY_DATE" = inserted."EXPIRY_DATE",
-      "IS_DISABLED" = inserted."IS_DISABLED",
       "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER"
     , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
     , DB_LAST_UPDATE_USERID = user_name()
