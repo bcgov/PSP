@@ -82,12 +82,16 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
       <StyledRow className="align-items-center mb-3 no-gutters">
         <Col md={3}>
           <div className="mb-0 d-flex align-items-center">
-            {featureSet.isActive === false ? (
-              <DisabledDraftCircleNumber text={(index + 1).toString()} />
-            ) : (
-              <DraftCircleNumber text={(index + 1).toString()} />
-            )}
-            <OverflowTip fullText={propertyIdentifier} className="pl-3"></OverflowTip>
+            {exists(index) &&
+              (featureSet.isActive === false ? (
+                <DisabledDraftCircleNumber text={(index! + 1).toString()} />
+              ) : (
+                <DraftCircleNumber text={(index! + 1).toString()} />
+              ))}
+            <OverflowTip
+              fullText={propertyIdentifier}
+              className={exists(index) ? 'pl-3' : ''}
+            ></OverflowTip>
           </div>
         </Col>
         <Col md={showDisable ? 4 : 5}>
@@ -100,16 +104,16 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
             errorKeys={[withNameSpace(nameSpace, 'isRetired')]}
           />
         </Col>
-        <Col xs="auto" className="ml-5">
+        <RestrictedWidthCol xs="auto" className="ml-5">
           <ZoomToLocation geometry={featureSet.pimsFeature.geometry} icon={ZoomIconType.single} />
-        </Col>
+        </RestrictedWidthCol>
         {showDisable && (
-          <Col md={2}>
+          <Col md={2} className="mr-3">
             {featureSet?.pimsFeature?.properties?.IS_RETIRED ? (
               <div className="mb-0 ml-7">Retired</div>
             ) : (
               <Select
-                className="mb-0 ml-4"
+                className="mb-0 ml-3"
                 field={withNameSpace(nameSpace, 'isActive')}
                 options={[
                   { label: 'Inactive', value: 'false' },
@@ -119,7 +123,7 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
             )}
           </Col>
         )}
-        <StyledActionsCol xs="auto" className="pl-3">
+        <StyledActionsCol xs="auto">
           <StyledIconButton
             title="move-pin-location"
             onClick={() => {
@@ -176,6 +180,11 @@ const StyledActionsCol = styled(Col)`
   flex-direction: row;
   align-items: center;
   justify-content: flex-end;
+`;
+
+const RestrictedWidthCol = styled(Col)`
+  max-width: 3rem;
+  min-width: 3rem;
 `;
 
 const StyledSpacingWrapper = styled.div`

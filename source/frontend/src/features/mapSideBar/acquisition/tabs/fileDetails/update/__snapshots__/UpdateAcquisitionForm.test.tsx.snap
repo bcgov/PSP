@@ -428,19 +428,19 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
   opacity: unset;
 }
 
-.c4 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c1 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c4 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c3.required::before {
@@ -603,6 +603,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Project
           </div>
@@ -828,6 +829,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Progress Statuses
           </div>
@@ -1283,6 +1285,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Schedule
           </div>
@@ -1536,6 +1539,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Acquisition Details
           </div>
@@ -1867,6 +1871,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Acquisition Team
           </div>
@@ -2294,6 +2299,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Owners
           </div>
@@ -4133,6 +4139,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Notice of Claim
           </div>

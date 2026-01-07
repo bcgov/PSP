@@ -31,6 +31,12 @@ export const PropertyManagementUpdateContainer = React.forwardRef<
     leaseExpiryDate: null,
     hasActiveLease: null,
     activeLeaseHasExpiryDate: null,
+    responsiblePayerPersonId: null,
+    responsiblePayerPerson: null,
+    responsiblePayerOrganizationId: null,
+    responsiblePayerOrganization: null,
+    responsiblePayerPrimaryContactId: null,
+    responsiblePayerPrimaryContact: null,
     ...getEmptyBaseAudit(),
   });
 

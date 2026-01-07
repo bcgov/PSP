@@ -16,6 +16,7 @@ import {
 } from './PropertyActivityEditContainer';
 import { IPropertyActivityEditFormProps } from './PropertyActivityEditForm';
 import { PropertyActivityFormModel } from './models';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 
 const history = createMemoryHistory();
 
@@ -27,6 +28,13 @@ const mockContactApi: ReturnType<typeof useActivityContactRetriever> = {
   fetchProviderContact: vi.fn(),
   fetchRequestorContact: vi.fn(),
   isLoading: false,
+};
+
+const mockGetApi = {
+  error: undefined,
+  response: undefined as ApiGen_Concepts_PropertyManagement | undefined,
+  execute: vi.fn(),
+  loading: false,
 };
 
 vi.mock('../hooks');
@@ -69,6 +77,15 @@ const mockPropertyActivityApi: ReturnType<typeof useManagementActivityPropertyRe
     status: 200,
   },
 };
+
+vi.mock('@/hooks/repositories/usePropertyManagementRepository', () => ({
+  usePropertyManagementRepository: () => {
+    return {
+      getPropertyManagement: mockGetApi,
+    };
+  },
+}));
+
 
 vi.mock('@/hooks/repositories/useManagementActivityPropertyRepository');
 vi.mocked(useManagementActivityPropertyRepository).mockReturnValue(mockPropertyActivityApi);

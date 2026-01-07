@@ -343,19 +343,19 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
   font-size: 3.2rem;
 }
 
-.c12 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c11 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c12 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c14.required::before {
@@ -581,6 +581,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Contact Details
                   </div>
@@ -789,6 +790,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     <div
                       class="d-flex align-items-center"
@@ -1103,6 +1105,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     <div
                       class="d-flex align-items-center"
@@ -1392,6 +1395,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Property Address
                   </div>
@@ -1649,6 +1653,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Billing Address
                   </div>
@@ -1906,6 +1911,7 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Comments
                   </div>

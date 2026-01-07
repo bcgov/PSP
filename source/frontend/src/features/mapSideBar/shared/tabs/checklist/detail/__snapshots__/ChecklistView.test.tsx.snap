@@ -22,19 +22,19 @@ exports[`ChecklistView component > renders as expected 1`] = `
   overflow: hidden;
 }
 
-.c4 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c2 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c4 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c7.required::before {
@@ -122,6 +122,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             File Initiation
           </div>
@@ -559,6 +560,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Active File Management
           </div>
@@ -1763,6 +1765,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Crown Land
           </div>
@@ -1808,6 +1811,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Section 3 - Agreement
           </div>
@@ -2381,6 +2385,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Section 6 - Expropriation
           </div>
@@ -2929,6 +2934,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Acquisition Completion
           </div>
