@@ -10564,7 +10564,9 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.ResponsiblePayerPrimaryContactId).HasComment("Foreign key for the responsible payer primary contact for the organization to the PIMS_PERSON table.");
             entity.Property(e => e.SurplusDeclarationComment).HasComment("Comment regarding the surplus declaration");
             entity.Property(e => e.SurplusDeclarationDate).HasComment("Date the property was declared surplus");
-            entity.Property(e => e.SurplusDeclarationTypeCode).HasComment("Foreign key to the surplus declaration type table.");
+            entity.Property(e => e.SurplusDeclarationTypeCode)
+                .HasDefaultValue("UNKNOWN")
+                .HasComment("Foreign key to the surplus declaration type table.");
             entity.Property(e => e.SurveyPlanNumber).HasComment("Property/Land Parcel survey plan number");
             entity.Property(e => e.TaxResponsibilityTypeCode).HasComment("Foreign key to the PIMS_TAX_RESPONSIBILITY_TYPE table.");
             entity.Property(e => e.UtilityResponsibilityTypeCode).HasComment("Foreign key to the PIMS_UTILITY_RESPONSIBILITY_TYPE table.");
