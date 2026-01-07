@@ -67,19 +67,19 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
   overflow: hidden;
 }
 
-.c5 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c4 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c5 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c9 {
@@ -189,6 +189,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   Project
                 </div>
@@ -262,6 +263,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   Progress Statuses
                 </div>
@@ -444,6 +446,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   Schedule
                 </div>
@@ -582,6 +585,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   Acquisition Details
                 </div>
@@ -751,6 +755,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   Acquisition Team
                 </div>
@@ -854,6 +859,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   Owner Information
                 </div>
@@ -1019,6 +1025,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   Notice of Claim
                 </div>

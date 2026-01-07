@@ -7,6 +7,8 @@ import { ApiGen_Concepts_File } from './ApiGen_Concepts_File';
 import { ApiGen_Concepts_ManagementFileProperty } from './ApiGen_Concepts_ManagementFileProperty';
 import { ApiGen_Concepts_ManagementFileTeam } from './ApiGen_Concepts_ManagementFileTeam';
 import { ApiGen_Concepts_NoticeOfClaim } from './ApiGen_Concepts_NoticeOfClaim';
+import { ApiGen_Concepts_Organization } from './ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from './ApiGen_Concepts_Person';
 import { ApiGen_Concepts_Product } from './ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
 
@@ -22,6 +24,12 @@ export interface ApiGen_Concepts_ManagementFile extends ApiGen_Concepts_File {
   product: ApiGen_Concepts_Product | null;
   fundingTypeCode: ApiGen_Base_CodeType<string> | null;
   purposeTypeCode: ApiGen_Base_CodeType<string> | null;
+  responsiblePayerPersonId: number | null;
+  responsiblePayerPerson: ApiGen_Concepts_Person | null;
+  responsiblePayerOrganizationId: number | null;
+  responsiblePayerOrganization: ApiGen_Concepts_Organization | null;
+  responsiblePayerPrimaryContactId: number | null;
+  responsiblePayerPrimaryContact: ApiGen_Concepts_Person | null;
   fileProperties: ApiGen_Concepts_ManagementFileProperty[] | null;
   managementTeam: ApiGen_Concepts_ManagementFileTeam[] | null;
   noticeOfClaim: ApiGen_Concepts_NoticeOfClaim[] | null;

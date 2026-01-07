@@ -3,6 +3,7 @@ import { Fragment } from 'react';
 import { FaExternalLinkAlt, FaUserPlus } from 'react-icons/fa';
 
 import EditButton from '@/components/common/buttons/EditButton';
+import ContactFieldContainer from '@/components/common/ContactFieldContainer';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -120,6 +121,15 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
         <SectionField label="Purpose" labelWidth={{ xs: '5' }} valueTestId="management-purpose">
           {managementFile.purposeTypeCode?.description}
         </SectionField>
+
+        <ContactFieldContainer
+          labelWidth={{ xs: '5' }}
+          label="Responsible payer"
+          personId={managementFile.responsiblePayerPersonId}
+          organizationId={managementFile.responsiblePayerOrganizationId}
+          primaryContact={managementFile.responsiblePayerPrimaryContactId}
+        />
+
         <SectionField
           label="Additional details"
           labelWidth={{ xs: '5' }}

@@ -212,19 +212,19 @@ exports[`PeriodsForm component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c0 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c4.btn.btn-primary,
@@ -260,6 +260,7 @@ exports[`PeriodsForm component > renders as expected 1`] = `
       >
         <div
           class="align-content-end col"
+          style="overflow: hidden;"
         >
           <div
             class="no-gutters justify-content-between align-items-end row"
@@ -887,19 +888,19 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
   line-height: 2rem;
 }
 
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c0 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c6 {
@@ -969,6 +970,7 @@ exports[`PeriodsForm component > renders with data as expected 1`] = `
       >
         <div
           class="align-content-end col"
+          style="overflow: hidden;"
         >
           <div
             class="no-gutters justify-content-between align-items-end row"
