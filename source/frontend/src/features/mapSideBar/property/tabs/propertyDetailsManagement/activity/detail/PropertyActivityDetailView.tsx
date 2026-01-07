@@ -87,15 +87,14 @@ export const PropertyActivityDetailView: React.FunctionComponent<
                   />
                 ))}
                 <ActivityDetailInvoiceTotalsView invoices={invoices} />
+                <DocumentListContainer
+                  title="File Documents"
+                  parentId={props.activity?.id.toString() ?? ''}
+                  addButtonText="Add a Management Document"
+                  relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementActivities}
+                />
               </StyledSummarySection>
             </StyledFormWrapper>
-
-            <DocumentListContainer
-              title="File Documents"
-              parentId={props.activity?.id.toString() ?? ''}
-              addButtonText="Add a Management Document"
-              relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementActivities}
-            />
           </Styled.TrayContent>
         </Styled.PopupTray>
       </ReactVisibilitySensor>

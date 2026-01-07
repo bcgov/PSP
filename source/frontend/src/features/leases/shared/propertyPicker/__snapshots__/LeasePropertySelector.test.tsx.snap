@@ -312,19 +312,19 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
   flex-shrink: 0;
 }
 
-.c1 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c0 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c1 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c2 {
@@ -473,6 +473,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
       >
         <div
           class="align-content-end col"
+          style="overflow: hidden;"
         >
           Properties to include in this file:
         </div>
@@ -602,6 +603,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               <div
                 class="row"

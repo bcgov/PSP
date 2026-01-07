@@ -7,9 +7,6 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   fillInput,
-  findByTitle,
-  getByTitle,
-  mockKeycloak,
   render,
   RenderOptions,
   userEvent,
@@ -19,11 +16,8 @@ import {
 import { vi } from 'vitest';
 import { getMockApiConsultation } from '@/mocks/consultations.mock';
 import Claims from '@/constants/claims';
-import { user } from '@/constants/toasts';
-import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
-import ConsultationListView, { IConsultationListViewProps } from '../detail/ConsultationListView';
 import ConsultationEditForm, { IConsultationEditFormProps } from './ConsultationEditForm';
 import { ConsultationFormModel } from './models';
 import { getEmptyPerson } from '@/mocks/contacts.mock';

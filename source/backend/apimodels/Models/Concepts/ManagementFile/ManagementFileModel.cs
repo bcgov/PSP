@@ -1,6 +1,8 @@
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.File;
+using Pims.Api.Models.Concepts.Organization;
+using Pims.Api.Models.Concepts.Person;
 using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Models.Concepts.Project;
 using Pims.Api.Models.Concepts.NoticeOfClaim;
@@ -60,6 +62,36 @@ namespace Pims.Api.Models.Concepts.ManagementFile
         /// get/set - The program management file falls under.
         /// </summary>
         public CodeTypeModel<string> PurposeTypeCode { get; set; }
+
+        /// <summary>
+        /// Responsible payer PersonId.
+        /// </summary>
+        public long? ResponsiblePayerPersonId { get; set; }
+
+        /// <summary>
+        /// Responsible payer Person.
+        /// </summary>
+        public PersonModel ResponsiblePayerPerson { get; set; }
+
+        /// <summary>
+        /// Responsible payer Organization Id.
+        /// </summary>
+        public long? ResponsiblePayerOrganizationId { get; set; }
+
+        /// <summary>
+        /// Responsible payer Organization.
+        /// </summary>
+        public OrganizationModel ResponsiblePayerOrganization { get; set; }
+
+        /// <summary>
+        /// Responsible payer Organization primary contact Id.
+        /// </summary>
+        public long? ResponsiblePayerPrimaryContactId { get; set; }
+
+        /// <summary>
+        /// Responsible payer Organization primary contact person.
+        /// </summary>
+        public PersonModel ResponsiblePayerPrimaryContact { get; set; }
 
         /// <summary>
         /// get/set - A list of management file properties.
