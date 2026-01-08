@@ -21,6 +21,7 @@ export enum LeaseFileTabNames {
   consultations = 'consultations',
   tenant = 'tenant',
   payee = 'payee',
+  improvements = 'improvements',
   insurance = 'insurance',
   deposit = 'deposit',
   payments = 'payments',

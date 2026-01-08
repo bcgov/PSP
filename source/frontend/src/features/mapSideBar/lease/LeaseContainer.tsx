@@ -21,6 +21,7 @@ import LeaseChecklistContainer from '@/features/leases/detail/LeasePages/checkli
 import DepositsContainer from '@/features/leases/detail/LeasePages/deposits/DepositsContainer';
 import DetailContainer from '@/features/leases/detail/LeasePages/details/DetailContainer';
 import DocumentsPage from '@/features/leases/detail/LeasePages/documents/DocumentsPage';
+import LeasePropertiesImprovementsContainer from '@/features/leases/detail/LeasePages/improvements/LeasePropertiesImprovementsContainer';
 import InsuranceContainer from '@/features/leases/detail/LeasePages/insurance/InsuranceContainer';
 import PeriodPaymentsContainer from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsContainer';
 import { PeriodPaymentsYupSchema } from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsYupSchema';
@@ -70,7 +71,7 @@ export interface LeasePageProps<T> {
 
 export interface ILeasePage<T> {
   pageName: LeasePageNames;
-  component: React.FunctionComponent<React.PropsWithChildren<LeasePageProps<T>>>;
+  component: React.FunctionComponent<React.PropsWithChildren<LeasePageProps<T> | any>>;
   componentView?: React.FunctionComponent<React.PropsWithChildren<T>>;
   title: string;
   description?: string;
@@ -86,6 +87,7 @@ export enum LeasePageNames {
   PAYEE = 'payee',
   EDIT_PAYEE = 'edit-payee',
   PAYMENTS = 'payments',
+  IMPROVEMENTS = 'improvements',
   INSURANCE = 'insurance',
   DEPOSIT = 'deposit',
   SURPLUS = 'surplus',
@@ -148,6 +150,14 @@ export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
   [
     LeasePageNames.SURPLUS,
     { pageName: LeasePageNames.SURPLUS, component: Surplus, title: 'Surplus Declaration' },
+  ],
+  [
+    LeasePageNames.IMPROVEMENTS,
+    {
+      pageName: LeasePageNames.IMPROVEMENTS,
+      component: LeasePropertiesImprovementsContainer,
+      title: 'Improvements',
+    },
   ],
   [
     LeasePageNames.CHECKLIST,

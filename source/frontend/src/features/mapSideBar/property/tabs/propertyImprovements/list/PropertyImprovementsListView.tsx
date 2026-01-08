@@ -6,10 +6,10 @@ import EditButton from '@/components/common/buttons/EditButton';
 import { RemoveIconButton } from '@/components/common/buttons/RemoveButton';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
-import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import Claims from '@/constants/claims';
+import PropertyImprovementDetails from '@/features/mapSideBar/shared/improvements/PropertyImprovementDetails/PropertyImprovementDetails';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_PropertyImprovement } from '@/models/api/generated/ApiGen_Concepts_PropertyImprovement';
 
@@ -86,21 +86,9 @@ export const PropertyImprovementsListView: React.FunctionComponent<
               isCollapsable
               initiallyExpanded
             >
-              <SectionField
-                labelWidth={{ xs: 4 }}
-                label="Agreement type"
-                valueTestId={`propertyImprovements[${index}].type`}
-              >
-                {improvement.propertyImprovementTypeCode?.description}
-              </SectionField>
-
-              <SectionField
-                label="Description"
-                labelWidth={{ xs: 4 }}
-                valueTestId={`propertyImprovements[${index}].description`}
-              >
-                {improvement.improvementDescription}
-              </SectionField>
+              <PropertyImprovementDetails
+                propertyImprovement={improvement}
+              ></PropertyImprovementDetails>
             </Section>
           </StyledBorder>
         ))}
