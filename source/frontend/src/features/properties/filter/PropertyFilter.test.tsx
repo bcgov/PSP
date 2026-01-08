@@ -203,6 +203,75 @@ describe('MapFilterBar', () => {
     expect(screen.getByPlaceholderText('Enter a historical file#', { exact: false })).toBeVisible();
   });
 
+  it('shows search by Legal Description option', async () => {
+    setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'legalDescription' },
+      },
+    });
+
+    const textarea = screen.getByPlaceholderText(/Enter a legal description/i);
+    expect(textarea).toBeVisible();
+    expect(textarea.tagName).toBe('TEXTAREA');
+  });
+
+  it('disables the search button if there is no legal description', async () => {
+    const { searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'legalDescription' },
+      },
+    });
+
+    expect(searchButton).toBeDisabled();
+  });
+
+  it('searches by Legal Description', async () => {
+    const { container, searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'legalDescription' },
+      },
+    });
+
+    // Enter values on the form field
+    const legalDescInput = container.querySelector(
+      'textarea[name="legalDescription"]',
+    ) as HTMLTextAreaElement;
+
+    await act(async () => {
+      legalDescInput.focus();
+      userEvent.type(legalDescInput, 'Lot 1, Block 2, Plan 12345');
+    });
+
+    // Now click search
+    await act(async () => {
+      userEvent.click(searchButton);
+    });
+
+    expect(onFilterChange).toHaveBeenCalledWith<[IPropertyFilter]>({
+      pid: '',
+      pin: '',
+      planNumber: '',
+      address: '',
+      searchBy: 'legalDescription',
+      page: undefined,
+      quantity: undefined,
+      latitude: '',
+      longitude: '',
+      historical: '',
+      coordinates: null,
+      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+      name: '',
+      district: null,
+      range: null,
+      section: null,
+      township: null,
+      districtLot: null,
+      project: null,
+      tenureCleanup: '',
+      legalDescription: 'Lot 1, Block 2, Plan 12345',
+    });
+  });
+
   it('clears the form when changing the search by option', async () => {
     const { searchByDropdown } = setup({
       props: {
@@ -385,6 +454,7 @@ describe('MapFilterBar', () => {
       project: null,
       districtLot: null,
       tenureCleanup: '',
+      legalDescription: null,
     } as IPropertyFilter);
   });
 
@@ -424,6 +494,7 @@ describe('MapFilterBar', () => {
       districtLot: null,
       project: null,
       tenureCleanup: '',
+      legalDescription: null,
     });
   });
 
@@ -463,6 +534,7 @@ describe('MapFilterBar', () => {
       districtLot: null,
       project: null,
       tenureCleanup: '',
+      legalDescription: null,
     });
   });
 
@@ -517,6 +589,7 @@ describe('MapFilterBar', () => {
       district: null,
       range: null,
       section: null,
+      legalDescription: null,
       township: null,
       districtLot: null,
       project: null,
@@ -581,6 +654,7 @@ describe('MapFilterBar', () => {
       districtLot: null,
       project: null,
       tenureCleanup: '',
+      legalDescription: null,
     });
   });
 
@@ -651,6 +725,7 @@ describe('MapFilterBar', () => {
       districtLot: null,
       project: null,
       tenureCleanup: '',
+      legalDescription: null,
     });
   });
 

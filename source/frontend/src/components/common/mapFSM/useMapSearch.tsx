@@ -48,6 +48,7 @@ export const useMapSearch = () => {
   const loadPimsPropertiesBoundary = pimsPropertyLayerService.loadPropertyBoundaryLayer.execute;
   const pmbcServiceFindByPin = fullyAttributedService.findByPin;
   const pmbcServiceFindByPid = fullyAttributedService.findByPid;
+  const pmbcServiceFindByLegalDescription = fullyAttributedService.findByLegalDescription;
   const pmbcServiceFindByPlanNumber = fullyAttributedService.findByPlanNumber;
   const highwayServiceFindByPlanNumber = highwayService.findBySurveyPlanNumber;
 
@@ -222,6 +223,45 @@ export const useMapSearch = () => {
       setDisplayModal,
       logout,
     ],
+  );
+
+  const searchByLegalDescription = useCallback(
+    async (filter?: IGeoSearchParams) => {
+      let result: MapFeatureData = emptyFeatureData;
+      try {
+        const response = filter?.LEGAL_DESCRIPTION
+          ? await pmbcServiceFindByLegalDescription(filter.LEGAL_DESCRIPTION)
+          : undefined;
+
+        const validFeatures = response?.features?.filter(feature => exists(feature?.geometry));
+
+        result = {
+          pimsLocationFeatures: emptyPimsLocationFeatureCollection,
+          pimsLocationLiteFeatures: emptyPimsLocationLiteFeatureCollection,
+          pimsBoundaryFeatures: emptyPimsBoundaryFeatureCollection,
+          fullyAttributedFeatures: exists(validFeatures)
+            ? {
+                type: response?.type,
+                bbox: response?.bbox,
+                features: validFeatures,
+              }
+            : emptyPmbcFeatureCollection,
+          surveyedParcelsFeatures: emptySurveyedParcelsFeatures,
+          highwayPlanFeatures: emptyHighwayFeatures,
+        };
+
+        if ((validFeatures?.length ?? 0) === 0) {
+          toast.info('No search results found');
+        } else {
+          toast.info(`${validFeatures?.length ?? 0} properties found`);
+        }
+      } catch (error) {
+        toast.error((error as Error).message, { autoClose: 7000 });
+      }
+
+      return result;
+    },
+    [pmbcServiceFindByLegalDescription],
   );
 
   const searchByProject = useCallback(
@@ -583,6 +623,7 @@ export const useMapSearch = () => {
     loadMapProperties,
     searchByHistorical,
     searchBySurveyParcel,
+    searchByLegalDescription,
     loadingPimsProperties: pimsPropertyLayerService.loadPropertyLayer,
     loadingPimsPropertiesResponse: pimsPropertyLayerService.loadPropertyLayer.response,
   };
