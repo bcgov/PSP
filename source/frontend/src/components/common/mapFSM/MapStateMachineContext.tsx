@@ -257,6 +257,9 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
         } else if (geoFilter?.HISTORICAL_FILE_NUMBER_STR) {
           geoFilter.forceExactMatch = false;
           return mapSearch.searchByHistorical(geoFilter);
+        } else if (geoFilter?.LEGAL_DESCRIPTION) {
+          geoFilter.forceExactMatch = false;
+          return mapSearch.searchByLegalDescription(geoFilter);
         } else if (
           isValidString(geoFilter?.SECTION?.toString()) ||
           isValidString(geoFilter?.RANGE?.toString()) ||
@@ -748,6 +751,7 @@ const getQueryParams = (filter: IPropertyFilter): IGeoSearchParams => {
     RANGE: filter.range,
     DISTRICT: filter.district,
     DISTRICT_LOT: filter.districtLot,
+    LEGAL_DESCRIPTION: filter.legalDescription,
     PROJECT: filter.project?.id,
     latitude: filter.latitude,
     longitude: filter.longitude,

@@ -9,6 +9,7 @@ import styled from 'styled-components';
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, ProjectSelector, Select } from '@/components/common/form';
 import { InlineFlexDiv } from '@/components/common/styles';
+import TooltipIcon from '@/components/common/TooltipIcon';
 import { getFeatureLatLng } from '@/components/maps/leaflet/Layers/PointClusterer';
 import { TableSort } from '@/components/Table/TableSort';
 import { IGeographicNamesProperties } from '@/hooks/pims-api/interfaces/IGeographicNamesProperties';
@@ -104,6 +105,10 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
       label: 'Project',
       value: 'project',
     });
+    searchOptions.push({
+      label: 'Legal Description',
+      value: 'legalDescription',
+    });
   }
 
   return (
@@ -139,6 +144,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   setFieldValue('range', null);
                   setFieldValue('districtLot', null);
                   setFieldValue('project', null);
+                  setFieldValue('legalDescription', null);
                   if (e.target.value === 'coordinates') {
                     setFieldValue('coordinates', new DmsCoordinates());
                   } else {
@@ -206,6 +212,22 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                   field="historical"
                   placeholder="Enter a historical file# (LIS, PS, etc.)"
                 ></Input>
+              )}
+              {values.searchBy === 'legalDescription' && (
+                <>
+                  <Input
+                    as="textarea"
+                    field="legalDescription"
+                    placeholder="Enter a legal description"
+                  />
+                  <div style={{ marginTop: '-0.5rem', marginBottom: '0.5rem' }}>
+                    <TooltipIcon
+                      toolTipId="legal-description-tooltip"
+                      toolTip="Searching by legal description may result in a slower search"
+                      placement="right"
+                    />
+                  </div>
+                </>
               )}
               {values.searchBy === 'name' && (
                 <GeographicNameInput
@@ -351,6 +373,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                     values.district ||
                     values.districtLot ||
                     values.project ||
+                    values.legalDescription ||
                     (values.searchBy === 'coordinates' && isValid)
                   )
                 }
