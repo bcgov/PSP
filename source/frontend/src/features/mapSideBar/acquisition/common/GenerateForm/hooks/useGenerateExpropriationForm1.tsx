@@ -11,7 +11,7 @@ import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/
 import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateExpropriationForm1 } from '@/models/generate/acquisition/GenerateExpropriationForm1';
-import { isValidId } from '@/utils';
+import { exists, isValidId } from '@/utils';
 
 export const useGenerateExpropriationForm1 = () => {
   const { getOrganizationConcept, getPersonConcept } = useApiContacts();
@@ -23,7 +23,9 @@ export const useGenerateExpropriationForm1 = () => {
     const filePromise = getAcquisitionFile.execute(acquisitionFileId);
     const propertiesPromise = getAcquisitionProperties.execute(acquisitionFileId);
     const interestHoldersPromise = getAcquisitionInterestHolders.execute(acquisitionFileId);
-    const expropriationAuthorityPromise = formModel.expropriationAuthority?.contact?.organizationId
+    const expropriationAuthorityPromise = isValidId(
+      formModel.expropriationAuthority?.contact?.organizationId,
+    )
       ? getOrganizationConcept(formModel.expropriationAuthority.contact.organizationId)
       : Promise.resolve(null);
 
@@ -33,17 +35,17 @@ export const useGenerateExpropriationForm1 = () => {
       interestHoldersPromise,
       expropriationAuthorityPromise,
     ]);
-    if (!file) {
+    if (!exists(file)) {
       throw Error('Acquisition file not found');
     }
     file.fileProperties = properties ?? null;
 
     // fetch primary contact information for organizations within interest holders
-    if (interestHolders) {
+    if (exists(interestHolders)) {
       await Promise.all(
         interestHolders.map(async holder => {
           const primaryContactPerson =
-            holder?.organizationId && holder?.primaryContactId
+            isValidId(holder?.organizationId) && isValidId(holder?.primaryContactId)
               ? (await getPersonConcept(holder?.primaryContactId))?.data
               : null;
           holder.primaryContact = primaryContactPerson;
