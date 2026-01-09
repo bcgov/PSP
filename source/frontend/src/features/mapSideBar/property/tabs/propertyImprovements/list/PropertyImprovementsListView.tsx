@@ -43,7 +43,7 @@ export const PropertyImprovementsListView: React.FunctionComponent<
           />
         }
       >
-        {propertyImprovements.map((improvement, index) => (
+        {propertyImprovements?.map((improvement, index) => (
           <StyledBorder key={improvement.id}>
             <Section
               header={
@@ -93,7 +93,7 @@ export const PropertyImprovementsListView: React.FunctionComponent<
           </StyledBorder>
         ))}
 
-        {propertyImprovements.length === 0 && (
+        {(!propertyImprovements || propertyImprovements.length === 0) && (
           <p>
             There are no commercial, residential, or other improvements indicated with this
             Property.
