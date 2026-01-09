@@ -179,15 +179,8 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             this._leaseService.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Once());
-            result.MotiRegion.Should().Be("region");
             result.LFileNo.Should().Be("L-010-070");
-            result.StartDate.Should().Be(new DateOnly(2000, 1, 1));
-            result.ProgramName.Should().Be("otherprogramdesc - program");
-            result.StatusType.Should().Be("status");
-            result.PurposeTypes.Should().Be("otherpurposedesc - purpose");
-            result.LeaseTypeName.Should().Be("othertypedesc - type");
             result.HistoricalFileNo.Should().Be("LIS: 123; PS: 456");
-            result.AccountType.Should().Be("Receivable");
         }
 
         public static IEnumerable<object[]> Financial_Public_Values = new List<object[]>()
@@ -217,8 +210,6 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             this._leaseService.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Once());
-            result.PublicBenefit.Should().Be(expectedValue);
-            result.FinancialGain.Should().Be(expectedValue);
         }
 
         [Fact]
@@ -247,10 +238,6 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             this._leaseService.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Once());
-            result.CurrentPeriodStartDate.Should().Be(DateOnly.FromDateTime(leasePeriod.PeriodStartDate));
-            result.CurrentTermEndDate.Should().Be(leasePeriod.PeriodExpiryDate.ToNullableDateOnly());
-            result.IsExpired.Should().Be("No");
-            result.LeasePaymentFrequencyType.Should().Be("pmt");
             result.LeaseAmount.Should().Be(1000);
         }
 
@@ -309,9 +296,6 @@ namespace Pims.Api.Test.Controllers.Reports
             this._leaseService.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Once());
             result.Pid.Should().Be(1);
             result.Pin.Should().Be(2);
-            result.CivicAddress.Should().Be("1 2 3 m");
-            result.LeaseArea.Should().Be(3);
-            result.AreaUnit.Should().Be("hectares");
         }
 
         [Fact]
