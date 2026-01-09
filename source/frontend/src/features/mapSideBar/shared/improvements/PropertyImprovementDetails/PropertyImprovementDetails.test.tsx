@@ -1,14 +1,8 @@
 import { render, RenderOptions, waitFor } from '@/utils/test-utils';
-import { IFilePropertyImprovements } from '../models/FilePropertyImprovements';
-import { getMockApiProperty } from '@/mocks/properties.mock';
-import { getMockPropertyImprovementApi, getMockPropertyImprovementsApi } from '@/mocks/propertyImprovements.mock';
+import { getMockPropertyImprovementApi } from '@/mocks/propertyImprovements.mock';
 import PropertyImprovementDetails, {
   IPropertyImprovementDetailsProps,
 } from './PropertyImprovementDetails';
-
-const mockFilePropertiesImprovements: IFilePropertyImprovements[] = [
-  { property: getMockApiProperty(), improvements: getMockPropertyImprovementsApi(1) },
-];
 
 describe('Property Improvement Details view', () => {
   const setup = async (
