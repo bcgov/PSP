@@ -86,7 +86,6 @@ vi.mock('@/hooks/repositories/usePropertyManagementRepository', () => ({
   },
 }));
 
-
 vi.mock('@/hooks/repositories/useManagementActivityPropertyRepository');
 vi.mocked(useManagementActivityPropertyRepository).mockReturnValue(mockPropertyActivityApi);
 
