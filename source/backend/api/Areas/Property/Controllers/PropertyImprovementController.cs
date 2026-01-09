@@ -53,7 +53,7 @@ namespace Pims.Api.Areas.Property.Controllers
         #region Endpoints
 
         /// <summary>
-        /// Get the improvements for the passed lease.
+        /// Get the improvements for the Property.
         /// </summary>
         /// <returns></returns>
         [HttpGet("{propertyId:long}/improvements")]
@@ -81,7 +81,7 @@ namespace Pims.Api.Areas.Property.Controllers
         /// </summary>
         /// <returns>Collection of Property Improvements.</returns>
         [HttpPost("{propertyId:long}/improvements")]
-        [HasPermission(Permissions.PropertyView)]
+        [HasPermission(Permissions.PropertyEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyImprovementModel), 201)]
         [TypeFilter(typeof(NullJsonResultFilter))]
@@ -137,7 +137,7 @@ namespace Pims.Api.Areas.Property.Controllers
         /// <returns></returns>
         /// <exception cref="BadRequestException">BadRequest for Missmatching Ids.</exception>
         [HttpPut("{propertyId:long}/improvements/{propertyImprovementId:long}")]
-        [HasPermission(Permissions.PropertyView)]
+        [HasPermission(Permissions.PropertyEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(PropertyImprovementModel), 200)]
         [TypeFilter(typeof(NullJsonResultFilter))]
@@ -166,7 +166,7 @@ namespace Pims.Api.Areas.Property.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpDelete("{propertyId:long}/improvements/{propertyImprovementId:long}")]
-        [HasPermission(Permissions.PropertyView)]
+        [HasPermission(Permissions.PropertyEdit)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(bool), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]

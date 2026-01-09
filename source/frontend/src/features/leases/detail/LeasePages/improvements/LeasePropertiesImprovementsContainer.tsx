@@ -9,7 +9,7 @@ const LeasePropertiesImprovementsContainer: React.FunctionComponent<
   React.PropsWithChildren<LeasePageProps<void>>
 > = ({ isEditing }) => {
   const { lease } = useContext(LeaseStateContext);
-  const properties = lease.fileProperties.map(x => x.property);
+  const properties = lease?.fileProperties?.map(x => x.property) ?? [];
 
   return (
     !isEditing && (

@@ -42,7 +42,7 @@ namespace Pims.Dal.Repositories
             return Context.PimsPropertyImprovements.AsNoTracking()
                 .Include(pi => pi.PropertyImprovementTypeCodeNavigation)
                 .Where(x => x.PropertyId == propertyId)
-                .OrderBy(i => i.PropertyImprovementTypeCode) ?? throw new KeyNotFoundException();
+                .OrderBy(i => i.AppCreateTimestamp) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>

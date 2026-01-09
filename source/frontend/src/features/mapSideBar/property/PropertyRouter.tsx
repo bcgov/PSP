@@ -128,7 +128,7 @@ const PropertyRouter = React.forwardRef<FormikProps<any>, IPropertyRouterProps>(
             }
             claim={Claims.PROPERTY_EDIT}
             key={'improvements'}
-            title={'Add Improvement'}
+            title={'Update Improvement'}
           />
           <AppRoute
             exact
