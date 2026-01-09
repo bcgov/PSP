@@ -48,7 +48,7 @@ export const FilePropertiesImprovementsView: React.FunctionComponent<
       <Section>
         <FormGuideContainer
           title="Improvements"
-          guideBody={<p>Click on a property to edit that properties improvements in a new tab</p>}
+          guideBody={<p>Click on a property to edit that property improvements in a new tab</p>}
         ></FormGuideContainer>
       </Section>
 
