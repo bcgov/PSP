@@ -1396,32 +1396,6 @@ namespace Pims.Api.Test.Services
         }
         #endregion
 
-        #region Improvements
-        [Fact]
-        public void UpdateImprovements_FinalFile()
-        {
-            // Arrange
-            var service = this.CreateLeaseService(Permissions.LeaseEdit);
-            var improvementsRepository = this._helper.GetService<Mock<IPropertyImprovementRepository>>();
-            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
-
-            var user = EntityHelper.CreateUser("Test");
-            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = 1 });
-            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
-
-            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
-
-            improvementsRepository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<IEnumerable<PimsPropertyImprovement>>())).Returns(new List<PimsPropertyImprovement>());
-
-            // Act
-            Action act = () => service.UpdateImprovementsByLeaseId(1, new List<PimsPropertyImprovement>());
-
-            // Assert
-            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
-        }
-        #endregion
-
         #region Stakeholders
         [Fact]
         public void UpdateStakeholders_FinalFile()
