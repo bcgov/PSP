@@ -35,13 +35,13 @@ export const FilePropertiesImprovementsView: React.FunctionComponent<
         >
           {propertyImprovements.improvements.map(
             (improvement: ApiGen_Concepts_PropertyImprovement, index: number) => (
-              <>
+              <div key={improvement.id}>
                 <PropertyImprovementDetails
                   propertyImprovement={improvement}
                   key={improvement.id}
                 ></PropertyImprovementDetails>
                 {index < propertyImprovements.improvements.length - 1 && <hr></hr>}
-              </>
+              </div>
             ),
           )}
 
