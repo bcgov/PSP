@@ -36,6 +36,7 @@ export interface IGeoSearchParams {
   RANGE?: number | string;
   DISTRICT?: string;
   DISTRICT_LOT?: string;
+  LEGAL_DESCRIPTION?: string;
   PROJECT?: number | string;
   latitude?: number | string;
   longitude?: number | string;
