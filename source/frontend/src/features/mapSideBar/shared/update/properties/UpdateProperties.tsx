@@ -246,6 +246,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
           <Formik<FileForm>
             innerRef={formikRef}
             initialValues={formFile}
+            enableReinitialize={true}
             validationSchema={UpdatePropertiesYupSchema}
             onSubmit={async (values: FileForm) => {
               const file: ApiGen_Concepts_File = values.toApi();
