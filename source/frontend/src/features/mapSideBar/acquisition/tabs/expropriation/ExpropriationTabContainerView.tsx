@@ -11,6 +11,7 @@ import { Claims } from '@/constants';
 import { ApiGen_CodeTypes_AcquisitionFileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionFileTypeTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
+import { isValidId } from '@/utils';
 
 import { cannotEditMessage } from '../../common/constants';
 import { useGenerateExpropriationForm1 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm1';
@@ -100,7 +101,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
     formikHelpers: FormikHelpers<ExpropriationForm7Model>,
   ) => {
     try {
-      if (acquisitionFile.id) {
+      if (isValidId(acquisitionFile.id)) {
         await onGenerateForm7(acquisitionFile.id, values);
       }
     } finally {

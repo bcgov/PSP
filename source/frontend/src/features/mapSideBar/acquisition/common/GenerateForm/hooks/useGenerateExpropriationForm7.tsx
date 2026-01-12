@@ -7,9 +7,11 @@ import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateExpropriationForm7 } from '@/models/generate/acquisition/GenerateExpropriationForm7';
 import { isValidId } from '@/utils';
+import { exists } from '@/utils/utils';
 
 export const useGenerateExpropriationForm7 = () => {
   const { getOrganizationConcept } = useApiContacts();
@@ -21,7 +23,9 @@ export const useGenerateExpropriationForm7 = () => {
     const filePromise = getAcquisitionFile.execute(acquisitionFileId);
     const propertiesPromise = getAcquisitionProperties.execute(acquisitionFileId);
     const interestHoldersPromise = getAcquisitionInterestHolders.execute(acquisitionFileId);
-    const expropriationAuthorityPromise = formModel.expropriationAuthority?.contact?.organizationId
+    const expropriationAuthorityPromise = isValidId(
+      formModel.expropriationAuthority?.contact?.organizationId,
+    )
       ? getOrganizationConcept(formModel.expropriationAuthority.contact.organizationId)
       : Promise.resolve(null);
 
@@ -31,7 +35,7 @@ export const useGenerateExpropriationForm7 = () => {
       interestHoldersPromise,
       expropriationAuthorityPromise,
     ]);
-    if (!file) {
+    if (!exists(file)) {
       throw Error('Acquisition file not found');
     }
     file.fileProperties = properties ?? null;
@@ -54,7 +58,7 @@ export const useGenerateExpropriationForm7 = () => {
     });
 
     const generatedFile = await generate({
-      templateType: 'FORM7',
+      templateType: ApiGen_CodeTypes_FormTypes.FORM7.toString(),
       templateData: expropriationData,
       convertToType: null,
     });

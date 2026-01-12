@@ -113,7 +113,6 @@ export class Api_GenerateAcquisitionFile implements ICompensationRequisitionFile
         ?.map(owner => new Api_GenerateOwner(owner)) ?? [];
     this.all_owners_string = this.owners.map(owner => owner.owner_string).join(', ');
     this.all_owners_string_and = this.owners.map(owner => owner.owner_string).join(' And ');
-
     const { verb, noun } = Api_GenerateAcquisitionFile.getOwnerGrammar(this.owners.length);
     this.owner_verb = verb;
     this.owner_noun = noun;
@@ -121,7 +120,7 @@ export class Api_GenerateAcquisitionFile implements ICompensationRequisitionFile
 
   // Set verb and noun for owner(s) grammar
   private static getOwnerGrammar(count: number) {
-    return count === 1 ? { verb: 'is', noun: 'owner' } : { verb: 'are', noun: 'owners' };
+    return count > 1 ? { verb: 'are', noun: 'owners' } : { verb: 'is', noun: 'owner' };
   }
 
   getTeam = (team: ApiGen_Concepts_AcquisitionFileTeam | null, overrideOrgAddress = false) => {
