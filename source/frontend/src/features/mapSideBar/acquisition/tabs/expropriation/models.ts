@@ -22,6 +22,10 @@ export class ExpropriationForm5Model extends ExpropriationBaseModel {
   impactedProperties: ApiGen_Concepts_AcquisitionFileProperty[] = [];
 }
 
+export class ExpropriationForm7Model extends ExpropriationBaseModel {
+  impactedProperties: ApiGen_Concepts_AcquisitionFileProperty[] = [];
+}
+
 export class ExpropriationForm9Model extends ExpropriationBaseModel {
   impactedProperties: ApiGen_Concepts_AcquisitionFileProperty[] = [];
   registeredPlanNumbers = '';
