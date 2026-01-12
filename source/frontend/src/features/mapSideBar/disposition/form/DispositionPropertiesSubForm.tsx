@@ -14,9 +14,15 @@ import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import MapClickMonitor from '@/components/propertySelector/MapClickMonitor';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { exists, firstOrNull, isLatLngInFeatureSetBoundary, isNumber } from '@/utils';
-import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
+import { useModalContext } from '@/hooks/useModalContext';
+import {
+  addPropertiesToCurrentFile,
+  addShapeToProperty,
+  removeShapeFromPropertyWithConfirmation,
+} from '@/utils/propertyUtils';
 
 import { PropertyForm } from '../../shared/models';
 import AddPropertiesGuide from '../../shared/update/properties/AddPropertiesGuide';
@@ -60,6 +66,7 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
 }) => {
   const localRef = useRef<FormikProps<DispositionFormModel>>();
 
+  const { setModalContent, setDisplayModal } = useModalContext();
   const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
     useMapStateMachine();
 
@@ -138,12 +145,13 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
             }
           >
             <AddPropertiesGuide />
-            {(exists(selectedFeatureDataset?.location) ||
-              exists(selectedFeatureDataset?.parcelFeature)) && (
+            {exists(selectedFeatureDataset?.parcelFeature) ||
+            exists(selectedFeatureDataset?.pimsFeature) ||
+            exists(selectedFeatureDataset?.location) ? (
               <StyledButtonWrapper>
                 <Button onClick={handleAddToSelection}>Add selected property</Button>
               </StyledButtonWrapper>
-            )}
+            ) : null}
 
             <Row className="py-3 no-gutters">
               <Col>
@@ -186,7 +194,22 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
                   onRemove={() => remove(index)}
                   nameSpace={`fileProperties.${index}`}
                   index={propertyIndex}
-                  property={property.toFeatureDataset()}
+                property={property}
+                canUploadShapefile={true}
+                onUploadShapefile={(result: UploadResponseModel | null) => {
+                  const updatedFormProperty = addShapeToProperty(property, result);
+                  replace(index, updatedFormProperty);
+                }}
+                onRemoveShapefile={() => {
+                  removeShapeFromPropertyWithConfirmation(
+                    property,
+                    setModalContent,
+                    setDisplayModal,
+                    updatedProperty => {
+                      replace(index, updatedProperty);
+                    },
+                  );
+                }}
                 />
               );
             })}

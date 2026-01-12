@@ -669,6 +669,37 @@ exports[`Management List View > matches snapshot 1`] = `
                       </div>
                     </div>
                   </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-6"
+                    >
+                      <div
+                        class="required d-flex form-group"
+                      >
+                        <select
+                          class="form-select form-control"
+                          id="input-regionCode"
+                          name="regionCode"
+                          required=""
+                        >
+                          <option
+                            value=""
+                          >
+                            Select region...
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-1"
+                            value="1"
+                          >
+                            South Coast Region
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
                 </div>
                 <div
                   class="col-xl-5"
@@ -838,7 +869,7 @@ exports[`Management List View > matches snapshot 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 240px;"
+            style="display: flex; flex: 1 0 auto; min-width: 270px;"
           >
             <div
               class="th"
@@ -930,6 +961,18 @@ exports[`Management List View > matches snapshot 1`] = `
                     />
                   </svg>
                 </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                MOTT region
               </div>
             </div>
             <div
@@ -1118,7 +1161,7 @@ exports[`Management List View > matches snapshot 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 240px;"
+              style="display: flex; flex: 1 0 auto; min-width: 270px;"
             >
               <div
                 class="td clickable"
@@ -1156,6 +1199,12 @@ exports[`Management List View > matches snapshot 1`] = `
               >
                 Test Management File
               </div>
+              <div
+                class="td"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
               <div
                 class="td clickable"
                 role="cell"

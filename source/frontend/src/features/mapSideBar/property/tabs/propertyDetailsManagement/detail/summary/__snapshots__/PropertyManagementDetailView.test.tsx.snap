@@ -6,7 +6,18 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
     class="Toastify"
   />
   <div />
-  .c3 {
+  .c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
+.c3 {
   float: right;
   cursor: pointer;
   font-size: 3.2rem;
@@ -17,13 +28,6 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
   overflow: hidden;
 }
 
-.c1 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c0 {
   margin: 1.6rem;
   padding: 1.6rem;
@@ -32,15 +36,11 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
   border-radius: 0.5rem;
 }
 
-.c5.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c4 {
+.c1 {
   font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 <div
@@ -54,6 +54,7 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
       >
         <div
           class="align-content-end col"
+          style="overflow: hidden;"
         >
           <div
             class="row"
@@ -215,6 +216,22 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
         >
           Unknown
         </div>
+      </div>
+      <div
+        class="pb-2 row"
+      >
+        <div
+          class="pr-0 text-left col-4"
+        >
+          <label
+            class="c4"
+          >
+            Responsible payer:
+          </label>
+        </div>
+        <div
+          class="c5 text-left col"
+        />
       </div>
       <div
         class="pb-2 row"

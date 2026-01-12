@@ -30,7 +30,7 @@ describe('SelectedPropertyRow component', () => {
         initialValues={{
           properties: [
             exists(renderOptions.props?.property)
-              ? PropertyForm.fromFeatureDataset(renderOptions.props?.property)
+              ? renderOptions.props?.property
               : new PropertyForm(),
           ],
         }}
@@ -38,10 +38,13 @@ describe('SelectedPropertyRow component', () => {
         {formikProps => (
           <SelectedPropertyRow
             formikProps={formikProps}
-            property={renderOptions.props?.property ?? new PropertyForm().toFeatureDataset()}
+            property={renderOptions.props?.property ?? new PropertyForm()}
             index={renderOptions.props?.index ?? 0}
             onRemove={onRemove}
             nameSpace="properties.0"
+            canUploadShapefile={renderOptions.props?.canUploadShapefile ?? false}
+            onUploadShapefile={renderOptions.props?.onUploadShapefile ?? vi.fn()}
+            onRemoveShapefile={renderOptions.props?.onRemoveShapefile ?? vi.fn()}
           />
         )}
       </Formik>,
@@ -88,7 +91,7 @@ describe('SelectedPropertyRow component', () => {
         PID_PADDED: '111-111-111',
       },
     };
-    await setup({ props: { property: mockFeatureSet } });
+    await setup({ props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet) } });
     expect(screen.getByText('PID: 111-111-111')).toBeVisible();
   });
 
@@ -103,7 +106,7 @@ describe('SelectedPropertyRow component', () => {
         PIN: 1234,
       },
     };
-    await setup({ props: { property: mockFeatureSet } });
+    await setup({ props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet) } });
     expect(screen.getByText('PIN: 1234')).toBeVisible();
   });
 
@@ -119,7 +122,7 @@ describe('SelectedPropertyRow component', () => {
         PIN: undefined,
       },
     };
-    await setup({ props: { property: mockFeatureSet } });
+    await setup({ props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet) } });
     expect(screen.getByText('Plan #: VIP123')).toBeVisible();
   });
 
@@ -129,7 +132,7 @@ describe('SelectedPropertyRow component', () => {
     mockFeatureSet.parcelFeature = {} as any;
     mockFeatureSet.location = { lat: 4, lng: 5 };
 
-    await setup({ props: { property: mockFeatureSet } });
+    await setup({ props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet) } });
     expect(screen.getByText('5.000000, 4.000000')).toBeVisible();
   });
 
@@ -147,7 +150,7 @@ describe('SelectedPropertyRow component', () => {
         STREET_ADDRESS_1: 'a test address',
       },
     };
-    await setup({ props: { property: mockFeatureSet } });
+    await setup({ props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet) } });
     expect(screen.getByText('Address: a test address')).toBeVisible();
   });
 });

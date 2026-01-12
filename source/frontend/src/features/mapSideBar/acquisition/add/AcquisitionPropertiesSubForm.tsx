@@ -12,8 +12,13 @@ import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyL
 import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
+import { useModalContext } from '@/hooks/useModalContext';
 import { exists, featuresetToLocationBoundaryDataset, firstOrNull } from '@/utils';
-import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
+import {
+  addPropertiesToCurrentFile,
+  addShapeToProperty,
+  removeShapeFromPropertyWithConfirmation,
+} from '@/utils/propertyUtils';
 
 import { PropertyForm } from '../../shared/models';
 import AddPropertiesGuide from '../../shared/update/properties/AddPropertiesGuide';
@@ -29,6 +34,7 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
 }) => {
   const localRef = useRef<FormikProps<AcquisitionForm>>();
 
+  const { setModalContent, setDisplayModal } = useModalContext();
   const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
     useMapStateMachine();
 
@@ -101,12 +107,13 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
         {({ remove, replace }) => (
           <Section header="Selected Properties">
             <AddPropertiesGuide />
-            {(exists(selectedFeatureDataset?.location) ||
-              exists(selectedFeatureDataset?.parcelFeature)) && (
+            {exists(selectedFeatureDataset?.parcelFeature) ||
+            exists(selectedFeatureDataset?.pimsFeature) ||
+            exists(selectedFeatureDataset?.location) ? (
               <StyledButtonWrapper>
                 <Button onClick={handleAddToSelection}>Add selected property</Button>
               </StyledButtonWrapper>
-            )}
+            ) : null}
 
             <SelectedPropertyHeaderRow />
             {formikProps.values.properties.map((property, index) => (
@@ -115,17 +122,21 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
                 onRemove={() => remove(index)}
                 nameSpace={`properties.${index}`}
                 index={index}
-                property={property.toFeatureDataset()}
+                property={property}
                 canUploadShapefile={true}
                 onUploadShapefile={(result: UploadResponseModel | null) => {
-                  // Update the property boundary based on the uploaded shapefile
-                  if (exists(result)) {
-                    if (result.isSuccess && exists(result.boundary)) {
-                      const updatedFormProperty = new PropertyForm(property);
-                      updatedFormProperty.fileBoundary = result.boundary;
-                      replace(index, updatedFormProperty);
-                    }
-                  }
+                  const updatedFormProperty = addShapeToProperty(property, result);
+                  replace(index, updatedFormProperty);
+                }}
+                onRemoveShapefile={() => {
+                  removeShapeFromPropertyWithConfirmation(
+                    property,
+                    setModalContent,
+                    setDisplayModal,
+                    updatedProperty => {
+                      replace(index, updatedProperty);
+                    },
+                  );
                 }}
               />
             ))}

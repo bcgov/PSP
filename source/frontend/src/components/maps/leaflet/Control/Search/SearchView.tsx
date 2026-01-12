@@ -172,7 +172,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
         e.stopPropagation(); // prevent any clicks on the search sidebar from propogating to the map.
       }}
     >
-      <Section className="my-0 pt-0">
+      <Section className="my-0 pt-0" data-testid="search-control-filters-section">
         <PropertyFilter
           defaultFilter={{ ...defaultPropertyFilter }}
           propertyFilter={props.propertyFilter}

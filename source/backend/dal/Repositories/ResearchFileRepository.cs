@@ -187,8 +187,8 @@ namespace Pims.Dal.Repositories
             .Select(rdh => new LastUpdatedByModel()
             {
                 ParentId = id,
-                AppLastUpdateUserid = rdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = rdh.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = rdh.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -221,8 +221,8 @@ namespace Pims.Dal.Repositories
                 .Select(anh => new LastUpdatedByModel()
                 {
                     ParentId = id,
-                    AppLastUpdateUserid = anh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                    AppLastUpdateUserGuid = anh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                    AppLastUpdateUserid = anh.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = anh.AppLastUpdateUserGuid,
                     AppLastUpdateTimestamp = anh.EndDateHist ?? DateTime.UnixEpoch,
                 })
                 .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -254,8 +254,8 @@ namespace Pims.Dal.Repositories
             .Select(rph => new LastUpdatedByModel()
             {
                 ParentId = id,
-                AppLastUpdateUserid = rph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = rph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = rph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = rph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = rph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)

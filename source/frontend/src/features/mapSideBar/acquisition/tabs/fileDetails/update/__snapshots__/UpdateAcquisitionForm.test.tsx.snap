@@ -428,19 +428,19 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
   opacity: unset;
 }
 
-.c4 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c1 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c4 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c3.required::before {
@@ -603,6 +603,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Project
           </div>
@@ -828,6 +829,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Progress Statuses
           </div>
@@ -1283,6 +1285,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Schedule
           </div>
@@ -1536,6 +1539,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Acquisition Details
           </div>
@@ -1867,6 +1871,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Acquisition Team
           </div>
@@ -2294,6 +2299,7 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Owners
           </div>
@@ -4119,6 +4125,68 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
               </textarea>
             </div>
           </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c4"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+            style="overflow: hidden;"
+          >
+            Notice of Claim
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="c6 form-group"
+        >
+          <div
+            class="react-datepicker-wrapper d-block"
+          >
+            <div
+              class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+            >
+              <svg
+                class="react-datepicker__calendar-icon"
+                viewBox="0 0 448 512"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                />
+              </svg>
+              <input
+                autocomplete="off"
+                class="c7 form-control date-picker"
+                id="datepicker-noticeOfClaim.receivedDate"
+                name="noticeOfClaim.receivedDate"
+                placeholder="MMM DD, YYYY"
+                type="text"
+                value=""
+              />
+            </div>
+          </div>
+        </div>
+        <div
+          class="textarea input form-group"
+        >
+          <textarea
+            class="form-control"
+            id="input-noticeOfClaim.comment"
+            name="noticeOfClaim.comment"
+            style="word-break: break-all;"
+          />
         </div>
       </div>
     </div>

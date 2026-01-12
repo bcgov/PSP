@@ -58,10 +58,19 @@ export class ActivityInvoiceFormModel {
   totalAmount = 0;
   isPstRequired = false;
 
+  isPaymentApproved = true;
+  isPaymentForwarded = false;
+
   isDisabled = false;
   managementActivityId = 0;
   managementActivity = '';
   rowVersion = 0;
+
+  constructor(responsiblePayerSet: boolean = null) {
+    if (exists(responsiblePayerSet)) {
+      this.isPaymentForwarded = responsiblePayerSet;
+    }
+  }
 
   toApi(managementActivityId: number): ApiGen_Concepts_ManagementActivityInvoice {
     return {
@@ -74,6 +83,8 @@ export class ActivityInvoiceFormModel {
       pstAmount: Number(this.pstAmount),
       totalAmount: Number(this.totalAmount),
       isPstRequired: this.isPstRequired,
+      isPaymentApproved: this.isPaymentApproved,
+      isPaymentForwarded: this.isPaymentForwarded,
       isDisabled: this.isDisabled,
       managementActivityId: managementActivityId,
       managementActivity: null,
@@ -98,6 +109,8 @@ export class ActivityInvoiceFormModel {
       formModel.pstAmount = model.pstAmount || 0;
       formModel.totalAmount = model.totalAmount || 0;
       formModel.isPstRequired = model.isPstRequired || false;
+      formModel.isPaymentApproved = model.isPaymentApproved;
+      formModel.isPaymentForwarded = model.isPaymentForwarded;
       formModel.isDisabled = model.isDisabled || false;
       formModel.managementActivityId = model.managementActivityId || 0;
       formModel.rowVersion = model.rowVersion || 0;

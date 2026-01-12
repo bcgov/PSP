@@ -13,6 +13,7 @@ export interface IInvoiceListForm {
   formikProps: FormikProps<ManagementActivityFormModel>;
   gstConstant: number;
   pstConstant: number;
+  isResponsiblePayerSet: boolean;
 }
 
 export const InvoiceListForm: React.FunctionComponent<IInvoiceListForm> = ({
@@ -20,6 +21,7 @@ export const InvoiceListForm: React.FunctionComponent<IInvoiceListForm> = ({
   formikProps,
   gstConstant,
   pstConstant,
+  isResponsiblePayerSet,
 }) => {
   const { setModalContent, setDisplayModal } = useModalContext();
 
@@ -62,7 +64,7 @@ export const InvoiceListForm: React.FunctionComponent<IInvoiceListForm> = ({
           ))}
           <InvoiceTotalsForm
             formikProps={formikProps}
-            onAdd={() => arrayHelpers.push(new ActivityInvoiceFormModel())}
+            onAdd={() => arrayHelpers.push(new ActivityInvoiceFormModel(isResponsiblePayerSet))}
           />
         </>
       )}

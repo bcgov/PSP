@@ -33,6 +33,7 @@ const getKeycloakEventHandler = (keycloak: Keycloak, onRefresh: () => void) => {
       };
 
       if (eventType === 'onAuthSuccess') {
+        onRefresh();
         store.dispatch(saveJwt(keycloak.token ?? ''));
         // store the currently logged user so that telemetry spans can be traced back to user actions
         const userDetails = getUserDetailsFromKeycloakToken(keycloak.tokenParsed);

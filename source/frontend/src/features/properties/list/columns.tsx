@@ -41,41 +41,39 @@ export const columns = ({
 }: Props): ColumnWithProps<ApiGen_Concepts_PropertyView>[] => [
   {
     Header: 'PID',
-    align: 'right',
-    minWidth: 40,
-    maxWidth: 40,
+    align: 'left',
+    responsive: true,
+    width: 7,
     Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
       return (
-        <>
+        <div style={{ display: 'flex', alignItems: 'center', gap: '0.5rem' }}>
           {pidFormatter(props?.row?.original?.pid?.toString())}
-          <span style={{ width: '2rem' }}>
-            {props.row.original.isRetired ? (
-              <TooltipIcon
-                variant="warning"
-                toolTipId="retired-tooltip"
-                toolTip="RETIRED"
-                placement="right"
-              />
-            ) : null}
-          </span>
-        </>
+          {props.row.original.isRetired && (
+            <TooltipIcon
+              variant="warning"
+              toolTipId="retired-tooltip"
+              toolTip="RETIRED"
+              placement="right"
+            />
+          )}
+        </div>
       );
     },
   },
   {
     Header: 'PIN',
     accessor: p => p.pin,
-    align: 'right',
-    minWidth: 35,
-    maxWidth: 40,
+    align: 'left',
+    responsive: true,
+    width: 7,
   },
   {
     Header: 'Historical File #',
     align: 'left',
     clickable: false,
     sortable: false,
-    minWidth: 40,
-    maxWidth: 60,
+    responsive: true,
+    width: 9,
     Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
       const propertyArrayId = [props.row.original.id];
       return (
@@ -98,15 +96,15 @@ export const columns = ({
         p.postalCode,
       ),
     align: 'left',
-    minWidth: 200,
-    maxWidth: 500,
+    responsive: true,
+    width: 30,
   },
   {
     Header: 'Location',
     accessor: p => p.municipalityName,
     align: 'left',
-    minWidth: 50,
-    maxWidth: 200,
+    responsive: true,
+    width: 12,
     sortable: true,
     filter: {
       component: TypeaheadField,
@@ -132,9 +130,9 @@ export const columns = ({
       );
       return <> {formatNumber(hectars, 0, 3)} </>;
     },
-    align: 'right',
-    minWidth: 20,
-    maxWidth: 50,
+    align: 'left',
+    responsive: true,
+    width: 7,
     sortable: true,
     filter: {
       component: Input,
@@ -151,8 +149,8 @@ export const columns = ({
     Header: 'Ownership',
     align: 'left',
     sortable: true,
-    minWidth: 100,
-    maxWidth: 100,
+    responsive: true,
+    width: 12,
     Cell: (cellProps: CellProps<ApiGen_Concepts_PropertyView>) => {
       const { hasClaim } = useKeycloakWrapper();
 
@@ -181,8 +179,8 @@ export const columns = ({
     Header: 'Tenure Cleanup',
     align: 'left',
     sortable: false,
-    minWidth: 80,
-    maxWidth: 80,
+    responsive: true,
+    width: 10,
     Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
       const propertyArrayId = [props.row.original.id];
       return <TenureCleanupContainer propertyIds={propertyArrayId} View={TenureCleanupFieldView} />;
@@ -191,10 +189,10 @@ export const columns = ({
   {
     Header: 'Actions',
     accessor: 'controls' as any, // this column is not part of the data model
-    align: 'right',
+    align: 'left',
     sortable: false,
-    minWidth: 40,
-    maxWidth: 40,
+    responsive: true,
+    width: 6,
     Cell: (cellProps: CellProps<ApiGen_Concepts_PropertyView, number>) => {
       const { hasClaim } = useKeycloakWrapper();
       const property = cellProps.row.original;
@@ -231,6 +229,6 @@ export const columns = ({
 ];
 
 const StyledDiv = styled(InlineFlexDiv)`
-  justify-content: space-around;
+  justify-content: flex-start;
   width: 100%;
 `;

@@ -203,7 +203,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
           </Col>
           <Col></Col>
         </Row>
-        <Row>
+        <Row className="pb-1">
           <Col xs="12">
             <StyledFilterBox className="p-3">
               <SectionField label="Ownership" labelWidth={{ xs: '2' }}>

@@ -54,6 +54,7 @@ export const layerDefinitions: LayerDefinition[] = [
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
     maxZoom: MAP_MAX_ZOOM,
     authenticated: true,
+    cql_filter: "DISPOSITION_FILE_STATUS_TYPE_CODE = 'ACTIVE'",
   },
   {
     layerIdentifier: 'pims_lease_receivable',

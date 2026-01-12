@@ -212,54 +212,54 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c16.c16.btn {
+.c17.c17.btn {
   background-color: unset;
   border: none;
 }
 
-.c16.c16.btn:hover,
-.c16.c16.btn:focus,
-.c16.c16.btn:active {
+.c17.c17.btn:hover,
+.c17.c17.btn:focus,
+.c17.c17.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c16.c16.btn svg {
+.c17.c17.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c16.c16.btn svg:hover {
+.c17.c17.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c16.c16.btn.btn-primary svg {
+.c17.c17.btn.btn-primary svg {
   color: #013366;
 }
 
-.c16.c16.btn.btn-primary svg:hover {
+.c17.c17.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c16.c16.btn.btn-light svg {
+.c17.c17.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c16.c16.btn.btn-light svg:hover {
+.c17.c17.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c16.c16.btn.btn-info svg {
+.c17.c17.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c16.c16.btn.btn-info svg:hover {
+.c17.c17.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c17.c17.btn {
+.c19.c19.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -267,13 +267,13 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
   line-height: unset;
 }
 
-.c17.c17.btn .text {
+.c19.c19.btn .text {
   display: none;
 }
 
-.c17.c17.btn:hover,
-.c17.c17.btn:active,
-.c17.c17.btn:focus {
+.c19.c19.btn:hover,
+.c19.c19.btn:active,
+.c19.c19.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -287,9 +287,9 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
   flex-direction: row;
 }
 
-.c17.c17.btn:hover .text,
-.c17.c17.btn:active .text,
-.c17.c17.btn:focus .text {
+.c19.c19.btn:hover .text,
+.c19.c19.btn:active .text,
+.c19.c19.btn:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -312,19 +312,19 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
   flex-shrink: 0;
 }
 
-.c1 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c0 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c1 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c2 {
@@ -411,7 +411,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
   line-break: break-all;
 }
 
-.c18 {
+.c20 {
   max-width: 25rem;
   padding: 1rem;
   background-color: #f2f2f2;
@@ -419,7 +419,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c20 {
+.c22 {
   max-width: 25rem;
   padding: 1rem;
   background-color: #f2f2f2;
@@ -427,7 +427,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c19 {
+.c21 {
   max-width: 9rem;
 }
 
@@ -438,6 +438,28 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
 
 .c13 {
   font-size: 1.2rem;
+}
+
+.c16 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.c18 {
+  padding-left: 1.2rem;
 }
 
 <div
@@ -451,6 +473,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
       >
         <div
           class="align-content-end col"
+          style="overflow: hidden;"
         >
           Properties to include in this file:
         </div>
@@ -580,6 +603,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               <div
                 class="row"
@@ -755,10 +779,10 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="pl-3 col-md-1"
+              class="c16 pl-3 col-auto"
             >
               <button
-                class="c10 Button c16 btn btn-primary"
+                class="c10 Button c17 btn btn-primary"
                 title="move-pin-location"
                 type="button"
               >
@@ -780,10 +804,6 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                   </svg>
                 </div>
               </button>
-            </div>
-            <div
-              class="pr-2 col-auto"
-            >
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon-no-location-tooltip"
@@ -804,13 +824,9 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                   />
                 </svg>
               </span>
-            </div>
-            <div
-              class="pl-3 col-md-1"
-            >
               <button
-                class="c10 Button c17 btn btn-link"
-                data-testid="delete-property-0"
+                class="c10 Button c17 btn btn-primary"
+                data-testid="upload-shapefile-0"
                 type="button"
               >
                 <div
@@ -818,32 +834,60 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                 >
                   <svg
                     fill="currentColor"
-                    height="2rem"
+                    height="18"
                     stroke="currentColor"
                     stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="2rem"
+                    version="1.1"
+                    viewBox="0 0 16 16"
+                    width="18"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <title>
-                      remove
-                    </title>
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M7 9h2v-4h3l-4-4-4 4h3zM10 6.75v1.542l4.579 1.708-6.579 2.453-6.579-2.453 4.579-1.708v-1.542l-6 2.25v4l8 3 8-3v-4z"
                     />
                   </svg>
-                   
-                  <span
-                    class="text"
-                  >
-                    Remove
-                  </span>
                 </div>
               </button>
+              <div
+                class="c18"
+              >
+                <button
+                  class="c10 Button c19 btn btn-link"
+                  data-testid="delete-property-0"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <title>
+                        remove
+                      </title>
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                     
+                    <span
+                      class="text"
+                    >
+                      Remove
+                    </span>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
           <div
@@ -859,7 +903,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c18"
+                    class="c20"
                   >
                     <div
                       class="pb-2 row"
@@ -869,7 +913,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                       >
                         <input
                           aria-label="square metres"
-                          class="c19"
+                          class="c21"
                           name="area-sq-meters"
                           step=".01"
                           type="number"
@@ -890,7 +934,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                       >
                         <input
                           aria-label="hectares"
-                          class="c19"
+                          class="c21"
                           name="area-hectares"
                           step=".01"
                           type="number"
@@ -909,7 +953,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c20"
+                    class="c22"
                   >
                     <div
                       class="pb-2 row"
@@ -919,7 +963,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                       >
                         <input
                           aria-label="square feet"
-                          class="c19"
+                          class="c21"
                           name="area-sq-feet"
                           step=".01"
                           type="number"
@@ -940,7 +984,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                       >
                         <input
                           aria-label="acres"
-                          class="c19"
+                          class="c21"
                           name="area-acres"
                           step=".01"
                           type="number"
@@ -1059,10 +1103,10 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="pl-3 col-md-1"
+              class="c16 pl-3 col-auto"
             >
               <button
-                class="c10 Button c16 btn btn-primary"
+                class="c10 Button c17 btn btn-primary"
                 title="move-pin-location"
                 type="button"
               >
@@ -1084,10 +1128,6 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                   </svg>
                 </div>
               </button>
-            </div>
-            <div
-              class="pr-2 col-auto"
-            >
               <span
                 class="tooltip-icon"
                 data-testid="tooltip-icon-no-location-tooltip"
@@ -1108,13 +1148,9 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                   />
                 </svg>
               </span>
-            </div>
-            <div
-              class="pl-3 col-md-1"
-            >
               <button
-                class="c10 Button c17 btn btn-link"
-                data-testid="delete-property-1"
+                class="c10 Button c17 btn btn-primary"
+                data-testid="upload-shapefile-1"
                 type="button"
               >
                 <div
@@ -1122,32 +1158,60 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                 >
                   <svg
                     fill="currentColor"
-                    height="2rem"
+                    height="18"
                     stroke="currentColor"
                     stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="2rem"
+                    version="1.1"
+                    viewBox="0 0 16 16"
+                    width="18"
                     xmlns="http://www.w3.org/2000/svg"
                   >
-                    <title>
-                      remove
-                    </title>
                     <path
-                      d="M0 0h24v24H0z"
-                      fill="none"
-                    />
-                    <path
-                      d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      d="M7 9h2v-4h3l-4-4-4 4h3zM10 6.75v1.542l4.579 1.708-6.579 2.453-6.579-2.453 4.579-1.708v-1.542l-6 2.25v4l8 3 8-3v-4z"
                     />
                   </svg>
-                   
-                  <span
-                    class="text"
-                  >
-                    Remove
-                  </span>
                 </div>
               </button>
+              <div
+                class="c18"
+              >
+                <button
+                  class="c10 Button c19 btn btn-link"
+                  data-testid="delete-property-1"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    <svg
+                      fill="currentColor"
+                      height="2rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 24 24"
+                      width="2rem"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <title>
+                        remove
+                      </title>
+                      <path
+                        d="M0 0h24v24H0z"
+                        fill="none"
+                      />
+                      <path
+                        d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                      />
+                    </svg>
+                     
+                    <span
+                      class="text"
+                    >
+                      Remove
+                    </span>
+                  </div>
+                </button>
+              </div>
             </div>
           </div>
           <div
@@ -1163,7 +1227,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c18"
+                    class="c20"
                   >
                     <div
                       class="pb-2 row"
@@ -1173,7 +1237,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                       >
                         <input
                           aria-label="square metres"
-                          class="c19"
+                          class="c21"
                           name="area-sq-meters"
                           step=".01"
                           type="number"
@@ -1194,7 +1258,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                       >
                         <input
                           aria-label="hectares"
-                          class="c19"
+                          class="c21"
                           name="area-hectares"
                           step=".01"
                           type="number"
@@ -1213,7 +1277,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c20"
+                    class="c22"
                   >
                     <div
                       class="pb-2 row"
@@ -1223,7 +1287,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                       >
                         <input
                           aria-label="square feet"
-                          class="c19"
+                          class="c21"
                           name="area-sq-feet"
                           step=".01"
                           type="number"
@@ -1244,7 +1308,7 @@ exports[`LeasePropertySelector component > renders as expected 1`] = `
                       >
                         <input
                           aria-label="acres"
-                          class="c19"
+                          class="c21"
                           name="area-acres"
                           step=".01"
                           type="number"

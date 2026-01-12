@@ -570,6 +570,7 @@ namespace Pims.Api
             services.AddScoped<IManagementFileService, ManagementFileService>();
             services.AddScoped<IManagementActivityService, ManagementActivityService>();
             services.AddScoped<IManagementFileStatusSolver, ManagementFileStatusSolver>();
+            services.AddScoped<IFilePropertyLocationUpdateSolver, FilePropertyLocationUpdateSolver>();
         }
 
         /// <summary>

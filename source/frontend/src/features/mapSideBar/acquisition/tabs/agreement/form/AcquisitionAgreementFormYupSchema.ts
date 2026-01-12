@@ -8,7 +8,7 @@ export const AcquisitionAgreementFormYupSchema = yup.object().shape({
     .string()
     .nullable()
     .max(250, 'Legal survey plan must be at most ${max} characters'),
-  agreementTypeCode: yup.string().required('Agreement type is required'),
+  agreementTypeCode: yup.string().nullable().required('Agreement type is required'),
   purchasePrice: yup.lazy(value =>
     value === ''
       ? yup.string().nullable()
