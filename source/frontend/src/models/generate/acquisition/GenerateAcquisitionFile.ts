@@ -121,7 +121,7 @@ export class Api_GenerateAcquisitionFile implements ICompensationRequisitionFile
 
   // Set verb and noun for owner(s) grammar
   private static getOwnerGrammar(count: number) {
-    return count === 1 ? { verb: 'is', noun: 'owner' } : { verb: 'are', noun: 'owners' };
+    return count > 1 ? { verb: 'are', noun: 'owners' } : { verb: 'is', noun: 'owner' };
   }
 
   getTeam = (team: ApiGen_Concepts_AcquisitionFileTeam | null, overrideOrgAddress = false) => {
