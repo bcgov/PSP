@@ -113,7 +113,6 @@ export class Api_GenerateAcquisitionFile implements ICompensationRequisitionFile
         ?.map(owner => new Api_GenerateOwner(owner)) ?? [];
     this.all_owners_string = this.owners.map(owner => owner.owner_string).join(', ');
     this.all_owners_string_and = this.owners.map(owner => owner.owner_string).join(' And ');
-
     const { verb, noun } = Api_GenerateAcquisitionFile.getOwnerGrammar(this.owners.length);
     this.owner_verb = verb;
     this.owner_noun = noun;
