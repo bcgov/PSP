@@ -2,23 +2,23 @@ import moment from 'moment';
 
 import { createFileDownload } from '@/features/documents/DownloadDocumentButton';
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
-import { ExpropriationForm5Model } from '@/features/mapSideBar/acquisition/tabs/expropriation/models';
+import { ExpropriationForm4Model } from '@/features/mapSideBar/acquisition/tabs/expropriation/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { useInterestHolderRepository } from '@/hooks/repositories/useInterestHolderRepository';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
-import { Api_GenerateExpropriationForm5 } from '@/models/generate/acquisition/GenerateExpropriationForm5';
+import { Api_GenerateExpropriationForm4 } from '@/models/generate/acquisition/GenerateExpropriationForm4';
 import { exists, isValidId } from '@/utils';
 
-export const useGenerateExpropriationForm5 = () => {
+export const useGenerateExpropriationForm4 = () => {
   const { getOrganizationConcept } = useApiContacts();
   const { getAcquisitionFile, getAcquisitionProperties } = useAcquisitionProvider();
   const { getAcquisitionInterestHolders } = useInterestHolderRepository();
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
 
-  const generateForm5 = async (acquisitionFileId: number, formModel: ExpropriationForm5Model) => {
+  const generateForm4 = async (acquisitionFileId: number, formModel: ExpropriationForm4Model) => {
     const filePromise = getAcquisitionFile.execute(acquisitionFileId);
     const propertiesPromise = getAcquisitionProperties.execute(acquisitionFileId);
     const interestHoldersPromise = getAcquisitionInterestHolders.execute(acquisitionFileId);
@@ -49,7 +49,7 @@ export const useGenerateExpropriationForm5 = () => {
     );
     const selectedProperties = properties?.filter(fp => filePropertyIds.has(Number(fp.id)));
 
-    const expropriationData = new Api_GenerateExpropriationForm5({
+    const expropriationData = new Api_GenerateExpropriationForm4({
       file: fileData,
       interestHolders: interestHolders ?? [],
       expropriationAuthority: expAuthority?.data ?? null,
@@ -57,7 +57,7 @@ export const useGenerateExpropriationForm5 = () => {
     });
 
     const generatedFile = await generate({
-      templateType: ApiGen_CodeTypes_FormTypes.FORM5.toString(),
+      templateType: ApiGen_CodeTypes_FormTypes.FORM4.toString(),
       templateData: expropriationData,
       convertToType: null,
     });
@@ -66,12 +66,12 @@ export const useGenerateExpropriationForm5 = () => {
       generatedFile?.payload
     ) {
       const fileExt = generatedFile?.payload?.fileNameExtension ?? 'docx';
-      const fileName = `Form 5-${file.fileNumber}-${moment().format('yyyyMMDD_hhmmss')}.${fileExt}`;
+      const fileName = `Form 4-${file.fileNumber}-${moment().format('yyyyMMDD_hhmmss')}.${fileExt}`;
       createFileDownload(generatedFile?.payload, fileName);
     } else {
       throw Error('Failed to generate file');
     }
   };
 
-  return generateForm5;
+  return generateForm4;
 };

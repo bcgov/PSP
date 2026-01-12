@@ -5,32 +5,32 @@ import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { FormikProps } from 'formik';
 import { createRef } from 'react';
-import { ExpropriationForm5Model } from '../models';
-import ExpropriationForm5, { IExpropriationForm5Props } from './ExpropriationForm5';
+import { ExpropriationForm4Model } from '../models';
+import ExpropriationForm4, { IExpropriationForm4Props } from './ExpropriationForm4';
 
 // mock auth library
 
 vi.mock('@/hooks/pims-api/useApiContacts');
 const getContacts = vi.fn();
-vi.mocked(useApiContacts).mockReturnValue({
+vi.mocked(useApiContacts, { partial: true }).mockReturnValue({
   getContacts,
-} as unknown as ReturnType<typeof useApiContacts>);
+});
 
 const onGenerate = vi.fn();
 const onError = vi.fn();
 
-describe('Expropriation Form 5', () => {
+describe('Expropriation Form 4', () => {
   const setup = async (
-    renderOptions: RenderOptions & { props?: Partial<IExpropriationForm5Props> } = {},
+    renderOptions: RenderOptions & { props?: Partial<IExpropriationForm4Props> } = {},
   ) => {
-    const formikRef = createRef<FormikProps<ExpropriationForm5Model>>();
+    const formikRef = createRef<FormikProps<ExpropriationForm4Model>>();
     const utils = render(
-      <ExpropriationForm5
+      <ExpropriationForm4
         {...renderOptions.props}
         acquisitionFile={renderOptions.props?.acquisitionFile ?? getMockExpropriationFile()}
         onGenerate={onGenerate}
         formikRef={renderOptions.props?.formikRef ?? formikRef}
-      ></ExpropriationForm5>,
+      ></ExpropriationForm4>,
       {
         ...renderOptions,
         useMockAuthentication: true,
@@ -64,7 +64,7 @@ describe('Expropriation Form 5', () => {
     expect(asFragment()).toMatchSnapshot();
   });
 
-  it('validates form 5 values before generating', async () => {
+  it('validates form values before generating', async () => {
     const { getByText, formikRef } = await setup();
     await act(async () => formikRef.current.submitForm());
 
@@ -72,7 +72,7 @@ describe('Expropriation Form 5', () => {
     expect(getByText('At least one impacted property is required')).toBeInTheDocument();
   });
 
-  it(`submits the form 5 when Generate button is clicked`, async () => {
+  it(`submits the form when Generate button is clicked`, async () => {
     const { getByText, getByTestId, getByTitle, formikRef } = await setup({});
     // pick an organization from contact manager
     await act(async () => userEvent.click(getByTitle('Select Contact')));

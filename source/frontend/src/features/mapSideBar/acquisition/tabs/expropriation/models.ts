@@ -18,6 +18,10 @@ export class ExpropriationForm1Model extends ExpropriationBaseModel {
   purpose = '';
 }
 
+export class ExpropriationForm4Model extends ExpropriationBaseModel {
+  impactedProperties: ApiGen_Concepts_AcquisitionFileProperty[] = [];
+}
+
 export class ExpropriationForm5Model extends ExpropriationBaseModel {
   impactedProperties: ApiGen_Concepts_AcquisitionFileProperty[] = [];
 }

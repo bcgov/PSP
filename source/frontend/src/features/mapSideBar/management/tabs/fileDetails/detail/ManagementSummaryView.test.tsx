@@ -322,8 +322,7 @@ describe('ManagementSummaryView component', () => {
           rowVersion: 1,
         },
       ],
-      organizationPersons: [
-      ],
+      organizationPersons: [],
       parentOrganization: null,
       rowVersion: 1,
     });
