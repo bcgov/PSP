@@ -33,6 +33,16 @@ namespace Pims.Api.Services
 
         PropertyManagementModel UpdatePropertyManagement(PimsProperty property);
 
+        IEnumerable<PimsPropertyImprovement> GetImprovementsByPropertyId(long propertyId);
+
+        PimsPropertyImprovement AddPropertyImprovement(PimsPropertyImprovement propertyImprovement);
+
+        PimsPropertyImprovement GetPropertyImprovementByID(long propertyId, long propertyImprovementId);
+
+        PimsPropertyImprovement UpdatePropertyImprovement(long propertyId, PimsPropertyImprovement propertyImprovement);
+
+        bool DeletePropertyImprovement(long propertyId, long propertyImprovementId);
+
         IList<PimsManagementActivity> GetActivities(long propertyId);
 
         IList<PimsManagementActivity> GetFileActivities(long managementFileId);

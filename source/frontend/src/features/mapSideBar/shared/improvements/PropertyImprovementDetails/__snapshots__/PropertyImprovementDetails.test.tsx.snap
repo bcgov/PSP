@@ -1,0 +1,70 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`Property Improvement Details view > renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
+    class="pb-2 row"
+  >
+    <div
+      class="pr-0 text-left col-4"
+    >
+      <label
+        class="c0"
+      >
+        Improvement type:
+      </label>
+    </div>
+    <div
+      class="c1 text-left col"
+      data-testid="improvement[1000].type"
+    >
+      Commercial Building
+    </div>
+  </div>
+  .c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
+    class="pb-2 row"
+  >
+    <div
+      class="pr-0 text-left col-4"
+    >
+      <label
+        class="c0"
+      >
+        Description:
+      </label>
+    </div>
+    <div
+      class="c1 text-left col"
+      data-testid="improvement[1000].description"
+    >
+      TEST DESCRIPTION
+    </div>
+  </div>
+</DocumentFragment>
+`;

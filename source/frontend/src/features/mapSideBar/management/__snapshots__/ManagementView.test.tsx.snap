@@ -1222,6 +1222,15 @@ exports[`ManagementView component > renders as expected 1`] = `
                   >
                     Activities
                   </a>
+                  <a
+                    aria-selected="false"
+                    class="nav-item nav-link"
+                    data-rb-event-key="improvements"
+                    href="#"
+                    role="tab"
+                  >
+                    Improvements
+                  </a>
                 </nav>
                 <div
                   class="tab-content"
