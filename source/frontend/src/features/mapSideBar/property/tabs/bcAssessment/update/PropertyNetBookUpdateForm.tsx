@@ -11,6 +11,7 @@ import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 
 import { PropertyNetBookFormModel } from './models';
+import { PropertyNetBookYupSchema } from './PropertyNetBookYupSchema';
 
 export interface IPropertyNetBookUpdateFormProps {
   isLoading: boolean;
@@ -35,6 +36,7 @@ export const PropertyNetBookUpdateForm = React.forwardRef<
           innerRef={formikRef}
           initialValues={PropertyNetBookFormModel.fromApi(property)}
           onSubmit={savePropertyNetBook}
+          validationSchema={PropertyNetBookYupSchema}
         >
           {formikProps => (
             <Section header="Net Book">
