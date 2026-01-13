@@ -38,7 +38,7 @@ export const PropertyNetBookUpdateForm = React.forwardRef<
         >
           {formikProps => (
             <Section header="Net Book">
-              <SectionField label="Net book value">
+              <SectionField label="Net book value" contentWidth={{ xs: 4 }}>
                 <FastCurrencyInput formikProps={formikProps} field="netBookAmount" />
               </SectionField>
               <SectionField label="Notes" labelWidth={{ xs: 12 }}>
