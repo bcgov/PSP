@@ -8,11 +8,16 @@ describe('Property Improvement Details view', () => {
   const setup = async (
     renderOptions: RenderOptions & { props?: Partial<IPropertyImprovementDetailsProps> },
   ) => {
-    const utils = render(<PropertyImprovementDetails propertyImprovement={
-      renderOptions?.props?.propertyImprovement ?? getMockPropertyImprovementApi()
-    } />, {
-      ...renderOptions,
-    });
+    const utils = render(
+      <PropertyImprovementDetails
+        propertyImprovement={
+          renderOptions?.props?.propertyImprovement ?? getMockPropertyImprovementApi()
+        }
+      />,
+      {
+        ...renderOptions,
+      },
+    );
 
     return {
       ...utils,

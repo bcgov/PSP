@@ -57,12 +57,12 @@ describe('File properties improvements list view', () => {
     const { getByText } = await setup({
       props: {
         isLoading: false,
-        filePropertiesImprovements: [
-          {property: getMockApiProperty() , improvements: []}
-        ],
+        filePropertiesImprovements: [{ property: getMockApiProperty(), improvements: [] }],
       },
     });
 
-    expect(getByText(/There are no commercial, residential, or other improvements indicated with this/i)).toBeInTheDocument();
+    expect(
+      getByText(/There are no commercial, residential, or other improvements indicated with this/i),
+    ).toBeInTheDocument();
   });
 });

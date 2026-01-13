@@ -9,7 +9,15 @@ import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockLtsaResponse } from '@/mocks/ltsa.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, cleanup, render, RenderOptions, userEvent, waitFor, waitForEffects } from '@/utils/test-utils';
+import {
+  act,
+  cleanup,
+  render,
+  RenderOptions,
+  userEvent,
+  waitFor,
+  waitForEffects,
+} from '@/utils/test-utils';
 
 import MotiInventoryContainer, { IMotiInventoryContainerProps } from './MotiInventoryContainer';
 import { mockFAParcelLayerResponse } from '@/mocks/faParcelLayerResponse.mock';
