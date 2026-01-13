@@ -244,7 +244,7 @@ export const SideNavBar = () => {
           onClick={() => {
             history.push('/documents/list');
           }}
-          icon={<DocumentIcon width="24px" height="24px" />}
+          icon={<DocumentIcon width="24px" height="24px" fill="white" />}
           text="Document Search"
           showText={expanded}
           isNavActive={isDocumentSearch != null}
