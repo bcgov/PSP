@@ -1,8 +1,7 @@
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 
-import { useModalManagement } from '@/hooks/useModalManagement';
+import { useForm12Generation } from '@/features/mapSideBar/shared/generateForm/useForm12Generation';
 import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
-import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 
 import { IGenerateFormViewProps } from '../acquisition/common/GenerateForm/GenerateFormView';
@@ -20,28 +19,15 @@ export interface IResearchGenerateContainerProps {
 const ResearchGenerateContainer: React.FunctionComponent<
   React.PropsWithChildren<IResearchGenerateContainerProps>
 > = ({ researchFile, View }) => {
-  const [isPropertyModalOpen, openPropertyModal, closePropertyModal] = useModalManagement();
   const [isGenerating, setIsGenerating] = useState(false);
   const generateForm12 = useGenerateForm12();
-
-  const onGenerate = useCallback(
-    (properties: ApiGen_Concepts_FileProperty[]) => {
-      setIsGenerating(true);
-      generateForm12(properties.map(fp => fp.property)).finally(() => setIsGenerating(false));
-    },
-    [generateForm12],
-  );
-
-  const handleGenerateForm12Click = () => {
-    openPropertyModal();
-  };
+  const {
+    isPropertyModalOpen,
+    closePropertyModal,
+    handleGenerateForm12Click,
+    handleSelectedProperties,
+  } = useForm12Generation(generateForm12, setIsGenerating);
   const generateNotice = useGenerateResearchNotice();
-
-  const handleSelectedProperties = (selectedProperties: ApiGen_Concepts_FileProperty[]) => {
-    onGenerate(selectedProperties);
-    closePropertyModal();
-  };
-
   const handleSelectedNoticeEntries = () => {
     generateNotice(researchFile?.id).finally(() => setIsGenerating(false));
   };
