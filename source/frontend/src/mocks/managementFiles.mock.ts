@@ -206,6 +206,8 @@ export const mockManagementFileResponse = (
         surplusDeclarationType: null,
         surplusDeclarationComment: null,
         surplusDeclarationDate: '0001-01-01',
+        netBookAmount: null,
+        netBookNote: null,
         rowVersion: 3,
       },
       propertyId: 352,

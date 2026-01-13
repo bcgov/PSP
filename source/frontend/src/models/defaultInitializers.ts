@@ -157,7 +157,7 @@ export const getEmptyProperty = (): ApiGen_Concepts_Property => ({
   surplusDeclarationDate: EpochIsoDateTime,
   historicalFileNumbers: null,
   tenureCleanups: null,
-  netBookAmount: 0,
+  netBookAmount: null,
   netBookNote: null,
   ...getEmptyBaseAudit(),
 });
