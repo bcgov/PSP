@@ -176,10 +176,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                     onSelectProperty={onSelectProperty}
                     onEditProperties={onEditProperties}
                   >
-                    <AcquisitionGenerateContainer
-                      acquisitionFileId={file.id}
-                      View={GenerateFormView}
-                    />
+                    <AcquisitionGenerateContainer acquisitionFile={file} View={GenerateFormView} />
                   </FileMenuView>
                 )}
               </>
