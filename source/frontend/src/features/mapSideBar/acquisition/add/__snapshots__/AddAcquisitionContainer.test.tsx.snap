@@ -227,10 +227,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   line-height: unset;
 }
 
-.c32.c32.btn .text {
-  display: none;
-}
-
 .c32.c32.btn:hover,
 .c32.c32.btn:active,
 .c32.c32.btn:focus {
@@ -245,13 +241,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
-}
-
-.c32.c32.btn:hover .text,
-.c32.c32.btn:active .text,
-.c32.c32.btn:focus .text {
-  display: inline;
-  line-height: 2rem;
 }
 
 .c17 .react-datepicker__calendar-icon {
@@ -2490,12 +2479,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                             d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                           />
                         </svg>
-                         
-                        <span
-                          class="text"
-                        >
-                          Remove
-                        </span>
                       </div>
                     </button>
                   </div>
@@ -2687,12 +2670,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                             d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                           />
                         </svg>
-                         
-                        <span
-                          class="text"
-                        >
-                          Remove
-                        </span>
                       </div>
                     </button>
                   </div>
