@@ -131,6 +131,18 @@ namespace Pims.Api.Services
             return GetById(newProperty.Internal_Id);
         }
 
+        /// <inheritdoc />
+        public PimsProperty UpdateNetBook(PimsProperty property)
+        {
+            _logger.LogInformation("Updating property net book value with id {id}", property.Internal_Id);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            var newProperty = _propertyRepository.UpdateNetBook(property);
+            _propertyRepository.CommitTransaction();
+
+            return GetById(newProperty.Internal_Id);
+        }
+
         public PimsProperty RetireProperty(PimsProperty property, bool commitTransaction = true)
         {
             _logger.LogInformation("Retiring property with id {id}", property.Internal_Id);

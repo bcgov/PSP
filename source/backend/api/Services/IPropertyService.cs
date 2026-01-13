@@ -94,5 +94,12 @@ namespace Pims.Api.Services
         /// <returns>The file properties with transformed spatial locations.</returns>
         List<T> TransformAllPropertiesToLatLong<T>(List<T> fileProperties)
             where T : IFilePropertyEntity;
+
+        /// <summary>
+        /// Update the net book value and note for the specified property.
+        /// </summary>
+        /// <param name="property">The property to update.</param>
+        /// <returns>The updated property.</returns>
+        PimsProperty UpdateNetBook(PimsProperty property);
     }
 }

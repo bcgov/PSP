@@ -393,6 +393,10 @@ namespace Pims.Dal.Repositories
             property.PropertyDataSourceTypeCode = existingProperty.PropertyDataSourceTypeCode;
             property.IsRetired = existingProperty.IsRetired;
 
+            // preserve net book values - they are updated via a separate endpoint
+            property.NetBookAmt = existingProperty.NetBookAmt;
+            property.NetBookNote = existingProperty.NetBookNote;
+
             if (property.PphStatusTypeCode != existingProperty.PphStatusTypeCode
                 && (property.PphStatusTypeCode != PropertyPPHStatusTypes.UNKNOWN.ToString() && existingProperty.PphStatusTypeCode != null))
             {
@@ -428,6 +432,23 @@ namespace Pims.Dal.Repositories
             Context.UpdateChild<PimsProperty, long, PimsPropPropRoadTyp, long>(p => p.PimsPropPropRoadTyps, propertyId, property.PimsPropPropRoadTyps.ToArray());
             Context.UpdateChild<PimsProperty, long, PimsPropPropTenureTyp, long>(p => p.PimsPropPropTenureTyps, propertyId, property.PimsPropPropTenureTyps.ToArray());
             Context.UpdateChild<PimsProperty, long, PimsPropTenureCleanup, long>(p => p.PimsPropTenureCleanups, propertyId, property.PimsPropTenureCleanups.ToArray());
+
+            return existingProperty;
+        }
+
+        public PimsProperty UpdateNetBook(PimsProperty property)
+        {
+            property.ThrowIfNull(nameof(property));
+
+            var propertyId = property.Internal_Id;
+            var existingProperty = Context.PimsProperties
+                .FirstOrDefault(p => p.PropertyId == propertyId) ?? throw new KeyNotFoundException();
+
+            // update net book fields
+            existingProperty.NetBookAmt = property.NetBookAmt;
+            existingProperty.NetBookNote = property.NetBookNote;
+
+            Context.Update(existingProperty);
 
             return existingProperty;
         }
