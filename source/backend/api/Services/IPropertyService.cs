@@ -33,6 +33,16 @@ namespace Pims.Api.Services
 
         PropertyManagementModel UpdatePropertyManagement(PimsProperty property);
 
+        IEnumerable<PimsPropertyImprovement> GetImprovementsByPropertyId(long propertyId);
+
+        PimsPropertyImprovement AddPropertyImprovement(PimsPropertyImprovement propertyImprovement);
+
+        PimsPropertyImprovement GetPropertyImprovementByID(long propertyId, long propertyImprovementId);
+
+        PimsPropertyImprovement UpdatePropertyImprovement(long propertyId, PimsPropertyImprovement propertyImprovement);
+
+        bool DeletePropertyImprovement(long propertyId, long propertyImprovementId);
+
         IList<PimsManagementActivity> GetActivities(long propertyId);
 
         IList<PimsManagementActivity> GetFileActivities(long managementFileId);
@@ -84,5 +94,12 @@ namespace Pims.Api.Services
         /// <returns>The file properties with transformed spatial locations.</returns>
         List<T> TransformAllPropertiesToLatLong<T>(List<T> fileProperties)
             where T : IFilePropertyEntity;
+
+        /// <summary>
+        /// Update the net book value and note for the specified property.
+        /// </summary>
+        /// <param name="property">The property to update.</param>
+        /// <returns>The updated property.</returns>
+        PimsProperty UpdateNetBook(PimsProperty property);
     }
 }

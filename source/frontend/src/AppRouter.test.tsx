@@ -99,7 +99,7 @@ vi.mocked(useApiUsers).mockReturnValue({
 });
 
 vi.mock('./hooks/pims-api/useApiProperties');
-vi.mocked(useApiProperties).mockReturnValue({
+vi.mocked(useApiProperties, { partial: true }).mockReturnValue({
   getPropertiesViewPagedApi: vi.fn().mockResolvedValue({
     data: {
       items: [{ id: 1, pid: 123456789 }],

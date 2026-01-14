@@ -222,6 +222,18 @@ exports[`GenerateFormContainer component > renders as expected 1`] = `
       <div
         class="Button__value"
       >
+        Generate Form 12
+      </div>
+    </button>
+    <div />
+    <button
+      class="c0 Button btn btn-link"
+      title="Download File"
+      type="button"
+    >
+      <div
+        class="Button__value"
+      >
         Generate Letter
       </div>
     </button>

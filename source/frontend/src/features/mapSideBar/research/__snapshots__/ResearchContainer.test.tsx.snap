@@ -1124,6 +1124,15 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                     >
                       File Details
                     </a>
+                    <a
+                      aria-selected="false"
+                      class="nav-item nav-link"
+                      data-rb-event-key="improvements"
+                      href="#"
+                      role="tab"
+                    >
+                      Improvements
+                    </a>
                   </nav>
                   <div
                     class="tab-content"

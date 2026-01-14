@@ -342,6 +342,8 @@ export class PropertyForm {
         : null,
       historicalFileNumbers: null,
       tenureCleanups: null,
+      netBookAmount: null,
+      netBookNote: null,
     };
   }
 }

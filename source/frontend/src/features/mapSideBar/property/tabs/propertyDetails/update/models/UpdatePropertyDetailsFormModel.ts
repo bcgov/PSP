@@ -304,6 +304,8 @@ export class UpdatePropertyDetailsFormModel {
       pphStatusUpdateUserGuid: null,
 
       historicalFileNumbers: null,
+      netBookAmount: null,
+      netBookNote: null,
     };
   }
 }

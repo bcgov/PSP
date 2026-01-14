@@ -30,6 +30,29 @@ const storeState = {
 
 const onClose = vi.fn();
 
+const mockGetImprovementsApi = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn(),
+  loading: false,
+};
+
+const mockDeleteImprovementApi = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn(),
+  loading: false,
+};
+
+vi.mock('@/hooks/repositories/usePropertyImprovementRepository', () => ({
+  usePropertyImprovementRepository: () => {
+    return {
+      getPropertyImprovements: mockGetImprovementsApi,
+      deletePropertyImprovement: mockDeleteImprovementApi,
+    };
+  },
+}));
+
 describe('MotiInventoryContainer component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions & IMotiInventoryContainerProps) => {
@@ -96,6 +119,7 @@ describe('MotiInventoryContainer component', () => {
     // PIMS properties api
     mockAxios.onGet(new RegExp('/properties/\\d+/historicalNumbers')).reply(200, []);
     mockAxios.onGet(new RegExp('/properties/*')).reply(200, { id: 1, pid: 9212434 });
+    mockGetImprovementsApi.execute.mockResolvedValue([]);
 
     // PIMS geoserver api
     mockAxios.onGet(new RegExp('/ogs-internal/*')).reply(200, {});
@@ -201,6 +225,7 @@ describe('MotiInventoryContainer component', () => {
     });
 
     await act(async () => {});
+    await waitForEffects();
     expect(await findByText('Property Information')).toBeVisible();
     const closeButton = getByTitle('close');
     await act(async () => userEvent.click(closeButton));

@@ -52,7 +52,6 @@ import {
   waitForEffects,
 } from '@/utils/test-utils';
 
-import { PropertyFilterFormModel } from '@/components/maps/leaflet/Control/AdvancedFilter/models';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useLtsa } from '@/hooks/useLtsa';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
@@ -92,7 +91,7 @@ vi.mock('react-visibility-sensor', () => {
   };
 });
 
-vi.mocked(useApiProperties).mockReturnValue({
+vi.mocked(useApiProperties, { partial: true }).mockReturnValue({
   getPropertiesViewPagedApi: vi
     .fn()
     .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Property> }),

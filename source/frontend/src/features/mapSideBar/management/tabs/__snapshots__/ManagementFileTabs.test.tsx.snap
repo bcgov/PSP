@@ -57,6 +57,11 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
+.c9 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c8 {
   float: right;
   cursor: pointer;
@@ -86,11 +91,6 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
-}
-
-.c9 {
-  padding: 0 0.4rem;
-  display: block;
 }
 
 .c6.required::before {
@@ -128,6 +128,15 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
         role="tab"
       >
         Activities
+      </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
+        data-rb-event-key="improvements"
+        href="#"
+        role="tab"
+      >
+        Improvements
       </a>
       <a
         aria-selected="false"
