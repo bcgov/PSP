@@ -123,7 +123,7 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
     [push, query],
   );
 
-  const onSuccess = useCallback(() => {
+  const onSuccess = useCallback(async (): Promise<void> => {
     setStaleFile(true);
     setStaleLastUpdatedBy(true);
     mapMachine.refreshMapProperties();
