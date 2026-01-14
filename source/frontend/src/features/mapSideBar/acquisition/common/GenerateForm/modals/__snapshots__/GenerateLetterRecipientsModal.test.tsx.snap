@@ -492,7 +492,7 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
             <div
               class="c4 m-4"
             >
-              No recipients availiable
+              No recipients available
             </div>
           </div>
         </div>
