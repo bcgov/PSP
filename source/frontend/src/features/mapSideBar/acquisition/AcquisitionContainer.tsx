@@ -259,9 +259,9 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     handleCancelClick(() => setIsEditing(false));
   }, [handleCancelClick, setIsEditing]);
 
-  const onSuccess = () => {
-    fetchAcquisitionFile();
-    fetchLastUpdatedBy();
+  const onSuccess = async (): Promise<void> => {
+    await fetchAcquisitionFile();
+    await fetchLastUpdatedBy();
     mapMachine.refreshMapProperties();
     setIsEditing(false);
   };

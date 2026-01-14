@@ -45,7 +45,7 @@ export interface IResearchViewProps {
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
-  onSuccess: () => void;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => Promise<void>;
 }
 
 const ResearchView: React.FunctionComponent<IResearchViewProps> = ({
@@ -71,8 +71,9 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = ({
   const { hasClaim } = useKeycloakWrapper();
   const { lastUpdatedBy } = useContext(SideBarContext);
 
-  const closePropertySelector = () => {
+  const closePropertySelector = async () => {
     setEditMode(false);
+    await onSuccess();
     history.push(`${match.url}`);
   };
 
