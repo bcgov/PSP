@@ -47,6 +47,9 @@ export const AddAcquisitionFileYupSchema = yup
           .notOneOf([true], 'Selected property is retired and can not be added to the file'),
       }),
     ),
+    noticeOfClaim: yup.object().shape({
+      comment: yup.string().max(4000, 'Notice of claim comment must be at most ${max} characters'),
+    }),
   })
   .concat(UpdateAcquisitionTeamYupSchema)
   .concat(UpdateAcquisitionOwnersYupSchema);
