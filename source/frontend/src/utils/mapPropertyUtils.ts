@@ -377,11 +377,11 @@ export const isEmptyFeatureCollection = (collection: FeatureCollection) => {
 
 export const isEmptyMapFeatureData = (mapFeatureData: MapFeatureData) => {
   return (
-    isEmptyFeatureCollection(mapFeatureData.pimsFeatures) &&
+    isEmptyFeatureCollection(mapFeatureData?.pimsFeatures) &&
     //isEmptyFeatureCollection(mapFeatureData.pimsLiteFeatures) && TODO: For now this is loading always. Investigate if it needs to be removed completly
-    isEmptyFeatureCollection(mapFeatureData.fullyAttributedFeatures) &&
-    isEmptyFeatureCollection(mapFeatureData.surveyedParcelsFeatures) &&
-    isEmptyFeatureCollection(mapFeatureData.highwayPlanFeatures)
+    isEmptyFeatureCollection(mapFeatureData?.fullyAttributedFeatures) &&
+    isEmptyFeatureCollection(mapFeatureData?.surveyedParcelsFeatures) &&
+    isEmptyFeatureCollection(mapFeatureData?.highwayPlanFeatures)
   );
 };
 

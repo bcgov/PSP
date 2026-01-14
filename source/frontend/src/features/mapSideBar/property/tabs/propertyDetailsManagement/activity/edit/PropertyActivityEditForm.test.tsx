@@ -54,7 +54,9 @@ describe('PropertyActivityEditForm component', () => {
     const result = render(
       <PropertyActivityEditForm
         propertyId={renderOptions?.props?.propertyId ?? 1}
-        propertyManagement={renderOptions?.props?.propertyManagement ?? getMockApiPropertyManagement()}
+        propertyManagement={
+          renderOptions?.props?.propertyManagement ?? getMockApiPropertyManagement()
+        }
         gstConstant={renderOptions?.props?.gstConstant ?? 0}
         pstConstant={renderOptions?.props?.pstConstant ?? 0}
         onCancel={renderOptions?.props?.onCancel ?? onCancel}
@@ -63,7 +65,8 @@ describe('PropertyActivityEditForm component', () => {
         setShow={renderOptions?.props?.setShow ?? setShow}
         onSave={renderOptions?.props?.onSave ?? onSave}
         onClose={renderOptions?.props?.onClose ?? onClose}
-        initialValues={renderOptions?.props?.initialValues ?? mockManagementActivityFormValues}       />,
+        initialValues={renderOptions?.props?.initialValues ?? mockManagementActivityFormValues}
+      />,
       {
         store: storeState,
         useMockAuthentication: true,

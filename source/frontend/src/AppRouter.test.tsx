@@ -333,7 +333,7 @@ describe('PSP routing', () => {
         await setup('/properties/list', { claims: [Claims.PROPERTY_VIEW] });
       });
       await waitFor(async () => {
-      const lazyElement = await screen.findByText('PIMS Property Search');
+        const lazyElement = await screen.findByText('PIMS Property Search');
         expect(lazyElement).toBeInTheDocument();
         expect(document.title).toMatch(/View Inventory/i);
       });

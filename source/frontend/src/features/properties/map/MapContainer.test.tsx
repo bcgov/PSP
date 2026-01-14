@@ -223,6 +223,19 @@ const store = mockStore({
 
 let history = createMemoryHistory();
 
+const getPropertyMarkerIcons = () =>
+  Array.from(document.querySelectorAll<HTMLImageElement>('img.leaflet-marker-icon')).filter(
+    icon => !(icon.getAttribute('src') ?? '').includes('marker-icon'),
+  );
+
+const getFirstPropertyMarker = () => {
+  const [firstMarker] = getPropertyMarkerIcons();
+  if (!firstMarker) {
+    throw new Error('Expected at least one property marker on the map');
+  }
+  return firstMarker;
+};
+
 describe('MapContainer', () => {
   const setup = async (renderOptions: RenderOptions = {}) => {
     const activePimsPropertyIds = mockParcels.map(mp => mp.propertyId);
@@ -484,8 +497,8 @@ describe('MapContainer', () => {
     await act(async () => userEvent.click(cluster!));
     vi.advanceTimersByTime(500);
     // click on single marker
-    const marker = document.querySelector('img.leaflet-marker-icon');
-    await act(async () => userEvent.click(marker!));
+    const marker = getFirstPropertyMarker();
+    await act(async () => userEvent.click(marker));
     vi.advanceTimersByTime(500);
     // verify the correct feature got clicked
     expect(testMapMock.mapMarkerClick).toHaveBeenCalledWith(expectedFeature);
@@ -522,8 +535,8 @@ describe('MapContainer', () => {
     await act(async () => userEvent.click(cluster!));
     vi.advanceTimersByTime(500);
     // click on single marker
-    const marker = document.querySelector('img.leaflet-marker-icon');
-    await act(async () => userEvent.click(marker!));
+    const marker = getFirstPropertyMarker();
+    await act(async () => userEvent.click(marker));
     vi.advanceTimersByTime(500);
     await waitForEffects();
     // verify the correct feature got clicked
@@ -536,8 +549,8 @@ describe('MapContainer', () => {
     const cluster = document.querySelector('.leaflet-marker-icon.marker-cluster');
     await act(async () => userEvent.click(cluster!));
     // click on single marker
-    const marker = document.querySelector('img.leaflet-marker-icon');
-    await act(async () => userEvent.click(marker!));
+    const marker = getFirstPropertyMarker();
+    await act(async () => userEvent.click(marker));
     // verify property information slide-out is shown
     const text = await screen.findByText('Property Information');
     expect(text).toBeVisible();
@@ -566,7 +579,7 @@ describe('MapContainer', () => {
     await setup({ mockMapMachine: testMapMock });
 
     const clusterIcons = document.querySelectorAll('.leaflet-marker-icon.marker-cluster');
-    const markerIcons = document.querySelectorAll('img.leaflet-marker-icon');
+    const markerIcons = getPropertyMarkerIcons();
     expect(clusterIcons.length).toBe(0);
     expect(markerIcons.length).toBe(pimsFeatures.features.length);
   });
@@ -603,15 +616,15 @@ describe('MapContainer', () => {
     await setup({ mockMapMachine: testMapMock });
 
     const clusterIcons = document.querySelectorAll('.leaflet-marker-icon.marker-cluster');
-    const markerIcons = document.querySelectorAll('img.leaflet-marker-icon');
+    const markerIcons = getPropertyMarkerIcons();
 
     // verify the markers have been filtered
     expect(clusterIcons.length).toBe(0);
     expect(markerIcons.length).toBe(activeIds.length);
 
     // click on single marker
-    const marker = document.querySelector('img.leaflet-marker-icon');
-    await act(async () => userEvent.click(marker!));
+    const marker = getFirstPropertyMarker();
+    await act(async () => userEvent.click(marker));
     vi.advanceTimersByTime(500);
 
     // verify the correct feature got clicked
@@ -650,15 +663,15 @@ describe('MapContainer', () => {
     await setup({ mockMapMachine: testMapMock });
 
     const clusterIcons = document.querySelectorAll('.leaflet-marker-icon.marker-cluster');
-    const markerIcons = document.querySelectorAll('img.leaflet-marker-icon');
+    const markerIcons = getPropertyMarkerIcons();
 
     // verify the markers have been filtered
     expect(clusterIcons.length).toBe(0);
     expect(markerIcons.length).toBe(activeIds.length);
 
     // click on single marker
-    const marker = document.querySelector('img.leaflet-marker-icon');
-    await act(async () => userEvent.dblClick(marker!));
+    const marker = getFirstPropertyMarker();
+    await act(async () => userEvent.dblClick(marker));
     vi.advanceTimersByTime(500);
 
     // verify the correct feature did not get clicked

@@ -97,7 +97,6 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
       }
     }
   }, [draftFeatureGroupRef, draftPoints]);
-
   /**
    * Render all of the unclustered DRAFT MARKERS.
    **/

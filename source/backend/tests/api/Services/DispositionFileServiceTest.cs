@@ -972,6 +972,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
 
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
             propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsDispositionFileProperty>(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>()));
@@ -1021,6 +1024,9 @@ namespace Pims.Api.Test.Services
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
@@ -1137,6 +1143,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
 
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
@@ -1191,6 +1200,9 @@ namespace Pims.Api.Test.Services
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
@@ -1421,6 +1433,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
 
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
@@ -1503,6 +1518,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
 
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
@@ -1516,7 +1534,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<BadRequestException>();
-            exception.WithMessage("You cannot add a property that is outside of your user account region(s). Either select a different property, or get your system administrator to add the required region to your user account settings.");
+            exception.WithMessage("You cannot add a property that is outside of your user account region(s).\n\nPlease select a different property or contact admin at pims@gov.bc.ca to add the required region to your user account settings.");
         }
 
         [Fact]

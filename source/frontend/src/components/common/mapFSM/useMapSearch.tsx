@@ -44,7 +44,6 @@ export const useMapSearch = () => {
 
   const loadPimsPropertiesMinimal = pimsPropertyLayerService.loadPropertyLayerMinimal.execute;
   const loadPimsProperties = pimsPropertyLayerService.loadPropertyLayer.execute;
-  const loadPimsPropertiesBoundary = pimsPropertyLayerService.loadPropertyBoundaryLayer.execute;
   const pmbcServiceFindByPin = fullyAttributedService.findByPin;
   const pmbcServiceFindByPid = fullyAttributedService.findByPid;
   const pmbcServiceFindByLegalDescription = fullyAttributedService.findByLegalDescription;
@@ -228,8 +227,8 @@ export const useMapSearch = () => {
         const validFeatures = response?.features?.filter(feature => exists(feature?.geometry));
 
         result = {
-          pimsLocationLiteFeatures: emptyPimsLiteFeatureCollection,
-          pimsBoundaryFeatures: emptyPimsFeatureCollection,
+          pimsLiteFeatures: emptyPimsLiteFeatureCollection,
+          pimsFeatures: emptyPimsFeatureCollection,
           fullyAttributedFeatures: exists(validFeatures)
             ? {
                 type: response?.type,

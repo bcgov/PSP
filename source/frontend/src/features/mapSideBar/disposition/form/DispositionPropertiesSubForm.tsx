@@ -16,8 +16,8 @@ import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPro
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
-import { exists, firstOrNull, isLatLngInFeatureSetBoundary, isNumber } from '@/utils';
 import { useModalContext } from '@/hooks/useModalContext';
+import { exists, firstOrNull, isLatLngInFeatureSetBoundary, isNumber } from '@/utils';
 import {
   addPropertiesToCurrentFile,
   addShapeToProperty,
@@ -194,22 +194,22 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
                   onRemove={() => remove(index)}
                   nameSpace={`fileProperties.${index}`}
                   index={propertyIndex}
-                property={property}
-                canUploadShapefile={true}
-                onUploadShapefile={(result: UploadResponseModel | null) => {
-                  const updatedFormProperty = addShapeToProperty(property, result);
-                  replace(index, updatedFormProperty);
-                }}
-                onRemoveShapefile={() => {
-                  removeShapeFromPropertyWithConfirmation(
-                    property,
-                    setModalContent,
-                    setDisplayModal,
-                    updatedProperty => {
-                      replace(index, updatedProperty);
-                    },
-                  );
-                }}
+                  property={property}
+                  canUploadShapefile={true}
+                  onUploadShapefile={(result: UploadResponseModel | null) => {
+                    const updatedFormProperty = addShapeToProperty(property, result);
+                    replace(index, updatedFormProperty);
+                  }}
+                  onRemoveShapefile={() => {
+                    removeShapeFromPropertyWithConfirmation(
+                      property,
+                      setModalContent,
+                      setDisplayModal,
+                      updatedProperty => {
+                        replace(index, updatedProperty);
+                      },
+                    );
+                  }}
                 />
               );
             })}
