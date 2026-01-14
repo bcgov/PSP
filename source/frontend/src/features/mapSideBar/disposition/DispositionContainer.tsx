@@ -213,11 +213,11 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     }
   };
 
-  const onSuccess = (refreshProperties?: boolean, refreshFile?: boolean) => {
+  const onSuccess = async (refreshProperties?: boolean, refreshFile?: boolean) => {
     setIsEditing(false);
     fetchLastUpdatedBy();
     if (refreshFile) {
-      fetchDispositionFile();
+      await fetchDispositionFile();
     }
     if (refreshProperties) {
       mapMachine.refreshMapProperties();
@@ -259,9 +259,9 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
             },
             userOverrideCodes,
           )
-          .then(response => {
+          .then(async response => {
+            await onSuccess(true, true);
             history.push(`${stripTrailingSlash(match.url)}`);
-            onSuccess(true, true);
             return response;
           });
       },

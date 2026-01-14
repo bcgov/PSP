@@ -208,12 +208,12 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     pathGenerator.showFilePropertyId('management', managementFile.id, filePropertyId);
   };
 
-  const onSuccess = (refreshProperties?: boolean, refreshFile?: boolean) => {
+  const onSuccess = async (refreshProperties?: boolean, refreshFile?: boolean) => {
     setIsEditing(false);
     stripEditFromPath();
     fetchLastUpdatedBy();
     if (refreshFile) {
-      fetchManagementFile();
+      await fetchManagementFile();
     }
     if (refreshProperties) {
       mapMachine.refreshMapProperties();
@@ -239,9 +239,9 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
             },
             userOverrideCodes,
           )
-          .then(response => {
+          .then(async response => {
+            await onSuccess(true, true);
             history.push(`${stripTrailingSlash(match.url)}`);
-            onSuccess(true, true);
             return response;
           });
       },
