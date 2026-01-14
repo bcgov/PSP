@@ -1,5 +1,4 @@
 import { Formik, FormikHelpers, FormikProps } from 'formik';
-import { cloneDeep } from 'lodash';
 import { Fragment } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -76,11 +75,9 @@ export const ExpropriationForm1: React.FC<IExpropriationForm1Props> = ({
                 <FilePropertiesTable
                   disabledSelection={false}
                   fileProperties={acquisitionFile.fileProperties ?? []}
-                  selectedFileProperties={[]}
+                  selectedFileProperties={formikProps.values.impactedProperties}
                   setSelectedFileProperties={(fileProperties: ApiGen_Concepts_FileProperty[]) => {
-                    const copiedProperties = cloneDeep(fileProperties);
-                    copiedProperties.forEach(fp => (fp.file = null));
-                    formikProps.setFieldValue('impactedProperties', copiedProperties);
+                    formikProps.setFieldValue('impactedProperties', fileProperties);
                   }}
                 ></FilePropertiesTable>
               </FormItem>
