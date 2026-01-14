@@ -61,7 +61,7 @@ describe('UpdateCompensationRequisition Container component', () => {
     vi.clearAllMocks();
   });
 
-    it('renders the underlying form', async () => {
+  it('renders the underlying form', async () => {
     const { getByText } = await setup();
     await waitForEffects();
 

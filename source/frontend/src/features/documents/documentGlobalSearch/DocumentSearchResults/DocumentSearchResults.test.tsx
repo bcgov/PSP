@@ -1,8 +1,8 @@
 import { Claims } from '@/constants/claims';
-import { render, RenderOptions } from '@/utils/test-utils';
-import { DocumentSearchResults, IDocumentSearchResultsProps } from './DocumentSearchResults';
 import { mockDocumentSearchResultsResponse } from '@/mocks/documents.mock';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { render, RenderOptions } from '@/utils/test-utils';
+import { DocumentSearchResults, IDocumentSearchResultsProps } from './DocumentSearchResults';
 
 // render component under test
 const setup = (
@@ -136,6 +136,8 @@ describe('Documents Search Results Table', () => {
                 surplusDeclarationComment: null,
                 surplusDeclarationDate: '0001-01-01',
                 rowVersion: 3,
+                netBookAmount: null,
+                netBookNote: null,
               },
               id: 1,
               parentId: '37',

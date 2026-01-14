@@ -58,4 +58,6 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   surplusDeclarationType: ApiGen_Base_CodeType<string> | null;
   surplusDeclarationComment: string | null;
   surplusDeclarationDate: UtcIsoDate | null;
+  netBookAmount: number | null;
+  netBookNote: string | null;
 }

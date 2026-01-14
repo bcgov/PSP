@@ -164,6 +164,7 @@ export const PropertyContainer: React.FunctionComponent<IPropertyContainerProps>
   tabViews.push({
     content: (
       <BcAssessmentTabView
+        property={composedPropertyState?.apiWrapper?.response}
         summaryData={composedPropertyState.bcAssessmentWrapper?.response}
         requestedOn={composedPropertyState.bcAssessmentWrapper?.requestedOn}
         loading={composedPropertyState.bcAssessmentWrapper?.loading ?? false}

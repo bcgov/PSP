@@ -11,6 +11,8 @@ import AppRoute from '@/utils/AppRoute';
 
 import { InventoryTabNames } from './InventoryTabs';
 import PropertyContainer from './PropertyContainer';
+import { PropertyNetBookUpdateContainer } from './tabs/bcAssessment/update/PropertyNetBookUpdateContainer';
+import { PropertyNetBookUpdateForm } from './tabs/bcAssessment/update/PropertyNetBookUpdateForm';
 import { PropertyContactEditContainer } from './tabs/propertyDetailsManagement/update/PropertyContactEditContainer';
 import { PropertyContactEditForm } from './tabs/propertyDetailsManagement/update/PropertyContactEditForm';
 import { PropertyManagementUpdateContainer } from './tabs/propertyDetailsManagement/update/summary/PropertyManagementUpdateContainer';
@@ -23,6 +25,7 @@ export enum PropertyEditForms {
   UpdatePropertyDetailsContainer = 'UpdatePropertyDetailsContainer',
   UpdateManagementSummaryContainer = 'UpdateManagementSummaryContainer',
   UpdateContactContainer = 'UpdateContactContainer',
+  UpdateNetBookValueContainer = 'UpdateNetBookValueContainer',
 }
 
 export interface EditManagementState {
@@ -105,6 +108,22 @@ const PropertyRouter = React.forwardRef<FormikProps<any>, IPropertyRouterProps>(
             )}
             key={PropertyEditForms.UpdateManagementSummaryContainer}
             title="Update Management Summary"
+          ></AppRoute>
+          <AppRoute
+            path={`${stripTrailingSlash(path)}/${InventoryTabNames.value}`}
+            customRender={({ match }) => (
+              <PropertyNetBookUpdateContainer
+                propertyId={match.params.propertyId}
+                View={PropertyNetBookUpdateForm}
+                onSuccess={() => {
+                  setIsEditing(false);
+                  props.onSuccess();
+                }}
+                ref={formikRef}
+              />
+            )}
+            key={PropertyEditForms.UpdateNetBookValueContainer}
+            title="Update Net Book Value"
           ></AppRoute>
         </Switch>
       );

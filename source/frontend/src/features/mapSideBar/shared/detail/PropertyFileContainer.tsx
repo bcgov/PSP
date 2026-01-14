@@ -133,6 +133,7 @@ export const PropertyFileContainer: React.FunctionComponent<
   tabViews.push({
     content: (
       <BcAssessmentTabView
+        property={composedProperties?.apiWrapper?.response}
         summaryData={composedProperties.bcAssessmentWrapper?.response}
         requestedOn={composedProperties.bcAssessmentWrapper?.requestedOn}
         loading={composedProperties.bcAssessmentWrapper?.loading ?? false}
