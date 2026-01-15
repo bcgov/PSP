@@ -4,6 +4,8 @@ env:
   # service account: gitaction
   OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
   OPENSHIFT_TOOLS_NAMESPACE: "3cd915-tools"
+  OPENSHIFT_REGISTRY: ${{ secrets.OPENSHIFT_REGISTRY }}
+  OC_USERNAME_SA: ${{ secrets.OC_USERNAME_SA }}
   MS_TEAMS_WEBHOOK_BUILD_CHANNEL: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
   AUTH__KEYCLOAK__SECRET: ${{ secrets.KEYCLOAK_SECRET }}
   AUTH__KEYCLOAK__SERVICEACCOUNT__SECRET: ${{ secrets.KEYCLOAK_SERVICEACCOUNT_SECRET }}
@@ -82,9 +84,108 @@ jobs:
           ./openshift/4.0/player.sh build proxy -apply
           ./openshift/4.0/player.sh build scheduler -apply
 
+  scan-images:
+    name: Scan container images for vulnerabilities
+    needs: [build-frontend, build-api]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+      - name: Docker login to OpenShift registry
+        run: echo ${{ env.OPENSHIFT_TOKEN }} | docker login ${{ env.OPENSHIFT_REGISTRY }} -u unused --password-stdin
+      - name: Pre-deploy scan frontend (block on CRITICAL/HIGH)
+        env:
+          IMAGE: ${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-app:latest-dev
+        run: |
+          docker pull "$IMAGE";
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMAGE" | tee frontend_predeploy_scan.txt;
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/frontend_predeploy_scan.sarif
+      - name: Upload frontend SARIF to Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        with:
+          sarif_file: frontend_predeploy_scan.sarif
+          category: dev-frontend-predeploy
+          ref: refs/heads/dev
+          sha: ${{ github.sha }}
+      - name: Pre-deploy scan api (block on CRITICAL/HIGH)
+        env:
+          IMAGE: ${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-api:latest-dev
+        run: |
+          docker pull "$IMAGE";
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMAGE" | tee backend_predeploy_scan.txt;
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/backend_predeploy_scan.sarif
+      - name: Upload api SARIF to Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        with:
+          sarif_file: backend_predeploy_scan.sarif
+          category: dev-api-predeploy
+          ref: refs/heads/dev
+          sha: ${{ github.sha }}
+      - name: Pre-deploy scan proxy (block on CRITICAL/HIGH)
+        env:
+          IMAGE: ${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-proxy:latest-dev
+        run: |
+          docker pull "$IMAGE";
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMAGE" | tee proxy_predeploy_scan.txt;
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/proxy_predeploy_scan.sarif
+      - name: Upload proxy SARIF to Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        with:
+          sarif_file: proxy_predeploy_scan.sarif
+          category: dev-proxy-predeploy
+          ref: refs/heads/dev
+          sha: ${{ github.sha }}
+      - name: Pre-deploy scan scheduler (block on CRITICAL/HIGH)
+        env:
+          IMAGE: ${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-scheduler:latest-dev
+        run: |
+          docker pull "$IMAGE";
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMAGE" | tee scheduler_predeploy_scan.txt;
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/scheduler_predeploy_scan.sarif
+      - name: Upload scheduler SARIF to Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        with:
+          sarif_file: scheduler_predeploy_scan.sarif
+          category: dev-scheduler-predeploy
+          ref: refs/heads/dev
+          sha: ${{ github.sha }}
+      - name: Upload SARIF files as artifacts
+        if: always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: dev-predeploy-sarif-reports
+          path: |
+            frontend_predeploy_scan.sarif
+            backend_predeploy_scan.sarif
+            proxy_predeploy_scan.sarif
+            scheduler_predeploy_scan.sarif
+          retention-days: 14
+      - name: Upload scan reports
+        if: failure()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: dev-predeploy-scan-reports
+          path: |
+            frontend_predeploy_scan.txt
+            backend_predeploy_scan.txt
+            proxy_predeploy_scan.txt
+            scheduler_predeploy_scan.txt
+          retention-days: 14
+
   deploy:
     name: Deploy to OpenShift
-    needs: [build-frontend, build-api]
+    needs: scan-images
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code

@@ -32,13 +32,13 @@ import {
 } from '@/utils/test-utils';
 
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
-import { ApiGen_CodeTypes_ManagementFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementFileStatusTypes';
-import { toTypeCode } from '@/utils/formUtils';
-import ManagementView, { IManagementViewProps } from './ManagementView';
 import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
 import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
+import { ApiGen_CodeTypes_ManagementFileStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementFileStatusTypes';
 import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
+import { toTypeCode } from '@/utils/formUtils';
 import { AxiosResponse } from 'axios';
+import ManagementView, { IManagementViewProps } from './ManagementView';
 
 // mock auth library
 
@@ -78,7 +78,7 @@ vi.mock('@/hooks/repositories/useComposedProperties', () => {
 });
 
 vi.mock('@/hooks/pims-api/useApiProperties');
-vi.mocked(useApiProperties).mockReturnValue({
+vi.mocked(useApiProperties, { partial: true }).mockReturnValue({
   getPropertiesViewPagedApi: vi
     .fn()
     .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Property> }),

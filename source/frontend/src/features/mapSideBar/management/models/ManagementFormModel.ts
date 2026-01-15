@@ -1,10 +1,18 @@
+import { first } from 'lodash';
+
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
+import {
+  fromApiOrganization,
+  fromApiPerson,
+  IContactSearchResult,
+} from '@/interfaces/IContactSearchResult';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
+import { ApiGen_Concepts_NoticeOfClaim } from '@/models/api/generated/ApiGen_Concepts_NoticeOfClaim';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { applyDisplayOrder } from '@/utils';
-import { fromTypeCode, toTypeCodeNullable } from '@/utils/formUtils';
-import { exists } from '@/utils/utils';
+import { fromTypeCode, toNullableId, toTypeCodeNullable } from '@/utils/formUtils';
+import { exists, isValidId } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ManagementTeamSubFormModel, WithManagementTeam } from './ManagementTeamSubFormModel';
@@ -15,12 +23,16 @@ export class ManagementFormModel implements WithManagementTeam {
   filePurpose: string | null = '';
   legacyFileNum: string | null = '';
   fileStatusTypeCode: string | null = null;
+  regionCode: string | null = null;
   project: IAutocompletePrediction | null = null;
   productId: string | null = null;
   fundingTypeCode: string | null = null;
   purposeTypeCode: string | null = null;
+  responsiblePayer: IContactSearchResult | null = null;
+  responsiblePayerPrimaryContactId: number | null = null;
   fileProperties: PropertyForm[] = [];
   team: ManagementTeamSubFormModel[] = [];
+  noticeOfClaim: ApiGen_Concepts_NoticeOfClaim;
 
   constructor(
     readonly id: number | null = null,
@@ -36,6 +48,9 @@ export class ManagementFormModel implements WithManagementTeam {
   toApi(): ApiGen_Concepts_ManagementFile {
     const fileProperties = this.fileProperties.map(x => this.toPropertyApi(x));
     const sortedProperties = applyDisplayOrder(fileProperties);
+    const personId = this.responsiblePayer?.personId ?? null;
+    const organizationId = !personId ? this.responsiblePayer?.organizationId ?? null : null;
+
     return {
       id: this.id ?? 0,
       fileName: this.fileName ?? null,
@@ -43,6 +58,7 @@ export class ManagementFormModel implements WithManagementTeam {
       filePurpose: this.filePurpose ?? null,
       fileNumber: this.fileNumber ?? null,
       legacyFileNum: this.legacyFileNum ?? null,
+      regionCode: exists(this.regionCode) ? toTypeCodeNullable(Number(this.regionCode)) : null,
       fileStatusTypeCode: toTypeCodeNullable(this.fileStatusTypeCode),
       totalAllowableCompensation: null,
       project: null,
@@ -51,12 +67,21 @@ export class ManagementFormModel implements WithManagementTeam {
       productId: this.productId ? Number(this.productId) : null,
       fundingTypeCode: toTypeCodeNullable(this.fundingTypeCode),
       purposeTypeCode: toTypeCodeNullable(this.purposeTypeCode),
+      responsiblePayerPersonId: toNullableId(personId),
+      responsiblePayerPerson: null,
+      responsiblePayerOrganizationId: toNullableId(organizationId),
+      responsiblePayerOrganization: null,
+      responsiblePayerPrimaryContactId: isValidId(personId)
+        ? null
+        : toNullableId(this.responsiblePayerPrimaryContactId),
+      responsiblePayerPrimaryContact: null,
       managementTeam: this.team
         .filter(x => !!x.contact && !!x.teamProfileTypeCode)
         .map(x => x.toApi(this.id || 0))
         .filter(exists),
       fileProperties: sortedProperties ?? [],
       ...getEmptyBaseAudit(this.rowVersion),
+      noticeOfClaim: exists(this.noticeOfClaim) ? [this.noticeOfClaim] : [],
     };
   }
 
@@ -85,9 +110,21 @@ export class ManagementFormModel implements WithManagementTeam {
     managementForm.fundingTypeCode = fromTypeCode(model.fundingTypeCode) ?? '';
     managementForm.purposeTypeCode = fromTypeCode(model.purposeTypeCode) ?? '';
     managementForm.fileName = model.fileName ?? '';
+    managementForm.regionCode = fromTypeCode(model.regionCode)?.toString() ?? '';
     managementForm.team =
       model.managementTeam?.map(x => ManagementTeamSubFormModel.fromApi(x)) || [];
     managementForm.fileProperties = model.fileProperties?.map(x => PropertyForm.fromApi(x)) || [];
+    managementForm.noticeOfClaim = exists(model.noticeOfClaim) ? first(model.noticeOfClaim) : null;
+
+    const contact: IContactSearchResult | undefined = exists(model.responsiblePayerPerson)
+      ? fromApiPerson(model.responsiblePayerPerson)
+      : exists(model.responsiblePayerOrganization)
+      ? fromApiOrganization(model.responsiblePayerOrganization)
+      : undefined;
+
+    managementForm.responsiblePayerPrimaryContactId = model.responsiblePayerPrimaryContactId;
+
+    managementForm.responsiblePayer = contact;
 
     return managementForm;
   }

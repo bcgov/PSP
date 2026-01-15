@@ -2,6 +2,7 @@ import { Claims } from '@/constants/index';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import FileMenuView, { IFileMenuProps } from './FileMenuView';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 
@@ -109,5 +110,56 @@ describe('FileMenuView component', () => {
 
     expect(button).toBeNull();
     expect(icon).toBeVisible();
+  });
+
+  it('renders indices correctly based on location presence', () => {
+    const fileWithMixedLocations = {
+      ...mockAcquisitionFileResponse(),
+      fileProperties: [
+        {
+          id: 1,
+          location: { coordinate: { x: 1, y: 1 } },
+          property: { id: 1 },
+          isActive: true,
+          propertyName: 'Prop A',
+        },
+        {
+          id: 2,
+          location: null,
+          property: { id: 2, location: null },
+          isActive: true,
+          propertyName: 'Prop B',
+        },
+        {
+          id: 3,
+          location: { coordinate: { x: 2, y: 2 } },
+          property: { id: 3 },
+          isActive: true,
+          propertyName: 'Prop C',
+        },
+        {
+          id: 4,
+          location: null,
+          property: { id: 4, location: null },
+          isActive: true,
+          propertyName: 'Prop D',
+        },
+      ] as ApiGen_Concepts_FileProperty[],
+    };
+
+    setup({ props: { file: fileWithMixedLocations } });
+
+    const prop1Row = screen.getByTestId('menu-item-row-1');
+    expect(prop1Row).toHaveTextContent('1');
+
+    const prop2Row = screen.getByTestId('menu-item-row-2');
+    expect(prop2Row).not.toHaveTextContent('2');
+
+    const prop3Row = screen.getByTestId('menu-item-row-3');
+    expect(prop3Row).toHaveTextContent('2');
+
+    const prop4Row = screen.getByTestId('menu-item-row-4');
+    expect(prop4Row).not.toHaveTextContent('3');
+    expect(prop4Row).not.toHaveTextContent('4');
   });
 });

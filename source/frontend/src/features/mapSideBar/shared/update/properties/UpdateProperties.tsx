@@ -19,13 +19,17 @@ import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPro
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import { useEditPropertiesMode } from '@/hooks/useEditPropertiesMode';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, firstOrNull, isLatLngInFeatureSetBoundary, isNumber, isValidId } from '@/utils';
-import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
+import {
+  addPropertiesToCurrentFile,
+  removeShapeFromPropertyWithConfirmation,
+} from '@/utils/propertyUtils';
 
 import { FileForm, PropertyForm } from '../../models';
 import SidebarFooter from '../../SidebarFooter';
@@ -45,7 +49,36 @@ export interface IUpdatePropertiesProps {
   confirmBeforeAddMessage?: React.ReactNode;
   formikRef?: React.RefObject<FormikProps<any>>;
   disableProperties?: boolean;
+  canUploadShapefiles?: boolean;
 }
+
+const getPropertyIndex = (property: PropertyForm, properties: PropertyForm[]): number | null => {
+  if (
+    !(
+      exists(property.fileLocation) ||
+      exists(property.fileBoundary) ||
+      exists(property.latitude) ||
+      exists(property.longitude)
+    )
+  ) {
+    return null;
+  }
+  let index = 0;
+  for (const p of properties) {
+    if (
+      exists(p.fileLocation) ||
+      exists(p.fileBoundary) ||
+      exists(p.latitude) ||
+      exists(p.longitude)
+    ) {
+      if (p === property) {
+        return index;
+      }
+      index++;
+    }
+  }
+  return null;
+};
 
 export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> = props => {
   const localRef = useRef<FormikProps<FileForm>>(null);
@@ -162,6 +195,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
       location:
         mapLocationFeatureDataset?.location ?? mapLocationFeatureDataset?.fileLocation ?? null,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
       pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
       regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
@@ -269,22 +303,49 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                       </Col>
                     </Row>
                     <SelectedPropertyHeaderRow />
-                    {formikProps.values.properties.map((property, index) => (
-                      <SelectedPropertyRow
-                        key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
-                        onRemove={async () => {
-                          if (!property.apiId || (await props.canRemove(property.apiId))) {
-                            remove(index);
-                          } else {
-                            setShowAssociatedEntityWarning(true);
-                          }
-                        }}
-                        nameSpace={`properties.${index}`}
-                        index={index}
-                        property={property.toFeatureDataset()}
-                        showDisable={props.disableProperties}
-                      />
-                    ))}
+                    {formikProps.values.properties.map((property, index) => {
+                      const propertyIndex = getPropertyIndex(
+                        property,
+                        formikProps.values.properties,
+                      );
+                      return (
+                        <SelectedPropertyRow
+                          key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
+                          onRemove={async () => {
+                            if (!property.apiId || (await props.canRemove(property.apiId))) {
+                              remove(index);
+                            } else {
+                              setShowAssociatedEntityWarning(true);
+                            }
+                          }}
+                          nameSpace={`properties.${index}`}
+                          index={propertyIndex}
+                          property={property}
+                          showDisable={props.disableProperties}
+                          canUploadShapefile={props.canUploadShapefiles}
+                          onUploadShapefile={(result: UploadResponseModel | null) => {
+                            // Update the property boundary based on the uploaded shapefile
+                            if (exists(result)) {
+                              if (result.isSuccess && exists(result.boundary)) {
+                                const updatedFormProperty = new PropertyForm(property);
+                                updatedFormProperty.fileBoundary = result.boundary;
+                                replace(index, updatedFormProperty);
+                              }
+                            }
+                          }}
+                          onRemoveShapefile={() => {
+                            removeShapeFromPropertyWithConfirmation(
+                              property,
+                              setModalContent,
+                              setDisplayModal,
+                              updatedProperty => {
+                                replace(index, updatedProperty);
+                              },
+                            );
+                          }}
+                        />
+                      );
+                    })}
                     {formikProps.values.properties.length === 0 && (
                       <span>No Properties selected</span>
                     )}

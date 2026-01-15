@@ -120,9 +120,7 @@ export const SideBarContextProvider = (props: ISideBarContextProviderProps) => {
 
   const resetFilePropertyLocations = useCallback(() => {
     if (exists(fileProperties)) {
-      const propertyLocations = fileProperties
-        .map(x => filePropertyToLocationBoundaryDataset(x))
-        .filter(exists);
+      const propertyLocations = fileProperties.map(x => filePropertyToLocationBoundaryDataset(x));
 
       exists(setFilePropertyLocations) && setFilePropertyLocations(propertyLocations);
     } else {

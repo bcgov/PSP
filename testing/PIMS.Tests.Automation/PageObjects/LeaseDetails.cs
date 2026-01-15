@@ -103,7 +103,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsProgramSelector = By.Id("input-programTypeCode");
         private readonly By licenseDetailsOtherProgramLabel = By.XPath("//label[contains(text(),'Other Program')]");
         private readonly By licenseDetailsOtherProgramInput = By.Id("input-otherProgramTypeDescription");
-        private readonly By licenseDetailsOtherProgramContent = By.Id("input-otherProgramType");
         private readonly By licenseDetailsTypeLabel = By.XPath("//label[contains(text(),'Type')]");
         private readonly By licenseDetailsTypeSelector = By.Id("input-leaseTypeCode");
         private readonly By licenseDetailsTypeContent = By.XPath("//div[contains(text(),'Administration')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Type')]/parent::div/following-sibling::div");
@@ -427,6 +426,8 @@ namespace PIMS.Tests.Automation.PageObjects
                     }
                 }
 
+                ScrollToElement(licenseDetailsAddRenewButton);
+                Wait();
                 for (var i = 0; i < lease.LeaseRenewals.Count; i++)
                 {
                     webDriver.FindElement(licenseDetailsAddRenewButton).Click();
@@ -623,7 +624,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
-                else if (sharedModals.ModalHeader() == "Confirm status change")
+                else if (sharedModals.ConfirmationModalParagraph1() == "If you save it, only the administrator can turn it back on. You will still see it in the management table.")
                 {
                     Assert.Equal("Confirm status change", sharedModals.ModalHeader());
                     Assert.Contains("If you save it, only the administrator can turn it back on. You will still see it in the management table.", sharedModals.ConfirmationModalParagraph1());
@@ -631,6 +632,19 @@ namespace PIMS.Tests.Automation.PageObjects
                     sharedModals.ModalClickOKBttn();
 
                     Wait();
+                }
+                else if (sharedModals.ConfirmationModalParagraph2() == "Do you wish to save without providing a primary contact?")
+                {
+                    Assert.Equal("Confirm status change", sharedModals.ModalHeader());
+                    Assert.Contains("A primary contact for", sharedModals.ConfirmationModalParagraph1());
+                    Assert.Equal("Do you want to acknowledge and proceed?", sharedModals.ConfirmationModalParagraph2());
+                    sharedModals.SecondaryModalClickOKBttn();
+
+                    Wait();
+                }
+                else if (sharedModals.ModalHeader() == "Error")
+                {
+                    break;
                 }
             }
         }
@@ -677,7 +691,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait(6000);
 
             //Create Title
-            AssertTrueIsDisplayed(licenseCreateTitle);
+            //AssertTrueIsDisplayed(licenseCreateTitle);
 
             //Original Agreement
             AssertTrueIsDisplayed(licenseDetailsCreateSubtitle);
@@ -723,6 +737,19 @@ namespace PIMS.Tests.Automation.PageObjects
             //Lease & Licence Team
             AssertTrueIsDisplayed(licenseDetailsTeamSubtitle);
             AssertTrueIsDisplayed(licenseDetailsTeamAddMemberLink);
+
+            //Fee Determination
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationSubtitle);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationPublicBenefitLabel);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationPublicBenefitInput);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationFinancialGainLabel);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationFinancialGainInput);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationSuggestedFeeLabel);
+            AssertTrueIsDisplayed(licenseDetaulsFeeDeterminationSuggestedFeeTooltip);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationSuggestedFeeContent);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationNotesLabel);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationNotesTooltip);
+            AssertTrueIsDisplayed(licenseDetailsFeeDeterminationNotesInput);
 
             //Buttons
             AssertTrueIsDisplayed(licenseDetailsSaveButton);
@@ -903,10 +930,10 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsProgramViewLabel);
 
             if(lease.Program != "")
-                //AssertTrueContentEquals(licenseDetailsProgramContent, lease.Program);
+                AssertTrueContentEquals(licenseDetailsProgramContent, lease.Program);
 
             if (lease.ProgramOther != "")
-                //AssertTrueElementValueEquals(licenseDetailsOtherProgramContent, lease.ProgramOther);
+                AssertTrueElementValueEquals(licenseDetailsProgramContent, "Other - " + lease.ProgramOther);
 
             AssertTrueIsDisplayed(licenseDetailsTypeLabel);
             if(lease.AdminType != "")

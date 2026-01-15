@@ -53,6 +53,7 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
         municipalityFeature: firstOrNull(mapMachine.mapLocationFeatureDataset.municipalityFeatures),
         selectingComponentId: mapMachine.mapLocationFeatureDataset.selectingComponentId,
         fileLocation: mapMachine.mapLocationFeatureDataset.fileLocation,
+        fileBoundary: null,
       };
       const parcelFeaturesNotInPims =
         mapMachine.mapLocationFeatureDataset.parcelFeatures?.filter(pf => {
@@ -84,7 +85,6 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
     if (
       mapMachine.isRepositioning &&
       mapMachine.repositioningFeatureDataset &&
-      mapMachine.mapLocationFeatureDataset &&
       previous !== mapMachine.mapLocationFeatureDataset &&
       previous !== undefined &&
       (!selectedComponentId ||

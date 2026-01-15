@@ -13,6 +13,11 @@ import {
 import { useTenant } from '@/tenants';
 import { isValidString } from '@/utils/utils';
 
+const hasFeatures = <TProperties>(
+  collection?: FeatureCollection<Geometry, TProperties> | null,
+): collection is FeatureCollection<Geometry, TProperties> =>
+  !!collection && Array.isArray(collection.features) && collection.features.length > 0;
+
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints on the set of Crown Land related layers.
  * @returns Object containing functions to make requests to the WFS layer.
@@ -48,14 +53,11 @@ export const useCrownLandLayer = () => {
       );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      const forceCasted = featureCollection as FeatureCollection<
-        Geometry,
-        TANTALIS_CrownLandLeases_Feature_Properties
-      >;
+      const forceCasted = featureCollection as
+        | FeatureCollection<Geometry, TANTALIS_CrownLandLeases_Feature_Properties>
+        | undefined;
 
-      return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features
-        : undefined;
+      return hasFeatures(forceCasted) ? forceCasted.features : undefined;
     },
     [findMultipleWhereContainsCrownLandLeasesExecute],
   );
@@ -80,14 +82,11 @@ export const useCrownLandLayer = () => {
       );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      const forceCasted = featureCollection as FeatureCollection<
-        Geometry,
-        TANTALIS_CrownLandLicenses_Feature_Properties
-      >;
+      const forceCasted = featureCollection as
+        | FeatureCollection<Geometry, TANTALIS_CrownLandLicenses_Feature_Properties>
+        | undefined;
 
-      return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features
-        : undefined;
+      return hasFeatures(forceCasted) ? forceCasted.features : undefined;
     },
     [findMultipleWhereContainsCrownLandLicensesExecute],
   );
@@ -112,14 +111,11 @@ export const useCrownLandLayer = () => {
       );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      const forceCasted = featureCollection as FeatureCollection<
-        Geometry,
-        TANTALIS_CrownLandTenures_Feature_Properties
-      >;
+      const forceCasted = featureCollection as
+        | FeatureCollection<Geometry, TANTALIS_CrownLandTenures_Feature_Properties>
+        | undefined;
 
-      return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features
-        : undefined;
+      return hasFeatures(forceCasted) ? forceCasted.features : undefined;
     },
     [findMultipleWhereContainsCrownLandTenuresExecute],
   );
@@ -144,14 +140,11 @@ export const useCrownLandLayer = () => {
       );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      const forceCasted = featureCollection as FeatureCollection<
-        Geometry,
-        TANTALIS_CrownLandInventory_Feature_Properties
-      >;
+      const forceCasted = featureCollection as
+        | FeatureCollection<Geometry, TANTALIS_CrownLandInventory_Feature_Properties>
+        | undefined;
 
-      return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features
-        : undefined;
+      return hasFeatures(forceCasted) ? forceCasted.features : undefined;
     },
     [findMultipleWhereContainsCrownLandInventoryExecute],
   );
@@ -176,14 +169,11 @@ export const useCrownLandLayer = () => {
       );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      const forceCasted = featureCollection as FeatureCollection<
-        Geometry,
-        TANTALIS_CrownLandInclusions_Feature_Properties
-      >;
+      const forceCasted = featureCollection as
+        | FeatureCollection<Geometry, TANTALIS_CrownLandInclusions_Feature_Properties>
+        | undefined;
 
-      return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features
-        : undefined;
+      return hasFeatures(forceCasted) ? forceCasted.features : undefined;
     },
     [findMultipleWhereContainsCrownLandInclusionsExecute],
   );
@@ -201,30 +191,39 @@ export const useCrownLandLayer = () => {
       township?: number | string,
       range?: number | string,
       district?: string,
+      districtLot?: string,
     ): Promise<FeatureCollection<Geometry, TANTALIS_CrownSurveyParcels_Feature_Properties>> => {
       let sectionQuery = '';
       let townshipQuery = '';
       let rangeQuery = '';
       let districtQuery = '';
-      if (isValidString(section?.toString())) {
-        if (isValidString(range?.toString())) {
-          sectionQuery = `(PARCEL_LEGAL_DESCRIPTION ilike '%SECTION ${section},%' OR (PARCEL_LEGAL_DESCRIPTION ilike '%SECTIONS%' AND PARCEL_LEGAL_DESCRIPTION ilike '%${section},%'))`;
-        } else {
-          sectionQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%SECTION ${section},%'`;
-        }
-      }
-      if (isValidString(township?.toString())) {
-        townshipQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%TOWNSHIP ${township},%'`;
-      }
-      if (isValidString(range?.toString())) {
-        rangeQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%RANGE ${range},%'`;
-      }
-      if (isValidString(district)) {
+      let districtLotQuery = '';
+
+      if (isValidString(district) && district !== 'ALL') {
         const districtSearchString = district.replace('DISTRICT', 'DIST');
+
         districtQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%${districtSearchString}%'`;
       }
 
-      const query = [sectionQuery, townshipQuery, rangeQuery, districtQuery]
+      if (isValidString(districtLot)) {
+        districtLotQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%DISTRICT LOT ${districtLot},%' OR (PARCEL_LEGAL_DESCRIPTION ilike '%SECTIONS%' AND PARCEL_LEGAL_DESCRIPTION ilike '%${districtLot},%')`;
+      } else {
+        if (isValidString(section?.toString())) {
+          if (isValidString(range?.toString())) {
+            sectionQuery = `(PARCEL_LEGAL_DESCRIPTION ilike '%SECTION ${section},%' OR (PARCEL_LEGAL_DESCRIPTION ilike '%SECTIONS%' AND PARCEL_LEGAL_DESCRIPTION ilike '%${section},%'))`;
+          } else {
+            sectionQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%SECTION ${section},%'`;
+          }
+        }
+        if (isValidString(township?.toString())) {
+          townshipQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%TOWNSHIP ${township},%'`;
+        }
+        if (isValidString(range?.toString())) {
+          rangeQuery = `PARCEL_LEGAL_DESCRIPTION ilike '%RANGE ${range},%'`;
+        }
+      }
+
+      const query = [districtQuery, sectionQuery, townshipQuery, rangeQuery, districtLotQuery]
         .filter(x => isValidString(x))
         .join(' AND ');
 

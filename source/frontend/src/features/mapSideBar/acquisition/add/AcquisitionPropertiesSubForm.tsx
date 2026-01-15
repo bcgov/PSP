@@ -9,10 +9,16 @@ import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFe
 import { Section } from '@/components/common/Section/Section';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
+import { useModalContext } from '@/hooks/useModalContext';
 import { exists, featuresetToLocationBoundaryDataset, firstOrNull } from '@/utils';
-import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
+import {
+  addPropertiesToCurrentFile,
+  addShapeToProperty,
+  removeShapeFromPropertyWithConfirmation,
+} from '@/utils/propertyUtils';
 
 import { PropertyForm } from '../../shared/models';
 import AddPropertiesGuide from '../../shared/update/properties/AddPropertiesGuide';
@@ -28,6 +34,7 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
 }) => {
   const localRef = useRef<FormikProps<AcquisitionForm>>();
 
+  const { setModalContent, setDisplayModal } = useModalContext();
   const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
     useMapStateMachine();
 
@@ -42,6 +49,7 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
       location: mapLocationFeatureDataset?.location,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
       pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
       regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
@@ -96,7 +104,7 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
       </div>
 
       <FieldArray name="properties">
-        {({ remove }) => (
+        {({ remove, replace }) => (
           <Section header="Selected Properties">
             <AddPropertiesGuide />
             {exists(selectedFeatureDataset?.parcelFeature) ||
@@ -114,7 +122,22 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
                 onRemove={() => remove(index)}
                 nameSpace={`properties.${index}`}
                 index={index}
-                property={property.toFeatureDataset()}
+                property={property}
+                canUploadShapefile={true}
+                onUploadShapefile={(result: UploadResponseModel | null) => {
+                  const updatedFormProperty = addShapeToProperty(property, result);
+                  replace(index, updatedFormProperty);
+                }}
+                onRemoveShapefile={() => {
+                  removeShapeFromPropertyWithConfirmation(
+                    property,
+                    setModalContent,
+                    setDisplayModal,
+                    updatedProperty => {
+                      replace(index, updatedProperty);
+                    },
+                  );
+                }}
               />
             ))}
             {formikProps.values.properties.length === 0 && <span>No Properties selected</span>}

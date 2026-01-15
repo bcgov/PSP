@@ -4,6 +4,7 @@ export class ManagementActivityFilterModel {
   searchBy = 'address';
   pin = '';
   pid = '';
+  regionCode = '';
   address = '';
   fileNameOrNumberOrReference = '';
   activityStatusCode = '';
@@ -17,6 +18,7 @@ export class ManagementActivityFilterModel {
       searchBy: this.searchBy,
       pin: this.pin,
       pid: this.pid,
+      regionCode: this.regionCode,
       address: this.address,
       fileNameOrNumberOrReference: this.fileNameOrNumberOrReference,
       activityStatusCode: this.activityStatusCode,
@@ -32,6 +34,7 @@ export class ManagementActivityFilterModel {
     newModel.searchBy = base.searchBy ?? 'address';
     newModel.pin = base.pin ?? '';
     newModel.pid = base.pid ?? '';
+    newModel.regionCode = base.regionCode ?? '';
     newModel.address = base.address ?? '';
     newModel.fileNameOrNumberOrReference = base.fileNameOrNumberOrReference ?? '';
     newModel.activityStatusCode = base.activityStatusCode ?? '';

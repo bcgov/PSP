@@ -9,12 +9,14 @@ import TooltipIcon from './TooltipIcon';
 export interface IUserNameTooltipProps {
   userGuid?: string | null;
   userName?: string | null;
+  tooltipId?: string | null;
 }
 
 /** Generic user info tooltip component that displays user name on hover */
 export const UserNameTooltip: FunctionComponent<IUserNameTooltipProps> = ({
   userGuid,
   userName,
+  tooltipId,
 }) => {
   const isMounted = useIsMounted();
   const { getUserInfo } = useApiUsers();
@@ -40,7 +42,7 @@ export const UserNameTooltip: FunctionComponent<IUserNameTooltipProps> = ({
 
   return (
     <TooltipIcon
-      toolTipId={'userNameTooltip'}
+      toolTipId={tooltipId ?? 'userNameTooltip'}
       innerClassName={'userNameTooltip'}
       toolTip={userNameInfo}
       customToolTipIcon={<strong>{userName ?? 'USER'}</strong>}

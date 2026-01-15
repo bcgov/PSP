@@ -51,6 +51,9 @@ const emptyProperty: ApiGen_Concepts_Property = {
   surplusDeclarationComment: null,
   surplusDeclarationDate: EpochIsoDateTime,
   historicalFileNumbers: null,
+  tenureCleanups: null,
+  netBookAmount: null,
+  netBookNote: null,
   rowVersion: null,
 };
 
@@ -207,6 +210,7 @@ export const getMockApiPropertyFile = (): ApiGen_Concepts_FileProperty => ({
   property: getMockApiProperty(),
   displayOrder: null,
   location: null,
+  boundary: null,
   rowVersion: null,
 });
 
@@ -254,6 +258,7 @@ export const getMockApiPropertyFiles = (): ApiGen_Concepts_FileProperty[] => [
     },
     displayOrder: null,
     location: null,
+    boundary: null,
     rowVersion: null,
   },
   {
@@ -299,6 +304,7 @@ export const getMockApiPropertyFiles = (): ApiGen_Concepts_FileProperty[] => [
     displayOrder: null,
     propertyName: null,
     location: null,
+    boundary: null,
     rowVersion: null,
   },
 ];
@@ -315,6 +321,7 @@ export const getEmptyPropertyLease = (): ApiGen_Concepts_PropertyLease => {
     property: null,
     propertyId: 0,
     location: null,
+    boundary: null,
     isActive: null,
     rowVersion: null,
   };

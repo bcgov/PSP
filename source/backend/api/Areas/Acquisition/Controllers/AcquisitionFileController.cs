@@ -44,6 +44,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         /// Creates a new instance of a AcquisitionFileController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="acquisitionService"></param>
+        /// <param name="acquisitionFileRepository"></param>
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
         ///

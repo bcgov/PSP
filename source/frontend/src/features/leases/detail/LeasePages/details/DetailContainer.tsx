@@ -15,6 +15,7 @@ const DetailContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
   isEditing,
   onEdit,
   formikRef,
+  onSuccess,
 }) => {
   const { lease } = useContext(LeaseStateContext);
 
@@ -24,6 +25,7 @@ const DetailContainer: React.FunctionComponent<React.PropsWithChildren<LeasePage
         View={UpdateLeaseForm}
         onEdit={onEdit}
         formikRef={formikRef as React.RefObject<FormikProps<LeaseFormModel>>}
+        onChildSuccess={onSuccess}
       />
     </ProtectedComponent>
   ) : (

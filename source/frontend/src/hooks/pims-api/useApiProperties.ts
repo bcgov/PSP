@@ -48,6 +48,8 @@ export const useApiProperties = () => {
         api.get<ApiGen_Concepts_Property>(`/properties/pin/${pin}`),
       putPropertyConceptApi: (property: ApiGen_Concepts_Property) =>
         api.put<ApiGen_Concepts_Property>(`/properties/${property.id}`, property),
+      putPropertyNetBookApi: (property: ApiGen_Concepts_Property) =>
+        api.put<ApiGen_Concepts_Property>(`/properties/${property.id}/netbook`, property),
     }),
     [api],
   );

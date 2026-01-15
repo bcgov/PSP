@@ -67,6 +67,7 @@ describe('LeaseHeaderAddresses component', () => {
           location: null,
           isActive: null,
           rowVersion: null,
+          boundary: null,
         },
         {
           fileId: 1,
@@ -81,6 +82,7 @@ describe('LeaseHeaderAddresses component', () => {
           location: null,
           isActive: null,
           rowVersion: null,
+          boundary: null,
         },
         {
           fileId: 1,
@@ -95,6 +97,7 @@ describe('LeaseHeaderAddresses component', () => {
           location: null,
           isActive: null,
           rowVersion: null,
+          boundary: null,
         },
         {
           fileId: 1,
@@ -109,6 +112,7 @@ describe('LeaseHeaderAddresses component', () => {
           location: null,
           isActive: null,
           rowVersion: null,
+          boundary: null,
         },
         {
           fileId: 1,
@@ -123,6 +127,7 @@ describe('LeaseHeaderAddresses component', () => {
           location: null,
           isActive: null,
           rowVersion: null,
+          boundary: null,
         },
       ],
     });

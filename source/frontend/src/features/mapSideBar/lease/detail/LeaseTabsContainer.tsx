@@ -124,9 +124,6 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     content: (
       <LeaseTab
         leasePage={leasePages.get(LeasePageNames.IMPROVEMENTS)}
-        onEdit={() =>
-          setContainerState({ activeEditForm: LeasePageNames.IMPROVEMENTS, isEditing: true })
-        }
         isEditing={isEditing}
         formikRef={formikRef}
         onSuccess={onSuccess}

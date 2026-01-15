@@ -15,6 +15,7 @@ import { ApiGen_Concepts_HistoricalFileNumber } from './ApiGen_Concepts_Historic
 import { ApiGen_Concepts_PropertyAnomaly } from './ApiGen_Concepts_PropertyAnomaly';
 import { ApiGen_Concepts_PropertyRoad } from './ApiGen_Concepts_PropertyRoad';
 import { ApiGen_Concepts_PropertyTenure } from './ApiGen_Concepts_PropertyTenure';
+import { ApiGen_Concepts_PropertyTenureCleanup } from './ApiGen_Concepts_PropertyTenureCleanup';
 
 // LINK: @backend/apimodels/Models/Concepts/Property/PropertyModel.cs
 export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
@@ -53,7 +54,10 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   boundary: Geometry | null;
   generalLocation: string | null;
   historicalFileNumbers: ApiGen_Concepts_HistoricalFileNumber[] | null;
+  tenureCleanups: ApiGen_Concepts_PropertyTenureCleanup[] | null;
   surplusDeclarationType: ApiGen_Base_CodeType<string> | null;
   surplusDeclarationComment: string | null;
-  surplusDeclarationDate: UtcIsoDate;
+  surplusDeclarationDate: UtcIsoDate | null;
+  netBookAmount: number | null;
+  netBookNote: string | null;
 }

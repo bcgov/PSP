@@ -17,6 +17,7 @@ import { RenderOptions, act, render } from '@/utils/test-utils';
 
 import { PropertyDetailsTabView } from './PropertyDetailsTabView';
 import { toFormValues } from './PropertyDetailsTabView.helpers';
+import { ApiGen_CodeTypes_SurplusDeclarationTypes } from '@/models/api/generated/ApiGen_CodeTypes_SurplusDeclarationTypes';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -229,6 +230,27 @@ describe('PropertyDetailsTabView component', () => {
     const { queryByTitle, getByTestId } = await setup({ property, claims: [Claims.PROPERTY_EDIT] });
     expect(queryByTitle(/Edit property details/)).toBeNull();
     expect(getByTestId('tooltip-icon-property-retired-tooltip')).toBeInTheDocument();
+  });
+
+  it('shows Surplus Declaration information', async () => {
+    const property: ApiGen_Concepts_Property = {
+      ...mockPropertyInfo,
+      surplusDeclarationType: {
+        id: ApiGen_CodeTypes_SurplusDeclarationTypes.YES,
+        description: 'Yes',
+        isDisabled: false,
+        displayOrder: 0,
+      },
+      surplusDeclarationDate: '2025-01-01T18:00',
+      surplusDeclarationComment: 'SURPLUS DECLARATION COMMMENT GOES HERE',
+    };
+
+    const { getByTestId } = await setup({ property });
+    expect(getByTestId('surplusDeclarationType')).toHaveTextContent('Yes');
+    expect(getByTestId('surplusDeclarationDate')).toHaveTextContent('Jan 1, 2025');
+    expect(getByTestId('surplusDeclarationComment')).toHaveTextContent(
+      'SURPLUS DECLARATION COMMMENT GOES HERE',
+    );
   });
 });
 

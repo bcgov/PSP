@@ -155,7 +155,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait(2000);
             webDriver.FindElement(searchDispositionOrderFileNumberBttn).Click();
 
-            WaitUntilClickable(searchDispositionFile1stResultLink);
+            Wait();
             webDriver.FindElement(searchDispositionFile1stResultLink).Click();
 
             Wait();

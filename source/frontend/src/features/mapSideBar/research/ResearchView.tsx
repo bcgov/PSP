@@ -98,6 +98,7 @@ const ResearchView: React.FunctionComponent<IResearchViewProps> = ({
               </>
             }
             canRemove={canRemove}
+            canUploadShapefiles={true}
             formikRef={formikRef}
           />
         )}

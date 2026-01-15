@@ -5,8 +5,14 @@ import { createRef } from 'react';
 
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { SideBarContextProvider } from '@/features/mapSideBar/context/sidebarContext';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
+import {
+  IShapeUploadModalProps,
+  ShapeUploadModal,
+} from '@/features/properties/shapeUpload/ShapeUploadModal';
 import { getMockApiAddress } from '@/mocks/address.mock';
 import { getMockFullyAttributedParcel } from '@/mocks/faParcelLayerResponse.mock';
+import { getMockPolygon } from '@/mocks/geometries.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockApiProperty, getMockApiPropertyFile } from '@/mocks/properties.mock';
@@ -30,6 +36,29 @@ import UpdateProperties, { IUpdatePropertiesProps } from './UpdateProperties';
 
 const mockAxios = new MockAdapter(axios);
 
+// Mock ShapeUploadModal in order to control its behavior in tests
+vi.mock('@/features/properties/shapeUpload/ShapeUploadModal');
+vi.mocked(ShapeUploadModal).mockImplementation((props: IShapeUploadModalProps) => {
+  return props.display ? (
+    <div data-testid="shape-upload-modal">
+      <span data-testid="prop-id">{props.propertyIdentifier}</span>
+      <button
+        data-testid="modal-close"
+        onClick={() => {
+          const fakeResult = new UploadResponseModel('fakefile.shp');
+          fakeResult.isSuccess = true;
+          fakeResult.boundary = getMockPolygon();
+          if (typeof props.onClose === 'function') {
+            props.onClose(fakeResult);
+          }
+        }}
+      >
+        close
+      </button>
+    </div>
+  ) : null;
+});
+
 const setIsShowingPropertySelector = vi.fn();
 const onSuccess = vi.fn();
 const updateFileProperties = vi.fn();
@@ -50,6 +79,8 @@ describe('UpdateProperties component', () => {
           updateFileProperties={updateFileProperties}
           confirmBeforeAdd={props.confirmBeforeAdd ?? vi.fn()}
           canRemove={props.canRemove ?? vi.fn()}
+          canUploadShapefiles={props.canUploadShapefiles ?? false}
+          disableProperties={props.disableProperties ?? false}
           formikRef={formikRef}
         />
       </SideBarContextProvider>,
@@ -138,6 +169,7 @@ describe('UpdateProperties component', () => {
             fileId: 1,
             propertyName: null,
             location: null,
+            boundary: null,
             file: null,
           },
         ],
@@ -198,6 +230,7 @@ describe('UpdateProperties component', () => {
             {
               location: { lng: -120.69195885, lat: 50.25163372 },
               fileLocation: null,
+              fileBoundary: null,
               pimsFeature: null,
               parcelFeature: getMockFullyAttributedParcel('111-111-111'),
               regionFeature: null,
@@ -208,6 +241,7 @@ describe('UpdateProperties component', () => {
             {
               location: { lng: -120.69195885, lat: 50.25163372 },
               fileLocation: null,
+              fileBoundary: null,
               pimsFeature: null,
               parcelFeature: getMockFullyAttributedParcel('222-222-222'),
               regionFeature: null,
@@ -218,6 +252,7 @@ describe('UpdateProperties component', () => {
             {
               location: { lng: -120.69195885, lat: 50.25163372 },
               fileLocation: null,
+              fileBoundary: null,
               pimsFeature: null,
               parcelFeature: getMockFullyAttributedParcel('333-333-333'),
               regionFeature: null,
@@ -289,6 +324,7 @@ describe('UpdateProperties component', () => {
               districtFeature: null,
               selectingComponentId: null,
               municipalityFeature: null,
+              fileBoundary: null,
             },
           ],
         },
@@ -479,5 +515,76 @@ describe('UpdateProperties component', () => {
         }),
       ]),
     );
+  });
+
+  it('updates property boundary when shapefile is uploaded', async () => {
+    const { formikRef } = await setup({
+      canUploadShapefiles: true,
+      file: {
+        ...getMockResearchFile(),
+        fileProperties: [
+          {
+            ...getMockApiPropertyFile(),
+            id: 1,
+            propertyId: 1,
+            property: { ...getMockApiProperty(), pid: 123456789, id: 1 },
+            boundary: null, // no custom boundary initially
+          },
+        ],
+      },
+    });
+
+    // Initial boundary is undefined
+    expect(formikRef.current?.values.properties[0].fileBoundary).toBeUndefined();
+
+    const uploadButton = screen.getByTestId('upload-shapefile-0');
+    await act(async () => userEvent.click(uploadButton));
+
+    // Modal is displayed
+    expect(screen.getByTestId('shape-upload-modal')).toBeVisible();
+    expect(screen.getByTestId('prop-id').textContent).toBe('PID: 123-456-789');
+
+    const modalCloseButton = screen.getByTestId('modal-close');
+    await act(async () => userEvent.click(modalCloseButton));
+
+    // Modal is closed
+    expect(screen.queryByTestId('shape-upload-modal')).toBeNull();
+
+    // Verify that the property boundary was updated in the formik values
+    expect(formikRef.current?.values.properties[0].fileBoundary).toStrictEqual(getMockPolygon());
+    expect(updateFileProperties).not.toHaveBeenCalled(); // not called yet
+  });
+
+  it('removes custom property boundary when Remove Shape is clicked', async () => {
+    const { formikRef } = await setup({
+      canUploadShapefiles: true,
+      file: {
+        ...getMockResearchFile(),
+        fileProperties: [
+          {
+            ...getMockApiPropertyFile(),
+            id: 1,
+            propertyId: 1,
+            property: { ...getMockApiProperty(), pid: 123456789, id: 1 },
+            boundary: getMockPolygon(), // has custom boundary initially
+          },
+        ],
+      },
+    });
+
+    // Initial boundary is defined
+    expect(formikRef.current?.values.properties[0].fileBoundary).toStrictEqual(getMockPolygon());
+
+    const removeShapeButton = screen.getByTestId('remove-shape-0');
+    await act(async () => userEvent.click(removeShapeButton));
+
+    // confirm removal in modal
+    expect(screen.getByText(/Are you sure you want to remove this uploaded shape/i)).toBeVisible();
+    const confirmButton = await screen.findByTitle('ok-modal');
+    await act(async () => userEvent.click(confirmButton));
+
+    // Verify that the property boundary was removed in the formik values
+    expect(formikRef.current?.values.properties[0].fileBoundary).toBeUndefined();
+    expect(updateFileProperties).not.toHaveBeenCalled(); // not called yet
   });
 });

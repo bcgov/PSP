@@ -78,6 +78,8 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   isPublicBenefit: null,
   isFinancialGain: null,
   feeDeterminationNote: null,
+  fileAppraisalStatusTypeCode: null,
+  fileLegalSurveyStatusTypeCode: null,
   leasePurposes: [],
   leaseTeam: [],
 });
@@ -154,6 +156,9 @@ export const getEmptyProperty = (): ApiGen_Concepts_Property => ({
   surplusDeclarationComment: null,
   surplusDeclarationDate: EpochIsoDateTime,
   historicalFileNumbers: null,
+  tenureCleanups: null,
+  netBookAmount: null,
+  netBookNote: null,
   ...getEmptyBaseAudit(),
 });
 
@@ -231,5 +236,6 @@ export const getEmptyAcquisitionFile = (): ApiGen_Concepts_AcquisitionFile => {
     fileNumberSuffix: 0,
     fileStatusTypeCode: null,
     physicalFileDetails: null,
+    noticeOfClaim: null,
   };
 };

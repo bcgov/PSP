@@ -16,8 +16,6 @@ namespace Pims.Api.Services
 
         bool CanEditStakeholders(LeaseStatusTypes? leaseStatus);
 
-        bool CanEditImprovements(LeaseStatusTypes? leaseStatus);
-
         bool CanEditInsurance(LeaseStatusTypes? leaseStatus);
 
         bool CanEditDeposits(LeaseStatusTypes? leaseStatus);

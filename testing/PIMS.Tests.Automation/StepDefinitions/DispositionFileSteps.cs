@@ -363,8 +363,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I create a Disposition File from a pin on map from row number (.*)")]
         public void CreateAcquisitionFileFromPin(int rowNumber)
         {
-            /* TEST COVERAGE:   */
-
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -373,17 +371,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchProperty(PID: dispositionFile.DispositionSearchProperties.PID);
 
             //Select Found Pin on map
-            searchProperties.SelectFound1stPropAddToFile();
-
-            //Close Property Information Modal
-            propertyInformation.HideLeftSideForms();
-
-            //Open elipsis option
-            propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Disposition File");
-
-            //Open Left Side Forms
-            propertyInformation.ShowLeftSideForms();
+            searchProperties.SelectFirstPMBCResult("Create Disposition");
 
             //Validate Acquisition File Details Create Form
             dispositionFileDetails.VerifyDispositionFileInitCreate();
@@ -398,14 +386,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchProperty(PID: dispositionFile.DispositionSearchProperties.PID);
 
             //Select Found Pin on map
-            searchProperties.SelectFound1stPropAddToFile();
-
-            //Open elipsis option
-            propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Disposition File");
-
-            //Open Left Side Forms
-            //propertyInformation.ShowLeftSideForms();
+            searchProperties.SelectFirstPMBCResult("Create Disposition");
 
             //Fill basic Acquisition File information
             dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);
@@ -417,11 +398,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchProperty(PID: dispositionFile.DispositionSearchProperties.PID);
 
             //Select Found Pin on map
-            searchProperties.SelectFound1stPropAddToFile();
-
-            //Open elipsis option
-            propertyInformation.OpenMoreOptionsPopUp();
-            propertyInformation.ChooseCreationOptionFromPin("Disposition File");
+            searchProperties.SelectFirstPMBCResult("Create Disposition");
 
             //Fill basic Disposition File information
             dispositionFileDetails.CreateMinimumDispositionFile(dispositionFile);
@@ -672,7 +649,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 dispositionFile.DispositionSearchProperties.SurveyParcel.Section = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "SurveySection");
                 dispositionFile.DispositionSearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "SurveyTownship");
                 dispositionFile.DispositionSearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "SurveyRange");
-                dispositionFile.DispositionSearchProperties.DisplayingList = genericSteps.PopulateLists(ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "DisplayingList"));
+                dispositionFile.DispositionSearchProperties.DisplayingList = genericSteps.PopulateUnsortedLists(ExcelDataContext.ReadData(dispositionFile.DispositionSearchPropertiesIndex, "DisplayingList"));
 
             }
 

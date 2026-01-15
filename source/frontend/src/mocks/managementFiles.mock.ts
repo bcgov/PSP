@@ -68,6 +68,7 @@ export const mockManagementFileResponse = (
       fileId: id,
       propertyName: null,
       location: null,
+      boundary: null,
       displayOrder: null,
       isActive: true,
       property: {
@@ -201,15 +202,24 @@ export const mockManagementFileResponse = (
         },
         generalLocation: null,
         historicalFileNumbers: [],
+        tenureCleanups: [],
         surplusDeclarationType: null,
         surplusDeclarationComment: null,
         surplusDeclarationDate: '0001-01-01',
+        netBookAmount: null,
+        netBookNote: null,
         rowVersion: 3,
       },
       propertyId: 352,
       rowVersion: 1,
     },
   ],
+  responsiblePayerPersonId: null,
+  responsiblePayerPerson: null,
+  responsiblePayerOrganizationId: null,
+  responsiblePayerOrganization: null,
+  responsiblePayerPrimaryContactId: null,
+  responsiblePayerPrimaryContact: null,
   managementTeam: [
     {
       id: 9,
@@ -285,6 +295,7 @@ export const mockManagementFileResponse = (
     isDisabled: false,
     displayOrder: 10,
   },
+  noticeOfClaim: [],
   appCreateTimestamp: '2023-11-25T20:48:26.693',
   appLastUpdateTimestamp: '2023-11-24T20:48:26.693',
   appLastUpdateUserid: 'FOUGSTER',
@@ -292,6 +303,7 @@ export const mockManagementFileResponse = (
   appLastUpdateUserGuid: '672bef2d-f689-4ad0-8201-1b6a40665e07',
   appCreateUserGuid: '5c01a037-8595-4f9c-b2d3-7d26b0095d36',
   rowVersion: rowVersion,
+  regionCode: undefined,
 });
 
 export const mockManagementFilePropertiesResponse =
@@ -302,6 +314,7 @@ export const mockManagementFilePropertiesResponse =
       propertyName: null,
       displayOrder: null,
       location: null,
+      boundary: null,
       property: {
         ...getEmptyProperty(),
         id: 227,

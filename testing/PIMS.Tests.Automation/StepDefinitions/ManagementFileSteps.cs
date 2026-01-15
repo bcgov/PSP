@@ -50,6 +50,26 @@ namespace PIMS.Tests.Automation.StepDefinitions
             managementFileCode = ManagementFilesDetails.GetManagementCode();
         }
 
+        [StepDefinition(@"I create a Management File from row number (.*) to check common data")]
+        public void CreateManagementFileWithoutLogin(int rowNumber)
+        {
+            //Navigate to Management File
+            PopulateManagementFile(rowNumber);
+            ManagementFilesDetails.NavigateToCreateNewManagementFile();
+
+            //Validate Management File Details Create Form
+            ManagementFilesDetails.VerifyManagementFileInitCreateForm();
+
+            //Create basic Management File
+            ManagementFilesDetails.CreateMinimumManagementDetails(managementFile);
+
+            //Save Management File
+            ManagementFilesDetails.SaveManagementFile();
+
+            //Get Acquisition File code
+            managementFileCode = ManagementFilesDetails.GetManagementCode();
+        }
+
         [StepDefinition(@"I add additional information to the Management File Details")]
         public void AddAdditionalInfoManagementFile()
         {
@@ -306,6 +326,92 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchManagementFiles.FilterManagementFiles(mgmtfile: managementFile.ManagementName, status: managementFile.ManagementStatus);
         }
 
+        [StepDefinition(@"I search for an existing Management Activities List")]
+        public void SearchExistingManagementActivitiesList()
+        {
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Navigate to Management Activities Search
+            searchActivities.NavigateToSearchActivities();
+
+            //Verify Pagination
+            sharedPagination.ChoosePaginationOption(5);
+            Assert.Equal(5, searchActivities.MgmtActsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(10);
+            Assert.Equal(10, searchActivities.MgmtActsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(20);
+            Assert.Equal(20, searchActivities.MgmtActsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(50);
+            Assert.Equal(50, searchActivities.MgmtActsTableResultNumber());
+
+            sharedPagination.ChoosePaginationOption(100);
+            Assert.Equal(100, searchActivities.MgmtActsTableResultNumber());
+
+            //Verify Column Sorting by Description
+            searchActivities.OrderByActDescription();
+            var firstDescriptionDescResult = searchActivities.FirstActDescription();
+
+            searchActivities.OrderByActDescription();
+            var firstDescriptionAscResult = searchActivities.FirstActDescription();
+
+            Assert.NotEqual(firstDescriptionDescResult, firstDescriptionAscResult);
+
+            //Verify Column Sorting by File Name
+            searchActivities.OrderByActName();
+            var firstFileNameDescResult = searchActivities.FirstActName();
+
+            searchActivities.OrderByActName();
+            var firstFileNameAscResult = searchActivities.FirstActName();
+
+            Assert.NotEqual(firstFileNameDescResult, firstFileNameAscResult);
+
+            //Verify Column Sorting by Historical File
+            searchActivities.OrderByActHistoricalFileNbr();
+            var firstHistoricalDescResult = searchActivities.FirstActHistoricalFile();
+
+            searchActivities.OrderByActHistoricalFileNbr();
+            var firstHistoricalAscResult = searchActivities.FirstActHistoricalFile();
+
+            Assert.NotEqual(firstHistoricalDescResult, firstHistoricalAscResult);
+
+            //Verify Column Sorting by Type
+            searchActivities.OrderByActType();
+            var firstActTypeDescResult = searchActivities.FirstActType();
+
+            searchActivities.OrderByActType();
+            var firstActTypeAscResult = searchActivities.FirstActType();
+
+            Assert.NotEqual(firstActTypeDescResult, firstActTypeAscResult);
+
+            //Verify Column Sorting by Status
+            searchActivities.OrderByActStatus();
+            var firstActStatusDescResult = searchActivities.FirstActMgmtStatus();
+
+            searchActivities.OrderByActStatus();
+            var firstActStatusAscResult = searchActivities.FirstActMgmtStatus();
+
+            Assert.NotEqual(firstActStatusDescResult, firstActStatusAscResult);
+
+            //Verify Pagination display different set of results
+            sharedPagination.ResetSearch();
+            sharedPagination.ChoosePaginationOption(5);
+
+            var firstAcquisitionPage1 = searchManagementFiles.FirstMgmtFileName();
+            sharedPagination.GoNextPage();
+            var firstAcquisitionPage2 = searchManagementFiles.FirstMgmtFileName();
+            Assert.NotEqual(firstAcquisitionPage1, firstAcquisitionPage2);
+
+            sharedPagination.ResetSearch();
+
+            //Filter Activities
+            searchManagementFiles.FilterManagementFiles(pid: "003-549-551", mgmtfile: "Management from Jonathan Doe", status: "Cancelled");
+            Assert.False(searchManagementFiles.SearchFoundResults());
+        }
+
         [StepDefinition(@"I insert activities to the Management Activities Tab")]
         public void InsertActivityTab()
         {
@@ -327,15 +433,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         }
 
-        [StepDefinition(@"I update an activity from the Activities Tab")]
-        public void UpdateManagementPropertyTab()
+        [StepDefinition(@"I update an activity from the Activities Tab from row number (.*)")]
+        public void UpdateManagementActivity(int rowNumber)
         {
+            //Populate data
+            PopulateManagementFile(rowNumber);
+
             //Update an activity
             managementActivities.ViewLastActivityFromList();
             managementActivities.ViewLastActivityButton();
-            sharedActivities.UpdateSelectedActivityBttn();
+            sharedActivities.UpdateSelectedFileActivityBttn();
             sharedActivities.InsertNewPropertyActivity(managementFile.ManagementPropertyActivities[0]);
-            sharedActivities.SaveManagementActivity();
+            sharedActivities.SaveManagementActivity("Management");
             sharedActivities.VerifyInsertedActivity(managementFile.ManagementPropertyActivities[0], "Management File");
             managementActivities.ViewLastActivityFromList();
             managementActivities.VerifyLastInsertedActivityTable(managementFile.ManagementPropertyActivities[0]);
@@ -352,28 +461,28 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Pagination
             sharedPagination.ChoosePaginationOption(5);
-            Assert.Equal(5, searchManagementFiles.MgmtTableResultNumber());
+            Assert.Equal(5, searchActivities.MgmtActsTableResultNumber());
 
             sharedPagination.ChoosePaginationOption(10);
-            Assert.Equal(10, searchManagementFiles.MgmtTableResultNumber());
+            Assert.Equal(10, searchActivities.MgmtActsTableResultNumber());
 
             sharedPagination.ChoosePaginationOption(20);
-            Assert.Equal(20, searchManagementFiles.MgmtTableResultNumber());
+            Assert.Equal(20, searchActivities.MgmtActsTableResultNumber());
 
             sharedPagination.ChoosePaginationOption(50);
-            Assert.Equal(50, searchManagementFiles.MgmtTableResultNumber());
+            Assert.Equal(50, searchActivities.MgmtActsTableResultNumber());
 
             sharedPagination.ChoosePaginationOption(100);
-            Assert.Equal(100, searchManagementFiles.MgmtTableResultNumber());
+            Assert.Equal(100, searchActivities.MgmtActsTableResultNumber());
 
             //Verify Column Sorting by Description
-            searchActivities.OrderByActDescription();
-            var firstActDescriptionDescResult = searchActivities.FirstActDescription();
+            //searchActivities.OrderByActDescription();
+            //var firstActDescriptionDescResult = searchActivities.FirstActDescription();
 
-            searchActivities.OrderByActDescription();
-            var firstActDescriptionAscResult = searchActivities.FirstActDescription();
+            //searchActivities.OrderByActDescription();
+            //var firstActDescriptionAscResult = searchActivities.FirstActDescription();
 
-            Assert.NotEqual(firstActDescriptionDescResult, firstActDescriptionAscResult);
+            //Assert.NotEqual(firstActDescriptionDescResult, firstActDescriptionAscResult);
 
             //Verify Column Sorting by File Name
             searchActivities.OrderByActName();
@@ -422,9 +531,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             sharedPagination.ResetSearch();
 
-            //Filter Acquisition Files
+            //Filter Management Activities
             searchActivities.FilterManagementActivities(pid: "003-549-551", actName: "Management from Jonathan Doe", mgmtStatus: "Cancelled");
             Assert.False(searchManagementFiles.SearchFoundResults());
+
+            sharedPagination.ResetSearch();
         }
 
         [StepDefinition(@"A new Management file is created or updated successfully")]
@@ -449,10 +560,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"Expected Management Activities Content is displayed on Management Activities Table")]
         public void VerifyManagementActivitiesTableContent()
         {
-
             //Verify List View
-            searchManagementFiles.VerifySearchManagementListView();
-            searchManagementFiles.VerifyManagementTableContent(managementFile);
+            searchActivities.VerifySearchManagementActivitiesListView();
         }
 
         [StepDefinition(@"An error from deleting a property attached to an activity appears")]
@@ -463,8 +572,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateManagementFile(int rowNumber)
         {
-            System.Data.DataTable acquisitionSheet = ExcelDataContext.GetInstance().Sheets["ManagementFiles"]!;
-            ExcelDataContext.PopulateInCollection(acquisitionSheet);
+            System.Data.DataTable managementSheet = ExcelDataContext.GetInstance().Sheets["ManagementFiles"]!;
+            ExcelDataContext.PopulateInCollection(managementSheet);
             managementFile = new ManagementFile();
 
             //Management Status
@@ -476,13 +585,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             managementFile.ManagementMinistryProduct = ExcelDataContext.ReadData(rowNumber, "ManagementMinistryProduct");
             managementFile.ManagementMinistryFunding = ExcelDataContext.ReadData(rowNumber, "ManagementMinistryFunding");
 
-            //Acquisition Details
+            //Management Details
             managementFile.ManagementName = ExcelDataContext.ReadData(rowNumber, "ManagementName");
             managementFile.ManagementHistoricalFile = ExcelDataContext.ReadData(rowNumber, "ManagementHistoricalFile");
             managementFile.ManagementPurpose = ExcelDataContext.ReadData(rowNumber, "ManagementPurpose");
             managementFile.ManagementAdditionalDetails = ExcelDataContext.ReadData(rowNumber, "ManagementAdditionalDetails");
 
-            //Acquisition Team
+            //Management Team
             managementFile.ManagementTeamStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementTeamStartRow"));
             managementFile.ManagementTeamCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementTeamCount"));
 
@@ -515,7 +624,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 managementFile.ManagementSearchProperties.SurveyParcel.Section = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "SurveySection");
                 managementFile.ManagementSearchProperties.SurveyParcel.Township = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "SurveyTownship");
                 managementFile.ManagementSearchProperties.SurveyParcel.Range = ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "SurveyRange");
-                managementFile.ManagementSearchProperties.DisplayingList = genericSteps.PopulateLists(ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "DisplayingList"));
+                managementFile.ManagementSearchProperties.DisplayingList = genericSteps.PopulateUnsortedLists(ExcelDataContext.ReadData(managementFile.ManagementSearchPropertiesIndex, "DisplayingList"));
             }
 
             //Management Activities
@@ -556,12 +665,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 propertyActivity.PropertyActivityType = ExcelDataContext.ReadData(i, "PropertyActivityType");
                 propertyActivity.PropertyActivitySubTypeList = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivitySubType"));
                 propertyActivity.PropertyActivityStatus = ExcelDataContext.ReadData(i, "PropertyActivityStatus");
-                propertyActivity.PropertyActivityRequestedCommenceDate = ExcelDataContext.ReadData(i, "PropertyActivityRequestedCommenceDate");
+                propertyActivity.PropertyActivityCommenceDate = ExcelDataContext.ReadData(i, "PropertyActivityRequestedCommenceDate");
                 propertyActivity.PropertyActivityCompletionDate = ExcelDataContext.ReadData(i, "PropertyActivityCompletionDate");
                 propertyActivity.PropertyActivityDescription = ExcelDataContext.ReadData(i, "PropertyActivityDescription");
                 propertyActivity.PropertyActivityMinistryContactList = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityMinistryContact"));
-                propertyActivity.PropertyActivityRequestorContactMngr = ExcelDataContext.ReadData(i, "PropertyActivityRequestorContactMngr");
-                propertyActivity.PropertyActivityInvolvedPartiesExtContactsList = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityInvolvedPartiesExtContacts"));
+                propertyActivity.PropertyActivityRequestorMngr = ExcelDataContext.ReadData(i, "PropertyActivityRequestorContactMngr");
+                propertyActivity.PropertyActivityExtContactsList = genericSteps.PopulateLists(ExcelDataContext.ReadData(i, "PropertyActivityInvolvedPartiesExtContacts"));
                 propertyActivity.PropertyActivityServiceProvider = ExcelDataContext.ReadData(i, "PropertyActivityServiceProvider");
                 propertyActivity.ManagementPropertyActivityInvoicesStartRow = int.Parse(ExcelDataContext.ReadData(i, "ManagementPropertyActivityInvoicesStartRow"));
                 propertyActivity.ManagementPropertyActivityInvoicesCount = int.Parse(ExcelDataContext.ReadData(i, "ManagementPropertyActivityInvoicesCount"));

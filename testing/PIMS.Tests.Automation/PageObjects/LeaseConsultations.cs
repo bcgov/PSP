@@ -1,5 +1,7 @@
-﻿using OpenQA.Selenium;
+﻿using AventStack.ExtentReports.Model;
+using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
+using static System.Runtime.InteropServices.JavaScript.JSType;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -58,14 +60,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By consultationCommentsTextarea = By.Id("input-comment");
 
         //Consultation Types Counting Elements
-        private readonly By consultationDistrictCount = By.XPath("//span[contains(text(),'District')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By consultationEngineeringCount = By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By consultationFirstNationCount = By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By consultationHeadquarterCount = By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By consultationRegionalPlanningCount = By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By consultationRegionalPropServicesCount = By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By consultationSRECount = By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
-        private readonly By consultationOtherCount = By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div");
+        private readonly By consultationDistrictCount = By.CssSelector("div[data-testid='consultation-group-section-District'] div[data-testid='consultation-District-items']");
+        private readonly By consultationEngineeringCount = By.CssSelector("div[data-testid='consultation-group-section-Engineering'] div[data-testid='consultation-Engineering-items']");
+        private readonly By consultationFirstNationCount = By.CssSelector("div[data-testid='cconsultation-group-section-First Nation'] div[data-testid='consultation-First Nation-items']");
+        private readonly By consultationHeadquarterCount = By.CssSelector("div[data-testid='consultation-group-section-Headquarter (HQ)'] div[data-testid='consultation-Headquarter (HQ)-items']");
+        private readonly By consultationRegionalPlanningCount = By.CssSelector("div[data-testid='consultation-group-section-Regional Planning'] div[data-testid='consultation-Regional Planning-items']");
+        private readonly By consultationRegionalPropServicesCount = By.CssSelector("div[data-testid='consultation-group-section-Regional Property Services'] div[data-testid='consultation-Regional Property Services-items']");
+        private readonly By consultationSRECount = By.CssSelector("div[data-testid='consultation-group-section-Strategic Real Estate (SRE)'] div[data-testid='consultation-Strategic Real Estate (SRE)-items']");
+        private readonly By consultationOtherCount = By.CssSelector("div[data-testid='consultation-group-section-Other'] div[data-testid='consultation-Other-items']");
 
         //Leases Modal Element
         private readonly By licenseConsultationConfirmationModal = By.CssSelector("div[class='modal-content']");
@@ -194,50 +196,42 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void DeleteLastConsultationByType(string consultationType)
+        public void DeleteFirstConsultationByType(string consultationType)
         {
             Wait();
             switch (consultationType)
             {
                 case "District":
                     ButtonElement(consultationDistrictExpandBttn);
-                    int lastDistrictConsultation = webDriver.FindElements(consultationDistrictCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'District')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastDistrictConsultation +"]/div/h2/div/div/div/div/div/button[@title='Delete Consultation']")).Click();
+                    webDriver.FindElement(By.CssSelector("div[data-testid='consultation-group-section-District'] consultations[0].delete-btn")).Click();
                     break;
                 case "Engineering":
                     ButtonElement(consultationEngineeringExpandBttn);
-                    int lastEngineerConsultation = webDriver.FindElements(consultationEngineeringCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastEngineerConsultation +"]/div/h2/div/div/div/div/div/button[@title='Delete Consultation']")).Click();
+                    webDriver.FindElement(By.CssSelector("div[data-testid='consultation-group-section-Engineering'] consultations[0].delete-btn")).Click();
                     break;
                 case "First Nation":
                     ButtonElement(consultationFirstNationExpandBttn);
-                    int lastFirstNationConsultation = webDriver.FindElements(consultationFirstNationCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/h2/div/div/div/div/div/button[@title='Delete Consultation']")).Click();
+                    webDriver.FindElement(By.CssSelector("div[data-testid='consultation-group-section-First Nation'] consultations[0].delete-btn")).Click();
                     break;
                 case "Headquarter (HQ)":
                     ButtonElement(consultationHeadquarterExpandBttn);
-                    int lastHeadquarterConsultation = webDriver.FindElements(consultationHeadquarterCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastHeadquarterConsultation +"]/div/h2/div/div/div/div/div/button[@title='Delete Consultation']")).Click();
+                    webDriver.FindElement(By.CssSelector("div[data-testid='consultation-group-section-Headquarter (HQ)'] consultations[0].delete-btn")).Click();
                     break;
                 case "Regional planning":
                     ButtonElement(consultationRegionalPlanningExpandBttn);
-                    int lastRegionalPlanningConsultation = webDriver.FindElements(consultationRegionalPlanningCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPlanningConsultation +"]/div/h2/div/div/div/div/div/button[@title='Delete Consultation']")).Click();
+                    webDriver.FindElement(By.CssSelector("div[data-testid='consultation-group-section-Regional Planning'] consultations[0].delete-btn")).Click();
                     break;
                 case "Regional property services":
                     ButtonElement(consultationRegionalPropServicesExpandBttn);
-                    int lastRegionalPropServicesConsultation = webDriver.FindElements(consultationRegionalPropServicesCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPropServicesConsultation +"]/div/h2/div/div/div/div/div/button[@title='Delete Consultation']")).Click();
+                    webDriver.FindElement(By.CssSelector("div[data-testid='consultation-group-section-Regional Property Services'] consultations[0].delete-btn")).Click();
                     break;
                 case "Strategic Real Estate (SRE)":
                     ButtonElement(consultationSREExpandBttn);
-                    int lastSREConsultation = webDriver.FindElements(consultationSRECount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastSREConsultation +"]/div/h2/div/div/div/div/div/button[@title='Delete Consultation']")).Click();
+                    webDriver.FindElement(By.CssSelector("div[data-testid='consultation-group-section-Strategic Real Estate (SRE)'] consultations[0].delete-btn")).Click();
                     break;
                 case "Other":
                     ButtonElement(consultationOtherExpandBttn);
-                    int lastOtherConsultation = webDriver.FindElements(consultationOtherCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastOtherConsultation +"]/div/h2/div/div/div/div/div/button[@title='Delete Consultation']")).Click();
+                    webDriver.FindElement(By.XPath("div[data-testid='consultation-group-section-Other'] consultations[0].delete-btn")).Click();
                     break;
             }
 

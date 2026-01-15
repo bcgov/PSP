@@ -489,6 +489,16 @@ namespace Pims.Dal.Repositories
         {
             return Context.PimsManagementFilePurposeTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
         }
+
+        public IEnumerable<PimsTenureCleanupType> GetAllTenureCleanupTypes()
+        {
+            return Context.PimsTenureCleanupTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
+        
+        public IEnumerable<PimsSurplusDeclarationType> GetAllSurplusDeclarationTypes()
+        {
+            return Context.PimsSurplusDeclarationTypes.AsNoTracking().OrderBy(a => a.SurplusDeclarationTypeCode).ToList();
+        }
         #endregion
     }
 }

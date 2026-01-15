@@ -53,7 +53,7 @@ public partial class PimsSecurityDeposit
     /// Amount paid of this security deposit
     /// </summary>
     [Column("AMOUNT_PAID", TypeName = "money")]
-    public decimal AmountPaid { get; set; }
+    public decimal? AmountPaid { get; set; }
 
     /// <summary>
     /// Date of this security deposit

@@ -449,19 +449,19 @@ exports[`DispositionView component > renders as expected 1`] = `
   overflow: hidden;
 }
 
-.c41 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c38 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c41 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c40.required::before {
@@ -544,9 +544,6 @@ exports[`DispositionView component > renders as expected 1`] = `
 }
 
 .c31 {
-  -webkit-align-self: flex-end;
-  -ms-flex-item-align: end;
-  align-self: flex-end;
   margin-right: 2rem;
 }
 
@@ -733,6 +730,7 @@ exports[`DispositionView component > renders as expected 1`] = `
       </div>
       <div
         class="c3 d-flex col-auto"
+        data-testid="leaflet-buttons-section"
       >
         <span>
           <button
@@ -771,6 +769,7 @@ exports[`DispositionView component > renders as expected 1`] = `
         />
         <svg
           class="c7"
+          data-testid="close-leaflet-button"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -976,7 +975,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                 class="c25"
               >
                 <div
-                  class="w-100 row no-gutters"
+                  class="w-100 d-flex align-items-center row no-gutters"
                 >
                   <div
                     class="col"
@@ -991,7 +990,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                     class="col-auto"
                   />
                   <div
-                    class="col-auto"
+                    class="pr-3 col-auto"
                   >
                     <span
                       class="tooltip-icon"
@@ -1013,6 +1012,33 @@ exports[`DispositionView component > renders as expected 1`] = `
                         />
                       </svg>
                     </span>
+                  </div>
+                  <div
+                    class="pr-1 col-auto"
+                  >
+                    <button
+                      class="c4 Button btn btn-link"
+                      title="Copy to worklist"
+                      type="button"
+                    >
+                      <div
+                        class="Button__value"
+                      >
+                        <svg
+                          fill="currentColor"
+                          height="24"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 32 32"
+                          width="24"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <path
+                            d="M 6 4 L 6 28 L 26 28 L 26 20 L 24 22 L 24 26 L 8 26 L 8 6 L 24 6 L 24 10 L 26 12 L 26 4 Z M 22.40625 11 L 21 12.40625 L 23.5625 15 L 13.90625 15 L 13.90625 17 L 23.5625 17 L 21 19.59375 L 22.40625 21 L 26.71875 16.71875 L 27.40625 16 L 26.71875 15.28125 Z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -1111,6 +1137,15 @@ exports[`DispositionView component > renders as expected 1`] = `
                   <a
                     aria-selected="false"
                     class="nav-item nav-link"
+                    data-rb-event-key="improvements"
+                    href="#"
+                    role="tab"
+                  >
+                    Improvements
+                  </a>
+                  <a
+                    aria-selected="false"
+                    class="nav-item nav-link"
                     data-rb-event-key="checklist"
                     href="#"
                     role="tab"
@@ -1169,6 +1204,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Project
                             </div>
@@ -1244,6 +1280,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Schedule
                             </div>
@@ -1301,6 +1338,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Disposition Details
                             </div>
@@ -1548,6 +1586,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Disposition Team
                             </div>

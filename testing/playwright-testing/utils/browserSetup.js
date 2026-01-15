@@ -19,7 +19,8 @@ const BROWSER_ARGS = [
  */
 async function launchBrowser() {
   const browser = await chromium.launch({
-    headless: true,
+    headless: false,
+    slowMo: 500,
     args: BROWSER_ARGS,
   });
   return browser;

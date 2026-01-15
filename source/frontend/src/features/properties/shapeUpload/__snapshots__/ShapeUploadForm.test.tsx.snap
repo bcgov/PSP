@@ -1,0 +1,96 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`ShapeUploadForm > matches snapshot 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c2 {
+  border: 1px solid #606060;
+  border-style: dashed;
+  height: 10rem;
+  line-height: 10rem;
+  text-align: center;
+}
+
+.c3 {
+  width: 100%;
+  display: inline-block;
+  vertical-align: middle;
+  line-height: normal;
+}
+
+.c4 {
+  display: inline-block;
+  color: var(--surface-color-primary-button-default);
+  cursor: pointer;
+}
+
+.c4:hover {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c5 {
+  display: none;
+}
+
+.c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
+<div
+    class="mb-4 row"
+  >
+    <div
+      class="pr-0 text-left col-12"
+    >
+      <label
+        class="c0"
+      >
+        Choose a shapefile to attach for upload:
+      </label>
+    </div>
+    <div
+      class="c1 text-left col"
+    >
+      <div
+        class="pt-2"
+      />
+      <div>
+        <div
+          class="c2"
+        >
+          <div
+            class="c3"
+          >
+            Drag files here to attach or 
+            <label
+              class="c4"
+            >
+              Browse
+              <input
+                accept=".zip"
+                class="c5"
+                data-testid="upload-input"
+                id="uploadInput"
+                name="documentFile"
+                type="file"
+              />
+            </label>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

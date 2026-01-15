@@ -40,6 +40,7 @@ namespace Pims.Api.Services
         private readonly IPropertyService _propertyService;
         private readonly IProjectRepository _projectRepository;
         private readonly IPropertyOperationService _propertyOperationService;
+        private readonly IFilePropertyLocationUpdateSolver _propertyLocationSolver;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -60,7 +61,8 @@ namespace Pims.Api.Services
             IProjectRepository projectRepository,
             IAcquisitionStatusSolver statusSolver,
             IPropertyService propertyService,
-            IPropertyOperationService propertyOperationService)
+            IPropertyOperationService propertyOperationService,
+            IFilePropertyLocationUpdateSolver propertyLocationSolver)
         {
             _user = user;
             _logger = logger;
@@ -81,6 +83,7 @@ namespace Pims.Api.Services
             _propertyService = propertyService;
             _projectRepository = projectRepository;
             _propertyOperationService = propertyOperationService;
+            _propertyLocationSolver = propertyLocationSolver;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -346,11 +349,15 @@ namespace Pims.Api.Services
                         needsUpdate = true;
                     }
 
-                    var incomingGeom = incomingAcquisitionProperty.Location;
-                    var existingGeom = existingFileProperty.Location;
-                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    if (_propertyLocationSolver.CanEditFilePropertyLocation(incomingAcquisitionProperty, existingFileProperty))
                     {
                         _propertyService.UpdateFilePropertyLocation(incomingAcquisitionProperty, existingFileProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (_propertyLocationSolver.CanEditFilePropertyBoundary(incomingAcquisitionProperty, existingFileProperty))
+                    {
+                        _propertyService.UpdateFilePropertyBoundary(incomingAcquisitionProperty, existingFileProperty);
                         needsUpdate = true;
                     }
 
@@ -965,7 +972,8 @@ namespace Pims.Api.Services
             foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
             {
                 var propertyRegion = acquisitionProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(acquisitionProperty.PropertyId);
-                if (!userRegions.Contains(propertyRegion))
+                var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+                if (propertyRegion != cannotDetermineRegion.Code && !userRegions.Contains(propertyRegion))
                 {
                     throw new BadRequestException("You cannot add a property that is outside of your user account region(s).\n\nPlease select a different property or contact admin at pims@gov.bc.ca to add the required region to your user account settings.");
                 }

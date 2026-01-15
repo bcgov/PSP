@@ -102,6 +102,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
             noPadding
             isCollapsable={true}
             initiallyExpanded={false}
+            data-testid={`consultation-group-section-${group.consultationTypeDescription}`}
           >
             {group.consultations.map((consultation, index) => (
               <StyledBorder key={`consultation-section-${index}`}>
@@ -157,6 +158,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                       </Row>
                     </div>
                   }
+                  data-testid={`consultation-${group.consultationTypeDescription}-items`}
                 >
                   {consultation?.consultationTypeCode?.id === 'OTHER' && (
                     <SectionField

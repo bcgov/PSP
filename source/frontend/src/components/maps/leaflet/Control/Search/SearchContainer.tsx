@@ -60,12 +60,11 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
         mapMarkLocation(latLng);
         requestCenterToLocation(latLng);
         mapClick(latLng);
-      }
-    } else {
-      if (filter !== null && !dequal(mapSearchCriteria, filter)) {
-        mapClearLocationMark();
         setMapSearchCriteria(filter);
       }
+    } else if (filter !== null && !dequal(mapSearchCriteria, filter)) {
+      mapClearLocationMark();
+      setMapSearchCriteria(filter);
     }
   };
 
@@ -80,6 +79,7 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
           location: { lat: center[1], lng: center[0] },
           regionFeature: null,
           fileLocation: null,
+          fileBoundary: null,
           districtFeature: null,
           municipalityFeature: null,
           selectingComponentId: null,

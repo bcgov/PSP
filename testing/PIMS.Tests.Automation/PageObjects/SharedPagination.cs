@@ -6,7 +6,7 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         private readonly By searchListResetButton = By.Id("reset-button");
 
-        private readonly By searchTableEntriesSpan = By.CssSelector("div[data-testid='input-page-size']");
+        private readonly By searchTableEntriesSpan = By.CssSelector("input[data-testid='input-page-size']");
         private readonly By searchTablePagination5 = By.CssSelector("div[class='Menu-options scrollable list-group'] div[title='menu-item-5']");
         private readonly By searchTablePagination10 = By.CssSelector("div[title='menu-item-10']");
         private readonly By searchTablePagination20 = By.CssSelector("div[title='menu-item-20']");

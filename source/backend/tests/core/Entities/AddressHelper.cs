@@ -65,10 +65,12 @@ namespace Pims.Core.Test
             province ??= EntityHelper.CreateProvince((short)id, "BC", EntityHelper.CreateCountry((short)id, "CAN"));
             district ??= EntityHelper.CreateDistrict((short)id, "District 1");
             municipality ??= "municipality";
+
             return new Entity.PimsAddress(address, unitNumber, municipality, province, district, postal)
             {
                 AddressId = id,
                 ConcurrencyControlNumber = 1,
+                CountryId = 1,
             };
         }
 
