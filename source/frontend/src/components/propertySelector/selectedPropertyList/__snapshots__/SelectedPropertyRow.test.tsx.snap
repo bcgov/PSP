@@ -6,7 +6,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c7.btn {
+  .c8.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +35,17 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c7.btn .Button__value {
+.c8.btn .Button__value {
   width: auto;
 }
 
-.c7.btn:hover {
+.c8.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c7.btn:focus {
+.c8.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +53,31 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c7.btn.btn-primary {
+.c8.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-primary:hover,
-.c7.btn.btn-primary:active,
-.c7.btn.btn-primary:focus {
+.c8.btn.btn-primary:hover,
+.c8.btn.btn-primary:active,
+.c8.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c7.btn.btn-secondary {
+.c8.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c7.btn.btn-secondary:hover,
-.c7.btn.btn-secondary:active,
-.c7.btn.btn-secondary:focus {
+.c8.btn.btn-secondary:hover,
+.c8.btn.btn-secondary:active,
+.c8.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c7.btn.btn-info {
+.c8.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +85,66 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c7.btn.btn-info:hover,
-.c7.btn.btn-info:active,
-.c7.btn.btn-info:focus {
+.c8.btn.btn-info:hover,
+.c8.btn.btn-info:active,
+.c8.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c7.btn.btn-light {
+.c8.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c7.btn.btn-light:hover,
-.c7.btn.btn-light:active,
-.c7.btn.btn-light:focus {
+.c8.btn.btn-light:hover,
+.c8.btn.btn-light:active,
+.c8.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c7.btn.btn-dark {
+.c8.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c7.btn.btn-dark:hover,
-.c7.btn.btn-dark:active,
-.c7.btn.btn-dark:focus {
+.c8.btn.btn-dark:hover,
+.c8.btn.btn-dark:active,
+.c8.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c7.btn.btn-danger {
+.c8.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-danger:hover,
-.c7.btn.btn-danger:active,
-.c7.btn.btn-danger:focus {
+.c8.btn.btn-danger:hover,
+.c8.btn.btn-danger:active,
+.c8.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c7.btn.btn-warning {
+.c8.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c7.btn.btn-warning:hover,
-.c7.btn.btn-warning:active,
-.c7.btn.btn-warning:focus {
+.c8.btn.btn-warning:hover,
+.c8.btn.btn-warning:active,
+.c8.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c7.btn.btn-link {
+.c8.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +168,9 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c7.btn.btn-link:hover,
-.c7.btn.btn-link:active,
-.c7.btn.btn-link:focus {
+.c8.btn.btn-link:hover,
+.c8.btn.btn-link:active,
+.c8.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +180,15 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   outline: none;
 }
 
-.c7.btn.btn-link:disabled,
-.c7.btn.btn-link.disabled {
+.c8.btn.btn-link:disabled,
+.c8.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c7.btn:disabled,
-.c7.btn:disabled:hover {
+.c8.btn:disabled,
+.c8.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,66 +200,19 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c7.Button .Button__icon {
+.c8.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c7.Button--icon-only:focus {
+.c8.Button--icon-only:focus {
   outline: none;
 }
 
-.c7.Button--icon-only .Button__icon {
+.c8.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c8.c8.btn {
-  background-color: unset;
-  border: none;
-}
-
-.c8.c8.btn:hover,
-.c8.c8.btn:focus,
-.c8.c8.btn:active {
-  background-color: unset;
-  outline: none;
-  box-shadow: none;
-}
-
-.c8.c8.btn svg {
-  -webkit-transition: all 0.3s ease-out;
-  transition: all 0.3s ease-out;
-}
-
-.c8.c8.btn svg:hover {
-  -webkit-transition: all 0.3s ease-in;
-  transition: all 0.3s ease-in;
-}
-
-.c8.c8.btn.btn-primary svg {
-  color: #013366;
-}
-
-.c8.c8.btn.btn-primary svg:hover {
-  color: #013366;
-}
-
-.c8.c8.btn.btn-light svg {
-  color: var(--surface-color-primary-button-default);
-}
-
-.c8.c8.btn.btn-light svg:hover {
-  color: #CE3E39;
-}
-
-.c8.c8.btn.btn-info svg {
-  color: var(--surface-color-primary-button-default);
-}
-
-.c8.c8.btn.btn-info svg:hover {
-  color: var(--surface-color-primary-button-hover);
-}
-
-.c10.c10.btn {
+.c9.c9.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -267,9 +220,9 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   line-height: unset;
 }
 
-.c10.c10.btn:hover,
-.c10.c10.btn:active,
-.c10.c10.btn:focus {
+.c9.c9.btn:hover,
+.c9.c9.btn:active,
+.c9.c9.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -354,7 +307,7 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
   min-width: 3rem;
 }
 
-.c9 {
+.c7 {
   padding-left: 1.2rem;
 }
 
@@ -484,35 +437,11 @@ exports[`SelectedPropertyRow component > renders as expected 1`] = `
     <div
       class="c6 col-auto"
     >
-      <button
-        class="c7 Button c8 btn btn-primary"
-        data-testid="move-pin-location-0"
-        title="move-pin-location"
-        type="button"
-      >
-        <div
-          class="Button__value"
-        >
-          <svg
-            fill="currentColor"
-            height="22"
-            stroke="currentColor"
-            stroke-width="0"
-            viewBox="0 0 24 24"
-            width="22"
-            xmlns="http://www.w3.org/2000/svg"
-          >
-            <path
-              d="M11 11V5.82843L9.17157 7.65685L7.75736 6.24264L12 2L16.2426 6.24264L14.8284 7.65685L13 5.82843V11H18.1716L16.3431 9.17157L17.7574 7.75736L22 12L17.7574 16.2426L16.3431 14.8284L18.1716 13H13V18.1716L14.8284 16.3431L16.2426 17.7574L12 22L7.75736 17.7574L9.17157 16.3431L11 18.1716V13H5.82843L7.65685 14.8284L6.24264 16.2426L2 12L6.24264 7.75736L7.65685 9.17157L5.82843 11H11Z"
-            />
-          </svg>
-        </div>
-      </button>
       <div
-        class="c9"
+        class="c7"
       >
         <button
-          class="c7 Button c10 btn btn-link"
+          class="c8 Button c9 btn btn-link"
           data-testid="delete-property-0"
           type="button"
         >

@@ -40,8 +40,6 @@ export interface ITenantConfig2 {
   layers: Dictionary<Partial<LayerDefinition>>;
   // the url that should be used to query the PSP properties layer.
   propertiesUrl: string;
-  // the url that should be used to query the PSP properties layer.
-  propertiesBoundaryUrl: string;
   // the url that should be used to display PSP properties on the map.
   minimalPropertiesUrl: string;
   // configuration pertaining the Fully Attributed Parcel Map layer
@@ -55,7 +53,6 @@ export interface ITenantConfig2 {
   hwyDistrictLayerUrl: string;
   alrLayerUrl: string;
   reservesLayerUrl: string;
-  boundaryLayerUrl: string;
   highwayLayerUrl: string;
   bcAssessment: IBcAssessmentLayerConfig;
   crownLandLicensesUrl: string;

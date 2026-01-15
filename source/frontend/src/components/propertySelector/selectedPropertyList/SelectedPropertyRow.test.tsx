@@ -101,8 +101,24 @@ describe('SelectedPropertyRow component', () => {
     expect(onRemove).toHaveBeenCalled();
   });
 
-  it('calls map machine when reposition button is clicked', async () => {
+  it('hides reposition button if there is no boundary', async () => {
     await setup();
+    const moveButton = screen.queryByTitle('move-pin-location');
+    expect(moveButton).toBeNull();
+  });
+
+  it('calls map machine when reposition button is clicked', async () => {
+    const mockFeatureSet = getMockSelectedFeatureDataset();
+    mockFeatureSet.pimsFeature = {
+      ...mockFeatureSet.pimsFeature,
+      properties: {
+        ...mockFeatureSet.pimsFeature?.properties,
+        PID_PADDED: '111-111-111',
+        PROPERTY_ID: 1,
+      },
+    };
+
+    await setup({ props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet) } });
     const moveButton = screen.getByTitle('move-pin-location');
     await act(async () => userEvent.click(moveButton));
     expect(mapMachineBaseMock.startReposition).toHaveBeenCalled();

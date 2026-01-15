@@ -17,7 +17,7 @@ import DraftCircleNumber from '@/components/propertySelector/selectedPropertyLis
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import { ShapeUploadModal } from '@/features/properties/shapeUpload/ShapeUploadModal';
-import { exists } from '@/utils';
+import { exists, isValidId } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 import { getPropertyNameFromSelectedFeatureSet, NameSourceType } from '@/utils/mapPropertyUtils';
 
@@ -49,6 +49,9 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
   const mapMachine = useMapStateMachine();
   const { setFieldTouched, touched } = useFormikContext();
   const [isUploadVisible, setIsUploadVisible] = useState(false);
+  const canMoveMarker =
+    exists(featureSet?.pimsFeature?.geometry) &&
+    isValidId(featureSet?.pimsFeature?.properties?.PROPERTY_ID);
 
   useEffect(() => {
     if (getIn(touched, `${nameSpace}.name`) !== true) {
@@ -124,15 +127,19 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
           </Col>
         )}
         <StyledActionsCol xs="auto">
-          <StyledIconButton
-            title="move-pin-location"
-            onClick={() => {
-              mapMachine.startReposition(featureSet, index);
-            }}
-            data-testid={'move-pin-location-' + index}
-          >
-            <RiDragMove2Line size={22} />
-          </StyledIconButton>
+          {canMoveMarker ? (
+            <StyledIconButton
+              title="move-pin-location"
+              onClick={() => {
+                mapMachine.startReposition(featureSet, index);
+              }}
+              data-testid={'move-pin-location-' + index}
+            >
+              <RiDragMove2Line size={22} />
+            </StyledIconButton>
+          ) : (
+            <></>
+          )}
           {canUploadShapefile && !hasCustomBoundary && (
             <TooltipWrapper tooltip="Upload shapefile" tooltipId={'upload-shapefile-' + index}>
               <StyledIconButton

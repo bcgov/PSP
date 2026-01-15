@@ -6,6 +6,7 @@ import { hideLoading, showLoading } from 'react-redux-loading-bar';
 import { SelectOption } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
@@ -280,3 +281,34 @@ export function relationshipTypeToPathName(
       return 'property';
   }
 }
+
+export const getFilePropertyIndex = (
+  fileProperty: ApiGen_Concepts_FileProperty,
+  fileProperties: ApiGen_Concepts_FileProperty[],
+): number | null => {
+  if (
+    !(
+      exists(fileProperty.location) ||
+      exists(fileProperty.boundary) ||
+      exists(fileProperty.property.location) ||
+      exists(fileProperty.property.boundary)
+    )
+  ) {
+    return null;
+  }
+  let index = 0;
+  for (const p of fileProperties) {
+    if (
+      exists(p.location) ||
+      exists(p.boundary) ||
+      exists(p.property.location) ||
+      exists(p.property.boundary)
+    ) {
+      index++;
+    }
+    if (p.id === fileProperty.id) {
+      return index;
+    }
+  }
+  return null;
+};

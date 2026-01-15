@@ -301,7 +301,6 @@ const StyledPropertyRowWrapper = styled.div`
 `;
 
 const StyledPropertyRowZoom = styled.div`
-  align-self: flex-end;
   margin-right: 2rem;
 `;
 
