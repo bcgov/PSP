@@ -801,6 +801,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="c5 text-left col"
             >
               00048
+              <div
+                class="invalid-feedback"
+              />
             </div>
           </div>
           <div
@@ -819,6 +822,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="c5 text-left col"
             >
               FERRIES
+              <div
+                class="invalid-feedback"
+              />
             </div>
           </div>
           <div
@@ -837,6 +843,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="c5 text-left col"
             >
               SURVEY
+              <div
+                class="invalid-feedback"
+              />
             </div>
           </div>
           <div
@@ -855,6 +864,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="c5 text-left col"
             >
               HWY PLAN
+              <div
+                class="invalid-feedback"
+              />
             </div>
           </div>
           <div

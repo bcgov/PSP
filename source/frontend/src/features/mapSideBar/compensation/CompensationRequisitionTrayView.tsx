@@ -83,7 +83,7 @@ export const CompensationRequisitionTrayView: React.FunctionComponent<
     ) : undefined;
 
   const updateViewContent =
-    editMode && compensation ? (
+    editMode && exists(compensation) ? (
       <HalfHeightDiv>
         <UpdateCompensationRequisitionContainer
           compensation={compensation}
