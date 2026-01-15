@@ -53,27 +53,6 @@ export const usePimsPropertyLayer = () => {
     requestName: 'LOAD_PROPERTIES',
   });
 
-  const loadPropertyBoundaryLayer = useApiRequestWrapper({
-    requestFunction: useCallback(
-      (params?: IGeoSearchParams) => {
-        const geoserver_params = {
-          STREET_ADDRESS_1: params?.STREET_ADDRESS_1,
-          PID: params?.PID,
-          PID_PADDED: params?.PID_PADDED,
-          PIN: params?.PIN,
-          SURVEY_PLAN_NUMBER: params?.SURVEY_PLAN_NUMBER,
-          HISTORICAL_FILE_NUMBER_STR: params?.HISTORICAL_FILE_NUMBER_STR,
-        };
-        const url = `${boundaryLayerUrl}&srsName=EPSG:4326${
-          geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''
-        }`;
-        return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Boundary_View>>(url);
-      },
-      [boundaryLayerUrl],
-    ),
-    requestName: 'LOAD_PROPERTIES_BOUNDARY',
-  });
-
   const loadPropertyLocationOnlyMinimal = useApiRequestWrapper({
     requestFunction: useCallback(() => {
       return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Lite_View>>(
@@ -151,7 +130,6 @@ export const usePimsPropertyLayer = () => {
   return useMemo(
     () => ({
       loadPropertyLayer,
-      loadPropertyBoundaryLayer,
       loadPropertyLayerMinimal: loadPropertyLocationOnlyMinimal,
       findAllByBoundary,
       findAllByBoundaryLoading: findMultipleWhereContainsWrappedLoading,
@@ -165,7 +143,6 @@ export const usePimsPropertyLayer = () => {
       findOneByBoundary,
       findOneByPidOrPin,
       findOneWhereContainsWrappedLoading,
-      loadPropertyBoundaryLayer,
       loadPropertyLayer,
       loadPropertyLocationOnlyMinimal,
     ],
