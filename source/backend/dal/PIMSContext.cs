@@ -19,6 +19,7 @@ namespace Pims.Dal
         #region Variables
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly JsonSerializerOptions _serializerOptions;
+        private static readonly object DeletionHistoryLock = new();
         #endregion
 
         #region Constructors
@@ -72,13 +73,16 @@ namespace Pims.Dal
                 if (entry.State == EntityState.Deleted && Database.IsRelational())
                 {
                     entry.State = EntityState.Detached;
-                    string user = username;
-                    string schema = GetSchemaName(entry.Entity);
-                    long primarykey = GetPrimaryKey(entry.Entity);
-                    string tableName = GetTableName(entry.Entity);
-                    Database.ExecuteSql(
-                        $"EXECUTE dbo.PIM_DELETION_HISTORY @prmUserID={user}, @prmHstSchema={schema}, @prmBizSchema={schema}, @prmBizTblNm={tableName}, @prmPKValue={primarykey}, @modeDebug={0}"
-                    );
+                    var user = username;
+                    var schema = GetSchemaName(entry.Entity);
+                    var primarykey = GetPrimaryKey(entry.Entity);
+                    var tableName = GetTableName(entry.Entity);
+
+                    lock (DeletionHistoryLock)
+                    {
+                        Database.ExecuteSql(
+                            $"EXECUTE dbo.PIM_DELETION_HISTORY @prmUserID={user}, @prmHstSchema={schema}, @prmBizSchema={schema}, @prmBizTblNm={tableName}, @prmPKValue={primarykey}, @modeDebug={0}");
+                    }
                 }
 
                 // For in-memory or non-relational providers, let EF handle the delete normally.
