@@ -185,10 +185,12 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
   const onAddToWorklist = useCallback(() => {
     const worklistDataSet: WorklistLocationFeatureDataset = {
       ...selectedFeatureDataset,
-      fullyAttributedFeatures: {
-        type: 'FeatureCollection',
-        features: [selectedFeatureDataset.parcelFeature],
-      },
+      fullyAttributedFeatures: exists(selectedFeatureDataset.parcelFeature)
+        ? {
+            type: 'FeatureCollection',
+            features: [selectedFeatureDataset.parcelFeature],
+          }
+        : null,
     };
     worklistAdd(worklistDataSet);
   }, [selectedFeatureDataset, worklistAdd]);

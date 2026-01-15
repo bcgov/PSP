@@ -1,4 +1,4 @@
-import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, PIMS_PROPERTY_BOUNDARY_KEY } from '@/constants/strings';
+import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, PIMS_PROPERTY_VW_KEY } from '@/constants/strings';
 
 import { LayerDefinition } from './types';
 
@@ -520,5 +520,5 @@ export const layerDefinitions: LayerDefinition[] = [
 ];
 
 export const pimsBoundaryLayers = new Set(
-  layerDefinitions.filter(x => x.layers?.includes(PIMS_PROPERTY_BOUNDARY_KEY)),
+  layerDefinitions.filter(x => x.layers?.includes(PIMS_PROPERTY_VW_KEY)),
 );

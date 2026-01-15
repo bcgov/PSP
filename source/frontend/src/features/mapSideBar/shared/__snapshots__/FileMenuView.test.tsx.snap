@@ -281,9 +281,6 @@ exports[`FileMenuView component > matches snapshot 1`] = `
 }
 
 .c9 {
-  -webkit-align-self: flex-end;
-  -ms-flex-item-align: end;
-  align-self: flex-end;
   margin-right: 2rem;
 }
 

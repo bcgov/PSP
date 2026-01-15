@@ -904,16 +904,15 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c3 required text-left col"
+            class="c3 text-left col"
           >
             <div
-              class="required d-flex form-group"
+              class="d-flex form-group"
             >
               <select
                 class="form-select form-control"
                 id="input-regionCode"
                 name="regionCode"
-                required=""
               >
                 <option
                   value=""

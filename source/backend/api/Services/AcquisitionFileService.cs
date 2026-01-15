@@ -972,7 +972,8 @@ namespace Pims.Api.Services
             foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
             {
                 var propertyRegion = acquisitionProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(acquisitionProperty.PropertyId);
-                if (!userRegions.Contains(propertyRegion))
+                var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+                if (propertyRegion != cannotDetermineRegion.Code && !userRegions.Contains(propertyRegion))
                 {
                     throw new BadRequestException("You cannot add a property that is outside of your user account region(s).\n\nPlease select a different property or contact admin at pims@gov.bc.ca to add the required region to your user account settings.");
                 }

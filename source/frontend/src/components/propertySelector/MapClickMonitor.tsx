@@ -85,7 +85,6 @@ export const MapClickMonitor: React.FunctionComponent<IMapClickMonitorProps> = (
     if (
       mapMachine.isRepositioning &&
       mapMachine.repositioningFeatureDataset &&
-      mapMachine.mapLocationFeatureDataset &&
       previous !== mapMachine.mapLocationFeatureDataset &&
       previous !== undefined &&
       (!selectedComponentId ||

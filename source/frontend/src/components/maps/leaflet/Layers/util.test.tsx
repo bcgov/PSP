@@ -2,10 +2,7 @@ import { DivIcon, LatLngExpression, Marker } from 'leaflet';
 import { ClusterFeature, ClusterProperties } from 'supercluster';
 
 import { toCqlFilterValue } from '@/hooks/layer-api/layerUtils';
-import {
-  emptyPropertyLocation,
-  PIMS_Property_Location_View,
-} from '@/models/layers/pimsPropertyLocationView';
+import { emptyProperty, PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 
 import { ICluster } from '../../types';
 import {
@@ -21,14 +18,14 @@ import {
 describe('mapUtils tests', () => {
   describe('pointToLayer function', () => {
     it('converts a feature and latlng expression into a layer', () => {
-      const feature: ICluster<PIMS_Property_Location_View> = {
-        id: 'PIMS_PROPERTY_LOCATION_VW.1234',
+      const feature: ICluster<PIMS_Property_View> = {
+        id: 'PIMS_PROPERTY_VW.1234',
         type: 'Feature',
         geometry: {
           type: 'Point',
           coordinates: [1, 2],
         },
-        properties: { ...emptyPropertyLocation, PROPERTY_ID: 1, IS_OTHER_INTEREST: true },
+        properties: { ...emptyProperty, PROPERTY_ID: 1, IS_OTHER_INTEREST: true },
       };
       const latlng: LatLngExpression = { lat: 1, lng: 2 };
 
@@ -97,7 +94,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { ...emptyPropertyLocation, PROPERTY_ID: 1, IS_OWNED: true },
+            properties: { ...emptyProperty, PROPERTY_ID: 1, IS_OWNED: true },
           },
           false,
         ),
@@ -109,7 +106,7 @@ describe('mapUtils tests', () => {
           {
             ...feature,
             properties: {
-              ...emptyPropertyLocation,
+              ...emptyProperty,
               PROPERTY_ID: 1,
               HAS_ACTIVE_RESEARCH_FILE: true,
             },
@@ -123,7 +120,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { ...emptyPropertyLocation, PROPERTY_ID: 1, IS_OTHER_INTEREST: true },
+            properties: { ...emptyProperty, PROPERTY_ID: 1, IS_OTHER_INTEREST: true },
           },
           false,
         ),
@@ -134,7 +131,7 @@ describe('mapUtils tests', () => {
         getMarkerIcon(
           {
             ...feature,
-            properties: { ...emptyPropertyLocation, PROPERTY_ID: 1, IS_DISPOSED: true },
+            properties: { ...emptyProperty, PROPERTY_ID: 1, IS_DISPOSED: true },
           },
           false,
           true,
@@ -147,7 +144,7 @@ describe('mapUtils tests', () => {
           {
             ...feature,
             properties: {
-              ...emptyPropertyLocation,
+              ...emptyProperty,
               PROPERTY_ID: 1,
               IS_OWNED: true,
               HAS_ACTIVE_ACQUISITION_FILE: true,
@@ -163,7 +160,7 @@ describe('mapUtils tests', () => {
           {
             ...feature,
             properties: {
-              ...emptyPropertyLocation,
+              ...emptyProperty,
               PROPERTY_ID: 1,
               IS_OWNED: null,
               HAS_ACTIVE_ACQUISITION_FILE: null,
