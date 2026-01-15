@@ -310,10 +310,9 @@ export const useMapSearch = () => {
       let result: MapFeatureData = emptyFeatureData;
       try {
         const loadPropertiesTask = loadPimsProperties(filter);
-        const loadPropertiesBoundariesTask = loadPimsPropertiesBoundary(filter);
 
         let historicalNumberInventoryData:
-           | FeatureCollection<Geometry, PIMS_Property_View>
+          | FeatureCollection<Geometry, PIMS_Property_View>
           | undefined;
         try {
           historicalNumberInventoryData = await loadPropertiesTask;
@@ -341,14 +340,10 @@ export const useMapSearch = () => {
           historicalNumberInventoryData?.features?.length > 0
         ) {
           const validFeatures = historicalNumberInventoryData.features.filter(feature =>
-            exists(feature),
-            );
+            exists(feature?.geometry),
+          );
 
-            const validBoundaryFeatures = historicalNumberInventoryDataBoundaries.features?.filter(
-              feature => !!feature?.geometry,
-            );
-
-            result = {
+          result = {
             pimsFeatures: {
               type: historicalNumberInventoryData.type,
               bbox: historicalNumberInventoryData.bbox,
