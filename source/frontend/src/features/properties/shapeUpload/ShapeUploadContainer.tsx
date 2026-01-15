@@ -38,6 +38,7 @@ export const ShapeUploadContainer: React.FunctionComponent<IShapeUploadContainer
       const shapeFeatures = await request.toGeoJson();
       response.isSuccess = true;
       response.boundary = firstOrNull(shapeFeatures.features)?.geometry as Polygon | MultiPolygon;
+      response.boundary.bbox = undefined; // remove bbox as this can cause issues with polygon json parsing on the backend.
     } catch (error) {
       response.isSuccess = false;
       response.errorMessage = (error as Error).message;
