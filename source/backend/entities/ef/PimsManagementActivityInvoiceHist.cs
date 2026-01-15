@@ -52,6 +52,12 @@ public partial class PimsManagementActivityInvoiceHist
     [Column("IS_PST_REQUIRED")]
     public bool IsPstRequired { get; set; }
 
+    [Column("IS_PAYMENT_APPROVED")]
+    public bool IsPaymentApproved { get; set; }
+
+    [Column("IS_PAYMENT_FORWARDED")]
+    public bool IsPaymentForwarded { get; set; }
+
     [Column("IS_DISABLED")]
     public bool? IsDisabled { get; set; }
 

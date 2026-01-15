@@ -24,7 +24,7 @@ import { ParcelListContainer } from '@/features/properties/parcelList/ParcelList
 import { ParcelListView } from '@/features/properties/parcelList/ParcelListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import { PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import { exists } from '@/utils';
 import { isStrataCommonProperty } from '@/utils/propertyUtils';
 
@@ -80,12 +80,12 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
       .flatMap(x => x)
       .map(x => ParcelDataset.fromFullyAttributedFeature(x.feature)) ?? [];
 
-  const pimsGroupedFeatures = chain(props.searchResult?.pimsLocationFeatures.features)
+  const pimsGroupedFeatures = chain(props.searchResult?.pimsFeatures.features)
     .groupBy(feature => feature?.properties?.SURVEY_PLAN_NUMBER)
     .map(
       planGroup =>
         planGroup
-          ?.map<PropertyProjection<PIMS_Property_Location_View>>(x => ({
+          ?.map<PropertyProjection<PIMS_Property_View>>(x => ({
             pid: x.properties.PID_PADDED,
             pin: exists(x.properties.PIN) ? String(x.properties.PIN) : null,
             isStrataLot: false,
@@ -172,7 +172,7 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
         e.stopPropagation(); // prevent any clicks on the search sidebar from propogating to the map.
       }}
     >
-      <Section className="my-0 pt-0">
+      <Section className="my-0 pt-0" data-testid="search-control-filters-section">
         <PropertyFilter
           defaultFilter={{ ...defaultPropertyFilter }}
           propertyFilter={props.propertyFilter}

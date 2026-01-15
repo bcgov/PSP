@@ -114,6 +114,7 @@ describe('AddResearchContainer component', () => {
           {
             location: { lat: 0, lng: 0 },
             fileLocation: null,
+            fileBoundary: null,
             pimsFeature: null,
             parcelFeature: selectedFeature,
             regionFeature: null,
@@ -180,6 +181,7 @@ describe('AddResearchContainer component', () => {
           {
             location: { lng: -120.69195885, lat: 50.25163372 },
             fileLocation: null,
+            fileBoundary: null,
             pimsFeature: null,
             parcelFeature: getMockFullyAttributedParcel('111-111-111'),
             regionFeature: null,
@@ -190,6 +192,7 @@ describe('AddResearchContainer component', () => {
           {
             location: { lng: -120.69195885, lat: 50.25163372 },
             fileLocation: null,
+            fileBoundary: null,
             pimsFeature: null,
             parcelFeature: getMockFullyAttributedParcel('222-222-222'),
             regionFeature: null,
@@ -200,6 +203,7 @@ describe('AddResearchContainer component', () => {
           {
             location: { lng: -120.69195885, lat: 50.25163372 },
             fileLocation: null,
+            fileBoundary: null,
             pimsFeature: null,
             parcelFeature: getMockFullyAttributedParcel('333-333-333'),
             regionFeature: null,

@@ -43,6 +43,11 @@ namespace Pims.Api.Areas.Property.Models.Search
         /// </summary>
         public IList<string> Ownership { get; set; }
 
+        /// <summary>
+        /// get/set - The property tenure cleanups.
+        /// </summary>
+        public IList<string> TenureCleanup { get; set; }
+
         #endregion
 
         #region Constructors
@@ -98,6 +103,7 @@ namespace Pims.Api.Areas.Property.Models.Search
             PlanNumber = filter.GetStringValue(nameof(PlanNumber));
             Historical = filter.GetStringValue(nameof(Historical));
             Ownership = filter.GetStringArrayValue(nameof(Ownership));
+            TenureCleanup = filter.GetStringArrayValue(nameof(TenureCleanup));
         }
         #endregion
 
@@ -121,6 +127,7 @@ namespace Pims.Api.Areas.Property.Models.Search
                 PlanNumber = model.PlanNumber,
                 Historical = model.Historical,
                 Ownership = model.Ownership,
+                TenureCleanup = model.TenureCleanup,
             };
 
             return filter;

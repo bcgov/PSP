@@ -20,6 +20,7 @@ export const usePimsPropertyRepository = () => {
     getPropertyConceptWithPidApi,
     getPropertyConceptWithPinApi,
     getPropertiesApi,
+    putPropertyNetBookApi,
   } = useApiProperties();
 
   const getPropertyWrapper = useApiRequestWrapper({
@@ -94,6 +95,16 @@ export const usePimsPropertyRepository = () => {
     }, []),
   });
 
+  const updatePropertyNetBookWrapper = useApiRequestWrapper<typeof putPropertyNetBookApi>({
+    requestFunction: useCallback(
+      async (property: ApiGen_Concepts_Property) => await putPropertyNetBookApi(property),
+      [putPropertyNetBookApi],
+    ),
+    requestName: 'updatePropertyNetBook',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to update property net book value.'),
+  });
+
   return useMemo(
     () => ({
       getPropertyWrapper,
@@ -102,6 +113,7 @@ export const usePimsPropertyRepository = () => {
       getPropertyByPidWrapper,
       getPropertyByPinWrapper,
       getAllPropertiesById,
+      updatePropertyNetBookWrapper,
     }),
     [
       getPropertyWrapper,
@@ -110,6 +122,7 @@ export const usePimsPropertyRepository = () => {
       getPropertyByPidWrapper,
       getPropertyByPinWrapper,
       getAllPropertiesById,
+      updatePropertyNetBookWrapper,
     ],
   );
 };

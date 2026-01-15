@@ -167,6 +167,7 @@ export const mockAcquisitionFileResponse = (
       file: null,
       propertyName: null,
       location: null,
+      boundary: null,
       rowVersion: 1,
     },
     {
@@ -212,6 +213,7 @@ export const mockAcquisitionFileResponse = (
       file: null,
       propertyName: null,
       location: null,
+      boundary: null,
     },
   ],
   acquisitionTeam: [
@@ -428,6 +430,7 @@ export const mockAcquisitionFileResponse = (
   acquisitionFileTakingStatuses: [],
   acquisitionFileExpropiationRiskStatusTypeCode: null,
   physicalFileDetails: null,
+  noticeOfClaim: [],
 });
 
 export const getMockExpropriationFile = (
@@ -1535,6 +1538,7 @@ export const mockAcquisitionFileSubFilesResponse = (): ApiGen_Concepts_Acquisiti
     appLastUpdateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     appCreateUserGuid: '939a27d0-76cd-49b0-b474-53166adb73da',
     rowVersion: 1,
+    noticeOfClaim: [],
     acquisitionFileProgressStatuses: [],
     acquisitionFileAppraisalStatusTypeCode: null,
     acquisitionFileLegalSurveyStatusTypeCode: null,
@@ -1597,5 +1601,6 @@ export const mockAcquisitionFileSubFilesResponse = (): ApiGen_Concepts_Acquisiti
     acquisitionFileTakingStatuses: [],
     acquisitionFileExpropiationRiskStatusTypeCode: null,
     physicalFileDetails: null,
+    noticeOfClaim: [],
   },
 ];

@@ -21,6 +21,8 @@ export interface IPropertyFilter {
   historical: string;
   /** The address of the property. */
   address: string;
+  /** The legal description of the property. */
+  legalDescription: string | null;
   /** The geocoder-returned latitude  */
   latitude: number | string | undefined;
   /** The geocoder-returned longitude  */
@@ -33,16 +35,23 @@ export interface IPropertyFilter {
   coordinates: DmsCoordinates | null;
   /** The geographic name of the property */
   name: string;
-  /** Survey Parcel Section */
-  section: string;
-  /** Survey Parcel Township */
-  township: string;
-  /** Survey Parcel Range */
-  range: string;
+
   /** Survey Parcel District */
-  district: string;
+  district: string | null;
+  /** Survey Parcel Section */
+  section: string | null;
+  /** Survey Parcel Township */
+  township: string | null;
+  /** Survey Parcel Range */
+  range: string | null;
+
+  /** Survey Parcel District Lot */
+  districtLot: string | null;
+
   /** PIMS project */
   project: IAutocompletePrediction;
+  /** The property tenure cleanup */
+  tenureCleanup: string;
 }
 
 export const defaultPropertyFilter: IPropertyFilter = {
@@ -51,6 +60,7 @@ export const defaultPropertyFilter: IPropertyFilter = {
   pin: '',
   address: '',
   planNumber: '',
+  legalDescription: null,
   latitude: '',
   longitude: '',
   historical: '',
@@ -59,9 +69,11 @@ export const defaultPropertyFilter: IPropertyFilter = {
   quantity: undefined,
   ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
   name: '',
-  section: '',
-  township: '',
-  range: '',
-  district: '',
+  district: null,
+  section: null,
+  township: null,
+  range: null,
+  districtLot: null,
   project: null,
+  tenureCleanup: '',
 };

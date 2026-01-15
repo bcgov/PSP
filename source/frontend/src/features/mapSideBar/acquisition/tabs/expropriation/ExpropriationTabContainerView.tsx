@@ -1,4 +1,5 @@
 import { FormikHelpers, FormikProps } from 'formik';
+import { cloneDeep } from 'lodash';
 import { useRef } from 'react';
 import { FaFileContract, FaPlus } from 'react-icons/fa';
 import { useHistory, useRouteMatch } from 'react-router-dom';
@@ -11,14 +12,19 @@ import { Claims } from '@/constants';
 import { ApiGen_CodeTypes_AcquisitionFileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionFileTypeTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_ExpropriationPayment } from '@/models/api/generated/ApiGen_Concepts_ExpropriationPayment';
+import { isValidId } from '@/utils';
 
 import { cannotEditMessage } from '../../common/constants';
 import { useGenerateExpropriationForm1 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm1';
+import { useGenerateExpropriationForm4 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm4';
 import { useGenerateExpropriationForm5 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm5';
+import { useGenerateExpropriationForm7 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm7';
 import { useGenerateExpropriationForm8 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm8';
 import { useGenerateExpropriationForm9 } from '../../common/GenerateForm/hooks/useGenerateExpropriationForm9';
 import ExpropriationForm1 from './form1/ExpropriationForm1';
+import ExpropriationForm4 from './form4/ExpropriationForm4';
 import ExpropriationForm5 from './form5/ExpropriationForm5';
+import ExpropriationForm7 from './form7/ExpropriationForm7';
 import ExpropriationForm8Details from './form8/details/ExpropriationForm8Details';
 import ExpropriationForm9 from './form9/ExpropriationForm9';
 import ExpropriationEventHistoryContainer from './history/ExpropriationEventHistoryContainer';
@@ -26,7 +32,9 @@ import ExpropriationEventHistoryView from './history/ExpropriationEventHistoryVi
 import ExpropriationEventModal from './history/modal/ExpropriationEventModal';
 import {
   ExpropriationForm1Model,
+  ExpropriationForm4Model,
   ExpropriationForm5Model,
+  ExpropriationForm7Model,
   ExpropriationForm9Model,
 } from './models';
 
@@ -46,11 +54,15 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
 
   const acquisitionFileTypeCode = acquisitionFile.acquisitionTypeCode?.id;
   const formikRefForm1 = useRef<FormikProps<ExpropriationForm1Model>>(null);
+  const formikRefForm4 = useRef<FormikProps<ExpropriationForm4Model>>(null);
   const formikRefForm5 = useRef<FormikProps<ExpropriationForm5Model>>(null);
+  const formikRefForm7 = useRef<FormikProps<ExpropriationForm7Model>>(null);
   const formikRefForm9 = useRef<FormikProps<ExpropriationForm9Model>>(null);
 
   const onGenerateForm1 = useGenerateExpropriationForm1();
+  const onGenerateForm4 = useGenerateExpropriationForm4();
   const onGenerateForm5 = useGenerateExpropriationForm5();
+  const onGenerateForm7 = useGenerateExpropriationForm7();
   const onGenerateForm8 = useGenerateExpropriationForm8();
   const onGenerateForm9 = useGenerateExpropriationForm9();
 
@@ -59,7 +71,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
     formikHelpers: FormikHelpers<ExpropriationForm1Model>,
   ) => {
     try {
-      if (acquisitionFile.id) {
+      if (isValidId(acquisitionFile.id)) {
         await onGenerateForm1(acquisitionFile.id, values);
       }
     } finally {
@@ -72,12 +84,30 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
     formikRefForm1.current?.submitForm();
   };
 
+  const handleGenerateForm4 = async (
+    values: ExpropriationForm5Model,
+    formikHelpers: FormikHelpers<ExpropriationForm5Model>,
+  ) => {
+    try {
+      if (isValidId(acquisitionFile.id)) {
+        await onGenerateForm4(acquisitionFile.id, values);
+      }
+    } finally {
+      formikHelpers?.setSubmitting(false);
+    }
+  };
+
+  const onGenerateForm4Click = () => {
+    formikRefForm4.current?.setSubmitting(true);
+    formikRefForm4.current?.submitForm();
+  };
+
   const handleGenerateForm5 = async (
     values: ExpropriationForm5Model,
     formikHelpers: FormikHelpers<ExpropriationForm5Model>,
   ) => {
     try {
-      if (acquisitionFile.id) {
+      if (isValidId(acquisitionFile.id)) {
         await onGenerateForm5(acquisitionFile.id, values);
       }
     } finally {
@@ -90,12 +120,30 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
     formikRefForm5.current?.submitForm();
   };
 
+  const handleGenerateForm7 = async (
+    values: ExpropriationForm7Model,
+    formikHelpers: FormikHelpers<ExpropriationForm7Model>,
+  ) => {
+    try {
+      if (isValidId(acquisitionFile.id)) {
+        await onGenerateForm7(acquisitionFile.id, values);
+      }
+    } finally {
+      formikHelpers?.setSubmitting(false);
+    }
+  };
+
+  const onGenerateForm7Click = () => {
+    formikRefForm7.current?.setSubmitting(true);
+    formikRefForm7.current?.submitForm();
+  };
+
   const handleGenerateForm9 = async (
     values: ExpropriationForm9Model,
     formikHelpers: FormikHelpers<ExpropriationForm9Model>,
   ) => {
     try {
-      if (acquisitionFile.id) {
+      if (isValidId(acquisitionFile.id)) {
         await onGenerateForm9(acquisitionFile.id, values);
       }
     } finally {
@@ -107,6 +155,9 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
     formikRefForm9.current?.setSubmitting(true);
     formikRefForm9.current?.submitForm();
   };
+
+  const copiedAcquisitionFile = cloneDeep(acquisitionFile);
+  copiedAcquisitionFile.fileProperties.forEach(fp => (fp.file = null));
 
   return (
     <>
@@ -134,7 +185,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
           data-testid="form-1-section"
         >
           <ExpropriationForm1
-            acquisitionFile={acquisitionFile}
+            acquisitionFile={copiedAcquisitionFile}
             formikRef={formikRefForm1}
             onGenerate={(
               values: ExpropriationForm1Model,
@@ -143,6 +194,37 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
               handleGenerateForm1(values, formikHelpers);
             }}
           ></ExpropriationForm1>
+        </Section>
+      )}
+
+      {[
+        ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN3.toString(),
+        ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN6.toString(),
+      ].includes(acquisitionFileTypeCode) && (
+        <Section
+          isCollapsable
+          initiallyExpanded={false}
+          header={
+            <SectionListHeader
+              claims={[Claims.ACQUISITION_VIEW]}
+              title="Form 4 - Amended Expropriation Notice"
+              addButtonText="Generate Form 4"
+              addButtonIcon={<FaFileContract size={'2rem'} />}
+              onButtonAction={onGenerateForm4Click}
+            />
+          }
+          data-testid="form-4-section"
+        >
+          <ExpropriationForm4
+            acquisitionFile={copiedAcquisitionFile}
+            formikRef={formikRefForm4}
+            onGenerate={(
+              values: ExpropriationForm4Model,
+              formikHelpers: FormikHelpers<ExpropriationForm4Model>,
+            ) => {
+              handleGenerateForm4(values, formikHelpers);
+            }}
+          ></ExpropriationForm4>
         </Section>
       )}
 
@@ -162,7 +244,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
           data-testid="form-5-section"
         >
           <ExpropriationForm5
-            acquisitionFile={acquisitionFile}
+            acquisitionFile={copiedAcquisitionFile}
             formikRef={formikRefForm5}
             onGenerate={(
               values: ExpropriationForm5Model,
@@ -171,6 +253,35 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
               handleGenerateForm5(values, formikHelpers);
             }}
           ></ExpropriationForm5>
+        </Section>
+      )}
+
+      {(acquisitionFileTypeCode === ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN6 ||
+        acquisitionFileTypeCode === ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN3) && (
+        <Section
+          isCollapsable
+          initiallyExpanded={false}
+          header={
+            <SectionListHeader
+              claims={[Claims.ACQUISITION_VIEW]}
+              title="Form 7 - Abandonment of Expropriation"
+              addButtonText="Generate Form 7"
+              addButtonIcon={<FaFileContract size={'2rem'} />}
+              onButtonAction={onGenerateForm7Click}
+            />
+          }
+          data-testid="form-7-section"
+        >
+          <ExpropriationForm7
+            acquisitionFile={copiedAcquisitionFile}
+            formikRef={formikRefForm7}
+            onGenerate={(
+              values: ExpropriationForm7Model,
+              formikHelpers: FormikHelpers<ExpropriationForm7Model>,
+            ) => {
+              handleGenerateForm7(values, formikHelpers);
+            }}
+          ></ExpropriationForm7>
         </Section>
       )}
 
@@ -226,7 +337,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
           data-testid="form-9-section"
         >
           <ExpropriationForm9
-            acquisitionFile={acquisitionFile}
+            acquisitionFile={copiedAcquisitionFile}
             formikRef={formikRefForm9}
             onGenerate={(
               values: ExpropriationForm9Model,

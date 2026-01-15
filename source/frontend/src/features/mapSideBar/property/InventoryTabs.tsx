@@ -25,6 +25,7 @@ export enum InventoryTabNames {
   pims = 'pims',
   takes = 'takes',
   management = 'management',
+  improvements = 'improvements',
   crown = 'crown',
   other = 'other',
   highway = 'highway',

@@ -22,6 +22,9 @@ namespace Pims.Dal.Entities;
 [Index("PropertyStatusTypeCode", Name = "PRPRTY_PROPERTY_STATUS_TYPE_CODE_IDX")]
 [Index("PropertyTypeCode", Name = "PRPRTY_PROPERTY_TYPE_CODE_IDX")]
 [Index("RegionCode", Name = "PRPRTY_REGION_CODE_IDX")]
+[Index("ResponsiblePayerOrganizationId", Name = "PRPRTY_RESPONSIBLE_PAYER_ORGANIZATION_ID_IDX")]
+[Index("ResponsiblePayerPersonId", Name = "PRPRTY_RESPONSIBLE_PAYER_PERSON_ID_IDX")]
+[Index("ResponsiblePayerPrimaryContactId", Name = "PRPRTY_RESPONSIBLE_PAYER_PRIMARY_CONTACT_ID_IDX")]
 [Index("SurplusDeclarationTypeCode", Name = "PRPRTY_SURPLUS_DECLARATION_TYPE_CODE_IDX")]
 [Index("SurveyPlanNumber", Name = "PRPRTY_SURVEY_PLAN_NUMBER_IDX")]
 [Index("TaxResponsibilityTypeCode", Name = "PRPRTY_TAX_RESPONSIBILITY_TYPE_CODE_IDX")]
@@ -130,6 +133,24 @@ public partial class PimsProperty
     public string TaxResponsibilityTypeCode { get; set; }
 
     /// <summary>
+    /// Foreign key for the responsible payer to the PIMS_PERSON table.
+    /// </summary>
+    [Column("RESPONSIBLE_PAYER_PERSON_ID")]
+    public long? ResponsiblePayerPersonId { get; set; }
+
+    /// <summary>
+    /// Foreign key for the responsible payer organization to the PIMS_ORGANIZATION table.
+    /// </summary>
+    [Column("RESPONSIBLE_PAYER_ORGANIZATION_ID")]
+    public long? ResponsiblePayerOrganizationId { get; set; }
+
+    /// <summary>
+    /// Foreign key for the responsible payer primary contact for the organization to the PIMS_PERSON table.
+    /// </summary>
+    [Column("RESPONSIBLE_PAYER_PRIMARY_CONTACT_ID")]
+    public long? ResponsiblePayerPrimaryContactId { get; set; }
+
+    /// <summary>
     /// Date the property was officially registered
     /// </summary>
     [Column("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE")]
@@ -174,7 +195,7 @@ public partial class PimsProperty
     public string LandLegalDescription { get; set; }
 
     /// <summary>
-    /// Spatial bundary of land
+    /// Spatial boundary of property.
     /// </summary>
     [Column("BOUNDARY", TypeName = "geometry")]
     public Geometry Boundary { get; set; }
@@ -307,6 +328,19 @@ public partial class PimsProperty
     [Column("GLOBAL_UID")]
     [StringLength(254)]
     public string GlobalUid { get; set; }
+
+    /// <summary>
+    /// Net book value of the property.
+    /// </summary>
+    [Column("NET_BOOK_AMT", TypeName = "money")]
+    public decimal? NetBookAmt { get; set; }
+
+    /// <summary>
+    /// Note associated with the net book value of the property.
+    /// </summary>
+    [Column("NET_BOOK_NOTE")]
+    [StringLength(4000)]
+    public string NetBookNote { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -443,6 +477,9 @@ public partial class PimsProperty
     public virtual ICollection<PimsPropertyDocument> PimsPropertyDocuments { get; set; } = new List<PimsPropertyDocument>();
 
     [InverseProperty("Property")]
+    public virtual ICollection<PimsPropertyImprovement> PimsPropertyImprovements { get; set; } = new List<PimsPropertyImprovement>();
+
+    [InverseProperty("Property")]
     public virtual ICollection<PimsPropertyLease> PimsPropertyLeases { get; set; } = new List<PimsPropertyLease>();
 
     [InverseProperty("Property")]
@@ -483,6 +520,18 @@ public partial class PimsProperty
     [ForeignKey("RegionCode")]
     [InverseProperty("PimsProperties")]
     public virtual PimsRegion RegionCodeNavigation { get; set; }
+
+    [ForeignKey("ResponsiblePayerOrganizationId")]
+    [InverseProperty("PimsProperties")]
+    public virtual PimsOrganization ResponsiblePayerOrganization { get; set; }
+
+    [ForeignKey("ResponsiblePayerPersonId")]
+    [InverseProperty("PimsPropertyResponsiblePayerPeople")]
+    public virtual PimsPerson ResponsiblePayerPerson { get; set; }
+
+    [ForeignKey("ResponsiblePayerPrimaryContactId")]
+    [InverseProperty("PimsPropertyResponsiblePayerPrimaryContacts")]
+    public virtual PimsPerson ResponsiblePayerPrimaryContact { get; set; }
 
     [ForeignKey("SurplusDeclarationTypeCode")]
     [InverseProperty("PimsProperties")]

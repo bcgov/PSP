@@ -14,10 +14,7 @@ import { ICluster } from '@/components/maps/types';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { TANTALIS_CrownSurveyParcels_Feature_Properties } from '@/models/layers/crownLand';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import {
-  PIMS_Property_Boundary_View,
-  PIMS_Property_Location_Lite_View,
-} from '@/models/layers/pimsPropertyLocationView';
+import { PIMS_Property_Lite_View, PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import { exists } from '@/utils';
 
 import { ONE_HUNDRED_METER_PRECISION } from '../../constants';
@@ -55,8 +52,8 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const spiderfierRef =
     useRef<
       Spiderfier<
-        | PIMS_Property_Location_Lite_View
-        | PIMS_Property_Boundary_View
+        | PIMS_Property_Lite_View
+        | PIMS_Property_View
         | PMBC_FullyAttributed_Feature_Properties
         | TANTALIS_CrownSurveyParcels_Feature_Properties
       >
@@ -83,66 +80,97 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
   const [spider, setSpider] = useState<
     SpiderSet<
-      | PIMS_Property_Location_Lite_View
-      | PIMS_Property_Boundary_View
+      | PIMS_Property_Lite_View
+      | PIMS_Property_View
       | PMBC_FullyAttributed_Feature_Properties
       | TANTALIS_CrownSurveyParcels_Feature_Properties
     >
   >({});
 
-  const pimsLocationFeatures: FeatureCollection<Geometry, PIMS_Property_Location_Lite_View> =
-    useMemo(() => {
-      let filteredFeatures = mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.features?.filter(
-        x => mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
-      );
+  const pimsLiteFeatures: FeatureCollection<Geometry, PIMS_Property_Lite_View> = useMemo(() => {
+    const sourceFeatures = mapMachine.mapFeatureData?.pimsLiteFeatures?.features ?? [];
 
-      if (!mapMachine.showRetired) {
-        filteredFeatures = filteredFeatures.filter(x => !x.properties.IS_RETIRED);
-      }
+    let filteredFeatures =
+      mapMachine.activePimsPropertyIds.length > 0
+        ? sourceFeatures.filter(x =>
+            mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
+          )
+        : sourceFeatures;
 
-      // Do not cluster any points that do not have markers on the map.
-      const displayableFeatures = filteredFeatures.filter(f =>
-        exists(getMarkerIcon(f, false, mapMachine.showDisposed, mapMachine.showRetired)),
-      );
+    if (!mapMachine.showRetired) {
+      filteredFeatures = filteredFeatures.filter(x => !x.properties.IS_RETIRED);
+    }
 
-      return {
-        type: mapMachine.mapFeatureData.pimsLocationLiteFeatures.type,
-        features: zoom > minZoom ? displayableFeatures : [],
-      };
-    }, [
-      mapMachine.activePimsPropertyIds,
-      mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.type,
-      mapMachine.mapFeatureData?.pimsLocationLiteFeatures?.features,
-      mapMachine.showDisposed,
-      mapMachine.showRetired,
-      minZoom,
-      zoom,
-    ]);
+    // Do not cluster any points that do not have markers on the map.
+    const displayableFeatures = filteredFeatures.filter(f =>
+      exists(getMarkerIcon(f, false, mapMachine.showDisposed, mapMachine.showRetired)),
+    );
 
-  const pimsBoundaryFeatures = mapMachine.mapFeatureData?.pimsBoundaryFeatures;
+    return {
+      type: mapMachine.mapFeatureData.pimsLiteFeatures.type,
+      features: zoom > minZoom ? displayableFeatures : [],
+    };
+  }, [
+    mapMachine.activePimsPropertyIds,
+    mapMachine.mapFeatureData?.pimsLiteFeatures?.type,
+    mapMachine.mapFeatureData?.pimsLiteFeatures?.features,
+    mapMachine.showDisposed,
+    mapMachine.showRetired,
+    minZoom,
+    zoom,
+  ]);
+
+  const pimsFeatures: FeatureCollection<Geometry, PIMS_Property_View> | undefined = useMemo(() => {
+    const sourceFeatures = mapMachine.mapFeatureData?.pimsFeatures?.features ?? [];
+
+    let filteredFeatures =
+      mapMachine.activePimsPropertyIds.length > 0
+        ? sourceFeatures.filter(x =>
+            mapMachine.activePimsPropertyIds.includes(Number(x.properties.PROPERTY_ID)),
+          )
+        : sourceFeatures;
+
+    if (!mapMachine.showRetired) {
+      filteredFeatures = filteredFeatures.filter(x => !x.properties.IS_RETIRED);
+    }
+
+    const displayableFeatures = filteredFeatures.filter(f =>
+      exists(getMarkerIcon(f, false, mapMachine.showDisposed, mapMachine.showRetired)),
+    );
+
+    return {
+      type: mapMachine.mapFeatureData.pimsFeatures.type,
+      features: zoom > minZoom ? displayableFeatures : [],
+    };
+  }, [
+    mapMachine.activePimsPropertyIds,
+    mapMachine.mapFeatureData?.pimsFeatures?.type,
+    mapMachine.mapFeatureData?.pimsFeatures?.features,
+    mapMachine.showDisposed,
+    mapMachine.showRetired,
+    minZoom,
+    zoom,
+  ]);
 
   const pmbcFeatures = mapMachine.mapFeatureData?.fullyAttributedFeatures;
 
   const surveyedParcelsFeatures = mapMachine.mapFeatureData?.surveyedParcelsFeatures;
 
   const featurePoints: Supercluster.PointFeature<
-    | PIMS_Property_Location_Lite_View
-    | PIMS_Property_Boundary_View
+    | PIMS_Property_Lite_View
+    | PIMS_Property_View
     | PMBC_FullyAttributed_Feature_Properties
     | TANTALIS_CrownSurveyParcels_Feature_Properties
   >[] = useMemo(() => {
-    const pimsLocationPoints =
-      featureCollectionResponseToPointFeature<PIMS_Property_Location_Lite_View>(
-        pimsLocationFeatures,
-      );
-    const pimsBoundaryPoints =
-      featureCollectionResponseToPointFeature<PIMS_Property_Boundary_View>(pimsBoundaryFeatures);
-    return [...pimsLocationPoints, ...pimsBoundaryPoints];
-  }, [pimsLocationFeatures, pimsBoundaryFeatures]);
+    const pimsLitePoints =
+      featureCollectionResponseToPointFeature<PIMS_Property_Lite_View>(pimsLiteFeatures);
+    const pimsPoints = featureCollectionResponseToPointFeature<PIMS_Property_View>(pimsFeatures);
+    return [...pimsLitePoints, ...pimsPoints];
+  }, [pimsLiteFeatures, pimsFeatures]);
 
   const searchPoints: Supercluster.PointFeature<
-    | PIMS_Property_Location_Lite_View
-    | PIMS_Property_Boundary_View
+    | PIMS_Property_Lite_View
+    | PIMS_Property_View
     | PMBC_FullyAttributed_Feature_Properties
     | TANTALIS_CrownSurveyParcels_Feature_Properties
   >[] = useMemo(() => {
@@ -283,7 +311,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
             );
           } else {
             const clusterFeature = cluster as PointFeature<
-              PIMS_Property_Location_Lite_View | PIMS_Property_Boundary_View
+              PIMS_Property_Lite_View | PIMS_Property_View
             >;
 
             const isSelected =
@@ -329,9 +357,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
          */}
         {spider.markers?.map((m, index: number) => {
           const clusterFeature = m as PointFeature<
-            | PIMS_Property_Location_Lite_View
-            | PIMS_Property_Boundary_View
-            | PMBC_FullyAttributed_Feature_Properties
+            PIMS_Property_Lite_View | PIMS_Property_View | PMBC_FullyAttributed_Feature_Properties
           >;
 
           return (

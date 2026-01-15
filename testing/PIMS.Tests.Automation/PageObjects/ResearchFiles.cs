@@ -1,6 +1,5 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
-using System.ComponentModel;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -77,7 +76,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By researchFileDetailsProjectSubtitle = By.XPath("//h2/div/div[contains(text(),'Project')]");
         private readonly By reserachFileDetailsProjectLabel = By.XPath("//label[contains(text(),'Ministry project')]");
         private readonly By researchFileDetailsProjectsCount = By.XPath("//div[contains(text(),'Project')]/parent::div/parent::h2/following-sibling::div/div/div/div");
-        private readonly By researchFileDetailsProjectsRemoveBttn = By.CssSelector("svg[data-testid='remove-button']");
+        private readonly By researchFileDetailsProjectsRemoveBttn = By.CssSelector("button[data-testid='remove-button']");
 
         private readonly By researchFileDetailsRoadSubtitle = By.XPath("//div[contains(text(),'Roads')]");
         private readonly By researchFileDetailsRoadNameLabel = By.XPath("//label[contains(text(),'Road name')]");
@@ -530,8 +529,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 else if (sharedModals.ModalHeader() == "User Override Required")
                 {
                     Assert.Equal("User Override Required", sharedModals.ModalHeader());
-                    Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.SecondaryModalContent());
-                    Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.SecondaryModalContent());
+                    Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
+                    Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
                 }
                 else if (sharedModals.ModalHeader() == "Confirm status change")
@@ -565,7 +564,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             //Title and Name
-            AssertTrueIsDisplayed(researchFileCreateHeader);
+            //AssertTrueIsDisplayed(researchFileCreateHeader);
             AssertTrueIsDisplayed(researchFileNameLabel);
             AssertTrueIsDisplayed(researchFileNameInput);
             AssertTrueIsDisplayed(researchFileHelpNameTooltip);

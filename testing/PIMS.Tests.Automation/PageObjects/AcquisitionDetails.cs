@@ -10,14 +10,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By menuAcquisitionButton = By.XPath("//body/div[@id='root']/div[2]/div[1]/div[1]/div[@data-testid='nav-tooltip-acquisition']/a");
         private readonly By createAcquisitionFileButton = By.XPath("//a[contains(text(),'Create an Acquisition File')]");
 
-        private readonly By acquisitionFileSummaryBttn = By.CssSelector("div[data-testid='menu-item-row-0'] div button[title='File Details']");
-        private readonly By acquisitionFileDetailsTab = By.CssSelector("button[title='File Details']");
+        private readonly By acquisitionFileSummaryBttn = By.CssSelector("div[data-testid='menu-item-summary'] button[title='File Details']");
+        private readonly By acquisitionFileDetailsTab = By.CssSelector("a[data-rb-event-key='fileDetails']");
         private readonly By acquisitionSubfilesTab = By.XPath("//a[contains(text(),'Sub-Files')]");
 
         //Acquisition File Details View Form Elements
-        private readonly By acquisitionFileViewTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Acquisition File')]");
-        
-        private readonly By acquisitionFileCreateTitle = By.XPath("//html[1]/body[1]/div[1]/div[2]/div[2]/div[1]/div[1]/div[1]/div[1]/div[1]/h1[contains(text(),'Create Acquisition File')]");
+        private readonly By acquisitionFileTitle = By.CssSelector("div[data-testid='form-title']");
         private readonly By acquisitionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
         private readonly By acquisitionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div[1]");
 
@@ -35,7 +33,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileHeaderHistoricalFileContent = By.XPath("//label[contains(text(),'Historical file #:')]/parent::div/following-sibling::div/div/span");
         private readonly By acquisitionHeaderStatusContent = By.XPath("//b[contains(text(),'File')]/parent::span/following-sibling::div");
 
-        private readonly By acquisitionFileProjectSubtitle = By.XPath("//h2/div/div[contains(text(), 'Project')]");
+        private readonly By acquisitionFileProjectSubtitle = By.XPath("//h2/div/div[normalize-space(text())='Project']");
+        private readonly By acquisitionFileProjectCreateLabel = By.XPath("//label[contains(text(),'Ministry project')]");
         private readonly By acquisitionFileProjectLabel = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]");
         private readonly By acquisitionFileProjectContent = By.XPath("//div[@class='collapse show']/div/div/label[contains(text(),'Ministry project')]/parent::div/following-sibling::div");
         private readonly By acquisitionFileProjectProductLabel = By.XPath("//label[contains(text(),'Product')]");
@@ -119,7 +118,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileEstimatedDateInput = By.Id("datepicker-estimatedCompletionDate");
         private readonly By acquisitionFilePossesionDateInput = By.Id("datepicker-possessionDate");
 
-        private readonly By acquisitionFileNameInput = By.Id("input-fileName");
+        private readonly By acquisitionFileNameInput = By.CssSelector("input[id='input-fileName']");
         private readonly By acquisitionFileNameInvalidMessage = By.XPath("//div[contains(text(),'Acquisition file name must be at most 500 characters')]");
         private readonly By acquisitionFileHistoricalNumberInput = By.Id("input-legacyFileNumber");
         private readonly By acquisitionFileHistoricalInvalidMessage = By.XPath("//div[contains(text(),'Legacy file number must be at most 18 characters')]");
@@ -153,7 +152,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Acquisition File')]/parent::div/parent::div/parent::div/parent::div");
 
         //Acquisition Sub-files View Elements
-        private readonly By acquisitionSubFileCreateTitle = By.XPath("//h1[contains(text(),'Create Acquisition Sub-Interest File')]");
         private readonly By acquisitionSubfileCreateTableTitle = By.XPath("//div[contains(text(),'Linked Files')]");
         private readonly By acquisitionSubfileCreateTableLinkedFilesCode = By.CssSelector("div[data-testid='linked-files-header']");
         private readonly By acquisitionSubfileCreateButton = By.XPath("//div[contains(text(),'Add Sub-interest File')]/parent::button");
@@ -783,13 +781,13 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             //if (acquisitionType == "Main")
-            //    AssertTrueIsDisplayed(acquisitionFileCreateTitle);
+            //    AssertTrueIsDisplayed(acquisitionFileTitle);
             //else
-            //    AssertTrueIsDisplayed(acquisitionSubFileCreateTitle);
+            //    AssertTrueContentEquals(acquisitionFileTitle, "Create Acquisition Sub-Interest File");
 
             //Project
             AssertTrueIsDisplayed(acquisitionFileProjectSubtitle);
-            AssertTrueIsDisplayed(acquisitionFileProjectLabel);
+            AssertTrueIsDisplayed(acquisitionFileProjectCreateLabel);
             if (acquisitionType == "Main")
                 AssertTrueIsDisplayed(acquisitionFileProjectInput);
              

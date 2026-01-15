@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Globalization;
 using System.Linq;
+using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 
@@ -59,6 +60,10 @@ namespace Pims.Api.Areas.Reports.Models.Management
         [CsvHelper.Configuration.Attributes.Name("Services Provider")]
         public string ServicesProvider { get; set; }
 
+        [DisplayName("Regions")]
+        [CsvHelper.Configuration.Attributes.Name("Regions")]
+        public string Regions { get; set; }
+
         [DisplayName("Properties")]
         [CsvHelper.Configuration.Attributes.Name("Properties")]
         public string Properties { get; set; }
@@ -79,21 +84,45 @@ namespace Pims.Api.Areas.Reports.Models.Management
         [CsvHelper.Configuration.Attributes.Name("Total amount [invoice]")]
         public decimal InvoiceTotal { get; set; }
 
-        [DisplayName("Total (before tax) [activity]")]
-        [CsvHelper.Configuration.Attributes.Name("Total (before tax) [activity]")]
-        public decimal ActivityPreTaxTotal { get; set; }
+        [DisplayName("Payment Approved")]
+        [CsvHelper.Configuration.Attributes.Name("Payment Approved")]
+        public string IsPaymentApproved { get; set; }
 
-        [DisplayName("GST Amount [activity]")]
-        [CsvHelper.Configuration.Attributes.Name("GST Amount [activity]")]
-        public decimal ActivityGstAmount { get; set; }
+        [DisplayName("Payment Forwarded")]
+        [CsvHelper.Configuration.Attributes.Name("Payment Forwarded")]
+        public string IsPaymentForwarded { get; set; }
 
-        [DisplayName("PST Amount [activity]")]
-        [CsvHelper.Configuration.Attributes.Name("PST Amount [activity]")]
-        public decimal ActivityPstAmount { get; set; }
+        [DisplayName("Approved Invoices Total (before tax) [activity]")]
+        [CsvHelper.Configuration.Attributes.Name("Approved Invoices Total (before tax) [activity]")]
+        public decimal ApprovedPreTaxTotal { get; set; }
 
-        [DisplayName("Total amount [activity]")]
-        [CsvHelper.Configuration.Attributes.Name("Total amount [activity]")]
-        public decimal ActivityTotal { get; set; }
+        [DisplayName("Approved Invoices GST amount [activity]")]
+        [CsvHelper.Configuration.Attributes.Name("Approved Invoices GST amount [activity]")]
+        public decimal ApprovedGstAmount { get; set; }
+
+        [DisplayName("Approved Invoices PST amount [activity]")]
+        [CsvHelper.Configuration.Attributes.Name("Approved Invoices PST amount [activity]")]
+        public decimal ApprovedPstAmount { get; set; }
+
+        [DisplayName("Approved Invoices Total amount [activity]")]
+        [CsvHelper.Configuration.Attributes.Name("Approved Invoices Total amount [activity]")]
+        public decimal ApprovedTotal { get; set; }
+
+        [DisplayName("All Invoices Total (before tax) [activity]")]
+        [CsvHelper.Configuration.Attributes.Name("All Invoices Total (before tax) [activity]")]
+        public decimal AllPreTaxTotal { get; set; }
+
+        [DisplayName("All Invoices GST amount [activity]")]
+        [CsvHelper.Configuration.Attributes.Name("All Invoices GST amount [activity]")]
+        public decimal AllGstAmount { get; set; }
+
+        [DisplayName("All Invoices PST amount [activity]")]
+        [CsvHelper.Configuration.Attributes.Name("All Invoices PST amount [activity]")]
+        public decimal AllPstAmount { get; set; }
+
+        [DisplayName("All Invoices Total amount [activity]")]
+        [CsvHelper.Configuration.Attributes.Name("All Invoices Total amount [activity]")]
+        public decimal AllTotal { get; set; }
 
         public ManagementActivityInvoicesReportModel(PimsManagementActivityInvoice invoice)
         {
@@ -111,15 +140,30 @@ namespace Pims.Api.Areas.Reports.Models.Management
             ActivitySubTypes = GetActivitySubTypesAsString(invoice.ManagementActivity?.PimsMgmtActivityActivitySubtyps);
             CompletionDate = GetNullableDate(invoice.ManagementActivity?.CompletionDt);
             ServicesProvider = invoice.ManagementActivity?.ServiceProviderPerson?.GetFullName() ?? GetNullableString(invoice.ManagementActivity?.ServiceProviderOrg?.Name);
+            Regions = GetRegionsAsString(invoice.ManagementActivity);
             Properties = GetPropertiesAsString(invoice.ManagementActivity);
             InvoicePreTaxTotal = invoice.PretaxAmt;
             InvoiceGstAmount = invoice.GstAmt ?? 0;
             InvoicePstAmount = invoice.PstAmt ?? 0;
             InvoiceTotal = invoice.TotalAmt ?? 0;
-            ActivityPreTaxTotal = invoice.ManagementActivity?.PimsManagementActivityInvoices?.Sum(i => i.PretaxAmt) ?? 0;
-            ActivityGstAmount = invoice.ManagementActivity?.PimsManagementActivityInvoices?.Sum(i => i.GstAmt ?? 0) ?? 0;
-            ActivityPstAmount = invoice.ManagementActivity?.PimsManagementActivityInvoices?.Sum(i => i.PstAmt ?? 0) ?? 0;
-            ActivityTotal = invoice.ManagementActivity?.PimsManagementActivityInvoices?.Sum(i => i.TotalAmt ?? 0) ?? 0;
+            IsPaymentApproved = invoice.IsPaymentApproved.BoolToYesNo();
+            IsPaymentForwarded = invoice.IsPaymentForwarded.BoolToYesNo();
+            ApprovedPreTaxTotal = invoice.ManagementActivity?.PimsManagementActivityInvoices?
+                .Where(i => i.IsPaymentApproved)
+                .Sum(i => i.PretaxAmt) ?? 0;
+            ApprovedGstAmount = invoice.ManagementActivity?.PimsManagementActivityInvoices?
+                .Where(i => i.IsPaymentApproved)
+                .Sum(i => i.GstAmt ?? 0) ?? 0;
+            ApprovedPstAmount = invoice.ManagementActivity?.PimsManagementActivityInvoices?
+                .Where(i => i.IsPaymentApproved)
+                .Sum(i => i.PstAmt ?? 0) ?? 0;
+            ApprovedTotal = invoice.ManagementActivity?.PimsManagementActivityInvoices?
+                .Where(i => i.IsPaymentApproved)
+                .Sum(i => i.TotalAmt ?? 0) ?? 0;
+            AllPreTaxTotal = invoice.ManagementActivity?.PimsManagementActivityInvoices?.Sum(i => i.PretaxAmt) ?? 0;
+            AllGstAmount = invoice.ManagementActivity?.PimsManagementActivityInvoices?.Sum(i => i.GstAmt ?? 0) ?? 0;
+            AllPstAmount = invoice.ManagementActivity?.PimsManagementActivityInvoices?.Sum(i => i.PstAmt ?? 0) ?? 0;
+            AllTotal = invoice.ManagementActivity?.PimsManagementActivityInvoices?.Sum(i => i.TotalAmt ?? 0) ?? 0;
         }
 
         private static string GetNullableString(string value)
@@ -166,6 +210,22 @@ namespace Pims.Api.Areas.Reports.Models.Management
                         .Select(st => st?.MgmtActivitySubtypeCodeNavigation?.Description)
                         .Where(s => !string.IsNullOrWhiteSpace(s))
                         .Distinct());
+            }
+            return string.Empty;
+        }
+
+        private static string GetRegionsAsString(PimsManagementActivity activity)
+        {
+            if (activity is not null)
+            {
+                var activityRegions = activity.PimsManagementActivityProperties
+                        .Select(map => map?.Property?.RegionCodeNavigation?.Description)
+                        .Where(s => !string.IsNullOrWhiteSpace(s)).ToList();
+                if (activity.ManagementFile?.RegionCode != null)
+                {
+                    activityRegions.Add(activity.ManagementFile.RegionCodeNavigation?.Description);
+                }
+                return string.Join("|", activityRegions.Distinct());
             }
             return string.Empty;
         }

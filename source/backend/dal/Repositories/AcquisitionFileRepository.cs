@@ -140,6 +140,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(rp => rp.Person)
                 .Include(r => r.PimsInterestHolders)
                     .ThenInclude(rp => rp.Organization)
+                .Include(r => r.PimsNoticeOfClaims)
                 .FirstOrDefault(x => x.AcquisitionFileId == id) ?? throw new KeyNotFoundException();
         }
 
@@ -191,8 +192,8 @@ namespace Pims.Dal.Repositories
                 .Select(aoh => new LastUpdatedByModel()
                 {
                     ParentId = id,
-                    AppLastUpdateUserid = aoh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                    AppLastUpdateUserGuid = aoh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                    AppLastUpdateUserid = aoh.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = aoh.AppLastUpdateUserGuid,
                     AppLastUpdateTimestamp = aoh.EndDateHist ?? DateTime.UnixEpoch,
                 })
                 .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -241,8 +242,8 @@ namespace Pims.Dal.Repositories
               .Select(aph => new LastUpdatedByModel()
               {
                   ParentId = id,
-                  AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                  AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                  AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                  AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                   AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
               })
               .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -276,8 +277,8 @@ namespace Pims.Dal.Repositories
               .Select(aihh => new LastUpdatedByModel()
               {
                   ParentId = id,
-                  AppLastUpdateUserid = aihh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                  AppLastUpdateUserGuid = aihh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                  AppLastUpdateUserid = aihh.AppLastUpdateUserid,
+                  AppLastUpdateUserGuid = aihh.AppLastUpdateUserGuid,
                   AppLastUpdateTimestamp = aihh.EndDateHist ?? DateTime.UnixEpoch,
               })
               .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -312,8 +313,8 @@ namespace Pims.Dal.Repositories
                 .Select(adh => new LastUpdatedByModel()
                 {
                     ParentId = id,
-                    AppLastUpdateUserid = adh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                    AppLastUpdateUserGuid = adh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                    AppLastUpdateUserid = adh.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = adh.AppLastUpdateUserGuid,
                     AppLastUpdateTimestamp = adh.EndDateHist ?? DateTime.UnixEpoch,
                 })
                 .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -348,8 +349,8 @@ namespace Pims.Dal.Repositories
                 .Select(anh => new LastUpdatedByModel()
                 {
                     ParentId = id,
-                    AppLastUpdateUserid = anh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                    AppLastUpdateUserGuid = anh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                    AppLastUpdateUserid = anh.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = anh.AppLastUpdateUserGuid,
                     AppLastUpdateTimestamp = anh.EndDateHist ?? DateTime.UnixEpoch,
                 })
                 .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -383,8 +384,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = id,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -425,8 +426,8 @@ namespace Pims.Dal.Repositories
             .Select(rdh => new LastUpdatedByModel()
             {
                 ParentId = id,
-                AppLastUpdateUserid = rdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = rdh.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = rdh.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -460,8 +461,8 @@ namespace Pims.Dal.Repositories
             .Select(acrh => new LastUpdatedByModel()
             {
                 ParentId = id,
-                AppLastUpdateUserid = acrh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = acrh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = acrh.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = acrh.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = acrh.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -502,8 +503,8 @@ namespace Pims.Dal.Repositories
             .Select(rdh => new LastUpdatedByModel()
             {
                 ParentId = id,
-                AppLastUpdateUserid = rdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = rdh.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = rdh.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -537,8 +538,8 @@ namespace Pims.Dal.Repositories
             .Select(aeph => new LastUpdatedByModel()
             {
                 ParentId = id,
-                AppLastUpdateUserid = aeph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aeph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aeph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aeph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aeph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -579,8 +580,8 @@ namespace Pims.Dal.Repositories
             .Select(rdh => new LastUpdatedByModel()
             {
                 ParentId = id,
-                AppLastUpdateUserid = rdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = rdh.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = rdh.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -614,8 +615,8 @@ namespace Pims.Dal.Repositories
             .Select(aah => new LastUpdatedByModel()
             {
                 ParentId = id,
-                AppLastUpdateUserid = aah.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aah.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aah.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aah.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aah.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -745,6 +746,7 @@ namespace Pims.Dal.Repositories
             Context.UpdateGrandchild<PimsAcquisitionFile, long, PimsAcquisitionOwner>(o => o.PimsAcquisitionOwners, oa => oa.Address, acquisitionFile.Internal_Id, acquisitionFile.PimsAcquisitionOwners.ToArray());
             Context.UpdateChild<PimsAcquisitionFile, long, PimsAcqFileAcqProgress, long>(p => p.PimsAcqFileAcqProgresses, acquisitionFile.AcquisitionFileId, acquisitionFile.PimsAcqFileAcqProgresses.ToArray());
             Context.UpdateChild<PimsAcquisitionFile, long, PimsAcqFileAcqFlTakeTyp, long>(p => p.PimsAcqFileAcqFlTakeTyps, acquisitionFile.AcquisitionFileId, acquisitionFile.PimsAcqFileAcqFlTakeTyps.ToArray());
+            Context.UpdateChild<PimsAcquisitionFile, long, PimsNoticeOfClaim, long>(p => p.PimsNoticeOfClaims, acquisitionFile.Internal_Id, acquisitionFile.PimsNoticeOfClaims.ToArray());
 
             return acquisitionFile;
         }
@@ -814,7 +816,7 @@ namespace Pims.Dal.Repositories
             }
 
             return Context.PimsAcquisitionFiles.AsNoTracking()
-                .Include(s => s.AcquisitionFileStatusTypeCodeNavigation)
+                .Include(r => r.AcquisitionFileStatusTypeCodeNavigation)
                 .Where(predicate).OrderBy(x => x.FileNoSuffix).ToList();
         }
 

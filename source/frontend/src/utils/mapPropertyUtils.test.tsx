@@ -11,7 +11,7 @@ import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Conc
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
 import { getEmptyProperty } from '@/models/defaultInitializers';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import { PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 
 import {
   filePropertyToLocationBoundaryDataset,
@@ -341,7 +341,7 @@ describe('mapPropertyUtils', () => {
   it.each([
     [
       { ...getEmptyFileProperty(), location: getMockLocation() },
-      { location: getMockLatLng(), boundary: null, isActive: null },
+      { location: getMockLatLng(), boundary: null, isActive: null, fileBoundary: null },
     ],
     [
       {
@@ -353,7 +353,7 @@ describe('mapPropertyUtils', () => {
           boundary: getMockPolygon(),
         },
       },
-      { location: getMockLatLng(), boundary: getMockPolygon(), isActive: null },
+      { location: getMockLatLng(), boundary: getMockPolygon(), isActive: null, fileBoundary: null },
     ],
     [{ ...getEmptyFileProperty(), location: null }, null],
   ])(
@@ -395,7 +395,7 @@ describe('mapPropertyUtils', () => {
             [-72, 41],
             [-81, 41],
           ],
-        ]) as Feature<Geometry, PIMS_Property_Location_View> | null,
+        ]) as Feature<Geometry, PIMS_Property_View> | null,
       },
       true,
     ],
@@ -411,7 +411,7 @@ describe('mapPropertyUtils', () => {
             [-72, 41],
             [-81, 41],
           ],
-        ]) as Feature<Geometry, PIMS_Property_Location_View> | null,
+        ]) as Feature<Geometry, PIMS_Property_View> | null,
       },
       false,
     ],

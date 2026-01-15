@@ -150,7 +150,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
                 properties: {
                   STREET_ADDRESS_1: addressResults[i]?.fullAddress,
                 },
-              } as Feature<Geometry, PIMS_Property_Location_View>);
+              } as Feature<Geometry, PIMS_Property_View>);
         }
         */
         return foundProperty;
@@ -280,6 +280,7 @@ export const featureToLocationFeatureDataset = (feature: Feature<Geometry, GeoJs
     location: { lat: center[1], lng: center[0] },
     regionFeature: null,
     fileLocation: null,
+    fileBoundary: null,
     districtFeature: null,
     municipalityFeature: null,
     selectingComponentId: null,

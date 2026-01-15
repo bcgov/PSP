@@ -20,6 +20,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchLicenseAddressInput = By.Id("input-address");
         private readonly By searchLicenseHistoricalFile = By.Id("input-historical");
         private readonly By searchLicenseProgramSelect = By.Id("properties-selector_input");
+        private readonly By searchLicenseTeamMemberInput = By.CssSelector("input[placeholder='Team member']");
+        private readonly By searchLicenseTeamMemberOptions = By.XPath("//input[@placeholder='Team member']/parent::div/following-sibling::div/ul[@class='optionContainer']");
         private readonly By searchLicenseStatusInput = By.Id("status-selector_input");
         private readonly By searchLicenseStatusOptions = By.XPath("//input[@id='status-selector_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
         private readonly By searchLicenseActiveStatusDeleteBttn = By.CssSelector("div[class='search-wrapper searchWrapper '] span i");
@@ -28,6 +30,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchLicenceFromDateInput = By.Id("datepicker-expiryStartDate");
         private readonly By searchLicenseToDateInput = By.Id("datepicker-expiryEndDate");
         private readonly By searchLicenseRegionsSelect = By.Id("input-regionType");
+        private readonly By searchLicenseAccountTypeSelect = By.Id("input-isReceivable");
         private readonly By searchLicenseKeywordInput = By.Id("input-details");
         private readonly By searchLicenseKeywordTooltip = By.Id("lease-search-keyword-tooltip");
         private readonly By searchLicenceExportExcelBttn = By.CssSelector("button:has(svg[data-testid='excel-icon'])");
@@ -56,7 +59,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchLicense1stResultExpiryDateContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[2]/span[1]");
         private readonly By searchLicense1stResultProgramContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[3]");
         private readonly By searchLicense1stResultTenantsContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/div");
-        private readonly By searchLicense1stResultPropertiesContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[5]/div/div");
+        private readonly By searchLicense1stResultPropertiesContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[6]/div/div");
         private readonly By searchLicense1stResultHistoricalFileContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[6]");
         private readonly By searchLicense1stResultStatusContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[8]");
 
@@ -185,8 +188,8 @@ namespace PIMS.Tests.Automation.PageObjects
             return webDriver.FindElement(searchLicense1stResultStatusContent).Text;
         }
 
-        public void FilterLeasesFiles(string pid = "", string pin = "", string address = "", string lfile = "", string historicalFile = "", string program = "",
-            string status = "", string tenant = "", string expiryDateFrom = "", string expiryDateTo = "", string region = "", string keyword = "")
+        public void FilterLeasesFiles(string pid = "", string pin = "", string address = "", string lfile = "", string historicalFile = "", string program = "", string teamMember = "",
+             string status = "", string tenant = "", string expiryDateFrom = "", string expiryDateTo = "", string accountType = "", string region = "", string keyword = "")
         {
             Wait();
             webDriver.FindElement(searchLicenseResetButton).Click();
@@ -236,6 +239,15 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseMultiSelectSpecificOption(searchLicenseProgramOptions, program);
             }
 
+            if (teamMember != "")
+            {
+                WaitUntilClickable(searchLicenseTeamMemberInput);
+
+                webDriver.FindElement(searchLicenseTeamMemberInput).Click();
+                WaitUntilClickable(searchLicenseTeamMemberOptions);
+                ChooseMultiSelectSpecificOption(searchLicenseTeamMemberOptions, teamMember);
+            }
+
             if (status != "")
             {
                 WaitUntilClickable(searchLicenseStatusInput);
@@ -261,6 +273,12 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 WaitUntilClickable(searchLicenseToDateInput);
                 webDriver.FindElement(searchLicenseToDateInput).SendKeys(address);
+            }
+
+            if (accountType != "")
+            {
+                WaitUntilClickable(searchLicenseAccountTypeSelect);
+                ChooseMultiSelectSpecificOption(searchLicenseAccountTypeSelect, accountType);
             }
 
             if (region != "")
@@ -331,7 +349,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLeaseTableContent(Lease lease)
         {
-            WaitUntilVisibleText(searchLicense1stResultExpiryDateContent, webDriver.FindElement(searchLicense1stResultExpiryDateContent).Text);
+            Wait();
 
             AssertTrueIsDisplayed(searchLicense1stResultLink);
 
@@ -341,14 +359,17 @@ namespace PIMS.Tests.Automation.PageObjects
             if(lease.Program != "")
                 AssertTrueContentEquals(searchLicense1stResultProgramContent, lease.Program);
 
-            if(lease.LeaseTenants.Count > 0)
-                Assert.NotEmpty(webDriver.FindElements(searchLicense1stResultTenantsContent));
+            var tenants = webDriver.FindElements(searchLicense1stResultTenantsContent);
+            var firstTenant = lease.LeaseTenants?.FirstOrDefault();
+            bool hasValidTenant = firstTenant != null && !lease.IsStakeholderEmpty(firstTenant);
+
+            if (hasValidTenant)
+                Assert.NotEmpty(tenants);
+            else
+                Assert.Empty(tenants);
 
             if (lease.SearchPropertiesIndex!= 0)
                 Assert.True(webDriver.FindElements(searchLicense1stResultPropertiesContent).Count > 0);
-
-            //TO-DO: HISTORICAL FILE
-
 
             if(lease.LeaseStatus != "")
                 AssertTrueContentEquals(searchLicense1stResultStatusContent, lease.LeaseStatus);

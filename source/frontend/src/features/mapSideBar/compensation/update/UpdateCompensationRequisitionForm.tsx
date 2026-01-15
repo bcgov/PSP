@@ -1,7 +1,7 @@
-import { Formik, FormikProps } from 'formik';
+import { Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
 import moment from 'moment';
-import { useEffect, useRef, useState } from 'react';
-import React from 'react';
+import React, { useEffect, useRef, useState } from 'react';
+import { Form } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import {
@@ -32,7 +32,7 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { isValidId } from '@/utils';
+import { isValidId, isValidString } from '@/utils';
 import { prettyFormatDate } from '@/utils/dateUtils';
 
 import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
@@ -56,6 +56,14 @@ export interface CompensationRequisitionFormProps {
   onCancel: () => void;
   showAltProjectError: boolean;
   setShowAltProjectError: React.Dispatch<React.SetStateAction<boolean>>;
+}
+
+// Define the shape for additional, custom, non-field-specific errors
+interface CustomFormikErrors extends FormikErrors<CompensationRequisitionFormModel> {
+  product?: string;
+  businessFunction?: string;
+  workActivity?: string;
+  costType?: string;
 }
 
 const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormProps> = ({
@@ -142,13 +150,42 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
     }
   };
 
+  const validateFormValues = (values: CompensationRequisitionFormModel): CustomFormikErrors => {
+    let errors: CustomFormikErrors = {};
+    try {
+      validateYupSchema(values, CompensationRequisitionYupSchema, true);
+    } catch (err) {
+      errors = yupToFormErrors(err);
+    }
+
+    if (values.status === 'final') {
+      if (!isValidString(file?.product?.code)) {
+        errors.product = 'Product is required';
+      }
+      if (!isValidString(file?.project?.businessFunctionCode?.code)) {
+        errors.businessFunction =
+          'Business function is required. Ensure a valid project is associated to this file (or alternate project) with required financial coding.';
+      }
+      if (!isValidString(file?.project?.workActivityCode?.code)) {
+        errors.workActivity =
+          'Work activity is required Ensure a valid project is associated to this file (or alternate project) with required financial coding.';
+      }
+      if (!isValidString(file?.project?.costTypeCode?.code)) {
+        errors.costType =
+          'Cost type is required. Ensure a valid project is associated to this file (or alternate project) with required financial coding.';
+      }
+    }
+
+    return errors;
+  };
+
   return (
     <Formik<CompensationRequisitionFormModel>
       enableReinitialize
       innerRef={formikRef}
       initialValues={initialValues}
       onSubmit={handleSubmit}
-      validationSchema={CompensationRequisitionYupSchema}
+      validate={validateFormValues}
       validateOnChange={true}
     >
       {formikProps => {
@@ -232,17 +269,45 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               </Section>
 
               <Section header="Financial Coding">
-                <SectionField label="Product" labelWidth={{ xs: 4 }}>
+                <SectionField
+                  label="Product"
+                  labelWidth={{ xs: 4 }}
+                  required={formikProps.values.status === 'final'}
+                >
                   {file.product?.code ?? ''}
+                  <Form.Control.Feedback type="invalid">
+                    {(formikProps.errors as CustomFormikErrors).product}
+                  </Form.Control.Feedback>
                 </SectionField>
-                <SectionField label="Business function" labelWidth={{ xs: 4 }}>
+                <SectionField
+                  label="Business function"
+                  labelWidth={{ xs: 4 }}
+                  required={formikProps.values.status === 'final'}
+                >
                   {file.project?.businessFunctionCode?.code ?? ''}
+                  <Form.Control.Feedback type="invalid">
+                    {(formikProps.errors as CustomFormikErrors).businessFunction}
+                  </Form.Control.Feedback>
                 </SectionField>
-                <SectionField label="Work activity" labelWidth={{ xs: 4 }}>
+                <SectionField
+                  label="Work activity"
+                  labelWidth={{ xs: 4 }}
+                  required={formikProps.values.status === 'final'}
+                >
                   {file.project?.workActivityCode?.code ?? ''}
+                  <Form.Control.Feedback type="invalid">
+                    {(formikProps.errors as CustomFormikErrors).workActivity}
+                  </Form.Control.Feedback>
                 </SectionField>
-                <SectionField label="Cost type" labelWidth={{ xs: 4 }}>
+                <SectionField
+                  label="Cost type"
+                  labelWidth={{ xs: 4 }}
+                  required={formikProps.values.status === 'final'}
+                >
                   {file.project?.costTypeCode?.code ?? ''}
+                  <Form.Control.Feedback type="invalid">
+                    {(formikProps.errors as CustomFormikErrors).costType}
+                  </Form.Control.Feedback>
                 </SectionField>
                 <SectionField
                   label="Fiscal year"

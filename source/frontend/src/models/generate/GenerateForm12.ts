@@ -11,7 +11,7 @@ export class Api_GenerateForm12 {
   first_property_plan_number: string;
   date_today: string;
   properties: Api_GenerateProperty[];
-  total_area_ha: number;
+  total_area_display: string;
 
   constructor(composedProperties: ComposedProperty[]) {
     this.properties = composedProperties.filter(exists).map(p => {
@@ -33,11 +33,23 @@ export class Api_GenerateForm12 {
       (accumulator, current) => accumulator + current.area_sqm,
       0,
     );
-    this.total_area_ha = convertArea(
+    const totalHa = convertArea(
       totalSqm,
       ApiGen_CodeTypes_AreaUnitTypes.M2,
       ApiGen_CodeTypes_AreaUnitTypes.HA,
     );
+
+    // Use hectares if >= 1 ha, otherwise use square meters
+    const areaUnit = totalHa >= 1 ? 'ha' : 'm²';
+
+    const totalArea = areaUnit === 'ha' ? totalHa : totalSqm;
+    this.total_area_display = `${totalArea} ${areaUnit}`;
+
+    // Convert property areas to match the selected unit
+    this.properties.forEach(property => {
+      const propertyArea = areaUnit === 'ha' ? property.area_ha : property.area_sqm;
+      property.area_display = `${propertyArea} ${areaUnit}`;
+    });
 
     this.date_today = moment().format('MMMM Do, YYYY');
   }

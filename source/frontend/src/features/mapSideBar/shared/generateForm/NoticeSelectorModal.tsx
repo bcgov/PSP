@@ -12,7 +12,7 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import { StyledNoData } from '@/features/documents/commonStyles';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
-import { formatApiAddress } from '@/utils';
+import { exists, formatApiAddress } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
@@ -113,11 +113,14 @@ const NoticeSelectorModal: React.FunctionComponent<
                           </Form.Check.Label>
                         </Form.Check>
                       ))}
+                      asfasd
+                      {!exists(ownerDetailList) ||
+                        (ownerDetailList.length === 0 && <>No Owner information</>)}
                     </Form.Group>
                   )}
                 />
                 {isEmpty(teamMembers) && (
-                  <StyledNoData className="m-4">No Team Members availiable</StyledNoData>
+                  <StyledNoData className="m-4">No Team Members available</StyledNoData>
                 )}
               </StyledDiv>
               <p className="pt-5">
@@ -175,7 +178,7 @@ const NoticeSelectorModal: React.FunctionComponent<
                   )}
                 />
                 {isEmpty(teamMembers) && (
-                  <StyledNoData className="m-4">No Team Members availiable</StyledNoData>
+                  <StyledNoData className="m-4">No Team Members available</StyledNoData>
                 )}
               </StyledDiv>
               <p className="pt-5">
@@ -231,7 +234,7 @@ const NoticeSelectorModal: React.FunctionComponent<
                   )}
                 />
                 {isEmpty(teamMembers) && (
-                  <StyledNoData className="m-4">No Team Members availiable</StyledNoData>
+                  <StyledNoData className="m-4">No Team Members available</StyledNoData>
                 )}
               </StyledDiv>
             </>

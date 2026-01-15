@@ -12,6 +12,7 @@ import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useQuery } from '@/hooks/use-query';
+import { useAddFileConfirmation } from '@/hooks/useAddFileConfirmation';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
 import { useModalContext } from '@/hooks/useModalContext';
@@ -39,9 +40,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
   const [isValid, setIsValid] = useState<boolean>(true);
   const { setModalContent, setDisplayModal } = useModalContext();
-
   const { execute: getPropertyAssociations } = usePropertyAssociations();
-  const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
 
   const {
     getAcquisitionFile: { execute: getAcquisitionFile, response: parentAcquisitionFile },
@@ -127,56 +126,29 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     [getPropertyAssociations],
   );
 
-  // Require user confirmation before adding a property to file
-  // This is the flow for Map Marker -> right-click -> create Acquisition File
-  useEffect(() => {
-    const runAsync = async () => {
-      if (exists(initialForm) && exists(formikRef.current) && needsUserConfirmation) {
-        if (initialForm.properties.length > 0) {
-          // Check all properties for confirmation
-          const needsConfirmation = await Promise.all(
-            initialForm.properties.map(formProperty => confirmBeforeAdd(formProperty)),
-          );
-          if (needsConfirmation.some(confirm => confirm)) {
-            setModalContent({
-              variant: 'warning',
-              title: 'User Override Required',
-              message: (
-                <>
-                  <p>
-                    One or more properties have already been added to one or more acquisition files.
-                  </p>
-                  <p>Do you want to acknowledge and proceed?</p>
-                </>
-              ),
-              okButtonText: 'Yes',
-              cancelButtonText: 'No',
-              handleOk: () => {
-                // allow the property to be added to the file being created
-                formikRef.current.resetForm();
-                formikRef.current.setFieldValue('properties', initialForm.properties);
-                setDisplayModal(false);
-                // show the user confirmation modal only once when creating a file
-                setNeedsUserConfirmation(false);
-              },
-              handleCancel: () => {
-                // clear out the properties array as the user did not agree to the popup
-                initialForm.properties.splice(0, initialForm.properties.length);
-                formikRef.current.resetForm();
-                formikRef.current.setFieldValue('properties', initialForm.properties);
-                setDisplayModal(false);
-                // show the user confirmation modal only once when creating a file
-                setNeedsUserConfirmation(false);
-              },
-            });
-            setDisplayModal(true);
-          }
-        }
-      }
-    };
+  const incomingProperties = useMemo(() => {
+    const mapProperties =
+      featuresWithAddresses?.map(f => PropertyForm.fromFeatureDataset(f.feature)) ?? [];
+    return mapProperties.length > 0 ? mapProperties : initialForm.properties;
+  }, [featuresWithAddresses, initialForm.properties]);
 
-    runAsync();
-  }, [confirmBeforeAdd, initialForm, needsUserConfirmation, setDisplayModal, setModalContent]);
+  const confirmationMessage = useMemo(
+    () => (
+      <>
+        <p>One or more properties have already been added to one or more acquisition files.</p>
+        <p>Do you want to acknowledge and proceed?</p>
+      </>
+    ),
+    [],
+  );
+
+  useAddFileConfirmation({
+    formikRef,
+    confirmBeforeAdd,
+    fieldName: 'properties',
+    properties: incomingProperties,
+    message: confirmationMessage,
+  });
 
   const checkState = useCallback(() => {
     return (isSubFile || formikRef?.current?.dirty) && !formikRef?.current?.isSubmitting;

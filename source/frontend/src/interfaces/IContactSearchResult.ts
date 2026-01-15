@@ -31,7 +31,11 @@ interface OrganizationContactSummary
 export function isPersonSummary(
   contactResult: IContactSearchResult,
 ): contactResult is PersonContactSummary {
-  return contactResult.id.startsWith('P') && contactResult.personId !== undefined;
+  if (!exists(contactResult)) {
+    return false;
+  }
+
+  return exists(contactResult.personId) && contactResult.id.startsWith('P');
 }
 
 export function isOrganizationSummary(
@@ -176,9 +180,10 @@ export function toContact(baseModel: IContactSearchResult): ApiGen_Concepts_Cont
 }
 
 export function toPerson(baseModel?: IContactSearchResult): ApiGen_Concepts_Person | undefined {
-  if (baseModel === undefined || !isPersonSummary(baseModel)) {
+  if (baseModel === undefined || baseModel === null || !isPersonSummary(baseModel)) {
     return undefined;
   }
+
   return {
     id: baseModel.personId || 0,
     firstName: baseModel.firstName || '',
@@ -202,7 +207,7 @@ export function toPerson(baseModel?: IContactSearchResult): ApiGen_Concepts_Pers
 export function toOrganization(
   baseModel?: IContactSearchResult,
 ): ApiGen_Concepts_Organization | undefined {
-  if (baseModel === undefined || isPersonSummary(baseModel)) {
+  if (baseModel === undefined || baseModel === null || isPersonSummary(baseModel)) {
     return undefined;
   }
 

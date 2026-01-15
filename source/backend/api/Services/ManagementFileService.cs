@@ -30,6 +30,7 @@ namespace Pims.Api.Services
         private readonly IManagementFileStatusSolver _managementStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly IManagementActivityRepository _managementActivityRepository;
+        private readonly IFilePropertyLocationUpdateSolver _propertyLocationSolver;
 
         public ManagementFileService(
             ClaimsPrincipal user,
@@ -42,7 +43,8 @@ namespace Pims.Api.Services
             INoteRelationshipRepository<PimsManagementFileNote> entityNoteRepository,
             IManagementFileStatusSolver managementStatusSolver,
             IPropertyOperationService propertyOperationService,
-            IManagementActivityRepository managementActivityRepository)
+            IManagementActivityRepository managementActivityRepository,
+            IFilePropertyLocationUpdateSolver propertyLocationSolver)
         {
             _user = user;
             _logger = logger;
@@ -55,6 +57,7 @@ namespace Pims.Api.Services
             _managementStatusSolver = managementStatusSolver;
             _propertyOperationService = propertyOperationService;
             _managementActivityRepository = managementActivityRepository;
+            _propertyLocationSolver = propertyLocationSolver;
         }
 
         public PimsManagementFile Add(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> userOverrides)
@@ -62,6 +65,13 @@ namespace Pims.Api.Services
             _logger.LogInformation("Creating management file {managementFile}", managementFile);
             _user.ThrowIfNotAuthorized(Permissions.ManagementAdd);
             ArgumentNullException.ThrowIfNull(managementFile);
+
+            // validate the new file region
+            var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+            if (managementFile.RegionCode == cannotDetermineRegion.RegionCode)
+            {
+                throw new BadRequestException("Cannot set an management file's region to 'cannot determine'");
+            }
 
             ValidateName(managementFile);
             managementFile.ManagementFileStatusTypeCode ??= ManagementFileStatusTypes.ACTIVE.ToString();
@@ -115,6 +125,12 @@ namespace Pims.Api.Services
             // validate management file state before proceeding with any database updates
             var currentManagementFile = _managementFileRepository.GetById(id);
             ValidateFileBeforeUpdate(managementFile, currentManagementFile);
+
+            var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+            if (managementFile.RegionCode == cannotDetermineRegion.RegionCode)
+            {
+                throw new BadRequestException("Cannot set an management file's region to 'cannot determine'");
+            }
 
             _managementFileRepository.Update(id, managementFile);
             AddNoteIfStatusChanged(managementFile);
@@ -210,11 +226,15 @@ namespace Pims.Api.Services
                         needsUpdate = true;
                     }
 
-                    var incomingGeom = incomingManagementProperty.Location;
-                    var existingGeom = existingProperty.Location;
-                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    if (_propertyLocationSolver.CanEditFilePropertyLocation(incomingManagementProperty, existingProperty))
                     {
                         _propertyService.UpdateFilePropertyLocation(incomingManagementProperty, existingProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (_propertyLocationSolver.CanEditFilePropertyBoundary(incomingManagementProperty, existingProperty))
+                    {
+                        _propertyService.UpdateFilePropertyBoundary(incomingManagementProperty, existingProperty);
                         needsUpdate = true;
                     }
 
@@ -454,7 +474,7 @@ namespace Pims.Api.Services
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.ManagingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.ManagingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an management file. Do you want to proceed?");
                         }
                     }
                 }
@@ -482,7 +502,7 @@ namespace Pims.Api.Services
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an management file. Do you want to proceed?");
                         }
                     }
                 }
@@ -495,7 +515,7 @@ namespace Pims.Api.Services
                     }
                     else
                     {
-                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?");
+                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an management file. Do you want to proceed?");
                     }
                 }
             }

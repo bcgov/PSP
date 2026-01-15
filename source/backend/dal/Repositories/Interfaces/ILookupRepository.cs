@@ -177,5 +177,9 @@ namespace Pims.Dal.Repositories
         IEnumerable<PimsManagementFilePurposeType> GetAllManagementFilePurposeTypes();
 
         IEnumerable<PimsManagementFileProfileType> GetAllManagementFileProfileTypes();
+
+        IEnumerable<PimsTenureCleanupType> GetAllTenureCleanupTypes();
+        
+        IEnumerable<PimsSurplusDeclarationType> GetAllSurplusDeclarationTypes();
     }
 }

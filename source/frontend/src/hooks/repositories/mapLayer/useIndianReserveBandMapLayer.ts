@@ -37,7 +37,7 @@ export const useIndianReserveBandMapLayer = () => {
       const forceCasted = featureCollection as
         | FeatureCollection<Geometry, ADM_IndianReserveBands_Feature_Properties>
         | undefined;
-      return forceCasted !== undefined && forceCasted.features.length > 0
+      return forceCasted !== undefined && forceCasted.features?.length > 0
         ? forceCasted.features[0]
         : undefined;
     },

@@ -216,19 +216,19 @@ exports[`AddProjectForm component > renders as expected 1`] = `
   font-size: 2.4rem;
 }
 
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c1 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c4.required::before {
@@ -272,6 +272,7 @@ exports[`AddProjectForm component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Project Details
             </div>
@@ -500,6 +501,7 @@ exports[`AddProjectForm component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Associated Codes
             </div>
@@ -680,6 +682,7 @@ exports[`AddProjectForm component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Associated products
             </div>
@@ -713,6 +716,7 @@ exports[`AddProjectForm component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Project Management Team
             </div>
@@ -1057,19 +1061,19 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
   font-size: 2.4rem;
 }
 
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c1 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c4.required::before {
@@ -1123,6 +1127,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Project Details
             </div>
@@ -1353,6 +1358,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Associated Codes
             </div>
@@ -1533,6 +1539,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Associated products
             </div>
@@ -2187,6 +2194,7 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Project Management Team
             </div>

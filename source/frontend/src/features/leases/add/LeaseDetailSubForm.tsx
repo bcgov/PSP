@@ -16,6 +16,7 @@ import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IAutocompletePrediction } from '@/interfaces';
+import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { isValidId } from '@/utils';
@@ -33,12 +34,20 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
   const { retrieveProjectProducts } = useProjectProvider();
 
   const { values, setFieldValue } = formikProps;
-  const { statusTypeCode, terminationReason, cancellationReason, project } = values;
+  const {
+    statusTypeCode,
+    terminationReason,
+    cancellationReason,
+    project,
+    paymentReceivableTypeCode,
+  } = values;
 
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const leaseStatusTypes = getOptionsByType(API.LEASE_STATUS_TYPES);
   const paymentReceivableTypes = getOptionsByType(API.LEASE_PAYMENT_RECEIVABLE_TYPES);
+  const fileAppraisalStatusTypes = getOptionsByType(API.FILE_APPRAISAL_STATUS_TYPES);
+  const fileLegalSurveyStatusTypes = getOptionsByType(API.FILE_LEGALSURVEY_STATUS_TYPES);
 
   const [projectProducts, setProjectProducts] = useState<ApiGen_Concepts_Product[] | undefined>(
     undefined,
@@ -116,134 +125,169 @@ export const LeaseDetailSubForm: React.FunctionComponent<ILeaseDetailsSubFormPro
   }, [onMinistryProjectSelected, project]);
 
   return (
-    <Section header="Original Agreement">
-      <SectionField label="Ministry project" labelWidth={{ xs: 4 }}>
-        <ProjectSelector
-          field="project"
-          onChange={(vals: IAutocompletePrediction[]) => {
-            onMinistryProjectSelected(vals);
-            if (vals.length === 0) {
-              formikProps.setFieldValue('productId', null);
-            }
-          }}
-        />
-      </SectionField>
-      {projectProducts !== undefined && (
-        <SectionField label="Product" labelWidth={{ xs: 4 }}>
-          <Select
-            field="productId"
-            options={projectProducts.map<SelectOption>(x => {
-              return { label: x.code + ' ' + x.description || '', value: x.id || 0 };
-            })}
-            placeholder="Select..."
+    <>
+      <Section header="Original Agreement">
+        <SectionField label="Ministry project" labelWidth={{ xs: 4 }}>
+          <ProjectSelector
+            field="project"
+            onChange={(vals: IAutocompletePrediction[]) => {
+              onMinistryProjectSelected(vals);
+              if (vals.length === 0) {
+                formikProps.setFieldValue('productId', null);
+              }
+            }}
           />
         </SectionField>
-      )}
-      <SectionField
-        label="Status"
-        labelWidth={{ xs: 4 }}
-        contentWidth={{ xs: 4 }}
-        tooltip={
-          <TooltipIcon
-            toolTipId="lease-status-tooltip"
-            toolTip={
-              <ul>
-                <li>Draft: In progress but not finalized.</li>
-                <li>
-                  Active: Finalized and all requirements met. Lease/Licence being actively managed.
-                </li>
-                <li>
-                  Terminated: The expiry date of the last agreement if by effluxion of time or the
-                  early termination date for cause.
-                </li>
-                <li>Cancelled: Request cancelled by requestor or MOTI.</li>
-                <li>Duplicate: Duplicate file created by accident or data transfer.</li>
-                <li>Hold: Agreement in progress but will not be immediately addressed.</li>
-                <li>Archived: File to be archived as per ARCS/ORCS.</li>
-              </ul>
-            }
-            placement="right"
-          ></TooltipIcon>
-        }
-        required
-      >
-        <Select
-          placeholder="Select Status"
-          field="statusTypeCode"
-          value={statusTypeCode}
-          options={leaseStatusTypes}
-          onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-            const selectedValue = [].slice
-              .call(e.target.selectedOptions)
-              .map((option: HTMLOptionElement & number) => option.value)[0];
-            onLeaseStatusChanged(selectedValue);
-          }}
+        {projectProducts !== undefined && (
+          <SectionField label="Product" labelWidth={{ xs: 4 }}>
+            <Select
+              field="productId"
+              options={projectProducts.map<SelectOption>(x => {
+                return { label: x.code + ' ' + x.description || '', value: x.id || 0 };
+              })}
+              placeholder="Select..."
+            />
+          </SectionField>
+        )}
+        <SectionField
+          label="Status"
+          labelWidth={{ xs: 4 }}
+          contentWidth={{ xs: 4 }}
+          tooltip={
+            <TooltipIcon
+              toolTipId="lease-status-tooltip"
+              toolTip={
+                <ul>
+                  <li>Draft: In progress but not finalized.</li>
+                  <li>
+                    Active: Finalized and all requirements met. Lease/Licence being actively
+                    managed.
+                  </li>
+                  <li>
+                    Terminated: The expiry date of the last agreement if by effluxion of time or the
+                    early termination date for cause.
+                  </li>
+                  <li>Cancelled: Request cancelled by requestor or MOTI.</li>
+                  <li>Duplicate: Duplicate file created by accident or data transfer.</li>
+                  <li>Hold: Agreement in progress but will not be immediately addressed.</li>
+                  <li>Archived: File to be archived as per ARCS/ORCS.</li>
+                </ul>
+              }
+              placement="right"
+            ></TooltipIcon>
+          }
           required
-        />
-      </SectionField>
-
-      {statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD && (
-        <SectionField label="Cancellation reason" contentWidth={{ xs: 12 }} required>
-          <TextArea field="cancellationReason" />
+        >
+          <Select
+            placeholder="Select Status"
+            field="statusTypeCode"
+            value={statusTypeCode}
+            options={leaseStatusTypes}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              const selectedValue = [].slice
+                .call(e.target.selectedOptions)
+                .map((option: HTMLOptionElement & number) => option.value)[0];
+              onLeaseStatusChanged(selectedValue);
+            }}
+            required
+          />
         </SectionField>
-      )}
 
-      <SectionField label="Account type" labelWidth={{ xs: 4 }} contentWidth={{ xs: 5 }} required>
-        <Select field="paymentReceivableTypeCode" options={paymentReceivableTypes} />
-      </SectionField>
-      <SectionField
-        label="Commencement"
-        labelWidth={{ xs: 4 }}
-        required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
-        tooltip={
-          <TooltipIcon
-            toolTipId="lease-commencement-tooltip"
-            toolTip="The start date defined in the original agreement"
-            placement="right"
+        {statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.DISCARD && (
+          <SectionField label="Cancellation reason" contentWidth={{ xs: 12 }} required>
+            <TextArea field="cancellationReason" />
+          </SectionField>
+        )}
+
+        <SectionField label="Account type" labelWidth={{ xs: 4 }} contentWidth={{ xs: 5 }} required>
+          <Select
+            field="paymentReceivableTypeCode"
+            options={paymentReceivableTypes}
+            onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+              const selectedValue = Array.prototype.slice
+                .call(e.target.selectedOptions)
+                .map((option: HTMLOptionElement & number) => option.value)[0];
+
+              if (selectedValue === ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL) {
+                setFieldValue('appraisalStatusType', null);
+                setFieldValue('legalSurveyStatusType', null);
+              }
+            }}
           />
-        }
-      >
-        <FastDatePicker
-          formikProps={formikProps}
-          field="startDate"
+        </SectionField>
+        <SectionField
+          label="Commencement"
+          labelWidth={{ xs: 4 }}
           required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
-        />
-      </SectionField>
-      <SectionField
-        label="Expiry"
-        labelWidth={{ xs: 4 }}
-        required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
-        tooltip={
-          <TooltipIcon
-            toolTipId="lease-expiry-tooltip"
-            toolTip="The end date specified in the original agreement"
-            placement="right"
+          tooltip={
+            <TooltipIcon
+              toolTipId="lease-commencement-tooltip"
+              toolTip="The start date defined in the original agreement"
+              placement="right"
+            />
+          }
+        >
+          <FastDatePicker
+            formikProps={formikProps}
+            field="startDate"
+            required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
           />
-        }
-      >
-        <FastDatePicker formikProps={formikProps} field="expiryDate" />
-      </SectionField>
-      {statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED && (
-        <>
-          <SectionField
-            label="Termination"
-            labelWidth={{ xs: 3 }}
-            tooltip={
-              <TooltipIcon
-                toolTipId="lease-termination-tooltip"
-                toolTip="The expiry date of the last agreement if by effluxion of time or the early termination date for cause"
-                placement="right"
-              />
-            }
-          >
-            <FastDatePicker formikProps={formikProps} field="terminationDate" />
+        </SectionField>
+        <SectionField
+          label="Expiry"
+          labelWidth={{ xs: 4 }}
+          required={statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE}
+          tooltip={
+            <TooltipIcon
+              toolTipId="lease-expiry-tooltip"
+              toolTip="The end date specified in the original agreement"
+              placement="right"
+            />
+          }
+        >
+          <FastDatePicker formikProps={formikProps} field="expiryDate" />
+        </SectionField>
+        {statusTypeCode === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED && (
+          <>
+            <SectionField
+              label="Termination"
+              labelWidth={{ xs: 3 }}
+              tooltip={
+                <TooltipIcon
+                  toolTipId="lease-termination-tooltip"
+                  toolTip="The expiry date of the last agreement if by effluxion of time or the early termination date for cause"
+                  placement="right"
+                />
+              }
+            >
+              <FastDatePicker formikProps={formikProps} field="terminationDate" />
+            </SectionField>
+            <SectionField label="Termination reason" contentWidth={{ xs: 12 }} required>
+              <TextArea field="terminationReason" />
+            </SectionField>
+          </>
+        )}
+      </Section>
+
+      {paymentReceivableTypeCode !== ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL && (
+        <Section header="Progress Statuses">
+          <SectionField label="Appraisal">
+            <Select
+              field="appraisalStatusType"
+              options={fileAppraisalStatusTypes}
+              placeholder="Select appraisal"
+            />
           </SectionField>
-          <SectionField label="Termination reason" contentWidth={{ xs: 12 }} required>
-            <TextArea field="terminationReason" />
+          <SectionField label="Legal survey">
+            <Select
+              field="legalSurveyStatusType"
+              options={fileLegalSurveyStatusTypes}
+              placeholder="Select legal survey"
+            />
           </SectionField>
-        </>
+        </Section>
       )}
-    </Section>
+    </>
   );
 };
 

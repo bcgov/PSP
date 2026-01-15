@@ -12,20 +12,6 @@ exports[`Operation section view > matches snapshot 1`] = `
   font-size: 3.2rem;
 }
 
-.c1 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c3 {
-  font-size: 1.0em;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c0 {
   margin: 1.6rem;
   padding: 1.6rem;
@@ -38,6 +24,20 @@ exports[`Operation section view > matches snapshot 1`] = `
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c1 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c3 {
+  font-size: 1.0em;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c5.required::before {
@@ -62,6 +62,7 @@ exports[`Operation section view > matches snapshot 1`] = `
       >
         <div
           class="align-content-end col"
+          style="overflow: hidden;"
         >
           Subdivision History
         </div>
@@ -81,6 +82,7 @@ exports[`Operation section view > matches snapshot 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               <div
                 class="row"
@@ -434,20 +436,6 @@ exports[`Operation section view > matches snapshot 1`] = `
   font-size: 3.2rem;
 }
 
-.c1 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c3 {
-  font-size: 1.0em;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c0 {
   margin: 1.6rem;
   padding: 1.6rem;
@@ -460,6 +448,20 @@ exports[`Operation section view > matches snapshot 1`] = `
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c1 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c3 {
+  font-size: 1.0em;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c5.required::before {
@@ -484,6 +486,7 @@ exports[`Operation section view > matches snapshot 1`] = `
       >
         <div
           class="align-content-end col"
+          style="overflow: hidden;"
         >
           Consolidation History
         </div>
@@ -503,6 +506,7 @@ exports[`Operation section view > matches snapshot 1`] = `
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               <div
                 class="row"

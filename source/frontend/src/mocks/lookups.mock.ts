@@ -6004,6 +6004,62 @@ export const mockLookups: ILookupCode[] = [
     displayOrder: 7,
     type: 'PimsManagementFilePurposeType',
   },
+  {
+    id: 'FORM12',
+    name: 'Form 12',
+    isDisabled: false,
+    displayOrder: 1,
+    type: 'PimsTenureCleanupType',
+  },
+  {
+    id: 'NEEDSRVY',
+    name: 'Needs Survey',
+    isDisabled: false,
+    displayOrder: 2,
+    type: 'PimsTenureCleanupType',
+  },
+  {
+    id: 'SECT42',
+    name: 'Section 42 roads (maybe)',
+    isDisabled: false,
+    displayOrder: 3,
+    type: 'PimsTenureCleanupType',
+  },
+  {
+    id: 'TBD',
+    name: 'TBD',
+    isDisabled: false,
+    displayOrder: 4,
+    type: 'PimsTenureCleanupType',
+  },
+  {
+    id: 'EXPIRED',
+    name: 'Expired',
+    isDisabled: false,
+    displayOrder: null,
+    type: 'PimsSurplusDeclarationType',
+  },
+  {
+    id: 'NO',
+    name: 'No',
+    isDisabled: false,
+    displayOrder: null,
+    type: 'PimsSurplusDeclarationType',
+  },
+  {
+    id: 'UNKNOWN',
+    name: 'Unknown',
+    isDisabled: false,
+    displayOrder: null,
+    type: 'PimsSurplusDeclarationType',
+  },
+  {
+    id: 'YES',
+    name: 'Yes',
+    isDisabled: false,
+    displayOrder: null,
+    type: 'PimsSurplusDeclarationType',
+  },
 ];
 
 export const getMockLookUpsByType = (codeType: string): SelectOption[] => {

@@ -1,46 +1,65 @@
 import { getIn, useFormikContext } from 'formik';
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { ImUpload } from 'react-icons/im';
 import { RiDragMove2Line } from 'react-icons/ri';
 import styled from 'styled-components';
 
+import RemoveShapeIcon from '@/assets/images/remove-shape-icon.svg?react';
 import { RemoveButton, StyledIconButton } from '@/components/common/buttons';
 import { Select } from '@/components/common/form';
 import { InlineInput } from '@/components/common/form/styles';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import OverflowTip from '@/components/common/OverflowTip';
+import { TooltipWrapper } from '@/components/common/TooltipWrapper';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import DraftCircleNumber from '@/components/propertySelector/selectedPropertyList/DraftCircleNumber';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
+import { ShapeUploadModal } from '@/features/properties/shapeUpload/ShapeUploadModal';
+import { exists, isValidId } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 import { getPropertyNameFromSelectedFeatureSet, NameSourceType } from '@/utils/mapPropertyUtils';
 
 import DisabledDraftCircleNumber from './DisabledDraftCircleNumber';
 
 export interface ISelectedPropertyRowProps {
+  property: PropertyForm;
   index: number;
   nameSpace?: string;
   onRemove: () => void;
   showDisable?: boolean;
-  property: SelectedFeatureDataset;
+  canUploadShapefile?: boolean;
+  onUploadShapefile?: (result: UploadResponseModel | null) => void;
+  onRemoveShapefile?: () => void;
 }
 
 export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowProps> = ({
+  property,
+  index,
   nameSpace,
   onRemove,
-  index,
   showDisable,
-  property,
+  canUploadShapefile,
+  onUploadShapefile,
+  onRemoveShapefile,
 }) => {
+  const hasCustomBoundary = exists(property.fileBoundary);
+  const featureSet = property.toFeatureDataset();
   const mapMachine = useMapStateMachine();
   const { setFieldTouched, touched } = useFormikContext();
+  const [isUploadVisible, setIsUploadVisible] = useState(false);
+  const canMoveMarker =
+    exists(featureSet?.pimsFeature?.geometry) &&
+    isValidId(featureSet?.pimsFeature?.properties?.PROPERTY_ID);
+
   useEffect(() => {
     if (getIn(touched, `${nameSpace}.name`) !== true) {
       setFieldTouched(`${nameSpace}.name`);
     }
   }, [nameSpace, setFieldTouched, touched]);
 
-  const propertyName = getPropertyNameFromSelectedFeatureSet(property);
+  const propertyName = getPropertyNameFromSelectedFeatureSet(featureSet);
   let propertyIdentifier = '';
   switch (propertyName.label) {
     case NameSourceType.PID:
@@ -55,67 +74,128 @@ export const SelectedPropertyRow: React.FunctionComponent<ISelectedPropertyRowPr
     default:
       break;
   }
+
+  const handleModalUploadClose = (result: UploadResponseModel | null) => {
+    setIsUploadVisible(false);
+    onUploadShapefile?.(result);
+  };
+
   return (
-    <StyledRow className="align-items-center mb-3 no-gutters">
-      <Col md={3}>
-        <div className="mb-0 d-flex align-items-center">
-          {property.isActive === false ? (
-            <DisabledDraftCircleNumber text={(index + 1).toString()} />
-          ) : (
-            <DraftCircleNumber text={(index + 1).toString()} />
-          )}
-          <OverflowTip fullText={propertyIdentifier} className="pl-3"></OverflowTip>
-        </div>
-      </Col>
-      <Col md={showDisable ? 4 : 5}>
-        <InlineInput
-          className="mb-0 w-100"
-          label=""
-          field={withNameSpace(nameSpace, 'name')}
-          displayErrorTooltips={true}
-          defaultValue=""
-          errorKeys={[withNameSpace(nameSpace, 'isRetired')]}
-        />
-      </Col>
-      <Col xs="auto" className="ml-5">
-        <ZoomToLocation geometry={property.pimsFeature.geometry} icon={ZoomIconType.single} />
-      </Col>
-      {showDisable && (
-        <Col md={2}>
-          <Select
-            className="mb-0 ml-4"
-            field={withNameSpace(nameSpace, 'isActive')}
-            options={[
-              { label: 'Inactive', value: 'false' },
-              { label: 'Active', value: 'true' },
-            ]}
-          ></Select>
+    <>
+      <StyledRow className="align-items-center mb-3 no-gutters">
+        <Col md={3}>
+          <div className="mb-0 d-flex align-items-center">
+            {exists(index) &&
+              (featureSet.isActive === false ? (
+                <DisabledDraftCircleNumber text={(index! + 1).toString()} />
+              ) : (
+                <DraftCircleNumber text={(index! + 1).toString()} />
+              ))}
+            <OverflowTip
+              fullText={propertyIdentifier}
+              className={exists(index) ? 'pl-3' : ''}
+            ></OverflowTip>
+          </div>
         </Col>
-      )}
-      <Col md={1} className="pl-3">
-        <StyledIconButton
-          title="move-pin-location"
-          onClick={() => {
-            mapMachine.startReposition(property, index);
-          }}
-          data-testid={'move-pin-location-' + index}
-        >
-          <RiDragMove2Line size={22} />
-        </StyledIconButton>
-      </Col>
-      <Col md={1}>
-        <RemoveButton
-          onRemove={onRemove}
-          fontSize="1.4rem"
-          data-testId={'delete-property-' + index}
+        <Col md={showDisable ? 4 : 5}>
+          <InlineInput
+            className="mb-0 w-100"
+            label=""
+            field={withNameSpace(nameSpace, 'name')}
+            displayErrorTooltips={true}
+            defaultValue=""
+            errorKeys={[withNameSpace(nameSpace, 'isRetired')]}
+          />
+        </Col>
+        <RestrictedWidthCol xs="auto" className="ml-5">
+          <ZoomToLocation geometry={featureSet.pimsFeature.geometry} icon={ZoomIconType.single} />
+        </RestrictedWidthCol>
+        {showDisable && (
+          <Col md={2} className="mr-3">
+            {featureSet?.pimsFeature?.properties?.IS_RETIRED ? (
+              <div className="mb-0 ml-7">Retired</div>
+            ) : (
+              <Select
+                className="mb-0 ml-3"
+                field={withNameSpace(nameSpace, 'isActive')}
+                options={[
+                  { label: 'Inactive', value: 'false' },
+                  { label: 'Active', value: 'true' },
+                ]}
+              ></Select>
+            )}
+          </Col>
+        )}
+        <StyledActionsCol xs="auto">
+          {canMoveMarker ? (
+            <StyledIconButton
+              title="move-pin-location"
+              onClick={() => {
+                mapMachine.startReposition(featureSet, index);
+              }}
+              data-testid={'move-pin-location-' + index}
+            >
+              <RiDragMove2Line size={22} />
+            </StyledIconButton>
+          ) : (
+            <></>
+          )}
+          {canUploadShapefile && !hasCustomBoundary && (
+            <TooltipWrapper tooltip="Upload shapefile" tooltipId={'upload-shapefile-' + index}>
+              <StyledIconButton
+                data-testid={'upload-shapefile-' + index}
+                onClick={() => setIsUploadVisible(true)}
+              >
+                <ImUpload size={18} />
+              </StyledIconButton>
+            </TooltipWrapper>
+          )}
+          {canUploadShapefile && hasCustomBoundary && (
+            <TooltipWrapper tooltip="Remove shape" tooltipId={'remove-shape-' + index}>
+              <StyledIconButton data-testid={'remove-shape-' + index} onClick={onRemoveShapefile}>
+                <RemoveShapeIcon width="1.8rem" height="1.8rem" />
+              </StyledIconButton>
+            </TooltipWrapper>
+          )}
+          <StyledSpacingWrapper>
+            <RemoveButton
+              onRemove={onRemove}
+              fontSize="1.4rem"
+              data-testId={'delete-property-' + index}
+            />
+          </StyledSpacingWrapper>
+        </StyledActionsCol>
+      </StyledRow>
+      {canUploadShapefile && (
+        <ShapeUploadModal
+          display={isUploadVisible}
+          setDisplay={setIsUploadVisible}
+          onClose={handleModalUploadClose}
+          propertyIdentifier={propertyIdentifier}
         />
-      </Col>
-    </StyledRow>
+      )}
+    </>
   );
 };
 
 const StyledRow = styled(Row)`
   min-height: 4.5rem;
+`;
+
+const StyledActionsCol = styled(Col)`
+  display: flex;
+  flex-direction: row;
+  align-items: center;
+  justify-content: flex-end;
+`;
+
+const RestrictedWidthCol = styled(Col)`
+  max-width: 3rem;
+  min-width: 3rem;
+`;
+
+const StyledSpacingWrapper = styled.div`
+  padding-left: 1.2rem;
 `;
 
 export default SelectedPropertyRow;

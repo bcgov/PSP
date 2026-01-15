@@ -259,19 +259,19 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   border: #CE3E39 solid 0.1rem;
 }
 
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c1 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c4.required::before {
@@ -398,6 +398,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Project
           </div>
@@ -608,6 +609,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Progress Statuses
           </div>
@@ -1063,6 +1065,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Schedule
           </div>
@@ -1316,6 +1319,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Properties to include in this sub-file:
           </div>
@@ -1343,6 +1347,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   Selected Properties
                 </div>
@@ -1509,6 +1514,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Acquisition Details
           </div>
@@ -1946,6 +1952,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Acquisition Team
           </div>
@@ -1979,6 +1986,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Sub-Interest
           </div>
@@ -2175,6 +2183,102 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 id="input-ownerRepresentative.comment"
                 name="ownerRepresentative.comment"
                 placeholder="Remarks or additional representative(s)"
+                style="word-break: break-all;"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+            style="overflow: hidden;"
+          >
+            Notice of Claim
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Received date:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5 form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c6 form-control date-picker"
+                    id="datepicker-noticeOfClaim.receivedDate"
+                    name="noticeOfClaim.receivedDate"
+                    placeholder="MMM DD, YYYY"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Comment:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-noticeOfClaim.comment"
+                name="noticeOfClaim.comment"
                 style="word-break: break-all;"
               />
             </div>
@@ -2450,19 +2554,19 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   border: #CE3E39 solid 0.1rem;
 }
 
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c1 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c4.required::before {
@@ -2589,6 +2693,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Project
           </div>
@@ -2791,6 +2896,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Progress Statuses
           </div>
@@ -3246,6 +3352,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Schedule
           </div>
@@ -3499,6 +3606,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Properties to include in this file:
           </div>
@@ -3526,6 +3634,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
               >
                 <div
                   class="align-content-end col"
+                  style="overflow: hidden;"
                 >
                   Selected Properties
                 </div>
@@ -3692,6 +3801,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Acquisition Details
           </div>
@@ -4011,6 +4121,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Acquisition Team
           </div>
@@ -4044,6 +4155,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Owners
           </div>
@@ -4240,6 +4352,102 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                 id="input-ownerRepresentative.comment"
                 name="ownerRepresentative.comment"
                 placeholder="Remarks or additional representative(s)"
+                style="word-break: break-all;"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+            style="overflow: hidden;"
+          >
+            Notice of Claim
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Received date:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c6 form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c7 form-control date-picker"
+                    id="datepicker-noticeOfClaim.receivedDate"
+                    name="noticeOfClaim.receivedDate"
+                    placeholder="MMM DD, YYYY"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Comment:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-noticeOfClaim.comment"
+                name="noticeOfClaim.comment"
                 style="word-break: break-all;"
               />
             </div>

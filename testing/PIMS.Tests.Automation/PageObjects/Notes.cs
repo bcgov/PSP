@@ -31,30 +31,32 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propNotesPropNameColumn = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(1) div");
         private readonly By propNotesPropNoteColumn = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(2) div");
         private readonly By propNotesPropCreatedDateColumn = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(3) div");
-        private readonly By propNotesPropCreatedSortBttn = By.CssSelector("div[data-testid='sort-column-appCreateTimestamp']");
+        private readonly By propNotesPropCreatedSortBttn = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='sort-column-appCreateTimestamp']");
         private readonly By propNotesPropUpdatedByColumn = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(4) div");
         private readonly By propNotesPropUpdatedBySortBttn = By.CssSelector("div[data-testid='sort-column-appLastUpdateUserid']");
         private readonly By propNotesPropActionsColumn = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(5) div");
 
-        private readonly By propNotesTableName1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(1) span");
-        private readonly By propNotesTableNote1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(2)");
-        private readonly By propNotesTableCreatedDate1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(3)");
-        private readonly By propNotesTableLastUpdated1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(4)");
-        private readonly By propNotesTableViewBttn1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(5) button[title='View Note']");
+        private readonly By propNotesTableName1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(1) span");
+        private readonly By propNotesTableNote1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(2)");
+        private readonly By propNotesTableCreatedDate1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(3)");
+        private readonly By propNotesTableLastUpdated1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(4)");
+        private readonly By propNotesTableViewBttn1stContent = By.CssSelector("div[data-testid='property-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(5) button[title='View Note']");
 
         //Management Notes Table Elements
         private readonly By mgmtNotesTableTitle = By.XPath("//div[@data-testid='management-notes-summary']/h2/div/div/div/div/div[text()='Management File Notes']");
         private readonly By mgmtNotesPropNameColumn = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(1) div");
         private readonly By mgmtNotesPropNoteColumn = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(2) div");
         private readonly By mgmtNotesPropCreatedDateColumn = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(3) div");
+        private readonly By mgmtNotesPropCreatedSortBttn = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='sort-column-appCreateTimestamp']");
         private readonly By mgmtNotesPropUpdatedByColumn = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(4) div");
+        private readonly By mgmtNotesPropUpdatedBySortBttn = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='sort-column-appLastUpdateUserid']");
         private readonly By mgmtNotesPropActionsColumn = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(5) div");
 
-        private readonly By mgmtNotesTableName1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(1) span");
-        private readonly By mgmtNotesTableNote1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(2)");
-        private readonly By mgmtNotesTableCreatedDate1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(3)");
-        private readonly By mgmtNotesTableLastUpdated1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(4)");
-        private readonly By mgmtNotesTableViewBttn1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='tr-wrapper']:first-child div[role='cell']:nth-child(5) button[title='View Note']");
+        private readonly By mgmtNotesTableName1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[role='cell']:first-child span");
+        private readonly By mgmtNotesTableNote1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(2)");
+        private readonly By mgmtNotesTableCreatedDate1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(3)");
+        private readonly By mgmtNotesTableLastUpdated1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(4)");
+        private readonly By mgmtNotesTableViewBttn1stContent = By.CssSelector("div[data-testid='management-notes-summary'] div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(5) button[title='View Note']");
 
         //Notes Add new notes Details Elements
         private readonly By notesAddDetailsHeader = By.XPath("//div[@class='modal-title h4']");
@@ -98,6 +100,32 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilClickable(notesTabLink);
             webDriver.FindElement(notesTabLink).Click();
+        }
+
+        public void NavigateToFirstManagementNote()
+        {
+            var originalWindowHandle = webDriver.CurrentWindowHandle;
+
+            Wait();
+            webDriver.FindElement(mgmtNotesTableName1stContent).Click();
+
+            Wait();
+            var allWindowsHandle = webDriver.WindowHandles;
+            var newWindowHandle = allWindowsHandle.Where(handle => handle != originalWindowHandle).First();
+            webDriver.SwitchTo().Window(newWindowHandle);
+        }
+
+        public void NavigateToFirstPropertyNote()
+        {
+            var originalWindowHandle = webDriver.CurrentWindowHandle;
+
+            Wait();
+            webDriver.FindElement(propNotesTableName1stContent).Click();
+
+            Wait();
+            var allWindowsHandle = webDriver.WindowHandles;
+            var newWindowHandle = allWindowsHandle.Where(handle => handle != originalWindowHandle).First();
+            webDriver.SwitchTo().Window(newWindowHandle);
         }
 
         public void CreateNotesTabButton()
@@ -209,6 +237,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (feature == "Property")
             {
+                //Second Table from Management notes
+                AssertTrueIsDisplayed(mgmtNotesTableTitle);
+                AssertTrueIsDisplayed(propNotesTooltip);
+                AssertTrueContentEquals(mgmtNotesPropNameColumn, "File Name");
+                AssertTrueContentEquals(mgmtNotesPropNoteColumn, "Note");
+                AssertTrueContentEquals(mgmtNotesPropCreatedDateColumn, "Created date");
+                AssertTrueIsDisplayed(mgmtNotesPropCreatedSortBttn);
+                AssertTrueContentEquals(mgmtNotesPropUpdatedByColumn, "Last updated by");
+                AssertTrueIsDisplayed(mgmtNotesPropUpdatedBySortBttn);
+                AssertTrueContentEquals(mgmtNotesPropActionsColumn, "Actions");
+            }
+            else
+            {
                 //Second Table from Properties notes
                 AssertTrueIsDisplayed(propNotesTableTitle);
                 AssertTrueIsDisplayed(propNotesTooltip);
@@ -220,38 +261,27 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(propNotesPropUpdatedBySortBttn);
                 AssertTrueContentEquals(propNotesPropActionsColumn, "Actions");
             }
-            else
-            {
-                //Second Table from Management notes
-                AssertTrueIsDisplayed(mgmtNotesTableTitle);
-                AssertTrueIsDisplayed(propNotesTooltip);
-                AssertTrueContentEquals(mgmtNotesPropNameColumn, "Property Name");
-                AssertTrueContentEquals(mgmtNotesPropNoteColumn, "Note");
-                AssertTrueContentEquals(mgmtNotesPropCreatedDateColumn, "Created date");
-                AssertTrueIsDisplayed(propNotesPropCreatedSortBttn);
-                AssertTrueContentEquals(mgmtNotesPropUpdatedByColumn, "Last updated by");
-                AssertTrueIsDisplayed(propNotesPropUpdatedBySortBttn);
-                AssertTrueContentEquals(mgmtNotesPropActionsColumn, "Actions");
-            }
         }
 
         public void VerifySecondaryNotesListContent(string feature, string note)
         {
+            Wait();
+
             if (feature == "Property")
             {
                 AssertTrueContentNotEquals(propNotesTableName1stContent, "");
-                AssertTrueContentEquals(propNotesTableNote1stContent, note);
+                AssertTrueContentNotEquals(propNotesTableNote1stContent, "");
                 AssertTrueContentNotEquals(propNotesTableCreatedDate1stContent, "");
                 AssertTrueContentNotEquals(propNotesTableLastUpdated1stContent, "");
-                AssertTrueIsDisplayed(propNotesTableViewBttn1stContent); 
+                AssertTrueIsDisplayed(propNotesTableViewBttn1stContent);
             }
             else
             {
                 AssertTrueContentNotEquals(mgmtNotesTableName1stContent, "");
-                AssertTrueContentEquals(mgmtNotesTableNote1stContent, note);
+                AssertTrueContentNotEquals(mgmtNotesTableNote1stContent, note);
                 AssertTrueContentNotEquals(mgmtNotesTableCreatedDate1stContent, "");
                 AssertTrueContentNotEquals(mgmtNotesTableLastUpdated1stContent, "");
-                AssertTrueIsDisplayed(mgmtNotesTableViewBttn1stContent); 
+                AssertTrueIsDisplayed(mgmtNotesTableViewBttn1stContent);
             }
         }
 

@@ -20,7 +20,7 @@ import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_Use
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { getEmptyBaseAudit, getEmptyLease } from '@/models/defaultInitializers';
 import { emptyRegion } from '@/models/layers/motRegionalBoundary';
-import { PIMS_Property_Boundary_View } from '@/models/layers/pimsPropertyLocationView';
+import { PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import {
@@ -329,6 +329,7 @@ describe('AddLeaseContainer component', () => {
         {
           location: { lng: -120.69195885, lat: 50.25163372 },
           fileLocation: null,
+          fileBoundary: null,
           pimsFeature: null,
           parcelFeature: getMockFullyAttributedParcel('1'),
           regionFeature: {
@@ -346,7 +347,7 @@ describe('AddLeaseContainer component', () => {
       type: 'Feature',
       properties: { REGION_NAME: 1, PID_PADDED: 1 } as any,
       geometry: getMockPolygon(),
-    } as Feature<Geometry, PIMS_Property_Boundary_View>);
+    } as Feature<Geometry, PIMS_Property_View>);
 
     getPrimaryAddressByPidFn.mockResolvedValue({ address: '1234 fake st' });
 

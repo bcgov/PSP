@@ -9,11 +9,17 @@ import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFe
 import { Section } from '@/components/common/Section/Section';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useEditPropertiesMode } from '@/hooks/useEditPropertiesMode';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
+import { useModalContext } from '@/hooks/useModalContext';
 import { featuresetToLocationBoundaryDataset } from '@/utils';
-import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
+import {
+  addPropertiesToCurrentFile,
+  addShapeToProperty,
+  removeShapeFromPropertyWithConfirmation,
+} from '@/utils/propertyUtils';
 import { exists, firstOrNull } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
@@ -29,6 +35,7 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
   const { values } = useFormikContext<ResearchForm>();
   useEditPropertiesMode();
 
+  const { setModalContent, setDisplayModal } = useModalContext();
   const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
     useMapStateMachine();
 
@@ -41,6 +48,7 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
       location: mapLocationFeatureDataset?.location,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
       pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
       regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
@@ -98,7 +106,7 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
       ) : null}
 
       <FieldArray name="properties">
-        {({ remove }) => (
+        {({ remove, replace }) => (
           <Section header="Selected Properties">
             <SelectedPropertyHeaderRow />
             {values.properties.map((property, index) => (
@@ -107,7 +115,22 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
                 onRemove={() => remove(index)}
                 nameSpace={`properties.${index}`}
                 index={index}
-                property={property.toFeatureDataset()}
+                property={property}
+                canUploadShapefile={true}
+                onUploadShapefile={(result: UploadResponseModel | null) => {
+                  const updatedFormProperty = addShapeToProperty(property, result);
+                  replace(index, updatedFormProperty);
+                }}
+                onRemoveShapefile={() => {
+                  removeShapeFromPropertyWithConfirmation(
+                    property,
+                    setModalContent,
+                    setDisplayModal,
+                    updatedProperty => {
+                      replace(index, updatedProperty);
+                    },
+                  );
+                }}
               />
             ))}
             {values.properties.length === 0 && <span>No Properties selected</span>}

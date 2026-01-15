@@ -5,22 +5,50 @@ import React from 'react';
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { FormLeaseProperty, getDefaultFormLease, LeaseFormModel } from '@/features/leases/models';
+import {
+  IShapeUploadModalProps,
+  ShapeUploadModal,
+} from '@/features/properties/shapeUpload/ShapeUploadModal';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import { getMockPolygon } from '@/mocks/geometries.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { emptyRegion } from '@/models/layers/motRegionalBoundary';
 import { emptyPmbcParcel } from '@/models/layers/parcelMapBC';
-import { emptyPropertyLocation } from '@/models/layers/pimsPropertyLocationView';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import * as mapUtils from '@/utils/mapPropertyUtils';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import LeasePropertySelector from './LeasePropertySelector';
+import { emptyProperty } from '@/models/layers/pimsPropertyView';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
+
+// Mock ShapeUploadModal in order to control its behavior in tests
+vi.mock('@/features/properties/shapeUpload/ShapeUploadModal');
+vi.mocked(ShapeUploadModal).mockImplementation((props: IShapeUploadModalProps) => {
+  return props.display ? (
+    <div data-testid="shape-upload-modal">
+      <span data-testid="prop-id">{props.propertyIdentifier}</span>
+      <button
+        data-testid="modal-close"
+        onClick={() => {
+          const fakeResult = new UploadResponseModel('fakefile.shp');
+          fakeResult.isSuccess = true;
+          fakeResult.boundary = getMockPolygon();
+          if (typeof props.onClose === 'function') {
+            props.onClose(fakeResult);
+          }
+        }}
+      >
+        close
+      </button>
+    </div>
+  ) : null;
+});
 
 describe('LeasePropertySelector component', () => {
   // render component under test
@@ -73,6 +101,7 @@ describe('LeasePropertySelector component', () => {
       FormLeaseProperty.fromApi({
         id: 1,
         location: { coordinate: { y: 44, x: -77 } },
+        boundary: null,
         fileId: 1,
         file: null,
         isActive: null,
@@ -92,6 +121,7 @@ describe('LeasePropertySelector component', () => {
       FormLeaseProperty.fromApi({
         id: 2,
         location: { coordinate: { y: 44, x: -77 } },
+        boundary: null,
         fileId: 1,
         file: null,
         isActive: null,
@@ -193,6 +223,47 @@ describe('LeasePropertySelector component', () => {
         }),
       ]),
     );
+  });
+
+  it('updates property boundary when shapefile is uploaded', async () => {
+    const { formikRef } = await setup({ initialForm: testForm });
+
+    const uploadButton = screen.getByTestId('upload-shapefile-0');
+    await act(async () => userEvent.click(uploadButton));
+
+    // Modal should be displayed
+    expect(screen.getByTestId('shape-upload-modal')).toBeVisible();
+
+    const closeButton = screen.getByTestId('modal-close');
+    await act(async () => userEvent.click(closeButton));
+
+    // Modal should be closed
+    expect(screen.queryByTestId('shape-upload-modal')).toBeNull();
+
+    // Verify that the property boundary was updated in the formik values
+    expect(formikRef.current?.values.properties[0].property.fileBoundary).toEqual(getMockPolygon());
+  });
+
+  it('removes custom property boundary when Remove Shape is clicked', async () => {
+    const { formikRef } = await setup({
+      initialForm: testForm,
+    });
+
+    // Manually set a custom boundary on the first property
+    act(() => {
+      formikRef.current?.setFieldValue('properties[0].property.fileBoundary', getMockPolygon());
+    });
+
+    const removeButton = screen.getByTestId('remove-shape-0');
+    await act(async () => userEvent.click(removeButton));
+
+    // confirm removal in modal
+    expect(screen.getByText(/Are you sure you want to remove this uploaded shape/i)).toBeVisible();
+    const confirmButton = await screen.findByTitle('ok-modal');
+    await act(async () => userEvent.click(confirmButton));
+
+    // Verify that the property boundary was removed in the formik values
+    expect(formikRef.current?.values.properties[0].property.fileBoundary).toBeUndefined();
   });
 
   // TODO: fix tests affected by the removal of the property selector tool
@@ -307,7 +378,7 @@ describe('LeasePropertySelector component', () => {
       pimsFeatures: [
         {
           type: 'Feature',
-          properties: { ...emptyPropertyLocation, PROPERTY_ID: 1 },
+          properties: { ...emptyProperty, PROPERTY_ID: 1 },
           geometry: getMockPolygon(),
         },
       ],

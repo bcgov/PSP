@@ -93,10 +93,11 @@ export const DocumentSearchListView: React.FC<unknown> = () => {
           <FlexDiv>
             <div>
               <DocumentIcon
-                title="Disposition file Icon"
+                title="Document search Icon"
+                width={24}
+                height={24}
                 fill="currentColor"
-                width="50px"
-                height="50px"
+                stroke="currentColor"
               />
               <span className="ml-2">Documents</span>
             </div>

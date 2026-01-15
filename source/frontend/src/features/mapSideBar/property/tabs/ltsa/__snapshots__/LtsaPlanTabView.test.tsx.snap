@@ -38,19 +38,19 @@ exports[`LtsaPlanTabView component > renders as expected when provided valid lts
   font-size: 3.2rem;
 }
 
-.c4 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c3 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c4 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c6.required::before {
@@ -108,6 +108,7 @@ exports[`LtsaPlanTabView component > renders as expected when provided valid lts
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Strata Plan Common Property Details
           </div>
@@ -189,6 +190,7 @@ exports[`LtsaPlanTabView component > renders as expected when provided valid lts
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Legal Notations on Strata Common Property
           </div>
@@ -305,6 +307,7 @@ GOVERNMENT ACT, SEE EP96596
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Charges on Strata Common Property
           </div>

@@ -56,6 +56,16 @@ export const columns: ColumnWithProps<ManagementSearchResultModel>[] = [
     maxWidth: 40,
   },
   {
+    Header: 'MOTT region',
+    accessor: 'regionCode',
+    align: 'left',
+    clickable: false,
+    width: 10,
+    maxWidth: 20,
+    Cell: (props: CellProps<ManagementSearchResultModel>) =>
+      stringToFragment(props.row.original.regionCode),
+  },
+  {
     Header: 'Historical File #',
     accessor: 'legacyFileNum',
     align: 'left',
