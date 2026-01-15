@@ -182,12 +182,8 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
                 <SectionField label="Additional details">
                   <Input field="additionalDetails" disabled={!canEditDetails} />
                 </SectionField>
-                <SectionField label="Ministry region" required>
-                  <UserRegionSelectContainer
-                    field="regionCode"
-                    placeholder="Select region..."
-                    required
-                  />
+                <SectionField label="Ministry region">
+                  <UserRegionSelectContainer field="regionCode" placeholder="Select region..." />
                 </SectionField>
               </Section>
 

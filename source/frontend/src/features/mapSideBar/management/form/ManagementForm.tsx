@@ -138,12 +138,8 @@ const ManagementForm: React.FC<IManagementFormProps> = props => {
               <SectionField label="Additional details">
                 <Input field="additionalDetails" />
               </SectionField>
-              <SectionField label="Ministry region" required>
-                <UserRegionSelectContainer
-                  field="regionCode"
-                  placeholder="Select region..."
-                  required
-                />
+              <SectionField label="Ministry region">
+                <UserRegionSelectContainer field="regionCode" placeholder="Select region..." />
               </SectionField>
             </Section>
 
