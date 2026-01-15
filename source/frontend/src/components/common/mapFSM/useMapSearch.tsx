@@ -340,7 +340,7 @@ export const useMapSearch = () => {
           historicalNumberInventoryData?.features?.length > 0
         ) {
           const validFeatures = historicalNumberInventoryData.features.filter(feature =>
-            exists(feature),
+            exists(feature?.geometry),
           );
 
           result = {

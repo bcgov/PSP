@@ -44,7 +44,7 @@ export const usePimsPropertyLayer = () => {
           HISTORICAL_FILE_NUMBER_STR: params?.HISTORICAL_FILE_NUMBER_STR,
         };
         const url = `${propertiesUrl}${
-          geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''
+          geoserver_params ? `&${toCqlFilter(geoserver_params, params?.forceExactMatch)}` : ''
         }`;
         return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_View>>(url);
       },
