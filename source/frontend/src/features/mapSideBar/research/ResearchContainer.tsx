@@ -294,7 +294,11 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
         onSuccess={onSuccess}
         isFormValid={isValid}
       />
-      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
+      <ConfirmNavigation
+        navigate={history.push}
+        shouldBlockNavigation={shouldBlockNavigation}
+        showModal={!isPropertySelector}
+      />
     </>
   );
 };
