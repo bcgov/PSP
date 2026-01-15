@@ -76,7 +76,8 @@ namespace Pims.Api.Services
             dispositionFile.DispositionStatusTypeCode ??= DispositionStatusTypes.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= DispositionFileStatusTypes.ACTIVE.ToString();
 
-            MatchProperties(dispositionFile, userOverrides);
+            // No existing properties when adding a new file
+            MatchProperties(dispositionFile, userOverrides, new HashSet<long>());
             ValidatePropertyRegions(dispositionFile);
 
             // Update marker locations in the context of this file
@@ -509,12 +510,12 @@ namespace Pims.Api.Services
 
             ValidateVersion(dispositionFile.Internal_Id, dispositionFile.ConcurrencyControlNumber);
 
-            MatchProperties(dispositionFile, userOverrides);
-
-            ValidatePropertyRegions(dispositionFile);
-
             // Get the current properties in the disposition file
             var currentFileProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
+            var existingPropertyIds = currentFileProperties.Select(p => p.PropertyId).ToHashSet();
+            MatchProperties(dispositionFile, userOverrides, existingPropertyIds);
+
+            ValidatePropertyRegions(dispositionFile);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingDispositionProperty in dispositionFile.PimsDispositionFileProperties)
@@ -718,7 +719,7 @@ namespace Pims.Api.Services
             }
         }
 
-        private void MatchProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> overrideCodes)
+        private void MatchProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> overrideCodes, HashSet<long> existingPropertyIds)
         {
             foreach (var dispProperty in dispositionFile.PimsDispositionFileProperties)
             {
@@ -730,7 +731,11 @@ namespace Pims.Api.Services
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
                         if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            // Only block if this is a new property (not already attached)
+                            if (!existingPropertyIds.Contains(foundProperty.Internal_Id))
+                            {
+                                throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            }
                         }
 
                         dispProperty.PropertyId = foundProperty.Internal_Id;
@@ -758,7 +763,11 @@ namespace Pims.Api.Services
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
                         if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            // Only block if this is a new property (not already attached)
+                            if (!existingPropertyIds.Contains(foundProperty.Internal_Id))
+                            {
+                                throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            }
                         }
 
                         dispProperty.PropertyId = foundProperty.Internal_Id;

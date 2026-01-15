@@ -246,7 +246,27 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
           <Formik<FileForm>
             innerRef={formikRef}
             initialValues={formFile}
-            validationSchema={UpdatePropertiesYupSchema}
+            validate={values => {
+              const originalPropertyIds = props.file.fileProperties
+                ?.map(fp => fp.property?.id)
+                .filter(Boolean);
+              try {
+                UpdatePropertiesYupSchema({ originalPropertyIds }).validateSync(values, {
+                  context: { originalPropertyIds },
+                });
+                return {};
+              } catch (err) {
+                // Return Formik-compatible error object
+                return (
+                  err.inner?.reduce((acc, curr) => {
+                    acc[curr.path] = curr.message;
+                    return acc;
+                  }, {}) || {}
+                );
+              }
+            }}
+            validateOnChange={true}
+            validateOnBlur={true}
             onSubmit={async (values: FileForm) => {
               const file: ApiGen_Concepts_File = values.toApi();
               await saveFile(file);

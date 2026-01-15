@@ -2130,7 +2130,7 @@ namespace Pims.Api.Test.Services
 
 
         [Fact]
-        public void UpdateProperties_WithRetiredProperty_Should_Fail()
+        public void UpdateProperties_WithRetired_New_Property_Should_Fail()
         {
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
@@ -2146,11 +2146,9 @@ namespace Pims.Api.Test.Services
                 IsRetired = true,
             };
 
+            // Simulate adding a new retired property (not already attached)
             acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() {
-                new()
-                {
-                    Property = retiredProperty
-                }
+                new PimsPropertyAcquisitionFile() { Property = retiredProperty, Internal_Id = 0 }
             };
 
 
@@ -2174,6 +2172,49 @@ namespace Pims.Api.Test.Services
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
             ex.WithMessage("Retired property can not be selected.");
+        }
+
+        public void UpdateProperties_WithRetired_Existing_Property_Success()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.ConcurrencyControlNumber = 1;
+
+            PimsProperty property = EntityHelper.CreateProperty(12345, regionCode: 3);
+            PimsProperty retiredProperty = new PimsProperty()
+            {
+                PropertyId = 100,
+                Pid = 1000,
+                IsRetired = true,
+            };
+
+            // Simulate the retired property is already attached to the file
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() {
+                new PimsPropertyAcquisitionFile() { Property = retiredProperty, Internal_Id = 1 }
+            };
+
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(retiredProperty);
+            propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(3);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            // Act
+            Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().NotThrow();
         }
 
         [Fact]
