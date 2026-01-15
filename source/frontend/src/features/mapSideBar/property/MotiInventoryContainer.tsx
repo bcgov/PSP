@@ -127,7 +127,11 @@ export const MotiInventoryContainer: React.FunctionComponent<
         onSuccess={onSuccess}
         ref={formikRef}
       />
-      <ConfirmNavigation navigate={push} shouldBlockNavigation={shouldBlockNavigation} />
+      <ConfirmNavigation
+        navigate={push}
+        shouldBlockNavigation={shouldBlockNavigation}
+        showModal={true}
+      />
     </MapSideBarLayout>
   );
 };

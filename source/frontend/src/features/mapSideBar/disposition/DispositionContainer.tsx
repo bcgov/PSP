@@ -348,7 +348,11 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         }
         isEditing={isEditing}
       ></View>
-      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
+      <ConfirmNavigation
+        navigate={history.push}
+        shouldBlockNavigation={shouldBlockNavigation}
+        showModal={!isPropertySelector}
+      />
     </>
   );
 };

@@ -122,6 +122,7 @@ export const UpdateFinancialCodeContainer: React.FC<IUpdateFinancialCodeContaine
           <ConfirmNavigation
             navigate={history.push}
             shouldBlockNavigation={shouldBlockNavigation}
+            showModal={true}
           />
         </Col>
       </Row>
