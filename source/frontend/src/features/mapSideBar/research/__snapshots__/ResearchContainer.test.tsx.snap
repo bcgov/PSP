@@ -533,9 +533,6 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 }
 
 .c30 {
-  -webkit-align-self: flex-end;
-  -ms-flex-item-align: end;
-  align-self: flex-end;
   margin-right: 2rem;
 }
 
@@ -1126,6 +1123,15 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                       role="tab"
                     >
                       File Details
+                    </a>
+                    <a
+                      aria-selected="false"
+                      class="nav-item nav-link"
+                      data-rb-event-key="improvements"
+                      href="#"
+                      role="tab"
+                    >
+                      Improvements
                     </a>
                   </nav>
                   <div

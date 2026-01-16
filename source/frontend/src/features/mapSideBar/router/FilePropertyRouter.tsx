@@ -7,11 +7,13 @@ import { InventoryTabNames, InventoryTabs } from '@/features/mapSideBar/property
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_ResearchFileProperty } from '@/models/api/generated/ApiGen_Concepts_ResearchFileProperty';
-import { exists, isValidId } from '@/utils';
+import { exists, isValidId, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
 import { SideBarContext } from '../context/sidebarContext';
 import { PropertyEditForms } from '../property/PropertyRouter';
+import { PropertyNetBookUpdateContainer } from '../property/tabs/bcAssessment/update/PropertyNetBookUpdateContainer';
+import { PropertyNetBookUpdateForm } from '../property/tabs/bcAssessment/update/PropertyNetBookUpdateForm';
 import { UpdatePropertyDetailsContainer } from '../property/tabs/propertyDetails/update/UpdatePropertyDetailsContainer';
 import { PropertyContactEditContainer } from '../property/tabs/propertyDetailsManagement/update/PropertyContactEditContainer';
 import { PropertyContactEditForm } from '../property/tabs/propertyDetailsManagement/update/PropertyContactEditForm';
@@ -124,6 +126,19 @@ export const FilePropertyRouter: React.FC<IFilePropertyRouterProps> = props => {
           )}
           key={PropertyEditForms.UpdateContactContainer}
           title="Update Contact"
+        ></AppRoute>
+        <AppRoute
+          path={`${stripTrailingSlash(path)}/${InventoryTabNames.value}`}
+          customRender={() => (
+            <PropertyNetBookUpdateContainer
+              propertyId={fileProperty?.propertyId}
+              View={PropertyNetBookUpdateForm}
+              onSuccess={onChildSuccess}
+              ref={props.formikRef}
+            />
+          )}
+          key={PropertyEditForms.UpdateNetBookValueContainer}
+          title="Update Net Book Value"
         ></AppRoute>
         <Redirect from={`${path}`} to={`${url}/${InventoryTabNames.property}?edit=true`} />
       </Switch>

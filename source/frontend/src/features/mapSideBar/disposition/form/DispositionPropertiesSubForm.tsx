@@ -1,7 +1,9 @@
 import { FieldArray, FormikProps } from 'formik';
+import { LatLngLiteral } from 'leaflet';
 import { noop } from 'lodash';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
 import { Col, Row } from 'react-bootstrap';
+import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons';
@@ -9,13 +11,13 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
+import MapClickMonitor from '@/components/propertySelector/MapClickMonitor';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
-import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { useModalContext } from '@/hooks/useModalContext';
-import { exists, featuresetToLocationBoundaryDataset, firstOrNull } from '@/utils';
+import { exists, firstOrNull, isLatLngInFeatureSetBoundary, isNumber } from '@/utils';
 import {
   addPropertiesToCurrentFile,
   addShapeToProperty,
@@ -31,6 +33,34 @@ export interface DispositionPropertiesSubFormProps {
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }
 
+const getPropertyIndex = (property: PropertyForm, properties: PropertyForm[]): number | null => {
+  if (
+    !(
+      exists(property.fileLocation) ||
+      exists(property.fileBoundary) ||
+      exists(property.latitude) ||
+      exists(property.longitude)
+    )
+  ) {
+    return null;
+  }
+  let index = 0;
+  for (const p of properties) {
+    if (
+      exists(p.fileLocation) ||
+      exists(p.fileBoundary) ||
+      exists(p.latitude) ||
+      exists(p.longitude)
+    ) {
+      if (p === property) {
+        return index;
+      }
+      index++;
+    }
+  }
+  return null;
+};
+
 const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertiesSubFormProps> = ({
   formikProps,
 }) => {
@@ -39,12 +69,6 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
   const { setModalContent, setDisplayModal } = useModalContext();
   const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
     useMapStateMachine();
-
-  useDraftMarkerSynchronizer(
-    formikProps.values.fileProperties.map(p =>
-      featuresetToLocationBoundaryDataset(p.toFeatureDataset()),
-    ),
-  );
 
   const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
     return {
@@ -129,31 +153,66 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
               </StyledButtonWrapper>
             ) : null}
 
+            <Row className="py-3 no-gutters">
+              <Col>
+                <MapClickMonitor
+                  selectedComponentId={null}
+                  addProperty={noop}
+                  repositionProperty={(
+                    featureset: SelectedFeatureDataset,
+                    latLng: LatLngLiteral,
+                    index: number | null,
+                  ) => {
+                    if (
+                      isNumber(index) &&
+                      index >= 0 &&
+                      isLatLngInFeatureSetBoundary(latLng, featureset)
+                    ) {
+                      const formProperty = formikProps.values.fileProperties[index];
+                      const updatedFormProperty = new PropertyForm(formProperty);
+                      updatedFormProperty.fileLocation = latLng;
+                      replace(index, updatedFormProperty);
+                    } else if (!isLatLngInFeatureSetBoundary(latLng, featureset)) {
+                      toast.warn(
+                        'Please choose a location that is within the (highlighted) boundary of this property.',
+                      );
+                    }
+                  }}
+                  modifiedProperties={formikProps.values.fileProperties.map(p =>
+                    p.toFeatureDataset(),
+                  )}
+                />
+              </Col>
+            </Row>
+
             <SelectedPropertyHeaderRow />
-            {formikProps.values.fileProperties.map((property, index) => (
-              <SelectedPropertyRow
-                key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
-                onRemove={() => remove(index)}
-                nameSpace={`fileProperties.${index}`}
-                index={index}
-                property={property}
-                canUploadShapefile={true}
-                onUploadShapefile={(result: UploadResponseModel | null) => {
-                  const updatedFormProperty = addShapeToProperty(property, result);
-                  replace(index, updatedFormProperty);
-                }}
-                onRemoveShapefile={() => {
-                  removeShapeFromPropertyWithConfirmation(
-                    property,
-                    setModalContent,
-                    setDisplayModal,
-                    updatedProperty => {
-                      replace(index, updatedProperty);
-                    },
-                  );
-                }}
-              />
-            ))}
+            {formikProps.values.fileProperties.map((property, index) => {
+              const propertyIndex = getPropertyIndex(property, formikProps.values.fileProperties);
+              return (
+                <SelectedPropertyRow
+                  key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
+                  onRemove={() => remove(index)}
+                  nameSpace={`fileProperties.${index}`}
+                  index={propertyIndex}
+                  property={property}
+                  canUploadShapefile={true}
+                  onUploadShapefile={(result: UploadResponseModel | null) => {
+                    const updatedFormProperty = addShapeToProperty(property, result);
+                    replace(index, updatedFormProperty);
+                  }}
+                  onRemoveShapefile={() => {
+                    removeShapeFromPropertyWithConfirmation(
+                      property,
+                      setModalContent,
+                      setDisplayModal,
+                      updatedProperty => {
+                        replace(index, updatedProperty);
+                      },
+                    );
+                  }}
+                />
+              );
+            })}
             {formikProps.values.fileProperties.length === 0 && <span>No Properties selected</span>}
           </Section>
         )}

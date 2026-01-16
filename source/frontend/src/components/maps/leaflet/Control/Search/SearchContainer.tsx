@@ -60,12 +60,11 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
         mapMarkLocation(latLng);
         requestCenterToLocation(latLng);
         mapClick(latLng);
-      }
-    } else {
-      if (filter !== null && !dequal(mapSearchCriteria, filter)) {
-        mapClearLocationMark();
         setMapSearchCriteria(filter);
       }
+    } else if (filter !== null && !dequal(mapSearchCriteria, filter)) {
+      mapClearLocationMark();
+      setMapSearchCriteria(filter);
     }
   };
 

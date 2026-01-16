@@ -215,12 +215,10 @@ describe('PropertyManagementDetailView component', () => {
           rowVersion: 1,
         },
       ],
-      organizationPersons: [
-      ],
+      organizationPersons: [],
       parentOrganization: null,
       rowVersion: 1,
     });
-
 
     const apiManagement: ApiGen_Concepts_PropertyManagement = {
       ...getMockApiPropertyManagement(),

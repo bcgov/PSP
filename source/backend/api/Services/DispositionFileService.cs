@@ -793,15 +793,16 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ValidatePropertyRegions(PimsDispositionFile dispositionFile)
+        private void ValidatePropertyRegions(PimsDispositionFile acquisitionFile)
         {
             var userRegions = _user.GetUserRegions(_userRepository);
-            foreach (var dispProperty in dispositionFile.PimsDispositionFileProperties)
+            foreach (var acquisitionProperty in acquisitionFile.PimsDispositionFileProperties)
             {
-                var propertyRegion = dispProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(dispProperty.PropertyId);
-                if (!userRegions.Contains(propertyRegion))
+                var propertyRegion = acquisitionProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(acquisitionProperty.PropertyId);
+                var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+                if (propertyRegion != cannotDetermineRegion.Code && !userRegions.Contains(propertyRegion))
                 {
-                    throw new BadRequestException("You cannot add a property that is outside of your user account region(s). Either select a different property, or get your system administrator to add the required region to your user account settings.");
+                    throw new BadRequestException("You cannot add a property that is outside of your user account region(s).\n\nPlease select a different property or contact admin at pims@gov.bc.ca to add the required region to your user account settings.");
                 }
             }
         }

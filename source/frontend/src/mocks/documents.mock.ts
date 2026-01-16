@@ -2419,6 +2419,8 @@ export const mockDocumentSearchResultsResponse = (): ApiGen_Concepts_DocumentSea
           surplusDeclarationType: null,
           surplusDeclarationComment: null,
           surplusDeclarationDate: '0001-01-01',
+          netBookAmount: null,
+          netBookNote: null,
           rowVersion: 3,
         },
         id: 1,

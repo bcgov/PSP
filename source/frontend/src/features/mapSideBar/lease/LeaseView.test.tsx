@@ -27,14 +27,14 @@ import {
 
 import { useLeaseDetail } from '@/features/leases';
 import { useApiUsers } from '@/hooks/pims-api/useApiUsers';
+import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { getUserMock } from '@/mocks/user.mock';
+import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
+import { AxiosResponse } from 'axios';
 import { LeasePageNames } from './LeaseContainer';
 import LeaseView, { ILeaseViewProps } from './LeaseView';
 import { LeaseFileTabNames } from './detail/LeaseFileTabs';
-import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
-import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
-import { AxiosResponse } from 'axios';
 
 vi.mock('@/hooks/repositories/useNoteRepository');
 vi.mock('@/hooks/pims-api/useApiNotes');
@@ -61,7 +61,7 @@ vi.mock('@/hooks/repositories/useComposedProperties', () => {
 });
 
 vi.mock('@/hooks/pims-api/useApiProperties');
-vi.mocked(useApiProperties).mockReturnValue({
+vi.mocked(useApiProperties, { partial: true }).mockReturnValue({
   getPropertiesViewPagedApi: vi
     .fn()
     .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Property> }),

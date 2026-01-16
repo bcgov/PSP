@@ -115,7 +115,7 @@ const UpdateCompensationRequisitionContainer: React.FC<
       fileType: ApiGen_CodeTypes_FileTypes,
       existingCompPayees: ApiGen_Concepts_CompReqAcqPayee[],
     ) => {
-      if (file.id) {
+      if (isValidId(file.id)) {
         switch (fileType) {
           case ApiGen_CodeTypes_FileTypes.Acquisition:
             {

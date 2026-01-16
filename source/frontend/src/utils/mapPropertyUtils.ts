@@ -24,10 +24,7 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import {
-  emptyPropertyLocation,
-  PIMS_Property_Location_View,
-} from '@/models/layers/pimsPropertyLocationView';
+import { emptyProperty, PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import { exists, formatApiAddress, pidFormatter } from '@/utils';
 
 export enum NameSourceType {
@@ -380,12 +377,11 @@ export const isEmptyFeatureCollection = (collection: FeatureCollection) => {
 
 export const isEmptyMapFeatureData = (mapFeatureData: MapFeatureData) => {
   return (
-    isEmptyFeatureCollection(mapFeatureData.pimsLocationFeatures) &&
-    //isEmptyFeatureCollection(mapFeatureData.pimsLocationLiteFeatures) && TODO: For now this is loading always. Investigate if it needs to be removed completly
-    isEmptyFeatureCollection(mapFeatureData.pimsBoundaryFeatures) &&
-    isEmptyFeatureCollection(mapFeatureData.fullyAttributedFeatures) &&
-    isEmptyFeatureCollection(mapFeatureData.surveyedParcelsFeatures) &&
-    isEmptyFeatureCollection(mapFeatureData.highwayPlanFeatures)
+    isEmptyFeatureCollection(mapFeatureData?.pimsFeatures) &&
+    //isEmptyFeatureCollection(mapFeatureData.pimsLiteFeatures) && TODO: For now this is loading always. Investigate if it needs to be removed completly
+    isEmptyFeatureCollection(mapFeatureData?.fullyAttributedFeatures) &&
+    isEmptyFeatureCollection(mapFeatureData?.surveyedParcelsFeatures) &&
+    isEmptyFeatureCollection(mapFeatureData?.highwayPlanFeatures)
   );
 };
 
@@ -476,16 +472,16 @@ export async function getRegionAndDistrictsResults(
 
 export function apiPropertyToPimsFeature(
   property: ApiGen_Concepts_Property | undefined | null,
-): Feature<Geometry, PIMS_Property_Location_View> | null {
+): Feature<Geometry, PIMS_Property_View> | null {
   if (!exists(property)) {
     return null;
   }
 
-  const feature: Feature<Geometry, PIMS_Property_Location_View> = {
+  const feature: Feature<Geometry, PIMS_Property_View> = {
     type: 'Feature',
     geometry: property.boundary ?? null,
     properties: {
-      ...emptyPropertyLocation,
+      ...emptyProperty,
       // core fields
       PROPERTY_ID: property.id ?? null,
       PID: property.pid ?? null,

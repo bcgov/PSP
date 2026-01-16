@@ -14,6 +14,8 @@ import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 
 import { SideBarContext } from '../../context/sidebarContext';
+import FilePropertiesImprovementsContainer from '../../shared/improvements/FilePropertiesImprovements/FilePropertiesImprovementsContainer';
+import { FilePropertiesImprovementsView } from '../../shared/improvements/FilePropertiesImprovements/FilePropertiesImprovementsView';
 import { ChecklistView } from '../../shared/tabs/checklist/detail/ChecklistView';
 import DispositionStatusUpdateSolver from './fileDetails/detail/DispositionStatusUpdateSolver';
 import DispositionSummaryView from './fileDetails/detail/DispositionSummaryView';
@@ -35,7 +37,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
 
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
-  const { setStaleLastUpdatedBy } = useContext(SideBarContext);
+  const { setStaleLastUpdatedBy, file } = useContext(SideBarContext);
   const history = useHistory();
   const { tab } = useParams<{ tab?: string }>();
   const activeTab = Object.values(FileTabType).find(value => value === tab) ?? defaultTab;
@@ -73,6 +75,17 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
       name: 'Offers & Sale',
     });
   }
+
+  tabViews.push({
+    content: (
+      <FilePropertiesImprovementsContainer
+        fileProperties={file?.fileProperties?.map(x => x.property) ?? []}
+        View={FilePropertiesImprovementsView}
+      ></FilePropertiesImprovementsContainer>
+    ),
+    key: FileTabType.IMPROVEMENTS,
+    name: 'Improvements',
+  });
 
   tabViews.push({
     content: (

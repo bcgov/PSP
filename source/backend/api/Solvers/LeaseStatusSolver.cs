@@ -186,36 +186,6 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
-        public bool CanEditImprovements(LeaseStatusTypes? leaseStatus)
-        {
-            if (leaseStatus == null)
-            {
-                return false;
-            }
-
-            bool canEdit;
-            switch (leaseStatus)
-            {
-                case LeaseStatusTypes.ACTIVE:
-                case LeaseStatusTypes.DRAFT:
-                case LeaseStatusTypes.INACTIVE:
-                    canEdit = true;
-                    break;
-                case LeaseStatusTypes.TERMINATED:
-                case LeaseStatusTypes.DUPLICATE:
-                case LeaseStatusTypes.DISCARD:
-                case LeaseStatusTypes.ARCHIVED:
-                case LeaseStatusTypes.EXPIRED:
-                    canEdit = false;
-                    break;
-                default:
-                    canEdit = false;
-                    break;
-            }
-
-            return canEdit;
-        }
-
         public bool CanEditInsurance(LeaseStatusTypes? leaseStatus)
         {
             if (leaseStatus == null)

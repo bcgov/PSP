@@ -11,8 +11,6 @@ export interface ApiGen_Concepts_PropertyImprovement extends ApiGen_Base_BaseAud
   id: number | null;
   propertyId: number | null;
   property: ApiGen_Concepts_Property | null;
-  address: string | null;
-  structureSize: string | null;
   improvementDescription: string | null;
   propertyImprovementTypeCode: ApiGen_Base_CodeType<string> | null;
 }

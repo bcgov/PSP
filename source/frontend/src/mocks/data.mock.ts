@@ -1,6 +1,6 @@
 import { FeatureCollection, Geometry } from 'geojson';
 
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import { PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 
 export const createMockHeader = () => ({
   headers: {
@@ -13,13 +13,13 @@ export const ERROR = { message: 'Errors', status: 400, data: { details: 'error' 
 
 export const getMockPimsLocationViewLayerResponse: () => FeatureCollection<
   Geometry,
-  PIMS_Property_Location_View
+  PIMS_Property_View
 > = () => ({
   type: 'FeatureCollection',
   features: [
     {
       type: 'Feature',
-      id: 'PIMS_PROPERTY_LOCATION_VW.fid--458993de_17c52535f19_-6487',
+      id: 'PIMS_PROPERTY_VW.fid--458993de_17c52535f19_-6487',
       geometry: {
         type: 'Point',
         coordinates: [-124.0658, 48.8281],
@@ -61,6 +61,8 @@ export const getMockPimsLocationViewLayerResponse: () => FeatureCollection<
         IS_RECEIVABLE_LEASE: false,
         IS_ACTIVE_RECEIVABLE_LEASE: false,
         HISTORICAL_FILE_NUMBER_STR: '',
+        GEOMETRY: null,
+        LOCATION: null,
       },
       bbox: [-124.0658, 48.8281, -124.0658, 48.8281],
     },

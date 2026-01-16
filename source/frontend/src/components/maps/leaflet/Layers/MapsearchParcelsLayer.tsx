@@ -7,7 +7,7 @@ import { v4 as uuidv4 } from 'uuid';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { usePrevious } from '@/hooks/usePrevious';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { PIMS_Property_Boundary_View } from '@/models/layers/pimsPropertyLocationView';
+import { PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import { exists } from '@/utils';
 
 export const MapsearchParcelsLayer: React.FunctionComponent = () => {
@@ -20,9 +20,9 @@ export const MapsearchParcelsLayer: React.FunctionComponent = () => {
     [mapFeatureData?.fullyAttributedFeatures.features],
   );
 
-  const searchValidBoundaries = useMemo<Feature<Geometry, PIMS_Property_Boundary_View>[]>(
-    () => (mapFeatureData?.pimsBoundaryFeatures.features ?? []).filter(p => exists(p?.geometry)),
-    [mapFeatureData?.pimsBoundaryFeatures.features],
+  const searchValidBoundaries = useMemo<Feature<Geometry, PIMS_Property_View>[]>(
+    () => (mapFeatureData?.pimsFeatures.features ?? []).filter(p => exists(p?.geometry)),
+    [mapFeatureData?.pimsFeatures.features],
   );
 
   const boundaryFeatures = useMemo<FeatureCollection>(() => {

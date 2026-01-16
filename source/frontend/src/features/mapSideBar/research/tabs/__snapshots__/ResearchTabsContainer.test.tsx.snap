@@ -127,6 +127,15 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
       <a
         aria-selected="false"
         class="nav-item nav-link"
+        data-rb-event-key="improvements"
+        href="#"
+        role="tab"
+      >
+        Improvements
+      </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
         data-rb-event-key="documents"
         href="#"
         role="tab"

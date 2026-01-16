@@ -182,12 +182,8 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
                 <SectionField label="Additional details">
                   <Input field="additionalDetails" disabled={!canEditDetails} />
                 </SectionField>
-                <SectionField label="Ministry region" required>
-                  <UserRegionSelectContainer
-                    field="regionCode"
-                    placeholder="Select region..."
-                    required
-                  />
+                <SectionField label="Ministry region">
+                  <UserRegionSelectContainer field="regionCode" placeholder="Select region..." />
                 </SectionField>
               </Section>
 
@@ -195,8 +191,12 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
                 <ManagementTeamSubForm canEditDetails={canEditDetails} />
               </Section>
               <Section header="Notice of Claim">
-                <FastDatePicker formikProps={formikProps} field="noticeOfClaim.receivedDate" />
-                <TextArea field="noticeOfClaim.comment" />
+                <SectionField label="Received date">
+                  <FastDatePicker formikProps={formikProps} field="noticeOfClaim.receivedDate" />
+                </SectionField>
+                <SectionField label="Comment">
+                  <TextArea field="noticeOfClaim.comment" />
+                </SectionField>
               </Section>
             </Container>
           </>

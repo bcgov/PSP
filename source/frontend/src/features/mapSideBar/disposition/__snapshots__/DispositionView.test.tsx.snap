@@ -544,9 +544,6 @@ exports[`DispositionView component > renders as expected 1`] = `
 }
 
 .c31 {
-  -webkit-align-self: flex-end;
-  -ms-flex-item-align: end;
-  align-self: flex-end;
   margin-right: 2rem;
 }
 
@@ -1136,6 +1133,15 @@ exports[`DispositionView component > renders as expected 1`] = `
                     role="tab"
                   >
                     Offers & Sale
+                  </a>
+                  <a
+                    aria-selected="false"
+                    class="nav-item nav-link"
+                    data-rb-event-key="improvements"
+                    href="#"
+                    role="tab"
+                  >
+                    Improvements
                   </a>
                   <a
                     aria-selected="false"

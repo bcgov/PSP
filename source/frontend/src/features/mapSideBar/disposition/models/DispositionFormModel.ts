@@ -49,6 +49,7 @@ export class DispositionFormModel implements WithDispositionTeam {
     this.fileNumber = fileNumber;
     this.fileStatusTypeCode = dispositionFileStatus;
     this.dispositionStatusTypeCode = dispositionStatus;
+    this.regionCode = '';
   }
 
   toApi(): ApiGen_Concepts_DispositionFile {

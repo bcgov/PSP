@@ -112,7 +112,7 @@ const GenerateLetterRecipientsModal: React.FunctionComponent<
                   )}
                 />
                 {isEmpty(recipientList) && (
-                  <StyledNoData className="m-4">No recipients availiable</StyledNoData>
+                  <StyledNoData className="m-4">No recipients available</StyledNoData>
                 )}
               </StyledDiv>
               {Object.values(formikProps.errors).length > 0 && (
