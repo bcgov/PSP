@@ -703,7 +703,7 @@ namespace Pims.Api.Services
                         // Only block if this is a new retired property
                         if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !alreadyAttachedPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         leaseProperty.PropertyId = foundProperty.Internal_Id;
@@ -726,7 +726,7 @@ namespace Pims.Api.Services
                         // Only block if this is a new retired property
                         if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !alreadyAttachedPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         leaseProperty.PropertyId = foundProperty.Internal_Id;

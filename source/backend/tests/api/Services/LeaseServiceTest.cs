@@ -234,7 +234,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
+            ex.WithMessage("New retired property can not be added.");
 
             leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Never);
             propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>()), Times.Never);
@@ -754,7 +754,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
+            ex.WithMessage("New retired property can not be added.");
         }
 
         [Fact]

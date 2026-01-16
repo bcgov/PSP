@@ -729,13 +729,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            // Only block if this is a new property (not already attached)
-                            if (!existingPropertyIds.Contains(foundProperty.Internal_Id))
-                            {
-                                throw new BusinessRuleViolationException("Retired property can not be selected.");
-                            }
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         dispProperty.PropertyId = foundProperty.Internal_Id;
@@ -761,13 +759,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            // Only block if this is a new property (not already attached)
-                            if (!existingPropertyIds.Contains(foundProperty.Internal_Id))
-                            {
-                                throw new BusinessRuleViolationException("Retired property can not be selected.");
-                            }
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         dispProperty.PropertyId = foundProperty.Internal_Id;
