@@ -3,6 +3,7 @@ PSP_PIMS | Development Sprint: S116.00 | Design Sprint: 115 | Date: 2026-Jan-08
 - Altered seed scripts:
   - 109_DML_PIMS_LEASE_STAKEHOLDER_TYPE.sql
   - 123_DML_PIMS_FORM_TYPE.sql
+  - 124_DML_PIMS_AGREEMENT_TYPE.sql
 - Added test scripts:
   - 999_Reset_PROPERTY_ID.sql
 
