@@ -4,9 +4,9 @@
 -- Author        Date         Ticket     Comment
 -- ------------  -----------  ---------  -----------------------------------------------------
 -- Doug Filteau  2025-Dec-17  N/A        Added the FORM4, FORM6, and FORM7 type codes.
--- Doug Filteau  2026-Jan-08  PSP-11105  Added the H0179B type code.
--- Doug Filteau  2026-Jan-08  PSP-11106  Added the H0179D type code.
--- Doug Filteau  2026-Jan-08  PSP-11107  Added the H0179RC type code.
+-- Doug Filteau  2026-Jan-08  PSP-11105  Added the H179B type code.
+-- Doug Filteau  2026-Jan-08  PSP-11106  Added the H179D type code.
+-- Doug Filteau  2026-Jan-08  PSP-11107  Added the H179RC type code.
 -- -------------------------------------------------------------------------------------------
 
 SET XACT_ABORT ON
@@ -18,11 +18,11 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Disable H0179B code.
-PRINT N'Disable H0179B code.'
+-- Disable H179B code.
+PRINT N'Disable H179B code.'
 GO
 DECLARE @CurrCd NVARCHAR(20)
-SET     @CurrCd = N'H0179B'
+SET     @CurrCd = N'H179B'
 
 SELECT FORM_TYPE_CODE
 FROM   PIMS_FORM_TYPE
@@ -37,11 +37,11 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Disable H0179D code.
-PRINT N'Disable H0179D code.'
+-- Disable H179D code.
+PRINT N'Disable H179D code.'
 GO
 DECLARE @CurrCd NVARCHAR(20)
-SET     @CurrCd = N'H0179D'
+SET     @CurrCd = N'H179D'
 
 SELECT FORM_TYPE_CODE
 FROM   PIMS_FORM_TYPE
@@ -56,11 +56,11 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Disable H0179RC code.
-PRINT N'Disable H0179RC code.'
+-- Disable H179RC code.
+PRINT N'Disable H179RC code.'
 GO
 DECLARE @CurrCd NVARCHAR(20)
-SET     @CurrCd = N'H0179RC'
+SET     @CurrCd = N'H179RC'
 
 SELECT FORM_TYPE_CODE
 FROM   PIMS_FORM_TYPE

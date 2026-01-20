@@ -4,9 +4,9 @@
 -- Author        Date         Ticket     Comment
 -- ------------  -----------  ---------  -----------------------------------------------------
 -- Doug Filteau  2025-Dec-17  N/A        Added the FORM4, FORM6, and FORM7 type codes.
--- Doug Filteau  2026-Jan-08  PSP-11105  Added the H0179B type code.
--- Doug Filteau  2026-Jan-08  PSP-11106  Added the H0179D type code.
--- Doug Filteau  2026-Jan-08  PSP-11107  Added the H0179RC type code.
+-- Doug Filteau  2026-Jan-08  PSP-11105  Added the H179B type code.
+-- Doug Filteau  2026-Jan-08  PSP-11106  Added the H179D type code.
+-- Doug Filteau  2026-Jan-08  PSP-11107  Added the H179RC type code.
 -- -------------------------------------------------------------------------------------------
 
 SET XACT_ABORT ON
@@ -18,11 +18,11 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Add/enable H0179B code.
-PRINT N'Add/enable H0179B code.'
+-- Add/enable H179B code.
+PRINT N'Add/enable H179B code.'
 GO
 DECLARE @CurrCd NVARCHAR(20)
-SET     @CurrCd = N'H0179B'
+SET     @CurrCd = N'H179B'
 
 SELECT FORM_TYPE_CODE
 FROM   PIMS_FORM_TYPE
@@ -35,16 +35,16 @@ IF @@ROWCOUNT = 1
   WHERE  FORM_TYPE_CODE = @CurrCd;
 ELSE
 	INSERT INTO PIMS_FORM_TYPE (FORM_TYPE_CODE, DESCRIPTION)
-	VALUES (N'H0179B', N'Release of Claims Agreement (H-0179(B))');
+	VALUES (N'H179B', N'Release of Claims Agreement (H179B)');
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Add/enable H0179D code.
-PRINT N'Add/enable H0179D code.'
+-- Add/enable H179D code.
+PRINT N'Add/enable H179D code.'
 GO
 DECLARE @CurrCd NVARCHAR(20)
-SET     @CurrCd = N'H0179D'
+SET     @CurrCd = N'H179D'
 
 SELECT FORM_TYPE_CODE
 FROM   PIMS_FORM_TYPE
@@ -57,16 +57,16 @@ IF @@ROWCOUNT = 1
   WHERE  FORM_TYPE_CODE = @CurrCd;
 ELSE
 	INSERT INTO PIMS_FORM_TYPE (FORM_TYPE_CODE, DESCRIPTION)
-	VALUES (N'H0179D', N'Statutory Right of Way Agreement (H-0179(D))');
+	VALUES (N'H179D', N'Statutory Right of Way Agreement (H179D)');
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Add/enable H0179RC code.
-PRINT N'Add/enable H0179RC code.'
+-- Add/enable H179RC code.
+PRINT N'Add/enable H179RC code.'
 GO
 DECLARE @CurrCd NVARCHAR(20)
-SET     @CurrCd = N'H0179RC'
+SET     @CurrCd = N'H179RC'
 
 SELECT FORM_TYPE_CODE
 FROM   PIMS_FORM_TYPE
@@ -79,7 +79,7 @@ IF @@ROWCOUNT = 1
   WHERE  FORM_TYPE_CODE = @CurrCd;
 ELSE
 	INSERT INTO PIMS_FORM_TYPE (FORM_TYPE_CODE, DESCRIPTION)
-	VALUES (N'H0179RC', N'Agreement of Purchase and Sale (Closed Road) (H-0179(RC))');
+	VALUES (N'H179RC', N'Agreement of Purchase and Sale (Closed Road) (H179RC)');
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
