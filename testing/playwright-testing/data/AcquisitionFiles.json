@@ -933,21 +933,6 @@
         "AgreementDepositAmount": 550000.0
       },
       {
-        "Test Case Description": "Create Acquisition File Agreement (H179B)",
-        "AgreementStatus": "Draft",
-        "AgreementCancellationReason": null,
-        "AgreementLegalSurveyPlan": "Automated Agreement H179B Test",
-        "AgreementType": "Release of Claims Agreement (H179B)",
-        "AgreementDate": 1705708800000,
-        "AgreementCommencementDate": null,
-        "AgreementCompletionDate": 1708300800000,
-        "AgreementTerminationDate": 1708387200000,
-        "AgreementPossessionDate": 1708473600000,
-        "AgreementPurchasePrice": 500000.0,
-        "AgreementDepositDue": 30,
-        "AgreementDepositAmount": 25000.0
-      },
-      {
         "Test Case Description": "Create Acquisition File Agreement (H0074)",
         "AgreementStatus": "Final",
         "AgreementCancellationReason": null,
