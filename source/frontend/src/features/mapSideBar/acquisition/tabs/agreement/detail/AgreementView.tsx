@@ -203,6 +203,8 @@ function getAgreementFormName(agreementType: string | null): string {
       return 'H-179A';
     case ApiGen_CodeTypes_AgreementTypes.H179B:
       return 'H-179B';
+    case ApiGen_CodeTypes_AgreementTypes.H179D:
+      return 'H-179D';
     case ApiGen_CodeTypes_AgreementTypes.H179P:
       return 'H-179P';
     case ApiGen_CodeTypes_AgreementTypes.H179T:

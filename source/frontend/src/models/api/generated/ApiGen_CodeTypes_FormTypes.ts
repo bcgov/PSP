@@ -18,6 +18,7 @@ export enum ApiGen_CodeTypes_FormTypes {
   H120 = 'H120',
   H179A = 'H179A',
   H179B = 'H179B',
+  H179D = 'H179D',
   H179FSPART = 'H179FSPART',
   H179P = 'H179P',
   H179PTO = 'H179PTO',
