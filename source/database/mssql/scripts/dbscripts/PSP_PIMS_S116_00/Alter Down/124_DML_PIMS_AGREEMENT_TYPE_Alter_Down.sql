@@ -1,12 +1,9 @@
 -- -------------------------------------------------------------------------------------------
--- Alter the PIMS_FORM_TYPE table.
+-- Alter the PIMS_AGREEMENT_TYPE table.
 -- . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 -- Author        Date         Ticket     Comment
 -- ------------  -----------  ---------  -----------------------------------------------------
--- Doug Filteau  2025-Dec-17  N/A        Added the FORM4, FORM6, and FORM7 type codes.
--- Doug Filteau  2026-Jan-08  PSP-11105  Added the H179B type code.
--- Doug Filteau  2026-Jan-08  PSP-11106  Added the H179D type code.
--- Doug Filteau  2026-Jan-08  PSP-11107  Added the H179RC type code.
+-- Doug Filteau  2026-Jan-19  PSP-11164  Added the H179B and H179D type code
 -- -------------------------------------------------------------------------------------------
 
 SET XACT_ABORT ON
@@ -18,59 +15,59 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Disable H179B code.
-PRINT N'Disable H179B code.'
+-- Add/enable H179B code.
+PRINT N'Add/enable H179B code.'
 GO
 DECLARE @CurrCd NVARCHAR(20)
 SET     @CurrCd = N'H179B'
 
-SELECT FORM_TYPE_CODE
-FROM   PIMS_FORM_TYPE
-WHERE  FORM_TYPE_CODE = @CurrCd;
+SELECT AGREEMENT_TYPE_CODE
+FROM   PIMS_AGREEMENT_TYPE
+WHERE  AGREEMENT_TYPE_CODE = @CurrCd;
 
 IF @@ROWCOUNT = 1
-  UPDATE PIMS_FORM_TYPE
+  UPDATE PIMS_AGREEMENT_TYPE
   SET    IS_DISABLED                = 1
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
-  WHERE  FORM_TYPE_CODE = @CurrCd;
+  WHERE  AGREEMENT_TYPE_CODE = @CurrCd;
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Disable H179D code.
-PRINT N'Disable H179D code.'
+-- Add/enable H179D code.
+PRINT N'Add/enable H179D code.'
 GO
 DECLARE @CurrCd NVARCHAR(20)
 SET     @CurrCd = N'H179D'
 
-SELECT FORM_TYPE_CODE
-FROM   PIMS_FORM_TYPE
-WHERE  FORM_TYPE_CODE = @CurrCd;
+SELECT AGREEMENT_TYPE_CODE
+FROM   PIMS_AGREEMENT_TYPE
+WHERE  AGREEMENT_TYPE_CODE = @CurrCd;
 
 IF @@ROWCOUNT = 1
-  UPDATE PIMS_FORM_TYPE
+  UPDATE PIMS_AGREEMENT_TYPE
   SET    IS_DISABLED                = 1
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
-  WHERE  FORM_TYPE_CODE = @CurrCd;
+  WHERE  AGREEMENT_TYPE_CODE = @CurrCd;
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Disable H179RC code.
-PRINT N'Disable H179RC code.'
+-- Add/enable H179RC code.
+PRINT N'Add/enable H179RC code.'
 GO
 DECLARE @CurrCd NVARCHAR(20)
 SET     @CurrCd = N'H179RC'
 
-SELECT FORM_TYPE_CODE
-FROM   PIMS_FORM_TYPE
-WHERE  FORM_TYPE_CODE = @CurrCd;
+SELECT AGREEMENT_TYPE_CODE
+FROM   PIMS_AGREEMENT_TYPE
+WHERE  AGREEMENT_TYPE_CODE = @CurrCd;
 
 IF @@ROWCOUNT = 1
-  UPDATE PIMS_FORM_TYPE
+  UPDATE PIMS_AGREEMENT_TYPE
   SET    IS_DISABLED                = 1
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
-  WHERE  FORM_TYPE_CODE = @CurrCd;
+  WHERE  AGREEMENT_TYPE_CODE = @CurrCd;
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
