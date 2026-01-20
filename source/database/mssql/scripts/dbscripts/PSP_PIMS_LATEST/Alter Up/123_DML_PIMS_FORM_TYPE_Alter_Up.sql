@@ -35,7 +35,7 @@ IF @@ROWCOUNT = 1
   WHERE  FORM_TYPE_CODE = @CurrCd;
 ELSE
 	INSERT INTO PIMS_FORM_TYPE (FORM_TYPE_CODE, DESCRIPTION)
-	VALUES (N'H179B', N'Release of Claims Agreement (H-0179(B))');
+	VALUES (N'H179B', N'Release of Claims Agreement (H179B)');
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -57,7 +57,7 @@ IF @@ROWCOUNT = 1
   WHERE  FORM_TYPE_CODE = @CurrCd;
 ELSE
 	INSERT INTO PIMS_FORM_TYPE (FORM_TYPE_CODE, DESCRIPTION)
-	VALUES (N'H179D', N'Statutory Right of Way Agreement (H-0179(D))');
+	VALUES (N'H179D', N'Statutory Right of Way Agreement (H179D)');
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -79,7 +79,7 @@ IF @@ROWCOUNT = 1
   WHERE  FORM_TYPE_CODE = @CurrCd;
 ELSE
 	INSERT INTO PIMS_FORM_TYPE (FORM_TYPE_CODE, DESCRIPTION)
-	VALUES (N'H179RC', N'Agreement of Purchase and Sale (Closed Road) (H-0179(RC))');
+	VALUES (N'H179RC', N'Agreement of Purchase and Sale (Closed Road) (H179RC)');
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

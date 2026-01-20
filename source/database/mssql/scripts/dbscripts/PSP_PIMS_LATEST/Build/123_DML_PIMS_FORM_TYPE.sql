@@ -9,6 +9,7 @@
 -- Doug Filteau  2026-Jan-08  PSP-11105  Added the H0179B type code.
 -- Doug Filteau  2026-Jan-08  PSP-11106  Added the H0179D type code.
 -- Doug Filteau  2026-Jan-08  PSP-11107  Added the H0179RC type code.
+-- Doug Filteau  2026-Jan-19  PSP-11164  Added the H179B and H179D type code
 -- -------------------------------------------------------------------------------------------
 
 DELETE FROM PIMS_FORM_TYPE
@@ -38,9 +39,9 @@ VALUES
   (N'FORM4',      N'Amended Expropriation Notice (Form 4)'),
   (N'FORM6',      N'Cancellation of Expropriation Notice (Form 6)'),
   (N'FORM7',      N'Abandonment of Expropriation (Form 7)'),
-  (N'H179RC',     N'Agreement of Purchase and Sale (Closed Road) (H-0179(RC))'),
-  (N'H179D',      N'Statutory Right of Way Agreement (H-0179(D))'),
-  (N'H179B',      N'Release of Claims Agreement (H-0179(B))');
+  (N'H179RC',     N'Agreement of Purchase and Sale (Closed Road) (H179RC)'),
+  (N'H179D',      N'Statutory Right of Way Agreement (H179D)'),
+  (N'H179B',      N'Release of Claims Agreement (H179B)');
 GO
 
 -- -------------------------------------------------------------------------------------------
