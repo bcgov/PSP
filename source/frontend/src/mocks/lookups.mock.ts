@@ -3881,6 +3881,13 @@ export const mockLookups: ILookupCode[] = [
     type: 'PimsAgreementType',
   },
   {
+    id: 'H179B',
+    name: 'Release of Claims Agreement (H179B)',
+    isDisabled: false,
+    displayOrder: 4,
+    type: 'PimsAgreementType',
+  },
+  {
     id: 'H0074',
     name: 'License Of Occupation (H0074)',
     isDisabled: false,
