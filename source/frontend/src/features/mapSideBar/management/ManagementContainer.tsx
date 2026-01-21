@@ -1,15 +1,16 @@
 import { AxiosError } from 'axios';
-import { FormikProps } from 'formik';
-import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { useFormikCancel } from '@/hooks/useFormikCancel';
+import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
@@ -60,7 +61,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
 
   const mapMachine = useMapStateMachine();
 
-  const formikRef = useRef<FormikProps<any>>(null);
+  const { formikRef, handleCancelClick } = useFormikCancel<any>();
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
@@ -155,33 +156,19 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
 
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() => pathGenerator.showFile('management', managementFile.id));
+        handleCancelClick(() => {
+          setIsEditing(false);
+          pathGenerator.showFile('management', managementFile.id);
+        });
         return;
       }
     }
     pathGenerator.showFile('management', managementFile.id);
   };
 
-  const onSelectProperty = (filePropertyId: number) => {
-    if (!exists(managementFile)) {
-      return;
-    }
-
-    if (isEditing) {
-      if (formikRef?.current?.dirty) {
-        handleCancelClick(() =>
-          pathGenerator.showFilePropertyId('management', managementFile.id, filePropertyId),
-        );
-        return;
-      }
-    }
-    // The index needs to be offset to match the menu index
-    pathGenerator.showFilePropertyId('management', managementFile.id, filePropertyId);
-  };
-
   const onEditProperties = () => {
     if (exists(managementFile)) {
-      pathGenerator.editProperties('management', managementFile.id);
+      pathGenerator.editProperties('management', managementFileId);
     }
   };
 
@@ -199,41 +186,34 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     }
   };
 
-  const handleCancelClick = (onCancelConfirm?: () => void) => {
-    if (formikRef !== undefined) {
-      if (formikRef.current?.dirty) {
-        setModalContent({
-          ...getCancelModalProps(),
-          handleOk: () => {
-            handleCancelConfirm();
-            setDisplayModal(false);
-            onCancelConfirm && onCancelConfirm();
-          },
-          handleCancel: () => setDisplayModal(false),
+  const handleCancel = () => {
+    handleCancelClick(() => setIsEditing(false));
+  };
+
+  const onSelectProperty = (filePropertyId: number) => {
+    if (!exists(managementFile)) {
+      return;
+    }
+
+    if (isEditing) {
+      if (formikRef?.current?.dirty) {
+        handleCancelClick(() => {
+          setIsEditing(false);
+          pathGenerator.showFilePropertyId('management', managementFile.id, filePropertyId);
         });
-        setDisplayModal(true);
-      } else {
-        handleCancelConfirm();
+        return;
       }
-    } else {
-      handleCancelConfirm();
     }
+    // The index needs to be offset to match the menu index
+    pathGenerator.showFilePropertyId('management', managementFile.id, filePropertyId);
   };
 
-  const handleCancelConfirm = () => {
-    if (formikRef !== undefined) {
-      formikRef.current?.resetForm();
-    }
-    setIsEditing(false);
-    stripEditFromPath();
-  };
-
-  const onSuccess = (refreshProperties?: boolean, refreshFile?: boolean) => {
+  const onSuccess = async (refreshProperties?: boolean, refreshFile?: boolean) => {
     setIsEditing(false);
     stripEditFromPath();
     fetchLastUpdatedBy();
     if (refreshFile) {
-      fetchManagementFile();
+      await fetchManagementFile();
     }
     if (refreshProperties) {
       mapMachine.refreshMapProperties();
@@ -259,9 +239,9 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
             },
             userOverrideCodes,
           )
-          .then(response => {
+          .then(async response => {
+            await onSuccess(true, true);
             history.push(`${stripTrailingSlash(match.url)}`);
-            onSuccess(true, true);
             return response;
           });
       },
@@ -302,6 +282,11 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     [managementFileId, getPropertyAssociations],
   );
 
+  const shouldBlockNavigation = useCallback(
+    () => formikRef.current?.dirty && !formikRef.current?.isSubmitting,
+    [formikRef],
+  );
+
   // UI components
   const loading =
     loadingManagementFile ||
@@ -315,7 +300,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
       <View
         setIsEditing={setIsEditing}
         onClose={close}
-        onCancel={handleCancelClick}
+        onCancel={handleCancel}
         onSave={handleSaveClick}
         onSelectFileSummary={onSelectFileSummary}
         onSelectProperty={onSelectProperty}
@@ -337,6 +322,11 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
         }
         isEditing={isEditing}
       ></View>
+      <ConfirmNavigation
+        navigate={history.push}
+        shouldBlockNavigation={shouldBlockNavigation}
+        showModal={!isPropertySelector}
+      />
     </>
   );
 };

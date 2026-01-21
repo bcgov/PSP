@@ -234,7 +234,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
+            ex.WithMessage("New retired property can not be added.");
 
             leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Never);
             propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>()), Times.Never);
@@ -650,7 +650,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void UpdateProperties_WithExistingDisposedProperty_Should_Pass()
+        public void UpdateProperties_WithExistingDisposedProperty_Success()
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
@@ -710,10 +710,25 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void UpdateProperties_WithRetiredProperty_Should_Fail()
+        public void UpdateProperties_WithNewRetiredProperty_Should_Fail()
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
+
+            // Simulate adding a new retired property (not already attached)
+            var retiredProperty = new PimsProperty()
+            {
+                PropertyId = 100,
+                Pid = 1,
+                IsRetired = true,
+            };
+            var newPropertyLease = new PimsPropertyLease()
+            {
+                Property = retiredProperty,
+                PropertyId = retiredProperty.PropertyId,
+                Internal_Id = 0 // Simulate new property (not attached yet)
+            };
+            lease.PimsPropertyLeases = new List<PimsPropertyLease> { newPropertyLease };
 
             var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
@@ -721,17 +736,13 @@ namespace Pims.Api.Test.Services
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
-            PimsProperty retiredProperty = new PimsProperty()
-            {
-                PropertyId = 100,
-                Pid = 1,
-                IsRetired = true,
-            };
-
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(retiredProperty);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
             userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // No properties are already attached to this lease
+            propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>());
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
@@ -743,7 +754,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
+            ex.WithMessage("New retired property can not be added.");
         }
 
         [Fact]

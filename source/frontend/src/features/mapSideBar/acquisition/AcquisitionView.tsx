@@ -47,7 +47,7 @@ export interface IAcquisitionViewProps {
   onSelectFileSummary: () => void;
   onSelectProperty: (propertyId: number) => void;
   onEditProperties: () => void;
-  onSuccess: () => void;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => Promise<void>;
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
@@ -103,9 +103,9 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
     ? getEditTitle(fileMatch, propertySelectorMatch, propertiesMatch)
     : 'Acquisition File';
 
-  const closePropertySelector = () => {
+  const closePropertySelector = async () => {
     setIsEditing(false);
-    onSuccess();
+    await onSuccess();
     history.push(`${match.url}`);
   };
 

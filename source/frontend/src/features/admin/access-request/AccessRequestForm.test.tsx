@@ -1,3 +1,6 @@
+import { FormikProps } from 'formik';
+import { createRef } from 'react';
+
 import { getMockAccessRequest } from '@/mocks/accessRequest.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
@@ -21,8 +24,10 @@ const onCancel = vi.fn();
 describe('AccessRequestForm component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions & { initialValues: FormAccessRequest }) => {
+    const formikRef = createRef<FormikProps<FormAccessRequest>>();
     const utils = render(
       <AccessRequestForm
+        formikRef={formikRef}
         initialValues={renderOptions.initialValues}
         addAccessRequest={addAccessRequest}
         onCancel={onCancel}
