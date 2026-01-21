@@ -1,16 +1,8 @@
 import { AxiosError } from 'axios';
-import { FormikProps } from 'formik/dist/types';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
@@ -19,7 +11,8 @@ import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
-import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { useFormikCancel } from '@/hooks/useFormikCancel';
+import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
@@ -90,26 +83,29 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     getProject: { execute: getProjectFunction },
   } = useProjectProvider();
 
-  const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
 
   const mapMachine = useMapStateMachine();
 
-  const formikRef = useRef<FormikProps<any>>(null);
+  const { formikRef, handleCancelClick } = useFormikCancel<any>();
+  const { setModalContent, setDisplayModal } = useModalContext();
   const location = useLocation();
   const history = useHistory();
   const match = useRouteMatch();
   const query = useQuery();
   const isEditing = query.get('edit') === 'true';
 
-  const setIsEditing = (value: boolean) => {
-    if (value) {
-      query.set('edit', value.toString());
-    } else {
-      query.delete('edit');
-    }
-    history.push({ search: query.toString() });
-  };
+  const setIsEditing = useCallback(
+    (value: boolean) => {
+      if (value) {
+        query.set('edit', value.toString());
+      } else {
+        query.delete('edit');
+      }
+      history.push({ search: query.toString() });
+    },
+    [query, history],
+  );
 
   const isPropertySelector = useMemo(
     () =>
@@ -228,9 +224,10 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
 
     if (isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() =>
-          pathGenerator.showFilePropertyId('acquisition', acquisitionFile.id, filePropertyId),
-        );
+        handleCancelClick(() => {
+          setIsEditing(false);
+          pathGenerator.showFilePropertyId('acquisition', acquisitionFile.id, filePropertyId);
+        });
         return;
       }
     }
@@ -258,37 +255,13 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     }
   };
 
-  const handleCancelClick = (onCancelConfirm?: () => void) => {
-    if (formikRef !== undefined) {
-      if (formikRef.current?.dirty) {
-        setModalContent({
-          ...getCancelModalProps(),
-          handleOk: () => {
-            handleCancelConfirm();
-            setDisplayModal(false);
-            onCancelConfirm && onCancelConfirm();
-          },
-          handleCancel: () => setDisplayModal(false),
-        });
-        setDisplayModal(true);
-      } else {
-        handleCancelConfirm();
-      }
-    } else {
-      handleCancelConfirm();
-    }
-  };
+  const handleCancel = useCallback(() => {
+    handleCancelClick(() => setIsEditing(false));
+  }, [handleCancelClick, setIsEditing]);
 
-  const handleCancelConfirm = () => {
-    if (formikRef !== undefined) {
-      formikRef.current?.resetForm();
-    }
-    setIsEditing(false);
-  };
-
-  const onSuccess = () => {
-    fetchAcquisitionFile();
-    fetchLastUpdatedBy();
+  const onSuccess = async (): Promise<void> => {
+    await fetchAcquisitionFile();
+    await fetchLastUpdatedBy();
     mapMachine.refreshMapProperties();
     setIsEditing(false);
   };
@@ -353,6 +326,11 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     );
   };
 
+  const shouldBlockNavigation = useCallback(() => {
+    const current = formikRef.current;
+    return !!current && current.dirty && !current.isSubmitting;
+  }, [formikRef]);
+
   // UI components
   if (
     loadingAcquisitionFile ||
@@ -364,25 +342,32 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
   }
 
   return (
-    <View
-      isEditing={isEditing}
-      setIsEditing={setIsEditing}
-      containerState={containerState}
-      setContainerState={setContainerState}
-      onClose={close}
-      onCancel={handleCancelClick}
-      onSave={handleSaveClick}
-      onSelectFileSummary={onSelectFileSummary}
-      onSelectProperty={onSelectProperty}
-      onEditProperties={onEditProperties}
-      onUpdateProperties={onUpdateProperties}
-      onSuccess={onSuccess}
-      confirmBeforeAdd={confirmBeforeAdd}
-      canRemove={canRemove}
-      formikRef={formikRef}
-      isFormValid={isValid}
-      error={error}
-    />
+    <>
+      <View
+        isEditing={isEditing}
+        setIsEditing={setIsEditing}
+        containerState={containerState}
+        setContainerState={setContainerState}
+        onClose={close}
+        onCancel={handleCancel}
+        onSave={handleSaveClick}
+        onSelectFileSummary={onSelectFileSummary}
+        onSelectProperty={onSelectProperty}
+        onEditProperties={onEditProperties}
+        onUpdateProperties={onUpdateProperties}
+        onSuccess={onSuccess}
+        confirmBeforeAdd={confirmBeforeAdd}
+        canRemove={canRemove}
+        formikRef={formikRef}
+        isFormValid={isValid}
+        error={error}
+      />
+      <ConfirmNavigation
+        navigate={history.push}
+        shouldBlockNavigation={shouldBlockNavigation}
+        showModal={!isPropertySelector}
+      />
+    </>
   );
 };
 

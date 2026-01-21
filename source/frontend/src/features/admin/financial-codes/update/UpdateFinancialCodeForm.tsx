@@ -23,6 +23,7 @@ export const UpdateFinancialCodeForm: React.FC<IUpdateFinancialCodeFormProps> = 
   onCancel,
   onSuccess,
   onError,
+  formikRef,
 }) => {
   // show confirmation message if user has made changes
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -47,6 +48,7 @@ export const UpdateFinancialCodeForm: React.FC<IUpdateFinancialCodeFormProps> = 
 
   return (
     <Formik<FinancialCodeForm>
+      innerRef={formikRef}
       enableReinitialize
       initialValues={
         financialCode ? FinancialCodeForm.fromApi(financialCode) : new FinancialCodeForm()

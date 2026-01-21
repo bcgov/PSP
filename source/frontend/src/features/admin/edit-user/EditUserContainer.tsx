@@ -1,8 +1,10 @@
-import { FunctionComponent, useEffect, useState } from 'react';
+import { FormikProps } from 'formik';
+import { FunctionComponent, useEffect, useRef, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { UserTypes } from '@/constants/index';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { toTypeCode } from '@/utils/formUtils';
@@ -19,6 +21,8 @@ const EditUserContainer: FunctionComponent<IEditUserContainerProps> = ({ userId 
   const history = useHistory();
   const [user, setUser] = useState<ApiGen_Concepts_User>();
   const isMounted = useIsMounted();
+  const formikRef = useRef<FormikProps<FormUser>>(null);
+  const { setModalContent, setDisplayModal } = useModalContext();
   const {
     updateUser: { execute: updateUserDetail },
     fetchUserDetail: { execute: getUserDetail, loading },
@@ -38,6 +42,35 @@ const EditUserContainer: FunctionComponent<IEditUserContainerProps> = ({ userId 
 
   const goBack = () => {
     history.goBack();
+  };
+
+  const handleCancelConfirm = () => {
+    if (formikRef !== undefined) {
+      formikRef.current?.resetForm();
+    }
+  };
+
+  const handleCancelClick = (onCancelConfirm?: () => void) => {
+    if (formikRef !== undefined) {
+      if (formikRef.current?.dirty) {
+        setModalContent({
+          ...getCancelModalProps(),
+          handleOk: () => {
+            handleCancelConfirm();
+            setDisplayModal(false);
+            onCancelConfirm && onCancelConfirm();
+          },
+          handleCancel: () => setDisplayModal(false),
+        });
+        setDisplayModal(true);
+      } else {
+        handleCancelConfirm();
+        onCancelConfirm && onCancelConfirm();
+      }
+    } else {
+      handleCancelConfirm();
+      onCancelConfirm && onCancelConfirm();
+    }
   };
 
   const initialValues: FormUser = {
@@ -61,14 +94,17 @@ const EditUserContainer: FunctionComponent<IEditUserContainerProps> = ({ userId 
       <LoadingBackdrop parentScreen show={loading} />
 
       <EditUserForm
+        formikRef={formikRef}
         updateUserDetail={async (updateUser: ApiGen_Concepts_User) => {
           const response = await updateUserDetail(updateUser);
           if (isMounted()) {
             setUser(response);
+            setDisplayModal(false);
           }
         }}
         formUser={formUser}
-        onCancel={goBack}
+        onCancel={() => handleCancelClick(goBack)}
+        onSuccess={goBack}
       />
     </>
   );

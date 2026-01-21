@@ -53,6 +53,13 @@ vi.mock('@/hooks/repositories/usePropertyImprovementRepository', () => ({
   },
 }));
 
+// Mock ConfirmNavigation to avoid Prompt issues in jsdom
+vi.mock('@/components/common/ConfirmNavigation', () => {
+  return {
+    default: () => null,
+  };
+});
+
 describe('MotiInventoryContainer component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions & IMotiInventoryContainerProps) => {
