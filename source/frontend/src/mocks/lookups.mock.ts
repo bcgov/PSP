@@ -3888,6 +3888,13 @@ export const mockLookups: ILookupCode[] = [
     type: 'PimsAgreementType',
   },
   {
+    id: 'H179D',
+    name: 'Statutory Right of Way Agreement (H179D)',
+    isDisabled: false,
+    displayOrder: 5,
+    type: 'PimsAgreementType',
+  },
+  {
     id: 'H0074',
     name: 'License Of Occupation (H0074)',
     isDisabled: false,
