@@ -29,10 +29,22 @@ export const layersMenuTree: LayerMenuEntry = {
           color: '#FC802D',
         },
         {
-          layerDefinitionId: 'pims_disposed_files',
-          key: 'disposition',
+          key: 'DispositionLayers',
           label: 'Disposition',
-          color: '#555555',
+          nodes: [
+            {
+              layerDefinitionId: 'pims_disposed_files',
+              key: 'disposition',
+              label: 'Disposition (Active)',
+              color: '#FF0000',
+            },
+            {
+              layerDefinitionId: 'pims_disposed_files_complete',
+              key: 'disposition_complete',
+              label: 'Disposition (Complete)',
+              color: '#FFA6A6',
+            },
+          ],
         },
         {
           key: 'LeaseLayers',
