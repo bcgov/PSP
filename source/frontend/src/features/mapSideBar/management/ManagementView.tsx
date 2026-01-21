@@ -43,7 +43,7 @@ export interface IManagementViewProps {
   onSelectFileSummary: () => void;
   onSelectProperty: (propertyId: number) => void;
   onEditProperties: () => void;
-  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => Promise<void>;
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
@@ -116,6 +116,7 @@ export const ManagementView: React.FunctionComponent<IManagementViewProps> = ({
             updateFileProperties={onUpdateProperties}
             confirmBeforeAdd={confirmBeforeAdd}
             canRemove={canRemove}
+            canUploadShapefiles={true}
             formikRef={formikRef}
             disableProperties
             confirmBeforeAddMessage={

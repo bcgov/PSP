@@ -40,6 +40,7 @@ namespace Pims.Api.Services
         private readonly IPropertyService _propertyService;
         private readonly IProjectRepository _projectRepository;
         private readonly IPropertyOperationService _propertyOperationService;
+        private readonly IFilePropertyLocationUpdateSolver _propertyLocationSolver;
 
         public AcquisitionFileService(
             ClaimsPrincipal user,
@@ -60,7 +61,8 @@ namespace Pims.Api.Services
             IProjectRepository projectRepository,
             IAcquisitionStatusSolver statusSolver,
             IPropertyService propertyService,
-            IPropertyOperationService propertyOperationService)
+            IPropertyOperationService propertyOperationService,
+            IFilePropertyLocationUpdateSolver propertyLocationSolver)
         {
             _user = user;
             _logger = logger;
@@ -81,6 +83,7 @@ namespace Pims.Api.Services
             _propertyService = propertyService;
             _projectRepository = projectRepository;
             _propertyOperationService = propertyOperationService;
+            _propertyLocationSolver = propertyLocationSolver;
         }
 
         public Paged<PimsAcquisitionFile> GetPage(AcquisitionFilter filter)
@@ -222,7 +225,8 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Cannot set an acquisition file's region to 'cannot determine'");
             }
 
-            MatchProperties(acquisitionFile, userOverrides);
+            // No existing properties when adding a new file
+            MatchProperties(acquisitionFile, userOverrides, new HashSet<long>());
             ValidatePropertyRegions(acquisitionFile);
 
             PopulateAcquisitionChecklist(acquisitionFile);
@@ -308,7 +312,10 @@ namespace Pims.Api.Services
 
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
-            MatchProperties(acquisitionFile, userOverrides);
+            // Get the current properties in the acquisition file
+            var currentFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
+            var existingPropertyIds = currentFileProperties.Select(p => p.PropertyId).ToHashSet();
+            MatchProperties(acquisitionFile, userOverrides, existingPropertyIds);
 
             ValidatePropertyRegions(acquisitionFile);
 
@@ -317,9 +324,6 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
-
-            // Get the current properties in the acquisition file
-            var currentFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
@@ -346,11 +350,15 @@ namespace Pims.Api.Services
                         needsUpdate = true;
                     }
 
-                    var incomingGeom = incomingAcquisitionProperty.Location;
-                    var existingGeom = existingFileProperty.Location;
-                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    if (_propertyLocationSolver.CanEditFilePropertyLocation(incomingAcquisitionProperty, existingFileProperty))
                     {
                         _propertyService.UpdateFilePropertyLocation(incomingAcquisitionProperty, existingFileProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (_propertyLocationSolver.CanEditFilePropertyBoundary(incomingAcquisitionProperty, existingFileProperty))
+                    {
+                        _propertyService.UpdateFilePropertyBoundary(incomingAcquisitionProperty, existingFileProperty);
                         needsUpdate = true;
                     }
 
@@ -665,7 +673,7 @@ namespace Pims.Api.Services
             return _acqFileRepository.GetAcquisitionSubFiles(id, userRegions, contractorPersonId);
         }
 
-        private void MatchProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrideCodes)
+        private void MatchProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrideCodes, HashSet<long> existingPropertyIds)
         {
             foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
             {
@@ -675,9 +683,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
@@ -696,9 +706,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
@@ -965,7 +977,8 @@ namespace Pims.Api.Services
             foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
             {
                 var propertyRegion = acquisitionProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(acquisitionProperty.PropertyId);
-                if (!userRegions.Contains(propertyRegion))
+                var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+                if (propertyRegion != cannotDetermineRegion.Code && !userRegions.Contains(propertyRegion))
                 {
                     throw new BadRequestException("You cannot add a property that is outside of your user account region(s).\n\nPlease select a different property or contact admin at pims@gov.bc.ca to add the required region to your user account settings.");
                 }

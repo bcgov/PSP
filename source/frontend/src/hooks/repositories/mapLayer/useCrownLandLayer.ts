@@ -13,6 +13,11 @@ import {
 import { useTenant } from '@/tenants';
 import { isValidString } from '@/utils/utils';
 
+const hasFeatures = <TProperties>(
+  collection?: FeatureCollection<Geometry, TProperties> | null,
+): collection is FeatureCollection<Geometry, TProperties> =>
+  !!collection && Array.isArray(collection.features) && collection.features.length > 0;
+
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints on the set of Crown Land related layers.
  * @returns Object containing functions to make requests to the WFS layer.
@@ -48,14 +53,11 @@ export const useCrownLandLayer = () => {
       );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      const forceCasted = featureCollection as FeatureCollection<
-        Geometry,
-        TANTALIS_CrownLandLeases_Feature_Properties
-      >;
+      const forceCasted = featureCollection as
+        | FeatureCollection<Geometry, TANTALIS_CrownLandLeases_Feature_Properties>
+        | undefined;
 
-      return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features
-        : undefined;
+      return hasFeatures(forceCasted) ? forceCasted.features : undefined;
     },
     [findMultipleWhereContainsCrownLandLeasesExecute],
   );
@@ -80,14 +82,11 @@ export const useCrownLandLayer = () => {
       );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      const forceCasted = featureCollection as FeatureCollection<
-        Geometry,
-        TANTALIS_CrownLandLicenses_Feature_Properties
-      >;
+      const forceCasted = featureCollection as
+        | FeatureCollection<Geometry, TANTALIS_CrownLandLicenses_Feature_Properties>
+        | undefined;
 
-      return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features
-        : undefined;
+      return hasFeatures(forceCasted) ? forceCasted.features : undefined;
     },
     [findMultipleWhereContainsCrownLandLicensesExecute],
   );
@@ -112,14 +111,11 @@ export const useCrownLandLayer = () => {
       );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      const forceCasted = featureCollection as FeatureCollection<
-        Geometry,
-        TANTALIS_CrownLandTenures_Feature_Properties
-      >;
+      const forceCasted = featureCollection as
+        | FeatureCollection<Geometry, TANTALIS_CrownLandTenures_Feature_Properties>
+        | undefined;
 
-      return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features
-        : undefined;
+      return hasFeatures(forceCasted) ? forceCasted.features : undefined;
     },
     [findMultipleWhereContainsCrownLandTenuresExecute],
   );
@@ -144,14 +140,11 @@ export const useCrownLandLayer = () => {
       );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      const forceCasted = featureCollection as FeatureCollection<
-        Geometry,
-        TANTALIS_CrownLandInventory_Feature_Properties
-      >;
+      const forceCasted = featureCollection as
+        | FeatureCollection<Geometry, TANTALIS_CrownLandInventory_Feature_Properties>
+        | undefined;
 
-      return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features
-        : undefined;
+      return hasFeatures(forceCasted) ? forceCasted.features : undefined;
     },
     [findMultipleWhereContainsCrownLandInventoryExecute],
   );
@@ -176,14 +169,11 @@ export const useCrownLandLayer = () => {
       );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      const forceCasted = featureCollection as FeatureCollection<
-        Geometry,
-        TANTALIS_CrownLandInclusions_Feature_Properties
-      >;
+      const forceCasted = featureCollection as
+        | FeatureCollection<Geometry, TANTALIS_CrownLandInclusions_Feature_Properties>
+        | undefined;
 
-      return forceCasted !== undefined && forceCasted.features.length > 0
-        ? forceCasted.features
-        : undefined;
+      return hasFeatures(forceCasted) ? forceCasted.features : undefined;
     },
     [findMultipleWhereContainsCrownLandInclusionsExecute],
   );

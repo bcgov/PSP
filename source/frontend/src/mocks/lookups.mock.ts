@@ -3881,17 +3881,24 @@ export const mockLookups: ILookupCode[] = [
     type: 'PimsAgreementType',
   },
   {
+    id: 'H179B',
+    name: 'Release of Claims Agreement (H179B)',
+    isDisabled: false,
+    displayOrder: 4,
+    type: 'PimsAgreementType',
+  },
+  {
     id: 'H0074',
     name: 'License Of Occupation (H0074)',
     isDisabled: false,
-    displayOrder: 4,
+    displayOrder: 6,
     type: 'PimsAgreementType',
   },
   {
     id: 'TOTAL',
     name: 'Total - Fee Simple Agreement',
     isDisabled: false,
-    displayOrder: 5,
+    displayOrder: 7,
     type: 'PimsAgreementType',
   },
   {
@@ -6031,6 +6038,34 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 4,
     type: 'PimsTenureCleanupType',
+  },
+  {
+    id: 'EXPIRED',
+    name: 'Expired',
+    isDisabled: false,
+    displayOrder: null,
+    type: 'PimsSurplusDeclarationType',
+  },
+  {
+    id: 'NO',
+    name: 'No',
+    isDisabled: false,
+    displayOrder: null,
+    type: 'PimsSurplusDeclarationType',
+  },
+  {
+    id: 'UNKNOWN',
+    name: 'Unknown',
+    isDisabled: false,
+    displayOrder: null,
+    type: 'PimsSurplusDeclarationType',
+  },
+  {
+    id: 'YES',
+    name: 'Yes',
+    isDisabled: false,
+    displayOrder: null,
+    type: 'PimsSurplusDeclarationType',
   },
 ];
 

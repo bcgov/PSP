@@ -11,6 +11,7 @@ export class ManagementFilterModel {
   searchBy = 'address';
   pin = '';
   pid = '';
+  regionCode = '';
   address = '';
   managementTeamMember: SelectOption | null = null;
   managementFileStatusCode = '';
@@ -32,6 +33,7 @@ export class ManagementFilterModel {
       searchBy: this.searchBy,
       pin: this.pin,
       pid: this.pid,
+      regionCode: this.regionCode,
       address: this.address,
       fileNameOrNumberOrReference: this.fileNameOrNumberOrReference,
       managementFileStatusCode: this.managementFileStatusCode,
@@ -83,6 +85,7 @@ export class ManagementSearchResultModel {
   managementFilePurposeTypeCode = '';
   managementTeam: ApiGen_Concepts_ManagementFileTeam[] = [];
   fileProperties?: ApiGen_Concepts_ManagementFileProperty[] = [];
+  regionCode = '';
 
   static fromApi(base: ApiGen_Concepts_ManagementFile): ManagementSearchResultModel {
     const newModel = new ManagementSearchResultModel();
@@ -96,6 +99,7 @@ export class ManagementSearchResultModel {
     newModel.managementFilePurposeTypeCode = base.purposeTypeCode?.description ?? '';
     newModel.managementTeam = base.managementTeam || [];
     newModel.fileProperties = base.fileProperties || [];
+    newModel.regionCode = base.regionCode?.description || '';
 
     return newModel;
   }

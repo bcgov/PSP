@@ -1,3 +1,6 @@
+import { FormikProps } from 'formik';
+import { createRef } from 'react';
+
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -20,8 +23,10 @@ const onCancel = vi.fn();
 describe('EditUserForm component', () => {
   // render component under test
   const setup = (renderOptions: RenderOptions & { initialValues: FormUser }) => {
+    const formikRef = createRef<FormikProps<FormUser>>();
     const utils = render(
       <EditUserForm
+        formikRef={formikRef}
         formUser={renderOptions.initialValues}
         updateUserDetail={onSubmit}
         onCancel={onCancel}

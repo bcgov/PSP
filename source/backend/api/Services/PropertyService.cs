@@ -34,6 +34,7 @@ namespace Pims.Api.Services
         private readonly IDocumentFileService _documentFileService;
         private readonly IMapper _mapper;
         private readonly ILookupRepository _lookupRepository;
+        private readonly IPropertyImprovementRepository _propertyImprovementRepository;
 
         public PropertyService(
             ClaimsPrincipal user,
@@ -47,7 +48,8 @@ namespace Pims.Api.Services
             IPropertyLeaseRepository propertyLeaseRepository,
             IDocumentFileService documentFileService,
             IMapper mapper,
-            ILookupRepository lookupRepository)
+            ILookupRepository lookupRepository,
+            IPropertyImprovementRepository propertyImprovementRepository)
         {
             _user = user;
             _logger = logger;
@@ -61,6 +63,7 @@ namespace Pims.Api.Services
             _documentFileService = documentFileService;
             _mapper = mapper;
             _lookupRepository = lookupRepository;
+            _propertyImprovementRepository = propertyImprovementRepository;
         }
 
         public PimsProperty GetById(long id)
@@ -124,6 +127,18 @@ namespace Pims.Api.Services
             {
                 _propertyRepository.CommitTransaction();
             }
+
+            return GetById(newProperty.Internal_Id);
+        }
+
+        /// <inheritdoc />
+        public PimsProperty UpdateNetBook(PimsProperty property)
+        {
+            _logger.LogInformation("Updating property net book value with id {id}", property.Internal_Id);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
+
+            var newProperty = _propertyRepository.UpdateNetBook(property);
+            _propertyRepository.CommitTransaction();
 
             return GetById(newProperty.Internal_Id);
         }
@@ -232,6 +247,56 @@ namespace Pims.Api.Services
             _propertyRepository.CommitTransaction();
 
             return GetPropertyManagement(newProperty.Internal_Id);
+        }
+
+        public IEnumerable<PimsPropertyImprovement> GetImprovementsByPropertyId(long propertyId)
+        {
+            _logger.LogInformation("Getting property improvements on propertyId {propertyId}", propertyId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            return _propertyImprovementRepository.GetByPropertyId(propertyId);
+        }
+
+        public PimsPropertyImprovement AddPropertyImprovement(PimsPropertyImprovement propertyImprovement)
+        {
+            _logger.LogInformation("Adding property improvements on propertyId {propertyId}", propertyImprovement.PropertyId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+            propertyImprovement.ThrowIfNull(nameof(propertyImprovement));
+
+            _propertyImprovementRepository.Add(propertyImprovement);
+            _propertyImprovementRepository.CommitTransaction();
+
+            return propertyImprovement;
+        }
+
+        public PimsPropertyImprovement GetPropertyImprovementByID(long propertyId, long propertyImprovementId)
+        {
+            _logger.LogInformation("Getting property improvement by Id {propertyId} and {propertyImprovementId}", propertyImprovementId, propertyImprovementId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            return _propertyImprovementRepository.Get(propertyId, propertyImprovementId);
+        }
+
+        public PimsPropertyImprovement UpdatePropertyImprovement(long propertyId, PimsPropertyImprovement propertyImprovement)
+        {
+            _logger.LogInformation("Updating property improvement by Id {propertyId} and {propertyImprovement}", propertyId, propertyImprovement.PropertyImprovementId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            var updatedImprovement = _propertyImprovementRepository.Update(propertyId, propertyImprovement);
+            _propertyImprovementRepository.CommitTransaction();
+
+            return updatedImprovement;
+        }
+
+        public bool DeletePropertyImprovement(long propertyId, long propertyImprovementId)
+        {
+            _logger.LogInformation("Deleting property improvement by Id {propertyId} and {propertyImprovement}", propertyId, propertyImprovementId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+
+            bool deleteResult = _propertyImprovementRepository.TryDelete(propertyId, propertyImprovementId);
+            _propertyImprovementRepository.CommitTransaction();
+
+            return deleteResult;
         }
 
         public IList<PimsManagementActivity> GetActivities(long propertyId)
@@ -377,7 +442,7 @@ namespace Pims.Api.Services
 
         public void UpdateLocation(PimsProperty incomingProperty, ref PimsProperty propertyToUpdate, IEnumerable<UserOverrideCode> overrideCodes, bool allowRetired = false)
         {
-            if (propertyToUpdate.Location == null || propertyToUpdate.Boundary == null)
+            if ((incomingProperty.Location != null || incomingProperty.Boundary != null) && (propertyToUpdate.Location == null || propertyToUpdate.Boundary == null))
             {
                 if (overrideCodes.Contains(UserOverrideCode.AddLocationToProperty))
                 {
@@ -418,20 +483,18 @@ namespace Pims.Api.Services
             where T : IFilePropertyEntity
         {
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-            var geom = fileProperty.Location;
-            if (geom is not null && geom.SRID != SpatialReference.BCALBERS)
+            var incomingLocation = fileProperty.Location;
+            if (incomingLocation is not null && incomingLocation.SRID != SpatialReference.BCALBERS)
             {
-                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
+                var newCoords = _coordinateService.TransformCoordinates(incomingLocation.SRID, SpatialReference.BCALBERS, incomingLocation.Coordinate);
                 fileProperty.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
             }
 
-            // apply similar logic to the boundary (only for Acquisition properties at the moment)
-            var boundaryGeom = fileProperty is PimsPropertyAcquisitionFile acquisitionFileProperty
-                ? acquisitionFileProperty.Boundary
-                : null;
-            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS)
+            // update property shape/boundary as well
+            var incomingBoundary = fileProperty.Boundary;
+            if (incomingBoundary is not null && incomingBoundary.SRID != SpatialReference.BCALBERS)
             {
-                _coordinateService.TransformGeometry(boundaryGeom.SRID, SpatialReference.BCALBERS, boundaryGeom);
+                _coordinateService.TransformGeometry(incomingBoundary.SRID, SpatialReference.BCALBERS, incomingBoundary);
             }
 
             return fileProperty;
@@ -442,22 +505,32 @@ namespace Pims.Api.Services
             where T : IFilePropertyEntity
         {
             // convert spatial location from lat/long (4326) to BC Albers (3005) for database storage
-            var geom = incomingFileProperty.Location;
-            if (geom is not null && geom.SRID != SpatialReference.BCALBERS)
+            var incomingLocation = incomingFileProperty.Location;
+            if (incomingLocation is not null)
             {
-                var newCoords = _coordinateService.TransformCoordinates(geom.SRID, SpatialReference.BCALBERS, geom.Coordinate);
-                filePropertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
+                if (incomingLocation.SRID != SpatialReference.BCALBERS)
+                {
+                    var newCoords = _coordinateService.TransformCoordinates(incomingLocation.SRID, SpatialReference.BCALBERS, incomingLocation.Coordinate);
+                    filePropertyToUpdate.Location = GeometryHelper.CreatePoint(newCoords, SpatialReference.BCALBERS);
+                }
+                else
+                {
+                    filePropertyToUpdate.Location = incomingLocation;
+                }
             }
+        }
 
-            // apply similar logic to the boundary (only for Acquisition properties at the moment)
-            var boundaryGeom = incomingFileProperty is PimsPropertyAcquisitionFile acquisitionFileProperty
-                ? acquisitionFileProperty.Boundary
-                : null;
-            if (boundaryGeom != null && boundaryGeom.SRID != SpatialReference.BCALBERS && filePropertyToUpdate is PimsPropertyAcquisitionFile acquisitionFilePropertyToUpdate)
+        /// <inheritdoc />
+        public void UpdateFilePropertyBoundary<T>(T incomingFileProperty, T filePropertyToUpdate)
+            where T : IFilePropertyEntity
+        {
+            // update property shape/boundary
+            var incomingBoundary = incomingFileProperty.Boundary;
+            if (incomingBoundary is not null && incomingBoundary.SRID != SpatialReference.BCALBERS)
             {
-                _coordinateService.TransformGeometry(boundaryGeom.SRID, SpatialReference.BCALBERS, boundaryGeom);
-                acquisitionFilePropertyToUpdate.Boundary = boundaryGeom;
+                _coordinateService.TransformGeometry(incomingBoundary.SRID, SpatialReference.BCALBERS, incomingBoundary);
             }
+            filePropertyToUpdate.Boundary = incomingBoundary;
         }
 
         public IList<PimsHistoricalFileNumber> GetHistoricalNumbersForPropertyId(long propertyId)
@@ -512,10 +585,10 @@ namespace Pims.Api.Services
                     fileProperty.Location = TransformCoordinates(fileProperty.Location);
                 }
 
-                // transform property boundary in-place (polygon/multipolygon) - only for Acquisition properties at the moment
-                if (fileProperty is PimsPropertyAcquisitionFile acquisitionFileProperty && acquisitionFileProperty.Boundary is not null)
+                // transform property boundary in-place (polygon/multipolygon)
+                if (fileProperty.Boundary is not null)
                 {
-                    _coordinateService.TransformGeometry(SpatialReference.BCALBERS, SpatialReference.WGS84, acquisitionFileProperty.Boundary);
+                    _coordinateService.TransformGeometry(SpatialReference.BCALBERS, SpatialReference.WGS84, fileProperty.Boundary);
                 }
 
                 TransformPropertyToLatLong(fileProperty.Property);

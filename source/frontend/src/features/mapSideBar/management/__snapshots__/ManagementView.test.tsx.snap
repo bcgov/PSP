@@ -455,19 +455,19 @@ exports[`ManagementView component > renders as expected 1`] = `
   overflow: hidden;
 }
 
-.c41 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c38 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c41 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c40.required::before {
@@ -550,9 +550,6 @@ exports[`ManagementView component > renders as expected 1`] = `
 }
 
 .c31 {
-  -webkit-align-self: flex-end;
-  -ms-flex-item-align: end;
-  align-self: flex-end;
   margin-right: 2rem;
 }
 
@@ -1222,6 +1219,15 @@ exports[`ManagementView component > renders as expected 1`] = `
                   >
                     Activities
                   </a>
+                  <a
+                    aria-selected="false"
+                    class="nav-item nav-link"
+                    data-rb-event-key="improvements"
+                    href="#"
+                    role="tab"
+                  >
+                    Improvements
+                  </a>
                 </nav>
                 <div
                   class="tab-content"
@@ -1275,6 +1281,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Project
                             </div>
@@ -1351,6 +1358,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Management Details
                             </div>
@@ -1425,6 +1433,22 @@ exports[`ManagementView component > renders as expected 1`] = `
                               <label
                                 class="c39"
                               >
+                                Responsible payer:
+                              </label>
+                            </div>
+                            <div
+                              class="c40 text-left col"
+                            />
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c39"
+                              >
                                 Additional details:
                               </label>
                             </div>
@@ -1434,6 +1458,22 @@ exports[`ManagementView component > renders as expected 1`] = `
                             >
                               ADDITIONAL DETAILS
                             </div>
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-5"
+                            >
+                              <label
+                                class="c39"
+                              >
+                                Ministry region:
+                              </label>
+                            </div>
+                            <div
+                              class="c40 text-left col"
+                            />
                           </div>
                         </div>
                       </div>
@@ -1448,6 +1488,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               <div
                                 class="no-gutters justify-content-between align-items-end row"
@@ -1584,6 +1625,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Management Team
                             </div>
@@ -1675,6 +1717,60 @@ exports[`ManagementView component > renders as expected 1`] = `
                                 </svg>
                               </a>
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="c38 form-section"
+                      >
+                        <h2
+                          class="c41"
+                        >
+                          <div
+                            class="no-gutters row"
+                          >
+                            <div
+                              class="align-content-end col"
+                              style="overflow: hidden;"
+                            >
+                              Notice of Claim
+                            </div>
+                          </div>
+                        </h2>
+                        <div
+                          class="collapse show"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c39"
+                              >
+                                Received date:
+                              </label>
+                            </div>
+                            <div
+                              class="c40 text-left col"
+                            />
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c39"
+                              >
+                                Comment:
+                              </label>
+                            </div>
+                            <div
+                              class="c40 text-left col"
+                            />
                           </div>
                         </div>
                       </div>

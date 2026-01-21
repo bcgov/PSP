@@ -212,19 +212,19 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c1 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c5 button.close {
@@ -375,6 +375,7 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Original Agreement
           </div>
@@ -758,6 +759,7 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Renewal Options
           </div>
@@ -790,6 +792,7 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Administration
           </div>
@@ -1818,6 +1821,7 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Lease & Licence Team
           </div>
@@ -1851,6 +1855,7 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
+            style="overflow: hidden;"
           >
             Fee Determination
           </div>

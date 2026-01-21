@@ -1,9 +1,14 @@
+import {
+  fromApiOrganization,
+  fromApiPerson,
+  IContactSearchResult,
+} from '@/interfaces/IContactSearchResult';
 import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { ApiGen_Concepts_PropertyManagementPurpose } from '@/models/api/generated/ApiGen_Concepts_PropertyManagementPurpose';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { ILookupCode } from '@/store/slices/lookupCodes';
-import { formatApiPropertyManagementLease } from '@/utils';
-import { stringToNull } from '@/utils/formUtils';
+import { exists, formatApiPropertyManagementLease, isValidId } from '@/utils';
+import { stringToNull, toNullableId } from '@/utils/formUtils';
 
 export class PropertyManagementFormModel {
   id = 0;
@@ -12,6 +17,8 @@ export class PropertyManagementFormModel {
   additionalDetails = '';
   isUtilitiesPayable: boolean | null = null;
   isTaxesPayable: boolean | null = null;
+  responsiblePayer: IContactSearchResult | null = null;
+  responsiblePayerPrimaryContactId: number | null = null;
   formattedLeaseInformation: string | null = null;
 
   static fromApi(base: ApiGen_Concepts_PropertyManagement | null): PropertyManagementFormModel {
@@ -25,10 +32,22 @@ export class PropertyManagementFormModel {
     newFormModel.isTaxesPayable = base?.isTaxesPayable ?? null;
     newFormModel.formattedLeaseInformation = formatApiPropertyManagementLease(base);
 
+    const contact: IContactSearchResult | null = exists(base?.responsiblePayerPerson)
+      ? fromApiPerson(base?.responsiblePayerPerson)
+      : exists(base?.responsiblePayerOrganization)
+      ? fromApiOrganization(base?.responsiblePayerOrganization)
+      : null;
+
+    newFormModel.responsiblePayerPrimaryContactId = base?.responsiblePayerPrimaryContactId ?? null;
+    newFormModel.responsiblePayer = contact ?? null;
+
     return newFormModel;
   }
 
   toApi(): ApiGen_Concepts_PropertyManagement {
+    const personId = this.responsiblePayer?.personId ?? null;
+    const organizationId = !personId ? this.responsiblePayer?.organizationId ?? null : null;
+
     return {
       id: this.id,
       managementPurposes: this.managementPurposes.map(p => ({
@@ -38,6 +57,14 @@ export class PropertyManagementFormModel {
       additionalDetails: stringToNull(this.additionalDetails),
       isUtilitiesPayable: this.isUtilitiesPayable,
       isTaxesPayable: this.isTaxesPayable,
+      responsiblePayerPersonId: toNullableId(personId),
+      responsiblePayerPerson: null,
+      responsiblePayerOrganizationId: toNullableId(organizationId),
+      responsiblePayerOrganization: null,
+      responsiblePayerPrimaryContactId: isValidId(personId)
+        ? null
+        : toNullableId(this.responsiblePayerPrimaryContactId),
+      responsiblePayerPrimaryContact: null,
       relatedLeases: 0,
       leaseExpiryDate: null,
       hasActiveLease: null,

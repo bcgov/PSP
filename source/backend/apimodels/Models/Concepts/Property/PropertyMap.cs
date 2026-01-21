@@ -50,16 +50,12 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.Latitude, src => src.Location.Coordinate.Y)
                 .Map(dest => dest.Longitude, src => src.Location.Coordinate.X)
                 .Map(dest => dest.SurplusDeclarationComment, src => src.SurplusDeclarationComment)
-                .Map(
-                    dest => dest.SurplusDeclarationDate,
-                    src => src.SurplusDeclarationDate.ToNullableDateOnly()
-                )
-                .Map(
-                    dest => dest.SurplusDeclarationType,
-                    src => src.SurplusDeclarationTypeCodeNavigation
-                )
+                .Map(dest => dest.SurplusDeclarationDate, src => src.SurplusDeclarationDate.ToNullableDateOnly())
+                .Map(dest => dest.SurplusDeclarationType, src => src.SurplusDeclarationTypeCodeNavigation)
                 .Map(dest => dest.HistoricalFileNumbers, src => src.PimsHistoricalFileNumbers)
                 .Map(dest => dest.TenureCleanups, src => src.PimsPropTenureCleanups)
+                .Map(dest => dest.NetBookAmount, src => src.NetBookAmt)
+                .Map(dest => dest.NetBookNote, src => src.NetBookNote)
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             config
@@ -80,6 +76,9 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.IsRwyBeltDomPatent, src => src.IsRwyBeltDomPatent)
                 .Map(dest => dest.PphStatusTypeCode, src => src.PphStatusTypeCode)
                 .Map(dest => dest.IsOwned, src => src.IsOwned)
+                .Map(dest => dest.SurplusDeclarationTypeCode, src => src.SurplusDeclarationType.Id)
+                .Map(dest => dest.SurplusDeclarationComment, src => src.SurplusDeclarationComment)
+                .Map(dest => dest.SurplusDeclarationDate, src => src.SurplusDeclarationDate.ToNullableDateTime())
                 // multi-selects
                 .Map(dest => dest.PimsPropPropAnomalyTyps, src => src.Anomalies)
                 .Map(dest => dest.PimsPropPropTenureTyps, src => src.Tenures)
@@ -93,6 +92,8 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.VolumetricTypeCode, src => src.VolumetricType.Id)
                 .Map(dest => dest.MunicipalZoning, src => src.MunicipalZoning)
                 .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription)
+                .Map(dest => dest.NetBookAmt, src => src.NetBookAmount)
+                .Map(dest => dest.NetBookNote, src => src.NetBookNote)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
 
             config
@@ -118,7 +119,9 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.VolumeUnitTypeCode, src => src.VolumeUnitTypeCode)
                 .Map(dest => dest.VolumetricTypeCode, src => src.VolumetricTypeCode)
                 .Map(dest => dest.MunicipalZoning, src => src.MunicipalZoning)
-                .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription);
+                .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription)
+                .Map(dest => dest.NetBookAmt, src => src.NetBookAmt)
+                .Map(dest => dest.NetBookNote, src => src.NetBookNote);
         }
     }
 }

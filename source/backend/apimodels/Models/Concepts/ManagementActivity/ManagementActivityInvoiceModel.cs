@@ -26,6 +26,10 @@ namespace Pims.Api.Models.Concepts.Property
 
         public bool? IsDisabled { get; set; }
 
+        public bool IsPaymentApproved { get; set; }
+
+        public bool IsPaymentForwarded { get; set; }
+
         public long ManagementActivityId { get; set; }
 
         public ManagementActivityModel ManagementActivity { get; set; }

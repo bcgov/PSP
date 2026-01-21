@@ -449,19 +449,19 @@ exports[`DispositionView component > renders as expected 1`] = `
   overflow: hidden;
 }
 
-.c41 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c38 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c41 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c40.required::before {
@@ -544,9 +544,6 @@ exports[`DispositionView component > renders as expected 1`] = `
 }
 
 .c31 {
-  -webkit-align-self: flex-end;
-  -ms-flex-item-align: end;
-  align-self: flex-end;
   margin-right: 2rem;
 }
 
@@ -1140,6 +1137,15 @@ exports[`DispositionView component > renders as expected 1`] = `
                   <a
                     aria-selected="false"
                     class="nav-item nav-link"
+                    data-rb-event-key="improvements"
+                    href="#"
+                    role="tab"
+                  >
+                    Improvements
+                  </a>
+                  <a
+                    aria-selected="false"
+                    class="nav-item nav-link"
                     data-rb-event-key="checklist"
                     href="#"
                     role="tab"
@@ -1198,6 +1204,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Project
                             </div>
@@ -1273,6 +1280,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Schedule
                             </div>
@@ -1330,6 +1338,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Disposition Details
                             </div>
@@ -1577,6 +1586,7 @@ exports[`DispositionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Disposition Team
                             </div>

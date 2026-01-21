@@ -30,7 +30,7 @@ Given(
       await this.searchProperties.searchPropertyByAddress(
         searchPropertiesData.Address
       );
-      await this.searchProperties.closePropertyLeaflet();
+      //await this.searchProperties.closePropertyLeaflet();
       await this.searchProperties.selectPinOnMap();
       await this.searchProperties.addPropertyToWorklistFromQuickInfo();
       await this.searchProperties.resetSearch();
@@ -58,7 +58,7 @@ Given(
       await this.searchProperties.searchPropertyByPOIName(
         searchPropertiesData.POIName
       );
-      await this.searchProperties.closePropertyLeaflet();
+      //await this.searchProperties.closePropertyLeaflet();
       await this.searchProperties.selectPinOnMap();
       await this.searchProperties.addPropertyToWorklistFromQuickInfo();
       await this.searchProperties.resetSearch();
@@ -68,7 +68,7 @@ Given(
       await this.searchProperties.searchPropertyByLongLant(
         searchPropertiesData.Coordinates
       );
-      await this.searchProperties.closePropertyLeaflet();
+      // //await this.searchProperties.closePropertyLeaflet();
       await this.searchProperties.selectPinOnMap();
       await this.searchProperties.addPropertyToWorklistFromQuickInfo();
       await this.searchProperties.resetSearch();

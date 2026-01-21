@@ -3,6 +3,7 @@ import { useHistory } from 'react-router-dom';
 
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import { useManagementActivityPropertyRepository } from '@/hooks/repositories/useManagementActivityPropertyRepository';
+import { usePropertyManagementRepository } from '@/hooks/repositories/usePropertyManagementRepository';
 import { ApiGen_CodeTypes_ManagementActivityStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementActivityStatusTypes';
 import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
@@ -28,13 +29,17 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
   React.PropsWithChildren<IPropertyActivityEditContainerProps>
 > = ({ propertyId, managementActivityId, onClose, viewEnabled, View }) => {
   const { getSystemConstant } = useSystemConstants();
-
   const history = useHistory();
+
+  const gstConstant = getSystemConstant(SystemConstants.GST);
+  const pstConstant = getSystemConstant(SystemConstants.PST);
+  const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) * 0.01 : 0;
+  const pstDecimal = pstConstant !== undefined ? parseFloat(pstConstant.value) * 0.01 : 0;
+
   const [initialValues, setInitialValues] = useState<PropertyActivityFormModel | null>(null);
+  const [show, setShow] = useState(true);
 
   const { setStaleLastUpdatedBy } = useContext(SideBarContext);
-
-  const [show, setShow] = useState(true);
 
   const {
     fetchMinistryContacts,
@@ -49,6 +54,14 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
     createActivity: { execute: createActivity, loading: createActivityLoading },
     updateActivity: { execute: updateActivity, loading: updateActivityLoading },
   } = useManagementActivityPropertyRepository();
+
+  const {
+    getPropertyManagement: {
+      execute: getPropertyManagement,
+      response: propertyManagement,
+      loading: managementLoading,
+    },
+  } = usePropertyManagementRepository();
 
   // Load the activity
   const fetchActivity = useCallback(
@@ -90,16 +103,22 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
     ],
   );
 
+  const fetchPropertyManagement = useCallback(async () => {
+    if (!propertyId) {
+      return;
+    }
+    await getPropertyManagement(propertyId);
+  }, [getPropertyManagement, propertyId]);
+
   useEffect(() => {
     if (!exists(initialValues)) {
       fetchActivity(propertyId, managementActivityId);
     }
   }, [propertyId, managementActivityId, fetchActivity, initialValues]);
 
-  const gstConstant = getSystemConstant(SystemConstants.GST);
-  const pstConstant = getSystemConstant(SystemConstants.PST);
-  const gstDecimal = gstConstant !== undefined ? parseFloat(gstConstant.value) * 0.01 : 0;
-  const pstDecimal = pstConstant !== undefined ? parseFloat(pstConstant.value) * 0.01 : 0;
+  useEffect(() => {
+    fetchPropertyManagement();
+  }, [fetchPropertyManagement]);
 
   const handleSave = async (model: ApiGen_Concepts_ManagementActivity) => {
     let result = undefined;
@@ -128,12 +147,17 @@ export const PropertyActivityEditContainer: React.FunctionComponent<
   return isValidId(propertyId) && exists(initialValues) ? (
     <View
       propertyId={propertyId}
+      propertyManagement={propertyManagement}
       initialValues={initialValues}
       gstConstant={gstDecimal}
       pstConstant={pstDecimal}
       onCancel={onCancelClick}
       loading={
-        getActivityLoading || createActivityLoading || updateActivityLoading || isContactLoading
+        getActivityLoading ||
+        createActivityLoading ||
+        updateActivityLoading ||
+        isContactLoading ||
+        managementLoading
       }
       show={show && viewEnabled}
       setShow={setShow}

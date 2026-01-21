@@ -227,7 +227,7 @@ namespace Pims.Dal.Repositories
             return new Paged<PimsDocument>(pageItems, filter.Page, filter.Quantity, query.Count());
         }
 
-        private IQueryable<PimsDocument> GetCommonQueryDeep(DocumentSearchFilterModel filter, bool excludeTemplates = true)
+        private IQueryable<PimsDocument> GetCommonQueryDeep(DocumentSearchFilterModel filter, bool excludeTemplates = true, bool excludeOrphans = true)
         {
             var predicate = PredicateBuilder.New<PimsDocument>(doc => true);
 
@@ -268,6 +268,13 @@ namespace Pims.Dal.Repositories
             {
                 var templateCodeType = Context.PimsDocumentTyps.FirstOrDefault(x => x.DocumentType == "CDOGTEMP");
                 predicate = predicate.And(x => x.DocumentTypeId != templateCodeType.DocumentTypeId);
+            }
+
+            if(excludeOrphans)
+            {
+                predicate = predicate.And(x => x.PimsAcquisitionFileDocuments.Any() || x.PimsDispositionFileDocuments.Any() || x.PimsLeaseDocuments.Any()
+                                            || x.PimsManagementFileDocuments.Any() || x.PimsMgmtActivityDocuments.Any() || x.PimsProjectDocuments.Any()
+                                            || x.PimsPropertyDocuments.Any() || x.PimsResearchFileDocuments.Any());
             }
 
             var query = Context.PimsDocuments.AsNoTracking()

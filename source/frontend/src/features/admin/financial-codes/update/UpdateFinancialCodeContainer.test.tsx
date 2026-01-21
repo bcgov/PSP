@@ -32,6 +32,13 @@ vi.mock('@/hooks/repositories/useFinancialCodeRepository', () => ({
   },
 }));
 
+// Mock ConfirmNavigation to avoid Prompt issues in jsdom
+vi.mock('@/components/common/ConfirmNavigation', () => {
+  return {
+    default: () => null,
+  };
+});
+
 const history = createMemoryHistory();
 
 let viewProps: IUpdateFinancialCodeFormProps | undefined;

@@ -8,7 +8,7 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { SystemConstants, useSystemConstants } from '@/store/slices/systemConstants';
-import { isValidId } from '@/utils';
+import { exists, isValidId } from '@/utils';
 
 import { CompensationRequisitionTrayViewProps } from './CompensationRequisitionTrayView';
 
@@ -45,16 +45,20 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
     getCompensationRequisition: { execute: getCompensationRequisition, error, loading },
   } = useCompensationRequisitionRepository();
 
-  const fetchCompensationReq = useCallback(async () => {
-    if (isValidId(compensationRequisitionId)) {
+  const fetchCompensationReq = useCallback(
+    async (compensationRequisitionId: number) => {
       const compensationReq = await getCompensationRequisition(compensationRequisitionId);
-      if (compensationReq) {
+      if (exists(compensationReq)) {
+        if (isValidId(compensationReq.alternateProjectId)) {
+          compensationReq.alternateProject = await getProject(compensationReq.alternateProjectId);
+        }
         setLoadedCompensation(compensationReq);
       }
 
       return compensationReq;
-    }
-  }, [compensationRequisitionId, getCompensationRequisition]);
+    },
+    [getCompensationRequisition, getProject],
+  );
 
   const fetchProject = useCallback(async () => {
     if (file?.projectId) {
@@ -64,8 +68,10 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
   }, [file?.projectId, getProject, setProject]);
 
   useEffect(() => {
-    fetchCompensationReq();
-  }, [fetchCompensationReq]);
+    if (isValidId(compensationRequisitionId)) {
+      fetchCompensationReq(compensationRequisitionId);
+    }
+  }, [compensationRequisitionId, fetchCompensationReq]);
 
   useEffect(() => setProjectLoading(loadingProject), [loadingProject, setProjectLoading]);
 
@@ -84,7 +90,7 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
     }
   };
 
-  return loadedCompensation ? (
+  return exists(loadedCompensation) ? (
     <View
       compensation={loadedCompensation}
       fileType={fileType}
@@ -99,7 +105,7 @@ export const CompensationRequisitionTrayContainer: React.FunctionComponent<
       show={show}
       setShow={setShow}
       onUpdate={() => {
-        fetchCompensationReq();
+        fetchCompensationReq(loadedCompensation.id);
         setStaleLastUpdatedBy(true);
         setStaleFile(true);
       }}

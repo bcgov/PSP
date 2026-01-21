@@ -244,7 +244,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c33 {
+.c32 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -270,7 +270,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   width: 22rem;
 }
 
-.c32 {
+.c31 {
   overflow: auto;
   height: 100%;
   width: 100%;
@@ -362,32 +362,32 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   align-items: end;
 }
 
-.c34 {
+.c33 {
   height: 100%;
 }
 
-.c34 .tab-content {
+.c33 .tab-content {
   border-radius: 0 0.4rem 0.4rem 0.4rem;
   overflow-y: auto;
   background-color: #f2f2f2;
 }
 
-.c34 .tab-content .tab-pane {
+.c33 .tab-content .tab-pane {
   position: relative;
 }
 
-.c35 {
+.c34 {
   background-color: white;
   color: var(--surface-color-primary-button-default);
   font-size: 1.4rem;
   border-color: transparent;
 }
 
-.c35 .nav-tabs {
+.c34 .nav-tabs {
   height: auto;
 }
 
-.c35 .nav-item {
+.c34 .nav-item {
   color: var(--surface-color-primary-button-default);
   min-width: 5rem;
   padding: 0.1rem 1.3rem;
@@ -395,7 +395,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   margin-left: 0.1rem;
 }
 
-.c35 .nav-item:hover {
+.c34 .nav-item:hover {
   color: #f2f2f2;
   background-color: #1e5189;
   border-color: transparent;
@@ -405,7 +405,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c35 .nav-item.active {
+.c34 .nav-item.active {
   border-radius: 0.4rem;
   color: #f2f2f2;
   background-color: #053662;
@@ -413,24 +413,17 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   text-shadow: 0.1rem 0 0 currentColor;
 }
 
-.c36 {
+.c35 {
   background-color: #f2f2f2;
   padding-top: 1rem;
 }
 
-.c37 {
+.c36 {
   text-align: right;
   overflow: hidden;
 }
 
-.c39 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c38 {
+.c37 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
@@ -438,18 +431,40 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c41.required::before {
+.c38 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c40.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c40 {
+.c39 {
   font-weight: bold;
 }
 
-.c30 {
+.c41 {
+  border: none;
+}
+
+.c41 .card-body {
+  padding: 0;
+}
+
+.c42 {
+  overflow: hidden;
+  white-space: break-spaces;
+  word-break: break-word;
+  text-align: justify;
+}
+
+.c29 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -517,37 +532,8 @@ exports[`ResearchContainer component > renders as expected 1`] = `
   cursor: default;
 }
 
-.c31 {
-  -webkit-align-self: flex-end;
-  -ms-flex-item-align: end;
-  align-self: flex-end;
+.c30 {
   margin-right: 2rem;
-}
-
-.c29 {
-  background-color: #fcba19;
-  font-size: 1.5rem;
-  border-radius: 50%;
-  opacity: 0.8;
-  width: 2.5rem;
-  height: 2.5rem;
-  padding: 1rem;
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-}
-
-.c29.selected {
-  background-color: #FCBA19;
 }
 
 .c25 {
@@ -641,21 +627,6 @@ exports[`ResearchContainer component > renders as expected 1`] = `
 
 .c12 {
   max-width: 60rem;
-}
-
-.c42 {
-  border: none;
-}
-
-.c42 .card-body {
-  padding: 0;
-}
-
-.c43 {
-  overflow: hidden;
-  white-space: break-spaces;
-  word-break: break-word;
-  text-align: justify;
 }
 
 @media only screen and (max-width:1199px) {
@@ -1091,25 +1062,19 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                       data-testid="menu-item-row-1"
                     >
                       <div />
-                      <div>
-                        <div
-                          class="c29"
-                        >
-                          1
-                        </div>
-                      </div>
+                      <div />
                       <div
-                        class="c30"
+                        class="c29"
                       >
                         <div
-                          class="c30"
+                          class="c29"
                           data-testid="menu-item-property-0"
                         >
                           123-456-789
                         </div>
                       </div>
                       <div
-                        class="c31"
+                        class="c30"
                       >
                         <span
                           class="tooltip-icon"
@@ -1138,16 +1103,16 @@ exports[`ResearchContainer component > renders as expected 1`] = `
               </div>
             </div>
             <div
-              class="c32 col"
+              class="c31 col"
             >
               <div
-                class="c33"
+                class="c32"
               >
                 <div
-                  class="c34"
+                  class="c33"
                 >
                   <nav
-                    class="c35 nav nav-tabs"
+                    class="c34 nav nav-tabs"
                     role="tablist"
                   >
                     <a
@@ -1159,6 +1124,15 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                     >
                       File Details
                     </a>
+                    <a
+                      aria-selected="false"
+                      class="nav-item nav-link"
+                      data-rb-event-key="improvements"
+                      href="#"
+                      role="tab"
+                    >
+                      Improvements
+                    </a>
                   </nav>
                   <div
                     class="tab-content"
@@ -1169,22 +1143,23 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                       role="tabpanel"
                     >
                       <div
-                        class="c36"
+                        class="c35"
                       >
                         <div
-                          class="c37 mr-3 my-1"
+                          class="c36 mr-3 my-1"
                         />
                         <div
-                          class="c38 form-section"
+                          class="c37 form-section"
                         >
                           <h2
-                            class="c39"
+                            class="c38"
                           >
                             <div
                               class="no-gutters row"
                             >
                               <div
                                 class="align-content-end col"
+                                style="overflow: hidden;"
                               >
                                 Project
                               </div>
@@ -1200,14 +1175,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c40"
+                                  class="c39"
                                 >
                                   Ministry project
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c41 text-left col"
+                                class="c40 text-left col"
                               >
                                 <div>
                                   00048 CLAIMS
@@ -1217,16 +1192,17 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                           </div>
                         </div>
                         <div
-                          class="c38 form-section"
+                          class="c37 form-section"
                         >
                           <h2
-                            class="c39"
+                            class="c38"
                           >
                             <div
                               class="no-gutters row"
                             >
                               <div
                                 class="align-content-end col"
+                                style="overflow: hidden;"
                               >
                                 Roads
                               </div>
@@ -1242,14 +1218,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c40"
+                                  class="c39"
                                 >
                                   Road name
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c41 text-left col"
+                                class="c40 text-left col"
                               >
                                 Test road name
                               </div>
@@ -1261,14 +1237,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c40"
+                                  class="c39"
                                 >
                                   Road alias
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c41 text-left col"
+                                class="c40 text-left col"
                               >
                                 Test road alias
                               </div>
@@ -1276,16 +1252,17 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                           </div>
                         </div>
                         <div
-                          class="c38 form-section"
+                          class="c37 form-section"
                         >
                           <h2
-                            class="c39"
+                            class="c38"
                           >
                             <div
                               class="no-gutters row"
                             >
                               <div
                                 class="align-content-end col"
+                                style="overflow: hidden;"
                               >
                                 Research Request
                               </div>
@@ -1301,14 +1278,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c40"
+                                  class="c39"
                                 >
                                   Research purpose
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c41 text-left col"
+                                class="c40 text-left col"
                               />
                             </div>
                             <div
@@ -1318,14 +1295,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c40"
+                                  class="c39"
                                 >
                                   Request date
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c41 text-left col"
+                                class="c40 text-left col"
                               >
                                  
                                 Apr 14, 2022
@@ -1338,14 +1315,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c40"
+                                  class="c39"
                                 >
                                   Source of request
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c41 text-left col"
+                                class="c40 text-left col"
                               >
                                 Headquarters (HQ)
                               </div>
@@ -1357,14 +1334,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c40"
+                                  class="c39"
                                 >
                                   Requester
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c41 text-left col"
+                                class="c40 text-left col"
                               >
                                 Dairy Queen Forever! Property Management
                               </div>
@@ -1376,18 +1353,18 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c40"
+                                  class="c39"
                                 >
                                   Description of request
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c41 text-left col"
+                                class="c40 text-left col"
                               />
                             </div>
                             <div
-                              class="c42 card"
+                              class="c41 card"
                               style="padding: 0px;"
                             >
                               <div
@@ -1402,7 +1379,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                     style="padding: 0px; word-break: break-all;"
                                   >
                                     <label
-                                      class="c43"
+                                      class="c42"
                                       style="max-height: fit-content;"
                                     >
                                       a request description
@@ -1414,16 +1391,17 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                           </div>
                         </div>
                         <div
-                          class="c38 form-section"
+                          class="c37 form-section"
                         >
                           <h2
-                            class="c39"
+                            class="c38"
                           >
                             <div
                               class="no-gutters row"
                             >
                               <div
                                 class="align-content-end col"
+                                style="overflow: hidden;"
                               >
                                 Result
                               </div>
@@ -1439,14 +1417,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c40"
+                                  class="c39"
                                 >
                                   Research completed on
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c41 text-left col"
+                                class="c40 text-left col"
                               >
                                 Mar 30, 2022
                               </div>
@@ -1458,18 +1436,18 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c40"
+                                  class="c39"
                                 >
                                   Result of request
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c41 text-left col"
+                                class="c40 text-left col"
                               />
                             </div>
                             <div
-                              class="c42 card"
+                              class="c41 card"
                               style="padding: 0px;"
                             >
                               <div
@@ -1484,7 +1462,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                     style="padding: 0px; word-break: break-all;"
                                   >
                                     <label
-                                      class="c43"
+                                      class="c42"
                                       style="max-height: fit-content;"
                                     >
                                       A research result
@@ -1496,16 +1474,17 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                           </div>
                         </div>
                         <div
-                          class="c38 form-section"
+                          class="c37 form-section"
                         >
                           <h2
-                            class="c39"
+                            class="c38"
                           >
                             <div
                               class="no-gutters row"
                             >
                               <div
                                 class="align-content-end col"
+                                style="overflow: hidden;"
                               >
                                 Expropriation
                               </div>
@@ -1521,14 +1500,14 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c40"
+                                  class="c39"
                                 >
                                   Expropriation?
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c41 text-left col"
+                                class="c40 text-left col"
                               >
                                 No
                               </div>
@@ -1540,18 +1519,18 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                 class="pr-0 text-left col-4"
                               >
                                 <label
-                                  class="c40"
+                                  class="c39"
                                 >
                                   Expropriation comments
                                   :
                                 </label>
                               </div>
                               <div
-                                class="c41 text-left col"
+                                class="c40 text-left col"
                               />
                             </div>
                             <div
-                              class="c42 card"
+                              class="c41 card"
                               style="padding: 0px;"
                             >
                               <div
@@ -1566,7 +1545,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                                     style="padding: 0px; word-break: break-all;"
                                   >
                                     <label
-                                      class="c43"
+                                      class="c42"
                                       style="max-height: fit-content;"
                                     >
                                       An expropriation note

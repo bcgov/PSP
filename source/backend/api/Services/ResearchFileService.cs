@@ -26,6 +26,7 @@ namespace Pims.Api.Services
         private readonly IPropertyService _propertyService;
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly IResearchStatusSolver _researchStatusSolver;
+        private readonly IFilePropertyLocationUpdateSolver _propertyLocationSolver;
 
         public ResearchFileService(
             ClaimsPrincipal user,
@@ -37,7 +38,8 @@ namespace Pims.Api.Services
             INoteRelationshipRepository<PimsResearchFileNote> entityNoteRepository,
             IPropertyService propertyService,
             IPropertyOperationService propertyOperationService,
-            IResearchStatusSolver researchStatusSolver)
+            IResearchStatusSolver researchStatusSolver,
+            IFilePropertyLocationUpdateSolver propertyLocationSolver)
         {
             _user = user;
             _logger = logger;
@@ -49,6 +51,7 @@ namespace Pims.Api.Services
             _propertyService = propertyService;
             _propertyOperationService = propertyOperationService;
             _researchStatusSolver = researchStatusSolver;
+            _propertyLocationSolver = propertyLocationSolver;
         }
 
         public PimsResearchFile GetById(long id)
@@ -77,7 +80,8 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ResearchFileAdd);
             researchFile.ResearchFileStatusTypeCode = "ACTIVE";
 
-            MatchProperties(researchFile, userOverrideCodes);
+            // No existing properties when adding a new file
+            MatchProperties(researchFile, userOverrideCodes, new HashSet<long>());
 
             // Update marker locations in the context of this file
             foreach (var incomingResearchProperty in researchFile.PimsPropertyResearchFiles)
@@ -126,10 +130,10 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
-            MatchProperties(researchFile, userOverrideCodes);
-
             // Get the current properties in the research file
             var currentFileProperties = _researchFilePropertyRepository.GetAllByResearchFileId(researchFile.Internal_Id);
+            var existingPropertyIds = currentFileProperties.Select(p => p.PropertyId).ToHashSet();
+            MatchProperties(researchFile, userOverrideCodes, existingPropertyIds);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingResearchProperty in researchFile.PimsPropertyResearchFiles)
@@ -156,11 +160,15 @@ namespace Pims.Api.Services
                         needsUpdate = true;
                     }
 
-                    var incomingGeom = incomingResearchProperty.Location;
-                    var existingGeom = existingProperty.Location;
-                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    if (_propertyLocationSolver.CanEditFilePropertyLocation(incomingResearchProperty, existingProperty))
                     {
                         _propertyService.UpdateFilePropertyLocation(incomingResearchProperty, existingProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (_propertyLocationSolver.CanEditFilePropertyBoundary(incomingResearchProperty, existingProperty))
+                    {
+                        _propertyService.UpdateFilePropertyBoundary(incomingResearchProperty, existingProperty);
                         needsUpdate = true;
                     }
 
@@ -235,7 +243,7 @@ namespace Pims.Api.Services
             return _researchFileRepository.GetLastUpdateBy(researchFileId);
         }
 
-        private void MatchProperties(PimsResearchFile researchFile, IEnumerable<UserOverrideCode> userOverrideCodes)
+        private void MatchProperties(PimsResearchFile researchFile, IEnumerable<UserOverrideCode> userOverrideCodes, HashSet<long> existingPropertyIds)
         {
             foreach (var researchProperty in researchFile.PimsPropertyResearchFiles)
             {
@@ -245,6 +253,12 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
+                        {
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
+                        }
                         researchProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes, allowRetired: true);
                         researchProperty.Property = foundProperty;
@@ -261,6 +275,12 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
+                        {
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
+                        }
                         researchProperty.PropertyId = foundProperty.Internal_Id;
                         _propertyService.UpdateLocation(researchProperty.Property, ref foundProperty, userOverrideCodes, allowRetired: true);
                         researchProperty.Property = foundProperty;

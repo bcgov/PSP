@@ -97,9 +97,15 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                 .Include(p => p.PimsPropPropPurposes)
                     .ThenInclude(t => t.PropertyPurposeTypeCodeNavigation)
+                .Include(p => p.SurplusDeclarationTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(p => p.VolumetricTypeCodeNavigation)
                 .Include(p => p.VolumeUnitTypeCodeNavigation)
+                .Include(p => p.ResponsiblePayerPerson)
+                    .ThenInclude(x => x.PimsPersonOrganizations)
+                        .ThenInclude(y => y.Organization)
+                .Include(p => p.ResponsiblePayerOrganization)
+                .Include(p => p.ResponsiblePayerPrimaryContact)
                 .Include(p => p.Address)
                     .ThenInclude(a => a.RegionCodeNavigation)
                 .Include(p => p.Address)
@@ -144,6 +150,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTyps)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.SurplusDeclarationTypeCodeNavigation)
                 .Include(p => p.PimsPropTenureCleanups)
                     .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -204,6 +211,7 @@ namespace Pims.Dal.Repositories
                         .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                     .Include(p => p.PimsPropPropTenureTyps)
                         .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                    .Include(p => p.SurplusDeclarationTypeCodeNavigation)
                     .Include(p => p.PimsPropTenureCleanups)
                         .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                     .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -247,6 +255,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTyps)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.SurplusDeclarationTypeCodeNavigation)
                 .Include(p => p.PimsPropTenureCleanups)
                     .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -290,6 +299,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.PropertyRoadTypeCodeNavigation)
                 .Include(p => p.PimsPropPropTenureTyps)
                     .ThenInclude(t => t.PropertyTenureTypeCodeNavigation)
+                .Include(p => p.SurplusDeclarationTypeCodeNavigation)
                 .Include(p => p.PimsPropTenureCleanups)
                     .ThenInclude(t => t.TenureCleanupTypeCodeNavigation)
                 .Include(p => p.PropertyAreaUnitTypeCodeNavigation)
@@ -381,10 +391,11 @@ namespace Pims.Dal.Repositories
             property.AddressId = existingProperty.AddressId;
             property.PropertyDataSourceEffectiveDate = existingProperty.PropertyDataSourceEffectiveDate;
             property.PropertyDataSourceTypeCode = existingProperty.PropertyDataSourceTypeCode;
-            property.SurplusDeclarationTypeCode = existingProperty.SurplusDeclarationTypeCode;
-            property.SurplusDeclarationComment = existingProperty.SurplusDeclarationComment;
-            property.SurplusDeclarationDate = existingProperty.SurplusDeclarationDate;
             property.IsRetired = existingProperty.IsRetired;
+
+            // preserve net book values - they are updated via a separate endpoint
+            property.NetBookAmt = existingProperty.NetBookAmt;
+            property.NetBookNote = existingProperty.NetBookNote;
 
             if (property.PphStatusTypeCode != existingProperty.PphStatusTypeCode
                 && (property.PphStatusTypeCode != PropertyPPHStatusTypes.UNKNOWN.ToString() && existingProperty.PphStatusTypeCode != null))
@@ -425,6 +436,23 @@ namespace Pims.Dal.Repositories
             return existingProperty;
         }
 
+        public PimsProperty UpdateNetBook(PimsProperty property)
+        {
+            property.ThrowIfNull(nameof(property));
+
+            var propertyId = property.Internal_Id;
+            var existingProperty = Context.PimsProperties
+                .FirstOrDefault(p => p.PropertyId == propertyId) ?? throw new KeyNotFoundException();
+
+            // update net book fields
+            existingProperty.NetBookAmt = property.NetBookAmt;
+            existingProperty.NetBookNote = property.NetBookNote;
+
+            Context.Update(existingProperty);
+
+            return existingProperty;
+        }
+
         /// <summary>
         /// Update the passed property management information in the database assuming the user has the required claims.
         /// </summary>
@@ -442,6 +470,10 @@ namespace Pims.Dal.Repositories
             existingProperty.AdditionalDetails = property.AdditionalDetails;
             existingProperty.IsUtilitiesPayable = property.IsUtilitiesPayable;
             existingProperty.IsTaxesPayable = property.IsTaxesPayable;
+            existingProperty.ResponsiblePayerPersonId = property.ResponsiblePayerPersonId;
+            existingProperty.ResponsiblePayerOrganizationId = property.ResponsiblePayerOrganizationId;
+            existingProperty.ResponsiblePayerPrimaryContactId = property.ResponsiblePayerPrimaryContactId;
+
             Context.Update(existingProperty);
 
             // update direct relationships - Property Purposes

@@ -10,15 +10,15 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
-import { apiPropertyToPimsFeature, exists, getLatLng } from '@/utils';
+import { PIMS_Property_View } from '@/models/layers/pimsPropertyView';
+import { apiPropertyToPimsFeature, exists, getFeatureBoundedCenter, getLatLng } from '@/utils';
 
 export class ParcelDataset {
   public id: string;
   public name: string;
   location: LatLngLiteral | null;
   public pmbcFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
-  public pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
+  public pimsFeature: Feature<Geometry, PIMS_Property_View> | null;
   public regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
   public districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
 
@@ -36,13 +36,19 @@ export class ParcelDataset {
     feature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null,
   ) {
     const parcel = new ParcelDataset();
+    const center = getFeatureBoundedCenter(feature);
     parcel.pmbcFeature = feature;
+    parcel.location =
+      exists(center) && center.length >= 2 ? { lat: center[1], lng: center[0] } : undefined;
     return parcel;
   }
 
-  public static fromPimsFeature(feature: Feature<Geometry, PIMS_Property_Location_View> | null) {
+  public static fromPimsFeature(feature: Feature<Geometry, PIMS_Property_View> | null) {
     const parcel = new ParcelDataset();
+    const center = getFeatureBoundedCenter(feature);
     parcel.pimsFeature = feature;
+    parcel.location =
+      exists(center) && center.length >= 2 ? { lat: center[1], lng: center[0] } : undefined;
     return parcel;
   }
 
@@ -67,7 +73,7 @@ export class ParcelDataset {
   public toSelectedFeatureDataset(): SelectedFeatureDataset {
     return {
       selectingComponentId: null,
-      location: this.location ?? { lat: 0, lng: 0 },
+      location: this.location ?? null,
       fileLocation: this.location ?? null,
       fileBoundary: null,
       id: this.id,

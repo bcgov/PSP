@@ -12,7 +12,7 @@ describe('PropertySelectorModal modal', () => {
       <PropertySelectorModal
         {...renderOptions.props}
         isOpened={renderOptions.props?.isOpened ?? true}
-        availiableProperties={renderOptions.props?.availiableProperties ?? []}
+        availableProperties={renderOptions.props?.availableProperties ?? []}
         onSelectOk={onSelectOkHandle}
         onCancelClick={onCancelClick}
       />,

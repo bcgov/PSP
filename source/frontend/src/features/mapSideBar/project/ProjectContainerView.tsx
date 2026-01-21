@@ -1,7 +1,9 @@
 import { FormikProps } from 'formik';
 import { useCallback, useRef } from 'react';
 import { FaBriefcase } from 'react-icons/fa';
+import { useHistory } from 'react-router-dom';
 
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import GenericModal from '@/components/common/GenericModal';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
@@ -27,6 +29,8 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
   setIsValid,
 }) => {
   const close = useCallback(() => onClose && onClose(), [onClose]);
+
+  const history = useHistory();
 
   const handleSaveClick = () => {
     if (formikRef !== undefined) {
@@ -62,6 +66,11 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
       handleCancelConfirm();
     }
   };
+
+  const shouldBlockNavigation = useCallback(
+    () => formikRef.current?.dirty && !formikRef.current?.isSubmitting,
+    [],
+  );
 
   if (loadingProject) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
@@ -110,6 +119,11 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
           okButtonText="Yes"
           cancelButtonText="No"
           show
+        />
+        <ConfirmNavigation
+          navigate={history.push}
+          shouldBlockNavigation={shouldBlockNavigation}
+          showModal={true}
         />
       </StyledFormWrapper>
     </MapSideBarLayout>

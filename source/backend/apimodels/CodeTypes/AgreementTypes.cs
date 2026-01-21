@@ -12,6 +12,9 @@ namespace Pims.Api.Models.CodeTypes
         [EnumMember(Value = "H179A")]
         H179A,
 
+        [EnumMember(Value = "H179B")]
+        H179B,
+
         [EnumMember(Value = "H179P")]
         H179P,
 

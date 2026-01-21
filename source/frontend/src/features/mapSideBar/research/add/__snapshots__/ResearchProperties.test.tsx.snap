@@ -1,6 +1,6 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
-exports[`ResearchProperties component > renders as expected when provided no properties 1`] = `
+exports[`ResearchProperties component > renders as expected 1`] = `
 <DocumentFragment>
   <div
     class="Toastify"
@@ -212,54 +212,54 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   margin-right: 0;
 }
 
-.c18.c18.btn {
+.c19.c19.btn {
   background-color: unset;
   border: none;
 }
 
-.c18.c18.btn:hover,
-.c18.c18.btn:focus,
-.c18.c18.btn:active {
+.c19.c19.btn:hover,
+.c19.c19.btn:focus,
+.c19.c19.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c18.c18.btn svg {
+.c19.c19.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c18.c18.btn svg:hover {
+.c19.c19.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c18.c18.btn.btn-primary svg {
+.c19.c19.btn.btn-primary svg {
   color: #013366;
 }
 
-.c18.c18.btn.btn-primary svg:hover {
+.c19.c19.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c18.c18.btn.btn-light svg {
+.c19.c19.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c18.c18.btn.btn-light svg:hover {
+.c19.c19.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c18.c18.btn.btn-info svg {
+.c19.c19.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c18.c18.btn.btn-info svg:hover {
+.c19.c19.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c20.c20.btn {
+.c21.c21.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -267,13 +267,9 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   line-height: unset;
 }
 
-.c20.c20.btn .text {
-  display: none;
-}
-
-.c20.c20.btn:hover,
-.c20.c20.btn:active,
-.c20.c20.btn:focus {
+.c21.c21.btn:hover,
+.c21.c21.btn:active,
+.c21.c21.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -285,13 +281,6 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
-}
-
-.c20.c20.btn:hover .text,
-.c20.c20.btn:active .text,
-.c20.c20.btn:focus .text {
-  display: inline;
-  line-height: 2rem;
 }
 
 .c16 {
@@ -312,19 +301,19 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   flex-shrink: 0;
 }
 
-.c1 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c0 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c1 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c11 {
@@ -368,7 +357,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   min-height: 4.5rem;
 }
 
-.c17 {
+.c18 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -386,7 +375,12 @@ exports[`ResearchProperties component > renders as expected when provided no pro
   justify-content: flex-end;
 }
 
-.c19 {
+.c17 {
+  max-width: 3rem;
+  min-width: 3rem;
+}
+
+.c20 {
   padding-left: 1.2rem;
 }
 
@@ -459,6 +453,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
       >
         <div
           class="align-content-end col"
+          style="overflow: hidden;"
         >
           Properties to include in this file:
         </div>
@@ -583,6 +578,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
           >
             <div
               class="align-content-end col"
+              style="overflow: hidden;"
             >
               Selected Properties
             </div>
@@ -727,7 +723,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               </div>
             </div>
             <div
-              class="ml-5 col-auto"
+              class="c17 ml-5 col-auto"
             >
               <button
                 class="c10 Button btn btn-link"
@@ -754,12 +750,11 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               </button>
             </div>
             <div
-              class="c17 pl-3 col-auto"
+              class="c18 col-auto"
             >
               <button
-                class="c10 Button c18 btn btn-primary"
-                data-testid="move-pin-location-0"
-                title="move-pin-location"
+                class="c10 Button c19 btn btn-primary"
+                data-testid="upload-shapefile-0"
                 type="button"
               >
                 <div
@@ -767,24 +762,25 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                 >
                   <svg
                     fill="currentColor"
-                    height="22"
+                    height="18"
                     stroke="currentColor"
                     stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="22"
+                    version="1.1"
+                    viewBox="0 0 16 16"
+                    width="18"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M11 11V5.82843L9.17157 7.65685L7.75736 6.24264L12 2L16.2426 6.24264L14.8284 7.65685L13 5.82843V11H18.1716L16.3431 9.17157L17.7574 7.75736L22 12L17.7574 16.2426L16.3431 14.8284L18.1716 13H13V18.1716L14.8284 16.3431L16.2426 17.7574L12 22L7.75736 17.7574L9.17157 16.3431L11 18.1716V13H5.82843L7.65685 14.8284L6.24264 16.2426L2 12L6.24264 7.75736L7.65685 9.17157L5.82843 11H11Z"
+                      d="M7 9h2v-4h3l-4-4-4 4h3zM10 6.75v1.542l4.579 1.708-6.579 2.453-6.579-2.453 4.579-1.708v-1.542l-6 2.25v4l8 3 8-3v-4z"
                     />
                   </svg>
                 </div>
               </button>
               <div
-                class="c19"
+                class="c20"
               >
                 <button
-                  class="c10 Button c20 btn btn-link"
+                  class="c10 Button c21 btn btn-link"
                   data-testid="delete-property-0"
                   type="button"
                 >
@@ -811,12 +807,6 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                         d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                       />
                     </svg>
-                     
-                    <span
-                      class="text"
-                    >
-                      Remove
-                    </span>
                   </div>
                 </button>
               </div>
@@ -924,7 +914,7 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               </div>
             </div>
             <div
-              class="ml-5 col-auto"
+              class="c17 ml-5 col-auto"
             >
               <button
                 class="c10 Button btn btn-link"
@@ -951,12 +941,11 @@ exports[`ResearchProperties component > renders as expected when provided no pro
               </button>
             </div>
             <div
-              class="c17 pl-3 col-auto"
+              class="c18 col-auto"
             >
               <button
-                class="c10 Button c18 btn btn-primary"
-                data-testid="move-pin-location-1"
-                title="move-pin-location"
+                class="c10 Button c19 btn btn-primary"
+                data-testid="upload-shapefile-1"
                 type="button"
               >
                 <div
@@ -964,24 +953,25 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                 >
                   <svg
                     fill="currentColor"
-                    height="22"
+                    height="18"
                     stroke="currentColor"
                     stroke-width="0"
-                    viewBox="0 0 24 24"
-                    width="22"
+                    version="1.1"
+                    viewBox="0 0 16 16"
+                    width="18"
                     xmlns="http://www.w3.org/2000/svg"
                   >
                     <path
-                      d="M11 11V5.82843L9.17157 7.65685L7.75736 6.24264L12 2L16.2426 6.24264L14.8284 7.65685L13 5.82843V11H18.1716L16.3431 9.17157L17.7574 7.75736L22 12L17.7574 16.2426L16.3431 14.8284L18.1716 13H13V18.1716L14.8284 16.3431L16.2426 17.7574L12 22L7.75736 17.7574L9.17157 16.3431L11 18.1716V13H5.82843L7.65685 14.8284L6.24264 16.2426L2 12L6.24264 7.75736L7.65685 9.17157L5.82843 11H11Z"
+                      d="M7 9h2v-4h3l-4-4-4 4h3zM10 6.75v1.542l4.579 1.708-6.579 2.453-6.579-2.453 4.579-1.708v-1.542l-6 2.25v4l8 3 8-3v-4z"
                     />
                   </svg>
                 </div>
               </button>
               <div
-                class="c19"
+                class="c20"
               >
                 <button
-                  class="c10 Button c20 btn btn-link"
+                  class="c10 Button c21 btn btn-link"
                   data-testid="delete-property-1"
                   type="button"
                 >
@@ -1008,12 +998,6 @@ exports[`ResearchProperties component > renders as expected when provided no pro
                         d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                       />
                     </svg>
-                     
-                    <span
-                      class="text"
-                    >
-                      Remove
-                    </span>
                   </div>
                 </button>
               </div>

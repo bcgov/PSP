@@ -451,19 +451,19 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   overflow: hidden;
 }
 
-.c39 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c38 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c39 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c41.required::before {
@@ -546,9 +546,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
 }
 
 .c31 {
-  -webkit-align-self: flex-end;
-  -ms-flex-item-align: end;
-  align-self: flex-end;
   margin-right: 2rem;
 }
 
@@ -1231,6 +1228,15 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                   <a
                     aria-selected="false"
                     class="nav-item nav-link"
+                    data-rb-event-key="improvements"
+                    href="#"
+                    role="tab"
+                  >
+                    Improvements
+                  </a>
+                  <a
+                    aria-selected="false"
+                    class="nav-item nav-link"
                     data-rb-event-key="stakeholders"
                     href="#"
                     role="tab"
@@ -1272,6 +1278,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Project
                             </div>
@@ -1345,6 +1352,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Progress Statuses
                             </div>
@@ -1527,6 +1535,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Schedule
                             </div>
@@ -1665,6 +1674,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Acquisition Details
                             </div>
@@ -1834,6 +1844,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Acquisition Team
                             </div>
@@ -1937,6 +1948,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
+                              style="overflow: hidden;"
                             >
                               Owner Information
                             </div>
@@ -2396,6 +2408,60 @@ Canada
                             >
                               test representative comment
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="c38 form-section"
+                      >
+                        <h2
+                          class="c39"
+                        >
+                          <div
+                            class="no-gutters row"
+                          >
+                            <div
+                              class="align-content-end col"
+                              style="overflow: hidden;"
+                            >
+                              Notice of Claim
+                            </div>
+                          </div>
+                        </h2>
+                        <div
+                          class="collapse show"
+                        >
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c40"
+                              >
+                                Received date:
+                              </label>
+                            </div>
+                            <div
+                              class="c41 text-left col"
+                            />
+                          </div>
+                          <div
+                            class="pb-2 row"
+                          >
+                            <div
+                              class="pr-0 text-left col-4"
+                            >
+                              <label
+                                class="c40"
+                              >
+                                Comment:
+                              </label>
+                            </div>
+                            <div
+                              class="c41 text-left col"
+                            />
                           </div>
                         </div>
                       </div>

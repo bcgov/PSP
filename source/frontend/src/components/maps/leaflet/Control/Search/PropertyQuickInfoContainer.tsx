@@ -130,18 +130,16 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
     getOwnerInfo(locationInfo?.PID);
   }, [getOwnerInfo, locationInfo?.PID]);
 
+  const mapMachine = useMapStateMachine();
+
   const onViewPropertyInfo = useCallback(() => {
-    if (exists(locationInfo?.PID)) {
-      pathGenerator.showPropertyByPid(locationInfo.PID);
-    }
-  }, [locationInfo?.PID, pathGenerator]);
+    mapMachine.showQuickInfoProperty();
+  }, [mapMachine]);
 
   const showViewPropertyInfo = useMemo(
     () => isValidString(locationInfo?.PID) && !hasMultipleProperties,
     [hasMultipleProperties, locationInfo?.PID],
   );
-
-  const mapMachine = useMapStateMachine();
 
   const isVisible = useMemo(() => mapMachine.isShowingQuickInfo, [mapMachine]);
   const isMinimized = useMemo(() => mapMachine.isQuickInfoMinimized, [mapMachine]);
@@ -187,10 +185,12 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
   const onAddToWorklist = useCallback(() => {
     const worklistDataSet: WorklistLocationFeatureDataset = {
       ...selectedFeatureDataset,
-      fullyAttributedFeatures: {
-        type: 'FeatureCollection',
-        features: [selectedFeatureDataset.parcelFeature],
-      },
+      fullyAttributedFeatures: exists(selectedFeatureDataset.parcelFeature)
+        ? {
+            type: 'FeatureCollection',
+            features: [selectedFeatureDataset.parcelFeature],
+          }
+        : null,
     };
     worklistAdd(worklistDataSet);
   }, [selectedFeatureDataset, worklistAdd]);

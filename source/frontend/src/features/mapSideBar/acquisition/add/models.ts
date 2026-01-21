@@ -1,8 +1,11 @@
+import { first } from 'lodash';
+
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
+import { ApiGen_Concepts_NoticeOfClaim } from '@/models/api/generated/ApiGen_Concepts_NoticeOfClaim';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { applyDisplayOrder } from '@/utils';
 import {
@@ -71,6 +74,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   );
   totalAllowableCompensation: number | '' = '';
   physicalFileDetails?: string = '';
+  noticeOfClaim: ApiGen_Concepts_NoticeOfClaim;
 
   toApi(): ApiGen_Concepts_AcquisitionFile {
     const fileProperties = this.properties.map(x => this.toPropertyApi(x));
@@ -129,6 +133,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       legacyStakeholders: null,
       product: null,
       project: null,
+      noticeOfClaim: exists(this.noticeOfClaim) ? [this.noticeOfClaim] : [],
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
@@ -241,6 +246,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.ownerRepresentative =
       interestHolders?.find(x => x.interestTypeCode === InterestHolderType.OWNER_REPRESENTATIVE) ??
       new InterestHolderForm(InterestHolderType.OWNER_REPRESENTATIVE, model.id);
+    newForm.noticeOfClaim = exists(model.noticeOfClaim) ? first(model.noticeOfClaim) : null;
 
     return newForm;
   }

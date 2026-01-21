@@ -14,7 +14,7 @@ export const MAP_MAX_ZOOM = 20;
 export const MAP_MAX_NATIVE_ZOOM = 20;
 export const MAP_MIN_MARKER_ZOOM = 10;
 
-export const PIMS_PROPERTY_BOUNDARY_KEY = 'PIMS_PROPERTY_BOUNDARY_VW';
+export const PIMS_PROPERTY_VW_KEY = 'PIMS_PROPERTY_VW';
 
 // Global
 export const DISCLAIMER_URL = 'https://www2.gov.bc.ca//gov/content/home/disclaimer';

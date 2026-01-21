@@ -1,10 +1,12 @@
 import { AxiosError } from 'axios';
-import React, { useEffect, useState } from 'react';
+import { FormikProps } from 'formik';
+import React, { useCallback, useEffect, useRef, useState } from 'react';
 import { Alert, Col, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
 
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { H1 } from '@/components/common/styles';
 import { useFinancialCodeRepository } from '@/hooks/repositories/useFinancialCodeRepository';
@@ -12,6 +14,7 @@ import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 
+import { FinancialCodeForm } from '../models';
 import { UpdateFinancialCodeYupSchema } from './UpdateFinancialCodeYupSchema';
 
 export interface IUpdateFinancialCodeFormProps {
@@ -23,6 +26,7 @@ export interface IUpdateFinancialCodeFormProps {
   onCancel: () => void;
   onSuccess: (financialCode: ApiGen_Concepts_FinancialCode) => Promise<void>;
   onError: (e: AxiosError<IApiError>) => void;
+  formikRef?: React.RefObject<FormikProps<FinancialCodeForm>>;
 }
 
 export interface IUpdateFinancialCodeContainerProps {
@@ -38,6 +42,7 @@ export const UpdateFinancialCodeContainer: React.FC<IUpdateFinancialCodeContaine
 }) => {
   const [duplicateError, setDuplicateError] = useState(false);
   const history = useHistory();
+  const formikRef = useRef<FormikProps<FinancialCodeForm>>(null);
   const {
     getFinancialCode: {
       execute: getFinancialCode,
@@ -80,6 +85,11 @@ export const UpdateFinancialCodeContainer: React.FC<IUpdateFinancialCodeContaine
     }
   };
 
+  const shouldBlockNavigation = useCallback(
+    () => formikRef.current?.dirty && !formikRef.current?.isSubmitting,
+    [],
+  );
+
   if (loadingFinancialCode) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
@@ -107,6 +117,12 @@ export const UpdateFinancialCodeContainer: React.FC<IUpdateFinancialCodeContaine
             onCancel={onCancel}
             onSuccess={onUpdateSuccess}
             onError={onUpdateError}
+            formikRef={formikRef}
+          />
+          <ConfirmNavigation
+            navigate={history.push}
+            shouldBlockNavigation={shouldBlockNavigation}
+            showModal={true}
           />
         </Col>
       </Row>

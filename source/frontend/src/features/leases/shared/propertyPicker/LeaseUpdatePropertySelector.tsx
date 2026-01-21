@@ -1,6 +1,8 @@
 import { AxiosError } from 'axios';
 import { dequal } from 'dequal';
 import { FieldArray, FieldArrayRenderProps, Formik, FormikProps } from 'formik';
+import { LatLngLiteral } from 'leaflet';
+import noop from 'lodash/noop';
 import { useCallback, useContext, useEffect, useMemo, useRef, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
@@ -13,13 +15,16 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
+import MapClickMonitor from '@/components/propertySelector/MapClickMonitor';
 import { ModalContext } from '@/contexts/modalContext';
 import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
+import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import AddPropertiesGuide from '@/features/mapSideBar/shared/update/properties/AddPropertiesGuide';
 import { UpdatePropertiesYupSchema } from '@/features/mapSideBar/shared/update/properties/UpdatePropertiesYupSchema';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useEnrichWithPimsFeatures } from '@/hooks/useEnrichWithPimsFeatures';
@@ -28,7 +33,16 @@ import { getCancelModalProps } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { arePropertyFormsEqual, exists, firstOrNull, isValidId } from '@/utils';
+import {
+  addShapeToProperty,
+  arePropertyFormsEqual,
+  exists,
+  firstOrNull,
+  isLatLngInFeatureSetBoundary,
+  isNumber,
+  isValidId,
+  removeShapeFromPropertyWithConfirmation,
+} from '@/utils';
 
 import { useLeaseDetail } from '../../hooks/useLeaseDetail';
 import { FormLeaseProperty, LeaseFormModel } from '../../models';
@@ -36,11 +50,12 @@ import SelectedPropertyHeaderRow from './selectedPropertyList/SelectedPropertyHe
 import SelectedPropertyRow from './selectedPropertyList/SelectedPropertyRow';
 interface LeaseUpdatePropertySelectorProp {
   lease: ApiGen_Concepts_Lease;
+  formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
 }
 
 export const LeaseUpdatePropertySelector: React.FunctionComponent<
   LeaseUpdatePropertySelectorProp
-> = ({ lease }) => {
+> = ({ lease, formikRef }) => {
   const pathSolver = usePathGenerator();
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
   const [isValid, setIsValid] = useState<boolean>(true);
@@ -49,7 +64,6 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
   const { resetFilePropertyLocations } = useContext(SideBarContext);
 
-  const formikRef = useRef<FormikProps<LeaseFormModel>>();
   const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
 
   const {
@@ -73,7 +87,8 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
   const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
     return {
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
-      location: mapLocationFeatureDataset?.location,
+      location:
+        mapLocationFeatureDataset?.location ?? mapLocationFeatureDataset?.fileLocation ?? null,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
       fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
@@ -367,11 +382,13 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
                 return (
                   <>
                     <AddPropertiesGuide />
-                    {exists(selectedFeatureDataset?.parcelFeature) && (
+                    {exists(selectedFeatureDataset?.parcelFeature) ||
+                    exists(selectedFeatureDataset?.pimsFeature) ||
+                    exists(selectedFeatureDataset?.location) ? (
                       <StyledButtonWrapper>
                         <Button onClick={handleAddToSelection}>Add selected property</Button>
                       </StyledButtonWrapper>
-                    )}
+                    ) : null}
                     <Section
                       header={
                         <Row>
@@ -385,6 +402,43 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
                         </Row>
                       }
                     >
+                      <Row className="py-3 no-gutters">
+                        <Col>
+                          <MapClickMonitor
+                            selectedComponentId={null}
+                            addProperty={noop}
+                            repositionProperty={(
+                              featureset: SelectedFeatureDataset,
+                              latLng: LatLngLiteral,
+                              index: number | null,
+                            ) => {
+                              // As long as the marker is repositioned within the boundary of the originally selected property simply reposition the marker without further notification.
+                              if (
+                                isNumber(index) &&
+                                index >= 0 &&
+                                isLatLngInFeatureSetBoundary(latLng, featureset)
+                              ) {
+                                const leaseProperty = formikProps.values.properties[index];
+                                const updatedFormProperty = new PropertyForm(
+                                  leaseProperty.property,
+                                );
+                                updatedFormProperty.fileLocation = latLng;
+
+                                // Find property within formik values and reposition it based on incoming file marker position
+                                leaseProperty.property = updatedFormProperty;
+                                arrayHelpers.replace(index, leaseProperty);
+                              } else if (!isLatLngInFeatureSetBoundary(latLng, featureset)) {
+                                toast.warn(
+                                  'Please choose a location that is within the (highlighted) boundary of this property.',
+                                );
+                              }
+                            }}
+                            modifiedProperties={formikProps.values.properties.map(p =>
+                              p.property.toFeatureDataset(),
+                            )}
+                          />
+                        </Col>
+                      </Row>
                       <SelectedPropertyHeaderRow />
                       {formikProps.values.properties.map((leaseProperty, index) => {
                         const property = leaseProperty?.property;
@@ -396,8 +450,25 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
                               onRemove={() => onRemoveClick(index)}
                               nameSpace={`properties.${index}`}
                               index={index}
-                              property={property.toFeatureDataset()}
+                              property={property}
                               showSeparator={index < formikProps.values.properties.length - 1}
+                              canUploadShapefile={true}
+                              onUploadShapefile={(result: UploadResponseModel | null) => {
+                                const updatedFormProperty = addShapeToProperty(property, result);
+                                leaseProperty.property = updatedFormProperty;
+                                arrayHelpers.replace(index, leaseProperty);
+                              }}
+                              onRemoveShapefile={() => {
+                                removeShapeFromPropertyWithConfirmation(
+                                  property,
+                                  setModalContent,
+                                  setDisplayModal,
+                                  updatedProperty => {
+                                    leaseProperty.property = updatedProperty;
+                                    arrayHelpers.replace(index, leaseProperty);
+                                  },
+                                );
+                              }}
                             />
                           );
                         }

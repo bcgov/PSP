@@ -1,4 +1,4 @@
-import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, PIMS_PROPERTY_BOUNDARY_KEY } from '@/constants/strings';
+import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, PIMS_PROPERTY_VW_KEY } from '@/constants/strings';
 
 import { LayerDefinition } from './types';
 
@@ -54,6 +54,7 @@ export const layerDefinitions: LayerDefinition[] = [
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
     maxZoom: MAP_MAX_ZOOM,
     authenticated: true,
+    cql_filter: "DISPOSITION_FILE_STATUS_TYPE_CODE = 'ACTIVE'",
   },
   {
     layerIdentifier: 'pims_lease_receivable',
@@ -519,5 +520,5 @@ export const layerDefinitions: LayerDefinition[] = [
 ];
 
 export const pimsBoundaryLayers = new Set(
-  layerDefinitions.filter(x => x.layers?.includes(PIMS_PROPERTY_BOUNDARY_KEY)),
+  layerDefinitions.filter(x => x.layers?.includes(PIMS_PROPERTY_VW_KEY)),
 );

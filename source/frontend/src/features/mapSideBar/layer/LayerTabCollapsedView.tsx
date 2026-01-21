@@ -34,10 +34,10 @@ export const LayerTabCollapsedView: React.FC<
   /** track the current page for each layer separately, ie layersData = [{..., group: 'group1' }, {..., group: 'group2' }] -> activeGroupedPages = {group1: 0, group2: 0} */
   useEffect(() => {
     const groupedPages = Object.keys(groupedLayersData).reduce((acc, key) => {
-      acc[key] = 0; // start each group on page 0.
+      acc[key] = 0; // start each group on page 0
       return acc;
     }, {});
-    setActiveGroupedPages(groupedPages);
+    setActiveGroupedPages?.(groupedPages);
   }, [groupedLayersData, setActiveGroupedPages]);
 
   return (

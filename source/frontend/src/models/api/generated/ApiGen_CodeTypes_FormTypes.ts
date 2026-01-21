@@ -4,7 +4,9 @@
  */
 export enum ApiGen_CodeTypes_FormTypes {
   FORM1 = 'FORM1',
+  FORM4 = 'FORM4',
   FORM5 = 'FORM5',
+  FORM7 = 'FORM7',
   FORM8 = 'FORM8',
   FORM9 = 'FORM9',
   FORM12 = 'FORM12',
@@ -15,6 +17,7 @@ export enum ApiGen_CodeTypes_FormTypes {
   H1005A = 'H1005A',
   H120 = 'H120',
   H179A = 'H179A',
+  H179B = 'H179B',
   H179FSPART = 'H179FSPART',
   H179P = 'H179P',
   H179PTO = 'H179PTO',

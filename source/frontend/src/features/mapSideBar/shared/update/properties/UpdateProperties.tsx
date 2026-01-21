@@ -26,7 +26,10 @@ import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, firstOrNull, isLatLngInFeatureSetBoundary, isNumber, isValidId } from '@/utils';
-import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
+import {
+  addPropertiesToCurrentFile,
+  removeShapeFromPropertyWithConfirmation,
+} from '@/utils/propertyUtils';
 
 import { FileForm, PropertyForm } from '../../models';
 import SidebarFooter from '../../SidebarFooter';
@@ -36,7 +39,7 @@ import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 export interface IUpdatePropertiesProps {
   file: ApiGen_Concepts_File;
   setIsShowingPropertySelector: (isShowing: boolean) => void;
-  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => Promise<void>;
   updateFileProperties: (
     file: ApiGen_Concepts_File,
     userOverrideCodes: UserOverrideCode[],
@@ -48,6 +51,34 @@ export interface IUpdatePropertiesProps {
   disableProperties?: boolean;
   canUploadShapefiles?: boolean;
 }
+
+const getPropertyIndex = (property: PropertyForm, properties: PropertyForm[]): number | null => {
+  if (
+    !(
+      exists(property.fileLocation) ||
+      exists(property.fileBoundary) ||
+      exists(property.latitude) ||
+      exists(property.longitude)
+    )
+  ) {
+    return null;
+  }
+  let index = 0;
+  for (const p of properties) {
+    if (
+      exists(p.fileLocation) ||
+      exists(p.fileBoundary) ||
+      exists(p.latitude) ||
+      exists(p.longitude)
+    ) {
+      if (p === property) {
+        return index;
+      }
+      index++;
+    }
+  }
+  return null;
+};
 
 export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> = props => {
   const localRef = useRef<FormikProps<FileForm>>(null);
@@ -130,9 +161,14 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const handleCancelConfirm = () => {
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
+      setTimeout(() => {
+        resetFilePropertyLocations();
+        props.setIsShowingPropertySelector(false);
+      }, 0); // Wait for Formik to update dirty state
+    } else {
+      resetFilePropertyLocations();
+      props.setIsShowingPropertySelector(false);
     }
-    resetFilePropertyLocations();
-    props.setIsShowingPropertySelector(false);
   };
 
   const saveFile = async (file: ApiGen_Concepts_File) => {
@@ -149,7 +185,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
         }
         formikRef.current?.resetForm();
         props.setIsShowingPropertySelector(false);
-        props.onSuccess(true);
+        await props.onSuccess(true);
       }
     } catch (e) {
       if (axios.isAxiosError(e) && (e as AxiosError).code === '409') {
@@ -161,7 +197,8 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const selectedFeatureDataset = useMemo<SelectedFeatureDataset>(() => {
     return {
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
-      location: mapLocationFeatureDataset?.location,
+      location:
+        mapLocationFeatureDataset?.location ?? mapLocationFeatureDataset?.fileLocation ?? null,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
       fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
@@ -191,7 +228,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
     <>
       <LoadingBackdrop show={bcaLoading} />
       <MapSideBarLayout
-        title={'Property selection'}
+        title="Property selection"
         icon={undefined}
         footer={
           <SidebarFooter
@@ -204,14 +241,17 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
       >
         <>
           <AddPropertiesGuide />
-          {exists(selectedFeatureDataset?.parcelFeature) && (
+          {exists(selectedFeatureDataset?.parcelFeature) ||
+          exists(selectedFeatureDataset?.pimsFeature) ||
+          exists(selectedFeatureDataset?.location) ? (
             <StyledButtonWrapper>
               <Button onClick={handleAddToSelection}>Add selected property</Button>
             </StyledButtonWrapper>
-          )}
+          ) : null}
           <Formik<FileForm>
             innerRef={formikRef}
             initialValues={formFile}
+            enableReinitialize={true}
             validationSchema={UpdatePropertiesYupSchema}
             onSubmit={async (values: FileForm) => {
               const file: ApiGen_Concepts_File = values.toApi();
@@ -269,33 +309,49 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                       </Col>
                     </Row>
                     <SelectedPropertyHeaderRow />
-                    {formikProps.values.properties.map((property, index) => (
-                      <SelectedPropertyRow
-                        key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
-                        onRemove={async () => {
-                          if (!property.apiId || (await props.canRemove(property.apiId))) {
-                            remove(index);
-                          } else {
-                            setShowAssociatedEntityWarning(true);
-                          }
-                        }}
-                        nameSpace={`properties.${index}`}
-                        index={index}
-                        property={property.toFeatureDataset()}
-                        showDisable={props.disableProperties}
-                        canUploadShapefile={props.canUploadShapefiles}
-                        onUploadShapefile={(result: UploadResponseModel | null) => {
-                          // Update the property boundary based on the uploaded shapefile
-                          if (exists(result)) {
-                            if (result.isSuccess && exists(result.boundary)) {
-                              const updatedFormProperty = new PropertyForm(property);
-                              updatedFormProperty.fileBoundary = result.boundary;
-                              replace(index, updatedFormProperty);
+                    {formikProps.values.properties.map((property, index) => {
+                      const propertyIndex = getPropertyIndex(
+                        property,
+                        formikProps.values.properties,
+                      );
+                      return (
+                        <SelectedPropertyRow
+                          key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
+                          onRemove={async () => {
+                            if (!property.apiId || (await props.canRemove(property.apiId))) {
+                              remove(index);
+                            } else {
+                              setShowAssociatedEntityWarning(true);
                             }
-                          }
-                        }}
-                      />
-                    ))}
+                          }}
+                          nameSpace={`properties.${index}`}
+                          index={propertyIndex}
+                          property={property}
+                          showDisable={props.disableProperties}
+                          canUploadShapefile={props.canUploadShapefiles}
+                          onUploadShapefile={(result: UploadResponseModel | null) => {
+                            // Update the property boundary based on the uploaded shapefile
+                            if (exists(result)) {
+                              if (result.isSuccess && exists(result.boundary)) {
+                                const updatedFormProperty = new PropertyForm(property);
+                                updatedFormProperty.fileBoundary = result.boundary;
+                                replace(index, updatedFormProperty);
+                              }
+                            }
+                          }}
+                          onRemoveShapefile={() => {
+                            removeShapeFromPropertyWithConfirmation(
+                              property,
+                              setModalContent,
+                              setDisplayModal,
+                              updatedProperty => {
+                                replace(index, updatedProperty);
+                              },
+                            );
+                          }}
+                        />
+                      );
+                    })}
                     {formikProps.values.properties.length === 0 && (
                       <span>No Properties selected</span>
                     )}

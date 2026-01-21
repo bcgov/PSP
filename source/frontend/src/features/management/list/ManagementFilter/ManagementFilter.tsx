@@ -5,6 +5,7 @@ import { Col, Row } from 'react-bootstrap';
 import { ResetButton } from '@/components/common/buttons';
 import { SearchButton } from '@/components/common/buttons/SearchButton';
 import { Input, Select, SelectOption, TypeaheadSelect } from '@/components/common/form';
+import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { ColButtons, FilterBoxForm } from '@/components/common/styles';
 import { ApiGen_Concepts_ManagementFileTeam } from '@/models/api/generated/ApiGen_Concepts_ManagementFileTeam';
@@ -106,6 +107,15 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
                     options={fileStatusOptions}
                     field="managementFileStatusCode"
                     placeholder="All Status"
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col xs={6}>
+                  <UserRegionSelectContainer
+                    field="regionCode"
+                    placeholder="Select region..."
+                    required
                   />
                 </Col>
               </Row>

@@ -227,10 +227,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   line-height: unset;
 }
 
-.c32.c32.btn .text {
-  display: none;
-}
-
 .c32.c32.btn:hover,
 .c32.c32.btn:active,
 .c32.c32.btn:focus {
@@ -245,13 +241,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
-}
-
-.c32.c32.btn:hover .text,
-.c32.c32.btn:active .text,
-.c32.c32.btn:focus .text {
-  display: inline;
-  line-height: 2rem;
 }
 
 .c17 .react-datepicker__calendar-icon {
@@ -482,19 +471,19 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   opacity: unset;
 }
 
-.c14 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c13 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c14 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c16.required::before {
@@ -733,6 +722,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Project
                   </div>
@@ -943,6 +933,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Progress Statuses
                   </div>
@@ -1398,6 +1389,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Schedule
                   </div>
@@ -1651,6 +1643,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Properties to include in this sub-file:
                   </div>
@@ -1678,6 +1671,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                       >
                         <div
                           class="align-content-end col"
+                          style="overflow: hidden;"
                         >
                           Selected Properties
                         </div>
@@ -1844,6 +1838,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Acquisition Details
                   </div>
@@ -2288,6 +2283,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Acquisition Team
                   </div>
@@ -2483,12 +2479,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                             d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                           />
                         </svg>
-                         
-                        <span
-                          class="text"
-                        >
-                          Remove
-                        </span>
                       </div>
                     </button>
                   </div>
@@ -2680,12 +2670,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                             d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                           />
                         </svg>
-                         
-                        <span
-                          class="text"
-                        >
-                          Remove
-                        </span>
                       </div>
                     </button>
                   </div>
@@ -2715,6 +2699,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Sub-Interest
                   </div>
@@ -2911,6 +2896,102 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         id="input-ownerRepresentative.comment"
                         name="ownerRepresentative.comment"
                         placeholder="Remarks or additional representative(s)"
+                        style="word-break: break-all;"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c13 form-section"
+            >
+              <h2
+                class="c14"
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="align-content-end col"
+                    style="overflow: hidden;"
+                  >
+                    Notice of Claim
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c15"
+                    >
+                      Received date:
+                    </label>
+                  </div>
+                  <div
+                    class="c16 text-left col"
+                  >
+                    <div
+                      class="c17 form-group"
+                    >
+                      <div
+                        class="react-datepicker-wrapper d-block"
+                      >
+                        <div
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                        >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
+                          <input
+                            autocomplete="off"
+                            class="c18 form-control date-picker"
+                            id="datepicker-noticeOfClaim.receivedDate"
+                            name="noticeOfClaim.receivedDate"
+                            placeholder="MMM DD, YYYY"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c15"
+                    >
+                      Comment:
+                    </label>
+                  </div>
+                  <div
+                    class="c16 text-left col"
+                  >
+                    <div
+                      class="textarea input form-group"
+                    >
+                      <textarea
+                        class="form-control"
+                        id="input-noticeOfClaim.comment"
+                        name="noticeOfClaim.comment"
                         style="word-break: break-all;"
                       />
                     </div>
@@ -3375,19 +3456,19 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   border: #CE3E39 solid 0.1rem;
 }
 
-.c14 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c13 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c14 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c16.required::before {
@@ -3626,6 +3707,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Project
                   </div>
@@ -3828,6 +3910,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Progress Statuses
                   </div>
@@ -4283,6 +4366,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Schedule
                   </div>
@@ -4536,6 +4620,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Properties to include in this file:
                   </div>
@@ -4563,6 +4648,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                       >
                         <div
                           class="align-content-end col"
+                          style="overflow: hidden;"
                         >
                           Selected Properties
                         </div>
@@ -4729,6 +4815,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Acquisition Details
                   </div>
@@ -5055,6 +5142,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Acquisition Team
                   </div>
@@ -5088,6 +5176,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
+                    style="overflow: hidden;"
                   >
                     Owners
                   </div>
@@ -5284,6 +5373,102 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                         id="input-ownerRepresentative.comment"
                         name="ownerRepresentative.comment"
                         placeholder="Remarks or additional representative(s)"
+                        style="word-break: break-all;"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="c13 form-section"
+            >
+              <h2
+                class="c14"
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="align-content-end col"
+                    style="overflow: hidden;"
+                  >
+                    Notice of Claim
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c15"
+                    >
+                      Received date:
+                    </label>
+                  </div>
+                  <div
+                    class="c16 text-left col"
+                  >
+                    <div
+                      class="c18 form-group"
+                    >
+                      <div
+                        class="react-datepicker-wrapper d-block"
+                      >
+                        <div
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                        >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
+                          <input
+                            autocomplete="off"
+                            class="c19 form-control date-picker"
+                            id="datepicker-noticeOfClaim.receivedDate"
+                            name="noticeOfClaim.receivedDate"
+                            placeholder="MMM DD, YYYY"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c15"
+                    >
+                      Comment:
+                    </label>
+                  </div>
+                  <div
+                    class="c16 text-left col"
+                  >
+                    <div
+                      class="textarea input form-group"
+                    >
+                      <textarea
+                        class="form-control"
+                        id="input-noticeOfClaim.comment"
+                        name="noticeOfClaim.comment"
                         style="word-break: break-all;"
                       />
                     </div>

@@ -18,6 +18,8 @@ import { exists } from '@/utils';
 import CompensationListContainer from '../../compensation/list/CompensationListContainer';
 import CompensationListView from '../../compensation/list/CompensationListView';
 import { SideBarContext } from '../../context/sidebarContext';
+import FilePropertiesImprovementsContainer from '../../shared/improvements/FilePropertiesImprovements/FilePropertiesImprovementsContainer';
+import { FilePropertiesImprovementsView } from '../../shared/improvements/FilePropertiesImprovements/FilePropertiesImprovementsView';
 import { ChecklistView } from '../../shared/tabs/checklist/detail/ChecklistView';
 import DocumentsTab from '../../shared/tabs/DocumentsTab';
 import AgreementContainer from './agreement/detail/AgreementContainer';
@@ -46,7 +48,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   const { hasClaim } = useKeycloakWrapper();
   const { setFullWidthSideBar } = useMapStateMachine();
 
-  const { setStaleLastUpdatedBy } = useContext(SideBarContext);
+  const { setStaleLastUpdatedBy, file } = useContext(SideBarContext);
 
   const location = useLocation();
   const history = useHistory();
@@ -95,6 +97,17 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       name: 'Agreements',
     });
   }
+
+  tabViews.push({
+    content: (
+      <FilePropertiesImprovementsContainer
+        fileProperties={file?.fileProperties?.map(x => x.property) ?? []}
+        View={FilePropertiesImprovementsView}
+      ></FilePropertiesImprovementsContainer>
+    ),
+    key: FileTabType.IMPROVEMENTS,
+    name: 'Improvements',
+  });
 
   if (acquisitionFile?.id) {
     tabViews.push({

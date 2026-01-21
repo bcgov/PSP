@@ -25,6 +25,7 @@ namespace Pims.Dal.Repositories
             : base(dbContext, user, logger)
         {
         }
+
         #endregion
 
         #region Methods
@@ -41,22 +42,75 @@ namespace Pims.Dal.Repositories
             return Context.PimsPropertyImprovements.AsNoTracking()
                 .Include(pi => pi.PropertyImprovementTypeCodeNavigation)
                 .Where(x => x.PropertyId == propertyId)
-                .OrderBy(i => i.PropertyImprovementTypeCode) ?? throw new KeyNotFoundException();
+                .OrderBy(i => i.AppCreateTimestamp) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
-        /// update the improvements on a property.
+        /// Add Property Improvement.
         /// </summary>
-        /// <param name="propertyId"></param>
-        /// <param name="pimsPropertyImprovements"></param>
+        /// <param name="propertyImprovement"></param>
         /// <returns></returns>
-        public IEnumerable<PimsPropertyImprovement> Update(long propertyId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements)
+        public PimsPropertyImprovement Add(PimsPropertyImprovement propertyImprovement)
         {
             using var scope = Logger.QueryScope();
 
-            Context.UpdateChild<PimsProperty, long, PimsPropertyImprovement, long>(x => x.PimsPropertyImprovements, propertyId, pimsPropertyImprovements.ToArray());
+            Context.PimsPropertyImprovements.Add(propertyImprovement);
 
-            return pimsPropertyImprovements;
+            return propertyImprovement;
+        }
+
+        /// <summary>
+        /// Update the Property Improvement.
+        /// </summary>
+        /// <param name="propertyId"></param>
+        /// <param name="propertyImprovement"></param>
+        /// <returns></returns>
+        public PimsPropertyImprovement Update(long propertyId, PimsPropertyImprovement propertyImprovement)
+        {
+            using var scope = Logger.QueryScope();
+
+            PimsPropertyImprovement existingImprovement = Context.PimsPropertyImprovements
+                .FirstOrDefault(x => x.PropertyId == propertyId && x.PropertyImprovementId == propertyImprovement.PropertyImprovementId);
+
+            Context.Entry(existingImprovement).CurrentValues.SetValues(propertyImprovement);
+
+            return existingImprovement;
+        }
+
+        /// <summary>
+        /// Get improvement by Id.
+        /// </summary>
+        /// <param name="propertyId"></param>
+        /// <param name="propertyImprovementId"></param>
+        /// <returns></returns>
+        public PimsPropertyImprovement Get(long propertyId, long propertyImprovementId)
+        {
+            using var scope = Logger.QueryScope();
+
+            return Context.PimsPropertyImprovements.AsNoTracking()
+                .Include(x => x.PropertyImprovementTypeCodeNavigation)
+                .FirstOrDefault(x => x.PropertyImprovementId == propertyImprovementId && x.PropertyId == propertyId) ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Delete the Property Improvement.
+        /// </summary>
+        /// <param name="propertyId"></param>
+        /// <param name="propertyImprovementId"></param>
+        /// <returns></returns>
+        public bool TryDelete(long propertyId, long propertyImprovementId)
+        {
+            using var scope = Logger.QueryScope();
+
+            var deletedEntity = Context.PimsPropertyImprovements.Where(x => x.PropertyId == propertyId && x.PropertyImprovementId == propertyImprovementId).FirstOrDefault();
+            if (deletedEntity is not null)
+            {
+                Context.PimsPropertyImprovements.Remove(deletedEntity);
+
+                return true;
+            }
+
+            return false;
         }
         #endregion
     }

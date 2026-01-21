@@ -120,7 +120,7 @@ const NoticeSelectorModal: React.FunctionComponent<
                   )}
                 />
                 {isEmpty(teamMembers) && (
-                  <StyledNoData className="m-4">No Team Members availiable</StyledNoData>
+                  <StyledNoData className="m-4">No Team Members available</StyledNoData>
                 )}
               </StyledDiv>
               <p className="pt-5">
@@ -178,7 +178,7 @@ const NoticeSelectorModal: React.FunctionComponent<
                   )}
                 />
                 {isEmpty(teamMembers) && (
-                  <StyledNoData className="m-4">No Team Members availiable</StyledNoData>
+                  <StyledNoData className="m-4">No Team Members available</StyledNoData>
                 )}
               </StyledDiv>
               <p className="pt-5">
@@ -234,7 +234,7 @@ const NoticeSelectorModal: React.FunctionComponent<
                   )}
                 />
                 {isEmpty(teamMembers) && (
-                  <StyledNoData className="m-4">No Team Members availiable</StyledNoData>
+                  <StyledNoData className="m-4">No Team Members available</StyledNoData>
                 )}
               </StyledDiv>
             </>

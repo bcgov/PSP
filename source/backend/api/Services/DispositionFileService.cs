@@ -35,6 +35,7 @@ namespace Pims.Api.Services
         private readonly INoteRelationshipRepository<PimsDispositionFileNote> _entityNoteRepository;
         private readonly IDispositionStatusSolver _dispositionStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
+        private readonly IFilePropertyLocationUpdateSolver _propertyLocationSolver;
 
         public DispositionFileService(
             ClaimsPrincipal user,
@@ -48,7 +49,8 @@ namespace Pims.Api.Services
             INoteRelationshipRepository<PimsDispositionFileNote> entityNoteRepository,
             IUserRepository userRepository,
             IDispositionStatusSolver dispositionStatusSolver,
-            IPropertyOperationService propertyOperationService)
+            IPropertyOperationService propertyOperationService,
+            IFilePropertyLocationUpdateSolver propertyLocationSolver)
         {
             _user = user;
             _logger = logger;
@@ -62,6 +64,7 @@ namespace Pims.Api.Services
             _userRepository = userRepository;
             _dispositionStatusSolver = dispositionStatusSolver;
             _propertyOperationService = propertyOperationService;
+            _propertyLocationSolver = propertyLocationSolver;
         }
 
         public PimsDispositionFile Add(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
@@ -73,7 +76,8 @@ namespace Pims.Api.Services
             dispositionFile.DispositionStatusTypeCode ??= DispositionStatusTypes.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= DispositionFileStatusTypes.ACTIVE.ToString();
 
-            MatchProperties(dispositionFile, userOverrides);
+            // No existing properties when adding a new file
+            MatchProperties(dispositionFile, userOverrides, new HashSet<long>());
             ValidatePropertyRegions(dispositionFile);
 
             // Update marker locations in the context of this file
@@ -506,12 +510,12 @@ namespace Pims.Api.Services
 
             ValidateVersion(dispositionFile.Internal_Id, dispositionFile.ConcurrencyControlNumber);
 
-            MatchProperties(dispositionFile, userOverrides);
-
-            ValidatePropertyRegions(dispositionFile);
-
             // Get the current properties in the disposition file
             var currentFileProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
+            var existingPropertyIds = currentFileProperties.Select(p => p.PropertyId).ToHashSet();
+            MatchProperties(dispositionFile, userOverrides, existingPropertyIds);
+
+            ValidatePropertyRegions(dispositionFile);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingDispositionProperty in dispositionFile.PimsDispositionFileProperties)
@@ -538,11 +542,15 @@ namespace Pims.Api.Services
                         needsUpdate = true;
                     }
 
-                    var incomingGeom = incomingDispositionProperty.Location;
-                    var existingGeom = existingProperty.Location;
-                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    if (_propertyLocationSolver.CanEditFilePropertyLocation(incomingDispositionProperty, existingProperty))
                     {
                         _propertyService.UpdateFilePropertyLocation(incomingDispositionProperty, existingProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (_propertyLocationSolver.CanEditFilePropertyBoundary(incomingDispositionProperty, existingProperty))
+                    {
+                        _propertyService.UpdateFilePropertyBoundary(incomingDispositionProperty, existingProperty);
                         needsUpdate = true;
                     }
 
@@ -711,7 +719,7 @@ namespace Pims.Api.Services
             }
         }
 
-        private void MatchProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> overrideCodes)
+        private void MatchProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> overrideCodes, HashSet<long> existingPropertyIds)
         {
             foreach (var dispProperty in dispositionFile.PimsDispositionFileProperties)
             {
@@ -721,9 +729,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         dispProperty.PropertyId = foundProperty.Internal_Id;
@@ -749,9 +759,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         dispProperty.PropertyId = foundProperty.Internal_Id;
@@ -786,15 +798,16 @@ namespace Pims.Api.Services
             }
         }
 
-        private void ValidatePropertyRegions(PimsDispositionFile dispositionFile)
+        private void ValidatePropertyRegions(PimsDispositionFile acquisitionFile)
         {
             var userRegions = _user.GetUserRegions(_userRepository);
-            foreach (var dispProperty in dispositionFile.PimsDispositionFileProperties)
+            foreach (var acquisitionProperty in acquisitionFile.PimsDispositionFileProperties)
             {
-                var propertyRegion = dispProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(dispProperty.PropertyId);
-                if (!userRegions.Contains(propertyRegion))
+                var propertyRegion = acquisitionProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(acquisitionProperty.PropertyId);
+                var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+                if (propertyRegion != cannotDetermineRegion.Code && !userRegions.Contains(propertyRegion))
                 {
-                    throw new BadRequestException("You cannot add a property that is outside of your user account region(s). Either select a different property, or get your system administrator to add the required region to your user account settings.");
+                    throw new BadRequestException("You cannot add a property that is outside of your user account region(s).\n\nPlease select a different property or contact admin at pims@gov.bc.ca to add the required region to your user account settings.");
                 }
             }
         }

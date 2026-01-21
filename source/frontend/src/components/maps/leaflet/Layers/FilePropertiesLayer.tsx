@@ -35,7 +35,7 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
   const draftBoundaryFeatures = useMemo<FeatureCollection>(() => {
     // ignore properties without a valid boundary
     const validBoundaries = (filePropertyLocations ?? [])
-      .map(pl => pl.boundary)
+      .map(pl => pl?.boundary)
       .filter(exists)
       .map(boundary => feature(boundary));
 
@@ -45,7 +45,7 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
   // These are the user-uploaded shapes in the context of the file (can be different than the property boundaries that mirror PMBC)
   const fileBoundaryFeatures = useMemo<FeatureCollection>(() => {
     const validBoundaries = (filePropertyLocations ?? [])
-      .map(pl => pl.fileBoundary)
+      .map(pl => pl?.fileBoundary)
       .filter(exists)
       .map(boundary => feature(boundary));
 
@@ -97,7 +97,6 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
       }
     }
   }, [draftFeatureGroupRef, draftPoints]);
-
   /**
    * Render all of the unclustered DRAFT MARKERS.
    **/
@@ -126,8 +125,7 @@ export const FilePropertiesLayer: React.FunctionComponent = () => {
                       mapMarkerClickFn({
                         clusterId: 'NO_ID',
                         latlng: draftPoint.location,
-                        pimsLocationFeature: null,
-                        pimsBoundaryFeature: null,
+                        pimsFeature: null,
                         fullyAttributedFeature: null,
                       });
                     },

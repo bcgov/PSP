@@ -205,9 +205,19 @@ namespace Pims.Api.Models.Concepts.Property
 
         public string SurplusDeclarationComment { get; set; }
 
-        public DateOnly SurplusDeclarationDate { get; set; }
+        public DateOnly? SurplusDeclarationDate { get; set; }
 
         #endregion
+
+        /// <summary>
+        /// get/set - The net book value of the property.
+        /// </summary>
+        public decimal? NetBookAmount { get; set; }
+
+        /// <summary>
+        /// get/set - Note associated with the net book value of the property.
+        /// </summary>
+        public string NetBookNote { get; set; }
 
         #endregion
     }

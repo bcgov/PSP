@@ -2,6 +2,7 @@ export interface Api_ManagementFilter {
   searchBy: string;
   pin: string;
   pid: string;
+  regionCode: string;
   address: string;
   fileNameOrNumberOrReference: string;
   managementFileStatusCode: string;
