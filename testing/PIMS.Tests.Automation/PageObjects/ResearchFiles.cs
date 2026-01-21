@@ -725,14 +725,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void VerifyResearchFileHeader(ResearchFile researchFile, string user)
         {
-            WaitUntilVisible(researchFileHeaderNbrContent);
+            Wait();
 
             AssertTrueIsDisplayed(researchFileViewTitle);
 
             AssertTrueIsDisplayed(researchFileHeaderNbrLabel);
             AssertTrueIsDisplayed(researchFileHeaderNbrContent);
             AssertTrueIsDisplayed(researchFileHeaderNameLabel);
-            AssertTrueContentEquals(researchFileHeaderNameContent,researchFile.ResearchFileName);
+            AssertTrueContentEquals(researchFileHeaderNameContent, researchFile.ResearchFileName);
 
             AssertTrueIsDisplayed(researchFileHeaderMOTIRegionLabel);
             AssertTrueIsDisplayed(researchFileHeaderDistrictLabel);
