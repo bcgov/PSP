@@ -14,19 +14,19 @@ export const layersMenuTree: LayerMenuEntry = {
           layerDefinitionId: 'pims_research_files',
           key: 'research',
           label: 'Research',
-          color: '#3388ff',
+          color: '#1389ed',
         },
         {
           layerDefinitionId: 'pims_acquisition_files',
           key: 'acquisition',
           label: 'Acquisition',
-          color: '#42814A',
+          color: '#FF00D4',
         },
         {
           layerDefinitionId: 'pims_management_files',
           key: 'management',
           label: 'Management',
-          color: '#FC802D',
+          color: '#cc4c02',
         },
         {
           key: 'DispositionLayers',
