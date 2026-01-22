@@ -8,7 +8,7 @@ export class ExpropriationAuthorityFormModel {
   contact: IContactSearchResult | null = null;
 }
 
-class ExpropriationBaseModel {
+export class ExpropriationBaseModel {
   expropriationAuthority = new ExpropriationAuthorityFormModel();
 }
 
