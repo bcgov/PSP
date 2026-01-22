@@ -146,7 +146,6 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Project
           </div>
@@ -223,7 +222,6 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Management Details
           </div>
@@ -353,7 +351,6 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             <div
               class="no-gutters justify-content-between align-items-end row"
@@ -722,7 +719,6 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Management Team
           </div>
@@ -828,7 +824,6 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Notice of Claim
           </div>

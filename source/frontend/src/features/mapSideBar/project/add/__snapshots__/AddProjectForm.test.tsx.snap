@@ -272,7 +272,6 @@ exports[`AddProjectForm component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Project Details
             </div>
@@ -501,7 +500,6 @@ exports[`AddProjectForm component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Associated Codes
             </div>
@@ -682,7 +680,6 @@ exports[`AddProjectForm component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Associated products
             </div>
@@ -716,7 +713,6 @@ exports[`AddProjectForm component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Project Management Team
             </div>
@@ -1127,7 +1123,6 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Project Details
             </div>
@@ -1358,7 +1353,6 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Associated Codes
             </div>
@@ -1539,7 +1533,6 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Associated products
             </div>
@@ -2194,7 +2187,6 @@ exports[`AddProjectForm component > renders as expected with existing data 1`] =
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Project Management Team
             </div>

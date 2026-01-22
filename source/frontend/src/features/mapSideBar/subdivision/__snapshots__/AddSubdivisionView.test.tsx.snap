@@ -649,7 +649,6 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
                     >
                       <div
                         class="align-content-end col"
-                        style="overflow: hidden;"
                       >
                         Selected Parent
                       </div>
@@ -715,7 +714,6 @@ exports[`Add Subdivision View > matches snapshot 1`] = `
                     >
                       <div
                         class="align-content-end col"
-                        style="overflow: hidden;"
                       >
                         <div
                           class="row"

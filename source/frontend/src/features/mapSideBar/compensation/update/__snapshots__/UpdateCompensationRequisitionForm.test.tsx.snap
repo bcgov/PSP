@@ -350,7 +350,6 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Requisition Details
             </div>
@@ -582,7 +581,6 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               <div
                 class="d-flex align-items-center"
@@ -776,7 +774,6 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Financial Coding
             </div>
@@ -1094,7 +1091,6 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Payment
             </div>
@@ -1416,7 +1412,6 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Activities
             </div>

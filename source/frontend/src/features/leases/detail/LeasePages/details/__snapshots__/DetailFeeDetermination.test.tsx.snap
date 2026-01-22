@@ -54,7 +54,6 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Fee Determination
         </div>
@@ -279,7 +278,6 @@ exports[`DetailFeeDetermination component > renders minimally as expected 1`] = 
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Fee Determination
         </div>

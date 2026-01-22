@@ -106,7 +106,6 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             <div
               class="c3"
@@ -330,7 +329,6 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             <div
               class="c3"
@@ -554,7 +552,6 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             <div
               class="c3"
@@ -776,7 +773,6 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             <div
               class="c3"
@@ -881,7 +877,6 @@ exports[`PropertyAssociationTabView component > renders as expected when provide
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             <div
               class="c3"
