@@ -271,7 +271,7 @@ export const layersMenuTree: LayerMenuEntry = {
               layerDefinitionId: 'bctfa_property',
               key: 'PMBC_BCTFA_PARCEL_POLYGON_FABRIC_KEY',
               label: 'BCTFA Ownership',
-              color: '#42814A',
+              color: '#551A8B',
             },
             {
               layerDefinitionId: 'pmbc_parcel_by_class',

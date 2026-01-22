@@ -34,7 +34,7 @@ export const getMockApiFileForms = (): ApiGen_Concepts_FormDocumentFile[] => [
     ...getEmptyBaseAudit(1),
   },
   {
-    id: 5,
+    id: 4,
     fileId: 1,
     formDocumentType: {
       formTypeCode: 'H179B',
@@ -46,7 +46,19 @@ export const getMockApiFileForms = (): ApiGen_Concepts_FormDocumentFile[] => [
     ...getEmptyBaseAudit(1),
   },
   {
-    id: 4,
+    id: 5,
+    fileId: 1,
+    formDocumentType: {
+      formTypeCode: 'H179D',
+      description: 'Statutory Right of Way Agreement (H179D)',
+      documentId: null,
+      displayOrder: 0,
+      ...getEmptyBaseAudit(),
+    },
+    ...getEmptyBaseAudit(1),
+  },
+  {
+    id: 6,
     fileId: 1,
     formDocumentType: {
       formTypeCode: 'H120',
