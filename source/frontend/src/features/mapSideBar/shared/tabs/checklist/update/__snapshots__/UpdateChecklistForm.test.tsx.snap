@@ -76,7 +76,6 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             File Initiation
           </div>
@@ -360,7 +359,6 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Active File Management
           </div>
@@ -1212,7 +1210,6 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Crown Land
           </div>
@@ -1233,7 +1230,6 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Section 3 - Agreement
           </div>
@@ -1635,7 +1631,6 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Section 6 - Expropriation
           </div>
@@ -2033,7 +2028,6 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Acquisition Completion
           </div>

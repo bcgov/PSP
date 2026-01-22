@@ -169,7 +169,6 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Update Take
           </div>
@@ -461,7 +460,6 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Area
               </div>
@@ -1861,7 +1859,6 @@ exports[`TakeUpdateForm component > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Surplus
               </div>

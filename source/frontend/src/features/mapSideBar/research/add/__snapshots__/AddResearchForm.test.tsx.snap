@@ -481,7 +481,6 @@ exports[`AddResearchForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Project
           </div>
@@ -514,7 +513,6 @@ exports[`AddResearchForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Properties to include in this file:
           </div>
@@ -639,7 +637,6 @@ exports[`AddResearchForm component > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Selected Properties
               </div>

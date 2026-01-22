@@ -158,7 +158,6 @@ exports[`LayersMenu View > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               PIMS
             </div>
@@ -392,7 +391,6 @@ exports[`LayersMenu View > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               External
             </div>

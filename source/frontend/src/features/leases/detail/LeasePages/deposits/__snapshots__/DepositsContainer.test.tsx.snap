@@ -32,7 +32,6 @@ exports[`DepositsContainer > renders as expected 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           <div
             class="no-gutters justify-content-between align-items-end row"
@@ -198,7 +197,6 @@ exports[`DepositsContainer > renders as expected 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Deposits Returned
         </div>
@@ -370,7 +368,6 @@ exports[`DepositsContainer > renders as expected 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           <span>
             Deposit Comments
