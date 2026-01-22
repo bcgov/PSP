@@ -169,6 +169,7 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
       propertyFilter={mapSearchCriteria ?? defaultPropertyFilter}
       onFilterChange={handleMapFilterChange}
       searchResult={mapFeatureData}
+      selectedFeatureDatasets={selectedFeatureDatasets}
       canAddToOpenFile={isEditPropertiesMode}
       onCreateResearchFile={onCreateResearchFile}
       onCreateAcquisitionFile={onCreateAcquisitionFile}
