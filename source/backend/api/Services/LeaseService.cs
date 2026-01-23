@@ -640,7 +640,11 @@ namespace Pims.Api.Services
         /// <returns></returns>
         private PimsLease AssociatePropertyLeases(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
         {
-            MatchProperties(lease, userOverrides);
+
+            // Get the set of already-attached property IDs for this lease
+            var attachedPropertyIds = lease.LeaseId != 0 ? _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId).Select(x => x.PropertyId).ToHashSet() : new HashSet<long>();
+
+            MatchProperties(lease, userOverrides, attachedPropertyIds);
 
             foreach (var propertyLease in lease.PimsPropertyLeases)
             {
@@ -685,7 +689,7 @@ namespace Pims.Api.Services
             return lease;
         }
 
-        private void MatchProperties(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
+        private void MatchProperties(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides, HashSet<long> alreadyAttachedPropertyIds)
         {
             foreach (var leaseProperty in lease.PimsPropertyLeases)
             {
@@ -695,9 +699,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !alreadyAttachedPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         leaseProperty.PropertyId = foundProperty.Internal_Id;
@@ -716,9 +722,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !alreadyAttachedPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         leaseProperty.PropertyId = foundProperty.Internal_Id;
