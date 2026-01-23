@@ -23,7 +23,7 @@ export const WorklistItemView: React.FC<CommonPropertyItemViewProps> = ({
 }) => {
   if (worklistItem.IsStrataPlanCommonProperty && worklistItem.CommonPropertyParcelsCount > 0) {
     return (
-      <StyledComponentWrapperDiv>
+      <StyledComponentWrapperDiv data-testid={`worklist-item[${parcelIndex}]`}>
         <StyledSectionHeaderDiv>
           <StyledArrowCollapseDiv
             onClick={e => {
@@ -31,11 +31,12 @@ export const WorklistItemView: React.FC<CommonPropertyItemViewProps> = ({
               e.stopPropagation();
               toggleCollapse();
             }}
+            data-testid={`worklist-item[${parcelIndex}].collapse-btn`}
           >
             {isCollapsed && <ArrowDropDownIcon />}
             {!isCollapsed && <ArrowDropUpIcon />}
           </StyledArrowCollapseDiv>
-          <StyledHeaderParcelDiv>
+          <StyledHeaderParcelDiv data-testid={`worklist-item[${parcelIndex}].parcel`}>
             <ParcelItem
               key={worklistItem.Parcel.id}
               parcel={worklistItem.Parcel}
@@ -44,6 +45,7 @@ export const WorklistItemView: React.FC<CommonPropertyItemViewProps> = ({
               parcelIndex={parcelIndex}
               removeIndentation={true}
               overridePropertyIdentifier={`Common Property: ${worklistItem.PlanNumber}`}
+              dataTestid={`worklist-item[${parcelIndex}].parcel`}
             ></ParcelItem>
           </StyledHeaderParcelDiv>
         </StyledSectionHeaderDiv>
@@ -58,6 +60,7 @@ export const WorklistItemView: React.FC<CommonPropertyItemViewProps> = ({
                 canAddToWorklist={false}
                 parcelIndex={index}
                 removeIndentation={false}
+                dataTestid={`worklist-item[${parcelIndex}].child[${index}]`}
               />
             ))}
             <hr></hr>
@@ -70,10 +73,10 @@ export const WorklistItemView: React.FC<CommonPropertyItemViewProps> = ({
     worklistItem.CommonPropertyParcelsCount === 0
   ) {
     return (
-      <StyledComponentWrapperDiv>
+      <StyledComponentWrapperDiv data-testid={`worklist-item[${parcelIndex}]`}>
         <StyledSectionHeaderDiv>
           <StyledArrowCollapseDiv></StyledArrowCollapseDiv>
-          <StyledHeaderParcelDiv>
+          <StyledHeaderParcelDiv data-testid={`worklist-item[${parcelIndex}].parcel`}>
             <ParcelItem
               key={worklistItem.Parcel.id}
               parcel={worklistItem.Parcel}
@@ -82,6 +85,7 @@ export const WorklistItemView: React.FC<CommonPropertyItemViewProps> = ({
               parcelIndex={parcelIndex}
               removeIndentation={true}
               overridePropertyIdentifier={`Common Property: ${worklistItem.PlanNumber}`}
+              dataTestid={`worklist-item[${parcelIndex}].parcel`}
             ></ParcelItem>
           </StyledHeaderParcelDiv>
         </StyledSectionHeaderDiv>
@@ -89,10 +93,10 @@ export const WorklistItemView: React.FC<CommonPropertyItemViewProps> = ({
     );
   } else {
     return (
-      <StyledComponentWrapperDiv>
+      <StyledComponentWrapperDiv data-testid={`worklist-item[${parcelIndex}]`}>
         <StyledSectionHeaderDiv>
           <StyledArrowCollapseDiv></StyledArrowCollapseDiv>
-          <StyledHeaderParcelDiv>
+          <StyledHeaderParcelDiv data-testid={`worklist-item[${parcelIndex}].parcel`}>
             <ParcelItem
               key={worklistItem.Parcel.id}
               parcel={worklistItem.Parcel}
@@ -100,6 +104,7 @@ export const WorklistItemView: React.FC<CommonPropertyItemViewProps> = ({
               onRemove={onRemove}
               parcelIndex={parcelIndex}
               removeIndentation={true}
+              dataTestid={`worklist-item[${parcelIndex}].parcel`}
             ></ParcelItem>
           </StyledHeaderParcelDiv>
         </StyledSectionHeaderDiv>

@@ -24,19 +24,21 @@ import { ParcelDataset } from './models';
 export interface IParcelItemProps {
   canAddToWorklist: boolean;
   parcel: ParcelDataset;
-  onRemove: (id: string) => void | null;
   parcelIndex: number;
   overridePropertyIdentifier?: string;
   removeIndentation?: boolean;
+  dataTestid?: string;
+  onRemove: (id: string) => void | null;
 }
 
 export function ParcelItem({
   parcel,
-  onRemove,
   canAddToWorklist,
   parcelIndex,
   overridePropertyIdentifier,
   removeIndentation,
+  dataTestid,
+  onRemove,
 }: IParcelItemProps) {
   const propertyName = getPropertyNameFromSelectedFeatureSet(parcel.toSelectedFeatureDataset());
   let propertyIdentifier = '';
@@ -194,7 +196,7 @@ export function ParcelItem({
   ]);
 
   return (
-    <StyledRow data-testid={`search-property-${parcelIndex}`}>
+    <StyledRow data-testid={dataTestid ?? `search-property-${parcelIndex}`}>
       {removeIndentation && (
         <StyledCommonPropCol
           onClick={e => {
@@ -205,6 +207,9 @@ export function ParcelItem({
         >
           <StyledOverflowTip
             fullText={overridePropertyIdentifier ?? propertyIdentifier}
+            valueTestId={
+              dataTestid ? `${dataTestid}.identifier` : `search-property-${parcelIndex}.identifier`
+            }
           ></StyledOverflowTip>
         </StyledCommonPropCol>
       )}
@@ -219,6 +224,9 @@ export function ParcelItem({
         >
           <StyledOverflowTip
             fullText={overridePropertyIdentifier ?? propertyIdentifier}
+            valueTestId={
+              dataTestid ? `${dataTestid}.identifier` : `search-property-${parcelIndex}.identifier`
+            }
           ></StyledOverflowTip>
         </StyledPidCol>
       )}

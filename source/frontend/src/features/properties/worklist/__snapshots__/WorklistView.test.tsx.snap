@@ -6,7 +6,7 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
     class="Toastify"
   />
   <div />
-  .c14.btn {
+  .c18.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +35,17 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   cursor: pointer;
 }
 
-.c14.btn .Button__value {
+.c18.btn .Button__value {
   width: auto;
 }
 
-.c14.btn:hover {
+.c18.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c14.btn:focus {
+.c18.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +53,31 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   box-shadow: none;
 }
 
-.c14.btn.btn-primary {
+.c18.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c14.btn.btn-primary:hover,
-.c14.btn.btn-primary:active,
-.c14.btn.btn-primary:focus {
+.c18.btn.btn-primary:hover,
+.c18.btn.btn-primary:active,
+.c18.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c14.btn.btn-secondary {
+.c18.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c14.btn.btn-secondary:hover,
-.c14.btn.btn-secondary:active,
-.c14.btn.btn-secondary:focus {
+.c18.btn.btn-secondary:hover,
+.c18.btn.btn-secondary:active,
+.c18.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c14.btn.btn-info {
+.c18.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +85,66 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   padding-right: 0.6rem;
 }
 
-.c14.btn.btn-info:hover,
-.c14.btn.btn-info:active,
-.c14.btn.btn-info:focus {
+.c18.btn.btn-info:hover,
+.c18.btn.btn-info:active,
+.c18.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c14.btn.btn-light {
+.c18.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c14.btn.btn-light:hover,
-.c14.btn.btn-light:active,
-.c14.btn.btn-light:focus {
+.c18.btn.btn-light:hover,
+.c18.btn.btn-light:active,
+.c18.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c14.btn.btn-dark {
+.c18.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c14.btn.btn-dark:hover,
-.c14.btn.btn-dark:active,
-.c14.btn.btn-dark:focus {
+.c18.btn.btn-dark:hover,
+.c18.btn.btn-dark:active,
+.c18.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c14.btn.btn-danger {
+.c18.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c14.btn.btn-danger:hover,
-.c14.btn.btn-danger:active,
-.c14.btn.btn-danger:focus {
+.c18.btn.btn-danger:hover,
+.c18.btn.btn-danger:active,
+.c18.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c14.btn.btn-warning {
+.c18.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c14.btn.btn-warning:hover,
-.c14.btn.btn-warning:active,
-.c14.btn.btn-warning:focus {
+.c18.btn.btn-warning:hover,
+.c18.btn.btn-warning:active,
+.c18.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c14.btn.btn-link {
+.c18.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +168,9 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   text-decoration: underline;
 }
 
-.c14.btn.btn-link:hover,
-.c14.btn.btn-link:active,
-.c14.btn.btn-link:focus {
+.c18.btn.btn-link:hover,
+.c18.btn.btn-link:active,
+.c18.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +180,15 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   outline: none;
 }
 
-.c14.btn.btn-link:disabled,
-.c14.btn.btn-link.disabled {
+.c18.btn.btn-link:disabled,
+.c18.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c14.btn:disabled,
-.c14.btn:disabled:hover {
+.c18.btn:disabled,
+.c18.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,82 +200,82 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   cursor: not-allowed;
 }
 
-.c14.Button .Button__icon {
+.c18.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c14.Button--icon-only:focus {
+.c18.Button--icon-only:focus {
   outline: none;
 }
 
-.c14.Button--icon-only .Button__icon {
+.c18.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c15.c15.btn {
+.c19.c19.btn {
   background-color: unset;
   border: none;
 }
 
-.c15.c15.btn:hover,
-.c15.c15.btn:focus,
-.c15.c15.btn:active {
+.c19.c19.btn:hover,
+.c19.c19.btn:focus,
+.c19.c19.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c15.c15.btn svg {
+.c19.c19.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c15.c15.btn svg:hover {
+.c19.c19.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c15.c15.btn.btn-primary svg {
+.c19.c19.btn.btn-primary svg {
   color: #013366;
 }
 
-.c15.c15.btn.btn-primary svg:hover {
+.c19.c19.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c15.c15.btn.btn-light svg {
+.c19.c19.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c15.c15.btn.btn-light svg:hover {
+.c19.c19.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c15.c15.btn.btn-info svg {
+.c19.c19.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c15.c15.btn.btn-info svg:hover {
+.c19.c19.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c16.c16.btn.btn-primary {
+.c20.c20.btn.btn-primary {
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c16.c16.btn.btn-primary svg {
+.c20.c20.btn.btn-primary svg {
   color: #aaaaaa !important;
 }
 
-.c16.c16.btn.btn-primary .text {
+.c20.c20.btn.btn-primary .text {
   display: none;
 }
 
-.c16.c16.btn.btn-primary svg:hover,
-.c16.c16.btn.btn-primary svg:active,
-.c16.c16.btn.btn-primary svg:focus {
+.c20.c20.btn.btn-primary svg:hover,
+.c20.c20.btn.btn-primary svg:active,
+.c20.c20.btn.btn-primary svg:focus {
   color: #d8292f !important;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -285,9 +285,9 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   flex-direction: row;
 }
 
-.c16.c16.btn.btn-primary svg:hover .text,
-.c16.c16.btn.btn-primary svg:active .text,
-.c16.c16.btn.btn-primary svg:focus .text {
+.c20.c20.btn.btn-primary svg:hover .text,
+.c20.c20.btn.btn-primary svg:active .text,
+.c20.c20.btn.btn-primary svg:focus .text {
   display: inline;
   line-height: 2rem;
 }
@@ -333,7 +333,7 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   overflow-y: auto;
 }
 
-.c9 {
+.c13 {
   -webkit-box-flex: 1;
   -webkit-flex-grow: 1;
   -ms-flex-positive: 1;
@@ -350,7 +350,7 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   line-break: break-all;
 }
 
-.c7 {
+.c11 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -362,19 +362,22 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   margin-left: 0;
   margin-right: 0;
   min-height: 4.5rem;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
 }
 
-.c7:hover {
+.c11:hover {
   background-color: #b3ebfc38;
 }
 
-.c10 {
+.c14 {
   font-size: 1.4rem;
   font-weight: 700;
   color: #1a5a96;
 }
 
-.c8 {
+.c12 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -383,13 +386,13 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   -webkit-justify-content: flex-start;
   -ms-flex-pack: start;
   justify-content: flex-start;
-  padding-left: 3rem;
+  padding-left: 0;
   padding-right: 0;
   cursor: pointer;
+  font-weight: bold;
 }
 
-.c11 {
-  width: 10rem;
+.c15 {
   -webkit-flex: 0 0 10rem;
   -ms-flex: 0 0 10rem;
   flex: 0 0 10rem;
@@ -401,9 +404,10 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
   justify-content: flex-end;
+  gap: 0.5rem;
 }
 
-.c13 {
+.c17 {
   display: none;
   gap: 0.5rem;
   -webkit-align-items: center;
@@ -412,11 +416,60 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
   align-items: center;
 }
 
-.c6:hover .c12 {
+.c10:hover .c16 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+  gap: 0.5rem;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.c6 {
+  text-align: left;
+  text-underline-offset: 2px;
+}
+
+.c6 button {
+  font-size: 14px;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  width: 100%;
+  -webkit-box-pack: start;
+  -webkit-justify-content: flex-start;
+  -ms-flex-pack: start;
+  justify-content: flex-start;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-flex-wrap: nowrap;
+  -ms-flex-wrap: nowrap;
+  flex-wrap: nowrap;
+}
+
+.c8 {
+  width: 3rem;
+}
+
+.c9 {
+  -webkit-flex: 1;
+  -ms-flex: 1;
+  flex: 1;
 }
 
 .c0 {
@@ -505,191 +558,229 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
       class="c4 c5"
     >
       <div
-        class="c6 c7 row"
-        data-testid="search-property-0"
+        class="c6"
+        data-testid="worklist-item[0]"
       >
         <div
-          class="c8 col"
+          class="c7"
         >
           <div
-            class="c9 c10"
-          >
-            PID: 123-456-789
-          </div>
-        </div>
-        <div
-          class="c11 col"
-        >
+            class="c8"
+          />
           <div
-            class="c12 c13"
+            class="c9"
+            data-testid="worklist-item[0].parcel"
           >
-            <button
-              class="c14 Button btn btn-link"
-              title="Fit boundaries"
-              type="button"
-            >
-              <div
-                class="Button__value"
-              >
-                <svg
-                  fill="currentColor"
-                  height="18"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="18"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
-                  />
-                </svg>
-              </div>
-            </button>
-            <button
-              class="c14 Button c15 c16 btn btn-primary"
-              data-testid="delete-list-parcel-parcel-1"
-              title="Delete parcel from list"
-              type="button"
-            >
-              <div
-                class="Button__value"
-              >
-                <svg
-                  fill="currentColor"
-                  height="22"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 448 512"
-                  width="22"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
-                  />
-                </svg>
-              </div>
-            </button>
             <div
-              class="dropdown"
+              class="c10 c11 row"
+              data-testid="worklist-item[0].parcel"
             >
-              <button
-                aria-expanded="false"
-                aria-haspopup="true"
-                aria-label="More options"
-                class="c3 dropdown-toggle btn btn-link"
-                id="dropdown-ellipsis"
-                type="button"
+              <div
+                class="c12 col"
               >
-                <svg
-                  fill="currentColor"
-                  height="18"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="18"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div
+                  class="c13 c14"
+                  data-testid="worklist-item[0].parcel.identifier"
                 >
-                  <path
-                    d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"
-                  />
-                </svg>
-              </button>
+                  PID: 123-456-789
+                </div>
+              </div>
+              <div
+                class="c15 col"
+              >
+                <div
+                  class="c16 c17"
+                >
+                  <button
+                    class="c18 Button btn btn-link"
+                    title="Fit boundaries"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="18"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                  <button
+                    class="c18 Button c19 c20 btn btn-primary"
+                    data-testid="delete-list-parcel-parcel-1"
+                    style="padding: 0px;"
+                    title="Delete parcel from list"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="22"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 448 512"
+                        width="22"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                  <div
+                    class="dropdown"
+                  >
+                    <button
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      aria-label="More options"
+                      class="c3 dropdown-toggle btn btn-link"
+                      id="dropdown-ellipsis"
+                      type="button"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="18"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
       </div>
       <div
-        class="c6 c7 row"
-        data-testid="search-property-1"
+        class="c6"
+        data-testid="worklist-item[1]"
       >
         <div
-          class="c8 col"
+          class="c7"
         >
           <div
-            class="c9 c10"
-          >
-            PIN: 99999999
-          </div>
-        </div>
-        <div
-          class="c11 col"
-        >
+            class="c8"
+          />
           <div
-            class="c12 c13"
+            class="c9"
+            data-testid="worklist-item[1].parcel"
           >
-            <button
-              class="c14 Button btn btn-link"
-              title="Fit boundaries"
-              type="button"
-            >
-              <div
-                class="Button__value"
-              >
-                <svg
-                  fill="currentColor"
-                  height="18"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="18"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
-                  />
-                </svg>
-              </div>
-            </button>
-            <button
-              class="c14 Button c15 c16 btn btn-primary"
-              data-testid="delete-list-parcel-parcel-2"
-              title="Delete parcel from list"
-              type="button"
-            >
-              <div
-                class="Button__value"
-              >
-                <svg
-                  fill="currentColor"
-                  height="22"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 448 512"
-                  width="22"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
-                  />
-                </svg>
-              </div>
-            </button>
             <div
-              class="dropdown"
+              class="c10 c11 row"
+              data-testid="worklist-item[1].parcel"
             >
-              <button
-                aria-expanded="false"
-                aria-haspopup="true"
-                aria-label="More options"
-                class="c3 dropdown-toggle btn btn-link"
-                id="dropdown-ellipsis"
-                type="button"
+              <div
+                class="c12 col"
               >
-                <svg
-                  fill="currentColor"
-                  height="18"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="18"
-                  xmlns="http://www.w3.org/2000/svg"
+                <div
+                  class="c13 c14"
+                  data-testid="worklist-item[1].parcel.identifier"
                 >
-                  <path
-                    d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"
-                  />
-                </svg>
-              </button>
+                  PIN: 99999999
+                </div>
+              </div>
+              <div
+                class="c15 col"
+              >
+                <div
+                  class="c16 c17"
+                >
+                  <button
+                    class="c18 Button btn btn-link"
+                    title="Fit boundaries"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="18"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M304 192v32c0 6.6-5.4 12-12 12h-56v56c0 6.6-5.4 12-12 12h-32c-6.6 0-12-5.4-12-12v-56h-56c-6.6 0-12-5.4-12-12v-32c0-6.6 5.4-12 12-12h56v-56c0-6.6 5.4-12 12-12h32c6.6 0 12 5.4 12 12v56h56c6.6 0 12 5.4 12 12zm201 284.7L476.7 505c-9.4 9.4-24.6 9.4-33.9 0L343 405.3c-4.5-4.5-7-10.6-7-17V372c-35.3 27.6-79.7 44-128 44C93.1 416 0 322.9 0 208S93.1 0 208 0s208 93.1 208 208c0 48.3-16.4 92.7-44 128h16.3c6.4 0 12.5 2.5 17 7l99.7 99.7c9.3 9.4 9.3 24.6 0 34zM344 208c0-75.2-60.8-136-136-136S72 132.8 72 208s60.8 136 136 136 136-60.8 136-136z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                  <button
+                    class="c18 Button c19 c20 btn btn-primary"
+                    data-testid="delete-list-parcel-parcel-2"
+                    style="padding: 0px;"
+                    title="Delete parcel from list"
+                    type="button"
+                  >
+                    <div
+                      class="Button__value"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="22"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 448 512"
+                        width="22"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M432 32H312l-9.4-18.7A24 24 0 0 0 281.1 0H166.8a23.72 23.72 0 0 0-21.4 13.3L136 32H16A16 16 0 0 0 0 48v32a16 16 0 0 0 16 16h416a16 16 0 0 0 16-16V48a16 16 0 0 0-16-16zM53.2 467a48 48 0 0 0 47.9 45h245.8a48 48 0 0 0 47.9-45L416 128H32z"
+                        />
+                      </svg>
+                    </div>
+                  </button>
+                  <div
+                    class="dropdown"
+                  >
+                    <button
+                      aria-expanded="false"
+                      aria-haspopup="true"
+                      aria-label="More options"
+                      class="c3 dropdown-toggle btn btn-link"
+                      id="dropdown-ellipsis"
+                      type="button"
+                    >
+                      <svg
+                        fill="currentColor"
+                        height="18"
+                        stroke="currentColor"
+                        stroke-width="0"
+                        viewBox="0 0 512 512"
+                        width="18"
+                        xmlns="http://www.w3.org/2000/svg"
+                      >
+                        <path
+                          d="M328 256c0 39.8-32.2 72-72 72s-72-32.2-72-72 32.2-72 72-72 72 32.2 72 72zm104-72c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72zm-352 0c-39.8 0-72 32.2-72 72s32.2 72 72 72 72-32.2 72-72-32.2-72-72-72z"
+                        />
+                      </svg>
+                    </button>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         </div>
