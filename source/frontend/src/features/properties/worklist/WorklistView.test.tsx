@@ -2,7 +2,6 @@ import { getMockWorklistParcel } from '@/mocks/worklistParcel.mock';
 import {
   act,
   cleanup,
-  render,
   renderAsync,
   RenderOptions,
   screen,
