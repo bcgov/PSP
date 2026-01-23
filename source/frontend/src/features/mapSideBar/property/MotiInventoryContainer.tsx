@@ -1,16 +1,16 @@
 import { point } from '@turf/turf';
-import { FormikProps } from 'formik';
 import { Geometry } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { generatePath, useHistory, useRouteMatch } from 'react-router-dom';
 import styled from 'styled-components';
 
 import LotSvg from '@/assets/images/icon-lot.svg?react';
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { PROPERTY_TYPES, useComposedProperties } from '@/hooks/repositories/useComposedProperties';
 import { useQuery } from '@/hooks/use-query';
-import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { useFormikCancel } from '@/hooks/useFormikCancel';
 import { exists, firstOrNull, pinParser } from '@/utils';
 
 import MapSideBarLayout from '../layout/MapSideBarLayout';
@@ -39,11 +39,10 @@ export const MotiInventoryContainer: React.FunctionComponent<
   const isEditing = query.get('edit') === 'true';
   const [isValid, setIsValid] = useState<boolean>(true);
 
-  const { setModalContent, setDisplayModal } = useModalContext();
   const mapMachine = useMapStateMachine();
   const selectedFeatureData = mapMachine.mapLocationFeatureDataset;
 
-  const formikRef = useRef<FormikProps<any>>(null);
+  const { formikRef, handleCancelClick } = useFormikCancel<any>();
   let boundary: Geometry = null;
   if (exists(props.id)) {
     boundary = firstOrNull(selectedFeatureData?.pimsFeatures)?.geometry;
@@ -80,34 +79,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
     }
   };
 
-  const handleCancelClick = () => {
-    if (formikRef !== undefined) {
-      if (formikRef.current?.dirty) {
-        setModalContent({
-          ...getCancelModalProps(),
-          handleOk: () => {
-            handleCancelConfirm();
-            setDisplayModal(false);
-          },
-          handleCancel: () => setDisplayModal(false),
-        });
-        setDisplayModal(true);
-      } else {
-        handleCancelConfirm();
-      }
-    } else {
-      handleCancelConfirm();
-    }
-  };
-
-  const handleCancelConfirm = () => {
-    if (formikRef !== undefined) {
-      formikRef.current?.resetForm();
-    }
-    stripEditFromPath();
-  };
-
-  const stripEditFromPath = () => {
+  const stripEditFromPath = useCallback(() => {
     if (!tabMatch) {
       return;
     }
@@ -116,7 +88,16 @@ export const MotiInventoryContainer: React.FunctionComponent<
       tab: tabMatch?.params.tab,
     });
     push(path, { search: query.toString() });
-  };
+  }, [tabMatch, push, query]);
+
+  const handleCancel = useCallback(() => {
+    handleCancelClick(() => stripEditFromPath());
+  }, [handleCancelClick, stripEditFromPath]);
+
+  const shouldBlockNavigation = useCallback(() => {
+    const current = formikRef.current;
+    return !!current && current.dirty && !current.isSubmitting;
+  }, [formikRef]);
 
   return (
     <MapSideBarLayout
@@ -132,7 +113,7 @@ export const MotiInventoryContainer: React.FunctionComponent<
           <SidebarFooter
             isOkDisabled={formikRef?.current?.isSubmitting}
             onSave={handleSaveClick}
-            onCancel={handleCancelClick}
+            onCancel={handleCancel}
             displayRequiredFieldError={!isValid}
           />
         )
@@ -145,6 +126,11 @@ export const MotiInventoryContainer: React.FunctionComponent<
         composedPropertyState={composedPropertyState}
         onSuccess={onSuccess}
         ref={formikRef}
+      />
+      <ConfirmNavigation
+        navigate={push}
+        shouldBlockNavigation={shouldBlockNavigation}
+        showModal={true}
       />
     </MapSideBarLayout>
   );

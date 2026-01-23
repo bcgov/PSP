@@ -735,6 +735,16 @@ exports[`AccessRequestPage > renders correctly 1`] = `
               role="toolbar"
             >
               <button
+                class="c7 Button mr-2 btn btn-primary"
+                type="button"
+              >
+                <div
+                  class="Button__value"
+                >
+                  Cancel
+                </div>
+              </button>
+              <button
                 class="c7 Button btn btn-primary"
                 type="submit"
               >
