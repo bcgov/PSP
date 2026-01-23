@@ -9,8 +9,7 @@ export class WorklistItemModel {
   private readonly _ds: SelectedFeatureDataset;
   private _parcelGroup: ParcelDataset[];
 
-  constructor(readonly _parcel: ParcelDataset) {
-    this._parcel = _parcel;
+  constructor(private readonly _parcel: ParcelDataset) {
     this._ds = _parcel.toSelectedFeatureDataset();
     this._parcelGroup = [];
   }

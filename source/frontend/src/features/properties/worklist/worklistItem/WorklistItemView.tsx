@@ -132,7 +132,7 @@ const StyledSectionHeaderDiv = styled.div`
 `;
 
 const StyledArrowCollapseDiv = styled.div`
-  width: 3rem;
+  width: 2.8rem;
 `;
 
 const StyledHeaderParcelDiv = styled.div`

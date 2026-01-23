@@ -463,7 +463,7 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
 }
 
 .c8 {
-  width: 3rem;
+  width: 2.8rem;
 }
 
 .c9 {
