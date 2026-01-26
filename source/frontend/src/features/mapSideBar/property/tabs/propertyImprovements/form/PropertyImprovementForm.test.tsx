@@ -125,7 +125,7 @@ describe('Compensation Requisition UpdateForm component', () => {
   });
 
   it('call on submit for minimun form data', async () => {
-    const { getImprovementTypeDropdown, getImprovementDescriptionTextarea, getByText } =
+    const { getImprovementTypeDropdown, getByText } =
       await setup({});
 
     await act(async () => {
