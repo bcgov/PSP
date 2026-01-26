@@ -20,7 +20,7 @@ const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
-describe('Compensation Requisition UpdateForm component', () => {
+describe('PropertyImprovementForm component', () => {
   const setup = async (
     renderOptions: RenderOptions & { props?: Partial<IPropertyImprovementFormProps> },
   ) => {
