@@ -16,7 +16,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { isStrataPlanCommonPropertyFromSelectedFeatureSet, planFromFeatureSet } from '@/utils';
 
 import { ParcelDataset } from '../parcelList/models';
-import { WorklistItemModel } from './worklistItem/models/WorlistItem.model';
+import { WorklistItemModel } from './worklistItem/models/WorklistItem.model';
 import WorklistItemContainer from './worklistItem/WorklistItemContainer';
 
 export interface IWorklistViewProps {

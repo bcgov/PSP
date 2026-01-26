@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
 
-import { WorklistItemModel } from './models/WorlistItem.model';
+import { WorklistItemModel } from './models/WorklistItem.model';
 import WorklistItemView from './WorklistItemView';
 
 export interface WorklistItemContainerProps {

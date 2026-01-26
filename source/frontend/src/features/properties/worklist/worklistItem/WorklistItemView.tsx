@@ -4,7 +4,7 @@ import styled from 'styled-components';
 import { ArrowDropDownIcon, ArrowDropUpIcon } from '@/components/common/Section/SectionStyles';
 
 import ParcelItem from '../../parcelList/ParcelItem';
-import { WorklistItemModel } from './models/WorlistItem.model';
+import { WorklistItemModel } from './models/WorklistItem.model';
 
 export interface CommonPropertyItemViewProps {
   isCollapsed: boolean;
