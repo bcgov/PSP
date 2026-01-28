@@ -72,7 +72,7 @@ namespace Pims.Api.Test.Services
             var mayanOptions = this._helper.GetService<Mock<IOptionsMonitor<MayanConfig>>>();
             mayanOptions.Setup(m => m.CurrentValue).Returns(new MayanConfig
             {
-                MaxContentResults = maxResults,
+                MaxContentResults = maxResults ?? 2000,
             });
         }
 
