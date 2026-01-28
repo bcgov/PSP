@@ -42,6 +42,7 @@ export interface ISearchViewProps {
   onCreateLeaseFile: () => void;
   onCreateManagementFile: () => void;
   onAddToOpenFile: () => void;
+  setIsPimsActive: (value: boolean) => void;
 }
 
 interface PropertyProjection<T> {
@@ -183,7 +184,11 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
         className="my-0 py-0"
         header={
           <SimpleSectionHeader title="Results (PMBC)">
-            <MoreOptionsMenu options={menuOptions} ariaLabel="search pmbc results more options" />
+            <MoreOptionsMenu
+              options={menuOptions}
+              ariaLabel="search pmbc results more options"
+              onMenuOpen={() => props.setIsPimsActive(false)}
+            />
           </SimpleSectionHeader>
         }
         isCollapsable
@@ -196,7 +201,11 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
         className="my-0 py-0"
         header={
           <SimpleSectionHeader title="Results (PIMS)">
-            <MoreOptionsMenu options={menuOptions} ariaLabel="search pims results more options" />
+            <MoreOptionsMenu
+              options={menuOptions}
+              ariaLabel="search pims results more options"
+              onMenuOpen={() => props.setIsPimsActive(true)}
+            />
           </SimpleSectionHeader>
         }
         isCollapsable
