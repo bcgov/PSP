@@ -40,7 +40,9 @@ MAYAN_COMMON_PROJECT_TITLE='Mayan EDMS'
 MAYAN_DOCUMENTS_FILE_PAGE_IMAGE_CACHE_MAXIMUM_SIZE='5242880000'
 MAYAN_DOCUMENT_PARSING_AUTO_PARSING='true'
 MAYAN_OCR_AUTO_OCR='false'
-MAYAN_SEARCH_DISABLE='true'
+MAYAN_SEARCH_DISABLE='false'
+MAYAN_SEARCH_BACKEND='mayan.apps.dynamic_search.backends.elasticsearch.ElasticSearchBackend'
+MAYAN_SEARCH_BACKEND_ARGUMENTS={"client_host":"http://elasticsearch:9200","client_http_auth":["elastic","mayanespassword"]}
 
 # Gunicorn
 MAYAN_GUNICORN_LIMIT_REQUEST_LINE=4094

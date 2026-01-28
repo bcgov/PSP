@@ -1,16 +1,17 @@
-using System.Collections.Generic;
-using System.Net.Http;
-using System.Threading.Tasks;
 using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Document;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
+using Pims.Api.Models.Models.Mayan.Document;
 using Pims.Api.Models.Requests.Document.UpdateMetadata;
 using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Http;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
+using System.Collections.Generic;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Pims.Api.Services
 {
@@ -58,5 +59,7 @@ namespace Pims.Api.Services
         Task<HttpResponseMessage> DownloadFilePageImageAsync(long mayanDocumentId, long mayanFileId, long mayanFilePageId);
 
         PimsDocument AddDocument(PimsDocument newPimsDocument);
+
+        Task<ExternalResponse<QueryResponse<DocumentSearchResult>>> SearchDocumentContent(string contentToSearch);
     }
 }
