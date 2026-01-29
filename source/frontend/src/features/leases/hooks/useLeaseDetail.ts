@@ -5,12 +5,13 @@ import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useLeasePeriodRepository } from '@/hooks/repositories/useLeasePeriodRepository';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { usePropertyLeaseRepository } from '@/hooks/repositories/usePropertyLeaseRepository';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { exists, sortFileProperties, useAxiosErrorHandler } from '@/utils';
+import { exists, isValidId, sortFileProperties, useAxiosErrorHandler } from '@/utils';
 
 import { LeaseStateContext } from './../context/LeaseContext';
 
@@ -34,6 +35,10 @@ export function useLeaseDetail(leaseId?: number) {
     getLeaseChecklist: { execute: getLeaseChecklist, loading: getLeaseChecklistLoading },
     getLeaseRenewals: { execute: getLeaseRenewals, loading: getLeaseRenewalsLoading },
   } = useLeaseRepository();
+
+  const {
+    getProject: { execute: getProjectFunction },
+  } = useProjectProvider();
 
   const getApiLeaseById = useApiRequestWrapper({
     requestFunction: getApiLease,
@@ -69,6 +74,10 @@ export function useLeaseDetail(leaseId?: number) {
       ]);
 
       if (exists(leaseResponse)) {
+        if (isValidId(leaseResponse.projectId)) {
+          leaseResponse.project = await getProjectFunction(leaseResponse.projectId);
+        }
+
         const mergedLeases: ApiGen_Concepts_Lease = {
           ...leaseResponse,
           stakeholders: leaseTenants ?? [],
@@ -98,6 +107,7 @@ export function useLeaseDetail(leaseId?: number) {
     getLeaseRenewals,
     setLease,
     setFile,
+    getProjectFunction,
   ]);
 
   const loading =
