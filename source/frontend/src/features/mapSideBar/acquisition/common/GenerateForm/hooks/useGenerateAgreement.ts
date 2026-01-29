@@ -144,6 +144,10 @@ const getTemplateTypeFromAgreementType = (agreementType: string | null): string 
   switch (agreementType) {
     case ApiGen_CodeTypes_AgreementTypes.H179A:
       return ApiGen_CodeTypes_FormTypes.H179A.toString();
+    case ApiGen_CodeTypes_AgreementTypes.H179B:
+      return ApiGen_CodeTypes_FormTypes.H179B.toString();
+    case ApiGen_CodeTypes_AgreementTypes.H179D:
+      return ApiGen_CodeTypes_FormTypes.H179D.toString();
     case ApiGen_CodeTypes_AgreementTypes.H179P:
       return ApiGen_CodeTypes_FormTypes.H179P.toString();
     case ApiGen_CodeTypes_AgreementTypes.H179T:

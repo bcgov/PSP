@@ -37,6 +37,30 @@ export const getMockApiFileForms = (): ApiGen_Concepts_FormDocumentFile[] => [
     id: 4,
     fileId: 1,
     formDocumentType: {
+      formTypeCode: 'H179B',
+      description: 'Release of Claims Agreement (H179B)',
+      documentId: null,
+      displayOrder: 0,
+      ...getEmptyBaseAudit(),
+    },
+    ...getEmptyBaseAudit(1),
+  },
+  {
+    id: 5,
+    fileId: 1,
+    formDocumentType: {
+      formTypeCode: 'H179D',
+      description: 'Statutory Right of Way Agreement (H179D)',
+      documentId: null,
+      displayOrder: 0,
+      ...getEmptyBaseAudit(),
+    },
+    ...getEmptyBaseAudit(1),
+  },
+  {
+    id: 6,
+    fileId: 1,
+    formDocumentType: {
       formTypeCode: 'H120',
       description: 'Payment requisition (H120)',
       documentId: null,

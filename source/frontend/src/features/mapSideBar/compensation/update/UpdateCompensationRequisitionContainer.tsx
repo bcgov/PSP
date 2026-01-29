@@ -351,7 +351,6 @@ const UpdateCompensationRequisitionContainer: React.FC<
       responsiblityCentreOptions={responsibilityCentreOptions}
       yearlyFinancialOptions={yearlyFinancialOptions}
       file={file}
-      fileType={fileType}
       onSave={updateCompensation}
       onCancel={onCancel}
       showAltProjectError={showAltProjectError}

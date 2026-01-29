@@ -2,6 +2,7 @@ import { FormikProps } from 'formik';
 import { createRef } from 'react';
 
 import Claims from '@/constants/claims';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useProjectTypeahead } from '@/hooks/useProjectTypeahead';
 import {
   mockAcquisitionFileOwnersResponse,
@@ -14,21 +15,30 @@ import {
   getMockCompReqAcqPayee,
   getMockCompReqLeasePayee,
 } from '@/mocks/compensations.mock';
+import { getMockLeaseStakeholders } from '@/mocks/lease.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
+import {
+  getMockProduct,
+  getMockProjectBusinessFunction,
+  getMockProjectCostType,
+  getMockProjectWorkActivity,
+  mockProjectGetResponse,
+} from '@/mocks/projects.mock';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   fakeText,
   fireEvent,
+  getMockRepositoryObj,
   render,
   RenderOptions,
   screen,
   userEvent,
   waitFor,
-  waitForEffects,
 } from '@/utils/test-utils';
 
 import { PayeeOption } from '../../acquisition/models/PayeeOptionModel';
@@ -36,9 +46,6 @@ import { CompensationRequisitionFormModel } from '../models/CompensationRequisit
 import UpdateCompensationRequisitionForm, {
   CompensationRequisitionFormProps,
 } from './UpdateCompensationRequisitionForm';
-import { getMockPerson } from '@/mocks/contacts.mock';
-import { ApiGen_Concepts_CompReqLeasePayee } from '@/models/api/generated/ApiGen_Concepts_CompReqLeasePayee';
-import { getMockLeaseStakeholders, getPersonLeaseStakeholder } from '@/mocks/lease.mock';
 
 const currentGstPercent = 0.05;
 const onSave = vi.fn();
@@ -70,6 +77,18 @@ const mockUseProjectTypeahead = vi.mocked(useProjectTypeahead);
 const handleTypeaheadSearch = vi.fn();
 const setShowAltProjectError = vi.fn();
 
+vi.mock('@/hooks/repositories/useProjectProvider');
+vi.mocked(useProjectProvider, { partial: true }).mockReturnValue({
+  getProject: getMockRepositoryObj<ApiGen_Concepts_Project>({
+    ...mockProjectGetResponse(),
+    id: 1,
+    description: 'MOCK TEST PROJECT',
+    businessFunctionCode: getMockProjectBusinessFunction(),
+    workActivityCode: getMockProjectWorkActivity(),
+    costTypeCode: getMockProjectCostType(),
+  }),
+});
+
 describe('Compensation Requisition UpdateForm component', () => {
   const payeeOptions = getPayeeOptions(mockAcquisitionFileOwnersResponse());
 
@@ -89,7 +108,6 @@ describe('Compensation Requisition UpdateForm component', () => {
         responsiblityCentreOptions={[]}
         yearlyFinancialOptions={[]}
         gstConstant={currentGstPercent ?? 0.05}
-        fileType={renderOptions.props?.fileType ?? ApiGen_CodeTypes_FileTypes.Acquisition}
         file={renderOptions.props?.file ?? mockAcquisitionFileResponse()}
         isLoading={renderOptions.props?.isLoading ?? false}
         showAltProjectError={false}
@@ -102,7 +120,7 @@ describe('Compensation Requisition UpdateForm component', () => {
     );
 
     // wait for useEffect
-    await waitFor(async () => {});
+    await act(async () => {});
 
     return {
       ...utils,
@@ -172,6 +190,34 @@ describe('Compensation Requisition UpdateForm component', () => {
     const { getByTestId } = await setup({ props: { isLoading: true } });
     const spinner = getByTestId('filter-backdrop-loading');
     expect(spinner).toBeVisible();
+  });
+
+  it('calls onCancel when cancel button is clicked', async () => {
+    await setup({});
+    const cancelButton = screen.getByText('Cancel');
+    await act(async () => userEvent.click(cancelButton));
+    expect(onCancel).toHaveBeenCalled();
+  });
+
+  it('asks for confirmation before cancelling when the form has changes', async () => {
+    const { getSpecialInstructionsTextbox, getByTitle } = await setup({});
+    await act(async () => {
+      userEvent.paste(getSpecialInstructionsTextbox(), 'some new instructions');
+    });
+    const cancelButton = screen.getByText('Cancel');
+    await act(async () => userEvent.click(cancelButton));
+
+    // Confirmation modal should be shown
+    expect(onCancel).not.toHaveBeenCalled();
+    expect(
+      screen.getByText(/If you choose to cancel now, your changes will not be saved/i),
+    ).toBeVisible();
+
+    const confirmButton = getByTitle('ok-modal');
+    await act(async () => userEvent.click(confirmButton));
+
+    // onCancel should be called after confirming
+    expect(onCancel).toHaveBeenCalled();
   });
 
   it('should validate character limits', async () => {
@@ -309,7 +355,6 @@ describe('Compensation Requisition UpdateForm component', () => {
     await act(async () => {
       fireEvent.change(getFinancialActivityPreTaxAmountInput(), { target: { value: '$100.00' } });
     });
-    await waitForEffects();
 
     expect(getPayeePreTaxAmount()).toHaveValue('$100.00');
     expect(getPayeeTaxAmount()).toHaveValue('$5.00');
@@ -402,7 +447,7 @@ describe('Compensation Requisition UpdateForm component', () => {
     });
 
     await act(async () => {
-      fireEvent.change(getStatusDropDown(), { target: { value: 'final' } });
+      userEvent.selectOptions(getStatusDropDown(), 'final');
     });
 
     const saveButton = screen.getByText('Save');
@@ -417,7 +462,7 @@ describe('Compensation Requisition UpdateForm component', () => {
     expect(onSave).not.toHaveBeenCalled();
   });
 
-  it('save a compensation with Status as "FINAL" after confirming modal', async () => {
+  it('saves a compensation with Status as "FINAL" after confirming modal', async () => {
     const apiCompensation = getMockApiDefaultCompensation();
     const mockCompensation = CompensationRequisitionFormModel.fromApi({
       ...apiCompensation,
@@ -430,7 +475,7 @@ describe('Compensation Requisition UpdateForm component', () => {
     });
 
     await act(async () => {
-      fireEvent.change(getStatusDropDown(), { target: { value: 'final' } });
+      userEvent.selectOptions(getStatusDropDown(), 'final');
     });
 
     const saveButton = screen.getByText('Save');
@@ -527,5 +572,94 @@ describe('Compensation Requisition UpdateForm component', () => {
     });
 
     expect(setShowAltProjectError).toHaveBeenCalledWith(true);
+  });
+
+  it('validates mandatory financial coding fields when trying to save', async () => {
+    const acquisitionFile: ApiGen_Concepts_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+      projectId: null,
+      project: null,
+      productId: null,
+      product: null,
+    };
+    const apiCompensation = getMockApiDefaultCompensation();
+    const mockCompensation = CompensationRequisitionFormModel.fromApi({
+      ...apiCompensation,
+      compReqAcqPayees: [{ ...getMockCompReqAcqPayee(), acquisitionFileTeamId: 1 }],
+      fiscalYear: '2020',
+      isDraft: true,
+    });
+
+    const { getStatusDropDown } = await setup({
+      props: { initialValues: mockCompensation, file: acquisitionFile },
+    });
+
+    // Change compensation status to FINAL
+    await act(async () => {
+      userEvent.selectOptions(getStatusDropDown(), 'final');
+    });
+
+    const saveButton = screen.getByText('Save');
+    await act(async () => userEvent.click(saveButton));
+
+    expect(await screen.findByText(/Product is required/i)).toBeVisible();
+    expect(
+      await screen.findByText(
+        'Business function is required. Ensure a valid project is associated to this file (or alternate project) with required financial coding.',
+      ),
+    ).toBeVisible();
+    expect(
+      await screen.findByText(
+        'Work activity is required Ensure a valid project is associated to this file (or alternate project) with required financial coding.',
+      ),
+    ).toBeVisible();
+    expect(
+      await screen.findByText(
+        'Cost type is required. Ensure a valid project is associated to this file (or alternate project) with required financial coding.',
+      ),
+    ).toBeVisible();
+
+    expect(onSave).not.toHaveBeenCalled();
+  });
+
+  it('saves FINAL compensation when alternate project is selected', async () => {
+    const acquisitionFile: ApiGen_Concepts_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+      projectId: null,
+      project: null,
+      productId: 1,
+      product: getMockProduct(),
+    };
+    const apiCompensation = getMockApiDefaultCompensation();
+    const mockCompensation = CompensationRequisitionFormModel.fromApi({
+      ...apiCompensation,
+      compReqAcqPayees: [{ ...getMockCompReqAcqPayee(), acquisitionFileTeamId: 1 }],
+      fiscalYear: '2020',
+      isDraft: true,
+    });
+
+    const { getStatusDropDown, getProjectSelector, getProjectSelectorItem } = await setup({
+      props: { initialValues: mockCompensation, file: acquisitionFile },
+    });
+
+    // Select alternate project
+    await act(async () => userEvent.type(getProjectSelector(), 'MOCK TEST'));
+    await act(async () => userEvent.click(getProjectSelectorItem(0)));
+
+    // Change compensation status to FINAL
+    await act(async () => {
+      userEvent.selectOptions(getStatusDropDown(), 'final');
+    });
+
+    const saveButton = screen.getByText('Save');
+    await act(async () => userEvent.click(saveButton));
+
+    expect(
+      await screen.findByText(/You have selected to change the status from DRAFT to FINAL./i),
+    ).toBeVisible();
+
+    await act(async () => userEvent.click(screen.getByTitle('ok-modal')));
+
+    expect(onSave).toHaveBeenCalled();
   });
 });

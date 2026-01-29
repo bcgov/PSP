@@ -1,4 +1,4 @@
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import { ButtonToolbar, Col, Row } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -19,16 +19,18 @@ import { FormAccessRequest as AccessRequestFormModel, userTypeCodeValues } from 
 import RolesToolTip from './RolesToolTip';
 
 interface IAccessRequestFormProps {
+  formikRef: React.RefObject<FormikProps<AccessRequestFormModel>>;
   initialValues: AccessRequestFormModel;
   addAccessRequest: (
     accessRequest: ApiGen_Concepts_AccessRequest,
   ) => Promise<ApiGen_Concepts_AccessRequest | undefined>;
   onCancel?: () => void;
+  onSuccess?: () => void;
 }
 
 export const AccessRequestForm: React.FunctionComponent<
   React.PropsWithChildren<IAccessRequestFormProps>
-> = ({ initialValues, addAccessRequest, onCancel }) => {
+> = ({ formikRef, initialValues, addAccessRequest, onCancel, onSuccess }) => {
   const { getPublicByType, getOptionsByType } = useLookupCodeHelpers();
   const roles = getPublicByType(API.ROLE_TYPES);
   const selectRegions = getOptionsByType(API.REGION_TYPES).filter(
@@ -38,6 +40,7 @@ export const AccessRequestForm: React.FunctionComponent<
 
   return (
     <Formik<AccessRequestFormModel>
+      innerRef={formikRef}
       enableReinitialize={true}
       initialValues={initialValues}
       validationSchema={AccessRequestSchema}
@@ -46,6 +49,7 @@ export const AccessRequestForm: React.FunctionComponent<
           await addAccessRequest(values.toApi());
         } finally {
           setSubmitting(false);
+          onSuccess && onSuccess();
         }
       }}
     >

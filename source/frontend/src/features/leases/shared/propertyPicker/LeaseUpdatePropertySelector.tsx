@@ -50,11 +50,12 @@ import SelectedPropertyHeaderRow from './selectedPropertyList/SelectedPropertyHe
 import SelectedPropertyRow from './selectedPropertyList/SelectedPropertyRow';
 interface LeaseUpdatePropertySelectorProp {
   lease: ApiGen_Concepts_Lease;
+  formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
 }
 
 export const LeaseUpdatePropertySelector: React.FunctionComponent<
   LeaseUpdatePropertySelectorProp
-> = ({ lease }) => {
+> = ({ lease, formikRef }) => {
   const pathSolver = usePathGenerator();
   const [showSaveConfirmModal, setShowSaveConfirmModal] = useState<boolean>(false);
   const [isValid, setIsValid] = useState<boolean>(true);
@@ -63,7 +64,6 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
   const { setModalContent, setDisplayModal } = useContext(ModalContext);
   const { resetFilePropertyLocations } = useContext(SideBarContext);
 
-  const formikRef = useRef<FormikProps<LeaseFormModel>>();
   const arrayHelpersRef = useRef<FieldArrayRenderProps | null>(null);
 
   const {

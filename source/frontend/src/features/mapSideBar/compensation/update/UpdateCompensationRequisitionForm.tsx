@@ -1,4 +1,11 @@
-import { Formik, FormikErrors, FormikProps, validateYupSchema, yupToFormErrors } from 'formik';
+import {
+  Formik,
+  FormikErrors,
+  FormikProps,
+  useFormikContext,
+  validateYupSchema,
+  yupToFormErrors,
+} from 'formik';
 import moment from 'moment';
 import React, { useEffect, useRef, useState } from 'react';
 import { Form } from 'react-bootstrap';
@@ -25,14 +32,14 @@ import FilePropertiesTable from '@/components/filePropertiesTable/FileProperties
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
-import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { isValidId, isValidString } from '@/utils';
+import { firstOrNull, isValidId, isValidString } from '@/utils';
 import { prettyFormatDate } from '@/utils/dateUtils';
 
 import { CompensationRequisitionFormModel } from '../models/CompensationRequisitionFormModel';
@@ -41,7 +48,6 @@ import FinancialActivitiesSubForm from './financials/FinancialActivitiesSubForm'
 
 export interface CompensationRequisitionFormProps {
   isLoading: boolean;
-  fileType: ApiGen_CodeTypes_FileTypes;
   file: ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_Lease;
   payeeOptions: PayeeOption[];
   initialValues: CompensationRequisitionFormModel;
@@ -66,9 +72,44 @@ interface CustomFormikErrors extends FormikErrors<CompensationRequisitionFormMod
   costType?: string;
 }
 
+// Observer component to watch for changes in the alternateProject field
+const FormikValueObserver: React.FC<unknown> = () => {
+  const { values, setFieldValue } = useFormikContext<CompensationRequisitionFormModel>();
+
+  const {
+    getProject: { execute: getProject },
+  } = useProjectProvider();
+
+  const previousProjectIdRef = useRef<number | null | undefined>(undefined);
+  const currentProjectId = values?.alternateProject?.id;
+
+  useEffect(() => {
+    // Prevent unnecessary refetches
+    if (previousProjectIdRef.current === currentProjectId) {
+      return;
+    }
+
+    previousProjectIdRef.current = currentProjectId;
+
+    const populateAlternateProjectConcept = async () => {
+      // Clear concept when project is removed
+      if (!isValidId(currentProjectId)) {
+        setFieldValue('alternateProjectConcept', null);
+        return;
+      }
+
+      const project = await getProject(currentProjectId);
+      setFieldValue('alternateProjectConcept', project ?? null);
+    };
+
+    populateAlternateProjectConcept();
+  }, [currentProjectId, getProject, setFieldValue]);
+
+  return null;
+};
+
 const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormProps> = ({
   isLoading,
-  fileType,
   file,
   payeeOptions,
   initialValues,
@@ -139,18 +180,17 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
     }
   };
 
-  const onMinistryProjectSelected = async (param: IAutocompletePrediction[]) => {
-    if (param.length > 0 && fileType === ApiGen_CodeTypes_FileTypes.Acquisition) {
-      if (
-        isValidId(param[0].id) &&
-        (file as ApiGen_Concepts_AcquisitionFile).projectId === param[0].id
-      ) {
-        setShowAltProjectError(true);
-      }
+  // Validate that the alternate project is not the same as the file project
+  const onMinistryProjectSelected = async (selected: IAutocompletePrediction[]) => {
+    const alternateProject = firstOrNull(selected);
+    if (isValidId(alternateProject?.id) && file.projectId === alternateProject.id) {
+      setShowAltProjectError(true);
     }
   };
 
-  const validateFormValues = (values: CompensationRequisitionFormModel): CustomFormikErrors => {
+  const validateFormValues = async (
+    values: CompensationRequisitionFormModel,
+  ): Promise<CustomFormikErrors> => {
     let errors: CustomFormikErrors = {};
     try {
       validateYupSchema(values, CompensationRequisitionYupSchema, true);
@@ -158,19 +198,31 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
       errors = yupToFormErrors(err);
     }
 
+    // Validate required financial coding fields - only when status is FINAL
     if (values.status === 'final') {
+      const alternateProject = values.alternateProjectConcept ?? null;
+
       if (!isValidString(file?.product?.code)) {
         errors.product = 'Product is required';
       }
-      if (!isValidString(file?.project?.businessFunctionCode?.code)) {
+      if (
+        !isValidString(file?.project?.businessFunctionCode?.code) &&
+        !isValidString(alternateProject?.businessFunctionCode?.code)
+      ) {
         errors.businessFunction =
           'Business function is required. Ensure a valid project is associated to this file (or alternate project) with required financial coding.';
       }
-      if (!isValidString(file?.project?.workActivityCode?.code)) {
+      if (
+        !isValidString(file?.project?.workActivityCode?.code) &&
+        !isValidString(alternateProject?.workActivityCode?.code)
+      ) {
         errors.workActivity =
           'Work activity is required Ensure a valid project is associated to this file (or alternate project) with required financial coding.';
       }
-      if (!isValidString(file?.project?.costTypeCode?.code)) {
+      if (
+        !isValidString(file?.project?.costTypeCode?.code) &&
+        !isValidString(alternateProject?.costTypeCode?.code)
+      ) {
         errors.costType =
           'Cost type is required. Ensure a valid project is associated to this file (or alternate project) with required financial coding.';
       }
@@ -192,6 +244,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
         return (
           <StyledFormWrapper>
             <LoadingBackdrop show={isLoading}></LoadingBackdrop>
+
+            {/* Render the observer component inside the Formik context */}
+            <FormikValueObserver />
 
             <StyledContent>
               <Section header="Requisition Details">
@@ -284,7 +339,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   labelWidth={{ xs: 4 }}
                   required={formikProps.values.status === 'final'}
                 >
-                  {file.project?.businessFunctionCode?.code ?? ''}
+                  {formikProps.values.alternateProjectConcept?.businessFunctionCode?.code ??
+                    file.project?.businessFunctionCode?.code ??
+                    ''}
                   <Form.Control.Feedback type="invalid">
                     {(formikProps.errors as CustomFormikErrors).businessFunction}
                   </Form.Control.Feedback>
@@ -294,7 +351,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   labelWidth={{ xs: 4 }}
                   required={formikProps.values.status === 'final'}
                 >
-                  {file.project?.workActivityCode?.code ?? ''}
+                  {formikProps.values.alternateProjectConcept?.workActivityCode?.code ??
+                    file.project?.workActivityCode?.code ??
+                    ''}
                   <Form.Control.Feedback type="invalid">
                     {(formikProps.errors as CustomFormikErrors).workActivity}
                   </Form.Control.Feedback>
@@ -304,7 +363,9 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
                   labelWidth={{ xs: 4 }}
                   required={formikProps.values.status === 'final'}
                 >
-                  {file.project?.costTypeCode?.code ?? ''}
+                  {formikProps.values.alternateProjectConcept?.costTypeCode?.code ??
+                    file.project?.costTypeCode?.code ??
+                    ''}
                   <Form.Control.Feedback type="invalid">
                     {(formikProps.errors as CustomFormikErrors).costType}
                   </Form.Control.Feedback>
@@ -464,6 +525,7 @@ const UpdateCompensationRequisitionForm: React.FC<CompensationRequisitionFormPro
               handleOk={() => {
                 setShowAltProjectError(false);
                 formikRef.current?.setFieldValue('alternateProject', '');
+                formikRef.current?.setFieldValue('alternateProjectConcept', null);
               }}
               handleCancel={() => {
                 setShowAltProjectError(false);

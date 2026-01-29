@@ -30,6 +30,7 @@ namespace Pims.Api.Services
         private readonly IPropertyService _propertyService;
         private readonly IOrganizationRepository _organizationRepository;
         private readonly IPersonRepository _personRepository;
+        private readonly IProjectRepository _projectRepository;
 
         public CompensationRequisitionService(
             ClaimsPrincipal user,
@@ -45,7 +46,8 @@ namespace Pims.Api.Services
             ILeaseRepository leaseRepository,
             IOrganizationRepository organizationRepository,
             IPersonRepository personRepository,
-            IPropertyService propertyService)
+            IPropertyService propertyService,
+            IProjectRepository projectRepository)
         {
             _user = user;
             _logger = logger;
@@ -61,6 +63,7 @@ namespace Pims.Api.Services
             _propertyService = propertyService;
             _organizationRepository = organizationRepository;
             _personRepository = personRepository;
+            _projectRepository = projectRepository;
         }
 
         public PimsCompensationRequisition GetById(long compensationRequisitionId)
@@ -325,46 +328,52 @@ namespace Pims.Api.Services
             return null;
         }
 
-        private static void ValidateMandatoryFinancialCodes(PimsAcquisitionFile currentAcquisitionFile, PimsCompensationRequisition newCompensation)
+        private void ValidateMandatoryFinancialCodes(PimsAcquisitionFile currentAcquisitionFile, PimsCompensationRequisition newCompensation)
         {
-            if (newCompensation.IsDraft.HasValue && !newCompensation.IsDraft.Value)
+            // Only validate if changing to FINAL compensation
+            if (newCompensation.IsDraft == false)
             {
+                var alternateProject = newCompensation.AlternateProjectId.HasValue ? _projectRepository.TryGet(newCompensation.AlternateProjectId.Value) : null;
+
                 if (currentAcquisitionFile.ProductId is null)
                 {
                     throw new BusinessRuleViolationException("Product Code is mandatory for FINAL compensation requisitions.");
                 }
-                if (currentAcquisitionFile.Project?.BusinessFunctionCodeId is null)
+                if (currentAcquisitionFile.Project?.BusinessFunctionCodeId is null && alternateProject?.BusinessFunctionCodeId is null)
                 {
                     throw new BusinessRuleViolationException("Business Function is mandatory for FINAL compensation requisitions. Ensure a valid project is associated to this file (or alternate project) with required financial coding.");
                 }
-                if (currentAcquisitionFile.Project?.WorkActivityCodeId is null)
+                if (currentAcquisitionFile.Project?.WorkActivityCodeId is null && alternateProject?.WorkActivityCodeId is null)
                 {
                     throw new BusinessRuleViolationException("Work Activity is mandatory for FINAL compensation requisitions. Ensure a valid project is associated to this file (or alternate project) with required financial coding.");
                 }
-                if (currentAcquisitionFile.Project?.CostTypeCodeId is null)
+                if (currentAcquisitionFile.Project?.CostTypeCodeId is null && alternateProject?.CostTypeCodeId is null)
                 {
                     throw new BusinessRuleViolationException("Cost Type is mandatory for FINAL compensation requisitions. Ensure a valid project is associated to this file (or alternate project) with required financial coding.");
                 }
             }
         }
 
-        private static void ValidateMandatoryFinancialCodes(PimsLease currentLease, PimsCompensationRequisition newCompensation)
+        private void ValidateMandatoryFinancialCodes(PimsLease currentLease, PimsCompensationRequisition newCompensation)
         {
-            if (newCompensation.IsDraft.HasValue && !newCompensation.IsDraft.Value)
+            // Only validate if changing to FINAL compensation
+            if (newCompensation.IsDraft == false)
             {
+                var alternateProject = newCompensation.AlternateProjectId.HasValue ? _projectRepository.TryGet(newCompensation.AlternateProjectId.Value) : null;
+
                 if (currentLease.ProductId is null)
                 {
                     throw new BusinessRuleViolationException("Product Code is mandatory for FINAL compensation requisitions.");
                 }
-                if (currentLease.Project?.BusinessFunctionCodeId is null)
+                if (currentLease.Project?.BusinessFunctionCodeId is null && alternateProject?.BusinessFunctionCodeId is null)
                 {
                     throw new BusinessRuleViolationException("Business Function is mandatory for FINAL compensation requisitions. Ensure a valid project is associated to this file (or alternate project) with required financial coding.");
                 }
-                if (currentLease.Project?.WorkActivityCodeId is null)
+                if (currentLease.Project?.WorkActivityCodeId is null && alternateProject?.WorkActivityCodeId is null)
                 {
                     throw new BusinessRuleViolationException("Work Activity is mandatory for FINAL compensation requisitions. Ensure a valid project is associated to this file (or alternate project) with required financial coding.");
                 }
-                if (currentLease.Project?.CostTypeCodeId is null)
+                if (currentLease.Project?.CostTypeCodeId is null && alternateProject?.CostTypeCodeId is null)
                 {
                     throw new BusinessRuleViolationException("Cost Type is mandatory for FINAL compensation requisitions. Ensure a valid project is associated to this file (or alternate project) with required financial coding.");
                 }
