@@ -644,10 +644,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(l => l.RegionCodeNavigation)
-
                 .Include(l => l.FileAppraisalTypeCodeNavigation)
                 .Include(l => l.FileLglSrvyTypeCodeNavigation)
-
                 .Include(l => l.Project)
                     .ThenInclude(x => x.WorkActivityCode)
                 .Include(r => r.Project)
@@ -656,6 +654,15 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(x => x.BusinessFunctionCode)
                 .Include(r => r.Project)
                     .ThenInclude(x => x.PimsProjectPeople)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.LlTeamProfileTypeCodeNavigation)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.Person)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.Organization)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.PrimaryContact)
+
                 .Include(l => l.LeaseProgramTypeCodeNavigation)
                 .Include(l => l.LeasePayRvblTypeCodeNavigation)
                 .Include(l => l.LeaseLicenseTypeCodeNavigation)
