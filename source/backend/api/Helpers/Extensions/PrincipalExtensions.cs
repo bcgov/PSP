@@ -41,6 +41,13 @@ namespace Pims.Core.Extensions
             ArgumentNullException.ThrowIfNull(principal);
 
             var leaseFile = leaseRepository.GetNoTracking(leaseFileId);
+            principal.ThrowInvalidAccessToLeaseFile(leaseFile, userRepository, projectRepository);
+        }
+
+        public static void ThrowInvalidAccessToLeaseFile(this ClaimsPrincipal principal, PimsLease leaseFile, IUserRepository userRepository, IProjectRepository projectRepository)
+        {
+            ArgumentNullException.ThrowIfNull(principal);
+            ArgumentNullException.ThrowIfNull(leaseFile);
 
             // Check region access
             principal.ThrowInvalidRegion(leaseFile, userRepository);
