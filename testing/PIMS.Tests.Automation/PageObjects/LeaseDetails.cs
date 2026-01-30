@@ -625,7 +625,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
-                else if (sharedModals.ConfirmationModalParagraph1() == "If you save it, only the administrator can turn it back on. You will still see it in the management table.")
+                else if (sharedModals.IsConfirmationModalParagraph1Visible())
                 {
                     Assert.Equal("Confirm status change", sharedModals.ModalHeader());
                     Assert.Contains("If you save it, only the administrator can turn it back on. You will still see it in the management table.", sharedModals.ConfirmationModalParagraph1());
@@ -634,7 +634,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
-                else if (sharedModals.ConfirmationModalParagraph2() == "Do you wish to save without providing a primary contact?")
+                else if (sharedModals.IsConfirmationModalParagraph2Visible())
                 {
                     Assert.Equal("Confirm status change", sharedModals.ModalHeader());
                     Assert.Contains("A primary contact for", sharedModals.ConfirmationModalParagraph1());
@@ -647,6 +647,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     break;
                 }
+                else sharedModals.SecondaryModalClickOKBttn();
             }
         }
 

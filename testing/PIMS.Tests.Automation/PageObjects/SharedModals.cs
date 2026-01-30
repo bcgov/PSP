@@ -87,6 +87,11 @@ namespace PIMS.Tests.Automation.PageObjects
             return (webDriver.FindElement(generalConfirmationModalBody2).Text);
         }
 
+        public Boolean IsConfirmationModalParagraph1Visible()
+        {
+            return (webDriver.FindElements(generalConfirmationModalParagraph1).Count >= 1);
+        }
+
         public string ConfirmationModalParagraph1()
         {
             WaitUntilVisible(generalConfirmationModalParagraph1);
@@ -97,6 +102,11 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(generalConfirmationModalParagraph2);
             return (webDriver.FindElement(generalConfirmationModalParagraph2).Text);
+        }
+
+        public Boolean IsConfirmationModalParagraph2Visible()
+        {
+            return (webDriver.FindElements(generalConfirmationModalParagraph2).Count >= 1);
         }
 
         public void VerifyButtonsPresence()

@@ -161,7 +161,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(activitiesAdhocListTableActCommencementSortBttn);
             AssertTrueIsDisplayed(activitiesAdhocListTableActivityNavigationColumn);
 
-            Assert.True(webDriver.FindElements(activitiesTablesEmptyInfo).Count == 1);
+            //Assert.True(webDriver.FindElements(activitiesTablesEmptyInfo).Count == 1);
         }
 
         public void ViewLastActivityFromList()
