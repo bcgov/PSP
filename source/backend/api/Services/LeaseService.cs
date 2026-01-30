@@ -116,6 +116,13 @@ namespace Pims.Api.Services
             return _leaseRepository.GetLastUpdateBy(leaseId);
         }
 
+        /// <summary>
+        /// Get a paged list of leases that satisfy the filter parameters.
+        /// The 'filter' will control the 'page' and 'quantity'.
+        /// </summary>
+        /// <param name="filter">The filter to apply to the lease search.</param>
+        /// <param name="all">True to return all leases, false to return only the current page.</param>
+        /// <returns></returns>
         public Paged<PimsLease> GetPage(LeaseFilter filter, bool? all = false)
         {
             _logger.LogInformation("Getting lease page {filter}", filter);
@@ -123,8 +130,9 @@ namespace Pims.Api.Services
             filter.Page = all.HasValue && all.Value ? 1 : filter.Page;
             filter.Quantity = all.HasValue && all.Value ? _leaseRepository.Count() : filter.Quantity;
             var user = _userRepository.GetByKeycloakUserId(this.User.GetUserKey());
+            long? contractorPersonId = user.IsContractor ? user.PersonId : null;
 
-            var leases = _leaseRepository.GetPage(filter, user.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet());
+            var leases = _leaseRepository.GetPage(filter, user.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet(), contractorPersonId);
             return leases;
         }
 

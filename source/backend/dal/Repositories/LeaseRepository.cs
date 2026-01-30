@@ -760,8 +760,10 @@ namespace Pims.Dal.Repositories
         /// Note that the 'leaseFilter' will control the 'page' and 'quantity'.
         /// </summary>
         /// <param name="filter"></param>
+        /// <param name="regions"></param>
+        /// <param name="contractorPersonId">The contractor person id to filter by. Only applies if calling user is a Contractor.</param>
         /// <returns></returns>
-        public Paged<PimsLease> GetPage(LeaseFilter filter, HashSet<short> regions)
+        public Paged<PimsLease> GetPage(LeaseFilter filter, HashSet<short> regions, long? contractorPersonId = null)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
@@ -771,7 +773,7 @@ namespace Pims.Dal.Repositories
             }
 
             var skip = (filter.Page - 1) * filter.Quantity;
-            var query = GenerateLeaseQuery(filter, regions);
+            var query = GenerateLeaseQuery(filter, regions, contractorPersonId: contractorPersonId);
             var items = query
                 .Skip(skip)
                 .Take(filter.Quantity)
@@ -861,7 +863,7 @@ namespace Pims.Dal.Repositories
         /// <param name="filter"></param>
         /// <param name="regionCodes"></param>
         /// <param name="loadPayments"></param>
-        /// <param name="contractorPersonId"></param>
+        /// <param name="contractorPersonId">The contractor person id to filter by. Only applies if calling user is a Contractor.</param>
         /// <returns></returns>
         public IQueryable<PimsLease> GenerateLeaseQuery(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false, long? contractorPersonId = null)
         {
@@ -1068,7 +1070,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <param name="regions"></param>
-        /// <param name="contractorPersonId"></param>
+        /// <param name="contractorPersonId">The contractor person id to filter by. Only applies if calling user is a Contractor.</param>
         /// <returns></returns>
         private static ExpressionStarter<PimsLease> GenerateCommonLeaseQuery(LeaseFilter filter, HashSet<short> regions, long? contractorPersonId = null)
         {
