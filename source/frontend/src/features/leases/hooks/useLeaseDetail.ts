@@ -11,7 +11,12 @@ import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { exists, isValidId, sortFileProperties, useAxiosErrorHandler } from '@/utils';
+import {
+  exists,
+  isValidId,
+  sortFileProperties,
+  useAxiosErrorHandlerWithAuthorization,
+} from '@/utils';
 
 import { LeaseStateContext } from './../context/LeaseContext';
 
@@ -43,7 +48,9 @@ export function useLeaseDetail(leaseId?: number) {
   const getApiLeaseById = useApiRequestWrapper({
     requestFunction: getApiLease,
     requestName: 'getApiLease',
-    onError: useAxiosErrorHandler('Failed to load lease, reload this page to try again.'),
+    onError: useAxiosErrorHandlerWithAuthorization(
+      'Failed to load lease, reload this page to try again.',
+    ),
   });
 
   const getApiLeaseByIdFunc = getApiLeaseById.execute;
