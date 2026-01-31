@@ -79,7 +79,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void OrderByMgmtHistoricalFileNbr()
         {
             WaitUntilClickable(managementListViewOrderByHistFile);
-            webDriver.FindElement(managementListViewOrderByHistFile).Click();
+            FocusAndClick(managementListViewOrderByHistFile);
         }
 
         public void OrderByMgmtPurpose()
@@ -96,8 +96,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFirstOption()
         {
+            var originalWindowHandle = webDriver.CurrentWindowHandle;
+
             WaitUntilClickable(managementListViewViewMgmtFile1stRecord);
             webDriver.FindElement(managementListViewViewMgmtFile1stRecord).Click();
+
+            Wait();
+            var allWindowsHandle = webDriver.WindowHandles;
+            var newWindowHandle = allWindowsHandle.Where(handle => handle != originalWindowHandle).First();
+            webDriver.SwitchTo().Window(newWindowHandle);
 
             WaitUntilVisible(managementFileHeaderCode);
             Assert.True(webDriver.FindElement(managementFileHeaderCode).Displayed);

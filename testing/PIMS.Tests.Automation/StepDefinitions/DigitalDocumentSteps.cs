@@ -436,7 +436,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify on related documents list view the previously attached documents
             for (var m = 0; m < digitalDocumentList.Count; m++)
-                digitalDocumentsTab.VerifyPIMSFilesDocumentsList(digitalDocumentList[m], m);
+                digitalDocumentsTab.VerifyAdhocDocumentsList(digitalDocumentList[m], m);
 
             //Navigate back the Management File section
             managementFilesDetails.NavigateToManagementFileSection();

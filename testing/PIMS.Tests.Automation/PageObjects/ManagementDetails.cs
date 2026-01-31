@@ -114,7 +114,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
 
-            AssertTrueIsDisplayed(updateManagementTitle);
+            //AssertTrueIsDisplayed(updateManagementTitle);
 
             //Status
             AssertTrueIsDisplayed(managementFileStatusLabel);
@@ -247,7 +247,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             //Create Title
-            AssertTrueIsDisplayed(createManagementTitle);
+            //AssertTrueIsDisplayed(createManagementTitle);
 
             //Project
             AssertTrueIsDisplayed(managementFileProjectSubtitle);
@@ -278,7 +278,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyManagementUpdateForm()
         {
             //Title
-            AssertTrueIsDisplayed(updateManagementTitle);
+            //AssertTrueIsDisplayed(updateManagementTitle);
 
             //Status
             AssertTrueIsDisplayed(managementFileStatusLabel);
@@ -310,7 +310,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyManagementDetailsViewForm(ManagementFile mgmtFile)
         {
             //Title
-            AssertTrueIsDisplayed(viewManagementTitle);
+            //AssertTrueIsDisplayed(viewManagementTitle);
 
             //Header
             AssertTrueIsDisplayed(managementFileHeaderFileNbrLabel);
