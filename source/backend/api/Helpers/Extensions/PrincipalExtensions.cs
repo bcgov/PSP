@@ -95,9 +95,13 @@ namespace Pims.Core.Extensions
             ArgumentNullException.ThrowIfNull(leaseFile);
 
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
+            if (pimsUser is null)
+            {
+                return false;
+            }
 
             // User is not assigned to the Lease File's region
-            if (leaseFile.RegionCode.HasValue && !pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == leaseFile.RegionCode))
+            if (leaseFile.RegionCode.HasValue && !pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == leaseFile.RegionCode.Value))
             {
                 return false;
             }
@@ -119,7 +123,7 @@ namespace Pims.Core.Extensions
             }
 
             // Contractors must be assigned to the Lease File's team or the associated Project's team.
-            if (pimsUser?.IsContractor == true && !leaseFile.PimsLeaseLicenseTeams.Any(x => x.PersonId == pimsUser.PersonId) && (project == null || !project.PimsProjectPeople.Any(x => x.PersonId == pimsUser.PersonId)))
+            if (pimsUser?.IsContractor == true && !leaseFile.PimsLeaseLicenseTeams.Any(x => x.PersonId == pimsUser?.PersonId) && (project == null || !project.PimsProjectPeople.Any(x => x.PersonId == pimsUser?.PersonId)))
             {
                 return false;
             }

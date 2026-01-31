@@ -129,7 +129,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.Page = all.HasValue && all.Value ? 1 : filter.Page;
             filter.Quantity = all.HasValue && all.Value ? _leaseRepository.Count() : filter.Quantity;
-            var user = _userRepository.GetByKeycloakUserId(this.User.GetUserKey());
+            var user = _userRepository.GetUserInfoByKeycloakUserId(this.User.GetUserKey());
             long? contractorPersonId = user.IsContractor ? user.PersonId : null;
 
             var leases = _leaseRepository.GetPage(filter, user.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet(), contractorPersonId);
@@ -219,6 +219,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting properties on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
             _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, leaseId);
 
             var propertyLeases = _propertyLeaseRepository.GetAllByLeaseId(leaseId);
@@ -437,7 +438,10 @@ namespace Pims.Api.Services
             _logger.LogInformation("Getting consultation with id: {consultationId}", consultationId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
 
-            return _consultationRepository.GetConsultationById(consultationId);
+            var currentConsultation = _consultationRepository.GetConsultationById(consultationId);
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, currentConsultation.LeaseId);
+
+            return currentConsultation;
         }
 
         public PimsLeaseConsultation AddConsultation(PimsLeaseConsultation consultation)
@@ -450,6 +454,8 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
+
+            _user.ThrowInvalidAccessToLeaseFile(currentLease, _userRepository, _projectRepository);
 
             var newConsultation = _consultationRepository.AddConsultation(consultation);
             _consultationRepository.CommitTransaction();
@@ -468,6 +474,8 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
+            _user.ThrowInvalidAccessToLeaseFile(currentLease, _userRepository, _projectRepository);
+
             var updatedConsultation = _consultationRepository.UpdateConsultation(consultation);
             _consultationRepository.CommitTransaction();
 
@@ -485,6 +493,8 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
+
+            _user.ThrowInvalidAccessToLeaseFile(currentLease, _userRepository, _projectRepository);
 
             bool deleteResult = _consultationRepository.TryDeleteConsultation(consultationId);
             _consultationRepository.CommitTransaction();
