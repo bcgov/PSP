@@ -148,7 +148,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyDetailsAttrCoordinatesLabel = By.XPath("//label[contains(text(),'Coordinates')]");
         private readonly By propertyDetailsAttrCoordinatesDiv = By.XPath("//label[contains(text(),'Coordinates')]/parent::div/following-sibling::div");
 
-        private readonly By propertyDetailsTenureTitle = By.XPath("//div[contains(text(),'Tenure Status')]");
+        private readonly By propertyDetailsTenureTitle = By.XPath("//div[contains(text(),'Tenure')]");
         private readonly By propertyDetailsTenureStatusLabel = By.XPath("//label[contains(text(),'Tenure status')]");
         private readonly By propertyDetailsTenureStatusDiv = By.XPath("//label[contains(text(),'Tenure status')]/parent::div/following-sibling::div/div/div/div");
         //private readonly By propertyDetailsPublicHwyLabel = By.XPath("//label[contains(text(),'Provincial public hwy')]");

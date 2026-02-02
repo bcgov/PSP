@@ -85,7 +85,11 @@ export const UpdateChecklistForm: React.FC<IUpdateChecklistFormProps> = ({
           )}
 
           {formikProps.values.checklistSections.map((section, i) => (
-            <Section key={section.id ?? `${prefix}-checklist-section-${i}`} header={section.name}>
+            <Section
+              key={section.id ?? `${prefix}-checklist-section-${i}`}
+              header={section.name}
+              data-testid={section.name}
+            >
               {section.items.map((checklistItem, j) => (
                 <SectionField
                   key={checklistItem.itemType?.code ?? `${prefix}-checklist-item-${j}`}

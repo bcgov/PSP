@@ -688,6 +688,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect7 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect7");
                 dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect8 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect8");
                 dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect9 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect9");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect10 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect10");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect11 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect11");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect12 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect12");
 
                 dispositionFile.DispositionFileChecklist.SaleInformationSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect1");
                 dispositionFile.DispositionFileChecklist.SaleInformationSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect2");
