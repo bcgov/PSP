@@ -40,7 +40,6 @@ export function useAddFileConfirmation<T>({
               cancelButtonText: 'No',
               handleOk: () => {
                 // allow the properties to be added to the file being created
-                formikRef.current?.resetForm();
                 formikRef.current?.setFieldValue(fieldName, properties);
                 setDisplayModal(false);
                 // show the user confirmation modal only once when creating a file
