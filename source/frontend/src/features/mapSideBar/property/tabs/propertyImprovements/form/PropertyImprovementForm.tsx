@@ -69,7 +69,7 @@ const PropertyImprovementForm: React.FunctionComponent<IPropertyImprovementFormP
               ></LoadingBackdrop>
               <StyledContent>
                 <Section header="Property Improvement Details">
-                  <SectionField label="Improvement type">
+                  <SectionField label="Improvement type" required>
                     <Select
                       options={propertyImprovementTypesOptions}
                       field="propertyImprovementTypeCode"

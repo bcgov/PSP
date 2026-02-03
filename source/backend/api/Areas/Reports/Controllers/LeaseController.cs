@@ -1,7 +1,3 @@
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using ClosedXML.Report;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -22,6 +18,11 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
+using static Pims.Dal.Entities.PimsLeaseStatusType;
 
 namespace Pims.Api.Areas.Reports.Controllers
 {
@@ -184,12 +185,13 @@ namespace Pims.Api.Areas.Reports.Controllers
             DateTime startDate = fiscalYearStart.ToFiscalYearDate();
             var allPayments = _leasePaymentService.GetAllByDateRange(startDate, startDate.AddYears(1).AddDays(-1)); // Add years will give you the equivalent month, except for 29th/ 28th of leap years which is not the case here.
             var leaseIds = allPayments.Select(payment => payment.LeasePeriod.LeaseId);
-            var paymentLeases = _leaseService.GetAllByIds(leaseIds);
+            var activeLeases = _leaseService.GetAllByIds(leaseIds).Where(l => l.LeaseStatusTypeCode != PimsLeaseStatusTypes.DUPLICATE && l.LeaseStatusTypeCode != PimsLeaseStatusTypes.DRAFT && l.LeaseStatusTypeCode != PimsLeaseStatusTypes.DISCARD);
+            var activePayments = allPayments.Where(payment => activeLeases.Any(lease => lease.LeaseId == payment.LeasePeriod.LeaseId)).ToList();
 
             // Required to display the latest payment on the lease, which may not be part of the current date range filter of payments. This ensures that all payments for a lease associated to one of the payments in the date range are included.
-            allPayments.ForEach(payment =>
+            activePayments.ForEach(payment =>
             {
-                payment.LeasePeriod.Lease = paymentLeases.FirstOrDefault(lease => lease.LeaseId == payment.LeasePeriod.LeaseId);
+                payment.LeasePeriod.Lease = activeLeases.FirstOrDefault(lease => lease.LeaseId == payment.LeasePeriod.LeaseId);
             });
             var paymentItems = _mapper.Map<IEnumerable<LeasePaymentReportModel>>(allPayments.OrderBy(p => p?.LeasePeriod?.Lease?.RegionCode).ThenBy(p => p?.LeasePeriod?.Lease?.LFileNo).ThenByDescending(p => p.PaymentReceivedDate));
 

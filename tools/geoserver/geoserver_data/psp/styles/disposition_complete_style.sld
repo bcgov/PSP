@@ -6,14 +6,14 @@
       <sld:FeatureTypeStyle>
         <sld:Name>name</sld:Name>
         <sld:Rule>
-          <sld:Title>lease payable</sld:Title>
+          <sld:Title>disposition complete</sld:Title>
           <sld:PolygonSymbolizer>
             <sld:Fill>
-              <sld:CssParameter name="fill">#fe9929</sld:CssParameter>
+              <sld:CssParameter name="fill">#FFA6A6</sld:CssParameter>
               <sld:CssParameter name="fill-opacity">.40</sld:CssParameter>
             </sld:Fill>
             <sld:Stroke>
-              <sld:CssParameter name="stroke">#fe9929</sld:CssParameter>
+              <sld:CssParameter name="stroke">#FFA6A6</sld:CssParameter>
               <sld:CssParameter name="stroke-width">3</sld:CssParameter>
             </sld:Stroke>
           </sld:PolygonSymbolizer>
