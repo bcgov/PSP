@@ -21,6 +21,7 @@ export const AgreementContainer: React.FunctionComponent<
   const [acquisitionAgreements, setAcquisitionAgreements] = useState<ApiGen_Concepts_Agreement[]>(
     [],
   );
+  const { setStaleLastUpdatedBy } = useContext(SideBarContext);
 
   const {
     getAcquisitionAgreements: { execute: getAgreements, loading: loadingAgreements },
@@ -56,6 +57,7 @@ export const AgreementContainer: React.FunctionComponent<
   const handleAgreementDeleted = async (agreementId: number) => {
     if (isValidId(acquisitionFileId)) {
       await deleteAgreement(acquisitionFileId, agreementId);
+      setStaleLastUpdatedBy(true);
       const updatedAgreements = await getAgreements(acquisitionFileId);
       if (updatedAgreements) {
         setAcquisitionAgreements(updatedAgreements);
