@@ -185,6 +185,13 @@ export const MapStateMachineProvider: React.FC<React.PropsWithChildren<unknown>>
     actions: {
       navigateToProperty: context => {
         const selectedFeatureData = context.mapLocationFeatureDataset;
+        const hasPimsFeatures = (selectedFeatureData?.pimsFeatures?.length ?? 0) > 0;
+        const hasParcelFeatures = (selectedFeatureData?.parcelFeatures?.length ?? 0) > 0;
+        const hasResults = hasPimsFeatures || hasParcelFeatures;
+
+        if (!context.mapFeatureSelected && !hasResults) {
+          return;
+        }
 
         // if there is more that one property on the location, further action is needed.
         if (selectedFeatureData.parcelFeatures?.length > 1) {
