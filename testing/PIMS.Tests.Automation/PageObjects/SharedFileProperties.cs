@@ -16,7 +16,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchPropertiesSelectedDescriptiveNameHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Provide a descriptive name for this land')]");
         private readonly By searchPropertiesSelectedToolTipIcon = By.CssSelector("span[data-testid='tooltip-icon-property-selector-tooltip']");
         private readonly By searchPropertiesSelectedDefault = By.XPath("//span[contains(text(),'No Properties selected')]");
-        private readonly By searchPropertiesPropertiesInFileTotal = By.CssSelector("button[title='move-pin-location']");
+        private readonly By searchPropertiesPropertiesInFileTotal = By.CssSelector("button[data-testid*='delete-property']");
         private readonly By searchPropertiesPropertiesInLeaseTotal = By.CssSelector("div[class='align-items-center my-3 no-gutters row']");
 
         //File - Edit Properties button

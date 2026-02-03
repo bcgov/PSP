@@ -259,6 +259,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Cancel changes
             propertyInformation.CancelPropertyDetails();
 
+
+
             //Click on the Edit Property Information Button
             propertyInformation.EditPropertyInfoBttn();
 
@@ -563,8 +565,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             property.Anomalies = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyAnomalies"));
 
             property.TenureStatus = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyTenureStatus"));
-            //property.ProvincialPublicHwy = ExcelDataContext.ReadData(rowNumber, "PropertyProvincialPublicHwy");
-            //property.HighwayEstablishedBy = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyHighwayEstablishedBy"));
+            property.TenureCleanup = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyTenureCleanup"));
             property.SqrMeters = ExcelDataContext.ReadData(rowNumber, "PropertySqrMeters");
             property.IsVolumetric = bool.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyIsVolumetric"));
             property.Volume = ExcelDataContext.ReadData(rowNumber, "PropertyVolume");

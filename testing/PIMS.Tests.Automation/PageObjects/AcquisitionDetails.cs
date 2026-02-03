@@ -14,6 +14,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileDetailsTab = By.CssSelector("a[data-rb-event-key='fileDetails']");
         private readonly By acquisitionSubfilesTab = By.XPath("//a[contains(text(),'Sub-Files')]");
 
+        //Generate Forms Elements
+        private readonly By acquisitionFileGenerateFormTitle = By.XPath("//span[text()='Generate a form:']");
+        private readonly By acquisitionFileGenerateForm12Link = By.XPath("//div[text()='Generate Form 12']/parent::button");
+        private readonly By acquisitionFileGenerateLetterLink = By.XPath("/div[text()='Generate Letter']/parent::button");
+        private readonly By acquisitionFileGenerateH0443Link = By.XPath("/div[text()='Conditions of Entry (H0443)']/parent::button");
+        private readonly By acquisitionFileGenerateNoticeEntryLink = By.XPath("/div[text()='Generate Notice of Entry']/parent::button");
+        private readonly By acquisitionFileGenerateIntakeLink = By.XPath("/div[text()='Generate Intake']/parent::button]");
+
         //Acquisition File Details View Form Elements
         private readonly By acquisitionFileTitle = By.CssSelector("div[data-testid='form-title']");
         private readonly By acquisitionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
@@ -100,7 +108,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileProjectDelete = By.CssSelector("div[data-testid='typeahead-project'] button[aria-label='Clear']");
         private readonly By acquisitionFileProject1stOption = By.CssSelector("div[id='typeahead-project'] a");
         private readonly By acquisitionFileProjectProductSelect = By.Id("input-product");
-        private readonly By acquicistionFileProjectProductOptions = By.CssSelector("select[id='input-product'] option");
         private readonly By acquisitionFileProjectOtherFundingInput = By.Id("input-fundingTypeOtherDescription");
 
         private readonly By acquisitionFileStatusesFileProgressCreateLabel = By.XPath("//label[contains(text(),'File progress')]");
@@ -131,7 +138,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileDetailsRegionSelect = By.Id("input-region");
 
         private readonly By acquisitionFileTeamMembersGroup = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row']");
-        private readonly By acquisitionFileViewTeamMembersGroup = By.XPath("//div[contains(text(),'Acquisition Team')]/parent::div/parent::h2/following-sibling::div/div");
 
         private readonly By acquisitionFileCreateOwnerSubtitle = By.XPath("//div[contains(text(),'Owners')]");
         private readonly By acquisitionFileOwnerInfo = By.XPath("//p[contains(text(),'Each property in this file should be owned by the owner(s) in this section')]");
@@ -141,39 +147,32 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileOwnerSolicitorLabel = By.XPath("//label[contains(text(),'Owner solicitor')]");
         private readonly By acquisitionFileOwnerSolicitorButton = By.XPath("//label[contains(text(),'Owner solicitor')]/parent::div/following-sibling::div/div/div/div/button[@title='Select Contact']");
         private readonly By acquisitionFileOwnerSolicitorContent = By.XPath("//label[contains(text(),'Owner solicitor')]/parent::div/following-sibling::div/a/span");
-      
         private readonly By acquisitionFileOwnerRepresentativeButton = By.XPath("//label[contains(text(),'Owner representative')]/parent::div/following-sibling::div/div/div/div/button[@title='Select Contact']");
         private readonly By acquisitionFileOwnerRepresentativeContent = By.XPath("//label[contains(text(),'Owner representative')]/parent::div/following-sibling::div/a/span");
-
         private readonly By acquisitionFileOwnerCommentTextArea = By.Id("input-ownerRepresentative.comment");
         private readonly By acquisitionFileOwnerCommentContent = By.XPath("//label[contains(text(),'Comment')]/parent::div/following-sibling::div");
-
         private readonly By acquisitionFileOwnerCommentEditTextArea = By.Id("input-ownerRepresentatives.0.comment");
-
         private readonly By acquisitionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Acquisition File')]/parent::div/parent::div/parent::div/parent::div");
 
+        private readonly By acquisitionFileNoticeClaimSubtitle = By.XPath("//h2/div/div[contains(text(),'Notice of Claims')]");
+        private readonly By acquisitionFileNoticeClaimReceivedDateLabel = By.XPath("//label[contains(text(),'Received date')]");
+        private readonly By acquisitionFileNoticeClaimReceivedDateInput = By.Id("datepicker-noticeOfClaim.receivedDate");
+        private readonly By acquisitionFileNoticeClaimReceivedDateContent = By.XPath("//label[contains(text(),'Received date')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileNoticeClaimCommentsLabel = By.XPath("//label[contains(text(),'Comments')]");
+        private readonly By acquisitionFileNoticeClaimCommentsInput = By.Id("input-noticeOfClaim.comment");
+        private readonly By acquisitionFileNoticeClaimCommentsContent = By.XPath("//label[contains(text(),'Comments')]/parent::div/following-sibling::div");
+
         //Acquisition Sub-files View Elements
-        private readonly By acquisitionSubfileCreateTableTitle = By.XPath("//div[contains(text(),'Linked Files')]");
         private readonly By acquisitionSubfileCreateTableLinkedFilesCode = By.CssSelector("div[data-testid='linked-files-header']");
         private readonly By acquisitionSubfileCreateButton = By.XPath("//div[contains(text(),'Add Sub-interest File')]/parent::button");
-        private readonly By acquisitionSubfileInitLabel = By.XPath("//label[contains(text(),'Linked files')]");
-        private readonly By acquisitionSubfileTable = By.CssSelector("div[data-testid='AcquisitionSubFilesTable']");
-        private readonly By acquisitionSubfileNumberColumn = By.XPath("//div[@data-testid='AcquisitionSubFilesTable']/div[@class='thead thead-light']/div/div//div[contains(text(),'#')]");
-        private readonly By acquisitionSubfileNameColumn = By.XPath("//div[@data-testid='AcquisitionSubFilesTable']/div[@class='thead thead-light']/div/div//div[contains(text(),'Name')]");
-        private readonly By acquisitionSubfileStatusColumn = By.XPath("//div[@data-testid='AcquisitionSubFilesTable']/div[@class='thead thead-light']/div/div//div[contains(text(),'Status')]");
-        private readonly By acquisitionSubfilesCount = By.CssSelector("div[data-testid='AcquisitionSubFilesTable'] div[class='tbody'] div[class='tr-wrapper']");
-        private readonly By acquisitionSubfileLastChildLink = By.CssSelector("div[data-testid='AcquisitionSubFilesTable'] div[class='tbody'] div[class='tr-wrapper']:last-child a");
-
         private readonly By acquisitionSubfileCreateInsterestSubtitle = By.XPath("//div[contains(text(),'Sub-Interest')]");
         private readonly By acquisitionSubfileInterestInfo = By.XPath("//p[contains(text(),'Each property in this sub-file should be impacted by the sub-interest(s) in this section')]");
-        private readonly By acquisitionSubfileOwnersGroup = By.XPath("//div[contains(text(),'Sub-Interest')]/parent::div/parent::h2/following-sibling::div/div[@class='py-3 row']");
         private readonly By acquisitionSubfileOwnerSolicitorLabel = By.XPath("//label[contains(text(),'Sub-interest solicitor')]");
         private readonly By acquisitionSubfileOwnerSolicitorButton = By.XPath("//label[contains(text(),'Sub-interest solicitor')]/parent::div/following-sibling::div/div/div/div/button[@title='Select Contact']");
         private readonly By acquisitionSubfileOwnerSolicitorContent = By.XPath("//label[contains(text(),'Sub-interest solicitor')]/parent::div/following-sibling::div/a/span");
         private readonly By acquisitionSubfileOwnerRepresentativeLabel = By.XPath("//label[contains(text(),'Sub-interest representative')]");
         private readonly By acquisitionSubfileOwnerRepresentativeButton = By.XPath("//label[contains(text(),'Sub-interest representative')]/parent::div/following-sibling::div/div/div/div/button[@title='Select Contact']");
         private readonly By acquisitionSubfileOwnerRepresentativeContent = By.XPath("//label[contains(text(),'Sub-interest representative')]/parent::div/following-sibling::div/a/span");
-
 
         //Acquisition File Confirmation Modal Elements
         private readonly By acquisitionFileConfirmationModal = By.CssSelector("div[class='modal-content']");
@@ -243,14 +242,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateAcquisitionFile(AcquisitionFile acquisition, string acquisitionType)
         {
-            //Status
+            //STATUS
             if (acquisition.AcquisitionStatus != "" && acquisitionType == "Main")
             {
                 WaitUntilClickable(acquisitionFileStatusSelect);
                 ChooseSpecificSelectOption(acquisitionFileStatusSelect, acquisition.AcquisitionStatus);
             }
 
-            //Project
+            //PROJECT
             if (acquisition.AcquisitionProject != "" && acquisitionType == "Main")
             {
                 WaitUntilVisible(acquisitionFileProjectInput);
@@ -288,7 +287,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(acquisitionFileProjectOtherFundingInput).SendKeys(acquisition.AcquisitionFundingOther);
             }
 
-            //Progress Statuses
+            //PROGRESS STATUTES
             //Delete File Progress statuses previously selected if any
             if (webDriver.FindElements(acquisitionFileStatusesDeleteBttns).Count > 0)
             {
@@ -356,7 +355,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.AcquisitionExpropriationRiskStatus != "")
                 ChooseSpecificSelectOption(acquisitionFileStatusesExpropriationRiskSelect, acquisition.AcquisitionExpropriationRiskStatus);
 
-            //Schedule
+            //SCHEDULE
             if (acquisition.AcquisitionAssignedDate != "")
             {
                 WaitUntilClickable(acquisitionFileAssignedDateInput);
@@ -389,7 +388,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(acquisitionFilePossesionDateInput).SendKeys(Keys.Enter);
             }
 
-            //Details
+            //DETAILS
             if (acquisition.AcquisitionFileName != "")
             {
                 WaitUntilVisible(acquisitionFileNameInput);
@@ -434,7 +433,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 ChooseSpecificSelectOption(acquisitionFileDetailsRegionSelect, acquisition.AcquisitionMOTIRegion);
             }
 
-            //Team
+            //TEAM
             if (acquisition.AcquisitionTeam!.Count > 0)
             {
                 while (webDriver.FindElements(acquisitionFileTeamMembersGroup).Count > 0)
@@ -445,7 +444,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 
             }
 
-            //Owners
+            //OWNERS
             if (acquisition.AcquisitionOwners!.Count > 0)
             {
                 while (webDriver.FindElements(acquisitionFileOwnersGroup).Count > 0)
@@ -497,6 +496,25 @@ namespace PIMS.Tests.Automation.PageObjects
                     ClearInput(acquisitionFileOwnerCommentTextArea);
                     webDriver.FindElement(acquisitionFileOwnerCommentTextArea).SendKeys(acquisition.OwnerComment);
                 }
+            }
+
+            //NOTICE OF CLAIMS
+            AssertTrueIsDisplayed(acquisitionFileNoticeClaimSubtitle);
+
+            //Date Received
+            AssertTrueIsDisplayed(acquisitionFileNoticeClaimReceivedDateLabel);
+            if (acquisition.AcquisitionNOCReceivedDate != "")
+            {
+                ClearInput(acquisitionFileNoticeClaimReceivedDateInput);
+                webDriver.FindElement(acquisitionFileNoticeClaimReceivedDateInput).SendKeys(acquisition.AcquisitionNOCReceivedDate);
+            }
+
+            //Comments
+            AssertTrueIsDisplayed(acquisitionFileNoticeClaimCommentsLabel);
+            if (acquisition.AcquisitionNOCComments != "")
+            {
+                ClearInput(acquisitionFileNoticeClaimCommentsInput);
+                webDriver.FindElement(acquisitionFileNoticeClaimCommentsInput).SendKeys(acquisition.AcquisitionNOCComments);
             }
         }
 
@@ -587,7 +605,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyAcquisitionFileView(AcquisitionFile acquisition, string acquisitionType)
         {
             Wait();
-            //AssertTrueIsDisplayed(acquisitionFileViewTitle);
 
             //Header
             AssertTrueIsDisplayed(acquisitionFileHeaderCodeLabel);
@@ -612,6 +629,15 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.AcquisitionStatus != "")
                 AssertTrueContentEquals(acquisitionHeaderStatusContent, GetUppercaseString(acquisition.AcquisitionStatus));
 
+            //Links
+            AssertTrueIsDisplayed(acquisitionFileGenerateFormTitle);
+            AssertTrueIsDisplayed(acquisitionFileGenerateForm12Link);
+            AssertTrueIsDisplayed(acquisitionFileGenerateLetterLink);
+            AssertTrueIsDisplayed(acquisitionFileGenerateH0443Link);
+            AssertTrueIsDisplayed(acquisitionFileGenerateNoticeEntryLink);
+            AssertTrueIsDisplayed(acquisitionFileGenerateIntakeLink);
+
+            //MAIN FORM
             //Project
             AssertTrueIsDisplayed(acquisitionFileProjectSubtitle);
             AssertTrueIsDisplayed(acquisitionFileProjectLabel);
@@ -777,6 +803,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (acquisition.OwnerComment != "")
                 AssertTrueContentEquals(acquisitionFileOwnerCommentContent, acquisition.OwnerComment);
+
+            //NOTICE OF CLAIMS
+            AssertTrueIsDisplayed(acquisitionFileNoticeClaimSubtitle);
+
+            //NOC Received Date
+            AssertTrueIsDisplayed(acquisitionFileNoticeClaimReceivedDateLabel);
+            if (acquisition.AcquisitionNOCReceivedDate != "")
+                AssertTrueContentEquals(acquisitionFileNoticeClaimReceivedDateContent, acquisition.AcquisitionNOCReceivedDate);
+
+            //NOC Comments
+            AssertTrueIsDisplayed(acquisitionFileNoticeClaimCommentsLabel);
+            if (acquisition.AcquisitionNOCReceivedDate != "")
+                AssertTrueContentEquals(acquisitionFileNoticeClaimCommentsContent, acquisition.AcquisitionNOCComments);
         }
 
         public void VerifyAcquisitionFileCreate(string acquisitionType)
@@ -859,6 +898,13 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(acquisitionSubfileOwnerRepresentativeButton);
             }
             AssertTrueIsDisplayed(acquisitionFileOwnerCommentTextArea);
+
+            //Notice of Claims
+            AssertTrueIsDisplayed(acquisitionFileNoticeClaimSubtitle);
+            AssertTrueIsDisplayed(acquisitionFileNoticeClaimReceivedDateLabel);
+            AssertTrueIsDisplayed(acquisitionFileNoticeClaimReceivedDateInput);
+            AssertTrueIsDisplayed(acquisitionFileNoticeClaimCommentsLabel);
+            AssertTrueIsDisplayed(acquisitionFileNoticeClaimCommentsInput);
         }
 
         public void VerifyMaximumFields()

@@ -73,17 +73,24 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchPropertyViewByFirstOption = By.CssSelector("ul[class='optionContainer'] li:nth-child(1)");
 
         private readonly By searchPropertyListViewTitle = By.XPath("//h3[contains(text(),'PIMS Property Search')]");
-        private readonly By searchPropertyViewByLabel = By.XPath("//div/strong[contains(text(),'View by')]");
-        private readonly By searchViewByContainer = By.CssSelector("div[id='properties-selector']");
+        private readonly By searchPropertyViewByLabel = By.XPath("//div/strong[contains(text(),'Search by')]");
+
+        private readonly By searchPropertyListViewOwnershipLabel = By.XPath("//label(text()='Ownership:')");
+        private readonly By searchPropertyListViewOwnershipInput = By.Id("ownership-selector_input");
+        private readonly By searchPropertyListViewTenureCleanupLabel = By.XPath("//label(text()='Tenure Cleanup:')");
+        private readonly By searchPropertyListViewTenureCleanupInput = By.Id("tenure-cleanup-selector_input");
+
         private readonly By searchPropertyListHeaderPid = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'PID')]");
         private readonly By searchPropertyListHeaderPin = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'PIN')]");
+        private readonly By searchPropertyListHeaderHistoricalFile = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Historical File')]");
         private readonly By searchPropertyListHeaderAddress = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address')]");
         private readonly By searchPropertyListHeaderLocation = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Location')]");
         private readonly By searchPropertyListLocationSortBttn = By.CssSelector("div[data-testid='sort-column-Location']");
         private readonly By searchPropertyListHeaderLotSize = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Lot Size')]");
-        private readonly By searchPropertyListLotSizeSortBttn = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Lot Size')]/div");
+        private readonly By searchPropertyListLotSizeSortBttn = By.CssSelector("div[data-testid='sort-column-Lot Size (in ha)']");
         private readonly By searchPropertyListHeaderOwnership = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Ownership')]");
         private readonly By searchPropertyListOwnershipSortBttn = By.CssSelector("div[data-testid='sort-column-Ownership']");
+        private readonly By searchPropertyListHeaderTenureCleanup = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Tenure Cleanup')]");
         private readonly By searchPropertyListContent = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']");
         private readonly By searchPropertyListContent1stProp = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child");
         private readonly By searchPropertyListContent1stPID = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(1)");
@@ -410,16 +417,27 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(searchPropertyListViewTitle);
             AssertTrueIsDisplayed(searchPropertyViewByLabel);
-            AssertTrueIsDisplayed(searchViewByContainer);
+
+            AssertTrueIsDisplayed(searchPropertyTypeSelect);
+            AssertTrueIsDisplayed(searchPropertyByPIDInput);
+            AssertTrueIsDisplayed(searchPropertySearchBttn);
+            AssertTrueIsDisplayed(searchPropertyResetBttn);
+
+            AssertTrueIsDisplayed(searchPropertyListViewOwnershipLabel);
+            AssertTrueIsDisplayed(searchPropertyListViewOwnershipInput);
+            AssertTrueIsDisplayed(searchPropertyListViewTenureCleanupLabel);
+            AssertTrueIsDisplayed(searchPropertyListViewTenureCleanupInput);
 
             AssertTrueIsDisplayed(searchPropertyListHeaderPid);
             AssertTrueIsDisplayed(searchPropertyListHeaderPin);
+            AssertTrueIsDisplayed(searchPropertyListHeaderHistoricalFile);
             AssertTrueIsDisplayed(searchPropertyListHeaderAddress);
             AssertTrueIsDisplayed(searchPropertyListHeaderLocation);
             AssertTrueIsDisplayed(searchPropertyListLocationSortBttn);
             AssertTrueIsDisplayed(searchPropertyListHeaderLotSize);
             AssertTrueIsDisplayed(searchPropertyListLotSizeSortBttn);
             AssertTrueIsDisplayed(searchPropertyListHeaderOwnership);
+            AssertTrueIsDisplayed(searchPropertyListHeaderTenureCleanup);
             AssertTrueIsDisplayed(searchPropertyListOwnershipSortBttn);
 
             AssertTrueIsDisplayed(searchPropertyListContent);

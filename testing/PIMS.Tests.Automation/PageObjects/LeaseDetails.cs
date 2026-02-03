@@ -293,7 +293,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     Wait();
                     FocusAndClick(licenseDetailsPurposeMultiselector);
 
-                    Wait(4000);
+                    Wait(5000);
                     ChooseMultiSelectSpecificOption(licenseDetailsPurposeOptions, purpose);
                 }
 
@@ -672,8 +672,10 @@ namespace PIMS.Tests.Automation.PageObjects
         public void CancelLicense()
         {
             Wait();
-            ButtonElement("Cancel");
+            FocusAndClick(By.CssSelector("button[data-testid='cancel-button']"));
             sharedModals.CancelActionModal();
+
+            Wait();
         }
 
         public string GetLeaseCode()
