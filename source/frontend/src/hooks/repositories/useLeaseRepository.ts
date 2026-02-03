@@ -9,7 +9,11 @@ import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Le
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
+import {
+  useAxiosErrorHandler,
+  useAxiosErrorHandlerWithAuthorization,
+  useAxiosSuccessHandler,
+} from '@/utils';
 
 import { useApiLeases } from '../pims-api/useApiLeases';
 import { ApiGen_Concepts_LeaseFileTeam } from './../../models/api/generated/ApiGen_Concepts_LeaseFileTeam';
@@ -66,7 +70,7 @@ export const useLeaseRepository = () => {
     ),
     requestName: 'getApiLease',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to retrieve lease.'),
+    onError: useAxiosErrorHandlerWithAuthorization('Failed to retrieve lease.'),
   });
 
   const getLeaseRenewalsApi = useApiRequestWrapper<
