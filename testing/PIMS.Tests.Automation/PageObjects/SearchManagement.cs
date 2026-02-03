@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.DevTools.V142.Network;
 using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -8,7 +9,6 @@ namespace PIMS.Tests.Automation.PageObjects
         //Main Menu Elements
         private readonly By managementMainMenu = By.XPath("//div[@data-testid= 'nav-tooltip-management']");
         private readonly By managementMainMenuListViewLink = By.XPath("//a[contains(text(),'Manage Management Files')]");
-        private readonly By managementMainMenuActsListViewLink = By.XPath("//a[contains(text(),'Manage Management Activities')]");
 
         //Management List View - Search Section Elements
         private readonly By searchManagementFileTitle = By.XPath("//h1/div/div/span[contains(text(),'Management Files')]");
@@ -24,6 +24,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementListSearchByStatusSelect = By.Id("input-managementFileStatusCode");
         private readonly By managementListSearchByPurposeSelect = By.Id("input-managementFilePurposeCode");
         private readonly By managementListSearchByProjectInput = By.Id("input-projectNameOrNumber");
+        private readonly By managementListSearchByRegionSelect = By.Id("input-regionCode");
         private readonly By managementListSearchButton = By.Id("search-button");
         private readonly By managementListResetButton = By.Id("reset-button");
 
@@ -31,6 +32,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementListViewMgmtFileColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Management file #')]");
         private readonly By managementListViewFileNameColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'File name')]");
         private readonly By managementListViewOrderByFileName = By.CssSelector("div[data-testid='sort-column-fileName']");
+        private readonly By managementListViewMOTTRegionColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTT region')]");
         private readonly By managementListViewHistFileColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Historical File #')]");
         private readonly By managementListViewOrderByHistFile = By.CssSelector("div[data-testid='sort-column-legacyFileNum']");
         private readonly By managementListViewProjectColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Project')]");
@@ -135,7 +137,7 @@ namespace PIMS.Tests.Automation.PageObjects
         }
 
         public void FilterManagementFiles(string pid = "", string pin = "", string address = "", string mgmtfile = "", string teamMember = "",
-            string status = "", string purpose = "", string project = "")
+            string status = "", string purpose = "", string project = "", string region = "")
         {
             Wait();
             webDriver.FindElement(managementListResetButton).Click();
@@ -192,6 +194,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 WaitUntilClickable(managementListSearchByProjectInput);
                 webDriver.FindElement(managementListSearchByProjectInput).SendKeys(project);
             }
+            if (region != "")
+            {
+                WaitUntilClickable(managementListSearchByRegionSelect);
+                ChooseSpecificSelectOption(managementListSearchByRegionSelect, region);
+
+            }
 
             WaitUntilClickable(managementListSearchButton);
             FocusAndClick(managementListSearchButton);
@@ -225,6 +233,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementListSearchByStatusSelect);
             AssertTrueIsDisplayed(managementListSearchByPurposeSelect);
             AssertTrueIsDisplayed(managementListSearchByProjectInput);
+            AssertTrueIsDisplayed(managementListSearchByRegionSelect);
             AssertTrueIsDisplayed(managementListSearchButton);
             AssertTrueIsDisplayed(managementListResetButton);
 
@@ -233,6 +242,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementListViewFileNameColumnHeader);
             AssertTrueIsDisplayed(managementListViewOrderByFileName);
             AssertTrueIsDisplayed(managementListViewHistFileColumnHeader);
+            AssertTrueIsDisplayed(managementListViewMOTTRegionColumnHeader);
             AssertTrueIsDisplayed(managementListViewOrderByHistFile);
             AssertTrueIsDisplayed(managementListViewProjectColumnHeader);
             AssertTrueIsDisplayed(managementListViewPurposeColumnHeader);

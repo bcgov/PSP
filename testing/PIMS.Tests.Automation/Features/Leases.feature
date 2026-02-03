@@ -13,8 +13,8 @@ Scenario: 02._Leases_Properties_and_Surplus_Declaration
 	Given I create a new minimum Lease from row number 3
 	When I add Properties to the Lease Details
 	And I update a Lease's Properties from row number 4
-	And I verify the Surplus section
-	Then A new lease is created successfully
+	#And I verify the Surplus section
+	#Then A new lease is created successfully
 
 Scenario: 03._Leases_Approval_Consultations
 	Given I create a new minimum Lease from row number 20

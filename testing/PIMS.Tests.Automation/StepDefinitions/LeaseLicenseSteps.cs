@@ -181,6 +181,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save the new license details
             leaseDetails.CancelLicense();
+            leaseDetails.CancelLicense();
 
             //Edit Properties Section
             leaseDetails.NavigateToAddPropertiesLeasesFile();
