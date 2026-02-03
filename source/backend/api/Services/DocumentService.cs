@@ -99,7 +99,9 @@ namespace Pims.Api.Services
             this.mapper = mapper;
             this.keycloakOptions = options;
             this.mayanOptions = mayanOptions;
-            configuration.Bind(MayanConfigSectionKey, _config);
+            var config = new MayanConfig();
+            configuration?.Bind(MayanConfigSectionKey, config);
+            _config = config;
         }
 
         public static bool IsValidDocumentExtension(string fileName)
