@@ -97,6 +97,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileEditButton = By.CssSelector("button[title='Edit acquisition file']");
         private readonly By acquisitionFileStatusSelect = By.Id("input-fileStatusTypeCode");
         private readonly By acquisitionFileProjectInput = By.CssSelector("input[id='typeahead-project']");
+        private readonly By acquisitionFileProjectDelete = By.CssSelector("div[data-testid='typeahead-project'] button[aria-label='Clear']");
         private readonly By acquisitionFileProject1stOption = By.CssSelector("div[id='typeahead-project'] a");
         private readonly By acquisitionFileProjectProductSelect = By.Id("input-product");
         private readonly By acquicistionFileProjectProductOptions = By.CssSelector("select[id='input-product'] option");
@@ -220,7 +221,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateMinimumAcquisitionFile(AcquisitionFile acquisition)
         {
-            Wait(5000);
+            Wait();
 
             webDriver.FindElement(acquisitionFileNameInput).SendKeys(acquisition.AcquisitionFileName);
             webDriver.FindElement(acquisitionFileDetailsTypeSelect);
@@ -254,7 +255,9 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 WaitUntilVisible(acquisitionFileProjectInput);
 
-                ClearInput(acquisitionFileProjectInput);
+                if(webDriver.FindElements(acquisitionFileProjectDelete).Count >= 1)
+                    webDriver.FindElement(acquisitionFileProjectDelete).Click();
+
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(acquisition.AcquisitionProject);
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(Keys.Space);
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(Keys.Backspace);
@@ -461,7 +464,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (acquisition.OwnerRepresentative != "" && acquisitionType == "Main")
             {
-                WaitUntilVisible(acquisitionFileOwnerRepresentativeButton);
+                Wait();
                 webDriver.FindElement(acquisitionFileOwnerRepresentativeButton).Click();
                 sharedSelectContact.SelectContact(acquisition.OwnerRepresentative, "");
             }

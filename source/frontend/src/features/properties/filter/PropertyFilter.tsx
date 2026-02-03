@@ -287,7 +287,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                           }}
                         ></Form.Check>
                         <Form.Label className="form-check-label" htmlFor="input-radio-district">
-                          Disctrict
+                          District
                         </Form.Label>
                       </InlineFlexDiv>
                       <InlineFlexDiv>
@@ -308,7 +308,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                           }}
                         ></Form.Check>
                         <Form.Label className="form-check-label" htmlFor="input-radio-district-lot">
-                          Disctrict Lot
+                          District Lot
                         </Form.Label>
                       </InlineFlexDiv>
                     </div>
