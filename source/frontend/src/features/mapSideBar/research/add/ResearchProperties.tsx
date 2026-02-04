@@ -1,12 +1,14 @@
 import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import noop from 'lodash/noop';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
@@ -107,7 +109,18 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
 
       <FieldArray name="properties">
         {({ remove, replace }) => (
-          <Section header="Selected Properties">
+          <Section
+            header={
+              <Row>
+                <Col xs="11">Selected Properties</Col>
+                {values?.properties?.length > 0 && (
+                  <Col>
+                    <ZoomToLocation formProperties={values?.properties} icon={ZoomIconType.area} />
+                  </Col>
+                )}
+              </Row>
+            }
+          >
             <SelectedPropertyHeaderRow />
             {values.properties.map((property, index) => (
               <SelectedPropertyRow
