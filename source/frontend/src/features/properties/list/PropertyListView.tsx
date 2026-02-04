@@ -3,8 +3,7 @@ import './PropertyListView.scss';
 import isEmpty from 'lodash/isEmpty';
 import Multiselect from 'multiselect-react-dropdown';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { Row } from 'react-bootstrap';
-import { Col } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { FaFileAlt, FaFileExcel, FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -334,6 +333,7 @@ const defaultStyle = {
   multiselectContainer: {
     width: 'auto',
     color: 'black',
+    zIndex: 200,
   },
   searchBox: {
     background: 'white',

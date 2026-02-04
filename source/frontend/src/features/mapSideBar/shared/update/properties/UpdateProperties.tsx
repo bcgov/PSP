@@ -265,12 +265,14 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                     header={
                       <Row>
                         <Col xs="11">Selected Properties</Col>
-                        <Col>
-                          <ZoomToLocation
-                            formProperties={formikProps?.values?.properties}
-                            icon={ZoomIconType.area}
-                          />
-                        </Col>
+                        {formikProps?.values?.properties?.length > 0 && (
+                          <Col>
+                            <ZoomToLocation
+                              formProperties={formikProps?.values?.properties}
+                              icon={ZoomIconType.area}
+                            />
+                          </Col>
+                        )}
                       </Row>
                     }
                   >
