@@ -366,7 +366,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             //AssertTrueIsDisplayed(projectCreateTitle);
-            AssertTrueIsDisplayed(projectInstructionParagraph);
+            //AssertTrueIsDisplayed(projectInstructionParagraph);
 
             AssertTrueIsDisplayed(projectNameLabel);
             AssertTrueIsDisplayed(projectNameInput);

@@ -425,9 +425,8 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            var currentLease = _leaseRepository.GetNoTracking((long)compensationRequisition.LeaseId);
-            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode);
+            // Enforce access control for lease files
+            _user.ThrowInvalidAccessToLeaseFile(currentLeaseFile, _userRepository, _projectRepository);
 
             compensationRequisition.IsDraft ??= true;
             var newCompensationRequisition = _compensationRequisitionRepository.Add(compensationRequisition);
@@ -449,9 +448,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting compensations for Lease file id: {LeaseId}", fileId);
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView, Permissions.LeaseView);
-
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(fileId).RegionCode);
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, fileId);
 
             return _compensationRequisitionRepository.GetAllByLeaseFileId(fileId).ToList();
         }

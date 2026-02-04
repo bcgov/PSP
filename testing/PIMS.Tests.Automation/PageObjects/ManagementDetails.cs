@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using OpenQA.Selenium.BiDi.BrowsingContext;
+using OpenQA.Selenium.DevTools.V142.Network;
 using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -61,13 +62,27 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementFilePurposeLabel = By.XPath("//label[contains(text(),'Purpose')]");
         private readonly By managementFilePurposeSelect = By.Id("input-purposeTypeCode");
         private readonly By managemenetFilePurposeContent = By.XPath("//label[contains(text(),'Purpose')]/parent::div/following-sibling::div");
+        private readonly By managementFileResponsiblePayerLabel = By.XPath("//label[contains(text(),'Responsible payer')]");
+        private readonly By managementFileResponsiblePayerContactBttn = By.XPath("//input[@id='input-responsiblePayer.id']/parent::div/parent::div/following-sibling::div/button");
+        private readonly By managementFileResponsiblePayerContent = By.XPath("//label[contains(text(),'Responsible payer')]/parent::div/following-sibling::div/a");
         private readonly By managementFileAdditionalDetailsLabel = By.XPath("//label[contains(text(),'Additional details')]");
         private readonly By managementFileAdditionalDetailsInput = By.Id("input-additionalDetails");
         private readonly By managementFileAdditionalDetailsContent = By.XPath("//label[contains(text(),'Additional details')]/parent::div/following-sibling::div");
+        private readonly By managementFileMinistryRegionLabel = By.XPath("//label[contains(text(),'Ministry region')]");
+        private readonly By managementFileMinistryRegionSelect = By.Id("input-regionCode");
+        private readonly By managementFileMinistryRegionContent = By.XPath("//label[contains(text(),'Ministry region')]/parent::div/following-sibling::div");
 
         private readonly By managementFileTeamSubtitle = By.XPath("//h2/div/div[contains(text(),'Management Team')]");
         private readonly By managementFileAddAnotherMemberLink = By.CssSelector("button[data-testid='add-team-member']");
         private readonly By managementFileViewTeamMembersGroup = By.XPath("//div[contains(text(),'Management Team')]/parent::div/parent::h2/following-sibling::div/div");
+
+        private readonly By managementFileNoticeClaimSubtitle = By.XPath("//h2/div/div[contains(text(),'Notice of Claims')]");
+        private readonly By managementFileNoticeClaimReceivedDateLabel = By.XPath("//label[contains(text(),'Received date')]");
+        private readonly By managementFileNoticeClaimReceivedDateInput = By.Id("datepicker-noticeOfClaim.receivedDate");
+        private readonly By managementFileNoticeClaimReceivedDateContent = By.XPath("//label[contains(text(),'Received date')]/parent::div/following-sibling::div");
+        private readonly By managementFileNoticeClaimCommentsLabel = By.XPath("//label[contains(text(),'Comments')]");
+        private readonly By managementFileNoticeClaimCommentsInput = By.Id("input-noticeOfClaim.comment");
+        private readonly By managementFileNoticeClaimCommentsContent = By.XPath("//label[contains(text(),'Comments')]/parent::div/following-sibling::div");
 
         private readonly By managementFileSummaryBttn = By.CssSelector("button[title='File Details']");
 
@@ -76,12 +91,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly SharedFileProperties sharedSearchProperties;
         private readonly SharedTeamMembers sharedTeamMembers;
         private readonly SharedModals sharedModals;
+        private readonly SharedSelectContact sharedContacts;
 
         public ManagementDetails(IWebDriver webDriver) : base(webDriver)
         {
             sharedSearchProperties = new SharedFileProperties(webDriver);
             sharedTeamMembers = new SharedTeamMembers(webDriver);
             sharedModals = new SharedModals(webDriver);
+            sharedContacts = new SharedSelectContact(webDriver);
         }
 
         public void NavigateToCreateNewManagementFile()
@@ -167,13 +184,26 @@ namespace PIMS.Tests.Automation.PageObjects
             if (mgmtFile.ManagementPurpose != "")
                 ChooseSpecificSelectOption(managementFilePurposeSelect, mgmtFile.ManagementPurpose);
 
-            //Additional details
+            //Responsible Payer
+            AssertTrueIsDisplayed(managementFileResponsiblePayerLabel);
+            if (mgmtFile.ManagementResponsiblePayer != "")
+            {
+                webDriver.FindElement(managementFileResponsiblePayerContactBttn).Click();
+                sharedContacts.SelectContact(mgmtFile.ManagementResponsiblePayer, "");
+            }
+            
+            //Additional Details
             AssertTrueIsDisplayed(managementFileAdditionalDetailsLabel);
             if (mgmtFile.ManagementAdditionalDetails != "")
             {
                 ClearInput(managementFileAdditionalDetailsInput);
                 webDriver.FindElement(managementFileAdditionalDetailsInput).SendKeys(mgmtFile.ManagementAdditionalDetails);
             }
+
+            //Ministry Region
+            AssertTrueIsDisplayed(managementFileMinistryRegionLabel);
+            if (mgmtFile.ManagementMinistryRegion != "")
+                ChooseSpecificSelectOption(managementFileMinistryRegionSelect, mgmtFile.ManagementMinistryRegion);
 
             //MANAGEMENT TEAM
             if (mgmtFile.ManagementTeam!.Count > 0)
@@ -183,6 +213,25 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 for (var i = 0; i < mgmtFile.ManagementTeam.Count; i++)
                     sharedTeamMembers.AddMgmtTeamMembers(mgmtFile.ManagementTeam[i]);
+            }
+
+            //NOTICE OF CLAIMS
+            AssertTrueIsDisplayed(managementFileNoticeClaimSubtitle);
+
+            //Date Received
+            AssertTrueIsDisplayed(managementFileNoticeClaimReceivedDateLabel);
+            if (mgmtFile.ManagementNOCReceivedDate != "")
+            {
+                ClearInput(managementFileNoticeClaimReceivedDateInput);
+                webDriver.FindElement(managementFileNoticeClaimReceivedDateInput).SendKeys(mgmtFile.ManagementNOCReceivedDate);
+            }
+                
+            //Comments
+            AssertTrueIsDisplayed(managementFileNoticeClaimCommentsLabel);
+            if (mgmtFile.ManagementNOCComments != "")
+            {
+                ClearInput(managementFileNoticeClaimCommentsInput);
+                webDriver.FindElement(managementFileNoticeClaimCommentsInput).SendKeys(mgmtFile.ManagementNOCComments);
             }
         }
 
@@ -269,10 +318,19 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementFilePurposeSelect);
             AssertTrueIsDisplayed(managementFileAdditionalDetailsLabel);
             AssertTrueIsDisplayed(managementFileAdditionalDetailsInput);
+            AssertTrueIsDisplayed(managementFileMinistryRegionLabel);
+            AssertTrueIsDisplayed(managementFileMinistryRegionSelect);
 
             //Management Team
             AssertTrueIsDisplayed(managementFileTeamSubtitle);
             AssertTrueIsDisplayed(managementFileAddAnotherMemberLink);
+
+            //Notice of Claim
+            AssertTrueIsDisplayed(managementFileNoticeClaimSubtitle);
+            AssertTrueIsDisplayed(managementFileNoticeClaimReceivedDateLabel);
+            AssertTrueIsDisplayed(managementFileNoticeClaimReceivedDateInput);
+            AssertTrueIsDisplayed(managementFileNoticeClaimCommentsLabel);
+            AssertTrueIsDisplayed(managementFileNoticeClaimCommentsInput);
         }
 
         public void VerifyManagementUpdateForm()
@@ -299,12 +357,23 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementFileHistoricalFileInput);
             AssertTrueIsDisplayed(managementFilePurposeLabel);
             AssertTrueIsDisplayed(managementFilePurposeSelect);
+            AssertTrueIsDisplayed(managementFileResponsiblePayerLabel);
+            AssertTrueIsDisplayed(managementFileResponsiblePayerContactBttn);
             AssertTrueIsDisplayed(managementFileAdditionalDetailsLabel);
             AssertTrueIsDisplayed(managementFileAdditionalDetailsInput);
+            AssertTrueIsDisplayed(managementFileMinistryRegionLabel);
+            AssertTrueIsDisplayed(managementFileMinistryRegionSelect);
 
             //Management Team
             AssertTrueIsDisplayed(managementFileTeamSubtitle);
             AssertTrueIsDisplayed(managementFileAddAnotherMemberLink);
+
+            //Notice of Claim
+            AssertTrueIsDisplayed(managementFileNoticeClaimSubtitle);
+            AssertTrueIsDisplayed(managementFileNoticeClaimReceivedDateLabel);
+            AssertTrueIsDisplayed(managementFileNoticeClaimReceivedDateInput);
+            AssertTrueIsDisplayed(managementFileNoticeClaimCommentsLabel);
+            AssertTrueIsDisplayed(managementFileNoticeClaimCommentsInput);
         }
 
         public void VerifyManagementDetailsViewForm(ManagementFile mgmtFile)
@@ -370,6 +439,11 @@ namespace PIMS.Tests.Automation.PageObjects
             if(mgmtFile.ManagementHistoricalFile != "")
                 AssertTrueContentEquals(managementFileHistoricalFileContent, mgmtFile.ManagementHistoricalFile);
 
+            //Responsible Payer
+            AssertTrueIsDisplayed(managementFileResponsiblePayerLabel);
+            if (mgmtFile.ManagementResponsiblePayer != "")
+                AssertTrueContentEquals(managementFileResponsiblePayerContent, mgmtFile.ManagementResponsiblePayer);
+
             //Purpose
             AssertTrueIsDisplayed(managementFilePurposeLabel);
             if (mgmtFile.ManagementPurpose != "")
@@ -380,10 +454,28 @@ namespace PIMS.Tests.Automation.PageObjects
             if (mgmtFile.ManagementAdditionalDetails != "")
                 AssertTrueContentEquals(managementFileAdditionalDetailsContent, mgmtFile.ManagementAdditionalDetails);
 
+            //Ministry Region
+            AssertTrueIsDisplayed(managementFileMinistryRegionLabel);
+            if (mgmtFile.ManagementMinistryRegion != "")
+                AssertTrueContentEquals(managementFileMinistryRegionContent, mgmtFile.ManagementMinistryRegion);
+
             //MANAGEMENT TEAM
             AssertTrueIsDisplayed(managementFileTeamSubtitle);
             if(mgmtFile.ManagementTeam!.Count > 0)
                 sharedTeamMembers.VerifyTeamMembersViewForm(mgmtFile.ManagementTeam);
+
+            //NOTICE OF CLAIMS
+            AssertTrueIsDisplayed(managementFileNoticeClaimSubtitle);
+
+            //NOC Received Date
+            AssertTrueIsDisplayed(managementFileNoticeClaimReceivedDateLabel);
+            if (mgmtFile.ManagementNOCReceivedDate != "")
+                AssertTrueContentEquals(managementFileNoticeClaimReceivedDateContent, mgmtFile.ManagementNOCReceivedDate);
+
+            //NOC Comments
+            AssertTrueIsDisplayed(managementFileNoticeClaimCommentsLabel);
+            if (mgmtFile.ManagementNOCReceivedDate != "")
+                AssertTrueContentEquals(managementFileNoticeClaimCommentsContent, mgmtFile.ManagementNOCComments);
         }
     }
 }

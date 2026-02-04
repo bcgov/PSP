@@ -588,8 +588,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Management Details
             managementFile.ManagementName = ExcelDataContext.ReadData(rowNumber, "ManagementName");
             managementFile.ManagementHistoricalFile = ExcelDataContext.ReadData(rowNumber, "ManagementHistoricalFile");
+            managementFile.ManagementResponsiblePayer = ExcelDataContext.ReadData(rowNumber, "ManagementResponsiblePayer");
             managementFile.ManagementPurpose = ExcelDataContext.ReadData(rowNumber, "ManagementPurpose");
             managementFile.ManagementAdditionalDetails = ExcelDataContext.ReadData(rowNumber, "ManagementAdditionalDetails");
+            managementFile.ManagementMinistryRegion = ExcelDataContext.ReadData(rowNumber, "ManagementMinistryRegion");
 
             //Management Team
             managementFile.ManagementTeamStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementTeamStartRow"));
@@ -597,6 +599,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             if (managementFile.ManagementTeamStartRow != 0 && managementFile.ManagementTeamCount != 0)
                 PopulateTeamsCollection(managementFile.ManagementTeamStartRow, managementFile.ManagementTeamCount);
+
+            //Notice of Claims
+            managementFile.ManagementNOCReceivedDate = ExcelDataContext.ReadData(rowNumber, "ManagementNOCReceivedDate");
+            managementFile.ManagementNOCComments = ExcelDataContext.ReadData(rowNumber, "ManagementNOCComments");
 
             //Properties Search
             managementFile.ManagementTotalProperties = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementTotalProperties"));
