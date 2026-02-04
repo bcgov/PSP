@@ -164,13 +164,16 @@ export const getFeatureBoundedCenter = (feature: Feature<Geometry, GeoJsonProper
   } else if (feature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Point) {
     const boundedCenter = feature.geometry.coordinates;
     return boundedCenter;
+  } else if (exists(feature?.properties?.LOCATION)) {
+    const boundedCenter = feature.properties.LOCATION as Point;
+    return boundedCenter.coordinates;
+  } else if (exists(feature?.properties?.LATITUDE) && exists(feature?.properties?.LONGITUDE)) {
+    return [feature.properties.LONGITUDE, feature.properties.LATITUDE];
   } else {
     toast.error(
       'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
     );
-    throw Error(
-      'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
-    );
+    return null;
   }
 };
 
