@@ -18,6 +18,9 @@ namespace Pims.Api.Models.CodeTypes
         [EnumMember(Value = "FORM5")]
         FORM5,
 
+        [EnumMember(Value = "FORM6")]
+        FORM6,
+
         [EnumMember(Value = "FORM7")]
         FORM7,
 

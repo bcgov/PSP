@@ -202,12 +202,6 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line 15
  await testRunner.AndAsync("I update a Lease\'s Properties from row number 4", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 16
- await testRunner.AndAsync("I verify the Surplus section", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 17
- await testRunner.ThenAsync("A new lease is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
             }
             await this.ScenarioCleanupAsync();
         }

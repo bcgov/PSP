@@ -35,6 +35,8 @@
         public string OwnerSolicitor { get; set; } = null!;
         public string OwnerRepresentative { get; set; } = null!;
         public string OwnerComment { get; set; } = null!;
+        public string AcquisitionNOCReceivedDate { get; set; } = null!;
+        public string AcquisitionNOCComments { get; set; } = null!;
         public int AcquisitionSearchPropertiesIndex { get; set; } = 0;
         public SearchProperty AcquisitionSearchProperties { get; set; } = new SearchProperty() { };
         public int TakesStartRow { get; set; } = 0;

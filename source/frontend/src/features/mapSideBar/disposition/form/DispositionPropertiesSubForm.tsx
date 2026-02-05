@@ -135,12 +135,14 @@ const DispositionPropertiesSubForm: React.FunctionComponent<DispositionPropertie
             header={
               <Row>
                 <Col xs="11">Selected Properties</Col>
-                <Col>
-                  <ZoomToLocation
-                    icon={ZoomIconType.area}
-                    formProperties={formikProps?.values?.fileProperties}
-                  />
-                </Col>
+                {formikProps?.values?.fileProperties?.length > 0 && (
+                  <Col>
+                    <ZoomToLocation
+                      icon={ZoomIconType.area}
+                      formProperties={formikProps?.values?.fileProperties}
+                    />
+                  </Col>
+                )}
               </Row>
             }
           >

@@ -40,6 +40,7 @@ namespace Pims.Dal.Entities
             public const string DRAFT = "DRAFT";
             public const string INACTIVE = "INACTIVE";
             public const string TERMINATED = "TERMINATED";
+            public const string DUPLICATE = "DUPLICATE";
         }
     }
 }

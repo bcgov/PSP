@@ -1,12 +1,14 @@
 import { FieldArray, FormikProps } from 'formik';
 import noop from 'lodash/noop';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
 import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
@@ -105,7 +107,21 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
 
       <FieldArray name="properties">
         {({ remove, replace }) => (
-          <Section header="Selected Properties">
+          <Section
+            header={
+              <Row>
+                <Col xs="11">Selected Properties</Col>
+                {formikProps?.values?.properties?.length > 0 && (
+                  <Col>
+                    <ZoomToLocation
+                      formProperties={formikProps?.values?.properties}
+                      icon={ZoomIconType.area}
+                    />
+                  </Col>
+                )}
+              </Row>
+            }
+          >
             <AddPropertiesGuide />
             {exists(selectedFeatureDataset?.parcelFeature) ||
             exists(selectedFeatureDataset?.pimsFeature) ||

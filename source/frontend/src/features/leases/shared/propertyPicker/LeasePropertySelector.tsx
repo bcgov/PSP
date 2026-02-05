@@ -162,12 +162,14 @@ export const LeasePropertySelector: React.FunctionComponent<LeasePropertySelecto
               header={
                 <Row>
                   <Col xs="11">Selected Properties</Col>
-                  <Col>
-                    <ZoomToLocation
-                      icon={ZoomIconType.area}
-                      formProperties={formikProps?.values?.properties?.map(lf => lf?.property)}
-                    />
-                  </Col>
+                  {formikProps?.values?.properties?.length > 0 && (
+                    <Col>
+                      <ZoomToLocation
+                        icon={ZoomIconType.area}
+                        formProperties={formikProps?.values?.properties?.map(lf => lf?.property)}
+                      />
+                    </Col>
+                  )}
                 </Row>
               }
             >

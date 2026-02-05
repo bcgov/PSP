@@ -24,7 +24,7 @@ namespace Pims.Dal.Repositories
 
         LastUpdatedByModel GetLastUpdateBy(long leaseId);
 
-        Paged<PimsLease> GetPage(LeaseFilter filter, HashSet<short> regions);
+        Paged<PimsLease> GetPage(LeaseFilter filter, HashSet<short> regions, long? contractorPersonId = null);
 
         PimsLease Add(PimsLease lease);
 
