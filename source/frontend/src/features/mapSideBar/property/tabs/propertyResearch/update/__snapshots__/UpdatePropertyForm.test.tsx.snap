@@ -61,7 +61,6 @@ exports[`UpdatePropertyForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Property of Interest
           </div>
@@ -435,7 +434,6 @@ exports[`UpdatePropertyForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Research Summary
           </div>

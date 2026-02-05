@@ -312,7 +312,6 @@ exports[`DocumentDetailContainer component > renders the underlying form 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Document Information
             <span

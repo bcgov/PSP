@@ -198,7 +198,6 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Project
                 </div>
@@ -272,7 +271,6 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Progress Statuses
                 </div>
@@ -455,7 +453,6 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Schedule
                 </div>
@@ -594,7 +591,6 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Acquisition Details
                 </div>
@@ -764,7 +760,6 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Acquisition Team
                 </div>
@@ -868,7 +863,6 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Owner Information
                 </div>
@@ -1034,7 +1028,6 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Notice of Claim
                 </div>

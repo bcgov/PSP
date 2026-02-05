@@ -274,7 +274,7 @@ export const useMapSearch = () => {
           findPropertyIdsByProjectTask,
         ]);
 
-        const validFeatures = properties.features?.filter(
+        const validFeatures = properties?.features?.filter(
           feature =>
             !!feature?.geometry && projectPropertyIds.includes(feature.properties.PROPERTY_ID),
         );
@@ -355,10 +355,10 @@ export const useMapSearch = () => {
             highwayPlanFeatures: emptyHighwayFeatures,
           };
 
-          if (validFeatures.length === 0) {
+          if (validFeatures?.length === 0) {
             toast.info('No search results found');
           } else {
-            toast.info(`${validFeatures.length} properties found`);
+            toast.info(`${validFeatures?.length} properties found`);
           }
         }
       } catch (error) {
@@ -469,12 +469,12 @@ export const useMapSearch = () => {
           features: [...(pinPmbcData?.features || []), ...(pidPmbcData?.features || [])],
           bbox: pinPmbcData?.bbox || pidPmbcData?.bbox,
         };
-        const validPimsFeatures = pidPinInventoryData.features.filter(feature => exists(feature));
+        const validPimsFeatures = pidPinInventoryData?.features?.filter(feature => exists(feature));
 
         //filter out any pmbc features that do not have geometry, or are part of the pims feature result set.
-        const validPmbcFeatures = attributedFeatures.features.filter(feature => exists(feature));
+        const validPmbcFeatures = attributedFeatures?.features?.filter(feature => exists(feature));
         result = {
-          pimsFeatures: validPimsFeatures.length
+          pimsFeatures: validPimsFeatures?.length
             ? {
                 type: pidPinInventoryData.type,
                 bbox: pidPinInventoryData.bbox,
@@ -482,7 +482,7 @@ export const useMapSearch = () => {
               }
             : emptyPimsFeatureCollection,
           pimsLiteFeatures: emptyPimsLiteFeatureCollection,
-          fullyAttributedFeatures: validPmbcFeatures
+          fullyAttributedFeatures: validPmbcFeatures?.length
             ? {
                 type: attributedFeatures.type,
                 bbox: attributedFeatures.bbox,
@@ -493,10 +493,10 @@ export const useMapSearch = () => {
           highwayPlanFeatures: emptyHighwayFeatures,
         };
 
-        if (validPmbcFeatures.length === 0 && validPimsFeatures.length === 0) {
+        if (validPmbcFeatures?.length === 0 && validPimsFeatures?.length === 0) {
           toast.info('No search results found');
         } else {
-          toast.info(`${validPmbcFeatures.length + validPimsFeatures.length} properties found`);
+          toast.info(`${validPmbcFeatures?.length + validPimsFeatures?.length} properties found`);
         }
       } catch (error) {
         toast.error((error as Error).message, { autoClose: 7000 });
@@ -550,7 +550,7 @@ export const useMapSearch = () => {
           pimsLiteFeatures: {
             type: pidPinInventoryData.type,
             bbox: pidPinInventoryData.bbox,
-            features: validFeatures.map(vf => ({
+            features: validFeatures?.map(vf => ({
               type: vf.type,
               geometry: vf.geometry ?? vf?.properties?.LOCATION,
               id: vf.id,

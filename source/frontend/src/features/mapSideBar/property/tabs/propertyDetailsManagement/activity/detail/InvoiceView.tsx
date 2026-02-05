@@ -28,7 +28,7 @@ export const InvoiceView: React.FunctionComponent<React.PropsWithChildren<IInvoi
   };
 
   return (
-    <Section header={getInvoiceHeader()} isCollapsable initiallyExpanded={false}>
+    <Section header={getInvoiceHeader()} isCollapsable initiallyExpanded={false} hideOverflow>
       <SectionField label="Invoice number" labelWidth={{ xs: 4 }} contentWidth={{ xs: 8 }}>
         {activityInvoice.invoiceNum}
       </SectionField>

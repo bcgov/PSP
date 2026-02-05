@@ -446,7 +446,6 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             <div
               class="c5"
@@ -609,7 +608,6 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             <div
               class="d-flex align-items-center"
@@ -684,7 +682,6 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Financial Coding
           </div>
@@ -868,7 +865,6 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Payment
           </div>
@@ -986,7 +982,6 @@ exports[`Compensation Detail View Component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Financial Activities
           </div>

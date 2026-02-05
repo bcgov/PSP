@@ -607,7 +607,6 @@ exports[`MapSelectorContainer component > renders as expected when provided no p
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Search for a property
               </div>
