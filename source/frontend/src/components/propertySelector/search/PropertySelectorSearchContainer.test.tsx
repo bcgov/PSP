@@ -223,7 +223,7 @@ describe('PropertySelectorSearchContainer component', () => {
     // typing on address search field should bring up address suggestions
     let addressSuggestions: HTMLElement;
     await waitFor(async () => {
-      addressSuggestions = container.querySelector('.suggestionList') as HTMLElement;
+      addressSuggestions = container.querySelector('.addressSuggestionList') as HTMLElement;
       expect(addressSuggestions).toBeInTheDocument();
       // clicking on a suggestion should initiate a search by address
       const firstAddress = addressSuggestions?.firstElementChild as HTMLElement;

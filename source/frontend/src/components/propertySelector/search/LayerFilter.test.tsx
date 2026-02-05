@@ -80,7 +80,7 @@ describe('LayerFilter component', () => {
       await fillInput(container, 'address', '1234 Fake');
     });
 
-    const addressInput = container.querySelector('.suggestionList');
+    const addressInput = container.querySelector('.addressSuggestionList');
     expect(addressInput).toBeInTheDocument();
   });
 
