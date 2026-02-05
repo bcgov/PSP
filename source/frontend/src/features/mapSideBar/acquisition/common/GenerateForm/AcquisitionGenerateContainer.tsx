@@ -2,7 +2,10 @@ import { useCallback, useState } from 'react';
 
 import PropertySelectorModal from '@/features/mapSideBar/research/PropertySelectorModal';
 import NoticeGenerateContainer from '@/features/mapSideBar/shared/generateForm/NoticeGenerateContainer';
-import { useForm12Generation } from '@/features/mapSideBar/shared/generateForm/useForm12Generation';
+import {
+  IGeneratingModal,
+  useForm12Generation,
+} from '@/features/mapSideBar/shared/generateForm/useForm12Generation';
 import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
@@ -29,7 +32,10 @@ export interface IGenerateFormContainerProps {
 const AcquisitionGenerateContainer: React.FunctionComponent<
   React.PropsWithChildren<IGenerateFormContainerProps>
 > = ({ acquisitionFile, View }) => {
-  const [isGenerating, setIsGenerating] = useState(false);
+  const [isGenerating, setIsGenerating] = useState<IGeneratingModal>({
+    display: false,
+    title: null,
+  });
   const generateForm12 = useGenerateForm12();
   const {
     isPropertyModalOpen,
@@ -43,15 +49,17 @@ const AcquisitionGenerateContainer: React.FunctionComponent<
   const generateIntake = useGenerateIntake();
 
   const handleGenerateH0443 = useCallback(() => {
-    setIsGenerating(true);
-    generateH0443(acquisitionFile.id).finally(() => setIsGenerating(false));
+    setIsGenerating({ display: true, title: 'Generate H0443' });
+    generateH0443(acquisitionFile.id).finally(() => setIsGenerating({ display: false }));
   }, [acquisitionFile.id, generateH0443]);
 
   const generateLetter = useGenerateLetter();
   const handleGenerateLetter = useCallback(
     (recipients: Api_GenerateOwner[]) => {
-      setIsGenerating(true);
-      generateLetter(acquisitionFile.id, recipients).finally(() => setIsGenerating(false));
+      setIsGenerating({ display: true, title: 'Generate Letter' });
+      generateLetter(acquisitionFile.id, recipients).finally(() =>
+        setIsGenerating({ display: false }),
+      );
     },
     [acquisitionFile.id, generateLetter],
   );
@@ -61,27 +69,27 @@ const AcquisitionGenerateContainer: React.FunctionComponent<
     responsibleTeamMember: ApiGen_Concepts_AcquisitionFileTeam | null,
     signingTeamMember: ApiGen_Concepts_AcquisitionFileTeam | null,
   ) => {
-    setIsGenerating(true);
+    setIsGenerating({ display: false, title: 'Generate Notice of Entry' });
     generateNotice(
       acquisitionFile.id,
       selectedOwners,
       responsibleTeamMember,
       signingTeamMember,
-    ).finally(() => setIsGenerating(false));
+    ).finally(() => setIsGenerating({ display: false }));
   };
 
   const handleGeneratePropertyIntake = useCallback(
     (fileProperties: ApiGen_Concepts_FileProperty[]) => {
-      setIsGenerating(true);
+      setIsGenerating({ display: false, title: 'Generate Property Intake' });
       generateIntake(acquisitionFile.id, firstOrNull(fileProperties)).finally(() =>
-        setIsGenerating(false),
+        setIsGenerating({ display: false }),
       );
     },
     [acquisitionFile.id, generateIntake],
   );
 
   return (
-    <View isLoading={isGenerating}>
+    <View isLoading={isGenerating.display}>
       <GenerateItemView
         label="Generate Form 12"
         formType={ApiGen_CodeTypes_FormTypes.FORM12}
@@ -89,9 +97,10 @@ const AcquisitionGenerateContainer: React.FunctionComponent<
       />
       <PropertySelectorModal
         isOpened={isPropertyModalOpen}
-        availiableProperties={acquisitionFile?.fileProperties ?? []}
+        availableProperties={acquisitionFile?.fileProperties ?? []}
         onSelectOk={handleSelectedProperties}
         onCancelClick={closePropertyModal}
+        title={isGenerating?.title}
       />
       <GenerateLetterContainer
         acquisitionFileId={acquisitionFile.id}

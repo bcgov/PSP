@@ -16,12 +16,12 @@ import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { getMockApiProperty } from '@/mocks/properties.mock';
 import { emptyRegion } from '@/models/layers/motRegionalBoundary';
 import { emptyPmbcParcel } from '@/models/layers/parcelMapBC';
-import { emptyPropertyLocation } from '@/models/layers/pimsPropertyLocationView';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import * as mapUtils from '@/utils/mapPropertyUtils';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import LeasePropertySelector from './LeasePropertySelector';
+import { emptyProperty } from '@/models/layers/pimsPropertyView';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -378,7 +378,7 @@ describe('LeasePropertySelector component', () => {
       pimsFeatures: [
         {
           type: 'Feature',
-          properties: { ...emptyPropertyLocation, PROPERTY_ID: 1 },
+          properties: { ...emptyProperty, PROPERTY_ID: 1 },
           geometry: getMockPolygon(),
         },
       ],

@@ -24,11 +24,8 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import {
-  emptyPropertyLocation,
-  PIMS_Property_Location_View,
-} from '@/models/layers/pimsPropertyLocationView';
-import { exists, formatApiAddress, pidFormatter } from '@/utils';
+import { emptyProperty, PIMS_Property_View } from '@/models/layers/pimsPropertyView';
+import { exists, formatApiAddress, isPlanNumberSPCP, pidFormatter } from '@/utils';
 
 export enum NameSourceType {
   PID = 'PID',
@@ -44,6 +41,34 @@ export interface PropertyName {
   label: NameSourceType;
   value: string;
 }
+
+export const isStrataPlanCommonPropertyFromSelectedFeatureSet = (
+  selectedFeature: SelectedFeatureDataset | null,
+): boolean => {
+  if (!exists(selectedFeature)) {
+    return false;
+  }
+
+  const pid = pidFromFeatureSet(selectedFeature);
+  const pin = pinFromFeatureSet(selectedFeature);
+  const planNumber = planFromFeatureSet(selectedFeature);
+  const address = addressFromFeatureSet(selectedFeature);
+  const location = selectedFeature.location;
+
+  if (exists(pid) && pid?.toString()?.length > 0 && pid !== '0') {
+    return false;
+  } else if (exists(pin) && pin?.toString()?.length > 0 && pin !== '0') {
+    return false;
+  } else if (exists(planNumber) && planNumber?.toString()?.length > 0) {
+    return isPlanNumberSPCP(planNumber);
+  } else if (exists(location?.lat) && exists(location?.lng)) {
+    return false;
+  } else if (exists(address) && address?.length > 0) {
+    return false;
+  }
+
+  return false;
+};
 
 export const getPropertyNameFromSelectedFeatureSet = (
   selectedFeature: SelectedFeatureDataset | null,
@@ -380,12 +405,11 @@ export const isEmptyFeatureCollection = (collection: FeatureCollection) => {
 
 export const isEmptyMapFeatureData = (mapFeatureData: MapFeatureData) => {
   return (
-    isEmptyFeatureCollection(mapFeatureData.pimsLocationFeatures) &&
-    //isEmptyFeatureCollection(mapFeatureData.pimsLocationLiteFeatures) && TODO: For now this is loading always. Investigate if it needs to be removed completly
-    isEmptyFeatureCollection(mapFeatureData.pimsBoundaryFeatures) &&
-    isEmptyFeatureCollection(mapFeatureData.fullyAttributedFeatures) &&
-    isEmptyFeatureCollection(mapFeatureData.surveyedParcelsFeatures) &&
-    isEmptyFeatureCollection(mapFeatureData.highwayPlanFeatures)
+    isEmptyFeatureCollection(mapFeatureData?.pimsFeatures) &&
+    //isEmptyFeatureCollection(mapFeatureData.pimsLiteFeatures) && TODO: For now this is loading always. Investigate if it needs to be removed completly
+    isEmptyFeatureCollection(mapFeatureData?.fullyAttributedFeatures) &&
+    isEmptyFeatureCollection(mapFeatureData?.surveyedParcelsFeatures) &&
+    isEmptyFeatureCollection(mapFeatureData?.highwayPlanFeatures)
   );
 };
 
@@ -476,16 +500,16 @@ export async function getRegionAndDistrictsResults(
 
 export function apiPropertyToPimsFeature(
   property: ApiGen_Concepts_Property | undefined | null,
-): Feature<Geometry, PIMS_Property_Location_View> | null {
+): Feature<Geometry, PIMS_Property_View> | null {
   if (!exists(property)) {
     return null;
   }
 
-  const feature: Feature<Geometry, PIMS_Property_Location_View> = {
+  const feature: Feature<Geometry, PIMS_Property_View> = {
     type: 'Feature',
     geometry: property.boundary ?? null,
     properties: {
-      ...emptyPropertyLocation,
+      ...emptyProperty,
       // core fields
       PROPERTY_ID: property.id ?? null,
       PID: property.pid ?? null,

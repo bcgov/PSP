@@ -8,7 +8,7 @@ export class ExpropriationAuthorityFormModel {
   contact: IContactSearchResult | null = null;
 }
 
-class ExpropriationBaseModel {
+export class ExpropriationBaseModel {
   expropriationAuthority = new ExpropriationAuthorityFormModel();
 }
 
@@ -23,6 +23,10 @@ export class ExpropriationForm4Model extends ExpropriationBaseModel {
 }
 
 export class ExpropriationForm5Model extends ExpropriationBaseModel {
+  impactedProperties: ApiGen_Concepts_AcquisitionFileProperty[] = [];
+}
+
+export class ExpropriationForm6Model extends ExpropriationBaseModel {
   impactedProperties: ApiGen_Concepts_AcquisitionFileProperty[] = [];
 }
 

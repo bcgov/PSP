@@ -99,6 +99,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsMotiRegionSelector = By.Id("input-regionId");
         private readonly By licenseDetailsProgramViewLabel = By.XPath("//label[contains(text(),'Program')]");
         private readonly By licenseDetailsProgramContent = By.XPath("//label[contains(text(),'Program')]/parent::div/following-sibling::div");
+        private readonly By licenseDetailsOtherProgramContent = By.XPath("//label[contains(text(),'Other program')]/parent::div/following-sibling::div");
         private readonly By licenseDetailsProgramLabel = By.XPath("//select[@id='input-programTypeCode']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Program')]");
         private readonly By licenseDetailsProgramSelector = By.Id("input-programTypeCode");
         private readonly By licenseDetailsOtherProgramLabel = By.XPath("//label[contains(text(),'Other Program')]");
@@ -292,7 +293,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     Wait();
                     FocusAndClick(licenseDetailsPurposeMultiselector);
 
-                    Wait(4000);
+                    Wait(5000);
                     ChooseMultiSelectSpecificOption(licenseDetailsPurposeOptions, purpose);
                 }
 
@@ -606,7 +607,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
-                else if (sharedModals.ModalContent().Contains("he selected property already exists in the system's inventory"))
+                else if (sharedModals.ModalContent().Contains("The selected property already exists in the system's inventory"))
                 {
                     Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
@@ -624,7 +625,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
-                else if (sharedModals.ConfirmationModalParagraph1() == "If you save it, only the administrator can turn it back on. You will still see it in the management table.")
+                else if (sharedModals.IsConfirmationModalParagraph1Visible())
                 {
                     Assert.Equal("Confirm status change", sharedModals.ModalHeader());
                     Assert.Contains("If you save it, only the administrator can turn it back on. You will still see it in the management table.", sharedModals.ConfirmationModalParagraph1());
@@ -633,7 +634,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
-                else if (sharedModals.ConfirmationModalParagraph2() == "Do you wish to save without providing a primary contact?")
+                else if (sharedModals.IsConfirmationModalParagraph2Visible())
                 {
                     Assert.Equal("Confirm status change", sharedModals.ModalHeader());
                     Assert.Contains("A primary contact for", sharedModals.ConfirmationModalParagraph1());
@@ -646,6 +647,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     break;
                 }
+                else sharedModals.SecondaryModalClickOKBttn();
             }
         }
 
@@ -670,8 +672,10 @@ namespace PIMS.Tests.Automation.PageObjects
         public void CancelLicense()
         {
             Wait();
-            ButtonElement("Cancel");
+            FocusAndClick(By.CssSelector("button[data-testid='cancel-button']"));
             sharedModals.CancelActionModal();
+
+            Wait();
         }
 
         public string GetLeaseCode()
@@ -933,7 +937,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(licenseDetailsProgramContent, lease.Program);
 
             if (lease.ProgramOther != "")
-                AssertTrueElementValueEquals(licenseDetailsProgramContent, "Other - " + lease.ProgramOther);
+                AssertTrueContentEquals(licenseDetailsOtherProgramContent, lease.ProgramOther);
 
             AssertTrueIsDisplayed(licenseDetailsTypeLabel);
             if(lease.AdminType != "")

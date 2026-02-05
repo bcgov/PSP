@@ -65,10 +65,11 @@ const GenerateIntakeContainer: React.FunctionComponent<
       />
       <PropertySelectorModal
         isOpened={isPropertyModalOpen}
-        availiableProperties={acquisitionFile?.fileProperties ?? []}
+        availableProperties={acquisitionFile?.fileProperties ?? []}
         onSelectOk={handleSelectedProperties}
         onCancelClick={closePropertyModal}
         isSingleSelect
+        title="Generate Intake Form"
       />
     </>
   );

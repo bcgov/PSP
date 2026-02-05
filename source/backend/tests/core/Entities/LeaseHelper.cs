@@ -2,7 +2,6 @@ using System;
 using System.Linq;
 using Pims.Dal;
 using Pims.Dal.Entities;
-using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
 {
@@ -48,6 +47,7 @@ namespace Pims.Core.Test
             if (region != null)
             {
                 lease.RegionCodeNavigation = region;
+                lease.RegionCode = region.RegionCode;
             }
             if (addStakeholder)
             {

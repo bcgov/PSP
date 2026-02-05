@@ -395,7 +395,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
+            ex.WithMessage("New retired property can not be added.");
             repository.Verify(x => x.Add(It.IsAny<PimsDispositionFile>()), Times.Never);
             propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsDispositionFileProperty>()), Times.Never);
         }
@@ -972,6 +972,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
 
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
             propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsDispositionFileProperty>(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>()));
@@ -1021,6 +1024,9 @@ namespace Pims.Api.Test.Services
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
@@ -1137,6 +1143,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
 
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
@@ -1191,6 +1200,9 @@ namespace Pims.Api.Test.Services
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
@@ -1421,6 +1433,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
 
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
@@ -1503,6 +1518,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
 
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
             statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
@@ -1516,11 +1534,11 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<BadRequestException>();
-            exception.WithMessage("You cannot add a property that is outside of your user account region(s). Either select a different property, or get your system administrator to add the required region to your user account settings.");
+            exception.WithMessage("You cannot add a property that is outside of your user account region(s).\n\nPlease select a different property or contact admin at pims@gov.bc.ca to add the required region to your user account settings.");
         }
 
         [Fact]
-        public void UpdateProperties_WithRetiredProperty_Should_Fail()
+        public void UpdateProperties_With_New_RetiredProperty_Should_Fail()
         {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit, Permissions.PropertyAdd, Permissions.PropertyView);
@@ -1535,10 +1553,12 @@ namespace Pims.Api.Test.Services
                 IsRetired = true,
             };
 
-            dspFile.PimsDispositionFileProperties.Add(new PimsDispositionFileProperty()
+            // Simulate update: attempt to add the retired property as a new property
+            var newProperties = new List<PimsDispositionFileProperty>
             {
-                Property = retiredProperty,
-            });
+                new PimsDispositionFileProperty() { Property = retiredProperty }
+            };
+            dspFile.PimsDispositionFileProperties = newProperties;
 
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
@@ -1566,7 +1586,53 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
+            ex.WithMessage("New retired property can not be added.");
+        }
+        public void UpdateProperties_With_Existing_RetiredProperty_Success()
+        {
+            // Arrange
+            var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+
+            var dspFile = EntityHelper.CreateDispositionFile();
+            dspFile.ConcurrencyControlNumber = 1;
+
+            PimsProperty retiredProperty = new PimsProperty()
+            {
+                PropertyId = 100,
+                Pid = 1000,
+                IsRetired = true,
+            };
+
+            // Simulate that the retired property is already attached to the file
+            dspFile.PimsDispositionFileProperties.Add(new PimsDispositionFileProperty() { Property = retiredProperty });
+
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dspFile);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IDispositionFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(dspFile.PimsDispositionFileProperties.ToList());
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(retiredProperty);
+
+            var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
+            statusMock.Setup(x => x.GetCurrentDispositionStatus(It.IsAny<string>())).Returns(DispositionFileStatusTypes.ACTIVE);
+            statusMock.Setup(x => x.CanEditProperties(It.IsAny<DispositionFileStatusTypes>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsDispositionFileProperty>(), It.IsAny<PimsDispositionFileProperty>())).Returns(true);
+
+            // Act
+            Action act = () => service.UpdateProperties(dspFile, new List<UserOverrideCode>());
+
+            // Assert
+            // Should NOT throw exception, since retired property is already attached
+            act.Should().NotThrow();
         }
         #endregion
 

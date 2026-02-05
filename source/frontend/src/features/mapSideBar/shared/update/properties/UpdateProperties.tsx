@@ -39,7 +39,7 @@ import { UpdatePropertiesYupSchema } from './UpdatePropertiesYupSchema';
 export interface IUpdatePropertiesProps {
   file: ApiGen_Concepts_File;
   setIsShowingPropertySelector: (isShowing: boolean) => void;
-  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => void;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => Promise<void>;
   updateFileProperties: (
     file: ApiGen_Concepts_File,
     userOverrideCodes: UserOverrideCode[],
@@ -161,9 +161,14 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
   const handleCancelConfirm = () => {
     if (formikRef !== undefined) {
       formikRef.current?.resetForm();
+      setTimeout(() => {
+        resetFilePropertyLocations();
+        props.setIsShowingPropertySelector(false);
+      }, 0); // Wait for Formik to update dirty state
+    } else {
+      resetFilePropertyLocations();
+      props.setIsShowingPropertySelector(false);
     }
-    resetFilePropertyLocations();
-    props.setIsShowingPropertySelector(false);
   };
 
   const saveFile = async (file: ApiGen_Concepts_File) => {
@@ -180,7 +185,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
         }
         formikRef.current?.resetForm();
         props.setIsShowingPropertySelector(false);
-        props.onSuccess(true);
+        await props.onSuccess(true);
       }
     } catch (e) {
       if (axios.isAxiosError(e) && (e as AxiosError).code === '409') {
@@ -246,6 +251,7 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
           <Formik<FileForm>
             innerRef={formikRef}
             initialValues={formFile}
+            enableReinitialize={true}
             validationSchema={UpdatePropertiesYupSchema}
             onSubmit={async (values: FileForm) => {
               const file: ApiGen_Concepts_File = values.toApi();
@@ -259,12 +265,14 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
                     header={
                       <Row>
                         <Col xs="11">Selected Properties</Col>
-                        <Col>
-                          <ZoomToLocation
-                            formProperties={formikProps?.values?.properties}
-                            icon={ZoomIconType.area}
-                          />
-                        </Col>
+                        {formikProps?.values?.properties?.length > 0 && (
+                          <Col>
+                            <ZoomToLocation
+                              formProperties={formikProps?.values?.properties}
+                              icon={ZoomIconType.area}
+                            />
+                          </Col>
+                        )}
                       </Row>
                     }
                   >

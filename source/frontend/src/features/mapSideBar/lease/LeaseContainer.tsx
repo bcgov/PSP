@@ -1,16 +1,9 @@
 import { FormikProps } from 'formik';
-import React, {
-  useCallback,
-  useContext,
-  useEffect,
-  useMemo,
-  useReducer,
-  useRef,
-  useState,
-} from 'react';
+import React, { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import * as Yup from 'yup';
 
+import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { LocationBoundaryDataset } from '@/components/common/mapFSM/models';
@@ -31,7 +24,7 @@ import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import { isLeaseFile, LeaseFormModel } from '@/features/leases/models';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useQuery } from '@/hooks/use-query';
-import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
+import { useFormikCancel } from '@/hooks/useFormikCancel';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, filePropertyToLocationBoundaryDataset } from '@/utils';
 
@@ -197,7 +190,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     initialState,
   );
 
-  const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
+  const { formikRef, handleCancelClick } = useFormikCancel<LeaseFormModel>();
 
   const close = useCallback(() => onClose && onClose(), [onClose]);
   const { setLease, getCompleteLease, refresh, loading } = useLeaseDetail(leaseId);
@@ -213,7 +206,6 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
   const query = useQuery();
   const history = useHistory();
   const [isValid, setIsValid] = useState<boolean>(true);
-  const { setModalContent, setDisplayModal } = useModalContext();
 
   const pathSolver = usePathGenerator();
 
@@ -240,16 +232,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     setStaleLastUpdatedBy(true);
   }, [setStaleLastUpdatedBy]);
 
-  const handleCancelConfirm = () => {
-    if (formikRef !== undefined) {
-      formikRef.current?.resetForm();
-    }
-    setIsValid(true);
-    setContainerState({
-      isEditing: false,
-      activeEditForm: undefined,
-    });
-  };
+  // cancellation handled via useFormikCancel; additional state resets occur in onCancelConfirm callback
 
   const handleSaveClick = async () => {
     await formikRef?.current?.validateForm();
@@ -265,30 +248,29 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     }
   };
 
-  const handleCancelClick = (onCancelConfirm?: () => void) => {
-    if (formikRef !== undefined) {
-      if (formikRef.current?.dirty) {
-        setModalContent({
-          ...getCancelModalProps(),
-          handleOk: () => {
-            handleCancelConfirm();
-            setDisplayModal(false);
-            if (typeof onCancelConfirm === 'function') {
-              onCancelConfirm();
-            }
-          },
-          handleCancel: () => setDisplayModal(false),
-        });
-        setDisplayModal(true);
+  const setIsPropertyEditing = useCallback(
+    (value: boolean) => {
+      if (value) {
+        query.set('edit', value.toString());
       } else {
-        handleCancelConfirm();
+        query.delete('edit');
       }
-    } else {
-      handleCancelConfirm();
-    }
 
-    setIsPropertyEditing(false);
-  };
+      setContainerState({
+        isEditing: value,
+      });
+      history.push({ search: query.toString() });
+    },
+    [history, query],
+  );
+
+  const handleCancel = useCallback(() => {
+    handleCancelClick(() => {
+      setIsValid(true);
+      setContainerState({ isEditing: false, activeEditForm: undefined });
+      setIsPropertyEditing(false);
+    });
+  }, [handleCancelClick, setIsPropertyEditing]);
 
   const fetchLastUpdatedBy = useCallback(async () => {
     if (leaseId) {
@@ -338,7 +320,10 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
     if (containerState.isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() => pathSolver.showFile('lease', lease?.id ?? 0));
+        handleCancelClick(() => {
+          setIsPropertyEditing(false);
+          pathSolver.showFile('lease', lease?.id ?? 0);
+        });
       }
     }
     pathSolver.showFile('lease', lease?.id ?? 0);
@@ -351,9 +336,10 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
 
     if (containerState.isEditing) {
       if (formikRef?.current?.dirty) {
-        handleCancelClick(() =>
-          pathSolver.showFilePropertyId('lease', lease?.id ?? 0, filePropertyId),
-        );
+        handleCancelClick(() => {
+          setIsPropertyEditing(false);
+          pathSolver.showFilePropertyId('lease', lease?.id ?? 0, filePropertyId);
+        });
         return;
       }
     }
@@ -368,22 +354,6 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     }
   };
 
-  const setIsPropertyEditing = useCallback(
-    (value: boolean) => {
-      if (value) {
-        query.set('edit', value.toString());
-      } else {
-        query.delete('edit');
-      }
-
-      setContainerState({
-        isEditing: value,
-      });
-      history.push({ search: query.toString() });
-    },
-    [history, query],
-  );
-
   useEffect(() => {
     setIsPropertyEditing(query.get('edit') === 'true');
   }, [query, setIsPropertyEditing]);
@@ -393,30 +363,42 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
     refresh();
   };
 
+  const shouldBlockNavigation = useCallback(() => {
+    const current = formikRef.current;
+    return !!current && current.dirty && !current.isSubmitting;
+  }, [formikRef]);
+
   // UI components
   if (loading || getLastUpdatedByLoading) {
     return <LoadingBackdrop show={true} parentScreen={true}></LoadingBackdrop>;
   }
 
   return (
-    <View
-      setIsEditing={setIsPropertyEditing}
-      onClose={close}
-      onSave={handleSaveClick}
-      onCancel={handleCancelClick}
-      onSelectFileSummary={onSelectFileSummary}
-      onSelectProperty={onSelectProperty}
-      onEditProperties={onEditProperties}
-      onPropertyUpdateSuccess={onPropertyUpdate}
-      onChildSuccess={onChildSuccess}
-      refreshLease={refresh}
-      setLease={setLease}
-      formikRef={formikRef}
-      containerState={containerState}
-      setContainerState={setContainerState}
-      isFormValid={isValid}
-      lease={lease}
-    ></View>
+    <>
+      <View
+        setIsEditing={setIsPropertyEditing}
+        onClose={close}
+        onSave={handleSaveClick}
+        onCancel={handleCancel}
+        onSelectFileSummary={onSelectFileSummary}
+        onSelectProperty={onSelectProperty}
+        onEditProperties={onEditProperties}
+        onPropertyUpdateSuccess={onPropertyUpdate}
+        onChildSuccess={onChildSuccess}
+        refreshLease={refresh}
+        setLease={setLease}
+        formikRef={formikRef}
+        containerState={containerState}
+        setContainerState={setContainerState}
+        isFormValid={isValid}
+        lease={lease}
+      ></View>
+      <ConfirmNavigation
+        navigate={history.push}
+        shouldBlockNavigation={shouldBlockNavigation}
+        showModal={true}
+      />
+    </>
   );
 };
 

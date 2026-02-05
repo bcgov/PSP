@@ -329,10 +329,14 @@ describe('PSP routing', () => {
 
   describe.skip('authenticated routes', () => {
     it('should display the property list view', async () => {
-      await setup('/properties/list', { claims: [Claims.PROPERTY_VIEW] });
-      const lazyElement = await waitFor(async () => screen.findByText('123-456-789'));
-      expect(lazyElement).toBeInTheDocument();
-      expect(document.title).toMatch(/View Inventory/i);
+      await act(async () => {
+        await setup('/properties/list', { claims: [Claims.PROPERTY_VIEW] });
+      });
+      await waitFor(async () => {
+        const lazyElement = await screen.findByText('PIMS Property Search');
+        expect(lazyElement).toBeInTheDocument();
+        expect(document.title).toMatch(/View Inventory/i);
+      });
     });
 
     it('should display the lease list view', async () => {

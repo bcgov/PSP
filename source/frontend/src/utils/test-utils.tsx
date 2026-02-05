@@ -393,13 +393,15 @@ export async function focusOptionMultiselect(
   });
 }
 
-export const getMockRepositoryObj = (response = undefined) => ({
-  error: undefined,
-  response,
-  execute: vi.fn().mockResolvedValue(response),
-  loading: false,
-  status: 200,
-});
+export function getMockRepositoryObj<T = any>(response: T | undefined = undefined) {
+  return {
+    error: undefined,
+    response,
+    execute: vi.fn().mockResolvedValue(response),
+    loading: false,
+    status: 200,
+  };
+}
 
 // re-export everything from RTL
 export * from '@testing-library/react';

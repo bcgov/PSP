@@ -7,21 +7,18 @@ import CustomAxios from '@/customAxios';
 import { toCqlFilter } from '@/hooks/layer-api/layerUtils';
 import { useLayerQuery } from '@/hooks/layer-api/useLayerQuery';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import {
-  PIMS_Property_Boundary_View,
-  PIMS_Property_Lite_View,
-} from '@/models/layers/pimsPropertyLocationView';
+import { PIMS_Property_Lite_View, PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import { TenantContext } from '@/tenants';
 import { exists } from '@/utils';
 
 /**
  * API wrapper to centralize all AJAX requests to WFS endpoints for the pims property location.
  * @returns Object containing functions to make requests to the WFS layer.
- * Note: according to the view PIMS_PROPERTY_LOCATION_VW
+ * Note: according to the view PIMS_PROPERTY_VW
  */
 export const usePimsPropertyLayer = () => {
   const {
-    tenant: { propertiesUrl, boundaryLayerUrl, minimalPropertiesUrl },
+    tenant: { propertiesUrl, minimalPropertiesUrl },
   } = useContext(TenantContext);
 
   const {
@@ -33,7 +30,7 @@ export const usePimsPropertyLayer = () => {
       execute: findOneWhereContainsWrappedExecute,
       loading: findOneWhereContainsWrappedLoading,
     },
-  } = useLayerQuery(boundaryLayerUrl, true);
+  } = useLayerQuery(propertiesUrl, true);
 
   const loadPropertyLayer = useApiRequestWrapper({
     requestFunction: useCallback(
@@ -47,34 +44,13 @@ export const usePimsPropertyLayer = () => {
           HISTORICAL_FILE_NUMBER_STR: params?.HISTORICAL_FILE_NUMBER_STR,
         };
         const url = `${propertiesUrl}${
-          geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''
+          geoserver_params ? `&${toCqlFilter(geoserver_params, params?.forceExactMatch)}` : ''
         }`;
-        return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Boundary_View>>(url);
+        return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_View>>(url);
       },
       [propertiesUrl],
     ),
     requestName: 'LOAD_PROPERTIES',
-  });
-
-  const loadPropertyBoundaryLayer = useApiRequestWrapper({
-    requestFunction: useCallback(
-      (params?: IGeoSearchParams) => {
-        const geoserver_params = {
-          STREET_ADDRESS_1: params?.STREET_ADDRESS_1,
-          PID: params?.PID,
-          PID_PADDED: params?.PID_PADDED,
-          PIN: params?.PIN,
-          SURVEY_PLAN_NUMBER: params?.SURVEY_PLAN_NUMBER,
-          HISTORICAL_FILE_NUMBER_STR: params?.HISTORICAL_FILE_NUMBER_STR,
-        };
-        const url = `${boundaryLayerUrl}&srsName=EPSG:4326${
-          geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''
-        }`;
-        return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Boundary_View>>(url);
-      },
-      [boundaryLayerUrl],
-    ),
-    requestName: 'LOAD_PROPERTIES_BOUNDARY',
   });
 
   const loadPropertyLocationOnlyMinimal = useApiRequestWrapper({
@@ -100,12 +76,9 @@ export const usePimsPropertyLayer = () => {
       );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      const forceCasted = featureCollection as FeatureCollection<
-        Geometry,
-        PIMS_Property_Boundary_View
-      >;
+      const forceCasted = featureCollection as FeatureCollection<Geometry, PIMS_Property_View>;
 
-      return forceCasted !== undefined && forceCasted.features.length > 0
+      return forceCasted !== undefined && forceCasted.features?.length > 0
         ? forceCasted.features[0]
         : undefined;
     },
@@ -126,12 +99,9 @@ export const usePimsPropertyLayer = () => {
       );
 
       // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      const forceCasted = featureCollection as FeatureCollection<
-        Geometry,
-        PIMS_Property_Boundary_View
-      >;
+      const forceCasted = featureCollection as FeatureCollection<Geometry, PIMS_Property_View>;
 
-      return forceCasted !== undefined && forceCasted.features.length > 0
+      return forceCasted !== undefined && forceCasted.features?.length > 0
         ? forceCasted.features
         : undefined;
     },
@@ -160,7 +130,6 @@ export const usePimsPropertyLayer = () => {
   return useMemo(
     () => ({
       loadPropertyLayer,
-      loadPropertyBoundaryLayer,
       loadPropertyLayerMinimal: loadPropertyLocationOnlyMinimal,
       findAllByBoundary,
       findAllByBoundaryLoading: findMultipleWhereContainsWrappedLoading,
@@ -174,7 +143,6 @@ export const usePimsPropertyLayer = () => {
       findOneByBoundary,
       findOneByPidOrPin,
       findOneWhereContainsWrappedLoading,
-      loadPropertyBoundaryLayer,
       loadPropertyLayer,
       loadPropertyLocationOnlyMinimal,
     ],

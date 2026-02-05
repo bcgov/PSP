@@ -129,7 +129,6 @@ namespace Pims.Dal.Helpers.Extensions
                 predicateBuilder = predicateBuilder.And(x => context.PimsProperties.Where(tenureCleanupBuilder).AsExpandable().Where(b => b.PropertyId == x.PropertyId).Any());
             }
 
-
             return predicateBuilder;
         }
     }
