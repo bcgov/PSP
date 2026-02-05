@@ -95,7 +95,8 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
           return {
             parcelFeature: pmbcParcel,
             pimsFeature: null,
-            location: { lat: center[1], lng: center[0] },
+            location:
+              exists(center) && center.length >= 2 ? { lat: center[1], lng: center[0] } : null,
             regionFeature: null,
             fileLocation: null,
             fileBoundary: null,
