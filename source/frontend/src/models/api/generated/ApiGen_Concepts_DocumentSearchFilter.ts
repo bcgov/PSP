@@ -5,6 +5,7 @@
 
 // LINK: @backend/apimodels/Models/Concepts/Document/DocumentSearchFilterModel.cs
 export interface ApiGen_Concepts_DocumentSearchFilter {
+  content: string | null;
   documentTypTypeCode: string | null;
   documentStatusTypeCode: string | null;
   documentName: string | null;

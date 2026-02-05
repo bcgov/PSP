@@ -264,6 +264,11 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(pd => pd.PimsPropertyDocuments.Any(p => p != null && EF.Functions.Like(p.Property.SurveyPlanNumber.ToString(), $"%{filter.Plan}%")));
             }
 
+            if (filter.MayanDocumentIds?.Any() == true)
+            {
+                predicate = predicate.And(pd => pd.MayanId.HasValue && filter.MayanDocumentIds.Contains(pd.MayanId.Value));
+            }
+
             if(excludeTemplates)
             {
                 var templateCodeType = Context.PimsDocumentTyps.FirstOrDefault(x => x.DocumentType == "CDOGTEMP");

@@ -176,7 +176,16 @@ export const columns = ({
     },
   },
   {
-    Header: 'Tenure Cleanup',
+    Header: () => (
+      <>
+        Tenure Cleanup
+        <TooltipIcon
+          toolTipId="tenureCleanupTooltip"
+          toolTip="The results displayed in this column identify properties that have been flagged for tenure clean-up and should not be taken to be exhaustive as there may be other tenure clean-up issues otherwise not captured by the applied filter criteria"
+        />
+      </>
+    ),
+    id: 'tenureCleanup',
     align: 'left',
     sortable: false,
     responsive: true,

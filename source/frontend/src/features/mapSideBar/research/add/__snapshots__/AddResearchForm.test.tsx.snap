@@ -641,7 +641,15 @@ exports[`AddResearchForm component > renders as expected 1`] = `
                 class="align-content-end col"
                 style="overflow: hidden;"
               >
-                Selected Properties
+                <div
+                  class="row"
+                >
+                  <div
+                    class="col-11"
+                  >
+                    Selected Properties
+                  </div>
+                </div>
               </div>
             </div>
           </h2>
