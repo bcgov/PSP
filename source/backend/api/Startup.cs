@@ -139,6 +139,7 @@ namespace Pims.Api
             services.Configure<Core.Http.Configuration.OpenIdConnectOptions>(this.Configuration.GetSection("OpenIdConnect"));
             services.Configure<Keycloak.Configuration.KeycloakOptions>(this.Configuration.GetSection("Keycloak"));
             services.Configure<Pims.Dal.PimsOptions>(this.Configuration.GetSection("Pims"));
+            services.Configure<MayanConfig>(this.Configuration.GetSection("Mayan"));
             services.Configure<AllHealthCheckOptions>(this.Configuration.GetSection("HealthChecks"));
             services.AddOptions();
 

@@ -39,6 +39,16 @@ namespace Pims.Api.Models.Concepts.Document
         public string Plan { get; set; }
 
         /// <summary>
+        /// get/set - The string content to search by.
+        /// </summary>
+        public string Content { get; set; }
+
+        /// <summary>
+        /// get/set - The Mayan document identifiers that match an external content search.
+        /// </summary>
+        public long[] MayanDocumentIds { get; set; }
+
+        /// <summary>
         /// Determine if a valid filter was provided.
         /// </summary>
         /// <returns>true if the filter is valid, false otherwise.</returns>

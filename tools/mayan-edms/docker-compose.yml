@@ -192,6 +192,17 @@ services:
       - all
       - mayan
 
+  worker_e:
+    <<: *mayan-container
+    command:
+      - run_worker
+      - worker_e
+      - "--prefetch-multiplier=1 --concurrency=10 --max-memory-per-child=1000 -E"
+    profiles:
+      - extra_worker_e
+      - all
+      - mayan
+
   worker_custom_queue:
     <<: *mayan-container
     command:
