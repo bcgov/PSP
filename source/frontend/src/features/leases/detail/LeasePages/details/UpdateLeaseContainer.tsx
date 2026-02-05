@@ -104,6 +104,14 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
         },
       });
       setDisplayModal(true);
+    } else if (e?.response?.data?.type === 'ContractorNotInTeamException') {
+      setModalContent({
+        variant: 'error',
+        title: 'Error',
+        message: e?.response?.data.error,
+        okButtonText: 'Close',
+      });
+      setDisplayModal(true);
     } else {
       throw e;
     }

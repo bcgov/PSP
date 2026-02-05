@@ -24,6 +24,8 @@ export interface IDocumentSearchResultsProps {
 export const DocumentSearchResults: React.FC<IDocumentSearchResultsProps> = ({
   results,
   totalItems,
+  pageIndex,
+  pageSize,
   setPageIndex,
   setPageSize,
   onViewDetails,
@@ -37,8 +39,29 @@ export const DocumentSearchResults: React.FC<IDocumentSearchResultsProps> = ({
 
   // This will get called when the table needs new data
   const updateCurrentPage = useCallback(
-    ({ pageIndex }: { pageIndex: number }) => setPageIndex && setPageIndex(pageIndex),
-    [setPageIndex],
+    ({ pageIndex: nextPageIndex }: { pageIndex: number }) => {
+      if (!setPageIndex) {
+        return;
+      }
+      if (pageIndex === nextPageIndex) {
+        return;
+      }
+      setPageIndex(nextPageIndex);
+    },
+    [setPageIndex, pageIndex],
+  );
+
+  const handlePageSizeChange = useCallback(
+    (nextPageSize: number) => {
+      if (!setPageSize) {
+        return;
+      }
+      if (pageSize === nextPageSize) {
+        return;
+      }
+      setPageSize(nextPageSize);
+    },
+    [setPageSize, pageSize],
   );
 
   return (
@@ -50,7 +73,9 @@ export const DocumentSearchResults: React.FC<IDocumentSearchResultsProps> = ({
       data={results ?? []}
       noRowsMessage="No matching Documents found"
       onRequestData={updateCurrentPage}
-      onPageSizeChange={setPageSize}
+      onPageSizeChange={handlePageSizeChange}
+      pageIndex={pageIndex}
+      pageSize={pageSize}
       {...rest}
     ></Table>
   );

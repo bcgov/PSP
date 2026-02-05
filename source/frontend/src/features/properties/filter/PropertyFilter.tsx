@@ -89,26 +89,28 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   ];
 
   if (toggle === SearchToggleOption.Map) {
-    searchOptions.push({
-      label: 'POI Name',
-      value: 'name',
-    });
-    searchOptions.push({
-      label: 'Lat/Long',
-      value: 'coordinates',
-    });
-    searchOptions.push({
-      label: 'Survey Parcel',
-      value: 'surveyParcel',
-    });
-    searchOptions.push({
-      label: 'Project',
-      value: 'project',
-    });
-    searchOptions.push({
-      label: 'Legal Description',
-      value: 'legalDescription',
-    });
+    searchOptions.push(
+      {
+        label: 'POI Name',
+        value: 'name',
+      },
+      {
+        label: 'Lat/Long',
+        value: 'coordinates',
+      },
+      {
+        label: 'Survey Parcel',
+        value: 'surveyParcel',
+      },
+      {
+        label: 'Project',
+        value: 'project',
+      },
+      {
+        label: 'Legal Description',
+        value: 'legalDescription',
+      },
+    );
   }
 
   return (
@@ -287,7 +289,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                           }}
                         ></Form.Check>
                         <Form.Label className="form-check-label" htmlFor="input-radio-district">
-                          Disctrict
+                          District
                         </Form.Label>
                       </InlineFlexDiv>
                       <InlineFlexDiv>
@@ -308,7 +310,7 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                           }}
                         ></Form.Check>
                         <Form.Label className="form-check-label" htmlFor="input-radio-district-lot">
-                          Disctrict Lot
+                          District Lot
                         </Form.Label>
                       </InlineFlexDiv>
                     </div>

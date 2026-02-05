@@ -87,6 +87,9 @@
         public string DirectSaleRoadClosureSelect7 { get; set; } = null!;
         public string DirectSaleRoadClosureSelect8 { get; set; } = null!;
         public string DirectSaleRoadClosureSelect9 { get; set; } = null!;
+        public string DirectSaleRoadClosureSelect10 { get; set; } = null!;
+        public string DirectSaleRoadClosureSelect11 { get; set; } = null!;
+        public string DirectSaleRoadClosureSelect12 { get; set; } = null!;
 
         public string SaleInformationSelect1 { get; set; } = null!;
         public string SaleInformationSelect2 { get; set; } = null!;

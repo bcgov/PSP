@@ -214,8 +214,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentViewOwnerContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[contains(text(),'Owner')]/parent::div/following-sibling::div");
         private readonly By documentViewPhysicalLocationContent = By.XPath("//label[contains(text(),'Physical location')]/parent::div/following-sibling::div");
         private readonly By documentViewPIDLabel = By.XPath("//label[contains(text(),'PID')]");
-        private readonly By documentViewPIDContent = By.XPath("//div[@class='pr-0 text-left col-4']/label[contains(text(),'PID')]/parent::div/following-sibling::div");
-        private readonly By documentViewPINContent = By.XPath("//div[@class='pb-2 row'][1]/div/label[contains(text(),'PIN')]/parent::div/following-sibling::div");
+        private readonly By documentViewPIDContent = By.XPath("//div[@class='modal-body']/div/div/div/div/div/div/label[text()='PID']/parent::div/following-sibling::div");
+        private readonly By documentViewPINContent = By.XPath("//div[@class='pb-2 row'][2]/div/label[contains(text(),'PIN')]/parent::div/following-sibling::div");
         private readonly By documentViewPlanNumberContent = By.XPath("//label[contains(text(),'Plan #')]/parent::div/following-sibling::div");
         private readonly By documentViewPlanRevisionContent = By.XPath("//label[contains(text(),'Plan revision')]/parent::div/following-sibling::div");
         private readonly By documentViewPlanTypeContent = By.XPath("//label[contains(text(),'Plan type')]/parent::div/following-sibling::div");
@@ -1157,11 +1157,11 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documentsTableColumnActions);
 
             AssertTrueIsDisplayed(adhocDocumentsTitle);
-            AssertTrueIsDisplayed(PIMSDocumentFilterTypeSelect);
-            AssertTrueIsDisplayed(PIMSDocumentFilterStatusSelect);
-            AssertTrueIsDisplayed(PIMSDocumentFilterNameInput);
-            AssertTrueIsDisplayed(PIMSDocumentFilterSearchBttn);
-            AssertTrueIsDisplayed(PIMSDocumentFilterResetBttn);
+            AssertTrueIsDisplayed(adhocDocumentFilterTypeSelect);
+            AssertTrueIsDisplayed(adhocDocumentFilterStatusSelect);
+            AssertTrueIsDisplayed(adhocDocumentFilterNameInput);
+            AssertTrueIsDisplayed(adhocDocumentFilterSearchBttn);
+            AssertTrueIsDisplayed(adhocDocumentFilterResetBttn);
 
             AssertTrueIsDisplayed(adhocDocumentsrefreshTableBttn);
             AssertTrueIsDisplayed(adhocDocumentsTableColumnAssociation);

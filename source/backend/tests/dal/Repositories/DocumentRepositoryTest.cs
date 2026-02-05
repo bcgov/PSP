@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
+using Pims.Api.Models.Concepts.Document;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
@@ -185,6 +186,93 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             result.Should().Be(8);
+        }
+        #endregion
+
+        #region GetPageDeep
+        [Fact]
+        public void GetPageDeep_Filters_By_MayanDocumentIds()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
+
+            var context = helper.CreatePimsContext(user, true);
+            var timestamp = DateTime.UtcNow;
+            var templateType = new PimsDocumentTyp()
+            {
+                DocumentTypeId = 100,
+                DocumentType = "CDOGTEMP",
+                DocumentTypeDescription = "Template",
+                ConcurrencyControlNumber = 1,
+                AppCreateTimestamp = timestamp,
+                AppCreateUserid = "test",
+                AppCreateUserDirectory = "test",
+                AppLastUpdateTimestamp = timestamp,
+                AppLastUpdateUserid = "test",
+                AppLastUpdateUserDirectory = "test",
+                DbCreateTimestamp = timestamp,
+                DbCreateUserid = "test",
+                DbLastUpdateTimestamp = timestamp,
+                DbLastUpdateUserid = "test"
+            };
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(10);
+
+            var matchingDocument = EntityHelper.CreateDocument(id: 1);
+            matchingDocument.MayanId = 101;
+            var nonMatchingDocument = EntityHelper.CreateDocument(id: 2);
+            nonMatchingDocument.MayanId = 202;
+
+            PimsAcquisitionFileDocument CreateLink(long linkId, PimsDocument document)
+            {
+                return new PimsAcquisitionFileDocument()
+                {
+                    AcquisitionFileDocumentId = linkId,
+                    AcquisitionFileId = acquisitionFile.AcquisitionFileId,
+                    DocumentId = document.DocumentId,
+                    AcquisitionFile = acquisitionFile,
+                    Document = document,
+                    ConcurrencyControlNumber = 1,
+                    AppCreateTimestamp = timestamp,
+                    AppCreateUserid = "test",
+                    AppCreateUserDirectory = "test",
+                    AppLastUpdateTimestamp = timestamp,
+                    AppLastUpdateUserid = "test",
+                    AppLastUpdateUserDirectory = "test",
+                    DbCreateTimestamp = timestamp,
+                    DbCreateUserid = "test",
+                    DbLastUpdateTimestamp = timestamp,
+                    DbLastUpdateUserid = "test"
+                };
+            }
+
+            var matchingLink = CreateLink(1000, matchingDocument);
+            var nonMatchingLink = CreateLink(1001, nonMatchingDocument);
+            matchingDocument.PimsAcquisitionFileDocuments = new List<PimsAcquisitionFileDocument>() { matchingLink };
+            nonMatchingDocument.PimsAcquisitionFileDocuments = new List<PimsAcquisitionFileDocument>() { nonMatchingLink };
+            acquisitionFile.PimsAcquisitionFileDocuments.Add(matchingLink);
+            acquisitionFile.PimsAcquisitionFileDocuments.Add(nonMatchingLink);
+
+            context.PimsDocumentTyps.Add(templateType);
+            context.PimsAcquisitionFiles.Add(acquisitionFile);
+            context.PimsDocuments.AddRange(matchingDocument, nonMatchingDocument);
+            context.PimsAcquisitionFileDocuments.AddRange(matchingLink, nonMatchingLink);
+            context.SaveChanges();
+
+            var repository = helper.CreateRepository<DocumentRepository>(user);
+            var filter = new DocumentSearchFilterModel()
+            {
+                Page = 1,
+                Quantity = 10,
+                MayanDocumentIds = new[] { matchingDocument.MayanId.Value }
+            };
+
+            // Act
+            var result = repository.GetPageDeep(filter);
+
+            // Assert
+            result.Items.Should().HaveCount(1);
+            result.Items.First().DocumentId.Should().Be(matchingDocument.DocumentId);
         }
         #endregion
 

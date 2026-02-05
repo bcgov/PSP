@@ -30,7 +30,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     break;
             }
 
-            Wait(2000);
+            Wait();
             webDriver.FindElement(selectContactSearchInput).SendKeys(contactSearchName);
             webDriver.FindElement(selectContactSearchButton).Click();
 

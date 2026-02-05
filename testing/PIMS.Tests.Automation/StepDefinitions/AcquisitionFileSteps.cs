@@ -1151,6 +1151,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.OwnerRepresentative = ExcelDataContext.ReadData(rowNumber, "OwnerRepresentative");
             acquisitionFile.OwnerComment = ExcelDataContext.ReadData(rowNumber, "OwnerComment");
 
+            //Notice of Claims
+            acquisitionFile.AcquisitionNOCReceivedDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionNOCReceivedDate");
+            acquisitionFile.AcquisitionNOCComments = ExcelDataContext.ReadData(rowNumber, "AcquisitionNOCComments");
+
             //Properties Search
             acquisitionFile.AcquisitionSearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcqSearchPropertiesIndex"));
             if (acquisitionFile.AcquisitionSearchPropertiesIndex > 0)

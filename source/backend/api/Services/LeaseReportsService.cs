@@ -35,7 +35,7 @@ namespace Pims.Api.Services
                 {
                     ExpiryAfterDate = fiscalYearStartDate,
                     StartBeforeDate = fiscalYearStartDate.AddYears(1).AddDays(-1),
-                    NotInStatus = new List<string>() { PimsLeaseStatusTypes.DRAFT, PimsLeaseStatusTypes.DISCARD },
+                    NotInStatus = new List<string>() { PimsLeaseStatusTypes.DRAFT, PimsLeaseStatusTypes.DISCARD, PimsLeaseStatusTypes.DUPLICATE },
                     IsReceivable = true,
                 }, user.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet(),
                 true);

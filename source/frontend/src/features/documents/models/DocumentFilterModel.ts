@@ -4,6 +4,7 @@ export class DocumentSearchFilterModel {
   documentTypTypeCode = '';
   documentStatusTypeCode = '';
   documentName = '';
+  content = '';
   searchBy = 'pid';
   pin: string;
   pid: string;
@@ -11,6 +12,7 @@ export class DocumentSearchFilterModel {
 
   toApi(): ApiGen_Concepts_DocumentSearchFilter {
     return {
+      content: this.content,
       documentName: this.documentName,
       documentTypTypeCode: this.documentTypTypeCode,
       documentStatusTypeCode: this.documentStatusTypeCode,

@@ -82,6 +82,7 @@ export const ChecklistView: React.FC<IChecklistViewProps> = ({
           header={section.name}
           isCollapsable
           initiallyExpanded
+          data-testid={section.name}
         >
           {checklist
             .filter(checklistItem => checklistItem.itemType?.sectionCode === section.id)

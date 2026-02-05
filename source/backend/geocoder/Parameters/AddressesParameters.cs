@@ -10,7 +10,8 @@ namespace Pims.Geocoder.Parameters
     {
         #region Properties
 
-        /// <summary>
+        /// <summary
+        ///  >
         /// <para>
         /// get/set - Civic address or intersection address as a single string in Single-line Address Format. If not present in an address request, individual address elements, such as streetName, localityName, and provinceCode must be provided.
         /// In an occupant/addresses resource, addressString represents an Occupant name followed by a frontGate delimiter('--') followed by an optional address.
@@ -28,7 +29,7 @@ namespace Pims.Geocoder.Parameters
         /// get/set - The maximum number of search results to return.
         /// </summary>
         /// <value>Default value: <c>5</c>.</value>
-        public int MaxResults { get; set; } = 5;
+        public int MaxResults { get; set; } = 25;
 
         /// <summary>
         /// get/set - In the case of a block level match, the method of interpolation to determine how far down the block the accessPoint should be. The geocoder supports none, linear and adaptive interpolation.
@@ -52,7 +53,7 @@ namespace Pims.Geocoder.Parameters
         /// get/set - If <c>true</c>, autoComplete suggestions are limited to addresses beginning with the provided partial address.
         /// </summary>
         /// <value>Default value: <c>true</c>.</value>
-        public bool ExactSpelling { get; set; } = true;
+        public bool ExactSpelling { get; set; } = false;
 
         /// <summary>
         /// get/set - If <c>true</c>, autoComplete suggestions are sorted using a fuzzy match comparison to the addressString.

@@ -1,17 +1,21 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using System.Threading.Tasks;
 using FluentAssertions;
 using Microsoft.AspNetCore.Http;
 using Microsoft.Extensions.Configuration;
+using Microsoft.Extensions.Options;
 using Moq;
 using Pims.Api.Models;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Concepts.Document;
+using Pims.Api.Models.Config;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Models.Mayan.Metadata;
+using Pims.Api.Models.Models.Mayan.Document;
 using Pims.Api.Models.Requests.Document.UpdateMetadata;
 using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Http;
@@ -23,6 +27,7 @@ using Pims.Core.Exceptions;
 using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Xunit;
@@ -60,6 +65,189 @@ namespace Pims.Api.Test.Services
             this._helper.CreatePimsContext(user, true);
             var builder = new ConfigurationBuilder();
             return this._helper.Create<DocumentService>(builder.Build());
+        }
+
+        private void ConfigureMayanMaxResults(int? maxResults)
+        {
+            var mayanOptions = this._helper.GetService<Mock<IOptionsMonitor<MayanConfig>>>();
+            mayanOptions.Setup(m => m.CurrentValue).Returns(new MayanConfig
+            {
+                MaxContentResults = maxResults ?? 2000,
+            });
+        }
+
+        [Fact]
+        public void GetPage_ShouldThrowException_NotAuthorized()
+        {
+            var service = this.CreateDocumentServiceWithPermissions();
+            var filter = new DocumentSearchFilterModel();
+
+            Action act = () => service.GetPage(filter);
+
+            act.Should().Throw<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void GetPage_ShouldThrowArgumentNullException_WhenFilterNull()
+        {
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+
+            Action act = () => service.GetPage(null);
+
+            act.Should().Throw<ArgumentNullException>();
+        }
+
+        [Fact]
+        public void GetPage_NoContent_ReturnsRepositoryResult()
+        {
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+            var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var expected = new Paged<PimsDocument>(Array.Empty<PimsDocument>(), 2, 5, 0);
+
+            documentRepository.Setup(r => r.GetPageDeep(It.Is<DocumentSearchFilterModel>(f => f.Page == 2 && f.Quantity == 5)))
+                .Returns(expected);
+
+            var filter = new DocumentSearchFilterModel
+            {
+                Content = null,
+                Page = 2,
+                Quantity = 5,
+            };
+
+            var result = service.GetPage(filter);
+
+            result.Should().BeSameAs(expected);
+            documentRepository.Verify(r => r.GetPageDeep(filter), Times.Once);
+            documentStorageRepository.Verify(r => r.TrySearchByDocumentContent(It.IsAny<string>()), Times.Never);
+        }
+
+        [Fact]
+        public void GetPage_ContentSearchSuccess_FiltersMayanIds()
+        {
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+            var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var expected = new Paged<PimsDocument>(Array.Empty<PimsDocument>(), 1, 10, 0);
+            var expectedMayanIds = new long[] { 1, 2 };
+
+            documentStorageRepository.Setup(r => r.TrySearchByDocumentContent("term"))
+                .ReturnsAsync(new ExternalResponse<QueryResponse<DocumentSearchResult>>
+                {
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new QueryResponse<DocumentSearchResult>
+                    {
+                        Count = 2,
+                        Results = new List<DocumentSearchResult>
+                        {
+                            new DocumentSearchResult { Id = 1 },
+                            new DocumentSearchResult { Id = 2 },
+                        },
+                    },
+                });
+
+            documentRepository.Setup(r => r.GetPageDeep(It.Is<DocumentSearchFilterModel>(f => f.MayanDocumentIds != null && f.MayanDocumentIds.SequenceEqual(expectedMayanIds))))
+                .Returns(expected);
+
+            var filter = new DocumentSearchFilterModel
+            {
+                Content = "term",
+                Page = 1,
+                Quantity = 10,
+            };
+
+            var result = service.GetPage(filter);
+
+            result.Should().BeSameAs(expected);
+            documentStorageRepository.Verify(r => r.TrySearchByDocumentContent("term"), Times.Once);
+            documentRepository.VerifyAll();
+        }
+
+        [Fact]
+        public void GetPage_ContentSearchReturnsNoMatches_ReturnsEmptyPage()
+        {
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+
+            documentStorageRepository.Setup(r => r.TrySearchByDocumentContent("term"))
+                .ReturnsAsync(new ExternalResponse<QueryResponse<DocumentSearchResult>>
+                {
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new QueryResponse<DocumentSearchResult>
+                    {
+                        Count = 0,
+                        Results = new List<DocumentSearchResult>(),
+                    },
+                });
+
+            var filter = new DocumentSearchFilterModel
+            {
+                Content = "term",
+                Page = 3,
+                Quantity = 7,
+            };
+
+            var result = service.GetPage(filter);
+
+            result.Count.Should().Be(0);
+            result.Total.Should().Be(0);
+            result.Page.Should().Be(3);
+            result.Quantity.Should().Be(7);
+            documentRepository.Verify(r => r.GetPageDeep(It.IsAny<DocumentSearchFilterModel>()), Times.Never);
+        }
+
+        [Fact]
+        public void GetPage_ContentSearchFails_ThrowsMayanRepositoryException()
+        {
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+
+            documentStorageRepository.Setup(r => r.TrySearchByDocumentContent("term"))
+                .ReturnsAsync(new ExternalResponse<QueryResponse<DocumentSearchResult>>
+                {
+                    Status = ExternalResponseStatus.Error,
+                    Message = "boom",
+                });
+
+            var filter = new DocumentSearchFilterModel { Content = "term" };
+
+            Action act = () => service.GetPage(filter);
+
+            act.Should().Throw<MayanRepositoryException>();
+            documentRepository.Verify(r => r.GetPageDeep(It.IsAny<DocumentSearchFilterModel>()), Times.Never);
+        }
+
+        [Fact]
+        public void GetPage_ContentSearchExceedsLimit_ThrowsBadRequestException()
+        {
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView);
+            ConfigureMayanMaxResults(1);
+            var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+
+            documentStorageRepository.Setup(r => r.TrySearchByDocumentContent("term"))
+                .ReturnsAsync(new ExternalResponse<QueryResponse<DocumentSearchResult>>
+                {
+                    Status = ExternalResponseStatus.Success,
+                    Payload = new QueryResponse<DocumentSearchResult>
+                    {
+                        Count = 2,
+                        Results = new List<DocumentSearchResult>
+                        {
+                            new DocumentSearchResult { Id = 1 },
+                            new DocumentSearchResult { Id = 2 },
+                        },
+                    },
+                });
+
+            var filter = new DocumentSearchFilterModel { Content = "term" };
+
+            Action act = () => service.GetPage(filter);
+
+            act.Should().Throw<BadRequestException>();
+            documentRepository.Verify(r => r.GetPageDeep(It.IsAny<DocumentSearchFilterModel>()), Times.Never);
         }
 
         [Fact]

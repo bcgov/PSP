@@ -21,7 +21,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By dispositionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Disposition File')]/parent::div/parent::div/parent::div/parent::div");
 
         private readonly By dispositionFileCreateTitle = By.XPath("//div[@data-testid='form-title']");
-        private readonly By dispositionFileCloseFormBttn = By.XPath("//h1[contains(text(),'Disposition File')]/parent::div/following-sibling::div/*[3]");
+        private readonly By dispositionFileCloseFormBttn = By.CssSelector("div[data-testd='leaflet-buttons-section'] *[data-testid='close-leaflet-button']");
 
         private readonly By dispositionFileHeaderCodeLabel = By.XPath("//label[contains(text(), 'File:')]");
         private readonly By dispositionFileHeaderCodeContent = By.XPath("//label[contains(text(), 'File:')]/parent::div/following-sibling::div");

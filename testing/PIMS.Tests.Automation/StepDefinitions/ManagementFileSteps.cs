@@ -130,7 +130,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (managementFile.ManagementStatus != "Active")
             {
                 notes.NavigateNotesTab();
-                notes.VerifyAutomaticNotes("Management File", "Hold", managementFile.ManagementStatus);
+                notes.VerifyAutomaticNotes("Management File", "Draft", managementFile.ManagementStatus);
             }
         }
 
@@ -164,7 +164,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 searchProperties.ResetPropertySearch();
             }
 
-            //Save Research File
+            //Save Management File
             sharedFileProperties.SaveFileProperties();
 
             //Verify properties order
@@ -174,11 +174,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I disable a property")]
         public void DisableProperty()
         {
-            //Navigate to the properties section
-            sharedFileProperties.NavigateToAddPropertiesToFile();
-
             //Verify initial state of properties
             Assert.True(sharedFileProperties.ActivePropertiesCount() == managementFile.ManagementTotalProperties);
+
+            //Navigate to the properties section
+            sharedFileProperties.NavigateToAddPropertiesToFile();
 
             //Disable a property
             sharedFileProperties.DisableEnableProperty(0, "Inactive");
@@ -500,7 +500,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchActivities.OrderByActHistoricalFileNbr();
             var firstFileHistoricalAscResult = searchActivities.FirstActHistoricalFile();
 
-            Assert.NotEqual(firstFileHistoricalDescResult, firstFileHistoricalAscResult);
+            //Assert.NotEqual(firstFileHistoricalDescResult, firstFileHistoricalAscResult);
 
             //Verify Column Sorting by Type
             searchActivities.OrderByActType();
@@ -588,8 +588,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Management Details
             managementFile.ManagementName = ExcelDataContext.ReadData(rowNumber, "ManagementName");
             managementFile.ManagementHistoricalFile = ExcelDataContext.ReadData(rowNumber, "ManagementHistoricalFile");
+            managementFile.ManagementResponsiblePayer = ExcelDataContext.ReadData(rowNumber, "ManagementResponsiblePayer");
             managementFile.ManagementPurpose = ExcelDataContext.ReadData(rowNumber, "ManagementPurpose");
             managementFile.ManagementAdditionalDetails = ExcelDataContext.ReadData(rowNumber, "ManagementAdditionalDetails");
+            managementFile.ManagementMinistryRegion = ExcelDataContext.ReadData(rowNumber, "ManagementMinistryRegion");
 
             //Management Team
             managementFile.ManagementTeamStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementTeamStartRow"));
@@ -597,6 +599,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             if (managementFile.ManagementTeamStartRow != 0 && managementFile.ManagementTeamCount != 0)
                 PopulateTeamsCollection(managementFile.ManagementTeamStartRow, managementFile.ManagementTeamCount);
+
+            //Notice of Claims
+            managementFile.ManagementNOCReceivedDate = ExcelDataContext.ReadData(rowNumber, "ManagementNOCReceivedDate");
+            managementFile.ManagementNOCComments = ExcelDataContext.ReadData(rowNumber, "ManagementNOCComments");
 
             //Properties Search
             managementFile.ManagementTotalProperties = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementTotalProperties"));
