@@ -10,6 +10,7 @@ import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import ManagementIcon from '@/assets/images/management-icon.svg?react';
 import ResearchIcon from '@/assets/images/research-icon.svg?react';
 import { MapFeatureData } from '@/components/common/mapFSM/models';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
 import { Section } from '@/components/common/Section/Section';
 import { SimpleSectionHeader } from '@/components/common/SimpleSectionHeader';
@@ -23,7 +24,6 @@ import { ParcelDataset } from '@/features/properties/parcelList/models';
 import { ParcelListContainer } from '@/features/properties/parcelList/ParcelListContainer';
 import { ParcelListView } from '@/features/properties/parcelList/ParcelListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import { exists } from '@/utils';
 import { isStrataCommonProperty } from '@/utils/propertyUtils';
@@ -34,6 +34,7 @@ export interface ISearchViewProps {
   onFilterChange: (filter: IPropertyFilter) => void;
   propertyFilter: IPropertyFilter;
   searchResult: MapFeatureData;
+  selectedFeatureDatasets?: SelectedFeatureDataset[];
   canAddToOpenFile?: boolean;
   onCreateResearchFile: () => void;
   onCreateAcquisitionFile: () => void;
@@ -41,6 +42,7 @@ export interface ISearchViewProps {
   onCreateLeaseFile: () => void;
   onCreateManagementFile: () => void;
   onAddToOpenFile: () => void;
+  setIsPimsActive: (value: boolean) => void;
 }
 
 interface PropertyProjection<T> {
@@ -54,31 +56,29 @@ interface PropertyProjection<T> {
 export const SearchView: React.FC<ISearchViewProps> = props => {
   const keycloak = useKeycloakWrapper();
 
-  const groupedFeatures = chain(props.searchResult?.fullyAttributedFeatures.features)
-    .groupBy(feature => feature?.properties?.PLAN_NUMBER)
-    .map(
-      planGroup =>
-        planGroup
-          ?.map<PropertyProjection<PMBC_FullyAttributed_Feature_Properties>>(x => ({
-            pid: x.properties.PID_FORMATTED,
-            pin: exists(x.properties.PIN) ? String(x.properties.PIN) : null,
-            isStrataLot: isStrataCommonProperty(x),
-            feature: x,
-            plan: x.properties.PLAN_NUMBER,
-          }))
-          .sort((a, b) => {
-            if (a.isStrataLot === b.isStrataLot) return 0;
-            if (a.isStrataLot) return -1;
-            if (b.isStrataLot) return 1;
-            return 0;
-          }) ?? [],
-    );
+  const propertyProjections = useMemo(() => {
+    const fallbackFeatures = props.searchResult?.fullyAttributedFeatures?.features ?? [];
 
-  const propertyProjections =
-    groupedFeatures
+    const baseParcels = props.selectedFeatureDatasets?.length
+      ? props.selectedFeatureDatasets.map(dataset =>
+          ParcelDataset.fromSelectedFeatureDataset(dataset),
+        )
+      : fallbackFeatures.map(feature => ParcelDataset.fromFullyAttributedFeature(feature));
+
+    return chain(baseParcels)
+      .groupBy(parcel => parcel.pmbcFeature?.properties?.PLAN_NUMBER)
+      .map(group =>
+        group.toSorted((a, b) => {
+          const aIsStrata = a.pmbcFeature ? isStrataCommonProperty(a.pmbcFeature) : false;
+          const bIsStrata = b.pmbcFeature ? isStrataCommonProperty(b.pmbcFeature) : false;
+
+          if (aIsStrata === bIsStrata) return 0;
+          return aIsStrata ? -1 : 1;
+        }),
+      )
       .value()
-      .flatMap(x => x)
-      .map(x => ParcelDataset.fromFullyAttributedFeature(x.feature)) ?? [];
+      .flat();
+  }, [props.searchResult, props.selectedFeatureDatasets]);
 
   const pimsGroupedFeatures = chain(props.searchResult?.pimsFeatures.features)
     .groupBy(feature => feature?.properties?.SURVEY_PLAN_NUMBER)
@@ -184,7 +184,11 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
         className="my-0 py-0"
         header={
           <SimpleSectionHeader title="Results (PMBC)">
-            <MoreOptionsMenu options={menuOptions} ariaLabel="search pmbc results more options" />
+            <MoreOptionsMenu
+              options={menuOptions}
+              ariaLabel="search pmbc results more options"
+              onMenuOpen={() => props.setIsPimsActive(false)}
+            />
           </SimpleSectionHeader>
         }
         isCollapsable
@@ -197,7 +201,11 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
         className="my-0 py-0"
         header={
           <SimpleSectionHeader title="Results (PIMS)">
-            <MoreOptionsMenu options={menuOptions} ariaLabel="search pims results more options" />
+            <MoreOptionsMenu
+              options={menuOptions}
+              ariaLabel="search pims results more options"
+              onMenuOpen={() => props.setIsPimsActive(true)}
+            />
           </SimpleSectionHeader>
         }
         isCollapsable

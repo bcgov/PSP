@@ -640,7 +640,6 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Project
                   </div>
@@ -843,7 +842,6 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Properties to include in this file:
                   </div>
@@ -871,7 +869,6 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                       >
                         <div
                           class="align-content-end col"
-                          style="overflow: hidden;"
                         >
                           <div
                             class="row"
@@ -1054,7 +1051,6 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Management Details
                   </div>
@@ -1269,7 +1265,6 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Management Team
                   </div>
@@ -1302,7 +1297,6 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Notice of Claim
                   </div>

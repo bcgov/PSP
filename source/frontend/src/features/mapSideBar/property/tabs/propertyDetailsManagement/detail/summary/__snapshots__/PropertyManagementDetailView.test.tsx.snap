@@ -54,7 +54,6 @@ exports[`PropertyManagementDetailView component > renders as expected when provi
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           <div
             class="row"

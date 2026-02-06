@@ -276,7 +276,6 @@ exports[`PaymentsView component > renders as expected 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           <div
             class="no-gutters justify-content-between align-items-end c2 row"
@@ -608,7 +607,6 @@ exports[`PaymentsView component > renders with data as expected 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           <div
             class="no-gutters justify-content-between align-items-end c2 row"

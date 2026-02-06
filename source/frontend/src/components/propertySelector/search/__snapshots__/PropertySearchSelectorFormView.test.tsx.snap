@@ -268,7 +268,6 @@ exports[`PropertySearchSelectorFormView component > renders as expected when pro
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Search for a property
         </div>

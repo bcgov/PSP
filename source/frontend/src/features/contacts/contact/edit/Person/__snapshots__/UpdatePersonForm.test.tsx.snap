@@ -416,7 +416,6 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Contact Details
               </div>
@@ -626,7 +625,6 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 <div
                   class="d-flex align-items-center"
@@ -929,7 +927,6 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 <div
                   class="d-flex align-items-center"
@@ -1218,7 +1215,6 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Property Address
               </div>
@@ -1476,7 +1472,6 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Billing Address
               </div>
@@ -1734,7 +1729,6 @@ exports[`UpdatePersonForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Comments
               </div>

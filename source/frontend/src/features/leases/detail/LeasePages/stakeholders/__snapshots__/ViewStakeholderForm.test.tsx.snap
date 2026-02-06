@@ -288,7 +288,6 @@ exports[`AddLeaseTenantForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             <div
               class="no-gutters justify-content-between align-items-end row"
@@ -533,7 +532,6 @@ exports[`Tenant component > renders as expected 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Assignee
         </div>
@@ -569,7 +567,6 @@ exports[`Tenant component > renders as expected 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Property manager
         </div>
@@ -605,7 +602,6 @@ exports[`Tenant component > renders as expected 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Representative
         </div>
@@ -641,7 +637,6 @@ exports[`Tenant component > renders as expected 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Tenant
         </div>
@@ -677,7 +672,6 @@ exports[`Tenant component > renders as expected 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Unknown
         </div>
