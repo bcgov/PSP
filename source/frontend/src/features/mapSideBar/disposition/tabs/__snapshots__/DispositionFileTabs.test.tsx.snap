@@ -202,7 +202,6 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Project
                 </div>
@@ -278,7 +277,6 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Schedule
                 </div>
@@ -336,7 +334,6 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Disposition Details
                 </div>
@@ -584,7 +581,6 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Disposition Team
                 </div>

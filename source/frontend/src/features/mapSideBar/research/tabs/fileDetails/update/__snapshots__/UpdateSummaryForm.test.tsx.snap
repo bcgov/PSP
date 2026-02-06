@@ -449,7 +449,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Research File Information
           </div>
@@ -673,7 +672,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Project
           </div>
@@ -706,7 +704,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Roads
           </div>
@@ -786,7 +783,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Research Request
           </div>
@@ -1158,7 +1154,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Result
           </div>
@@ -1257,7 +1252,6 @@ exports[`UpdateResearchForm component > renders as expected when provided no res
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Expropriation
           </div>

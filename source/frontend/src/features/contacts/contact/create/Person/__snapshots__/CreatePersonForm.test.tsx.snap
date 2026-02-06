@@ -343,7 +343,6 @@ exports[`CreatePersonForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Contact Details
               </div>
@@ -552,7 +551,6 @@ exports[`CreatePersonForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 <div
                   class="d-flex align-items-center"
@@ -855,7 +853,6 @@ exports[`CreatePersonForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 <div
                   class="d-flex align-items-center"
@@ -1145,7 +1142,6 @@ exports[`CreatePersonForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Property Address
               </div>
@@ -1403,7 +1399,6 @@ exports[`CreatePersonForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Billing Address
               </div>
@@ -1661,7 +1656,6 @@ exports[`CreatePersonForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Comments
               </div>

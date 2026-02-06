@@ -1159,7 +1159,6 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                             >
                               <div
                                 class="align-content-end col"
-                                style="overflow: hidden;"
                               >
                                 Project
                               </div>
@@ -1202,7 +1201,6 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                             >
                               <div
                                 class="align-content-end col"
-                                style="overflow: hidden;"
                               >
                                 Roads
                               </div>
@@ -1262,7 +1260,6 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                             >
                               <div
                                 class="align-content-end col"
-                                style="overflow: hidden;"
                               >
                                 Research Request
                               </div>
@@ -1401,7 +1398,6 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                             >
                               <div
                                 class="align-content-end col"
-                                style="overflow: hidden;"
                               >
                                 Result
                               </div>
@@ -1484,7 +1480,6 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                             >
                               <div
                                 class="align-content-end col"
-                                style="overflow: hidden;"
                               >
                                 Expropriation
                               </div>

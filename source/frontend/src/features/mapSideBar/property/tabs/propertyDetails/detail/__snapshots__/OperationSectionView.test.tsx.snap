@@ -62,7 +62,6 @@ exports[`Operation section view > matches snapshot 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Subdivision History
         </div>
@@ -82,7 +81,6 @@ exports[`Operation section view > matches snapshot 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               <div
                 class="row"
@@ -486,7 +484,6 @@ exports[`Operation section view > matches snapshot 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Consolidation History
         </div>
@@ -506,7 +503,6 @@ exports[`Operation section view > matches snapshot 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               <div
                 class="row"

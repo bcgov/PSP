@@ -13,6 +13,7 @@ interface SectionProps {
   isCollapsable?: boolean;
   initiallyExpanded?: boolean;
   noPadding?: boolean;
+  hideOverflow?: boolean;
 }
 
 export const Section: React.FC<
@@ -28,6 +29,7 @@ export const Section: React.FC<
   initiallyExpanded,
   noPadding,
   className,
+  hideOverflow,
   ...rest
 }) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(!(initiallyExpanded === true));
@@ -40,7 +42,10 @@ export const Section: React.FC<
       {exists(header) && (
         <StyledSectionHeader isStyledHeader={isStyledHeader}>
           <Row className="no-gutters">
-            <Col className="align-content-end" style={{ overflow: 'hidden' }}>
+            <Col
+              className="align-content-end"
+              style={{ overflow: hideOverflow === true ? 'hidden' : '' }}
+            >
               {header}
             </Col>
             {isCollapsable && (

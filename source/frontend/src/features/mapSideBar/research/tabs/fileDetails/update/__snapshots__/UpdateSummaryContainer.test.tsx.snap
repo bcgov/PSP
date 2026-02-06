@@ -496,7 +496,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Research File Information
             </div>
@@ -720,7 +719,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Project
             </div>
@@ -868,7 +866,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Roads
             </div>
@@ -948,7 +945,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Research Request
             </div>
@@ -1320,7 +1316,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Result
             </div>
@@ -1419,7 +1414,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Expropriation
             </div>
