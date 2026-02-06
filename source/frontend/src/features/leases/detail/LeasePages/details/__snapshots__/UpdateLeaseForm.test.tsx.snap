@@ -375,7 +375,6 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Original Agreement
           </div>
@@ -759,7 +758,6 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Renewal Options
           </div>
@@ -792,7 +790,6 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Administration
           </div>
@@ -1821,7 +1818,6 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Lease & Licence Team
           </div>
@@ -1855,7 +1851,6 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Fee Determination
           </div>

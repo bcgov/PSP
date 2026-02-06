@@ -334,7 +334,6 @@ exports[`FilterContentForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Show Ownership
           </div>
@@ -620,7 +619,6 @@ exports[`FilterContentForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Project
           </div>
@@ -733,7 +731,6 @@ exports[`FilterContentForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Tenure
           </div>
@@ -1124,7 +1121,6 @@ exports[`FilterContentForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Lease / Licence
           </div>
@@ -1752,7 +1748,6 @@ exports[`FilterContentForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Anomaly
           </div>

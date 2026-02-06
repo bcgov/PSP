@@ -40,6 +40,7 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
   const pathGenerator = usePathGenerator();
 
   const { findDistrict, findRegion } = useAdminBoundaryMapLayer();
+  const [isPimsActive, setIsPimsActive] = useState(false);
 
   const handleMapFilterChange = (filter: IPropertyFilter) => {
     if (['coordinates', 'name', 'address'].includes(filter.searchBy)) {
@@ -70,23 +71,43 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
 
   // Base dataset (no region/district yet)
   const baseDatasets = useMemo<SelectedFeatureDataset[]>(() => {
-    return (
-      mapFeatureData?.fullyAttributedFeatures.features.map<SelectedFeatureDataset>(pmbcParcel => {
-        const center = getFeatureBoundedCenter(pmbcParcel);
-        return {
-          parcelFeature: pmbcParcel,
-          pimsFeature: null,
-          location: { lat: center[1], lng: center[0] },
-          regionFeature: null,
-          fileLocation: null,
-          fileBoundary: null,
-          districtFeature: null,
-          municipalityFeature: null,
-          selectingComponentId: null,
-        };
-      }) ?? []
-    );
-  }, [mapFeatureData?.fullyAttributedFeatures?.features]);
+    if (isPimsActive) {
+      return (
+        mapFeatureData?.pimsFeatures.features.map<SelectedFeatureDataset>(pimsParcel => {
+          const center = getFeatureBoundedCenter(pimsParcel);
+          return {
+            parcelFeature: null,
+            pimsFeature: pimsParcel,
+            location: { lat: center[1], lng: center[0] },
+            regionFeature: null,
+            fileLocation: null,
+            fileBoundary: null,
+            districtFeature: null,
+            municipalityFeature: null,
+            selectingComponentId: null,
+          };
+        }) ?? []
+      );
+    } else {
+      return (
+        mapFeatureData?.fullyAttributedFeatures.features.map<SelectedFeatureDataset>(pmbcParcel => {
+          const center = getFeatureBoundedCenter(pmbcParcel);
+          return {
+            parcelFeature: pmbcParcel,
+            pimsFeature: null,
+            location:
+              exists(center) && center.length >= 2 ? { lat: center[1], lng: center[0] } : null,
+            regionFeature: null,
+            fileLocation: null,
+            fileBoundary: null,
+            districtFeature: null,
+            municipalityFeature: null,
+            selectingComponentId: null,
+          };
+        }) ?? []
+      );
+    }
+  }, [mapFeatureData, isPimsActive]);
 
   // Enrich dataset with region/district info
   const [selectedFeatureDatasets, setSelectedFeatureDatasets] = useState<SelectedFeatureDataset[]>(
@@ -169,6 +190,7 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
       propertyFilter={mapSearchCriteria ?? defaultPropertyFilter}
       onFilterChange={handleMapFilterChange}
       searchResult={mapFeatureData}
+      selectedFeatureDatasets={selectedFeatureDatasets}
       canAddToOpenFile={isEditPropertiesMode}
       onCreateResearchFile={onCreateResearchFile}
       onCreateAcquisitionFile={onCreateAcquisitionFile}
@@ -176,6 +198,7 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
       onCreateLeaseFile={onCreateLeaseFile}
       onCreateManagementFile={onCreateManagementFile}
       onAddToOpenFile={onAddToOpenFile}
+      setIsPimsActive={setIsPimsActive}
     />
   );
 };

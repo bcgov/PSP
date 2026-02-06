@@ -570,7 +570,6 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Contact Details
                   </div>
@@ -779,7 +778,6 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     <div
                       class="d-flex align-items-center"
@@ -1082,7 +1080,6 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     <div
                       class="d-flex align-items-center"
@@ -1372,7 +1369,6 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Property Address
                   </div>
@@ -1630,7 +1626,6 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Billing Address
                   </div>
@@ -1888,7 +1883,6 @@ exports[`CreateContactContainer component > should render as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Comments
                   </div>

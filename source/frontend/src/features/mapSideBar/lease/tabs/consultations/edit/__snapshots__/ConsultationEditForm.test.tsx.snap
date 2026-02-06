@@ -367,7 +367,6 @@ exports[`ConsultationEditForm component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Update Approval / Consultation
             </div>

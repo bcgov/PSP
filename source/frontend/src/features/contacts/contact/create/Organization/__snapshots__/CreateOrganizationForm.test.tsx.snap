@@ -330,7 +330,6 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Contact Details
               </div>
@@ -439,7 +438,6 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 <div
                   class="d-flex align-items-center"
@@ -742,7 +740,6 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Mailing Address
               </div>
@@ -1000,7 +997,6 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Property Address
               </div>
@@ -1258,7 +1254,6 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Billing Address
               </div>
@@ -1516,7 +1511,6 @@ exports[`CreateOrganizationForm > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 Comments
               </div>
