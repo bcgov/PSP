@@ -1204,7 +1204,6 @@ exports[`DispositionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Project
                             </div>
@@ -1280,7 +1279,6 @@ exports[`DispositionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Schedule
                             </div>
@@ -1338,7 +1336,6 @@ exports[`DispositionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Disposition Details
                             </div>
@@ -1586,7 +1583,6 @@ exports[`DispositionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Disposition Team
                             </div>

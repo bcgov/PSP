@@ -412,7 +412,6 @@ exports[`ConsultationListView component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             <div
               class="no-gutters justify-content-between align-items-end row"
@@ -468,7 +467,6 @@ exports[`ConsultationListView component > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 <div
                   class="c7 row"
@@ -544,7 +542,6 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                   >
                     <div
                       class="align-content-end col"
-                      style="overflow: hidden;"
                     >
                       <div>
                         <div
@@ -795,7 +792,6 @@ exports[`ConsultationListView component > renders as expected 1`] = `
                   >
                     <div
                       class="align-content-end col"
-                      style="overflow: hidden;"
                     >
                       <div>
                         <div
@@ -1045,7 +1041,6 @@ exports[`ConsultationListView component > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 <div
                   class="c7 row"
@@ -1110,7 +1105,6 @@ exports[`ConsultationListView component > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 <div
                   class="c7 row"
@@ -1175,7 +1169,6 @@ exports[`ConsultationListView component > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 <div
                   class="c7 row"
@@ -1240,7 +1233,6 @@ exports[`ConsultationListView component > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 <div
                   class="c7 row"
@@ -1305,7 +1297,6 @@ exports[`ConsultationListView component > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 <div
                   class="c7 row"
@@ -1370,7 +1361,6 @@ exports[`ConsultationListView component > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 <div
                   class="c7 row"
@@ -1435,7 +1425,6 @@ exports[`ConsultationListView component > renders as expected 1`] = `
             >
               <div
                 class="align-content-end col"
-                style="overflow: hidden;"
               >
                 <div
                   class="c7 row"

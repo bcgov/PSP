@@ -463,7 +463,6 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Project
           </div>
@@ -667,7 +666,6 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Management Details
           </div>
@@ -943,7 +941,6 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Management Team
           </div>
@@ -1302,7 +1299,6 @@ exports[`UpdateManagementForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Notice of Claim
           </div>

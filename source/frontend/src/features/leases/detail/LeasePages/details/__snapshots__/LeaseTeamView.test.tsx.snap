@@ -32,7 +32,6 @@ exports[`LeaseTeamView component > renders empty lease team 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Lease & Licence Team
         </div>

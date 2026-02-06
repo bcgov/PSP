@@ -1278,7 +1278,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Project
                             </div>
@@ -1352,7 +1351,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Progress Statuses
                             </div>
@@ -1535,7 +1533,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Schedule
                             </div>
@@ -1674,7 +1671,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Acquisition Details
                             </div>
@@ -1844,7 +1840,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Acquisition Team
                             </div>
@@ -1948,7 +1943,6 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Owner Information
                             </div>
@@ -2422,7 +2416,6 @@ Canada
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Notice of Claim
                             </div>

@@ -75,7 +75,6 @@ exports[`ResearchSummaryView component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Project
             </div>
@@ -118,7 +117,6 @@ exports[`ResearchSummaryView component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Roads
             </div>
@@ -178,7 +176,6 @@ exports[`ResearchSummaryView component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Research Request
             </div>
@@ -317,7 +314,6 @@ exports[`ResearchSummaryView component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Result
             </div>
@@ -400,7 +396,6 @@ exports[`ResearchSummaryView component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Expropriation
             </div>
