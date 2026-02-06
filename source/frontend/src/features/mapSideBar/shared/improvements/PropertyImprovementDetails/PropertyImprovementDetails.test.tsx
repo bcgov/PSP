@@ -13,6 +13,9 @@ describe('Property Improvement Details view', () => {
         propertyImprovement={
           renderOptions?.props?.propertyImprovement ?? getMockPropertyImprovementApi()
         }
+        propertyImprovementIndex={
+          renderOptions?.props?.propertyImprovementIndex ?? 1000
+        }
       />,
       {
         ...renderOptions,

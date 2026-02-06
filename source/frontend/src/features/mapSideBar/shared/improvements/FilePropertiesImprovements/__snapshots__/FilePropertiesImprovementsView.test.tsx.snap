@@ -294,7 +294,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
             </div>
             <div
               class="c13 text-left col"
-              data-testid="improvement[1000].type"
+              data-testid="improvement[0].type"
             >
               Commercial Building
             </div>
@@ -313,7 +313,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
             </div>
             <div
               class="c13 text-left col"
-              data-testid="improvement[1000].description"
+              data-testid="improvement[0].description"
             >
               TEST DESCRIPTION
             </div>
