@@ -635,7 +635,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Original Agreement
                 </div>
@@ -1019,7 +1018,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Properties to include in this file:
                 </div>
@@ -1149,7 +1147,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                   >
                     <div
                       class="align-content-end col"
-                      style="overflow: hidden;"
                     >
                       <div
                         class="row"
@@ -1218,7 +1215,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Administration
                 </div>
@@ -2254,7 +2250,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Lease & Licence Team
                 </div>
@@ -2288,7 +2283,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Fee Determination
                 </div>

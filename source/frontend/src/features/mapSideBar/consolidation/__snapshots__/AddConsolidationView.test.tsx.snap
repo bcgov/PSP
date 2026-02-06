@@ -657,7 +657,6 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
                     >
                       <div
                         class="align-content-end col"
-                        style="overflow: hidden;"
                       >
                         Selected Parents
                       </div>
@@ -723,7 +722,6 @@ exports[`Add Consolidation View > matches snapshot 1`] = `
                     >
                       <div
                         class="align-content-end col"
-                        style="overflow: hidden;"
                       >
                         Selected Child
                       </div>

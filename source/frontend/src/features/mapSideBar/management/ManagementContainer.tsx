@@ -187,7 +187,10 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
   };
 
   const handleCancel = () => {
-    handleCancelClick(() => setIsEditing(false));
+    handleCancelClick(() => {
+      setIsEditing(false);
+      pathGenerator.showFile('management', managementFile.id);
+    });
   };
 
   const onSelectProperty = (filePropertyId: number) => {

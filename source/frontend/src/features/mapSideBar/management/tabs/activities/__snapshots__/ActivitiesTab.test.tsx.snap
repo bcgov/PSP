@@ -91,7 +91,6 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             <div
               class="c3 no-gutters row"
@@ -360,7 +359,6 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             <div
               class="d-flex"

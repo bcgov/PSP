@@ -488,7 +488,6 @@ exports[`ManagementActivityEditForm component > renders as expected 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Select File Properties
                 </div>
@@ -618,7 +617,6 @@ exports[`ManagementActivityEditForm component > renders as expected 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   Activity Details
                 </div>
@@ -1417,7 +1415,6 @@ exports[`ManagementActivityEditForm component > renders as expected 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
                   <div
                     class="c17 no-gutters row"

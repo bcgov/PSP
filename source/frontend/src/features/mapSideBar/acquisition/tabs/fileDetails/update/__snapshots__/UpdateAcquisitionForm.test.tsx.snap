@@ -581,7 +581,6 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Project
           </div>
@@ -807,7 +806,6 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Progress Statuses
           </div>
@@ -1263,7 +1261,6 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Schedule
           </div>
@@ -1517,7 +1514,6 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Acquisition Details
           </div>
@@ -1849,7 +1845,6 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Acquisition Team
           </div>
@@ -2265,7 +2260,6 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Owners
           </div>
@@ -4081,7 +4075,6 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Notice of Claim
           </div>

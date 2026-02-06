@@ -108,7 +108,6 @@ exports[`LtsaPlanTabView component > renders as expected when provided valid lts
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Strata Plan Common Property Details
           </div>
@@ -190,7 +189,6 @@ exports[`LtsaPlanTabView component > renders as expected when provided valid lts
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Legal Notations on Strata Common Property
           </div>
@@ -307,7 +305,6 @@ GOVERNMENT ACT, SEE EP96596
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Charges on Strata Common Property
           </div>

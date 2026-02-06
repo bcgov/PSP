@@ -453,7 +453,6 @@ exports[`ResearchProperties component > renders as expected 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Properties to include in this file:
         </div>
@@ -578,7 +577,6 @@ exports[`ResearchProperties component > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               <div
                 class="row"
