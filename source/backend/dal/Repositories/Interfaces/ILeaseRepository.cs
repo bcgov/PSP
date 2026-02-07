@@ -12,7 +12,7 @@ namespace Pims.Dal.Repositories
     {
         int Count();
 
-        IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false);
+        IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false, long? contractorPersonId = null);
 
         long GetRowVersion(long id);
 

@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.IO;
+using System.Linq;
 using ClosedXML.Report;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
@@ -18,10 +22,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Linq;
 using static Pims.Dal.Entities.PimsLeaseStatusType;
 
 namespace Pims.Api.Areas.Reports.Controllers

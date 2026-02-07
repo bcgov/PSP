@@ -27,7 +27,8 @@ namespace Pims.Api.Services
         {
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
             DateTime fiscalYearStartDate = fiscalYearStart.ToFiscalYearDate();
-            var user = _userRepository.GetByKeycloakUserId(this._user.GetUserKey());
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
             // fiscal defined as April 01 to March 31 of following year
             return _leaseRepository.GetAllByFilter(
@@ -37,8 +38,9 @@ namespace Pims.Api.Services
                     StartBeforeDate = fiscalYearStartDate.AddYears(1).AddDays(-1),
                     NotInStatus = new List<string>() { PimsLeaseStatusTypes.DRAFT, PimsLeaseStatusTypes.DISCARD, PimsLeaseStatusTypes.DUPLICATE },
                     IsReceivable = true,
-                }, user.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet(),
-                true);
+                }, pimsUser.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet(),
+                true,
+                contractorPersonId);
         }
     }
 }

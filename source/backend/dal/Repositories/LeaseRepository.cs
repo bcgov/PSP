@@ -58,7 +58,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false)
+        public IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false, long? contractorPersonId = null)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
@@ -67,7 +67,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            var query = GenerateLeaseQuery(filter, regionCodes, loadPayments);
+            var query = GenerateLeaseQuery(filter, regionCodes, loadPayments, contractorPersonId);
 
             // Getting all by the filter will ignore the order by passed and instead use the lease id.
             var leases = query.OrderBy(l => l.LeaseId).ToArray();
