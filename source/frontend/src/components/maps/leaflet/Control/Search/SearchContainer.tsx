@@ -144,13 +144,17 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
       setSelectedFeatureDatasets(enriched);
     }
 
-    fetchRegions();
+    if (!isPimsActive) {
+      fetchRegions();
+    } else {
+      setSelectedFeatureDatasets(baseDatasets);
+    }
 
     // Cleanup function to avoid state updates if component unmounts
     return () => {
       cancelled = true;
     };
-  }, [baseDatasets, findDistrict, findRegion]);
+  }, [baseDatasets, findDistrict, findRegion, isPimsActive]);
 
   // Actions for creating new files
   const onCreateResearchFile = useCallback(() => {

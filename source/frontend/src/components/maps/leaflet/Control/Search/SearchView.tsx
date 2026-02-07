@@ -60,9 +60,9 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
     const fallbackFeatures = props.searchResult?.fullyAttributedFeatures?.features ?? [];
 
     const baseParcels = props.selectedFeatureDatasets?.length
-      ? props.selectedFeatureDatasets.map(dataset =>
-          ParcelDataset.fromSelectedFeatureDataset(dataset),
-        )
+      ? props.selectedFeatureDatasets
+          .filter(dataset => !!dataset.parcelFeature) // Only PMBC records
+          .map(dataset => ParcelDataset.fromSelectedFeatureDataset(dataset))
       : fallbackFeatures.map(feature => ParcelDataset.fromFullyAttributedFeature(feature));
 
     return chain(baseParcels)
