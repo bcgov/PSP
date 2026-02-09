@@ -156,6 +156,9 @@ class AcquisitionFileStatusUpdateSolver
     }
 
     const statusCode = this.fileStatus.id;
+    console.log('this: ', this);
+    console.log('fileStatus: ', this.fileStatus);
+    console.log('statusCode: ', statusCode);
     let canEdit = false;
 
     switch (statusCode) {

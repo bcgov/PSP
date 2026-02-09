@@ -4,33 +4,44 @@ import styled from 'styled-components';
 import { FastCurrencyInput, FastDatePicker, Input, Select } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField, StyledFieldLabel } from '@/components/common/Section/SectionField';
+import * as AGREEMENT from '@/constants/agreements';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_AgreementStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementStatusTypes';
 import { ApiGen_CodeTypes_AgreementTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementTypes';
-import { mapLookupCode } from '@/utils/mapLookupCode';
 
 import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
 import { StyledSectionSubheader } from '../styles';
 
 export interface IAcquisitionAgreementFormProps {
   formikProps: FormikProps<AcquisitionAgreementFormModel>;
+  fileType: string;
 }
 
 const AcquisitionAgreementForm: React.FunctionComponent<
   React.PropsWithChildren<IAcquisitionAgreementFormProps>
-> = ({ formikProps }) => {
+> = ({ formikProps, fileType }) => {
   const { setModalContent, setDisplayModal } = useModalContext();
-  const { getOptionsByType, getByType } = useLookupCodeHelpers();
+  const { getAgreementSelectOptions } = useLookupCodeHelpers();
 
-  const agreementStatusOptions = getOptionsByType(API.AGREEMENT_STATUS_TYPES);
-  const agreementTypeOptions = getByType(API.AGREEMENT_TYPES);
-
+  const agreementStatusSelectOptions = getAgreementSelectOptions(
+    API.AGREEMENT_STATUS_TYPES,
+    fileType,
+    fileType === 'disposition' ? AGREEMENT.DISPOSITION_STATUS_TYPES : undefined,
+  );
+  console.log('agreementStatusSelectOptions:', agreementStatusSelectOptions);
+  const agreementTypeSelectOptions = getAgreementSelectOptions(
+    API.AGREEMENT_TYPES,
+    fileType,
+    fileType === 'disposition' ? AGREEMENT.DISPOSITION_FORMS : undefined, // Only pass for disposition
+  );
+  console.log('agreementTypeSelectOptions:', agreementTypeSelectOptions);
   const agreementStatusTypeCodeValue: string | null = getIn(
     formikProps.values,
     'agreementStatusTypeCode',
   );
+  console.log('agreementStatusTypeCodeValue:', agreementStatusTypeCodeValue);
   const agreementTypeCodeValue: string | null = getIn(formikProps.values, 'agreementTypeCode');
   const agreementCancellationNoteValue: string | null = getIn(
     formikProps.values,
@@ -64,12 +75,13 @@ const AcquisitionAgreementForm: React.FunctionComponent<
       setDisplayModal(true);
     }
   };
+  console.log('Rendering AcquisitionAgreementForm');
 
   return (
     <Section header="Agreement Details">
       <SectionField labelWidth={{ xs: 5 }} label="Agreement status">
         <Select
-          options={agreementStatusOptions}
+          options={agreementStatusSelectOptions}
           onChange={onSelectChange}
           field="agreementStatusTypeCode"
         />
@@ -85,7 +97,7 @@ const AcquisitionAgreementForm: React.FunctionComponent<
       <SectionField labelWidth={{ xs: 5 }} label="Agreement type" required>
         <Select
           field="agreementTypeCode"
-          options={agreementTypeOptions.map(mapLookupCode)}
+          options={agreementTypeSelectOptions}
           placeholder="Select Agreement Type"
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
             const selectedValue = [].slice

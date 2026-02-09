@@ -9,6 +9,8 @@ import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_C
 import { exists, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
+import AddAcquisitionAgreementContainer from '../../shared/agreement/add/AddAcquisitionAgreementContainer';
+import UpdateAcquisitionAgreementForm from '../../shared/agreement/common/UpdateAcquisitionAgreementForm';
 import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
 import { UpdateDispositionChecklistContainer } from '../tabs/checklist/update/UpdateDispositionChecklistContainer';
 import DispositionFileTabs from '../tabs/DispositionFileTabs';
@@ -40,6 +42,7 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
   }
 
   // render edit forms
+  console.log('DispositionRouter - isEditing:', props.isEditing);
   if (props.isEditing) {
     return (
       <Switch>
@@ -77,6 +80,23 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
         <Route path={`${stripTrailingSlash(path)}/property`}>
           <></>
         </Route>
+        <AppRoute
+          exact
+          path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/add`}
+          customRender={() =>
+            props.dispositionFile?.id ? (
+              <AddAcquisitionAgreementContainer
+                acquisitionFileId={props.dispositionFile?.id}
+                View={UpdateAcquisitionAgreementForm}
+                onSuccess={props.onSuccess}
+                fileType="disposition"
+              />
+            ) : null
+          }
+          claim={Claims.DISPOSITION_EDIT}
+          key={'agreement'}
+          title={'Add Agreement'}
+        />
         <AppRoute
           exact
           path={`${stripTrailingSlash(path)}/${FileTabType.OFFERS_AND_SALE}/appraisal/update`}

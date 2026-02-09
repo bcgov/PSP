@@ -18,12 +18,12 @@ import { exists } from '@/utils';
 import CompensationListContainer from '../../compensation/list/CompensationListContainer';
 import CompensationListView from '../../compensation/list/CompensationListView';
 import { SideBarContext } from '../../context/sidebarContext';
+import AgreementContainer from '../../shared/agreement/detail/AgreementContainer';
+import AgreementView from '../../shared/agreement/detail/AgreementView';
 import FilePropertiesImprovementsContainer from '../../shared/improvements/FilePropertiesImprovements/FilePropertiesImprovementsContainer';
 import { FilePropertiesImprovementsView } from '../../shared/improvements/FilePropertiesImprovements/FilePropertiesImprovementsView';
 import { ChecklistView } from '../../shared/tabs/checklist/detail/ChecklistView';
 import DocumentsTab from '../../shared/tabs/DocumentsTab';
-import AgreementContainer from './agreement/detail/AgreementContainer';
-import AgreementView from './agreement/detail/AgreementView';
 import ExpropriationTabContainer from './expropriation/ExpropriationTabContainer';
 import ExpropriationTabContainerView from './expropriation/ExpropriationTabContainerView';
 import AcquisitionFileStatusUpdateSolver from './fileDetails/detail/AcquisitionFileStatusUpdateSolver';
@@ -92,7 +92,13 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
 
   if (acquisitionFile?.id && hasClaim(Claims.AGREEMENT_VIEW)) {
     tabViews.push({
-      content: <AgreementContainer acquisitionFileId={acquisitionFile.id} View={AgreementView} />,
+      content: (
+        <AgreementContainer
+          fileId={acquisitionFile.id}
+          fileType="acquisition"
+          View={AgreementView}
+        />
+      ),
       key: FileTabType.AGREEMENTS,
       name: 'Agreements',
     });

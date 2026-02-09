@@ -12,6 +12,7 @@ import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFor
 
 export interface IUpdateAcquisitionAgreementFormProps {
   isLoading: boolean;
+  fileType: string;
   initialValues: AcquisitionAgreementFormModel | null;
   onSubmit: (
     values: AcquisitionAgreementFormModel,
@@ -22,7 +23,7 @@ export interface IUpdateAcquisitionAgreementFormProps {
 
 const UpdateAcquisitionAgreementForm: React.FunctionComponent<
   React.PropsWithChildren<IUpdateAcquisitionAgreementFormProps>
-> = ({ isLoading, initialValues, onSubmit, onCancel }) => {
+> = ({ isLoading, fileType, initialValues, onSubmit, onCancel }) => {
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
@@ -41,6 +42,7 @@ const UpdateAcquisitionAgreementForm: React.FunctionComponent<
       setDisplayModal(true);
     }
   };
+  console.log('UpdateAcquisitionAgreementForm - initialValues:', initialValues);
 
   return (
     initialValues && (
@@ -59,7 +61,10 @@ const UpdateAcquisitionAgreementForm: React.FunctionComponent<
                   parentScreen={true}
                 ></LoadingBackdrop>
                 <StyledContent>
-                  <AcquisitionAgreementForm formikProps={formikProps}></AcquisitionAgreementForm>
+                  <AcquisitionAgreementForm
+                    formikProps={formikProps}
+                    fileType={fileType}
+                  ></AcquisitionAgreementForm>
                 </StyledContent>
                 <StyledFooter>
                   <SidebarFooter

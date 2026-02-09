@@ -9,11 +9,11 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { exists, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
+import AddAcquisitionAgreementContainer from '../../shared/agreement/add/AddAcquisitionAgreementContainer';
+import UpdateAcquisitionAgreementForm from '../../shared/agreement/common/UpdateAcquisitionAgreementForm';
+import UpdateAcquisitionAgreementContainer from '../../shared/agreement/update/UpdateAcquisitionAgreementContainer';
 import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
 import { AcquisitionFileTabs } from '../tabs/AcquisitionFileTabs';
-import AddAcquisitionAgreementContainer from '../tabs/agreement/add/AddAcquisitionAgreementContainer';
-import UpdateAcquisitionAgreementForm from '../tabs/agreement/common/UpdateAcquisitionAgreementForm';
-import UpdateAcquisitionAgreementContainer from '../tabs/agreement/update/UpdateAcquisitionAgreementContainer';
 import { UpdateAcquisitionChecklistContainer } from '../tabs/checklist/update/UpdateAcquisitionChecklistContainer';
 import AddForm8Container from '../tabs/expropriation/form8/add/AddForm8Container';
 import { UpdateForm8Container } from '../tabs/expropriation/form8/update/UpdateForm8Container';

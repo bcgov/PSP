@@ -12,13 +12,14 @@ import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFor
 
 export interface IAddAcquisitionAgreementContainerProps {
   acquisitionFileId: number;
+  fileType: string;
   View: React.FC<IUpdateAcquisitionAgreementFormProps>;
   onSuccess: () => void;
 }
 
 const AddAcquisitionAgreementContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddAcquisitionAgreementContainerProps>
-> = ({ acquisitionFileId, View, onSuccess }) => {
+> = ({ acquisitionFileId, fileType, View, onSuccess }) => {
   const history = useHistory();
   const location = useLocation();
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -73,6 +74,7 @@ const AddAcquisitionAgreementContainer: React.FunctionComponent<
     initialValues && (
       <View
         initialValues={initialValues}
+        fileType={fileType}
         isLoading={loading}
         onSubmit={handleSubmit}
         onCancel={() => history.push(backUrl)}

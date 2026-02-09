@@ -39,10 +39,22 @@ export function useLookupCodeHelpers() {
     [getByType],
   );
 
+  const getAgreementSelectOptions = useCallback(
+    (type: string, fileType: string, allowedIds?: string[]) => {
+      const options = getByType(type);
+      if (fileType === 'disposition' && allowedIds && allowedIds.length > 0) {
+        return options.filter(opt => allowedIds.includes(opt.id)).map(mapLookupCode);
+      }
+      return options.map(mapLookupCode);
+    },
+    [getByType],
+  );
+
   return {
     getOptionsByType,
     getCodeById,
     getByType,
+    getAgreementSelectOptions,
     getPublicByType,
     lookupCodes,
   };
