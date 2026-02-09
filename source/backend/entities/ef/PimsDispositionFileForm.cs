@@ -7,47 +7,39 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table describing the available document types.
+/// Entity associating a form to an acquisition file.  The acquisition file can have multiple forms.
 /// </summary>
-[Table("PIMS_DOCUMENT")]
-[Index("DocumentId", Name = "DOCMNT_DOCUMENT_ID_IDX")]
-[Index("DocumentStatusTypeCode", Name = "DOCMNT_DOCUMENT_STATUS_TYPE_CODE_IDX")]
-public partial class PimsDocument
+[Table("PIMS_DISPOSITION_FILE_FORM")]
+[Index("DispositionFileId", Name = "DSPFRM_DISPOSITION_FILE_ID_IDX")]
+[Index("DispositionFormTypeCode", Name = "DSPFRM_DISPOSITION_FORM_TYPE_CODE_IDX")]
+public partial class PimsDispositionFileForm
 {
     /// <summary>
     /// System-generated unique surrogate primary key.
     /// </summary>
     [Key]
-    [Column("DOCUMENT_ID")]
-    public long DocumentId { get; set; }
+    [Column("DISPOSITION_FILE_FORM_ID")]
+    public long DispositionFileFormId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_DOCUMENT_TYPE table.
+    /// Foreign key to the PIMS_DISPOSITION_FILE table.
     /// </summary>
-    [Column("DOCUMENT_TYPE_ID")]
-    public long DocumentTypeId { get; set; }
+    [Column("DISPOSITION_FILE_ID")]
+    public long DispositionFileId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_DOCUMENT_STATUS_TYPE table.
+    /// Foreign key to the PIMS_DISPOSITION_FORM_TYPE table.
     /// </summary>
-    [Required]
-    [Column("DOCUMENT_STATUS_TYPE_CODE")]
+    [Column("DISPOSITION_FORM_TYPE_CODE")]
     [StringLength(20)]
-    public string DocumentStatusTypeCode { get; set; }
+    public string DispositionFormTypeCode { get; set; }
 
     /// <summary>
-    /// Name of the file stored on Mayan EDMS.
+    /// JSON associated with the form.
     /// </summary>
-    [Required]
-    [Column("FILE_NAME")]
-    [StringLength(500)]
-    public string FileName { get; set; }
-
-    /// <summary>
-    /// Mayan-generated document number used for retrieval from Mayan EDMS.
-    /// </summary>
-    [Column("MAYAN_ID")]
-    public long? MayanId { get; set; }
+    [Column("FORM_JSON")]
+    [StringLength(4000)]
+    public string FormJson { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -139,51 +131,11 @@ public partial class PimsDocument
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    /// <summary>
-    /// Fluid key used to uniquely identify document in external system.
-    /// </summary>
-    [Column("DOCUMENT_EXTERNAL_ID")]
-    [StringLength(1000)]
-    public string DocumentExternalId { get; set; }
+    [ForeignKey("DispositionFileId")]
+    [InverseProperty("PimsDispositionFileForms")]
+    public virtual PimsDispositionFile DispositionFile { get; set; }
 
-    [ForeignKey("DocumentStatusTypeCode")]
-    [InverseProperty("PimsDocuments")]
-    public virtual PimsDocumentStatusType DocumentStatusTypeCodeNavigation { get; set; }
-
-    [ForeignKey("DocumentTypeId")]
-    [InverseProperty("PimsDocuments")]
-    public virtual PimsDocumentTyp DocumentType { get; set; }
-
-    [InverseProperty("Document")]
-    public virtual ICollection<PimsAcquisitionFileDocument> PimsAcquisitionFileDocuments { get; set; } = new List<PimsAcquisitionFileDocument>();
-
-    [InverseProperty("Document")]
-    public virtual ICollection<PimsDispositionFileDocument> PimsDispositionFileDocuments { get; set; } = new List<PimsDispositionFileDocument>();
-
-    [InverseProperty("Document")]
-    public virtual ICollection<PimsDispositionFormType> PimsDispositionFormTypes { get; set; } = new List<PimsDispositionFormType>();
-
-    [InverseProperty("DocumentNavigation")]
-    public virtual ICollection<PimsDocumentQueue> PimsDocumentQueues { get; set; } = new List<PimsDocumentQueue>();
-
-    [InverseProperty("Document")]
-    public virtual ICollection<PimsFormType> PimsFormTypes { get; set; } = new List<PimsFormType>();
-
-    [InverseProperty("Document")]
-    public virtual ICollection<PimsLeaseDocument> PimsLeaseDocuments { get; set; } = new List<PimsLeaseDocument>();
-
-    [InverseProperty("Document")]
-    public virtual ICollection<PimsManagementFileDocument> PimsManagementFileDocuments { get; set; } = new List<PimsManagementFileDocument>();
-
-    [InverseProperty("Document")]
-    public virtual ICollection<PimsMgmtActivityDocument> PimsMgmtActivityDocuments { get; set; } = new List<PimsMgmtActivityDocument>();
-
-    [InverseProperty("Document")]
-    public virtual ICollection<PimsProjectDocument> PimsProjectDocuments { get; set; } = new List<PimsProjectDocument>();
-
-    [InverseProperty("Document")]
-    public virtual ICollection<PimsPropertyDocument> PimsPropertyDocuments { get; set; } = new List<PimsPropertyDocument>();
-
-    [InverseProperty("Document")]
-    public virtual ICollection<PimsResearchFileDocument> PimsResearchFileDocuments { get; set; } = new List<PimsResearchFileDocument>();
+    [ForeignKey("DispositionFormTypeCode")]
+    [InverseProperty("PimsDispositionFileForms")]
+    public virtual PimsDispositionFormType DispositionFormTypeCodeNavigation { get; set; }
 }

@@ -271,6 +271,9 @@ public partial class PimsDispositionFile
     public virtual PimsDspPhysFileStatusType DspPhysFileStatusTypeCodeNavigation { get; set; }
 
     [InverseProperty("DispositionFile")]
+    public virtual ICollection<PimsDispositionAgreement> PimsDispositionAgreements { get; set; } = new List<PimsDispositionAgreement>();
+
+    [InverseProperty("DispositionFile")]
     public virtual ICollection<PimsDispositionAppraisal> PimsDispositionAppraisals { get; set; } = new List<PimsDispositionAppraisal>();
 
     [InverseProperty("DispositionFile")]
@@ -278,6 +281,9 @@ public partial class PimsDispositionFile
 
     [InverseProperty("DispositionFile")]
     public virtual ICollection<PimsDispositionFileDocument> PimsDispositionFileDocuments { get; set; } = new List<PimsDispositionFileDocument>();
+
+    [InverseProperty("DispositionFile")]
+    public virtual ICollection<PimsDispositionFileForm> PimsDispositionFileForms { get; set; } = new List<PimsDispositionFileForm>();
 
     [InverseProperty("DispositionFile")]
     public virtual ICollection<PimsDispositionFileNote> PimsDispositionFileNotes { get; set; } = new List<PimsDispositionFileNote>();

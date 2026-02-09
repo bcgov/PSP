@@ -5,11 +5,12 @@
 
 // LINK: @backend/apimodels/Models/Concepts/Document/DocumentSearchFilterModel.cs
 export interface ApiGen_Concepts_DocumentSearchFilter {
-  content: string | null;
   documentTypTypeCode: string | null;
   documentStatusTypeCode: string | null;
   documentName: string | null;
   pid: string | null;
   pin: string | null;
   plan: string | null;
+  content: string | null;
+  mayanDocumentIds: number[] | null;
 }
