@@ -49,7 +49,6 @@ exports[`DetailAdministration component > renders a complete lease as expected 1
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Administration
         </div>
@@ -365,7 +364,6 @@ exports[`DetailAdministration component > renders minimally as expected 1`] = `
       >
         <div
           class="align-content-end col"
-          style="overflow: hidden;"
         >
           Administration
         </div>

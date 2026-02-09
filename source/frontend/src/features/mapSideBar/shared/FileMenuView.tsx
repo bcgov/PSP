@@ -152,16 +152,20 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
               onEdit={onEditProperties}
             />
           </Col>
-          <Col xs="auto" className="pr-3">
-            <ZoomToLocation
-              icon={ZoomIconType.area}
-              iconSize={24}
-              pimsFileProperties={file?.fileProperties}
-            />
-          </Col>
-          <Col xs="auto" className="pr-1">
-            <CopyToWorklist iconSize={24} fileProperties={file?.fileProperties ?? []} />
-          </Col>
+          {file?.fileProperties?.length > 0 && (
+            <Col xs="auto" className="pr-3">
+              <ZoomToLocation
+                icon={ZoomIconType.area}
+                iconSize={24}
+                pimsFileProperties={file?.fileProperties}
+              />
+            </Col>
+          )}
+          {file?.fileProperties?.length > 0 && (
+            <Col xs="auto" className="pr-1">
+              <CopyToWorklist iconSize={24} fileProperties={file?.fileProperties ?? []} />
+            </Col>
+          )}
         </Row>
       </StyledMenuHeaderWrapper>
       <div className={'p-1'} />

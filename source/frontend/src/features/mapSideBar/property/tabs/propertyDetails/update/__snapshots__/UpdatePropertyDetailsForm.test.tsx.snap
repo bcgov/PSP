@@ -406,7 +406,6 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Property Address
           </div>
@@ -1168,7 +1167,6 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Property Attributes
           </div>
@@ -1807,7 +1805,6 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Tenure
           </div>
@@ -2335,7 +2332,6 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Measurements
           </div>
@@ -2682,7 +2678,6 @@ exports[`UpdatePropertyDetailsForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Surplus Declaration
           </div>

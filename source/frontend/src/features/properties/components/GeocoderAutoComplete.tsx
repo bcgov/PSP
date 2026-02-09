@@ -3,9 +3,10 @@ import './GeocoderAutoComplete.scss';
 import classNames from 'classnames';
 import { useFormikContext } from 'formik';
 import debounce from 'lodash/debounce';
-import { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState } from 'react';
 import Form from 'react-bootstrap/Form';
 import { FormControlProps } from 'react-bootstrap/FormControl';
+import Overlay from 'react-bootstrap/Overlay';
 import ClickAwayListener from 'react-click-away-listener';
 
 import { DisplayError } from '@/components/common/form';
@@ -32,6 +33,32 @@ interface IGeocoderAutoCompleteProps {
   outerClassName?: string;
 }
 
+interface ISuggestionListProps {
+  options: IGeocoderResponse[];
+  onSelect: (value: IGeocoderResponse) => void;
+}
+
+const SuggestionList: React.FC<React.PropsWithChildren<ISuggestionListProps>> = ({
+  options,
+  onSelect,
+}) => {
+  return (
+    <ul className="suggestionList">
+      {options.map((option, index: number) => (
+        <li
+          key={index}
+          onClick={e => {
+            onSelect(option);
+            e.stopPropagation();
+          }}
+        >
+          {option.fullAddress}
+        </li>
+      ))}
+    </ul>
+  );
+};
+
 export const GeocoderAutoComplete: React.FC<
   React.PropsWithChildren<IGeocoderAutoCompleteProps>
 > = ({
@@ -56,6 +83,8 @@ export const GeocoderAutoComplete: React.FC<
   const errorTooltip = error && touch && displayErrorTooltips ? error : undefined;
   const { searchAddress } = useGeocoderRepository();
   const [textValue, setTextValue] = useState<string | undefined>(value);
+  const containerRef = useRef<HTMLDivElement | null>(null);
+  const inputRef = useRef<HTMLInputElement | null>(null);
   const debouncedSearch = useRef(
     debounce(
       async (val: string, abort: boolean) => {
@@ -78,6 +107,7 @@ export const GeocoderAutoComplete: React.FC<
       setOptions([]);
     }
   };
+
   useEffect(() => {
     return () => {
       debouncedSearch('', true);
@@ -94,31 +124,43 @@ export const GeocoderAutoComplete: React.FC<
   };
 
   const renderSuggestions = () => {
-    if (options !== undefined && options.length === 0) {
+    if (options.length === 0) {
       return null;
     }
-    if (options !== undefined) {
-      return (
-        <ul className="suggestionList">
-          {options.map((x: IGeocoderResponse, index: number) => (
-            <li
-              key={index}
-              onClick={e => {
-                suggestionSelected(x);
-                e.stopPropagation();
-              }}
-            >
-              {x.fullAddress}
-            </li>
-          ))}
-        </ul>
-      );
-    }
-    return null;
+
+    return (
+      <Overlay
+        target={inputRef.current}
+        show
+        placement="bottom-start"
+        popperConfig={{
+          modifiers: [
+            {
+              name: 'offset',
+              options: {
+                offset: [0, 0],
+              },
+            },
+          ],
+        }}
+      >
+        {({
+          placement,
+          show: _show,
+          arrowProps: _arrowProps,
+          popper: _popper,
+          ...overlayProps
+        }) => (
+          <div {...overlayProps} data-placement={placement} className="suggestionOverlay">
+            <SuggestionList options={options} onSelect={suggestionSelected} />
+          </div>
+        )}
+      </Overlay>
+    );
   };
 
   return (
-    <div className="GeocoderAutoComplete">
+    <div className="GeocoderAutoComplete" ref={containerRef}>
       <ClickAwayListener
         onClickAway={e => {
           if (e.type === 'click') {
@@ -142,6 +184,7 @@ export const GeocoderAutoComplete: React.FC<
               disabled={disabled}
               required={required}
               onBlur={handleBlur}
+              ref={inputRef}
               {...rest}
             />
           </TooltipWrapper>
@@ -167,27 +210,29 @@ interface IDebounceInputProps extends FormControlProps {
   };
 }
 
-const InputControl: React.FC<React.PropsWithChildren<IDebounceInputProps>> = ({
-  onTextChange,
-  ...props
-}) => {
-  const onChange = (value: string) => {
-    onTextChange(value);
-  };
+const InputControl = React.forwardRef<HTMLInputElement, IDebounceInputProps>(
+  ({ onTextChange, ...props }, ref) => {
+    const onChange = (value: string) => {
+      onTextChange(value);
+    };
 
-  return (
-    <Form.Control
-      autoComplete={props.autoComplete}
-      name={props.field}
-      value={props.value}
-      isInvalid={props.isInvalid}
-      onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-        onChange(e.target.value);
-      }}
-      placeholder={props.placeholder}
-      disabled={props.disabled}
-      required={props.required}
-      {...props}
-    />
-  );
-};
+    return (
+      <Form.Control
+        ref={ref}
+        autoComplete={props.autoComplete}
+        name={props.field}
+        value={props.value}
+        isInvalid={props.isInvalid}
+        onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+          onChange(e.target.value);
+        }}
+        placeholder={props.placeholder}
+        disabled={props.disabled}
+        required={props.required}
+        {...props}
+      />
+    );
+  },
+);
+
+InputControl.displayName = 'InputControl';

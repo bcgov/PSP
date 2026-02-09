@@ -398,7 +398,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Project
           </div>
@@ -609,7 +608,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Progress Statuses
           </div>
@@ -1065,7 +1063,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Schedule
           </div>
@@ -1319,7 +1316,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Properties to include in this sub-file:
           </div>
@@ -1347,9 +1343,16 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
-                  Selected Properties
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-11"
+                    >
+                      Selected Properties
+                    </div>
+                  </div>
                 </div>
               </div>
             </h2>
@@ -1514,7 +1517,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Acquisition Details
           </div>
@@ -1952,7 +1954,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Acquisition Team
           </div>
@@ -1986,7 +1987,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Sub-Interest
           </div>
@@ -2201,7 +2201,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Notice of Claim
           </div>
@@ -2693,7 +2692,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Project
           </div>
@@ -2896,7 +2894,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Progress Statuses
           </div>
@@ -3352,7 +3349,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Schedule
           </div>
@@ -3606,7 +3602,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Properties to include in this file:
           </div>
@@ -3634,9 +3629,16 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
               >
                 <div
                   class="align-content-end col"
-                  style="overflow: hidden;"
                 >
-                  Selected Properties
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-11"
+                    >
+                      Selected Properties
+                    </div>
+                  </div>
                 </div>
               </div>
             </h2>
@@ -3801,7 +3803,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Acquisition Details
           </div>
@@ -4121,7 +4122,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Acquisition Team
           </div>
@@ -4155,7 +4155,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Owners
           </div>
@@ -4370,7 +4369,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Notice of Claim
           </div>

@@ -90,7 +90,6 @@ exports[`DispositionSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Project
           </div>
@@ -166,7 +165,6 @@ exports[`DispositionSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Schedule
           </div>
@@ -224,7 +222,6 @@ exports[`DispositionSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Disposition Details
           </div>
@@ -472,7 +469,6 @@ exports[`DispositionSummaryView component > matches snapshot 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Disposition Team
           </div>

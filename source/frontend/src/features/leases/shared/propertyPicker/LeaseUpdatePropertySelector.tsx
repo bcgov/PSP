@@ -393,12 +393,16 @@ export const LeaseUpdatePropertySelector: React.FunctionComponent<
                       header={
                         <Row>
                           <Col xs="11">Selected Properties</Col>
-                          <Col>
-                            <ZoomToLocation
-                              icon={ZoomIconType.area}
-                              formProperties={formikProps.values.properties.map(lp => lp.property)}
-                            />
-                          </Col>
+                          {formikProps?.values?.properties?.length > 0 && (
+                            <Col>
+                              <ZoomToLocation
+                                icon={ZoomIconType.area}
+                                formProperties={formikProps.values.properties.map(
+                                  lp => lp.property,
+                                )}
+                              />
+                            </Col>
+                          )}
                         </Row>
                       }
                     >

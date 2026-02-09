@@ -62,6 +62,30 @@ export const DocumentSearchFilter: React.FC<React.PropsWithChildren<IDocumentFil
               </Row>
               <Row>
                 <Col xl="12">
+                  <Input field="content" placeholder="Document content" />
+                </Col>
+              </Row>
+            </Col>
+            <Col xl="5">
+              <Row>
+                <Col xl="7">
+                  <Select
+                    options={documentTypeOptions ?? []}
+                    field="documentTypTypeCode"
+                    placeholder="Select document type..."
+                  />
+                </Col>
+                <Col xl="5">
+                  <Select
+                    field="documentStatusTypeCode"
+                    data-testid="document-status"
+                    placeholder="All statuses"
+                    options={documentStatusTypeOptions ?? []}
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col xl="12">
                   <SelectInput<
                     {
                       pin: string;
@@ -82,25 +106,6 @@ export const DocumentSearchFilter: React.FC<React.PropsWithChildren<IDocumentFil
                       { label: 'Plan #', key: 'plan', placeholder: 'Enter a Plan number' },
                     ]}
                     className="idir-input-group"
-                  />
-                </Col>
-              </Row>
-            </Col>
-            <Col xl="5">
-              <Row>
-                <Col xl="7">
-                  <Select
-                    options={documentTypeOptions ?? []}
-                    field="documentTypTypeCode"
-                    placeholder="Select document type..."
-                  />
-                </Col>
-                <Col xl="5">
-                  <Select
-                    field="documentStatusTypeCode"
-                    data-testid="document-status"
-                    placeholder="All statuses"
-                    options={documentStatusTypeOptions ?? []}
                   />
                 </Col>
               </Row>

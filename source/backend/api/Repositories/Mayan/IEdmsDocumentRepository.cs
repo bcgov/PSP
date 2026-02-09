@@ -1,10 +1,11 @@
-using System.Net.Http;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Pims.Api.Models;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
+using Pims.Api.Models.Models.Mayan.Document;
 using Pims.Api.Models.Requests.Http;
+using System.Net.Http;
+using System.Threading.Tasks;
 
 namespace Pims.Api.Repositories.Mayan
 {
@@ -56,5 +57,7 @@ namespace Pims.Api.Repositories.Mayan
         Task<ExternalResponse<QueryResponse<FilePageModel>>> TryGetFilePageListAsync(long documentId, long documentFileId, int pageSize, int pageNumber);
 
         Task<HttpResponseMessage> TryGetFilePageImage(long documentId, long documentFileId, long documentFilePageId);
+
+        Task<ExternalResponse<QueryResponse<DocumentSearchResult>>> TrySearchByDocumentContent(string contentToSearch);
     }
 }

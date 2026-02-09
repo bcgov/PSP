@@ -25,7 +25,7 @@ import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDist
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { emptyProperty, PIMS_Property_View } from '@/models/layers/pimsPropertyView';
-import { exists, formatApiAddress, pidFormatter } from '@/utils';
+import { exists, formatApiAddress, isPlanNumberSPCP, pidFormatter } from '@/utils';
 
 export enum NameSourceType {
   PID = 'PID',
@@ -41,6 +41,34 @@ export interface PropertyName {
   label: NameSourceType;
   value: string;
 }
+
+export const isStrataPlanCommonPropertyFromSelectedFeatureSet = (
+  selectedFeature: SelectedFeatureDataset | null,
+): boolean => {
+  if (!exists(selectedFeature)) {
+    return false;
+  }
+
+  const pid = pidFromFeatureSet(selectedFeature);
+  const pin = pinFromFeatureSet(selectedFeature);
+  const planNumber = planFromFeatureSet(selectedFeature);
+  const address = addressFromFeatureSet(selectedFeature);
+  const location = selectedFeature.location;
+
+  if (exists(pid) && pid?.toString()?.length > 0 && pid !== '0') {
+    return false;
+  } else if (exists(pin) && pin?.toString()?.length > 0 && pin !== '0') {
+    return false;
+  } else if (exists(planNumber) && planNumber?.toString()?.length > 0) {
+    return isPlanNumberSPCP(planNumber);
+  } else if (exists(location?.lat) && exists(location?.lng)) {
+    return false;
+  } else if (exists(address) && address?.length > 0) {
+    return false;
+  }
+
+  return false;
+};
 
 export const getPropertyNameFromSelectedFeatureSet = (
   selectedFeature: SelectedFeatureDataset | null,
@@ -164,13 +192,16 @@ export const getFeatureBoundedCenter = (feature: Feature<Geometry, GeoJsonProper
   } else if (feature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Point) {
     const boundedCenter = feature.geometry.coordinates;
     return boundedCenter;
+  } else if (exists(feature?.properties?.LOCATION)) {
+    const boundedCenter = feature.properties.LOCATION as Point;
+    return boundedCenter.coordinates;
+  } else if (exists(feature?.properties?.LATITUDE) && exists(feature?.properties?.LONGITUDE)) {
+    return [feature.properties.LONGITUDE, feature.properties.LATITUDE];
   } else {
     toast.error(
       'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
     );
-    throw Error(
-      'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
-    );
+    return null;
   }
 };
 

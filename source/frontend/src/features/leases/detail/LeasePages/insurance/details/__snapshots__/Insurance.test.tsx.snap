@@ -73,7 +73,6 @@ exports[`Edit Lease Insurance > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Required Coverage
           </div>
@@ -154,7 +153,6 @@ exports[`Edit Lease Insurance > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Home Insurance
           </div>
@@ -382,7 +380,6 @@ exports[`Lease Insurance > renders as expected 1`] = `
         >
           <div
             class="align-content-end col"
-            style="overflow: hidden;"
           >
             Required insurance
           </div>
@@ -414,7 +411,6 @@ exports[`Lease Insurance > renders as expected 1`] = `
           >
             <div
               class="align-content-end col"
-              style="overflow: hidden;"
             >
               Home Insurance
             </div>

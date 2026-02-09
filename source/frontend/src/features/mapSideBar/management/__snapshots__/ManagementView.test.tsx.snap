@@ -1281,7 +1281,6 @@ exports[`ManagementView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Project
                             </div>
@@ -1358,7 +1357,6 @@ exports[`ManagementView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Management Details
                             </div>
@@ -1488,7 +1486,6 @@ exports[`ManagementView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               <div
                                 class="no-gutters justify-content-between align-items-end row"
@@ -1625,7 +1622,6 @@ exports[`ManagementView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Management Team
                             </div>
@@ -1731,7 +1727,6 @@ exports[`ManagementView component > renders as expected 1`] = `
                           >
                             <div
                               class="align-content-end col"
-                              style="overflow: hidden;"
                             >
                               Notice of Claim
                             </div>

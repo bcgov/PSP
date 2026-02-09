@@ -722,7 +722,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Project
                   </div>
@@ -933,7 +932,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Progress Statuses
                   </div>
@@ -1389,7 +1387,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Schedule
                   </div>
@@ -1643,7 +1640,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Properties to include in this sub-file:
                   </div>
@@ -1671,9 +1667,16 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                       >
                         <div
                           class="align-content-end col"
-                          style="overflow: hidden;"
                         >
-                          Selected Properties
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="col-11"
+                            >
+                              Selected Properties
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </h2>
@@ -1838,7 +1841,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Acquisition Details
                   </div>
@@ -2283,7 +2285,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Acquisition Team
                   </div>
@@ -2699,7 +2700,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Sub-Interest
                   </div>
@@ -2914,7 +2914,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Notice of Claim
                   </div>
@@ -3707,7 +3706,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Project
                   </div>
@@ -3910,7 +3908,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Progress Statuses
                   </div>
@@ -4366,7 +4363,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Schedule
                   </div>
@@ -4620,7 +4616,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Properties to include in this file:
                   </div>
@@ -4648,9 +4643,16 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                       >
                         <div
                           class="align-content-end col"
-                          style="overflow: hidden;"
                         >
-                          Selected Properties
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="col-11"
+                            >
+                              Selected Properties
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </h2>
@@ -4815,7 +4817,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Acquisition Details
                   </div>
@@ -5142,7 +5143,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Acquisition Team
                   </div>
@@ -5176,7 +5176,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Owners
                   </div>
@@ -5391,7 +5390,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 >
                   <div
                     class="align-content-end col"
-                    style="overflow: hidden;"
                   >
                     Notice of Claim
                   </div>
