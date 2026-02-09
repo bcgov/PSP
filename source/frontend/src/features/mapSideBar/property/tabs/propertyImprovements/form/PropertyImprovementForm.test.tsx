@@ -125,8 +125,7 @@ describe('PropertyImprovementForm component', () => {
   });
 
   it('call on submit for minimun form data', async () => {
-    const { getImprovementTypeDropdown, getByText } =
-      await setup({});
+    const { getImprovementTypeDropdown, getByText } = await setup({});
 
     await act(async () => {
       userEvent.selectOptions(
