@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_PROPERTY_IMPROVEMENT_HIST")]
-[Index("PropertyImprovementHistId", "EndDateHist", Name = "PIMS_PIMPRV_H_UK", IsUnique = true)]
-public partial class PimsPropertyImprovementHist
+[Table("PIMS_DISPOSITION_FILE_FORM_HIST")]
+[Index("DispositionFileFormHistId", "EndDateHist", Name = "PIMS_DSPFRM_H_UK", IsUnique = true)]
+public partial class PimsDispositionFileFormHist
 {
     [Key]
-    [Column("_PROPERTY_IMPROVEMENT_HIST_ID")]
-    public long PropertyImprovementHistId { get; set; }
+    [Column("_DISPOSITION_FILE_FORM_HIST_ID")]
+    public long DispositionFileFormHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,41 +20,19 @@ public partial class PimsPropertyImprovementHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("PROPERTY_IMPROVEMENT_ID")]
-    public long PropertyImprovementId { get; set; }
+    [Column("DISPOSITION_FILE_FORM_ID")]
+    public long DispositionFileFormId { get; set; }
 
-    [Column("PROPERTY_ID")]
-    public long PropertyId { get; set; }
+    [Column("DISPOSITION_FILE_ID")]
+    public long DispositionFileId { get; set; }
 
-    [Required]
-    [Column("PROPERTY_IMPROVEMENT_TYPE_CODE")]
+    [Column("DISPOSITION_FORM_TYPE_CODE")]
     [StringLength(20)]
-    public string PropertyImprovementTypeCode { get; set; }
+    public string DispositionFormTypeCode { get; set; }
 
-    [Required]
-    [Column("PROP_IMPRVMNT_STATUS_TYPE_CODE")]
-    [StringLength(20)]
-    public string PropImprvmntStatusTypeCode { get; set; }
-
-    [Required]
-    [Column("IMPROVEMENT_NAME")]
-    [StringLength(500)]
-    public string ImprovementName { get; set; }
-
-    [Column("IMPROVEMENT_DESCRIPTION")]
-    [StringLength(2000)]
-    public string ImprovementDescription { get; set; }
-
-    [Column("IMPROVEMENT_DATE", TypeName = "datetime")]
-    public DateTime? ImprovementDate { get; set; }
-
-    [Column("STRUCTURE_SIZE")]
-    [StringLength(2000)]
-    public string StructureSize { get; set; }
-
-    [Column("ADDRESS")]
-    [StringLength(2000)]
-    public string Address { get; set; }
+    [Column("FORM_JSON")]
+    [StringLength(4000)]
+    public string FormJson { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

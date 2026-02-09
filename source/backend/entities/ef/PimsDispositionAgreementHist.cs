@@ -6,13 +6,13 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
-[Table("PIMS_PROPERTY_IMPROVEMENT_HIST")]
-[Index("PropertyImprovementHistId", "EndDateHist", Name = "PIMS_PIMPRV_H_UK", IsUnique = true)]
-public partial class PimsPropertyImprovementHist
+[Table("PIMS_DISPOSITION_AGREEMENT_HIST")]
+[Index("DispositionAgreementHistId", "EndDateHist", Name = "PIMS_DSPAGR_H_UK", IsUnique = true)]
+public partial class PimsDispositionAgreementHist
 {
     [Key]
-    [Column("_PROPERTY_IMPROVEMENT_HIST_ID")]
-    public long PropertyImprovementHistId { get; set; }
+    [Column("_DISPOSITION_AGREEMENT_HIST_ID")]
+    public long DispositionAgreementHistId { get; set; }
 
     [Column("EFFECTIVE_DATE_HIST", TypeName = "datetime")]
     public DateTime EffectiveDateHist { get; set; }
@@ -20,41 +20,68 @@ public partial class PimsPropertyImprovementHist
     [Column("END_DATE_HIST", TypeName = "datetime")]
     public DateTime? EndDateHist { get; set; }
 
-    [Column("PROPERTY_IMPROVEMENT_ID")]
-    public long PropertyImprovementId { get; set; }
+    [Column("DISPOSITION_AGREEMENT_ID")]
+    public long DispositionAgreementId { get; set; }
 
-    [Column("PROPERTY_ID")]
-    public long PropertyId { get; set; }
+    [Column("DISPOSITION_FILE_ID")]
+    public long DispositionFileId { get; set; }
 
     [Required]
-    [Column("PROPERTY_IMPROVEMENT_TYPE_CODE")]
+    [Column("DISPOSITION_AGREEMENT_TYPE_CODE")]
     [StringLength(20)]
-    public string PropertyImprovementTypeCode { get; set; }
+    public string DispositionAgreementTypeCode { get; set; }
 
     [Required]
-    [Column("PROP_IMPRVMNT_STATUS_TYPE_CODE")]
+    [Column("DSP_AGREEMENT_STATUS_TYPE_CODE")]
     [StringLength(20)]
-    public string PropImprvmntStatusTypeCode { get; set; }
+    public string DspAgreementStatusTypeCode { get; set; }
 
-    [Required]
-    [Column("IMPROVEMENT_NAME")]
-    [StringLength(500)]
-    public string ImprovementName { get; set; }
+    [Column("AGREEMENT_DATE")]
+    public DateOnly? AgreementDate { get; set; }
 
-    [Column("IMPROVEMENT_DESCRIPTION")]
+    [Column("COMPLETION_DATE")]
+    public DateOnly? CompletionDate { get; set; }
+
+    [Column("TERMINATION_DATE")]
+    public DateOnly? TerminationDate { get; set; }
+
+    [Column("COMMENCEMENT_DATE")]
+    public DateOnly? CommencementDate { get; set; }
+
+    [Column("DEPOSIT_AMOUNT", TypeName = "money")]
+    public decimal? DepositAmount { get; set; }
+
+    [Column("NO_LATER_THAN_DAYS")]
+    public int? NoLaterThanDays { get; set; }
+
+    [Column("PURCHASE_PRICE", TypeName = "money")]
+    public decimal? PurchasePrice { get; set; }
+
+    [Column("LEGAL_SURVEY_PLAN_NUM")]
+    [StringLength(250)]
+    public string LegalSurveyPlanNum { get; set; }
+
+    [Column("OFFER_DATE")]
+    public DateOnly? OfferDate { get; set; }
+
+    [Column("EXPIRY_TS", TypeName = "datetime")]
+    public DateTime? ExpiryTs { get; set; }
+
+    [Column("SIGNED_DATE")]
+    public DateOnly? SignedDate { get; set; }
+
+    [Column("INSPECTION_DATE")]
+    public DateOnly? InspectionDate { get; set; }
+
+    [Column("EXPROPRIATION_DATE")]
+    public DateOnly? ExpropriationDate { get; set; }
+
+    [Column("POSSESSION_DATE")]
+    public DateOnly? PossessionDate { get; set; }
+
+    [Column("CANCELLATION_NOTE")]
     [StringLength(2000)]
-    public string ImprovementDescription { get; set; }
-
-    [Column("IMPROVEMENT_DATE", TypeName = "datetime")]
-    public DateTime? ImprovementDate { get; set; }
-
-    [Column("STRUCTURE_SIZE")]
-    [StringLength(2000)]
-    public string StructureSize { get; set; }
-
-    [Column("ADDRESS")]
-    [StringLength(2000)]
-    public string Address { get; set; }
+    public string CancellationNote { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

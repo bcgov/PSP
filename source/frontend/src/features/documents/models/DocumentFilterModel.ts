@@ -9,6 +9,7 @@ export class DocumentSearchFilterModel {
   pin: string;
   pid: string;
   plan: string;
+  mayanDocumentIds: number[] | null;
 
   toApi(): ApiGen_Concepts_DocumentSearchFilter {
     return {
@@ -19,6 +20,7 @@ export class DocumentSearchFilterModel {
       pid: this.pid,
       pin: this.pin,
       plan: this.plan,
+      mayanDocumentIds: this.mayanDocumentIds,
     };
   }
 

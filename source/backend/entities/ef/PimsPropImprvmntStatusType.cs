@@ -7,30 +7,21 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Table that contains the disposition checklist items that are presented to the user through dynamically building the input form.
+/// Description of the types of improvements made to a property during the lease.
 /// </summary>
-[Table("PIMS_DSP_CHKLST_ITEM_TYPE")]
-[Index("DspChklstSectionTypeCode", Name = "DSPCIT_DSP_CHKLST_SECTION_TYPE_CODE_IDX")]
-public partial class PimsDspChklstItemType
+[Table("PIMS_PROP_IMPRVMNT_STATUS_TYPE")]
+public partial class PimsPropImprvmntStatusType
 {
     /// <summary>
-    /// Disposition checklist item code value.
+    /// Code value of the status of improvements made to a property during the lease.
     /// </summary>
     [Key]
-    [Column("DSP_CHKLST_ITEM_TYPE_CODE")]
+    [Column("PROP_IMPRVMNT_STATUS_TYPE_CODE")]
     [StringLength(20)]
-    public string DspChklstItemTypeCode { get; set; }
+    public string PropImprvmntStatusTypeCode { get; set; }
 
     /// <summary>
-    /// Disposition Section to which the item belongs.
-    /// </summary>
-    [Required]
-    [Column("DSP_CHKLST_SECTION_TYPE_CODE")]
-    [StringLength(20)]
-    public string DspChklstSectionTypeCode { get; set; }
-
-    /// <summary>
-    /// Disposition Checklist item descriptive text presented to the user.
+    /// Code description of the status of improvements made to a property during the lease.
     /// </summary>
     [Required]
     [Column("DESCRIPTION")]
@@ -38,35 +29,16 @@ public partial class PimsDspChklstItemType
     public string Description { get; set; }
 
     /// <summary>
-    /// Disposition Checklist item descriptive tooltip presented to the user.
+    /// Indicates if the record is disabled and therefore not selectable or displayed.
     /// </summary>
-    [Column("HINT")]
-    [StringLength(200)]
-    public string Hint { get; set; }
-
-    /// <summary>
-    /// Indicates if the disposition checklist item is a required field.
-    /// </summary>
-    [Column("IS_REQUIRED")]
-    public bool? IsRequired { get; set; }
+    [Column("IS_DISABLED")]
+    public bool IsDisabled { get; set; }
 
     /// <summary>
     /// Designates a preferred presentation order of the code descriptions.
     /// </summary>
     [Column("DISPLAY_ORDER")]
     public int? DisplayOrder { get; set; }
-
-    /// <summary>
-    /// Date the disposition checklist item is able to be presented to the user via the input form.
-    /// </summary>
-    [Column("EFFECTIVE_DATE")]
-    public DateOnly EffectiveDate { get; set; }
-
-    /// <summary>
-    /// Date the disposition checklist section is removed from the input form.
-    /// </summary>
-    [Column("EXPIRY_DATE")]
-    public DateOnly? ExpiryDate { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -102,10 +74,6 @@ public partial class PimsDspChklstItemType
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("DspChklstSectionTypeCode")]
-    [InverseProperty("PimsDspChklstItemTypes")]
-    public virtual PimsDspChklstSectionType DspChklstSectionTypeCodeNavigation { get; set; }
-
-    [InverseProperty("DspChklstItemTypeCodeNavigation")]
-    public virtual ICollection<PimsDispositionChecklistItem> PimsDispositionChecklistItems { get; set; } = new List<PimsDispositionChecklistItem>();
+    [InverseProperty("PropImprvmntStatusTypeCodeNavigation")]
+    public virtual ICollection<PimsPropertyImprovement> PimsPropertyImprovements { get; set; } = new List<PimsPropertyImprovement>();
 }
