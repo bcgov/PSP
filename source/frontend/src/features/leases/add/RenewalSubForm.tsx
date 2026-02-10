@@ -60,7 +60,6 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
                     <SectionField
                       label="Expiry"
                       labelWidth={{ xs: 4 }}
-                      required={renewal.isExercised === true}
                       tooltip={
                         <TooltipIcon
                           toolTipId="lease-renewal-expiry-tooltip"

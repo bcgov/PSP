@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Formats.Asn1;
 using System.Globalization;
 using System.IO;
 using System.Linq;
@@ -541,13 +542,13 @@ namespace Pims.Api.Services
 
                 if (renewal.IsExercised == true)
                 {
-                    if (renewal.CommencementDt.HasValue && renewal.ExpiryDt.HasValue)
+                    if(!renewal.CommencementDt.HasValue)
+                    {
+                        throw new BusinessRuleViolationException("Exercised renewals must have a commencement date");
+                    }
+                    else if (renewal.CommencementDt.HasValue && renewal.ExpiryDt.HasValue)
                     {
                         renewalDates.Add(new Tuple<long, DateTime, DateTime>(renewal.LeaseRenewalId, renewal.CommencementDt.Value, renewal.ExpiryDt.Value));
-                    }
-                    else
-                    {
-                        throw new BusinessRuleViolationException("Exercised renewals must have a commencement date and expiry date");
                     }
                 }
             }
