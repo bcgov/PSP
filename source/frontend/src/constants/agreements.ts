@@ -1,2 +1,1 @@
 export const DISPOSITION_FORMS = ['H179RC'];
-export const DISPOSITION_STATUS_TYPES = ['DRAFT'];

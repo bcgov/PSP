@@ -630,6 +630,64 @@ namespace Pims.Dal.Repositories
             return GetCommonDispositionFileQueryDeep(filter).ToList();
         }
 
+        public List<PimsDispositionAgreement> GetAgreementsByDispositionFile(long dispositionFileId)
+        {
+            using var scope = Logger.QueryScope();
+
+            return Context.PimsDispositionAgreements
+                .Where(ci => ci.DispositionFileId == dispositionFileId)
+                .Include(ci => ci.DispositionAgreementTypeCodeNavigation)
+                .Include(ci => ci.DspAgreementStatusTypeCodeNavigation)
+                .AsNoTracking()
+                .ToList();
+        }
+
+        public PimsDispositionAgreement GetAgreementById(long agreementId)
+        {
+            using var scope = Logger.QueryScope();
+
+            return Context.PimsDispositionAgreements.Where(x => x.DispositionAgreementId == agreementId)
+                .AsNoTracking()
+                .Include(x => x.DispositionAgreementTypeCodeNavigation)
+                .Include(x => x.DspAgreementStatusTypeCodeNavigation)
+                .FirstOrDefault() ?? throw new KeyNotFoundException();
+        }
+
+        public PimsDispositionAgreement AddAgreement(PimsDispositionAgreement dispositionAgreement)
+        {
+            using var scope = Logger.QueryScope();
+
+            Context.PimsDispositionAgreements.Add(dispositionAgreement);
+            return dispositionAgreement;
+        }
+
+        public PimsDispositionAgreement UpdateAgreement(PimsDispositionAgreement dispositionAgreement)
+        {
+            using var scope = Logger.QueryScope();
+
+            var existingAgreement = Context.PimsDispositionAgreements
+                .FirstOrDefault(x => x.DispositionAgreementId.Equals(dispositionAgreement.DispositionAgreementId)) ?? throw new KeyNotFoundException();
+
+            Context.Entry(existingAgreement).CurrentValues.SetValues(dispositionAgreement);
+
+            return existingAgreement;
+        }
+
+        public bool TryDeleteAgreement(long dispositionFileId, long agreementId)
+        {
+            using var scope = Logger.QueryScope();
+
+            var deletedEntity = Context.PimsDispositionAgreements.Where(x => x.DispositionFileId == dispositionFileId && x.DispositionAgreementId == agreementId).FirstOrDefault();
+            if (deletedEntity is not null)
+            {
+                Context.PimsDispositionAgreements.Remove(deletedEntity);
+
+                return true;
+            }
+
+            return false;
+        }
+
         /// <summary>
         /// Generate a Common IQueryable for Disposition Files.
         /// </summary>

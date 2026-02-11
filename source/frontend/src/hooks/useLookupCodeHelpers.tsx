@@ -43,7 +43,7 @@ export function useLookupCodeHelpers() {
     (type: string, fileType: string, allowedIds?: string[]) => {
       const options = getByType(type);
       if (fileType === 'disposition' && allowedIds && allowedIds.length > 0) {
-        return options.filter(opt => allowedIds.includes(opt.id)).map(mapLookupCode);
+        return options.filter(opt => allowedIds.includes(String(opt.id))).map(mapLookupCode);
       }
       return options.map(mapLookupCode);
     },

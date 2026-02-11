@@ -1,4 +1,5 @@
 import { FormikProps, getIn } from 'formik';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import { FastCurrencyInput, FastDatePicker, Input, Select } from '@/components/common/form';
@@ -17,31 +18,36 @@ import { StyledSectionSubheader } from '../styles';
 export interface IAcquisitionAgreementFormProps {
   formikProps: FormikProps<AcquisitionAgreementFormModel>;
   fileType: string;
+  isNew?: boolean;
 }
 
 const AcquisitionAgreementForm: React.FunctionComponent<
   React.PropsWithChildren<IAcquisitionAgreementFormProps>
-> = ({ formikProps, fileType }) => {
+> = ({ formikProps, fileType, isNew = false }) => {
   const { setModalContent, setDisplayModal } = useModalContext();
-  const { getAgreementSelectOptions } = useLookupCodeHelpers();
+  const { getAgreementSelectOptions, getOptionsByType } = useLookupCodeHelpers();
 
-  const agreementStatusSelectOptions = getAgreementSelectOptions(
-    API.AGREEMENT_STATUS_TYPES,
-    fileType,
-    fileType === 'disposition' ? AGREEMENT.DISPOSITION_STATUS_TYPES : undefined,
-  );
-  console.log('agreementStatusSelectOptions:', agreementStatusSelectOptions);
-  const agreementTypeSelectOptions = getAgreementSelectOptions(
-    API.AGREEMENT_TYPES,
-    fileType,
-    fileType === 'disposition' ? AGREEMENT.DISPOSITION_FORMS : undefined, // Only pass for disposition
-  );
-  console.log('agreementTypeSelectOptions:', agreementTypeSelectOptions);
+  const agreementStatusSelectOptions = useMemo(() => {
+    const options = getOptionsByType(API.AGREEMENT_STATUS_TYPES);
+    if (isNew && fileType === 'disposition') {
+      return options.filter(option => option.value === ApiGen_CodeTypes_AgreementStatusTypes.DRAFT);
+    }
+    return options;
+  }, [getOptionsByType, isNew, fileType]);
+
+  const agreementTypeSelectOptions = useMemo(() => {
+    return getAgreementSelectOptions(
+      API.AGREEMENT_TYPES,
+      fileType,
+      fileType === 'disposition' ? AGREEMENT.DISPOSITION_FORMS : undefined,
+    );
+  }, [getAgreementSelectOptions, fileType]);
+
   const agreementStatusTypeCodeValue: string | null = getIn(
     formikProps.values,
     'agreementStatusTypeCode',
   );
-  console.log('agreementStatusTypeCodeValue:', agreementStatusTypeCodeValue);
+
   const agreementTypeCodeValue: string | null = getIn(formikProps.values, 'agreementTypeCode');
   const agreementCancellationNoteValue: string | null = getIn(
     formikProps.values,
@@ -75,7 +81,6 @@ const AcquisitionAgreementForm: React.FunctionComponent<
       setDisplayModal(true);
     }
   };
-  console.log('Rendering AcquisitionAgreementForm');
 
   return (
     <Section header="Agreement Details">

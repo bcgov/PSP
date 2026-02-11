@@ -11,6 +11,7 @@ import AppRoute from '@/utils/AppRoute';
 
 import AddAcquisitionAgreementContainer from '../../shared/agreement/add/AddAcquisitionAgreementContainer';
 import UpdateAcquisitionAgreementForm from '../../shared/agreement/common/UpdateAcquisitionAgreementForm';
+import UpdateAcquisitionAgreementContainer from '../../shared/agreement/update/UpdateAcquisitionAgreementContainer';
 import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
 import { UpdateDispositionChecklistContainer } from '../tabs/checklist/update/UpdateDispositionChecklistContainer';
 import DispositionFileTabs from '../tabs/DispositionFileTabs';
@@ -41,8 +42,6 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
     return null;
   }
 
-  // render edit forms
-  console.log('DispositionRouter - isEditing:', props.isEditing);
   if (props.isEditing) {
     return (
       <Switch>
@@ -90,12 +89,30 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
                 View={UpdateAcquisitionAgreementForm}
                 onSuccess={props.onSuccess}
                 fileType="disposition"
+                isNew={true}
               />
             ) : null
           }
           claim={Claims.DISPOSITION_EDIT}
           key={'agreement'}
           title={'Add Agreement'}
+        />
+        <AppRoute
+          path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/:agreementId/update`}
+          customRender={({ match }) =>
+            props.dispositionFile?.id ? (
+              <UpdateAcquisitionAgreementContainer
+                fileId={props.dispositionFile?.id}
+                agreementId={match.params.agreementId}
+                fileType="disposition"
+                View={UpdateAcquisitionAgreementForm}
+                onSuccess={props.onSuccess}
+              />
+            ) : null
+          }
+          claim={Claims.ACQUISITION_EDIT}
+          key={'updateAgreement'}
+          title={'Update Agreement'}
         />
         <AppRoute
           exact

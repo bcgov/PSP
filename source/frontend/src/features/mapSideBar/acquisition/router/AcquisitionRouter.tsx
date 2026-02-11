@@ -95,6 +95,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
                 acquisitionFileId={props.acquisitionFile?.id}
                 View={UpdateAcquisitionAgreementForm}
                 onSuccess={props.onSuccess}
+                fileType="acquisition"
               />
             ) : null
           }
@@ -107,8 +108,9 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
           customRender={({ match }) =>
             props.acquisitionFile?.id ? (
               <UpdateAcquisitionAgreementContainer
-                acquisitionFileId={props.acquisitionFile?.id}
+                fileId={props.acquisitionFile?.id}
                 agreementId={match.params.agreementId}
+                fileType="acquisition"
                 View={UpdateAcquisitionAgreementForm}
                 onSuccess={props.onSuccess}
               />

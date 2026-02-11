@@ -2,17 +2,17 @@ using Mapster;
 using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
 
-namespace Pims.Api.Models.Concepts.AcquisitionFile
+namespace Pims.Api.Models.Concepts.DispositionFile
 {
-    public class AgreementMap : IRegister
+    public class DispositionAgreementMap : IRegister
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsAgreement, AgreementModel>()
-                .Map(dest => dest.AgreementId, src => src.AgreementId)
-                .Map(dest => dest.FileId, src => src.AcquisitionFileId)
-                .Map(dest => dest.AgreementType, src => src.AgreementTypeCodeNavigation)
-                .Map(dest => dest.AgreementStatusType, src => src.AgreementStatusTypeCodeNavigation)
+            config.NewConfig<Entity.PimsDispositionAgreement, DispositionAgreementModel>()
+                .Map(dest => dest.AgreementId, src => src.DispositionAgreementId)
+                .Map(dest => dest.FileId, src => src.DispositionFileId)
+                .Map(dest => dest.AgreementType, src => src.DispositionAgreementTypeCodeNavigation)
+                .Map(dest => dest.AgreementStatusType, src => src.DspAgreementStatusTypeCodeNavigation)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDate)
                 .Map(dest => dest.CompletionDate, src => src.CompletionDate)
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)
@@ -29,11 +29,11 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.CancellationNote, src => src.CancellationNote)
                 .Inherits<Entity.IBaseAppEntity, BaseConcurrentModel>();
 
-            config.NewConfig<AgreementModel, Entity.PimsAgreement>()
-                .Map(dest => dest.AgreementId, src => src.AgreementId)
-                .Map(dest => dest.AcquisitionFileId, src => src.FileId)
-                .Map(dest => dest.AgreementTypeCode, src => src.AgreementType.Id)
-                .Map(dest => dest.AgreementStatusTypeCode, src => src.AgreementStatusType.Id)
+            config.NewConfig<DispositionAgreementModel, Entity.PimsDispositionAgreement>()
+                .Map(dest => dest.DispositionAgreementId, src => src.AgreementId)
+                .Map(dest => dest.DispositionFileId, src => src.FileId)
+                .Map(dest => dest.DispositionAgreementTypeCode, src => src.AgreementType.Id)
+                .Map(dest => dest.DspAgreementStatusTypeCode, src => src.AgreementStatusType.Id)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDate)
                 .Map(dest => dest.CompletionDate, src => src.CompletionDate)
                 .Map(dest => dest.TerminationDate, src => src.TerminationDate)

@@ -50,5 +50,15 @@ namespace Pims.Api.Services
         PimsDispositionFile UpdateChecklistItems(IList<PimsDispositionChecklistItem> checklistItems);
 
         PimsDispositionFile UpdateProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides);
+
+        IEnumerable<PimsDispositionAgreement> GetAgreements(long dispositionFileId);
+
+        PimsDispositionAgreement AddDispositionFileAgreement(long dispositionFileId, PimsDispositionAgreement dispositionAgreement);
+
+        PimsDispositionAgreement GetAgreementById(long dispositionFileId, long agreementId);
+
+        PimsDispositionAgreement UpdateDispositionFileAgreement(long dispositionFileId, PimsDispositionAgreement dispositionAgreement);
+
+        bool DeleteDispositionFileAgreement(long dispositionFileId, long agreementId);
     }
 }

@@ -13,13 +13,14 @@ import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFor
 export interface IAddAcquisitionAgreementContainerProps {
   acquisitionFileId: number;
   fileType: string;
+  isNew?: boolean;
   View: React.FC<IUpdateAcquisitionAgreementFormProps>;
   onSuccess: () => void;
 }
 
 const AddAcquisitionAgreementContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddAcquisitionAgreementContainerProps>
-> = ({ acquisitionFileId, fileType, View, onSuccess }) => {
+> = ({ acquisitionFileId, fileType, isNew, View, onSuccess }) => {
   const history = useHistory();
   const location = useLocation();
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -28,7 +29,14 @@ const AddAcquisitionAgreementContainer: React.FunctionComponent<
   const backUrl = location.pathname.split('/add')[0];
 
   const {
-    addAcquisitionAgreement: { execute: postAcquisitionAgreement, loading },
+    addAcquisitionAgreement: {
+      execute: postAcquisitionAgreement,
+      loading: loadingAcquisitionAgreement,
+    },
+    addDispositionAgreement: {
+      execute: postDispositionAgreement,
+      loading: loadingDispositionAgreement,
+    },
   } = useAgreementProvider();
 
   const onCreateError = (e: AxiosError<IApiError>) => {
@@ -55,7 +63,12 @@ const AddAcquisitionAgreementContainer: React.FunctionComponent<
     formikHelpers: FormikHelpers<AcquisitionAgreementFormModel>,
   ) => {
     try {
-      const agreementSaved = await postAcquisitionAgreement(acquisitionFileId, values.toApi());
+      let agreementSaved;
+      if (fileType === 'acquisition') {
+        agreementSaved = await postAcquisitionAgreement(acquisitionFileId, values.toApi());
+      } else if (fileType === 'disposition') {
+        agreementSaved = await postDispositionAgreement(acquisitionFileId, values.toApi());
+      }
       if (agreementSaved) {
         onSuccess();
         history.push(backUrl);
@@ -75,7 +88,8 @@ const AddAcquisitionAgreementContainer: React.FunctionComponent<
       <View
         initialValues={initialValues}
         fileType={fileType}
-        isLoading={loading}
+        isNew={isNew}
+        isLoading={loadingAcquisitionAgreement || loadingDispositionAgreement}
         onSubmit={handleSubmit}
         onCancel={() => history.push(backUrl)}
       />

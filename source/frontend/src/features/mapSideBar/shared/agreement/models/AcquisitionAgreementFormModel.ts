@@ -23,18 +23,18 @@ export class AcquisitionAgreementFormModel {
   public isDraft: boolean | null = null;
 
   constructor(
-    readonly acquisitionFileId: number,
+    readonly fileId: number,
     readonly agreementId: number = 0,
     readonly rowVersion: number | null = null,
   ) {
     this.agreementId = agreementId;
-    this.acquisitionFileId = acquisitionFileId;
+    this.fileId = fileId;
     this.rowVersion = rowVersion;
   }
 
   static fromApi(apiModel: ApiGen_Concepts_Agreement): AcquisitionAgreementFormModel {
     const agreement = new AcquisitionAgreementFormModel(
-      apiModel.acquisitionFileId,
+      apiModel.fileId,
       apiModel.agreementId,
       apiModel.rowVersion,
     );
@@ -65,7 +65,7 @@ export class AcquisitionAgreementFormModel {
   public toApi(): ApiGen_Concepts_Agreement {
     return {
       agreementId: this.agreementId,
-      acquisitionFileId: this.acquisitionFileId,
+      fileId: this.fileId,
       agreementType: toTypeCodeNullable(this.agreementTypeCode),
       agreementDate: stringToNull(this.agreementDate),
       agreementStatusType: toTypeCodeNullable(this.agreementStatusTypeCode),

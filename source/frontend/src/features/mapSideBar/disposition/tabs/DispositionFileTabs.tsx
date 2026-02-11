@@ -78,8 +78,6 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
     });
   }
 
-  console.log('DispositionFileTabs - dispositionFile?.type:', dispositionFile);
-
   tabViews.push({
     content: (
       <AgreementContainer fileId={dispositionFile.id} fileType="disposition" View={AgreementView} />
