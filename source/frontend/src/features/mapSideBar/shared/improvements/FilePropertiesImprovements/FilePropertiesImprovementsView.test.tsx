@@ -24,6 +24,7 @@ describe('File properties improvements list view', () => {
       />,
       {
         ...renderOptions,
+        useMockAuthentication: true,
       },
     );
 
@@ -49,7 +50,10 @@ describe('File properties improvements list view', () => {
   it('displays values', async () => {
     const { queryByTestId } = await setup({});
 
+    expect(queryByTestId('improvement[1000].name')).toHaveTextContent('TEST NAME');
     expect(queryByTestId('improvement[1000].type')).toHaveTextContent('Commercial Building');
+    expect(queryByTestId('improvement[1000].date')).toHaveTextContent('Feb 14, 2026');
+    expect(queryByTestId('improvement[1000].status')).toHaveTextContent('Active');
     expect(queryByTestId('improvement[1000].description')).toHaveTextContent('TEST DESCRIPTION');
   });
 

@@ -56,6 +56,8 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsPropertyImprovementType> GetAllPropertyImprovementTypes();
 
+        IEnumerable<PimsPropImprvmntStatusType> GetAllPropertyImprovementStatusTypes();
+
         IEnumerable<PimsSecurityDepositType> GetAllSecurityDepositTypes();
 
         IEnumerable<PimsLeasePaymentStatusType> GetAllLeasePaymentStatusTypes();
