@@ -57,6 +57,9 @@ namespace Pims.Dal.Repositories
         /// Note that the 'leaseFilter' will control the 'page' and 'quantity'.
         /// </summary>
         /// <param name="filter"></param>
+        /// <param name="regionCodes"></param>
+        /// <param name="loadPayments"></param>
+        /// <param name="contractorPersonId"></param>
         /// <returns></returns>
         public IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false, long? contractorPersonId = null)
         {
@@ -130,11 +133,9 @@ namespace Pims.Dal.Repositories
             return lease;
         }
 
-        public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds)
+        public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds, HashSet<short> regions, long? contractorPersonId = null)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
-
-            IEnumerable<PimsLease> leases = this.Context.PimsLeases.AsSplitQuery().AsNoTracking()
+            var query = Context.PimsLeases.AsSplitQuery().AsNoTracking()
                 .Include(l => l.PimsPropertyLeases)
                     .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.PimsHistoricalFileNumbers)
@@ -162,8 +163,23 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(x => x.CostTypeCode)
                 .Include(r => r.Project)
                     .ThenInclude(x => x.BusinessFunctionCode)
+                .Include(r => r.Project)
+                    .ThenInclude(x => x.PimsProjectPeople)
                 .Include(r => r.Product)
+                .Include(r => r.PimsLeaseLicenseTeams)
                 .Where(l => leaseIds.Any(leaseId => leaseId == l.LeaseId)) ?? throw new KeyNotFoundException();
+
+            // If the lease has a region, the user must have access to that region to view the lease. If the lease does not have a region, anyone with access to view leases can view it.
+            query = query.Where(l => l.RegionCode == null || regions.Contains(l.RegionCode.Value));
+
+            // Enforce contractor access to only their leases
+            if (contractorPersonId is not null)
+            {
+                query = query.Where(l => l.PimsLeaseLicenseTeams.Any(lt => lt.PersonId == contractorPersonId) ||
+                    (l.Project != null && l.Project.PimsProjectPeople.Any(pp => pp.PersonId == contractorPersonId)));
+            }
+
+            var leases = query.ToArray();
             return leases;
         }
 

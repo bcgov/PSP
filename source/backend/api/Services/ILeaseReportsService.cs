@@ -6,5 +6,7 @@ namespace Pims.Api.Services
     public interface ILeaseReportsService
     {
         IEnumerable<PimsLease> GetAggregatedLeaseReport(int fiscalYearStart);
+
+        IEnumerable<PimsLeasePayment> GetLeasePaymentsReport(int fiscalYearStart);
     }
 }

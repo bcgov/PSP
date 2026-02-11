@@ -12,6 +12,6 @@ namespace Pims.Dal.Repositories
 
         PimsLeasePayment Add(PimsLeasePayment pimsLeasePayment);
 
-        IEnumerable<PimsLeasePayment> GetAllTracking(DateTime startDate, DateTime endDate);
+        IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate, long? contractorPersonId = null);
     }
 }
