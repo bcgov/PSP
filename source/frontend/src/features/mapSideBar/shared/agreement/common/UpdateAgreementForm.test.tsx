@@ -1,10 +1,10 @@
 import { mockLookups } from '@/mocks/index.mock';
 
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import UpdateAcquisitionAgreementForm, {
-  IUpdateAcquisitionAgreementFormProps,
-} from './UpdateAcquisitionAgreementForm';
-import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
+import UpdateAgreementForm, {
+  IUpdateAgreementFormProps,
+} from './UpdateAgreementForm';
+import { AgreementFormModel } from '../models/AgreementFormModel';
 import {
   act,
   RenderOptions,
@@ -18,21 +18,23 @@ export const organizerMock = {
   canEditOrDeleteAgreement: vi.fn(),
 };
 
-const mockViewProps: IUpdateAcquisitionAgreementFormProps = {
+const mockViewProps: IUpdateAgreementFormProps = {
   isLoading: false,
-  initialValues: new AcquisitionAgreementFormModel(1),
+  initialValues: new AgreementFormModel(1),
   onSubmit: vi.fn(),
   onCancel: vi.fn(),
+  fileType: 'acquisition',
 };
 
 describe('UpdateAcquisitionAgreementView component', () => {
   const setup = async (renderOptions: RenderOptions = {}) => {
     const utils = render(
-      <UpdateAcquisitionAgreementForm
+      <UpdateAgreementForm
         isLoading={false}
         initialValues={mockViewProps.initialValues}
         onSubmit={mockViewProps.onSubmit}
         onCancel={mockViewProps.onCancel}
+        fileType={mockViewProps.fileType}
       />,
       {
         store: {

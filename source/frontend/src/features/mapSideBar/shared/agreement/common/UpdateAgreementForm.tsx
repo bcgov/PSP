@@ -6,24 +6,24 @@ import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 
-import AcquisitionAgreementForm from '../form/AcquisitionAgreementForm';
-import { AcquisitionAgreementFormYupSchema } from '../form/AcquisitionAgreementFormYupSchema';
-import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
+import AgreementForm from '../form/AgreementForm';
+import { AgreementFormYupSchema } from '../form/AgreementFormYupSchema';
+import { AgreementFormModel } from '../models/AgreementFormModel';
 
-export interface IUpdateAcquisitionAgreementFormProps {
+export interface IUpdateAgreementFormProps {
   isLoading: boolean;
   fileType: string;
   isNew?: boolean;
-  initialValues: AcquisitionAgreementFormModel | null;
+  initialValues: AgreementFormModel | null;
   onSubmit: (
-    values: AcquisitionAgreementFormModel,
-    formikHelpers: FormikHelpers<AcquisitionAgreementFormModel>,
+    values: AgreementFormModel,
+    formikHelpers: FormikHelpers<AgreementFormModel>,
   ) => Promise<void>;
   onCancel: () => void;
 }
 
-const UpdateAcquisitionAgreementForm: React.FunctionComponent<
-  React.PropsWithChildren<IUpdateAcquisitionAgreementFormProps>
+const UpdateAgreementForm: React.FunctionComponent<
+  React.PropsWithChildren<IUpdateAgreementFormProps>
 > = ({ isLoading, fileType, isNew, initialValues, onSubmit, onCancel }) => {
   const { setModalContent, setDisplayModal } = useModalContext();
 
@@ -47,10 +47,10 @@ const UpdateAcquisitionAgreementForm: React.FunctionComponent<
   return (
     initialValues && (
       <StyledFormWrapper>
-        <Formik<AcquisitionAgreementFormModel>
+        <Formik<AgreementFormModel>
           enableReinitialize
           initialValues={initialValues}
-          validationSchema={AcquisitionAgreementFormYupSchema}
+          validationSchema={AgreementFormYupSchema}
           onSubmit={onSubmit}
         >
           {formikProps => {
@@ -61,11 +61,11 @@ const UpdateAcquisitionAgreementForm: React.FunctionComponent<
                   parentScreen={true}
                 ></LoadingBackdrop>
                 <StyledContent>
-                  <AcquisitionAgreementForm
+                  <AgreementForm
                     formikProps={formikProps}
                     fileType={fileType}
                     isNew={isNew}
-                  ></AcquisitionAgreementForm>
+                  ></AgreementForm>
                 </StyledContent>
                 <StyledFooter>
                   <SidebarFooter
@@ -86,7 +86,7 @@ const UpdateAcquisitionAgreementForm: React.FunctionComponent<
   );
 };
 
-export default UpdateAcquisitionAgreementForm;
+export default UpdateAgreementForm;
 
 const StyledContent = styled.div`
   background-color: ${props => props.theme.css.highlightBackgroundColor};

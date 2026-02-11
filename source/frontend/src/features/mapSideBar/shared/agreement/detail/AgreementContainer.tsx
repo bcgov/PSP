@@ -44,10 +44,8 @@ export const AgreementContainer: React.FunctionComponent<
       ? agreementProvider.deleteAcquisitionAgreement
       : agreementProvider.deleteDispositionAgreement;
 
-  // Generate agreement (TODO: generalize if needed)
   const generateAgreement = useGenerateAgreement();
 
-  // File state
   const { execute: getFileExecute, loading: loadingFile, response: fileData } = getFile;
   const { execute: getAgreementsExecute, loading: loadingAgreements } = getAgreements;
   const { execute: deleteAgreementExecute, loading: deletingAgreement } = deleteAgreement;

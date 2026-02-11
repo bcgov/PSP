@@ -1,7 +1,7 @@
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 import { stringToNull, stringToNumber, toTypeCodeNullable } from '@/utils/formUtils';
 
-export class AcquisitionAgreementFormModel {
+export class AgreementFormModel {
   public agreementTypeCode: string | null = null;
   public agreementTypeDescription: string | null = null;
   public agreementDate: string | null = null;
@@ -32,8 +32,8 @@ export class AcquisitionAgreementFormModel {
     this.rowVersion = rowVersion;
   }
 
-  static fromApi(apiModel: ApiGen_Concepts_Agreement): AcquisitionAgreementFormModel {
-    const agreement = new AcquisitionAgreementFormModel(
+  static fromApi(apiModel: ApiGen_Concepts_Agreement): AgreementFormModel {
+    const agreement = new AgreementFormModel(
       apiModel.fileId,
       apiModel.agreementId,
       apiModel.rowVersion,

@@ -8,24 +8,24 @@ import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider'
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 
-import { IUpdateAcquisitionAgreementFormProps } from '../common/UpdateAcquisitionAgreementForm';
-import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
+import { IUpdateAgreementFormProps } from '../common/UpdateAgreementForm';
+import { AgreementFormModel } from '../models/AgreementFormModel';
 
 export interface IUpdateAcquisitionAgreementContainerProps {
   fileId: number;
   agreementId: number;
   fileType: 'acquisition' | 'disposition';
-  View: React.FC<IUpdateAcquisitionAgreementFormProps>;
+  View: React.FC<IUpdateAgreementFormProps>;
   onSuccess: () => void;
 }
 
-const UpdateAcquisitionAgreementContainer: React.FunctionComponent<
+const UpdateAgreementContainer: React.FunctionComponent<
   React.PropsWithChildren<IUpdateAcquisitionAgreementContainerProps>
 > = ({ fileId, agreementId, fileType, View, onSuccess }) => {
   const history = useHistory();
   const location = useLocation();
   const { setModalContent, setDisplayModal } = useModalContext();
-  const [initialValues, setInitialValues] = useState<AcquisitionAgreementFormModel | null>(null);
+  const [initialValues, setInitialValues] = useState<AgreementFormModel | null>(null);
 
   const backUrl = location.pathname.split(`/${agreementId}/update`)[0];
 
@@ -74,8 +74,8 @@ const UpdateAcquisitionAgreementContainer: React.FunctionComponent<
   };
 
   const handleSubmit = async (
-    values: AcquisitionAgreementFormModel,
-    formikHelpers: FormikHelpers<AcquisitionAgreementFormModel>,
+    values: AgreementFormModel,
+    formikHelpers: FormikHelpers<AgreementFormModel>,
   ) => {
     try {
       const agreementSaved = await updateAgreement(fileId, agreementId, values.toApi());
@@ -95,7 +95,7 @@ const UpdateAcquisitionAgreementContainer: React.FunctionComponent<
   const fetchAgreement = useCallback(async () => {
     const agreement = await getAgreement(fileId, agreementId);
     if (agreement) {
-      const agreementFormModel = AcquisitionAgreementFormModel.fromApi(agreement);
+      const agreementFormModel = AgreementFormModel.fromApi(agreement);
       setInitialValues(agreementFormModel);
     }
   }, [fileId, agreementId, getAgreement]);
@@ -115,4 +115,4 @@ const UpdateAcquisitionAgreementContainer: React.FunctionComponent<
   );
 };
 
-export default UpdateAcquisitionAgreementContainer;
+export default UpdateAgreementContainer;

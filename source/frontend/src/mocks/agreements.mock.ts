@@ -3,7 +3,7 @@ import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concept
 export const mockAgreementsResponse = (): ApiGen_Concepts_Agreement[] => [
   {
     agreementId: 1,
-    acquisitionFileId: 1,
+    fileId: 1,
     agreementType: {
       id: 'H0074',
       description: 'License Of Occupation (H0074)',
@@ -30,7 +30,7 @@ export const mockAgreementsResponse = (): ApiGen_Concepts_Agreement[] => [
   },
   {
     agreementId: 2,
-    acquisitionFileId: 1,
+    fileId: 1,
     agreementType: {
       id: 'H179T',
       description: 'Test type 2 (ABCD)',
@@ -57,9 +57,9 @@ export const mockAgreementsResponse = (): ApiGen_Concepts_Agreement[] => [
   },
 ];
 
-export const mockAgreementResponseApi = (acquisitionFileId = 1): ApiGen_Concepts_Agreement => ({
+export const mockAgreementResponseApi = (fileId = 1): ApiGen_Concepts_Agreement => ({
   agreementId: 10,
-  acquisitionFileId: acquisitionFileId,
+  fileId: fileId,
   agreementType: {
     id: 'H0074',
     description: 'License Of Occupation (H0074)',

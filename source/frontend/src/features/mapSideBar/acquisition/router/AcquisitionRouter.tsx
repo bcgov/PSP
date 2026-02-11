@@ -9,9 +9,9 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { exists, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
-import AddAcquisitionAgreementContainer from '../../shared/agreement/add/AddAcquisitionAgreementContainer';
-import UpdateAcquisitionAgreementForm from '../../shared/agreement/common/UpdateAcquisitionAgreementForm';
-import UpdateAcquisitionAgreementContainer from '../../shared/agreement/update/UpdateAcquisitionAgreementContainer';
+import AddAgreementContainer from '../../shared/agreement/add/AddAgreementContainer';
+import UpdateAgreementForm from '../../shared/agreement/common/UpdateAgreementForm';
+import UpdateAgreementContainer from '../../shared/agreement/update/UpdateAgreementContainer';
 import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
 import { AcquisitionFileTabs } from '../tabs/AcquisitionFileTabs';
 import { UpdateAcquisitionChecklistContainer } from '../tabs/checklist/update/UpdateAcquisitionChecklistContainer';
@@ -91,9 +91,9 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
           path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/add`}
           customRender={() =>
             props.acquisitionFile?.id ? (
-              <AddAcquisitionAgreementContainer
+              <AddAgreementContainer
                 acquisitionFileId={props.acquisitionFile?.id}
-                View={UpdateAcquisitionAgreementForm}
+                View={UpdateAgreementForm}
                 onSuccess={props.onSuccess}
                 fileType="acquisition"
               />
@@ -107,11 +107,11 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
           path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/:agreementId/update`}
           customRender={({ match }) =>
             props.acquisitionFile?.id ? (
-              <UpdateAcquisitionAgreementContainer
+              <UpdateAgreementContainer
                 fileId={props.acquisitionFile?.id}
                 agreementId={match.params.agreementId}
                 fileType="acquisition"
-                View={UpdateAcquisitionAgreementForm}
+                View={UpdateAgreementForm}
                 onSuccess={props.onSuccess}
               />
             ) : null

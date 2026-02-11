@@ -12,18 +12,20 @@ import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_AgreementStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementStatusTypes';
 import { ApiGen_CodeTypes_AgreementTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementTypes';
 
-import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
+import { AgreementFormModel } from '../models/AgreementFormModel';
 import { StyledSectionSubheader } from '../styles';
 
-export interface IAcquisitionAgreementFormProps {
-  formikProps: FormikProps<AcquisitionAgreementFormModel>;
+export interface IAcquisitionFormProps {
+  formikProps: FormikProps<AgreementFormModel>;
   fileType: string;
   isNew?: boolean;
 }
 
-const AcquisitionAgreementForm: React.FunctionComponent<
-  React.PropsWithChildren<IAcquisitionAgreementFormProps>
-> = ({ formikProps, fileType, isNew = false }) => {
+const AgreementForm: React.FunctionComponent<React.PropsWithChildren<IAcquisitionFormProps>> = ({
+  formikProps,
+  fileType,
+  isNew = false,
+}) => {
   const { setModalContent, setDisplayModal } = useModalContext();
   const { getAgreementSelectOptions, getOptionsByType } = useLookupCodeHelpers();
 
@@ -153,7 +155,7 @@ const AcquisitionAgreementForm: React.FunctionComponent<
   );
 };
 
-export default AcquisitionAgreementForm;
+export default AgreementForm;
 
 const StyledDiv = styled.div`
   display: flex;
