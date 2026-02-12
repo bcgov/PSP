@@ -4,6 +4,7 @@ import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 
 import { IMapStateMachineContext } from '@/components/common/mapFSM/MapStateMachineContext';
+import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { getMockFullyAttributedParcel } from '@/mocks/faParcelLayerResponse.mock';
 import { getMockPolygon } from '@/mocks/geometries.mock';
@@ -20,10 +21,10 @@ import {
 } from '@/utils/test-utils';
 
 import { SideBarContextProvider } from '../../context/sidebarContext';
+import { PropertyForm } from '../../shared/models';
 import { ManagementFormModel } from '../models/ManagementFormModel';
 import AddManagementContainer, { IAddManagementContainerProps } from './AddManagementContainer';
 import { IAddManagementContainerViewProps } from './AddManagementContainerView';
-import { PropertyForm } from '../../shared/models';
 
 const history = createMemoryHistory();
 
@@ -126,10 +127,11 @@ describe('Add Management Container component', () => {
     const testMockMachine: IMapStateMachineContext = {
       ...mapMachineBaseMock,
     };
-    const selectedFeatures = [
+    const selectedFeatures: SelectedFeatureDataset[] = [
       {
         location: { lng: -120.69195885, lat: 50.25163372 },
         fileLocation: null,
+        fileBoundary: null,
         pimsFeature: null,
         parcelFeature: getMockFullyAttributedParcel('111-111-111'),
         regionFeature: feature(getMockPolygon(), {
@@ -144,6 +146,7 @@ describe('Add Management Container component', () => {
       {
         location: { lng: -120.69195885, lat: 50.25163372 },
         fileLocation: null,
+        fileBoundary: null,
         pimsFeature: null,
         parcelFeature: getMockFullyAttributedParcel('222-222-222'),
         regionFeature: feature(getMockPolygon(), {
@@ -158,6 +161,7 @@ describe('Add Management Container component', () => {
       {
         location: { lng: -120.69195885, lat: 50.25163372 },
         fileLocation: null,
+        fileBoundary: null,
         pimsFeature: null,
         parcelFeature: getMockFullyAttributedParcel('333-333-333'),
         regionFeature: feature(getMockPolygon(), {

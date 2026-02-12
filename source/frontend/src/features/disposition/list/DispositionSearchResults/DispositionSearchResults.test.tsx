@@ -92,6 +92,7 @@ describe('Disposition search results table', () => {
               location: null,
               isActive: null,
               rowVersion: null,
+              boundary: null,
             },
             {
               id: 200,
@@ -104,6 +105,7 @@ describe('Disposition search results table', () => {
               location: null,
               isActive: null,
               rowVersion: null,
+              boundary: null,
             },
             {
               id: 300,
@@ -116,6 +118,7 @@ describe('Disposition search results table', () => {
               location: null,
               isActive: null,
               rowVersion: null,
+              boundary: null,
             },
           ],
         }),

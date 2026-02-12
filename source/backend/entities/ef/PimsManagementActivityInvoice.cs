@@ -77,6 +77,18 @@ public partial class PimsManagementActivityInvoice
     public bool IsPstRequired { get; set; }
 
     /// <summary>
+    /// Is this payment approved?  Default value is TRUE.
+    /// </summary>
+    [Column("IS_PAYMENT_APPROVED")]
+    public bool IsPaymentApproved { get; set; }
+
+    /// <summary>
+    /// Default value is FALSE if responsible payer field is not set at file level.
+    /// </summary>
+    [Column("IS_PAYMENT_FORWARDED")]
+    public bool IsPaymentForwarded { get; set; }
+
+    /// <summary>
     /// Indicates if the record is disabled and therefore not selectable or displayed.
     /// </summary>
     [Column("IS_DISABLED")]

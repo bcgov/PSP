@@ -10,8 +10,10 @@ import ManagementIcon from '@/assets/images/management-icon.svg?react';
 import ResearchIcon from '@/assets/images/research-icon.svg?react';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { WorklistLocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
-import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import {
+  SelectedFeatureDataset,
+  WorklistLocationFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
 import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
@@ -128,18 +130,16 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
     getOwnerInfo(locationInfo?.PID);
   }, [getOwnerInfo, locationInfo?.PID]);
 
+  const mapMachine = useMapStateMachine();
+
   const onViewPropertyInfo = useCallback(() => {
-    if (exists(locationInfo?.PID)) {
-      pathGenerator.showPropertyByPid(locationInfo.PID);
-    }
-  }, [locationInfo?.PID, pathGenerator]);
+    mapMachine.showQuickInfoProperty();
+  }, [mapMachine]);
 
   const showViewPropertyInfo = useMemo(
     () => isValidString(locationInfo?.PID) && !hasMultipleProperties,
     [hasMultipleProperties, locationInfo?.PID],
   );
-
-  const mapMachine = useMapStateMachine();
 
   const isVisible = useMemo(() => mapMachine.isShowingQuickInfo, [mapMachine]);
   const isMinimized = useMemo(() => mapMachine.isQuickInfoMinimized, [mapMachine]);
@@ -162,6 +162,7 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
       selectingComponentId: mapLocationFeatureDataset?.selectingComponentId ?? null,
       location: mapLocationFeatureDataset?.location,
       fileLocation: mapLocationFeatureDataset?.fileLocation ?? null,
+      fileBoundary: null,
       parcelFeature: firstOrNull(mapLocationFeatureDataset?.parcelFeatures),
       pimsFeature: firstOrNull(mapLocationFeatureDataset?.pimsFeatures),
       regionFeature: mapLocationFeatureDataset?.regionFeature ?? null,
@@ -184,10 +185,12 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
   const onAddToWorklist = useCallback(() => {
     const worklistDataSet: WorklistLocationFeatureDataset = {
       ...selectedFeatureDataset,
-      fullyAttributedFeatures: {
-        type: 'FeatureCollection',
-        features: [selectedFeatureDataset.parcelFeature],
-      },
+      fullyAttributedFeatures: exists(selectedFeatureDataset.parcelFeature)
+        ? {
+            type: 'FeatureCollection',
+            features: [selectedFeatureDataset.parcelFeature],
+          }
+        : null,
     };
     worklistAdd(worklistDataSet);
   }, [selectedFeatureDataset, worklistAdd]);

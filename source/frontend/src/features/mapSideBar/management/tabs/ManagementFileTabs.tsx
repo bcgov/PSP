@@ -9,6 +9,8 @@ import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Co
 import { isValidId } from '@/utils';
 
 import { SideBarContext } from '../../context/sidebarContext';
+import FilePropertiesImprovementsContainer from '../../shared/improvements/FilePropertiesImprovements/FilePropertiesImprovementsContainer';
+import { FilePropertiesImprovementsView } from '../../shared/improvements/FilePropertiesImprovements/FilePropertiesImprovementsView';
 import usePathGenerator from '../../shared/sidebarPathGenerator';
 import ManagementDocumentsTab from '../../shared/tabs/ManagementDocumentsTab';
 import ActivitiesTab from './activities/ActivitiesTab';
@@ -31,7 +33,7 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
 
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
-  const { setStaleLastUpdatedBy } = useContext(SideBarContext);
+  const { setStaleLastUpdatedBy, file } = useContext(SideBarContext);
   const params = useParams();
   const pathGenerator = usePathGenerator();
 
@@ -69,6 +71,17 @@ export const ManagementFileTabs: React.FC<IManagementFileTabsProps> = ({
       name: 'Activities',
     });
   }
+
+  tabViews.push({
+    content: (
+      <FilePropertiesImprovementsContainer
+        fileProperties={file?.fileProperties?.map(x => x.property) ?? []}
+        View={FilePropertiesImprovementsView}
+      ></FilePropertiesImprovementsContainer>
+    ),
+    key: FileTabType.IMPROVEMENTS,
+    name: 'Improvements',
+  });
 
   if (isValidId(managementFile?.id) && hasClaim(Claims.DOCUMENT_VIEW)) {
     tabViews.push({

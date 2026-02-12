@@ -995,5 +995,196 @@ namespace Pims.Api.Test.Services
         }
 
         #endregion
+
+        #region PopulateNewFileProperty
+
+        [Fact]
+        public void PopulateNewFileProperty_Location_Reprojects_To_BcAlbers()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+
+            var coordService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordService.Setup(x =>
+                x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()))
+                .Returns(new Coordinate(14000, 9200));
+
+            var fileProperty = new PimsPropertyAcquisitionFile()
+            {
+                PropertyId = 1,
+                Location = EntityHelper.CreatePoint(-119, 53, SpatialReference.WGS84)
+            };
+
+            // Act
+            var result = service.PopulateNewFileProperty(fileProperty);
+
+            // Assert
+            coordService.Verify(
+                x => x.TransformCoordinates(SpatialReference.WGS84, SpatialReference.BCALBERS, It.IsAny<Coordinate>()),
+                Times.Once);
+
+            result.Location.Should().NotBeNull();
+            result.Location.SRID.Should().Be(SpatialReference.BCALBERS);
+            result.Location.Coordinate.Should().Be(new Coordinate(14000, 9200));
+        }
+
+        [Fact]
+        public void PopulateNewFileProperty_Location_NoReprojection_When_Already_BcAlbers()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+
+            var coordService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+
+            var fileProperty = new PimsPropertyAcquisitionFile()
+            {
+                PropertyId = 1,
+                Location = EntityHelper.CreatePoint(14000, 9200, SpatialReference.BCALBERS)
+            };
+
+            // Act
+            var result = service.PopulateNewFileProperty(fileProperty);
+
+            // Assert
+            coordService.Verify(
+                x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()),
+                Times.Never);
+
+            result.Location.SRID.Should().Be(SpatialReference.BCALBERS);
+            result.Location.Coordinate.Should().Be(new Coordinate(14000, 9200));
+        }
+
+        [Fact]
+        public void PopulateNewFileProperty_Reprojects_Boundary()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+
+            var coordService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+
+            coordService.Setup(x =>
+                x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()))
+                .Returns(new Coordinate(14000, 9200));
+
+            coordService.Setup(x =>
+                x.TransformGeometry(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Geometry>()))
+                .Callback<int, int, Geometry>((source, target, geom) =>
+                {
+                    geom.SRID = target;
+                    var poly = (Polygon)geom;
+                    poly.ExteriorRing.CoordinateSequence.SetX(0, 5000);
+                    poly.ExteriorRing.CoordinateSequence.SetY(0, 5000);
+                });
+
+            var acquisition = new PimsPropertyAcquisitionFile()
+            {
+                PropertyId = 1,
+                Location = EntityHelper.CreatePoint(-119, 53, SpatialReference.WGS84),
+                Boundary = EntityHelper.CreatePolygon(SpatialReference.WGS84)
+            };
+
+            // Act
+            var result = service.PopulateNewFileProperty(acquisition);
+
+            // Assert: location reprojection
+            coordService.Verify(
+                x => x.TransformCoordinates(SpatialReference.WGS84, SpatialReference.BCALBERS, It.IsAny<Coordinate>()),
+                Times.Once);
+
+            // Assert: boundary reprojection
+            coordService.Verify(
+                x => x.TransformGeometry(SpatialReference.WGS84, SpatialReference.BCALBERS, acquisition.Boundary),
+                Times.Once);
+
+            var poly = (Polygon)result.Boundary;
+            poly.SRID.Should().Be(SpatialReference.BCALBERS);
+            poly.ExteriorRing.GetCoordinateN(0).Should().Be(new Coordinate(5000, 5000));
+        }
+        #endregion
+
+        #region UpdateFilePropertyLocation
+        [Fact]
+        public void UpdateFilePropertyLocation_Location_Reprojects_To_BcAlbers()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+
+            var coordService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordService.Setup(x => x.TransformCoordinates(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Coordinate>()))
+                .Returns(new Coordinate(14000, 9200));
+
+            var incoming = new PimsPropertyAcquisitionFile()
+            {
+                PropertyId = 1,
+                Location = EntityHelper.CreatePoint(-119, 53, SpatialReference.WGS84)
+            };
+
+            var toUpdate = new PimsPropertyAcquisitionFile()
+            {
+                PropertyId = 1,
+                Location = null
+            };
+
+            // Act
+            service.UpdateFilePropertyLocation(incoming, toUpdate);
+
+            // Assert
+            coordService.Verify(
+                x => x.TransformCoordinates(SpatialReference.WGS84, SpatialReference.BCALBERS, It.IsAny<Coordinate>()),
+                Times.Once
+            );
+
+            toUpdate.Location.Should().NotBeNull();
+            toUpdate.Location.SRID.Should().Be(SpatialReference.BCALBERS);
+            toUpdate.Location.Coordinate.Should().Be(new Coordinate(14000, 9200));
+        }
+
+        [Fact]
+        public void UpdateFilePropertyLocation_Boundary_Reprojects_Success()
+        {
+            // Arrange
+            var service = this.CreatePropertyServiceWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
+
+            var coordService = this._helper.GetService<Mock<ICoordinateTransformService>>();
+            coordService.Setup(x => x.TransformGeometry(It.IsAny<int>(), It.IsAny<int>(), It.IsAny<Geometry>()))
+                .Callback<int, int, Geometry>((source, target, geom) =>
+                {
+                    geom.SRID = target;
+                    var poly = (Polygon)geom;
+                    poly.ExteriorRing.CoordinateSequence.SetX(0, 5000);
+                    poly.ExteriorRing.CoordinateSequence.SetY(0, 5000);
+                });
+
+            var incoming = new PimsPropertyAcquisitionFile()
+            {
+                PropertyId = 1,
+                Location = EntityHelper.CreatePoint(-119, 53, SpatialReference.WGS84),
+                Boundary = EntityHelper.CreatePolygon(SpatialReference.WGS84)
+            };
+
+            var toUpdate = new PimsPropertyAcquisitionFile()
+            {
+                PropertyId = 1,
+                Location = null,
+                Boundary = null
+            };
+
+            // Act
+            service.UpdateFilePropertyBoundary(incoming, toUpdate);
+
+            // Assert
+            coordService.Verify(
+                x => x.TransformGeometry(SpatialReference.WGS84, SpatialReference.BCALBERS, incoming.Boundary),
+                Times.Once
+            );
+
+            toUpdate.Boundary.Should().NotBeNull().And.BeOfType<Polygon>();
+            var poly = (Polygon)toUpdate.Boundary;
+            poly.SRID.Should().Be(SpatialReference.BCALBERS);
+            poly.ExteriorRing.GetCoordinateN(0).Should().Be(new Coordinate(5000, 5000));
+        }
+
+        #endregion
+
     }
 }

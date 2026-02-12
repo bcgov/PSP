@@ -207,54 +207,54 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   margin-right: 0;
 }
 
-.c26.c26.btn {
+.c28.c28.btn {
   background-color: unset;
   border: none;
 }
 
-.c26.c26.btn:hover,
-.c26.c26.btn:focus,
-.c26.c26.btn:active {
+.c28.c28.btn:hover,
+.c28.c28.btn:focus,
+.c28.c28.btn:active {
   background-color: unset;
   outline: none;
   box-shadow: none;
 }
 
-.c26.c26.btn svg {
+.c28.c28.btn svg {
   -webkit-transition: all 0.3s ease-out;
   transition: all 0.3s ease-out;
 }
 
-.c26.c26.btn svg:hover {
+.c28.c28.btn svg:hover {
   -webkit-transition: all 0.3s ease-in;
   transition: all 0.3s ease-in;
 }
 
-.c26.c26.btn.btn-primary svg {
+.c28.c28.btn.btn-primary svg {
   color: #013366;
 }
 
-.c26.c26.btn.btn-primary svg:hover {
+.c28.c28.btn.btn-primary svg:hover {
   color: #013366;
 }
 
-.c26.c26.btn.btn-light svg {
+.c28.c28.btn.btn-light svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c26.c26.btn.btn-light svg:hover {
+.c28.c28.btn.btn-light svg:hover {
   color: #CE3E39;
 }
 
-.c26.c26.btn.btn-info svg {
+.c28.c28.btn.btn-info svg {
   color: var(--surface-color-primary-button-default);
 }
 
-.c26.c26.btn.btn-info svg:hover {
+.c28.c28.btn.btn-info svg:hover {
   color: var(--surface-color-primary-button-hover);
 }
 
-.c27.c27.btn {
+.c30.c30.btn {
   font-size: 1.4rem;
   color: #aaaaaa;
   -webkit-text-decoration: none;
@@ -262,13 +262,9 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   line-height: unset;
 }
 
-.c27.c27.btn .text {
-  display: none;
-}
-
-.c27.c27.btn:hover,
-.c27.c27.btn:active,
-.c27.c27.btn:focus {
+.c30.c30.btn:hover,
+.c30.c30.btn:active,
+.c30.c30.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -280,13 +276,6 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
-}
-
-.c27.c27.btn:hover .text,
-.c27.c27.btn:active .text,
-.c27.c27.btn:focus .text {
-  display: inline;
-  line-height: 2rem;
 }
 
 .c25 {
@@ -329,19 +318,19 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   border-bottom: solid 0.5rem #3470B1;
 }
 
-.c19 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c18 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c19 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c20 {
@@ -383,6 +372,33 @@ exports[`UpdateProperties component > renders as expected 1`] = `
 
 .c21 {
   min-height: 4.5rem;
+}
+
+.c27 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: end;
+  -webkit-justify-content: flex-end;
+  -ms-flex-pack: end;
+  justify-content: flex-end;
+}
+
+.c26 {
+  max-width: 3rem;
+  min-width: 3rem;
+}
+
+.c29 {
+  padding-left: 1.2rem;
 }
 
 .c5.btn.btn-light.Button {
@@ -467,7 +483,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
   align-items: end;
 }
 
-.c28 {
+.c31 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -571,6 +587,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
         </div>
         <div
           class="c3 d-flex col-auto"
+          data-testid="leaflet-buttons-section"
         >
           <span>
             <button
@@ -921,7 +938,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="ml-5 col-auto"
+                  class="c26 ml-5 col-auto"
                 >
                   <button
                     class="c4 Button btn btn-link"
@@ -948,10 +965,10 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                   </button>
                 </div>
                 <div
-                  class="pl-3 col-md-1"
+                  class="c27 col-auto"
                 >
                   <button
-                    class="c4 Button c26 btn btn-primary"
+                    class="c4 Button c28 btn btn-primary"
                     data-testid="move-pin-location-0"
                     title="move-pin-location"
                     type="button"
@@ -974,46 +991,40 @@ exports[`UpdateProperties component > renders as expected 1`] = `
                       </svg>
                     </div>
                   </button>
-                </div>
-                <div
-                  class="col-md-1"
-                >
-                  <button
-                    class="c4 Button c27 btn btn-link"
-                    data-testid="delete-property-0"
-                    type="button"
+                  <div
+                    class="c29"
                   >
-                    <div
-                      class="Button__value"
+                    <button
+                      class="c4 Button c30 btn btn-link"
+                      data-testid="delete-property-0"
+                      type="button"
                     >
-                      <svg
-                        fill="currentColor"
-                        height="2rem"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 24 24"
-                        width="2rem"
-                        xmlns="http://www.w3.org/2000/svg"
+                      <div
+                        class="Button__value"
                       >
-                        <title>
-                          remove
-                        </title>
-                        <path
-                          d="M0 0h24v24H0z"
-                          fill="none"
-                        />
-                        <path
-                          d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
-                        />
-                      </svg>
-                       
-                      <span
-                        class="text"
-                      >
-                        Remove
-                      </span>
-                    </div>
-                  </button>
+                        <svg
+                          fill="currentColor"
+                          height="2rem"
+                          stroke="currentColor"
+                          stroke-width="0"
+                          viewBox="0 0 24 24"
+                          width="2rem"
+                          xmlns="http://www.w3.org/2000/svg"
+                        >
+                          <title>
+                            remove
+                          </title>
+                          <path
+                            d="M0 0h24v24H0z"
+                            fill="none"
+                          />
+                          <path
+                            d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
+                          />
+                        </svg>
+                      </div>
+                    </button>
+                  </div>
                 </div>
               </div>
             </div>
@@ -1023,7 +1034,7 @@ exports[`UpdateProperties component > renders as expected 1`] = `
           class=""
         >
           <div
-            class="c28 justify-content-end pt-4 p-0 no-gutters row"
+            class="c31 justify-content-end pt-4 p-0 no-gutters row"
           >
             <div
               class="pr-3 col-auto"

@@ -4,7 +4,6 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Areas.Lease.Controllers;
 using Pims.Api.Models.Concepts.Lease;
 using Pims.Api.Services;
 using Pims.Core.Api.Policies;
@@ -92,7 +91,7 @@ namespace Pims.Api.Areas.Leases.Controllers
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
-                nameof(PropertyImprovementController),
+                nameof(InsuranceController),
                 nameof(GetInsurance),
                 User.GetUsername(),
                 DateTime.Now);

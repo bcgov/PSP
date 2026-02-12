@@ -11,11 +11,12 @@ import {
   cleanup,
   fillInput,
   getByName,
-  prettyDOM,
   render,
   RenderOptions,
   screen,
   userEvent,
+  waitFor,
+  waitForEffects,
 } from '@/utils/test-utils';
 
 import { PropertyFilter } from '.';
@@ -90,7 +91,18 @@ describe('MapFilterBar', () => {
     const searchButton = screen.getByTitle('search');
     const resetButton = screen.getByTitle('reset-button');
     const searchByDropdown = getByName('searchBy') as HTMLSelectElement;
-    return { ...utils, searchButton, resetButton, searchByDropdown };
+    return {
+      ...utils,
+      searchButton,
+      resetButton,
+      searchByDropdown,
+      getDistrictLotTextbox: () =>
+        utils.container.querySelector(`input[name="districtLot"]`) as HTMLInputElement,
+      getDistrictRadio: () =>
+        utils.container.querySelector(`input[name="radio-district"]`) as HTMLInputElement,
+      getDistrictLotRadio: () =>
+        utils.container.querySelector(`input[name="radio-district-lot"]`) as HTMLInputElement,
+    };
   };
 
   beforeEach(() => {
@@ -189,6 +201,75 @@ describe('MapFilterBar', () => {
     });
 
     expect(screen.getByPlaceholderText('Enter a historical file#', { exact: false })).toBeVisible();
+  });
+
+  it('shows search by Legal Description option', async () => {
+    setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'legalDescription' },
+      },
+    });
+
+    const textarea = screen.getByPlaceholderText(/Enter a legal description/i);
+    expect(textarea).toBeVisible();
+    expect(textarea.tagName).toBe('TEXTAREA');
+  });
+
+  it('disables the search button if there is no legal description', async () => {
+    const { searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'legalDescription' },
+      },
+    });
+
+    expect(searchButton).toBeDisabled();
+  });
+
+  it('searches by Legal Description', async () => {
+    const { container, searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'legalDescription' },
+      },
+    });
+
+    // Enter values on the form field
+    const legalDescInput = container.querySelector(
+      'textarea[name="legalDescription"]',
+    ) as HTMLTextAreaElement;
+
+    await act(async () => {
+      legalDescInput.focus();
+      userEvent.type(legalDescInput, 'Lot 1, Block 2, Plan 12345');
+    });
+
+    // Now click search
+    await act(async () => {
+      userEvent.click(searchButton);
+    });
+
+    expect(onFilterChange).toHaveBeenCalledWith<[IPropertyFilter]>({
+      pid: '',
+      pin: '',
+      planNumber: '',
+      address: '',
+      searchBy: 'legalDescription',
+      page: undefined,
+      quantity: undefined,
+      latitude: '',
+      longitude: '',
+      historical: '',
+      coordinates: null,
+      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+      name: '',
+      district: null,
+      range: null,
+      section: null,
+      township: null,
+      districtLot: null,
+      project: null,
+      tenureCleanup: '',
+      legalDescription: 'Lot 1, Block 2, Plan 12345',
+    });
   });
 
   it('clears the form when changing the search by option', async () => {
@@ -366,12 +447,15 @@ describe('MapFilterBar', () => {
       coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
       name: '',
-      section: '',
-      township: '',
-      range: '',
-      district: '',
+      district: null,
+      range: null,
+      section: null,
+      township: null,
       project: null,
-    });
+      districtLot: null,
+      tenureCleanup: '',
+      legalDescription: null,
+    } as IPropertyFilter);
   });
 
   it('searches by PID', async () => {
@@ -403,11 +487,14 @@ describe('MapFilterBar', () => {
       coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
       name: '',
-      section: '',
-      township: '',
-      range: '',
-      district: '',
+      section: null,
+      township: null,
+      range: null,
+      district: null,
+      districtLot: null,
       project: null,
+      tenureCleanup: '',
+      legalDescription: null,
     });
   });
 
@@ -440,11 +527,14 @@ describe('MapFilterBar', () => {
       coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
       name: '',
-      section: '',
-      township: '',
-      range: '',
-      district: '',
+      district: null,
+      range: null,
+      section: null,
+      township: null,
+      districtLot: null,
       project: null,
+      tenureCleanup: '',
+      legalDescription: null,
     });
   });
 
@@ -496,23 +586,35 @@ describe('MapFilterBar', () => {
       }),
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
       name: '',
-      section: '',
-      township: '',
-      range: '',
-      district: '',
+      district: null,
+      range: null,
+      section: null,
+      legalDescription: null,
+      township: null,
+      districtLot: null,
       project: null,
+      tenureCleanup: '',
     });
   });
 
-  it('searches by section/township/range coordinates', async () => {
-    const { searchButton } = setup({
+  it('searches by "District" section/township/range coordinates', async () => {
+    const { searchButton, searchByDropdown, getDistrictRadio, getDistrictLotTextbox } = setup({
       props: {
         propertyFilter: {
           ...defaultPropertyFilter,
-          searchBy: 'surveyParcel',
         },
       },
     });
+    await waitForEffects();
+
+    expect(getDistrictLotTextbox()).not.toBeInTheDocument();
+
+    await act(async () => {
+      userEvent.selectOptions(searchByDropdown, 'surveyParcel');
+    });
+    await waitForEffects();
+
+    expect(getDistrictRadio()).toBeChecked();
 
     // Enter values on the form fields, then click the Search button
     await act(async () => {
@@ -532,24 +634,27 @@ describe('MapFilterBar', () => {
     });
 
     expect(onFilterChange).toHaveBeenCalledWith<[IPropertyFilter]>({
-      pid: '',
-      pin: '',
-      planNumber: '',
+      pid: null,
+      pin: null,
+      planNumber: null,
       address: '',
       searchBy: 'surveyParcel',
       page: undefined,
       quantity: undefined,
-      latitude: '',
-      longitude: '',
-      historical: '',
+      latitude: null,
+      longitude: null,
+      historical: null,
       coordinates: null,
       ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
-      name: '',
+      name: null,
       section: '1',
       township: '2',
       range: '3',
-      district: '',
+      district: 'ALL',
+      districtLot: null,
       project: null,
+      tenureCleanup: '',
+      legalDescription: null,
     });
   });
 
@@ -613,11 +718,14 @@ describe('MapFilterBar', () => {
       planNumber: '',
       quantity: undefined,
       searchBy: 'name',
-      section: '',
-      township: '',
-      range: '',
-      district: '',
+      district: null,
+      section: null,
+      township: null,
+      range: null,
+      districtLot: null,
       project: null,
+      tenureCleanup: '',
+      legalDescription: null,
     });
   });
 

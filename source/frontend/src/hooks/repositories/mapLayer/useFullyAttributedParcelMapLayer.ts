@@ -36,14 +36,22 @@ export const useFullyAttributedParcelMapLayer = () => {
 
   const findByLegalDescription = useCallback(
     async (legalDesc: string) => {
-      const data = await getAllFeatures({ LEGAL_DESCRIPTION: legalDesc }, { timeout: 40000 });
+      try {
+        const pmbc_response = await getAllFeatures(
+          { LEGAL_DESCRIPTION: legalDesc },
+          { timeout: 40000 },
+        );
 
-      // TODO: Enhance useLayerQuery to allow generics to match the Property types
-      return data as
-        | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
-        | undefined;
+        // Return results from PMBC
+        return pmbc_response as
+          | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
+          | undefined;
+      } catch (e: unknown) {
+        handleError();
+        return undefined;
+      }
     },
-    [getAllFeatures],
+    [getAllFeatures, handleError],
   );
 
   const findByPid = useCallback(
@@ -118,7 +126,7 @@ export const useFullyAttributedParcelMapLayer = () => {
         const forceCasted = featureCollection as
           | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
           | undefined;
-        return forceCasted !== undefined && forceCasted.features.length > 0
+        return forceCasted !== undefined && forceCasted.features?.length > 0
           ? forceCasted.features[0]
           : undefined;
       } catch (e: unknown) {

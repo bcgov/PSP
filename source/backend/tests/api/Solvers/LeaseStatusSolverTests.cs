@@ -188,20 +188,6 @@ namespace Pims.Api.Test.Services
                 new object[] {LeaseStatusTypes.ARCHIVED, false},
             };
 
-        [Theory]
-        [MemberData(nameof(CanEditImprovementsParameters))]
-        public void CanEditImprovements_Parametrized(LeaseStatusTypes? status, bool expectedResult)
-        {
-            // Arrange
-            var solver = new LeaseStatusSolver();
-
-            // Act
-            var result = solver.CanEditImprovements(status);
-
-            // Assert
-            Assert.Equal(expectedResult, result);
-        }
-
         public static IEnumerable<object[]> CanEditInsuranceParameters =>
             new List<object[]>
             {

@@ -4,11 +4,9 @@ import { launchBrowser, createNewContext } from "../utils/browserSetup.js";
 
 // Import your page objects
 import LoginPage from "./pages/LoginPage.js";
-import ManagementFileDetails from "./pages/ManagementFileDetails.js";
+import ManagementFile from "./pages/ManagementFile.js";
 import Notes from "./pages/Notes.js";
-import SearchManagementFiles from "./pages/SearchManagementFiles.js";
 import SharedActivities from "./pages/SharedActivities.js";
-import SharedFileProperties from "./pages/SharedFileProperties.js";
 import SharedPagination from "./pages/SharedPagination.js";
 import SearchProperties from "./pages/SearchProperties.js";
 import SharedModal from "./pages/SharedModal.js";
@@ -35,11 +33,9 @@ class CustomWorld {
 
     // Page objects will be set after browser starts
     this.loginPage = null;
-    this.managementFileDetails = null;
+    this.managementFile = null;
     this.notes = null;
-    this.searchManagementFiles = null;
     this.sharedActivities = null;
-    this.sharedFileProperties = null;
     this.sharedPagination = null;
     this.searchProperties = null;
     this.sharedModal = null;
@@ -66,11 +62,9 @@ class CustomWorld {
 
     // Initialize page objects
     this.loginPage = new LoginPage(this.page);
-    this.managementFileDetails = new ManagementFileDetails(this.page);
+    this.managementFile = new ManagementFile(this.page);
     this.notes = new Notes(this.page);
-    this.searchManagementFiles = new SearchManagementFiles(this.page);
     this.sharedActivities = new SharedActivities(this.page);
-    this.sharedFileProperties = new SharedFileProperties(this.page);
     this.sharedPagination = new SharedPagination(this.page);
     this.searchProperties = new SearchProperties(this.page);
     this.sharedModal = new SharedModal(this.page);

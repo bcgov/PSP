@@ -1,0 +1,325 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`File properties improvements list view > renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 8px;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  color: inherit;
+}
+
+.c10:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c2 {
+  margin: 0 1.6rem 0 1.6rem;
+  padding: 1.6rem;
+  text-align: left;
+  text-underline-offset: 2px;
+}
+
+.c2 button {
+  font-size: 14px;
+}
+
+.c3 {
+  font-size: 16px;
+  color: #1a5a96;
+  font-style: italic;
+  font-weight: bold;
+  -webkit-text-decoration: none solid rgb(26,90,150);
+  text-decoration: none solid rgb(26,90,150);
+  line-height: 24px;
+  margin-bottom: 1rem;
+}
+
+.c7 {
+  padding: 1.5rem 1.8rem;
+  border-radius: 4px;
+  background-color: #f0f7fc;
+  margin-bottom: 2rem;
+  font-size: 14px;
+  color: #053662;
+  -webkit-text-decoration: none solid rgb(49,49,50);
+  text-decoration: none solid rgb(49,49,50);
+  line-height: 24px;
+}
+
+.c6 {
+  float: right;
+  cursor: pointer;
+  color: #1a5a96;
+  font-size: 2.8rem;
+}
+
+.c5 {
+  margin-right: 1.5rem;
+  font-size: 1.3rem;
+}
+
+.c4 {
+  cursor: pointer;
+}
+
+.c11 {
+  float: right;
+  cursor: pointer;
+  font-size: 3.2rem;
+}
+
+.c0 {
+  background-color: #f2f2f2;
+  padding-top: 1rem;
+}
+
+.c1 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c8 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c13.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c12 {
+  font-weight: bold;
+}
+
+.c9 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+}
+
+.c9 a {
+  margin-left: 0.4rem;
+}
+
+.c9 span {
+  margin-left: 0.4rem;
+}
+
+.c9 .badge {
+  margin-left: 1rem;
+  margin-bottom: 0.25rem;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 form-section"
+    >
+      <div
+        class="collapse show"
+      >
+        <div
+          class="c2"
+        >
+          <div
+            class="c3"
+          >
+            <div
+              class="c4 no-gutters row"
+            >
+              <div
+                class="col"
+              >
+                <svg
+                  class="c5"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                  />
+                </svg>
+                Improvements
+              </div>
+              <div
+                class="col-1"
+              >
+                <svg
+                  class="c6"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M0 0h24v24H0z"
+                    fill="none"
+                  />
+                  <path
+                    d="m7 10 5 5 5-5z"
+                  />
+                </svg>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c7 collapsing"
+          >
+            <p>
+              Click on a property to edit that property improvements in a new tab
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+      data-testid="property-improvements-1"
+    >
+      <h2
+        class="c8"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+          >
+            <div
+              class="c9"
+            >
+              Location: 123.000000, 48.000000
+              <a
+                class="c10"
+                href="/mapview/sidebar/property/1/improvements"
+                rel="noopener noreferrer"
+                target="_blank"
+              >
+                <svg
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 512 512"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                  />
+                </svg>
+              </a>
+              <span
+                class="rounded-pill badge badge-primary"
+              >
+                1
+              </span>
+            </div>
+          </div>
+          <div
+            class="pl-2 d-flex align-items-end col-auto"
+          >
+            <svg
+              class="c11"
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <title>
+                expand-section
+              </title>
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="m7 10 5 5 5-5z"
+              />
+            </svg>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse"
+      >
+        <div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c12"
+              >
+                Improvement type:
+              </label>
+            </div>
+            <div
+              class="c13 text-left col"
+              data-testid="improvement[1000].type"
+            >
+              Commercial Building
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c12"
+              >
+                Description:
+              </label>
+            </div>
+            <div
+              class="c13 text-left col"
+              data-testid="improvement[1000].description"
+            >
+              TEST DESCRIPTION
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

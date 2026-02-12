@@ -219,10 +219,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   line-height: unset;
 }
 
-.c14.c14.btn .text {
-  display: none;
-}
-
 .c14.c14.btn:hover,
 .c14.c14.btn:active,
 .c14.c14.btn:focus {
@@ -237,13 +233,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
-}
-
-.c14.c14.btn:hover .text,
-.c14.c14.btn:active .text,
-.c14.c14.btn:focus .text {
-  display: inline;
-  line-height: 2rem;
 }
 
 .c0 {
@@ -316,50 +305,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   flex-wrap: nowrap;
 }
 
-.c18 {
-  position: relative;
-  border-radius: 0.4rem;
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-  padding-left: 1.2rem;
-  padding-right: 2.8rem;
-  background-image: none;
-  color: #474543;
-  border: #606060 solid 0.1rem;
-  cursor: default;
-}
-
-.c18.is-invalid {
-  border: #CE3E39 solid 0.1rem;
-}
-
-.c19.c19.btn {
-  position: absolute;
-  top: calc(50% - 1.4rem);
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-  padding-right: 1.2rem;
-  height: 1.6rem;
-  right: 0rem;
-  color: #9F9D9C;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  line-height: unset;
-}
-
-.c19.c19.btn .text {
-  display: none;
-}
-
-.c19.c19.btn:hover,
-.c19.c19.btn:active,
-.c19.c19.btn:focus {
-  color: #CE3E39;
-  -webkit-text-decoration: none;
-  text-decoration: none;
-  opacity: unset;
-}
-
 .c20.form-group {
   display: -webkit-box;
   display: -webkit-flex;
@@ -408,16 +353,54 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   margin-bottom: unset;
 }
 
+.c18 {
+  position: relative;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+  word-break: break-all;
+  background-image: none;
+  color: #474543;
+  border: #606060 solid 0.1rem;
+  cursor: default;
+}
+
+.c18.is-invalid {
+  border: #CE3E39 solid 0.1rem;
+}
+
+.c19.c19.btn {
+  position: absolute;
+  top: calc(50% - 1.4rem);
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-right: 1.2rem;
+  height: 1.6rem;
+  right: 0rem;
+  color: #9F9D9C;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  line-height: unset;
+}
+
+.c19.c19.btn .text {
+  display: none;
+}
+
+.c19.c19.btn:hover,
+.c19.c19.btn:active,
+.c19.c19.btn:focus {
+  color: #CE3E39;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  opacity: unset;
+}
+
 .c1 {
   background-color: #f2f2f2;
   padding-top: 1rem;
-}
-
-.c3 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
 }
 
 .c2 {
@@ -426,6 +409,13 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c3 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c5.required::before {
@@ -846,12 +836,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                           d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                         />
                       </svg>
-                       
-                      <span
-                        class="text"
-                      >
-                        Remove
-                      </span>
                     </div>
                   </button>
                 </div>
@@ -1217,6 +1201,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                       Dairy Queen Forever! Property Management
                       <button
                         class="c13 Button c19 btn btn-link"
+                        title="remove"
                         type="button"
                       >
                         <div
@@ -1231,9 +1216,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                             width="2rem"
                             xmlns="http://www.w3.org/2000/svg"
                           >
-                            <title>
-                              remove
-                            </title>
                             <path
                               d="M0 0h24v24H0z"
                               fill="none"
@@ -1264,6 +1246,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                   >
                     <button
                       class="c13 Button Button--icon-only px-2 btn btn-primary"
+                      title="Select Contact"
                       type="button"
                     >
                       <div
@@ -1287,6 +1270,7 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
                   </div>
                 </div>
               </div>
+              <div />
             </div>
           </div>
           <div
@@ -1540,7 +1524,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
           </div>
         </div>
       </div>
-      <div />
     </div>
   </div>
 </DocumentFragment>

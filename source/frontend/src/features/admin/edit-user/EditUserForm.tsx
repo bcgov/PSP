@@ -1,4 +1,4 @@
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import { ButtonToolbar, Row } from 'react-bootstrap';
 import { FaInfoCircle } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -19,15 +19,19 @@ import RolesToolTip from '../access-request/RolesToolTip';
 import { FormUser, userTypeCodeValues } from '../users/models';
 
 interface IEditUserFormProps {
+  formikRef: React.RefObject<FormikProps<FormUser>>;
   updateUserDetail: (user: ApiGen_Concepts_User) => void;
   formUser: FormUser;
   onCancel: () => void;
+  onSuccess?: () => void;
 }
 
 const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFormProps>> = ({
+  formikRef,
   updateUserDetail,
   formUser,
   onCancel,
+  onSuccess,
 }) => {
   const { getPublicByType, getByType } = useLookupCodeHelpers();
   const roles = getByType(API.ROLE_TYPES);
@@ -36,13 +40,14 @@ const EditUserForm: React.FunctionComponent<React.PropsWithChildren<IEditUserFor
   );
   return (
     <Formik<FormUser>
+      innerRef={formikRef}
       enableReinitialize
       initialValues={formUser}
       validationSchema={UserUpdateSchema}
       onSubmit={async (values, { setSubmitting }) => {
         await updateUserDetail(values.toApi());
         setSubmitting(false);
-        onCancel();
+        onSuccess && onSuccess();
       }}
     >
       {formikProps => (

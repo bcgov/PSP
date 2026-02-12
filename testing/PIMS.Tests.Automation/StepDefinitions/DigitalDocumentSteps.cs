@@ -33,12 +33,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void DocumentTabCreate(string fileType, int rowNumber)
         {
             //Access the documents tab
-            digitalDocumentsTab.NavigateDocumentsTab();
+            if(fileType != "Management Activity")
+                digitalDocumentsTab.NavigateDocumentsTab();
 
             //Verify Initial List View
-            if (fileType == "Property" || fileType == "Management Activity")
+            if (fileType == "Property")
                 digitalDocumentsTab.VerifyPropertyDocumentsListView();
-            else if(fileType == "Management File")
+            else if(fileType == "Management Activity")
+                digitalDocumentsTab.VerifyActivityDocumentsListView();
+            else if (fileType == "Management File")
                 digitalDocumentsTab.VerifyManagementFilesDocumentsListView();
             else
                 digitalDocumentsTab.VerifyFileDocumentsListView();
@@ -90,13 +93,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
 
             //Order Documents by Document Type
-            digitalDocumentsTab.OrderByDocumentFileType();
             digitalDocumentsTab.WaitUploadDocument();
-
+            digitalDocumentsTab.OrderByDocumentFileType();
 
             //Insert Document Details to previously uploaded documents
             for (var l = 0; l < digitalDocumentList.Count; l++)
             {
+                if ((fileType == "Lease" || fileType == "Property") && l > 0)
+                    digitalDocumentsTab.OrderByDocumentFileType();
+
                 digitalDocumentsTab.ViewUploadedDocument(l);
                 digitalDocumentsTab.EditDocumentButton();
                 digitalDocumentsTab.VerifyDocumentFields(digitalDocumentList[l].DocumentType);
@@ -108,12 +113,22 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.NavigateToFirstPageDocumentsTable();
 
             //Verify Details View Form of previously uploaded documents
+            if (fileType == "Lease" || fileType == "Property")
+                digitalDocumentsTab.OrderByDocumentFileType();
+
             for (var m = 0; m < digitalDocumentList.Count; m++)
             {
                 digitalDocumentsTab.ViewUploadedDocument(m);
                 digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[m]);
                 digitalDocumentsTab.CloseDigitalDocumentViewDetails();
             }
+
+            if (fileType == "Lease")
+            {
+                digitalDocumentsTab.OrderByDocumentFileType();
+                digitalDocumentsTab.OrderByDocumentFileType();
+            }
+                
         }
 
         [StepDefinition(@"I create Digital Documents for a Property Management row number (.*)")]
@@ -201,9 +216,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I edit a Digital Document for a ""(.*)"" from row number (.*)")]
         public void UpdateDigitalDocuments(string fileType, int rowNumber)
         {
-            //Navigate back to the file section
-
-
             //Access the documents tab
             digitalDocumentsTab.NavigateDocumentsTab();
 
@@ -212,7 +224,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Add new digital document
             digitalDocumentsTab.AddNewDocumentButton();
-            //digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[0]);
 
             Random random = new();
             var index2 = random.Next(0, documentFiles.Count());
@@ -225,8 +236,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Edit digital document's details
             digitalDocumentsTab.NavigateToFirstPageDocumentsTable();
+
+            //Disable Order by Document's type
+            if (fileType != "Lease")
+            {
+                digitalDocumentsTab.OrderByDocumentFileType();
+                digitalDocumentsTab.OrderByDocumentFileType();
+            }
+
+            //Pick 1st available digital document
             digitalDocumentsTab.View1stDocument();
             digitalDocumentsTab.EditDocumentButton();
+            digitalDocumentsTab.UpdateDocumentName(digitalDocumentList[0].DocumentName);
             digitalDocumentsTab.UpdateNewDocumentType(digitalDocumentList[0]);
 
             //Cancel digital document's details
@@ -308,7 +329,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I edit a Digital Document for a property from row number (.*)")]
         public void UpdatePropertyDigitalDocuments(int rowNumber)
         {
-
             //Access the documents tab
             digitalDocumentsTab.NavigatePropertyDocumentsTab();
 
@@ -317,7 +337,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Add new digital document
             digitalDocumentsTab.AddNewDocumentButton();
-            //digitalDocumentsTab.InsertDocumentTypeStatus(digitalDocumentList[0]);
 
             Random random = new();
             var index2 = random.Next(0, documentFiles.Count());
@@ -348,7 +367,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify Details View Form
             digitalDocumentsTab.View1stDocument();
-            //digitalDocumentsTab.VerifyDocumentDetailsUpdateViewForm(digitalDocumentList[0]);
 
             //Close Digital Documents Details View
             digitalDocumentsTab.CloseDigitalDocumentViewDetails();
@@ -424,15 +442,22 @@ namespace PIMS.Tests.Automation.StepDefinitions
             managementFilesDetails.NavigateToManagementFileSection();
         }
 
-        [StepDefinition(@"The related documents appeared as expected")]
-        public void VerifyRelatedDocumentsList()
+        [StepDefinition(@"The related documents from ""(.*)"" appeared as expected")]
+        public void VerifyRelatedDocumentsList(string fileType)
         {
-            //Navigate to the Management File Documents Tab
-            digitalDocumentsTab.NavigateDocumentsTab();
+            //Access the documents tab
+            if (fileType == "Management File")
+                digitalDocumentsTab.NavigateDocumentsTab();
+
+            //Organize documents by type
+            digitalDocumentsTab.OrderByActivityRelatedDocumentsType();
 
             //Verify on related documents list view the previously attached documents
-            for (var m = 0; m < digitalDocumentList.Count; m++)
-                digitalDocumentsTab.VerifyAdhocDocumentsList(digitalDocumentList[m], m);
+            if (fileType == "Management File")
+            {
+                for (var m = 0; m < digitalDocumentList.Count; m++)
+                    digitalDocumentsTab.VerifyAdhocDocumentsList(digitalDocumentList[m], m);
+            }
         }
 
         public List<DocumentFile> UploadFileDocuments()
@@ -517,6 +542,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             digitalDocument.DocumentType = ExcelDataContext.ReadData(rowNumber, "DocumentType");
             digitalDocument.DocumentStatus = ExcelDataContext.ReadData(rowNumber, "DocumentStatus");
+            digitalDocument.DocumentName = ExcelDataContext.ReadData(rowNumber, "DocumentName");
             digitalDocument.ApplicationNumber = ExcelDataContext.ReadData(rowNumber, "ApplicationNumber");
             digitalDocument.CanadaLandSurvey = ExcelDataContext.ReadData(rowNumber, "CanadaLandSurvey");
             digitalDocument.CivicAddress = ExcelDataContext.ReadData(rowNumber, "CivicAddress");

@@ -24,6 +24,7 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { emptyProperty, PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import { exists, formatApiAddress, pidFormatter } from '@/utils';
 
 export enum NameSourceType {
@@ -161,14 +162,18 @@ export const getFeatureBoundedCenter = (feature: Feature<Geometry, GeoJsonProper
     );
     return boundedCenter;
   } else if (feature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Point) {
-    return (feature.geometry as Point).coordinates;
+    const boundedCenter = feature.geometry.coordinates;
+    return boundedCenter;
+  } else if (exists(feature?.properties?.LOCATION)) {
+    const boundedCenter = feature.properties.LOCATION as Point;
+    return boundedCenter.coordinates;
+  } else if (exists(feature?.properties?.LATITUDE) && exists(feature?.properties?.LONGITUDE)) {
+    return [feature.properties.LONGITUDE, feature.properties.LATITUDE];
   } else {
     toast.error(
       'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
     );
-    throw Error(
-      'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
-    );
+    return null;
   }
 };
 
@@ -178,6 +183,7 @@ export const featuresetToLocationBoundaryDataset = (
   return {
     location: featureSet?.fileLocation ?? featureSet?.location,
     boundary: featureSet?.pimsFeature?.geometry ?? featureSet?.parcelFeature?.geometry ?? null,
+    fileBoundary: featureSet?.fileBoundary ?? null,
     isActive: featureSet.isActive,
   };
 };
@@ -283,6 +289,7 @@ export function filePropertyToLocationBoundaryDataset(
     ? {
         location,
         boundary: fileProperty?.property?.boundary ?? null,
+        fileBoundary: fileProperty?.boundary ?? null,
         isActive: fileProperty.isActive,
       }
     : null;
@@ -296,6 +303,7 @@ export function propertyToLocationBoundaryDataset(
     ? {
         location,
         boundary: property?.boundary ?? null,
+        fileBoundary: null,
       }
     : null;
 }
@@ -372,12 +380,11 @@ export const isEmptyFeatureCollection = (collection: FeatureCollection) => {
 
 export const isEmptyMapFeatureData = (mapFeatureData: MapFeatureData) => {
   return (
-    isEmptyFeatureCollection(mapFeatureData.pimsLocationFeatures) &&
-    //isEmptyFeatureCollection(mapFeatureData.pimsLocationLiteFeatures) && TODO: For now this is loading always. Investigate if it needs to be removed completly
-    isEmptyFeatureCollection(mapFeatureData.pimsBoundaryFeatures) &&
-    isEmptyFeatureCollection(mapFeatureData.fullyAttributedFeatures) &&
-    isEmptyFeatureCollection(mapFeatureData.surveyedParcelsFeatures) &&
-    isEmptyFeatureCollection(mapFeatureData.highwayPlanFeatures)
+    isEmptyFeatureCollection(mapFeatureData?.pimsFeatures) &&
+    //isEmptyFeatureCollection(mapFeatureData.pimsLiteFeatures) && TODO: For now this is loading always. Investigate if it needs to be removed completly
+    isEmptyFeatureCollection(mapFeatureData?.fullyAttributedFeatures) &&
+    isEmptyFeatureCollection(mapFeatureData?.surveyedParcelsFeatures) &&
+    isEmptyFeatureCollection(mapFeatureData?.highwayPlanFeatures)
   );
 };
 
@@ -464,4 +471,41 @@ export async function getRegionAndDistrictsResults(
 
   // Convert back into a Map
   return new Map(results);
+}
+
+export function apiPropertyToPimsFeature(
+  property: ApiGen_Concepts_Property | undefined | null,
+): Feature<Geometry, PIMS_Property_View> | null {
+  if (!exists(property)) {
+    return null;
+  }
+
+  const feature: Feature<Geometry, PIMS_Property_View> = {
+    type: 'Feature',
+    geometry: property.boundary ?? null,
+    properties: {
+      ...emptyProperty,
+      // core fields
+      PROPERTY_ID: property.id ?? null,
+      PID: property.pid ?? null,
+      PID_PADDED: property.pid?.toString().padStart(9, '0') ?? null,
+      PIN: property.pin ?? null,
+      SURVEY_PLAN_NUMBER: property.planNumber ?? null,
+      LAND_AREA: property.landArea ?? null,
+      LAND_LEGAL_DESCRIPTION: property.landLegalDescription ?? null,
+      // address fields
+      STREET_ADDRESS_1: property.address?.streetAddress1 ?? null,
+      STREET_ADDRESS_2: property.address?.streetAddress2 ?? null,
+      STREET_ADDRESS_3: property.address?.streetAddress3 ?? null,
+      MUNICIPALITY_NAME: property.address?.municipality ?? null,
+      POSTAL_CODE: property.address?.postal ?? null,
+      REGION_CODE: property.region?.id ?? null,
+      DISTRICT_CODE: property.district?.id ?? null,
+      // status fields
+      IS_OWNED: property.isOwned ?? null,
+      IS_RETIRED: property.isRetired ?? null,
+    },
+  };
+
+  return feature;
 }

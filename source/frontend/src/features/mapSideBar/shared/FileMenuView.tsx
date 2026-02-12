@@ -1,6 +1,5 @@
 import cx from 'classnames';
-import { useMemo } from 'react';
-import React from 'react';
+import React, { useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaCaretRight } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -10,6 +9,7 @@ import { EditPropertiesIcon } from '@/components/common/buttons/EditPropertiesBu
 import { LinkButton } from '@/components/common/buttons/LinkButton';
 import OverflowTip from '@/components/common/OverflowTip';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
+import CopyToWorklist from '@/features/properties/worklist/CopyToWorklist';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { exists, getFilePropertyName, sortFileProperties } from '@/utils';
@@ -27,6 +27,37 @@ export interface IFileMenuProps {
   onEditProperties: () => void;
 }
 
+const getFilePropertyIndex = (
+  fileProperty: ApiGen_Concepts_FileProperty,
+  fileProperties: ApiGen_Concepts_FileProperty[],
+): number | null => {
+  if (
+    !(
+      exists(fileProperty.location) ||
+      exists(fileProperty.boundary) ||
+      exists(fileProperty.property.location) ||
+      exists(fileProperty.property.boundary)
+    )
+  ) {
+    return null;
+  }
+  let index = 0;
+  for (const p of fileProperties) {
+    if (
+      exists(p.location) ||
+      exists(p.boundary) ||
+      exists(p.property.location) ||
+      exists(p.property.boundary)
+    ) {
+      index++;
+    }
+    if (p.id === fileProperty.id) {
+      return index;
+    }
+  }
+  return null;
+};
+
 const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuProps>> = ({
   file,
   currentFilePropertyId,
@@ -42,10 +73,45 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
   const sortedProperties = sortFileProperties(file?.fileProperties ?? []);
   const isSummary = useMemo(() => !exists(currentFilePropertyId), [currentFilePropertyId]);
 
+  const renderPropertyIcon = (
+    fileProperty: ApiGen_Concepts_FileProperty,
+    filePropertyIndex: number | null,
+    sortedProperties: ApiGen_Concepts_FileProperty[],
+  ) => {
+    if (!exists(filePropertyIndex)) {
+      return null;
+    }
+
+    if (fileProperty?.property?.isRetired) {
+      return (
+        <StyledDisabledIconWrapper>
+          {sortedProperties.indexOf(fileProperty) + 1}
+        </StyledDisabledIconWrapper>
+      );
+    }
+
+    if (fileProperty?.isActive !== false) {
+      return (
+        <StyledIconWrapper
+          className={cx({
+            selected: currentFilePropertyId === fileProperty?.id,
+          })}
+        >
+          {filePropertyIndex}
+        </StyledIconWrapper>
+      );
+    }
+
+    return <StyledDisabledIconWrapper>{filePropertyIndex}</StyledDisabledIconWrapper>;
+  };
+
   const activeProperties = [];
   const inactiveProperties = [];
+  const retiredProperties = [];
   sortedProperties.forEach(p => {
-    if (p.isActive !== false) {
+    if (p.property?.isRetired) {
+      retiredProperties.push(p);
+    } else if (p.isActive !== false) {
       activeProperties.push(p);
     } else {
       inactiveProperties.push(p);
@@ -54,6 +120,7 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
   const labelledProperties: { label: string; properties: ApiGen_Concepts_FileProperty[] }[] = [
     { label: 'Active', properties: activeProperties },
     { label: 'Inactive', properties: inactiveProperties },
+    { label: 'Retired', properties: retiredProperties },
   ];
 
   return (
@@ -70,7 +137,7 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
         </Col>
       </StyledRow>
       <StyledMenuHeaderWrapper>
-        <Row noGutters className="w-100">
+        <Row noGutters className="w-100 d-flex align-items-center">
           <Col>
             <StyledMenuHeader>Properties</StyledMenuHeader>
           </Col>
@@ -85,8 +152,15 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
               onEdit={onEditProperties}
             />
           </Col>
-          <Col xs="auto">
-            <ZoomToLocation icon={ZoomIconType.area} pimsFileProperties={file?.fileProperties} />
+          <Col xs="auto" className="pr-3">
+            <ZoomToLocation
+              icon={ZoomIconType.area}
+              iconSize={24}
+              pimsFileProperties={file?.fileProperties}
+            />
+          </Col>
+          <Col xs="auto" className="pr-1">
+            <CopyToWorklist iconSize={24} fileProperties={file?.fileProperties ?? []} />
           </Col>
         </Row>
       </StyledMenuHeaderWrapper>
@@ -106,6 +180,10 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                     .filter(sp => labelledProperties.properties.includes(sp))
                     .map((fileProperty: ApiGen_Concepts_FileProperty, index: number) => {
                       const propertyName = getFilePropertyName(fileProperty);
+                      const filePropertyIndex = getFilePropertyIndex(
+                        fileProperty,
+                        sortedProperties,
+                      );
                       return (
                         <StyledPropertyRowWrapper
                           key={`menu-item-row-${fileProperty?.id ?? index}`}
@@ -124,19 +202,7 @@ const FileMenuView: React.FunctionComponent<React.PropsWithChildren<IFileMenuPro
                           </div>
 
                           <div>
-                            {fileProperty?.isActive !== false ? (
-                              <StyledIconWrapper
-                                className={cx({
-                                  selected: currentFilePropertyId === fileProperty?.id,
-                                })}
-                              >
-                                {sortedProperties.indexOf(fileProperty) + 1}
-                              </StyledIconWrapper>
-                            ) : (
-                              <StyledDisabledIconWrapper>
-                                {sortedProperties.indexOf(fileProperty) + 1}
-                              </StyledDisabledIconWrapper>
-                            )}
+                            {renderPropertyIcon(fileProperty, filePropertyIndex, sortedProperties)}
                           </div>
 
                           <OverflowTip>
@@ -235,7 +301,6 @@ const StyledPropertyRowWrapper = styled.div`
 `;
 
 const StyledPropertyRowZoom = styled.div`
-  align-self: flex-end;
   margin-right: 2rem;
 `;
 

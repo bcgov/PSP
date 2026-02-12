@@ -121,6 +121,15 @@ namespace Pims.Dal.Helpers.Extensions
 
             predicateBuilder = predicateBuilder.And(ownershipBuilder);
 
+            if (filter.TenureCleanup.Count > 0 && filter.TenureCleanup.FirstOrDefault() != string.Empty)
+            {
+                var tenureCleanupBuilder = PredicateBuilder.New<PimsProperty>(p => true);
+                tenureCleanupBuilder = tenureCleanupBuilder.And(x => x.PimsPropTenureCleanups.Any(y => filter.TenureCleanup.Contains(y.TenureCleanupTypeCode)));
+
+                predicateBuilder = predicateBuilder.And(x => context.PimsProperties.Where(tenureCleanupBuilder).AsExpandable().Where(b => b.PropertyId == x.PropertyId).Any());
+            }
+
+
             return predicateBuilder;
         }
     }

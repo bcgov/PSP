@@ -21,6 +21,7 @@ import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTy
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
 import { stripTrailingSlash } from '@/utils';
+import { isAcquisitionFile } from '@/utils/fileUtils';
 
 import { useFilePropertyIdFromUrl } from '../../../hooks/useFilePropertyIdFromUrl';
 import { SideBarContext } from '../context/sidebarContext';
@@ -33,7 +34,6 @@ import SidebarFooter from '../shared/SidebarFooter';
 import { StyledFormWrapper } from '../shared/styles';
 import UpdateProperties from '../shared/update/properties/UpdateProperties';
 import { AcquisitionContainerState } from './AcquisitionContainer';
-import { isAcquisitionFile } from './add/models';
 import AcquisitionHeader from './common/AcquisitionHeader';
 import AcquisitionGenerateContainer from './common/GenerateForm/AcquisitionGenerateContainer';
 import GenerateFormView from './common/GenerateForm/GenerateFormView';
@@ -47,7 +47,7 @@ export interface IAcquisitionViewProps {
   onSelectFileSummary: () => void;
   onSelectProperty: (propertyId: number) => void;
   onEditProperties: () => void;
-  onSuccess: () => void;
+  onSuccess: (updateProperties?: boolean, updateFile?: boolean) => Promise<void>;
   onUpdateProperties: (file: ApiGen_Concepts_File) => Promise<ApiGen_Concepts_File | undefined>;
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
   canRemove: (propertyId: number) => Promise<boolean>;
@@ -103,8 +103,9 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
     ? getEditTitle(fileMatch, propertySelectorMatch, propertiesMatch)
     : 'Acquisition File';
 
-  const closePropertySelector = () => {
+  const closePropertySelector = async () => {
     setIsEditing(false);
+    await onSuccess();
     history.push(`${match.url}`);
   };
 
@@ -130,6 +131,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
               </>
             }
             canRemove={canRemove}
+            canUploadShapefiles={true}
             formikRef={formikRef}
           />
         )}
@@ -174,10 +176,7 @@ export const AcquisitionView: React.FunctionComponent<IAcquisitionViewProps> = (
                     onSelectProperty={onSelectProperty}
                     onEditProperties={onEditProperties}
                   >
-                    <AcquisitionGenerateContainer
-                      acquisitionFileId={file.id}
-                      View={GenerateFormView}
-                    />
+                    <AcquisitionGenerateContainer acquisitionFile={file} View={GenerateFormView} />
                   </FileMenuView>
                 )}
               </>

@@ -7,14 +7,6 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Map Property LTSA ParcelMap Data Pop-Up Elements
         private readonly By propertyLeafletCloseLink = By.CssSelector("a[class='leaflet-popup-close-button']");
-        private readonly By propertyLeafletTitle = By.XPath("//h5[contains(text(),'LTSA ParcelMap data')]");
-        private readonly By propertyLeafletPIDLabel = By.XPath("//b[contains(text(),'Parcel PID:')]");
-        private readonly By propertyLeafletPINLabel = By.XPath("//b[contains(text(),'Parcel PIN:')]");
-        private readonly By propertyLeafletPlanNbrLabel = By.XPath("//b[contains(text(),'Plan number:')]");
-        private readonly By propertyLeafletOwnerTypeLabel = By.XPath("//b[contains(text(),'Owner type:')]");
-        private readonly By propertyLeafletMunicipalityLabel = By.XPath("//b[contains(text(),'Municipality:')]");
-        private readonly By propertyLeafletAreaLabel = By.XPath("//b[contains(text(),'Area:')]");
-        private readonly By propertyLeafletZoomMapZoomBttn = By.XPath("//button/div[contains(text(),'Zoom map')]");
         private readonly By propertyLeafletEllipsisBttn = By.CssSelector("button[data-testid='fly-out-ellipsis']");
 
         private readonly By propertyHideWindowBttn = By.XPath("//div[@class='col']/h1/parent::div/following-sibling::div/span/button");
@@ -30,7 +22,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Property Information Tabs Elements
         private readonly By propertyInformationTabsTotal = By.CssSelector("nav[role='tablist'] a");
-        private readonly By propertyInformationTitleTab = By.XPath("//a[contains(text(),'Title')]");
+        private readonly By propertyInformationTitleTab = By.CssSelector("a[data-rb-event-key='ltsa']");
         private readonly By propertyInformationValueTab = By.XPath("//a[contains(text(),'Value')]");
 
         //Property Information Header Elements
@@ -38,14 +30,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyInformationHeaderAddressLabel = By.XPath("//label[contains(text(),'Civic Address')]");
         private readonly By propertyInformationHeaderAddressContent = By.XPath("//label[contains(text(),'Civic Address')]/parent::div/following-sibling::div");
         private readonly By propertyInformationHeaderPlanLabel = By.XPath("//label[contains(text(),'Plan')]");
-        private readonly By propertyInformationHeaderPlanContent = By.XPath("//label[contains(text(),'Plan #')]/parent::div/following-sibling::div");
         private readonly By propertyInformationHeaderHistoricFileLabel = By.XPath("//label[contains(text(),'Historical file #:')]");
         private readonly By propertyInformationHeaderHistoricFileContent = By.XPath("//label[contains(text(),'Historical file #:')]/parent::div/following-sibling::div/span");
         private readonly By propertyInformationHeaderPIDLabel = By.XPath("//label[contains(text(),'PID')]");
         private readonly By propertyInformationHeaderPIDContent = By.XPath("//label[contains(text(),'PID')]/parent::div/following-sibling::div");
-        //private readonly By propertyInformationHeaderLandTypeLabel = By.XPath("//button[@title='Zoom into parcel']/parent::div/preceding-sibling::div/div/div/div/label[contains(text(),'Land parcel type')]");
-        //private readonly By propertyInformationHeaderLandTypeContent = By.XPath("//button[@title='Zoom into parcel']/parent::div/preceding-sibling::div/div/div/div[2]");
-        private readonly By propertyInformationHeaderZoomBttn = By.CssSelector("button[title='Fit boundaries button']");
+        private readonly By propertyInformationHeaderZoomBttn = By.CssSelector("button[title='Fit boundaries']");
 
         //Title Tab Elements
         private readonly By propertyTitleInfo = By.XPath("//div[contains(text(),'This data was retrieved from LTSA')]");
@@ -58,7 +47,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyTitlePIDLabel = By.XPath("//div[contains(text(),'Land')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'PID')]");
         private readonly By propertyTitleLandDescriptionLabel = By.XPath("//label[contains(text(),'Legal description')]");
 
-        private readonly By propertyOwnershipInformationTitle = By.XPath("//h2/div/div[contains(text(),'Ownership Information')]");
         private readonly By propertyFractionalOwnershipLabel = By.XPath("//label[contains(text(),'Fractional ownership')]");
         private readonly By propertyJointTenancyLabel = By.XPath("//label[contains(text(),'Joint tenancy')]");
         private readonly By propertyOwnershipRemarksLabel = By.XPath("//label[contains(text(),'Ownership remarks')]");

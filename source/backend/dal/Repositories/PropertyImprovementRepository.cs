@@ -16,7 +16,7 @@ namespace Pims.Dal.Repositories
         #region Constructors
 
         /// <summary>
-        /// Creates a new instance of a LeaseRepository, and initializes it with the specified arguments.
+        /// Creates a new instance of a PropertyImprovementRepository, and initializes it with the specified arguments.
         /// </summary>
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
@@ -25,37 +25,92 @@ namespace Pims.Dal.Repositories
             : base(dbContext, user, logger)
         {
         }
+
         #endregion
 
         #region Methods
 
         /// <summary>
-        /// get the improvements on a lease.
+        /// get the improvements on a property.
         /// </summary>
-        /// <param name="leaseId"></param>
+        /// <param name="propertyId"></param>
         /// <returns></returns>
-        public IEnumerable<PimsPropertyImprovement> GetByLeaseId(long leaseId)
+        public IEnumerable<PimsPropertyImprovement> GetByPropertyId(long propertyId)
         {
             using var scope = Logger.QueryScope();
-            return this.Context.PimsPropertyImprovements
+
+            return Context.PimsPropertyImprovements.AsNoTracking()
                 .Include(pi => pi.PropertyImprovementTypeCodeNavigation)
-                .Where(l => l.LeaseId == leaseId).AsNoTracking()
-                .OrderBy(i => i.PropertyImprovementTypeCode)
-                 ?? throw new KeyNotFoundException();
+                .Where(x => x.PropertyId == propertyId)
+                .OrderBy(i => i.AppCreateTimestamp) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
-        /// update the improvements on a lease.
+        /// Add Property Improvement.
         /// </summary>
-        /// <param name="leaseId"></param>
-        /// <param name="pimsPropertyImprovements"></param>
+        /// <param name="propertyImprovement"></param>
         /// <returns></returns>
-        public IEnumerable<PimsPropertyImprovement> Update(long leaseId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements)
+        public PimsPropertyImprovement Add(PimsPropertyImprovement propertyImprovement)
         {
             using var scope = Logger.QueryScope();
-            this.Context.UpdateChild<PimsLease, long, PimsPropertyImprovement, long>(l => l.PimsPropertyImprovements, leaseId, pimsPropertyImprovements.ToArray());
 
-            return pimsPropertyImprovements;
+            Context.PimsPropertyImprovements.Add(propertyImprovement);
+
+            return propertyImprovement;
+        }
+
+        /// <summary>
+        /// Update the Property Improvement.
+        /// </summary>
+        /// <param name="propertyId"></param>
+        /// <param name="propertyImprovement"></param>
+        /// <returns></returns>
+        public PimsPropertyImprovement Update(long propertyId, PimsPropertyImprovement propertyImprovement)
+        {
+            using var scope = Logger.QueryScope();
+
+            PimsPropertyImprovement existingImprovement = Context.PimsPropertyImprovements
+                .FirstOrDefault(x => x.PropertyId == propertyId && x.PropertyImprovementId == propertyImprovement.PropertyImprovementId);
+
+            Context.Entry(existingImprovement).CurrentValues.SetValues(propertyImprovement);
+
+            return existingImprovement;
+        }
+
+        /// <summary>
+        /// Get improvement by Id.
+        /// </summary>
+        /// <param name="propertyId"></param>
+        /// <param name="propertyImprovementId"></param>
+        /// <returns></returns>
+        public PimsPropertyImprovement Get(long propertyId, long propertyImprovementId)
+        {
+            using var scope = Logger.QueryScope();
+
+            return Context.PimsPropertyImprovements.AsNoTracking()
+                .Include(x => x.PropertyImprovementTypeCodeNavigation)
+                .FirstOrDefault(x => x.PropertyImprovementId == propertyImprovementId && x.PropertyId == propertyId) ?? throw new KeyNotFoundException();
+        }
+
+        /// <summary>
+        /// Delete the Property Improvement.
+        /// </summary>
+        /// <param name="propertyId"></param>
+        /// <param name="propertyImprovementId"></param>
+        /// <returns></returns>
+        public bool TryDelete(long propertyId, long propertyImprovementId)
+        {
+            using var scope = Logger.QueryScope();
+
+            var deletedEntity = Context.PimsPropertyImprovements.Where(x => x.PropertyId == propertyId && x.PropertyImprovementId == propertyImprovementId).FirstOrDefault();
+            if (deletedEntity is not null)
+            {
+                Context.PimsPropertyImprovements.Remove(deletedEntity);
+
+                return true;
+            }
+
+            return false;
         }
         #endregion
     }

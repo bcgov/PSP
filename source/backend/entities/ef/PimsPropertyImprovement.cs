@@ -10,9 +10,9 @@ namespace Pims.Dal.Entities;
 /// Description of property improvements associated with the lease.
 /// </summary>
 [Table("PIMS_PROPERTY_IMPROVEMENT")]
-[Index("LeaseId", "PropertyImprovementTypeCode", Name = "PIMPRV_LEASE_IMPROVEMENT_TUC", IsUnique = true)]
+[Index("PropertyId", Name = "PIMPRV_PROPERTY_ID_IDX")]
 [Index("PropertyImprovementTypeCode", Name = "PIMPRV_PROPERTY_IMPROVEMENT_TYPE_CODE_IDX")]
-[Index("LeaseId", Name = "PIMPRV_PROPERTY_LEASE_ID_IDX")]
+[Index("PropertyId", "PropertyImprovementId", Name = "PIMPRV_PROP_IMPRV_TUC", IsUnique = true)]
 public partial class PimsPropertyImprovement
 {
     /// <summary>
@@ -23,10 +23,10 @@ public partial class PimsPropertyImprovement
     public long PropertyImprovementId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_LEASE table.
+    /// Foreign key to the PIMS_PROPERTY table.
     /// </summary>
-    [Column("LEASE_ID")]
-    public long LeaseId { get; set; }
+    [Column("PROPERTY_ID")]
+    public long PropertyId { get; set; }
 
     /// <summary>
     /// Foreign key to the PIMS_PROPERTY_IMPROVEMENT_TYPE table.
@@ -147,9 +147,9 @@ public partial class PimsPropertyImprovement
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("LeaseId")]
+    [ForeignKey("PropertyId")]
     [InverseProperty("PimsPropertyImprovements")]
-    public virtual PimsLease Lease { get; set; }
+    public virtual PimsProperty Property { get; set; }
 
     [ForeignKey("PropertyImprovementTypeCode")]
     [InverseProperty("PimsPropertyImprovements")]

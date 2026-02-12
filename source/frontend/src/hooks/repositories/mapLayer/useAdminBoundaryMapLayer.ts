@@ -53,7 +53,7 @@ export const useAdminBoundaryMapLayer = () => {
         Geometry,
         MOT_RegionalBoundary_Feature_Properties
       >;
-      return forceCasted !== undefined && forceCasted.features.length > 0
+      return forceCasted !== undefined && forceCasted.features?.length > 0
         ? forceCasted.features[0]
         : undefined;
     },
@@ -73,7 +73,7 @@ export const useAdminBoundaryMapLayer = () => {
         Geometry,
         MOT_DistrictBoundary_Feature_Properties
       >;
-      return forceCasted !== undefined && forceCasted.features.length > 0
+      return forceCasted !== undefined && forceCasted.features?.length > 0
         ? forceCasted.features[0]
         : undefined;
     },
@@ -92,7 +92,7 @@ export const useAdminBoundaryMapLayer = () => {
       const forceCasted = featureCollection as
         | FeatureCollection<Geometry, EBC_ELECTORAL_DISTS_BS10_SVW_Feature_Properties>
         | undefined;
-      return forceCasted !== undefined && forceCasted.features.length > 0
+      return forceCasted !== undefined && forceCasted.features?.length > 0
         ? forceCasted.features[0]
         : undefined;
     },

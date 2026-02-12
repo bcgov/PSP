@@ -249,15 +249,14 @@ export const useLayerQuery = (
         spatialReferenceId = 4326,
         sortBy = '',
       ): Promise<AxiosResponse<FeatureCollection<Geometry, GeoJsonProperties>>> => {
-        const data = await wfsAxios2({ authenticated, withCredentials }).get<
+        const wkt = geojsonToWKT(boundary);
+        const url = `${baseAllUrl}${sortBy ? '&' + sortBy : ''}`;
+        const body = new URLSearchParams();
+        body.append('cql_filter', `INTERSECTS(${geometryName},SRID=${spatialReferenceId};${wkt})`);
+
+        const data = await wfsAxios2({ authenticated, withCredentials }).post<
           FeatureCollection<Geometry, GeoJsonProperties>
-        >(
-          `${baseAllUrl}${
-            sortBy ? '&' + sortBy : ''
-          }&cql_filter=INTERSECTS(${geometryName},SRID=${spatialReferenceId};${geojsonToWKT(
-            boundary,
-          )})`,
-        );
+        >(url, body);
 
         return data;
       },

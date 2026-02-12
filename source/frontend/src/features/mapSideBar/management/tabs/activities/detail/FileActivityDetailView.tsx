@@ -19,6 +19,7 @@ import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator'
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { ApiGen_Concepts_ManagementActivityInvoice } from '@/models/api/generated/ApiGen_Concepts_ManagementActivityInvoice';
 
@@ -45,18 +46,21 @@ export const FileActivityDetailView: React.FunctionComponent<
 
   const pathGenerator = usePathGenerator();
 
-  const activityAsFileProperties = props.activity?.activityProperties?.map(ap => ({
-    id: ap.id,
-    fileId: null,
-    displayOrder: null,
-    file: null,
-    location: null,
-    property: ap.property,
-    propertyId: ap.propertyId,
-    propertyName: null,
-    rowVersion: null,
-    isActive: null,
-  }));
+  const activityAsFileProperties =
+    props.activity?.activityProperties?.map<ApiGen_Concepts_FileProperty>(ap => ({
+      id: ap.id,
+      fileId: null,
+      displayOrder: null,
+      file: null,
+      location: null,
+      boundary: null,
+      property: ap.property,
+      propertyId: ap.propertyId,
+      propertyName: null,
+      rowVersion: null,
+      isActive: null,
+      isRetired: false,
+    }));
 
   if (props.activity !== null) {
     const invoices: ApiGen_Concepts_ManagementActivityInvoice[] = props.activity.invoices ?? [];
@@ -117,22 +121,22 @@ export const FileActivityDetailView: React.FunctionComponent<
                   />
                 ))}
                 <ActivityDetailInvoiceTotalsView invoices={invoices} />
+
+                <DocumentListContainer
+                  title="File Documents"
+                  parentId={props.activity?.id.toString() ?? ''}
+                  addButtonText="Add a Management Document"
+                  relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementActivities}
+                  disableAdd={!props.canEditDocuments}
+                />
+                <DocumentActivityListContainer
+                  title={'Related Documents'}
+                  parentId={props.activity?.id.toString() ?? ''}
+                  relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementActivities}
+                  disableAdd={true}
+                />
               </StyledSummarySection>
             </StyledFormWrapper>
-
-            <DocumentListContainer
-              title="File Documents"
-              parentId={props.activity?.id.toString() ?? ''}
-              addButtonText="Add a Management Document"
-              relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementActivities}
-              disableAdd={!props.canEditDocuments}
-            />
-            <DocumentActivityListContainer
-              title={'Related Documents'}
-              parentId={props.activity?.id.toString() ?? ''}
-              relationshipType={ApiGen_CodeTypes_DocumentRelationType.ManagementActivities}
-              disableAdd={true}
-            />
           </Styled.TrayContent>
         </Styled.PopupTray>
       </ReactVisibilitySensor>

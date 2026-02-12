@@ -16,6 +16,8 @@ export class Api_GenerateProperty {
   district: string;
   electoral_dist: string;
   area_sqm: number | null;
+  area_ha?: number | null;
+  area_display?: string; // Display value with unit
   plan_number: string;
 
   constructor(
@@ -50,5 +52,10 @@ export class Api_GenerateProperty {
     );
 
     this.area_sqm = firstValidOrNull([fa_area_sqm, pims_area_sqm], exists) ?? 0;
+    this.area_ha = convertArea(
+      this.area_sqm,
+      ApiGen_CodeTypes_AreaUnitTypes.M2,
+      ApiGen_CodeTypes_AreaUnitTypes.HA,
+    );
   }
 }

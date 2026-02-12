@@ -23,6 +23,9 @@ import {
 
 import ManagementListView from './ManagementListView';
 import { ManagementFilterModel } from './models';
+import { server } from '@/mocks/msw/server';
+import { http, HttpResponse } from 'msw';
+import { getUserMock } from '@/mocks/user.mock';
 
 vi.mock('@/hooks/pims-api/useApiManagementFile');
 const getManagementFilesPagedApiFn = vi.fn();
@@ -68,6 +71,9 @@ describe('Management List View', () => {
   };
 
   beforeEach(() => {
+    server.use(
+      http.get('/api/users/info/*', () => HttpResponse.json(getUserMock(), { status: 200 })),
+    );
     vi.clearAllMocks();
   });
 
@@ -128,6 +134,7 @@ describe('Management List View', () => {
             propertyName: null,
             isActive: null,
             location: null,
+            boundary: null,
             rowVersion: null,
           },
         ],

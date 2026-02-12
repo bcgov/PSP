@@ -401,19 +401,19 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   z-index: 10;
 }
 
-.c13 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c12 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c13 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c19 {
@@ -555,6 +555,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
       </div>
       <div
         class="c3 d-flex col-auto"
+        data-testid="leaflet-buttons-section"
       >
         <span>
           <button
@@ -593,6 +594,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
         />
         <svg
           class="c7"
+          data-testid="close-leaflet-button"
           fill="currentColor"
           height="1em"
           stroke="currentColor"

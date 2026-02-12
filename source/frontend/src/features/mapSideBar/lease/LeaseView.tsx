@@ -74,7 +74,7 @@ export const LeaseView: React.FunctionComponent<ILeaseViewProps> = ({
   return (
     <Switch>
       <Route path={`${stripTrailingSlash(currentRoute.path)}/property/selector`}>
-        {exists(lease) && <LeaseUpdatePropertySelector lease={lease} />}
+        {exists(lease) && <LeaseUpdatePropertySelector lease={lease} formikRef={formikRef} />}
       </Route>
       <Route>
         <MapSideBarLayout

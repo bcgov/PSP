@@ -1,5 +1,4 @@
 import { FormikProps, getIn } from 'formik';
-import { useEffect } from 'react';
 import styled from 'styled-components';
 
 import { FastCurrencyInput, FastDatePicker, Input, Select } from '@/components/common/form';
@@ -37,14 +36,10 @@ const AcquisitionAgreementForm: React.FunctionComponent<
     formikProps.values,
     'cancellationNote',
   );
-  const agreementStatusTypeCodeTouched: string | null = getIn(
-    formikProps.touched,
-    'agreementStatusTypeCode',
-  );
 
-  useEffect(() => {
+  const onSelectChange = (e: React.ChangeEvent<HTMLSelectElement>) => {
     if (
-      agreementStatusTypeCodeValue !== ApiGen_CodeTypes_AgreementStatusTypes.CANCELLED &&
+      e.target.value !== ApiGen_CodeTypes_AgreementStatusTypes.CANCELLED &&
       !!agreementCancellationNoteValue
     ) {
       setModalContent({
@@ -68,19 +63,16 @@ const AcquisitionAgreementForm: React.FunctionComponent<
       });
       setDisplayModal(true);
     }
-  }, [
-    agreementStatusTypeCodeValue,
-    agreementCancellationNoteValue,
-    setDisplayModal,
-    setModalContent,
-    formikProps,
-    agreementStatusTypeCodeTouched,
-  ]);
+  };
 
   return (
     <Section header="Agreement Details">
       <SectionField labelWidth={{ xs: 5 }} label="Agreement status">
-        <Select options={agreementStatusOptions} field="agreementStatusTypeCode" />
+        <Select
+          options={agreementStatusOptions}
+          onChange={onSelectChange}
+          field="agreementStatusTypeCode"
+        />
       </SectionField>
       {agreementStatusTypeCodeValue === ApiGen_CodeTypes_AgreementStatusTypes.CANCELLED && (
         <SectionField labelWidth={{ xs: 5 }} label="Cancellation reason">

@@ -454,6 +454,10 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsNoteHist> PimsNoteHists { get; set; }
 
+    public virtual DbSet<PimsNoticeOfClaim> PimsNoticeOfClaims { get; set; }
+
+    public virtual DbSet<PimsNoticeOfClaimHist> PimsNoticeOfClaimHists { get; set; }
+
     public virtual DbSet<PimsOrgIdentifierType> PimsOrgIdentifierTypes { get; set; }
 
     public virtual DbSet<PimsOrganization> PimsOrganizations { get; set; }
@@ -3587,6 +3591,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user that updated the record.");
+            entity.Property(e => e.Boundary).HasComment("Spatial boundary of property.  Supports upload of custom shape file by user.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -7667,6 +7672,10 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.IsDisabled)
                 .HasDefaultValue(false)
                 .HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+            entity.Property(e => e.IsPaymentApproved)
+                .HasDefaultValue(true)
+                .HasComment("Is this payment approved?  Default value is TRUE.");
+            entity.Property(e => e.IsPaymentForwarded).HasComment("Default value is FALSE if responsible payer field is not set at file level.");
             entity.Property(e => e.IsPstRequired).HasComment("Indicates if the invoice requires PST.");
             entity.Property(e => e.ManagementActivityId).HasComment("Foreign key to the PIMS_MANAGEMENT_ACTIVITY table.");
             entity.Property(e => e.PretaxAmt).HasComment("Subtotal of the invoice,");
@@ -7816,6 +7825,9 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.ProductId).HasComment("Foreign key to the PIMS_PRODUCT table.");
             entity.Property(e => e.ProjectId).HasComment("Foreign key to the PIMS_PROJECT table.");
             entity.Property(e => e.RegionCode).HasComment("Foreign key to the PIMS_REGION table.");
+            entity.Property(e => e.ResponsiblePayerOrganizationId).HasComment("Foreign key for the responsible payer organization to the PIMS_ORGANIZATION table.");
+            entity.Property(e => e.ResponsiblePayerPersonId).HasComment("Foreign key for the responsible payer to the PIMS_PERSON table.");
+            entity.Property(e => e.ResponsiblePayerPrimaryContactId).HasComment("Foreign key for the responsible payer primary contact for the organization to the PIMS_PERSON table.");
 
             entity.HasOne(d => d.AcquisitionFundingTypeCodeNavigation).WithMany(p => p.PimsManagementFiles).HasConstraintName("PIM_ACQFTY_PIM_MGMTFL_FK");
 
@@ -7832,6 +7844,12 @@ public partial class PimsBaseContext : DbContext
             entity.HasOne(d => d.Project).WithMany(p => p.PimsManagementFiles).HasConstraintName("PIM_PROJCT_PIM_MGMTFL_FK");
 
             entity.HasOne(d => d.RegionCodeNavigation).WithMany(p => p.PimsManagementFiles).HasConstraintName("PIM_REGION_PIM_MGMTFL_FK");
+
+            entity.HasOne(d => d.ResponsiblePayerOrganization).WithMany(p => p.PimsManagementFiles).HasConstraintName("PIM_ORG_PIM_MGMTFL_FK");
+
+            entity.HasOne(d => d.ResponsiblePayerPerson).WithMany(p => p.PimsManagementFileResponsiblePayerPeople).HasConstraintName("PIM_PERSON_PIM_MGMTFL_FK");
+
+            entity.HasOne(d => d.ResponsiblePayerPrimaryContact).WithMany(p => p.PimsManagementFileResponsiblePayerPrimaryContacts).HasConstraintName("PIM_PERSON_PIM_MGMTFL_PRIMARY_FK");
         });
 
         modelBuilder.Entity<PimsManagementFileContact>(entity =>
@@ -8124,6 +8142,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user that updated the record.");
+            entity.Property(e => e.Boundary).HasComment("Spatial boundary of property.  Supports upload of custom shape file by user.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -8751,6 +8770,73 @@ public partial class PimsBaseContext : DbContext
             entity.HasKey(e => e.NoteHistId).HasName("PIMS_NOTE_H_PK");
 
             entity.Property(e => e.NoteHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTE_H_ID_SEQ])");
+            entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+        });
+
+        modelBuilder.Entity<PimsNoticeOfClaim>(entity =>
+        {
+            entity.HasKey(e => e.NoticeOfClaimId).HasName("NTCCLM_PK");
+
+            entity.ToTable("PIMS_NOTICE_OF_CLAIM", tb =>
+                {
+                    tb.HasTrigger("PIMS_NTCCLM_A_S_IUD_TR");
+                    tb.HasTrigger("PIMS_NTCCLM_I_S_I_TR");
+                    tb.HasTrigger("PIMS_NTCCLM_I_S_U_TR");
+                });
+
+            entity.Property(e => e.NoticeOfClaimId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_PIMS_NOTICE_OF_CLAIM_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.Comment).HasComment("Comments, update, or instructions about this notice of claim.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.ManagementFileId).HasComment("Foreign key to the PIMS_MANAGEMENT_FILE table.");
+            entity.Property(e => e.ReceivedDt).HasComment("Date that the Notice of Claim was received.");
+
+            entity.HasOne(d => d.AcquisitionFile).WithMany(p => p.PimsNoticeOfClaims).HasConstraintName("PIM_ACQNFL_PIM_NTCCLM_FK");
+
+            entity.HasOne(d => d.ManagementFile).WithMany(p => p.PimsNoticeOfClaims).HasConstraintName("PIM_MGMTFL_PIM_NTCCLM_FK");
+        });
+
+        modelBuilder.Entity<PimsNoticeOfClaimHist>(entity =>
+        {
+            entity.HasKey(e => e.NoticeOfClaimHistId).HasName("PIMS_NTCCLM_H_PK");
+
+            entity.Property(e => e.NoticeOfClaimHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTICE_OF_CLAIM_H_ID_SEQ])");
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
         });
 
@@ -10421,7 +10507,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
             entity.Property(e => e.AppLastUpdateUserid).HasComment("The user that updated the record.");
             entity.Property(e => e.BandName).HasComment("Name of the Indian band.");
-            entity.Property(e => e.Boundary).HasComment("Spatial bundary of land");
+            entity.Property(e => e.Boundary).HasComment("Spatial boundary of property.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -10458,6 +10544,8 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.LandLegalDescription).HasComment("Legal description of property");
             entity.Property(e => e.Location).HasComment("Geospatial location (pin) of property");
             entity.Property(e => e.MunicipalZoning).HasComment("Municipal zoning that applies this property.");
+            entity.Property(e => e.NetBookAmt).HasComment("Net book value of the property.");
+            entity.Property(e => e.NetBookNote).HasComment("Note associated with the net book value of the property.");
             entity.Property(e => e.Pid).HasComment("Property ID");
             entity.Property(e => e.Pin).HasComment("Property number");
             entity.Property(e => e.PphStatusTypeCode).HasComment("Foreign key to the provincial public highway status type table.");
@@ -10471,9 +10559,14 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.PropertyTypeCode).HasComment("Foreign key to the property type table.");
             entity.Property(e => e.RegionCode).HasComment("Foreign key to the region table.");
             entity.Property(e => e.ReserveName).HasComment("Name of the Indian reserve.");
+            entity.Property(e => e.ResponsiblePayerOrganizationId).HasComment("Foreign key for the responsible payer organization to the PIMS_ORGANIZATION table.");
+            entity.Property(e => e.ResponsiblePayerPersonId).HasComment("Foreign key for the responsible payer to the PIMS_PERSON table.");
+            entity.Property(e => e.ResponsiblePayerPrimaryContactId).HasComment("Foreign key for the responsible payer primary contact for the organization to the PIMS_PERSON table.");
             entity.Property(e => e.SurplusDeclarationComment).HasComment("Comment regarding the surplus declaration");
             entity.Property(e => e.SurplusDeclarationDate).HasComment("Date the property was declared surplus");
-            entity.Property(e => e.SurplusDeclarationTypeCode).HasComment("Foreign key to the surplus declaration type table.");
+            entity.Property(e => e.SurplusDeclarationTypeCode)
+                .HasDefaultValue("UNKNOWN")
+                .HasComment("Foreign key to the surplus declaration type table.");
             entity.Property(e => e.SurveyPlanNumber).HasComment("Property/Land Parcel survey plan number");
             entity.Property(e => e.TaxResponsibilityTypeCode).HasComment("Foreign key to the PIMS_TAX_RESPONSIBILITY_TYPE table.");
             entity.Property(e => e.UtilityResponsibilityTypeCode).HasComment("Foreign key to the PIMS_UTILITY_RESPONSIBILITY_TYPE table.");
@@ -10506,6 +10599,12 @@ public partial class PimsBaseContext : DbContext
             entity.HasOne(d => d.RegionCodeNavigation).WithMany(p => p.PimsProperties)
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("PIM_REGION_PIM_PRPRTY_FK");
+
+            entity.HasOne(d => d.ResponsiblePayerOrganization).WithMany(p => p.PimsProperties).HasConstraintName("PIM_ORG_PIM_PRPRTY_FK");
+
+            entity.HasOne(d => d.ResponsiblePayerPerson).WithMany(p => p.PimsPropertyResponsiblePayerPeople).HasConstraintName("PIM_PERSON_PIM_PRPRTY_PERSON_FK");
+
+            entity.HasOne(d => d.ResponsiblePayerPrimaryContact).WithMany(p => p.PimsPropertyResponsiblePayerPrimaryContacts).HasConstraintName("PIM_PERSON_PIM_PRPRTY_PRIMARY_FK");
 
             entity.HasOne(d => d.SurplusDeclarationTypeCodeNavigation).WithMany(p => p.PimsProperties)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -10556,6 +10655,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user that updated the record.");
+            entity.Property(e => e.Boundary).HasComment("Spatial boundary of property.  Supports upload of custom shape file by user.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -10877,13 +10977,13 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user or proxy account that created or last updated the record.");
             entity.Property(e => e.ImprovementDescription).HasComment("Description of the improvements");
-            entity.Property(e => e.LeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
+            entity.Property(e => e.PropertyId).HasComment("Foreign key to the PIMS_PROPERTY table.");
             entity.Property(e => e.PropertyImprovementTypeCode).HasComment("Foreign key to the PIMS_PROPERTY_IMPROVEMENT_TYPE table.");
             entity.Property(e => e.StructureSize).HasComment("Size of the structure (house, building, bridge, etc,)");
 
-            entity.HasOne(d => d.Lease).WithMany(p => p.PimsPropertyImprovements)
+            entity.HasOne(d => d.Property).WithMany(p => p.PimsPropertyImprovements)
                 .OnDelete(DeleteBehavior.ClientSetNull)
-                .HasConstraintName("PIM_LEASE_PIM_PIMPRV_FK");
+                .HasConstraintName("PIM_PRPRTY_PIM_PIMPRV_FK");
 
             entity.HasOne(d => d.PropertyImprovementTypeCodeNavigation).WithMany(p => p.PimsPropertyImprovements)
                 .OnDelete(DeleteBehavior.ClientSetNull)
@@ -10966,6 +11066,7 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user that updated the record.");
             entity.Property(e => e.AreaUnitTypeCode).HasComment("Foreign key to the PIMS AREA_UNIT_TYPE table.");
+            entity.Property(e => e.Boundary).HasComment("Spatial boundary of property.  Supports upload of custom shape file by user.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -11331,6 +11432,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.AppLastUpdateUserid)
                 .HasDefaultValueSql("(user_name())")
                 .HasComment("The user that updated the record.");
+            entity.Property(e => e.Boundary).HasComment("Spatial boundary of property.  Supports upload of custom shape file by user.");
             entity.Property(e => e.ConcurrencyControlNumber)
                 .HasDefaultValue(1L)
                 .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
@@ -11746,6 +11848,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.Name).HasComment("Name given to the research file.");
             entity.Property(e => e.RequestDate).HasComment("Date of the research request.");
             entity.Property(e => e.RequestDescription).HasComment("Description of the research request.");
+            entity.Property(e => e.RequestSourceDescription).HasComment("Description of the source of the research request.");
             entity.Property(e => e.RequestSourceTypeCode).HasComment("Foreign key to the PIMS_REQUEST_SOURCE_TYPE table.");
             entity.Property(e => e.RequestorName).HasComment("Name of the research requestor.");
             entity.Property(e => e.RequestorOrganization).HasComment("Organization associated with the research requestor.");
@@ -14225,6 +14328,9 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_NOTE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_NOTICE_OF_CLAIM_H_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_ORGANIZATION_ADDRESS_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -14259,6 +14365,9 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PERSON_ORGANIZATION_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_PIMS_NOTICE_OF_CLAIM_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PRF_PROP_RESEARCH_PURPOSE_ID_SEQ")

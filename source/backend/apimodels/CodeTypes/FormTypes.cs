@@ -12,8 +12,14 @@ namespace Pims.Api.Models.CodeTypes
         [EnumMember(Value = "FORM1")]
         FORM1,
 
+        [EnumMember(Value = "FORM4")]
+        FORM4,
+
         [EnumMember(Value = "FORM5")]
         FORM5,
+
+        [EnumMember(Value = "FORM7")]
+        FORM7,
 
         [EnumMember(Value = "FORM8")]
         FORM8,
@@ -62,5 +68,8 @@ namespace Pims.Api.Models.CodeTypes
 
         [EnumMember(Value = "LETTER")]
         LETTER,
+
+        [EnumMember(Value = "FORMINTAKE")]
+        FORMINTAKE,
     }
 }

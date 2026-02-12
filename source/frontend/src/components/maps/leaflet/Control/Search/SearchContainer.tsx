@@ -24,71 +24,11 @@ export interface ISearchContainerProps {
   View: React.FunctionComponent<ISearchViewProps>;
 }
 
-export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
-  const {
-    mapSearchCriteria,
-    setMapSearchCriteria,
-    mapClick,
-    requestCenterToLocation,
-    mapFeatureData,
-    mapMarkLocation,
-    mapClearLocationMark,
-    prepareForCreation,
-    isEditPropertiesMode,
-  } = useMapStateMachine();
-
-  const pathGenerator = usePathGenerator();
-
-  const { findDistrict, findRegion } = useAdminBoundaryMapLayer();
-
-  const handleMapFilterChange = (filter: IPropertyFilter) => {
-    if (['coordinates', 'name', 'address'].includes(filter.searchBy)) {
-      let latLng: LatLngLiteral = undefined;
-      switch (filter.searchBy) {
-        case 'name':
-        case 'address':
-          if (exists(filter.latitude)) {
-            latLng = { lat: +filter.latitude, lng: +filter.longitude };
-          } else {
-            toast.warn('No valid location found for address - unable to zoom to location.');
-          }
-          break;
-        case 'coordinates':
-          latLng = filter.coordinates?.toLatLng();
-      }
-      if (latLng) {
-        mapMarkLocation(latLng);
-        requestCenterToLocation(latLng);
-        mapClick(latLng);
-      }
-    } else {
-      if (filter !== null && !dequal(mapSearchCriteria, filter)) {
-        mapClearLocationMark();
-        setMapSearchCriteria(filter);
-      }
-    }
-  };
-
-  // Base dataset (no region/district yet)
-  const baseDatasets = useMemo<SelectedFeatureDataset[]>(() => {
-    return (
-      mapFeatureData?.fullyAttributedFeatures.features.map<SelectedFeatureDataset>(pmbcParcel => {
-        const center = getFeatureBoundedCenter(pmbcParcel);
-        return {
-          parcelFeature: pmbcParcel,
-          pimsFeature: null,
-          location: { lat: center[1], lng: center[0] },
-          regionFeature: null,
-          fileLocation: null,
-          districtFeature: null,
-          municipalityFeature: null,
-          selectingComponentId: null,
-        };
-      }) ?? []
-    );
-  }, [mapFeatureData?.fullyAttributedFeatures?.features]);
-
-  // Enrich dataset with region/district info
+const useEnrichedDatasets = (
+  baseDatasets: SelectedFeatureDataset[],
+  findRegion: ReturnType<typeof useAdminBoundaryMapLayer>['findRegion'],
+  findDistrict: ReturnType<typeof useAdminBoundaryMapLayer>['findDistrict'],
+): SelectedFeatureDataset[] => {
   const [selectedFeatureDatasets, setSelectedFeatureDatasets] = useState<SelectedFeatureDataset[]>(
     [],
   );
@@ -131,44 +71,175 @@ export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
     };
   }, [baseDatasets, findDistrict, findRegion]);
 
-  // Actions for creating new files
-  const onCreateResearchFile = useCallback(() => {
-    prepareForCreation(selectedFeatureDatasets);
-    pathGenerator.newFile('research');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
+  return selectedFeatureDatasets;
+};
 
-  const onCreateAcquisitionFile = useCallback(() => {
-    prepareForCreation(selectedFeatureDatasets);
-    pathGenerator.newFile('acquisition');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
+export const SearchContainer: React.FC<ISearchContainerProps> = ({ View }) => {
+  const {
+    mapSearchCriteria,
+    setMapSearchCriteria,
+    mapClick,
+    requestCenterToLocation,
+    mapFeatureData,
+    mapMarkLocation,
+    mapClearLocationMark,
+    prepareForCreation,
+    isEditPropertiesMode,
+  } = useMapStateMachine();
 
-  const onCreateDispositionFile = useCallback(() => {
-    prepareForCreation(selectedFeatureDatasets);
-    pathGenerator.newFile('disposition');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
+  const pathGenerator = usePathGenerator();
 
-  const onCreateLeaseFile = useCallback(() => {
-    prepareForCreation(selectedFeatureDatasets);
-    pathGenerator.newFile('lease');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
+  const { findDistrict, findRegion } = useAdminBoundaryMapLayer();
 
-  const onCreateManagementFile = useCallback(() => {
-    prepareForCreation(selectedFeatureDatasets);
-    pathGenerator.newFile('management');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDatasets]);
-
-  const onAddToOpenFile = useCallback(() => {
-    // If in edit properties mode, prepare the parcel for addition to an open file
-    if (isEditPropertiesMode) {
-      prepareForCreation(selectedFeatureDatasets);
+  const handleMapFilterChange = (filter: IPropertyFilter) => {
+    if (['coordinates', 'name', 'address'].includes(filter.searchBy)) {
+      let latLng: LatLngLiteral = undefined;
+      switch (filter.searchBy) {
+        case 'name':
+        case 'address':
+          if (exists(filter.latitude)) {
+            latLng = { lat: +filter.latitude, lng: +filter.longitude };
+          } else {
+            toast.warn('No valid location found for address - unable to zoom to location.');
+          }
+          break;
+        case 'coordinates':
+          latLng = filter.coordinates?.toLatLng();
+      }
+      if (latLng) {
+        mapMarkLocation(latLng);
+        requestCenterToLocation(latLng);
+        mapClick(latLng);
+        setMapSearchCriteria(filter);
+      }
+    } else if (filter !== null && !dequal(mapSearchCriteria, filter)) {
+      mapClearLocationMark();
+      setMapSearchCriteria(filter);
     }
-  }, [isEditPropertiesMode, prepareForCreation, selectedFeatureDatasets]);
+  };
+
+  // Base datasets (no region/district yet)
+  const pimsBaseDatasets = useMemo<SelectedFeatureDataset[]>(() => {
+    return (
+      mapFeatureData?.pimsFeatures.features.map<SelectedFeatureDataset>(pimsParcel => {
+        const center = getFeatureBoundedCenter(pimsParcel);
+        return {
+          parcelFeature: null,
+          pimsFeature: pimsParcel,
+          location:
+            exists(center) && center.length >= 2 ? { lat: center[1], lng: center[0] } : null,
+          regionFeature: null,
+          fileLocation: null,
+          fileBoundary: null,
+          districtFeature: null,
+          municipalityFeature: null,
+          selectingComponentId: null,
+        };
+      }) ?? []
+    );
+  }, [mapFeatureData]);
+
+  const pmbcBaseDatasets = useMemo<SelectedFeatureDataset[]>(() => {
+    return (
+      mapFeatureData?.fullyAttributedFeatures.features.map<SelectedFeatureDataset>(pmbcParcel => {
+        const center = getFeatureBoundedCenter(pmbcParcel);
+        return {
+          parcelFeature: pmbcParcel,
+          pimsFeature: null,
+          location:
+            exists(center) && center.length >= 2 ? { lat: center[1], lng: center[0] } : null,
+          regionFeature: null,
+          fileLocation: null,
+          fileBoundary: null,
+          districtFeature: null,
+          municipalityFeature: null,
+          selectingComponentId: null,
+        };
+      }) ?? []
+    );
+  }, [mapFeatureData]);
+
+  const pimsSelectedFeatureDatasets = useEnrichedDatasets(
+    pimsBaseDatasets,
+    findRegion,
+    findDistrict,
+  );
+
+  const pmbcSelectedFeatureDatasets = useEnrichedDatasets(
+    pmbcBaseDatasets,
+    findRegion,
+    findDistrict,
+  );
+
+  // Actions for creating new files
+  const onCreateResearchFile = useCallback(
+    (isPims: boolean) => {
+      const datasets = isPims ? pimsSelectedFeatureDatasets : pmbcSelectedFeatureDatasets;
+      prepareForCreation(datasets);
+      pathGenerator.newFile('research');
+    },
+    [pathGenerator, prepareForCreation, pimsSelectedFeatureDatasets, pmbcSelectedFeatureDatasets],
+  );
+
+  const onCreateAcquisitionFile = useCallback(
+    (isPims: boolean) => {
+      const datasets = isPims ? pimsSelectedFeatureDatasets : pmbcSelectedFeatureDatasets;
+      prepareForCreation(datasets);
+      pathGenerator.newFile('acquisition');
+    },
+    [pathGenerator, prepareForCreation, pimsSelectedFeatureDatasets, pmbcSelectedFeatureDatasets],
+  );
+
+  const onCreateDispositionFile = useCallback(
+    (isPims: boolean) => {
+      const datasets = isPims ? pimsSelectedFeatureDatasets : pmbcSelectedFeatureDatasets;
+      prepareForCreation(datasets);
+      pathGenerator.newFile('disposition');
+    },
+    [pathGenerator, prepareForCreation, pimsSelectedFeatureDatasets, pmbcSelectedFeatureDatasets],
+  );
+
+  const onCreateLeaseFile = useCallback(
+    (isPims: boolean) => {
+      const datasets = isPims ? pimsSelectedFeatureDatasets : pmbcSelectedFeatureDatasets;
+      prepareForCreation(datasets);
+      pathGenerator.newFile('lease');
+    },
+    [pathGenerator, prepareForCreation, pimsSelectedFeatureDatasets, pmbcSelectedFeatureDatasets],
+  );
+
+  const onCreateManagementFile = useCallback(
+    (isPims: boolean) => {
+      const datasets = isPims ? pimsSelectedFeatureDatasets : pmbcSelectedFeatureDatasets;
+      prepareForCreation(datasets);
+      pathGenerator.newFile('management');
+    },
+    [pathGenerator, prepareForCreation, pimsSelectedFeatureDatasets, pmbcSelectedFeatureDatasets],
+  );
+
+  const onAddToOpenFile = useCallback(
+    (isPims: boolean) => {
+      // If in edit properties mode, prepare the parcel for addition to an open file
+      if (isEditPropertiesMode) {
+        const datasets = isPims ? pimsSelectedFeatureDatasets : pmbcSelectedFeatureDatasets;
+        prepareForCreation(datasets);
+      }
+    },
+    [
+      isEditPropertiesMode,
+      prepareForCreation,
+      pimsSelectedFeatureDatasets,
+      pmbcSelectedFeatureDatasets,
+    ],
+  );
 
   return (
     <View
       propertyFilter={mapSearchCriteria ?? defaultPropertyFilter}
       onFilterChange={handleMapFilterChange}
       searchResult={mapFeatureData}
+      pmbcSelectedFeatureDatasets={pmbcSelectedFeatureDatasets}
+      pimsSelectedFeatureDatasets={pimsSelectedFeatureDatasets}
       canAddToOpenFile={isEditPropertiesMode}
       onCreateResearchFile={onCreateResearchFile}
       onCreateAcquisitionFile={onCreateAcquisitionFile}

@@ -48,6 +48,13 @@ vi.mock('react-visibility-sensor', () => {
 
 const onClose = vi.fn();
 
+// Mock ConfirmNavigation to avoid Prompt issues in jsdom
+vi.mock('@/components/common/ConfirmNavigation', () => {
+  return {
+    default: () => null,
+  };
+});
+
 describe('ResearchContainer component', () => {
   // render component under test
   const setup = (

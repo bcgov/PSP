@@ -256,6 +256,12 @@ public partial class PimsPerson
     [InverseProperty("PrimaryContact")]
     public virtual ICollection<PimsManagementFileContact> PimsManagementFileContactPrimaryContacts { get; set; } = new List<PimsManagementFileContact>();
 
+    [InverseProperty("ResponsiblePayerPerson")]
+    public virtual ICollection<PimsManagementFile> PimsManagementFileResponsiblePayerPeople { get; set; } = new List<PimsManagementFile>();
+
+    [InverseProperty("ResponsiblePayerPrimaryContact")]
+    public virtual ICollection<PimsManagementFile> PimsManagementFileResponsiblePayerPrimaryContacts { get; set; } = new List<PimsManagementFile>();
+
     [InverseProperty("Person")]
     public virtual ICollection<PimsManagementFileTeam> PimsManagementFileTeamPeople { get; set; } = new List<PimsManagementFileTeam>();
 
@@ -282,6 +288,12 @@ public partial class PimsPerson
 
     [InverseProperty("PrimaryContact")]
     public virtual ICollection<PimsPropertyContact> PimsPropertyContactPrimaryContacts { get; set; } = new List<PimsPropertyContact>();
+
+    [InverseProperty("ResponsiblePayerPerson")]
+    public virtual ICollection<PimsProperty> PimsPropertyResponsiblePayerPeople { get; set; } = new List<PimsProperty>();
+
+    [InverseProperty("ResponsiblePayerPrimaryContact")]
+    public virtual ICollection<PimsProperty> PimsPropertyResponsiblePayerPrimaryContacts { get; set; } = new List<PimsProperty>();
 
     [InverseProperty("RequestorNameNavigation")]
     public virtual ICollection<PimsResearchFile> PimsResearchFiles { get; set; } = new List<PimsResearchFile>();

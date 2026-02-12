@@ -27,7 +27,6 @@ namespace Pims.Api.Services
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly ILeaseRepository _leaseRepository;
-        private readonly IPropertyImprovementRepository _propertyImprovementRepository;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
         private readonly INoteRelationshipRepository<PimsLeaseNote> _entityNoteRepository;
@@ -42,6 +41,7 @@ namespace Pims.Api.Services
         private readonly ICompReqFinancialService _compReqFinancialService;
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly ILeaseStatusSolver _leaseStatusSolver;
+        private readonly IFilePropertyLocationUpdateSolver _propertyLocationSolver;
 
         public LeaseService(
             ClaimsPrincipal user,
@@ -49,7 +49,6 @@ namespace Pims.Api.Services
             ILeaseRepository leaseRepository,
             IPropertyRepository propertyRepository,
             IPropertyLeaseRepository propertyLeaseRepository,
-            IPropertyImprovementRepository propertyImprovementRepository,
             INoteRelationshipRepository<PimsLeaseNote> entityNoteRepository,
             IInsuranceRepository insuranceRepository,
             ILeaseStakeholderRepository stakeholderRepository,
@@ -61,7 +60,8 @@ namespace Pims.Api.Services
             ILookupRepository lookupRepository,
             ICompReqFinancialService compReqFinancialService,
             IPropertyOperationService propertyOperationService,
-            ILeaseStatusSolver leaseStatusSolver)
+            ILeaseStatusSolver leaseStatusSolver,
+            IFilePropertyLocationUpdateSolver propertyLocationSolver)
             : base(user, logger)
         {
             _logger = logger;
@@ -70,7 +70,6 @@ namespace Pims.Api.Services
             _propertyRepository = propertyRepository;
             _propertyLeaseRepository = propertyLeaseRepository;
             _entityNoteRepository = entityNoteRepository;
-            _propertyImprovementRepository = propertyImprovementRepository;
             _insuranceRepository = insuranceRepository;
             _stakeholderRepository = stakeholderRepository;
             _compensationRequisitionRepository = compensationRequisitionRepository;
@@ -82,6 +81,7 @@ namespace Pims.Api.Services
             _compReqFinancialService = compReqFinancialService;
             _propertyOperationService = propertyOperationService;
             _leaseStatusSolver = leaseStatusSolver;
+            _propertyLocationSolver = propertyLocationSolver;
         }
 
         public PimsLease GetById(long leaseId)
@@ -156,36 +156,6 @@ namespace Pims.Api.Services
             _insuranceRepository.CommitTransaction();
 
             return _insuranceRepository.GetByLeaseId(leaseId);
-        }
-
-        public IEnumerable<PimsPropertyImprovement> GetImprovementsByLeaseId(long leaseId)
-        {
-            _logger.LogInformation("Getting property improvements on lease {leaseId}", leaseId);
-            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
-
-            return _propertyImprovementRepository.GetByLeaseId(leaseId);
-        }
-
-        public IEnumerable<PimsPropertyImprovement> UpdateImprovementsByLeaseId(long leaseId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements)
-        {
-            _logger.LogInformation("Updating property improvements on lease {leaseId}", leaseId);
-            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            var currentLease = _leaseRepository.GetNoTracking(leaseId);
-            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease?.RegionCode);
-
-            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
-            if (!_leaseStatusSolver.CanEditImprovements(currentLeaseStatus))
-            {
-                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
-            }
-
-            _propertyImprovementRepository.Update(leaseId, pimsPropertyImprovements);
-            _propertyImprovementRepository.CommitTransaction();
-
-            return _propertyImprovementRepository.GetByLeaseId(leaseId);
         }
 
         public IEnumerable<PimsLeaseStakeholder> GetStakeholdersByLeaseId(long leaseId)
@@ -321,12 +291,16 @@ namespace Pims.Api.Services
                 {
                     var existingFileProperty = currentFileProperties.FirstOrDefault(x => x.Internal_Id == incomingLeaseProperty.Internal_Id);
 
-                    var incomingGeom = incomingLeaseProperty?.Location;
-                    var existingGeom = existingFileProperty?.Location;
-                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    if (_propertyLocationSolver.CanEditFilePropertyLocation(incomingLeaseProperty, existingFileProperty))
                     {
                         _propertyService.UpdateFilePropertyLocation(incomingLeaseProperty, existingFileProperty);
                         incomingLeaseProperty.Location = existingFileProperty?.Location;
+                    }
+
+                    if (_propertyLocationSolver.CanEditFilePropertyBoundary(incomingLeaseProperty, existingFileProperty))
+                    {
+                        _propertyService.UpdateFilePropertyBoundary(incomingLeaseProperty, existingFileProperty);
+                        incomingLeaseProperty.Boundary = existingFileProperty?.Boundary;
                     }
                 }
                 else

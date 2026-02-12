@@ -89,7 +89,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         }
 
         [StepDefinition(@"I edit a Note on the Notes Tab for a ""(.*)"" from row number (.*)")]
-        public void EditPropNotesTab(int rowNumber, string feature)
+        public void EditPropNotesTab(string feature, int rowNumber)
         {
             /* TEST COVERAGE: PSP-4020, PSP-5506, PSP-5507 */
 
@@ -117,16 +117,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
             notesCount = notes.NotesTabCount();
             notes.DeleteLastSecondNote();
 
+
             if (feature == "Property")
             {
                 //Navigate to Management Section
-                management.NavigateToManagementFileSection();
-
-                //Navigate to its Notes Tab
-                notes.NavigateNotesTab();
+                notes.NavigateToFirstManagementNote();
 
                 //Verify the Property's notes section
-                notes.VerifySecondaryNotesListContent("Property", notesData[0]);
+                var lastNote = notesData.Count -1;
+                notes.VerifySecondaryNotesListContent(feature, notesData[lastNote]);
+
+                //Navigate back to Properties section
+                notes.NavigateToFirstPropertyNote();
+
             }
             else
             {
@@ -137,7 +140,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 notes.NavigateNotesTab();
 
                 //Verify the Management's notes section
-                notes.VerifySecondaryNotesListContent("Management", notesData[0]);
+                notes.VerifySecondaryNotesListContent(feature, notesData[0]);
             }
         }
 

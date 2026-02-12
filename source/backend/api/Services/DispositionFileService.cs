@@ -35,6 +35,7 @@ namespace Pims.Api.Services
         private readonly INoteRelationshipRepository<PimsDispositionFileNote> _entityNoteRepository;
         private readonly IDispositionStatusSolver _dispositionStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
+        private readonly IFilePropertyLocationUpdateSolver _propertyLocationSolver;
 
         public DispositionFileService(
             ClaimsPrincipal user,
@@ -48,7 +49,8 @@ namespace Pims.Api.Services
             INoteRelationshipRepository<PimsDispositionFileNote> entityNoteRepository,
             IUserRepository userRepository,
             IDispositionStatusSolver dispositionStatusSolver,
-            IPropertyOperationService propertyOperationService)
+            IPropertyOperationService propertyOperationService,
+            IFilePropertyLocationUpdateSolver propertyLocationSolver)
         {
             _user = user;
             _logger = logger;
@@ -62,6 +64,7 @@ namespace Pims.Api.Services
             _userRepository = userRepository;
             _dispositionStatusSolver = dispositionStatusSolver;
             _propertyOperationService = propertyOperationService;
+            _propertyLocationSolver = propertyLocationSolver;
         }
 
         public PimsDispositionFile Add(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
@@ -538,11 +541,15 @@ namespace Pims.Api.Services
                         needsUpdate = true;
                     }
 
-                    var incomingGeom = incomingDispositionProperty.Location;
-                    var existingGeom = existingProperty.Location;
-                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    if (_propertyLocationSolver.CanEditFilePropertyLocation(incomingDispositionProperty, existingProperty))
                     {
                         _propertyService.UpdateFilePropertyLocation(incomingDispositionProperty, existingProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (_propertyLocationSolver.CanEditFilePropertyBoundary(incomingDispositionProperty, existingProperty))
+                    {
+                        _propertyService.UpdateFilePropertyBoundary(incomingDispositionProperty, existingProperty);
                         needsUpdate = true;
                     }
 
@@ -767,7 +774,7 @@ namespace Pims.Api.Services
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTT Inventory. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MOTT Inventory. Do you want to proceed?");
                         }
                     }
                 }
@@ -780,21 +787,22 @@ namespace Pims.Api.Services
                     }
                     else
                     {
-                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MoTT Inventory. Do you want to proceed?");
+                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the disposition file that are not in the MOTT Inventory. Do you want to proceed?");
                     }
                 }
             }
         }
 
-        private void ValidatePropertyRegions(PimsDispositionFile dispositionFile)
+        private void ValidatePropertyRegions(PimsDispositionFile acquisitionFile)
         {
             var userRegions = _user.GetUserRegions(_userRepository);
-            foreach (var dispProperty in dispositionFile.PimsDispositionFileProperties)
+            foreach (var acquisitionProperty in acquisitionFile.PimsDispositionFileProperties)
             {
-                var propertyRegion = dispProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(dispProperty.PropertyId);
-                if (!userRegions.Contains(propertyRegion))
+                var propertyRegion = acquisitionProperty.Property?.RegionCode ?? _propertyRepository.GetPropertyRegion(acquisitionProperty.PropertyId);
+                var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+                if (propertyRegion != cannotDetermineRegion.Code && !userRegions.Contains(propertyRegion))
                 {
-                    throw new BadRequestException("You cannot add a property that is outside of your user account region(s). Either select a different property, or get your system administrator to add the required region to your user account settings.");
+                    throw new BadRequestException("You cannot add a property that is outside of your user account region(s).\n\nPlease select a different property or contact admin at pims@gov.bc.ca to add the required region to your user account settings.");
                 }
             }
         }

@@ -13,6 +13,7 @@ interface SectionProps {
   isCollapsable?: boolean;
   initiallyExpanded?: boolean;
   noPadding?: boolean;
+  hideOverflow?: boolean;
 }
 
 export const Section: React.FC<
@@ -28,6 +29,7 @@ export const Section: React.FC<
   initiallyExpanded,
   noPadding,
   className,
+  hideOverflow,
   ...rest
 }) => {
   const [isCollapsed, setIsCollapsed] = useState<boolean>(!(initiallyExpanded === true));
@@ -40,7 +42,12 @@ export const Section: React.FC<
       {exists(header) && (
         <StyledSectionHeader isStyledHeader={isStyledHeader}>
           <Row className="no-gutters">
-            <Col className="align-content-end">{header}</Col>
+            <Col
+              className="align-content-end"
+              style={{ overflow: hideOverflow === true ? 'hidden' : '' }}
+            >
+              {header}
+            </Col>
             {isCollapsable && (
               <Col xs="auto" className="pl-2 d-flex align-items-end">
                 {isCollapsed && (
@@ -76,18 +83,18 @@ export const Section: React.FC<
   );
 };
 
-export const StyledSectionHeader = styled.h2<{ isStyledHeader?: boolean }>`
-  font-size: ${props => (props.isStyledHeader === true ? '1.0em' : '')};
-  font-weight: ${props => (props.isStyledHeader === true ? '' : 'bold')};
-  color: ${props => props.theme.css.headerTextColor};
-  border-bottom: 0.2rem ${props => props.theme.css.headerBorderColor} solid;
-  margin-bottom: 2.4rem;
-`;
-
 const StyledFormSection = styled.div<{ noPadding?: boolean }>`
   margin: ${props => (props.noPadding === true ? '' : '1.6rem')};
   padding: ${props => (props.noPadding === true ? '' : '1.6rem')};
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+`;
+
+export const StyledSectionHeader = styled.h2<{ isStyledHeader?: boolean }>`
+  font-size: ${props => (props.isStyledHeader === true ? '1.0em' : '')};
+  font-weight: ${props => (props.isStyledHeader === true ? '' : 'bold')};
+  color: ${props => props.theme.css.headerTextColor};
+  border-bottom: 0.2rem ${props => props.theme.css.headerBorderColor} solid;
+  margin-bottom: 2.4rem;
 `;

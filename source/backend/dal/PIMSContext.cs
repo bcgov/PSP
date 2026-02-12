@@ -1,5 +1,8 @@
+//PIMSContext.cs
+using System.Data.SqlClient;
 using System.Linq;
 using System.Text.Json;
+using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Options;
@@ -16,6 +19,7 @@ namespace Pims.Dal
         #region Variables
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly JsonSerializerOptions _serializerOptions;
+        private static readonly object DeletionHistoryLock = new();
         #endregion
 
         #region Constructors
@@ -24,9 +28,7 @@ namespace Pims.Dal
         /// Creates a new instance of a PimsContext class.
         /// </summary>
         public PimsContext()
-            : base()
-        {
-        }
+            : base() { }
 
         /// <summary>
         /// Creates a new instance of a PimsContext class.
@@ -35,11 +37,15 @@ namespace Pims.Dal
         /// <param name="httpContextAccessor"></param>
         /// <param name="serializerOptions"></param>
         /// <returns></returns>
-        public PimsContext(DbContextOptions<PimsContext> options, IHttpContextAccessor httpContextAccessor = null, IOptions<JsonSerializerOptions> serializerOptions = null)
+        public PimsContext(
+            DbContextOptions<PimsContext> options,
+            IHttpContextAccessor httpContextAccessor = null,
+            IOptions<JsonSerializerOptions> serializerOptions = null
+        )
             : base(options)
         {
             _httpContextAccessor = httpContextAccessor;
-            _serializerOptions = serializerOptions.Value;
+            _serializerOptions = serializerOptions?.Value;
         }
 
         /// <summary>
@@ -49,16 +55,37 @@ namespace Pims.Dal
         public override int SaveChanges()
         {
             // get entries that are being Added or Updated
-            var modifiedEntries = ChangeTracker.Entries()
-                    .Where(x => x.State.IsIn(EntityState.Added, EntityState.Modified, EntityState.Deleted));
+            var modifiedEntries = ChangeTracker
+                .Entries()
+                .Where(x =>
+                    x.State.IsIn(EntityState.Added, EntityState.Modified, EntityState.Deleted)
+                );
 
             // Default values are provided because depending on the claim source it may or may not have these values.
             var username = _httpContextAccessor.HttpContext.User.GetUsername() ?? "service";
             var key = _httpContextAccessor.HttpContext.User.GetUserKey();
-            var directory = _httpContextAccessor.HttpContext.User.GetUserDirectory() ?? string.Empty;
+            var directory =
+                _httpContextAccessor.HttpContext.User.GetUserDirectory() ?? string.Empty;
             foreach (var entry in modifiedEntries)
             {
                 entry.UpdateAppAuditProperties(username, key, directory);
+
+                if (entry.State == EntityState.Deleted && Database.IsRelational())
+                {
+                    entry.State = EntityState.Detached;
+                    var user = username;
+                    var schema = GetSchemaName(entry.Entity);
+                    var primarykey = GetPrimaryKey(entry.Entity);
+                    var tableName = GetTableName(entry.Entity);
+
+                    lock (DeletionHistoryLock)
+                    {
+                        Database.ExecuteSql(
+                            $"EXECUTE dbo.PIM_DELETION_HISTORY @prmUserID={user}, @prmHstSchema={schema}, @prmBizSchema={schema}, @prmBizTblNm={tableName}, @prmPKValue={primarykey}, @modeDebug={0}");
+                    }
+                }
+
+                // For in-memory or non-relational providers, let EF handle the delete normally.
             }
 
             return base.SaveChanges();
@@ -125,6 +152,29 @@ namespace Pims.Dal
             }
 
             base.OnConfiguring(optionsBuilder);
+        }
+
+        // Entity Framework Core
+        protected virtual long GetPrimaryKey<T>(T entity)
+        {
+            var entityType = entity.GetType();
+            var modelEntityType = Model.FindEntityType(entityType);
+            var keyName = modelEntityType.FindPrimaryKey().Properties.Select(x => x.Name).Single();
+
+            return (long)entityType.GetProperty(keyName).GetValue(entity, null);
+        }
+
+        protected string GetTableName<T>(T entity)
+        {
+            var entityType = entity.GetType();
+            var modelEntityType = Model.FindEntityType(entityType);
+
+            return modelEntityType.GetSchemaQualifiedTableName();
+        }
+
+        protected string GetSchemaName<T>(T entity)
+        {
+            return "dbo";
         }
         #endregion
     }

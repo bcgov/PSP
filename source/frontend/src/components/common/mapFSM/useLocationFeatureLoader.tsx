@@ -1,4 +1,4 @@
-import { Feature, FeatureCollection, Geometry } from 'geojson';
+import { Feature, FeatureCollection, Geometry, MultiPolygon, Polygon } from 'geojson';
 import { LatLngLiteral } from 'leaflet';
 import { useCallback } from 'react';
 
@@ -19,7 +19,7 @@ import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegi
 import { WHSE_Municipalities_Feature_Properties } from '@/models/layers/municipalities';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { ISS_ProvincialPublicHighway } from '@/models/layers/pimsHighwayLayer';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import { PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import { exists, isValidId } from '@/utils';
 
 export interface FeatureDataset {
@@ -30,7 +30,7 @@ export interface FeatureDataset {
 
 export interface LocationFeatureDataset extends FeatureDataset {
   parcelFeatures: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>[] | null;
-  pimsFeatures: Feature<Geometry, PIMS_Property_Location_View>[] | null;
+  pimsFeatures: Feature<Geometry, PIMS_Property_View>[] | null;
   regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
   districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
   municipalityFeatures: Feature<Geometry, WHSE_Municipalities_Feature_Properties>[] | null;
@@ -53,8 +53,9 @@ export interface LocationFeatureDataset extends FeatureDataset {
 export interface SelectedFeatureDataset extends FeatureDataset {
   id?: string;
   location: LatLngLiteral;
+  fileBoundary: Polygon | MultiPolygon | null;
   parcelFeature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> | null;
-  pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
+  pimsFeature: Feature<Geometry, PIMS_Property_View> | null;
   regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
   districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
   municipalityFeature: Feature<Geometry, WHSE_Municipalities_Feature_Properties> | null;
@@ -68,7 +69,7 @@ export interface WorklistLocationFeatureDataset
     Geometry,
     PMBC_FullyAttributed_Feature_Properties
   > | null;
-  pimsFeature: Feature<Geometry, PIMS_Property_Location_View> | null;
+  pimsFeature: Feature<Geometry, PIMS_Property_View> | null;
   regionFeature: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties> | null;
   districtFeature: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties> | null;
 }
@@ -130,8 +131,7 @@ const useLocationFeatureLoader = () => {
       const [parcelFeatureCollection, regionFeature, districtFeature, municipalityFeatures] =
         await Promise.all([fullyAttributedTask, regionTask, districtTask, municipalityFeatureTask]);
 
-      let pimsLocationProperties: Feature<Geometry, PIMS_Property_Location_View>[] | undefined =
-        undefined;
+      let pimsLocationProperties: Feature<Geometry, PIMS_Property_View>[] | undefined = undefined;
 
       // Load PimsProperties
       // - first attempt to find it by our internal PIMS id
@@ -149,9 +149,7 @@ const useLocationFeatureLoader = () => {
           const parcelFeatures = parcelFeatureCollection.features;
           pimsLocationProperties = [];
 
-          const pimsFeatureTasks: Promise<
-            FeatureCollection<Geometry, PIMS_Property_Location_View>
-          >[] = [];
+          const pimsFeatureTasks: Promise<FeatureCollection<Geometry, PIMS_Property_View>>[] = [];
 
           for (let i = 0; i < parcelFeatures.length; i++) {
             const parcelFeature = parcelFeatures[i];

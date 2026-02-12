@@ -5,6 +5,7 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
+import { useAddFileConfirmation } from '@/hooks/useAddFileConfirmation';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
 import { useModalContext } from '@/hooks/useModalContext';
@@ -33,7 +34,6 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
 
   const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
-  const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
 
   const {
     addDispositionFileApi: { execute: addDispositionFileApi, loading },
@@ -69,7 +69,7 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
         const firstProperty = PropertyForm.fromFeatureDataset(firstPropertyFeature);
         formikRef?.current?.setFieldValue(
           'regionCode',
-          firstProperty.regionName !== 'Cannot determine' ? firstProperty.region : undefined,
+          firstProperty.regionName !== 'Cannot determine' ? firstProperty.region : '',
         );
       }
     }
@@ -79,65 +79,28 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
     return new DispositionFormModel();
   }, []);
 
-  // Require user confirmation before adding a property to file
-  // This is the flow for Map Marker -> right-click -> create Disposition File
-  useEffect(() => {
-    const runAsync = async () => {
-      const incomingProperties =
-        featuresWithAddresses?.map(f => PropertyForm.fromFeatureDataset(f.feature)) ?? [];
-      if (exists(incomingProperties) && exists(formikRef.current) && needsUserConfirmation) {
-        if (incomingProperties.length > 0) {
-          // Check all properties for confirmation
-          const needsConfirmation = await Promise.all(
-            incomingProperties.map(formProperty => confirmBeforeAdd(formProperty)),
-          );
-          if (needsConfirmation.some(confirm => confirm)) {
-            setModalContent({
-              variant: 'warning',
-              title: 'User Override Required',
-              message: (
-                <>
-                  <p>
-                    One or more properties have already been added to one or more disposition files.
-                  </p>
-                  <p>Do you want to acknowledge and proceed?</p>
-                </>
-              ),
-              okButtonText: 'Yes',
-              cancelButtonText: 'No',
-              handleOk: () => {
-                // allow the property to be added to the file being created
-                formikRef.current.resetForm();
-                formikRef.current.setFieldValue('properties', incomingProperties);
-                setDisplayModal(false);
-                // show the user confirmation modal only once when creating a file
-                setNeedsUserConfirmation(false);
-              },
-              handleCancel: () => {
-                // clear out the properties array as the user did not agree to the popup
-                incomingProperties.splice(0, incomingProperties.length);
-                formikRef.current.resetForm();
-                formikRef.current.setFieldValue('properties', incomingProperties);
-                setDisplayModal(false);
-                // show the user confirmation modal only once when creating a file
-                setNeedsUserConfirmation(false);
-              },
-            });
-            setDisplayModal(true);
-          }
-        }
-      }
-    };
+  const incomingProperties = useMemo(
+    () => featuresWithAddresses?.map(f => PropertyForm.fromFeatureDataset(f.feature)) ?? [],
+    [featuresWithAddresses],
+  );
 
-    runAsync();
-  }, [
+  const confirmationMessage = useMemo(
+    () => (
+      <>
+        <p>One or more properties have already been added to one or more disposition files.</p>
+        <p>Do you want to acknowledge and proceed?</p>
+      </>
+    ),
+    [],
+  );
+
+  useAddFileConfirmation({
+    formikRef,
     confirmBeforeAdd,
-    featuresWithAddresses,
-    initialForm,
-    needsUserConfirmation,
-    setDisplayModal,
-    setModalContent,
-  ]);
+    fieldName: 'fileProperties',
+    properties: incomingProperties,
+    message: confirmationMessage,
+  });
 
   const handleCancel = useCallback(() => onClose(), [onClose]);
 
