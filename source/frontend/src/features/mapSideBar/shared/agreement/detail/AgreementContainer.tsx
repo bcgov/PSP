@@ -5,7 +5,6 @@ import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvi
 import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
-import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { isValidId } from '@/utils';
 
 import { useGenerateAgreement } from '../../../acquisition/common/GenerateForm/hooks/useGenerateAgreement';
@@ -15,38 +14,27 @@ import { IAgreementViewProps } from './AgreementView';
 
 export interface IAgreementContainerProps {
   fileId: number;
-  fileType: 'acquisition' | 'disposition';
   View: React.FunctionComponent<React.PropsWithChildren<IAgreementViewProps>>;
+  getFile:
+    | ReturnType<typeof useAcquisitionProvider>['getAcquisitionFile']
+    | ReturnType<typeof useDispositionProvider>['getDispositionFile'];
+  getAgreements:
+    | ReturnType<typeof useAgreementProvider>['getAcquisitionAgreements']
+    | ReturnType<typeof useAgreementProvider>['getDispositionFileAgreements'];
+  deleteAgreement:
+    | ReturnType<typeof useAgreementProvider>['deleteAcquisitionAgreement']
+    | ReturnType<typeof useAgreementProvider>['deleteDispositionAgreement'];
+  statusSolver: AcquisitionFileStatusUpdateSolver | DispositionStatusUpdateSolver;
 }
 
 export const AgreementContainer: React.FunctionComponent<
   React.PropsWithChildren<IAgreementContainerProps>
-> = ({ fileId, fileType, View }) => {
+> = ({ fileId, View, getFile, getAgreements, deleteAgreement, statusSolver }) => {
   const [agreements, setAgreements] = useState<ApiGen_Concepts_Agreement[]>([]);
   const { setStaleLastUpdatedBy } = useContext(SideBarContext);
 
-  // Providers
-  const agreementProvider = useAgreementProvider();
-  const acquisitionProvider = useAcquisitionProvider();
-  const dispositionProvider = useDispositionProvider();
-
-  // Dynamic provider selection
-  const getFile =
-    fileType === 'acquisition'
-      ? acquisitionProvider.getAcquisitionFile
-      : dispositionProvider.getDispositionFile;
-  const getAgreements =
-    fileType === 'acquisition'
-      ? agreementProvider.getAcquisitionAgreements
-      : agreementProvider.getDispositionFileAgreements;
-  const deleteAgreement =
-    fileType === 'acquisition'
-      ? agreementProvider.deleteAcquisitionAgreement
-      : agreementProvider.deleteDispositionAgreement;
-
   const generateAgreement = useGenerateAgreement();
-
-  const { execute: getFileExecute, loading: loadingFile, response: fileData } = getFile;
+  const { execute: getFileExecute, loading: loadingFile } = getFile;
   const { execute: getAgreementsExecute, loading: loadingAgreements } = getAgreements;
   const { execute: deleteAgreementExecute, loading: deletingAgreement } = deleteAgreement;
 
@@ -78,11 +66,6 @@ export const AgreementContainer: React.FunctionComponent<
   useEffect(() => {
     fetchData();
   }, [fetchData]);
-
-  const statusSolver =
-    fileType === 'acquisition'
-      ? new AcquisitionFileStatusUpdateSolver(fileData?.fileStatusTypeCode)
-      : new DispositionStatusUpdateSolver(fileData as ApiGen_Concepts_DispositionFile);
 
   return file?.id ? (
     <View

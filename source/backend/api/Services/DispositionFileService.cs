@@ -613,7 +613,7 @@ namespace Pims.Api.Services
 
         public PimsDispositionAgreement GetAgreementById(long dispositionFileId, long agreementId)
         {
-            _logger.LogInformation("Getting acquisition file agreement with Agreement id: {agreementId}", agreementId);
+            _logger.LogInformation("Getting disposition file agreement with Agreement id: {agreementId}", agreementId);
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
             _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
 

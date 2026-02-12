@@ -9,6 +9,8 @@ import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared
 import DocumentsTab from '@/features/mapSideBar/shared/tabs/DocumentsTab';
 import NoteListContainer from '@/features/notes/list/NoteListContainer';
 import NoteListView from '@/features/notes/list/NoteListView';
+import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
+import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
@@ -44,6 +46,12 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
   const { tab } = useParams<{ tab?: string }>();
   const activeTab = Object.values(FileTabType).find(value => value === tab) ?? defaultTab;
   const statusSolver = new DispositionStatusUpdateSolver(dispositionFile);
+  const agreementProvider = useAgreementProvider();
+  const dispositionProvider = useDispositionProvider();
+
+  const getFile = dispositionProvider.getDispositionFile;
+  const getAgreements = agreementProvider.getDispositionFileAgreements;
+  const deleteAgreement = agreementProvider.deleteDispositionAgreement;
 
   const setActiveTab = (tab: FileTabType) => {
     if (activeTab !== tab) {
@@ -80,7 +88,14 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
 
   tabViews.push({
     content: (
-      <AgreementContainer fileId={dispositionFile.id} fileType="disposition" View={AgreementView} />
+      <AgreementContainer
+        fileId={dispositionFile.id}
+        View={AgreementView}
+        getFile={getFile}
+        getAgreements={getAgreements}
+        deleteAgreement={deleteAgreement}
+        statusSolver={statusSolver}
+      />
     ),
     key: FileTabType.AGREEMENTS,
     name: 'Agreements',
