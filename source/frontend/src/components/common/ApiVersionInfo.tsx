@@ -5,9 +5,59 @@ import styled from 'styled-components';
 import IApiVersion from '@/hooks/pims-api/interfaces/IApiVersion';
 import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
+import { stringToNumberOrNull } from '@/utils/formUtils';
 
 import { InlineFlexDiv } from './styles';
 import TooltipWrapper from './TooltipWrapper';
+
+type ApiDbCompatibilityEntry = {
+  apiVersion: number;
+  databaseVersions: number[];
+};
+
+const parseApiDbCompatibility = (rawValue?: string): ApiDbCompatibilityEntry[] => {
+  if (!rawValue?.trim()) {
+    return [];
+  }
+
+  try {
+    const parsed = JSON.parse(rawValue) as Record<string, unknown>;
+    if (!parsed || typeof parsed !== 'object' || Array.isArray(parsed)) {
+      return [];
+    }
+
+    return Object.entries(parsed)
+      .map(([apiVersionKey, dbVersionValues]) => {
+        const apiVersionValue = stringToNumberOrNull(apiVersionKey);
+        const apiVersion = Number.isFinite(apiVersionValue ?? NaN) ? apiVersionValue : null;
+        const dbVersions = Array.isArray(dbVersionValues)
+          ? dbVersionValues
+              .map(stringToNumberOrNull)
+              .filter((value): value is number => Number.isFinite(value ?? NaN))
+          : [];
+
+        if (apiVersion === null || dbVersions.length === 0) {
+          return null;
+        }
+
+        return { apiVersion, databaseVersions: dbVersions } as ApiDbCompatibilityEntry;
+      })
+      .filter((value): value is ApiDbCompatibilityEntry => value !== null);
+  } catch {
+    return [];
+  }
+};
+
+const getApiBuildVersion = (informationalVersion?: string): number | null => {
+  if (!informationalVersion) {
+    return null;
+  }
+
+  const match = informationalVersion.match(/-(\d+)(?:\.|$)|\.(\d+)$/);
+  const candidate = match?.[1] ?? match?.[2] ?? informationalVersion;
+  const parsed = stringToNumberOrNull(candidate);
+  return Number.isFinite(parsed ?? NaN) ? parsed : null;
+};
 
 /**
  * Provides a way to display the API version information.
@@ -17,6 +67,11 @@ import TooltipWrapper from './TooltipWrapper';
 export const ApiVersionInfo = () => {
   const { getVersion } = useApiHealth();
   const [version, setVersion] = React.useState<IApiVersion>(null);
+
+  const apiDbCompatibility = React.useMemo(
+    () => parseApiDbCompatibility(import.meta.env.VITE_API_DB_VERSION_COMPATIBILITY),
+    [],
+  );
 
   useDeepCompareEffect(() => {
     let isActive = true;
@@ -50,7 +105,29 @@ export const ApiVersionInfo = () => {
   const frontEndDBVersion = findDBVersion(frontEndVersion);
 
   const apiVersionMismatch = version?.informationalVersion !== frontEndVersion;
-  const dbVersionMismatch = version?.dbVersion !== frontEndDBVersion;
+  const apiBuildVersion = getApiBuildVersion(version?.informationalVersion);
+  const dbVersionValueRaw = stringToNumberOrNull(version?.dbVersion);
+  const dbVersionValue = Number.isFinite(dbVersionValueRaw ?? NaN) ? dbVersionValueRaw : null;
+  const frontEndDbVersionValueRaw = stringToNumberOrNull(frontEndDBVersion);
+  const frontEndDbVersionValue = Number.isFinite(frontEndDbVersionValueRaw ?? NaN)
+    ? frontEndDbVersionValueRaw
+    : null;
+  const allowedDbVersions = new Set<number>();
+
+  if (frontEndDbVersionValue !== null) {
+    allowedDbVersions.add(frontEndDbVersionValue);
+  }
+
+  if (apiBuildVersion !== null) {
+    const match = apiDbCompatibility.find(entry => entry.apiVersion === apiBuildVersion);
+    match?.databaseVersions.forEach(dbVersion => allowedDbVersions.add(dbVersion));
+  }
+  console.debug(import.meta.env.VITE_API_DB_VERSION_COMPATIBILITY);
+
+  const dbVersionMismatch =
+    dbVersionValue === null || allowedDbVersions.size === 0
+      ? version?.dbVersion !== frontEndDBVersion
+      : !allowedDbVersions.has(dbVersionValue);
 
   const versionMismatchMsg = (apiMismatch: boolean, dbMismatch: boolean): string => {
     let msg = '';

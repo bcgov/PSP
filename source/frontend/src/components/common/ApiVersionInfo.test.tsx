@@ -18,6 +18,7 @@ const mockGetVersionApi = vi.fn();
 const mockGetLiveApi = vi.fn();
 const mockGetReady = vi.fn();
 const mockGetSystemCheckApi = vi.fn();
+const originalCompatibility = import.meta.env.VITE_API_DB_VERSION_COMPATIBILITY;
 
 vi.mock('@/hooks/pims-api/useApiHealth');
 vi.mocked(useApiHealth).mockReturnValue({
@@ -40,10 +41,12 @@ describe('ApiVersionInfo suite', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
+    import.meta.env.VITE_API_DB_VERSION_COMPATIBILITY = originalCompatibility;
   });
 
   beforeEach(() => {
     import.meta.env.VITE_PACKAGE_VERSION = '11.1.1-93.999';
+    import.meta.env.VITE_API_DB_VERSION_COMPATIBILITY = undefined;
     mockGetVersionApi.mockResolvedValue({ data: defaultVersion } as any);
   });
 
@@ -95,6 +98,39 @@ describe('ApiVersionInfo suite', () => {
 
     const element = queryByTestId(`version-mismatch-warning`);
     expect(element).toBeInTheDocument();
+    expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
+  });
+
+  it('Does not display version warning when DB version is compatible with API version', async () => {
+    import.meta.env.VITE_API_DB_VERSION_COMPATIBILITY = '{"93":[92,93]}';
+    mockGetVersionApi.mockResolvedValue({
+      data: { ...defaultVersion, dbVersion: '92.00' },
+    } as any);
+
+    const { queryByTestId } = setup();
+    await waitForEffects();
+
+    const element = queryByTestId(`version-mismatch-warning`);
+    expect(element).not.toBeInTheDocument();
+    expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
+  });
+
+  it('Does not display version warning for compatibility with informational build format', async () => {
+    import.meta.env.VITE_PACKAGE_VERSION = '5.16.0-116.23';
+    import.meta.env.VITE_API_DB_VERSION_COMPATIBILITY = '{"116":[114,116]}';
+    mockGetVersionApi.mockResolvedValue({
+      data: {
+        ...defaultVersion,
+        informationalVersion: '5.16.0-116.23',
+        dbVersion: '114.00',
+      },
+    } as any);
+
+    const { queryByTestId } = setup();
+    await waitForEffects();
+
+    const element = queryByTestId(`version-mismatch-warning`);
+    expect(element).not.toBeInTheDocument();
     expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
   });
 });
