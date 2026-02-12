@@ -4,6 +4,7 @@ import { FaEye, FaMinus, FaPlus, FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import AcquisitionIcon from '@/assets/images/acquisition-icon.svg?react';
+import AddToWorklistIcon from '@/assets/images/add-to-wl-icon.svg?react';
 import DispositionIcon from '@/assets/images/disposition-icon.svg?react';
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import ManagementIcon from '@/assets/images/management-icon.svg?react';
@@ -233,7 +234,7 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
     options.push({
       label: 'Add to Worklist',
       onClick: onAddToWorklist,
-      icon: <ResearchIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+      icon: <AddToWorklistIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
     });
 
     if (keycloak.hasClaim(Claims.RESEARCH_ADD)) {

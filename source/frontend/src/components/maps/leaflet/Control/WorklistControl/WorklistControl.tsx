@@ -1,7 +1,7 @@
 import React from 'react';
-import { FaListUl } from 'react-icons/fa';
 import styled from 'styled-components';
 
+import WorkListIcon from '@/assets/images/wl-icon.svg?react';
 import { Button } from '@/components/common/buttons/Button';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
@@ -48,8 +48,11 @@ const WorklistControl: React.FC<IWorklistControl> = ({
 
 export default WorklistControl;
 
-const WorklistIcon = styled(FaListUl)`
-  font-size: 3rem;
+const WorklistIcon = styled(WorkListIcon)`
+  width: 3rem;
+  height: 3rem;
+  display: block;
+  margin: auto;
 `;
 
 const BadgeWrapper = styled.div`
