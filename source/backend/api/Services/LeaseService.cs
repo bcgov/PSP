@@ -545,7 +545,7 @@ namespace Pims.Api.Services
                     {
                         throw new BusinessRuleViolationException("Exercised renewals must have a commencement date");
                     }
-                    else if (renewal.CommencementDt.HasValue && renewal.ExpiryDt.HasValue)
+                    else if (renewal.ExpiryDt.HasValue)
                     {
                         renewalDates.Add(new Tuple<long, DateTime, DateTime>(renewal.LeaseRenewalId, renewal.CommencementDt.Value, renewal.ExpiryDt.Value));
                     }
