@@ -225,7 +225,7 @@ class ManagementFile {
     );
     expect(fileNameColumn).toHaveText("File name");
 
-     await this.page
+    await this.page
       .getByTestId("sort-column-fileName")
       .waitFor({ status: "visible" });
     expect(this.page.getByTestId("sort-column-fileName")).toBeVisible();

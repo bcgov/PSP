@@ -271,7 +271,7 @@ class SearchProperties {
       "Lat/Long",
       "Survey Parcel",
       "Project",
-      "Legal Description"
+      "Legal Description",
     ]);
 
     const searchPIDText = await this.page.locator("#input-searchBy");
