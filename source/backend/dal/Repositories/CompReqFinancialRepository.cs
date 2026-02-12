@@ -66,7 +66,7 @@ namespace Pims.Dal.Repositories
             return query.AsNoTracking().ToList();
         }
 
-        public IEnumerable<PimsCompReqFinancial> SearchCompensationRequisitionFinancials(AcquisitionReportFilterModel filter, bool includeAcquisitions = true, bool includeLeases = true)
+        public IEnumerable<PimsCompReqFinancial> SearchCompensationRequisitionFinancials(AcquisitionReportFilterModel filter, HashSet<short> regions, long? contractorPersonId = null, bool includeAcquisitions = true, bool includeLeases = true)
         {
             using var scope = Logger.QueryScope();
 
@@ -94,6 +94,7 @@ namespace Pims.Dal.Repositories
                     .Include(f => f.CompensationRequisition)
                         .ThenInclude(cr => cr.AcquisitionFile)
                             .ThenInclude(a => a.Project)
+                                .ThenInclude(p => p.PimsProjectPeople)
                     .Include(f => f.CompensationRequisition)
                         .ThenInclude(cr => cr.AcquisitionFile)
                             .ThenInclude(a => a.Product);
@@ -104,7 +105,11 @@ namespace Pims.Dal.Repositories
                 query = query
                     .Include(f => f.CompensationRequisition)
                         .ThenInclude(cr => cr.Lease)
+                            .ThenInclude(l => l.PimsLeaseLicenseTeams)
+                    .Include(f => f.CompensationRequisition)
+                        .ThenInclude(cr => cr.Lease)
                             .ThenInclude(l => l.Project)
+                                .ThenInclude(p => p.PimsProjectPeople)
                     .Include(f => f.CompensationRequisition)
                         .ThenInclude(cr => cr.Lease)
                             .ThenInclude(l => l.Product);
@@ -119,17 +124,63 @@ namespace Pims.Dal.Repositories
                 projectBuilder.Or(f => !f.CompensationRequisition.AlternateProjectId.HasValue && f.CompensationRequisition.AcquisitionFile != null && f.CompensationRequisition.AcquisitionFile.ProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.AcquisitionFile.ProjectId.Value));
                 projectBuilder.Or(f => !f.CompensationRequisition.AlternateProjectId.HasValue && f.CompensationRequisition.Lease != null && f.CompensationRequisition.Lease.ProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.Lease.ProjectId.Value));
 
-                predicate.And(projectBuilder);
+                predicate = predicate.And(projectBuilder);
             }
 
-            if (includeAcquisitions && filter.AcquisitionTeamPersons != null && filter.AcquisitionTeamPersons.Any())
+            if (includeAcquisitions)
             {
-                predicate.And(f => f.CompensationRequisition.AcquisitionFile != null && f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId.HasValue && filter.AcquisitionTeamPersons.Contains((long)afp.PersonId)));
+                var acquisitionPredicate = PredicateBuilder.New<PimsCompReqFinancial>(p => true);
+                acquisitionPredicate = acquisitionPredicate.And(f => f.CompensationRequisition.AcquisitionFile != null);
+
+                // The system will only provide data that adheres to the user's "region limited data".
+                acquisitionPredicate = acquisitionPredicate.And(f => regions.Contains(f.CompensationRequisition.AcquisitionFile.RegionCode) || f.CompensationRequisition.AcquisitionFile.RegionCode == 4);
+
+                // If the user is a contractor, they should only see financials for acquisition files they are assigned to.
+                if (contractorPersonId is not null)
+                {
+                    acquisitionPredicate = acquisitionPredicate.And(f => f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId == contractorPersonId) ||
+                        (f.CompensationRequisition.AcquisitionFile.Project != null && f.CompensationRequisition.AcquisitionFile.Project.PimsProjectPeople.Any(pp => pp.PersonId == contractorPersonId)));
+                }
+
+                if (filter.AcquisitionTeamPersons is not null && filter.AcquisitionTeamPersons.Any())
+                {
+                    acquisitionPredicate = acquisitionPredicate.And(f => f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(afp => afp.PersonId != null && filter.AcquisitionTeamPersons.Contains(afp.PersonId.Value)));
+                }
+
+                if (filter.AcquisitionTeamOrganizations is not null && filter.AcquisitionTeamOrganizations.Any())
+                {
+                    acquisitionPredicate = acquisitionPredicate.And(f => f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(o => o.OrganizationId != null && filter.AcquisitionTeamOrganizations.Contains(o.OrganizationId.Value)));
+                }
+
+                predicate = predicate.And(acquisitionPredicate);
             }
 
-            if (includeAcquisitions && filter.AcquisitionTeamOrganizations != null && filter.AcquisitionTeamOrganizations.Any())
+            if (includeLeases)
             {
-                predicate.And(f => f.CompensationRequisition.AcquisitionFile != null && f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(o => o.OrganizationId.HasValue && filter.AcquisitionTeamOrganizations.Contains((long)o.OrganizationId)));
+                var leasePredicate = PredicateBuilder.New<PimsCompReqFinancial>(p => true);
+                leasePredicate = leasePredicate.And(f => f.CompensationRequisition.Lease != null);
+
+                // The system will only provide data that adheres to the user's "region limited data".
+                leasePredicate = leasePredicate.And(f => !f.CompensationRequisition.Lease.RegionCode.HasValue || regions.Contains(f.CompensationRequisition.Lease.RegionCode.Value));
+
+                // If the user is a contractor, they should only see financials for leases they are assigned to.
+                if (contractorPersonId is not null)
+                {
+                    leasePredicate = leasePredicate.And(f => f.CompensationRequisition.Lease.PimsLeaseLicenseTeams.Any(lt => lt.PersonId == contractorPersonId) ||
+                        (f.CompensationRequisition.Lease.Project != null && f.CompensationRequisition.Lease.Project.PimsProjectPeople.Any(pp => pp.PersonId == contractorPersonId)));
+                }
+
+                if (filter.AcquisitionTeamPersons is not null && filter.AcquisitionTeamPersons.Any())
+                {
+                    leasePredicate = leasePredicate.And(f => f.CompensationRequisition.Lease.PimsLeaseLicenseTeams.Any(lt => lt.PersonId != null && filter.AcquisitionTeamPersons.Contains(lt.PersonId.Value)));
+                }
+
+                if (filter.AcquisitionTeamOrganizations is not null && filter.AcquisitionTeamOrganizations.Any())
+                {
+                    leasePredicate = leasePredicate.And(f => f.CompensationRequisition.Lease.PimsLeaseLicenseTeams.Any(o => o.OrganizationId != null && filter.AcquisitionTeamOrganizations.Contains(o.OrganizationId.Value)));
+                }
+
+                predicate = predicate.And(leasePredicate);
             }
 
             return query.Where(predicate).ToList();
