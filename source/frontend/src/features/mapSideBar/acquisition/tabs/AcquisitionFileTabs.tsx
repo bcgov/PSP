@@ -8,6 +8,8 @@ import { NoteTypes } from '@/constants/noteTypes';
 import { FileTabs, FileTabType, TabFileView } from '@/features/mapSideBar/shared/detail/FileTabs';
 import NoteListContainer from '@/features/notes/list/NoteListContainer';
 import NoteListView from '@/features/notes/list/NoteListView';
+import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_CodeTypes_AcquisitionFileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionFileTypeTypes';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
@@ -56,6 +58,13 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   const activeTab = Object.values(FileTabType).find(value => value === tab) ?? defaultTab;
   const solverStatus = new AcquisitionFileStatusUpdateSolver(acquisitionFile.fileStatusTypeCode);
 
+  const acquisitionProvider = useAcquisitionProvider();
+  const agreementProvider = useAgreementProvider();
+
+  const getFile = acquisitionProvider.getAcquisitionFile;
+  const getAgreements = agreementProvider.getAcquisitionAgreements;
+  const deleteAgreement = agreementProvider.deleteAcquisitionAgreement;
+
   const setActiveTab = (tab: FileTabType) => {
     if (activeTab !== tab) {
       history.push(`${tab}`);
@@ -95,8 +104,11 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
       content: (
         <AgreementContainer
           fileId={acquisitionFile.id}
-          fileType="acquisition"
           View={AgreementView}
+          getFile={getFile}
+          getAgreements={getAgreements}
+          deleteAgreement={deleteAgreement}
+          statusSolver={solverStatus}
         />
       ),
       key: FileTabType.AGREEMENTS,
