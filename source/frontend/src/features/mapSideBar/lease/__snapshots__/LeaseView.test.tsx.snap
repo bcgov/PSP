@@ -1256,15 +1256,6 @@ exports[`LeaseView component > renders as expected 1`] = `
                   >
                     Payments
                   </a>
-                  <a
-                    aria-selected="false"
-                    class="nav-item nav-link"
-                    data-rb-event-key="surplusDeclaration"
-                    href="#"
-                    role="tab"
-                  >
-                    Surplus Declaration
-                  </a>
                 </nav>
                 <div
                   class="tab-content"
