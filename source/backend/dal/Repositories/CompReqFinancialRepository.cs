@@ -127,9 +127,9 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(projectBuilder);
             }
 
+            var acquisitionPredicate = PredicateBuilder.New<PimsCompReqFinancial>(p => true);
             if (includeAcquisitions)
             {
-                var acquisitionPredicate = PredicateBuilder.New<PimsCompReqFinancial>(p => true);
                 acquisitionPredicate = acquisitionPredicate.And(f => f.CompensationRequisition.AcquisitionFile != null);
 
                 // The system will only provide data that adheres to the user's "region limited data".
@@ -151,13 +151,11 @@ namespace Pims.Dal.Repositories
                 {
                     acquisitionPredicate = acquisitionPredicate.And(f => f.CompensationRequisition.AcquisitionFile.PimsAcquisitionFileTeams.Any(o => o.OrganizationId != null && filter.AcquisitionTeamOrganizations.Contains(o.OrganizationId.Value)));
                 }
-
-                predicate = predicate.And(acquisitionPredicate);
             }
 
+            var leasePredicate = PredicateBuilder.New<PimsCompReqFinancial>(p => true);
             if (includeLeases)
             {
-                var leasePredicate = PredicateBuilder.New<PimsCompReqFinancial>(p => true);
                 leasePredicate = leasePredicate.And(f => f.CompensationRequisition.Lease != null);
 
                 // The system will only provide data that adheres to the user's "region limited data".
@@ -179,10 +177,9 @@ namespace Pims.Dal.Repositories
                 {
                     leasePredicate = leasePredicate.And(f => f.CompensationRequisition.Lease.PimsLeaseLicenseTeams.Any(o => o.OrganizationId != null && filter.AcquisitionTeamOrganizations.Contains(o.OrganizationId.Value)));
                 }
-
-                predicate = predicate.And(leasePredicate);
             }
 
+            predicate = predicate.And(acquisitionPredicate.Or(leasePredicate));
             return query.Where(predicate).ToList();
         }
     }
