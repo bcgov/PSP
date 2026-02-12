@@ -454,8 +454,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.9,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_NATIVE_ZOOM,
   },
   {
     layerIdentifier: 'closedHighway',
@@ -464,8 +464,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.9,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_NATIVE_ZOOM,
   },
   {
     layerIdentifier: 'parentParcelAcquisition',
@@ -474,8 +474,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.8,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_NATIVE_ZOOM,
   },
   {
     layerIdentifier: 'section107Plan',
@@ -484,8 +484,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.8,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_NATIVE_ZOOM,
   },
   {
     layerIdentifier: 'motiPlan',
@@ -494,8 +494,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.8,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_NATIVE_ZOOM,
   },
   {
     layerIdentifier: 'motiPlanFootprint',
@@ -504,8 +504,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.8,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_NATIVE_ZOOM,
   },
   {
     layerIdentifier: 'plans',
@@ -514,8 +514,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.8,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_NATIVE_ZOOM,
   },
 ];
 
