@@ -8,6 +8,12 @@ Scenario: 01._Property_Information_Tab
 	When I update a Property details
 	Then A Property Information is saved successfully
 
+Scenario: 02._Property_Improvements_Tab
+	Given I review a Property's Information from row number 3
+	When I create Property Improvements
+	Then I update Property Improvements from row number 6
+	Then A Property Information is saved successfully
+
 Scenario: 02._Property_PIMS_Files_Tab
 	Given I search for a property in the inventory by PID from row number 24
 	When I verify the PIMS Files Tab

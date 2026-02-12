@@ -178,9 +178,16 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyDetailsMeasurementTypeLabel = By.XPath("//label[contains(text(),'Type')]");
         private readonly By propertyDetailsMeasurementTypeContent = By.XPath("//label[contains(text(),'Type')]/parent::div/following-sibling::div");
 
-        private readonly By propertyDetailsViewNotesTitle = By.XPath("//div[contains(text(),'Measurements')]/parent::div/parent::h2/parent::div/following-sibling::div/h2/div/div[contains(text(),'Comments')]");
-        private readonly By propertyDetailsEditNotesTitle = By.XPath("//h2/div/div[contains(text(),'Comments')]");
-        private readonly By propertyDetailsViewNotesContent = By.XPath("//div[contains(text(),'Comments')]/parent::div/parent::h2/following-sibling::div/p");
+        private readonly By propertyDetailsSurplusDeclarationSubtitle = By.XPath("//div[contains(text(),'Surplus Declaration')]");
+        private readonly By propertyDetailsSurplusDeclarationTypeLabel = By.XPath("//label[contains(text(),'Surplus declaration type')]");
+        private readonly By propertyDetailsSurplusDeclarationTypeSelect = By.Id("input-surplusDeclarationType");
+        private readonly By propertyDetailsSurplusDeclarationTypeContent = By.CssSelector("div[data-testid='surplusDeclarationType']");
+        private readonly By propertyDetailsSurplusDeclarationDateLabel = By.XPath("//label[contains(text(),'Surplus declaration date')]");
+        private readonly By propertyDetailsSurplusDeclarationDateInput = By.Id("datepicker-surplusDeclarationDate");
+        private readonly By propertyDetailsSurplusDeclarationDateContent = By.CssSelector("div[data-testid='surplusDeclarationDate']");
+        private readonly By propertyDetailsSurplusDeclarationCommentsLabel = By.XPath("//label[contains(text(),'Comment')]");
+        private readonly By propertyDetailsSurplusDeclarationCommentsInput = By.Id("input-suplusDelarationComment");
+        private readonly By propertyDetailsSurplusDeclarationCommentsContent = By.CssSelector("div[data-testid='surplusDeclarationComment'] label");
 
         private readonly By propertyDetailsSubdivisionTitle = By.XPath("//div[contains(text(),'Subdivision History')]");
         private readonly By propertyDetailsSubdivisionNoneContent = By.XPath("//div[contains(text(),'This property is not part of a subdivision')]");
@@ -489,9 +496,20 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
             }
 
+            //Delete Tenure cleanup previously selected if any
+            if (webDriver.FindElements(propertyDetailsTenureCleanupDeleteBttns).Count > 0)
+            {
+                FocusAndClick(propertyDetailsTenureCleanupLabel);
+                while (webDriver.FindElements(propertyDetailsTenureCleanupDeleteBttns).Count > 0)
+                {
+                    webDriver.FindElement(propertyDetailsTenureCleanupLabel).Click();
+                    webDriver.FindElements(propertyDetailsTenureCleanupDeleteBttns)[0].Click();
+                }
+                webDriver.FindElement(propertyDetailsTenureCleanupLabel).Click();
+            }
+
             if (property.TenureCleanup.First() != "")
             {
-                ClearMultiSelectInput(propertyDetailsTenureCleanupInput);
                 foreach (string status in property.TenureCleanup)
                 {
                     FocusAndClick(propertyDetailsTenureCleanupInput);
@@ -519,6 +537,22 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (property.VolumeType != "")
                 ChooseSpecificSelectOption(propertyDetailsVolTypeSelect, property.VolumeType);
+
+            //SURPLUS DECLARATION
+            if (property.SurplusDeclarationType != "")
+                ChooseSpecificSelectOption(propertyDetailsSurplusDeclarationTypeSelect, property.SurplusDeclarationType);
+
+            if (property.SurplusDeclarationDate != "")
+            {
+                ClearInput(propertyDetailsSurplusDeclarationDateInput);
+                webDriver.FindElement(propertyDetailsSurplusDeclarationDateInput).SendKeys(property.SurplusDeclarationDate);
+            }
+
+            if (property.SurplusDeclarationComment != "")
+            {
+                ClearInput(propertyDetailsSurplusDeclarationCommentsInput);
+                webDriver.FindElement(propertyDetailsSurplusDeclarationCommentsInput).SendKeys(property.SurplusDeclarationDate);
+            }
         }
 
         public void VerifyTitleTab()
@@ -698,6 +732,11 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(propertyDetailsAreaMtsCubeLabel);
                 AssertTrueIsDisplayed(propertyDetailsAreaFeetCubeLabel);
             }
+
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationSubtitle);
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationTypeLabel);
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationDateLabel);
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationCommentsLabel);
         }
 
         public void VerifyUpdatePropertyDetailsView(Property property)
@@ -793,16 +832,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(Enumerable.SequenceEqual(tenureStatusUI, property.TenureStatus));
             }
 
-            //AssertTrueIsDisplayed(propertyDetailsPublicHwyLabel);
-            //AssertTrueContentEquals(propertyDetailsPublicHwyDiv, property.ProvincialPublicHwy);
-
-            //if (webDriver.FindElements(propertyDetailsHighwayRoadEstablishLabel).Count() > 0)
-            //{
-            //    AssertTrueIsDisplayed(propertyDetailsHighwayRoadEstablishLabel);
-
-            //    var highwayEstablishedUI = GetViewFieldListContent(propertyDetailsHighwayRoadEstablishDiv);
-            //    Assert.True(Enumerable.SequenceEqual(highwayEstablishedUI, property.HighwayEstablishedBy));
-            //}
+            AssertTrueIsDisplayed(propertyDetailsTenureCleanupLabel);
+            if (property.TenureCleanup.First() != "")
+            {
+                var tenureCleanupUI = GetViewFieldListContent(propertyDetailsTenureCleanupDiv);
+                Assert.True(Enumerable.SequenceEqual(tenureCleanupUI, property.TenureCleanup));
+            }
 
             if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)
             {
@@ -844,6 +879,21 @@ namespace PIMS.Tests.Automation.PageObjects
             //CONSOLIDATION HISTORY
             AssertTrueIsDisplayed(propertyDetailsConsolidationTitle);
             AssertTrueIsDisplayed(propertyDetailsConsolidationNoneContent);
+
+            //SURPLUS DECLARATION
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationSubtitle);
+
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationTypeLabel);
+            if (property.SurplusDeclarationType != "")
+                AssertTrueContentEquals(propertyDetailsSurplusDeclarationTypeContent, property.SurplusDeclarationType);
+
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationDateLabel);
+            if (property.SurplusDeclarationDate != "")
+                AssertTrueContentEquals(propertyDetailsSurplusDeclarationDateContent, property.SurplusDeclarationDate);
+
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationCommentsLabel);
+            if (property.SurplusDeclarationComment != "")
+                AssertTrueContentEquals(propertyDetailsSurplusDeclarationCommentsContent, property.SurplusDeclarationComment);
         }
 
         public void VerifyPropertyDetailsEditForm()
@@ -883,14 +933,8 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(propertyDetailsTenureTitle);
             AssertTrueIsDisplayed(propertyDetailsTenureStatusLabel);
             AssertTrueIsDisplayed(propertyDetailsTenureStatusInput);
-            //AssertTrueIsDisplayed(propertyDetailsPublicHwyLabel);
-            //AssertTrueIsDisplayed(propertyDetailsProvPublicHwy);
-
-            //if (webDriver.FindElements(propertyDetailsHighwayRoadEstablishLabel).Count() > 0)
-            //{
-            //    AssertTrueIsDisplayed(propertyDetailsHighwayRoadEstablishLabel);
-            //    AssertTrueIsDisplayed(propertyDetailsRoadEstablishInput);
-            //}
+            AssertTrueIsDisplayed(propertyDetailsTenureCleanupLabel);
+            AssertTrueIsDisplayed(propertyDetailsTenureCleanupInput);
 
             if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)
             {
@@ -927,6 +971,14 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(propertyDetailsAreaFeetCubeLabel);
                 AssertTrueIsDisplayed(propertyDetailsVolCubeFeetInput);
             }
+
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationSubtitle);
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationTypeLabel);
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationTypeSelect);
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationDateLabel);
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationDateInput);
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationCommentsLabel);
+            AssertTrueIsDisplayed(propertyDetailsSurplusDeclarationCommentsInput);
         }
 
         public void VerifyNonInventoryPropertyTabs()

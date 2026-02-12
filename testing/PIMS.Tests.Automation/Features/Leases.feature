@@ -39,12 +39,6 @@ Scenario: 05-2._Lease_and_License_Tenants_Tab
 	And I update a Lease's Tenants from row number 7
 	Then A new lease is created successfully
 
-Scenario: 06._Lease_and_License_Improvements_Tab
-	Given I create a new minimum Lease from row number 23
-	When  I add Improvements to the Lease
-	And I update a Lease's Improvements from row number 24
-	Then A new lease is created successfully
-
 Scenario: 07._Lease_and_License_Insurance_Tab
 	Given I create a new minimum Lease from row number 25
 	When  I add Insurance to the Lease
