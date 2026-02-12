@@ -121,8 +121,14 @@ namespace Pims.Dal.Repositories
             {
                 var projectBuilder = PredicateBuilder.New<PimsCompReqFinancial>(p => false);
                 projectBuilder.Or(f => f.CompensationRequisition.AlternateProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.AlternateProjectId.Value));
-                projectBuilder.Or(f => !f.CompensationRequisition.AlternateProjectId.HasValue && f.CompensationRequisition.AcquisitionFile != null && f.CompensationRequisition.AcquisitionFile.ProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.AcquisitionFile.ProjectId.Value));
-                projectBuilder.Or(f => !f.CompensationRequisition.AlternateProjectId.HasValue && f.CompensationRequisition.Lease != null && f.CompensationRequisition.Lease.ProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.Lease.ProjectId.Value));
+                if (includeAcquisitions)
+                {
+                    projectBuilder.Or(f => !f.CompensationRequisition.AlternateProjectId.HasValue && f.CompensationRequisition.AcquisitionFile != null && f.CompensationRequisition.AcquisitionFile.ProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.AcquisitionFile.ProjectId.Value));
+                }
+                if (includeLeases)
+                {
+                    projectBuilder.Or(f => !f.CompensationRequisition.AlternateProjectId.HasValue && f.CompensationRequisition.Lease != null && f.CompensationRequisition.Lease.ProjectId.HasValue && filter.Projects.Contains(f.CompensationRequisition.Lease.ProjectId.Value));
+                }
 
                 predicate = predicate.And(projectBuilder);
             }
