@@ -10,7 +10,6 @@ export const useConfiguredMapLayers = () => {
   const { tenant } = useContext(TenantContext);
 
   const layerConfiguration = tenant.layers;
-  console.log(layerDefinitions);
 
   const layers = useMemo<LayerDefinition[]>(() => {
     return layerDefinitions.map<LayerDefinition>(ld => {
