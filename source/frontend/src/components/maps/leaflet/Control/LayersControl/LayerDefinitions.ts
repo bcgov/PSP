@@ -455,7 +455,7 @@ export const layerDefinitions: LayerDefinition[] = [
     format: 'image/png',
     authenticated: true,
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
-    maxZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
   {
     layerIdentifier: 'closedHighway',
@@ -465,7 +465,7 @@ export const layerDefinitions: LayerDefinition[] = [
     format: 'image/png',
     authenticated: true,
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
-    maxZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
   {
     layerIdentifier: 'parentParcelAcquisition',
@@ -475,7 +475,7 @@ export const layerDefinitions: LayerDefinition[] = [
     format: 'image/png',
     authenticated: true,
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
-    maxZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
   {
     layerIdentifier: 'section107Plan',
@@ -485,7 +485,7 @@ export const layerDefinitions: LayerDefinition[] = [
     format: 'image/png',
     authenticated: true,
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
-    maxZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
   {
     layerIdentifier: 'motiPlan',
@@ -495,7 +495,7 @@ export const layerDefinitions: LayerDefinition[] = [
     format: 'image/png',
     authenticated: true,
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
-    maxZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
   {
     layerIdentifier: 'motiPlanFootprint',
@@ -505,7 +505,7 @@ export const layerDefinitions: LayerDefinition[] = [
     format: 'image/png',
     authenticated: true,
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
-    maxZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
   {
     layerIdentifier: 'plans',
@@ -515,7 +515,7 @@ export const layerDefinitions: LayerDefinition[] = [
     format: 'image/png',
     authenticated: true,
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
-    maxZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
 ];
 
