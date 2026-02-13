@@ -323,30 +323,31 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
                             }}
                           ></Form.Check>
                           <Form.Label className="form-check-label" htmlFor="input-radio-district">
-                          District
-                        </Form.Label>
-                      </InlineFlexDiv>
-                      <InlineFlexDiv>
-                        <Form.Check
-                          id="input-radio-district-lot"
-                          name="radio-district-lot"
-                          type="radio"
-                          value="district-lot"
-                          checked={selectedSurveyParcelSearch === 'district-lot'}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            setSelectedSurveyParcelSearch(
-                              e.target.value.toString() as SurveyParcelOptions,
-                            );
-                            setFieldValue('section', null);
-                            setFieldValue('township', null);
-                            setFieldValue('range', null);
-                            setFieldValue('districtLot', '');
-                          }}
-                        ></Form.Check>
-                        <Form.Label className="form-check-label" htmlFor="input-radio-district-lot">
-                          District Lot
+                            District
+                          </Form.Label>
+                        </InlineFlexDiv>
+                        <InlineFlexDiv>
+                          <Form.Check
+                            id="input-radio-district-lot"
+                            name="radio-district-lot"
+                            type="radio"
+                            value="district-lot"
+                            checked={selectedSurveyParcelSearch === 'district-lot'}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                              setSelectedSurveyParcelSearch(
+                                e.target.value.toString() as SurveyParcelOptions,
+                              );
+                              setFieldValue('section', null);
+                              setFieldValue('township', null);
+                              setFieldValue('range', null);
+                              setFieldValue('districtLot', '');
+                            }}
+                          ></Form.Check>
+                          <Form.Label
+                            className="form-check-label"
                             htmlFor="input-radio-district-lot"
                           >
+                            District Lot
                           </Form.Label>
                         </InlineFlexDiv>
                       </div>
