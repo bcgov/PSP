@@ -1,16 +1,14 @@
 import { createMemoryHistory } from 'history';
 import { RenderOptions, act, render } from '@/utils/test-utils';
-import AddAcquisitionAgreementContainer, {
+import AddAgreementContainer, {
   IAddAcquisitionAgreementContainerProps,
-} from './AddAcquisitionAgreementContainer';
+} from './AddAgreementContainer';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { IUpdateAcquisitionAgreementFormProps } from '../common/UpdateAcquisitionAgreementForm';
+import { IUpdateAgreementFormProps } from '../common/UpdateAgreementForm';
 import { Claims } from '@/constants/claims';
 import { mockAgreementResponseApi } from '@/mocks/agreements.mock';
-import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
-import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
-import { FormikHelpers } from 'formik';
+import { AgreementFormModel } from '../models/AgreementFormModel';
 
 const history = createMemoryHistory();
 const mockPostApi = {
@@ -21,8 +19,8 @@ const mockPostApi = {
 };
 const onSuccess = vi.fn();
 
-let viewProps: IUpdateAcquisitionAgreementFormProps | undefined;
-const TestView: React.FC<IUpdateAcquisitionAgreementFormProps> = props => {
+let viewProps: IUpdateAgreementFormProps | undefined;
+const TestView: React.FC<IUpdateAgreementFormProps> = props => {
   viewProps = props;
   return <span>Content Rendered</span>;
 };
@@ -31,6 +29,7 @@ vi.mock('@/hooks/repositories/useAgreementProvider', () => ({
   useAgreementProvider: () => {
     return {
       addAcquisitionAgreement: mockPostApi,
+      addDispositionAgreement: mockPostApi,
     };
   },
 }));
@@ -42,9 +41,10 @@ describe('Add Disposition Offer Container component', () => {
     } = {},
   ) => {
     const component = render(
-      <AddAcquisitionAgreementContainer
+      <AddAgreementContainer
         acquisitionFileId={1}
         View={TestView}
+        fileType='acquisition'
         onSuccess={onSuccess}
       />,
       {
@@ -77,7 +77,7 @@ describe('Add Disposition Offer Container component', () => {
     await setup({ props: { acquisitionFileId: 1 } });
 
     expect(viewProps?.initialValues?.agreementId).toBe(0);
-    expect(viewProps?.initialValues?.acquisitionFileId).toBe(1);
+    expect(viewProps?.initialValues?.fileId).toBe(1);
     expect(viewProps?.initialValues?.agreementStatusTypeCode).toBe('DRAFT');
     expect(viewProps?.initialValues?.agreementTypeCode).toBe(null);
     expect(viewProps?.initialValues?.agreementDate).toBe(null);
@@ -90,7 +90,7 @@ describe('Add Disposition Offer Container component', () => {
     const agreementMock = mockAgreementResponseApi(1);
     mockPostApi.execute.mockReturnValue(agreementMock);
 
-    const agreementFormModel = new AcquisitionAgreementFormModel(1);
+    const agreementFormModel = new AgreementFormModel(1);
     agreementFormModel.agreementTypeCode = 'H0074';
     await act(async () => {
       return viewProps?.onSubmit(agreementFormModel, { setSubmitting: vi.fn() } as any);
@@ -100,7 +100,7 @@ describe('Add Disposition Offer Container component', () => {
       1,
       expect.objectContaining({
         agreementId: 0,
-        acquisitionFileId: 1,
+        fileId: 1,
         agreementType: { description: null, displayOrder: null, id: 'H0074', isDisabled: false },
         agreementDate: null,
         agreementStatusType: {

@@ -9,11 +9,11 @@ import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_C
 import { exists, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
+import AddAgreementContainer from '../../shared/agreement/add/AddAgreementContainer';
+import UpdateAgreementForm from '../../shared/agreement/common/UpdateAgreementForm';
+import UpdateAgreementContainer from '../../shared/agreement/update/UpdateAgreementContainer';
 import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
 import { AcquisitionFileTabs } from '../tabs/AcquisitionFileTabs';
-import AddAcquisitionAgreementContainer from '../tabs/agreement/add/AddAcquisitionAgreementContainer';
-import UpdateAcquisitionAgreementForm from '../tabs/agreement/common/UpdateAcquisitionAgreementForm';
-import UpdateAcquisitionAgreementContainer from '../tabs/agreement/update/UpdateAcquisitionAgreementContainer';
 import { UpdateAcquisitionChecklistContainer } from '../tabs/checklist/update/UpdateAcquisitionChecklistContainer';
 import AddForm8Container from '../tabs/expropriation/form8/add/AddForm8Container';
 import { UpdateForm8Container } from '../tabs/expropriation/form8/update/UpdateForm8Container';
@@ -91,10 +91,11 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
           path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/add`}
           customRender={() =>
             props.acquisitionFile?.id ? (
-              <AddAcquisitionAgreementContainer
+              <AddAgreementContainer
                 acquisitionFileId={props.acquisitionFile?.id}
-                View={UpdateAcquisitionAgreementForm}
+                View={UpdateAgreementForm}
                 onSuccess={props.onSuccess}
+                fileType="acquisition"
               />
             ) : null
           }
@@ -106,10 +107,11 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
           path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/:agreementId/update`}
           customRender={({ match }) =>
             props.acquisitionFile?.id ? (
-              <UpdateAcquisitionAgreementContainer
-                acquisitionFileId={props.acquisitionFile?.id}
+              <UpdateAgreementContainer
+                fileId={props.acquisitionFile?.id}
                 agreementId={match.params.agreementId}
-                View={UpdateAcquisitionAgreementForm}
+                fileType="acquisition"
+                View={UpdateAgreementForm}
                 onSuccess={props.onSuccess}
               />
             ) : null

@@ -1154,6 +1154,15 @@ exports[`DispositionView component > renders as expected 1`] = `
                   <a
                     aria-selected="false"
                     class="nav-item nav-link"
+                    data-rb-event-key="agreements"
+                    href="#"
+                    role="tab"
+                  >
+                    Agreements
+                  </a>
+                  <a
+                    aria-selected="false"
+                    class="nav-item nav-link"
                     data-rb-event-key="improvements"
                     href="#"
                     role="tab"

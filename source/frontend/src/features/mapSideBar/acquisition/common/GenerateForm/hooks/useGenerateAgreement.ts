@@ -25,8 +25,8 @@ export const useGenerateAgreement = () => {
     if (!exists(agreement?.agreementType?.id)) {
       throw Error('user must choose agreement type in order to generate a document');
     }
-    const file = await getAcquisitionFile.execute(agreement.acquisitionFileId);
-    const properties = await getAcquisitionProperties.execute(agreement.acquisitionFileId);
+    const file = await getAcquisitionFile.execute(agreement.fileId);
+    const properties = await getAcquisitionProperties.execute(agreement.fileId);
 
     if (!file) {
       throw Error('Acquisition file not found');
