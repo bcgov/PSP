@@ -219,8 +219,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.8,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
   {
     layerIdentifier: 'firstNationsReserves',
