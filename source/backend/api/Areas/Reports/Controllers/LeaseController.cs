@@ -181,7 +181,8 @@ namespace Pims.Api.Areas.Reports.Controllers
             }
 
             IEnumerable<PimsLeasePayment> paymentsForFiscal = _leaseReportService.GetLeasePaymentsReport(fiscalYearStart);
-            var paymentItems = _mapper.Map<IEnumerable<LeasePaymentReportModel>>(paymentsForFiscal.OrderBy(p => p?.LeasePeriod?.Lease?.RegionCode).ThenBy(p => p?.LeasePeriod?.Lease?.LFileNo).ThenByDescending(p => p.PaymentReceivedDate));
+            var sortedPayments = paymentsForFiscal.OrderBy(p => p?.LeasePeriod?.Lease?.RegionCode).ThenBy(p => p?.LeasePeriod?.Lease?.LFileNo).ThenByDescending(p => p.PaymentReceivedDate).ToList();
+            var paymentItems = sortedPayments.Select(p => LeasePaymentReportModel.MapFrom(p)).ToList();
 
             return acceptHeader.ToString() switch
             {

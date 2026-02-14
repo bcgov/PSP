@@ -46,6 +46,7 @@ namespace Pims.Dal.Repositories
         {
             var query = Context.PimsLeasePayments.AsSplitQuery().AsNoTracking()
                 .Include(p => p.LeasePaymentCategoryTypeCodeNavigation)
+                .Include(p => p.LeasePaymentStatusTypeCodeNavigation)
                 .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.LeasePeriodStatusTypeCodeNavigation)
                 .Include(p => p.LeasePeriod)
