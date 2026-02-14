@@ -62,6 +62,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   const agreementProvider = useAgreementProvider();
 
   const getFile = acquisitionProvider.getAcquisitionFile;
+  const getProperties = acquisitionProvider.getAcquisitionProperties;
   const getAgreements = agreementProvider.getAcquisitionAgreements;
   const deleteAgreement = agreementProvider.deleteAcquisitionAgreement;
 
@@ -107,6 +108,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           View={AgreementView}
           getFile={getFile}
           getAgreements={getAgreements}
+          getProperties={getProperties}
           deleteAgreement={deleteAgreement}
           statusSolver={solverStatus}
         />

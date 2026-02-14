@@ -287,7 +287,7 @@ export const ExpropriationTabContainerView: React.FunctionComponent<
           header={
             <SectionListHeader
               claims={[Claims.ACQUISITION_VIEW]}
-              title="Form 6 - Cancellation of Expropriation"
+              title="Form 6 - Cancellation of Expropriation Notice"
               addButtonText="Generate Form 6"
               addButtonIcon={<FaFileContract size={'2rem'} />}
               onButtonAction={onGenerateForm6Click}

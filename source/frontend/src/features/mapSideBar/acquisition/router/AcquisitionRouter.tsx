@@ -36,13 +36,10 @@ export interface IAcquisitionRouterProps {
 
 export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
   const { path, url } = useRouteMatch();
+  const agreementProvider = useAgreementProvider();
 
-  const {
-    addAcquisitionAgreement: {
-      execute: postAcquisitionAgreement,
-      loading: loadingAcquisitionAgreement,
-    },
-  } = useAgreementProvider();
+  const { execute: postAcquisitionAgreement, loading: loadingAcquisitionAgreement } =
+    agreementProvider.addAcquisitionAgreement;
 
   if (!exists(props.acquisitionFile)) {
     return null;
@@ -123,6 +120,10 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
                 fileType="acquisition"
                 View={UpdateAgreementForm}
                 onSuccess={props.onSuccess}
+                updateAgreement={agreementProvider.updateAcquisitionAgreement.execute}
+                updatingAgreement={agreementProvider.updateAcquisitionAgreement.loading}
+                getAgreement={agreementProvider.getAcquisitionAgreementById.execute}
+                fetchingAgreement={agreementProvider.getAcquisitionAgreementById.loading}
               />
             ) : null
           }

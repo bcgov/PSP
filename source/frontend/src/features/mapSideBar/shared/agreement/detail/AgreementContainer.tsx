@@ -18,6 +18,9 @@ export interface IAgreementContainerProps {
   getFile:
     | ReturnType<typeof useAcquisitionProvider>['getAcquisitionFile']
     | ReturnType<typeof useDispositionProvider>['getDispositionFile'];
+  getProperties:
+    | ReturnType<typeof useAcquisitionProvider>['getAcquisitionProperties']
+    | ReturnType<typeof useDispositionProvider>['getDispositionProperties'];
   getAgreements:
     | ReturnType<typeof useAgreementProvider>['getAcquisitionAgreements']
     | ReturnType<typeof useAgreementProvider>['getDispositionFileAgreements'];
@@ -29,11 +32,11 @@ export interface IAgreementContainerProps {
 
 export const AgreementContainer: React.FunctionComponent<
   React.PropsWithChildren<IAgreementContainerProps>
-> = ({ fileId, View, getFile, getAgreements, deleteAgreement, statusSolver }) => {
+> = ({ fileId, View, getFile, getAgreements, getProperties, deleteAgreement, statusSolver }) => {
   const [agreements, setAgreements] = useState<ApiGen_Concepts_Agreement[]>([]);
   const { setStaleLastUpdatedBy } = useContext(SideBarContext);
 
-  const generateAgreement = useGenerateAgreement();
+  const generateAgreement = useGenerateAgreement(getFile, getProperties);
   const { execute: getFileExecute, loading: loadingFile } = getFile;
   const { execute: getAgreementsExecute, loading: loadingAgreements } = getAgreements;
   const { execute: deleteAgreementExecute, loading: deletingAgreement } = deleteAgreement;

@@ -38,12 +38,10 @@ export interface IDispositionRouterProps {
 
 export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
   const { path, url } = useRouteMatch();
-  const {
-    addDispositionAgreement: {
-      execute: postDispositionAgreement,
-      loading: loadingDispositionAgreement,
-    },
-  } = useAgreementProvider();
+  const agreementProvider = useAgreementProvider();
+
+  const { execute: postDispositionAgreement, loading: loadingDispositionAgreement } =
+    agreementProvider.addDispositionAgreement;
 
   if (!exists(props.dispositionFile)) {
     return null;
@@ -116,6 +114,10 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
                 fileType="disposition"
                 View={UpdateAgreementForm}
                 onSuccess={props.onSuccess}
+                updateAgreement={agreementProvider.updateDispositionAgreement.execute}
+                updatingAgreement={agreementProvider.updateDispositionAgreement.loading}
+                getAgreement={agreementProvider.getDispositionAgreementById.execute}
+                fetchingAgreement={agreementProvider.getDispositionAgreementById.loading}
               />
             ) : null
           }

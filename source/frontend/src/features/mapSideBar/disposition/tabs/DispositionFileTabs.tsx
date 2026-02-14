@@ -50,6 +50,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
   const dispositionProvider = useDispositionProvider();
 
   const getFile = dispositionProvider.getDispositionFile;
+  const getProperties = dispositionProvider.getDispositionProperties;
   const getAgreements = agreementProvider.getDispositionFileAgreements;
   const deleteAgreement = agreementProvider.deleteDispositionAgreement;
 
@@ -93,6 +94,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
         View={AgreementView}
         getFile={getFile}
         getAgreements={getAgreements}
+        getProperties={getProperties}
         deleteAgreement={deleteAgreement}
         statusSolver={statusSolver}
       />

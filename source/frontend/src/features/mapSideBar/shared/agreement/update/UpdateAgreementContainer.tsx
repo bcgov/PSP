@@ -4,7 +4,6 @@ import { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
-import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 
@@ -17,37 +16,31 @@ export interface IUpdateAcquisitionAgreementContainerProps {
   fileType: 'acquisition' | 'disposition';
   View: React.FC<IUpdateAgreementFormProps>;
   onSuccess: () => void;
+  updateAgreement: (fileId: number, agreementId: number, agreement: any) => Promise<any>;
+  getAgreement: (fileId: number, agreementId: number) => Promise<any>;
+  fetchingAgreement: boolean;
+  updatingAgreement: boolean;
 }
 
 const UpdateAgreementContainer: React.FunctionComponent<
   React.PropsWithChildren<IUpdateAcquisitionAgreementContainerProps>
-> = ({ fileId, agreementId, fileType, View, onSuccess }) => {
+> = ({
+  fileId,
+  agreementId,
+  fileType,
+  View,
+  onSuccess,
+  updateAgreement,
+  getAgreement,
+  fetchingAgreement,
+  updatingAgreement,
+}) => {
   const history = useHistory();
   const location = useLocation();
   const { setModalContent, setDisplayModal } = useModalContext();
   const [initialValues, setInitialValues] = useState<AgreementFormModel | null>(null);
 
   const backUrl = location.pathname.split(`/${agreementId}/update`)[0];
-
-  const agreementProvider = useAgreementProvider();
-
-  // Select correct hooks based on fileType
-  const updateAgreement =
-    fileType === 'acquisition'
-      ? agreementProvider.updateAcquisitionAgreement.execute
-      : agreementProvider.updateDispositionAgreement.execute;
-  const getAgreement =
-    fileType === 'acquisition'
-      ? agreementProvider.getAcquisitionAgreementById.execute
-      : agreementProvider.getDispositionAgreementById.execute;
-  const updatingAgreement =
-    fileType === 'acquisition'
-      ? agreementProvider.updateAcquisitionAgreement.loading
-      : agreementProvider.updateDispositionAgreement.loading;
-  const fetchingAgreement =
-    fileType === 'acquisition'
-      ? agreementProvider.getAcquisitionAgreementById.loading
-      : agreementProvider.getDispositionAgreementById.loading;
 
   const handleSuccess = async () => {
     onSuccess();
