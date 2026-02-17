@@ -49,6 +49,12 @@ namespace Pims.Dal.Entities.Models
         [DisplayName("Acquisition Type")]
         public string FileAcquisitionType { get; set; }
 
+        [DisplayName("NOC Received Date")]
+        public string NOCReceivedDate { get; set; }
+
+        [DisplayName("NOC Comment")]
+        public string NOCComment { get; set; }
+
         [DisplayName("Acquisition Team")]
         public string FileAcquisitionTeam { get; set; }
 
