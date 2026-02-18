@@ -5,21 +5,25 @@ import { Col, Row } from 'react-bootstrap';
 import { FaWindowClose } from 'react-icons/fa';
 import styled from 'styled-components';
 
+import AddAllWorklistIcon from '@/assets/images/add-all-wl-icon.svg?react';
+import AddToWorklistIcon from '@/assets/images/add-to-wl-icon.svg?react';
 import { LinkButton, StyledIconButton } from '@/components/common/buttons';
-import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import {
-  LocationFeatureDataset,
-  WorklistLocationFeatureDataset,
-} from '@/components/common/mapFSM/useLocationFeatureLoader';
+import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { StyledScrollable } from '@/features/documents/commonStyles';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import { exists, firstOrNull } from '@/utils';
+import { exists } from '@/utils';
 import { isStrataCommonProperty, pidFormatter } from '@/utils/propertyUtils';
 
 export interface IMultiplePropertyPopupView {
   featureDataset: LocationFeatureDataset | null;
   onSelectProperty: (feature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>) => void;
+  onAddPropertyToWorklist: (
+    feature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>,
+    featureDataset: LocationFeatureDataset,
+  ) => void;
+  onAddAllToWorklist: (featureDataset: LocationFeatureDataset) => void;
+  onClose: (event: React.MouseEvent<HTMLElement, MouseEvent>) => void;
 }
 
 interface PropertyProjection {
@@ -32,14 +36,13 @@ interface PropertyProjection {
 
 export const MultiplePropertyPopupView: React.FC<
   React.PropsWithChildren<IMultiplePropertyPopupView>
-> = ({ featureDataset, onSelectProperty }) => {
-  const mapMachine = useMapStateMachine();
-
-  const onCloseButtonPressed = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
-    event.stopPropagation();
-    mapMachine.closePopup();
-  };
-
+> = ({
+  featureDataset,
+  onSelectProperty,
+  onAddPropertyToWorklist,
+  onAddAllToWorklist,
+  onClose,
+}) => {
   const handlePropertySelect = (index: number) => {
     const selectedProperty = propertyProjections[index];
     if (exists(selectedProperty?.feature)) {
@@ -47,18 +50,11 @@ export const MultiplePropertyPopupView: React.FC<
     }
   };
 
-  const onAddAllToWorklist = () => {
-    const worklistDataSet: WorklistLocationFeatureDataset = {
-      fullyAttributedFeatures: {
-        features: featureDataset.parcelFeatures,
-        type: 'FeatureCollection',
-      },
-      pimsFeature: firstOrNull(featureDataset.pimsFeatures),
-      regionFeature: featureDataset.regionFeature,
-      districtFeature: featureDataset.districtFeature,
-      location: featureDataset.location,
-    };
-    mapMachine.worklistAdd(worklistDataSet);
+  const handlePropertyAddToWorklist = (index: number) => {
+    const selectedProperty = propertyProjections[index];
+    if (exists(selectedProperty?.feature)) {
+      onAddPropertyToWorklist(selectedProperty.feature, featureDataset);
+    }
   };
 
   const groupedFeatures = chain(featureDataset?.parcelFeatures)
@@ -86,7 +82,7 @@ export const MultiplePropertyPopupView: React.FC<
   return (
     <StyledContainer>
       <TooltipWrapper tooltipId="close-sidebar-tooltip" tooltip="Close Form">
-        <StyledCloseButton title="close" onClick={onCloseButtonPressed}>
+        <StyledCloseButton title="close" onClick={onClose}>
           <CloseIcon />
         </StyledCloseButton>
       </TooltipWrapper>
@@ -94,21 +90,41 @@ export const MultiplePropertyPopupView: React.FC<
       <StyledDivider />
       <StyledScrollable className="pb-4">
         {propertyProjections.map((property, index) => (
-          <StyledRow
-            key={`feature-${property.pid}-${index}`}
-            onClick={(e: Event) => {
-              e.stopPropagation();
-              handlePropertySelect(index);
-            }}
-            index={index}
-          >
-            {property.isStrataLot && <Col>Common Property ({property.plan})</Col>}
-            {property.pid && <Col>PID: {pidFormatter(property.pid)} </Col>}
-            {property.pin && <Col>PIN: {property.pin} </Col>}
+          <StyledRow key={`feature-${property.pid}-${index}`}>
+            <StyledPropIdentifierCol
+              xs={10}
+              onClick={(e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+                e.stopPropagation();
+                handlePropertySelect(index);
+              }}
+            >
+              {property.isStrataLot && <>Common Property ({property.plan})</>}
+              {property.pid && <>PID: {pidFormatter(property.pid)} </>}
+              {property.pin && <>PIN: {property.pin} </>}
+            </StyledPropIdentifierCol>
+            <StyledButtonCol xs={2}>
+              <ButtonContainer>
+                <StyledIconButton
+                  title="Add to working list"
+                  onClick={(e: React.MouseEvent<HTMLElement, MouseEvent>) => {
+                    e.stopPropagation();
+                    handlePropertyAddToWorklist(index);
+                  }}
+                >
+                  <AddToWorklistIcon width="1.5rem" height="1.5rem" fill="currentColor" />
+                </StyledIconButton>
+              </ButtonContainer>
+            </StyledButtonCol>
           </StyledRow>
         ))}
       </StyledScrollable>
-      <LinkButton onClick={onAddAllToWorklist}>+ Add all to worklist</LinkButton>
+      <StyledLinkButton
+        onClick={() => onAddAllToWorklist(featureDataset)}
+        disabled={propertyProjections.length === 0}
+      >
+        <AddAllWorklistIcon width={24} height={24} />
+        <span>Add all to working list</span>
+      </StyledLinkButton>
     </StyledContainer>
   );
 };
@@ -130,6 +146,7 @@ const StyledContainer = styled.div`
   min-width: 30rem;
   padding-left: 1.6rem;
   padding-right: 1.6rem;
+  padding-bottom: 1rem;
   margin: 0rem;
 `;
 
@@ -147,17 +164,61 @@ const StyledDivider = styled.div`
   border-bottom-width: 0.1rem;
 `;
 
-const StyledRow = styled(Row)<{ index: number }>`
-  color: rgb(1, 51, 102);
+const StyledRow = styled(Row)`
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
   font-weight: bold;
-  padding-top: 0.8rem;
-  cursor: pointer;
-  background-color: ${p => (p.index % 2 === 0 ? '#f5f6f8' : 'none')};
-
-  padding: 0.8rem;
+  padding-top: 0;
+  padding-bottom: 0;
+  background-color: none;
+  min-height: 3.6rem;
 
   &:hover {
-    color: var(--surface-color-primary-button-hover);
-    text-decoration: underline;
+    background-color: ${props => props.theme.css.pimsBlue10 + '38'};
+  }
+`;
+
+const StyledPropIdentifierCol = styled(Col)`
+  display: flex;
+  justify-content: flex-start;
+  padding-right: 0;
+  color: ${props => props.theme.css.pimsBlue200};
+  font-weight: bold;
+  cursor: pointer;
+`;
+
+const StyledButtonCol = styled(Col)`
+  flex: 0 0 10rem;
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.5rem;
+  padding-right: 2rem;
+`;
+
+const ButtonContainer = styled.div`
+  display: none;
+  gap: 0.5rem;
+  align-items: center;
+
+  ${StyledRow}:hover & {
+    display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    justify-content: flex-end;
+  }
+`;
+
+const StyledLinkButton = styled(LinkButton)`
+  &&.btn {
+    text-decoration: none;
+
+    .Button__value {
+      display: flex;
+      align-items: center;
+      gap: 0.8rem;
+      font-weight: bold;
+      font-size: 1.4rem;
+    }
   }
 `;
