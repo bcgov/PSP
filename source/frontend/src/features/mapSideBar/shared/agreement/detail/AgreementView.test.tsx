@@ -5,7 +5,6 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 import AgreementView, { IAgreementViewProps } from './AgreementView';
 
-
 // mock auth library
 
 const mockViewProps: IAgreementViewProps = {
