@@ -84,6 +84,17 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsViewTerminateReason = By.XPath("//label[contains(text(),'Termination reason')]/parent::div/following-sibling::div");
         private readonly By licenseDetailsViewCancelReason = By.XPath("//label[contains(text(),'Cancellation reason')]/parent::div/following-sibling::div");
 
+        //Create/View Progress Statuses
+        private readonly By licenseDetailsProgressSubtitle = By.XPath("//h2/div/div[contains(text(),'Progress Statuses')]");
+
+        private readonly By licenseDetailsProgressAppraisalLabel = By.XPath("//label[contains(text(),'Appraisal')]");
+        private readonly By licenseDetailsProgressAppraisalSelector = By.Id("input-appraisalStatusType");
+        private readonly By licenseDetailsProgressAppraisalContent = By.XPath("//label[contains(text(),'Appraisal')]/parent::div/following-sibling::div");
+
+        private readonly By licenseDetailsProgressLegalSurveyLabel = By.XPath("//label[contains(text(),'Legal survey')]");
+        private readonly By licenseDetailsProgressLegalSurveySelector = By.Id("input-legalSurveyStatusType");
+        private readonly By licenseDetailsProgressLegalSurveyContent = By.XPath("//label[contains(text(),'Legal survey')]/parent::div/following-sibling::div");
+
         //Create/View Renewal Options Elements
         private readonly By licenseDetailsRenewalTitle = By.XPath("//h2/div/div[contains(text(),'Renewal Option')]");
         private readonly By licenseDetailsAddRenewButton = By.XPath("//div[contains(text(),'+ Add a Renewal')]/parent::button");
@@ -407,6 +418,22 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearInput(licenseDetailsCancelReasonInput);
                 webDriver.FindElement(licenseDetailsCancelReasonInput).Click();
                 webDriver.FindElement(licenseDetailsCancelReasonInput).SendKeys(lease.LeaseCancellationReason);
+            }
+
+            //PROGRESS STATUSES
+            if (lease.AccountType != "Receivable")
+            {
+                AssertTrueIsDisplayed(licenseDetailsProgressSubtitle);
+
+                //Appraisal
+                AssertTrueIsDisplayed(licenseDetailsProgressAppraisalLabel);
+                if (lease.LeaseProgressAppraisal != "")
+                    ChooseSpecificSelectOption(licenseDetailsProgressAppraisalSelector, lease.LeaseProgressAppraisal);
+
+                //Legal Survey
+                AssertTrueIsDisplayed(licenseDetailsProgressLegalSurveyLabel);
+                if (lease.LeaseProgressLegalSurvey != "")
+                    ChooseSpecificSelectOption(licenseDetailsProgressLegalSurveySelector, lease.LeaseProgressLegalSurvey);
             }
 
             //RENEWAL OPTIONS
@@ -905,6 +932,20 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(licenseDetailsCancelReasonLabel);
                 AssertTrueContentEquals(licenseDetailsCancelContent, lease.LeaseCancellationReason);
                 AssertTrueContentEquals(licenseDetailsViewCancelReason, lease.LeaseCancellationReason);
+            }
+
+            //PROGRESS STATUSES
+            if (lease.AccountType != "Receivable")
+            {
+                AssertTrueIsDisplayed(licenseDetailsProgressSubtitle);
+
+                //Appraisal
+                AssertTrueIsDisplayed(licenseDetailsProgressAppraisalLabel);
+                AssertTrueContentEquals(licenseDetailsProgressAppraisalContent, lease.LeaseProgressAppraisal);
+
+                //Legal Survey
+                AssertTrueIsDisplayed(licenseDetailsProgressLegalSurveyLabel);
+                AssertTrueContentEquals(licenseDetailsProgressLegalSurveyContent, lease.LeaseProgressLegalSurvey);
             }
 
             //RENEWALS

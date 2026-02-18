@@ -10,7 +10,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         {
             config.NewConfig<Entity.PimsAgreement, AgreementModel>()
                 .Map(dest => dest.AgreementId, src => src.AgreementId)
-                .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
+                .Map(dest => dest.FileId, src => src.AcquisitionFileId)
                 .Map(dest => dest.AgreementType, src => src.AgreementTypeCodeNavigation)
                 .Map(dest => dest.AgreementStatusType, src => src.AgreementStatusTypeCodeNavigation)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDate)
@@ -31,7 +31,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
 
             config.NewConfig<AgreementModel, Entity.PimsAgreement>()
                 .Map(dest => dest.AgreementId, src => src.AgreementId)
-                .Map(dest => dest.AcquisitionFileId, src => src.AcquisitionFileId)
+                .Map(dest => dest.AcquisitionFileId, src => src.FileId)
                 .Map(dest => dest.AgreementTypeCode, src => src.AgreementType.Id)
                 .Map(dest => dest.AgreementStatusTypeCode, src => src.AgreementStatusType.Id)
                 .Map(dest => dest.AgreementDate, src => src.AgreementDate)

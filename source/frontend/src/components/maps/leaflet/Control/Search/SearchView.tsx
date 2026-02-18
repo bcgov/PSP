@@ -1,6 +1,5 @@
-import { Feature, Geometry } from 'geojson';
 import { chain } from 'lodash';
-import React, { useMemo } from 'react';
+import React, { useCallback, useMemo } from 'react';
 import { FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 
@@ -24,7 +23,6 @@ import { ParcelDataset } from '@/features/properties/parcelList/models';
 import { ParcelListContainer } from '@/features/properties/parcelList/ParcelListContainer';
 import { ParcelListView } from '@/features/properties/parcelList/ParcelListView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import { exists } from '@/utils';
 import { isStrataCommonProperty } from '@/utils/propertyUtils';
 
@@ -34,33 +32,32 @@ export interface ISearchViewProps {
   onFilterChange: (filter: IPropertyFilter) => void;
   propertyFilter: IPropertyFilter;
   searchResult: MapFeatureData;
-  selectedFeatureDatasets?: SelectedFeatureDataset[];
+  pmbcSelectedFeatureDatasets?: SelectedFeatureDataset[];
+  pimsSelectedFeatureDatasets?: SelectedFeatureDataset[];
   canAddToOpenFile?: boolean;
-  onCreateResearchFile: () => void;
-  onCreateAcquisitionFile: () => void;
-  onCreateDispositionFile: () => void;
-  onCreateLeaseFile: () => void;
-  onCreateManagementFile: () => void;
-  onAddToOpenFile: () => void;
-  setIsPimsActive: (value: boolean) => void;
-}
-
-interface PropertyProjection<T> {
-  isStrataLot: boolean;
-  pid: string | null;
-  pin: string | null;
-  plan: string | null;
-  feature: Feature<Geometry, T> | null;
+  onCreateResearchFile: (isPims: boolean) => void;
+  onCreateAcquisitionFile: (isPims: boolean) => void;
+  onCreateDispositionFile: (isPims: boolean) => void;
+  onCreateLeaseFile: (isPims: boolean) => void;
+  onCreateManagementFile: (isPims: boolean) => void;
+  onAddToOpenFile: (isPims: boolean) => void;
 }
 
 export const SearchView: React.FC<ISearchViewProps> = props => {
+  const canAddToOpenFile = props.canAddToOpenFile;
+  const onAddToOpenFile = props.onAddToOpenFile;
+  const onCreateAcquisitionFile = props.onCreateAcquisitionFile;
+  const onCreateDispositionFile = props.onCreateDispositionFile;
+  const onCreateLeaseFile = props.onCreateLeaseFile;
+  const onCreateManagementFile = props.onCreateManagementFile;
+  const onCreateResearchFile = props.onCreateResearchFile;
   const keycloak = useKeycloakWrapper();
 
   const propertyProjections = useMemo(() => {
     const fallbackFeatures = props.searchResult?.fullyAttributedFeatures?.features ?? [];
 
-    const baseParcels = props.selectedFeatureDatasets?.length
-      ? props.selectedFeatureDatasets.map(dataset =>
+    const baseParcels = props.pmbcSelectedFeatureDatasets?.length
+      ? props.pmbcSelectedFeatureDatasets.map(dataset =>
           ParcelDataset.fromSelectedFeatureDataset(dataset),
         )
       : fallbackFeatures.map(feature => ParcelDataset.fromFullyAttributedFeature(feature));
@@ -78,93 +75,98 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
       )
       .value()
       .flat();
-  }, [props.searchResult, props.selectedFeatureDatasets]);
+  }, [props.searchResult, props.pmbcSelectedFeatureDatasets]);
 
-  const pimsGroupedFeatures = chain(props.searchResult?.pimsFeatures.features)
-    .groupBy(feature => feature?.properties?.SURVEY_PLAN_NUMBER)
-    .map(
-      planGroup =>
-        planGroup
-          ?.map<PropertyProjection<PIMS_Property_View>>(x => ({
-            pid: x.properties.PID_PADDED,
-            pin: exists(x.properties.PIN) ? String(x.properties.PIN) : null,
-            isStrataLot: false,
-            feature: x,
-            plan: x.properties.SURVEY_PLAN_NUMBER,
-          }))
-          .sort((a, b) => {
-            if (a.isStrataLot === b.isStrataLot) return 0;
-            if (a.isStrataLot) return -1;
-            if (b.isStrataLot) return 1;
-            return 0;
-          }) ?? [],
-    );
+  const pimsPropertyProjections = useMemo(() => {
+    const fallbackFeatures = props.searchResult?.pimsFeatures?.features ?? [];
 
-  const pimsPropertyProjections =
-    pimsGroupedFeatures
+    const baseParcels = props.pimsSelectedFeatureDatasets?.length
+      ? props.pimsSelectedFeatureDatasets.map(dataset =>
+          ParcelDataset.fromSelectedFeatureDataset(dataset),
+        )
+      : fallbackFeatures.map(feature => ParcelDataset.fromPimsFeature(feature));
+
+    return chain(baseParcels)
+      .groupBy(pimsParcel => pimsParcel?.pimsFeature?.properties?.SURVEY_PLAN_NUMBER)
+      .map(planGroup =>
+        planGroup.toSorted((a, b) => {
+          const aIsStrata = a.pmbcFeature ? isStrataCommonProperty(a.pmbcFeature) : false;
+          const bIsStrata = b.pmbcFeature ? isStrataCommonProperty(b.pmbcFeature) : false;
+
+          if (aIsStrata === bIsStrata) return 0;
+          return aIsStrata ? -1 : 1;
+        }),
+      )
       .value()
-      .flatMap(x => x)
-      .map(x => ParcelDataset.fromPimsFeature(x.feature)) ?? [];
+      .flat();
+  }, [props.searchResult, props.pimsSelectedFeatureDatasets]);
 
-  const menuOptions: MenuOption[] = useMemo(() => {
-    const options: MenuOption[] = [];
+  const createMenuOptions = useCallback(
+    (isPims: boolean): MenuOption[] => {
+      const options: MenuOption[] = [];
 
-    if (keycloak.hasClaim(Claims.RESEARCH_ADD)) {
-      options.push({
-        label: 'Create Research File',
-        onClick: props.onCreateResearchFile,
-        icon: <ResearchIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
-      });
-    }
-    if (keycloak.hasClaim(Claims.ACQUISITION_ADD)) {
-      options.push({
-        label: 'Create Acquisition File',
-        onClick: props.onCreateAcquisitionFile,
-        icon: <AcquisitionIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
-      });
-    }
-    if (keycloak.hasClaim(Claims.MANAGEMENT_ADD)) {
-      options.push({
-        label: 'Create Management File',
-        onClick: props.onCreateManagementFile,
-        icon: <ManagementIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
-      });
-    }
-    if (keycloak.hasClaim(Claims.LEASE_ADD)) {
-      options.push({
-        label: 'Create Lease File',
-        onClick: props.onCreateLeaseFile,
-        icon: <LeaseIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
-      });
-    }
-    if (keycloak.hasClaim(Claims.DISPOSITION_ADD)) {
-      options.push({
-        label: 'Create Disposition File',
-        onClick: props.onCreateDispositionFile,
-        icon: <DispositionIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
-      });
-    }
+      if (keycloak.hasClaim(Claims.RESEARCH_ADD)) {
+        options.push({
+          label: 'Create Research File',
+          onClick: () => onCreateResearchFile(isPims),
+          icon: <ResearchIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+        });
+      }
+      if (keycloak.hasClaim(Claims.ACQUISITION_ADD)) {
+        options.push({
+          label: 'Create Acquisition File',
+          onClick: () => onCreateAcquisitionFile(isPims),
+          icon: <AcquisitionIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+        });
+      }
+      if (keycloak.hasClaim(Claims.MANAGEMENT_ADD)) {
+        options.push({
+          label: 'Create Management File',
+          onClick: () => onCreateManagementFile(isPims),
+          icon: <ManagementIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+        });
+      }
+      if (keycloak.hasClaim(Claims.LEASE_ADD)) {
+        options.push({
+          label: 'Create Lease File',
+          onClick: () => onCreateLeaseFile(isPims),
+          icon: <LeaseIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+        });
+      }
+      if (keycloak.hasClaim(Claims.DISPOSITION_ADD)) {
+        options.push({
+          label: 'Create Disposition File',
+          onClick: () => onCreateDispositionFile(isPims),
+          icon: <DispositionIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+        });
+      }
 
-    options.push({
-      label: 'Add to Open File',
-      onClick: props.onAddToOpenFile,
-      icon: props.canAddToOpenFile ? <FaPlus size="1.5rem" /> : undefined,
-      disabled: !props.canAddToOpenFile,
-      tooltip: 'A file must be open and in "edit property" mode',
-      separator: true, // Add a separator before the "Add to Open File" option
-    });
+      options.push({
+        label: 'Add to Open File',
+        onClick: () => onAddToOpenFile(isPims),
+        icon: canAddToOpenFile ? <FaPlus size="1.5rem" /> : undefined,
+        disabled: !canAddToOpenFile,
+        tooltip: 'A file must be open and in "edit property" mode',
+        separator: true, // Add a separator before the "Add to Open File" option
+      });
 
-    return options;
-  }, [
-    keycloak,
-    props.canAddToOpenFile,
-    props.onAddToOpenFile,
-    props.onCreateAcquisitionFile,
-    props.onCreateDispositionFile,
-    props.onCreateLeaseFile,
-    props.onCreateManagementFile,
-    props.onCreateResearchFile,
-  ]);
+      return options;
+    },
+    [
+      keycloak,
+      canAddToOpenFile,
+      onAddToOpenFile,
+      onCreateAcquisitionFile,
+      onCreateDispositionFile,
+      onCreateLeaseFile,
+      onCreateManagementFile,
+      onCreateResearchFile,
+    ],
+  );
+
+  const pmbcMenuOptions = useMemo(() => createMenuOptions(false), [createMenuOptions]);
+
+  const pimsMenuOptions = useMemo(() => createMenuOptions(true), [createMenuOptions]);
 
   return (
     <StyledWrapper
@@ -185,9 +187,8 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
         header={
           <SimpleSectionHeader title="Results (PMBC)">
             <MoreOptionsMenu
-              options={menuOptions}
+              options={pmbcMenuOptions}
               ariaLabel="search pmbc results more options"
-              onMenuOpen={() => props.setIsPimsActive(false)}
             />
           </SimpleSectionHeader>
         }
@@ -202,9 +203,8 @@ export const SearchView: React.FC<ISearchViewProps> = props => {
         header={
           <SimpleSectionHeader title="Results (PIMS)">
             <MoreOptionsMenu
-              options={menuOptions}
+              options={pimsMenuOptions}
               ariaLabel="search pims results more options"
-              onMenuOpen={() => props.setIsPimsActive(true)}
             />
           </SimpleSectionHeader>
         }

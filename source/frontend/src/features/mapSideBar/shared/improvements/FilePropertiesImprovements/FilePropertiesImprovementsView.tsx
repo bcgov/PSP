@@ -52,37 +52,40 @@ export const FilePropertiesImprovementsView: React.FunctionComponent<
         ></FormGuideContainer>
       </Section>
 
-      {filePropertiesImprovements.map((propertyImprovements: IFilePropertyImprovements) => (
-        <Section
-          header={getHeader(
-            propertyImprovements.property,
-            propertyImprovements.improvements?.length ?? 0,
-          )}
-          key={propertyImprovements.property.id}
-          data-testid={`property-improvements-${propertyImprovements.property.id}`}
-          isCollapsable
-          initiallyExpanded={false}
-        >
-          {propertyImprovements.improvements.map(
-            (improvement: ApiGen_Concepts_PropertyImprovement, index: number) => (
-              <div key={improvement.id}>
-                <PropertyImprovementDetails
-                  propertyImprovement={improvement}
-                  key={improvement.id}
-                ></PropertyImprovementDetails>
-                {index < propertyImprovements.improvements.length - 1 && <hr></hr>}
-              </div>
-            ),
-          )}
+      {filePropertiesImprovements.map(
+        (propertyImprovements: IFilePropertyImprovements, index: number) => (
+          <Section
+            header={getHeader(
+              propertyImprovements.property,
+              propertyImprovements.improvements?.length ?? 0,
+            )}
+            key={propertyImprovements.property.id}
+            data-testid={`property-improvements-${index}`}
+            isCollapsable
+            initiallyExpanded={false}
+          >
+            {propertyImprovements.improvements.map(
+              (improvement: ApiGen_Concepts_PropertyImprovement, index: number) => (
+                <div key={improvement.id}>
+                  <PropertyImprovementDetails
+                    propertyImprovement={improvement}
+                    key={improvement.id}
+                    propertyImprovementIndex={index}
+                  ></PropertyImprovementDetails>
+                  {index < propertyImprovements.improvements.length - 1 && <hr></hr>}
+                </div>
+              ),
+            )}
 
-          {propertyImprovements.improvements.length === 0 && (
-            <p>
-              There are no commercial, residential, or other improvements indicated with this
-              Property.
-            </p>
-          )}
-        </Section>
-      ))}
+            {propertyImprovements.improvements.length === 0 && (
+              <p>
+                There are no commercial, residential, or other improvements indicated with this
+                Property.
+              </p>
+            )}
+          </Section>
+        ),
+      )}
 
       {(!filePropertiesImprovements || filePropertiesImprovements.length === 0) && (
         <Section>

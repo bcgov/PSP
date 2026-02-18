@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
+using PIMS.Tests.Automation.PageObjects;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -18,6 +19,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SharedActivities sharedActivities = new(driver);
         private readonly SearchProperties searchProperties = new(driver);
         private readonly SearchActivities searchActivities = new(driver);
+        private readonly SharedImprovementsTab sharedImprovementsTab = new(driver);
         private readonly Notes notes = new(driver);
 
         private readonly string userName = "TRANPSP1";
@@ -169,6 +171,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify properties order
             sharedFileProperties.VerifyInsertedPropsOrder(managementFile.ManagementSearchProperties.DisplayingList);
+        }
+
+        [StepDefinition(@"I verify the Management File Improvements Tab")]
+        public void VerifyAcquisitionPropertyImprovement()
+        {
+            //Navigate to Improvements Tab
+            sharedImprovementsTab.NavigateImprovementTab();
+
+            //Verify Properties' count on Improvement Tabs
+            Assert.Equal(managementFile.ManagementSearchProperties.DisplayingList.Count, sharedImprovementsTab.CountProperties());
+
+            //Verify Improvements Tab
+            sharedImprovementsTab.VerifyImprovementsTab(managementFile.ManagementSearchProperties.DisplayingList);
         }
 
         [StepDefinition(@"I disable a property")]

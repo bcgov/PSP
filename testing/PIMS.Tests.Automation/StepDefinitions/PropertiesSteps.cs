@@ -11,6 +11,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SearchProperties searchProperties;
         private readonly PropertyInformation propertyInformation;
         private readonly PropertyManagementTab propertyManagementTab;
+        private readonly PropertyImprovements propertyImprovement;
         private readonly PropertyPIMSFiles pimsFiles;
         private readonly MapFeatures mapFeatures;
         private readonly SharedPagination sharedPagination;
@@ -30,6 +31,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties = new SearchProperties(driver);
             propertyInformation = new PropertyInformation(driver);
             propertyManagementTab = new PropertyManagementTab(driver);
+            propertyImprovement = new PropertyImprovements(driver);
             pimsFiles = new PropertyPIMSFiles(driver);
             mapFeatures = new MapFeatures(driver);
             sharedPagination = new SharedPagination(driver);
@@ -296,6 +298,37 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Save changes
             propertyInformation.SavePropertyDetails();
+        }
+
+        [StepDefinition(@"I create Property Improvements")]
+        public void CreatePropertyImprovements()
+        {
+            //Navigate to Improvements Tab
+            propertyImprovement.NavigateToImprovementSection();
+
+            //Create improvements
+            for (var i = 0; i < property.PropertyImprovements.Count; i++)
+            {
+                propertyImprovement.AddImprovementBttn();
+                propertyImprovement.AddUpdateImprovement(property.PropertyImprovements[i]);
+                propertyImprovement.SaveImprovement();
+
+                propertyImprovement.VerifyImprovementView(i, property.PropertyImprovements[i]);
+            }
+        }
+
+        [StepDefinition(@"I update Property Improvements from row number (.*)")]
+        public void UpdatePropertyImprovements(int rowNumber)
+        {
+            //Populate Property Information
+            PopulateProperty(rowNumber);
+
+            //Edit improvement
+            propertyImprovement.EditNthImprovements(1);
+            propertyImprovement.AddUpdateImprovement(property.PropertyImprovements[0]);
+            propertyImprovement.SaveImprovement();
+
+            propertyImprovement.VerifyImprovementView(0, property.PropertyImprovements[0]);
         }
 
         [StepDefinition(@"I insert information in the Property Management Tab from row number (.*)")]
@@ -570,7 +603,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             property.IsVolumetric = bool.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyIsVolumetric"));
             property.Volume = ExcelDataContext.ReadData(rowNumber, "PropertyVolume");
             property.VolumeType = ExcelDataContext.ReadData(rowNumber, "PropertyVolumeType");
-            property.PropertyNotes = ExcelDataContext.ReadData(rowNumber, "PropertyNotes");
+
+            property.PropertyImprovementsStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyImprovementsStartRow"));
+            property.PropertyImprovementsCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyImprovementsCount"));
+            if (property.PropertyImprovementsStartRow != 0 && property.PropertyImprovementsCount != 0)
+                PopulatePropertyImprovements(property.PropertyImprovementsStartRow, property.PropertyImprovementsCount);
         }
 
         private void PopulateHistoricalFiles(int startRow, int rowsCount)
@@ -617,6 +654,21 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperty.SurveyParcel.Range = ExcelDataContext.ReadData(rowNumber, "SurveyRange");
         }
 
+        private void PopulatePropertyImprovements(int startRow, int rowsCount)
+        {
+            System.Data.DataTable propertyImprovementsSheet = ExcelDataContext.GetInstance().Sheets["PropertiesImprovements"]!;
+            ExcelDataContext.PopulateInCollection(propertyImprovementsSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                PropertyImprovement improvement = new();
+                improvement.ImprovementType = ExcelDataContext.ReadData(i, "PropertyImprovementType");
+                improvement.ImprovementDescription = ExcelDataContext.ReadData(i, "PropertyImprovementDescription");
+
+                property.PropertyImprovements.Add(improvement);
+            }
+        }
+
         private void PopulateManagementProperty(int rowNumber)
         {
             System.Data.DataTable propertyManagementSheet = ExcelDataContext.GetInstance().Sheets["PropertyManagement"]!;
@@ -629,12 +681,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyManagement.ManagementTaxesPayable = ExcelDataContext.ReadData(rowNumber, "ManagementTaxesPayable");
             propertyManagement.ManagementPropertyAdditionalDetails = ExcelDataContext.ReadData(rowNumber, "ManagementPropertyAdditionalDetails");
             propertyManagement.ManagementPropertyContactsStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementPropertyContactsStartRow"));
-            propertyManagement.ManagementPropertyContactsStartCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementPropertyContactsStartCount"));
+            propertyManagement.ManagementPropertyContactsCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementPropertyContactsStartCount"));
             propertyManagement.ManagementPropertyActivitiesStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementPropertyActivitiesStartRow"));
             propertyManagement.ManagementPropertyActivitiesCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "ManagementPropertyActivitiesCount"));
 
-            if (propertyManagement.ManagementPropertyContactsStartRow != 0 && propertyManagement.ManagementPropertyContactsStartCount != 0)
-                PopulateManagementContactsCollection(propertyManagement.ManagementPropertyContactsStartRow, propertyManagement.ManagementPropertyContactsStartCount);
+            if (propertyManagement.ManagementPropertyContactsStartRow != 0 && propertyManagement.ManagementPropertyContactsCount != 0)
+                PopulateManagementContactsCollection(propertyManagement.ManagementPropertyContactsStartRow, propertyManagement.ManagementPropertyContactsCount);
 
             if (propertyManagement.ManagementPropertyActivitiesStartRow != 0 && propertyManagement.ManagementPropertyActivitiesCount != 0)
                 PopulateManagementActivitiesCollection(propertyManagement.ManagementPropertyActivitiesStartRow, propertyManagement.ManagementPropertyActivitiesCount);

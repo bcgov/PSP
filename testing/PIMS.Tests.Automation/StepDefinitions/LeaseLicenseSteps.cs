@@ -2,6 +2,7 @@
 using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
+using PIMS.Tests.Automation.PageObjects;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -14,7 +15,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly LeasesChecklist checklist;
         private readonly LeaseTenants tenant;
         private readonly LeasePeriodPayments periodPayments;
-        private readonly LeaseImprovements improvements;
+        private readonly PropertyImprovements improvements;
         private readonly LeaseInsurance insurance;
         private readonly LeaseDeposits deposits;
         private readonly LeaseSurplus surplus;
@@ -22,6 +23,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SearchProperties searchProperties;
         private readonly PropertyInformation propertyInformation;
         private readonly SharedFileProperties sharedFileProperties;
+        private readonly SharedImprovementsTab sharedImprovementsTab;
         private readonly SharedPagination sharedPagination;
         private readonly SharedCompensations h120;
         private readonly Notes notes;
@@ -42,7 +44,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             checklist = new LeasesChecklist(driver);
             tenant = new LeaseTenants(driver);
             periodPayments = new LeasePeriodPayments(driver);
-            improvements = new LeaseImprovements(driver);
+            improvements = new PropertyImprovements(driver);
             insurance = new LeaseInsurance(driver);
             deposits = new LeaseDeposits(driver);
             surplus = new LeaseSurplus(driver);
@@ -50,6 +52,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties = new SearchProperties(driver);
             propertyInformation = new PropertyInformation(driver);
             sharedFileProperties = new SharedFileProperties(driver);
+            sharedImprovementsTab = new SharedImprovementsTab(driver);
             sharedPagination = new SharedPagination(driver);
             h120 = new SharedCompensations(driver);
             notes = new Notes(driver);
@@ -158,6 +161,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify File Details Form
             leaseDetails.VerifyLicenseDetailsViewForm(lease);
+        }
+
+        [StepDefinition(@"I verify the Lease Improvements Tab")]
+        public void VerifyAcquisitionPropertyImprovement()
+        {
+            //Navigate to Improvements Tab
+            sharedImprovementsTab.NavigateImprovementTab();
+
+            //Verify Properties' count on Improvement Tabs
+            Assert.Equal(lease.SearchProperties.DisplayingList.Count, sharedImprovementsTab.CountProperties());
+
+            //Verify Improvements Tab
+            sharedImprovementsTab.VerifyImprovementsTab(lease.SearchProperties.DisplayingList);
         }
 
         [StepDefinition(@"I update a Lease's Properties from row number (.*)")]
@@ -383,73 +399,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
                     Assert.Equal(lease.OwnerPayeeNumber, tenant.TotalOwners());
                 }
             }
-        }
-
-        [StepDefinition(@"I add Improvements to the Lease")]
-        public void CreateImprovements()
-        {
-            /* TEST COVERAGE: PSP-2637, PSP-2640 */
-
-            //Navigate to Improvements
-            improvements.NavigateToImprovementSection();
-
-            //Edit Improvement Section
-            improvements.EditImprovements();
-
-            //Add Commercial Improvements
-            if (lease.CommercialImprovementUnit != "")
-                improvements.AddCommercialImprovement(lease);
-
-            //Add Commercial Improvements
-            if (lease.ResidentialImprovementUnit != "")
-                improvements.AddResidentialImprovement(lease);
-
-            //Add Commercial Improvements
-            if (lease.OtherImprovementUnit != "")
-                improvements.AddOtherImprovement(lease);
-
-            //Save Improvements
-            leaseDetails.SaveLicense();
-
-            //Verify Improvements View
-            improvements.VerifyImprovementView(lease);
-        }
-
-        [StepDefinition(@"I update a Lease's Improvements from row number (.*)")]
-        public void UpdateImprovements(int rowNumber)
-        {
-            /* TEST COVERAGE:  PSP-2638, PSP-2640 */
-
-            //Navigate to Search Leases
-            PopulateLeaseLicense(rowNumber);
-            searchLeases.NavigateToSearchLicense();
-
-            //Look for the previously created lease
-            searchLeases.SearchLicenseByLFile(leaseCode);
-            searchLeases.SelectFirstOption();
-           
-            //Navigate to the improvements section
-            improvements.NavigateToImprovementSection();
-
-            //Edit Improvements
-            improvements.EditImprovements();
-            if (lease.CommercialImprovementUnit != "")
-                improvements.AddCommercialImprovement(lease);
-
-            if (lease.ResidentialImprovementUnit != "")
-                improvements.AddResidentialImprovement(lease);
-
-            if (lease.OtherImprovementUnit != "")
-                improvements.AddOtherImprovement(lease);
-
-            //Save Improvements
-            leaseDetails.SaveLicense();
-
-            //Verify Improvement Changes
-            improvements.VerifyImprovementView(lease);
-
-            //Verify improvements count
-            Assert.True(improvements.ImprovementTotal().Equals(lease.TotalImprovementCount));
         }
 
         [StepDefinition(@"I add Insurance to the Lease")]
@@ -852,7 +801,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
                     //Add Details to the Compensation Requisition
                     h120.EditCompensationDetails();
-                    //h120.VerifyCompensationDetailsInitCreateForm();
+                    h120.VerifyCompensationDetailsInitCreateForm();
                     h120.UpdateCompensationDetails(lease.LeaseCompensations[i], "Lease");
 
                     //Save new Compensation Requisition Details
@@ -1023,6 +972,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (lease.LeaseRenewalStartRow != 0 && lease.LeaseRenewalQuantity != 0)
                 PopulateRenewalsCollection(lease.LeaseRenewalStartRow, lease.LeaseRenewalQuantity);
 
+            lease.LeaseProgressAppraisal = ExcelDataContext.ReadData(rowNumber, "LeaseProgressAppraisal");
+            lease.LeaseProgressLegalSurvey = ExcelDataContext.ReadData(rowNumber, "LeaseProgressLegalSurvey");
+
             lease.MOTIContact = ExcelDataContext.ReadData(rowNumber, "MOTIContact");
             lease.MOTIRegion = ExcelDataContext.ReadData(rowNumber, "MOTIRegion");
             lease.Program = ExcelDataContext.ReadData(rowNumber, "Program");
@@ -1141,21 +1093,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.OwnerRepresentativeNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "OwnerRepresentativeNumber"));
             if (lease.TenantsStartRow != 0 && lease.TenantsQuantity != 0)
                 PopulateTenantsCollection(lease.TenantsStartRow, lease.TenantsQuantity);
-            
-            //Improvements
-            lease.CommercialImprovementUnit = ExcelDataContext.ReadData(rowNumber, "CommercialImprovementUnit");
-            lease.CommercialImprovementBuildingSize = ExcelDataContext.ReadData(rowNumber, "CommercialImprovementBuildingSize");
-            lease.CommercialImprovementDescription = ExcelDataContext.ReadData(rowNumber, "CommercialImprovementDescription");
-
-            lease.ResidentialImprovementUnit = ExcelDataContext.ReadData(rowNumber, "ResidentialImprovementUnit");
-            lease.ResidentialImprovementBuildingSize = ExcelDataContext.ReadData(rowNumber, "ResidentialImprovementBuildingSize");
-            lease.ResidentialImprovementDescription = ExcelDataContext.ReadData(rowNumber, "ResidentialImprovementDescription");
-
-            lease.OtherImprovementUnit = ExcelDataContext.ReadData(rowNumber, "OtherImprovementUnit");
-            lease.OtherImprovementBuildingSize = ExcelDataContext.ReadData(rowNumber, "OtherImprovementBuildingSize");
-            lease.OtherImprovementDescription = ExcelDataContext.ReadData(rowNumber, "OtherImprovementDescription");
-
-            lease.TotalImprovementCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "TotalImprovementCount"));
 
             //Insurance
             lease.AccidentalInsuranceInPlace = ExcelDataContext.ReadData(rowNumber, "AccidentalInsuranceInPlace");

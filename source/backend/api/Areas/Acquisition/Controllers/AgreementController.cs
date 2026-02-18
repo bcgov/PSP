@@ -92,7 +92,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            if (id != agreement.AcquisitionFileId)
+            if (id != agreement.FileId)
             {
                 throw new BadRequestException("Invalid AcquisitionFileId.");
             }
@@ -144,7 +144,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
                 User.GetUsername(),
                 DateTime.Now);
 
-            if (id != agreement.AcquisitionFileId)
+            if (id != agreement.FileId)
             {
                 throw new BadRequestException("Invalid AcquisitionFileId.");
             }

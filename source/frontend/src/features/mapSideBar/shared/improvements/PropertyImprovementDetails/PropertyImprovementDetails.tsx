@@ -3,17 +3,18 @@ import { ApiGen_Concepts_PropertyImprovement } from '@/models/api/generated/ApiG
 
 export interface IPropertyImprovementDetailsProps {
   propertyImprovement: ApiGen_Concepts_PropertyImprovement;
+  propertyImprovementIndex: number;
 }
 
 export const PropertyImprovementDetails: React.FunctionComponent<
   IPropertyImprovementDetailsProps
-> = ({ propertyImprovement }) => {
+> = ({ propertyImprovement, propertyImprovementIndex }) => {
   return (
     <>
       <SectionField
         labelWidth={{ xs: 4 }}
         label="Improvement type"
-        valueTestId={`improvement[${propertyImprovement.id}].type`}
+        valueTestId={`improvement[${propertyImprovementIndex}].type`}
       >
         {propertyImprovement.propertyImprovementTypeCode?.description}
       </SectionField>
@@ -21,7 +22,7 @@ export const PropertyImprovementDetails: React.FunctionComponent<
       <SectionField
         label="Description"
         labelWidth={{ xs: 4 }}
-        valueTestId={`improvement[${propertyImprovement.id}].description`}
+        valueTestId={`improvement[${propertyImprovementIndex}].description`}
       >
         {propertyImprovement.improvementDescription ?? ''}
       </SectionField>

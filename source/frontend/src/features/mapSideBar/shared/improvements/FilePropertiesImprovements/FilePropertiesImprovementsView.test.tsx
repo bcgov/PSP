@@ -49,8 +49,8 @@ describe('File properties improvements list view', () => {
   it('displays values', async () => {
     const { queryByTestId } = await setup({});
 
-    expect(queryByTestId('improvement[1000].type')).toHaveTextContent('Commercial Building');
-    expect(queryByTestId('improvement[1000].description')).toHaveTextContent('TEST DESCRIPTION');
+    expect(queryByTestId('improvement[0].type')).toHaveTextContent('Commercial Building');
+    expect(queryByTestId('improvement[0].description')).toHaveTextContent('TEST DESCRIPTION');
   });
 
   it('displays message when no improvements', async () => {

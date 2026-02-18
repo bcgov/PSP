@@ -14,6 +14,8 @@ import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/Ap
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 
 import { SideBarContext } from '../../context/sidebarContext';
+import AgreementContainer from '../../shared/agreement/detail/AgreementContainer';
+import AgreementView from '../../shared/agreement/detail/AgreementView';
 import FilePropertiesImprovementsContainer from '../../shared/improvements/FilePropertiesImprovements/FilePropertiesImprovementsContainer';
 import { FilePropertiesImprovementsView } from '../../shared/improvements/FilePropertiesImprovements/FilePropertiesImprovementsView';
 import { ChecklistView } from '../../shared/tabs/checklist/detail/ChecklistView';
@@ -75,6 +77,14 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
       name: 'Offers & Sale',
     });
   }
+
+  tabViews.push({
+    content: (
+      <AgreementContainer fileId={dispositionFile.id} fileType="disposition" View={AgreementView} />
+    ),
+    key: FileTabType.AGREEMENTS,
+    name: 'Agreements',
+  });
 
   tabViews.push({
     content: (

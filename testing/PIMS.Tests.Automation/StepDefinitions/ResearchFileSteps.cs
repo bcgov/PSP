@@ -1,41 +1,27 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
+using PIMS.Tests.Automation.PageObjects;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
     [Binding]
-    public class ResearchFileSteps
+    public class ResearchFileSteps(IWebDriver driver)
     {
-        private readonly LoginSteps loginSteps;
-        private readonly ResearchFiles researchFiles;
-        private readonly SharedFileProperties sharedFileProperties;
-        private readonly SearchResearchFiles searchResearchFiles;
-        private readonly PropertyInformation propertyInformation;
-        private readonly SearchProperties searchProperties;
-        private readonly SharedPagination sharedPagination;
-        private readonly Notes notes;
-        private readonly GenericSteps genericSteps;
+        private readonly LoginSteps loginSteps = new(driver);
+        private readonly ResearchFiles researchFiles = new(driver);
+        private readonly SharedFileProperties sharedFileProperties = new(driver);
+        private readonly SearchResearchFiles searchResearchFiles = new(driver);
+        private readonly SearchProperties searchProperties = new(driver);
+        private readonly SharedImprovementsTab sharedImprovementsTab = new(driver);
+        private readonly SharedPagination sharedPagination = new(driver);
+        private readonly Notes notes = new(driver);
+        private readonly GenericSteps genericSteps = new(driver);
 
         private readonly string userName = "TRANPSP1";
 
-        private ResearchFile researchFile;
+        private ResearchFile researchFile = new ResearchFile();
         protected string researchFileCode = "";
-
-        public ResearchFileSteps(IWebDriver driver)
-        {
-            loginSteps = new LoginSteps(driver);
-            researchFiles = new ResearchFiles(driver);
-            sharedFileProperties = new SharedFileProperties(driver);
-            sharedPagination = new SharedPagination(driver);
-            searchResearchFiles = new SearchResearchFiles(driver);
-            propertyInformation = new PropertyInformation(driver);
-            searchProperties = new SearchProperties(driver);
-            notes = new Notes(driver);
-            genericSteps = new GenericSteps(driver);
-            
-            researchFile = new ResearchFile();
-        }
 
         [StepDefinition(@"I create a basic Research File from row number (.*)")]
         public void CreateBasicResearchFile(int rowNumber)
@@ -152,6 +138,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Go back to Research File Details
             researchFiles.NavigateToFileSummary();
+        }
+
+        [StepDefinition(@"I verify the Research File Improvements Tab")]
+        public void VerifyAcquisitionPropertyImprovement()
+        {
+            //Navigate to Improvements Tab
+            sharedImprovementsTab.NavigateImprovementTab();
+
+            //Verify Properties' count on Improvement Tabs
+            Assert.Equal(researchFile.SearchProperties.DisplayingList.Count, sharedImprovementsTab.CountProperties());
+
+            //Verify Improvements Tab
+            sharedImprovementsTab.VerifyImprovementsTab(researchFile.SearchProperties.DisplayingList);
         }
 
         [StepDefinition(@"I update a Research File Properties from row number (.*)")]
