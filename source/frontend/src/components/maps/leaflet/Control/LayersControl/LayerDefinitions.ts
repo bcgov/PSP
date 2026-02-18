@@ -517,6 +517,16 @@ export const layerDefinitions: LayerDefinition[] = [
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
     maxZoom: MAP_MAX_ZOOM,
   },
+  {
+    layerIdentifier: 'hwyPlans',
+    url: 'ogs-internal/ows?',
+    transparent: true,
+    opacity: 0.8,
+    format: 'image/png',
+    authenticated: true,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
+  },
 ];
 
 export const pimsBoundaryLayers = new Set(
