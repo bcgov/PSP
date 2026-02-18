@@ -2,6 +2,7 @@ import { FormikHelpers } from 'formik';
 import { useHistory, useLocation } from 'react-router-dom';
 
 import { usePropertyImprovementRepository } from '@/hooks/repositories/usePropertyImprovementRepository';
+import { ApiGen_CodeTypes_PropertyImprovementStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyImprovementStatusTypes';
 import { isValidId } from '@/utils';
 
 import { IPropertyImprovementFormProps } from '../form/PropertyImprovementForm';
@@ -18,9 +19,13 @@ export const AddPropertyImprovementsContainer: React.FunctionComponent<
 > = ({ propertyId, View, onSuccess }) => {
   const history = useHistory();
   const location = useLocation();
-
-  const initialValues = new PropertyImprovementFormModel(null, propertyId);
   const backUrl = location.pathname.split('/add')[0];
+
+  const initialValues: PropertyImprovementFormModel = new PropertyImprovementFormModel(
+    null,
+    propertyId,
+  );
+  initialValues.improvementStatusCode = ApiGen_CodeTypes_PropertyImprovementStatusTypes.ACTIVE;
 
   const {
     postPropertyImprovement: { execute: addPropertyImprovement, loading },
@@ -30,7 +35,8 @@ export const AddPropertyImprovementsContainer: React.FunctionComponent<
     values: PropertyImprovementFormModel,
     formikHelpers: FormikHelpers<PropertyImprovementFormModel>,
   ) => {
-    const newPropertyImprovement = await addPropertyImprovement(propertyId, values.toApi());
+    const entity = values.toApi();
+    const newPropertyImprovement = await addPropertyImprovement(propertyId, entity);
     if (isValidId(newPropertyImprovement.id)) {
       onSuccess();
       history.push(backUrl);

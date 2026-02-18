@@ -69,6 +69,7 @@ export const LEASE_PAYMENT_METHOD_TYPES = 'PimsLeasePaymentMethodType';
 export const LEASE_PAYMENT_STATUS_TYPES = 'PimsLeasePaymentStatusType';
 export const PROPERTY_CLASSIFICATION_TYPES = 'PimsPropertyClassification';
 export const PROPERTY_IMPROVEMENT_TYPES = 'PimsPropertyImprovementType';
+export const PROPERTY_IMPROVEMENT_STATUS_TYPES = 'PimsPropImprvmntStatusType';
 export const PROPERTY_ANOMALY_TYPES = 'PimsPropertyAnomalyType';
 export const PROPERTY_TENURE_TYPES = 'PimsPropertyTenureType';
 export const PROPERTY_ROAD_TYPES = 'PimsPropertyRoadType';

@@ -6,7 +6,7 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c8.btn {
+  .c10.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +35,17 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c8.btn .Button__value {
+.c10.btn .Button__value {
   width: auto;
 }
 
-.c8.btn:hover {
+.c10.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c8.btn:focus {
+.c10.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +53,31 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c8.btn.btn-primary {
+.c10.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c8.btn.btn-primary:hover,
-.c8.btn.btn-primary:active,
-.c8.btn.btn-primary:focus {
+.c10.btn.btn-primary:hover,
+.c10.btn.btn-primary:active,
+.c10.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c8.btn.btn-secondary {
+.c10.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c8.btn.btn-secondary:hover,
-.c8.btn.btn-secondary:active,
-.c8.btn.btn-secondary:focus {
+.c10.btn.btn-secondary:hover,
+.c10.btn.btn-secondary:active,
+.c10.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c8.btn.btn-info {
+.c10.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +85,66 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c8.btn.btn-info:hover,
-.c8.btn.btn-info:active,
-.c8.btn.btn-info:focus {
+.c10.btn.btn-info:hover,
+.c10.btn.btn-info:active,
+.c10.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c8.btn.btn-light {
+.c10.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c8.btn.btn-light:hover,
-.c8.btn.btn-light:active,
-.c8.btn.btn-light:focus {
+.c10.btn.btn-light:hover,
+.c10.btn.btn-light:active,
+.c10.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c8.btn.btn-dark {
+.c10.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c8.btn.btn-dark:hover,
-.c8.btn.btn-dark:active,
-.c8.btn.btn-dark:focus {
+.c10.btn.btn-dark:hover,
+.c10.btn.btn-dark:active,
+.c10.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c8.btn.btn-danger {
+.c10.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c8.btn.btn-danger:hover,
-.c8.btn.btn-danger:active,
-.c8.btn.btn-danger:focus {
+.c10.btn.btn-danger:hover,
+.c10.btn.btn-danger:active,
+.c10.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c8.btn.btn-warning {
+.c10.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c8.btn.btn-warning:hover,
-.c8.btn.btn-warning:active,
-.c8.btn.btn-warning:focus {
+.c10.btn.btn-warning:hover,
+.c10.btn.btn-warning:active,
+.c10.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c8.btn.btn-link {
+.c10.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +168,9 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c8.btn.btn-link:hover,
-.c8.btn.btn-link:active,
-.c8.btn.btn-link:focus {
+.c10.btn.btn-link:hover,
+.c10.btn.btn-link:active,
+.c10.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +180,15 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
   outline: none;
 }
 
-.c8.btn.btn-link:disabled,
-.c8.btn.btn-link.disabled {
+.c10.btn.btn-link:disabled,
+.c10.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c8.btn:disabled,
-.c8.btn:disabled:hover {
+.c10.btn:disabled,
+.c10.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,16 +200,38 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c8.Button .Button__icon {
+.c10.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c8.Button--icon-only:focus {
+.c10.Button--icon-only:focus {
   outline: none;
 }
 
-.c8.Button--icon-only .Button__icon {
+.c10.Button--icon-only .Button__icon {
   margin-right: 0;
+}
+
+.c6 .react-datepicker__calendar-icon {
+  width: 2.4rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  margin-right: 1.2rem;
+  right: 0;
+  fill: var(--surface-color-primary-button-default);
+  pointer-events: none;
+}
+
+.c6 .react-datepicker__view-calendar-icon input {
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
+}
+
+.c7.c7.form-control.is-valid {
+  background-image: none;
+}
+
+.c7.c7.form-control.is-invalid {
+  border-color: #d8292f !important;
 }
 
 .c2 {
@@ -238,7 +260,7 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
   font-weight: bold;
 }
 
-.c7 {
+.c9 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -269,7 +291,7 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
   background-color: #f2f2f2;
 }
 
-.c6 {
+.c8 {
   margin-right: 1rem;
   padding-bottom: 1rem;
   z-index: 0;
@@ -309,6 +331,35 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
               <label
                 class="c4"
               >
+                Name:
+              </label>
+            </div>
+            <div
+              class="c5 required text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-name"
+                  name="name"
+                  style="word-break: break-all;"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c4"
+              >
                 Improvement type:
               </label>
             </div>
@@ -320,8 +371,8 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
               >
                 <select
                   class="form-select form-control"
-                  id="input-propertyImprovementTypeCode"
-                  name="propertyImprovementTypeCode"
+                  id="input-improvementTypeCode"
+                  name="improvementTypeCode"
                 >
                   <option
                     value=""
@@ -362,6 +413,99 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
               <label
                 class="c4"
               >
+                Improvement status:
+              </label>
+            </div>
+            <div
+              class="c5 required text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-improvementStatusCode"
+                  name="improvementStatusCode"
+                >
+                  <option
+                    value=""
+                  >
+                    Select type
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-ACTIVE"
+                    value="ACTIVE"
+                  >
+                    Active
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-ARCHIVD"
+                    value="ARCHIVD"
+                  >
+                    Archived
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c4"
+              >
+                Improvement date:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="c6 form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                  >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
+                    <input
+                      autocomplete="off"
+                      class="c7 form-control date-picker"
+                      id="datepicker-improvementDate"
+                      name="improvementDate"
+                      placeholder="MMM DD, YYYY"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c4"
+              >
                 Description:
               </label>
             </div>
@@ -385,10 +529,10 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
       </div>
     </div>
     <div
-      class="c6"
+      class="c8"
     >
       <div
-        class="c7 justify-content-end pt-4 p-0 no-gutters row"
+        class="c9 justify-content-end pt-4 p-0 no-gutters row"
       >
         <div
           class="pr-3 col-auto"
@@ -397,7 +541,7 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
           class="pr-6 col-auto"
         >
           <button
-            class="c8 Button btn btn-secondary"
+            class="c10 Button btn btn-secondary"
             data-testid="cancel-button"
             type="button"
           >
@@ -412,7 +556,7 @@ exports[`PropertyImprovementForm component > renders as expected 1`] = `
           class="col-auto"
         >
           <button
-            class="c8 Button Button--disabled mr-9 btn btn-primary"
+            class="c10 Button Button--disabled mr-9 btn btn-primary"
             data-testid="save-button"
             disabled=""
             type="button"

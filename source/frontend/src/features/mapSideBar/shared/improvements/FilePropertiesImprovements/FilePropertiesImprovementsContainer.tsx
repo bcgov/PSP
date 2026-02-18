@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useState } from 'react';
 
 import { usePropertyImprovementRepository } from '@/hooks/repositories/usePropertyImprovementRepository';
+import { ApiGen_CodeTypes_PropertyImprovementStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyImprovementStatusTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 
 import { IFilePropertyImprovements } from '../models/FilePropertyImprovements';
@@ -30,7 +31,15 @@ export const FilePropertiesImprovementsContainer: React.FunctionComponent<
     if (fileProperties && fileProperties.length > 0) {
       const improvementPromises = fileProperties.map(fp =>
         getPropertyImprovementsApi(fp.id).then(improvements => {
-          propertiesImprovements.push({ property: fp, improvements: improvements });
+          const sortArray = improvements.sort((a, b) => {
+            const statusA = a.improvementStatusCode.id;
+            const statusB = b.improvementStatusCode.id;
+            if (statusA === statusB) return 0;
+            if (statusA === ApiGen_CodeTypes_PropertyImprovementStatusTypes.ACTIVE) return -1;
+            if (statusB !== ApiGen_CodeTypes_PropertyImprovementStatusTypes.ACTIVE) return 1;
+            return 0;
+          });
+          propertiesImprovements.push({ property: fp, improvements: sortArray });
         }),
       );
 

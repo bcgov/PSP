@@ -77,6 +77,7 @@ namespace Pims.Api.Controllers
                 var leaseTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllLeaseTypes());
                 var organizationTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllOrganizationTypes());
                 var propertyImprovementTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyImprovementTypes());
+                var propertyImprovementStatusTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyImprovementStatusTypes());
                 var propertyTypes = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllPropertyTypes());
                 var provinces = _mapper.Map<Model.LookupModel[]>(_lookupRepository.GetAllProvinces());
                 var regions = _mapper.Map<Model.LookupModel<short>[]>(_lookupRepository.GetAllRegions());
@@ -164,6 +165,7 @@ namespace Pims.Api.Controllers
                 codes.AddRange(leaseTypes);
                 codes.AddRange(organizationTypes);
                 codes.AddRange(propertyImprovementTypes);
+                codes.AddRange(propertyImprovementStatusTypes);
                 codes.AddRange(propertyTypes);
                 codes.AddRange(provinces);
                 codes.AddRange(regions);
