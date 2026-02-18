@@ -10,6 +10,7 @@ import { StyledSummarySection } from '@/components/common/Section/SectionStyles'
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import Claims from '@/constants/claims';
 import PropertyImprovementDetails from '@/features/mapSideBar/shared/improvements/PropertyImprovementDetails/PropertyImprovementDetails';
+import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_PropertyImprovement } from '@/models/api/generated/ApiGen_Concepts_PropertyImprovement';
 
@@ -25,6 +26,7 @@ export const PropertyImprovementsListView: React.FunctionComponent<
   const history = useHistory();
   const match = useRouteMatch();
   const { setModalContent, setDisplayModal } = useModalContext();
+  const { hasClaim } = useKeycloakWrapper();
 
   return (
     <StyledSummarySection>
@@ -33,7 +35,7 @@ export const PropertyImprovementsListView: React.FunctionComponent<
       <Section
         header={
           <SectionListHeader
-            claims={[Claims.PROJECT_VIEW]}
+            claims={[Claims.PROPERTY_EDIT]}
             title="Property Improvements"
             addButtonText="Add Improvement"
             addButtonIcon={<FaPlus size={'2rem'} />}
@@ -49,38 +51,40 @@ export const PropertyImprovementsListView: React.FunctionComponent<
               header={
                 <StyledHeaderContainer>
                   <div>{`Improvement ${++index}`}</div>
-                  <StyledButtonContainer>
-                    <EditButton
-                      title="Edit Improvement"
-                      data-testId={`improvements[${index}].edit-btn`}
-                      onClick={() => history.push(`${match.url}/${improvement.id}/update`)}
-                      icon={<FaEdit size={'2rem'} />}
-                    />
-                    <RemoveIconButton
-                      title="Delete Improvement"
-                      data-testId={`improvements[${index}].delete-btn`}
-                      icon={<FaTrash size={'1.75rem'} />}
-                      onRemove={() => {
-                        setModalContent({
-                          ...getDeleteModalProps(),
-                          variant: 'error',
-                          title: 'Delete Improvement',
-                          message: `You have selected to delete this Improvement.
+                  {hasClaim(Claims.PROPERTY_EDIT) && (
+                    <StyledButtonContainer>
+                      <EditButton
+                        title="Edit Improvement"
+                        data-testId={`improvements[${index}].edit-btn`}
+                        onClick={() => history.push(`${match.url}/${improvement.id}/update`)}
+                        icon={<FaEdit size={'2rem'} />}
+                      />
+                      <RemoveIconButton
+                        title="Delete Improvement"
+                        data-testId={`improvements[${index}].delete-btn`}
+                        icon={<FaTrash size={'1.75rem'} />}
+                        onRemove={() => {
+                          setModalContent({
+                            ...getDeleteModalProps(),
+                            variant: 'error',
+                            title: 'Delete Improvement',
+                            message: `You have selected to delete this Improvement.
                                                           Do you want to proceed?`,
-                          okButtonText: 'Yes',
-                          cancelButtonText: 'No',
-                          handleOk: async () => {
-                            improvement.id && onDelete(improvement.id);
-                            setDisplayModal(false);
-                          },
-                          handleCancel: () => {
-                            setDisplayModal(false);
-                          },
-                        });
-                        setDisplayModal(true);
-                      }}
-                    />
-                  </StyledButtonContainer>
+                            okButtonText: 'Yes',
+                            cancelButtonText: 'No',
+                            handleOk: async () => {
+                              improvement.id && onDelete(improvement.id);
+                              setDisplayModal(false);
+                            },
+                            handleCancel: () => {
+                              setDisplayModal(false);
+                            },
+                          });
+                          setDisplayModal(true);
+                        }}
+                      />
+                    </StyledButtonContainer>
+                  )}
                 </StyledHeaderContainer>
               }
               isCollapsable
@@ -88,7 +92,6 @@ export const PropertyImprovementsListView: React.FunctionComponent<
             >
               <PropertyImprovementDetails
                 propertyImprovement={improvement}
-                propertyImprovementIndex={index}
               ></PropertyImprovementDetails>
             </Section>
           </StyledBorder>

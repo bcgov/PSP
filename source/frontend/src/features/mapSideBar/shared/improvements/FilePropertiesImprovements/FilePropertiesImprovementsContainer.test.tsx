@@ -31,7 +31,7 @@ const TestView: React.FC<IFilePropertiesImprovementsViewProps> = props => {
   return <span>Content Rendered</span>;
 };
 
-describe('UpdateCompensationRequisition Container component', () => {
+describe('File properties improvements container component', () => {
   const setup = async (
     renderOptions: RenderOptions & {
       props?: Partial<IFilePropertiesImprovementsContainerProps>;

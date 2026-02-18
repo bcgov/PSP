@@ -206,7 +206,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
     </div>
     <div
       class="c1 form-section"
-      data-testid="property-improvements-0"
+      data-testid="property-improvements-1"
     >
       <h2
         class="c8"
@@ -288,14 +288,71 @@ exports[`File properties improvements list view > renders as expected 1`] = `
               <label
                 class="c12"
               >
+                Name:
+              </label>
+            </div>
+            <div
+              class="c13 text-left col"
+              data-testid="improvement[1000].name"
+            >
+              TEST NAME
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c12"
+              >
                 Improvement type:
               </label>
             </div>
             <div
               class="c13 text-left col"
-              data-testid="improvement[0].type"
+              data-testid="improvement[1000].type"
             >
               Commercial Building
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c12"
+              >
+                Improvement date:
+              </label>
+            </div>
+            <div
+              class="c13 text-left col"
+              data-testid="improvement[1000].date"
+            >
+              Feb 14, 2026
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c12"
+              >
+                Improvement status:
+              </label>
+            </div>
+            <div
+              class="c13 text-left col"
+              data-testid="improvement[1000].status"
+            >
+              Active
             </div>
           </div>
           <div
@@ -312,7 +369,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
             </div>
             <div
               class="c13 text-left col"
-              data-testid="improvement[0].description"
+              data-testid="improvement[1000].description"
             >
               TEST DESCRIPTION
             </div>

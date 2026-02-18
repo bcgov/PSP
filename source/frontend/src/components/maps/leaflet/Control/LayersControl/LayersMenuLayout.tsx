@@ -190,7 +190,12 @@ export const layersMenuTree: LayerMenuEntry = {
             {
               layerDefinitionId: 'plans',
               key: 'plans',
-              label: 'Plans',
+              label: 'Greyscale Plans',
+            },
+            {
+              layerDefinitionId: 'hwyPlans',
+              key: 'hwyPlans',
+              label: 'Coloured Plans',
             },
           ],
         },

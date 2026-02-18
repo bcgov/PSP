@@ -1,0 +1,255 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`File properties improvements list view > renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c5 {
+  float: right;
+  cursor: pointer;
+  font-size: 3.2rem;
+}
+
+.c0 {
+  background-color: #f2f2f2;
+  padding-top: 1rem;
+}
+
+.c1 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c7.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c6 {
+  font-weight: bold;
+}
+
+.c3 {
+  border: solid 0.2rem var(--theme-blue-90);
+  margin-bottom: 1.5rem;
+  border-radius: 0.5rem;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-box-pack: justify;
+  -webkit-justify-content: space-between;
+  -ms-flex-pack: justify;
+  justify-content: space-between;
+  -webkit-align-items: end;
+  -webkit-box-align: end;
+  -ms-flex-align: end;
+  align-items: end;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+          >
+            <div
+              class="no-gutters justify-content-between align-items-end row"
+            >
+              <div
+                class="my-1 col-auto"
+              >
+                Property Improvements
+              </div>
+            </div>
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="c3"
+        >
+          <div
+            class="c1 form-section"
+          >
+            <h2
+              class="c2"
+            >
+              <div
+                class="no-gutters row"
+              >
+                <div
+                  class="align-content-end col"
+                >
+                  <div
+                    class="c4"
+                  >
+                    <div>
+                      Improvement 1
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pl-2 d-flex align-items-end col-auto"
+                >
+                  <svg
+                    class="c5"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 24 24"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <title>
+                      collapse-section
+                    </title>
+                    <path
+                      d="M0 0h24v24H0z"
+                      fill="none"
+                    />
+                    <path
+                      d="m7 14 5-5 5 5z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </h2>
+            <div
+              class="collapse show"
+            >
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Name:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                  data-testid="improvement[1000].name"
+                >
+                  TEST NAME
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Improvement type:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                  data-testid="improvement[1000].type"
+                >
+                  Commercial Building
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Improvement date:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                  data-testid="improvement[1000].date"
+                >
+                  Feb 14, 2026
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Improvement status:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                  data-testid="improvement[1000].status"
+                >
+                  Active
+                </div>
+              </div>
+              <div
+                class="pb-2 row"
+              >
+                <div
+                  class="pr-0 text-left col-4"
+                >
+                  <label
+                    class="c6"
+                  >
+                    Description:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                  data-testid="improvement[1000].description"
+                >
+                  TEST DESCRIPTION
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;
