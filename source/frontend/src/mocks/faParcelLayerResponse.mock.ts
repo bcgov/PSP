@@ -161,7 +161,10 @@ export const mockFAParcelLayerResponseMultiPolygon: FeatureCollection<
 };
 
 export const getMockFullyAttributedParcel = (
-  pid: string,
+  pid: string | null,
+  pin?: number | null,
+  plan?: string | null,
+  ownerType?: string | null,
 ): Feature<Geometry, PMBC_FullyAttributed_Feature_Properties> => ({
   type: 'Feature',
   geometry: {
@@ -184,15 +187,15 @@ export const getMockFullyAttributedParcel = (
     GLOBAL_UID: '{4C4D758A-1261-44C1-8835-0FEB93150495}',
     PARCEL_NAME: 'MOCK_PARCEL',
     PLAN_ID: 3,
-    PLAN_NUMBER: 'NO_PLAN',
-    PIN: null,
-    PID: pid ?? '111111111',
-    PID_FORMATTED: pid ?? '111111111',
-    PID_NUMBER: pid ? parseInt(pid, 10) : 111111111,
+    PLAN_NUMBER: plan ?? null,
+    PIN: pin ?? null,
+    PID: pid,
+    PID_FORMATTED: pid,
+    PID_NUMBER: pid ? parseInt(pid, 10) : null,
     SOURCE_PARCEL_ID: null,
     PARCEL_STATUS: 'ACTIVE',
     PARCEL_CLASS: 'SUBDIVISION',
-    OWNER_TYPE: 'CROWN PROVINCIAL',
+    OWNER_TYPE: ownerType ?? 'CROWN PROVINCIAL',
     PARCEL_START_DATE: null,
     SURVEY_DESIGNATION_1: 'PART 13',
     SURVEY_DESIGNATION_2: 'SOUTH SALT SPRING,1',
