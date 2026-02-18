@@ -1,36 +1,55 @@
 import { FormikProps, getIn } from 'formik';
+import { useMemo } from 'react';
 import styled from 'styled-components';
 
 import { FastCurrencyInput, FastDatePicker, Input, Select } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField, StyledFieldLabel } from '@/components/common/Section/SectionField';
+import * as AGREEMENT from '@/constants/agreements';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_AgreementStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementStatusTypes';
 import { ApiGen_CodeTypes_AgreementTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementTypes';
-import { mapLookupCode } from '@/utils/mapLookupCode';
 
-import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
+import { AgreementFormModel } from '../models/AgreementFormModel';
 import { StyledSectionSubheader } from '../styles';
 
-export interface IAcquisitionAgreementFormProps {
-  formikProps: FormikProps<AcquisitionAgreementFormModel>;
+export interface IAcquisitionFormProps {
+  formikProps: FormikProps<AgreementFormModel>;
+  fileType: string;
+  isNew?: boolean;
 }
 
-const AcquisitionAgreementForm: React.FunctionComponent<
-  React.PropsWithChildren<IAcquisitionAgreementFormProps>
-> = ({ formikProps }) => {
+const AgreementForm: React.FunctionComponent<React.PropsWithChildren<IAcquisitionFormProps>> = ({
+  formikProps,
+  fileType,
+  isNew = false,
+}) => {
   const { setModalContent, setDisplayModal } = useModalContext();
-  const { getOptionsByType, getByType } = useLookupCodeHelpers();
+  const { getAgreementSelectOptions, getOptionsByType } = useLookupCodeHelpers();
 
-  const agreementStatusOptions = getOptionsByType(API.AGREEMENT_STATUS_TYPES);
-  const agreementTypeOptions = getByType(API.AGREEMENT_TYPES);
+  const agreementStatusSelectOptions = useMemo(() => {
+    const options = getOptionsByType(API.AGREEMENT_STATUS_TYPES);
+    if (isNew && fileType === 'disposition') {
+      return options.filter(option => option.value === ApiGen_CodeTypes_AgreementStatusTypes.DRAFT);
+    }
+    return options;
+  }, [getOptionsByType, isNew, fileType]);
+
+  const agreementTypeSelectOptions = useMemo(() => {
+    return getAgreementSelectOptions(
+      API.AGREEMENT_TYPES,
+      fileType,
+      fileType === 'disposition' ? AGREEMENT.DISPOSITION_FORMS : undefined,
+    );
+  }, [getAgreementSelectOptions, fileType]);
 
   const agreementStatusTypeCodeValue: string | null = getIn(
     formikProps.values,
     'agreementStatusTypeCode',
   );
+
   const agreementTypeCodeValue: string | null = getIn(formikProps.values, 'agreementTypeCode');
   const agreementCancellationNoteValue: string | null = getIn(
     formikProps.values,
@@ -69,7 +88,7 @@ const AcquisitionAgreementForm: React.FunctionComponent<
     <Section header="Agreement Details">
       <SectionField labelWidth={{ xs: 5 }} label="Agreement status">
         <Select
-          options={agreementStatusOptions}
+          options={agreementStatusSelectOptions}
           onChange={onSelectChange}
           field="agreementStatusTypeCode"
         />
@@ -85,7 +104,7 @@ const AcquisitionAgreementForm: React.FunctionComponent<
       <SectionField labelWidth={{ xs: 5 }} label="Agreement type" required>
         <Select
           field="agreementTypeCode"
-          options={agreementTypeOptions.map(mapLookupCode)}
+          options={agreementTypeSelectOptions}
           placeholder="Select Agreement Type"
           onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
             const selectedValue = [].slice
@@ -136,7 +155,7 @@ const AcquisitionAgreementForm: React.FunctionComponent<
   );
 };
 
-export default AcquisitionAgreementForm;
+export default AgreementForm;
 
 const StyledDiv = styled.div`
   display: flex;

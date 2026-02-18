@@ -501,6 +501,129 @@ namespace Pims.Api.Areas.Disposition.Controllers
             return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
         }
 
+        [HttpGet("{id:long}/agreements")]
+        [HasPermission(Permissions.AgreementView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<DispositionAgreementModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetDispositionFileAgreements(long id)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(GetDispositionFileAgreements),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var agreements = _dispositionService.GetAgreements(id);
+            return new JsonResult(_mapper.Map<IEnumerable<DispositionAgreementModel>>(agreements));
+        }
+
+        /// <summary>
+        /// Create the dispostion file agreement to the disposition file.
+        /// </summary>
+        /// <returns>The agreements items.</returns>
+        [HttpPost("{id:long}/agreements")]
+        [HasPermission(Permissions.AgreementView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionAgreementModel), 201)]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        public IActionResult AddDispositionFileAgreement([FromRoute] long id, [FromBody] DispositionAgreementModel agreement)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(AddDispositionFileAgreement),
+                User.GetUsername(),
+                DateTime.Now);
+
+            if (id != agreement.FileId)
+            {
+                throw new BadRequestException("Invalid DispositionFileId.");
+            }
+
+            var newAgreement = _dispositionService.AddDispositionFileAgreement(id, _mapper.Map<Dal.Entities.PimsDispositionAgreement>(agreement));
+
+            return new JsonResult(_mapper.Map<DispositionAgreementModel>(newAgreement));
+        }
+
+        /// <summary>
+        /// Get the acquisition file agreement by Id.
+        /// </summary>
+        /// <returns>The agreements items.</returns>
+        [HttpGet("{id:long}/agreements/{agreementId:long}")]
+        [HasPermission(Permissions.AgreementView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionAgreementModel), 200)]
+        [SwaggerOperation(Tags = new[] { "acquisitionfile" })]
+        public IActionResult GetDispositionFileAgreementById([FromRoute] long id, [FromRoute] long agreementId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(GetDispositionFileAgreementById),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var agreement = _dispositionService.GetAgreementById(id, agreementId);
+
+            return new JsonResult(_mapper.Map<DispositionAgreementModel>(agreement));
+        }
+
+        /// <summary>
+        /// Update the disposition file agreement by Id.
+        /// </summary>
+        /// <returns>The agreements item updated.</returns>
+        [HttpPut("{id:long}/agreements/{agreementId:long}")]
+        [HasPermission(Permissions.AgreementView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionAgreementModel), 200)]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        public IActionResult UpdateDispositionFileAgreement([FromRoute] long id, [FromRoute] long agreementId, [FromBody] DispositionAgreementModel agreement)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(UpdateDispositionFileAgreement),
+                User.GetUsername(),
+                DateTime.Now);
+
+            if (id != agreement.FileId)
+            {
+                throw new BadRequestException("Invalid DispositionFileId.");
+            }
+
+            var updatedAgreement = _dispositionService.UpdateDispositionFileAgreement(id, _mapper.Map<Dal.Entities.PimsDispositionAgreement>(agreement));
+
+            return new JsonResult(_mapper.Map<DispositionAgreementModel>(updatedAgreement));
+        }
+
+        /// <summary>
+        /// Delete the disposition file agreement by Id.
+        /// </summary>
+        /// <returns>The agreements item updated.</returns>
+        [HttpDelete("{id:long}/agreements/{agreementId:long}")]
+        [HasPermission(Permissions.AgreementView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(bool), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        public IActionResult DeleteDispositionFileAgreement([FromRoute] long id, [FromRoute] long agreementId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(DeleteDispositionFileAgreement),
+                User.GetUsername(),
+                DateTime.Now);
+
+            var result = _dispositionService.DeleteDispositionFileAgreement(id, agreementId);
+
+            return new JsonResult(result);
+        }
+
         #endregion
     }
 }

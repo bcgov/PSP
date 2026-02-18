@@ -4,11 +4,12 @@ import { prettyFormatDate } from '@/utils/dateUtils';
 
 export interface IPropertyImprovementDetailsProps {
   propertyImprovement: ApiGen_Concepts_PropertyImprovement;
+  propertyImprovementIndex: number;
 }
 
 export const PropertyImprovementDetails: React.FunctionComponent<
   IPropertyImprovementDetailsProps
-> = ({ propertyImprovement }) => {
+> = ({ propertyImprovement, propertyImprovementIndex }) => {
   return (
     <>
       <SectionField

@@ -8,30 +8,46 @@ import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider'
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 
-import { IUpdateAcquisitionAgreementFormProps } from '../common/UpdateAcquisitionAgreementForm';
-import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
+import { IUpdateAgreementFormProps } from '../common/UpdateAgreementForm';
+import { AgreementFormModel } from '../models/AgreementFormModel';
 
 export interface IUpdateAcquisitionAgreementContainerProps {
-  acquisitionFileId: number;
+  fileId: number;
   agreementId: number;
-  View: React.FC<IUpdateAcquisitionAgreementFormProps>;
+  fileType: 'acquisition' | 'disposition';
+  View: React.FC<IUpdateAgreementFormProps>;
   onSuccess: () => void;
 }
 
-const UpdateAcquisitionAgreementContainer: React.FunctionComponent<
+const UpdateAgreementContainer: React.FunctionComponent<
   React.PropsWithChildren<IUpdateAcquisitionAgreementContainerProps>
-> = ({ acquisitionFileId, agreementId, View, onSuccess }) => {
+> = ({ fileId, agreementId, fileType, View, onSuccess }) => {
   const history = useHistory();
   const location = useLocation();
   const { setModalContent, setDisplayModal } = useModalContext();
-  const [initialValues, setInitialValues] = useState<AcquisitionAgreementFormModel | null>(null);
+  const [initialValues, setInitialValues] = useState<AgreementFormModel | null>(null);
 
   const backUrl = location.pathname.split(`/${agreementId}/update`)[0];
 
-  const {
-    updateAcquisitionAgreement: { execute: updateAcquisitionAgreement, loading: updatingAgreement },
-    getAcquisitionAgreementById: { execute: getAgreement, loading: fetchingAgreement },
-  } = useAgreementProvider();
+  const agreementProvider = useAgreementProvider();
+
+  // Select correct hooks based on fileType
+  const updateAgreement =
+    fileType === 'acquisition'
+      ? agreementProvider.updateAcquisitionAgreement.execute
+      : agreementProvider.updateDispositionAgreement.execute;
+  const getAgreement =
+    fileType === 'acquisition'
+      ? agreementProvider.getAcquisitionAgreementById.execute
+      : agreementProvider.getDispositionAgreementById.execute;
+  const updatingAgreement =
+    fileType === 'acquisition'
+      ? agreementProvider.updateAcquisitionAgreement.loading
+      : agreementProvider.updateDispositionAgreement.loading;
+  const fetchingAgreement =
+    fileType === 'acquisition'
+      ? agreementProvider.getAcquisitionAgreementById.loading
+      : agreementProvider.getDispositionAgreementById.loading;
 
   const handleSuccess = async () => {
     onSuccess();
@@ -58,15 +74,11 @@ const UpdateAcquisitionAgreementContainer: React.FunctionComponent<
   };
 
   const handleSubmit = async (
-    values: AcquisitionAgreementFormModel,
-    formikHelpers: FormikHelpers<AcquisitionAgreementFormModel>,
+    values: AgreementFormModel,
+    formikHelpers: FormikHelpers<AgreementFormModel>,
   ) => {
     try {
-      const agreementSaved = await updateAcquisitionAgreement(
-        acquisitionFileId,
-        agreementId,
-        values.toApi(),
-      );
+      const agreementSaved = await updateAgreement(fileId, agreementId, values.toApi());
       if (agreementSaved) {
         handleSuccess();
       }
@@ -80,18 +92,17 @@ const UpdateAcquisitionAgreementContainer: React.FunctionComponent<
     }
   };
 
-  const fetchAcquisitionAgreement = useCallback(async () => {
-    const agreement = await getAgreement(acquisitionFileId, agreementId);
-
+  const fetchAgreement = useCallback(async () => {
+    const agreement = await getAgreement(fileId, agreementId);
     if (agreement) {
-      const agreementFormModel = AcquisitionAgreementFormModel.fromApi(agreement);
+      const agreementFormModel = AgreementFormModel.fromApi(agreement);
       setInitialValues(agreementFormModel);
     }
-  }, [acquisitionFileId, agreementId, getAgreement]);
+  }, [fileId, agreementId, getAgreement]);
 
   useEffect(() => {
-    fetchAcquisitionAgreement();
-  }, [fetchAcquisitionAgreement]);
+    fetchAgreement();
+  }, [fetchAgreement]);
 
   return (
     <View
@@ -99,8 +110,9 @@ const UpdateAcquisitionAgreementContainer: React.FunctionComponent<
       isLoading={fetchingAgreement || updatingAgreement}
       onSubmit={handleSubmit}
       onCancel={() => history.push(backUrl)}
+      fileType={fileType}
     ></View>
   );
 };
 
-export default UpdateAcquisitionAgreementContainer;
+export default UpdateAgreementContainer;

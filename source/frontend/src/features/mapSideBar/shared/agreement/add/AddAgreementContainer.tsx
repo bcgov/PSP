@@ -7,27 +7,36 @@ import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider'
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 
-import { IUpdateAcquisitionAgreementFormProps } from '../common/UpdateAcquisitionAgreementForm';
-import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
+import { IUpdateAgreementFormProps } from '../common/UpdateAgreementForm';
+import { AgreementFormModel } from '../models/AgreementFormModel';
 
 export interface IAddAcquisitionAgreementContainerProps {
   acquisitionFileId: number;
-  View: React.FC<IUpdateAcquisitionAgreementFormProps>;
+  fileType: string;
+  isNew?: boolean;
+  View: React.FC<IUpdateAgreementFormProps>;
   onSuccess: () => void;
 }
 
-const AddAcquisitionAgreementContainer: React.FunctionComponent<
+const AddAgreementContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddAcquisitionAgreementContainerProps>
-> = ({ acquisitionFileId, View, onSuccess }) => {
+> = ({ acquisitionFileId, fileType, isNew, View, onSuccess }) => {
   const history = useHistory();
   const location = useLocation();
   const { setModalContent, setDisplayModal } = useModalContext();
-  const initialValues = new AcquisitionAgreementFormModel(acquisitionFileId);
+  const initialValues = new AgreementFormModel(acquisitionFileId);
 
   const backUrl = location.pathname.split('/add')[0];
 
   const {
-    addAcquisitionAgreement: { execute: postAcquisitionAgreement, loading },
+    addAcquisitionAgreement: {
+      execute: postAcquisitionAgreement,
+      loading: loadingAcquisitionAgreement,
+    },
+    addDispositionAgreement: {
+      execute: postDispositionAgreement,
+      loading: loadingDispositionAgreement,
+    },
   } = useAgreementProvider();
 
   const onCreateError = (e: AxiosError<IApiError>) => {
@@ -50,11 +59,16 @@ const AddAcquisitionAgreementContainer: React.FunctionComponent<
   };
 
   const handleSubmit = async (
-    values: AcquisitionAgreementFormModel,
-    formikHelpers: FormikHelpers<AcquisitionAgreementFormModel>,
+    values: AgreementFormModel,
+    formikHelpers: FormikHelpers<AgreementFormModel>,
   ) => {
     try {
-      const agreementSaved = await postAcquisitionAgreement(acquisitionFileId, values.toApi());
+      let agreementSaved;
+      if (fileType === 'acquisition') {
+        agreementSaved = await postAcquisitionAgreement(acquisitionFileId, values.toApi());
+      } else if (fileType === 'disposition') {
+        agreementSaved = await postDispositionAgreement(acquisitionFileId, values.toApi());
+      }
       if (agreementSaved) {
         onSuccess();
         history.push(backUrl);
@@ -73,7 +87,9 @@ const AddAcquisitionAgreementContainer: React.FunctionComponent<
     initialValues && (
       <View
         initialValues={initialValues}
-        isLoading={loading}
+        fileType={fileType}
+        isNew={isNew}
+        isLoading={loadingAcquisitionAgreement || loadingDispositionAgreement}
         onSubmit={handleSubmit}
         onCancel={() => history.push(backUrl)}
       />
@@ -81,4 +97,4 @@ const AddAcquisitionAgreementContainer: React.FunctionComponent<
   );
 };
 
-export default AddAcquisitionAgreementContainer;
+export default AddAgreementContainer;

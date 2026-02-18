@@ -12,14 +12,14 @@ import { SectionListHeader } from '@/components/common/SectionListHeader';
 import { StyledAddButton } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import Claims from '@/constants/claims';
+//Check this later if we need to move to shared folder.
+import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_AgreementStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementStatusTypes';
 import { ApiGen_CodeTypes_AgreementTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementTypes';
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 import { exists, formatMoney, prettyFormatDate } from '@/utils';
-
-import { cannotEditMessage } from '../../../common/constants';
 
 export interface IAgreementViewProps {
   loading: boolean;

@@ -92,6 +92,7 @@ export const PropertyImprovementsListView: React.FunctionComponent<
             >
               <PropertyImprovementDetails
                 propertyImprovement={improvement}
+                propertyImprovementIndex={index}
               ></PropertyImprovementDetails>
             </Section>
           </StyledBorder>

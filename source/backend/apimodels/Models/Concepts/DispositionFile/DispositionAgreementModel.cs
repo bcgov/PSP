@@ -1,9 +1,9 @@
 using System;
 using Pims.Api.Models.Base;
 
-namespace Pims.Api.Models.Concepts.AcquisitionFile
+namespace Pims.Api.Models.Concepts.DispositionFile
 {
-    public class AgreementModel : BaseConcurrentModel
+    public class DispositionAgreementModel : BaseConcurrentModel
     {
         public long AgreementId { get; set; }
 
@@ -14,8 +14,6 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public CodeTypeModel<string> AgreementStatusType { get; set; }
 
         public DateOnly? AgreementDate { get; set; }
-
-        public bool? IsDraft { get; set; }
 
         public DateOnly? CompletionDate { get; set; }
 

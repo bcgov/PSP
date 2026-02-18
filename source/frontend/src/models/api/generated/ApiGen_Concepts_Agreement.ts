@@ -11,7 +11,7 @@ import { ApiGen_Base_CodeType } from './ApiGen_Base_CodeType';
 // LINK: @backend/apimodels/Models/Concepts/AcquisitionFile/AgreementModel.cs
 export interface ApiGen_Concepts_Agreement extends ApiGen_Base_BaseConcurrent {
   agreementId: number;
-  acquisitionFileId: number;
+  fileId: number;
   agreementType: ApiGen_Base_CodeType<string> | null;
   agreementStatusType: ApiGen_Base_CodeType<string> | null;
   agreementDate: UtcIsoDate | null;

@@ -57,11 +57,11 @@ Feature: Smoke Test
 #     And I verify the Disposition Files Create Form fields
 #     Then The Disposition Files section is rendered successfully
 
-# Scenario: Contact Manager Section
-#     Given I navigate to the Contact Manager Page
-#     When I verify the Contact Manager List View
-#     And I verify the Contact Manager Create Form fields
-#     Then The Contact Manager section is rendered successfully
+Scenario: Contact Manager Section
+    Given I navigate to the Contact Manager Page
+    When I verify the Contact Manager List View
+    And I verify the Contact Manager Create Form fields
+    Then The Contact Manager section is rendered successfully
 
 # Scenario: Admin Users Section
 #     Given I navigate to the Admin Users Page

@@ -13,6 +13,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
         private readonly SharedTeamMembers sharedTeamMembers;
         private readonly SharedFileProperties sharedFileProperties;
+        private readonly SharedImprovementsTab sharedImprovementsTab;
         private readonly SharedPagination sharedPagination;
         private readonly SearchProperties searchProperties;
         private readonly AcquisitionTakes acquisitionTakes;
@@ -37,6 +38,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails = new AcquisitionDetails(driver);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver);
             sharedFileProperties = new SharedFileProperties(driver);
+            sharedImprovementsTab = new SharedImprovementsTab(driver);
             sharedTeamMembers = new SharedTeamMembers(driver);
             sharedPagination = new SharedPagination(driver);
             searchProperties = new SearchProperties(driver);
@@ -219,6 +221,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify properties order
             sharedFileProperties.VerifyInsertedPropsOrder(acquisitionFile.AcquisitionSearchProperties.DisplayingList);
+        }
+
+        [StepDefinition(@"I verify the Acquisition File Improvements Tab")]
+        public void VerifyAcquisitionPropertyImprovement()
+        {
+            //Navigate to Improvements Tab
+            sharedImprovementsTab.NavigateImprovementTab();
+
+            //Verify Properties' count on Improvement Tabs
+            Assert.Equal(acquisitionFile.AcquisitionSearchProperties.DisplayingList.Count, sharedImprovementsTab.CountProperties());
+
+            //Verify Improvements Tab
+            sharedImprovementsTab.VerifyImprovementsTab(acquisitionFile.AcquisitionSearchProperties.DisplayingList);
         }
 
         [StepDefinition(@"I update an Acquisition File's Properties from row number (.*)")]

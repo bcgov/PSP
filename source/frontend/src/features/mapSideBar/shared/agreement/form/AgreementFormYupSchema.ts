@@ -3,7 +3,7 @@ import * as yup from 'yup';
 
 import { MAX_SQL_MONEY_SIZE } from '@/constants/API';
 
-export const AcquisitionAgreementFormYupSchema = yup.object().shape({
+export const AgreementFormYupSchema = yup.object().shape({
   legalSurveyPlanNum: yup
     .string()
     .nullable()

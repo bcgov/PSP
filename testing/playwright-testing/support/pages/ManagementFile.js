@@ -230,8 +230,18 @@ class ManagementFile {
       .waitFor({ status: "visible" });
     expect(this.page.getByTestId("sort-column-fileName")).toBeVisible();
 
-    const historyFileColumn = await this.page.locator(
+    const MOTTFileColumn = await this.page.locator(
       "div[data-testid='managementFilesTable'] div[class='thead thead-light'] div:nth-child(3) div[class='sortable-column']"
+    );
+    expect(MOTTFileColumn).toHaveText("MOTT region");
+
+    await this.page
+      .getByTestId("sort-column-fileName")
+      .waitFor({ status: "visible" });
+    expect(this.page.getByTestId("sort-column-fileName")).toBeVisible();
+
+    const historyFileColumn = await this.page.locator(
+      "div[data-testid='managementFilesTable'] div[class='thead thead-light'] div:nth-child(4) div[class='sortable-column']"
     );
     expect(historyFileColumn).toHaveText("Historical File #");
 
@@ -258,17 +268,17 @@ class ManagementFile {
     ).toBeVisible();
 
     const teamMemberColumn = await this.page.locator(
-      "div[data-testid='managementFilesTable'] div[class='thead thead-light'] div:nth-child(6) div[class='sortable-column']"
+      "div[data-testid='managementFilesTable'] div[class='thead thead-light'] div:nth-child(7) div[class='sortable-column']"
     );
     expect(teamMemberColumn).toHaveText("Team member");
 
     const civicAddressColumn = await this.page.locator(
-      "div[data-testid='managementFilesTable'] div[class='thead thead-light'] div:nth-child(7) div[class='sortable-column']"
+      "div[data-testid='managementFilesTable'] div[class='thead thead-light'] div:nth-child(8) div[class='sortable-column']"
     );
     expect(civicAddressColumn).toHaveText("Civic Address / PID / PIN");
 
     const statusColumn = await this.page.locator(
-      "div[data-testid='managementFilesTable'] div[class='thead thead-light'] div:nth-child(8) div[class='sortable-column']"
+      "div[data-testid='managementFilesTable'] div[class='thead thead-light'] div:nth-child(9) div[class='sortable-column']"
     );
     expect(statusColumn).toHaveText("Status");
 
