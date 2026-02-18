@@ -131,6 +131,8 @@ namespace Pims.Api.Services
                     FileDeliveryDate = fileProperty.file.DeliveryDate.HasValue ? fileProperty.file.DeliveryDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
                     FilePhysicalStatus = fileProperty.file.AcqPhysFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcqPhysFileStatusTypeCodeNavigation.Description : string.Empty,
                     FileAcquisitionType = fileProperty.file.AcquisitionTypeCodeNavigation is not null ? fileProperty.file.AcquisitionTypeCodeNavigation.Description : string.Empty,
+                    NOCReceivedDate = fileProperty.file.PimsNoticeOfClaims.FirstOrDefault()?.ReceivedDt?.ToString("dd-MMM-yyyy") ?? string.Empty,
+                    NOCComment = fileProperty.file.PimsNoticeOfClaims?.FirstOrDefault()?.Comment ?? string.Empty,
                     FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFileTeams.Select(x => x.PersonId.HasValue ? x.Person.GetFullName(true) : x.Organization.Name)),
                     FileAcquisitionOwners = string.Join(", ", fileProperty.file.PimsAcquisitionOwners.Select(x => x.FormatOwnerName())),
                 }).ToList();
