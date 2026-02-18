@@ -9,6 +9,7 @@ import { act, fakeText, render, RenderOptions, userEvent } from '@/utils/test-ut
 
 import { PropertyImprovementFormModel } from '../models/PropertyImprovementFormModel';
 import PropertyImprovementForm, { IPropertyImprovementFormProps } from './PropertyImprovementForm';
+import { ApiGen_CodeTypes_PropertyImprovementStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_PropertyImprovementStatusTypes';
 
 const onSubmit = vi.fn();
 const onCancel = vi.fn();
@@ -43,10 +44,14 @@ describe('PropertyImprovementForm component', () => {
     return {
       ...utils,
       formikRef,
+      getImprovementNameInput: () =>
+        utils.container.querySelector(`input[name="name"]`) as HTMLInputElement,
       getImprovementTypeDropdown: () =>
-        utils.container.querySelector(
-          `select[name="propertyImprovementTypeCode"]`,
-        ) as HTMLSelectElement,
+        utils.container.querySelector(`select[name="improvementTypeCode"]`) as HTMLSelectElement,
+      getImprovementStatusDropdown: () =>
+        utils.container.querySelector(`select[name="improvementStatusCode"]`) as HTMLSelectElement,
+      getImprovementDatePicker: () =>
+        utils.container.querySelector(`input[name="improvementDate"]`) as HTMLInputElement,
       getImprovementDescriptionTextarea: () =>
         utils.container.querySelector(`textarea[name="description"]`) as HTMLInputElement,
     };
@@ -89,7 +94,20 @@ describe('PropertyImprovementForm component', () => {
     expect(onCancel).toHaveBeenCalled();
   });
 
-  it('should validate character limits', async () => {
+  it('should validate name character limits', async () => {
+    const { findByText, getByText, getImprovementNameInput } = await setup({});
+
+    await act(async () => {
+      userEvent.paste(getImprovementNameInput(), fakeText(501));
+    });
+
+    const saveButton = getByText('Save');
+    await act(async () => userEvent.click(saveButton));
+
+    expect(await findByText(/Name field must be at most 500 characters/i)).toBeVisible();
+  });
+
+  it('should validate description character limits', async () => {
     const { findByText, getByText, getImprovementDescriptionTextarea } = await setup({});
 
     await act(async () => {
@@ -102,7 +120,7 @@ describe('PropertyImprovementForm component', () => {
     expect(await findByText(/Description field must be at most 2000 characters/i)).toBeVisible();
   });
 
-  it('should validate type required', async () => {
+  it('should validate required fields', async () => {
     const { findByText, getByText, getImprovementDescriptionTextarea } = await setup({});
 
     await act(async () => {
@@ -113,26 +131,54 @@ describe('PropertyImprovementForm component', () => {
     await act(async () => userEvent.click(saveButton));
 
     expect(await findByText(/Improvement type is required/i)).toBeVisible();
+    expect(await findByText(/Improvement name is required/i)).toBeVisible();
+    expect(await findByText(/Improvement status is required/i)).toBeVisible();
   });
 
   it('displays the existing values for the improvement', async () => {
-    const { getImprovementTypeDropdown, getImprovementDescriptionTextarea } = await setup({
+    const {
+      getImprovementNameInput,
+      getImprovementTypeDropdown,
+      getImprovementStatusDropdown,
+      getImprovementDescriptionTextarea,
+      getImprovementDatePicker,
+    } = await setup({
       props: { initialValues: mockPropertyImprovementApi },
     });
-
+    expect(getImprovementNameInput()).toHaveValue('TEST NAME');
     expect(getImprovementTypeDropdown()).toHaveValue(
       ApiGen_CodeTypes_PropertyImprovementTypes.COMMBLDG,
+    );
+    expect(getImprovementDatePicker()).toHaveValue('Feb 18, 2026');
+    expect(getImprovementStatusDropdown()).toHaveValue(
+      ApiGen_CodeTypes_PropertyImprovementStatusTypes.ACTIVE,
     );
     expect(getImprovementDescriptionTextarea()).toHaveValue('TEST DESCRIPTION');
   });
 
   it('call on submit for minimun form data', async () => {
-    const { getImprovementTypeDropdown, getByText } = await setup({});
+    const {
+      getImprovementNameInput,
+      getImprovementTypeDropdown,
+      getImprovementStatusDropdown,
+      getByText,
+    } = await setup({});
+
+    await act(async () => {
+      userEvent.type(getImprovementNameInput(), 'NEW NAME');
+    });
 
     await act(async () => {
       userEvent.selectOptions(
         getImprovementTypeDropdown(),
         ApiGen_CodeTypes_PropertyImprovementTypes.RTA,
+      );
+    });
+
+    await act(async () => {
+      userEvent.selectOptions(
+        getImprovementStatusDropdown(),
+        ApiGen_CodeTypes_PropertyImprovementStatusTypes.ACTIVE,
       );
     });
 

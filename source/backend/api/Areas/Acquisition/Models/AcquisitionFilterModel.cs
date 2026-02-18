@@ -53,6 +53,12 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
         /// get/set - The MOTI Organization id to search by for acquisition team members.
         /// </summary>
         public string AcquisitionTeamMemberOrganizationId { get; set; }
+
+        /// <summary>
+        /// get/set - Get the Acquisition files that has NOC.
+        /// </summary>
+        public bool HasNoticeOfClaim { get; set; }
+
         #endregion
 
         #region Constructors
@@ -74,17 +80,18 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
-            this.Pid = filter.GetStringValue(nameof(this.Pid));
-            this.Pin = filter.GetStringValue(nameof(this.Pin));
-            this.Address = filter.GetStringValue(nameof(this.Address));
-            this.AcquisitionFileStatusTypeCode = filter.GetStringValue(nameof(this.AcquisitionFileStatusTypeCode));
-            this.AcquisitionFileNameOrNumber = filter.GetStringValue(nameof(this.AcquisitionFileNameOrNumber));
-            this.ProjectNameOrNumber = filter.GetStringValue(nameof(this.ProjectNameOrNumber));
-            this.OwnerName = filter.GetStringValue(nameof(this.OwnerName));
-            this.AcquisitionTeamMemberPersonId = filter.GetStringValue(nameof(this.AcquisitionTeamMemberPersonId));
-            this.AcquisitionTeamMemberOrganizationId = filter.GetStringValue(nameof(this.AcquisitionTeamMemberOrganizationId));
+            Pid = filter.GetStringValue(nameof(Pid));
+            Pin = filter.GetStringValue(nameof(Pin));
+            Address = filter.GetStringValue(nameof(Address));
+            AcquisitionFileStatusTypeCode = filter.GetStringValue(nameof(AcquisitionFileStatusTypeCode));
+            AcquisitionFileNameOrNumber = filter.GetStringValue(nameof(AcquisitionFileNameOrNumber));
+            ProjectNameOrNumber = filter.GetStringValue(nameof(ProjectNameOrNumber));
+            OwnerName = filter.GetStringValue(nameof(OwnerName));
+            AcquisitionTeamMemberPersonId = filter.GetStringValue(nameof(AcquisitionTeamMemberPersonId));
+            AcquisitionTeamMemberOrganizationId = filter.GetStringValue(nameof(AcquisitionTeamMemberOrganizationId));
+            HasNoticeOfClaim = filter.GetBoolValue(nameof(HasNoticeOfClaim));
 
-            this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
+            Sort = filter.GetStringArrayValue(nameof(Sort));
         }
         #endregion
 
@@ -110,6 +117,7 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
                 OwnerName = model.OwnerName,
                 AcquisitionTeamMemberPersonId = model.AcquisitionTeamMemberPersonId,
                 AcquisitionTeamMemberOrganizationId = model.AcquisitionTeamMemberOrganizationId,
+                HasNoticeOfClaim = model.HasNoticeOfClaim,
 
                 Sort = model.Sort,
             };

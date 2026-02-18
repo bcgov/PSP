@@ -44,7 +44,7 @@ describe('Add Disposition Offer Container component', () => {
       <AddAgreementContainer
         acquisitionFileId={1}
         View={TestView}
-        fileType='acquisition'
+        fileType="acquisition"
         onSuccess={onSuccess}
       />,
       {

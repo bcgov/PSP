@@ -1,9 +1,7 @@
 import { mockLookups } from '@/mocks/index.mock';
 
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import UpdateAgreementForm, {
-  IUpdateAgreementFormProps,
-} from './UpdateAgreementForm';
+import UpdateAgreementForm, { IUpdateAgreementFormProps } from './UpdateAgreementForm';
 import { AgreementFormModel } from '../models/AgreementFormModel';
 import {
   act,

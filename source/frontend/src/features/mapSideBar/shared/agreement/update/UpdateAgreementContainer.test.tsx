@@ -54,7 +54,7 @@ describe('Update AcquisitionAgreementContainer component', () => {
       <UpdateAgreementContainer
         fileId={1}
         agreementId={10}
-        fileType='acquisition'
+        fileType="acquisition"
         View={TestView}
         onSuccess={onSuccess}
       />,
