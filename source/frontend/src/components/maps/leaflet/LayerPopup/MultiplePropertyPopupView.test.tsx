@@ -31,6 +31,20 @@ describe('MultiplePropertyPopupView', () => {
     };
   };
 
+  it('renders as expected', () => {
+    const featureDataset = {
+      ...getMockLocationFeatureDataset(),
+      parcelFeatures: [
+        getMockFullyAttributedParcel(null, null, 'VIS547', 'Unclassified'),
+        getMockFullyAttributedParcel('000-709-280', null, 'VIS547'),
+        getMockFullyAttributedParcel('000-709-239', null, 'VIS547'),
+      ],
+    };
+
+    const { asFragment } = setup({ props: { featureDataset } });
+    expect(asFragment()).toMatchSnapshot();
+  });
+
   it('renders title when featureDataset is provided', () => {
     const featureDataset = {
       ...getMockLocationFeatureDataset(),

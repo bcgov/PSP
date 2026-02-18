@@ -90,7 +90,7 @@ export const MultiplePropertyPopupView: React.FC<
       <StyledDivider />
       <StyledScrollable className="pb-4">
         {propertyProjections.map((property, index) => (
-          <StyledRow key={`feature-${property.pid}-${index}`}>
+          <StyledRow key={`feature-${property.pid ?? 'unknown'}-${index}`}>
             <StyledPropIdentifierCol
               xs={10}
               onClick={(e: React.MouseEvent<HTMLElement, MouseEvent>) => {
