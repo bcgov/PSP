@@ -147,9 +147,8 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     };
   }, [
     mapMachine.activePimsPropertyIds,
-    mapMachine.isFiltering,
-    mapMachine.mapFeatureData?.pimsFeatures?.type,
-    mapMachine.mapFeatureData?.pimsFeatures?.features,
+    mapMachine.mapFeatureData.pimsFeatures.type,
+    mapMachine.mapFeatureData.pimsFeatures?.features,
     mapMachine.showDisposed,
     mapMachine.showRetired,
     minZoom,
