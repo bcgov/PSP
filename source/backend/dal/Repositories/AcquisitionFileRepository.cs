@@ -856,8 +856,9 @@ namespace Pims.Dal.Repositories
             }
             else
             {
-                short maxSuffix = existingSubFiles.Select(x => x.FileNoSuffix).Max();
-                return (short)(maxSuffix + 1);
+                short maxSuffix = existingSubFiles.Select(x => x.FileNoSuffix).Max() ?? 0;
+
+                return ++maxSuffix;
             }
         }
 
