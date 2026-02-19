@@ -1,5 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
+using Xunit;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
