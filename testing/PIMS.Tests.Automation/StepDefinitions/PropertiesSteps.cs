@@ -518,6 +518,20 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.VerifyPlanInventoryPropertyTabs();
         }
 
+        [StepDefinition(@"I verify the Highway Tab")]
+        public void HighwayPropertyTab()
+        {
+            propertyInformation.NavigatePropertyHighwayTab();
+            propertyInformation.VerifyHwyTab();
+        }
+
+        [StepDefinition(@"I verify the Other Tab")]
+        public void OtherPropertyTab()
+        {
+            propertyInformation.NavigatePropertyOtherTab();
+            propertyInformation.VerifyOtherTab();
+        }
+
         [StepDefinition(@"No Properties were found")]
         public void NonPropertyFound()
         {
