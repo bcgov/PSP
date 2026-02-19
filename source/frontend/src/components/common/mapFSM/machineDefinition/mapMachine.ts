@@ -514,6 +514,9 @@ const rightSideBarStates = {
         TOGGLE_WORKLIST: {
           target: 'worklistVisible',
         },
+        SET_MAP_LAYERS: {
+          actions: assign({ activeLayers: (_, event: any) => event.activeLayers }),
+        },
       },
     },
     worklistVisible: {
