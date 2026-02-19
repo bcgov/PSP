@@ -17,20 +17,16 @@ Given(
   "I search for a property by Plan number from row number {int}",
   async function (rowNbr) {
     searchPropertiesData = searchPropertiesJson[rowNbr];
+    await this.searchProperties.searchPropertyByPlan(searchPropertiesData.Plan);
+    await this.searchProperties.selectPinOnMap();
   }
 );
 
-Given(
-  "I search for a property by coordinates from row number {int}",
-  async function (rowNbr) {
-    searchPropertiesData = searchPropertiesJson[rowNbr];
-  }
-);
+When("I verify the Strata popup on map", async function () {
+  await this.searchProperties.verifyMultiplePropertyPopup();
+});
 
-When("I verify the Property's PID details", async function () {});
-
-When("I verify the Property's Plan number details", async function () {});
-
-When("I verify the Property's coordinates details", async function () {});
-
-Then("The Property View on Map is rendered successfully", async function () {});
+Then("The Property View on Map is rendered successfully", async function () {
+  await this.searchProperties.resetSearch();
+  await this.searchProperties.closeMultiplePropertyPopup();
+});

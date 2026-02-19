@@ -11,7 +11,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private readonly By propertyHideWindowBttn = By.XPath("//div[@class='col']/h1/parent::div/following-sibling::div/span/button");
         private readonly By propertyShowWindowBttn = By.XPath("//div/div/div/div/div/div/span/button[@title='expand']");
-        private readonly By propertyMoreOptionsMenu = By.CssSelector("div[class='list-group list-group-flush']");
         private readonly By propertyViewInfoBttn = By.XPath("//div[contains(text(),'View Property Info')]/parent::button");
         private readonly By propertyNewResearchFileBttn = By.XPath("//div[contains(text(),'Research File')]/parent::button");
         private readonly By propertyNewAcquisitionFileBttn = By.XPath("//div[contains(text(),'Acquisition File')]/parent::button");
@@ -23,7 +22,11 @@ namespace PIMS.Tests.Automation.PageObjects
         //Property Information Tabs Elements
         private readonly By propertyInformationTabsTotal = By.CssSelector("nav[role='tablist'] a");
         private readonly By propertyInformationTitleTab = By.CssSelector("a[data-rb-event-key='ltsa']");
-        private readonly By propertyInformationValueTab = By.XPath("//a[contains(text(),'Value')]");
+        private readonly By propertyInformationValueTab = By.XPath("a[data-rb-event-key='bcassessment')]");
+        private readonly By propertyInformationHwyTab = By.CssSelector("a[data-rb-event-key='highway')]");
+        private readonly By propertyInformationOtherTab = By.CssSelector("a[data-rb-event-key='other')]");
+
+        private readonly By propertyInformationPlanTab = By.CssSelector("a[data-rb-event-key='plan']");
 
         //Property Information Header Elements
         private readonly By propertyInformationHeaderTitle = By.CssSelector("div[data-testid='form-title']");
@@ -101,6 +104,63 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private readonly By propertyAssessmentSalesTitle = By.XPath("//h2/div/div[contains(text(),'Assessment Details')]");
         private readonly By propertySalesDescription = By.XPath("//div[contains(text(),'Description')]");
+
+        //Property Plan Tab Elements
+        private readonly By propertyStrataPlanTitle = By.XPath("//div[text()='Strata Plan Common Property Details']");
+        private readonly By propertyStrataPlanNumberLabel = By.XPath("//label[text()='Strata plan number']");
+        private readonly By propertyStrataLandDistrictLabel = By.XPath("//label[text()='Land title district']");
+
+        private readonly By propertyLegalNotationsTitle = By.XPath("//div[text()='Legal Notations on Strata Common Property']");
+        private readonly By propertyLegalNotationNbrLabel = By.XPath("//label[text()='Legal notations#']");
+        private readonly By propertyLegalNotationLabel = By.XPath("//label[text()='Legal notations']");
+        private readonly By propertyLegalNotationStatusLabel = By.XPath("//label[text()='Status']");
+        private readonly By propertyLegalNotationCancelDateLabel = By.XPath("//label[text()='Cancellation date']");
+
+        private readonly By propertyChargesStrataTitle = By.XPath("//div[text()='Charges on Strata Common Property']");
+        private readonly By propertyChargesRegistrationLabel = By.XPath("//label[text()='Registration #']");
+        private readonly By propertyChargesNatureLabel = By.XPath("//label[text()='Nature']");
+        private readonly By propertyChargesRegisteredDateLabel = By.XPath("//label[text()='Registered date']");
+        private readonly By propertyChangesRegisteredOwnerLabel = By.XPath("//label[text()='Registered owner']");
+
+        //Property HWY Tab Elements
+        private readonly By propertyHWYTitle = By.XPath("//div/b[contains(text(),'Highway Research')]");
+        private readonly By propertyHWYTooltip = By.CssSelector("span[data-testid='tooltip-icon-layer-tab-tooltip']");
+        private readonly By propertyHWYIDLabel = By.XPath("//label[text()='Id']");
+        private readonly By propertyHWYGlobalIDLabel = By.XPath("//label[text()='Global Id']");
+        private readonly By propertyHWYUniqueIDLabel = By.XPath("//label[text()='Unique Id']");
+        private readonly By propertyHWYLinkPlanDocsIDLabel = By.XPath("//label[text()='Hyperlink to plan documents']");
+        private readonly By propertyHWYPlanAnnotationLabel = By.XPath("//label[text()='Plan annotation']");
+        private readonly By propertyHWYMOTTPlanLabel = By.XPath("//label[text()='MOTT plan']");
+        private readonly By propertyHWYVettingStatusLabel = By.XPath("//label[text()='Vetting Status']");
+        private readonly By propertyHWYShapeTypeLabel = By.XPath("//label[text()='Shape type']");
+        private readonly By propertyHWYPendindClassLabel = By.XPath("//label[text()='Pending classification']");
+        private readonly By propertyHWYMOTTFileLabel = By.XPath("//label[text()='MOTT file']");
+        private readonly By propertyHWYGazzetePublishDateLabel = By.XPath("//label[text()='Gazette published date']");
+        private readonly By propertyHWYGazzetePublishOnLabel = By.XPath("//label[text()='Gazette published on']");
+        private readonly By propertyHWYProvPublicTypeLabel = By.XPath("//label[text()='Prov public highway type']");
+        private readonly By propertyHWYOrderCouncilLabel = By.XPath("//label[text()='Order in council']");
+        private readonly By propertyHWYLegalDescriptionLabel = By.XPath("//label[text()='Short legal description']");
+        private readonly By propertyHWYSurveyPlanLabel = By.XPath("//label[text()='Survey plan']");
+        private readonly By propertyHWYParentParcelLabel = By.XPath("//label[text()='Parent parcel']");
+        private readonly By propertyHWYParcelMapCommentLabel = By.XPath("//label[text()='Parcelmapbc comment']");
+        private readonly By propertyHWYCreateTimeLabel = By.XPath("//label[text()='Create time']");
+        private readonly By propertyHWYUpdateTimeLabel = By.XPath("//label[text()='Update time']");
+        private readonly By propertyHWYCreateUserLabel = By.XPath("//label[text()='Create user']");
+        private readonly By propertyHWYUpdateDateLabel = By.XPath("//label[text()='Update user']");
+        private readonly By propertyHWYLTSACreateTimeLabel = By.XPath("//label[text()='Ltsa create time']");
+        private readonly By propertyHWYLTSAUpdateTimeLabel = By.XPath("//label[text()='Ltsa update time']");
+        private readonly By propertyHWYLTSACreateUserLabel = By.XPath("//label[text()='Ltsa create user']");
+        private readonly By propertyHWYLTSAUpdateUserLabel = By.XPath("//label[text()='Ltsa update user']");
+        private readonly By propertyHWYRelatedGazetteLabel = By.XPath("//label[text()='Related gazettes']");
+        private readonly By propertyHWYRelativePathLabel = By.XPath("//label[text()='Relative path']");
+
+        //Property Other Tab Elements
+        private readonly By propertyOtherMunicipalityTitle = By.XPath("//div/b[contains(text(),'Municipality Information')]");
+        private readonly By propertyOtherMunicipalityNameLabel = By.XPath("//label[text()='Municipality Name']");
+        private readonly By propertyOtherElectoralTitle = By.XPath("//div/b[contains(text(),'Electoral District Information')]");
+        private readonly By propertyOtherElectoralDistrictIDLabel = By.XPath("//label[text()='Electoral District Id']");
+        private readonly By propertyOtherElectoralDistrictNameLabel = By.XPath("//label[text()='Electoral District Name']");
+        private readonly By propertyOtherElectoralDistrictSizeLabel = By.XPath("//label[text()='Electoral District Size (square meteres)']");
 
 
         //Property Details Elements
@@ -350,6 +410,18 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilClickable(propertyInformationValueTab);
             webDriver.FindElement(propertyInformationValueTab).Click();
+        }
+
+        public void NavigatePropertyHighwayTab()
+        {
+            WaitUntilClickable(propertyInformationHwyTab);
+            webDriver.FindElement(propertyInformationHwyTab).Click();
+        }
+
+        public void NavigatePropertyOtherTab()
+        {
+            WaitUntilClickable(propertyInformationOtherTab);
+            webDriver.FindElement(propertyInformationOtherTab).Click();
         }
 
         public void EditPropertyInfoBttn()
@@ -631,6 +703,54 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(propertyAssessmentSalesTitle);
             AssertTrueIsDisplayed(propertySalesDescription);
+        }
+
+        public void VerifyHwyTab()
+        {
+            Wait();
+
+            AssertTrueIsDisplayed(propertyHWYTitle);
+            AssertTrueIsDisplayed(propertyHWYTooltip);
+            AssertTrueIsDisplayed(propertyHWYIDLabel);
+            AssertTrueIsDisplayed(propertyHWYGlobalIDLabel);
+            AssertTrueIsDisplayed(propertyHWYUniqueIDLabel);
+
+            AssertTrueIsDisplayed(propertyHWYLinkPlanDocsIDLabel);
+            AssertTrueIsDisplayed(propertyHWYPlanAnnotationLabel);
+            AssertTrueIsDisplayed(propertyHWYMOTTPlanLabel);
+            AssertTrueIsDisplayed(propertyHWYVettingStatusLabel);
+            AssertTrueIsDisplayed(propertyHWYShapeTypeLabel);
+            AssertTrueIsDisplayed(propertyHWYPendindClassLabel);
+            AssertTrueIsDisplayed(propertyHWYMOTTFileLabel);
+            AssertTrueIsDisplayed(propertyHWYGazzetePublishDateLabel);
+            AssertTrueIsDisplayed(propertyHWYGazzetePublishOnLabel);
+            AssertTrueIsDisplayed(propertyHWYProvPublicTypeLabel);
+            AssertTrueIsDisplayed(propertyHWYOrderCouncilLabel);
+            AssertTrueIsDisplayed(propertyHWYLegalDescriptionLabel);
+            AssertTrueIsDisplayed(propertyHWYSurveyPlanLabel);
+            AssertTrueIsDisplayed(propertyHWYParentParcelLabel);
+            AssertTrueIsDisplayed(propertyHWYParcelMapCommentLabel);
+            AssertTrueIsDisplayed(propertyHWYCreateTimeLabel);
+            AssertTrueIsDisplayed(propertyHWYUpdateTimeLabel);
+            AssertTrueIsDisplayed(propertyHWYCreateUserLabel);
+            AssertTrueIsDisplayed(propertyHWYUpdateDateLabel);
+            AssertTrueIsDisplayed(propertyHWYLTSACreateTimeLabel);
+            AssertTrueIsDisplayed(propertyHWYLTSAUpdateTimeLabel);
+            AssertTrueIsDisplayed(propertyHWYLTSACreateUserLabel);
+            AssertTrueIsDisplayed(propertyHWYLTSAUpdateUserLabel);
+            AssertTrueIsDisplayed(propertyHWYRelatedGazetteLabel);
+            AssertTrueIsDisplayed(propertyHWYRelativePathLabel);
+        }
+
+        public void VerifyOtherTab()
+        {
+            AssertTrueIsDisplayed(propertyOtherMunicipalityTitle);
+            AssertTrueIsDisplayed(propertyOtherMunicipalityNameLabel);
+
+            AssertTrueIsDisplayed(propertyOtherElectoralTitle);
+            AssertTrueIsDisplayed(propertyOtherElectoralDistrictIDLabel);
+            AssertTrueIsDisplayed(propertyOtherElectoralDistrictNameLabel);
+            AssertTrueIsDisplayed(propertyOtherElectoralDistrictSizeLabel);
         }
 
         public void VerifyPropertyInformationHeader(bool hasHistoricalFile)
@@ -986,6 +1106,37 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(propertyInformationTitleTab);
             AssertTrueIsDisplayed(propertyInformationTitleTab);
             AssertTrueIsDisplayed(propertyInformationValueTab);
+        }
+
+        public void VerifyPlanInventoryPropertyTabs()
+        {
+            WaitUntilVisible(propertyInformationPlanTab);
+
+            Assert.Equal(10, webDriver.FindElements(propertyInformationTabsTotal).Count);
+            AssertTrueIsDisplayed(propertyInformationPlanTab);
+
+            webDriver.FindElement(propertyInformationPlanTab).Click();
+        }
+
+        public void VerifyPlanTabDetails()
+        {
+            Wait();
+
+            AssertTrueIsDisplayed(propertyStrataPlanTitle);
+            AssertTrueIsDisplayed(propertyStrataPlanNumberLabel);
+            AssertTrueIsDisplayed(propertyStrataLandDistrictLabel);
+
+            AssertTrueIsDisplayed(propertyLegalNotationsTitle);
+            AssertTrueIsDisplayed(propertyLegalNotationNbrLabel);
+            AssertTrueIsDisplayed(propertyLegalNotationLabel);
+            AssertTrueIsDisplayed(propertyLegalNotationStatusLabel);
+            AssertTrueIsDisplayed(propertyLegalNotationCancelDateLabel);
+
+            AssertTrueIsDisplayed(propertyChargesStrataTitle);
+            Assert.True(webDriver.FindElements(propertyChargesRegistrationLabel).Count >= 1);
+            Assert.True(webDriver.FindElements(propertyChargesNatureLabel).Count >= 1);
+            Assert.True(webDriver.FindElements(propertyChargesRegisteredDateLabel).Count >= 1);
+            Assert.True(webDriver.FindElements(propertyChangesRegisteredOwnerLabel).Count >= 1);
         }
 
         public int PropertyTabs()

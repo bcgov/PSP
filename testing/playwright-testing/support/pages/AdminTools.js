@@ -199,7 +199,7 @@ class AdminTools {
     expect(cdogsTemplateSelect).toBeVisible();
 
     const optionsLocator = cdogsTemplateSelect.locator("option");
-    await expect(optionsLocator).toHaveCount(19);
+    await expect(optionsLocator).toHaveCount(26);
 
     await cdogsTemplateSelect.selectOption({
       label: "Notice of Expropriation (Form 1)",
