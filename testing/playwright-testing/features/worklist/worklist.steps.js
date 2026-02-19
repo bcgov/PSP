@@ -23,7 +23,9 @@ When(
 When(
   "I verify the Worklist view form for Property Worklist",
   async function () {
-    await this.workLists.verifyWorkListForm(searchPropertiesData.TotalPropertiesCount);
+    await this.workLists.verifyWorkListForm(
+      searchPropertiesData.TotalPropertiesCount
+    );
     await this.worklists.verifyWorklistMenuUptions();
   }
 );
@@ -32,19 +34,21 @@ When("I delete properties on the worklist", async function () {
   await this.workLists.deleteNthElementWorklist(0);
 });
 
-When("I create a file from the worklist", async function() {
-  const countOnPropDetails = await this.sharedFileProperties.countInsertedPropertiesOnFilePropDetails();
+When("I create a file from the worklist", async function () {
+  const countOnPropDetails =
+    await this.sharedFileProperties.countInsertedPropertiesOnFilePropDetails();
   expect(countOnPropDetails).toBe(searchPropertiesData.TotalPropertiesCount);
 
   await this.workLists.createFileWithProps();
 });
 
-Then("The Worklist section is rendered successfully", async function() {
-  const propsAfterDelete = searchPropertiesData.TotalPropertiesCount -1;
+Then("The Worklist section is rendered successfully", async function () {
+  const propsAfterDelete = searchPropertiesData.TotalPropertiesCount - 1;
   await this.worklLists.verifyWorkListForm(propsAfterDelete);
 });
 
-Then("The file is created successfully from the worklist", async function() {
-  const countOnPropSidebar = await this.sharedFileProperties.countInsertedPropertiesOnFileSideBar();
+Then("The file is created successfully from the worklist", async function () {
+  const countOnPropSidebar =
+    await this.sharedFileProperties.countInsertedPropertiesOnFileSideBar();
   expect(countOnPropSidebar).toBe(searchPropertiesData.TotalPropertiesCount);
 });

@@ -28,17 +28,22 @@ class AcquisitionDetails {
       .click();
   }
 
-  async createMinimumAcquisitionFile(acquisition)
-{
-    const acquisitionName = await this.page.locator("input[id='input-fileName']");
-    await acquisitionName.waitFor({status: "visible"});
+  async createMinimumAcquisitionFile(acquisition) {
+    const acquisitionName = await this.page.locator(
+      "input[id='input-fileName']"
+    );
+    await acquisitionName.waitFor({ status: "visible" });
     await acquisitionName.fill(acquisition.AcquisitionFileName);
 
-    await this.page.locator("select[id='input-acquisitionType']").selectOption({ label: acquisition.AcquisitionType});
-    await this.page.locator("select[id='input-region']").selectOption({ label: acquisition.AcquisitionMOTIRegion});
+    await this.page
+      .locator("select[id='input-acquisitionType']")
+      .selectOption({ label: acquisition.AcquisitionType });
+    await this.page
+      .locator("select[id='input-region']")
+      .selectOption({ label: acquisition.AcquisitionMOTIRegion });
 
     await this.page.getByTestId("save-button").click();
-}
+  }
 
   async verifyAcquisitionFileCreateForm() {
     const formTitle = await this.page.getByTestId("form-title");
@@ -247,7 +252,7 @@ class AcquisitionDetails {
       )
     ).toBeVisible();
     await expect(
-      this.page.locator('label').filter({ hasText: 'Comment:' }).first()
+      this.page.locator("label").filter({ hasText: "Comment:" }).first()
     ).toBeVisible();
     await expect(
       this.page.locator("textarea[id='input-ownerRepresentative.comment']")
@@ -265,17 +270,13 @@ class AcquisitionDetails {
       this.page.locator("//label[contains(text(),'Received date')]")
     ).toBeVisible();
     await expect(
-      this.page.locator(
-        "input[id='datepicker-noticeOfClaim.receivedDate']"
-      )
+      this.page.locator("input[id='datepicker-noticeOfClaim.receivedDate']")
     ).toBeVisible();
     await expect(
-      this.page.locator('label').filter({ hasText: 'Comment:' }).last()
+      this.page.locator("label").filter({ hasText: "Comment:" }).last()
     ).toBeVisible();
     await expect(
-      this.page.locator(
-        "textarea[id='input-noticeOfClaim.comment']"
-      )
+      this.page.locator("textarea[id='input-noticeOfClaim.comment']")
     ).toBeVisible();
 
     const tooltips = await this.page.getByTestId(

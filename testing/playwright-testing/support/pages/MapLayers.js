@@ -35,17 +35,11 @@ class MapLayers {
       this.page.locator("label[for='license_to_construct_take']")
     ).toBeVisible();
     await expect(this.page.locator("#license_to_construct_take")).toBeVisible();
-    await expect(
-      this.page.locator("label[for='land_act_take']")
-    ).toBeVisible();
+    await expect(this.page.locator("label[for='land_act_take']")).toBeVisible();
     await expect(this.page.locator("#land_act_take")).toBeVisible();
-    await expect(
-      this.page.locator("label[for='srw_take']")
-    ).toBeVisible();
+    await expect(this.page.locator("label[for='srw_take']")).toBeVisible();
     await expect(this.page.locator("#srw_take")).toBeVisible();
-    await expect(
-      this.page.locator("label[for='surplus_take']")
-    ).toBeVisible();
+    await expect(this.page.locator("label[for='surplus_take']")).toBeVisible();
     await expect(this.page.locator("#surplus_take")).toBeVisible();
     await expect(
       this.page.locator("label[for='inventory_takee']")

@@ -11,7 +11,7 @@ Given("I navigate to the Search Control", async function () {
 Given(
   "I search for several properties from row number {int} and add to the worklist",
   async function (rowNbr) {
-     searchPropertiesData = searchPropertiesJson[rowNbr];
+    searchPropertiesData = searchPropertiesJson[rowNbr];
     if (searchPropertiesData.PID != "") {
       await this.searchProperties.searchPropertyByPID(searchPropertiesData.PID);
       await this.searchProperties.selectNthPMBCSearchResult(0);

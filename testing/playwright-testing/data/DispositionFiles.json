@@ -44,8 +44,8 @@
     "NetBookValue": 0.0,
     "TotalCostOfSales": 0.0,
     "NetProceedsBeforeSPP": 0.0,
-    "SPPAmount": 0.00,
-    "NetProceedsAfterSPP": 0.00,
-    "RemediationCost": 0.00
+    "SPPAmount": 0.0,
+    "NetProceedsAfterSPP": 0.0,
+    "RemediationCost": 0.0
   }
 ]

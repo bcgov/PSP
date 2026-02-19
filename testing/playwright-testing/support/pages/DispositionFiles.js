@@ -1,6 +1,6 @@
 const { expect } = require("@playwright/test");
 const { clickAndWaitFor, clickSaveButton } = require("../../support/common.js");
-const SharedModal = require("./SharedModal.js")
+const SharedModal = require("./SharedModal.js");
 
 class DispositionFiles {
   constructor(page) {

@@ -29,5 +29,4 @@ When("I verify the Strata popup on map", async function () {
 Then("The Property View on Map is rendered successfully", async function () {
   await this.searchProperties.resetSearch();
   await this.searchProperties.closeMultiplePropertyPopup();
-
 });

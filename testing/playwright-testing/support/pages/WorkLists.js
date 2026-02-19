@@ -29,46 +29,70 @@ class WorkLists {
       this.page.locator("//p[contains(text(),'Working list')]")
     ).toBeVisible();
 
-    if(propertyCount > 0) {
-      await expect(this.page.locator("//div[@data-testid='worklist-scroll-area']/div")).toHaveCount(propertyCount);
+    if (propertyCount > 0) {
+      await expect(
+        this.page.locator("//div[@data-testid='worklist-scroll-area']/div")
+      ).toHaveCount(propertyCount);
     } else {
       await expect(
-      this.page.locator(
-        "//div[contains(text(),'CTRL + Click to add a property')]"
-      )
-    ).toBeVisible();
+        this.page.locator(
+          "//div[contains(text(),'CTRL + Click to add a property')]"
+        )
+      ).toBeVisible();
     }
   }
 
   async verifyWorklistMenuUptions() {
-    const worklistMoreOptionsBttn = await this.page.locator("div[data-testid='worklist-sidebar'] button[id='dropdown-ellipsis']").first();
+    const worklistMoreOptionsBttn = await this.page
+      .locator(
+        "div[data-testid='worklist-sidebar'] button[id='dropdown-ellipsis']"
+      )
+      .first();
     expect(worklistMoreOptionsBttn).toBeVisible();
     await worklistMoreOptionsBttn.click();
 
-    await this.page.locator("div[aria-labelledby='dropdown-ellipsis']").waitFor({status: "visible"});
+    await this.page
+      .locator("div[aria-labelledby='dropdown-ellipsis']")
+      .waitFor({ status: "visible" });
 
-    const clearListOption = await this.page.locator("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Clear list']");
+    const clearListOption = await this.page.locator(
+      "div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Clear list']"
+    );
     expect(clearListOption).toBeVisible();
 
-    const createResearchOption = await this.page.locator("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Research File']");
+    const createResearchOption = await this.page.locator(
+      "div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Research File']"
+    );
     expect(createResearchOption).toBeVisible();
 
-    const createAcquisitionOption = await this.page.locator("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Acquisition File']");
+    const createAcquisitionOption = await this.page.locator(
+      "div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Acquisition File']"
+    );
     expect(createAcquisitionOption).toBeVisible();
 
-    const createManagementOption = await this.page.locator("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Management File']");
+    const createManagementOption = await this.page.locator(
+      "div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Management File']"
+    );
     expect(createManagementOption).toBeVisible();
 
-    const createLeaseOption = await this.page.locator("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Lease File']");
+    const createLeaseOption = await this.page.locator(
+      "div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Lease File']"
+    );
     expect(createLeaseOption).toBeVisible();
 
-    const createDispositionOption = await this.page.locator("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Disposition File']");
+    const createDispositionOption = await this.page.locator(
+      "div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Disposition File']"
+    );
     expect(createDispositionOption).toBeVisible();
 
-    const addToOpenFileOption = await this.page.locator("//span[text()='Add to Open File']");
+    const addToOpenFileOption = await this.page.locator(
+      "//span[text()='Add to Open File']"
+    );
     expect(addToOpenFileOption).toBeVisible();
 
-    const addToOpenFileTooltip = await this.page.locator("span[data-testid='tooltip-icon-tooltip-6']");
+    const addToOpenFileTooltip = await this.page.locator(
+      "span[data-testid='tooltip-icon-tooltip-6']"
+    );
     expect(addToOpenFileTooltip).toBeVisible();
   }
 
@@ -95,9 +119,9 @@ class WorkLists {
       "//button[@id='worklistControlButton']/following-sibling::div"
     );
     const intPrevItemsCount = parseInt(await prevItemsCount.textContent());
-    const propertyItem = await this.page.locator(
-      `div[data-testid='worklist-item[${index}].parcel']`
-    ).first();
+    const propertyItem = await this.page
+      .locator(`div[data-testid='worklist-item[${index}].parcel']`)
+      .first();
     await propertyItem.hover();
 
     const deleteBttn = await this.page.locator(
@@ -113,39 +137,61 @@ class WorkLists {
   }
 
   async createFileWithProps(fileType) {
-    const worklistMoreOptionsBttn = await this.page.locator("div[data-testid='worklist-sidebar'] button[id='dropdown-ellipsis']").first();
+    const worklistMoreOptionsBttn = await this.page
+      .locator(
+        "div[data-testid='worklist-sidebar'] button[id='dropdown-ellipsis']"
+      )
+      .first();
     expect(worklistMoreOptionsBttn).toBeVisible();
     await worklistMoreOptionsBttn.click();
 
-    await this.page.locator("div[aria-labelledby='dropdown-ellipsis']").waitFor({status: "visible"});
+    await this.page
+      .locator("div[aria-labelledby='dropdown-ellipsis']")
+      .waitFor({ status: "visible" });
 
-    switch(fileType) {
+    switch (fileType) {
       case "acquisition":
-        const createAcquisitionOption = await this.page.locator("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Acquisition File']");
+        const createAcquisitionOption = await this.page.locator(
+          "div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Acquisition File']"
+        );
         expect(createAcquisitionOption).toBeVisible();
         await createAcquisitionOption.click();
-        await this.acquisitionDetails.createMinimumAcquisitionFile(acquisitionData[0]);
+        await this.acquisitionDetails.createMinimumAcquisitionFile(
+          acquisitionData[0]
+        );
         break;
       case "management":
-        const createManagementOption = await this.page.locator("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Management File']");
+        const createManagementOption = await this.page.locator(
+          "div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Management File']"
+        );
         expect(createManagementOption).toBeVisible();
         await createManagementOption.click();
-        this.managementDetails.createMinimumManagementDetails(managementData[0]);
+        this.managementDetails.createMinimumManagementDetails(
+          managementData[0]
+        );
         break;
       case "lease":
-        const createLeaseOption = await this.page.locator("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Lease File']");
+        const createLeaseOption = await this.page.locator(
+          "div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Lease File']"
+        );
         expect(createLeaseOption).toBeVisible();
         await createLeaseOption.click();
         await this.leaseDetails.createMinimumLease(leaseData[0]);
         break;
       case "disposition":
-        const createDispositionOption = await this.page.locator("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Disposition File']");
+        const createDispositionOption = await this.page.locator(
+          "div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Disposition File']"
+        );
         expect(createDispositionOption).toBeVisible();
         await createDispositionOption.click();
-        this.dispositionDetails.createMinimumDispositionFile(dispositionData[0]);
+        this.dispositionDetails.createMinimumDispositionFile(
+          dispositionData[0]
+        );
         break;
       default:
-        const createResearchOption = await this.page.locator("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Research File']");
+        const createResearchOption = await this.page.locator(
+          "div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Research File']"
+        );
         expect(createResearchOption).toBeVisible();
         await createResearchOption.click();
         this.researchDetails.createMinimumResearchFile(researchData[0]);
