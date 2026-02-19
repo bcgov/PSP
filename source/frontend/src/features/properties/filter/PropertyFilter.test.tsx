@@ -17,7 +17,6 @@ import {
   RenderOptions,
   screen,
   userEvent,
-  waitFor,
   waitForEffects,
 } from '@/utils/test-utils';
 import { initialEnabledLayers } from '@/components/maps/leaflet/Control/LayersControl/LayersMenuLayout';
@@ -110,7 +109,7 @@ describe('MapFilterBar', () => {
 
   beforeEach(() => {
     import.meta.env.VITE_TENANT = 'MOTI';
-    mapMachineBaseMock.setMapLayers.mockClear();
+    vi.mocked(mapMachineBaseMock.setMapLayers).mockClear();
     mapMachineBaseMock.activeLayers = new Set(initialEnabledLayers);
   });
 
