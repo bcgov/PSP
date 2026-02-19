@@ -42,6 +42,11 @@ namespace Pims.Dal.Entities
         /// <returns>The formatted Acquisition File Number.</returns>
         public static string GenerateAcquisitionFileNumber(short prefix, int? fileNumber, int? suffix = 1)
         {
+            if(fileNumber is null)
+            {
+                return string.Empty;
+            }
+
             return $"{prefix:00}-{fileNumber}-{suffix:00}";
         }
     }
