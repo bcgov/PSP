@@ -590,6 +590,62 @@ namespace Pims.Api.Services
             return _dispositionFileRepository.GetById(dispositionFile.Internal_Id);
         }
 
+        public IEnumerable<PimsDispositionAgreement> GetAgreements(long dispositionFileId)
+        {
+            _logger.LogInformation("Getting disposition file agreements with DispositionFile id: {id}", dispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+            return _dispositionFileRepository.GetAgreementsByDispositionFile(dispositionFileId);
+        }
+
+        public PimsDispositionAgreement AddDispositionFileAgreement(long dispositionFileId, PimsDispositionAgreement dispositionAgreement)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+
+            ValidateDispositionFileStatusForAgreement(dispositionFileId);
+
+            var newAgreement = _dispositionFileRepository.AddAgreement(dispositionAgreement);
+            _dispositionFileRepository.CommitTransaction();
+
+            return newAgreement;
+        }
+
+        public PimsDispositionAgreement GetAgreementById(long dispositionFileId, long agreementId)
+        {
+            _logger.LogInformation("Getting acquisition file agreement with Agreement id: {agreementId}", agreementId);
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+
+            return _dispositionFileRepository.GetAgreementById(agreementId);
+        }
+
+        public PimsDispositionAgreement UpdateDispositionFileAgreement(long dispositionFileId, PimsDispositionAgreement dispositionAgreement)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+
+            ValidateDispositionFileStatusForAgreement(dispositionFileId);
+
+            var updatedAgreement = _dispositionFileRepository.UpdateAgreement(dispositionAgreement);
+            _dispositionFileRepository.CommitTransaction();
+
+            return updatedAgreement;
+        }
+
+        public bool DeleteDispositionFileAgreement(long dispositionFileId, long agreementId)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+
+            ValidateDispositionFileStatusForAgreement(dispositionFileId);
+
+            var deleteResult = _dispositionFileRepository.TryDeleteAgreement(dispositionFileId, agreementId);
+            _dispositionFileRepository.CommitTransaction();
+
+            return deleteResult;
+        }
+
         private static decimal CalculateNetProceedsBeforeSpp(PimsDispositionSale sale)
         {
             if (sale != null)
@@ -858,6 +914,16 @@ namespace Pims.Api.Services
             }
 
             return currentDispositionFileStatus;
+        }
+
+        private void ValidateDispositionFileStatusForAgreement(long dispositionFileId)
+        {
+            var currentDispositionStatus = GetCurrentDispositionStatus(dispositionFileId);
+
+            if (!_dispositionStatusSolver.CanEditOrDeleteAgreement(currentDispositionStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
         }
     }
 }

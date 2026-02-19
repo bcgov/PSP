@@ -1249,6 +1249,20 @@ export const mockLookups: ILookupCode[] = [
     type: 'PimsPropertyImprovementType',
   },
   {
+    id: 'ACTIVE',
+    name: 'Active',
+    isDisabled: false,
+    displayOrder: 1,
+    type: 'PimsPropImprvmntStatusType',
+  },
+  {
+    id: 'ARCHIVD',
+    name: 'Archived',
+    isDisabled: false,
+    displayOrder: 2,
+    type: 'PimsPropImprvmntStatusType',
+  },
+  {
     id: 'BUILD',
     name: 'Buiding',
     isDisabled: true,

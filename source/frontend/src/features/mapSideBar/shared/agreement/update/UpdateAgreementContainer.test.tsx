@@ -1,18 +1,17 @@
 import { mockAgreementResponseApi } from '@/mocks/agreements.mock';
 import { createMemoryHistory } from 'history';
-import { IUpdateAcquisitionAgreementFormProps } from '../common/UpdateAcquisitionAgreementForm';
+import { IUpdateAgreementFormProps } from '../common/UpdateAgreementForm';
 import { RenderOptions, act, render, waitForEffects } from '@/utils/test-utils';
-import UpdateAcquisitionAgreementContainer, {
+import UpdateAgreementContainer, {
   IUpdateAcquisitionAgreementContainerProps,
-} from './UpdateAcquisitionAgreementContainer';
+} from './UpdateAgreementContainer';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { Claims } from '@/constants/claims';
-import { AcquisitionAgreementFormModel } from '../models/AcquisitionAgreementFormModel';
-import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
+import { AgreementFormModel } from '../models/AgreementFormModel';
 
 const history = createMemoryHistory();
-const mockAcquisitionAgreementApi = mockAgreementResponseApi(1);
+const mockAgreementApi = mockAgreementResponseApi(1);
 
 const mockPutAgreementApi = {
   error: undefined,
@@ -24,7 +23,7 @@ const mockPutAgreementApi = {
 const mockGetAgreementApi = {
   error: undefined,
   response: undefined,
-  execute: vi.fn().mockResolvedValue(mockAcquisitionAgreementApi),
+  execute: vi.fn().mockResolvedValue(mockAgreementApi),
   loading: false,
 };
 
@@ -39,8 +38,8 @@ vi.mock('@/hooks/repositories/useAgreementProvider', () => ({
   },
 }));
 
-let viewProps: IUpdateAcquisitionAgreementFormProps | undefined;
-const TestView: React.FC<IUpdateAcquisitionAgreementFormProps> = props => {
+let viewProps: IUpdateAgreementFormProps | undefined;
+const TestView: React.FC<IUpdateAgreementFormProps> = props => {
   viewProps = props;
   return <span>Content Rendered</span>;
 };
@@ -52,9 +51,10 @@ describe('Update AcquisitionAgreementContainer component', () => {
     } = {},
   ) => {
     const component = render(
-      <UpdateAcquisitionAgreementContainer
-        acquisitionFileId={1}
+      <UpdateAgreementContainer
+        fileId={1}
         agreementId={10}
+        fileType="acquisition"
         View={TestView}
         onSuccess={onSuccess}
       />,
@@ -80,30 +80,30 @@ describe('Update AcquisitionAgreementContainer component', () => {
   });
 
   it('Renders the underlying form', async () => {
-    const { getByText } = await setup({ props: { acquisitionFileId: 1, agreementId: 10 } });
+    const { getByText } = await setup({ props: { fileId: 1, agreementId: 10 } });
 
     expect(getByText(/Content Rendered/)).toBeVisible();
     expect(mockGetAgreementApi.execute).toHaveBeenCalledWith(1, 10);
   });
 
   it('Loads props with the initial values', async () => {
-    mockGetAgreementApi.execute.mockResolvedValue(mockAcquisitionAgreementApi);
-    await setup({ props: { acquisitionFileId: 1, agreementId: 10 } });
+    mockGetAgreementApi.execute.mockResolvedValue(mockAgreementApi);
+    await setup({ props: { fileId: 1, agreementId: 10 } });
     await waitForEffects();
 
     expect(mockGetAgreementApi.execute).toHaveBeenCalledWith(1, 10);
-    const formModel = AcquisitionAgreementFormModel.fromApi(mockAcquisitionAgreementApi);
+    const formModel = AgreementFormModel.fromApi(mockAgreementApi);
 
     expect(viewProps?.initialValues).toStrictEqual(formModel);
   });
 
   it('makes request to create a new Agreement and returns the response', async () => {
-    mockGetAgreementApi.execute.mockResolvedValue(mockAcquisitionAgreementApi);
-    mockPutAgreementApi.execute.mockReturnValue(mockAcquisitionAgreementApi);
+    mockGetAgreementApi.execute.mockResolvedValue(mockAgreementApi);
+    mockPutAgreementApi.execute.mockReturnValue(mockAgreementApi);
 
-    await setup({ props: { acquisitionFileId: 1, agreementId: 10 } });
+    await setup({ props: { fileId: 1, agreementId: 10 } });
 
-    let agreementFormModel = AcquisitionAgreementFormModel.fromApi(mockAcquisitionAgreementApi);
+    let agreementFormModel = AgreementFormModel.fromApi(mockAgreementApi);
     agreementFormModel.agreementStatusTypeCode = 'FINAL';
 
     await act(async () => {
@@ -115,7 +115,7 @@ describe('Update AcquisitionAgreementContainer component', () => {
       10,
       expect.objectContaining({
         agreementId: 10,
-        acquisitionFileId: 1,
+        fileId: 1,
         agreementType: { description: null, displayOrder: null, id: 'H0074', isDisabled: false },
         agreementDate: null,
         agreementStatusType: {
@@ -146,7 +146,7 @@ describe('Update AcquisitionAgreementContainer component', () => {
   });
 
   it('navigates back to Agreement when form is cancelled', async () => {
-    await setup({ props: { acquisitionFileId: 1, agreementId: 10 } });
+    await setup({ props: { fileId: 1, agreementId: 10 } });
     await act(async () => {
       viewProps?.onCancel();
     });

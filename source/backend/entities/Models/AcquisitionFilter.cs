@@ -49,6 +49,11 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         public string AcquisitionTeamMemberOrganizationId { get; set; }
 
+        /// <summary>
+        /// get/set - Get the Acquisition files that have NOC.
+        /// </summary>
+        public bool HasNoticeOfClaim { get; set; }
+
         #endregion
 
         #region Constructors

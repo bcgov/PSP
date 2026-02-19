@@ -7,7 +7,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
     {
         public long AgreementId { get; set; }
 
-        public long AcquisitionFileId { get; set; }
+        public long FileId { get; set; }
 
         public CodeTypeModel<string> AgreementType { get; set; }
 

@@ -1,10 +1,11 @@
 import { Formik, FormikHelpers } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
 import { ResetButton } from '@/components/common/buttons';
 import { SearchButton } from '@/components/common/buttons/SearchButton';
-import { Input, Select, SelectOption, TypeaheadSelect } from '@/components/common/form';
+import { Check, Input, Select, SelectOption, TypeaheadSelect } from '@/components/common/form';
 import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { ColButtons, FilterBoxForm } from '@/components/common/styles';
@@ -118,6 +119,13 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
                     required
                   />
                 </Col>
+                <Col xs={6} style={{ textAlign: 'left' }}>
+                  <StyledCheckBox
+                    field="hasNoticeOfClaim"
+                    postLabel="File has NOC"
+                    onChange={formikProps.handleChange}
+                  ></StyledCheckBox>
+                </Col>
               </Row>
             </Col>
             <Col xl="5">
@@ -169,3 +177,11 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
 };
 
 export default ManagementFilter;
+
+const StyledCheckBox = styled(Check)`
+  font-size: 1.6rem;
+  font-weight: normal;
+  label {
+    margin-bottom: 0;
+  }
+`;

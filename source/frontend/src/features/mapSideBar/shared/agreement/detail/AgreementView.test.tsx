@@ -3,10 +3,7 @@ import { mockAgreementsResponse } from '@/mocks/agreements.mock';
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
-
-import AcquisitionFileStatusUpdateSolver from '../../fileDetails/detail/AcquisitionFileStatusUpdateSolver';
 import AgreementView, { IAgreementViewProps } from './AgreementView';
-import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
 
 // mock auth library
 
