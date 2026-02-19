@@ -54,6 +54,11 @@ export class Api_GenerateAcquisitionFile implements ICompensationRequisitionFile
   property_coordinator?: Api_GeneratePerson | Api_GenerateOrganization;
   all_owners_string_and: string;
   readonly interestHolders: ApiGen_Concepts_InterestHolder[];
+  purchasers?: {
+    Organization: Api_GenerateOrganization[];
+    Person: Api_GeneratePerson[];
+  };
+  purchaser_solicitor?: Api_GeneratePerson | Api_GenerateOrganization;
   owner_verb: string;
   owner_noun: string;
 
@@ -134,6 +139,34 @@ export class Api_GenerateAcquisitionFile implements ICompensationRequisitionFile
     const { verb, noun } = Api_GenerateAcquisitionFile.getOwnerGrammar(this.owners.length);
     this.owner_verb = verb;
     this.owner_noun = noun;
+
+    if (
+      file &&
+      'dispositionSale' in file &&
+      file.dispositionSale?.dispositionPurchasers &&
+      file.dispositionSale.dispositionPurchasers.length > 0
+    ) {
+      this.purchasers = {
+        Organization: [],
+        Person: [],
+      };
+      file.dispositionSale.dispositionPurchasers.forEach(purchaser => {
+        if (purchaser.organization) {
+          this.purchasers.Organization.push(new Api_GenerateOrganization(purchaser.organization));
+        } else if (purchaser.person) {
+          this.purchasers.Person.push(new Api_GeneratePerson(purchaser.person));
+        }
+      });
+    }
+
+    if (file && 'dispositionSale' in file && file.dispositionSale?.dispositionPurchaserSolicitor) {
+      const solicitor = file.dispositionSale.dispositionPurchaserSolicitor;
+      if (solicitor.organization) {
+        this.purchaser_solicitor = new Api_GenerateOrganization(solicitor.organization);
+      } else if (solicitor.person) {
+        this.purchaser_solicitor = new Api_GeneratePerson(solicitor.person);
+      }
+    }
   }
 
   // Set verb and noun for owner(s) grammar

@@ -50,7 +50,8 @@ namespace Pims.Dal.Repositories
         {
             using var scope = Logger.QueryScope();
 
-            return this.Context.PimsDispositionFiles.AsNoTracking()
+            // Load the main entity with only direct navigation properties
+            var dispositionFile = this.Context.PimsDispositionFiles.AsNoTracking()
                 .Include(d => d.DispositionFileStatusTypeCodeNavigation)
                 .Include(d => d.Project)
                 .Include(d => d.Product)
@@ -62,8 +63,12 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.RegionCodeNavigation)
                 .Include(d => d.DspPhysFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsDispositionSales)
+                    .ThenInclude(sale => sale.PimsDispositionPurchasers)
+                .Include(d => d.PimsDispositionSales)
+                    .ThenInclude(sale => sale.DspPurchSolicitor)
                 .Include(d => d.PimsDispositionAppraisals)
-                .Include(d => d.PimsDispositionFileProperties)
+                .Include(fp => fp.PimsDispositionFileProperties)
+                    .ThenInclude(prop => prop.Property)
                 .Include(d => d.PimsDispositionOffers)
                     .ThenInclude(o => o.DispositionOfferStatusTypeCodeNavigation)
                 .Include(d => d.PimsDispositionFileTeams)
@@ -74,7 +79,147 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(d => d.PrimaryContact)
                 .Include(d => d.PimsDispositionFileTeams)
                     .ThenInclude(d => d.DspFlTeamProfileTypeCodeNavigation)
-                .FirstOrDefault(d => d.DispositionFileId == id) ?? throw new KeyNotFoundException();
+                .FirstOrDefault(d => d.DispositionFileId == id);
+
+            if (dispositionFile == null)
+                throw new KeyNotFoundException();
+
+            // Gather all purchaser person IDs
+            var purchaserPersonIds = dispositionFile.PimsDispositionSales
+                .SelectMany(sale => sale.PimsDispositionPurchasers)
+                .Where(p => p.PersonId.HasValue)
+                .Select(p => p.PersonId.Value)
+                .Distinct()
+                .ToList();
+
+            // Load all addresses and contact methods for purchaser persons in one go
+            var purchaserPersons = this.Context.PimsPeople
+                .Where(p => purchaserPersonIds.Contains(p.PersonId))
+                .Include(p => p.PimsPersonAddresses)
+                    .ThenInclude(pa => pa.AddressUsageTypeCodeNavigation)
+                .Include(p => p.PimsPersonAddresses)
+                    .ThenInclude(pa => pa.Address)
+                        .ThenInclude(a => a.ProvinceState)
+                .Include(p => p.PimsPersonAddresses)
+                    .ThenInclude(pa => pa.Address)
+                        .ThenInclude(a => a.Country)
+                .Include(p => p.PimsContactMethods)
+                    .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
+                .AsNoTracking()
+                .ToList();
+
+            // Attach loaded addresses/contact methods to the in-memory purchaser person objects
+            var purchaserPersonDict = purchaserPersons.ToDictionary(p => p.PersonId);
+            foreach (var sale in dispositionFile.PimsDispositionSales)
+            {
+                foreach (var purchaser in sale.PimsDispositionPurchasers)
+                {
+                    if (purchaser.PersonId.HasValue && purchaserPersonDict.TryGetValue(purchaser.PersonId.Value, out var person))
+                    {
+                        purchaser.Person = person;
+                    }
+                }
+            }
+
+            // Purchaser Organizations: Load and attach addresses/contact methods
+            var purchaserOrgIds = dispositionFile.PimsDispositionSales
+                .SelectMany(sale => sale.PimsDispositionPurchasers)
+                .Where(p => p.OrganizationId.HasValue)
+                .Select(p => p.OrganizationId.Value)
+                .Distinct()
+                .ToList();
+
+            var purchaserOrgs = this.Context.PimsOrganizations
+                .Where(o => purchaserOrgIds.Contains(o.OrganizationId))
+                .Include(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(oa => oa.AddressUsageTypeCodeNavigation)
+                .Include(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(oa => oa.Address)
+                        .ThenInclude(a => a.ProvinceState)
+                .Include(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(oa => oa.Address)
+                        .ThenInclude(a => a.Country)
+                .Include(o => o.PimsContactMethods)
+                    .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
+                .AsNoTracking()
+                .ToList();
+
+            var purchaserOrgDict = purchaserOrgs.ToDictionary(o => o.OrganizationId);
+            foreach (var sale in dispositionFile.PimsDispositionSales)
+            {
+                foreach (var purchaser in sale.PimsDispositionPurchasers)
+                {
+                    if (purchaser.OrganizationId.HasValue && purchaserOrgDict.TryGetValue(purchaser.OrganizationId.Value, out var org))
+                    {
+                        purchaser.Organization = org;
+                    }
+                }
+            }
+
+            // Solicitor: Person and Organization
+            var solicitorPersonIds = dispositionFile.PimsDispositionSales
+                .Where(sale => sale.DspPurchSolicitor != null && sale.DspPurchSolicitor.PersonId.HasValue)
+                .Select(sale => sale.DspPurchSolicitor.PersonId.Value)
+                .Distinct()
+                .ToList();
+
+            var solicitorPersons = this.Context.PimsPeople
+                .Where(p => solicitorPersonIds.Contains(p.PersonId))
+                .Include(p => p.PimsPersonAddresses)
+                    .ThenInclude(pa => pa.AddressUsageTypeCodeNavigation)
+                .Include(p => p.PimsPersonAddresses)
+                    .ThenInclude(pa => pa.Address)
+                        .ThenInclude(a => a.ProvinceState)
+                .Include(p => p.PimsPersonAddresses)
+                    .ThenInclude(pa => pa.Address)
+                        .ThenInclude(a => a.Country)
+                .Include(p => p.PimsContactMethods)
+                    .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
+                .AsNoTracking()
+                .ToList();
+
+            var solicitorPersonDict = solicitorPersons.ToDictionary(p => p.PersonId);
+            foreach (var sale in dispositionFile.PimsDispositionSales)
+            {
+                var solicitor = sale.DspPurchSolicitor;
+                if (solicitor != null && solicitor.PersonId.HasValue && solicitorPersonDict.TryGetValue(solicitor.PersonId.Value, out var person))
+                {
+                    solicitor.Person = person;
+                }
+            }
+
+            var solicitorOrgIds = dispositionFile.PimsDispositionSales
+                .Where(sale => sale.DspPurchSolicitor != null && sale.DspPurchSolicitor.OrganizationId.HasValue)
+                .Select(sale => sale.DspPurchSolicitor.OrganizationId.Value)
+                .Distinct()
+                .ToList();
+
+            var solicitorOrgs = this.Context.PimsOrganizations
+                .Where(o => solicitorOrgIds.Contains(o.OrganizationId))
+                .Include(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(oa => oa.AddressUsageTypeCodeNavigation)
+                .Include(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(oa => oa.Address)
+                        .ThenInclude(a => a.ProvinceState)
+                .Include(o => o.PimsOrganizationAddresses)
+                    .ThenInclude(oa => oa.Address)
+                        .ThenInclude(a => a.Country)
+                .Include(o => o.PimsContactMethods)
+                    .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
+                .AsNoTracking()
+                .ToList();
+
+            var solicitorOrgDict = solicitorOrgs.ToDictionary(o => o.OrganizationId);
+            foreach (var sale in dispositionFile.PimsDispositionSales)
+            {
+                var solicitor = sale.DspPurchSolicitor;
+                if (solicitor != null && solicitor.OrganizationId.HasValue && solicitorOrgDict.TryGetValue(solicitor.OrganizationId.Value, out var org))
+                {
+                    solicitor.Organization = org;
+                }
+            }
+
+            return dispositionFile;
         }
 
         /// <summary>
