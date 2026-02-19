@@ -1,5 +1,6 @@
 import axios from 'axios';
 import { createMemoryHistory } from 'history';
+import { vi } from 'vitest';
 
 import { Claims } from '@/constants';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
