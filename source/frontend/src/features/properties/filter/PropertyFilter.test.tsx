@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { createMemoryHistory } from 'history';
+import { vi } from 'vitest';
 
 import { Claims } from '@/constants';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -15,9 +17,9 @@ import {
   RenderOptions,
   screen,
   userEvent,
-  waitFor,
   waitForEffects,
 } from '@/utils/test-utils';
+import { initialEnabledLayers } from '@/components/maps/leaflet/Control/LayersControl/LayersMenuLayout';
 
 import { PropertyFilter } from '.';
 import { Dms, DmsCoordinates } from './CoordinateSearch/models';
@@ -107,6 +109,8 @@ describe('MapFilterBar', () => {
 
   beforeEach(() => {
     import.meta.env.VITE_TENANT = 'MOTI';
+    vi.mocked(mapMachineBaseMock.setMapLayers).mockClear();
+    mapMachineBaseMock.activeLayers = new Set(initialEnabledLayers);
   });
 
   afterEach(() => {
@@ -656,6 +660,52 @@ describe('MapFilterBar', () => {
       tenureCleanup: '',
       legalDescription: null,
     });
+  });
+
+  it('activates the crown survey parcel layer when Survey Parcel is selected', async () => {
+    const { searchByDropdown } = setup({
+      props: {
+        propertyFilter: {
+          ...defaultPropertyFilter,
+        },
+      },
+    });
+    await waitForEffects();
+
+    await act(async () => {
+      userEvent.selectOptions(searchByDropdown, 'surveyParcel');
+    });
+    await waitForEffects();
+
+    expect(mapMachineBaseMock.setMapLayers).toHaveBeenCalledWith(
+      new Set([...initialEnabledLayers, 'crownSurveyParcels']),
+    );
+  });
+
+  it('deactivates the crown survey parcel layer when switching away from Survey Parcel', async () => {
+    const { searchByDropdown } = setup({
+      props: {
+        propertyFilter: {
+          ...defaultPropertyFilter,
+        },
+      },
+    });
+    await waitForEffects();
+
+    await act(async () => {
+      userEvent.selectOptions(searchByDropdown, 'surveyParcel');
+    });
+    await waitForEffects();
+
+    mapMachineBaseMock.activeLayers = new Set([...initialEnabledLayers, 'crownSurveyParcels']);
+    vi.mocked(mapMachineBaseMock.setMapLayers).mockClear();
+
+    await act(async () => {
+      userEvent.selectOptions(searchByDropdown, 'pid');
+    });
+    await waitForEffects();
+
+    expect(mapMachineBaseMock.setMapLayers).toHaveBeenCalledWith(new Set(initialEnabledLayers));
   });
 
   it('submits the form if there is lat/lng for geographic names', async () => {

@@ -21,7 +21,10 @@ const setup = (renderOptions: RenderOptions = {}) => {
   });
   const searchButton = utils.getByTestId('search');
   const resetButton = utils.getByTestId('reset-button');
-  return { searchButton, setFilter, resetButton, ...utils };
+  const hasNOCCheckbox = utils.container.querySelector(
+    `input[name="hasNoticeOfClaim"]`,
+  ) as HTMLInputElement;
+  return { searchButton, hasNOCCheckbox, setFilter, resetButton, ...utils };
 };
 
 describe('Acquisition Filter', () => {
@@ -82,6 +85,19 @@ describe('Acquisition Filter', () => {
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
         ownerName: 'DOE',
+      }),
+    );
+  });
+
+  it('searches by Notice of Claim', async () => {
+    const { searchButton, hasNOCCheckbox } = setup();
+
+    await act(async () => userEvent.click(hasNOCCheckbox));
+    await act(async () => userEvent.click(searchButton));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({
+        hasNoticeOfClaim: true,
       }),
     );
   });

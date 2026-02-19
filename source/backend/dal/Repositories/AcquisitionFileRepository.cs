@@ -952,6 +952,11 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.OrganizationId == long.Parse(filter.AcquisitionTeamMemberOrganizationId)));
             }
 
+            if (filter.HasNoticeOfClaim)
+            {
+                predicate = predicate.And(acq => acq.PimsNoticeOfClaims.Any(x => x.ReceivedDt != null || x.Comment != null));
+            }
+
             var query = Context.PimsAcquisitionFiles.AsNoTracking()
                 .Include(r => r.RegionCodeNavigation)
                 .Include(p => p.Project)
@@ -978,6 +983,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(x => x.Country)
                 .Include(fp => fp.PimsCompensationRequisitions)
                     .ThenInclude(fp => fp.AlternateProject)
+                .Include(noc => noc.PimsNoticeOfClaims)
                 .Where(predicate);
 
             if (filter.Sort?.Length > 0 && filter.Sort[0].Contains("FileNumber"))
