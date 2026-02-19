@@ -128,7 +128,6 @@ export const useGenerateAgreement = (
       interestHolders: [],
     });
     const agreementData = new Api_GenerateAgreement(agreement, fileData);
-    console.log('Generating agreement with data:', agreementData);
     const generatedFile = await generate({
       templateType: getTemplateTypeFromAgreementType(agreement.agreementType!.id),
       templateData: agreementData,

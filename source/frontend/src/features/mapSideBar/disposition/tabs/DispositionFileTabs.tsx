@@ -41,7 +41,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
 
   const tabViews: TabFileView[] = [];
   const { hasClaim } = useKeycloakWrapper();
-  const { setStaleLastUpdatedBy, file } = useContext(SideBarContext);
+  const { setStaleLastUpdatedBy, file, fileLoading } = useContext(SideBarContext);
   const history = useHistory();
   const { tab } = useParams<{ tab?: string }>();
   const activeTab = Object.values(FileTabType).find(value => value === tab) ?? defaultTab;
@@ -88,17 +88,18 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
   }
 
   tabViews.push({
-    content: (
-      <AgreementContainer
-        fileId={dispositionFile.id}
-        View={AgreementView}
-        getFile={getFile}
-        getAgreements={getAgreements}
-        getProperties={getProperties}
-        deleteAgreement={deleteAgreement}
-        statusSolver={statusSolver}
-      />
-    ),
+    content:
+      !fileLoading && file?.id ? (
+        <AgreementContainer
+          fileId={file.id}
+          View={AgreementView}
+          getFile={getFile}
+          getAgreements={getAgreements}
+          getProperties={getProperties}
+          deleteAgreement={deleteAgreement}
+          statusSolver={statusSolver}
+        />
+      ) : null,
     key: FileTabType.AGREEMENTS,
     name: 'Agreements',
   });
