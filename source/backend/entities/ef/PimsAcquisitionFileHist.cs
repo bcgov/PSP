@@ -75,10 +75,10 @@ public partial class PimsAcquisitionFileHist
     public string FileName { get; set; }
 
     [Column("FILE_NO")]
-    public int FileNo { get; set; }
+    public int? FileNo { get; set; }
 
     [Column("FILE_NO_SUFFIX")]
-    public short FileNoSuffix { get; set; }
+    public short? FileNoSuffix { get; set; }
 
     [Column("LEGACY_FILE_NUMBER")]
     [StringLength(18)]
