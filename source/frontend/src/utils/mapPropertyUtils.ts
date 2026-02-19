@@ -428,6 +428,35 @@ export interface RegionDistrictResult {
   districtResult: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties>;
 }
 
+const REGION_DISTRICT_CONCURRENCY = 8;
+
+const runWithConcurrency = async <T, R>(
+  items: T[],
+  limit: number,
+  iterator: (item: T) => Promise<R>,
+): Promise<R[]> => {
+  if (items.length === 0) {
+    return [];
+  }
+
+  const results: R[] = new Array(items.length);
+  let nextIndex = 0;
+  const workerCount = Math.min(limit, items.length);
+
+  const runWorker = async () => {
+    while (nextIndex < items.length) {
+      const currentIndex = nextIndex;
+      nextIndex += 1;
+      results[currentIndex] = await iterator(items[currentIndex]);
+    }
+  };
+
+  const workers = Array.from({ length: workerCount }, runWorker);
+
+  await Promise.all(workers);
+  return results;
+};
+
 export function featureSetToLatLngKey(featureSet: SelectedFeatureDataset | null | undefined) {
   if (exists(featureSet.location)) {
     const latLng: LatLngLiteral = {
@@ -481,24 +510,25 @@ export async function getRegionAndDistrictsResults(
     }
   }
 
-  // Prepare all parallel tasks
-  const entries = Array.from(latLngMap.entries()).map(([key, latLng]) =>
-    Promise.all([regionSearch(latLng, 'SHAPE'), districtSearch(latLng, 'SHAPE')]).then(
-      ([regionResult, districtResult]): [string, RegionDistrictResult] => [
-        key,
-        {
-          regionResult: regionResult ?? null,
-          districtResult: districtResult ?? null,
-        },
-      ],
-    ),
+  const fetchedEntries = await runWithConcurrency(
+    Array.from(latLngMap.entries()),
+    REGION_DISTRICT_CONCURRENCY,
+    async ([key, latLng]) => {
+      const [regionResult, districtResult] = await Promise.all([
+        regionSearch(latLng, 'SHAPE'),
+        districtSearch(latLng, 'SHAPE'),
+      ]);
+
+      const value: RegionDistrictResult = {
+        regionResult: regionResult ?? null,
+        districtResult: districtResult ?? null,
+      };
+
+      return [key, value] as [string, RegionDistrictResult];
+    },
   );
 
-  // Resolve in parallel
-  const results = await Promise.all(entries);
-
-  // Convert back into a Map
-  return new Map(results);
+  return new Map(fetchedEntries);
 }
 
 export function apiPropertyToPimsFeature(
