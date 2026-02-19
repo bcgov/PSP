@@ -97,9 +97,7 @@ describe('File properties improvements list view', () => {
 
     await act(async () => userEvent.click(deleteButton));
 
-    expect(
-      await findByText(/You have selected to delete this Improvement/i),
-    ).toBeVisible();
+    expect(await findByText(/You have selected to delete this Improvement/i)).toBeVisible();
 
     const okButton = getByTitle('ok-modal');
     await act(async () => userEvent.click(okButton));

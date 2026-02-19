@@ -39,7 +39,8 @@ describe('Management filter', () => {
       ...utils,
       getSearchButton: () => screen.getByTestId('search'),
       getResetButton: () => screen.getByTestId('reset-button'),
-      getHasNOCCheckbox: () => utils.container.querySelector(`input[name="hasNoticeOfClaim"]`) as HTMLInputElement,
+      getHasNOCCheckbox: () =>
+        utils.container.querySelector(`input[name="hasNoticeOfClaim"]`) as HTMLInputElement,
     };
   };
 
@@ -121,9 +122,8 @@ describe('Management filter', () => {
     );
   });
 
-    it('searches by file has NOC', async () => {
+  it('searches by file has NOC', async () => {
     const { getSearchButton, getHasNOCCheckbox } = setup();
-
 
     await act(async () => userEvent.click(getHasNOCCheckbox()));
     await act(async () => userEvent.click(getSearchButton()));
