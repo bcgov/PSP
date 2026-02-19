@@ -11,6 +11,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private readonly By propertyHideWindowBttn = By.XPath("//div[@class='col']/h1/parent::div/following-sibling::div/span/button");
         private readonly By propertyShowWindowBttn = By.XPath("//div/div/div/div/div/div/span/button[@title='expand']");
+        private readonly By propertyCloseButton = By.CssSelector("div[data-testid='leaflet-buttons-section'] *[data-testid='close-leaflet-button']");
         private readonly By propertyViewInfoBttn = By.XPath("//div[contains(text(),'View Property Info')]/parent::button");
         private readonly By propertyNewResearchFileBttn = By.XPath("//div[contains(text(),'Research File')]/parent::button");
         private readonly By propertyNewAcquisitionFileBttn = By.XPath("//div[contains(text(),'Acquisition File')]/parent::button");
@@ -24,6 +25,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyInformationTitleTab = By.CssSelector("a[data-rb-event-key='ltsa']");
         private readonly By propertyInformationValueTab = By.XPath("a[data-rb-event-key='bcassessment')]");
         private readonly By propertyInformationHwyTab = By.CssSelector("a[data-rb-event-key='highway')]");
+        private readonly By propertyInformationPMBCTab = By.CssSelector("a[data-rb-event-key='pmbc')]");
+        private readonly By propertyInformationCrownTab = By.CssSelector("a[data-rb-event-key='crown')]");
         private readonly By propertyInformationOtherTab = By.CssSelector("a[data-rb-event-key='other')]");
 
         private readonly By propertyInformationPlanTab = By.CssSelector("a[data-rb-event-key='plan']");
@@ -153,6 +156,45 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyHWYLTSAUpdateUserLabel = By.XPath("//label[text()='Ltsa update user']");
         private readonly By propertyHWYRelatedGazetteLabel = By.XPath("//label[text()='Related gazettes']");
         private readonly By propertyHWYRelativePathLabel = By.XPath("//label[text()='Relative path']");
+
+        //Property PMBC Tab Elements
+        private readonly By propertyPMBCTitle = By.XPath("//div/b[contains(text(),'LTSA ParcelMap data')]");
+        private readonly By propertyPMBCPIDLabel = By.XPath("//label[text()='Parcel PID']");
+        private readonly By propertyPMBCPINLabel = By.XPath("//label[text()='Parcel PIN']");
+        private readonly By propertyPMBCPlanNbrLabel = By.XPath("//label[text()='Plan number']");
+        private readonly By propertyPMBCOwnerTypeLabel = By.XPath("//label[text()='Legal description']");
+        private readonly By propertyPMBCMunicipalityLabel = By.XPath("//label[text()='Owner type']");
+        private readonly By propertyPMBCRegionalDistrictLabel = By.XPath("//label[text()='Municipality']");
+        private readonly By propertyPMBCDistrictLabel = By.XPath("//label[text()='Regional district']");
+        private readonly By propertyPMBCAreaLabel = By.XPath("//label[text()='Area']");
+        private readonly By propertyPMBCParcelClassLabel = By.XPath("//label[text()='Parcel class']");
+        private readonly By propertyPMBCSUrveyDesignation1Label = By.XPath("//label[text()='Survey designation one']");
+        private readonly By propertyPMBCSUrveyDesignation2Label = By.XPath("//label[text()='Survey designation two']");
+        private readonly By propertyPMBCSUrveyDesignation3Label = By.XPath("//label[text()='Survey designation three']");
+
+        //Property Crown Tab Elements
+        private readonly By propertyCrownTitle = By.XPath("//div/b[contains(text(),'Crown Land Tenures')]");
+        private readonly By propertyCrownIntridSidLabel = By.XPath("//label[text()='Intrid sid']");
+        private readonly By propertyCrownTenureStageLabel = By.XPath("//label[text()='Tenure stage']");
+        private readonly By propertyCrownTenureStatusLabel = By.XPath("//label[text()='Tenure status']");
+        private readonly By propertyCrownTenureTypeLabel = By.XPath("//label[text()='Tenure type']");
+        private readonly By propertyCrownTenureSubtypeLabel = By.XPath("//label[text()='Tenure subtype']");
+        private readonly By propertyCrownTenurePurposeLabel = By.XPath("//label[text()='Tenure purpose']");
+        private readonly By propertyCrownTenureSubpurposeLabel = By.XPath("//label[text()='Tenure subpurpose']");
+        private readonly By propertyCrownLandsFileLabel = By.XPath("//label[text()='Crown lands file']");
+        private readonly By propertyCrownApplicationTypeLabel = By.XPath("//label[text()='Application type cde']");
+        private readonly By propertyCrownTenureDocLabel = By.XPath("//label[text()='Tenure document']");
+        private readonly By propertyCrownTenureExpiryLabel = By.XPath("//label[text()='Tenure expiry']");
+        private readonly By propertyCrownLegalDescriptionLabel = By.XPath("//label[text()='Tenure location']");
+        private readonly By propertyCrownTenureAreaDerivationLabel = By.XPath("//label[text()='Tenure legal description']");
+        private readonly By propertyCrownAreaHtcLabel = By.XPath("//label[text()='Tenure area in hectares']");
+        private readonly By propertyCrownResponsibleBusinessLabel = By.XPath("//label[text()='Responsible business unit']");
+        private readonly By propertyCrownDispositionTransactionLabel = By.XPath("//label[text()='Disposition transaction sid']");
+        private readonly By propertyCrownCodeChrStageLabel = By.XPath("//label[text()='Code chr stage']");
+        private readonly By propertyCrownFeatureCodeLabel = By.XPath("//label[text()='Feature code']");
+        private readonly By propertyCrownFeatureAreaSqmLabel = By.XPath("//label[text()='Feature area sqm']");
+        private readonly By propertyCrownFeatureLengthLabel = By.XPath("//label[text()='Feature length m']");
+        private readonly By propertyCrownObjectiveIdLabel = By.XPath("//label[text()='Objectid']");
 
         //Property Other Tab Elements
         private readonly By propertyOtherMunicipalityTitle = By.XPath("//div/b[contains(text(),'Municipality Information')]");
@@ -295,8 +337,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyDetailsVolCubeFeetInput = By.Name("volume-cubic-feet");
         private readonly By propertyDetailsVolTypeSelect = By.Id("input-volumetricParcelTypeCode");
 
-        private readonly By propertyDetailsNotesTextarea = By.Id("input-notes");
-
         //Property Information Confirmation Modal
         private readonly By propertyInformationConfirmationModal = By.CssSelector("div[class='modal-content']");
 
@@ -327,6 +367,12 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilClickable(propertyLeafletCloseLink);
             webDriver.FindElement(propertyLeafletCloseLink).Click();
+        }
+
+        public void ClosePropertyLeafletTab()
+        {
+            WaitUntilClickable(propertyCloseButton);
+            webDriver.FindElement(propertyCloseButton).Click();
         }
 
         public void OpenMoreOptionsPopUp()
@@ -422,6 +468,18 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilClickable(propertyInformationOtherTab);
             webDriver.FindElement(propertyInformationOtherTab).Click();
+        }
+
+        public void NavigatePropertyPMBCTab()
+        {
+            WaitUntilClickable(propertyInformationPMBCTab);
+            webDriver.FindElement(propertyInformationPMBCTab).Click();
+        }
+
+        public void NavigatePropertyCrownTab()
+        {
+            WaitUntilClickable(propertyInformationCrownTab);
+            webDriver.FindElement(propertyInformationCrownTab).Click();
         }
 
         public void EditPropertyInfoBttn()
@@ -740,6 +798,49 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(propertyHWYLTSAUpdateUserLabel);
             AssertTrueIsDisplayed(propertyHWYRelatedGazetteLabel);
             AssertTrueIsDisplayed(propertyHWYRelativePathLabel);
+        }
+
+        public void VerifyPMBCTab()
+        {
+            AssertTrueIsDisplayed(propertyPMBCTitle);
+            AssertTrueIsDisplayed(propertyPMBCPIDLabel);
+            AssertTrueIsDisplayed(propertyPMBCPINLabel);
+            AssertTrueIsDisplayed(propertyPMBCPlanNbrLabel);
+            AssertTrueIsDisplayed(propertyPMBCOwnerTypeLabel);
+            AssertTrueIsDisplayed(propertyPMBCMunicipalityLabel);
+            AssertTrueIsDisplayed(propertyPMBCRegionalDistrictLabel);
+            AssertTrueIsDisplayed(propertyPMBCDistrictLabel);
+            AssertTrueIsDisplayed(propertyPMBCAreaLabel);
+            AssertTrueIsDisplayed(propertyPMBCParcelClassLabel);
+            AssertTrueIsDisplayed(propertyPMBCSUrveyDesignation1Label);
+            AssertTrueIsDisplayed(propertyPMBCSUrveyDesignation2Label);
+            AssertTrueIsDisplayed(propertyPMBCSUrveyDesignation3Label);
+        }
+
+        public void VerifyCrownTab()
+        {
+            AssertTrueIsDisplayed(propertyCrownTitle);
+            AssertTrueIsDisplayed(propertyCrownIntridSidLabel);
+            AssertTrueIsDisplayed(propertyCrownTenureStageLabel);
+            AssertTrueIsDisplayed(propertyCrownTenureStatusLabel);
+            AssertTrueIsDisplayed(propertyCrownTenureTypeLabel);
+            AssertTrueIsDisplayed(propertyCrownTenureSubtypeLabel);
+            AssertTrueIsDisplayed(propertyCrownTenurePurposeLabel);
+            AssertTrueIsDisplayed(propertyCrownTenureSubpurposeLabel);
+            AssertTrueIsDisplayed(propertyCrownLandsFileLabel);
+            AssertTrueIsDisplayed(propertyCrownApplicationTypeLabel);
+            AssertTrueIsDisplayed(propertyCrownTenureDocLabel);
+            AssertTrueIsDisplayed(propertyCrownTenureExpiryLabel);
+            AssertTrueIsDisplayed(propertyCrownLegalDescriptionLabel);
+            AssertTrueIsDisplayed(propertyCrownTenureAreaDerivationLabel);
+            AssertTrueIsDisplayed(propertyCrownAreaHtcLabel);
+            AssertTrueIsDisplayed(propertyCrownResponsibleBusinessLabel);
+            AssertTrueIsDisplayed(propertyCrownDispositionTransactionLabel);
+            AssertTrueIsDisplayed(propertyCrownCodeChrStageLabel);
+            AssertTrueIsDisplayed(propertyCrownFeatureCodeLabel);
+            AssertTrueIsDisplayed(propertyCrownFeatureAreaSqmLabel);
+            AssertTrueIsDisplayed(propertyCrownFeatureLengthLabel);
+            AssertTrueIsDisplayed(propertyCrownObjectiveIdLabel);
         }
 
         public void VerifyOtherTab()

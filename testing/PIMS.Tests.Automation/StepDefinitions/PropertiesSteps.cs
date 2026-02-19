@@ -496,6 +496,22 @@ namespace PIMS.Tests.Automation.StepDefinitions
             mapFeatures.VerifyMapLayers();
         }
 
+        [StepDefinition(@"I search for a property by PID from row number (.*)")]
+        public void SearchPropertyPID(int rowNumber)
+        {
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Grab data from excel
+            PopulateSearchProperty(rowNumber);
+
+            //Search for a property by plan
+            searchProperties.SearchProperty(PID: searchProperty.PID);
+
+            //Click on first property found
+            searchProperties.SelectFirstPIMSResult();
+        }
+
         [StepDefinition(@"I search for a property by Plan Number from row number (.*)")]
         public void SearchPropertyPlan(int rowNumber)
         {
@@ -503,7 +519,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             loginSteps.Idir(userName);
 
             //Grab data from excel
-            PopulateManagementProperty(rowNumber);
+            PopulateSearchProperty(rowNumber);
 
             //Search for a property by plan
             searchProperties.SearchProperty(plan: searchProperty.PlanNumber);
@@ -523,6 +539,20 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             propertyInformation.NavigatePropertyHighwayTab();
             propertyInformation.VerifyHwyTab();
+        }
+
+        [StepDefinition(@"I verify the PMBC Tab")]
+        public void PMBCPropertyTab()
+        {
+            propertyInformation.NavigatePropertyPMBCTab();
+            propertyInformation.VerifyPMBCTab();
+        }
+
+        [StepDefinition(@"I verify the Crown Tab")]
+        public void CrownPropertyTab()
+        {
+            propertyInformation.NavigatePropertyCrownTab();
+            propertyInformation.VerifyCrownTab();
         }
 
         [StepDefinition(@"I verify the Other Tab")]
@@ -600,6 +630,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void VerifyPlanTabDetails()
         {
             propertyInformation.VerifyPlanTabDetails();
+        }
+
+        [StepDefinition(@"Property Tabs rendered successfully")]
+        public void PropertyTabsSuccess()
+        {
+            propertyInformation.ClosePropertyLeafletTab();
         }
 
         private void PopulateProperty(int rowNumber)
