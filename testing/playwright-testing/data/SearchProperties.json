@@ -18,13 +18,26 @@
       "LongitudeDirection": "W"
     },
     "SurveyParcel": {
-      "DistrictInput": "ALBERNI DISTRICT",
-      "DistrictLot": "90",
+      "DistrictInput": null,
+      "DistrictLot": null,
       "Section": null,
       "Township": null,
       "Range": null
     },
     "Project": "TestProject1402",
-    "TotalPropertiesCount": 9
+    "TotalPropertiesCount": 8
+  },
+  {
+    "Test Case Description": "Strata pop-up testing",
+    "PID": null,
+    "PIN": null,
+    "Address": null,
+    "PlanNumber": "LMS220",
+    "HistoricalFile": null,
+    "POIName": null,
+    "Coordinates": null,
+    "SurveyParcel": null,
+    "Project": null,
+    "TotalPropertiesCount": 1
   }
 ]

@@ -175,7 +175,7 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
           </StyledSpan>
           <MoreOptionsMenu options={menuOptions} ariaLabel="worklist more options" />
         </StyledHeaderDiv>
-        <ScrollArea>
+        <ScrollArea data-testid="worklist-scroll-area">
           {worklistItems.map((p, index) => (
             <WorklistItemContainer
               key={p.Parcel.id}

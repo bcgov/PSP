@@ -25,6 +25,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyInformationTitleTab = By.CssSelector("a[data-rb-event-key='ltsa']");
         private readonly By propertyInformationValueTab = By.XPath("//a[contains(text(),'Value')]");
 
+        private readonly By propertyInformationPlanTab = By.CssSelector("a[data-rb-event-key='plan']");
+
         //Property Information Header Elements
         private readonly By propertyInformationHeaderTitle = By.CssSelector("div[data-testid='form-title']");
         private readonly By propertyInformationHeaderAddressLabel = By.XPath("//label[contains(text(),'Civic Address')]");
@@ -102,6 +104,22 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyAssessmentSalesTitle = By.XPath("//h2/div/div[contains(text(),'Assessment Details')]");
         private readonly By propertySalesDescription = By.XPath("//div[contains(text(),'Description')]");
 
+        //Property Plan Tab Elements
+        private readonly By propertyStrataPlanTitle = By.XPath("//div[text()='Strata Plan Common Property Details']");
+        private readonly By propertyStrataPlanNumberLabel = By.XPath("//label[text()='Strata plan number']");
+        private readonly By propertyStrataLandDistrictLabel = By.XPath("//label[text()='Land title district']");
+
+        private readonly By propertyLegalNotationsTitle = By.XPath("//div[text()='Legal Notations on Strata Common Property']");
+        private readonly By propertyLegalNotationNbrLabel = By.XPath("//label[text()='Legal notations#']");
+        private readonly By propertyLegalNotationLabel = By.XPath("//label[text()='Legal notations']");
+        private readonly By propertyLegalNotationStatusLabel = By.XPath("//label[text()='Status']");
+        private readonly By propertyLegalNotationCancelDateLabel = By.XPath("//label[text()='Cancellation date']");
+
+        private readonly By propertyChargesStrataTitle = By.XPath("//div[text()='Charges on Strata Common Property']");
+        private readonly By propertyChargesRegistrationLabel = By.XPath("//label[text()='Registration #']");
+        private readonly By propertyChargesNatureLabel = By.XPath("//label[text()='Nature']");
+        private readonly By propertyChargesRegisteredDateLabel = By.XPath("//label[text()='Registered date']");
+        private readonly By propertyChangesRegisteredOwnerLabel = By.XPath("//label[text()='Registered owner']");
 
         //Property Details Elements
         private readonly By propertyDetailsTab = By.XPath("//a[contains(text(),'Property Details')]");
@@ -986,6 +1004,37 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(propertyInformationTitleTab);
             AssertTrueIsDisplayed(propertyInformationTitleTab);
             AssertTrueIsDisplayed(propertyInformationValueTab);
+        }
+
+        public void VerifyPlanInventoryPropertyTabs()
+        {
+            WaitUntilVisible(propertyInformationPlanTab);
+
+            Assert.Equal(10, webDriver.FindElements(propertyInformationTabsTotal).Count);
+            AssertTrueIsDisplayed(propertyInformationPlanTab);
+
+            webDriver.FindElement(propertyInformationPlanTab).Click();
+        }
+
+        public void VerifyPlanTabDetails()
+        {
+            Wait();
+
+            AssertTrueIsDisplayed(propertyStrataPlanTitle);
+            AssertTrueIsDisplayed(propertyStrataPlanNumberLabel);
+            AssertTrueIsDisplayed(propertyStrataLandDistrictLabel);
+
+            AssertTrueIsDisplayed(propertyLegalNotationsTitle);
+            AssertTrueIsDisplayed(propertyLegalNotationNbrLabel);
+            AssertTrueIsDisplayed(propertyLegalNotationLabel);
+            AssertTrueIsDisplayed(propertyLegalNotationStatusLabel);
+            AssertTrueIsDisplayed(propertyLegalNotationCancelDateLabel);
+
+            AssertTrueIsDisplayed(propertyChargesStrataTitle);
+            Assert.True(webDriver.FindElements(propertyChargesRegistrationLabel).Count >= 1);
+            Assert.True(webDriver.FindElements(propertyChargesNatureLabel).Count >= 1);
+            Assert.True(webDriver.FindElements(propertyChargesRegisteredDateLabel).Count >= 1);
+            Assert.True(webDriver.FindElements(propertyChangesRegisteredOwnerLabel).Count >= 1);
         }
 
         public int PropertyTabs()

@@ -62,12 +62,12 @@ class SearchProperties {
     await this.page.getByTestId("geographic-name-input").fill(poiName);
     await expect(
       this.page.locator(
-        "//input[@data-testid='geographic-name-input']/following-sibling::ul[@class='suggestionList']"
+        "div[data-placement='bottom-start'] ul[class='suggestionList']"
       )
     ).toBeVisible();
     await this.page
       .locator(
-        "//input[@data-testid='geographic-name-input']/following-sibling::ul[@class='suggestionList']/li[1]"
+        "div[data-placement='bottom-start'] ul[class='suggestionList'] li:first-child"
       )
       .click();
     await this.page.getByTestId("search").click();
@@ -154,14 +154,23 @@ class SearchProperties {
   }
 
   async selectNthPMBCSearchResult(index) {
-    await this.page
-      .locator(
-        `div[data-testid="pmbc-search-results-section"] div[data-testid="search-property-${index}"]`
-      )
-      .click();
+    const loader = this.page.locator("div[data-testid='filter-backdrop-loading']").first();
+    if (await loader.isVisible()) {
+        await loader.waitFor({ state: "hidden" });
+    }
+
+    const selector = `div[data-testid="pmbc-search-results-section"] div[data-testid="search-property-${index}"]`;
+    const locator = this.page.locator(selector);
+
+    // Ensure the element is attached and stable before clicking
+    await locator.waitFor({ state: "visible", timeout: 10000 });
+
+    // Use a targeted click
+    await locator.click();
   }
 
   async selectNthPIMSSearchResult(index) {
+     await this.page.locator(`div[data-testid="pims-search-results-section"] div[data-testid="search-property-${index}"]`).waitFor({ status: "visible" });
     await this.page
       .locator(
         `div[data-testid="pims-search-results-section"] div[data-testid="search-property-${index}"]`
@@ -170,7 +179,7 @@ class SearchProperties {
   }
 
   async closePropertyLeaflet() {
-    const closeLeafketBttn = await this.page.location(
+    const closeLeafketBttn = await this.page.locator(
       "div[data-testid='leaflet-buttons-section'] *[data-testid='close-leaflet-button']"
     );
     await closeLeafketBttn.waitFor({ status: "visible" });
@@ -229,11 +238,9 @@ class SearchProperties {
   }
 
   async addPropertyToWorklistFromQuickInfo() {
-    clickAndWaitFor(
-      this.page,
-      "button[data-testid='quick-info-more-options']",
-      "div[aria-labelledby='dropdown-ellipsis']"
-    );
+    await this.page.locator("div[data-testid='quick-info'] div[data-testid='filter-backdrop-loading']").waitFor({ state: 'hidden' });
+    await this.page.locator("button[data-testid='quick-info-more-options']").waitFor({ state: 'visible' });
+    await this.page.locator("button[data-testid='quick-info-more-options']").click();
     await this.page
       .locator(
         "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']"
@@ -337,6 +344,30 @@ class SearchProperties {
       "*[data-testid='close-icon']"
     );
     expect(quickInfoCloseIcon).toBeVisible({ timeout: 120000 });
+  }
+
+  async verifyMultiplePropertyPopup() {
+    const popupTitle = await this.page.locator(
+      "//div[@class='leaflet-popup-content']/div/div[text()='Multiple properties found']"
+    );
+    expect(popupTitle).toBeVisible({timeout: 12000});
+
+    const closeButton = await this.page.locator("div[class='leaflet-popup-content'] button[title='close']");
+    expect(closeButton).toBeVisible({timeout: 12000});
+
+    const commonPropertyDiv = await this.page.locator("//div[@class='leaflet-popup-content']/div/div/div/div[contains(text(),'Common Property')]");
+    expect(commonPropertyDiv).toBeVisible({timeout: 12000});
+
+    const propertiesPID = await this.page.locator("//div[@class='leaflet-popup-content']/div/div/div").textContent();
+    expect(parseInt(propertiesPID)).toBeGreaterThan(1);
+
+    const addWorklistBttn = await this.page.locator("//div[@class='leaflet-popup-content']/div/button[2]");
+    expect(addWorklistBttn).toBeVisible({timeout: 12000});
+  }
+
+   async closeMultiplePropertyPopup() {
+    const closeButton = await this.page.locator("div[class='leaflet-popup-content'] button[title='close']");
+    await closeButton.click();
   }
 }
 

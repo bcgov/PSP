@@ -21,12 +21,36 @@ class MapLayers {
     await expect(this.page.locator("#management")).toBeVisible();
     await expect(this.page.locator("label[for='disposition']")).toBeVisible();
     await expect(this.page.locator("#disposition")).toBeVisible();
+    await expect(this.page.locator("#disposition_complete")).toBeVisible();
     await expect(this.page.locator("label[for='LeaseLayers']")).toBeVisible();
     await expect(this.page.locator("#LeaseLayers")).toBeVisible();
+    await expect(this.page.locator("#lease_receivable")).toBeVisible();
+    await expect(this.page.locator("#lease_payable")).toBeVisible();
+
     await expect(
       this.page.locator("label[for='InterestLayers']")
     ).toBeVisible();
     await expect(this.page.locator("#InterestLayers")).toBeVisible();
+    await expect(
+      this.page.locator("label[for='license_to_construct_take']")
+    ).toBeVisible();
+    await expect(this.page.locator("#license_to_construct_take")).toBeVisible();
+    await expect(
+      this.page.locator("label[for='land_act_take']")
+    ).toBeVisible();
+    await expect(this.page.locator("#land_act_take")).toBeVisible();
+    await expect(
+      this.page.locator("label[for='srw_take']")
+    ).toBeVisible();
+    await expect(this.page.locator("#srw_take")).toBeVisible();
+    await expect(
+      this.page.locator("label[for='surplus_take']")
+    ).toBeVisible();
+    await expect(this.page.locator("#surplus_take")).toBeVisible();
+    await expect(
+      this.page.locator("label[for='inventory_takee']")
+    ).toBeVisible();
+    await expect(this.page.locator("#inventory_take")).toBeVisible();
 
     await expect(
       this.page.locator("//div[contains(text(),'External')]")

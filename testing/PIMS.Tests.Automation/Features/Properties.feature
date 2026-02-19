@@ -85,6 +85,11 @@ Scenario Outline: 12._Property_Management_Lease_Active_Indicator
 	| No				| 16        |
 	| Yes               | 17        |
 
+Scenario: 13._Strata_Properties_Tabs
+	Given I search for a property by Plan Number from row number 39
+	When I verify the MultiProperty Tabs
+	Then Multiproperty property rendered successfully
+
 
 
 
