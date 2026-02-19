@@ -556,7 +556,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [HttpGet("{id:long}/agreements/{agreementId:long}")]
         [HasPermission(Permissions.AgreementView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(DispositionAgreementModel), 200)]
+        [ProducesResponseType(typeof(DispositionAgreementModel), 201)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
         public IActionResult GetDispositionFileAgreementById([FromRoute] long id, [FromRoute] long agreementId)
         {
@@ -568,8 +568,13 @@ namespace Pims.Api.Areas.Disposition.Controllers
                 DateTime.Now);
 
             var agreement = _dispositionService.GetAgreementById(id, agreementId);
+            var model = _mapper.Map<DispositionAgreementModel>(agreement);
 
-            return new JsonResult(_mapper.Map<DispositionAgreementModel>(agreement));
+            return CreatedAtAction(
+                nameof(GetDispositionFileAgreementById),
+                new { id, agreementId = model.AgreementId },
+                model
+            );
         }
 
         /// <summary>

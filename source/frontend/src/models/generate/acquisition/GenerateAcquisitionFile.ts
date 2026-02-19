@@ -190,10 +190,10 @@ export class Api_GenerateAcquisitionFile implements ICompensationRequisitionFile
         'primaryContact' in team && team.primaryContact
           ? new Api_GeneratePerson(team.primaryContact)
           : undefined;
-      org.phone = primary?.phone;
-      org.email = primary?.email;
+      org.phone = primary?.phone ?? '';
+      org.email = primary?.email ?? '';
       if (overrideOrgAddress) {
-        org.address = primary?.address;
+        org.address = primary?.address ?? null;
       }
       return org;
     }

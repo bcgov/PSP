@@ -50,7 +50,6 @@ namespace Pims.Dal.Repositories
         {
             using var scope = Logger.QueryScope();
 
-            // Load the main entity with only direct navigation properties
             var dispositionFile = this.Context.PimsDispositionFiles.AsNoTracking()
                 .Include(d => d.DispositionFileStatusTypeCodeNavigation)
                 .Include(d => d.Project)
@@ -79,12 +78,9 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(d => d.PrimaryContact)
                 .Include(d => d.PimsDispositionFileTeams)
                     .ThenInclude(d => d.DspFlTeamProfileTypeCodeNavigation)
-                .FirstOrDefault(d => d.DispositionFileId == id);
+                .FirstOrDefault(d => d.DispositionFileId == id) ?? throw new KeyNotFoundException();
 
-            if (dispositionFile == null)
-                throw new KeyNotFoundException();
-
-            // Gather all purchaser person IDs
+            // Gather all purchaser person IDs associated with the disposition file
             var purchaserPersonIds = dispositionFile.PimsDispositionSales
                 .SelectMany(sale => sale.PimsDispositionPurchasers)
                 .Where(p => p.PersonId.HasValue)
@@ -92,7 +88,7 @@ namespace Pims.Dal.Repositories
                 .Distinct()
                 .ToList();
 
-            // Load all addresses and contact methods for purchaser persons in one go
+            // Gather addresses/contact methods associated with purchaserPersonIds
             var purchaserPersons = this.Context.PimsPeople
                 .Where(p => purchaserPersonIds.Contains(p.PersonId))
                 .Include(p => p.PimsPersonAddresses)
@@ -108,7 +104,7 @@ namespace Pims.Dal.Repositories
                 .AsNoTracking()
                 .ToList();
 
-            // Attach loaded addresses/contact methods to the in-memory purchaser person objects
+            // Add addresses/contact methods to the PimsDispositionPurchasers
             var purchaserPersonDict = purchaserPersons.ToDictionary(p => p.PersonId);
             foreach (var sale in dispositionFile.PimsDispositionSales)
             {
@@ -121,7 +117,6 @@ namespace Pims.Dal.Repositories
                 }
             }
 
-            // Purchaser Organizations: Load and attach addresses/contact methods
             var purchaserOrgIds = dispositionFile.PimsDispositionSales
                 .SelectMany(sale => sale.PimsDispositionPurchasers)
                 .Where(p => p.OrganizationId.HasValue)
