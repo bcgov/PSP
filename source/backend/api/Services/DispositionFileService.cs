@@ -103,6 +103,17 @@ namespace Pims.Api.Services
             return dispositionFile;
         }
 
+        public PimsDispositionFile GetDeepById(long id)
+        {
+            _logger.LogInformation("Getting disposition file deep with id {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, id);
+
+            var dispositionFile = _dispositionFileRepository.GetDeepById(id);
+
+            return dispositionFile;
+        }
+
         public PimsDispositionFile Update(long id, PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
             dispositionFile.ThrowIfNull(nameof(dispositionFile));

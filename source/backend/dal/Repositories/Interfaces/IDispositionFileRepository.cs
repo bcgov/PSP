@@ -10,6 +10,8 @@ namespace Pims.Dal.Repositories
 
         PimsDispositionFile GetById(long id);
 
+        PimsDispositionFile GetDeepById(long id);
+
         PimsDispositionFile Add(PimsDispositionFile disposition);
 
         PimsDispositionFile Update(long dispositionFileId, PimsDispositionFile dispositionFile);

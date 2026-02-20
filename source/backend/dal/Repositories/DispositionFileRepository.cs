@@ -42,45 +42,39 @@ namespace Pims.Dal.Repositories
         #region Methods
 
         /// <summary>
-        /// Retrieves the disposition file with the specified id.
+        /// Retrieves the disposition file with the specified id (lightweight version).
         /// </summary>
         /// <param name="id"></param>
         /// <returns></returns>
         public PimsDispositionFile GetById(long id)
         {
             using var scope = Logger.QueryScope();
+            return GetDispositionFileBaseQuery()
+                .FirstOrDefault(d => d.DispositionFileId == id) ?? throw new KeyNotFoundException();
+        }
 
-            var dispositionFile = this.Context.PimsDispositionFiles.AsNoTracking()
-                .Include(d => d.DispositionFileStatusTypeCodeNavigation)
-                .Include(d => d.Project)
-                .Include(d => d.Product)
-                .Include(d => d.DispositionFundingTypeCodeNavigation)
-                .Include(d => d.DispositionInitiatingDocTypeCodeNavigation)
-                .Include(d => d.DispositionStatusTypeCodeNavigation)
-                .Include(d => d.DispositionTypeCodeNavigation)
-                .Include(d => d.DspInitiatingBranchTypeCodeNavigation)
-                .Include(d => d.RegionCodeNavigation)
-                .Include(d => d.DspPhysFileStatusTypeCodeNavigation)
+        /// <summary>
+        /// Retrieves the disposition file with the specified id, including pimsPerson for purchaser and solicitor.
+        /// </summary>
+        /// <param name="id"></param>
+        /// <returns></returns>
+        public PimsDispositionFile GetDeepById(long id)
+        {
+            using var scope = Logger.QueryScope();
+
+            // Start with the base query (shallow)
+            var query = GetDispositionFileBaseQuery()
                 .Include(d => d.PimsDispositionSales)
                     .ThenInclude(sale => sale.PimsDispositionPurchasers)
                 .Include(d => d.PimsDispositionSales)
                     .ThenInclude(sale => sale.DspPurchSolicitor)
-                .Include(d => d.PimsDispositionAppraisals)
                 .Include(fp => fp.PimsDispositionFileProperties)
                     .ThenInclude(prop => prop.Property)
-                .Include(d => d.PimsDispositionOffers)
-                    .ThenInclude(o => o.DispositionOfferStatusTypeCodeNavigation)
-                .Include(d => d.PimsDispositionFileTeams)
-                    .ThenInclude(d => d.Organization)
-                .Include(d => d.PimsDispositionFileTeams)
-                    .ThenInclude(d => d.Person)
-                .Include(d => d.PimsDispositionFileTeams)
-                    .ThenInclude(d => d.PrimaryContact)
-                .Include(d => d.PimsDispositionFileTeams)
-                    .ThenInclude(d => d.DspFlTeamProfileTypeCodeNavigation)
-                .FirstOrDefault(d => d.DispositionFileId == id) ?? throw new KeyNotFoundException();
+                .AsSplitQuery();
 
-            // Gather all purchaser person IDs associated with the disposition file
+            var dispositionFile = query.FirstOrDefault(d => d.DispositionFileId == id) ?? throw new KeyNotFoundException();
+
+            // Gather all purchaser person IDs
             var purchaserPersonIds = dispositionFile.PimsDispositionSales
                 .SelectMany(sale => sale.PimsDispositionPurchasers)
                 .Where(p => p.PersonId.HasValue)
@@ -88,7 +82,7 @@ namespace Pims.Dal.Repositories
                 .Distinct()
                 .ToList();
 
-            // Gather addresses/contact methods associated with purchaserPersonIds
+            // Load all addresses and contact methods for purchaser persons in one go
             var purchaserPersons = this.Context.PimsPeople
                 .Where(p => purchaserPersonIds.Contains(p.PersonId))
                 .Include(p => p.PimsPersonAddresses)
@@ -104,7 +98,7 @@ namespace Pims.Dal.Repositories
                 .AsNoTracking()
                 .ToList();
 
-            // Add addresses/contact methods to the PimsDispositionPurchasers
+            // Attach loaded addresses/contact methods to the in-memory purchaser person objects
             var purchaserPersonDict = purchaserPersons.ToDictionary(p => p.PersonId);
             foreach (var sale in dispositionFile.PimsDispositionSales)
             {
@@ -117,6 +111,7 @@ namespace Pims.Dal.Repositories
                 }
             }
 
+            // Purchaser Organizations: Load and attach addresses/contact methods
             var purchaserOrgIds = dispositionFile.PimsDispositionSales
                 .SelectMany(sale => sale.PimsDispositionPurchasers)
                 .Where(p => p.OrganizationId.HasValue)
@@ -935,6 +930,38 @@ namespace Pims.Dal.Repositories
             // As per Confluence - default sort to show chronological, newest first; based upon File Assigned Date
             query = (filter.Sort?.Any() == true) ? query.OrderByProperty(true, filter.Sort) : query.OrderByDescending(disp => disp.AssignedDt ?? DateOnly.FromDateTime(DateTime.MinValue));
 
+            return query;
+        }
+
+        /// <summary>
+        /// Shared base query for disposition file retrieval.
+        /// </summary>
+        private IQueryable<PimsDispositionFile> GetDispositionFileBaseQuery()
+        {
+            var query = this.Context.PimsDispositionFiles.AsNoTracking()
+                .Include(d => d.DispositionFileStatusTypeCodeNavigation)
+                .Include(d => d.Project)
+                .Include(d => d.Product)
+                .Include(d => d.DispositionFundingTypeCodeNavigation)
+                .Include(d => d.DispositionInitiatingDocTypeCodeNavigation)
+                .Include(d => d.DispositionStatusTypeCodeNavigation)
+                .Include(d => d.DispositionTypeCodeNavigation)
+                .Include(d => d.DspInitiatingBranchTypeCodeNavigation)
+                .Include(d => d.RegionCodeNavigation)
+                .Include(d => d.DspPhysFileStatusTypeCodeNavigation)
+                .Include(d => d.PimsDispositionSales)
+                .Include(d => d.PimsDispositionAppraisals)
+                .Include(fp => fp.PimsDispositionFileProperties)
+                .Include(d => d.PimsDispositionOffers)
+                    .ThenInclude(o => o.DispositionOfferStatusTypeCodeNavigation)
+                .Include(d => d.PimsDispositionFileTeams)
+                    .ThenInclude(d => d.Organization)
+                .Include(d => d.PimsDispositionFileTeams)
+                    .ThenInclude(d => d.Person)
+                .Include(d => d.PimsDispositionFileTeams)
+                    .ThenInclude(d => d.PrimaryContact)
+                .Include(d => d.PimsDispositionFileTeams)
+                    .ThenInclude(d => d.DspFlTeamProfileTypeCodeNavigation);
             return query;
         }
         #endregion

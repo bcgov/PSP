@@ -49,7 +49,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
   const agreementProvider = useAgreementProvider();
   const dispositionProvider = useDispositionProvider();
 
-  const getFile = dispositionProvider.getDispositionFile;
+  const getFile = dispositionProvider.getDispositionFileDeep;
   const getProperties = dispositionProvider.getDispositionProperties;
   const getAgreements = agreementProvider.getDispositionFileAgreements;
   const deleteAgreement = agreementProvider.deleteDispositionAgreement;

@@ -80,6 +80,31 @@ namespace Pims.Api.Areas.Disposition.Controllers
         }
 
         /// <summary>
+        /// Gets the specified disposition file with all related entities.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("{id:long}/deep")]
+        [HasPermission(Permissions.DispositionView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(DispositionFileModel), 200)]
+        [SwaggerOperation(Tags = new[] { "dispositionfile" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetDispositionFileDeep(long id)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(DispositionFileController),
+                nameof(GetDispositionFileDeep),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _dispositionService.GetType());
+
+            var dispositionFile = _dispositionService.GetDeepById(id);
+            return new JsonResult(_mapper.Map<DispositionFileModel>(dispositionFile));
+        }
+
+        /// <summary>
         /// Creates a new Disposition File entity.
         /// </summary>
         /// <returns></returns>
@@ -556,7 +581,7 @@ namespace Pims.Api.Areas.Disposition.Controllers
         [HttpGet("{id:long}/agreements/{agreementId:long}")]
         [HasPermission(Permissions.AgreementView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(DispositionAgreementModel), 201)]
+        [ProducesResponseType(typeof(DispositionAgreementModel), 200)]
         [SwaggerOperation(Tags = new[] { "dispositionfile" })]
         public IActionResult GetDispositionFileAgreementById([FromRoute] long id, [FromRoute] long agreementId)
         {
@@ -568,13 +593,8 @@ namespace Pims.Api.Areas.Disposition.Controllers
                 DateTime.Now);
 
             var agreement = _dispositionService.GetAgreementById(id, agreementId);
-            var model = _mapper.Map<DispositionAgreementModel>(agreement);
 
-            return CreatedAtAction(
-                nameof(GetDispositionFileAgreementById),
-                new { id, agreementId = model.AgreementId },
-                model
-            );
+            return new JsonResult(_mapper.Map<DispositionAgreementModel>(agreement));
         }
 
         /// <summary>
