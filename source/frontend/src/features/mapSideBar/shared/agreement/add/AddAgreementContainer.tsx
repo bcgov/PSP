@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
+import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 
 import { IUpdateAgreementFormProps } from '../common/UpdateAgreementForm';
 import { AgreementFormModel } from '../models/AgreementFormModel';
@@ -15,7 +16,10 @@ export interface IAddAcquisitionAgreementContainerProps {
   isNew?: boolean;
   View: React.FC<IUpdateAgreementFormProps>;
   onSuccess: () => void;
-  onCreateAgreement: (fileId: number, data: any) => Promise<any>;
+  onCreateAgreement: (
+    fileId: number,
+    data: ApiGen_Concepts_Agreement,
+  ) => Promise<ApiGen_Concepts_Agreement>;
   isCreatingAgreement: boolean;
 }
 
