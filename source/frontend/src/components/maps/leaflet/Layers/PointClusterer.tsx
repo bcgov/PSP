@@ -109,13 +109,13 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     );
 
     return {
-      type: mapMachine.mapFeatureData.pimsLiteFeatures.type,
+      type: mapMachine.mapFeatureData?.pimsLiteFeatures?.type,
       features: shouldShowSearchResultsAtAnyZoom || zoom > minZoom ? displayableFeatures : [],
     };
   }, [
     mapMachine.activePimsPropertyIds,
-    mapMachine.mapFeatureData.pimsLiteFeatures.type,
-    mapMachine.mapFeatureData.pimsLiteFeatures?.features,
+    mapMachine.mapFeatureData?.pimsLiteFeatures?.type,
+    mapMachine.mapFeatureData?.pimsLiteFeatures?.features,
     mapMachine.showDisposed,
     mapMachine.showRetired,
     minZoom,
