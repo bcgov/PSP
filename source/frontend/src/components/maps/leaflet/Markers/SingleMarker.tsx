@@ -97,6 +97,7 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
     mapMachine.requestCenterToLocation(latlng);
   };
 
+  const isOwned = isPimsFeature(pointFeature);
   const icon = getIcon(pointFeature, isSelected, mapMachine.showDisposed, mapMachine.showRetired);
 
   // render single marker, not in a cluster
@@ -105,6 +106,7 @@ const SinglePropertyMarker: React.FC<React.PropsWithChildren<SinglePropertyMarke
       {...pointFeature.properties}
       position={markerPosition}
       icon={icon}
+      zIndexOffset={isOwned ? 0 : -100}
       eventHandlers={{
         dblclick: (event: LeafletMouseEvent) => {
           map.fireEvent('dblclick', event); // bubble up double click events to the map.
