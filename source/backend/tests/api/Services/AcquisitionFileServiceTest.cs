@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NetTopologySuite.Geometries;
@@ -144,6 +145,61 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Add_Duplicate_LegacyFileNumber_Error()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.LegacyFileNumber = "BC-99999";
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            repository.Setup(x => x.LegacyFileNumberExists(It.IsAny<string>())).Returns(true);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            // Act
+            Action act = () => service.Add(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void Add_Duplicate_OverrideFileNumber_Error()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.LegacyFileNumber = null;
+            acqFile.FileNo = 9999;
+            acqFile.OverrideFileNumberSequence = true;
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            repository.Setup(x => x.LegacyFileNumberExists(It.IsAny<string>())).Returns(true);
+            repository.Setup(x => x.CheckDuplicateFile(It.IsAny<short>(),It.IsAny<int>(), 1)).Returns(true);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            // Act
+            Action act = () => service.Add(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
         public void Add_NoPermission_Error()
         {
             // Arrange
@@ -208,6 +264,38 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Once);
+        }
+
+        [Fact]
+        public void Add_LegacyFileNo_Fails_IsContractor()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionFileTeams.Add(new PimsAcquisitionFileTeam() { PersonId = 1, AcqFlTeamProfileTypeCode = "test" });
+            acqFile.ConcurrencyControlNumber = 1;
+            acqFile.OverrideFileNumberSequence = true;
+            acqFile.FileNo = 9999;
+            acqFile.LegacyFileNumber = null;
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            var newGuid = Guid.NewGuid();
+            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true);
+            contractorUser.PersonId = 1;
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            // Act
+            Action act = () => service.Add(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
         }
 
         [Fact]

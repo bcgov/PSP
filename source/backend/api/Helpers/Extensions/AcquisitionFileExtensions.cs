@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using System.Security.Claims;
+using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -34,10 +35,7 @@ namespace Pims.Api.Helpers.Extensions
         public static void ThrowContractorRemovedFromTeam(this PimsAcquisitionFile acquisitionFile, ClaimsPrincipal principal, IUserRepository userRepository, IProjectRepository projectRepository)
         {
             ArgumentNullException.ThrowIfNull(acquisitionFile);
-
             ArgumentNullException.ThrowIfNull(principal);
-
-            var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
 
             PimsProject project = null;
             if (acquisitionFile.ProjectId.HasValue)
@@ -45,9 +43,22 @@ namespace Pims.Api.Helpers.Extensions
                 project = projectRepository.TryGet(acquisitionFile.ProjectId.Value);
             }
 
+            var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
             if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.PersonId == pimsUser.PersonId) && (project == null || !project.PimsProjectPeople.Any(x => x.PersonId == pimsUser.PersonId)))
             {
                 throw new UserOverrideException(UserOverrideCode.ContractorSelfRemoved, "Contractors cannot remove themselves from a file. Please contact the admin at pims@gov.bc.ca");
+            }
+        }
+
+        public static void ThrowContractorLegacyFileForbidden(this PimsAcquisitionFile acquisitionFile, ClaimsPrincipal principal, IUserRepository userRepository)
+        {
+            ArgumentNullException.ThrowIfNull(acquisitionFile);
+            ArgumentNullException.ThrowIfNull(principal);
+
+            var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
+            if (pimsUser?.IsContractor == true && acquisitionFile.OverrideFileNumberSequence)
+            {
+                throw new BadRequestException("Contractors cannot create Acquisition files with legacy numbers. Please contact the admin at pims@gov.bc.ca");
             }
         }
     }

@@ -233,6 +233,7 @@ export const getEmptyAcquisitionFile = (): ApiGen_Concepts_AcquisitionFile => {
     parentAcquisitionFileId: null,
     fileName: null,
     fileNumber: null,
+    overrideFileNumberSequence: false,
     fileNumberSuffix: 0,
     fileStatusTypeCode: null,
     physicalFileDetails: null,

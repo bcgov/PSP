@@ -16,7 +16,10 @@ namespace Pims.Dal.Entities
         /// Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number.
         /// </summary>
         [NotMapped]
-        public string FileNumberFormatted { get => GenerateAcquisitionFileNumber(RegionCode, FileNo, FileNoSuffix); }
+        public string FileNumberFormatted => GenerateAcquisitionFileNumber(this.RegionCode, this.FileNo, this.FileNoSuffix);
+
+        [NotMapped]
+        public bool OverrideFileNumberSequence { get; set; } = false;
         #endregion
 
         /// <summary>
