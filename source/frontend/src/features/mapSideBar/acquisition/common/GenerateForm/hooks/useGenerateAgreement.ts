@@ -8,8 +8,10 @@ import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_AgreementTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementTypes';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_DispositionFileTeam } from '@/models/api/generated/ApiGen_Concepts_DispositionFileTeam';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
@@ -25,6 +27,7 @@ export const useGenerateAgreement = (
   getProperties:
     | ReturnType<typeof useAcquisitionProvider>['getAcquisitionProperties']
     | ReturnType<typeof useDispositionProvider>['getDispositionProperties'],
+  isAcquisition = false,
 ) => {
   const { getPersonConcept, getOrganizationConcept } = useApiContacts();
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
@@ -40,10 +43,14 @@ export const useGenerateAgreement = (
       throw Error('File not found');
     }
     file.fileProperties = properties ?? null;
-    const isAcquisition = 'acquisitionTeam' in file;
 
-    const team = isAcquisition ? file.acquisitionTeam : file.dispositionTeam;
-    const interestHolders = isAcquisition ? file.acquisitionFileInterestHolders : [];
+    const team = isAcquisition
+      ? (file as ApiGen_Concepts_AcquisitionFile).acquisitionTeam
+      : (file as ApiGen_Concepts_DispositionFile).dispositionTeam;
+
+    const interestHolders = isAcquisition
+      ? (file as ApiGen_Concepts_AcquisitionFile).acquisitionFileInterestHolders
+      : [];
 
     const coordinators = team?.filter(team => team.teamProfileTypeCode === 'PROPCOORD');
     const negotiatingAgents = team?.filter(team => team.teamProfileTypeCode === 'NEGOTAGENT');

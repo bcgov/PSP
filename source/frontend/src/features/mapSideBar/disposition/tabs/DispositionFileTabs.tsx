@@ -98,6 +98,7 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
           getProperties={getProperties}
           deleteAgreement={deleteAgreement}
           statusSolver={statusSolver}
+          isAcquisition={false}
         />
       ) : null,
     key: FileTabType.AGREEMENTS,

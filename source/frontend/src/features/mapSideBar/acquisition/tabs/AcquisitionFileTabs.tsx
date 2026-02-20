@@ -111,6 +111,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           getProperties={getProperties}
           deleteAgreement={deleteAgreement}
           statusSolver={solverStatus}
+          isAcquisition={true}
         />
       ),
       key: FileTabType.AGREEMENTS,
