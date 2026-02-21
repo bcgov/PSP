@@ -260,32 +260,35 @@ namespace Pims.Api.Models.Report.Lease
 
         private static string GetFallbackPropertyIdentifier(PimsPropertyLease propertyLease)
         {
-            PimsProperty property = propertyLease.Property;
+            PimsProperty property = propertyLease?.Property;
             if (property?.Pid != null)
             {
                 return PidTranslator.ConvertPIDToDash(property.Pid.ToString());
             }
-            else if (property?.Pin != null)
+
+            if (property?.Pin != null)
             {
                 return property.Pin.ToString();
             }
-            else if (property?.Address != null && !string.IsNullOrEmpty(property.Address.StreetAddress1))
+
+            if (property?.Address != null && !string.IsNullOrEmpty(property.Address.StreetAddress1))
             {
                 string[] addressStrings = new string[2] { property.Address.StreetAddress1, property.Address.MunicipalityName };
                 return $"({string.Join(" ", addressStrings.Where(s => s != null))})";
             }
-            else if (!string.IsNullOrEmpty(propertyLease?.Name))
+
+            if (!string.IsNullOrEmpty(propertyLease?.Name))
             {
                 return $"({propertyLease.Name})";
             }
-            else if (property?.Location != null)
+
+            if (property?.Location != null)
             {
                 return $"({property.Location.Coordinate.X}, {property.Location.Coordinate.Y})";
             }
-            else
-            {
-                return "No Property Identifier";
-            }
+
+            // Fallback if no identifier is available.
+            return "No Property Identifier";
         }
 
         private static string GetHistoricalFileNumbers(PimsLease lease)
