@@ -41,6 +41,63 @@ namespace Pims.Dal.Repositories
 
         #region Methods
 
+        private static void AttachPurchaserPersons(PimsDispositionFile dispositionFile, List<PimsPerson> purchaserPersons)
+        {
+            var purchaserPersonDict = purchaserPersons.ToDictionary(p => p.PersonId);
+            foreach (var sale in dispositionFile.PimsDispositionSales)
+            {
+                foreach (var purchaser in sale.PimsDispositionPurchasers)
+                {
+                    if (purchaser.PersonId.HasValue && purchaserPersonDict.TryGetValue(purchaser.PersonId.Value, out var person))
+                    {
+                        purchaser.Person = person;
+                    }
+                }
+            }
+        }
+
+        private static void AttachPurchaserOrganizations(PimsDispositionFile dispositionFile, List<PimsOrganization> purchaserOrgs)
+        {
+            var purchaserOrgDict = purchaserOrgs.ToDictionary(o => o.OrganizationId);
+            foreach (var sale in dispositionFile.PimsDispositionSales)
+            {
+                foreach (var purchaser in sale.PimsDispositionPurchasers)
+                {
+                    if (purchaser.OrganizationId.HasValue && purchaserOrgDict.TryGetValue(purchaser.OrganizationId.Value, out var org))
+                    {
+                        purchaser.Organization = org;
+                    }
+                }
+            }
+        }
+
+        private static void AttachSolicitorPersons(PimsDispositionFile dispositionFile, List<PimsPerson> solicitorPersons)
+        {
+            var solicitorPersonDict = solicitorPersons.ToDictionary(p => p.PersonId);
+            foreach (var sale in dispositionFile.PimsDispositionSales)
+            {
+                var solicitor = sale.DspPurchSolicitor;
+                if (solicitor != null && solicitor.PersonId.HasValue && solicitorPersonDict.TryGetValue(solicitor.PersonId.Value, out var person))
+                {
+                    solicitor.Person = person;
+                }
+            }
+        }
+
+        private static void AttachSolicitorOrganizations(PimsDispositionFile dispositionFile, List<PimsOrganization> solicitorOrgs)
+        {
+            var solicitorOrgDict = solicitorOrgs.ToDictionary(o => o.OrganizationId);
+            foreach (var sale in dispositionFile.PimsDispositionSales)
+            {
+                var solicitor = sale.DspPurchSolicitor;
+                if (solicitor != null && solicitor.OrganizationId.HasValue && solicitorOrgDict.TryGetValue(solicitor.OrganizationId.Value, out var org))
+                {
+                    solicitor.Organization = org;
+                }
+            }
+        }
+
+
         /// <summary>
         /// Retrieves the disposition file with the specified id (lightweight version).
         /// </summary>
@@ -98,26 +155,12 @@ namespace Pims.Dal.Repositories
                 .AsNoTracking()
                 .ToList();
 
-            // Attach loaded addresses/contact methods to the in-memory purchaser person objects
-            var purchaserPersonDict = purchaserPersons.ToDictionary(p => p.PersonId);
-            foreach (var sale in dispositionFile.PimsDispositionSales)
-            {
-                foreach (var purchaser in sale.PimsDispositionPurchasers)
-                {
-                    if (purchaser.PersonId.HasValue && purchaserPersonDict.TryGetValue(purchaser.PersonId.Value, out var person))
-                    {
-                        purchaser.Person = person;
-                    }
-                }
-            }
-
-            // Purchaser Organizations: Load and attach addresses/contact methods
             var purchaserOrgIds = dispositionFile.PimsDispositionSales
-                .SelectMany(sale => sale.PimsDispositionPurchasers)
-                .Where(p => p.OrganizationId.HasValue)
-                .Select(p => p.OrganizationId.Value)
-                .Distinct()
-                .ToList();
+               .SelectMany(sale => sale.PimsDispositionPurchasers)
+               .Where(p => p.OrganizationId.HasValue)
+               .Select(p => p.OrganizationId.Value)
+               .Distinct()
+               .ToList();
 
             var purchaserOrgs = this.Context.PimsOrganizations
                 .Where(o => purchaserOrgIds.Contains(o.OrganizationId))
@@ -134,19 +177,6 @@ namespace Pims.Dal.Repositories
                 .AsNoTracking()
                 .ToList();
 
-            var purchaserOrgDict = purchaserOrgs.ToDictionary(o => o.OrganizationId);
-            foreach (var sale in dispositionFile.PimsDispositionSales)
-            {
-                foreach (var purchaser in sale.PimsDispositionPurchasers)
-                {
-                    if (purchaser.OrganizationId.HasValue && purchaserOrgDict.TryGetValue(purchaser.OrganizationId.Value, out var org))
-                    {
-                        purchaser.Organization = org;
-                    }
-                }
-            }
-
-            // Solicitor: Person and Organization
             var solicitorPersonIds = dispositionFile.PimsDispositionSales
                 .Where(sale => sale.DspPurchSolicitor != null && sale.DspPurchSolicitor.PersonId.HasValue)
                 .Select(sale => sale.DspPurchSolicitor.PersonId.Value)
@@ -167,16 +197,6 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(cm => cm.ContactMethodTypeCodeNavigation)
                 .AsNoTracking()
                 .ToList();
-
-            var solicitorPersonDict = solicitorPersons.ToDictionary(p => p.PersonId);
-            foreach (var sale in dispositionFile.PimsDispositionSales)
-            {
-                var solicitor = sale.DspPurchSolicitor;
-                if (solicitor != null && solicitor.PersonId.HasValue && solicitorPersonDict.TryGetValue(solicitor.PersonId.Value, out var person))
-                {
-                    solicitor.Person = person;
-                }
-            }
 
             var solicitorOrgIds = dispositionFile.PimsDispositionSales
                 .Where(sale => sale.DspPurchSolicitor != null && sale.DspPurchSolicitor.OrganizationId.HasValue)
@@ -199,15 +219,10 @@ namespace Pims.Dal.Repositories
                 .AsNoTracking()
                 .ToList();
 
-            var solicitorOrgDict = solicitorOrgs.ToDictionary(o => o.OrganizationId);
-            foreach (var sale in dispositionFile.PimsDispositionSales)
-            {
-                var solicitor = sale.DspPurchSolicitor;
-                if (solicitor != null && solicitor.OrganizationId.HasValue && solicitorOrgDict.TryGetValue(solicitor.OrganizationId.Value, out var org))
-                {
-                    solicitor.Organization = org;
-                }
-            }
+            AttachPurchaserPersons(dispositionFile, purchaserPersons);
+            AttachPurchaserOrganizations(dispositionFile, purchaserOrgs);
+            AttachSolicitorPersons(dispositionFile, solicitorPersons);
+            AttachSolicitorOrganizations(dispositionFile, solicitorOrgs);
 
             return dispositionFile;
         }
@@ -964,6 +979,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(d => d.DspFlTeamProfileTypeCodeNavigation);
             return query;
         }
+
         #endregion
     }
 }
