@@ -64,7 +64,7 @@ namespace Pims.Dal.Repositories
             if (contractorPersonId is not null)
             {
                 query = query.Where(p => p.LeasePeriod.Lease.PimsLeaseLicenseTeams.Any(lt => lt.PersonId == contractorPersonId) ||
-                    p.LeasePeriod.Lease.Project.PimsProjectPeople.Any(pp => pp.PersonId == contractorPersonId));
+                    (p.LeasePeriod.Lease.Project != null && p.LeasePeriod.Lease.Project.PimsProjectPeople.Any(pp => pp.PersonId == contractorPersonId)));
             }
 
             return query;

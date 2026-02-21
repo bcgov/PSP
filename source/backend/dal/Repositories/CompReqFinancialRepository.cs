@@ -133,7 +133,7 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(projectBuilder);
             }
 
-            var acquisitionPredicate = PredicateBuilder.New<PimsCompReqFinancial>(p => true);
+            var acquisitionPredicate = PredicateBuilder.New<PimsCompReqFinancial>(includeAcquisitions);
             if (includeAcquisitions)
             {
                 acquisitionPredicate = acquisitionPredicate.And(f => f.CompensationRequisition.AcquisitionFile != null);
@@ -159,7 +159,7 @@ namespace Pims.Dal.Repositories
                 }
             }
 
-            var leasePredicate = PredicateBuilder.New<PimsCompReqFinancial>(p => true);
+            var leasePredicate = PredicateBuilder.New<PimsCompReqFinancial>(includeLeases);
             if (includeLeases)
             {
                 leasePredicate = leasePredicate.And(f => f.CompensationRequisition.Lease != null);
