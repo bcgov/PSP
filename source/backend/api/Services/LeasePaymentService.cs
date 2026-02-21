@@ -71,7 +71,7 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate)
         {
-            return _leasePaymentRepository.GetAllTracking(startDate, endDate);
+            return _leasePaymentRepository.GetAllByDateRange(startDate, endDate);
         }
 
         public bool DeletePayment(long leaseId, PimsLeasePayment payment)
