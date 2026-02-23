@@ -1,4 +1,4 @@
-import axios, { AxiosError } from 'axios';
+import axios, { AxiosError, AxiosResponse } from 'axios';
 import { FormikHelpers } from 'formik/dist/types';
 import { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -6,6 +6,7 @@ import { toast } from 'react-toastify';
 
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
+import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 
 import { IUpdateAgreementFormProps } from '../common/UpdateAgreementForm';
 import { AgreementFormModel } from '../models/AgreementFormModel';
@@ -16,8 +17,15 @@ export interface IUpdateAcquisitionAgreementContainerProps {
   fileType: 'acquisition' | 'disposition';
   View: React.FC<IUpdateAgreementFormProps>;
   onSuccess: () => void;
-  updateAgreement: (fileId: number, agreementId: number, agreement: any) => Promise<any>;
-  getAgreement: (fileId: number, agreementId: number) => Promise<any>;
+  updateAgreement: (
+    fileId: number,
+    agreementId: number,
+    agreement: ApiGen_Concepts_Agreement,
+  ) => Promise<AxiosResponse<ApiGen_Concepts_Agreement>>;
+  getAgreement: (
+    fileId: number,
+    agreementId: number,
+  ) => Promise<AxiosResponse<ApiGen_Concepts_Agreement>>;
   fetchingAgreement: boolean;
   updatingAgreement: boolean;
 }

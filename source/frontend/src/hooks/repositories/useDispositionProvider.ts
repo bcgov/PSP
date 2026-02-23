@@ -66,7 +66,7 @@ export const useDispositionProvider = () => {
   });
 
   const getDispositionFileApi = useApiRequestWrapper<
-    (dispositionFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFile, any>>
+    (dispositionFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFile>>
   >({
     requestFunction: useCallback(
       async (dispositionFileId: number) => await getDispositionFile(dispositionFileId),
