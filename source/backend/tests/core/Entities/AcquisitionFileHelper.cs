@@ -15,21 +15,20 @@ namespace Pims.Core.Test
         /// Create a new instance of an Acquisition file.
         /// </summary>
         /// <returns></returns>
-        public static Entity.PimsAcquisitionFile CreateAcquisitionFile(long? acqFileId = null, string name = null, PimsAcquisitionFileStatusType statusType = null, PimsAcquisitionType acquisitionType = null, PimsRegion region = null)
+        public static PimsAcquisitionFile CreateAcquisitionFile(long? acqFileId = null, string name = null, PimsAcquisitionFileStatusType statusType = null, PimsAcquisitionType acquisitionType = null, PimsRegion region = null)
         {
-            var acquisitionFile = new Entity.PimsAcquisitionFile()
+            var acquisitionFile = new PimsAcquisitionFile
             {
                 AcquisitionFileId = acqFileId ?? 1,
                 FileName = name ?? "Test Acquisition File",
                 ConcurrencyControlNumber = 1,
+                AcquisitionFileStatusTypeCode = "ACTIVE",
+                AcquisitionFileStatusTypeCodeNavigation = statusType ?? new PimsAcquisitionFileStatusType() { Id = "ACTIVE", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" },
+                AcquisitionTypeCodeNavigation = acquisitionType ?? new PimsAcquisitionType() { Id = "SECTN3", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "test" },
+                RegionCodeNavigation = region ?? new PimsRegion("Northern") { RegionCode = 1, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test" },
             };
-            acquisitionFile.FileNo = 12345;
-            acquisitionFile.FileNoSuffix = 1;
-            acquisitionFile.AcquisitionFileStatusTypeCode = "ACTIVE";
-            acquisitionFile.AcquisitionFileStatusTypeCodeNavigation = statusType ?? new Entity.PimsAcquisitionFileStatusType() { Id = "ACTIVE", Description = "Active", DbCreateUserid = "test", DbLastUpdateUserid = "test" };
-            acquisitionFile.AcquisitionTypeCodeNavigation = acquisitionType ?? new Entity.PimsAcquisitionType() { Id = "SECTN3", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "test" };
-            acquisitionFile.RegionCodeNavigation = region ?? new Entity.PimsRegion("Northern") { RegionCode = 1, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test" };
             acquisitionFile.RegionCode = acquisitionFile.RegionCodeNavigation.RegionCode;
+            acquisitionFile.OverrideFileNumberSequence = false;
 
             return acquisitionFile;
         }
@@ -43,7 +42,7 @@ namespace Pims.Core.Test
             var statusType = context.PimsAcquisitionFileStatusTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find acquisition file status type.");
             var acquisitionType = context.PimsAcquisitionTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find acquisition type.");
             var region = context.PimsRegions.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find region.");
-            var acquisitionFile = EntityHelper.CreateAcquisitionFile(acqFileId: acqFileId, name: name, statusType: statusType, acquisitionType: acquisitionType, region: region);
+            var acquisitionFile = CreateAcquisitionFile(acqFileId: acqFileId, name: name, statusType: statusType, acquisitionType: acquisitionType, region: region);
             context.PimsAcquisitionFiles.Add(acquisitionFile);
 
             return acquisitionFile;

@@ -26,6 +26,7 @@ export class UpdateAcquisitionSummaryFormModel
 {
   id?: number;
   parentAcquisitionFileId: number | null = null;
+  overrideFileNumberSequence = false;
   fileNo?: number;
   fileNumberSuffix?: number;
   fileNumber?: string;
@@ -84,6 +85,7 @@ export class UpdateAcquisitionSummaryFormModel
         ? this.parentAcquisitionFileId
         : null,
       fileNo: this.fileNo ?? 0,
+      overrideFileNumberSequence: this.overrideFileNumberSequence,
       fileNumber: this.fileNumber ?? null,
       fileNumberSuffix: this.fileNumberSuffix ?? 0,
       legacyFileNumber: this.legacyFileNumber ?? null,

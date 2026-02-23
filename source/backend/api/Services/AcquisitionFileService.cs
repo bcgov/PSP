@@ -219,6 +219,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileAdd);
 
             acquisitionFile.ThrowMissingContractorInTeam(_user, _userRepository, _projectRepository);
+            acquisitionFile.ThrowContractorLegacyFileForbidden(_user, _userRepository);
 
             // validate the new acq region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
@@ -226,6 +227,8 @@ namespace Pims.Api.Services
             {
                 throw new BadRequestException("Cannot set an acquisition file's region to 'cannot determine'");
             }
+
+            CheckFileNumberDuplicate(acquisitionFile);
 
             // No existing properties when adding a new file
             MatchProperties(acquisitionFile, userOverrides, new HashSet<long>());
@@ -673,6 +676,25 @@ namespace Pims.Api.Services
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
             return _acqFileRepository.GetAcquisitionSubFiles(id, userRegions, contractorPersonId);
+        }
+
+        private void CheckFileNumberDuplicate(PimsAcquisitionFile acquisitionFile)
+        {
+            if (!acquisitionFile.OverrideFileNumberSequence)
+            {
+                if (!string.IsNullOrEmpty(acquisitionFile.LegacyFileNumber) && _acqFileRepository.LegacyFileNumberExists(acquisitionFile.LegacyFileNumber))
+                {
+                    throw new BadRequestException("An acquisition file with this Legacy File number already exists.");
+                }
+            }
+            else
+            {
+                if (acquisitionFile.FileNo is not null && acquisitionFile.PrntAcquisitionFileId is null
+                    && _acqFileRepository.CheckDuplicateFile(acquisitionFile.RegionCode, acquisitionFile.FileNo.Value))
+                {
+                    throw new BadRequestException("An acquisition file with this number already exists.");
+                }
+            }
         }
 
         private void MatchProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrideCodes, HashSet<long> existingPropertyIds)

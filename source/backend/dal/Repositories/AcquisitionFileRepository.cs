@@ -686,12 +686,21 @@ namespace Pims.Dal.Repositories
                 }
             }
 
-            if (acquisitionFile.PrntAcquisitionFileId is null)
+            if (acquisitionFile.PrntAcquisitionFileId is null && !acquisitionFile.OverrideFileNumberSequence)
             {
                 // generate file number for "main" files
-                int nextFileNo = GetNextAcquisitionFileNumberSequenceValue();
-                acquisitionFile.FileNo = nextFileNo;
+                acquisitionFile.FileNo = GetNextAcquisitionFileNumberSequenceValue();
                 acquisitionFile.FileNoSuffix = 1;
+            }
+            else if (acquisitionFile.PrntAcquisitionFileId is null && acquisitionFile.OverrideFileNumberSequence && acquisitionFile.FileNo is not null)
+            {
+                acquisitionFile.FileNoSuffix = 1;
+                acquisitionFile.LegacyFileNumber = null;
+            }
+            else if (acquisitionFile.PrntAcquisitionFileId is null && acquisitionFile.OverrideFileNumberSequence && acquisitionFile.LegacyFileNumber is not null)
+            {
+                acquisitionFile.FileNo = null;
+                acquisitionFile.FileNoSuffix = null;
             }
             else
             {
@@ -832,6 +841,28 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault();
 
             return _mapper.Map<PimsAcquisitionFile>(acquisitionHist);
+        }
+
+        /// <summary>
+        /// Check if another file already exists with the same Legacy file number.
+        /// </summary>
+        /// <param name="legacyFileNo"></param>
+        /// <returns></returns>
+        public bool LegacyFileNumberExists(string legacyFileNo)
+        {
+            return Context.PimsAcquisitionFiles.AsNoTracking()
+                .Where(x => x.LegacyFileNumber == legacyFileNo).Any();
+        }
+
+        /// <summary>
+        /// Verify if a File number override already exists.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public bool CheckDuplicateFile(short regionCode, int fileNo, short fileNoSuffix = 1)
+        {
+            return Context.PimsAcquisitionFiles.AsNoTracking()
+                .Where(x => x.RegionCode == regionCode && x.FileNo == fileNo && x.FileNoSuffix == fileNoSuffix).Any();
         }
 
         /// <summary>

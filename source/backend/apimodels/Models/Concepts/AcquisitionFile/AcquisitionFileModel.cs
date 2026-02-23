@@ -25,6 +25,11 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public long? FileNo { get; set; }
 
         /// <summary>
+        /// get/set - Flag to override FileNo Sequence in favor of Legacy/pre-Legacy number.
+        /// </summary>
+        public bool OverrideFileNumberSequence { get; set; }
+
+        /// <summary>
         /// get/set - The File number Suffix.
         /// </summary>
         public short? FileNumberSuffix { get; set; }

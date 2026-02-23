@@ -22,6 +22,7 @@ export const mockAcquisitionFileResponse = (
   parentAcquisitionFileId: null,
   rowVersion,
   fileNo: 12345,
+  overrideFileNumberSequence: false,
   fileNumber: '01-12345-01',
   fileNumberSuffix: 1,
   fileName: name,
@@ -1492,6 +1493,7 @@ export const mockAcquisitionFileSubFilesResponse = (): ApiGen_Concepts_Acquisiti
   {
     parentAcquisitionFileId: 64,
     fileNo: 51,
+    overrideFileNumberSequence: false,
     fileNumberSuffix: 1,
     legacyFileNumber: '',
     assignedDate: '2024-10-17T21:44:15.107',
@@ -1549,6 +1551,7 @@ export const mockAcquisitionFileSubFilesResponse = (): ApiGen_Concepts_Acquisiti
   {
     parentAcquisitionFileId: 64,
     fileNo: 52,
+    overrideFileNumberSequence: false,
     fileNumberSuffix: 2,
     legacyFileNumber: '',
     assignedDate: '2024-10-17T21:45:36.29',
