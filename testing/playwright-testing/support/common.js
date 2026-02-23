@@ -86,7 +86,7 @@ async function clickAndWaitFor(
   const {
     maxRetries = 3,
     clickDelay = 2000, // ms delay before retry click
-    timeout = 10000, // time to wait for expected element before retry
+    timeout = 15000, // time to wait for expected element before retry
   } = options;
 
   let lastError;

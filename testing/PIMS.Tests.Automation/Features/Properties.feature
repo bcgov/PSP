@@ -85,6 +85,23 @@ Scenario Outline: 12._Property_Management_Lease_Active_Indicator
 	| No				| 16        |
 	| Yes               | 17        |
 
+Scenario: 13._Strata_Properties_Tabs
+	Given I search for a property by Plan Number from row number 39
+	When I verify the MultiProperty Tabs
+	Then Multiproperty property rendered successfully
+
+Scenario: 14._Property_Hwy_and_Other_Tabs
+	Given I search for a property by Plan Number from row number 40
+	When I verify the Highway Tab
+	And I verify the Other Tab
+	Then Property Tabs rendered successfully
+
+Scenario: 15._Property_PMBC_and_Crown_Tabs
+	Given I search for a property by PID from row number 41
+	When I verify the PMBC Tab
+	And I verify the Crown Tab
+	Then Property Tabs rendered successfully
+
 
 
 

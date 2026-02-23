@@ -100,11 +100,10 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting all leases with ids {leaseIds}", leaseIds);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-            var leases = _leaseRepository.GetAllByIds(leaseIds).ToList();
-            leaseIds.ForEach(leaseId =>
-            {
-                _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, leaseId);
-            });
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            var leases = _leaseRepository.GetAllByIds(leaseIds, pimsUser.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet(), contractorPersonId).ToList();
             return leases;
         }
 
@@ -129,10 +128,10 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.Page = all.HasValue && all.Value ? 1 : filter.Page;
             filter.Quantity = all.HasValue && all.Value ? _leaseRepository.Count() : filter.Quantity;
-            var user = _userRepository.GetUserInfoByKeycloakUserId(this.User.GetUserKey());
-            long? contractorPersonId = user.IsContractor ? user.PersonId : null;
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            var leases = _leaseRepository.GetPage(filter, user.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet(), contractorPersonId);
+            var leases = _leaseRepository.GetPage(filter, pimsUser.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet(), contractorPersonId);
             return leases;
         }
 

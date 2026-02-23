@@ -244,8 +244,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I update a Property details from a file from row number (.*)")]
         public void EditPropertyInformationDetailsFromFile(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-3460, PSP-3462, PSP-3590, PSP-3591, PSP-3599, PSP-3600, PSP-3612, PSP-3722, PSP-4791, PSP-4794, PSP-5162, PSP-5163, PSP-5164, PSP-5165 */
-
             //Populate Property Information
             PopulateProperty(rowNumber);
 
@@ -260,8 +258,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Cancel changes
             propertyInformation.CancelPropertyDetails();
-
-
 
             //Click on the Edit Property Information Button
             propertyInformation.EditPropertyInfoBttn();
@@ -500,6 +496,72 @@ namespace PIMS.Tests.Automation.StepDefinitions
             mapFeatures.VerifyMapLayers();
         }
 
+        [StepDefinition(@"I search for a property by PID from row number (.*)")]
+        public void SearchPropertyPID(int rowNumber)
+        {
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Grab data from excel
+            PopulateSearchProperty(rowNumber);
+
+            //Search for a property by plan
+            searchProperties.SearchProperty(PID: searchProperty.PID);
+
+            //Click on first property found
+            searchProperties.SelectFirstPIMSResult();
+        }
+
+        [StepDefinition(@"I search for a property by Plan Number from row number (.*)")]
+        public void SearchPropertyPlan(int rowNumber)
+        {
+            //Login to PIMS
+            loginSteps.Idir(userName);
+
+            //Grab data from excel
+            PopulateSearchProperty(rowNumber);
+
+            //Search for a property by plan
+            searchProperties.SearchProperty(plan: searchProperty.PlanNumber);
+
+            //Click on first property found
+            searchProperties.SelectFirstPIMSResult();
+        }
+
+        [StepDefinition(@"I verify the MultiProperty Tabs")]
+        public void MultiPropertyTabs()
+        {
+            propertyInformation.VerifyPlanInventoryPropertyTabs();
+        }
+
+        [StepDefinition(@"I verify the Highway Tab")]
+        public void HighwayPropertyTab()
+        {
+            propertyInformation.NavigatePropertyHighwayTab();
+            propertyInformation.VerifyHwyTab();
+        }
+
+        [StepDefinition(@"I verify the PMBC Tab")]
+        public void PMBCPropertyTab()
+        {
+            propertyInformation.NavigatePropertyPMBCTab();
+            propertyInformation.VerifyPMBCTab();
+        }
+
+        [StepDefinition(@"I verify the Crown Tab")]
+        public void CrownPropertyTab()
+        {
+            propertyInformation.NavigatePropertyCrownTab();
+            propertyInformation.VerifyCrownTab();
+        }
+
+        [StepDefinition(@"I verify the Other Tab")]
+        public void OtherPropertyTab()
+        {
+            propertyInformation.NavigatePropertyOtherTab();
+            propertyInformation.VerifyOtherTab();
+        }
+
         [StepDefinition(@"No Properties were found")]
         public void NonPropertyFound()
         {
@@ -562,6 +624,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
         {
             //Reset map filters
             mapFeatures.OpenMapLayers();
+        }
+
+        [StepDefinition(@"Multiproperty property rendered successfully")]
+        public void VerifyPlanTabDetails()
+        {
+            propertyInformation.VerifyPlanTabDetails();
+        }
+
+        [StepDefinition(@"Property Tabs rendered successfully")]
+        public void PropertyTabsSuccess()
+        {
+            propertyInformation.ClosePropertyLeafletTab();
         }
 
         private void PopulateProperty(int rowNumber)

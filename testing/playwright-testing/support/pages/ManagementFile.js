@@ -40,6 +40,8 @@ class ManagementFile {
     await this.page(managementFilePurposeSelect).selectOption({
       label: mgmtFile.ManagementPurpose,
     });
+
+    await this.page.getByTestId("save-button").click();
   }
 
   async verifyInitManagementFileDetailsPage() {
@@ -75,7 +77,7 @@ class ManagementFile {
       )
     ).toBeVisible();
     await expect(
-      this.page.locator("//h2/div/div[text()='Selected Properties']")
+      this.page.locator("//h2/div/div/div/div[text()='Selected Properties']")
     ).toBeVisible();
     await expect(
       this.page.locator("//div[contains(text(),'New workflow')]")
@@ -251,12 +253,12 @@ class ManagementFile {
     expect(this.page.getByTestId("sort-column-legacyFileNum")).toBeVisible();
 
     const projectColumn = await this.page.locator(
-      "div[data-testid='managementFilesTable'] div[class='thead thead-light'] div:nth-child(4) div[class='sortable-column']"
+      "div[data-testid='managementFilesTable'] div[class='thead thead-light'] div:nth-child(5) div[class='sortable-column']"
     );
     expect(projectColumn).toHaveText("Project");
 
     const purposeColumn = await this.page.locator(
-      "div[data-testid='managementFilesTable'] div[class='thead thead-light'] div:nth-child(5) div[class='sortable-column']"
+      "div[data-testid='managementFilesTable'] div[class='thead thead-light'] div:nth-child(6) div[class='sortable-column']"
     );
     expect(purposeColumn).toHaveText("Purpose");
 
@@ -404,23 +406,28 @@ class ManagementFile {
       .waitFor({ status: "visible" });
     expect(this.page.getByTestId("sort-column-fileName")).toBeVisible();
 
-    const historyFileColumn = await this.page.locator(
+    const regionsFileColumn = await this.page.locator(
       "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(3) div[class='sortable-column']"
     );
-    expect(historyFileColumn).toHaveText("Historical File #");
+    expect(regionsFileColumn).toHaveText("Region(s)");
 
     await this.page
       .getByTestId("sort-column-legacyFileNum")
       .waitFor({ status: "visible" });
     expect(this.page.getByTestId("sort-column-legacyFileNum")).toBeVisible();
 
-    const addressColumn = await this.page.locator(
+    const historicalColumn = await this.page.locator(
       "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(4) div[class='sortable-column']"
+    );
+    expect(historicalColumn).toHaveText("Historical File #");
+
+    const addressColumn = await this.page.locator(
+      "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(5) div[class='sortable-column']"
     );
     expect(addressColumn).toHaveText("Civic Address / PID / PIN");
 
     const typeColumn = await this.page.locator(
-      "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(5) div[class='sortable-column']"
+      "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(6) div[class='sortable-column']"
     );
     expect(typeColumn).toHaveText("Type");
 
@@ -430,12 +437,12 @@ class ManagementFile {
     expect(this.page.getByTestId("sort-column-activityType")).toBeVisible();
 
     const subtypeColumn = await this.page.locator(
-      "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(6) div[class='sortable-column']"
+      "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(7) div[class='sortable-column']"
     );
     expect(subtypeColumn).toHaveText("Sub-type");
 
     const statusColumn = await this.page.locator(
-      "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(7) div[class='sortable-column']"
+      "div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div:nth-child(8) div[class='sortable-column']"
     );
     expect(statusColumn).toHaveText("Status");
 

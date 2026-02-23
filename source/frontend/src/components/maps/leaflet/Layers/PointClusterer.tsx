@@ -77,6 +77,8 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
   const minZoom = minZoomProps ?? 0;
   const maxZoom = maxZoomProps ?? 18;
+  const shouldShowSearchResultsAtAnyZoom =
+    mapMachine.isFiltering && mapMachine.activePimsPropertyIds.length > 0;
 
   const [spider, setSpider] = useState<
     SpiderSet<
@@ -107,8 +109,8 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     );
 
     return {
-      type: mapMachine.mapFeatureData.pimsLiteFeatures.type,
-      features: zoom > minZoom ? displayableFeatures : [],
+      type: mapMachine.mapFeatureData?.pimsLiteFeatures?.type,
+      features: shouldShowSearchResultsAtAnyZoom || zoom > minZoom ? displayableFeatures : [],
     };
   }, [
     mapMachine.activePimsPropertyIds,
@@ -117,6 +119,7 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
     mapMachine.showDisposed,
     mapMachine.showRetired,
     minZoom,
+    shouldShowSearchResultsAtAnyZoom,
     zoom,
   ]);
 
@@ -140,15 +143,16 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
 
     return {
       type: mapMachine.mapFeatureData.pimsFeatures.type,
-      features: zoom > minZoom ? displayableFeatures : [],
+      features: shouldShowSearchResultsAtAnyZoom || zoom > minZoom ? displayableFeatures : [],
     };
   }, [
     mapMachine.activePimsPropertyIds,
-    mapMachine.mapFeatureData?.pimsFeatures?.type,
-    mapMachine.mapFeatureData?.pimsFeatures?.features,
+    mapMachine.mapFeatureData.pimsFeatures.type,
+    mapMachine.mapFeatureData.pimsFeatures?.features,
     mapMachine.showDisposed,
     mapMachine.showRetired,
     minZoom,
+    shouldShowSearchResultsAtAnyZoom,
     zoom,
   ]);
 
