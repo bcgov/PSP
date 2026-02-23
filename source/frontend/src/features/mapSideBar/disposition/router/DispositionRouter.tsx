@@ -5,6 +5,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import Claims from '@/constants/claims';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
+import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { exists, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
@@ -37,6 +38,10 @@ export interface IDispositionRouterProps {
 
 export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
   const { path, url } = useRouteMatch();
+  const agreementProvider = useAgreementProvider();
+
+  const { execute: postDispositionAgreement, loading: loadingDispositionAgreement } =
+    agreementProvider.addDispositionAgreement;
 
   if (!exists(props.dispositionFile)) {
     return null;
@@ -85,11 +90,13 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
           customRender={() =>
             props.dispositionFile?.id ? (
               <AddAgreementContainer
-                acquisitionFileId={props.dispositionFile?.id}
+                fileId={props.dispositionFile?.id}
                 View={UpdateAgreementForm}
                 onSuccess={props.onSuccess}
                 fileType="disposition"
                 isNew={true}
+                onCreateAgreement={postDispositionAgreement}
+                isCreatingAgreement={loadingDispositionAgreement}
               />
             ) : null
           }
@@ -107,6 +114,10 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
                 fileType="disposition"
                 View={UpdateAgreementForm}
                 onSuccess={props.onSuccess}
+                updateAgreement={agreementProvider.updateDispositionAgreement.execute}
+                updatingAgreement={agreementProvider.updateDispositionAgreement.loading}
+                getAgreement={agreementProvider.getDispositionAgreementById.execute}
+                fetchingAgreement={agreementProvider.getDispositionAgreementById.loading}
               />
             ) : null
           }

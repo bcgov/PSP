@@ -38,11 +38,12 @@ const AgreementForm: React.FunctionComponent<React.PropsWithChildren<IAcquisitio
   }, [getOptionsByType, isNew, fileType]);
 
   const agreementTypeSelectOptions = useMemo(() => {
-    return getAgreementSelectOptions(
-      API.AGREEMENT_TYPES,
-      fileType,
-      fileType === 'disposition' ? AGREEMENT.DISPOSITION_FORMS : undefined,
-    );
+    if (fileType === 'disposition') {
+      return getAgreementSelectOptions(API.AGREEMENT_TYPES, fileType, AGREEMENT.DISPOSITION_FORMS);
+    }
+
+    const options = getAgreementSelectOptions(API.AGREEMENT_TYPES, fileType);
+    return options.filter(option => option.value !== ApiGen_CodeTypes_AgreementTypes.H179RC);
   }, [getAgreementSelectOptions, fileType]);
 
   const agreementStatusTypeCodeValue: string | null = getIn(

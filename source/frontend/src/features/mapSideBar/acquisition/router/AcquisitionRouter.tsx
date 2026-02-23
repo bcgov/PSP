@@ -5,6 +5,7 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import Claims from '@/constants/claims';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
+import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { exists, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
@@ -35,6 +36,10 @@ export interface IAcquisitionRouterProps {
 
 export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
   const { path, url } = useRouteMatch();
+  const agreementProvider = useAgreementProvider();
+
+  const { execute: postAcquisitionAgreement, loading: loadingAcquisitionAgreement } =
+    agreementProvider.addAcquisitionAgreement;
 
   if (!exists(props.acquisitionFile)) {
     return null;
@@ -92,10 +97,12 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
           customRender={() =>
             props.acquisitionFile?.id ? (
               <AddAgreementContainer
-                acquisitionFileId={props.acquisitionFile?.id}
+                fileId={props.acquisitionFile?.id}
                 View={UpdateAgreementForm}
                 onSuccess={props.onSuccess}
                 fileType="acquisition"
+                onCreateAgreement={postAcquisitionAgreement}
+                isCreatingAgreement={loadingAcquisitionAgreement}
               />
             ) : null
           }
@@ -113,6 +120,10 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
                 fileType="acquisition"
                 View={UpdateAgreementForm}
                 onSuccess={props.onSuccess}
+                updateAgreement={agreementProvider.updateAcquisitionAgreement.execute}
+                updatingAgreement={agreementProvider.updateAcquisitionAgreement.loading}
+                getAgreement={agreementProvider.getAcquisitionAgreementById.execute}
+                fetchingAgreement={agreementProvider.getAcquisitionAgreementById.loading}
               />
             ) : null
           }

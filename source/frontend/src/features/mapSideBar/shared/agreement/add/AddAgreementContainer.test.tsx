@@ -42,10 +42,12 @@ describe('Add Disposition Offer Container component', () => {
   ) => {
     const component = render(
       <AddAgreementContainer
-        acquisitionFileId={1}
+        fileId={1}
         View={TestView}
         fileType="acquisition"
         onSuccess={onSuccess}
+        onCreateAgreement={mockPostApi.execute}
+        isCreatingAgreement={mockPostApi.loading}
       />,
       {
         history,
@@ -74,7 +76,7 @@ describe('Add Disposition Offer Container component', () => {
   });
 
   it('Loads props with the initial values', async () => {
-    await setup({ props: { acquisitionFileId: 1 } });
+    await setup({ props: { fileId: 1 } });
 
     expect(viewProps?.initialValues?.agreementId).toBe(0);
     expect(viewProps?.initialValues?.fileId).toBe(1);
@@ -86,7 +88,7 @@ describe('Add Disposition Offer Container component', () => {
   });
 
   it('makes request to create a new Agreement and returns the response', async () => {
-    await setup({ props: { acquisitionFileId: 1 } });
+    await setup({ props: { fileId: 1 } });
     const agreementMock = mockAgreementResponseApi(1);
     mockPostApi.execute.mockReturnValue(agreementMock);
 

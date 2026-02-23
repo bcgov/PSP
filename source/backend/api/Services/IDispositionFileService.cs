@@ -11,6 +11,8 @@ namespace Pims.Api.Services
 
         PimsDispositionFile GetById(long id);
 
+        PimsDispositionFile GetDeepById(long id);
+
         PimsDispositionFile Add(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides);
 
         PimsDispositionFile Update(long id, PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides);
