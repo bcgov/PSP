@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosResponse } from 'axios';
+import axios, { AxiosError } from 'axios';
 import { FormikHelpers } from 'formik/dist/types';
 import { useCallback, useEffect, useState } from 'react';
 import { useHistory, useLocation } from 'react-router-dom';
@@ -21,11 +21,8 @@ export interface IUpdateAcquisitionAgreementContainerProps {
     fileId: number,
     agreementId: number,
     agreement: ApiGen_Concepts_Agreement,
-  ) => Promise<AxiosResponse<ApiGen_Concepts_Agreement>>;
-  getAgreement: (
-    fileId: number,
-    agreementId: number,
-  ) => Promise<AxiosResponse<ApiGen_Concepts_Agreement>>;
+  ) => Promise<ApiGen_Concepts_Agreement>;
+  getAgreement: (fileId: number, agreementId: number) => Promise<ApiGen_Concepts_Agreement>;
   fetchingAgreement: boolean;
   updatingAgreement: boolean;
 }
