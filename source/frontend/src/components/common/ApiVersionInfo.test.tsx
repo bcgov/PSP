@@ -1,5 +1,7 @@
 import IApiVersion from '@/hooks/pims-api/interfaces/IApiVersion';
 import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
+import defaultTenant from '@/tenants/config/defaultTenant';
+import { useTenant } from '@/tenants/useTenant';
 import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import { ApiVersionInfo } from './ApiVersionInfo';
@@ -18,15 +20,15 @@ const mockGetVersionApi = vi.fn();
 const mockGetLiveApi = vi.fn();
 const mockGetReady = vi.fn();
 const mockGetSystemCheckApi = vi.fn();
-const originalCompatibility = import.meta.env.VITE_API_DB_VERSION_COMPATIBILITY;
-
 vi.mock('@/hooks/pims-api/useApiHealth');
+vi.mock('@/tenants/useTenant');
 vi.mocked(useApiHealth).mockReturnValue({
   getVersion: mockGetVersionApi,
   getLive: mockGetLiveApi,
   getReady: mockGetReady,
   getSystemCheck: mockGetSystemCheckApi,
 });
+const mockUseTenant = vi.mocked(useTenant);
 
 describe('ApiVersionInfo suite', () => {
   const setup = (renderOptions: RenderOptions = {}) => {
@@ -41,12 +43,11 @@ describe('ApiVersionInfo suite', () => {
 
   afterEach(() => {
     vi.clearAllMocks();
-    import.meta.env.VITE_API_DB_VERSION_COMPATIBILITY = originalCompatibility;
   });
 
   beforeEach(() => {
     import.meta.env.VITE_PACKAGE_VERSION = '11.1.1-93.999';
-    import.meta.env.VITE_API_DB_VERSION_COMPATIBILITY = undefined;
+    mockUseTenant.mockReturnValue(defaultTenant);
     mockGetVersionApi.mockResolvedValue({ data: defaultVersion } as any);
   });
 
@@ -102,7 +103,10 @@ describe('ApiVersionInfo suite', () => {
   });
 
   it('Does not display version warning when DB version is compatible with API version', async () => {
-    import.meta.env.VITE_API_DB_VERSION_COMPATIBILITY = '{"93":[92,93]}';
+    mockUseTenant.mockReturnValue({
+      ...defaultTenant,
+      apiDbVersionCompatibility: { '93': [92, 93] },
+    });
     mockGetVersionApi.mockResolvedValue({
       data: { ...defaultVersion, dbVersion: '92.00' },
     } as any);
@@ -117,7 +121,10 @@ describe('ApiVersionInfo suite', () => {
 
   it('Does not display version warning for compatibility with informational build format', async () => {
     import.meta.env.VITE_PACKAGE_VERSION = '5.16.0-116.23';
-    import.meta.env.VITE_API_DB_VERSION_COMPATIBILITY = '{"116":[114,116]}';
+    mockUseTenant.mockReturnValue({
+      ...defaultTenant,
+      apiDbVersionCompatibility: { '116': [114, 116] },
+    });
     mockGetVersionApi.mockResolvedValue({
       data: {
         ...defaultVersion,
