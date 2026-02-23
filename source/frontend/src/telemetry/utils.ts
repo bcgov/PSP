@@ -24,7 +24,7 @@ import {
 import isAbsoluteUrl from 'is-absolute-url';
 import { v4 as uuidv4 } from 'uuid';
 
-import { TelemetryConfig } from './config';
+import { TelemetrySettings } from './config';
 import { BrowserAttributesSpanProcessor } from './traces/BrowserAttributesSpanProcessor';
 import { UserInfoSpanProcessor } from './traces/UserInfoSpanProcessor';
 
@@ -48,7 +48,7 @@ export const buildUrl = (inputUrl: string, queryParams: Record<string, any> = {}
   return urlInstance;
 };
 
-export const isBlocked = (uri: string, config: TelemetryConfig) => {
+export const isBlocked = (uri: string, config: TelemetrySettings) => {
   const blockList = [...(config.denyUrls ?? []), config.otlpEndpoint];
   return blockList.findIndex(blocked => uri.includes(blocked)) >= 0;
 };
@@ -56,7 +56,7 @@ export const isBlocked = (uri: string, config: TelemetryConfig) => {
 // List of meters in the application: e.g. "network", "webvitals", "app", etc
 export const NETWORK_METER = 'network-meter';
 
-const makeResource = (config: TelemetryConfig, extraAttributes?: ResourceAttributes) => {
+const makeResource = (config: TelemetrySettings, extraAttributes?: ResourceAttributes) => {
   const uuid = uuidv4();
   let resource = new Resource({
     [ATTR_DEPLOYMENT_ENVIRONMENT_NAME]: config?.environment,
@@ -76,7 +76,7 @@ const makeResource = (config: TelemetryConfig, extraAttributes?: ResourceAttribu
 };
 
 export const registerMeterProvider = (
-  config: TelemetryConfig,
+  config: TelemetrySettings,
   extraAttributes?: ResourceAttributes,
 ) => {
   if (config.debug) {
@@ -104,7 +104,7 @@ export const registerMeterProvider = (
 };
 
 export const registerTracerProvider = (
-  config: TelemetryConfig,
+  config: TelemetrySettings,
   extraAttributes?: ResourceAttributes,
 ) => {
   if (config.debug) {

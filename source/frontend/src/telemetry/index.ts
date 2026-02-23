@@ -1,11 +1,11 @@
 import { exists } from '@/utils';
 
-import { TelemetryConfig } from './config';
+import { TelemetrySettings } from './config';
 import { UserAPI } from './users/UserAPI';
 import { registerMeterProvider, registerTracerProvider } from './utils';
 
 // Main entry-point to configure the collection of application telemetry
-export const initializeTelemetry = (config: TelemetryConfig) => {
+export const initializeTelemetry = (config: TelemetrySettings) => {
   try {
     if (!exists(config)) {
       throw Error('[ERR] No metrics configuration provided, it will not be initialized.');

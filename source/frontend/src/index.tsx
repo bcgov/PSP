@@ -23,20 +23,19 @@ import LoginLoading from '@/features/account/LoginLoading';
 import EmptyLayout from '@/layouts/EmptyLayout';
 import { store } from '@/store/store';
 import { TenantConsumer, TenantProvider } from '@/tenants';
+import { TelemetryConfig } from '@/utils/config';
 import getKeycloakEventHandler from '@/utils/getKeycloakEventHandler';
 
 import App from './App';
-import { config } from './config';
 import { NavigationIntentProvider } from './contexts/NavigationIntentContext';
 import { DocumentViewerContextProvider } from './features/documents/context/DocumentViewerContext';
 import { WorklistContextProvider } from './features/properties/worklist/context/WorklistContext';
 import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
 import { initializeTelemetry } from './telemetry';
-import { defaultHistogramBuckets, TelemetryConfig } from './telemetry/config';
+import { TelemetrySettings } from './telemetry/config';
 import { ReactRouterSpanProcessor } from './telemetry/traces/ReactRouterSpanProcessor';
-import { exists } from './utils';
-import { stringToNull, stringToNullableBoolean, stringToNumberOrNull } from './utils/formUtils';
+import { stringToNullableBoolean, stringToNumberOrNull } from './utils/formUtils';
 
 async function prepare() {
   if (process.env.NODE_ENV === 'development') {
@@ -96,20 +95,18 @@ const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
 // get telemetry options from global configuration.
 // window.config is set in index.html, populated by env variables.
 const setupTelemetry = () => {
-  const isTelemetryEnabled = stringToNullableBoolean(config.VITE_TELEMERY_ENABLED) ?? false;
-  const isDebugEnabled = stringToNullableBoolean(config.VITE_TELEMERY_DEBUG) ?? false;
+  const isTelemetryEnabled = stringToNullableBoolean(TelemetryConfig.enabled) ?? false;
+  const isDebugEnabled = stringToNullableBoolean(TelemetryConfig.debug) ?? false;
 
   if (isTelemetryEnabled) {
-    const jsonValues = stringToNull(config.VITE_TELEMERY_HISTOGRAM_BUCKETS);
-    const buckets: number[] = exists(jsonValues) ? JSON.parse(jsonValues) : defaultHistogramBuckets;
-    const options: TelemetryConfig = {
-      name: config.VITE_TELEMERY_SERVICE_NAME ?? 'frontend',
-      appVersion: import.meta.env.VITE_PACKAGE_VERSION ?? '',
-      environment: config.VITE_TELEMERY_ENVIRONMENT || 'local',
-      otlpEndpoint: config.VITE_TELEMERY_URL || '',
+    const options: TelemetrySettings = {
+      name: TelemetryConfig.appName || 'pims-frontend',
+      appVersion: TelemetryConfig.appVersion || 'unknown',
+      environment: TelemetryConfig.environment || 'local',
+      otlpEndpoint: TelemetryConfig.telemetryUrl || '',
       debug: isDebugEnabled,
-      exportInterval: stringToNumberOrNull(config.VITE_TELEMERY_EXPORT_INTERVAL) ?? 30000,
-      histogramBuckets: buckets,
+      exportInterval: stringToNumberOrNull(TelemetryConfig.exportInterval) ?? 30000,
+      histogramBuckets: TelemetryConfig.histogramBuckets,
     };
 
     // configure browser telemetry (if enabled via dynamic config-map)

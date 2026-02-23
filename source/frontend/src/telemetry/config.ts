@@ -1,5 +1,5 @@
 // The configuration for browser telemetry (metrics and logs)
-export interface TelemetryConfig {
+export interface TelemetrySettings {
   // by default the service name is set to 'frontend' - helps finding traces in the trace UI dashboard
   name?: string;
   appVersion?: string;
