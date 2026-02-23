@@ -56,7 +56,8 @@ namespace Pims.Api.Helpers.Extensions
             ArgumentNullException.ThrowIfNull(principal);
 
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
-            if (pimsUser?.IsContractor == true && acquisitionFile.OverrideFileNumberSequence)
+            if (pimsUser?.IsContractor == true && (acquisitionFile.OverrideFileNumberSequence
+                || acquisitionFile.FileNo != null))
             {
                 throw new BadRequestException("Contractors cannot create Acquisition files with legacy numbers. Please contact the admin at pims@gov.bc.ca");
             }

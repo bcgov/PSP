@@ -23,7 +23,7 @@ export const AddAcquisitionFileYupSchema = yup
           then: schema =>
             schema.test(
               'one-of-two',
-              'Either Legacy file or Historical file is required',
+              'Either Legacy file or Historical file number is required',
               function (value) {
                 const { legacyFileNumber } = this.parent;
                 return !!value || !!legacyFileNumber;
@@ -33,6 +33,7 @@ export const AddAcquisitionFileYupSchema = yup
         }),
       legacyFileNumber: yup
         .string()
+        .max(18, 'Historical file number must be at most ${max} characters')
         .nullable()
         .when('overrideFileNumberSequence', {
           is: true,
@@ -98,7 +99,7 @@ export const AddAcquisitionFileYupSchema = yup
     if (hasA && hasB) {
       return this.createError({
         path: 'fileNo',
-        message: 'Choose Field A OR Field B, not both.',
+        message: 'Please enter Historical file OR Legacy file, not both.',
       });
     }
 
