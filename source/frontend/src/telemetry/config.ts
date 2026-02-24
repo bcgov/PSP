@@ -1,20 +1,23 @@
+import { Attributes } from '@opentelemetry/api';
+
 // The configuration for browser telemetry (metrics and logs)
 export interface TelemetrySettings {
-  // by default the service name is set to 'frontend' - helps finding traces in the trace UI dashboard
-  name?: string;
+  appName: string;
   appVersion?: string;
-  // set this to match the deployed environment (dev, test, uat, prod) or set to local for local development
+  // Set this to match the deployed environment (dev, test, uat, prod) or set to local for local development
   environment?: string;
-  // the URL to the open-telemetry collector
-  otlpEndpoint?: string;
+  // The URL to the open-telemetry collector service that will receive the telemetry data
+  collectorUrl?: string;
   // a list of URLs to ignore for traces and metrics
   denyUrls?: string[];
-  // if true, it will output extra information to the console
+  // If true, it will output extra information to the console
   debug?: boolean;
-  // how often to send traces and metrics back to the collector - defaults to 30 seconds
-  exportInterval?: number;
-  // the default buckets to apply to histogram metrics
+  // Metric export interval in ms (default: 30,000)
+  metricExportIntervalMs?: number;
+  // Default buckets to apply to histogram metrics
   histogramBuckets?: number[];
+  // Additional resource atttributes to add to all telemetry data (traces and metrics)
+  resourceAttributes?: Attributes;
 }
 
 export const defaultHistogramBuckets = [

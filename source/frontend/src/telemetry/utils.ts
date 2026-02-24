@@ -49,7 +49,7 @@ export const buildUrl = (inputUrl: string, queryParams: Record<string, any> = {}
 };
 
 export const isBlocked = (uri: string, config: TelemetrySettings) => {
-  const blockList = [...(config.denyUrls ?? []), config.otlpEndpoint];
+  const blockList = [...(config.denyUrls ?? []), config.collectorUrl];
   return blockList.findIndex(blocked => uri.includes(blocked)) >= 0;
 };
 
@@ -60,7 +60,7 @@ const makeResource = (config: TelemetrySettings, extraAttributes?: ResourceAttri
   const uuid = uuidv4();
   let resource = new Resource({
     [ATTR_DEPLOYMENT_ENVIRONMENT_NAME]: config?.environment,
-    [ATTR_SERVICE_NAME]: config?.name,
+    [ATTR_SERVICE_NAME]: config?.appName,
     [ATTR_SERVICE_VERSION]: config?.appVersion,
     [ATTR_SERVICE_INSTANCE_ID]: uuid,
     [ATTR_USER_AGENT_ORIGINAL]: typeof navigator !== 'undefined' ? navigator.userAgent : '',
@@ -86,7 +86,7 @@ export const registerMeterProvider = (
   // This is common metadata sent with every metric measurement
   const resource = makeResource(config, extraAttributes);
   const metricExporter = new OTLPMetricExporter({
-    url: new URL('/v1/metrics', config.otlpEndpoint).href,
+    url: new URL('/v1/metrics', config.collectorUrl).href,
   });
 
   const meterProvider = new MeterProvider({
@@ -94,7 +94,7 @@ export const registerMeterProvider = (
     readers: [
       new PeriodicExportingMetricReader({
         exporter: metricExporter,
-        exportIntervalMillis: config?.exportInterval || 30_000, // export metrics every 30s by default
+        exportIntervalMillis: config?.metricExportIntervalMs || 30_000, // export metrics every 30s by default
       }),
     ],
   });
@@ -114,7 +114,7 @@ export const registerTracerProvider = (
   // This is common metadata sent with every trace
   const resource = makeResource(config, extraAttributes);
   const exporter = new OTLPTraceExporter({
-    url: new URL('v1/traces', config.otlpEndpoint).href,
+    url: new URL('v1/traces', config.collectorUrl).href,
   });
 
   const processors: SpanProcessor[] = [];
@@ -125,7 +125,9 @@ export const registerTracerProvider = (
 
   // use the batch processor for better performance
   processors.push(
-    new BatchSpanProcessor(exporter, { scheduledDelayMillis: config?.exportInterval || 5000 }), // export traces every 5s by default
+    new BatchSpanProcessor(exporter, {
+      scheduledDelayMillis: config?.metricExportIntervalMs || 5000,
+    }), // export traces every 5s by default
     new BrowserAttributesSpanProcessor(),
     new UserInfoSpanProcessor(),
   );

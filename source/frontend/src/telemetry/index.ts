@@ -11,7 +11,7 @@ export const initializeTelemetry = (config: TelemetrySettings) => {
       throw Error('[ERR] No metrics configuration provided, it will not be initialized.');
     }
 
-    if (!exists(config.otlpEndpoint)) {
+    if (!exists(config.collectorUrl)) {
       throw Error('[ERR] Invalid metrics endpoint provided, it will not be initialized.');
     }
 

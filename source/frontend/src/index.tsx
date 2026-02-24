@@ -100,12 +100,12 @@ const setupTelemetry = () => {
 
   if (isTelemetryEnabled) {
     const options: TelemetrySettings = {
-      name: TelemetryConfig.appName || 'pims-frontend',
+      appName: TelemetryConfig.appName || 'pims-frontend',
       appVersion: TelemetryConfig.appVersion || 'unknown',
       environment: TelemetryConfig.environment || 'local',
-      otlpEndpoint: TelemetryConfig.telemetryUrl || '',
+      collectorUrl: TelemetryConfig.telemetryUrl || '',
       debug: isDebugEnabled,
-      exportInterval: stringToNumberOrNull(TelemetryConfig.exportInterval) ?? 30000,
+      metricExportIntervalMs: stringToNumberOrNull(TelemetryConfig.exportInterval) ?? 30000,
       histogramBuckets: TelemetryConfig.histogramBuckets,
     };
 
