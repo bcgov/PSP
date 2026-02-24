@@ -12,7 +12,7 @@ import { toast } from 'react-toastify';
 import { clearJwt, saveJwt } from '@/store/slices/jwt/JwtSlice';
 import { setKeycloakReady } from '@/store/slices/keycloakReady/keycloakReadySlice';
 import { store } from '@/store/store';
-import { user } from '@/telemetry';
+import { UserTelemetry } from '@/telemetry';
 import { runWithSpan } from '@/telemetry/traces';
 import { SpanEnrichment } from '@/telemetry/traces/SpanEnrichment';
 import { getUserDetailsFromKeycloakToken } from '@/telemetry/users/UserAPI';
@@ -37,7 +37,7 @@ const getKeycloakEventHandler = (keycloak: Keycloak, onRefresh: () => void) => {
         store.dispatch(saveJwt(keycloak.token ?? ''));
         // store the currently logged user so that telemetry spans can be traced back to user actions
         const userDetails = getUserDetailsFromKeycloakToken(keycloak.tokenParsed);
-        user.getUserManager().setUser(userDetails);
+        UserTelemetry.getUserManager().setUser(userDetails);
         SpanEnrichment.enrichWithKeycloakToken(attributes, keycloak);
       } else if (eventType === 'onAuthRefreshSuccess') {
         onRefresh();
@@ -45,7 +45,7 @@ const getKeycloakEventHandler = (keycloak: Keycloak, onRefresh: () => void) => {
         SpanEnrichment.enrichWithKeycloakToken(attributes, keycloak);
       } else if (eventType === 'onAuthLogout' || eventType === 'onTokenExpired') {
         store.dispatch(clearJwt());
-        user.getUserManager().clearUser();
+        UserTelemetry.getUserManager().clearUser();
         attributes[ATTR_EXCEPTION_TYPE] = error?.error ?? '';
         attributes[ATTR_EXCEPTION_MESSAGE] = error?.error_description ?? '';
       } else if (eventType === 'onReady') {

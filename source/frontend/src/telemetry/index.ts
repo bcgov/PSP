@@ -25,4 +25,4 @@ export const initializeTelemetry = (config: TelemetrySettings) => {
 };
 
 // Global provider to capture logged-in user in traces
-export const user = UserAPI.getInstance();
+export const UserTelemetry = UserAPI.getInstance();

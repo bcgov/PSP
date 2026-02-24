@@ -5,14 +5,14 @@ import {
   ATTR_USER_NAME,
 } from '@opentelemetry/semantic-conventions/incubating';
 
-import { user } from '..';
+import { UserTelemetry } from '..';
 
 /**
  * A {@link SpanProcessor} that adds user information to each span.
  */
 export class UserInfoSpanProcessor implements SpanProcessor {
   onStart(span: Span) {
-    const userDetails = user.getUserManager().getUser();
+    const userDetails = UserTelemetry.getUserManager().getUser();
 
     span.setAttributes({
       [ATTR_USER_FULL_NAME]: userDetails?.displayName ?? '',
