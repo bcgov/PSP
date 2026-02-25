@@ -173,6 +173,12 @@ namespace Pims.Api.Areas.Reports.Controllers
         [SwaggerOperation(Tags = new[] { "lease", "payments", "report" })]
         public IActionResult ExportLeasePayments(int fiscalYearStart)
         {
+            // TODO: REMOVE ME
+            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Local")
+            {
+                throw new InvalidOperationException("Sample error message for testing error handling in local environment.");
+            }
+
             var acceptHeader = (string)Request.Headers["Accept"];
 
             if (acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
