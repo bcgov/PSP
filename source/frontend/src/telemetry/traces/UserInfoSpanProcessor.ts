@@ -8,7 +8,7 @@ import {
 import { UserTelemetry } from '..';
 
 /**
- * A {@link SpanProcessor} that adds user information to each span.
+ * A {@link SpanProcessor} that adds information about the currently logged-in user to each span.
  */
 export class UserInfoSpanProcessor implements SpanProcessor {
   onStart(span: Span) {

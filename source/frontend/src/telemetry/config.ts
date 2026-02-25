@@ -14,6 +14,8 @@ export interface TelemetrySettings {
   debug?: boolean;
   // Metric export interval in ms (default: 30,000)
   metricExportIntervalMs?: number;
+  // Trace export interval in ms (default: 5,000)
+  traceExportIntervalMs?: number;
   // Default buckets to apply to histogram metrics
   histogramBuckets?: number[];
   // Additional resource atttributes to add to all telemetry data (traces and metrics)

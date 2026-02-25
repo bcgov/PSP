@@ -12,8 +12,7 @@ import { toast } from 'react-toastify';
 import { clearJwt, saveJwt } from '@/store/slices/jwt/JwtSlice';
 import { setKeycloakReady } from '@/store/slices/keycloakReady/keycloakReadySlice';
 import { store } from '@/store/store';
-import { UserTelemetry } from '@/telemetry';
-import { runWithSpan } from '@/telemetry/traces';
+import { Telemetry, UserTelemetry } from '@/telemetry';
 import { SpanEnrichment } from '@/telemetry/traces/SpanEnrichment';
 import { getUserDetailsFromKeycloakToken } from '@/telemetry/users/UserAPI';
 
@@ -25,39 +24,38 @@ const getKeycloakEventHandler = (keycloak: Keycloak, onRefresh: () => void) => {
     error?: AuthClientError | undefined,
   ) => {
     // Track keycloak authentication events with browser telemetry
-    runWithSpan('process keycloak.event', { component: 'keycloak' }, span => {
-      const attributes: Attributes = {
-        [ATTR_EVENT_NAME]: eventType,
-        [ATTR_CODE_FUNCTION]: 'getKeycloakEventHandler',
-        'user.is_authenticated': keycloak?.authenticated ?? false,
-      };
+    const spanAttributes: Attributes = {
+      component: 'keycloak',
+      [ATTR_EVENT_NAME]: eventType,
+      [ATTR_CODE_FUNCTION]: 'getKeycloakEventHandler',
+      'user.is_authenticated': keycloak?.authenticated ?? false,
+    };
 
-      if (eventType === 'onAuthSuccess') {
-        onRefresh();
-        store.dispatch(saveJwt(keycloak.token ?? ''));
-        // store the currently logged user so that telemetry spans can be traced back to user actions
-        const userDetails = getUserDetailsFromKeycloakToken(keycloak.tokenParsed);
-        UserTelemetry.getUserManager().setUser(userDetails);
-        SpanEnrichment.enrichWithKeycloakToken(attributes, keycloak);
-      } else if (eventType === 'onAuthRefreshSuccess') {
-        onRefresh();
-        store.dispatch(saveJwt(keycloak.token ?? ''));
-        SpanEnrichment.enrichWithKeycloakToken(attributes, keycloak);
-      } else if (eventType === 'onAuthLogout' || eventType === 'onTokenExpired') {
-        store.dispatch(clearJwt());
-        UserTelemetry.getUserManager().clearUser();
-        attributes[ATTR_EXCEPTION_TYPE] = error?.error ?? '';
-        attributes[ATTR_EXCEPTION_MESSAGE] = error?.error_description ?? '';
-      } else if (eventType === 'onReady') {
-        store.dispatch(setKeycloakReady(true));
-      } else {
-        toast.error(errorMessage);
-        console.debug(`keycloak event: ${eventType} error ${JSON.stringify(error)}`);
-        attributes[ATTR_EXCEPTION_TYPE] = error?.error ?? '';
-        attributes[ATTR_EXCEPTION_MESSAGE] = error?.error_description ?? '';
-      }
-      span.addEvent('keycloak_event_handled', attributes);
-    });
+    if (eventType === 'onAuthSuccess') {
+      onRefresh();
+      store.dispatch(saveJwt(keycloak.token ?? ''));
+      // store the currently logged user so that telemetry spans can be traced back to user actions
+      const userDetails = getUserDetailsFromKeycloakToken(keycloak.tokenParsed);
+      UserTelemetry.getUserManager().setUser(userDetails);
+      SpanEnrichment.enrichWithKeycloakToken(spanAttributes, keycloak);
+    } else if (eventType === 'onAuthRefreshSuccess') {
+      onRefresh();
+      store.dispatch(saveJwt(keycloak.token ?? ''));
+      SpanEnrichment.enrichWithKeycloakToken(spanAttributes, keycloak);
+    } else if (eventType === 'onAuthLogout' || eventType === 'onTokenExpired') {
+      store.dispatch(clearJwt());
+      UserTelemetry.getUserManager().clearUser();
+      spanAttributes[ATTR_EXCEPTION_TYPE] = error?.error ?? '';
+      spanAttributes[ATTR_EXCEPTION_MESSAGE] = error?.error_description ?? '';
+    } else if (eventType === 'onReady') {
+      store.dispatch(setKeycloakReady(true));
+    } else {
+      toast.error(errorMessage);
+      console.debug(`keycloak event: ${eventType} error ${JSON.stringify(error)}`);
+      spanAttributes[ATTR_EXCEPTION_TYPE] = error?.error ?? '';
+      spanAttributes[ATTR_EXCEPTION_MESSAGE] = error?.error_description ?? '';
+    }
+    Telemetry.recordEvent(`keycloak_${eventType}`, spanAttributes);
   };
 
   return keycloakEventHandler;

@@ -32,8 +32,7 @@ import { DocumentViewerContextProvider } from './features/documents/context/Docu
 import { WorklistContextProvider } from './features/properties/worklist/context/WorklistContext';
 import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
 import { useRefreshSiteminder } from './hooks/useRefreshSiteminder';
-import { initializeTelemetry } from './telemetry';
-import { TelemetrySettings } from './telemetry/config';
+import { Telemetry } from './telemetry';
 import { ReactRouterSpanProcessor } from './telemetry/traces/ReactRouterSpanProcessor';
 import { stringToNullableBoolean, stringToNumberOrNull } from './utils/formUtils';
 
@@ -92,37 +91,20 @@ const InnerComponent = ({ tenant }: { tenant: ITenantConfig2 }) => {
   );
 };
 
-// get telemetry options from global configuration.
-// window.config is set in index.html, populated by env variables.
-const setupTelemetry = () => {
-  const isTelemetryEnabled = stringToNullableBoolean(TelemetryConfig.enabled) ?? false;
-  const isDebugEnabled = stringToNullableBoolean(TelemetryConfig.debug) ?? false;
-
-  if (isTelemetryEnabled) {
-    const options: TelemetrySettings = {
-      appName: TelemetryConfig.appName || 'pims-frontend',
-      appVersion: TelemetryConfig.appVersion || 'unknown',
-      environment: TelemetryConfig.environment || 'local',
-      collectorUrl: TelemetryConfig.telemetryUrl || '',
-      debug: isDebugEnabled,
-      metricExportIntervalMs: stringToNumberOrNull(TelemetryConfig.exportInterval) ?? 30000,
-      histogramBuckets: TelemetryConfig.histogramBuckets,
-    };
-
-    // configure browser telemetry (if enabled via dynamic config-map)
-    initializeTelemetry(options);
-
-    console.log('[INFO] Telemetry enabled');
-    if (isDebugEnabled) {
-      console.log(options);
-    }
-  } else {
-    console.log('[INFO] Telemetry disabled');
-  }
-};
-
 prepare().then(() => {
-  setupTelemetry();
+  // Bootstrap once at app entry point to ensure telemetry is setup before any other code runs, so that we can capture telemetry for the entire app lifecycle.
+  Telemetry.init({
+    appName: TelemetryConfig.appName || 'pims-frontend',
+    appVersion: TelemetryConfig.appVersion || 'unknown',
+    environment: TelemetryConfig.environment || 'local',
+    collectorUrl: TelemetryConfig.telemetryUrl || '',
+    debug: stringToNullableBoolean(TelemetryConfig.debug) ?? false,
+    metricExportIntervalMs: stringToNumberOrNull(TelemetryConfig.metricExportIntervalMs) ?? 30000,
+    traceExportIntervalMs: stringToNumberOrNull(TelemetryConfig.traceExportIntervalMs) ?? 5000,
+    histogramBuckets: TelemetryConfig.histogramBuckets,
+  });
+
+  // Now that telemetry is initialized, we can render the app.
   const root = createRoot(document.getElementById('root') as Element);
   root.render(<Index />);
 });
