@@ -174,7 +174,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         public IActionResult ExportLeasePayments(int fiscalYearStart)
         {
             // TODO: REMOVE ME
-            if (Environment.GetEnvironmentVariable("ASPNETCORE_ENVIRONMENT") == "Local")
+            if (Environment.GetEnvironmentVariable("FEATURE_FLAG_TELEMETRY_DEMO") == "true")
             {
                 throw new InvalidOperationException("Sample error message for testing error handling in local environment.");
             }
