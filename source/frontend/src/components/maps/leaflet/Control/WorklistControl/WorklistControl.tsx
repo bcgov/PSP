@@ -85,8 +85,10 @@ const WorklistButton = styled(Button)<{ $active?: boolean }>`
     height: 5.2rem;
     background-color: ${({ theme, $active }) =>
       $active ? theme.bcTokens.surfaceColorPrimaryButtonDefault : '#FFFFFF'};
-    color: ${({ theme, $active }) =>
-      $active ? '#FFFFFF' : theme.bcTokens.surfaceColorPrimaryButtonDefault};
+    svg path {
+      fill: ${({ theme, $active }) =>
+        $active ? '#FFFFFF' : theme.bcTokens.surfaceColorPrimaryButtonDefault};
+    }
     border-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
     box-shadow: -0.2rem 0.1rem 0.4rem rgba(0, 0, 0, 0.2);
 
