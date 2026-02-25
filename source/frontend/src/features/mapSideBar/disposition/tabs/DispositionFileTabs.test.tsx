@@ -5,9 +5,10 @@ import Claims from '@/constants/claims';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
 import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
-import { act, getMockRepositoryObj, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, findByText, getMockRepositoryObj, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import DispositionFileTabs, { IDispositionFileTabsProps } from './DispositionFileTabs';
+import { ApiGen_CodeTypes_DispositionFileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionFileTypeTypes';
 
 vi.mock('@/hooks/repositories/useNoteRepository');
 
@@ -236,5 +237,39 @@ describe('DispositionFileTabs component', () => {
 
     expect(getByText('Checklist')).toHaveClass('active');
     expect(history.location.pathname).toBe(`/blah/${FileTabType.CHECKLIST}`);
+  });
+
+  it('has an agreements tab', () => {
+    const { getAllByText } = setup(
+      {
+        dispositionFile: mockDispositionFileResponseApi,
+        defaultTab: FileTabType.FILE_DETAILS,
+      },
+      { },
+    );
+
+    const tab = getAllByText('Agreements')[0];
+    expect(tab).toBeVisible();
+  });
+
+  it('hides the agreements tab when not "Road Closure" type', () => {
+    const { findByText } = setup(
+      {
+        dispositionFile: {
+          ...mockDispositionFileResponseApi,
+          dispositionTypeCode: {
+            id: ApiGen_CodeTypes_DispositionFileTypeTypes.DIRECT,
+            description: 'Direct Sale',
+            isDisabled: false,
+            displayOrder: 1,
+          },
+        },
+        defaultTab: FileTabType.FILE_DETAILS,
+      },
+      { },
+    );
+
+    const tab = findByText('Agreements')[0];
+    expect(tab).toBe(undefined);
   });
 });
