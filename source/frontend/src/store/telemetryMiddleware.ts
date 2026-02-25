@@ -21,7 +21,7 @@ export const telemetryMiddleware: Middleware = _storeAPI => next => async action
         'network.error.config.url': error?.config?.url,
         'network.error.config.method': error?.config?.method,
       },
-      'network.error',
+      'bomb.network.error',
     );
   }
 
