@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { FormikProps, getIn } from 'formik';
+import isAbsoluteUrl from 'is-absolute-url';
 import { isEmpty, isNull, isUndefined, lowerFirst, startCase } from 'lodash';
 import { first } from 'lodash';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -316,4 +317,16 @@ export const getFilePropertyIndex = (
 
 export const formatGuid = (sub: string): string => {
   return first(sub?.split('@'))?.replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, '$1-$2-$3-$4-$5');
+};
+
+// creates URL and appends query parameters
+export const buildUrl = (inputUrl: string, queryParams: Record<string, any> = {}): URL => {
+  const baseUrl = window.location.origin;
+  const urlInstance = isAbsoluteUrl(inputUrl) ? new URL(inputUrl) : new URL(inputUrl, baseUrl);
+  Object.keys(queryParams).forEach(k => {
+    if (queryParams[k] !== undefined) {
+      urlInstance.searchParams.set(k, queryParams[k]);
+    }
+  });
+  return urlInstance;
 };
