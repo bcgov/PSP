@@ -81,7 +81,6 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   toApi(): ApiGen_Concepts_AcquisitionFile {
     const fileProperties = this.properties.map(x => this.toPropertyApi(x));
     const sortedProperties = applyDisplayOrder(fileProperties);
-    const fileNumberValue = this.fileNo ?? 0;
 
     return {
       id: this.id ?? 0,
@@ -130,7 +129,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       fileChecklistItems: this.fileCheckList.map(x => x.toApi()),
       compensationRequisitions: null,
       overrideFileNumberSequence: this.overrideFileNumberSequence,
-      fileNo: this.overrideFileNumberSequence ? fileNumberValue : null,
+      fileNo: this.overrideFileNumberSequence ? this.fileNo : null,
       legacyFileNumber: this.legacyFileNumber ?? null,
       fileNumber: null,
       fileNumberSuffix: 0,
