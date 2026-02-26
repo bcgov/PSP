@@ -78,7 +78,8 @@ export const PointClusterer: React.FC<React.PropsWithChildren<PointClustererProp
   const minZoom = minZoomProps ?? 0;
   const maxZoom = maxZoomProps ?? 18;
   const shouldShowSearchResultsAtAnyZoom =
-    mapMachine.isFiltering && mapMachine.activePimsPropertyIds.length > 0;
+    mapMachine.mapFeatureData?.pimsFeatures?.features?.length > 0 ||
+    mapMachine.mapFeatureData?.fullyAttributedFeatures?.features?.length > 0;
 
   const [spider, setSpider] = useState<
     SpiderSet<

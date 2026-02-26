@@ -1,5 +1,7 @@
 import IApiVersion from '@/hooks/pims-api/interfaces/IApiVersion';
 import { useApiHealth } from '@/hooks/pims-api/useApiHealth';
+import defaultTenant from '@/tenants/config/defaultTenant';
+import { useTenant } from '@/tenants/useTenant';
 import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import { ApiVersionInfo } from './ApiVersionInfo';
@@ -18,14 +20,15 @@ const mockGetVersionApi = vi.fn();
 const mockGetLiveApi = vi.fn();
 const mockGetReady = vi.fn();
 const mockGetSystemCheckApi = vi.fn();
-
 vi.mock('@/hooks/pims-api/useApiHealth');
+vi.mock('@/tenants/useTenant');
 vi.mocked(useApiHealth).mockReturnValue({
   getVersion: mockGetVersionApi,
   getLive: mockGetLiveApi,
   getReady: mockGetReady,
   getSystemCheck: mockGetSystemCheckApi,
 });
+const mockUseTenant = vi.mocked(useTenant);
 
 describe('ApiVersionInfo suite', () => {
   const setup = (renderOptions: RenderOptions = {}) => {
@@ -44,6 +47,7 @@ describe('ApiVersionInfo suite', () => {
 
   beforeEach(() => {
     import.meta.env.VITE_PACKAGE_VERSION = '11.1.1-93.999';
+    mockUseTenant.mockReturnValue(defaultTenant);
     mockGetVersionApi.mockResolvedValue({ data: defaultVersion } as any);
   });
 
@@ -95,6 +99,45 @@ describe('ApiVersionInfo suite', () => {
 
     const element = queryByTestId(`version-mismatch-warning`);
     expect(element).toBeInTheDocument();
+    expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
+  });
+
+  it('Does not display version warning when DB version is compatible with API version', async () => {
+    mockUseTenant.mockReturnValue({
+      ...defaultTenant,
+      apiDbVersionCompatibility: { '93': [92, 93] },
+    });
+    mockGetVersionApi.mockResolvedValue({
+      data: { ...defaultVersion, dbVersion: '92.00' },
+    } as any);
+
+    const { queryByTestId } = setup();
+    await waitForEffects();
+
+    const element = queryByTestId(`version-mismatch-warning`);
+    expect(element).not.toBeInTheDocument();
+    expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
+  });
+
+  it('Does not display version warning for compatibility with informational build format', async () => {
+    import.meta.env.VITE_PACKAGE_VERSION = '5.16.0-116.23';
+    mockUseTenant.mockReturnValue({
+      ...defaultTenant,
+      apiDbVersionCompatibility: { '116': [114, 116] },
+    });
+    mockGetVersionApi.mockResolvedValue({
+      data: {
+        ...defaultVersion,
+        informationalVersion: '5.16.0-116.23',
+        dbVersion: '114.00',
+      },
+    } as any);
+
+    const { queryByTestId } = setup();
+    await waitForEffects();
+
+    const element = queryByTestId(`version-mismatch-warning`);
+    expect(element).not.toBeInTheDocument();
     expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
   });
 });
