@@ -2,14 +2,14 @@ using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using FluentAssertions;
+using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
-using Pims.Core.Exceptions;
 
 namespace Pims.Dal.Test.Repositories
 {
@@ -121,7 +121,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var filter = new AcquisitionReportFilterModel() { Projects = new List<long> { 1 } };
-            var result = repository.SearchCompensationRequisitionFinancials(filter);
+            var result = repository.SearchCompensationRequisitionFinancials(filter, new HashSet<short>() { 1 });
 
             // Assert
             result.Should().HaveCount(1);
@@ -150,7 +150,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var filter = new AcquisitionReportFilterModel() { Projects = new List<long> { 1 } };
-            var result = repository.SearchCompensationRequisitionFinancials(filter);
+            var result = repository.SearchCompensationRequisitionFinancials(filter, new HashSet<short>() { 1 });
 
             // Assert
             result.Should().HaveCount(1);
@@ -179,7 +179,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var filter = new AcquisitionReportFilterModel() { Projects = new List<long> { 1 } };
-            var result = repository.SearchCompensationRequisitionFinancials(filter);
+            var result = repository.SearchCompensationRequisitionFinancials(filter, new HashSet<short>() { 1 });
 
             // Assert
             result.Should().HaveCount(1);
@@ -208,7 +208,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var filter = new AcquisitionReportFilterModel() { Projects = new List<long> { 1 } };
-            var result = repository.SearchCompensationRequisitionFinancials(filter);
+            var result = repository.SearchCompensationRequisitionFinancials(filter, new HashSet<short>() { 1 });
 
             // Assert
             result.Should().HaveCount(1);
@@ -236,7 +236,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var filter = new AcquisitionReportFilterModel() { AcquisitionTeamPersons = new List<long> { 1 } };
-            var result = repository.SearchCompensationRequisitionFinancials(filter);
+            var result = repository.SearchCompensationRequisitionFinancials(filter, new HashSet<short>() { 1 });
 
             // Assert
             result.Should().HaveCount(1);
@@ -264,7 +264,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var filter = new AcquisitionReportFilterModel() { AcquisitionTeamOrganizations = new List<long> { 100 } };
-            var result = repository.SearchCompensationRequisitionFinancials(filter);
+            var result = repository.SearchCompensationRequisitionFinancials(filter, new HashSet<short>() { 1 });
 
             // Assert
             result.Should().HaveCount(1);
@@ -314,20 +314,12 @@ namespace Pims.Dal.Test.Repositories
             var repository = this.CreateWithPermissions(Permissions.LeaseAdd, Permissions.LeaseView, Permissions.CompensationRequisitionView, Permissions.AcquisitionFileAdd, Permissions.AcquisitionFileView);
 
             this._helper.AddAndSaveChanges(region);
-            if (includeAcquisitions)
-            {
-                this._helper.AddAndSaveChanges(acquisitionFinancial);
-            }
-
-            if (includeLeases)
-            {
-                this._helper.AddAndSaveChanges(leaseFinancial);
-            }
-
+            this._helper.AddAndSaveChanges(acquisitionFinancial);
+            this._helper.AddAndSaveChanges(leaseFinancial);
 
             // Act
             var filter = new AcquisitionReportFilterModel() { Projects = new List<long> { 1 } };
-            var result = repository.SearchCompensationRequisitionFinancials(filter, includeAcquisitions, includeLeases);
+            var result = repository.SearchCompensationRequisitionFinancials(filter, new HashSet<short>() { 1 }, null, includeAcquisitions, includeLeases);
 
             // Assert
             result.Should().HaveCount(expected);

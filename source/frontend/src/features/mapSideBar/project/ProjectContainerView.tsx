@@ -120,11 +120,7 @@ const ProjectContainerView: React.FC<IProjectContainerViewProps> = ({
           cancelButtonText="No"
           show
         />
-        <ConfirmNavigation
-          navigate={history.push}
-          shouldBlockNavigation={shouldBlockNavigation}
-          showModal={true}
-        />
+        <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
       </StyledFormWrapper>
     </MapSideBarLayout>
   );

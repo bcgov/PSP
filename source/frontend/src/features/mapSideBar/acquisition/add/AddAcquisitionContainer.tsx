@@ -11,15 +11,17 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { useQuery } from '@/hooks/use-query';
 import { useAddFileConfirmation } from '@/hooks/useAddFileConfirmation';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
+import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, firstOrNull, isValidId } from '@/utils';
+import { exists, firstOrNull, formatGuid, isValidId } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
@@ -37,10 +39,16 @@ export interface IAddAcquisitionContainerProps {
 export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = props => {
   const { onClose, onSuccess, View } = props;
   const history = useHistory();
+  const { obj } = useKeycloakWrapper();
+  const { sub } = obj.userInfo as IUserInfo;
+  const formattedGuid = formatGuid(sub);
+
   const formikRef = useRef<FormikProps<AcquisitionForm>>(null);
   const [isValid, setIsValid] = useState<boolean>(true);
   const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
+  const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
+  const userType = retrieveUserInfoResponse?.userTypeCode?.id ?? null;
 
   const {
     getAcquisitionFile: { execute: getAcquisitionFile, response: parentAcquisitionFile },
@@ -81,6 +89,10 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
       }
     }
   }, [featuresWithAddresses, isSubFile]);
+
+  useEffect(() => {
+    formattedGuid && retrieveUserInfo(formattedGuid);
+  }, [formattedGuid, retrieveUserInfo]);
 
   const initialForm = useMemo(() => {
     return exists(parentAcquisitionFile)
@@ -232,6 +244,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
             );
           }}
           validationSchema={AddAcquisitionFileYupSchema}
+          userType={userType}
           confirmBeforeAdd={confirmBeforeAdd}
         />
       </StyledFormWrapper>

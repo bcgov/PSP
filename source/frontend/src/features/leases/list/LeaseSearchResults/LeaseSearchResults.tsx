@@ -103,7 +103,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
   {
     Header: 'Account Type',
     align: 'left',
-    sortable: true,
+    sortable: false,
     width: 25,
     maxWidth: 25,
     accessor: 'paymentReceivableType',

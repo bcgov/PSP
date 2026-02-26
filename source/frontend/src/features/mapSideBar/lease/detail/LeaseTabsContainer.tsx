@@ -175,19 +175,6 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
     name: 'Payments',
   });
 
-  tabViews.push({
-    content: (
-      <LeaseTab
-        leasePage={leasePages.get(LeasePageNames.SURPLUS)}
-        isEditing={isEditing}
-        formikRef={formikRef}
-        onSuccess={onSuccess}
-      />
-    ),
-    key: LeaseFileTabNames.surplusDeclaration,
-    name: 'Surplus Declaration',
-  });
-
   if (
     lease?.id &&
     (lease.paymentReceivableType?.id === ApiGen_CodeTypes_LeasePaymentReceivableTypes.PYBLBCTFA ||

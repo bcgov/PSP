@@ -870,7 +870,15 @@ exports[`Add Management Container View > matches snapshot 1`] = `
                         <div
                           class="align-content-end col"
                         >
-                          Selected Properties
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="col-11"
+                            >
+                              Selected Properties
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </h2>

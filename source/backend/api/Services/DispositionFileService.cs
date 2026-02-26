@@ -76,7 +76,8 @@ namespace Pims.Api.Services
             dispositionFile.DispositionStatusTypeCode ??= DispositionStatusTypes.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= DispositionFileStatusTypes.ACTIVE.ToString();
 
-            MatchProperties(dispositionFile, userOverrides);
+            // No existing properties when adding a new file
+            MatchProperties(dispositionFile, userOverrides, new HashSet<long>());
             ValidatePropertyRegions(dispositionFile);
 
             // Update marker locations in the context of this file
@@ -98,6 +99,17 @@ namespace Pims.Api.Services
             _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, id);
 
             var dispositionFile = _dispositionFileRepository.GetById(id);
+
+            return dispositionFile;
+        }
+
+        public PimsDispositionFile GetDeepById(long id)
+        {
+            _logger.LogInformation("Getting disposition file deep with id {id}", id);
+            _user.ThrowIfNotAuthorized(Permissions.DispositionView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, id);
+
+            var dispositionFile = _dispositionFileRepository.GetDeepById(id);
 
             return dispositionFile;
         }
@@ -509,12 +521,12 @@ namespace Pims.Api.Services
 
             ValidateVersion(dispositionFile.Internal_Id, dispositionFile.ConcurrencyControlNumber);
 
-            MatchProperties(dispositionFile, userOverrides);
-
-            ValidatePropertyRegions(dispositionFile);
-
             // Get the current properties in the disposition file
             var currentFileProperties = _dispositionFilePropertyRepository.GetPropertiesByDispositionFileId(dispositionFile.Internal_Id);
+            var existingPropertyIds = currentFileProperties.Select(p => p.PropertyId).ToHashSet();
+            MatchProperties(dispositionFile, userOverrides, existingPropertyIds);
+
+            ValidatePropertyRegions(dispositionFile);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingDispositionProperty in dispositionFile.PimsDispositionFileProperties)
@@ -587,6 +599,62 @@ namespace Pims.Api.Services
 
             _dispositionFileRepository.CommitTransaction();
             return _dispositionFileRepository.GetById(dispositionFile.Internal_Id);
+        }
+
+        public IEnumerable<PimsDispositionAgreement> GetAgreements(long dispositionFileId)
+        {
+            _logger.LogInformation("Getting disposition file agreements with DispositionFile id: {id}", dispositionFileId);
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+            return _dispositionFileRepository.GetAgreementsByDispositionFile(dispositionFileId);
+        }
+
+        public PimsDispositionAgreement AddDispositionFileAgreement(long dispositionFileId, PimsDispositionAgreement dispositionAgreement)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+
+            ValidateDispositionFileStatusForAgreement(dispositionFileId);
+
+            var newAgreement = _dispositionFileRepository.AddAgreement(dispositionAgreement);
+            _dispositionFileRepository.CommitTransaction();
+
+            return newAgreement;
+        }
+
+        public PimsDispositionAgreement GetAgreementById(long dispositionFileId, long agreementId)
+        {
+            _logger.LogInformation("Getting disposition file agreement with Agreement id: {agreementId}", agreementId);
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+
+            return _dispositionFileRepository.GetAgreementById(agreementId);
+        }
+
+        public PimsDispositionAgreement UpdateDispositionFileAgreement(long dispositionFileId, PimsDispositionAgreement dispositionAgreement)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+
+            ValidateDispositionFileStatusForAgreement(dispositionFileId);
+
+            var updatedAgreement = _dispositionFileRepository.UpdateAgreement(dispositionAgreement);
+            _dispositionFileRepository.CommitTransaction();
+
+            return updatedAgreement;
+        }
+
+        public bool DeleteDispositionFileAgreement(long dispositionFileId, long agreementId)
+        {
+            _user.ThrowIfNotAuthorized(Permissions.AgreementView);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+
+            ValidateDispositionFileStatusForAgreement(dispositionFileId);
+
+            var deleteResult = _dispositionFileRepository.TryDeleteAgreement(dispositionFileId, agreementId);
+            _dispositionFileRepository.CommitTransaction();
+
+            return deleteResult;
         }
 
         private static decimal CalculateNetProceedsBeforeSpp(PimsDispositionSale sale)
@@ -718,7 +786,7 @@ namespace Pims.Api.Services
             }
         }
 
-        private void MatchProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> overrideCodes)
+        private void MatchProperties(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> overrideCodes, HashSet<long> existingPropertyIds)
         {
             foreach (var dispProperty in dispositionFile.PimsDispositionFileProperties)
             {
@@ -728,9 +796,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         dispProperty.PropertyId = foundProperty.Internal_Id;
@@ -756,9 +826,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         dispProperty.PropertyId = foundProperty.Internal_Id;
@@ -853,6 +925,16 @@ namespace Pims.Api.Services
             }
 
             return currentDispositionFileStatus;
+        }
+
+        private void ValidateDispositionFileStatusForAgreement(long dispositionFileId)
+        {
+            var currentDispositionStatus = GetCurrentDispositionStatus(dispositionFileId);
+
+            if (!_dispositionStatusSolver.CanEditOrDeleteAgreement(currentDispositionStatus))
+            {
+                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            }
         }
     }
 }

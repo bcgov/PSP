@@ -20,7 +20,6 @@ import PeriodPaymentsContainer from '@/features/leases/detail/LeasePages/payment
 import { PeriodPaymentsYupSchema } from '@/features/leases/detail/LeasePages/payment/PeriodPaymentsYupSchema';
 import PeriodPaymentsView from '@/features/leases/detail/LeasePages/payment/table/periods/PaymentPeriodsView';
 import LeaseStakeholderContainer from '@/features/leases/detail/LeasePages/stakeholders/LeaseStakeholderContainer';
-import Surplus from '@/features/leases/detail/LeasePages/surplus/Surplus';
 import { isLeaseFile, LeaseFormModel } from '@/features/leases/models';
 import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useQuery } from '@/hooks/use-query';
@@ -139,10 +138,6 @@ export const leasePages: Map<LeasePageNames, ILeasePage<any>> = new Map<
   [
     LeasePageNames.DEPOSIT,
     { pageName: LeasePageNames.DEPOSIT, component: DepositsContainer, title: 'Deposit' },
-  ],
-  [
-    LeasePageNames.SURPLUS,
-    { pageName: LeasePageNames.SURPLUS, component: Surplus, title: 'Surplus Declaration' },
   ],
   [
     LeasePageNames.IMPROVEMENTS,
@@ -393,11 +388,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
         isFormValid={isValid}
         lease={lease}
       ></View>
-      <ConfirmNavigation
-        navigate={history.push}
-        shouldBlockNavigation={shouldBlockNavigation}
-        showModal={true}
-      />
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
     </>
   );
 };

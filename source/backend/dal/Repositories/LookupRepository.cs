@@ -194,6 +194,11 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsPropertyImprovementTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
 
+        public IEnumerable<PimsPropImprvmntStatusType> GetAllPropertyImprovementStatusTypes()
+        {
+            return Context.PimsPropImprvmntStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
+        }
+
         public IEnumerable<PimsSecurityDepositType> GetAllSecurityDepositTypes()
         {
             return this.Context.PimsSecurityDepositTypes.AsNoTracking().OrderBy(d => d.DisplayOrder).ToArray();

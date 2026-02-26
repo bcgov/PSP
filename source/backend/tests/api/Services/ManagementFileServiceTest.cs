@@ -330,7 +330,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
+            ex.WithMessage("New retired property can not be added.");
             repository.Verify(x => x.Add(It.IsAny<PimsManagementFile>()), Times.Never);
             propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsManagementFileProperty>()), Times.Never);
         }
@@ -890,7 +890,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<UserOverrideException>();
-            exception.WithMessage("You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an management file. Do you want to proceed?");
+            exception.WithMessage("You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to a management file. Do you want to proceed?");
         }
 
         [Fact]
@@ -1296,7 +1296,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void UpdateProperties_WithRetiredProperty_Should_Fail()
+        public void UpdateProperties_With_New_RetiredProperty_Should_Fail()
         {
             // Arrange
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementEdit, Permissions.PropertyAdd, Permissions.PropertyView);
@@ -1311,10 +1311,12 @@ namespace Pims.Api.Test.Services
                 IsRetired = true,
             };
 
-            managementFile.PimsManagementFileProperties.Add(new PimsManagementFileProperty()
+            // Attempt to add the retired property as a new property
+            var newProperties = new List<PimsManagementFileProperty>
             {
-                Property = retiredProperty,
-            });
+                new PimsManagementFileProperty() { Property = retiredProperty, Internal_Id = 0 }
+            };
+            managementFile.PimsManagementFileProperties = newProperties;
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
@@ -1339,7 +1341,54 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
+            ex.WithMessage("New retired property can not be added.");
+        }
+
+        public void UpdateProperties_With_Existing_RetiredProperty_Success()
+        {
+            // Arrange
+            var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+
+            var managementFile = EntityHelper.CreateManagementFile();
+            managementFile.ConcurrencyControlNumber = 1;
+
+            PimsProperty retiredProperty = new PimsProperty()
+            {
+                PropertyId = 100,
+                Pid = 1000,
+                IsRetired = true,
+            };
+
+            // Simulate the retired property is already attached to the file
+            var existingProperties = new List<PimsManagementFileProperty>
+            {
+                new PimsManagementFileProperty() { Property = retiredProperty, Internal_Id = 1 }
+            };
+            managementFile.PimsManagementFileProperties = existingProperties;
+
+            var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(managementFile.PimsManagementFileProperties.ToList());
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(retiredProperty);
+
+            var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
+            statusMock.Setup(x => x.GetCurrentManagementStatus(It.IsAny<string>())).Returns(ManagementFileStatusTypes.ACTIVE);
+            statusMock.Setup(x => x.CanEditProperties(It.IsAny<ManagementFileStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsManagementFileProperty>(), It.IsAny<PimsManagementFileProperty>())).Returns(true);
+
+            // Act
+            Action act = () => service.UpdateProperties(managementFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().NotThrow();
         }
 
         [Fact]

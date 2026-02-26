@@ -25,6 +25,7 @@ namespace Pims.Api.Test.Services
     [ExcludeFromCodeCoverage]
     public class LeaseServiceTest
     {
+        private const string ContractorNotInTeamError = "Contractor is not assigned to the Lease File's team or the associated Project's team";
         private TestHelper _helper;
 
         public LeaseServiceTest()
@@ -54,17 +55,43 @@ namespace Pims.Api.Test.Services
             user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
 
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
-            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
-
+            leaseRepository.Setup(x => x.GetPage(It.IsAny<LeaseFilter>(), It.IsAny<HashSet<short>>(), null))
+                .Returns(new Paged<PimsLease>(new List<PimsLease>() { lease }, 1, 1, 1));
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             // Act
             var filter = new LeaseFilter() { LFileNo = "L-1234" };
             var properties = service.GetPage(filter, false);
 
             // Assert
-            leaseRepository.Verify(x => x.GetPage(filter, It.Is<HashSet<short>>(r => r.Count == 1 && r.Contains(lease.RegionCode.Value))), Times.Once);
+            leaseRepository.Verify(x => x.GetPage(filter, It.Is<HashSet<short>>(r => r.Count == 1 && r.Contains(lease.RegionCode.Value)), null), Times.Once);
+        }
+        [Fact]
+        public void GetPage_Contractor_Success()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var user = EntityHelper.CreateUser("Test", isContractor: true);
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+            user.PersonId = 1;
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetPage(It.IsAny<LeaseFilter>(), It.IsAny<HashSet<short>>(), null))
+                .Returns(new Paged<PimsLease>(new List<PimsLease>() { lease }, 1, 1, 1));
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            // Act
+            var filter = new LeaseFilter() { LFileNo = "L-1234" };
+            var properties = service.GetPage(filter, false);
+
+            // Assert
+            // PersonId should be passed to ensure contractor only sees leases they are assigned to
+            leaseRepository.Verify(x => x.GetPage(filter, It.Is<HashSet<short>>(r => r.Count == 1 && r.Contains(lease.RegionCode.Value)), user.PersonId), Times.Once);
         }
 
         [Fact]
@@ -79,11 +106,10 @@ namespace Pims.Api.Test.Services
             user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
 
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
-            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Count()).Returns(55); // mock the total amount of leases in the database
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             // Act
             var filter = new LeaseFilter() { LFileNo = "L-1234" };
@@ -92,7 +118,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             // Pagination should be ignored and all results should be returned when "all" parameter is true
-            leaseRepository.Verify(x => x.GetPage(It.Is<LeaseFilter>(f => f.Page == 1 && f.Quantity == 55), It.IsAny<HashSet<short>>()), Times.Once);
+            leaseRepository.Verify(x => x.GetPage(It.Is<LeaseFilter>(f => f.Page == 1 && f.Quantity == 55), It.IsAny<HashSet<short>>(), null), Times.Once);
         }
         #endregion
 
@@ -132,7 +158,7 @@ namespace Pims.Api.Test.Services
             propertyService.Setup(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>())).Returns<PimsPropertyLease>(x => x);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             // Act
             var result = service.Add(lease, new List<UserOverrideCode>());
@@ -148,7 +174,181 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Add_NoPermission()
+        public void Add_Success_DuplicateTeamMember_IsSupported()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            lease.PimsLeaseLicenseTeams.Add(new() { PersonId = 1, LlTeamProfileTypeCode = "test" });
+            lease.PimsLeaseLicenseTeams.Add(new() { PersonId = 1, LlTeamProfileTypeCode = "test" });
+
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+            user.PersonId = 1;
+
+            var service = this.CreateLeaseService(Permissions.LeaseAdd);
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.Add(It.IsAny<PimsLease>())).Returns(lease);
+            leaseRepository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsLeaseChklstItemType>() {
+                new PimsLeaseChklstItemType()
+                {
+                    LeaseChklstItemTypeCode = "VALID-ITEM",
+                    LeaseChklstSectionTypeCode = LeaseChecklistItemSectionTypes.FILEINIT.ToString(),
+                    Description = "MY VALID CHECKLIST ITEM",
+                    IsRequired = false,
+                    EffectiveDate = DateOnly.MinValue,
+                    ExpiryDate = null,
+                    IsDisabled = false,
+                    DisplayOrder = 1,
+                    ConcurrencyControlNumber = 1,
+                },
+            });
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>())).Returns<PimsPropertyLease>(x => x);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            // Act
+            var result = service.Add(lease, new List<UserOverrideCode>());
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsLease>();
+            result.LeaseId.Should().Be(1);
+            result.PimsLeaseChecklistItems.Should().HaveCount(1);
+            result.PimsLeaseLicenseTeams.Should().HaveCount(2);
+
+            leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Once);
+            propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>()), Times.Once);
+        }
+
+        [Fact]
+        public void Add_Success_Contractor_AssignedToTeam()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            lease.PimsLeaseLicenseTeams.Add(new() { PersonId = 1, LlTeamProfileTypeCode = "test" });
+
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+            contractorUser.PersonId = 1;
+
+            var service = this.CreateLeaseService(Permissions.LeaseAdd);
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.Add(It.IsAny<PimsLease>())).Returns(lease);
+            leaseRepository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsLeaseChklstItemType>() {
+                new PimsLeaseChklstItemType()
+                {
+                    LeaseChklstItemTypeCode = "VALID-ITEM",
+                    LeaseChklstSectionTypeCode = LeaseChecklistItemSectionTypes.FILEINIT.ToString(),
+                    Description = "MY VALID CHECKLIST ITEM",
+                    IsRequired = false,
+                    EffectiveDate = DateOnly.MinValue,
+                    ExpiryDate = null,
+                    IsDisabled = false,
+                    DisplayOrder = 1,
+                    ConcurrencyControlNumber = 1,
+                },
+            });
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>())).Returns<PimsPropertyLease>(x => x);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            var result = service.Add(lease, new List<UserOverrideCode>());
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsLease>();
+            result.LeaseId.Should().Be(1);
+            result.PimsLeaseChecklistItems.Should().HaveCount(1);
+            result.PimsLeaseLicenseTeams.Should().HaveCount(1);
+
+            leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Once);
+            propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>()), Times.Once);
+        }
+
+        [Fact]
+        public void Add_Success_Contractor_AssignedToProject()
+        {
+            // Arrange
+            var project = EntityHelper.CreateProject(1, "test", "test project");
+            project.PimsProjectPeople.Add(new PimsProjectPerson()
+            {
+                PersonId = 1,
+                ProjectPersonRoleTypeCode = "test",
+            });
+
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            lease.ProjectId = project.Internal_Id;
+            lease.Project = project;
+
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+            contractorUser.PersonId = 1;
+
+            var service = this.CreateLeaseService(Permissions.LeaseAdd);
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.Add(It.IsAny<PimsLease>())).Returns(lease);
+            leaseRepository.Setup(x => x.GetAllChecklistItemTypes()).Returns(new List<PimsLeaseChklstItemType>() {
+                new PimsLeaseChklstItemType()
+                {
+                    LeaseChklstItemTypeCode = "VALID-ITEM",
+                    LeaseChklstSectionTypeCode = LeaseChecklistItemSectionTypes.FILEINIT.ToString(),
+                    Description = "MY VALID CHECKLIST ITEM",
+                    IsRequired = false,
+                    EffectiveDate = DateOnly.MinValue,
+                    ExpiryDate = null,
+                    IsDisabled = false,
+                    DisplayOrder = 1,
+                    ConcurrencyControlNumber = 1,
+                },
+            });
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>())).Returns<PimsPropertyLease>(x => x);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var projectRepository = this._helper.GetService<Mock<IProjectRepository>>();
+            projectRepository.Setup(x => x.TryGet(It.IsAny<long>())).Returns(project);
+
+            // Act
+            var result = service.Add(lease, new List<UserOverrideCode>());
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsLease>();
+            result.LeaseId.Should().Be(1);
+            result.PimsLeaseChecklistItems.Should().HaveCount(1);
+            result.Project.PimsProjectPeople.Should().HaveCount(1);
+
+            leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Once);
+            propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>()), Times.Once);
+        }
+
+        [Fact]
+        public void Add_NoPermission_Error()
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
@@ -170,7 +370,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void Add_InvalidAccessToLeaseFile()
+        public void Add_InvalidRegion_Error()
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
@@ -179,10 +379,11 @@ namespace Pims.Api.Test.Services
             user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = 2 });
 
             var service = this.CreateLeaseService(Permissions.LeaseAdd);
+
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             leaseRepository.Setup(x => x.Add(It.IsAny<PimsLease>())).Returns(lease);
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
@@ -191,6 +392,33 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Never);
+            propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>()), Times.Never);
+        }
+
+        [Fact]
+        public void Add_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var service = this.CreateLeaseService(Permissions.LeaseAdd);
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            leaseRepository.Setup(x => x.Add(It.IsAny<PimsLease>())).Returns(lease);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+
+            // Act
+            Action act = () => service.Add(lease, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<ContractorNotInTeamException>();
             leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Never);
             propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>()), Times.Never);
         }
@@ -225,7 +453,7 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(retiredProperty);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
@@ -234,7 +462,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
+            ex.WithMessage("New retired property can not be added.");
 
             leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Never);
             propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>()), Times.Never);
@@ -282,7 +510,7 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(disposedProperty);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
@@ -295,6 +523,84 @@ namespace Pims.Api.Test.Services
 
             leaseRepository.Verify(x => x.Add(It.IsAny<PimsLease>()), Times.Never);
             propertyService.Verify(x => x.PopulateNewFileProperty(It.IsAny<PimsPropertyLease>()), Times.Never);
+        }
+
+        #endregion
+
+        #region GetById
+        [Fact]
+        public void GetById_Success()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            // Act
+            var result = service.GetById(1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsLease>();
+            result.LeaseId.Should().Be(1);
+            leaseRepository.Verify(x => x.Get(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetById_NoPermission_Error()
+        {
+            // Arrange
+            var service = this.CreateLeaseService();
+
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(lease);
+
+            // Act
+            Action act = () => service.GetById(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>();
+            leaseRepository.Verify(x => x.Get(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void GetById_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.GetById(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            leaseRepository.Verify(x => x.Get(It.IsAny<long>()), Times.Never);
         }
 
         #endregion
@@ -318,13 +624,43 @@ namespace Pims.Api.Test.Services
             propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>());
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             // Act
             Action act = () => service.GetPropertiesByLeaseId(1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            propertyLeaseRepository.Verify(x => x.GetAllByLeaseId(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void GetProperties_ByFileId_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseView, Permissions.PropertyView);
+
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+            propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>());
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.GetPropertiesByLeaseId(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            propertyLeaseRepository.Verify(x => x.GetAllByLeaseId(It.IsAny<long>()), Times.Never);
         }
 
         [Fact]
@@ -345,7 +681,7 @@ namespace Pims.Api.Test.Services
             propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>());
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             // Act
             var properties = service.GetPropertiesByLeaseId(1);
@@ -373,7 +709,7 @@ namespace Pims.Api.Test.Services
                 .Returns(new List<PimsPropertyLease>() { new() { Property = new() { Location = new Point(1, 1) } } });
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.TransformAllPropertiesToLatLong(It.IsAny<List<PimsPropertyLease>>()))
@@ -403,13 +739,44 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             Action act = () => service.Update(lease, new List<UserOverrideCode>());
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
+            leaseRepository.Verify(x => x.Update(It.IsAny<PimsLease>(), It.IsAny<bool>()), Times.Never);
+        }
+
+        [Fact]
+        public void Update_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.Update(lease, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<ContractorNotInTeamException>().WithMessage("Contractors cannot remove themselves from a Lease File. Please contact the admin at pims@gov.bc.ca");
             leaseRepository.Verify(x => x.Update(It.IsAny<PimsLease>(), It.IsAny<bool>()), Times.Never);
         }
 
@@ -428,7 +795,7 @@ namespace Pims.Api.Test.Services
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(currentLeaseEntity);
 
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
             compReqFinancialRepository.Setup(c => c.GetAllByLeaseFileId(It.IsAny<long>(), true)).Returns(
                 new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 50 } });
 
@@ -461,7 +828,7 @@ namespace Pims.Api.Test.Services
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(currentLeaseEntity);
 
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
             compReqFinancialRepository.Setup(c => c.GetAllByLeaseFileId(It.IsAny<long>(), true)).Returns(
                 new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } });
 
@@ -495,7 +862,7 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsLeaseNote>>>();
 
@@ -535,7 +902,7 @@ namespace Pims.Api.Test.Services
 
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(currentLeaseEntity);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
             lookupRepository.Setup(x => x.GetAllLeaseStatusTypes()).Returns(new List<PimsLeaseStatusType>() {
                 new PimsLeaseStatusType()
                 {
@@ -578,7 +945,7 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
@@ -593,6 +960,37 @@ namespace Pims.Api.Test.Services
 
             // Assert
             leaseRepository.Verify(x => x.Update(lease, false), Times.Once);
+        }
+
+        [Fact]
+        public void UpdateProperties_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.UpdateProperties(lease, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<ContractorNotInTeamException>().WithMessage("Contractors cannot remove themselves from a Lease File. Please contact the admin at pims@gov.bc.ca");
+            propertyLeaseRepository.Verify(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<ICollection<PimsPropertyLease>>()), Times.Never);
         }
 
         [Fact]
@@ -634,7 +1032,7 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(disposedProperty);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
@@ -650,7 +1048,7 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void UpdateProperties_WithExistingDisposedProperty_Should_Pass()
+        public void UpdateProperties_WithExistingDisposedProperty_Success()
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
@@ -694,7 +1092,7 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetAllAssociationsById(It.IsAny<long>())).Returns(disposedProperty);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
@@ -710,10 +1108,25 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
-        public void UpdateProperties_WithRetiredProperty_Should_Fail()
+        public void UpdateProperties_WithNewRetiredProperty_Should_Fail()
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
+
+            // Simulate adding a new retired property (not already attached)
+            var retiredProperty = new PimsProperty()
+            {
+                PropertyId = 100,
+                Pid = 1,
+                IsRetired = true,
+            };
+            var newPropertyLease = new PimsPropertyLease()
+            {
+                Property = retiredProperty,
+                PropertyId = retiredProperty.PropertyId,
+                Internal_Id = 0 // Simulate new property (not attached yet)
+            };
+            lease.PimsPropertyLeases = new List<PimsPropertyLease> { newPropertyLease };
 
             var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
@@ -721,17 +1134,13 @@ namespace Pims.Api.Test.Services
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
-            PimsProperty retiredProperty = new PimsProperty()
-            {
-                PropertyId = 100,
-                Pid = 1,
-                IsRetired = true,
-            };
-
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(retiredProperty);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            // No properties are already attached to this lease
+            propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(new List<PimsPropertyLease>());
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
@@ -743,7 +1152,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
+            ex.WithMessage("New retired property can not be added.");
         }
 
         [Fact]
@@ -761,7 +1170,7 @@ namespace Pims.Api.Test.Services
             propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
@@ -801,7 +1210,7 @@ namespace Pims.Api.Test.Services
             propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
@@ -852,7 +1261,7 @@ namespace Pims.Api.Test.Services
             propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(lease.PimsPropertyLeases);
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
@@ -913,7 +1322,7 @@ namespace Pims.Api.Test.Services
             propertyLeaseRepository.Setup(x => x.GetAllByLeaseId(It.IsAny<long>())).Returns(propertyLeases);
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
@@ -946,7 +1355,7 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
             leaseRepository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             PimsProperty newProperty = null;
@@ -998,7 +1407,7 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetAllAssociationsCountById(It.IsAny<long>())).Returns(3);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
@@ -1036,7 +1445,7 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetAllAssociationsCountById(It.IsAny<long>())).Returns(1);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
@@ -1073,7 +1482,7 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetAllAssociationsCountById(It.IsAny<long>())).Returns(1);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>() { new() { Internal_Id = 1, SourcePropertyId = deletedProperty.Internal_Id, SourceProperty = deletedProperty } });
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
@@ -1110,7 +1519,7 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetAllAssociationsCountById(It.IsAny<long>())).Returns(1);
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
             leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
@@ -1149,13 +1558,52 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void GetConsultations_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseView);
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+            consultationRepository.Setup(x => x.GetConsultationsByLease(It.IsAny<long>())).Returns(new List<PimsLeaseConsultation>());
+
+            // Act
+            Action act = () => service.GetConsultations(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            consultationRepository.Verify(x => x.GetConsultationsByLease(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
         public void GetConsultations_Success()
         {
             // Arrange
             var service = this.CreateLeaseService(Permissions.LeaseView);
-            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
 
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
             consultationRepository.Setup(x => x.GetConsultationsByLease(It.IsAny<long>())).Returns(new List<PimsLeaseConsultation>());
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             // Act
             var result = service.GetConsultations(1);
@@ -1182,13 +1630,49 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void GetConsultationById_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseView);
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+            consultationRepository.Setup(x => x.GetConsultationById(It.IsAny<long>())).Returns(new PimsLeaseConsultation());
+
+            // Act
+            Action act = () => service.GetConsultationById(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+        }
+
+        [Fact]
         public void GetConsultationById_Success()
         {
             // Arrange
             var service = this.CreateLeaseService(Permissions.LeaseView);
-            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
 
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
             consultationRepository.Setup(x => x.GetConsultationById(It.IsAny<long>())).Returns(new PimsLeaseConsultation());
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             // Act
             var result = service.GetConsultationById(1);
@@ -1215,12 +1699,52 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void AddConsultation_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+            consultationRepository.Setup(x => x.AddConsultation(It.IsAny<PimsLeaseConsultation>())).Returns(new PimsLeaseConsultation());
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteConsultation(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.AddConsultation(new PimsLeaseConsultation());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            consultationRepository.Verify(x => x.AddConsultation(It.IsAny<PimsLeaseConsultation>()), Times.Never);
+        }
+
+        [Fact]
         public void AddConsultation_Success()
         {
             // Arrange
             var service = this.CreateLeaseService(Permissions.LeaseEdit);
-            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
 
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
             consultationRepository.Setup(x => x.AddConsultation(It.IsAny<PimsLeaseConsultation>())).Returns(new PimsLeaseConsultation());
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
@@ -1270,6 +1794,36 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Update_Consultation_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+            consultationRepository.Setup(x => x.UpdateConsultation(It.IsAny<PimsLeaseConsultation>())).Returns(new PimsLeaseConsultation());
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteConsultation(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.UpdateConsultation(new PimsLeaseConsultation());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            consultationRepository.Verify(x => x.UpdateConsultation(It.IsAny<PimsLeaseConsultation>()), Times.Never);
+        }
+
+        [Fact]
         public void Update_Consultation_FinalFile()
         {
             // Arrange
@@ -1293,8 +1847,18 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateLeaseService(Permissions.LeaseEdit);
-            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
 
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
             consultationRepository.Setup(x => x.UpdateConsultation(It.IsAny<PimsLeaseConsultation>())).Returns(new PimsLeaseConsultation());
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
@@ -1325,6 +1889,37 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Delete_Consultation_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
+            consultationRepository.Setup(x => x.GetConsultationById(It.IsAny<long>())).Returns(EntityHelper.CreateLeaseConsultationItem(1, leaseId: lease.LeaseId));
+            consultationRepository.Setup(x => x.TryDeleteConsultation(It.IsAny<long>())).Returns(true);
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditOrDeleteConsultation(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.DeleteConsultation(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            consultationRepository.Verify(x => x.TryDeleteConsultation(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
         public void Delete_Consultation_FinalFile()
         {
             // Arrange
@@ -1351,12 +1946,20 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateLeaseService(Permissions.LeaseEdit);
-            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
-            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
 
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
             consultationRepository.Setup(x => x.TryDeleteConsultation(It.IsAny<long>())).Returns(true);
             consultationRepository.Setup(x => x.GetConsultationById(It.IsAny<long>())).Returns(EntityHelper.CreateLeaseConsultationItem());
-            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.CanEditOrDeleteConsultation(It.IsAny<LeaseStatusTypes?>())).Returns(true);
@@ -1371,6 +1974,37 @@ namespace Pims.Api.Test.Services
         #endregion
 
         #region Insurance
+
+        [Fact]
+        public void UpdateInsurance_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var insuranceRepository = this._helper.GetService<Mock<IInsuranceRepository>>();
+            insuranceRepository.Setup(x => x.UpdateLeaseInsurance(It.IsAny<long>(), It.IsAny<IEnumerable<PimsInsurance>>())).Returns(new List<PimsInsurance>());
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditInsurance(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.UpdateInsuranceByLeaseId(1, new List<PimsInsurance>());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            insuranceRepository.Verify(x => x.UpdateLeaseInsurance(It.IsAny<long>(), It.IsAny<IEnumerable<PimsInsurance>>()), Times.Never);
+        }
+
         [Fact]
         public void UpdateInsurance_FinalFile()
         {
@@ -1382,7 +2016,7 @@ namespace Pims.Api.Test.Services
             var user = EntityHelper.CreateUser("Test");
             user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = 1 });
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
 
@@ -1398,6 +2032,33 @@ namespace Pims.Api.Test.Services
 
         #region Stakeholders
         [Fact]
+        public void GetStakeholders_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseView);
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var stakeholderRepository = this._helper.GetService<Mock<ILeaseStakeholderRepository>>();
+            stakeholderRepository.Setup(x => x.GetByLeaseId(It.IsAny<long>())).Returns(new List<PimsLeaseStakeholder>());
+
+            // Act
+            Action act = () => service.GetStakeholdersByLeaseId(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            stakeholderRepository.Verify(x => x.GetByLeaseId(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
         public void UpdateStakeholders_FinalFile()
         {
             // Arrange
@@ -1408,7 +2069,7 @@ namespace Pims.Api.Test.Services
             var user = EntityHelper.CreateUser("Test");
             user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = 1 });
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
 
@@ -1420,11 +2081,123 @@ namespace Pims.Api.Test.Services
             // Assert
             act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
+
+        [Fact]
+        public void UpdateStakeholders_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var stakeholderRepository = this._helper.GetService<Mock<ILeaseStakeholderRepository>>();
+            stakeholderRepository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<IEnumerable<PimsLeaseStakeholder>>())).Returns(new List<PimsLeaseStakeholder>());
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditStakeholders(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.UpdateStakeholdersByLeaseId(1, new List<PimsLeaseStakeholder>());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            stakeholderRepository.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<IEnumerable<PimsLeaseStakeholder>>()), Times.Never);
+        }
         #endregion
 
         #region Checklists
+
         [Fact]
-        public void UpdateChecklists_FinalFile()
+        public void GetChecklist_Success()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseView);
+
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.GetAllChecklistItemsByLeaseId(It.IsAny<long>())).Returns(new List<PimsLeaseChecklistItem>());
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            // Act
+            var result = service.GetChecklistItems(1);
+
+            // Assert
+            leaseRepository.Verify(x => x.GetAllChecklistItemsByLeaseId(It.IsAny<long>()), Times.Once);
+        }
+
+        [Fact]
+        public void GetChecklist_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseView);
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.GetAllChecklistItemsByLeaseId(It.IsAny<long>())).Returns(new List<PimsLeaseChecklistItem>());
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            // Act
+            Action act = () => service.GetChecklistItems(1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            leaseRepository.Verify(x => x.GetAllChecklistItemsByLeaseId(It.IsAny<long>()), Times.Never);
+        }
+
+        [Fact]
+        public void UpdateChecklist_ContractorNotInTeam_Error()
+        {
+            // Arrange
+            var service = this.CreateLeaseService(Permissions.LeaseEdit);
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            var contractorUser = EntityHelper.CreateUser("Test", isContractor: true);
+            contractorUser.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.GetAllChecklistItemsByLeaseId(It.IsAny<long>())).Returns(new List<PimsLeaseChecklistItem>());
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.CanEditChecklists(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
+            // Act
+            Action act = () => service.UpdateChecklistItems(1, new List<PimsLeaseChecklistItem>());
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            leaseRepository.Verify(x => x.GetAllChecklistItemsByLeaseId(It.IsAny<long>()), Times.Never);
+            leaseRepository.Verify(x => x.AddChecklistItem(It.IsAny<PimsLeaseChecklistItem>()), Times.Never);
+            leaseRepository.Verify(x => x.UpdateChecklistItem(It.IsAny<PimsLeaseChecklistItem>()), Times.Never);
+        }
+
+        [Fact]
+        public void UpdateChecklist_FinalFile()
         {
             // Arrange
             var service = this.CreateLeaseService(Permissions.LeaseEdit);
@@ -1433,7 +2206,7 @@ namespace Pims.Api.Test.Services
             var user = EntityHelper.CreateUser("Test");
             user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = 1 });
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
 

@@ -1,7 +1,7 @@
 import { Formik, FormikHelpers } from 'formik';
 import styled from 'styled-components';
 
-import { Select, TextArea } from '@/components/common/form';
+import { FastDatePicker, Input, Select, TextArea } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -34,6 +34,7 @@ const PropertyImprovementForm: React.FunctionComponent<IPropertyImprovementFormP
   const { getOptionsByType } = useLookupCodeHelpers();
 
   const propertyImprovementTypesOptions = getOptionsByType(API.PROPERTY_IMPROVEMENT_TYPES);
+  const propertyImprovementStatusOptions = getOptionsByType(API.PROPERTY_IMPROVEMENT_STATUS_TYPES);
 
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
     if (!dirty) {
@@ -69,12 +70,25 @@ const PropertyImprovementForm: React.FunctionComponent<IPropertyImprovementFormP
               ></LoadingBackdrop>
               <StyledContent>
                 <Section header="Property Improvement Details">
-                  <SectionField label="Improvement type">
+                  <SectionField label="Name" required>
+                    <Input field="name" />
+                  </SectionField>
+                  <SectionField label="Improvement type" required>
                     <Select
                       options={propertyImprovementTypesOptions}
-                      field="propertyImprovementTypeCode"
+                      field="improvementTypeCode"
                       placeholder="Select type"
                     />
+                  </SectionField>
+                  <SectionField label="Improvement status" required>
+                    <Select
+                      options={propertyImprovementStatusOptions}
+                      field="improvementStatusCode"
+                      placeholder="Select type"
+                    />
+                  </SectionField>
+                  <SectionField label="Improvement date">
+                    <FastDatePicker field="improvementDate" formikProps={formikProps} />
                   </SectionField>
                   <SectionField label="Description">
                     <TextArea field="description" />

@@ -1,6 +1,7 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
+using PIMS.Tests.Automation.PageObjects;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -13,11 +14,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SearchDispositionFiles searchDispositionFiles;
         private readonly SharedFileProperties sharedFileProperties;
         private readonly SearchProperties searchProperties;
-        private readonly PropertyInformation propertyInformation;
+ 
         private readonly Notes notes;
         private readonly DispositionChecklist checklist;
         private readonly DispositionOfferSale offerSale;
         private readonly SharedPagination sharedPagination;
+        private readonly SharedImprovementsTab sharedImprovementsTab;
 
         private readonly string userName = "TRANPSP1";
         private string dispositionFileName = "";
@@ -31,10 +33,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchDispositionFiles = new SearchDispositionFiles(driver);
             sharedFileProperties = new SharedFileProperties(driver);
             searchProperties = new SearchProperties(driver);
-            propertyInformation = new PropertyInformation(driver);
             notes = new Notes(driver);
             checklist = new DispositionChecklist(driver);
             offerSale = new DispositionOfferSale(driver);
+            sharedImprovementsTab = new SharedImprovementsTab(driver);
             sharedPagination = new SharedPagination(driver);
 
             dispositionFile = new DispositionFile();
@@ -191,6 +193,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify properties order
             sharedFileProperties.VerifyInsertedPropsOrder(dispositionFile.DispositionSearchProperties.DisplayingList);
+        }
+
+        [StepDefinition(@"I verify the Disposition File Improvements Tab")]
+        public void VerifyAcquisitionPropertyImprovement()
+        {
+            //Navigate to Improvements Tab
+            sharedImprovementsTab.NavigateImprovementTab();
+
+            //Verify Properties' count on Improvement Tabs
+            Assert.Equal(dispositionFile.DispositionSearchProperties.DisplayingList.Count, sharedImprovementsTab.CountProperties());
+
+            //Verify Improvements Tab
+            sharedImprovementsTab.VerifyImprovementsTab(dispositionFile.DispositionSearchProperties.DisplayingList);
         }
 
         [StepDefinition(@"I update a Disposition File's Properties from row number (.*)")]
@@ -688,6 +703,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect7 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect7");
                 dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect8 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect8");
                 dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect9 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect9");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect10 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect10");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect11 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect11");
+                dispositionFile.DispositionFileChecklist.DirectSaleRoadClosureSelect12 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispDirectSaleRoadClosureSelect12");
 
                 dispositionFile.DispositionFileChecklist.SaleInformationSelect1 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect1");
                 dispositionFile.DispositionFileChecklist.SaleInformationSelect2 = ExcelDataContext.ReadData(dispositionFile.DispositionFileChecklistIndex, "DispSaleInformationSelect2");

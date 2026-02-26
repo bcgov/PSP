@@ -12,19 +12,19 @@ namespace Pims.Dal.Repositories
     {
         int Count();
 
-        IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false);
+        IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false, long? contractorPersonId = null);
 
         long GetRowVersion(long id);
 
         PimsLease Get(long id);
 
-        IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds);
+        IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds, HashSet<short> regions, long? contractorPersonId = null);
 
         PimsLease GetNoTracking(long id);
 
         LastUpdatedByModel GetLastUpdateBy(long leaseId);
 
-        Paged<PimsLease> GetPage(LeaseFilter filter, HashSet<short> regions);
+        Paged<PimsLease> GetPage(LeaseFilter filter, HashSet<short> regions, long? contractorPersonId = null);
 
         PimsLease Add(PimsLease lease);
 

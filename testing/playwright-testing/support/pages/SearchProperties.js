@@ -62,12 +62,12 @@ class SearchProperties {
     await this.page.getByTestId("geographic-name-input").fill(poiName);
     await expect(
       this.page.locator(
-        "//input[@data-testid='geographic-name-input']/following-sibling::ul[@class='suggestionList']"
-      )
+        "div[data-placement='bottom-start'] ul[class='suggestionList']",
+      ),
     ).toBeVisible();
     await this.page
       .locator(
-        "//input[@data-testid='geographic-name-input']/following-sibling::ul[@class='suggestionList']/li[1]"
+        "div[data-placement='bottom-start'] ul[class='suggestionList'] li:first-child",
       )
       .click();
     await this.page.getByTestId("search").click();
@@ -146,7 +146,7 @@ class SearchProperties {
       .click();
 
     const quickInfoCloseBttn = await this.page.locator(
-      "div[data-testid='quick-info-header'] *[data-testid='close-icon']"
+      "div[data-testid='quick-info-header'] *[data-testid='close-icon']",
     );
     if (await quickInfoCloseBttn.isVisible()) {
       await quickInfoCloseBttn.click();
@@ -154,24 +154,39 @@ class SearchProperties {
   }
 
   async selectNthPMBCSearchResult(index) {
-    await this.page
-      .locator(
-        `div[data-testid="pmbc-search-results-section"] div[data-testid="search-property-${index}"]`
-      )
-      .click();
+    const loader = this.page
+      .locator("div[data-testid='filter-backdrop-loading']")
+      .first();
+    if (await loader.isVisible()) {
+      await loader.waitFor({ state: "hidden" });
+    }
+
+    const selector = `div[data-testid="pmbc-search-results-section"] div[data-testid="search-property-${index}"]`;
+    const locator = this.page.locator(selector);
+
+    // Ensure the element is attached and stable before clicking
+    await locator.waitFor({ state: "visible", timeout: 10000 });
+
+    // Use a targeted click
+    await locator.click();
   }
 
   async selectNthPIMSSearchResult(index) {
     await this.page
       .locator(
-        `div[data-testid="pims-search-results-section"] div[data-testid="search-property-${index}"]`
+        `div[data-testid="pims-search-results-section"] div[data-testid="search-property-${index}"]`,
+      )
+      .waitFor({ status: "visible" });
+    await this.page
+      .locator(
+        `div[data-testid="pims-search-results-section"] div[data-testid="search-property-${index}"]`,
       )
       .click();
   }
 
   async closePropertyLeaflet() {
-    const closeLeafketBttn = await this.page.location(
-      "div[data-testid='leaflet-buttons-section'] *[data-testid='close-leaflet-button']"
+    const closeLeafketBttn = await this.page.locator(
+      "div[data-testid='leaflet-buttons-section'] *[data-testid='close-leaflet-button']",
     );
     await closeLeafketBttn.waitFor({ status: "visible" });
     await closeLeafketBttn.click();
@@ -179,7 +194,7 @@ class SearchProperties {
 
   async selectPinOnMap() {
     const pinOnMap = await this.page.locator(
-      "div[class='leaflet-pane leaflet-marker-pane'] img:first-child"
+      "div[class='leaflet-pane leaflet-marker-pane'] img:first-child",
     );
     await pinOnMap.waitFor({ status: "visible" });
     await pinOnMap.click({ force: true });
@@ -192,7 +207,7 @@ class SearchProperties {
 
   async quickInfoAddWorklist() {
     await this.page.locator("#dropdown-ellipsis").click();
-    await this.page.locator("a[aria-label='Add to Worklist']").click();
+    await this.page.locator("a[aria-label='Add to Working List']").click();
   }
 
   async quickInfoCreateResearchFile() {
@@ -225,31 +240,36 @@ class SearchProperties {
       .getByTestId("search-property-0")
       .getByLabel("More options")
       .click();
-    await this.page.locator("a[aria-label='Add to Worklist']").click();
+    await this.page.locator("a[aria-label='Add to Working List']").click();
   }
 
   async addPropertyToWorklistFromQuickInfo() {
-    clickAndWaitFor(
-      this.page,
-      "button[data-testid='quick-info-more-options']",
-      "div[aria-labelledby='dropdown-ellipsis']"
-    );
     await this.page
       .locator(
-        "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']"
+        "div[data-testid='quick-info'] div[data-testid='filter-backdrop-loading']",
+      )
+      .waitFor({ state: "hidden" });
+    await this.page
+      .locator("button[data-testid='quick-info-more-options']")
+      .waitFor({ state: "visible" });
+    await this.page
+      .locator("button[data-testid='quick-info-more-options']")
+      .click();
+    await this.page
+      .locator(
+        "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Working List']",
       )
       .waitFor({ status: "visible" });
     await this.page
       .locator(
-        "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']"
+        "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Working List']",
       )
       .click();
   }
 
   async verifySearchControlForm() {
-    const searchPropertiesSidebar = await this.page.getByTestId(
-      "search-sidebar"
-    );
+    const searchPropertiesSidebar =
+      await this.page.getByTestId("search-sidebar");
     expect(searchPropertiesSidebar).toBeVisible();
 
     const searchTitle = await this.page
@@ -271,6 +291,7 @@ class SearchProperties {
       "Lat/Long",
       "Survey Parcel",
       "Project",
+      "Legal Description",
     ]);
 
     const searchPIDText = await this.page.locator("#input-searchBy");
@@ -283,39 +304,39 @@ class SearchProperties {
     expect(resetButton).toBeVisible();
 
     const PMBCResultsTitle = await this.page.locator(
-      "//div[text()='Results (PMBC)']"
+      "//div[text()='Results (PMBC)']",
     );
     expect(PMBCResultsTitle).toBeVisible();
 
     const PMBCResultsMoreOptions = await this.page.locator(
-      "button[aria-label='search pmbc results more options']"
+      "button[aria-label='search pmbc results more options']",
     );
     expect(PMBCResultsMoreOptions).toBeVisible();
 
     const PIMSResultsTitle = await this.page.locator(
-      "//div[text()='Results (PIMS)']"
+      "//div[text()='Results (PIMS)']",
     );
     expect(PIMSResultsTitle).toBeVisible();
 
     const PIMSResultsMoreOptions = await this.page.locator(
-      "button[aria-label='search pims results more options']"
+      "button[aria-label='search pims results more options']",
     );
     expect(PIMSResultsMoreOptions).toBeVisible();
   }
 
   async verifyPropertyQuickInfo() {
     const quickInfoLeaflet = await this.page.locator(
-      "div[data-testid='quick-info']"
+      "div[data-testid='quick-info']",
     );
     expect(quickInfoLeaflet).toBeVisible({ timeout: 120000 });
 
     const quickInfoViewIcon = await this.page.locator(
-      "div[data-testid='view-property-icon']"
+      "div[data-testid='view-property-icon']",
     );
     expect(quickInfoViewIcon).toBeVisible({ timeout: 120000 });
 
     const quickInfoMorOptions = await this.page.locator(
-      "button[data-testid='quick-info-more-options']"
+      "button[data-testid='quick-info-more-options']",
     );
     expect(quickInfoMorOptions).toBeVisible({ timeout: 120000 });
 
@@ -328,14 +349,48 @@ class SearchProperties {
     expect(quickInfoZoom).toBeVisible({ timeout: 120000 });
 
     const quickInfoMinimize = await this.page.getByTestId(
-      "*[data-testid='toggle-icon']"
+      "*[data-testid='toggle-icon']",
     );
     expect(quickInfoMinimize).toBeVisible({ timeout: 120000 });
 
     const quickInfoCloseIcon = await this.page.locator(
-      "*[data-testid='close-icon']"
+      "*[data-testid='close-icon']",
     );
     expect(quickInfoCloseIcon).toBeVisible({ timeout: 120000 });
+  }
+
+  async verifyMultiplePropertyPopup() {
+    const popupTitle = await this.page.locator(
+      "//div[@class='leaflet-popup-content']/div/div[text()='Multiple properties found']",
+    );
+    expect(popupTitle).toBeVisible({ timeout: 12000 });
+
+    const closeButton = await this.page.locator(
+      "div[class='leaflet-popup-content'] button[title='close']",
+    );
+    expect(closeButton).toBeVisible({ timeout: 12000 });
+
+    const commonPropertyDiv = await this.page.locator(
+      "//div[@class='leaflet-popup-content']/div/div/div/div[contains(text(),'Common Property')]",
+    );
+    expect(commonPropertyDiv).toBeVisible({ timeout: 12000 });
+
+    const propertiesPID = await this.page
+      .locator("//div[@class='leaflet-popup-content']/div/div/div")
+      .textContent();
+    expect(parseInt(propertiesPID)).toBeGreaterThan(1);
+
+    const addWorklistBttn = await this.page.locator(
+      "//div[@class='leaflet-popup-content']/div/button[2]",
+    );
+    expect(addWorklistBttn).toBeVisible({ timeout: 12000 });
+  }
+
+  async closeMultiplePropertyPopup() {
+    const closeButton = await this.page.locator(
+      "div[class='leaflet-popup-content'] button[title='close']",
+    );
+    await closeButton.click();
   }
 }
 

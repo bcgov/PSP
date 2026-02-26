@@ -26,6 +26,42 @@ class LeaseLicence {
     await this.page.locator("//a[text()='Manage Lease/Licence Files']").click();
   }
 
+  async createMinimumLease(lease) {
+    const leaseStatus = await this.page.locator("#input-statusTypeCode");
+    await leaseStatus.waitFor({ status: "visible" });
+    await leaseStatus.selectOption({ label: lease.LeaseStatus });
+
+    await this.page
+      .locator("#input-paymentReceivableTypeCode")
+      .selectOption({ label: lease.AccountType });
+
+    await this.page
+      .locator("#input-regionId")
+      .selectOption({ label: lease.MOTIRegion });
+    await this.page
+      .locator("#input-programTypeCode")
+      .selectOption({ label: lease.Program });
+    await this.page
+      .locator("#input-leaseTypeCode")
+      .selectOption({ label: lease.lease.AdminType });
+
+    const purposeInput = await this.page.locator("#multiselect-purposes_input");
+    await purposeInput.click();
+
+    const purposesOptions = await this.page.locator(
+      "//input[@id='multiselect-purposes_input']/parent::div/following-sibling::div/ul[@class='optionContainer']"
+    );
+    await purposesOptions.waitFor({ status: "visible" });
+    await lease.LeasePurpose.forEach((purpose) => {
+      const selectedOption = this.page
+        .locator(purposesOptions)
+        .locator("li", { hasText: purpose });
+      selectedOption.click();
+    });
+
+    await this.page.getByTestId("save-button").click();
+  }
+
   async verifyCreateLeaseForm() {
     const formTitle = await this.page.getByTestId("form-title");
     expect(formTitle).toHaveText("Create Lease/Licence");

@@ -20,13 +20,17 @@
         public string MunicipalZoning { get; set; } = null!;
         public List<string> Anomalies { get; set; } = new List<string>();
         public List<string> TenureStatus { get; set; } = new List<string>();
-        //public string ProvincialPublicHwy { get; set; } = null!;
-        //public List<string> HighwayEstablishedBy { get; set; } = new List<string>();
+        public List<string> TenureCleanup { get; set; } = new List<string>();
         public string SqrMeters { get; set; } = null!;
         public Boolean IsVolumetric { get; set; } = false;
         public string Volume { get; set; } = null!;
         public string VolumeType { get; set; } = null!;
-        public string PropertyNotes { get; set; } = null!;
+        public string SurplusDeclarationType { get; set; } = null!;
+        public string SurplusDeclarationDate { get; set; } = null!;
+        public string SurplusDeclarationComment { get; set; } = null!;
+        public int PropertyImprovementsStartRow { get; set; } = 0;
+        public int PropertyImprovementsCount { get; set; } = 0;
+        public List<PropertyImprovement> PropertyImprovements { get; set; } = new List<PropertyImprovement>();
     }
 
     public class LeaseProperty
@@ -81,7 +85,7 @@
         public string ManagementTaxesPayable { get; set; } = null!;
         public string ManagementPropertyAdditionalDetails { get; set; } = null!;
         public int ManagementPropertyContactsStartRow { get; set; } = 0;
-        public int ManagementPropertyContactsStartCount { get; set; } = 0;
+        public int ManagementPropertyContactsCount { get; set; } = 0;
         public List<PropertyContact> ManagementPropertyContacts { get; set; } = new List<PropertyContact>();
         public int ManagementPropertyActivitiesStartRow { get; set; } = 0;
         public int ManagementPropertyActivitiesCount { get; set; } = 0;
@@ -168,5 +172,11 @@
         public string Section{ get; set; } = null!;
         public string Township { get; set; } = null!;
         public string Range { get; set; } = null!;
+    }
+
+    public class PropertyImprovement
+    {
+        public string ImprovementType { get; set; } = null!;
+        public string ImprovementDescription { get; set; } = null!;
     }
 }

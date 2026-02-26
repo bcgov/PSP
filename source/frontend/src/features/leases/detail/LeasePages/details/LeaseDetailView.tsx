@@ -1,13 +1,16 @@
 import { Col, Row } from 'react-bootstrap';
+import { FaExternalLinkAlt } from 'react-icons/fa';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import { StyledLink } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { exists, prettyFormatDate } from '@/utils';
 import { formatMinistryProject } from '@/utils/formUtils';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 export interface ILeaseDetailViewProps {
   lease: ApiGen_Concepts_Lease;
@@ -30,7 +33,7 @@ export const LeaseDetailView: React.FunctionComponent<
 
   return (
     <>
-      <Section header={'Original Agreement'}>
+      <Section header="Original Agreement">
         <SectionField label="Ministry project" labelWidth={{ xs: 3 }}>
           {projectName}
         </SectionField>
@@ -107,6 +110,18 @@ export const LeaseDetailView: React.FunctionComponent<
             </SectionField>
           </>
         )}
+        {lease?.project?.projectPersons?.map((teamMember, index) => (
+          <SectionField label="Project team member" key={`project-team-${index}`}>
+            <StyledLink
+              target="_blank"
+              rel="noopener noreferrer"
+              to={`/contact/P${teamMember?.personId}`}
+            >
+              <span>{formatApiPersonNames(teamMember?.person)}</span>
+              <FaExternalLinkAlt className="ml-2" size="1rem" />
+            </StyledLink>
+          </SectionField>
+        ))}
       </Section>
 
       {lease?.paymentReceivableType?.id !== ApiGen_CodeTypes_LeasePaymentReceivableTypes.RCVBL && (

@@ -496,3 +496,503 @@ exports[`SideNavbar display and logic > renders 1`] = `
   </div>
 </div>
 `;
+
+exports[`SideNavbar display and logic > renders 2`] = `
+.c4.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c4.btn .Button__value {
+  width: auto;
+}
+
+.c4.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c4.btn:focus {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.c4.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c4.btn.btn-primary:hover,
+.c4.btn.btn-primary:active,
+.c4.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c4.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c4.btn.btn-secondary:hover,
+.c4.btn.btn-secondary:active,
+.c4.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c4.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c4.btn.btn-info:hover,
+.c4.btn.btn-info:active,
+.c4.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c4.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c4.btn.btn-light:hover,
+.c4.btn.btn-light:active,
+.c4.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c4.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c4.btn.btn-dark:hover,
+.c4.btn.btn-dark:active,
+.c4.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c4.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c4.btn.btn-danger:hover,
+.c4.btn.btn-danger:active,
+.c4.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c4.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c4.btn.btn-warning:hover,
+.c4.btn.btn-warning:active,
+.c4.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c4.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c4.btn.btn-link:hover,
+.c4.btn.btn-link:active,
+.c4.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c4.btn.btn-link:disabled,
+.c4.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c4.btn:disabled,
+.c4.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.c4.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c4.Button--icon-only:focus {
+  outline: none;
+}
+
+.c4.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c5.btn.btn-light.Button {
+  padding: 0;
+  border: 0.1rem solid #9F9D9C;
+  background-color: white;
+  color: #474543;
+}
+
+.c5.btn.btn-light.Button:focus,
+.c5.btn.btn-light.Button:active {
+  background-color: white;
+  color: #474543;
+}
+
+.c5.btn,
+.c5 .Button__icon,
+.c5 svg {
+  max-width: 2.4rem;
+  min-width: 2.4rem;
+  max-height: 2.4rem;
+  min-height: 2.4rem;
+  font-size: 1.4rem;
+}
+
+.c1 {
+  height: 100%;
+  overflow-y: auto;
+  overflow-x: hidden;
+  padding-top: 1.5rem;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  position: relative;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  grid-area: iconbar;
+  background-color: #003366;
+  -webkit-transition: 0.5s width;
+  transition: 0.5s width;
+  width: 6rem;
+}
+
+.c1 label {
+  color: white;
+  min-width: 8rem;
+}
+
+.c1.expanded {
+  width: 16rem;
+}
+
+.c1 .nav-item svg {
+  min-width: 2.4rem;
+}
+
+.c1 .to-bottom {
+  margin-top: auto;
+  margin-bottom: 1.6rem;
+}
+
+.c1 .nav-link {
+  padding: 0.8rem 1.6rem;
+}
+
+.c1 .nav-link:hover {
+  -webkit-text-decoration: none;
+  text-decoration: none;
+}
+
+.c0 {
+  z-index: 1000;
+  position: relative;
+  grid-area: iconbar;
+  height: 100%;
+  min-height: 0;
+}
+
+.c7 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  height: 100%;
+}
+
+.c7 a {
+  font-size: 1.7rem;
+}
+
+.c6 {
+  height: 100%;
+  overflow-y: auto;
+  position: absolute;
+  top: 0;
+  right: 0;
+  background-color: white;
+  z-index: -1;
+  width: 64rem;
+  padding: 0.8rem 1.6rem;
+  text-align: left;
+  -webkit-transition: -webkit-transform 0.3s ease-in-out;
+  -webkit-transition: transform 0.3s ease-in-out;
+  transition: transform 0.3s ease-in-out;
+  box-shadow: 0.3rem 0 0.4rem rgba(0,0,0,0.2);
+}
+
+.c6.show {
+  -webkit-transform: translateX(64rem);
+  -ms-transform: translateX(64rem);
+  transform: translateX(64rem);
+}
+
+.c2 {
+  width: 100%;
+  margin-bottom: 2rem;
+  fill: #f2f2f2;
+}
+
+.c2:hover label {
+  color: #8ec6ff;
+}
+
+.c2:hover svg {
+  fill: #8ec6ff;
+}
+
+.c3 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c3 svg {
+  fill: white;
+  min-width: -webkit-max-content;
+  min-width: -moz-max-content;
+  min-width: max-content;
+}
+
+.c3.active svg,
+.c3.active svg g,
+.c3.active svg g path {
+  fill: #fdb913;
+}
+
+@media (max-width:1225px) {
+  .c6 {
+    width: 32rem;
+  }
+
+  .c6.show {
+    -webkit-transform: translateX(32rem);
+    -ms-transform: translateX(32rem);
+    transform: translateX(32rem);
+  }
+}
+
+<div>
+  <div
+    class="Toastify"
+  />
+  <div />
+  <div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2 nav-item"
+        data-testid="nav-tooltip-mapview"
+      >
+        <a
+          class="c3 nav-link"
+          href="#"
+          role="button"
+        >
+          <svg
+            fill="none"
+            height="24"
+            viewBox="0 0 24 24"
+            width="24"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <path
+              d="M12 12.6826C10.7569 12.6826 9.75 13.6907 9.75 14.9326C9.75 16.1746 10.7569 17.1826 12 17.1826C13.2431 17.1826 14.25 16.1746 14.25 14.9326C14.25 13.6907 13.2431 12.6826 12 12.6826Z"
+            />
+            <path
+              d="M12.1725 0L0 12.825L3.075 12.7725V24H20.925V12.54L24 12.4875L12.1725 0ZM12.375 24C12 24 11.625 24 11.625 24C7.65 18.18 6.75 17.1375 6.75 15C6.75 12.0675 9.0975 9.6975 12 9.6975C14.9025 9.6975 17.25 12.075 17.25 15C17.25 17.1375 16.35 18.18 12.375 24Z"
+            />
+          </svg>
+        </a>
+      </div>
+      <div
+        class="c2 nav-item"
+        data-testid="nav-tooltip-documentsearch"
+      >
+        <a
+          class="c3 nav-link"
+          href="#"
+          role="button"
+        >
+          <svg
+            fill="white"
+            height="24px"
+            viewBox="0 0 55 55"
+            width="24px"
+            xmlns="http://www.w3.org/2000/svg"
+          >
+            <g
+              clip-path="url(#clip0_1295_1298)"
+            >
+              <path
+                d="M25.9736 -0.0195312C40.3216 -0.0195312 51.9473 11.5966 51.9473 25.9326C51.9472 31.6594 50.0864 36.9493 46.9521 41.2412L53.8301 48.1592C55.3909 49.7188 55.3909 52.2519 53.8301 53.8115C52.2692 55.3711 49.7338 55.3711 48.1729 53.8115L41.2959 46.8936C37.0003 50.0253 31.7053 51.8838 25.9736 51.8838C11.6258 51.8838 0.000220149 40.2684 0 25.9326C0 11.5966 11.6257 -0.0195212 25.9736 -0.0195312ZM17.9365 8.10547C15.4633 8.1055 13.4521 10.042 13.4521 12.4229V38.3223C13.4521 40.7031 15.4633 42.6386 17.9365 42.6387H35.873C38.3462 42.6386 40.3564 40.7031 40.3564 38.3223V19.6055C40.3564 18.4589 39.8876 17.3591 39.0469 16.5498L31.5781 9.36719C30.7374 8.55783 29.6022 8.10548 28.4111 8.10547H17.9365ZM36.2578 19.9766H29.707C28.7753 19.9764 28.0254 19.2544 28.0254 18.3574V12.0518L36.2578 19.9766Z"
+              />
+            </g>
+            <defs>
+              <clippath
+                id="clip0_1295_1298"
+              >
+                <rect
+                  fill="white"
+                  height="55"
+                  width="55"
+                />
+              </clippath>
+            </defs>
+          </svg>
+        </a>
+      </div>
+      <span
+        class="to-bottom"
+      >
+        <button
+          class="c4 Button Button--icon-only c5 btn btn-light"
+          title="expand"
+          type="button"
+        >
+          <div
+            class="Button__icon"
+          >
+            <svg
+              fill="currentColor"
+              height="1em"
+              stroke="currentColor"
+              stroke-width="0"
+              viewBox="0 0 24 24"
+              width="1em"
+              xmlns="http://www.w3.org/2000/svg"
+            >
+              <path
+                d="M0 0h24v24H0z"
+                fill="none"
+              />
+              <path
+                d="M6.41 6 5 7.41 9.58 12 5 16.59 6.41 18l6-6z"
+              />
+              <path
+                d="m13 6-1.41 1.41L16.17 12l-4.58 4.59L13 18l6-6z"
+              />
+            </svg>
+          </div>
+        </button>
+      </span>
+    </div>
+    <div
+      class="c6"
+      data-testid="side-tray"
+    >
+      <div
+        class="c7"
+      />
+    </div>
+  </div>
+</div>
+`;

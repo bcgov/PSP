@@ -4,7 +4,7 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { Form, Input, Multiselect, Select } from '@/components/common/form';
+import { Check, Form, Input, Multiselect, Select } from '@/components/common/form';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { ColButtons } from '@/components/common/styles';
 import { ACQUISITION_FILE_STATUS_TYPES } from '@/constants/API';
@@ -147,11 +147,18 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                 </Col>
               </Row>
               <Row>
-                <Col lg="12">
+                <Col lg="9">
                   <Input
                     field="projectNameOrNumber"
                     placeholder="Ministry or alternate project name or number"
                   />
+                </Col>
+                <Col lg="3">
+                  <StyledCheckBox
+                    field="hasNoticeOfClaim"
+                    postLabel="File has NOC"
+                    onChange={formikProps.handleChange}
+                  ></StyledCheckBox>
                 </Col>
               </Row>
             </Col>
@@ -187,5 +194,13 @@ const FilterBoxForm = styled(Form)`
     input {
       max-width: 100%;
     }
+  }
+`;
+
+const StyledCheckBox = styled(Check)`
+  font-size: 1.6rem;
+  font-weight: normal;
+  label {
+    margin-bottom: 0;
   }
 `;

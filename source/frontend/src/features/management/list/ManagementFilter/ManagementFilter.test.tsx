@@ -39,6 +39,8 @@ describe('Management filter', () => {
       ...utils,
       getSearchButton: () => screen.getByTestId('search'),
       getResetButton: () => screen.getByTestId('reset-button'),
+      getHasNOCCheckbox: () =>
+        utils.container.querySelector(`input[name="hasNoticeOfClaim"]`) as HTMLInputElement,
     };
   };
 
@@ -116,6 +118,19 @@ describe('Management filter', () => {
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<Partial<Api_ManagementFilter>>({
         fileNameOrNumberOrReference: 'test management',
+      }),
+    );
+  });
+
+  it('searches by file has NOC', async () => {
+    const { getSearchButton, getHasNOCCheckbox } = setup();
+
+    await act(async () => userEvent.click(getHasNOCCheckbox()));
+    await act(async () => userEvent.click(getSearchButton()));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining<Partial<Api_ManagementFilter>>({
+        hasNoticeOfClaim: true,
       }),
     );
   });

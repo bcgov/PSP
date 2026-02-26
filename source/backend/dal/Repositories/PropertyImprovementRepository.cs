@@ -40,7 +40,8 @@ namespace Pims.Dal.Repositories
             using var scope = Logger.QueryScope();
 
             return Context.PimsPropertyImprovements.AsNoTracking()
-                .Include(pi => pi.PropertyImprovementTypeCodeNavigation)
+                .Include(x => x.PropertyImprovementTypeCodeNavigation)
+                .Include(x => x.PropImprvmntStatusTypeCodeNavigation)
                 .Where(x => x.PropertyId == propertyId)
                 .OrderBy(i => i.AppCreateTimestamp) ?? throw new KeyNotFoundException();
         }
@@ -89,6 +90,7 @@ namespace Pims.Dal.Repositories
 
             return Context.PimsPropertyImprovements.AsNoTracking()
                 .Include(x => x.PropertyImprovementTypeCodeNavigation)
+                .Include(x => x.PropImprvmntStatusTypeCodeNavigation)
                 .FirstOrDefault(x => x.PropertyImprovementId == propertyImprovementId && x.PropertyId == propertyId) ?? throw new KeyNotFoundException();
         }
 

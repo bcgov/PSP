@@ -68,9 +68,18 @@ const setup = (params?: {
 
   getAcquisitionFileFn.mockReturnValue(acquisitionResponse);
 
-  const { result } = renderHook(useGenerateAgreement, {
-    wrapper: getWrapper(getStore(params?.storeValues)),
-  });
+  const { result } = renderHook(
+    ({ getFile, getProperties, isAcquisition }) =>
+      useGenerateAgreement(getFile, getProperties, isAcquisition),
+    {
+      wrapper: getWrapper(getStore(params?.storeValues)),
+      initialProps: {
+        getFile: { execute: getAcquisitionFileFn },
+        getProperties: { execute: getAcquisitionFileProperties },
+        isAcquisition: true,
+      },
+    },
+  );
   return result.current;
 };
 

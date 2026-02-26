@@ -21,16 +21,16 @@ exports[`LayersMenu View > renders as expected 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c9 {
+.c8 {
   padding-left: 0rem;
   padding-bottom: 0.5rem;
 }
 
-.c9 .form-check input {
+.c8 .form-check input {
   margin-left: -0.3rem;
 }
 
-.c9 .form-check label {
+.c8 .form-check label {
   font-weight: bold;
 }
 
@@ -47,7 +47,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
   font-weight: normal;
 }
 
-.c10 {
+.c9 {
   font-size: 2.4rem;
   margin: -0.5rem;
 }
@@ -92,7 +92,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
 .c5 {
   width: 1.4rem;
   height: 1.4rem;
-  background-color: #3388ff;
+  background-color: #1389ed;
   margin-right: 0.5rem;
   padding-right: 1.4rem;
   margin-top: 0.3rem;
@@ -101,7 +101,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
 .c6 {
   width: 1.4rem;
   height: 1.4rem;
-  background-color: #42814A;
+  background-color: #FF00D4;
   margin-right: 0.5rem;
   padding-right: 1.4rem;
   margin-top: 0.3rem;
@@ -110,16 +110,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
 .c7 {
   width: 1.4rem;
   height: 1.4rem;
-  background-color: #FC802D;
-  margin-right: 0.5rem;
-  padding-right: 1.4rem;
-  margin-top: 0.3rem;
-}
-
-.c8 {
-  width: 1.4rem;
-  height: 1.4rem;
-  background-color: #555555;
+  background-color: #cc4c02;
   margin-right: 0.5rem;
   padding-right: 1.4rem;
   margin-top: 0.3rem;
@@ -187,7 +178,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 >
                   <div
                     class="c5"
-                    color="#3388ff"
+                    color="#1389ed"
                   />
                    Research
                 </span>
@@ -215,7 +206,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 >
                   <div
                     class="c6"
-                    color="#42814A"
+                    color="#FF00D4"
                   />
                    Acquisition
                 </span>
@@ -243,7 +234,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 >
                   <div
                     class="c7"
-                    color="#FC802D"
+                    color="#cc4c02"
                   />
                    Management
                 </span>
@@ -251,35 +242,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c3"
-          >
-            <div
-              class="form-check"
-            >
-              <input
-                class="form-check-input"
-                id="disposition"
-                type="checkbox"
-              />
-              <label
-                class="form-check-label"
-                for="disposition"
-                title=""
-              >
-                <span
-                  class="c4"
-                >
-                  <div
-                    class="c8"
-                    color="#555555"
-                  />
-                   Disposition
-                </span>
-              </label>
-            </div>
-          </div>
-          <div
-            class="c9"
+            class="c8"
           >
             <div
               class="row no-gutters"
@@ -288,7 +251,57 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c10"
+                  class="c9"
+                  fill="currentColor"
+                  height="1em"
+                  stroke="currentColor"
+                  stroke-width="0"
+                  viewBox="0 0 24 24"
+                  width="1em"
+                  xmlns="http://www.w3.org/2000/svg"
+                >
+                  <path
+                    d="m10 17 5-5-5-5v10z"
+                  />
+                  <path
+                    d="M0 24V0h24v24H0z"
+                    fill="none"
+                  />
+                </svg>
+              </div>
+              <div
+                class="col"
+              >
+                <div
+                  class="form-check"
+                >
+                  <input
+                    class="form-check-input"
+                    id="DispositionLayers"
+                    type="checkbox"
+                  />
+                  <label
+                    class="form-check-label"
+                    for="DispositionLayers"
+                    title=""
+                  >
+                    Disposition
+                  </label>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="c8"
+          >
+            <div
+              class="row no-gutters"
+            >
+              <div
+                class="col-1"
+              >
+                <svg
+                  class="c9"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -329,7 +342,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c9"
+            class="c8"
           >
             <div
               class="row no-gutters"
@@ -338,7 +351,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c10"
+                  class="c9"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -424,7 +437,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c9"
+            class="c8"
           >
             <div
               class="row no-gutters"
@@ -433,7 +446,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c10"
+                  class="c9"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -474,7 +487,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c9"
+            class="c8"
           >
             <div
               class="row no-gutters"
@@ -483,7 +496,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c10"
+                  class="c9"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -524,7 +537,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c9"
+            class="c8"
           >
             <div
               class="row no-gutters"
@@ -533,7 +546,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c10"
+                  class="c9"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -574,7 +587,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c9"
+            class="c8"
           >
             <div
               class="row no-gutters"
@@ -583,7 +596,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c10"
+                  class="c9"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -624,7 +637,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c9"
+            class="c8"
           >
             <div
               class="row no-gutters"
@@ -633,7 +646,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c10"
+                  class="c9"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -674,7 +687,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c9"
+            class="c8"
           >
             <div
               class="row no-gutters"
@@ -683,7 +696,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c10"
+                  class="c9"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -724,7 +737,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c9"
+            class="c8"
           >
             <div
               class="row no-gutters"
@@ -733,7 +746,7 @@ exports[`LayersMenu View > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c10"
+                  class="c9"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"

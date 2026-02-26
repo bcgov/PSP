@@ -57,7 +57,7 @@ namespace Pims.Api.Areas.Property.Controllers
         /// </summary>
         /// <returns></returns>
         [HttpGet("{propertyId:long}/improvements")]
-        [HasPermission(Permissions.LeaseView)]
+        [HasPermission(Permissions.PropertyView)]
         [Produces("application/json")]
         [ProducesResponseType(typeof(IEnumerable<PropertyImprovementModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]

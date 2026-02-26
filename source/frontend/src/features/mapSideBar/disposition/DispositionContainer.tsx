@@ -32,7 +32,7 @@ export interface IDispositionContainerProps {
 export const DispositionContainer: React.FunctionComponent<IDispositionContainerProps> = props => {
   // Load state from props and side-bar context
   const { dispositionFileId, onClose, View } = props;
-  const { setLastUpdatedBy, lastUpdatedBy, staleLastUpdatedBy, staleFile, setFile } =
+  const { setLastUpdatedBy, lastUpdatedBy, staleLastUpdatedBy, staleFile, setFile, setStaleFile } =
     useContext(SideBarContext);
   const [isValid, setIsValid] = useState<boolean>(true);
   const withUserOverride = useApiUserOverride<
@@ -108,6 +108,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
       retrieved.fileProperties = sortFileProperties(fileProperties) ?? null;
       retrieved.fileChecklistItems = dispositionChecklist ?? [];
       setFile({ ...retrieved, fileType: ApiGen_CodeTypes_FileTypes.Disposition });
+      setStaleFile(false);
     } else {
       setFile(undefined);
     }
@@ -117,6 +118,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
     retrieveDispositionFileProperties,
     retrieveDispositionFileChecklist,
     setFile,
+    setStaleFile,
   ]);
 
   const fetchLastUpdatedBy = React.useCallback(async () => {
@@ -348,11 +350,7 @@ export const DispositionContainer: React.FunctionComponent<IDispositionContainer
         }
         isEditing={isEditing}
       ></View>
-      <ConfirmNavigation
-        navigate={history.push}
-        shouldBlockNavigation={shouldBlockNavigation}
-        showModal={!isPropertySelector}
-      />
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
     </>
   );
 };

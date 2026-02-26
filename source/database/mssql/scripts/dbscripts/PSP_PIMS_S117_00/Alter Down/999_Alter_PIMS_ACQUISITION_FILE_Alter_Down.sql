@@ -1,0 +1,144 @@
+-- -------------------------------------------------------------------------------------------
+-- Alter the PIMS_ACQUISITION_FILE and PIMS_ACQUISITION_FILE_HIST table.
+-- . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+-- Author        Date         Ticket     Comment
+-- ------------  -----------  ---------  -----------------------------------------------------
+-- Doug Filteau  2026-Feb-17  PSP-11224  Alter the FILE_NO and FILE_NO_SUFFIX columns.
+-- -------------------------------------------------------------------------------------------
+
+SET XACT_ABORT ON
+GO
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+GO
+BEGIN TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop the default constraint for FILE_NO on PIMS_ACQUISITION_FILE.
+PRINT N'Drop the default constraint for FILE_NO on PIMS_ACQUISITION_FILE.'
+GO
+ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE]
+DROP  CONSTRAINT IF EXISTS [ACQNFL_FILE_NO_DEF];
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Add the default constraint for FILE_NO on PIMS_ACQUISITION_FILE.
+PRINT N'Add the default constraint for FILE_NO on PIMS_ACQUISITION_FILE.'
+GO
+ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE]
+ADD   CONSTRAINT [ACQNFL_FILE_NO_DEF]
+      DEFAULT NEXT VALUE FOR [PIMS_ACQUISITION_FILE_NO_SEQ]
+      FOR FILE_NO;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop the default constraint for FILE_NO_SUFFIX on PIMS_ACQUISITION_FILE.
+PRINT N'Drop the default constraint for FILE_NO_SUFFIX on PIMS_ACQUISITION_FILE.'
+GO
+ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE]
+DROP  CONSTRAINT IF EXISTS [ACQNFL_FILE_NO_SUFFIX_DEF];
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Add the default constraint for FILE_NO_SUFFIX on PIMS_ACQUISITION_FILE.
+PRINT N'Add the default constraint for FILE_NO_SUFFIX on PIMS_ACQUISITION_FILE.'
+GO
+ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE]
+ADD   CONSTRAINT [ACQNFL_FILE_NO_SUFFIX_DEF]
+      DEFAULT 1
+      FOR FILE_NO_SUFFIX;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Drop the index for FILE_NO_SUFFIX on PIMS_ACQUISITION_FILE.
+PRINT N'Drop the index for FILE_NO_SUFFIX on PIMS_ACQUISITION_FILE.'
+GO
+DROP INDEX IF EXISTS ACQNFL_FILE_NO_IDX ON [dbo].[PIMS_ACQUISITION_FILE];
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Make the FILE_NO column not null on PIMS_ACQUISITION_FILE.  
+PRINT N'Make the FILE_NO column not null on PIMS_ACQUISITION_FILE.'
+GO
+ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE]
+ALTER COLUMN FILE_NO INTEGER NOT NULL;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Make the FILE_NO_SUFFIX column not null on PIMS_ACQUISITION_FILE.  
+PRINT N'Make the FILE_NO_SUFFIX column not null on PIMS_ACQUISITION_FILE.'
+GO
+ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE]
+ALTER COLUMN FILE_NO_SUFFIX SMALLINT NOT NULL;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Create the index for FILE_NO_SUFFIX on PIMS_ACQUISITION_FILE.
+PRINT N'Create the index for FILE_NO_SUFFIX on PIMS_ACQUISITION_FILE.'
+GO
+CREATE NONCLUSTERED INDEX [ACQNFL_FILE_NO_IDX] ON [dbo].[PIMS_ACQUISITION_FILE] ([FILE_NO] ASC)
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Set FILE_NO to a default value where null on PIMS_ACQUISITION_FILE_HIST.
+PRINT N'Set FILE_NO to a default value where null on PIMS_ACQUISITION_FILE_HIST.'
+GO
+UPDATE PIMS_ACQUISITION_FILE_HIST
+SET    FILE_NO = -1
+WHERE  FILE_NO IS NULL;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Set FILE_NO_SUFFIX to a default value where null on PIMS_ACQUISITION_FILE_HIST.
+PRINT N'Set FILE_NO_SUFFIX to a default value where null on PIMS_ACQUISITION_FILE_HIST.'
+GO
+UPDATE PIMS_ACQUISITION_FILE_HIST
+SET    FILE_NO_SUFFIX = 1
+WHERE  FILE_NO_SUFFIX IS NULL;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Make the FILE_NO column not null on PIMS_ACQUISITION_FILE_HIST.  
+PRINT N'Make the FILE_NO column not null on PIMS_ACQUISITION_FILE_HIST.'
+GO
+ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE_HIST]
+ALTER COLUMN FILE_NO INTEGER NOT NULL;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Make the FILE_NO_SUFFIX column not null on PIMS_ACQUISITION_FILE_HIST.  
+PRINT N'Make the FILE_NO_SUFFIX column not null on PIMS_ACQUISITION_FILE_HIST.'
+GO
+ALTER TABLE [dbo].[PIMS_ACQUISITION_FILE_HIST]
+ALTER COLUMN FILE_NO_SUFFIX SMALLINT NOT NULL;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+COMMIT TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+DECLARE @Success AS BIT
+SET @Success = 1
+SET NOEXEC OFF
+IF (@Success = 1) 
+  PRINT 'The database update succeeded'
+ELSE 
+  BEGIN
+  IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+    PRINT 'The database update failed'
+  END
+GO

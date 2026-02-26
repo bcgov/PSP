@@ -113,6 +113,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
     </div>
     <div
       class="c2 form-section"
+      data-testid="File Initiation"
     >
       <h2
         class="c4"
@@ -550,6 +551,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
     </div>
     <div
       class="c2 form-section"
+      data-testid="Active File Management"
     >
       <h2
         class="c4"
@@ -1754,6 +1756,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
     </div>
     <div
       class="c2 form-section"
+      data-testid="Crown Land"
     >
       <h2
         class="c4"
@@ -1799,6 +1802,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
     </div>
     <div
       class="c2 form-section"
+      data-testid="Section 3 - Agreement"
     >
       <h2
         class="c4"
@@ -2372,6 +2376,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
     </div>
     <div
       class="c2 form-section"
+      data-testid="Section 6 - Expropriation"
     >
       <h2
         class="c4"
@@ -2920,6 +2925,7 @@ exports[`ChecklistView component > renders as expected 1`] = `
     </div>
     <div
       class="c2 form-section"
+      data-testid="Acquisition Completion"
     >
       <h2
         class="c4"

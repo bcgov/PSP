@@ -3,6 +3,7 @@ import React from 'react';
 import styled from 'styled-components';
 
 import {
+  Check,
   FastDatePicker,
   Input,
   Multiselect,
@@ -24,6 +25,7 @@ import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { ApiGen_CodeTypes_SubfileInterestTypes } from '@/models/api/generated/ApiGen_CodeTypes_SubfileInterestTypes';
+import { ApiGen_CodeTypes_UserTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_UserTypeTypes';
 import { ApiGen_Concepts_PersonOrganization } from '@/models/api/generated/ApiGen_Concepts_PersonOrganization';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -47,6 +49,8 @@ export interface IAddAcquisitionFormProps {
   initialValues: AcquisitionForm;
   /** A Yup Schema or a function that returns a Yup schema */
   validationSchema?: any | (() => any);
+  /** User Type */
+  userType?: string | null;
   /** Submission handler */
   onSubmit: (
     values: AcquisitionForm,
@@ -60,6 +64,7 @@ export const AddAcquisitionForm: React.FunctionComponent<IAddAcquisitionFormProp
   parentId,
   initialValues,
   validationSchema,
+  userType,
   onSubmit,
   confirmBeforeAdd,
   formikRef,
@@ -85,6 +90,9 @@ export const AddAcquisitionForm: React.FunctionComponent<IAddAcquisitionFormProp
     }
   };
 
+  const isContractorUser: boolean =
+    userType && userType === ApiGen_CodeTypes_UserTypeTypes.CONTRACT;
+
   return (
     <Formik<AcquisitionForm>
       innerRef={formikRef}
@@ -102,6 +110,7 @@ export const AddAcquisitionForm: React.FunctionComponent<IAddAcquisitionFormProp
             formikProps={formikProps}
             onSubmit={onSubmit}
             showDiffMinistryRegionModal={showDiffMinistryRegionModal}
+            userIsContractor={isContractorUser}
             setShowDiffMinistryRegionModal={setShowDiffMinistryRegionModal}
             confirmBeforeAdd={confirmBeforeAdd}
           ></AddAcquisitionDetailSubForm>
@@ -120,6 +129,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
     userOverrides: UserOverrideCode[],
   ) => void | Promise<any>;
   showDiffMinistryRegionModal: boolean;
+  userIsContractor: boolean;
   setShowDiffMinistryRegionModal: React.Dispatch<React.SetStateAction<boolean>>;
   confirmBeforeAdd: (propertyForm: PropertyForm) => Promise<boolean>;
 }> = ({
@@ -127,6 +137,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
   formikProps,
   onSubmit,
   showDiffMinistryRegionModal,
+  userIsContractor,
   setShowDiffMinistryRegionModal,
   confirmBeforeAdd,
 }) => {
@@ -135,8 +146,8 @@ const AddAcquisitionDetailSubForm: React.FC<{
   >(undefined);
 
   const { values, setFieldValue } = formikProps;
-
   const ownerSolicitorContact = values?.ownerSolicitor.contact;
+  const overrideFileNumberSequence = values?.overrideFileNumberSequence;
 
   const { retrieveProjectProducts } = useProjectProvider();
   const { getOptionsByType, getByType } = useLookupCodeHelpers();
@@ -346,12 +357,27 @@ const AddAcquisitionDetailSubForm: React.FC<{
           <SectionField label="Acquisition file name" required>
             <LargeInput field="fileName" />
           </SectionField>
+
+          {!userIsContractor && (
+            <SectionField
+              label="Legacy File"
+              tooltip="Check this box to manually enter a legacy file number instead of a new generated PIMS acquisition. Use this to enter legacy files and track their original file numbers. If the legacy file number contains a non-numeric character, check this box, leave the acquisition file number blank, and enter the number into the historical file number field."
+            >
+              <StyledCheckBox
+                field="overrideFileNumberSequence"
+                onChange={formikProps.handleChange}
+              ></StyledCheckBox>
+              {overrideFileNumberSequence && <LargeInput field="fileNo" type="number" />}
+            </SectionField>
+          )}
+
           <SectionField
             label="Historical file number"
             tooltip="Older file that this file represents (ex: those from the legacy system or other non-digital files.)"
           >
             <LargeInput field="legacyFileNumber" />
           </SectionField>
+
           <SectionField label="Physical file status">
             <Select
               field="acquisitionPhysFileStatusType"
@@ -531,5 +557,13 @@ const Container = styled.div`
 
   [name='region'] {
     max-width: 25rem;
+  }
+`;
+
+const StyledCheckBox = styled(Check)`
+  font-size: 1.6rem;
+  font-weight: normal;
+  label {
+    margin-bottom: 0;
   }
 `;

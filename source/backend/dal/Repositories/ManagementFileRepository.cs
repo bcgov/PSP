@@ -475,6 +475,11 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(disp => disp.PimsManagementFileTeams.Any(x => x.OrganizationId == filter.TeamMemberOrganizationId.Value));
             }
 
+            if(filter.HasNoticeOfClaim)
+            {
+                predicate = predicate.And(x => x.PimsNoticeOfClaims.Any(y => y.ReceivedDt != null || y.Comment != null));
+            }
+
             var query = this.Context.PimsManagementFiles.AsNoTracking()
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.Project)
@@ -484,6 +489,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsManagementFileProperties)
+                .Include(d => d.PimsNoticeOfClaims)
                 .Include(d => d.PimsManagementFileTeams)
                     .ThenInclude(d => d.Organization)
                 .Include(d => d.PimsManagementFileTeams)

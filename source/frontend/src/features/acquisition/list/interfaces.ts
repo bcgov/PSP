@@ -11,6 +11,7 @@ export interface ApiGen_Concepts_AcquisitionFilter {
   projectNameOrNumber: string;
   ownerName: string;
   searchBy: string;
+  hasNoticeOfClaim: boolean;
   pin: string;
   pid: string;
   address: string;
@@ -21,6 +22,7 @@ export class AcquisitionFilterModel {
   acquisitionFileNameOrNumber = '';
   acquisitionTeamMembers: MultiSelectOption[] = [];
   projectNameOrNumber = '';
+  hasNoticeOfClaim = false;
   ownerName = '';
   searchBy = 'address';
   pin = '';
@@ -39,6 +41,7 @@ export class AcquisitionFilterModel {
       projectNameOrNumber: this.projectNameOrNumber,
       ownerName: this.ownerName,
       searchBy: this.searchBy,
+      hasNoticeOfClaim: this.hasNoticeOfClaim,
       pin: this.pin,
       pid: this.pid,
       address: this.address,
@@ -57,6 +60,7 @@ export class AcquisitionFilterModel {
     newModel.searchBy = model.searchBy;
     newModel.pin = model.pin;
     newModel.pid = model.pid;
+    newModel.hasNoticeOfClaim = model.hasNoticeOfClaim;
     newModel.address = model.address;
 
     if (model.acquisitionTeamMemberPersonId) {

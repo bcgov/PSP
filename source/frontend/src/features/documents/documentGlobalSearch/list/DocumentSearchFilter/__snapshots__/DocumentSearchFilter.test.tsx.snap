@@ -294,63 +294,17 @@ exports[`Document search Filter > matches snapshot 1`] = `
             class="col-xl-12"
           >
             <div
-              class="idir-input-group flex-nowrap input-group row no-gutters"
+              class="input form-group"
             >
-              <div
-                class="c1 col-auto"
-              >
-                <div
-                  class="input-group-prepend"
-                >
-                  <div
-                    class="form-group"
-                  >
-                    <select
-                      class="form-select form-control"
-                      id="input-searchBy"
-                      name="searchBy"
-                    >
-                      <option
-                        class="option"
-                        data-testid="select-option-pid"
-                        value="pid"
-                      >
-                        PID
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-pin"
-                        value="pin"
-                      >
-                        PIN
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-plan"
-                        value="plan"
-                      >
-                        Plan #
-                      </option>
-                    </select>
-                  </div>
-                </div>
-              </div>
-              <div
-                class="c2 col"
-              >
-                <div
-                  class="input form-group"
-                >
-                  <input
-                    class="form-control"
-                    id="input-pid"
-                    name="pid"
-                    placeholder="Enter a PID"
-                    style="word-break: break-all;"
-                    value=""
-                  />
-                </div>
-              </div>
+              <input
+                class="form-control"
+                id="input-content"
+                name="content"
+                placeholder="Document content"
+                style="word-break: break-all;"
+                title=""
+                value=""
+              />
             </div>
           </div>
         </div>
@@ -461,6 +415,73 @@ exports[`Document search Filter > matches snapshot 1`] = `
                   Cancelled
                 </option>
               </select>
+            </div>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-xl-12"
+          >
+            <div
+              class="idir-input-group flex-nowrap input-group row no-gutters"
+            >
+              <div
+                class="c1 col-auto"
+              >
+                <div
+                  class="input-group-prepend"
+                >
+                  <div
+                    class="form-group"
+                  >
+                    <select
+                      class="form-select form-control"
+                      id="input-searchBy"
+                      name="searchBy"
+                    >
+                      <option
+                        class="option"
+                        data-testid="select-option-pid"
+                        value="pid"
+                      >
+                        PID
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-pin"
+                        value="pin"
+                      >
+                        PIN
+                      </option>
+                      <option
+                        class="option"
+                        data-testid="select-option-plan"
+                        value="plan"
+                      >
+                        Plan #
+                      </option>
+                    </select>
+                  </div>
+                </div>
+              </div>
+              <div
+                class="c2 col"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-pid"
+                    name="pid"
+                    placeholder="Enter a PID"
+                    style="word-break: break-all;"
+                    value=""
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>

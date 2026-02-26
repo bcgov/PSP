@@ -36,7 +36,7 @@ namespace Pims.Dal.Repositories
         public IList<PimsProduct> GetByProject(long projectId)
         {
             return this.Context.PimsProducts.AsNoTracking()
-                .Where(p => p.PimsProjectProducts.All(x => x.ProjectId == projectId))
+                .Where(p => p.PimsProjectProducts.Any(x => x.ProjectId == projectId))
                 .Include(p => p.PimsAcquisitionFiles)
                 .OrderBy(p => p.Code)
                 .ToArray();

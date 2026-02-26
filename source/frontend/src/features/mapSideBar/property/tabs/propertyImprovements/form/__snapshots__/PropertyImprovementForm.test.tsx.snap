@@ -1,0 +1,575 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`PropertyImprovementForm component > renders as expected 1`] = `
+<DocumentFragment>
+  <div
+    class="Toastify"
+  />
+  <div />
+  .c10.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
+}
+
+.c10.btn .Button__value {
+  width: auto;
+}
+
+.c10.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c10.btn:focus {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.c10.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c10.btn.btn-primary:hover,
+.c10.btn.btn-primary:active,
+.c10.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c10.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c10.btn.btn-secondary:hover,
+.c10.btn.btn-secondary:active,
+.c10.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c10.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c10.btn.btn-info:hover,
+.c10.btn.btn-info:active,
+.c10.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c10.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c10.btn.btn-light:hover,
+.c10.btn.btn-light:active,
+.c10.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c10.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c10.btn.btn-dark:hover,
+.c10.btn.btn-dark:active,
+.c10.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c10.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c10.btn.btn-danger:hover,
+.c10.btn.btn-danger:active,
+.c10.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c10.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c10.btn.btn-warning:hover,
+.c10.btn.btn-warning:active,
+.c10.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c10.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c10.btn.btn-link:hover,
+.c10.btn.btn-link:active,
+.c10.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c10.btn.btn-link:disabled,
+.c10.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c10.btn:disabled,
+.c10.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.c10.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c10.Button--icon-only:focus {
+  outline: none;
+}
+
+.c10.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c6 .react-datepicker__calendar-icon {
+  width: 2.4rem;
+  height: 3rem;
+  margin-top: 0.5rem;
+  margin-right: 1.2rem;
+  right: 0;
+  fill: var(--surface-color-primary-button-default);
+  pointer-events: none;
+}
+
+.c6 .react-datepicker__view-calendar-icon input {
+  padding: 0.8rem 1.2rem 0.8rem 1.2rem;
+}
+
+.c7.c7.form-control.is-valid {
+  background-image: none;
+}
+
+.c7.c7.form-control.is-invalid {
+  border-color: #d8292f !important;
+}
+
+.c2 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c3 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
+.c9 {
+  position: -webkit-sticky;
+  position: sticky;
+  padding-top: 2rem;
+  bottom: 0;
+  border-top: 2px solid #e5e5e5;
+  background: white;
+  z-index: 10;
+}
+
+.c0 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: column;
+  -ms-flex-direction: column;
+  flex-direction: column;
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+  text-align: left;
+  height: 100%;
+  overflow-y: auto;
+}
+
+.c1 {
+  background-color: #f2f2f2;
+}
+
+.c8 {
+  margin-right: 1rem;
+  padding-bottom: 1rem;
+  z-index: 0;
+}
+
+<div
+    class="c0"
+  >
+    <div
+      class="c1"
+    >
+      <div
+        class="c2 form-section"
+      >
+        <h2
+          class="c3"
+        >
+          <div
+            class="no-gutters row"
+          >
+            <div
+              class="align-content-end col"
+            >
+              Property Improvement Details
+            </div>
+          </div>
+        </h2>
+        <div
+          class="collapse show"
+        >
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c4"
+              >
+                Name:
+              </label>
+            </div>
+            <div
+              class="c5 required text-left col"
+            >
+              <div
+                class="input form-group"
+              >
+                <input
+                  class="form-control"
+                  id="input-name"
+                  name="name"
+                  style="word-break: break-all;"
+                  title=""
+                  value=""
+                />
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c4"
+              >
+                Improvement type:
+              </label>
+            </div>
+            <div
+              class="c5 required text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-improvementTypeCode"
+                  name="improvementTypeCode"
+                >
+                  <option
+                    value=""
+                  >
+                    Select type
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-COMMBLDG"
+                    value="COMMBLDG"
+                  >
+                    Commercial Building
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-RTA"
+                    value="RTA"
+                  >
+                    Residential Tenancy Act
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-OTHER"
+                    value="OTHER"
+                  >
+                    Other
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c4"
+              >
+                Improvement status:
+              </label>
+            </div>
+            <div
+              class="c5 required text-left col"
+            >
+              <div
+                class="form-group"
+              >
+                <select
+                  class="form-select form-control"
+                  id="input-improvementStatusCode"
+                  name="improvementStatusCode"
+                >
+                  <option
+                    value=""
+                  >
+                    Select type
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-ACTIVE"
+                    value="ACTIVE"
+                  >
+                    Active
+                  </option>
+                  <option
+                    class="option"
+                    data-testid="select-option-ARCHIVD"
+                    value="ARCHIVD"
+                  >
+                    Archived
+                  </option>
+                </select>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c4"
+              >
+                Improvement date:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="c6 form-group"
+              >
+                <div
+                  class="react-datepicker-wrapper d-block"
+                >
+                  <div
+                    class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                  >
+                    <svg
+                      class="react-datepicker__calendar-icon"
+                      viewBox="0 0 448 512"
+                      xmlns="http://www.w3.org/2000/svg"
+                    >
+                      <path
+                        d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                      />
+                    </svg>
+                    <input
+                      autocomplete="off"
+                      class="c7 form-control date-picker"
+                      id="datepicker-improvementDate"
+                      name="improvementDate"
+                      placeholder="MMM DD, YYYY"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+          <div
+            class="pb-2 row"
+          >
+            <div
+              class="pr-0 text-left col-4"
+            >
+              <label
+                class="c4"
+              >
+                Description:
+              </label>
+            </div>
+            <div
+              class="c5 text-left col"
+            >
+              <div
+                class="textarea input form-group"
+              >
+                <textarea
+                  class="form-control"
+                  id="input-description"
+                  name="description"
+                  style="word-break: break-all;"
+                  title=""
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c8"
+    >
+      <div
+        class="c9 justify-content-end pt-4 p-0 no-gutters row"
+      >
+        <div
+          class="pr-3 col-auto"
+        />
+        <div
+          class="pr-6 col-auto"
+        >
+          <button
+            class="c10 Button btn btn-secondary"
+            data-testid="cancel-button"
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              Cancel
+            </div>
+          </button>
+        </div>
+        <div
+          class="col-auto"
+        >
+          <button
+            class="c10 Button Button--disabled mr-9 btn btn-primary"
+            data-testid="save-button"
+            disabled=""
+            type="button"
+          >
+            <div
+              class="Button__value"
+            >
+              Save
+            </div>
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</DocumentFragment>
+`;

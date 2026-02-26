@@ -62,7 +62,7 @@ export const LayerFilter: React.FunctionComponent<React.PropsWithChildren<ILayer
       return null;
     }
     return (
-      <div className="suggestionList">
+      <div className="addressSuggestionList">
         {addressResults?.map((geoResponse: IGeocoderResponse, index: number) => (
           <option
             key={index}

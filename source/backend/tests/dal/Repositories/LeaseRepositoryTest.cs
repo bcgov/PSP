@@ -349,6 +349,37 @@ namespace Pims.Dal.Test.Repositories
             Assert.Equal(1, result.Items.Count);
         }
 
+        [Fact]
+        public void GetPage_Contractor_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var contractorLease = EntityHelper.CreateLease(456, 789, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true, generateTypeIds: true);
+            contractorLease.Project = new PimsProject()
+            {
+                Description = "",
+                ProjectStatusTypeCode = "",
+                PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1 } } // contractor Id
+            };
+
+            var secondLease = EntityHelper.CreateLease(100, generateTypeIds: true);
+
+            var context = helper.CreatePimsContext(user, true);
+            context.Add(contractorLease);
+            context.AddAndSaveChanges(secondLease);
+
+            var service = helper.CreateRepository<LeaseRepository>(user);
+
+            // Act
+            var result = service.GetPage(new LeaseFilter(), new HashSet<short>(), 1);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+            result.Items.First().LeaseId.Should().Be(contractorLease.LeaseId);
+        }
+
         #endregion
 
         #region LFileNo Normalization Tests
