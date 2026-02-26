@@ -362,11 +362,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
         isFormValid={isValid}
         error={error}
       />
-      <ConfirmNavigation
-        navigate={history.push}
-        shouldBlockNavigation={shouldBlockNavigation}
-        showModal={!isPropertySelector}
-      />
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
     </>
   );
 };

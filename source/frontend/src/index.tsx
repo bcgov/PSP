@@ -27,6 +27,7 @@ import getKeycloakEventHandler from '@/utils/getKeycloakEventHandler';
 
 import App from './App';
 import { config } from './config';
+import { NavigationIntentProvider } from './contexts/NavigationIntentContext';
 import { DocumentViewerContextProvider } from './features/documents/context/DocumentViewerContext';
 import { WorklistContextProvider } from './features/properties/worklist/context/WorklistContext';
 import { ITenantConfig2 } from './hooks/pims-api/interfaces/ITenantConfig';
@@ -52,9 +53,11 @@ const Index = () => {
   return (
     <TenantProvider>
       <ModalContextProvider>
-        <Router>
-          <TenantConsumer>{({ tenant }) => <InnerComponent tenant={tenant} />}</TenantConsumer>
-        </Router>
+        <NavigationIntentProvider>
+          <Router>
+            <TenantConsumer>{({ tenant }) => <InnerComponent tenant={tenant} />}</TenantConsumer>
+          </Router>
+        </NavigationIntentProvider>
       </ModalContextProvider>
     </TenantProvider>
   );
