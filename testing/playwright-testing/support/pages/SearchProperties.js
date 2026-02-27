@@ -207,7 +207,7 @@ class SearchProperties {
 
   async quickInfoAddWorklist() {
     await this.page.locator("#dropdown-ellipsis").click();
-    await this.page.locator("a[aria-label='Add to Worklist']").click();
+    await this.page.locator("a[aria-label='Add to Working List']").click();
   }
 
   async quickInfoCreateResearchFile() {
@@ -240,7 +240,7 @@ class SearchProperties {
       .getByTestId("search-property-0")
       .getByLabel("More options")
       .click();
-    await this.page.locator("a[aria-label='Add to Worklist']").click();
+    await this.page.locator("a[aria-label='Add to Working List']").click();
   }
 
   async addPropertyToWorklistFromQuickInfo() {
@@ -257,12 +257,12 @@ class SearchProperties {
       .click();
     await this.page
       .locator(
-        "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']"
+        "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Working List']"
       )
       .waitFor({ status: "visible" });
     await this.page
       .locator(
-        "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Worklist']"
+        "div[aria-labelledBy='dropdown-ellipsis'] a[aria-label='Add to Working List']"
       )
       .click();
   }

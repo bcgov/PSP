@@ -7,7 +7,7 @@ import {
 
 import { exists, isNumber } from '@/utils';
 
-import { TelemetryConfig } from './config';
+import { TelemetrySettings } from './config';
 import { isBlocked, isBrowserEnvironment, NETWORK_METER } from './utils';
 
 // These values are lifted from suggested defaults in open-telemetry documentation:
@@ -16,7 +16,7 @@ const defaultHistogramBucketsInSeconds = [
   0.005, 0.01, 0.025, 0.05, 0.075, 0.1, 0.25, 0.5, 0.75, 1, 2.5, 5, 7.5, 10,
 ];
 
-export const registerNetworkMetrics = (config: TelemetryConfig) => {
+export const registerNetworkMetrics = (config: TelemetrySettings) => {
   if (!isBrowserEnvironment() || !window.performance) {
     return;
   }

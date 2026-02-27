@@ -20,6 +20,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import { Claims } from '@/constants';
+import { useNavigationIntent } from '@/contexts/NavigationIntentContext';
 import usePathGenerator from '@/features/mapSideBar/shared/sidebarPathGenerator';
 import { useFullyAttributedParcelMapLayer } from '@/hooks/repositories/mapLayer/useFullyAttributedParcelMapLayer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
@@ -36,6 +37,7 @@ import { formatNames } from '@/utils/personUtils';
 export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () => {
   const keycloak = useKeycloakWrapper();
   const [ownerNames, setOwnerNames] = useState('');
+  const { setIntent } = useNavigationIntent();
 
   const {
     mapLocationFeatureDataset,
@@ -197,29 +199,49 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
   }, [selectedFeatureDataset, worklistAdd]);
 
   const onCreateResearchFile = useCallback(() => {
-    prepareForCreation([selectedFeatureDataset]);
-    pathGenerator.newFile('research');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+    setIntent({
+      action: () => prepareForCreation([selectedFeatureDataset]),
+    });
+    setTimeout(() => {
+      pathGenerator.newFile('research');
+    }, 0);
+  }, [pathGenerator, prepareForCreation, selectedFeatureDataset, setIntent]);
 
   const onCreateAcquisitionFile = useCallback(() => {
-    prepareForCreation([selectedFeatureDataset]);
-    pathGenerator.newFile('acquisition');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+    setIntent({
+      action: () => prepareForCreation([selectedFeatureDataset]),
+    });
+    setTimeout(() => {
+      pathGenerator.newFile('acquisition');
+    }, 0);
+  }, [pathGenerator, prepareForCreation, selectedFeatureDataset, setIntent]);
 
   const onCreateDispositionFile = useCallback(() => {
-    prepareForCreation([selectedFeatureDataset]);
-    pathGenerator.newFile('disposition');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+    setIntent({
+      action: () => prepareForCreation([selectedFeatureDataset]),
+    });
+    setTimeout(() => {
+      pathGenerator.newFile('disposition');
+    }, 0);
+  }, [pathGenerator, prepareForCreation, selectedFeatureDataset, setIntent]);
 
   const onCreateLeaseFile = useCallback(() => {
-    prepareForCreation([selectedFeatureDataset]);
-    pathGenerator.newFile('lease');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+    setIntent({
+      action: () => prepareForCreation([selectedFeatureDataset]),
+    });
+    setTimeout(() => {
+      pathGenerator.newFile('lease');
+    }, 0);
+  }, [pathGenerator, prepareForCreation, selectedFeatureDataset, setIntent]);
 
   const onCreateManagementFile = useCallback(() => {
-    prepareForCreation([selectedFeatureDataset]);
-    pathGenerator.newFile('management');
-  }, [pathGenerator, prepareForCreation, selectedFeatureDataset]);
+    setIntent({
+      action: () => prepareForCreation([selectedFeatureDataset]),
+    });
+    setTimeout(() => {
+      pathGenerator.newFile('management');
+    }, 0);
+  }, [pathGenerator, prepareForCreation, selectedFeatureDataset, setIntent]);
 
   const onAddToOpenFile = useCallback(() => {
     // If in edit properties mode, prepare the parcel for addition to an open file
@@ -232,7 +254,7 @@ export const PropertyQuickInfoContainer: React.FC<React.PropsWithChildren> = () 
     const options: MenuOption[] = [];
 
     options.push({
-      label: 'Add to Worklist',
+      label: 'Add to Working List',
       onClick: onAddToWorklist,
       icon: <AddToWorklistIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
     });

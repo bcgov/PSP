@@ -78,7 +78,7 @@ const setup = (params?: {
         getProperties: { execute: getAcquisitionFileProperties },
         isAcquisition: true,
       },
-    }
+    },
   );
   return result.current;
 };

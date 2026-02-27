@@ -61,7 +61,7 @@
   </ItemGroup>
 
   <ItemGroup>
-  <ProjectReference Include="..\..\..\source\backend\keycloak\Pims.Keycloak.csproj" />
+    <ProjectReference Include="..\..\..\source\backend\keycloak\Pims.Keycloak.csproj" />
     <ProjectReference Include="..\..\..\source\backend\apimodels\Pims.Api.Models.csproj" />
   </ItemGroup>
 

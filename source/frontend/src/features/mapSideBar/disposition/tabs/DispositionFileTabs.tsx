@@ -12,8 +12,10 @@ import NoteListView from '@/features/notes/list/NoteListView';
 import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
 import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_DispositionFileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionFileTypeTypes';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { exists } from '@/utils/utils';
 
 import { SideBarContext } from '../../context/sidebarContext';
 import AgreementContainer from '../../shared/agreement/detail/AgreementContainer';
@@ -87,23 +89,28 @@ export const DispositionFileTabs: React.FC<IDispositionFileTabsProps> = ({
     });
   }
 
-  tabViews.push({
-    content:
-      !fileLoading && file?.id ? (
-        <AgreementContainer
-          fileId={file.id}
-          View={AgreementView}
-          getFile={getFile}
-          getAgreements={getAgreements}
-          getProperties={getProperties}
-          deleteAgreement={deleteAgreement}
-          statusSolver={statusSolver}
-          isAcquisition={false}
-        />
-      ) : null,
-    key: FileTabType.AGREEMENTS,
-    name: 'Agreements',
-  });
+  if (
+    exists(dispositionFile) &&
+    dispositionFile.dispositionTypeCode.id === ApiGen_CodeTypes_DispositionFileTypeTypes.CLOSURE
+  ) {
+    tabViews.push({
+      content:
+        !fileLoading && file?.id ? (
+          <AgreementContainer
+            fileId={file.id}
+            View={AgreementView}
+            getFile={getFile}
+            getAgreements={getAgreements}
+            getProperties={getProperties}
+            deleteAgreement={deleteAgreement}
+            statusSolver={statusSolver}
+            isAcquisition={false}
+          />
+        ) : null,
+      key: FileTabType.AGREEMENTS,
+      name: 'Agreements',
+    });
+  }
 
   tabViews.push({
     content: (
