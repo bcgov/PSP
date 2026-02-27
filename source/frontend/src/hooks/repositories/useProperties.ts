@@ -116,7 +116,7 @@ export const useProperties = () => {
         fileDownload(data, fileName);
       } catch (axiosError) {
         if (axios.isAxiosError(axiosError)) {
-          catchAxiosError(axiosError, dispatch, actionTypes.DELETE_PARCEL);
+          catchAxiosError(axiosError, dispatch, requestId);
         }
       }
     },
