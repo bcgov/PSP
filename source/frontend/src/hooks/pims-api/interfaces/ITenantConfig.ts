@@ -73,6 +73,8 @@ export interface ITenantConfig2 {
   geographicNamesUrl: string;
   // the number of results to display when searching for geographic names
   geographicNamesResultLimit: number;
+  // API build version compatibility map (API build number to DB build numbers). ie {'115': [116,117]}
+  apiDbVersionCompatibility?: Record<string, number[]>;
   landTitleDistricts: string[];
 }
 

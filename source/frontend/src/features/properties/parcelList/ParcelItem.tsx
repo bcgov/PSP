@@ -131,7 +131,7 @@ export function ParcelItem({
 
     if (canAddToWorklist) {
       options.push({
-        label: 'Add to Worklist',
+        label: 'Add to Working List',
         onClick: onAddToWorklist,
         icon: <AddToWorklistIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
       });

@@ -92,7 +92,16 @@ describe('Update AcquisitionAgreementContainer component', () => {
 
   it('Loads props with the initial values', async () => {
     mockGetAgreementApi.execute.mockResolvedValue(mockAgreementApi);
-    await setup({ props: { fileId: 1, agreementId: 10, updateAgreement: mockPutAgreementApi.execute, getAgreement: mockGetAgreementApi.execute, fetchingAgreement: mockGetAgreementApi.loading, updatingAgreement: mockPutAgreementApi.loading } });
+    await setup({
+      props: {
+        fileId: 1,
+        agreementId: 10,
+        updateAgreement: mockPutAgreementApi.execute,
+        getAgreement: mockGetAgreementApi.execute,
+        fetchingAgreement: mockGetAgreementApi.loading,
+        updatingAgreement: mockPutAgreementApi.loading,
+      },
+    });
     await waitForEffects();
 
     expect(mockGetAgreementApi.execute).toHaveBeenCalledWith(1, 10);

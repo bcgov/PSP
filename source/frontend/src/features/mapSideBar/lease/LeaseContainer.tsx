@@ -388,11 +388,7 @@ export const LeaseContainer: React.FC<ILeaseContainerProps> = ({ leaseId, onClos
         isFormValid={isValid}
         lease={lease}
       ></View>
-      <ConfirmNavigation
-        navigate={history.push}
-        shouldBlockNavigation={shouldBlockNavigation}
-        showModal={true}
-      />
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
     </>
   );
 };

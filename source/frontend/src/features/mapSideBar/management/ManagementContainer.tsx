@@ -313,11 +313,7 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
         }
         isEditing={isEditing}
       ></View>
-      <ConfirmNavigation
-        navigate={history.push}
-        shouldBlockNavigation={shouldBlockNavigation}
-        showModal={!isPropertySelector}
-      />
+      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
     </>
   );
 };
