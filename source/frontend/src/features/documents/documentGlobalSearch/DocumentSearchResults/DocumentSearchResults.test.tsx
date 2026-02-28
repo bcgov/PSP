@@ -1,7 +1,8 @@
 import { Claims } from '@/constants/claims';
-import { mockDocumentSearchResultsResponse } from '@/mocks/documents.mock';
+import { mockDocumentSearchResultsResponse } from '@/mocks/documentSearchResults.mock';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { render, RenderOptions } from '@/utils/test-utils';
+
 import { DocumentSearchResults, IDocumentSearchResultsProps } from './DocumentSearchResults';
 
 // render component under test
