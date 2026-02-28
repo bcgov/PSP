@@ -1,6 +1,55 @@
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Concepts_DocumentSearchResult } from '@/models/api/generated/ApiGen_Concepts_DocumentSearchResult';
 
+export const getMockApiDocumentSearchResult = (): ApiGen_Concepts_DocumentSearchResult => ({
+  acquisitionDocuments: [],
+  dispositionDocuments: [],
+  leaseDocuments: [],
+  managementDocuments: [],
+  mgmtActivitiesDocuments: [],
+  projectDocuments: [],
+  propertiesDocuments: [],
+  researchDocuments: [],
+  documentRelationships: [],
+  id: 1,
+  fileName: 'mock-file-name.pdf',
+  documentType: {
+    id: 0,
+    documentType: 'mock-document-type',
+    documentTypeDescription: 'Mock Document Type Description',
+    documentTypePurpose: null,
+    mayanId: 0,
+    isDisabled: false,
+    appCreateTimestamp: '2024-01-01T00:00:00',
+    appLastUpdateTimestamp: '2024-01-01T00:00:00',
+    appLastUpdateUserid: 'mock-user',
+    appCreateUserid: 'mock-user',
+    appLastUpdateUserGuid: '00000000-0000-0000-0000-000000000000',
+    appCreateUserGuid: '00000000-0000-0000-0000-000000000000',
+    rowVersion: 1,
+  },
+  statusTypeCode: {
+    id: 'DRAFT',
+    description: 'Draft',
+    isDisabled: false,
+    displayOrder: 1,
+  },
+  documentQueueStatusTypeCode: {
+    id: 'PENDING',
+    description: 'Pending',
+    isDisabled: false,
+    displayOrder: 1,
+  },
+  mayanDocumentId: 0,
+  appCreateTimestamp: '2024-01-01T00:00:00',
+  appLastUpdateTimestamp: '2024-01-01T00:00:00',
+  appLastUpdateUserid: 'mock-user',
+  appCreateUserid: 'mock-user',
+  appLastUpdateUserGuid: '00000000-0000-0000-0000-000000000000',
+  appCreateUserGuid: '00000000-0000-0000-0000-000000000000',
+  rowVersion: 1,
+});
+
 export const mockDocumentSearchResultsResponse = (): ApiGen_Concepts_DocumentSearchResult[] => [
   {
     acquisitionDocuments: [

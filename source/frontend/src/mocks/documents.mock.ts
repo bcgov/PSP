@@ -2,8 +2,11 @@ import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/Ap
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { ApiGen_Concepts_Document } from '@/models/api/generated/ApiGen_Concepts_Document';
 import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
+import { ApiGen_Concepts_PropertyDocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_PropertyDocumentRelationship';
 import { ApiGen_Requests_DocumentUploadRelationshipResponse } from '@/models/api/generated/ApiGen_Requests_DocumentUploadRelationshipResponse';
 import { ApiGen_System_HttpStatusCode } from '@/models/api/generated/ApiGen_System_HttpStatusCode';
+
+import { getMockApiProperty } from './properties.mock';
 
 export const getMockApiDocument = (id = 1): ApiGen_Concepts_Document => ({
   id,
@@ -94,6 +97,14 @@ export const getMockApiDocumentRelationship = (
   appLastUpdateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   appCreateUserGuid: '14c9a273-6f4a-4859-8d59-9264d3cee53f',
   rowVersion: 1,
+});
+
+export const getMockApiPropertyDocumentRelationship = (
+  id = 1,
+  property = getMockApiProperty(),
+): ApiGen_Concepts_PropertyDocumentRelationship => ({
+  ...getMockApiDocumentRelationship(id, ApiGen_CodeTypes_DocumentRelationType.Properties),
+  property,
 });
 
 export const mockDocumentsResponse = (): ApiGen_Concepts_DocumentRelationship[] => [
