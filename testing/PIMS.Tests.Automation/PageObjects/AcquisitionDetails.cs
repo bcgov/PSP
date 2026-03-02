@@ -17,10 +17,10 @@ namespace PIMS.Tests.Automation.PageObjects
         //Generate Forms Elements
         private readonly By acquisitionFileGenerateFormTitle = By.XPath("//span[text()='Generate a form:']");
         private readonly By acquisitionFileGenerateForm12Link = By.XPath("//div[text()='Generate Form 12']/parent::button");
-        private readonly By acquisitionFileGenerateLetterLink = By.XPath("/div[text()='Generate Letter']/parent::button");
-        private readonly By acquisitionFileGenerateH0443Link = By.XPath("/div[text()='Conditions of Entry (H0443)']/parent::button");
-        private readonly By acquisitionFileGenerateNoticeEntryLink = By.XPath("/div[text()='Generate Notice of Entry']/parent::button");
-        private readonly By acquisitionFileGenerateIntakeLink = By.XPath("/div[text()='Generate Intake']/parent::button]");
+        private readonly By acquisitionFileGenerateLetterLink = By.XPath("//div[text()='Generate Letter']/parent::button");
+        private readonly By acquisitionFileGenerateH0443Link = By.XPath("//div[text()='Conditions of Entry (H0443)']/parent::button");
+        private readonly By acquisitionFileGenerateNoticeEntryLink = By.XPath("//div[text()='Generate Notice of Entry']/parent::button");
+        private readonly By acquisitionFileGenerateIntakeLink = By.XPath("//div[text()='Generate Intake']/parent::button");
 
         //Acquisition File Details View Form Elements
         private readonly By acquisitionFileTitle = By.CssSelector("div[data-testid='form-title']");
@@ -154,13 +154,13 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileOwnerCommentEditTextArea = By.Id("input-ownerRepresentatives.0.comment");
         private readonly By acquisitionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Acquisition File')]/parent::div/parent::div/parent::div/parent::div");
 
-        private readonly By acquisitionFileNoticeClaimSubtitle = By.XPath("//h2/div/div[contains(text(),'Notice of Claims')]");
+        private readonly By acquisitionFileNoticeClaimSubtitle = By.XPath("//h2/div/div[contains(text(),'Notice of Claim')]");
         private readonly By acquisitionFileNoticeClaimReceivedDateLabel = By.XPath("//label[contains(text(),'Received date')]");
         private readonly By acquisitionFileNoticeClaimReceivedDateInput = By.Id("datepicker-noticeOfClaim.receivedDate");
         private readonly By acquisitionFileNoticeClaimReceivedDateContent = By.XPath("//label[contains(text(),'Received date')]/parent::div/following-sibling::div");
-        private readonly By acquisitionFileNoticeClaimCommentsLabel = By.XPath("//label[contains(text(),'Comments')]");
+        private readonly By acquisitionFileNoticeClaimCommentsLabel = By.XPath("//label[contains(text(),'Comment')]");
         private readonly By acquisitionFileNoticeClaimCommentsInput = By.Id("input-noticeOfClaim.comment");
-        private readonly By acquisitionFileNoticeClaimCommentsContent = By.XPath("//label[contains(text(),'Comments')]/parent::div/following-sibling::div");
+        private readonly By acquisitionFileNoticeClaimCommentsContent = By.XPath("//div[text()='Notice of Claim']/parent::div/parent::h2/following-sibling::div/div/div/label[text()='Comment']/parent::div/following-sibling::div");
 
         //Acquisition Sub-files View Elements
         private readonly By acquisitionSubfileCreateTableLinkedFilesCode = By.CssSelector("div[data-testid='linked-files-header']");
@@ -810,7 +810,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //NOC Received Date
             AssertTrueIsDisplayed(acquisitionFileNoticeClaimReceivedDateLabel);
             if (acquisition.AcquisitionNOCReceivedDate != "")
-                AssertTrueContentEquals(acquisitionFileNoticeClaimReceivedDateContent, acquisition.AcquisitionNOCReceivedDate);
+                AssertTrueContentEquals(acquisitionFileNoticeClaimReceivedDateContent, TransformDateFormat(acquisition.AcquisitionNOCReceivedDate));
 
             //NOC Comments
             AssertTrueIsDisplayed(acquisitionFileNoticeClaimCommentsLabel);
@@ -820,7 +820,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyAcquisitionFileCreate(string acquisitionType)
         {
-            Wait();
+            Wait(5000);
 
             //if (acquisitionType == "Main")
             //    AssertTrueIsDisplayed(acquisitionFileTitle);
