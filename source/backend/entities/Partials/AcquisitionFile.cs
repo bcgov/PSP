@@ -9,14 +9,14 @@ namespace Pims.Dal.Entities
     {
         #region Properties
         [NotMapped]
-        public override long Internal_Id { get => this.AcquisitionFileId; set => this.AcquisitionFileId = value; }
+        public override long Internal_Id { get => AcquisitionFileId; set => AcquisitionFileId = value; }
 
         /// <summary>
         /// Formatted file number assigned to the acquisition file.
         /// Format follows YY-XXXXXX-ZZ where YY = MoTI region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number.
         /// </summary>
         [NotMapped]
-        public string FileNumberFormatted { get => GenerateAcquisitionFileNumber(this.RegionCode, this.FileNo, this.FileNoSuffix); }
+        public string FileNumberFormatted { get => GenerateAcquisitionFileNumber(RegionCode, FileNo, FileNoSuffix); }
         #endregion
 
         /// <summary>
@@ -40,8 +40,13 @@ namespace Pims.Dal.Entities
         /// </list>
         /// </remarks>
         /// <returns>The formatted Acquisition File Number.</returns>
-        public static string GenerateAcquisitionFileNumber(short prefix, int fileNumber, int suffix = 1)
+        public static string GenerateAcquisitionFileNumber(short prefix, int? fileNumber, int? suffix = 1)
         {
+            if(fileNumber is null)
+            {
+                return string.Empty;
+            }
+
             return $"{prefix:00}-{fileNumber}-{suffix:00}";
         }
     }
