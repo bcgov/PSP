@@ -576,7 +576,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
           <div
             class="c8 collapse show"
           >
-            <ol>
+            <ul>
               <li
                 class="c12"
               >
@@ -586,7 +586,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
                 <div
                   class="c13"
                 >
-                  Navigate to an area of the map OR use 
+                  Locate an area on the map OR use 
                   <button
                     class="c10 Button d-inline-block btn btn-link"
                     type="button"
@@ -603,19 +603,19 @@ exports[`AddResearchForm component > renders as expected 1`] = `
                 class="c12"
               >
                 <div>
-                  Select a property
+                  Select a Property
                 </div>
                 <div
                   class="c13"
                 >
-                  Click on the map and the selection will be highlighed
+                  Click on the map to highlight the selection
                 </div>
               </li>
               <li
                 class="c12"
               >
                 <div>
-                  Add it to this file
+                  Add it to this File
                 </div>
                 <div
                   class="c13"
@@ -623,7 +623,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
                   Click "Add selected" property button when it appears below
                 </div>
               </li>
-            </ol>
+            </ul>
           </div>
         </div>
         <div
