@@ -96,22 +96,6 @@ exports[`DispositionHeader component > renders as expected when no data is provi
             <label
               class="c2"
             >
-              File name:
-            </label>
-          </div>
-          <div
-            class="pl-1 text-left col-9"
-          />
-        </div>
-        <div
-          class="row"
-        >
-          <div
-            class="pr-0 text-left col-3"
-          >
-            <label
-              class="c2"
-            >
               Historical file #:
             </label>
           </div>
