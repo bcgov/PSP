@@ -1,10 +1,9 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
-using Xunit;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
-    public class AcquisitionAgreements : PageObjectBase
+    public class SharedAgreements : PageObjectBase
     {
         //Acquisition Files Agreements Initial Elements
         private By agreementsLinkTab = By.XPath("//a[contains(text(),'Agreements')]");
@@ -49,7 +48,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private SharedModals sharedModals;
 
 
-        public AcquisitionAgreements(IWebDriver webDriver) : base(webDriver)
+        public SharedAgreements(IWebDriver webDriver) : base(webDriver)
         {
             sharedModals = new SharedModals(webDriver);
         }
@@ -93,7 +92,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(agreementsCreateNewAgreementBttn);
         }
 
-        public void CreateUpdateAgreement(AcquisitionAgreement agreement)
+        public void CreateUpdateAgreement(Agreement agreement)
         {
             Wait();
 
@@ -234,7 +233,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(agreementsDepositAmountInput);
         }
 
-        public void VerifyViewAgreementForm(AcquisitionAgreement agreement, int index)
+        public void VerifyViewAgreementForm(Agreement agreement, int index)
         {
             var agreementNbr = index + 1;
 
