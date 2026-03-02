@@ -832,24 +832,6 @@ exports[`DispositionView component > renders as expected 1`] = `
                   <label
                     class="c13"
                   >
-                    File name:
-                  </label>
-                </div>
-                <div
-                  class="pl-1 text-left col-9"
-                >
-                  Test Disposition File
-                </div>
-              </div>
-              <div
-                class="row"
-              >
-                <div
-                  class="pr-0 text-left col-3"
-                >
-                  <label
-                    class="c13"
-                  >
                     Historical file #:
                   </label>
                 </div>
