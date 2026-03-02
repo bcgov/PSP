@@ -105,6 +105,20 @@ class WorkLists {
     await expect(this.page.getByTestId("search-property-0")).toBeVisible();
   }
 
+  async verifyWorklistStrata() {
+    const planElement = await this.page.getByTestId("worklist-item[0].parcel.identifier");
+    await expect(planElement).toBeVisible();
+
+    const collapseBttn = await this.page.getByTestId("worklist-item[0].collapse-btn");
+    await expect(collapseBttn).toBeVisible();
+
+    const planChild1 = await this.page.getByTestId("worklist-item[0].child[0]");
+    await expect(planChild1).toBeVisible();
+
+    const planChild2 = await this.page.getByTestId("worklist-item[0].child[1]");
+    await expect(planChild2).toBeVisible();
+  }
+
   async countItemsOnWorklist(propertyCountData) {
     const countWorklistItems = await this.page.locator(
       "//button[@id='worklistControlButton']/following-sibling::div"

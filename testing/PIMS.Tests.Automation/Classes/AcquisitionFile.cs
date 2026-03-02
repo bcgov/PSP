@@ -46,7 +46,7 @@
         public AcquisitionFileChecklist AcquisitionFileChecklist { get; set; } = new AcquisitionFileChecklist() { };
         public int AgreementStartRow { get; set; } = 0;
         public int AgreementCount { get; set; } = 0;
-        public List<AcquisitionAgreement> AcquisitionAgreements { get; set; } = new List<AcquisitionAgreement>() { };
+        public List<Agreement> AcquisitionAgreements { get; set; } = new List<Agreement>() { };
         public int StakeholderStartRow { get; set; } = 0;
         public int StakeholderCount { get; set; } = 0;
         public List<AcquisitionStakeholder> AcquisitionStakeholders { get; set; } = new List<AcquisitionStakeholder>();
@@ -144,7 +144,7 @@
         public string AcquisitionCompletionSelect1 { get; set; } = null!;
     }
 
-    public class AcquisitionAgreement
+    public class Agreement
     {
         public string AgreementStatus { get; set; } = null!;
         public string AgreementCancellationReason { get; set; } = null!;

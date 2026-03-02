@@ -55,7 +55,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectTemplateType(string type)
         {
-            WaitUntilClickable(adminToolsTemplateTypeSelect);
+            Wait();
             ChooseSpecificSelectOption(adminToolsTemplateTypeSelect, type);
         }
 

@@ -1,7 +1,7 @@
 const { Given, setDefaultTimeout } = require("@cucumber/cucumber");
 const searchPropertiesJson = require("../../data/SearchProperties.json");
 
-let searchPropertiesData = [];
+let searchPropertiesData = {};
 setDefaultTimeout(100000);
 
 Given("I navigate to the Search Control", async function () {
@@ -86,5 +86,29 @@ Given(
       await this.searchProperties.addPropertyToWorklistFromQuickInfo();
       await this.searchProperties.resetSearch();
     }
+  }
+);
+
+Given(
+  "I search for a Strata plan and several properties from row number {int} and add to the worklist",
+  async function (rowNbr) {
+    searchPropertiesData = searchPropertiesJson[rowNbr];
+
+    await this.searchProperties.searchPropertyByPlan(
+      searchPropertiesData.PlanNumber
+    );
+    await this.searchProperties.selectNthPMBCSearchResult(0);
+    await this.searchProperties.addPropertyToWorklistFromQuickInfo();
+
+    //Add Child 1
+    await this.searchProperties.selectNthPMBCSearchResult(1);
+    await this.searchProperties.addPropertyToWorklistFromQuickInfo();
+
+    //Add Child 2
+    await this.searchProperties.selectNthPMBCSearchResult(2);
+    await this.searchProperties.addPropertyToWorklistFromQuickInfo();
+
+    //reset search
+    await this.searchProperties.resetSearch();
   }
 );
