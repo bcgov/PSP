@@ -18,7 +18,7 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
   {
     Header: 'Description',
     accessor: 'description',
-    align: 'center',
+    align: 'left',
     clickable: true,
     sortable: true,
     width: 20,
@@ -61,7 +61,7 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
     maxWidth: 40,
   },
   {
-    Header: 'Region(s)',
+    Header: 'MOTT region',
     accessor: 'regionCodes',
     align: 'left',
     clickable: true,
@@ -70,16 +70,16 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
     maxWidth: 40,
   },
   {
-    Header: 'Historical File #',
+    Header: 'Historical file #',
     accessor: 'legacyFileNum',
-    align: 'left',
+    align: 'right',
     clickable: true,
     sortable: true,
     width: 10,
     maxWidth: 20,
   },
   {
-    Header: 'Civic Address / PID / PIN',
+    Header: 'Civic address / PID / PIN',
     accessor: 'properties',
     align: 'left',
     maxWidth: 40,

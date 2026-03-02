@@ -65,7 +65,7 @@ describe('Acquisition Search Results Table', () => {
     const { getByText, findAllByText } = setup({ results: [] });
 
     await findAllByText('No matching results can be found. Try widening your search criteria.');
-    expect(getByText('Owner')).toBeVisible();
+    expect(getByText('Owners')).toBeVisible();
   });
 
   it('displays alternate project', async () => {
