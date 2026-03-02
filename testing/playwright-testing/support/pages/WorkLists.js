@@ -106,10 +106,14 @@ class WorkLists {
   }
 
   async verifyWorklistStrata() {
-    const planElement = await this.page.getByTestId("worklist-item[0].parcel.identifier");
+    const planElement = await this.page.getByTestId(
+      "worklist-item[0].parcel.identifier"
+    );
     await expect(planElement).toBeVisible();
 
-    const collapseBttn = await this.page.getByTestId("worklist-item[0].collapse-btn");
+    const collapseBttn = await this.page.getByTestId(
+      "worklist-item[0].collapse-btn"
+    );
     await expect(collapseBttn).toBeVisible();
 
     const planChild1 = await this.page.getByTestId("worklist-item[0].child[0]");
