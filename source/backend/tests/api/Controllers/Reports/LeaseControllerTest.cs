@@ -64,6 +64,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public LeaseControllerTest()
         {
             this._helper = new TestHelper();
+            this._helper.AddSingletonWithMock<ILeasePaymentService>();
             this._controller = this._helper.CreateController<LeaseController>(Permissions.LeaseView);
             this._mapper = this._helper.GetService<IMapper>();
             this._service = this._helper.GetService<Mock<ILeaseReportsService>>();

@@ -1086,7 +1086,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 <div
                   class="c24 collapse show"
                 >
-                  <ol>
+                  <ul>
                     <li
                       class="c25"
                     >
@@ -1096,7 +1096,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       <div
                         class="c26"
                       >
-                        Navigate to an area of the map OR use 
+                        Locate an area on the map OR use 
                         <button
                           class="c4 Button d-inline-block btn btn-link"
                           type="button"
@@ -1113,19 +1113,19 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       class="c25"
                     >
                       <div>
-                        Select a property
+                        Select a Property
                       </div>
                       <div
                         class="c26"
                       >
-                        Click on the map and the selection will be highlighed
+                        Click on the map to highlight the selection
                       </div>
                     </li>
                     <li
                       class="c25"
                     >
                       <div>
-                        Add it to this file
+                        Add it to this File
                       </div>
                       <div
                         class="c26"
@@ -1133,7 +1133,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                         Click "Add selected" property button when it appears below
                       </div>
                     </li>
-                  </ol>
+                  </ul>
                 </div>
               </div>
               <div

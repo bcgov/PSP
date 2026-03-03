@@ -257,13 +257,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.UpdatePropertyDetails(property);
 
             //Cancel changes
-            propertyInformation.CancelPropertyDetails();
+            //propertyInformation.CancelPropertyDetails();
 
-            //Click on the Edit Property Information Button
-            propertyInformation.EditPropertyInfoBttn();
+            ////Click on the Edit Property Information Button
+            //propertyInformation.EditPropertyInfoBttn();
 
-            //Apply changes on the Property Information Form
-            propertyInformation.UpdatePropertyDetails(property);
+            ////Apply changes on the Property Information Form
+            //propertyInformation.UpdatePropertyDetails(property);
 
             //Save changes
             propertyInformation.SavePropertyDetails();
@@ -525,7 +525,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchProperty(plan: searchProperty.PlanNumber);
 
             //Click on first property found
-            searchProperties.SelectFirstPIMSResult();
+            searchProperties.SelectFirstPMBCResult();
         }
 
         [StepDefinition(@"I verify the MultiProperty Tabs")]
@@ -673,10 +673,15 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             property.TenureStatus = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyTenureStatus"));
             property.TenureCleanup = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "PropertyTenureCleanup"));
+            property.TenureProvHwy = ExcelDataContext.ReadData(rowNumber, "TenureProvHwy");
+            property.TenureHighwayDetails = genericSteps.PopulateLists(ExcelDataContext.ReadData(rowNumber, "TenureHighwayDetails"));
             property.SqrMeters = ExcelDataContext.ReadData(rowNumber, "PropertySqrMeters");
             property.IsVolumetric = bool.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyIsVolumetric"));
             property.Volume = ExcelDataContext.ReadData(rowNumber, "PropertyVolume");
             property.VolumeType = ExcelDataContext.ReadData(rowNumber, "PropertyVolumeType");
+            property.SurplusDeclarationType = ExcelDataContext.ReadData(rowNumber,"SurplusDeclarationType");
+            property.SurplusDeclarationDate = ExcelDataContext.ReadData(rowNumber, "SurplusDeclarationDate");
+            property.SurplusDeclarationComment = ExcelDataContext.ReadData(rowNumber, "SurplusDeclarationComment");
 
             property.PropertyImprovementsStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyImprovementsStartRow"));
             property.PropertyImprovementsCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyImprovementsCount"));

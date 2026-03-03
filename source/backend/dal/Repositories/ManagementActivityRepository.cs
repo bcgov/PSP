@@ -98,9 +98,11 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.FileNameOrNumberOrReference))
             {
-                predicate = predicate.And(x => EF.Functions.Like(x.ManagementFile.FileName, $"%{filter.FileNameOrNumberOrReference}%")
-                || EF.Functions.Like(x.ManagementFile.ManagementFileId.ToString(), $"%{filter.FileNameOrNumberOrReference}%")
-                || EF.Functions.Like(x.ManagementFile.LegacyFileNum, $"%{filter.FileNameOrNumberOrReference}%"));
+                var fileIdSearch = ManagementFileIdExtensions.NormalizeManagementFileIdSearch(filter.FileNameOrNumberOrReference);
+                predicate = predicate.And(
+                    x => EF.Functions.Like(x.ManagementFile.FileName, $"%{filter.FileNameOrNumberOrReference}%")
+                    || EF.Functions.Like(x.ManagementFile.ManagementFileId.ToString(), $"%{fileIdSearch}%")
+                    || EF.Functions.Like(x.ManagementFile.LegacyFileNum, $"%{filter.FileNameOrNumberOrReference}%"));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ActivityTypeCode))
