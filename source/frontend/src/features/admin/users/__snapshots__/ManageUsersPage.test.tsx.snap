@@ -1031,7 +1031,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
               <div
                 class="sortable-column"
               >
-                Email
+                E-mail
                 <div
                   class="c11"
                   data-testid="sort-column-email"
@@ -1147,7 +1147,7 @@ exports[`Manage Users Component > Snapshot matches 1`] = `
               <div
                 class="sortable-column"
               >
-                MOTT region(s)
+                MOTT region
               </div>
             </div>
             <div
