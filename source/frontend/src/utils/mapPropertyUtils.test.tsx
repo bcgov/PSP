@@ -155,7 +155,7 @@ describe('mapPropertyUtils', () => {
         pimsFeature: {} as any,
         parcelFeature: {} as any,
       },
-      { label: NameSourceType.LOCATION, value: '2.000000, 1.000000' },
+      { label: NameSourceType.LOCATION, value: '1.000000, 2.000000' },
     ],
     [
       {
