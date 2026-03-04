@@ -84,9 +84,26 @@ jobs:
           ./openshift/4.0/player.sh build proxy -apply
           ./openshift/4.0/player.sh build scheduler -apply
 
+  detect-dependency-changes:
+    runs-on: ubuntu-22.04
+    outputs:
+      deps_changed: ${{ steps.changed.outputs.any_changed }}
+    steps:
+      - uses: actions/checkout@v4
+      - name: Check dependency-related file changes
+        id: changed
+        uses: tj-actions/changed-files@v44
+        with:
+          files: |
+            **/package.json
+            **/package-lock.json
+            **/*.csproj
+            **/*.props
+
   scan-images:
     name: Scan container images for vulnerabilities
-    needs: [build-frontend, build-api]
+    needs: [build-frontend, build-api, detect-dependency-changes]
+    if: needs.detect-dependency-changes.outputs.deps_changed == 'true'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -185,7 +202,11 @@ jobs:
 
   deploy:
     name: Deploy to OpenShift
-    needs: scan-images
+    needs: [build-frontend, build-api, scan-images]
+    if: |
+      needs.build-frontend.result == 'success' &&
+      needs.build-api.result == 'success' &&
+      (needs.scan-images.result == 'success' || needs.scan-images.result == 'skipped')
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
