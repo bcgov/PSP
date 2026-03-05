@@ -6,22 +6,24 @@
 -- Doug Filteau  2021-Aug-24  N/A        Initial version.
 -- Doug Filteau  2025-Oct-15  N/A        Added OWNSOL.
 -- Doug Filteau  2026-Jan-08  PSP-11108  Added OTHRCV and OTHPAY.
+-- Doug Filteau  2026-Feb-27  PSP-11279  Amended to repair UNK and added OTHRCV.
 -- -------------------------------------------------------------------------------------------
 
 DELETE FROM PIMS_LEASE_STAKEHOLDER_TYPE
 GO
 
-INSERT INTO PIMS_LEASE_STAKEHOLDER_TYPE (LEASE_STAKEHOLDER_TYPE_CODE, DESCRIPTION, IS_PAYABLE_RELATED)
+INSERT INTO PIMS_LEASE_STAKEHOLDER_TYPE (LEASE_STAKEHOLDER_TYPE_CODE, DESCRIPTION, IS_PAYABLE_RELATED, IS_DISABLED)
 VALUES
-  (N'TEN',    N'Tenant',               0),
-  (N'ASGN',   N'Assignee',             0),
-  (N'REP',    N'Representative',       0),
-  (N'PMGR',   N'Property manager',     0),
-  (N'UNK',    N'Other',                0),
-  (N'OTHPAY', N'Other',                1),
-  (N'OWNER',  N'Owner',                1),
-  (N'OWNREP', N'Owner Representative', 1),
-  (N'OWNSOL', N'Owner Solicitor',      1);
+  (N'TEN',    N'Tenant',               0, 0),
+  (N'ASGN',   N'Assignee',             0, 0),
+  (N'REP',    N'Representative',       0, 0),
+  (N'PMGR',   N'Property manager',     0, 0),
+  (N'UNK',    N'Unknown',              0, 1),
+  (N'OTHRCV', N'Other',                0, 0),
+  (N'OTHPAY', N'Other',                1, 0),
+  (N'OWNER',  N'Owner',                1, 0),
+  (N'OWNREP', N'Owner Representative', 1, 0),
+  (N'OWNSOL', N'Owner Solicitor',      1, 0);
 GO
 
 -- -------------------------------------------------------------------------------------------
