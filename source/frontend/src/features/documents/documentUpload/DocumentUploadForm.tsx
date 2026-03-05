@@ -48,8 +48,9 @@ export const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProp
         documentStatusOptions[0]?.value?.toString(),
         initialDocumentType ?? '',
         [],
+        file,
       );
-      formDocument.file = file;
+
       push(formDocument);
     }
 
@@ -89,6 +90,7 @@ export const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProp
                       multiple
                     />
                   </SectionField>
+
                   <StyledScrollable>
                     {formikProps.values.documents.map((formDocument, index) => (
                       <SectionField

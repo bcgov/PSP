@@ -4,6 +4,7 @@ import truncate from 'lodash/truncate';
 import { useEffect, useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaCheck, FaTrash } from 'react-icons/fa';
+import { TbReplace, TbReplaceOff } from 'react-icons/tb';
 import styled, { useTheme } from 'styled-components';
 
 import { StyledRemoveIconButton } from '@/components/common/buttons';
@@ -15,6 +16,8 @@ import { exists } from '@/utils';
 import { withNameSpace } from '@/utils/formUtils';
 
 import { BatchUploadFormModel, DocumentUploadFormData } from '../models';
+import DocumentUploadReplaceContainer from './documentUploadReplace/DocumentUploadReplaceContainer';
+import DocumentUploadReplaceView from './documentUploadReplace/DocumentUploadReplaceView';
 
 export interface ISelectedDocumentHeaderProps {
   // props
@@ -26,6 +29,9 @@ export interface ISelectedDocumentHeaderProps {
   document: DocumentUploadFormData;
   documentTypes: ApiGen_Concepts_DocumentType[];
   documentStatusOptions: SelectOption[];
+  replacingFile: boolean;
+  onConfirmDocumentReplace: (file: File) => void;
+  toggleReplacingFile: () => void;
   // event handlers
   onDocumentTypeChange: (changeEvent: React.ChangeEvent<HTMLInputElement>) => void;
   onRemove: (index: number) => void;
@@ -40,6 +46,9 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
   document,
   documentTypes,
   documentStatusOptions,
+  replacingFile,
+  onConfirmDocumentReplace,
+  toggleReplacingFile,
   onDocumentTypeChange,
   onRemove,
 }) => {
@@ -98,15 +107,50 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
           <span>File {index + 1}:</span>
           <span className="ml-4">{truncate(document.file.name, { length: 50 })}</span>
           <FaCheck className="ml-2" size="1.6rem" color={theme.css.uploadFileCheckColor} />
+          {!replacingFile && (
+            <TbReplace
+              className="ml-2"
+              style={{ cursor: 'pointer' }}
+              size="1.6rem"
+              color={theme.css.pimsGrey80}
+              onClick={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleReplacingFile();
+              }}
+            />
+          )}
+          {replacingFile && (
+            <TbReplaceOff
+              className="ml-2"
+              style={{ cursor: 'pointer' }}
+              size="1.6rem"
+              color={theme.css.pimsRed80}
+              onClick={e => {
+                e.preventDefault();
+                e.stopPropagation();
+                toggleReplacingFile();
+              }}
+            />
+          )}
         </Col>
       </Row>
+
+      {replacingFile && (
+        <DocumentUploadReplaceContainer
+          onReplaceDocumentFile={onConfirmDocumentReplace}
+          onCancelReplaceFile={() => toggleReplacingFile()}
+          View={DocumentUploadReplaceView}
+        ></DocumentUploadReplaceContainer>
+      )}
+
       <StyledRow className={clsx('ml-0', className)}>
         <Col md="5">
           <SectionField label={null} contentWidth={{ xs: 12 }} required>
             <Select
               className="mb-0"
               data-testid={withNameSpace(namespace, 'document-type')}
-              placeholder={documentTypeOptions.length > 1 ? 'Select Document type' : undefined}
+              placeholder={documentTypeOptions.length > 1 ? 'Select Document type' : ''}
               field={withNameSpace(namespace, 'documentTypeId')}
               options={documentTypeOptions}
               onChange={onDocumentTypeChange}
