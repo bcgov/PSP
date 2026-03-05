@@ -7,7 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         //Tab and Edit elements
         private readonly By takesTabLink = By.CssSelector("a[data-rb-event-key='takes']");
-        private readonly By takesAddButton = By.CssSelector("h2 button");
+        private readonly By takesAddButton = By.XPath("//div[contains(text(), 'Takes')]/following-sibling::div/button");
 
         //Initial View Elements
         private readonly By takesTitle = By.XPath("//h2[contains(text(),'Takes')]");

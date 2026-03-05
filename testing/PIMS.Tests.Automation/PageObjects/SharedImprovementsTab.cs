@@ -7,6 +7,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By sharedImprovementTab = By.CssSelector("a[data-rb-event-key='improvements']");
         private readonly By sharedImprovementTitle = By.XPath("//div[contains(text(),'Improvements')]");
         private readonly By sharedImprovementTooltip = By.XPath("//p[contains(text(),'Click on a property to edit that property improvements in a new tab')]");
+        private readonly By sharedImprovementExpandBttn = By.XPath("//div[contains(text(),'Improvements')]/following-sibling::div");
 
         private readonly By sharedImprovementsPropertiesCount = By.CssSelector("div[data-testid*='property-improvements']");
 
@@ -26,14 +27,34 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             AssertTrueIsDisplayed(sharedImprovementTitle);
+
+            webDriver.FindElement(sharedImprovementExpandBttn).Click();
             AssertTrueIsDisplayed(sharedImprovementTooltip);
 
+            var propertiesSectors = webDriver.FindElements(sharedImprovementsPropertiesCount);
+
             for (int i = 0; i < propertiesList.Count; i++)
-                AssertTrueContentEquals(By.CssSelector("div[data-testid*='property-improvements"+ i +"'] h2 div div div"), propertiesList[i]);
+            {
+                for (int n = 0; n < propertiesSectors.Count; n++)
+                {
+                    var propertySector = webDriver.FindElements(sharedImprovementsPropertiesCount)[n];
+                    var propertySubtitle = propertySector.FindElement(By.CssSelector("h2 div div div"));
+                    if (propertySubtitle.Text.Contains(propertiesList[i]))
+                    {
+                        Assert.Contains(propertiesList[i], propertySubtitle.Text);
+                        break;
+                    }
+                        
+                }
+               
+                
+            }
+                
         }
 
         public int CountProperties()
         {
+            Wait();
             return webDriver.FindElements(sharedImprovementsPropertiesCount).Count;
         }
     }

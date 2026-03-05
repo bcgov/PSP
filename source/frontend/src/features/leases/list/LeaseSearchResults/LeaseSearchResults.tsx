@@ -22,7 +22,7 @@ const maxPropertyDisplayCount = 2;
 
 const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
   {
-    Header: 'L-File Number',
+    Header: 'L-File number',
     accessor: 'lFileNo',
     align: 'right',
     clickable: true,
@@ -36,7 +36,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     ),
   },
   {
-    Header: 'Expiry Date',
+    Header: 'Expiry date',
     accessor: 'expiryDate',
     align: 'left',
     sortable: true,
@@ -75,7 +75,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     },
   },
   {
-    Header: 'Program Name',
+    Header: 'Program name',
     accessor: 'programName',
     align: 'left',
     sortable: true,
@@ -83,7 +83,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     maxWidth: 60,
   },
   {
-    Header: 'Tenant Names',
+    Header: 'Tenant names',
     align: 'left',
     width: 40,
     maxWidth: 100,
@@ -101,7 +101,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     },
   },
   {
-    Header: 'Account Type',
+    Header: 'Account type',
     align: 'left',
     sortable: false,
     width: 25,
@@ -110,7 +110,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     Cell: renderTypeCode,
   },
   {
-    Header: 'Properties',
+    Header: 'Civic address / PID / PIN',
     align: 'left',
     width: 75,
     Cell: (props: CellProps<ApiGen_Concepts_Lease>) => {
@@ -125,7 +125,7 @@ const columns: ColumnWithProps<ApiGen_Concepts_Lease>[] = [
     },
   },
   {
-    Header: 'Historical File #',
+    Header: 'Historical file #',
     align: 'left',
     clickable: false,
     sortable: false,

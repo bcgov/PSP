@@ -866,7 +866,7 @@ exports[`Property list view > matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Historical File #
+                Historical file #
               </div>
             </div>
             <div
@@ -879,7 +879,7 @@ exports[`Property list view > matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Civic Address
+                Civic address
               </div>
             </div>
             <div
@@ -939,10 +939,10 @@ exports[`Property list view > matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Lot Size (in ha)
+                Lot size (in ha)
                 <div
                   class="c7"
-                  data-testid="sort-column-Lot Size (in ha)"
+                  data-testid="sort-column-Lot size (in ha)"
                 >
                   <svg
                     class="c8"
@@ -1033,7 +1033,7 @@ exports[`Property list view > matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Tenure Cleanup
+                Tenure cleanup
                 <span
                   class="tooltip-icon"
                   data-testid="tooltip-icon-tenureCleanupTooltip"

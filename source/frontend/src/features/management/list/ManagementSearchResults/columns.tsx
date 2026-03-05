@@ -26,7 +26,7 @@ export const columns: ColumnWithProps<ManagementSearchResultModel>[] = [
   {
     Header: 'Management file #',
     accessor: 'managementFileId',
-    align: 'center',
+    align: 'right',
     clickable: true,
     sortable: true,
     width: 10,
@@ -66,9 +66,9 @@ export const columns: ColumnWithProps<ManagementSearchResultModel>[] = [
       stringToFragment(props.row.original.regionCode),
   },
   {
-    Header: 'Historical File #',
+    Header: 'Historical file #',
     accessor: 'legacyFileNum',
-    align: 'left',
+    align: 'right',
     clickable: true,
     sortable: true,
     width: 10,
@@ -98,7 +98,7 @@ export const columns: ColumnWithProps<ManagementSearchResultModel>[] = [
     maxWidth: 40,
   },
   {
-    Header: 'Team member',
+    Header: 'Team members',
     accessor: 'managementTeam',
     align: 'left',
     clickable: true,
@@ -159,7 +159,7 @@ export const columns: ColumnWithProps<ManagementSearchResultModel>[] = [
     },
   },
   {
-    Header: 'Civic Address / PID / PIN',
+    Header: 'Civic address / PID / PIN',
     accessor: 'fileProperties',
     align: 'left',
     Cell: (props: CellProps<ManagementSearchResultModel>) => {
