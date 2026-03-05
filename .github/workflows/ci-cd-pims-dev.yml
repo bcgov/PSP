@@ -204,6 +204,7 @@ jobs:
     name: Deploy to OpenShift
     needs: [build-frontend, build-api, scan-images]
     if: |
+      always() &&
       needs.build-frontend.result == 'success' &&
       needs.build-api.result == 'success' &&
       (needs.scan-images.result == 'success' || needs.scan-images.result == 'skipped')
