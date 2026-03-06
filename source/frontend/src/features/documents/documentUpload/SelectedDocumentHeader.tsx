@@ -113,6 +113,7 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
               style={{ cursor: 'pointer' }}
               size="1.6rem"
               color={theme.css.pimsGrey80}
+              data-testid={`enable-replace-btn-${index}`}
               onClick={e => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -126,6 +127,7 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
               style={{ cursor: 'pointer' }}
               size="1.6rem"
               color={theme.css.pimsRed80}
+              data-testid={`cancel-replace-btn-${index}`}
               onClick={e => {
                 e.preventDefault();
                 e.stopPropagation();
@@ -138,6 +140,7 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
 
       {replacingFile && (
         <DocumentUploadReplaceContainer
+          index={index}
           onReplaceDocumentFile={onConfirmDocumentReplace}
           onCancelReplaceFile={() => toggleReplacingFile()}
           View={DocumentUploadReplaceView}

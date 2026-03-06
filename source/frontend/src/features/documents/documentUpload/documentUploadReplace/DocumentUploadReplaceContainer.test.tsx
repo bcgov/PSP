@@ -22,6 +22,7 @@ describe('document upload replace container component', () => {
   ) => {
     const utils = render(
       <DocumentUploadReplaceContainer
+        index={renderOptions?.props?.index ?? 0}
         onReplaceDocumentFile={onReplaceDocumentFile}
         onCancelReplaceFile={onCancelReplaceFile}
         View={TestView}

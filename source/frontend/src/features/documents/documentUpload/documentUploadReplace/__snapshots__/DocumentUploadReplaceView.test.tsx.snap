@@ -243,7 +243,9 @@ exports[`Document upload replacement view > renders as expected 1`] = `
   display: none;
 }
 
-<div>
+<div
+    data-testid="doc-replacement[0]"
+  >
     <div
       class="no-gutters pb-3 row"
     >

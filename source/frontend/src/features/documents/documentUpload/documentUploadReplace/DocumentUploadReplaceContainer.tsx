@@ -5,6 +5,7 @@ import { exists } from '@/utils/utils';
 import { IDocumentUploadReplaceViewProps } from './DocumentUploadReplaceView';
 
 export interface IDocumentUploadReplaceContainerProps {
+  index: number;
   onReplaceDocumentFile: (file: File) => void;
   onCancelReplaceFile: () => void;
   View: React.FunctionComponent<IDocumentUploadReplaceViewProps>;
@@ -12,7 +13,7 @@ export interface IDocumentUploadReplaceContainerProps {
 
 const DocumentUploadReplaceContainer: React.FunctionComponent<
   IDocumentUploadReplaceContainerProps
-> = ({ onReplaceDocumentFile, onCancelReplaceFile, View }) => {
+> = ({ index, onReplaceDocumentFile, onCancelReplaceFile, View }) => {
   const [replacementFile, setReplacementFile] = useState<File | null>(null);
 
   const handleOnSelectedFile = (files: File[]) => {
@@ -25,6 +26,7 @@ const DocumentUploadReplaceContainer: React.FunctionComponent<
   return (
     <View
       file={replacementFile}
+      index={index}
       onCancelReplace={() => {
         setReplacementFile(null);
         onCancelReplaceFile && onCancelReplaceFile();

@@ -24,6 +24,7 @@ describe('Document upload replacement view', () => {
   ) => {
     const utils = render(
       <DocumentUploadReplaceView
+        index={renderOptions?.props?.index ?? 0}
         file={renderOptions?.props?.file ?? null}
         onSelectedReplacementFile={onSelectedReplacementFile}
         onConfirmReplace={onConfirmReplace}

@@ -10,6 +10,7 @@ import { exists } from '@/utils/utils';
 export interface IDocumentUploadReplaceViewProps {
   className?: string;
   file: File | null;
+  index: number;
   onSelectedReplacementFile: (files: File[]) => void;
   onConfirmReplace: () => void;
   onCancelReplace: () => void;
@@ -18,12 +19,13 @@ export interface IDocumentUploadReplaceViewProps {
 const DocumentUploadReplaceView: FunctionComponent<IDocumentUploadReplaceViewProps> = ({
   file,
   className,
+  index,
   onConfirmReplace,
   onCancelReplace,
   onSelectedReplacementFile,
 }) => {
   return (
-    <div>
+    <div data-testid={`doc-replacement[${index}]`}>
       <Row className={clsx('no-gutters', 'pb-3', className)}>
         <Col>
           <FileDragAndDrop
