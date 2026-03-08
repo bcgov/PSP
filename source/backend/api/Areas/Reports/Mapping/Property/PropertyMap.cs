@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Core.Helpers;
 using Entity = Pims.Dal.Entities;
 using Model = Pims.Api.Areas.Reports.Models.Property;
 
@@ -16,7 +17,7 @@ namespace Pims.Api.Areas.Reports.Mapping.Property
                 .Map(dest => dest.Latitude, src => src.Location.Coordinate.Y)
                 .Map(dest => dest.Longitude, src => src.Location.Coordinate.X)
 
-                .Map(dest => dest.PID, src => src.ParcelIdentity)
+                .Map(dest => dest.PID, src => src.PidFormatted)
                 .Map(dest => dest.PIN, src => src.Pin)
                 .Map(dest => dest.LandArea, src => src.LandArea)
                 .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription);
@@ -29,7 +30,7 @@ namespace Pims.Api.Areas.Reports.Mapping.Property
                 .Map(dest => dest.Latitude, src => src.Location.Coordinate.Y)
                 .Map(dest => dest.Longitude, src => src.Location.Coordinate.X)
 
-                .Map(dest => dest.PID, src => src.PidPadded)
+                .Map(dest => dest.PID, src => PidTranslator.ConvertPIDToDash(src.PidPadded))
                 .Map(dest => dest.PIN, src => src.Pin)
                 .Map(dest => dest.LandArea, src => src.LandArea)
                 .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription);
