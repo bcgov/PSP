@@ -30,7 +30,7 @@ namespace Pims.Api.Areas.Reports.Mapping.Property
                 .Map(dest => dest.Latitude, src => src.Location.Coordinate.Y)
                 .Map(dest => dest.Longitude, src => src.Location.Coordinate.X)
 
-                .Map(dest => dest.PID, src => PidTranslator.ConvertPIDToDash(src.PidPadded))
+                .Map(dest => dest.PID, src => src.PidPadded != null ? PidTranslator.ConvertPIDToDash(src.PidPadded) : string.Empty)
                 .Map(dest => dest.PIN, src => src.Pin)
                 .Map(dest => dest.LandArea, src => src.LandArea)
                 .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription);
