@@ -1,6 +1,6 @@
 using System.Text.Json.Serialization;
 
-namespace Pims.Api.Models.Cdogs
+namespace Pims.Api.Models.Common
 {
     /// <summary>
     /// Represents a JWT (JSON Web Token) response.

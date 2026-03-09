@@ -12,26 +12,24 @@ using Pims.Api.Models.Requests.Http;
 using Pims.Core.Api.Exceptions;
 using Polly.Registry;
 
-namespace Pims.Api.Repositories.Cdogs
+namespace Pims.Api.Repositories.Ches.Auth
 {
-    /// <summary>
-    /// CdogsAuthRepository provides authentication to the Cdogs external api.
-    /// </summary>
-    public class CdogsAuthRepository : CdogsBaseRepository, IDocumentGenerationAuthRepository
+
+    public class ChesAuthRepository : ChesBaseRepository, IEmailAuthRepository
     {
         private JwtResponse _currentToken;
-        private DateTime _lastSucessfullRequest;
+        private DateTime _lastSuccessfulRequest;
 
         /// <summary>
-        /// Initializes a new instance of the <see cref="CdogsAuthRepository"/> class.
+        /// Initializes a new instance of the <see cref="ChesAuthRepository"/> class.
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
         /// <param name="configuration">The injected configuration provider.</param>
         /// <param name="jsonOptions">The jsonOptions.</param>
         /// <param name="pollyPipelineProvider">The polly retry policy.</param>
-        public CdogsAuthRepository(
-            ILogger<CdogsAuthRepository> logger,
+        public ChesAuthRepository(
+            ILogger<ChesAuthRepository> logger,
             IHttpClientFactory httpClientFactory,
             IConfiguration configuration,
             IOptions<JsonSerializerOptions> jsonOptions,
@@ -39,7 +37,7 @@ namespace Pims.Api.Repositories.Cdogs
             : base(logger, httpClientFactory, configuration, jsonOptions, pollyPipelineProvider)
         {
             _currentToken = null;
-            _lastSucessfullRequest = DateTime.UnixEpoch;
+            _lastSuccessfulRequest = DateTime.UnixEpoch;
         }
 
         public async Task<string> GetTokenAsync()
@@ -47,13 +45,12 @@ namespace Pims.Api.Repositories.Cdogs
             if (!IsValidToken())
             {
                 ExternalResponse<JwtResponse> tokenResult = await TryRequestToken();
-
                 if (tokenResult.Status == ExternalResponseStatus.Error)
                 {
                     throw new AuthenticationException(tokenResult.Message);
                 }
 
-                _lastSucessfullRequest = DateTime.UtcNow;
+                _lastSuccessfulRequest = DateTime.UtcNow;
                 _currentToken = tokenResult.Payload;
             }
 
@@ -65,7 +62,7 @@ namespace Pims.Api.Repositories.Cdogs
             if (_currentToken != null)
             {
                 DateTime now = DateTime.UtcNow;
-                TimeSpan delta = now - _lastSucessfullRequest;
+                TimeSpan delta = now - _lastSuccessfulRequest;
                 if (delta.TotalSeconds >= _currentToken.ExpiresIn)
                 {
                     // Revoke token
@@ -98,7 +95,7 @@ namespace Pims.Api.Repositories.Cdogs
             content.Headers.Add("Content-Type", "application/x-www-form-urlencoded");
 
             ExternalResponse<JwtResponse> result = await PostAsync<JwtResponse>(_config.AuthEndpoint, content);
-            _logger.LogDebug("Finished getting authentication token");
+            _logger.LogDebug("Token endpoint response: {@Result}", result);
 
             return result;
         }
