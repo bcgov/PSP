@@ -5,6 +5,7 @@
 -- ------------  -----------  ---------  -----------------------------------------------------
 -- Doug Filteau  2021-Feb-03  PSP-11108  Added OTHPAY and altered UNK.
 -- Doug Filteau  2026-Feb-27  PSP-11279  Amended to repair UNK and added OTHRCV.
+-- Doug Filteau  2026-Mar-05  PSP-11279  Amended to disable UNK.
 -- -------------------------------------------------------------------------------------------
 
 SET XACT_ABORT ON
@@ -16,52 +17,8 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Add/enable the "OTHRCV" type.
-PRINT N'Add/enable the "OTHRCV" type.'
-GO
-DECLARE @CurrCd NVARCHAR(20)
-SET     @CurrCd = N'OTHRCV'
-
-SELECT LEASE_STAKEHOLDER_TYPE_CODE
-FROM   PIMS_LEASE_STAKEHOLDER_TYPE
-WHERE  LEASE_STAKEHOLDER_TYPE_CODE = @CurrCd;
-
-IF @@ROWCOUNT = 1
-  UPDATE PIMS_LEASE_STAKEHOLDER_TYPE
-  SET    IS_DISABLED                = 0
-       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
-  WHERE  LEASE_STAKEHOLDER_TYPE_CODE = @CurrCd;
-ELSE
-  INSERT INTO PIMS_LEASE_STAKEHOLDER_TYPE (LEASE_STAKEHOLDER_TYPE_CODE, DESCRIPTION, IS_PAYABLE_RELATED)
-  VALUES (N'OTHRCV', N'Other', 0);
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-
--- Add/enable the "OTHPAY" type.
-PRINT N'Add/enable the "OTHPAY" type.'
-GO
-DECLARE @CurrCd NVARCHAR(20)
-SET     @CurrCd = N'OTHPAY'
-
-SELECT LEASE_STAKEHOLDER_TYPE_CODE
-FROM   PIMS_LEASE_STAKEHOLDER_TYPE
-WHERE  LEASE_STAKEHOLDER_TYPE_CODE = @CurrCd;
-
-IF @@ROWCOUNT = 1
-  UPDATE PIMS_LEASE_STAKEHOLDER_TYPE
-  SET    IS_DISABLED                = 0
-       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
-  WHERE  LEASE_STAKEHOLDER_TYPE_CODE = @CurrCd;
-ELSE
-  INSERT INTO PIMS_LEASE_STAKEHOLDER_TYPE (LEASE_STAKEHOLDER_TYPE_CODE, DESCRIPTION, IS_PAYABLE_RELATED)
-  VALUES (N'OTHPAY', N'Other', 1);
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-
--- Alter the "UNK" type.
-PRINT N'Alter the "UNK" type.'
+-- Disable the "UNK" type.
+PRINT N'Disable the "UNK" type.'
 GO
 DECLARE @CurrCd NVARCHAR(20)
 SET     @CurrCd = N'UNK'
@@ -76,32 +33,6 @@ IF @@ROWCOUNT = 1
        , IS_DISABLED                = 1
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
   WHERE  LEASE_STAKEHOLDER_TYPE_CODE = @CurrCd;
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-
--- -------------------------------------------------------------------------------------------
--- Update the display order for the non-Other codes by DESCRIPTION
--- -------------------------------------------------------------------------------------------
-UPDATE biz
-SET    biz.DISPLAY_ORDER              = seq.ROW_NUM
-     , biz.CONCURRENCY_CONTROL_NUMBER = biz.CONCURRENCY_CONTROL_NUMBER + 1
-FROM   PIMS_LEASE_STAKEHOLDER_TYPE biz JOIN
-       (SELECT LEASE_STAKEHOLDER_TYPE_CODE
-             , ROW_NUMBER() OVER (ORDER BY DESCRIPTION) AS ROW_NUM
-        FROM   PIMS_LEASE_STAKEHOLDER_TYPE
-        WHERE  DESCRIPTION <> N'Other') seq ON seq.LEASE_STAKEHOLDER_TYPE_CODE = biz.LEASE_STAKEHOLDER_TYPE_CODE
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-
--- -------------------------------------------------------------------------------------------
--- Update the display order for the Other codes
--- -------------------------------------------------------------------------------------------
-UPDATE PIMS_LEASE_STAKEHOLDER_TYPE
-SET    DISPLAY_ORDER              = 99
-     , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
-WHERE  DESCRIPTION = N'Other'
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
