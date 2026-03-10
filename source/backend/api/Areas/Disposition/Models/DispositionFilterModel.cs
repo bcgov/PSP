@@ -103,8 +103,8 @@ namespace Pims.Api.Areas.Disposition.Models.Search
 
                 Pid = model.Pid,
                 Pin = model.Pin,
-                Address = model.Address,
-                FileNameOrNumberOrReference = model.FileNameOrNumberOrReference,
+                Address = model.Address.Trim(),
+                FileNameOrNumberOrReference = model.FileNameOrNumberOrReference.Trim(),
                 DispositionFileStatusCode = model.DispositionFileStatusCode,
                 DispositionStatusCode = model.DispositionStatusCode,
                 DispositionTypeCode = model.DispositionTypeCode,

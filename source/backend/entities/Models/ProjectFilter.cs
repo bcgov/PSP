@@ -8,10 +8,10 @@ namespace Pims.Dal.Entities.Models
 
         public ProjectFilter(string projectNumber, string projectName, string projectStatus, string projectRegion)
         {
-            this.ProjectNumber = projectNumber;
-            this.ProjectName = projectName;
-            this.ProjectStatusCode = projectStatus;
-            this.ProjectRegionCode = projectRegion;
+            ProjectNumber = projectNumber;
+            ProjectName = projectName;
+            ProjectStatusCode = projectStatus;
+            ProjectRegionCode = projectRegion;
         }
 
         public string ProjectNumber { get; set; }
