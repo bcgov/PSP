@@ -23,8 +23,8 @@ namespace Pims.Api.Areas.Projects.Models
                 Page = model.Page,
                 Quantity = model.Quantity,
 
-                ProjectNumber = model.ProjectNumber.Trim(),
-                ProjectName = model.ProjectName.Trim(),
+                ProjectNumber = model.ProjectNumber?.Trim(),
+                ProjectName = model.ProjectName?.Trim(),
                 ProjectStatusCode = model.ProjectStatusCode,
                 ProjectRegionCode = model.ProjectRegionCode,
 
