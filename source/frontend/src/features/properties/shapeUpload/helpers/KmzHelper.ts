@@ -56,11 +56,11 @@ export class KmzHelper {
    * @returns A Promise resolving to the GeoJSON FeatureCollection.
    */
   public static async toGeoJson(buffer: ArrayBuffer): Promise<FeatureCollection> {
-    if (await KmzHelper.isKml(buffer)) {
-      return KmzHelper.kmlToGeoJson(new TextDecoder().decode(buffer));
-    }
     if (await KmzHelper.isKmz(buffer)) {
       return KmzHelper.kmzToGeoJson(buffer);
+    }
+    if (await KmzHelper.isKml(buffer)) {
+      return KmzHelper.kmlToGeoJson(new TextDecoder().decode(buffer));
     }
     throw new Error('Failed to parse file. Please ensure the file is a valid KML or KMZ file.');
   }
