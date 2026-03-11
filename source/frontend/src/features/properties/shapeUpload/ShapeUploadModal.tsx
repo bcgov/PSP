@@ -56,7 +56,7 @@ export const ShapeUploadModal: React.FunctionComponent<IShapeUploadModalProps> =
       display={display}
       setDisplay={setDisplay}
       headerIcon={<FaUpload size={22} />}
-      title="Upload Shapefile"
+      title="Upload boundary file"
       message={
         <ShapeUploadContainer
           formikRef={formikRef}
