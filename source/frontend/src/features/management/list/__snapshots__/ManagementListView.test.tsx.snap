@@ -919,7 +919,7 @@ exports[`Management List View > matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Management file #
+                Mgmt. file #
                 <div
                   class="c13"
                   data-testid="sort-column-managementFileId"
@@ -1214,7 +1214,7 @@ exports[`Management List View > matches snapshot 1`] = `
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  M-1
+                  FILE_NUMBER 3A8F46B
                   <svg
                     fill="currentColor"
                     height="1em"
