@@ -2,7 +2,8 @@ import { FeatureCollection, MultiPolygon, Polygon } from 'geojson';
 
 import { exists } from '@/utils';
 
-import { KmzHelper, ShapefileHelper } from './helpers';
+import { KmzHelper } from './helpers/KmzHelper';
+import { ShapefileHelper } from './helpers/ShapefileHelper';
 
 export class ShapeUploadModel {
   public file: File | null;
