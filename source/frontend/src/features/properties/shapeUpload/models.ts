@@ -22,9 +22,13 @@ export class ShapeUploadModel {
       return ShapefileHelper.toGeoJson(arrayBuffer);
     }
 
-    if (await KmzHelper.isKmz(arrayBuffer)) {
+    if ((await KmzHelper.isKml(arrayBuffer)) || (await KmzHelper.isKmz(arrayBuffer))) {
       return KmzHelper.toGeoJson(arrayBuffer);
     }
+
+    throw new Error(
+      'Unsupported file format. Please upload a valid shapefile (.zip), KMZ, or KML file.',
+    );
   }
 }
 
