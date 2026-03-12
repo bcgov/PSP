@@ -43,12 +43,12 @@ export const useGenerateResearchNotice = () => {
         }
       });
 
-      const fulltyAttributedResults: FeatureCollection<
+      const fullyAttributedResults: FeatureCollection<
         Geometry,
         PMBC_FullyAttributed_Feature_Properties
       >[] = await Promise.all(fullyAttributedTasks);
 
-      const flatFA = fulltyAttributedResults.flatMap(x => x.features).map(x => x.properties);
+      const flatFA = fullyAttributedResults.flatMap(x => x.features).map(x => x.properties);
 
       const composedProperties = pimsProperties.map(pimsResearchProperty => {
         const pimsProperty = pimsResearchProperty.property;

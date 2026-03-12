@@ -295,8 +295,8 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             this._leaseService.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Once());
-            result.Pid.Should().Be(1);
-            result.Pin.Should().Be(2);
+            result.Pid.Should().Be("000-000-001");
+            result.Pin.Should().Be("2");
         }
 
         [Fact]

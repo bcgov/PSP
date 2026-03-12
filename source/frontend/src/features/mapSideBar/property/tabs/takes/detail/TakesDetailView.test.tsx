@@ -1,19 +1,23 @@
 import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants/claims';
+import Roles from '@/constants/roles';
 import { mockLookups } from '@/mocks/lookups.mock';
-import { getMockApiPropertyFiles } from '@/mocks/properties.mock';
+import {
+  getMockApiProperty,
+  getMockApiPropertyFile,
+  getMockApiPropertyFiles,
+} from '@/mocks/properties.mock';
 import { getMockApiTakes } from '@/mocks/takes.mock';
+import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
+import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
 import { ApiGen_Concepts_File } from '@/models/api/generated/ApiGen_Concepts_File';
+import { getEmptyAcquisitionFile } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, screen, userEvent, within } from '@/utils/test-utils';
 
 import TakesDetailView, { ITakesDetailViewProps } from './TakesDetailView';
-import { ApiGen_CodeTypes_AcquisitionStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionStatusTypes';
-import { ApiGen_CodeTypes_AcquisitionTakeStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTakeStatusTypes';
-import Roles from '@/constants/roles';
-import { getEmptyAcquisitionFile } from '@/models/defaultInitializers';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -473,5 +477,23 @@ describe('TakesDetailView component', () => {
       exact: false,
     });
     expect(code).toBeVisible();
+  });
+
+  it('displays Lat/Long for properties when no other identifier is available', () => {
+    const { getByText } = setup({
+      props: {
+        takes: [{ ...getMockApiTakes()[0] }],
+        fileProperty: {
+          ...getMockApiPropertyFile(),
+          property: {
+            ...getMockApiProperty(),
+            latitude: 48.43,
+            longitude: -123.49,
+          },
+        },
+      },
+    });
+    const latLong = getByText(/Takes for 48.430000, -123.490000/);
+    expect(latLong).toBeVisible();
   });
 });

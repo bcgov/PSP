@@ -3,12 +3,12 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 
 import { SelectOption } from '@/components/common/form';
-import { mockDocumentTypesResponse } from '@/mocks/documents.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fireEvent, render, RenderOptions, screen } from '@/utils/test-utils';
 
+import { mockDocumentTypesResponse } from '@/mocks/documentTypes.mock';
 import { BatchUploadFormModel, DocumentUploadFormData } from '../models';
 import DocumentUploadForm from './DocumentUploadForm';
 
