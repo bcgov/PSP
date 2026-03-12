@@ -30,14 +30,14 @@ namespace Pims.Api.Areas.Documents
     public class SearchController : ControllerBase
     {
         private readonly IDocumentService _documentService;
-        private readonly IPropertyService propertyService;
+        private readonly IPropertyService _propertyService;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
         public SearchController(IDocumentService documentService, IPropertyService propertyService, IMapper mapper, ILogger<SearchController> logger)
         {
             _documentService = documentService;
-            this.propertyService = propertyService;
+            _propertyService = propertyService;
             _mapper = mapper;
             _logger = logger;
         }
@@ -98,7 +98,7 @@ namespace Pims.Api.Areas.Documents
 
             foreach (var propertyDocument in propertyDocuments)
             {
-                propertyDocument.Property = propertyService.TransformPropertyToLatLong(propertyDocument.Property);
+                propertyDocument.Property = _propertyService.TransformPropertyToLatLong(propertyDocument.Property);
             }
 
             return propertyDocuments;

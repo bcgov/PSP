@@ -32,13 +32,13 @@ namespace Pims.Api.Areas.Reports.Controllers
     public class ManagementActivityController : ControllerBase
     {
         private readonly IManagementActivityService _managementActivityService;
-        private readonly IPropertyService propertyService;
+        private readonly IPropertyService _propertyService;
         private readonly ILogger _logger;
 
         public ManagementActivityController(IManagementActivityService managementActivityService, IPropertyService propertyService, ILogger<ManagementActivityController> logger)
         {
             _managementActivityService = managementActivityService;
-            this.propertyService = propertyService;
+            _propertyService = propertyService;
             _logger = logger;
         }
 
@@ -161,7 +161,7 @@ namespace Pims.Api.Areas.Reports.Controllers
 
             foreach (var activityProperty in activityProperties)
             {
-                activityProperty.Property = propertyService.TransformPropertyToLatLong(activityProperty.Property);
+                activityProperty.Property = _propertyService.TransformPropertyToLatLong(activityProperty.Property);
             }
 
             return activityProperties;
