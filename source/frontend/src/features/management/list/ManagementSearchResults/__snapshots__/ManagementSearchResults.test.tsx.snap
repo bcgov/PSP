@@ -61,7 +61,7 @@ exports[`Management search results table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Management file #
+            Mgmt. file #
             <div
               class="c0"
               data-testid="sort-column-managementFileId"
@@ -350,7 +350,7 @@ exports[`Management search results table > matches snapshot 1`] = `
             style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            M-1
+            FILE_NUMBER 3A8F46B
           </div>
           <div
             class="td clickable"

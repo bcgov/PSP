@@ -104,6 +104,14 @@ namespace Pims.Api.Services
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
             var leases = _leaseRepository.GetAllByIds(leaseIds, pimsUser.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet(), contractorPersonId).ToList();
+
+            // Ensure we return property information with lat/long coordinates for any properties associated to the returned leases.
+            foreach (var lease in leases)
+            {
+                var propertyLeases = lease.PimsPropertyLeases ?? new List<PimsPropertyLease>();
+                lease.PimsPropertyLeases = _propertyService.TransformAllPropertiesToLatLong(propertyLeases.ToList());
+            }
+
             return leases;
         }
 
@@ -540,7 +548,7 @@ namespace Pims.Api.Services
 
                 if (renewal.IsExercised == true)
                 {
-                    if(!renewal.CommencementDt.HasValue)
+                    if (!renewal.CommencementDt.HasValue)
                     {
                         throw new BusinessRuleViolationException("Exercised renewals must have a commencement date");
                     }

@@ -220,7 +220,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
             <div
               class="c9"
             >
-              Location: 123.000000, 48.000000
+              Location: 48.000000, 123.000000
               <a
                 class="c10"
                 href="/mapview/sidebar/property/1/improvements"

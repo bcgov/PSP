@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
 using Pims.Api.Services;
-using Pims.Core.Helpers;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
 
@@ -190,8 +189,8 @@ namespace Pims.Api.Models.Report.Lease
             dest.LFileNumber = src.LeasePeriod.Lease?.LFileNo ?? string.Empty;
             dest.HistoricalFiles = GetHistoricalFileNumbers(src.LeasePeriod.Lease);
             dest.LeaseStatus = src.LeasePeriod.Lease?.LeaseStatusTypeCodeNavigation?.Description ?? string.Empty;
-            dest.PropertyList = string.Join(",", leaseProperties.Select(lp => GetFallbackPropertyIdentifier(lp)));
-            dest.TenantList = string.Join(",", leaseTenants.Select(t => GetStakeholderName(t)));
+            dest.PropertyList = GetPropertiesAsString(leaseProperties);
+            dest.TenantList = string.Join("|", leaseTenants.Select(t => GetStakeholderName(t)));
             dest.PayableOrReceivable = src.LeasePeriod.Lease.LeasePayRvblTypeCodeNavigation?.Description ?? string.Empty;
             dest.Program = GetLeaseProgramName(src.LeasePeriod.Lease);
             dest.PeriodStart = src.LeasePeriod.PeriodStartDate.ToString("MMMM dd, yyyy");
@@ -217,6 +216,15 @@ namespace Pims.Api.Models.Report.Lease
         {
             var lastPayment = lease.PimsLeasePeriods?.SelectMany(lp => lp.PimsLeasePayments ?? new List<PimsLeasePayment>())?.OrderByDescending(p => p.PaymentReceivedDate)?.FirstOrDefault();
             return lastPayment != null ? lastPayment.PaymentReceivedDate.ToString("MMMM dd, yyyy") : string.Empty;
+        }
+
+        private static string GetPropertiesAsString(ICollection<PimsPropertyLease> leaseProperties)
+        {
+            return string.Join("|", leaseProperties
+                    .Where(lp => lp?.Property != null)
+                    .Select(lp => lp.Property.GetPropertyName())
+                    .Where(s => !string.IsNullOrWhiteSpace(s))
+                    .Distinct());
         }
 
         private static string GetStakeholderName(PimsLeaseStakeholder stakeholder)
@@ -256,39 +264,6 @@ namespace Pims.Api.Models.Report.Lease
             {
                 return lease.LeaseProgramTypeCodeNavigation?.Description ?? string.Empty;
             }
-        }
-
-        private static string GetFallbackPropertyIdentifier(PimsPropertyLease propertyLease)
-        {
-            PimsProperty property = propertyLease?.Property;
-            if (property?.Pid != null)
-            {
-                return PidTranslator.ConvertPIDToDash(property.Pid.ToString());
-            }
-
-            if (property?.Pin != null)
-            {
-                return property.Pin.ToString();
-            }
-
-            if (property?.Address != null && !string.IsNullOrEmpty(property.Address.StreetAddress1))
-            {
-                string[] addressStrings = new string[2] { property.Address.StreetAddress1, property.Address.MunicipalityName };
-                return $"({string.Join(" ", addressStrings.Where(s => s != null))})";
-            }
-
-            if (!string.IsNullOrEmpty(propertyLease?.Name))
-            {
-                return $"({propertyLease.Name})";
-            }
-
-            if (property?.Location != null)
-            {
-                return $"({property.Location.Coordinate.X}, {property.Location.Coordinate.Y})";
-            }
-
-            // Fallback if no identifier is available.
-            return "No Property Identifier";
         }
 
         private static string GetHistoricalFileNumbers(PimsLease lease)

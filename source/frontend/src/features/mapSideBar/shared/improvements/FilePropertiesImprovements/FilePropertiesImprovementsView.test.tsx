@@ -1,11 +1,12 @@
+import { getMockApiProperty } from '@/mocks/properties.mock';
+import { getMockPropertyImprovementsApi } from '@/mocks/propertyImprovements.mock';
 import { render, RenderOptions, waitFor } from '@/utils/test-utils';
+
+import { IFilePropertyImprovements } from '../models/FilePropertyImprovements';
 import {
   FilePropertiesImprovementsView,
   IFilePropertiesImprovementsViewProps,
 } from './FilePropertiesImprovementsView';
-import { IFilePropertyImprovements } from '../models/FilePropertyImprovements';
-import { getMockApiProperty } from '@/mocks/properties.mock';
-import { getMockPropertyImprovementsApi } from '@/mocks/propertyImprovements.mock';
 
 const mockFilePropertiesImprovements: IFilePropertyImprovements[] = [
   { property: getMockApiProperty(), improvements: getMockPropertyImprovementsApi(1) },
@@ -68,5 +69,23 @@ describe('File properties improvements list view', () => {
     expect(
       getByText(/There are no commercial, residential, or other improvements indicated with this/i),
     ).toBeInTheDocument();
+  });
+
+  it('displays Lat/Long for properties when no other identifier is available', async () => {
+    const propertyWithoutIdentifier = {
+      ...getMockApiProperty(),
+      pid: null,
+      pin: null,
+      latitude: 48.43,
+      longitude: -123.49,
+    };
+    const { getByText } = await setup({
+      props: {
+        filePropertiesImprovements: [
+          { property: propertyWithoutIdentifier, improvements: getMockPropertyImprovementsApi(1) },
+        ],
+      },
+    });
+    expect(getByText(/Location: 48.430000, -123.490000/i)).toBeInTheDocument();
   });
 });

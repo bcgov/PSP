@@ -1,8 +1,8 @@
 using Mapster;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.CodeTypes;
-using Entity = Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
+using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Document.Document
 {

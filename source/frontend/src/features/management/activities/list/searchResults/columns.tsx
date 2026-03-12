@@ -52,6 +52,15 @@ export const columns: ColumnWithProps<ManagementActivitySearchResultModel>[] = [
     },
   },
   {
+    Header: 'Mgmt. file #',
+    accessor: 'managementFileNumber',
+    align: 'left',
+    clickable: false,
+    sortable: false,
+    width: 20,
+    maxWidth: 20,
+  },
+  {
     Header: 'File name',
     accessor: 'fileName',
     align: 'left',

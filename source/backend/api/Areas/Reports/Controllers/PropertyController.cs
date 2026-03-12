@@ -7,6 +7,7 @@ using Pims.Api.Helpers.Constants;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Helpers.Reporting;
 using Pims.Api.Models.Base;
+using Pims.Api.Services;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Policies;
 using Pims.Core.Security;
@@ -29,6 +30,8 @@ namespace Pims.Api.Areas.Reports.Controllers
     {
         #region Variables
         private readonly IPropertyRepository _propertyRepository;
+        private readonly IPropertyService _propertyService;
+
         private readonly IMapper _mapper;
         #endregion
 
@@ -38,10 +41,12 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// Creates a new instance of a ReportController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="propertyRepository"></param>
+        /// <param name="propertyService"></param>
         /// <param name="mapper"></param>
-        public PropertyController(IPropertyRepository propertyRepository, IMapper mapper)
+        public PropertyController(IPropertyRepository propertyRepository, IPropertyService propertyService, IMapper mapper)
         {
             _propertyRepository = propertyRepository;
+            _propertyService = propertyService;
             _mapper = mapper;
         }
         #endregion
@@ -98,6 +103,13 @@ namespace Pims.Api.Areas.Reports.Controllers
 
             filter.Quantity = all ? _propertyRepository.Count() : filter.Quantity;
             var page = _propertyRepository.GetPage((PropertyFilter)filter);
+
+            // Transform all properties to lat/long for returned invoices that have properties, this is required for the front end to properly display the property locations.
+            foreach (var propertyVw in page.Items)
+            {
+                _propertyService.TransformPropertyVwToLatLong(propertyVw);
+            }
+
             var report = _mapper.Map<PageModel<Models.Property.PropertyModel>>(page);
 
             return acceptHeader.ToString() switch
