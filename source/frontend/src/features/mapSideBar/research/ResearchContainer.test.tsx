@@ -94,7 +94,7 @@ describe('ResearchContainer component', () => {
   });
 
   it('renders as expected', async () => {
-    const { getByTestId } = await setup();
+    await setup();
     expect(document.body).toMatchSnapshot();
   });
 
@@ -113,11 +113,11 @@ describe('ResearchContainer component', () => {
       ...mockAcquisitionFileResponse(),
       fileType: ApiGen_CodeTypes_FileTypes.Acquisition,
     };
-    const { getByTestId } = await setup({ context: { file: typedFile } });
+    await setup({ context: { file: typedFile } });
   });
 
   it('displays a properties pid if that is the only valid identifier', async () => {
-    const { getByTestId, findByText } = await setup();
+    const { findByText } = await setup();
     expect(await findByText('123-456-789')).toBeVisible();
   });
 
@@ -126,7 +126,7 @@ describe('ResearchContainer component', () => {
       .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
       .reply(200, [{ id: 1, property: { pin: 123456 } }]);
 
-    const { getByTestId, findByText } = await setup();
+    const { findByText } = await setup();
     expect(await findByText('123456')).toBeVisible();
   });
 
@@ -135,7 +135,7 @@ describe('ResearchContainer component', () => {
       .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
       .reply(200, [{ id: 1, property: { planNumber: 'EPP92028' } }]);
 
-    const { getByTestId, findByText } = await setup();
+    const { findByText } = await setup();
     expect(await findByText('EPP92028')).toBeVisible();
   });
 
@@ -144,7 +144,7 @@ describe('ResearchContainer component', () => {
       .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
       .reply(200, [{ id: 1, property: { latitude: 1, longitude: 2 } }]);
 
-    const { getByTestId, findByText } = await setup();
+    const { findByText } = await setup();
     expect(await findByText('1.000000, 2.000000')).toBeVisible();
   });
 });
