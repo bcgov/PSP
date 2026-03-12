@@ -1,8 +1,9 @@
 import { FeatureCollection } from 'geojson';
-import JSZip from 'jszip';
 import shp from 'shpjs';
 
 import { exists, firstOrNull } from '@/utils';
+
+import { loadZipSafely } from './ZipSafetyValidator';
 
 export class ShapefileHelper {
   /**
@@ -24,7 +25,7 @@ export class ShapefileHelper {
    * @param buffer The ArrayBuffer of the shapefile to validate.
    */
   public static async validate(buffer: ArrayBuffer): Promise<void> {
-    const zip = await JSZip.loadAsync(buffer);
+    const zip = await loadZipSafely(buffer);
     const files = zip.files;
 
     const shpEntry = Object.values(files).find(f => f.name.toLowerCase().endsWith('.shp'));

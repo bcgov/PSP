@@ -1,9 +1,10 @@
 import { kml } from '@tmcw/togeojson';
 import { DOMParser } from '@xmldom/xmldom';
 import { FeatureCollection } from 'geojson';
-import JSZip from 'jszip';
 
 import { exists } from '@/utils';
+
+import { loadZipSafely } from './ZipSafetyValidator';
 
 export class KmzHelper {
   public static async isKmz(buffer: ArrayBuffer): Promise<boolean> {
@@ -29,7 +30,7 @@ export class KmzHelper {
    * @param buffer The ArrayBuffer of the KMZ file to validate.
    */
   public static async validateKmz(buffer: ArrayBuffer): Promise<void> {
-    const zip = await JSZip.loadAsync(buffer);
+    const zip = await loadZipSafely(buffer);
     const files = zip.files;
 
     const kmlEntry = Object.values(files).find(f => f.name.toLowerCase().endsWith('.kml'));
@@ -87,7 +88,7 @@ export class KmzHelper {
 
   private static async kmzToGeoJson(buffer: ArrayBuffer): Promise<FeatureCollection> {
     try {
-      const zip = await JSZip.loadAsync(buffer);
+      const zip = await loadZipSafely(buffer);
       const kmlEntry = Object.values(zip.files).find(f => f.name.toLowerCase().endsWith('.kml'));
       const kmlText = await kmlEntry.async('text');
       return KmzHelper.kmlToGeoJson(kmlText);
