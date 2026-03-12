@@ -374,6 +374,16 @@ namespace Pims.Api
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Cdogs.Period) });
             }
 
+            if (allHealthCheckOptions.Ches.Enabled)
+            {
+                services.AddHealthChecks().Add(new HealthCheckRegistration(
+                    "Ches",
+                    sp => new ChesHealthCheck(sp.GetService<IEmailRepository>()),
+                    null,
+                    new string[] { SERVICES, EXTERNAL, SYSTEMCHECK })
+                { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Ches.Period) });
+            }
+
             services.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
@@ -576,7 +586,7 @@ namespace Pims.Api
             services.AddScoped<IManagementActivityService, ManagementActivityService>();
             services.AddScoped<IManagementFileStatusSolver, ManagementFileStatusSolver>();
             services.AddScoped<IFilePropertyLocationUpdateSolver, FilePropertyLocationUpdateSolver>();
-            services.AddScoped<IChesService, ChesService>();
+            services.AddScoped<IEmailService, ChesService>();
         }
 
         /// <summary>

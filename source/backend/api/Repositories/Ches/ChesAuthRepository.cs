@@ -80,9 +80,6 @@ namespace Pims.Api.Repositories.Ches.Auth
         {
             _logger.LogDebug("Getting authentication token...");
 
-            using HttpClient client = _httpClientFactory.CreateClient("Pims.Api.Logging");
-            client.DefaultRequestHeaders.Accept.Clear();
-
             var requestForm = new Dictionary<string, string>
                 {
                     { "grant_type", "client_credentials" },

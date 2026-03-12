@@ -107,5 +107,18 @@ namespace Pims.Api.Repositories.Ches
             _logger.LogDebug($"Finished sending email");
             return result;
         }
+
+        public async Task<HttpResponseMessage> TryGetHealthAsync()
+        {
+            _logger.LogDebug("Checking health of CHES service");
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            Uri endpoint = new(this._config.ChesHost, "/api/v1/health");
+
+            Task<HttpResponseMessage> result = GetRawAsync(endpoint, authenticationToken);
+
+            _logger.LogDebug($"Finished checking health of CHES service");
+            return await result;
+        }
     }
 }
