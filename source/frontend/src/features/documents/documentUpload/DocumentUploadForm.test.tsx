@@ -7,7 +7,7 @@ import { mockDocumentTypesResponse } from '@/mocks/documents.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, findByTestId, fireEvent, queryByTestId, render, RenderOptions, screen, userEvent, waitForEffects } from '@/utils/test-utils';
+import { act, fireEvent, render, RenderOptions, screen, userEvent, waitForEffects } from '@/utils/test-utils';
 
 import { BatchUploadFormModel, DocumentUploadFormData } from '../models';
 import DocumentUploadForm from './DocumentUploadForm';

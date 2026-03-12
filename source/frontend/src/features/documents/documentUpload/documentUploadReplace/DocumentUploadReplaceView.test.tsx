@@ -1,6 +1,5 @@
 import {
   act,
-  findAllByTestId,
   fireEvent,
   render,
   RenderOptions,
