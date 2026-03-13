@@ -58,7 +58,7 @@ describe('ShapeUploadResultView', () => {
     uploadResult.isSuccess = true;
     setup({ props: { uploadResult } });
 
-    expect(screen.getByText(/Shapefile uploaded successfully/i)).toBeInTheDocument();
+    expect(screen.getByText(/Boundary file uploaded successfully/i)).toBeInTheDocument();
     expect(screen.getByText('example.zip')).toBeInTheDocument();
     const icon = screen.getByTestId('file-check-icon');
     expect(icon).toBeInTheDocument();
@@ -71,7 +71,7 @@ describe('ShapeUploadResultView', () => {
     uploadResult.errorMessage = 'Upload failed';
     setup({ props: { uploadResult } });
 
-    expect(screen.getByText(/Shapefile upload failed/i)).toBeInTheDocument();
+    expect(screen.getByText(/Boundary file upload failed/i)).toBeInTheDocument();
     expect(screen.getByText('example.zip')).toBeInTheDocument();
     expect(screen.getByText('Upload failed')).toBeInTheDocument();
     const icon = screen.getByTestId('file-error-icon');

@@ -18,7 +18,8 @@ export interface IShapeUploadContainerProps {
 }
 
 /**
- * Component that provides functionality to upload shapefiles. Can be embedded as a widget.
+ * Component that provides functionality to upload boundary files (Shapefile, KML, KMZ).
+ * Can be embedded as a widget.
  */
 export const ShapeUploadContainer: React.FunctionComponent<IShapeUploadContainerProps> = ({
   formikRef,
