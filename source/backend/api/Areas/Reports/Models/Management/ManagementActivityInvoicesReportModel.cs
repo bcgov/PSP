@@ -1,12 +1,11 @@
-using Pims.Core.Extensions;
-using Pims.Dal.Entities;
-using Pims.Dal.Helpers.Extensions;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
-using System.Diagnostics;
 using System.Globalization;
 using System.Linq;
+using Pims.Core.Extensions;
+using Pims.Dal.Entities;
+using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Api.Areas.Reports.Models.Management
 {
