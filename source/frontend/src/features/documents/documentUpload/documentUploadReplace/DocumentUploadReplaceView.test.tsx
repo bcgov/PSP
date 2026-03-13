@@ -95,7 +95,6 @@ describe('Document upload replacement view', () => {
 
     // get the upload button
     const uploader = getByTestId('upload-input');
-    console.log(uploader);
 
     // simulate upload event and wait until finish
     await act(async () => {

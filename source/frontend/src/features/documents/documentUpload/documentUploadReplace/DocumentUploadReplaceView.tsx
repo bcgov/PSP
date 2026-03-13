@@ -45,22 +45,22 @@ const DocumentUploadReplaceView: FunctionComponent<IDocumentUploadReplaceViewPro
         <Col md="2">
           <Button
             title="cancel-replace"
-            variant={'secondary'}
+            variant="secondary"
             onClick={onCancelReplace}
             data-testid="cancel-replace-button"
           >
-            {'Cancel'}
+            Cancel
           </Button>
         </Col>
         <Col md="2">
           <Button
             title="confirm-replace"
-            variant={'primary'}
+            variant="primary"
             onClick={onConfirmReplace}
             data-testid="ok-replace-button"
             disabled={!exists(file)}
           >
-            {'Replace'}
+            Replace
           </Button>
         </Col>
       </Row>
