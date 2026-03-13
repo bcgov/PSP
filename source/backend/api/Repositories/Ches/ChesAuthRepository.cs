@@ -7,7 +7,7 @@ using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Api.Models.CodeTypes;
-using Pims.Api.Models.Common;
+using Pims.Api.Models.Ches;
 using Pims.Api.Models.Requests.Http;
 using Pims.Core.Api.Exceptions;
 using Polly.Registry;
