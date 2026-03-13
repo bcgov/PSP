@@ -3,28 +3,36 @@ using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Ches;
 using Pims.Api.Models.CodeTypes;
+using Pims.Api.Models.Config;
 using Pims.Api.Models.Requests.Http;
 using Pims.Api.Repositories.Ches;
 
 namespace Pims.Api.Services
-    /// <summary>
-    /// Default implementation of IEmailService using CHES.
-    /// </summary>
+/// <summary>
+/// Default implementation of IEmailService using CHES.
+/// </summary>
 {
     public class ChesService : IEmailService
     {
         private readonly IEmailRepository _chesRepository;
         private readonly ILogger<ChesService> _logger;
+        private readonly ChesConfig _chesConfig;
 
-        public ChesService(IEmailRepository chesRepository, ILogger<ChesService> logger)
+        public ChesService(IEmailRepository chesRepository, ILogger<ChesService> logger, ChesConfig chesConfig)
         {
             _chesRepository = chesRepository;
             _logger = logger;
+            _chesConfig = chesConfig;
         }
 
         public async Task<ExternalResponse<EmailResponse>> SendEmailAsync(EmailRequest request)
         {
             _logger.LogInformation("Email send requested. Recipient count: {recipientCount}.", request.To?.Count ?? 0);
+
+            if (string.IsNullOrEmpty(request.From))
+            {
+                request.From = _chesConfig.FromEmail;
+            }
 
             ExternalResponse<EmailResponse>? response = await _chesRepository.SendEmailAsync(request);
 

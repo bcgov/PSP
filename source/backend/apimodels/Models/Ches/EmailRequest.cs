@@ -32,7 +32,6 @@ namespace Pims.Api.Models.Ches
         /// All email addresses can be plain 'sender@server.com' or formatted '"Sender Name" sender@server.com'.
         /// </summary>
         [JsonPropertyName("from")]
-        [System.ComponentModel.DataAnnotations.Required]
         public string From { get; set; }
 
         /// <summary>

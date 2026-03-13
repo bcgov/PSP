@@ -586,6 +586,13 @@ namespace Pims.Api
             services.AddScoped<IManagementActivityService, ManagementActivityService>();
             services.AddScoped<IManagementFileStatusSolver, ManagementFileStatusSolver>();
             services.AddScoped<IFilePropertyLocationUpdateSolver, FilePropertyLocationUpdateSolver>();
+            services.AddSingleton(sp =>
+            {
+                var config = sp.GetRequiredService<IConfiguration>();
+                var chesConfig = new ChesConfig();
+                config.GetSection("Ches").Bind(chesConfig);
+                return chesConfig;
+            });
             services.AddScoped<IEmailService, ChesService>();
         }
 
