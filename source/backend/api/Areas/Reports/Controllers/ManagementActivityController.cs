@@ -166,6 +166,5 @@ namespace Pims.Api.Areas.Reports.Controllers
 
             return activityProperties;
         }
-
     }
 }
