@@ -3,22 +3,19 @@ import React, { createRef } from 'react';
 
 import { useDocumentProvider } from '@/features/documents/hooks/useDocumentProvider';
 import { useDocumentRelationshipProvider } from '@/features/documents/hooks/useDocumentRelationshipProvider';
-import {
-  mockDocumentBatchUploadResponse,
-  mockDocumentTypesAcquisition,
-  mockDocumentTypesAll,
-} from '@/mocks/documents.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, screen } from '@/utils/test-utils';
 
+import { mockDocumentTypesAcquisition, mockDocumentTypesAll } from '@/mocks/documentTypes.mock';
+import { mockDocumentBatchUploadResponse } from '@/mocks/documents.mock';
+import { BatchUploadFormModel, DocumentUploadFormData } from '../models';
 import DocumentUploadContainer, {
   IDocumentUploadContainerProps,
   IDocumentUploadContainerRef,
 } from './DocumentUploadContainer';
 import { IDocumentUploadFormProps } from './DocumentUploadForm';
-import { BatchUploadFormModel, DocumentUploadFormData } from '../models';
 
 const history = createMemoryHistory();
 const storeState = {

@@ -5,7 +5,7 @@ import { createMemoryHistory } from 'history';
 import noop from 'lodash/noop';
 
 import { defaultDocumentFilter } from '@/interfaces/IDocumentResults';
-import { mockDocumentTypesResponse } from '@/mocks/documents.mock';
+import { mockDocumentTypesResponse } from '@/mocks/documentTypes.mock';
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, renderAsync, RenderOptions } from '@/utils/test-utils';

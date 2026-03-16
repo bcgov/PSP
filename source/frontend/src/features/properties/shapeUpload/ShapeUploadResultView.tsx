@@ -18,7 +18,7 @@ export const ShapeUploadResultView: React.FunctionComponent<IShapeUploadResultVi
   return (
     <>
       {uploadResult.isSuccess ? (
-        <StyledSuccessSection label="Shapefile uploaded successfully" labelWidth={{ xs: 12 }}>
+        <StyledSuccessSection label="Boundary file uploaded successfully" labelWidth={{ xs: 12 }}>
           {truncate(uploadResult.fileName ?? '', { length: 100 })}
           <FaCheck
             data-testid="file-check-icon"
@@ -28,7 +28,7 @@ export const ShapeUploadResultView: React.FunctionComponent<IShapeUploadResultVi
           />
         </StyledSuccessSection>
       ) : (
-        <StyledFailSection label="Shapefile upload failed" labelWidth={{ xs: 12 }}>
+        <StyledFailSection label="Boundary file upload failed" labelWidth={{ xs: 12 }}>
           {truncate(uploadResult.fileName ?? '', { length: 100 })}
           <FaTimesCircle
             data-testid="file-error-icon"

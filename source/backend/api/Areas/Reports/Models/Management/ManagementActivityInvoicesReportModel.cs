@@ -16,6 +16,10 @@ namespace Pims.Api.Areas.Reports.Models.Management
         [CsvHelper.Configuration.Attributes.Name("Invoice Number")]
         public string InvoiceNumber { get; set; }
 
+        [DisplayName("Management File Number")]
+        [CsvHelper.Configuration.Attributes.Name("Management File Number")]
+        public string ManagementFileNumber { get; set; }
+
         [DisplayName("Management File Name")]
         [CsvHelper.Configuration.Attributes.Name("Management File Name")]
         public string ManagementFileName { get; set; }
@@ -129,6 +133,7 @@ namespace Pims.Api.Areas.Reports.Models.Management
             ArgumentNullException.ThrowIfNull(invoice, nameof(invoice));
 
             InvoiceNumber = GetNullableString(invoice.InvoiceNum);
+            ManagementFileNumber = invoice.ManagementActivity?.ManagementFile?.ManagementFileId != null ? $"M-{invoice.ManagementActivity.ManagementFile?.ManagementFileId}" : string.Empty;
             ManagementFileName = GetNullableString(invoice.ManagementActivity?.ManagementFile?.FileName);
             LegacyFileNum = GetNullableString(invoice.ManagementActivity?.ManagementFile?.LegacyFileNum);
             Funding = GetNullableString(invoice.ManagementActivity?.ManagementFile?.AcquisitionFundingTypeCodeNavigation?.Description);

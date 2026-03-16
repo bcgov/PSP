@@ -10,6 +10,7 @@ export class ManagementActivitySearchResultModel {
   id: number | null = null;
   managementFileId: number | null = null;
   fileName = '';
+  managementFileNumber = '';
   project: ApiGen_Concepts_Project | null = null;
   legacyFileNum = '';
   activityStatus = '';
@@ -25,6 +26,7 @@ export class ManagementActivitySearchResultModel {
     newModel.id = base.id ?? null;
     newModel.managementFileId = base.managementFileId ?? null;
     newModel.fileName = base.managementFile?.fileName ?? '';
+    newModel.managementFileNumber = base.managementFile?.fileNumber ?? '';
     newModel.legacyFileNum = base.managementFile?.legacyFileNum ?? '';
     newModel.project = base.managementFile?.project ?? null;
     newModel.properties = base.managementFileId

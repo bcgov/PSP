@@ -58,7 +58,7 @@ namespace Pims.Api.Areas.Management.Controllers
         [HttpGet]
         [HasPermission(Permissions.ManagementView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(IEnumerable<ManagementActivityFilterModel>), 200)]
+        [ProducesResponseType(typeof(IEnumerable<ManagementActivityModel>), 200)]
         [ProducesResponseType(typeof(Api.Models.ErrorResponseModel), 400)]
         [SwaggerOperation(Tags = new[] { "management-activities" })]
         [TypeFilter(typeof(NullJsonResultFilter))]

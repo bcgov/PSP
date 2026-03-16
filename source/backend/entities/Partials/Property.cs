@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations.Schema;
 using System.Linq;
 using NetTopologySuite.Geometries;
+using Pims.Core.Helpers;
 
 namespace Pims.Dal.Entities
 {
@@ -19,9 +20,9 @@ namespace Pims.Dal.Entities
         /// get - The friendly formated Parcel Id.
         /// </summary>
         [NotMapped]
-        public string ParcelIdentity
+        public string PidFormatted
         {
-            get { return this.Pid > 0 ? $"{this.Pid:000-000-000}" : null; }
+            get { return this.Pid != null ? PidTranslator.ConvertPIDToDash(this.Pid.ToString()) : null; }
         }
 
         public ICollection<PimsOrganization> GetOrganizations() => PimsPropertyOrganizations?.Select(o => o.Organization).ToArray();

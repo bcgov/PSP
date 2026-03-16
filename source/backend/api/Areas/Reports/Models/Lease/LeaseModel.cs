@@ -31,11 +31,11 @@ namespace Pims.Api.Areas.Reports.Models.Lease
 
         [DisplayName("PID")]
         [CsvHelper.Configuration.Attributes.Name("PID")]
-        public int? Pid { get; set; }
+        public string Pid { get; set; }
 
         [DisplayName("PIN")]
         [CsvHelper.Configuration.Attributes.Name("PIN")]
-        public int? Pin { get; set; }
+        public string Pin { get; set; }
 
         [DisplayName("Lease Amount")]
         [CsvHelper.Configuration.Attributes.Name("Lease Amount")]

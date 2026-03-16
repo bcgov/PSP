@@ -36,7 +36,7 @@ export const ManagementHeader: React.FunctionComponent<
           labelWidth={{ xs: leftColumnLabel }}
           contentWidth={{ xs: leftColumnWidth }}
         >
-          <div data-testid="mgmt-fileId">M-{managementFile?.id?.toString()}</div>
+          <div data-testid="mgmt-fileId">{managementFile?.fileNumber}</div>
         </HeaderField>
         <HeaderField
           label="File name:"
