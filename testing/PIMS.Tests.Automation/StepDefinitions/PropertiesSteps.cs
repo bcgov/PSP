@@ -254,16 +254,16 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyInformation.VerifyPropertyDetailsEditForm();
 
             //Apply changes on the Property Information Form
-            propertyInformation.UpdatePropertyDetails(property);
+            //propertyInformation.UpdatePropertyDetails(property);
 
-            //Cancel changes
+            ////Cancel changes
             //propertyInformation.CancelPropertyDetails();
 
             ////Click on the Edit Property Information Button
             //propertyInformation.EditPropertyInfoBttn();
 
-            ////Apply changes on the Property Information Form
-            //propertyInformation.UpdatePropertyDetails(property);
+            //Apply changes on the Property Information Form
+            propertyInformation.UpdatePropertyDetails(property);
 
             //Save changes
             propertyInformation.SavePropertyDetails();

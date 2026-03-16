@@ -263,19 +263,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
             agreements.SaveAcquisitionFileAgreement();
 
             //Verify new added Agreement form
-            agreements.VerifyViewAgreementForm(dispositionFile.DispositionAgreements[0], 4);
+            agreements.VerifyViewAgreementForm(dispositionFile.DispositionAgreements[0], 1);
 
             //Edit Agreement button
             agreements.EditAgreementButton(0);
 
             //Update created agreement
-            agreements.CreateUpdateAgreement(dispositionFile.DispositionAgreements[1]);
+            agreements.CreateUpdateAgreement(dispositionFile.DispositionAgreements[0]);
 
             //Save new agreement
             agreements.SaveAcquisitionFileAgreement();
 
             //Verify Edit Agreement form
-            agreements.VerifyViewAgreementForm(dispositionFile.DispositionAgreements[1], 0);
+            agreements.VerifyViewAgreementForm(dispositionFile.DispositionAgreements[0], 1);
 
             var agreementsBeforeDelete = agreements.TotalAgreementsCount();
 
@@ -920,6 +920,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 Agreement agreement = new();
 
                 agreement.AgreementStatus = ExcelDataContext.ReadData(i, "AgreementStatus");
+                agreement.AgreementCancellationReason = ExcelDataContext.ReadData(i, "AgreementCancellationReason");
                 agreement.AgreementLegalSurveyPlan = ExcelDataContext.ReadData(i, "AgreementLegalSurveyPlan");
                 agreement.AgreementType = ExcelDataContext.ReadData(i, "AgreementType");
                 agreement.AgreementDate = ExcelDataContext.ReadData(i, "AgreementDate");

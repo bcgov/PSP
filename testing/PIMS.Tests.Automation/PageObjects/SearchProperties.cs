@@ -37,8 +37,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchPropertySearchBttn = By.Id("search-button");
         private readonly By searchPropertyResetBttn = By.Id("reset-button");
 
-        private readonly By searchPropertyPOINameOptionList = By.CssSelector("input[data-testid='geographic-name-input']");
-        private readonly By searchPropertyPOINameFirstOption = By.XPath("//input[@data-testid='geographic-name-input']/following-sibling::ul/li[1]");
+        private readonly By searchPropertyPOINameFirstOption = By.CssSelector("div[data-placement='bottom-start'] ul[class='suggestionList'] li:first-child");
 
         private readonly By searchPropertyProjectInput = By.Id("typeahead-project");
         private readonly By searchProject1stOption = By.CssSelector("div[id='typeahead-project'] a");
@@ -204,7 +203,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 Wait();
                 FocusAndClick(searchProject1stOption);
             }
-            
+
+            Wait();
             webDriver.FindElement(searchPropertySearchBttn).Click();
             WaitUntilSpinnerDisappear();
         }
@@ -234,7 +234,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void ResetPropertySearch()
         {
             Wait();
-            WaitUntilClickable(searchPropertyResetBttn);
             webDriver.FindElement(searchPropertyResetBttn).Click();
 
             WaitUntilSpinnerDisappear();
@@ -310,8 +309,8 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedModals.ModalClickOKBttn();
             }
 
-            Wait(10000);
-            webDriver.FindElement(quickInfoCloseModalBttn).Click();
+            //Wait(10000);
+            //webDriver.FindElement(quickInfoCloseModalBttn).Click();
         }
 
         public void SelectSecondPMBCResult(string action = "")

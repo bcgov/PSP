@@ -1,6 +1,4 @@
 ﻿using OpenQA.Selenium;
-using OpenQA.Selenium.BiDi.BrowsingContext;
-using OpenQA.Selenium.DevTools.V142.Network;
 using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -76,13 +74,13 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementFileAddAnotherMemberLink = By.CssSelector("button[data-testid='add-team-member']");
         private readonly By managementFileViewTeamMembersGroup = By.XPath("//div[contains(text(),'Management Team')]/parent::div/parent::h2/following-sibling::div/div");
 
-        private readonly By managementFileNoticeClaimSubtitle = By.XPath("//h2/div/div[contains(text(),'Notice of Claims')]");
+        private readonly By managementFileNoticeClaimSubtitle = By.XPath("//h2/div/div[contains(text(),'Notice of Claim')]");
         private readonly By managementFileNoticeClaimReceivedDateLabel = By.XPath("//label[contains(text(),'Received date')]");
         private readonly By managementFileNoticeClaimReceivedDateInput = By.Id("datepicker-noticeOfClaim.receivedDate");
         private readonly By managementFileNoticeClaimReceivedDateContent = By.XPath("//label[contains(text(),'Received date')]/parent::div/following-sibling::div");
-        private readonly By managementFileNoticeClaimCommentsLabel = By.XPath("//label[contains(text(),'Comments')]");
+        private readonly By managementFileNoticeClaimCommentsLabel = By.XPath("//label[contains(text(),'Comment')]");
         private readonly By managementFileNoticeClaimCommentsInput = By.Id("input-noticeOfClaim.comment");
-        private readonly By managementFileNoticeClaimCommentsContent = By.XPath("//label[contains(text(),'Comments')]/parent::div/following-sibling::div");
+        private readonly By managementFileNoticeClaimCommentsContent = By.XPath("//label[contains(text(),'Comment')]/parent::div/following-sibling::div");
 
         private readonly By managementFileSummaryBttn = By.CssSelector("button[title='File Details']");
 
@@ -276,6 +274,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
+                else
+                    break;
             }
         }
 
@@ -470,7 +470,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //NOC Received Date
             AssertTrueIsDisplayed(managementFileNoticeClaimReceivedDateLabel);
             if (mgmtFile.ManagementNOCReceivedDate != "")
-                AssertTrueContentEquals(managementFileNoticeClaimReceivedDateContent, mgmtFile.ManagementNOCReceivedDate);
+                AssertTrueContentEquals(managementFileNoticeClaimReceivedDateContent, TransformDateFormat(mgmtFile.ManagementNOCReceivedDate));
 
             //NOC Comments
             AssertTrueIsDisplayed(managementFileNoticeClaimCommentsLabel);

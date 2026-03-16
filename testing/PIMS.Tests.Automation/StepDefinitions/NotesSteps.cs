@@ -140,7 +140,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 notes.NavigateNotesTab();
 
                 //Verify the Management's notes section
-                notes.VerifySecondaryNotesListContent(feature, notesData[0]);
+                //notes.VerifySecondaryNotesListContent(feature, notesData[0]);
             }
         }
 

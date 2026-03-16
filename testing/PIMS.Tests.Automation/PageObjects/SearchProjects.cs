@@ -24,7 +24,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By searchProjectNbrOrderBttn = By.CssSelector("div[data-testid='sort-column-code']");
         private By searchProjectNameHeaderColumn = By.XPath("//div[@data-testid='projectsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Project name')]");
         private By searchProjectNameOrderBttn = By.CssSelector("div[data-testid='sort-column-description']");
-        private By searchProjectRegionHeaderColumn = By.XPath("//div[@data-testid='projectsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Region')]");
+        private By searchProjectRegionHeaderColumn = By.XPath("//div[@data-testid='projectsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTT region')]");
         private By searchProjectStatusHeaderColumn = By.XPath("//div[@data-testid='projectsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");
         private By searchProjectLastUpdatedByHeaderColumn = By.XPath("//div[@data-testid='projectsTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Last updated by')]");
         private By searchProjectLastUpdatedByOrderBttn = By.CssSelector("div[data-testid='sort-column-lastUpdatedBy']");
