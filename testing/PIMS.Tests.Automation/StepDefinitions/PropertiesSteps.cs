@@ -741,7 +741,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
                 PropertyImprovement improvement = new();
+                improvement.ImprovementName = ExcelDataContext.ReadData(i, "ImprovementName");
                 improvement.ImprovementType = ExcelDataContext.ReadData(i, "PropertyImprovementType");
+                improvement.ImprovementStatus = ExcelDataContext.ReadData(i, "ImprovementStatus");
+                improvement.ImprovementDate = ExcelDataContext.ReadData(i, "ImprovementDate");
                 improvement.ImprovementDescription = ExcelDataContext.ReadData(i, "PropertyImprovementDescription");
 
                 property.PropertyImprovements.Add(improvement);

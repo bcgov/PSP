@@ -67,15 +67,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchPropertyFoundLocationPin = By.CssSelector("div[class='leaflet-pane leaflet-marker-pane'] img:first-child");
 
         //Properties List View Elements
-        private readonly By searchPropertyViewByInput = By.Id("properties-selector_input");
-        private readonly By searchPropertyViewByInputOptions = By.CssSelector("ul[class='optionContainer']");
-        private readonly By searchPropertyViewByFirstOption = By.CssSelector("ul[class='optionContainer'] li:nth-child(1)");
-
         private readonly By searchPropertyListViewTitle = By.XPath("//h3[contains(text(),'PIMS Property Search')]");
         private readonly By searchPropertyViewByLabel = By.XPath("//div/strong[contains(text(),'Search by')]");
 
         private readonly By searchPropertyListViewOwnershipLabel = By.XPath("//label(text()='Ownership:')");
-        private readonly By searchPropertyListViewOwnershipInput = By.Id("ownership-selector_input");
+        private readonly By searchPropertyListViewOwnershipInput = By.Id("ownership-selector");
+        private readonly By searchPropertyListOwnershipOptions = By.CssSelector("div[id='ownership-selector'] div[class='optionListContainer displayBlock']");
+        private readonly By searchPropertyOwnershipFirstOption = By.CssSelector("div[id='ownership-selector'] div[class='optionListContainer displayBlock'] ul[class='optionContainer'] li:nth-child(1)");
+
         private readonly By searchPropertyListViewTenureCleanupLabel = By.XPath("//label(text()='Tenure Cleanup:')");
         private readonly By searchPropertyListViewTenureCleanupInput = By.Id("tenure-cleanup-selector_input");
 
@@ -224,11 +223,11 @@ namespace PIMS.Tests.Automation.PageObjects
         public void IncludeAllPropertyOwnershipSearch()
         {
             Wait();
-            webDriver.FindElement(searchPropertyViewByInput).Click();
+            webDriver.FindElement(searchPropertyListViewOwnershipInput).Click();
 
-            WaitUntilVisible(searchPropertyViewByInputOptions);
-            while (webDriver.FindElements(searchPropertyViewByFirstOption).Count == 1)
-                webDriver.FindElement(searchPropertyViewByFirstOption).Click();
+            WaitUntilVisible(searchPropertyListOwnershipOptions);
+            while (webDriver.FindElements(searchPropertyOwnershipFirstOption).Count == 1)
+                FocusAndClick(searchPropertyOwnershipFirstOption);
         }
 
         public void ResetPropertySearch()

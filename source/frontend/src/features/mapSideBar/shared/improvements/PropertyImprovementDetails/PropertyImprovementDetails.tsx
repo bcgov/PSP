@@ -4,17 +4,18 @@ import { prettyFormatDate } from '@/utils/dateUtils';
 
 export interface IPropertyImprovementDetailsProps {
   propertyImprovement: ApiGen_Concepts_PropertyImprovement;
+  propertyImprovementIndex?: number;
 }
 
 export const PropertyImprovementDetails: React.FunctionComponent<
   IPropertyImprovementDetailsProps
-> = ({ propertyImprovement }) => {
+> = ({ propertyImprovement, propertyImprovementIndex }) => {
   return (
     <>
       <SectionField
         labelWidth={{ xs: 4 }}
         label="Name"
-        valueTestId={`improvement[${propertyImprovement.id}].name`}
+        valueTestId={`improvement[${propertyImprovementIndex}].name`}
       >
         {propertyImprovement.improvementName ?? ''}
       </SectionField>
@@ -22,7 +23,7 @@ export const PropertyImprovementDetails: React.FunctionComponent<
       <SectionField
         labelWidth={{ xs: 4 }}
         label="Improvement type"
-        valueTestId={`improvement[${propertyImprovement.id}].type`}
+        valueTestId={`improvement[${propertyImprovementIndex}].type`}
       >
         {propertyImprovement.improvementTypeCode?.description}
       </SectionField>
@@ -30,7 +31,7 @@ export const PropertyImprovementDetails: React.FunctionComponent<
       <SectionField
         labelWidth={{ xs: 4 }}
         label="Improvement date"
-        valueTestId={`improvement[${propertyImprovement.id}].date`}
+        valueTestId={`improvement[${propertyImprovementIndex}].date`}
       >
         {prettyFormatDate(propertyImprovement.improvementDate)}
       </SectionField>
@@ -38,7 +39,7 @@ export const PropertyImprovementDetails: React.FunctionComponent<
       <SectionField
         labelWidth={{ xs: 4 }}
         label="Improvement status"
-        valueTestId={`improvement[${propertyImprovement.id}].status`}
+        valueTestId={`improvement[${propertyImprovementIndex}].status`}
       >
         {propertyImprovement.improvementStatusCode?.description}
       </SectionField>
@@ -46,7 +47,7 @@ export const PropertyImprovementDetails: React.FunctionComponent<
       <SectionField
         label="Description"
         labelWidth={{ xs: 4 }}
-        valueTestId={`improvement[${propertyImprovement.id}].description`}
+        valueTestId={`improvement[${propertyImprovementIndex}].description`}
       >
         {propertyImprovement.improvementDescription ?? ''}
       </SectionField>

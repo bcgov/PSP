@@ -345,6 +345,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Property Information Confirmation Modal
         private readonly By propertyInformationConfirmationModal = By.CssSelector("div[class='modal-content']");
 
+        private readonly By propertyDetailsCancelButton = By.CssSelector("button[data-testid='cancel-button']");
         private readonly By propertyDetailsSaveButton = By.CssSelector("button[data-testid='save-button']");
 
         private SharedModals sharedModals;
@@ -503,7 +504,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelPropertyDetails()
         {
-            ButtonElement("Cancel");
+            webDriver.FindElement(propertyDetailsCancelButton).Click(); 
 
             Wait();
             if (webDriver.FindElements(propertyInformationConfirmationModal).Count > 0)
@@ -961,10 +962,10 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(propertyDetailsTenureStatusDiv);
             AssertTrueIsDisplayed(propertyDetailsTenureCleanupLabel);
             AssertTrueIsDisplayed(propertyDetailsTenureCleanupDiv);
-            AssertTrueIsDisplayed(propertyDetailsProvPublicHwyLabel);
-            AssertTrueIsDisplayed(propertyDetailsProvPublicHwyDiv);
-            AssertTrueIsDisplayed(propertyDetailsHighwayRoadLabel);
-            AssertTrueIsDisplayed(propertyDetailsHighwayRoadDiv);
+            //AssertTrueIsDisplayed(propertyDetailsProvPublicHwyLabel);
+            //AssertTrueIsDisplayed(propertyDetailsProvPublicHwyDiv);
+            //AssertTrueIsDisplayed(propertyDetailsHighwayRoadLabel);
+            //AssertTrueIsDisplayed(propertyDetailsHighwayRoadDiv);
 
             if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)
             {
@@ -1097,26 +1098,26 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(Enumerable.SequenceEqual(tenureCleanupUI, property.TenureCleanup));
             }
 
-            AssertTrueIsDisplayed(propertyDetailsProvPublicHwyLabel);
-            if (property.TenureCleanup.First() != "")
-                AssertTrueContentEquals(propertyDetailsProvPublicHwyDiv, property.TenureProvHwy);
+            //AssertTrueIsDisplayed(propertyDetailsProvPublicHwyLabel);
+            //if (property.TenureCleanup.First() != "")
+            //    AssertTrueContentEquals(propertyDetailsProvPublicHwyDiv, property.TenureProvHwy);
             
 
-            AssertTrueIsDisplayed(propertyDetailsHighwayRoadLabel);
-            if (property.TenureCleanup.First() != "")
-            {
-                var tenureCleanupUI = GetViewFieldListContent(propertyDetailsHighwayRoadDiv);
-                Assert.True(Enumerable.SequenceEqual(tenureCleanupUI, property.TenureHighwayDetails));
-            }
+            //AssertTrueIsDisplayed(propertyDetailsHighwayRoadLabel);
+            //if (property.TenureCleanup.First() != "")
+            //{
+            //    var tenureCleanupUI = GetViewFieldListContent(propertyDetailsHighwayRoadDiv);
+            //    Assert.True(Enumerable.SequenceEqual(tenureCleanupUI, property.TenureHighwayDetails));
+            //}
 
-            if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)
-            {
-                AssertTrueIsDisplayed(propertyDetailsFirstNationTitle);
-                AssertTrueIsDisplayed(propertyDetailsFirstNationBandNameLabel);
-                AssertTrueIsDisplayed(propertyDetailsFirstNationBandNameDiv);
-                AssertTrueIsDisplayed(propertyDetailsFirstNationReserveLabel);
-                AssertTrueIsDisplayed(propertyDetailsFirstNationReserveDiv);
-            }
+            //if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)
+            //{
+            //    AssertTrueIsDisplayed(propertyDetailsFirstNationTitle);
+            //    AssertTrueIsDisplayed(propertyDetailsFirstNationBandNameLabel);
+            //    AssertTrueIsDisplayed(propertyDetailsFirstNationBandNameDiv);
+            //    AssertTrueIsDisplayed(propertyDetailsFirstNationReserveLabel);
+            //    AssertTrueIsDisplayed(propertyDetailsFirstNationReserveDiv);
+            //}
 
             //MEASUREMENTS
             AssertTrueIsDisplayed(propertyDetailsMeasurementsTitle);

@@ -178,7 +178,10 @@
 
     public class PropertyImprovement
     {
+        public string ImprovementName { get; set; } = null!;
         public string ImprovementType { get; set; } = null!;
+        public string ImprovementStatus { get; set; } = null!;
+        public string ImprovementDate { get; set; } = null!;
         public string ImprovementDescription { get; set; } = null!;
     }
 }
