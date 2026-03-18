@@ -24,7 +24,7 @@ interface MemberRoleGroup {
 
 export const columns: ColumnWithProps<ManagementSearchResultModel>[] = [
   {
-    Header: 'Management file #',
+    Header: 'Mgmt. file #',
     accessor: 'managementFileId',
     align: 'right',
     clickable: true,
@@ -33,17 +33,16 @@ export const columns: ColumnWithProps<ManagementSearchResultModel>[] = [
     maxWidth: 20,
     Cell: (props: CellProps<ManagementSearchResultModel>) => {
       const { hasClaim } = useKeycloakWrapper();
-      const fileNumberString = `M-${props.row.original.id}`;
 
       if (hasClaim(Claims.MANAGEMENT_VIEW)) {
         return (
           <ExternalLink to={`/mapview/sidebar/management/${props.row.original.id}`}>
-            {fileNumberString}
+            {props.row.original.fileNumber}
           </ExternalLink>
         );
       }
 
-      return stringToFragment(fileNumberString);
+      return stringToFragment(props.row.original.fileNumber);
     },
   },
   {

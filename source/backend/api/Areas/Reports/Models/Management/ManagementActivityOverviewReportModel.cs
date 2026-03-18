@@ -15,6 +15,10 @@ namespace Pims.Api.Areas.Reports.Models.Management
         [CsvHelper.Configuration.Attributes.Name("Management File Name")]
         public string ManagementFileName { get; set; }
 
+        [DisplayName("Management File Number")]
+        [CsvHelper.Configuration.Attributes.Name("Management File Number")]
+        public string ManagementFileNumber { get; set; }
+
         [DisplayName("Historical File Number")]
         [CsvHelper.Configuration.Attributes.Name("Historical File Number")]
         public string LegacyFileNum { get; set; }
@@ -103,6 +107,7 @@ namespace Pims.Api.Areas.Reports.Models.Management
         {
             ArgumentNullException.ThrowIfNull(activity, nameof(activity));
 
+            ManagementFileNumber = activity.ManagementFile?.ManagementFileId != null ? $"M-{activity.ManagementFile?.ManagementFileId}" : string.Empty;
             ManagementFileName = GetNullableString(activity.ManagementFile?.FileName);
             LegacyFileNum = GetNullableString(activity.ManagementFile?.LegacyFileNum);
             Properties = GetPropertiesAsString(activity);

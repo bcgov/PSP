@@ -32,8 +32,8 @@ namespace Pims.Api.Areas.Reports.Mapping.Lease
             dest.AgreementCommencementDate = src.lease.OrigStartDate?.FilterSqlMinDate().ToNullableDateOnly();
             dest.AgreementExpiryDate = src.lease.OrigExpiryDate?.FilterSqlMinDate().ToNullableDateOnly();
             dest.LeaseAmount = src.period?.PaymentAmount;
-            dest.Pid = src.property?.Property?.Pid;
-            dest.Pin = src.property?.Property?.Pin;
+            dest.Pid = src.property?.Property?.PidFormatted ?? string.Empty;
+            dest.Pin = src.property?.Property?.Pin.ToString() ?? string.Empty;
             dest.TenantName = src.stakeholder?.GetStakeholderName();
         }
     }

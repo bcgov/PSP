@@ -832,7 +832,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                 <div
                   data-testid="mgmt-fileId"
                 >
-                  M-1
+                  FILE_NUMBER 3A8F46B
                 </div>
               </div>
             </div>

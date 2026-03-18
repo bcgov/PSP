@@ -198,7 +198,7 @@ namespace Pims.Core.Extensions
         /// <returns></returns>
         public static string GetStringValue(this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key, string defaultValue = null)
         {
-            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues value) ? value.ToString() : defaultValue;
+            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues value) ? value.ToString().Trim() : defaultValue;
         }
 
         /// <summary>

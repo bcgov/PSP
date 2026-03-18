@@ -17,7 +17,8 @@ export interface IShapeUploadFormProps {
 }
 
 /**
- * Component that provides functionality to upload shapefiles. Can be embedded as a widget.
+ * Component that provides functionality to upload boundary files (Shapefile, KML, KMZ).
+ * Can be embedded as a widget.
  */
 export const ShapeUploadForm: React.FunctionComponent<IShapeUploadFormProps> = ({
   isLoading,
@@ -37,18 +38,21 @@ export const ShapeUploadForm: React.FunctionComponent<IShapeUploadFormProps> = (
         <>
           <LoadingBackdrop show={isLoading} />
           <SectionField
-            label="Choose a shapefile to attach for upload"
+            label="Upload a boundary file"
+            tooltip="Accepted formats: Shapefile (.zip), KML (.kml), or KMZ (.kmz)"
             labelWidth={{ xs: 12 }}
             className="mb-4"
           >
-            <div className="pt-2"></div>
+            <div className="pt-2  pb-1 text-muted">
+              Accepted formats: Shapefile (.zip), KML (.kml), or KMZ (.kmz)
+            </div>
             <FileDragAndDrop
               onSelectFiles={files => {
                 if (files.length === 1) {
                   formikProps.setFieldValue('file', firstOrNull(files));
                 }
               }}
-              validExtensions={['zip']}
+              validExtensions={['zip', 'kml', 'kmz']}
               multiple={false}
               keyName={formikProps.values?.file?.name}
             />
@@ -62,8 +66,8 @@ export const ShapeUploadForm: React.FunctionComponent<IShapeUploadFormProps> = (
               </SectionField>
               <div className="pt-1">
                 {exists(propertyIdentifier)
-                  ? `You have attached a shapefile for property: ${propertyIdentifier}. Do you want to proceed and save?`
-                  : 'You have attached a shapefile. Do you want to proceed and save?'}
+                  ? `You have attached a boundary file for property: ${propertyIdentifier}. Do you want to proceed and save?`
+                  : 'You have attached a boundary file. Do you want to proceed and save?'}
               </div>
             </>
           )}

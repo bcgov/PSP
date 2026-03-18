@@ -88,8 +88,7 @@ namespace Pims.Api.Services
             IAvService avService,
             IMapper mapper,
             IOptionsMonitor<AuthClientOptions> options,
-            IOptionsMonitor<MayanConfig> mayanOptions,
-            IDocumentQueueRepository queueRepository)
+            IOptionsMonitor<MayanConfig> mayanOptions)
             : base(user, logger)
         {
             this.documentRepository = documentRepository;
