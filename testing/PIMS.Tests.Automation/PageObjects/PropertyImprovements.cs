@@ -94,9 +94,18 @@ namespace PIMS.Tests.Automation.PageObjects
             int elementIdx = index + 1;
 
             AssertTrueIsDisplayed(improvementDetailsTitle);
+
+            AssertTrueIsDisplayed(improvementDetailsNameLabel);
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].name']"), improvement.ImprovementName);
+
             AssertTrueIsDisplayed(improvementDetailsTypeLabel);
-            if(improvement.ImprovementType != "")
-                AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].type']"), improvement.ImprovementType);
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].type']"), improvement.ImprovementType);
+
+            AssertTrueIsDisplayed(improvementDetailsDateLabel);
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].date']"), improvement.ImprovementDate);
+
+            AssertTrueIsDisplayed(improvementDetailsStatusLabel);
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].status']"), improvement.ImprovementStatus);
 
             AssertTrueIsDisplayed(improvementDetailsDescriptionLabel);
             if(improvement.ImprovementDescription != "")
