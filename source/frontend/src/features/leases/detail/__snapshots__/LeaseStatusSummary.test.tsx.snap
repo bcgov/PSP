@@ -2,7 +2,11 @@
 
 exports[`LeaseStatusSummary component > renders as expected when active 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />
@@ -79,7 +83,11 @@ exports[`LeaseStatusSummary component > renders as expected when active 1`] = `
 
 exports[`LeaseStatusSummary component > renders as expected when inactive 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />

@@ -6,7 +6,11 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
 
 }
 
-<div
+<section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   @media only screen and (max-width:1199px) {
@@ -3121,7 +3125,11 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 
 }
 
-<div
+<section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   @media only screen and (max-width:1199px) {

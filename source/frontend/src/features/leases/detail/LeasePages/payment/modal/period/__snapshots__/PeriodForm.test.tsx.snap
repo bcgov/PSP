@@ -2,7 +2,11 @@
 
 exports[`PeriodForm component > renders as expected 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />
@@ -794,7 +798,11 @@ exports[`PeriodForm component > renders as expected 1`] = `
 
 exports[`PeriodForm component > renders with data as expected 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />

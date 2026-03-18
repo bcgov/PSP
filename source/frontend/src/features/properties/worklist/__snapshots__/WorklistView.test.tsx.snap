@@ -2,7 +2,11 @@
 
 exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />
@@ -793,7 +797,11 @@ exports[`WorklistView > matches snapshot with multiple parcels 1`] = `
 
 exports[`WorklistView > matches snapshot with no parcels (empty state) 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />

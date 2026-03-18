@@ -59,7 +59,11 @@ exports[`DocumentUploadView component > renders as expected 1`] = `
 
 <body>
   <div>
-    <div
+    <section
+      aria-atomic="false"
+      aria-label="Notifications Alt+T"
+      aria-live="polite"
+      aria-relevant="additions text"
       class="Toastify"
     />
     <div />
