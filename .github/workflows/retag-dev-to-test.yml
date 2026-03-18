@@ -30,6 +30,7 @@ env:
   NAMESPACE_OVERRIDE: "3cd915-dev"
   RELEASE_TAG: "dev"
   DEPLOYMENT_NAMESPACE: "3cd915-dev"
+  WORKFLOW_NAME: "${{ github.workflow }}"
 
 on: workflow_dispatch
 
@@ -47,9 +48,176 @@ jobs:
           notification-color: 17a2b8
           timezone: America/Los_Angeles
 
+  detect-dependency-changes:
+    runs-on: ubuntu-22.04
+    needs: ci-cd-start-notification
+    outputs:
+      deps_changed: ${{ steps.detect.outputs.deps_changed }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+        with:
+          fetch-depth: 0
+
+      - name: Detect dependency changes since last successful run
+        id: detect
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          RUNS=$(gh run list \
+            --workflow "${{ env.WORKFLOW_NAME }}" \
+            --status success \
+            --limit 1 \
+            --json headSha)
+
+          LAST_SHA=$(echo "$RUNS" | jq -r '.[0].headSha // empty')
+
+          if [ -z "$LAST_SHA" ]; then
+            echo "No previous successful run found — using HEAD~1"
+            LAST_SHA=$(git rev-parse HEAD~1)
+          fi
+
+          echo "Last successful run SHA: $LAST_SHA"
+          echo "Current SHA: $(git rev-parse HEAD)"
+
+          tracked_files=$(git ls-files \
+            '**/package.json' \
+            '**/package-lock.json' \
+            '**/*.csproj' \
+            '**/*.props')
+
+          deps_changed=false
+
+          extract_node_deps() {
+            jq '{
+              dependencies: (.dependencies // {}),
+              devDependencies: (.devDependencies // {})
+            }' -S
+          }
+
+          extract_itemgroups() {
+            sed -n '/<ItemGroup>/,/<\/ItemGroup>/p' | grep '<PackageReference' | sed 's/^ *//'
+          }
+
+          for file in $tracked_files; do
+            echo "Checking $file"
+
+            old_raw=$(git show "$LAST_SHA:$file" 2>/dev/null || true)
+            new_raw=$(git show "HEAD:$file" 2>/dev/null || true)
+
+            if [[ -z "$old_raw" || -z "$new_raw" ]]; then
+              echo "Skipping $file (missing in one revision)"
+              continue
+            fi
+
+            ############################################
+            # package.json and package-lock.json
+            ############################################
+            if [[ "$file" == *package.json || "$file" == *package-lock.json ]]; then
+              old=$(echo "$old_raw" | extract_node_deps)
+              new=$(echo "$new_raw" | extract_node_deps)
+            ############################################
+            # .csproj / .props
+            ############################################
+            elif [[ "$file" == *.csproj || "$file" == *.props ]]; then
+              old=$(echo "$old_raw" | extract_itemgroups)
+              new=$(echo "$new_raw" | extract_itemgroups)
+            fi
+
+            ############################################
+            # Show diff
+            ############################################
+            diff_output=$(diff -u <(echo "$old") <(echo "$new") || true)
+
+            if [[ -n "$diff_output" ]]; then
+              deps_changed=true
+              echo ""
+              echo "=============================="
+              echo "Semantic diff for $file"
+              echo "=============================="
+              echo "$diff_output"
+            fi
+          done
+          echo "deps_changed=$deps_changed" >> "$GITHUB_OUTPUT"
+
+  scan-images:
+    name: Scan container images for vulnerabilities
+    needs: detect-dependency-changes
+    if: needs.detect-dependency-changes.outputs.deps_changed == 'true'
+    runs-on: ubuntu-22.04
+    strategy:
+      fail-fast: false
+      matrix:
+        service:
+          - name: frontend
+            image: pims-app
+          - name: api
+            image: pims-api
+          - name: proxy
+            image: pims-proxy
+          - name: scheduler
+            image: pims-scheduler
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+      - name: Docker login to OpenShift registry
+        run: echo "${{ env.OPENSHIFT_TOKEN }}" | docker login ${{ env.OPENSHIFT_REGISTRY }} -u unused --password-stdin
+      - name: Scan container image
+        env:
+          IMAGE: ${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/${{ matrix.service.image }}:dev
+        run: |
+          docker pull "$IMAGE"
+
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+            aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 \
+            image --exit-code 1 \
+            --scanners vuln,secret,misconfig \
+            --format table \
+            --severity CRITICAL,HIGH \
+            "$IMAGE" | tee ${{ matrix.service.name }}_predeploy_scan.txt
+
+          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock \
+            -v "$PWD:/workspace" \
+            aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 \
+            image \
+            --scanners vuln,secret,misconfig \
+            --format sarif \
+            --severity CRITICAL,HIGH \
+            "$IMAGE" \
+            -o /workspace/${{ matrix.service.name }}_predeploy_scan.sarif
+      - name: Upload SARIF to Security tab
+        if: always()
+        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
+        with:
+          sarif_file: ${{ matrix.service.name }}_predeploy_scan.sarif
+          category: test-${{ matrix.service.name }}-predeploy
+      - name: Upload SARIF files as artifacts
+        if: always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+        with:
+          name: test-predeploy-sarif-${{ matrix.service.name }}
+          path: ${{ matrix.service.name }}_predeploy_scan.sarif
+          retention-days: 14
+      - name: Upload scan reports
+        if: failure()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882
+        with:
+          name: test-predeploy-scan-${{ matrix.service.name }}
+          path: ${{ matrix.service.name }}_predeploy_scan.txt
+          retention-days: 14
+      
   deploy:
     name: Retag/Deploy to OpenShift
-    needs: ci-cd-start-notification
+    needs: [ci-cd-start-notification, scan-images]
+    if: |
+      always() &&
+      (needs.scan-images.result == 'success' || needs.scan-images.result == 'skipped')
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -63,104 +231,30 @@ jobs:
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
       - name: Docker login to OpenShift registry
         run: echo "${{ env.OPENSHIFT_TOKEN }}" | docker login ${{ env.OPENSHIFT_REGISTRY }} -u unused --password-stdin
-      - name: Pre-deploy scan frontend (block on CRITICAL/HIGH)
-        env:
-          IMAGE: ${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-app:dev
-        run: |
-          docker pull "$IMAGE";
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMAGE" | tee frontend_predeploy_scan.txt;
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/frontend_predeploy_scan.sarif
-      - name: Upload frontend SARIF to Security tab
-        if: always()
-        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
-        with:
-          sarif_file: frontend_predeploy_scan.sarif
-          category: test-frontend-predeploy
       - name: Deploy PIMS frontend
         shell: bash
         run: |
           oc tag pims-app:$RELEASE_TAG pims-app:$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-app-$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-app-$DESTINATION
-      - name: Pre-deploy scan api (block on CRITICAL/HIGH)
-        env:
-          IMAGE: ${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-api:dev
-        run: |
-          docker pull "$IMAGE";
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMAGE" | tee api_predeploy_scan.txt;
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/api_predeploy_scan.sarif
-      - name: Upload api SARIF to Security tab
-        if: always()
-        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
-        with:
-          sarif_file: api_predeploy_scan.sarif
-          category: test-api-predeploy
       - name: Deploy PIMS api
         shell: bash
         run: |
           oc tag pims-api:$RELEASE_TAG pims-api:$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-api-$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-api-$DESTINATION
-      - name: Pre-deploy scan proxy (block on CRITICAL/HIGH)
-        env:
-          IMAGE: ${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-proxy:dev
-        run: |
-          docker pull "$IMAGE";
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMAGE" | tee proxy_predeploy_scan.txt;
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/proxy_predeploy_scan.sarif
-      - name: Upload proxy SARIF to Security tab
-        if: always()
-        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
-        with:
-          sarif_file: proxy_predeploy_scan.sarif
-          category: test-proxy-predeploy
       - name: Deploy geoserver proxy microservice
         shell: bash
         run: |
           oc tag pims-proxy:$RELEASE_TAG pims-proxy:$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
-      - name: Pre-deploy scan scheduler (block on CRITICAL/HIGH)
-        env:
-          IMAGE: ${{ env.OPENSHIFT_REGISTRY }}/3cd915-tools/pims-scheduler:dev
-        run: |
-          docker pull "$IMAGE";
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMAGE" | tee scheduler_predeploy_scan.txt;
-          docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMAGE" -o /workspace/scheduler_predeploy_scan.sarif
-      - name: Upload scheduler SARIF to Security tab
-        if: always()
-        uses: github/codeql-action/upload-sarif@aa578102511db1f4524ed59b8cc2bae4f6e88195 # v3.27.9
-        with:
-          sarif_file: scheduler_predeploy_scan.sarif
-          category: test-scheduler-predeploy
       - name: Deploy scheduler microservice
         shell: bash
         run: |
           oc tag pims-scheduler:$RELEASE_TAG pims-scheduler:$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
-      - name: Upload scan reports
-        if: failure()
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
-        with:
-          name: test-predeploy-scan-reports
-          path: |
-            frontend_predeploy_scan.txt
-            api_predeploy_scan.txt
-            proxy_predeploy_scan.txt
-            scheduler_predeploy_scan.txt
-          retention-days: 14
-      - name: Upload SARIF files as artifacts
-        if: always()
-        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
-        with:
-          name: test-predeploy-sarif-reports
-          path: |
-            frontend_predeploy_scan.sarif
-            api_predeploy_scan.sarif
-            proxy_predeploy_scan.sarif
-            scheduler_predeploy_scan.sarif
-          retention-days: 14
       - name: Deploy mayan
         shell: bash
         run: |
