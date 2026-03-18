@@ -1,5 +1,4 @@
 import { AxiosResponse } from 'axios';
-import { File } from 'buffer';
 import fileDownload from 'js-file-download';
 import { FaDownload } from 'react-icons/fa';
 import { toast } from 'react-toastify';
@@ -98,7 +97,7 @@ export const createFileDownload = async (
   }
 };
 
-export const showFile = async (response: AxiosResponse<File, any>, fileName?: string) => {
+export const showFile = async (response: AxiosResponse<any, any>, fileName?: string) => {
   const groups = /filename[^;=\n]*=((['"]).*?\2|[^;\n]*)/g.exec(
     response.headers['content-disposition'],
   );

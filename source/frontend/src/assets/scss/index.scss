@@ -1,5 +1,5 @@
-@import 'colors.scss';
-@import 'fonts.scss';
+@use './colors';
+@use './fonts.scss';
 
 html {
   font-size: 62.5%; // This sets 10px to 1rem. https://www.sitepoint.com/understanding-and-using-rem-units-in-css/

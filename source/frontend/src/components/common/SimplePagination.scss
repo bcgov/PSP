@@ -1,5 +1,5 @@
-@import '@/assets/scss/styles.scss';
-@import '@/assets/scss/colors.scss';
+@use '@/assets/scss/styles.scss';
+@use '@/assets/scss/colors.scss';
 
 .simple-pagination-container {
   display: flex;

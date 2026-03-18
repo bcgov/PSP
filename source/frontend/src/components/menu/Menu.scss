@@ -1,3 +1,5 @@
+@use "sass:color";
+
 .Menu-root {
   position: relative;
   border: 0.1rem;
@@ -48,7 +50,7 @@
       font-size: 1.2rem;
       text-align: left;
       &:hover {
-        background-color: lighten(grey, 45%);
+        background-color: color.adjust(grey, $lightness: -45%);
       }
       &:active {
         background-color: #ffc107 !important;

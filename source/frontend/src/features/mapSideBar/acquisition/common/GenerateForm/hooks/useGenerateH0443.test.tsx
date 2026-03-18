@@ -16,7 +16,7 @@ import { act } from '@/utils/test-utils';
 
 import { useGenerateH0443 } from './useGenerateH0443';
 
-const getPropertiesFn = vi.fn<ApiGen_Concepts_Property[], any[]>();
+const getPropertiesFn = vi.fn<(ids: any[]) => ApiGen_Concepts_Property[]>();
 const generateFn = vi.fn();
 const getAcquisitionFileFn = vi.fn();
 const getPersonConceptFn = vi.fn();

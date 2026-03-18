@@ -19,7 +19,7 @@ const mockDispositionSale = mockDispositionSaleApi(1, 1);
 const mockGetSaleApi = {
   error: undefined,
   response: undefined,
-  execute: vi.fn().mockResolvedValue(mockDispositionSale),
+  execute: vi.fn().mockImplementation(() => mockDispositionSale),
   loading: false,
 };
 
@@ -90,13 +90,11 @@ describe('Update Disposition Appraisal Container component', () => {
   });
 
   it('Loads props with the initial values when Sale has values', async () => {
-    mockGetSaleApi.execute.mockResolvedValue(mockDispositionSale);
     await setup();
     await waitForEffects();
 
     expect(mockGetSaleApi.execute).toHaveBeenCalled();
     const formModel = DispositionSaleFormModel.fromApi(mockDispositionSale);
-
     expect(viewProps?.initialValues).toStrictEqual(formModel);
   });
 
@@ -131,7 +129,6 @@ describe('Update Disposition Appraisal Container component', () => {
   });
 
   it('makes PUT request to update Appraisal and returns the response', async () => {
-    mockGetSaleApi.execute.mockResolvedValue(mockDispositionSale);
     mockPutSaleApi.execute.mockResolvedValue(mockDispositionSale);
 
     await setup({ props: { dispositionFileId: 1 } });
