@@ -70,6 +70,8 @@ const mockDocumentRelationshipApi = {
 vi.mock('@/features/documents/hooks/useDocumentRelationshipProvider');
 vi.mocked(useDocumentRelationshipProvider).mockReturnValue(mockDocumentRelationshipApi);
 
+const mockFile = new File(['(⌐□_□)'], 'test.png', { type: 'image/png' });
+
 describe('DocumentUploadContainer component', () => {
   let viewProps: IDocumentUploadFormProps | undefined;
   const View: React.FC<IDocumentUploadFormProps> = props => {
@@ -172,7 +174,7 @@ describe('DocumentUploadContainer component', () => {
         '',
         [],
       );
-      formDocument.file = new File(['(⌐□_□)'], 'test.png', { type: 'image/png' });
+      formDocument.setFile(mockFile);
 
       const batchRequest = new BatchUploadFormModel();
       batchRequest.documents.push(formDocument);
