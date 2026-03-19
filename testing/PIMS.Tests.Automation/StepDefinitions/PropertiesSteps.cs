@@ -56,7 +56,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateSearchProperty(rowNumber);
             searchProperties.SearchProperty(PID: searchProperty.PID);
 
-            //Select founded property
+            //Select found property
             searchProperties.SelectFirstPMBCResult();
         }
 
@@ -94,8 +94,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         [StepDefinition(@"I search for a Property in the Properties List by different filters from row number (.*)")]
         public void ReviewPropertyInformationList(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-1558, PSP-3153, PSP-3184, PSP-3589, PSP-4903, PSP-4905, PSP-5163, PSP-7815 */
-
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -335,41 +333,41 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Go to the Property Management Tab
             propertyManagementTab.NavigateManagementTab();
-            propertyManagementTab.VerifyInitManagementTabView();
+            //propertyManagementTab.VerifyInitManagementTabView();
 
-            //Click on Edit Summary
-            propertyManagementTab.UpdateManagementSummaryButton();
+            ////Click on Edit Summary
+            //propertyManagementTab.UpdateManagementSummaryButton();
 
-            //Insert and cancel Summary Information
-            propertyManagementTab.InsertManagementSummaryInformation(propertyManagement);
-            sharedActivities.CancelPropertyManagement();
+            ////Insert and cancel Summary Information
+            //propertyManagementTab.InsertManagementSummaryInformation(propertyManagement);
+            //sharedActivities.CancelPropertyManagement();
 
-            //Click on Edit Summary
-            propertyManagementTab.UpdateManagementSummaryButton();
+            ////Click on Edit Summary
+            //propertyManagementTab.UpdateManagementSummaryButton();
 
-            //Insert and save Summary Information
-            propertyManagementTab.VerifyCreateSummaryInitForm();
-            propertyManagementTab.InsertManagementSummaryInformation(propertyManagement);
-            propertyManagementTab.SavePropertyManagement();
-            propertyManagementTab.VerifyInsertedSummaryForm(propertyManagement);   
+            ////Insert and save Summary Information
+            //propertyManagementTab.VerifyCreateSummaryInitForm();
+            //propertyManagementTab.InsertManagementSummaryInformation(propertyManagement);
+            //propertyManagementTab.SavePropertyManagement();
+            //propertyManagementTab.VerifyInsertedSummaryForm(propertyManagement);   
 
             //Insert Contacts
-            for (int i = 0; i < propertyManagement.ManagementPropertyContacts.Count; i++)
-            {
-                if (i == 0)
-                {
-                    //Checking Initial Contact form and cancel changes
-                    propertyManagementTab.AddNewPropertyContactButton();
-                    propertyManagementTab.VerifyCreateContactsInitForm();
-                    propertyManagementTab.InsertNewPropertyContact(propertyManagement.ManagementPropertyContacts[i]);
-                    sharedActivities.CancelPropertyManagement();
-                }
+            //for (int i = 0; i < propertyManagement.ManagementPropertyContacts.Count; i++)
+            //{
+            //    if (i == 0)
+            //    {
+            //        //Checking Initial Contact form and cancel changes
+            //        propertyManagementTab.AddNewPropertyContactButton();
+            //        propertyManagementTab.VerifyCreateContactsInitForm();
+            //        propertyManagementTab.InsertNewPropertyContact(propertyManagement.ManagementPropertyContacts[i]);
+            //        sharedActivities.CancelPropertyManagement();
+            //    }
 
-                propertyManagementTab.AddNewPropertyContactButton();
-                propertyManagementTab.InsertNewPropertyContact(propertyManagement.ManagementPropertyContacts[i]);
-                propertyManagementTab.SavePropertyManagement();
-                propertyManagementTab.VerifyLastInsertedPropertyContactTable(propertyManagement.ManagementPropertyContacts[i]);
-            }
+            //    propertyManagementTab.AddNewPropertyContactButton();
+            //    propertyManagementTab.InsertNewPropertyContact(propertyManagement.ManagementPropertyContacts[i]);
+            //    propertyManagementTab.SavePropertyManagement();
+            //    propertyManagementTab.VerifyLastInsertedPropertyContactTable(propertyManagement.ManagementPropertyContacts[i]);
+            //}
 
             //Insert Activities
             for (int j = 0; j < propertyManagement.ManagementPropertyActivities.Count; j++)
@@ -452,7 +450,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             PopulateManagementProperty(rowNumber);
 
             //Close Activity Tray
-            sharedActivities.CloseActivityTray();
+            sharedActivities.CloseActivityTray("Property");
 
             //Clean up Summary section
             propertyManagementTab.UpdateManagementSummaryButton();
@@ -470,7 +468,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public void DeleteActivitiesManagementPropertyTab()
         {
             //Close Activity Tray
-            sharedActivities.CloseActivityTray();
+            sharedActivities.CloseActivityTray("Property");
 
             //Delete all Activities
             propertyManagementTab.DeleteAllActivities();

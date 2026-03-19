@@ -362,10 +362,17 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentTableResults1stDeleteBttn = By.CssSelector("div[data-testid='documentsTable'] div[class='tbody'] button[data-testid='document-delete-button-0']");
 
         //Documents Tab Pagination
-        private readonly By documentPagination = By.XPath("//div[@class='row']/div[4]/ul[@class='pagination']");
-        private readonly By documentMenuPagination = By.XPath("//div[@class='row']/div[3]/div[@class='Menu-root']");
-        private readonly By documentPaginationPrevPageLink = By.CssSelector("ul[class='pagination'] a[aria-label='Previous page']");
-        private readonly By documentPaginationNextPageLink = By.CssSelector("ul[class='pagination'] a[aria-label='Next page']");
+        private readonly By documentPagination = By.XPath("//div[@data-testid='main-document-list']/div/div[@data-testid='documentsTable']/following-sibling::div/div/ul[@class='pagination']");
+        private readonly By documentMenuPagination = By.XPath("//div[@data-testid='main-document-list']/div/div[@data-testid='documentsTable']/following-sibling::div/div/div[@class='Menu-root']");
+        private readonly By documentPaginationPrevPageLink = By.CssSelector("div[data-testid='main-document-list'] ul[class='pagination'] a[aria-label='Previous page']");
+        private readonly By documentPaginationNextPageLink = By.CssSelector("div[data-testid='main-document-list'] ul[class='pagination'] a[aria-label='Next page']");
+
+        private readonly By searchTableEntriesSpan = By.CssSelector("div[data-testid='main-document-list'] input[data-testid='input-page-size']");
+        private readonly By searchTablePagination5 = By.CssSelector("div[data-testid='main-document-list'] div[title='menu-item-5']");
+        private readonly By searchTablePagination10 = By.CssSelector("div[data-testid='main-document-list'] div[title='menu-item-10']");
+        private readonly By searchTablePagination20 = By.CssSelector("div[data-testid='main-document-list'] div[title='menu-item-20']");
+        private readonly By searchTablePagination50 = By.CssSelector("div[data-testid='main-document-list'] div[title='menu-item-50']");
+        private readonly By searchTablePagination100 = By.CssSelector("div[data-testid='main-document-list'] div[title='menu-item-100']");
 
         //Document Preview Elements
         private readonly By documentPreiewWindow = By.CssSelector("iframe");
@@ -1493,6 +1500,38 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documentUploadInstructionsLabel);
             AssertTrueIsDisplayed(documentUploadDragDropArea);
             WaitUntilExist(documentUploadDocInput);
+        }
+
+        public void ChoosePaginationOption(int pagination)
+        {
+            Wait();
+
+            WaitUntilVisible(searchTableEntriesSpan);
+            FocusAndClick(searchTableEntriesSpan);
+
+            switch (pagination)
+            {
+                case 5:
+                    //WaitUntilClickable(searchTablePagination5);
+                    FocusAndClick(searchTablePagination5);
+                    break;
+                case 10:
+                    //WaitUntilVisible(searchTablePagination10);
+                    FocusAndClick(searchTablePagination10);
+                    break;
+                case 20:
+                    //WaitUntilClickable(searchTablePagination20);
+                    FocusAndClick(searchTablePagination20);
+                    break;
+                case 50:
+                    //WaitUntilClickable(searchTablePagination50);
+                    FocusAndClick(searchTablePagination50);
+                    break;
+                case 100:
+                    //WaitUntilClickable(searchTablePagination100);
+                    FocusAndClick(searchTablePagination100);
+                    break;
+            }
         }
 
         private void VerifyGeneralUpdateDocumentForm()

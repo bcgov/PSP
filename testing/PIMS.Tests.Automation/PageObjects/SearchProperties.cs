@@ -68,27 +68,27 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Properties List View Elements
         private readonly By searchPropertyListViewTitle = By.XPath("//h3[contains(text(),'PIMS Property Search')]");
-        private readonly By searchPropertyViewByLabel = By.XPath("//div/strong[contains(text(),'Search by')]");
+        private readonly By searchPropertyViewByLabel = By.XPath("//label[contains(text(),'Search By')]");
 
-        private readonly By searchPropertyListViewOwnershipLabel = By.XPath("//label(text()='Ownership:')");
+        private readonly By searchPropertyListViewOwnershipLabel = By.XPath("//label[text()='Ownership']");
         private readonly By searchPropertyListViewOwnershipInput = By.Id("ownership-selector");
         private readonly By searchPropertyListOwnershipOptions = By.CssSelector("div[id='ownership-selector'] div[class='optionListContainer displayBlock']");
         private readonly By searchPropertyOwnershipFirstOption = By.CssSelector("div[id='ownership-selector'] div[class='optionListContainer displayBlock'] ul[class='optionContainer'] li:nth-child(1)");
 
-        private readonly By searchPropertyListViewTenureCleanupLabel = By.XPath("//label(text()='Tenure Cleanup:')");
+        private readonly By searchPropertyListViewTenureCleanupLabel = By.XPath("//label[text()='Tenure Cleanup']");
         private readonly By searchPropertyListViewTenureCleanupInput = By.Id("tenure-cleanup-selector_input");
 
         private readonly By searchPropertyListHeaderPid = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'PID')]");
         private readonly By searchPropertyListHeaderPin = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'PIN')]");
-        private readonly By searchPropertyListHeaderHistoricalFile = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Historical File')]");
-        private readonly By searchPropertyListHeaderAddress = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address')]");
+        private readonly By searchPropertyListHeaderHistoricalFile = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Historical file')]");
+        private readonly By searchPropertyListHeaderAddress = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic address')]");
         private readonly By searchPropertyListHeaderLocation = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Location')]");
         private readonly By searchPropertyListLocationSortBttn = By.CssSelector("div[data-testid='sort-column-Location']");
-        private readonly By searchPropertyListHeaderLotSize = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Lot Size')]");
-        private readonly By searchPropertyListLotSizeSortBttn = By.CssSelector("div[data-testid='sort-column-Lot Size (in ha)']");
+        private readonly By searchPropertyListHeaderLotSize = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Lot size')]");
+        private readonly By searchPropertyListLotSizeSortBttn = By.XPath("//div[contains(text(),'Lot size')]/div");
         private readonly By searchPropertyListHeaderOwnership = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Ownership')]");
         private readonly By searchPropertyListOwnershipSortBttn = By.CssSelector("div[data-testid='sort-column-Ownership']");
-        private readonly By searchPropertyListHeaderTenureCleanup = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Tenure Cleanup')]");
+        private readonly By searchPropertyListHeaderTenureCleanup = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Tenure cleanup')]");
         private readonly By searchPropertyListContent = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']");
         private readonly By searchPropertyListContent1stProp = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child");
         private readonly By searchPropertyListContent1stPID = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(1)");
