@@ -4,12 +4,13 @@ import truncate from 'lodash/truncate';
 import { useEffect, useMemo } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaCheck, FaTrash } from 'react-icons/fa';
-import { TbReplace, TbReplaceOff } from 'react-icons/tb';
+import { TbRepeat, TbRepeatOff } from 'react-icons/tb';
 import styled, { useTheme } from 'styled-components';
 
 import { StyledRemoveIconButton } from '@/components/common/buttons';
 import { Select, SelectOption } from '@/components/common/form';
 import { SectionField } from '@/components/common/Section/SectionField';
+import TooltipWrapper from '@/components/common/TooltipWrapper';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
 import { exists } from '@/utils';
@@ -108,32 +109,36 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
           <span className="ml-4">{truncate(document.file.name, { length: 50 })}</span>
           <FaCheck className="ml-2" size="1.6rem" color={theme.css.uploadFileCheckColor} />
           {!replacingFile && (
-            <TbReplace
-              className="ml-2"
-              style={{ cursor: 'pointer' }}
-              size="1.6rem"
-              color={theme.css.pimsGrey80}
-              data-testid={`enable-replace-btn-${index}`}
-              onClick={e => {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleReplacingFile();
-              }}
-            />
+            <TooltipWrapper tooltip="Replace document" tooltipId={'replace-doc-' + index}>
+              <TbRepeat
+                className="ml-2"
+                style={{ cursor: 'pointer' }}
+                size="1.6rem"
+                color={theme.css.pimsGrey80}
+                data-testid={`enable-replace-btn-${index}`}
+                onClick={e => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleReplacingFile();
+                }}
+              />
+            </TooltipWrapper>
           )}
           {replacingFile && (
-            <TbReplaceOff
-              className="ml-2"
-              style={{ cursor: 'pointer' }}
-              size="1.6rem"
-              color={theme.css.pimsRed80}
-              data-testid={`cancel-replace-btn-${index}`}
-              onClick={e => {
-                e.preventDefault();
-                e.stopPropagation();
-                toggleReplacingFile();
-              }}
-            />
+            <TooltipWrapper tooltip="Cancel replace" tooltipId={'cancel-replace-doc-' + index}>
+              <TbRepeatOff
+                className="ml-2"
+                style={{ cursor: 'pointer' }}
+                size="1.6rem"
+                color={theme.css.pimsRed80}
+                data-testid={`cancel-replace-btn-${index}`}
+                onClick={e => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  toggleReplacingFile();
+                }}
+              />
+            </TooltipWrapper>
           )}
         </Col>
       </Row>
