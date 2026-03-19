@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -111,6 +112,13 @@ namespace Pims.Api.Areas.Reports.Controllers
             }
 
             var report = _mapper.Map<PageModel<Models.Property.PropertyModel>>(page);
+
+            // Load the tenure cleanup values for each property to include in the report export.
+            foreach (var property in report.Items)
+            {
+                var tenureCleanups = _propertyService.GetTenureCleanupsForPropertyId(property.Id);
+                property.TenureCleanupValues = string.Join("|", tenureCleanups.Select(tc => tc.TenureCleanupTypeCodeNavigation.Description));
+            }
 
             return acceptHeader.ToString() switch
             {
