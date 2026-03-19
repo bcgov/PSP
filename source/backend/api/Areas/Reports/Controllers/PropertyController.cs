@@ -89,7 +89,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         [SwaggerOperation(Tags = new[] { "property", "report" })]
         public IActionResult ExportProperties([FromBody] Property.Models.Search.PropertyFilterModel filter, bool all = false)
         {
-            filter.ThrowBadRequestIfNull($"The request must include a filter.");
+            filter.ThrowBadRequestIfNull("The request must include a filter.");
             if (!filter.IsValid())
             {
                 throw new BadRequestException("Property filter must contain valid values.");
@@ -114,7 +114,8 @@ namespace Pims.Api.Areas.Reports.Controllers
             var report = _mapper.Map<PageModel<Models.Property.PropertyModel>>(page);
 
             // Load the tenure cleanup values for each property to include in the report export.
-            foreach (var property in report.Items)
+            var reportData = report.Items.ToList();
+            foreach (var property in reportData)
             {
                 var tenureCleanups = _propertyService.GetTenureCleanupsForPropertyId(property.Id);
                 property.TenureCleanupValues = string.Join("|", tenureCleanups.Select(tc => tc.TenureCleanupTypeCodeNavigation.Description));
@@ -122,8 +123,8 @@ namespace Pims.Api.Areas.Reports.Controllers
 
             return acceptHeader.ToString() switch
             {
-                ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv(report.Items),
-                _ => ReportHelper.GenerateExcel(report.Items, "PIMS")
+                ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv(reportData),
+                _ => ReportHelper.GenerateExcel(reportData, "PIMS")
             };
         }
 

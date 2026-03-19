@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Mvc;
@@ -8,11 +9,12 @@ using Moq;
 using Pims.Api.Areas.Property.Models.Search;
 using Pims.Api.Areas.Reports.Controllers;
 using Pims.Api.Helpers.Constants;
+using Pims.Api.Services;
 using Pims.Core.Api.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -53,6 +55,7 @@ namespace Pims.Api.Test.Controllers.Reports
         };
 
         private Mock<IPropertyRepository> _repository;
+        private Mock<IPropertyService> _service;
         private PropertyController _controller;
         private IMapper _mapper;
         private TestHelper _helper;
@@ -70,6 +73,7 @@ namespace Pims.Api.Test.Controllers.Reports
             this._webHost = this._helper.GetService<Mock<IWebHostEnvironment>>();
             this._headers = this._helper.GetService<Mock<Microsoft.AspNetCore.Http.IHeaderDictionary>>();
             this._repository = this._helper.GetService<Mock<IPropertyRepository>>();
+            this._service = this._helper.GetService<Mock<IPropertyService>>();
         }
 
         #region Tests
@@ -88,6 +92,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var page = new Paged<Entity.PimsPropertyVw>(properties, filter.Page, filter.Quantity);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            this._service.Setup(s => s.GetTenureCleanupsForPropertyId(It.IsAny<long>())).Returns(new List<Entity.PimsPropTenureCleanup>());
 
             // Act
             var result = this._controller.ExportProperties(filter);
@@ -113,6 +118,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var page = new Paged<Entity.PimsPropertyVw>(properties);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            this._service.Setup(s => s.GetTenureCleanupsForPropertyId(It.IsAny<long>())).Returns(new List<Entity.PimsPropTenureCleanup>());
 
             // Act
             var result = this._controller.ExportProperties();
@@ -138,6 +144,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var page = new Paged<Entity.PimsPropertyVw>(properties, filter.Page, filter.Quantity);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            this._service.Setup(s => s.GetTenureCleanupsForPropertyId(It.IsAny<long>())).Returns(new List<Entity.PimsPropTenureCleanup>());
 
             // Act
             var result = this._controller.ExportProperties(filter);
@@ -164,6 +171,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var page = new Paged<Entity.PimsPropertyVw>(properties);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            this._service.Setup(s => s.GetTenureCleanupsForPropertyId(It.IsAny<long>())).Returns(new List<Entity.PimsPropTenureCleanup>());
 
             // Act
             var result = this._controller.ExportProperties();
@@ -190,6 +198,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var page = new Paged<Entity.PimsPropertyVw>(properties, filter.Page, filter.Quantity);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            this._service.Setup(s => s.GetTenureCleanupsForPropertyId(It.IsAny<long>())).Returns(new List<Entity.PimsPropTenureCleanup>());
 
             // Act
             var result = this._controller.ExportProperties(filter);
@@ -216,6 +225,7 @@ namespace Pims.Api.Test.Controllers.Reports
 
             var page = new Paged<Entity.PimsPropertyVw>(properties);
             this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            this._service.Setup(s => s.GetTenureCleanupsForPropertyId(It.IsAny<long>())).Returns(new List<Entity.PimsPropTenureCleanup>());
 
             // Act
             var result = this._controller.ExportProperties();
@@ -226,6 +236,60 @@ namespace Pims.Api.Test.Controllers.Reports
             Assert.NotNull(actionResult.FileDownloadName);
             Assert.True(actionResult.FileStream.Length > 0);
             this._repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
+        }
+
+        [Fact]
+        public void ExportProperties_Excel_TenureCleanup_Success()
+        {
+            // Arrange
+            this._headers.Setup(m => m["Accept"]).Returns(ContentTypes.CONTENTTYPEEXCEL);
+
+            var properties = new[] { EntityHelper.CreatePropertyView(1) };
+
+            var page = new Paged<Entity.PimsPropertyVw>(properties, 1, 10);
+            this._repository.Setup(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>())).Returns(page);
+            this._service.Setup(s => s.GetTenureCleanupsForPropertyId(It.IsAny<long>())).Returns(
+                new List<Entity.PimsPropTenureCleanup>()
+                {
+                    new Entity.PimsPropTenureCleanup() {
+                        PropTenureCleanupId = 1,
+                        PropertyId = 1,
+                        TenureCleanupTypeCode = "FORM12",
+                        TenureCleanupTypeCodeNavigation = new Entity.PimsTenureCleanupType() { TenureCleanupTypeCode = "FORM12", Description = "Form 12" }
+                    },
+                    new Entity.PimsPropTenureCleanup() {
+                        PropTenureCleanupId = 2,
+                        PropertyId = 1,
+                        TenureCleanupTypeCode = "SECTION42",
+                        TenureCleanupTypeCodeNavigation = new Entity.PimsTenureCleanupType() { TenureCleanupTypeCode = "SECTION42", Description = "Section 42" }
+                    },
+                });
+
+            // Act
+            var result = this._controller.ExportProperties(new PropertyFilterModel() { Page = 1, Quantity = 10 });
+
+            // Assert
+            var actionResult = Assert.IsType<FileStreamResult>(result);
+            Assert.Equal(ContentTypes.CONTENTTYPEEXCELX, actionResult.ContentType);
+            Assert.NotNull(actionResult.FileDownloadName);
+            Assert.True(actionResult.FileStream.Length > 0);
+            this._repository.Verify(m => m.GetPage(It.IsAny<Entity.Models.PropertyFilter>()), Times.Once());
+
+            // Assert - verify the Excel file contains the tenure cleanup column with the expected pipe-joined values
+            actionResult.FileStream.Position = 0;
+            using var workbook = new ClosedXML.Excel.XLWorkbook(actionResult.FileStream);
+            var worksheet = workbook.Worksheets.First();
+
+            Assert.NotNull(worksheet);
+            Assert.True(worksheet.RowCount() > 1); // Assert that there is at least one row of data in addition to the header row
+
+            var headerRow = worksheet.Row(1);
+            var tenureCleanupColumn = headerRow.Cells()
+                .FirstOrDefault(c => c.GetString().Equals("Tenure Cleanup", StringComparison.OrdinalIgnoreCase))
+                ?? throw new Exception("Tenure Cleanup column not found in the exported Excel file.");
+
+            var cellValue = worksheet.Row(2).Cell(tenureCleanupColumn.Address.ColumnNumber).GetString();
+            Assert.Equal("Form 12|Section 42", cellValue);
         }
 
         /// <summary>
