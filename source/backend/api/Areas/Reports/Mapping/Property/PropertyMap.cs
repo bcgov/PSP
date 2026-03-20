@@ -10,6 +10,7 @@ namespace Pims.Api.Areas.Reports.Mapping.Property
         public void Register(TypeAdapterConfig config)
         {
             config.NewConfig<Entity.PimsProperty, Model.PropertyModel>()
+                .Map(dest => dest.Id, src => src.PropertyId)
                 .Map(dest => dest.PropertyTypeId, src => src.PropertyTypeCode)
                 .Map(dest => dest.Address, src => src.Address)
                 .Map(dest => dest.Municipality, src => src.Address.MunicipalityName)
@@ -23,6 +24,7 @@ namespace Pims.Api.Areas.Reports.Mapping.Property
                 .Map(dest => dest.LandLegalDescription, src => src.LandLegalDescription);
 
             config.NewConfig<Entity.PimsPropertyVw, Model.PropertyModel>()
+                .Map(dest => dest.Id, src => src.PropertyId)
                 .Map(dest => dest.PropertyTypeId, src => src.PropertyTypeCode)
                 .Map(dest => dest.Address, src => $"{src.StreetAddress1} {src.StreetAddress2} {src.StreetAddress3}")
                 .Map(dest => dest.Municipality, src => src.MunicipalityName)

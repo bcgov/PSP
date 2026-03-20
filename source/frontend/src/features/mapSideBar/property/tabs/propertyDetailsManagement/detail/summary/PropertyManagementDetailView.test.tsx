@@ -1,6 +1,8 @@
 import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants';
+import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
+import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
 import {
   getMockApiPropertyManagement,
@@ -8,14 +10,20 @@ import {
 } from '@/mocks/propertyManagement.mock';
 import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, cleanup, render, RenderOptions, userEvent, waitForEffects } from '@/utils/test-utils';
+import {
+  act,
+  cleanup,
+  getMockRepositoryObj,
+  render,
+  RenderOptions,
+  userEvent,
+  waitForEffects,
+} from '@/utils/test-utils';
 
 import {
   IPropertyManagementDetailViewProps,
   PropertyManagementDetailView,
 } from './PropertyManagementDetailView';
-import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
-import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -23,21 +31,8 @@ const storeState = {
 
 const history = createMemoryHistory();
 
-const mockGetPersonApi = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn(),
-  loading: false,
-  status: 200,
-};
-
-const mockGetOrganizationApi = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn(),
-  loading: false,
-  status: 200,
-};
+const mockGetPersonApi = getMockRepositoryObj();
+const mockGetOrganizationApi = getMockRepositoryObj();
 
 vi.mock('@/features/contacts/repositories/useOrganizationRepository');
 vi.mocked(useOrganizationRepository).mockImplementation(() => ({
@@ -69,6 +64,8 @@ describe('PropertyManagementDetailView component', () => {
         useMockAuthentication: true,
       },
     );
+
+    await waitForEffects();
 
     return {
       ...utils,
@@ -135,7 +132,6 @@ describe('PropertyManagementDetailView component', () => {
     const { getByText } = await setup({
       props: { propertyManagement: apiManagement, isLoading: false },
     });
-    await waitForEffects();
 
     expect(mockGetPersonApi.execute).toHaveBeenCalledTimes(1);
     expect(getByText(/Aman Monga/)).toBeVisible();
@@ -230,7 +226,6 @@ describe('PropertyManagementDetailView component', () => {
     const { getByText } = await setup({
       props: { propertyManagement: apiManagement, isLoading: false },
     });
-    await waitForEffects();
 
     expect(mockGetOrganizationApi.execute).toHaveBeenCalledTimes(1);
     expect(getByText(/TEST COMANY INC./)).toBeVisible();

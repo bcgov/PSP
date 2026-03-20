@@ -1,10 +1,19 @@
 using System.ComponentModel;
+using System.Runtime.Serialization;
 
 namespace Pims.Api.Areas.Reports.Models.Property
 {
     public class PropertyModel
     {
         #region Properties
+
+        /// <summary>
+        /// get/set - The primary key to identify the property.
+        /// This property is not included in the exports.
+        /// </summary>
+        [CsvHelper.Configuration.Attributes.Ignore]
+        [IgnoreDataMember]
+        public long Id { get; set; }
 
         /// <summary>
         /// get/set - The type of property.
@@ -63,6 +72,13 @@ namespace Pims.Api.Areas.Reports.Models.Property
         [DisplayName("Legal Description")]
         [CsvHelper.Configuration.Attributes.Name("Legal Description")]
         public string LandLegalDescription { get; set; }
+
+        /// <summary>
+        /// get/set - The property tenure cleanup values.
+        /// </summary>
+        [DisplayName("Tenure Cleanup")]
+        [CsvHelper.Configuration.Attributes.Name("Tenure Cleanup")]
+        public string TenureCleanupValues { get; set; }
 
         #endregion
         #endregion
