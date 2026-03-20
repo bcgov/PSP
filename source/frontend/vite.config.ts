@@ -1,3 +1,4 @@
+/// <reference types="vitest/config" />
 /// <reference types="vitest" />
 import react from '@vitejs/plugin-react';
 import path from 'path';
@@ -5,7 +6,6 @@ import { defineConfig } from 'vite';
 import viteCompression from 'vite-plugin-compression';
 import eslint from 'vite-plugin-eslint';
 import svgr from 'vite-plugin-svgr';
-import viteTsconfigPaths from 'vite-tsconfig-paths';
 
 import packageJson from './package.json';
 
@@ -43,12 +43,6 @@ export default defineConfig({
     globals: true,
     testTimeout: 10000,
     reporters: ['default', ['vitest-sonar-reporter', { outputFile: 'test-report.xml' }]],
-    poolOptions: {
-      vmThreads: {
-        memoryLimit: '500M',
-        useAtomics: true,
-      },
-    },
     deps: {
       optimizer: {
         web: {
@@ -57,9 +51,12 @@ export default defineConfig({
       },
     },
     maxConcurrency: 32,
+    pool: 'threads',
+    vmMemoryLimit: '500M',
   },
   resolve: {
     alias: [{ find: '@', replacement: path.resolve(__dirname, 'src') }],
+    tsconfigPaths: true,
   },
   server: {
     open: true,
@@ -111,10 +108,7 @@ export default defineConfig({
   plugins: [
     react(),
     eslint(),
-    viteTsconfigPaths(),
-    svgr({
-      include: '**/*.svg?react',
-    }),
+    svgr(),
     viteCompression({
       filter: /\.(js|mjs|css|html)$/i,
     }),
@@ -122,4 +116,5 @@ export default defineConfig({
   define: {
     'import.meta.env.VITE_PACKAGE_VERSION': JSON.stringify(packageJson.version),
   },
+  legacy: { inconsistentCjsInterop: true },
 });

@@ -14,7 +14,7 @@ import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generated/ApiGen_CodeTypes_HistoricalFileNumberTypes';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
-import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
+import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   cleanup,
@@ -23,6 +23,7 @@ import {
   RenderOptions,
   userEvent,
   waitFor,
+  waitForEffects,
 } from '@/utils/test-utils';
 
 import { IPropertyFilter } from '../filter/IPropertyFilter';
@@ -35,6 +36,7 @@ vi.mock('@/hooks/pims-api/useApiGeocoder');
 vi.mock('@/hooks/pims-api/useApiProperties');
 
 const mockApiGetPropertiesPagedApi = vi.fn();
+
 vi.mocked(useApiProperties).mockReturnValue({
   getPropertiesViewPagedApi: mockApiGetPropertiesPagedApi as (
     params: IPropertyFilter | null,
@@ -62,7 +64,7 @@ vi.mocked(useHistoricalNumberRepository).mockReturnValue({
   updatePropertyHistoricalNumbers: {
     error: null,
     response: [],
-    execute: vi.fn().mockResolvedValue([]),
+    execute: vi.fn().mockImplementation(() => []),
     loading: false,
     status: 200,
   },
@@ -93,15 +95,18 @@ const setup = (renderOptions: RenderOptions = {}) => {
 const setupMockApi = (properties?: ApiGen_Concepts_PropertyView[]) => {
   const mockProperties = properties ?? [];
   const len = mockProperties.length;
-  mockApiGetPropertiesPagedApi.mockResolvedValue({
-    data: {
-      quantity: len,
-      total: len,
-      page: 1,
-      pageIndex: 0,
-      items: mockProperties,
-    },
-  } as any);
+  mockApiGetPropertiesPagedApi
+    .mockImplementation(() => {
+      return {
+        data: {
+          quantity: len,
+          total: len,
+          page: 1,
+          pageIndex: 0,
+          items: mockProperties,
+        },
+      };
+    });
 
   for (let i = 0; i < mockProperties.length; i++) {
     mockGetPropertyHistoricalNumbersExecute.mockResolvedValueOnce([
@@ -316,6 +321,7 @@ describe('Property list view', () => {
       component: { getByTestId },
       findSpinner,
     } = setup({});
+    await waitForEffects();
 
     // wait for table to finish loading
     await waitFor(() => expect(findSpinner()).not.toBeInTheDocument());

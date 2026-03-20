@@ -1,5 +1,6 @@
 @import '@/assets/scss/styles.scss';
 @import '@/assets/scss/colors.scss';
+
 .table.no-zebra-rows > .tbody > .tr-wrapper {
   &:nth-child(even) {
     background-color: $highlight-background-color;

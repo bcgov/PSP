@@ -383,7 +383,11 @@ exports[`NoteContainer component > renders as expected 1`] = `
   <div
     aria-hidden="true"
   >
-    <div
+    <section
+      aria-atomic="false"
+      aria-label="Notifications Alt+T"
+      aria-live="polite"
+      aria-relevant="additions text"
       class="Toastify"
     />
     <div />

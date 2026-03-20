@@ -6,7 +6,11 @@ exports[`ResearchHeader component > renders as expected when provided no researc
 
 }
 
-<div
+<section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   @media only screen and (max-width:1199px) {

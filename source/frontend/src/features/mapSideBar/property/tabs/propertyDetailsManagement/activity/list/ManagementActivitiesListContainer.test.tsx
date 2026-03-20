@@ -5,7 +5,7 @@ import {
   getMockManagementActivityList,
   getMockManagementActivityNotStarted,
 } from '@/mocks/managementActivity.mock';
-import { act, render, RenderOptions, screen, userEvent, waitFor } from '@/utils/test-utils';
+import { act, render, renderAsync, RenderOptions, screen, userEvent, waitFor, waitForEffects } from '@/utils/test-utils';
 
 import PropertyManagementActivitiesListContainer, {
   IPropertyManagementActivitiesListContainerProps,
@@ -49,7 +49,7 @@ describe('ManagementActivitiesListContainer component', () => {
       props?: Partial<IPropertyManagementActivitiesListContainerProps>;
     } = {},
   ) => {
-    const component = render(
+    const component = await renderAsync(
       <PropertyManagementActivitiesListContainer
         propertyId={renderOptions?.props?.propertyId ?? 1}
         View={TestView}
@@ -74,10 +74,9 @@ describe('ManagementActivitiesListContainer component', () => {
   it('renders as expected', async () => {
     mockGetApi.execute.mockResolvedValue(getMockManagementActivityList());
     const { asFragment } = await setup({});
-    await act(async () => {});
-    const fragment = await waitFor(() => asFragment());
+    await waitForEffects();
 
-    expect(fragment).toMatchSnapshot();
+    expect(asFragment()).toMatchSnapshot();
     expect(mockGetApi.execute).toHaveBeenCalledWith(1);
   });
 

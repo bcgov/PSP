@@ -6,8 +6,6 @@ import { Claims } from '@/constants';
 import { LeaseContextProvider } from '@/features/leases/context/LeaseContext';
 import { LeaseFormModel } from '@/features/leases/models';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
-import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
-import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { fromContactSummary, IContactSearchResult } from '@/interfaces';
 import {
   getEmptyPerson,
@@ -25,7 +23,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   createAxiosError,
-  render,
+  renderAsync,
   RenderOptions,
   screen,
   waitFor,
@@ -53,7 +51,7 @@ const storeState = {
 };
 
 const getLeaseTenantTypesObj = {
-  execute: vi.fn().mockResolvedValue([]),
+  execute: vi.fn().mockImplementation(() => []),
   loading: false,
   error: undefined,
   response: [],
@@ -63,27 +61,43 @@ vi.mocked(useApiContacts).mockReturnValue({
   getPersonConcept: getPersonConcept,
 } as unknown as ReturnType<typeof useApiContacts>);
 
-const mockLeaseStakeholderApi = {
-  getLeaseStakeholders: {
-    execute: vi.fn(),
-    loading: false,
-    error: undefined,
-    response: [],
-    status: 200,
-  },
-  updateLeaseStakeholders: {
-    execute: vi.fn(),
-    loading: false,
-    error: undefined,
-    response: [],
-    status: 200,
-  },
+const mockGetLeaseStakeholdersApi = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn().mockImplementation(() => defaultApiLease().stakeholders),
+  loading: false,
 };
-vi.mocked(useLeaseStakeholderRepository).mockReturnValue(mockLeaseStakeholderApi);
 
-vi.mocked(useLeaseRepository).mockReturnValue({
-  getLeaseStakeholderTypes: getLeaseTenantTypesObj,
-} as unknown as ReturnType<typeof useLeaseRepository>);
+const mockPutLeaseStakeholdersApi = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn(),
+  loading: false,
+};
+
+vi.mock('@/hooks/repositories/useLeaseStakeholderRepository', () => ({
+  useLeaseStakeholderRepository: () => {
+    return {
+      getLeaseStakeholders: mockGetLeaseStakeholdersApi,
+      updateLeaseStakeholders: mockPutLeaseStakeholdersApi,
+    };
+  },
+}));
+
+const mockGetLeaseStakeholdersTypesApi = {
+  error: undefined,
+  response: undefined,
+  execute: vi.fn().mockImplementation(() => []),
+  loading: false,
+};
+
+vi.mock('@/hooks/repositories/useLeaseRepository', () => ({
+  useLeaseRepository: () => {
+    return {
+      getLeaseStakeholderTypes: mockGetLeaseStakeholdersTypesApi,
+    };
+  },
+}));
 
 describe('AddLeaseTenantContainer component', () => {
   let viewProps: IAddLeaseStakeholderFormProps & IPrimaryContactWarningModalProps;
@@ -94,7 +108,7 @@ describe('AddLeaseTenantContainer component', () => {
   };
 
   // render component under test
-  const setup = (
+  const setup = async (
     renderOptions: RenderOptions & {
       props?: {
         lease?: ApiGen_Concepts_Lease;
@@ -103,7 +117,7 @@ describe('AddLeaseTenantContainer component', () => {
     } = {},
   ) => {
     const formikRef = createRef<FormikProps<LeaseFormModel>>();
-    const utils = render(
+    const utils = renderAsync(
       <LeaseContextProvider
         initialLease={renderOptions?.props?.lease ?? { ...defaultApiLease(), id: 1 }}
       >
@@ -129,15 +143,11 @@ describe('AddLeaseTenantContainer component', () => {
 
   beforeEach(() => {
     vi.clearAllMocks();
-    mockLeaseStakeholderApi.getLeaseStakeholders.execute.mockResolvedValue(
-      defaultApiLease().stakeholders,
-    );
-    mockLeaseStakeholderApi.updateLeaseStakeholders.execute.mockResolvedValue([]);
   });
 
   it('renders as expected', async () => {
-    const { asFragment } = setup();
-    await waitForEffects();
+    const { asFragment } = await setup();
+    waitForEffects();
 
     expect(asFragment()).toMatchSnapshot();
   });
@@ -271,8 +281,8 @@ describe('AddLeaseTenantContainer component', () => {
       viewProps.saveCallback && viewProps.saveCallback();
     });
 
-    expect(mockLeaseStakeholderApi.updateLeaseStakeholders.execute).toHaveBeenCalledTimes(1);
-    expect(mockLeaseStakeholderApi.updateLeaseStakeholders.execute).toHaveBeenCalledWith(
+    expect(mockPutLeaseStakeholdersApi.execute).toHaveBeenCalledTimes(1);
+    expect(mockPutLeaseStakeholdersApi.execute).toHaveBeenCalledWith(
       1, // lease Id
       [
         expect.objectContaining<Partial<ApiGen_Concepts_LeaseStakeholder>>({
@@ -295,8 +305,8 @@ describe('AddLeaseTenantContainer component', () => {
       });
     });
 
-    expect(mockLeaseStakeholderApi.updateLeaseStakeholders.execute).toHaveBeenCalledTimes(1);
-    expect(mockLeaseStakeholderApi.updateLeaseStakeholders.execute).toHaveBeenCalledWith(
+    expect(mockPutLeaseStakeholdersApi.execute).toHaveBeenCalledTimes(1);
+    expect(mockPutLeaseStakeholdersApi.execute).toHaveBeenCalledWith(
       1, // lease Id
       [
         expect.objectContaining<Partial<ApiGen_Concepts_LeaseStakeholder>>({
@@ -321,8 +331,8 @@ describe('AddLeaseTenantContainer component', () => {
       });
     });
 
-    expect(mockLeaseStakeholderApi.updateLeaseStakeholders.execute).toHaveBeenCalledTimes(1);
-    expect(mockLeaseStakeholderApi.updateLeaseStakeholders.execute).toHaveBeenCalledWith(
+    expect(mockPutLeaseStakeholdersApi.execute).toHaveBeenCalledTimes(1);
+    expect(mockPutLeaseStakeholdersApi.execute).toHaveBeenCalledWith(
       1, // lease Id
       [
         {
@@ -346,7 +356,7 @@ describe('AddLeaseTenantContainer component', () => {
   });
 
   it('shows a friendly error message when user attempts to delete a stakeholder that is associated to a compensation', async () => {
-    mockLeaseStakeholderApi.updateLeaseStakeholders.execute.mockRejectedValue(
+    mockPutLeaseStakeholdersApi.execute.mockRejectedValue(
       createAxiosError(
         409,
         `Lease File Stakeholder can not be removed since it's assigned as a payee for a compensation requisition`,
@@ -374,7 +384,7 @@ describe('AddLeaseTenantContainer component', () => {
       });
     });
 
-    expect(mockLeaseStakeholderApi.updateLeaseStakeholders.execute).toHaveBeenCalledTimes(1);
+    expect(mockPutLeaseStakeholdersApi.execute).toHaveBeenCalledTimes(1);
     expect(onEdit).not.toHaveBeenCalled();
     expect(
       await screen.findByText(
@@ -394,7 +404,7 @@ describe('AddLeaseTenantContainer component', () => {
   });
 
   it('shows generic error message for server errors', async () => {
-    mockLeaseStakeholderApi.updateLeaseStakeholders.execute.mockRejectedValue(
+    mockPutLeaseStakeholdersApi.execute.mockRejectedValue(
       createAxiosError(400, 'test error message'),
     );
     setup();
@@ -408,7 +418,7 @@ describe('AddLeaseTenantContainer component', () => {
       });
     });
 
-    expect(mockLeaseStakeholderApi.updateLeaseStakeholders.execute).toHaveBeenCalledTimes(1);
+    expect(mockPutLeaseStakeholdersApi.execute).toHaveBeenCalledTimes(1);
     expect(onEdit).not.toHaveBeenCalled();
     expect(await screen.findByText('test error message')).toBeVisible();
   });

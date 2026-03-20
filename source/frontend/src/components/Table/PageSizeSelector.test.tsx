@@ -11,7 +11,7 @@ const setup = (
       alignTop
       value={selectorProps?.value ?? 10}
       options={selectorProps?.options ?? [5, 10, 20, 50, 100]}
-      onChange={selectorProps?.onChange ?? vi.fn}
+      onChange={selectorProps?.onChange ?? vi.fn()}
     />,
     rest,
   );

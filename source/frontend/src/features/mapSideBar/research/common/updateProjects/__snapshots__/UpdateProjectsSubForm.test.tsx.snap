@@ -2,7 +2,11 @@
 
 exports[`UpdateProjectsSubForm > renders as expected with minimal form data 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />
@@ -228,7 +232,11 @@ exports[`UpdateProjectsSubForm > renders as expected with minimal form data 1`] 
 
 exports[`UpdateProjectsSubForm > renders as expected with pre-existing form data 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />

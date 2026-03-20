@@ -1,6 +1,8 @@
 @import '@/assets/scss/variables';
 @import '@/assets/scss/colors';
+
 $contentheading-height: 6rem;
+
 .PropertyListView {
   background-color: #fff;
   display: flex;
@@ -11,7 +13,7 @@ $contentheading-height: 6rem;
 
   .filter-container {
     padding: 0;
-    background-color: $highlight-background-color;
+    background-color: $pims-white;
     .container {
       max-width: 136rem;
     }

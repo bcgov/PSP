@@ -2,7 +2,11 @@
 
 exports[`AddProjectForm component > renders as expected 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />
@@ -741,7 +745,11 @@ exports[`AddProjectForm component > renders as expected 1`] = `
 
 exports[`AddProjectForm component > renders as expected with existing data 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />

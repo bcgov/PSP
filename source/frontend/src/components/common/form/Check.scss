@@ -1,4 +1,5 @@
 @import '@/assets/scss/colors.scss';
+
 .check-field {
   display: inline-flex;
   flex-wrap: nowrap;
@@ -8,6 +9,7 @@
     margin: 0rem 0.5rem;
   }
 }
+
 .required.form-group {
   .check-field {
     label {

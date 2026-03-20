@@ -2,7 +2,11 @@
 
 exports[`DetailFeeDetermination component > renders a complete lease as expected 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />
@@ -226,7 +230,11 @@ exports[`DetailFeeDetermination component > renders a complete lease as expected
 
 exports[`DetailFeeDetermination component > renders minimally as expected 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />

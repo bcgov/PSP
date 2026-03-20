@@ -338,14 +338,11 @@ describe('LeasePropertySelector component', () => {
       selectingComponentId: undefined,
       mapLocationFeatureDataset: null,
       // provide fake logic for map marker repositioning
-      startReposition: vi.fn<
-        [
-          repositioningFeatureDataset: SelectedFeatureDataset,
-          index: number,
-          selectingComponentId?: string,
-        ],
-        void
-      >((featureSet, index, _) => {
+      startReposition: vi.fn<(
+        repositioningFeatureDataset: SelectedFeatureDataset,
+        index: number,
+        selectingComponentId?: string,
+      ) => void>((featureSet, index, _) => {
         testMockMachine.isRepositioning = true;
         testMockMachine.repositioningFeatureDataset = featureSet;
         testMockMachine.repositioningPropertyIndex = index;

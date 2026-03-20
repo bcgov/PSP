@@ -6,7 +6,11 @@ exports[`App Header > renders correctly 1`] = `
 
 }
 
-<div
+<section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   @media (min-width:99.2rem) {

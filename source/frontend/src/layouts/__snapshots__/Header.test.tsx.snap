@@ -2,7 +2,11 @@
 
 exports[`Tenant Header > Header MOTI background 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />
@@ -21,7 +25,11 @@ exports[`Tenant Header > Header MOTI background 1`] = `
 
 exports[`Tenant Header > Header black background 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />
@@ -40,7 +48,11 @@ exports[`Tenant Header > Header black background 1`] = `
 
 exports[`Tenant Header > Header default background 1`] = `
 <DocumentFragment>
-  <div
+  <section
+    aria-atomic="false"
+    aria-label="Notifications Alt+T"
+    aria-live="polite"
+    aria-relevant="additions text"
     class="Toastify"
   />
   <div />

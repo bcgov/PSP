@@ -15,6 +15,13 @@
     <link rel="manifest" href="/manifest.json" />
     <title>Property Inventory Management System</title>
     <script src="/runtime-vars.js"></script>
+    <script type="module">
+      import RefreshRuntime from "/@react-refresh"
+      RefreshRuntime.injectIntoGlobalHook(window)
+      window.$RefreshReg$ = () => {}
+      window.$RefreshSig$ = () => (type) => type
+      window.__vite_plugin_react_preamble_installed__ = true
+    </script>
   </head>
 
   <body>

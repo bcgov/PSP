@@ -1,4 +1,5 @@
-@import '@/assets/scss/styles.scss';
+@use '@/assets/scss/styles.scss';
+
 .GeocoderAutoComplete {
   font-size: 1.6rem;
   position: relative;

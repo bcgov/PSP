@@ -77,33 +77,6 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
     },
   } = useLeaseRepository();
 
-  const leaseId = lease?.id;
-  useEffect(() => {
-    const stakeholderFunc = async () => {
-      const stakeholders = await getLeaseStakeholders(leaseId ?? 0);
-      if (exists(stakeholders)) {
-        setStakeholders(
-          stakeholders.map((t: ApiGen_Concepts_LeaseStakeholder) => new FormStakeholder(t)),
-        );
-        setSelectedContacts(
-          stakeholders
-            .map((t: ApiGen_Concepts_LeaseStakeholder) =>
-              FormStakeholder.toContactSearchResult(new FormStakeholder(t)),
-            )
-            .filter(exists) || [],
-        );
-      }
-    };
-    stakeholderFunc();
-  }, [leaseId, getLeaseStakeholders]);
-
-  useEffect(() => {
-    const stakeholderTypesFunc = async () => {
-      await getLeaseStakeholderTypes();
-    };
-    stakeholderTypesFunc();
-  }, [getLeaseStakeholderTypes]);
-
   const setSelectedStakeholdersWithPersonData = async (
     updatedStakeholders?: IContactSearchResult[],
   ) => {
@@ -220,6 +193,32 @@ export const AddLeaseStakeholderContainer: React.FunctionComponent<
       submit(leaseToUpdate);
     }
   };
+
+  useEffect(() => {
+    const stakeholderFunc = async () => {
+      const stakeholders = await getLeaseStakeholders(lease?.id ?? 0);
+      if (exists(stakeholders)) {
+        setStakeholders(
+          stakeholders.map((t: ApiGen_Concepts_LeaseStakeholder) => new FormStakeholder(t)),
+        );
+        setSelectedContacts(
+          stakeholders
+            .map((t: ApiGen_Concepts_LeaseStakeholder) =>
+              FormStakeholder.toContactSearchResult(new FormStakeholder(t)),
+            )
+            .filter(exists) || [],
+        );
+      }
+    };
+    stakeholderFunc();
+  }, [lease, getLeaseStakeholders]);
+
+  useEffect(() => {
+    const stakeholderTypesFunc = async () => {
+      await getLeaseStakeholderTypes();
+    };
+    stakeholderTypesFunc();
+  }, [getLeaseStakeholderTypes]);
 
   return lease ? (
     <View
