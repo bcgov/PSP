@@ -57,10 +57,9 @@ namespace Pims.Core.Helpers
             var properties = type.GetCachedProperties();
             properties.ForEach(p =>
             {
-                // Check if the property has the IgnoreDataMember attribute, and ignore the property if it does.
+                // Check if the property has the [IgnoreDataMember] attribute, and ignore the property if it does.
                 // This allows us to include properties in the model that we don't want to include in the export.
-                var dataMemberIgnore = p.GetCustomAttribute<IgnoreDataMemberAttribute>() != null;
-                if (dataMemberIgnore)
+                if (p.GetCustomAttribute<IgnoreDataMemberAttribute>() != null)
                 {
                     return;
                 }
