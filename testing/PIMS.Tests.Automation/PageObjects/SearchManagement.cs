@@ -28,28 +28,29 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementListResetButton = By.Id("reset-button");
 
         //Management List View - Table Elements
-        private readonly By managementListViewMgmtFileColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Management file #')]");
+        private readonly By managementListViewMgmtFileColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Mgmt. file #')]");
         private readonly By managementListViewFileNameColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'File name')]");
         private readonly By managementListViewOrderByFileName = By.CssSelector("div[data-testid='sort-column-fileName']");
         private readonly By managementListViewMOTTRegionColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTT region')]");
-        private readonly By managementListViewHistFileColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Historical File #')]");
+        private readonly By managementListViewHistFileColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Historical file #')]");
         private readonly By managementListViewOrderByHistFile = By.CssSelector("div[data-testid='sort-column-legacyFileNum']");
         private readonly By managementListViewProjectColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Project')]");
         private readonly By managementListViewPurposeColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Purpose')]");
         private readonly By managementListViewOrderByPurpose = By.CssSelector("div[data-testid='sort-column-managementFilePurposeTypeCode']");
-        private readonly By managementListViewTeamMemberColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Team member')]");
-        private readonly By managementListViewAddressColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address / PID / PIN')]");
+        private readonly By managementListViewTeamMemberColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Team members')]");
+        private readonly By managementListViewAddressColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic address / PID / PIN')]");
         private readonly By managementListViewStatusColumnHeader = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");
         private readonly By managementListViewOrderByStatus = By.CssSelector("div[data-testid='sort-column-managementFileStatusTypeCode']");
 
         private readonly By managementListViewViewMgmtFile1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[1]/a");
         private readonly By managementListViewFileName1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[2]");
-        private readonly By managementListViewHistFile1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[3]");
-        private readonly By managementListViewProject1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]");
-        private readonly By managementListViewPurpose1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[5]");
-        private readonly By managementListViewTeamMember1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[6]/span");
-        private readonly By managementListViewAddress1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[7]/div/div");
-        private readonly By managementListViewStatus1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[8]");
+        private readonly By managementListViewFilMOTTRegion1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[3]");
+        private readonly By managementListViewHistFile1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]");
+        private readonly By managementListViewProject1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[5]");
+        private readonly By managementListViewPurpose1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[6]");
+        private readonly By managementListViewTeamMember1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[7]/span");
+        private readonly By managementListViewAddress1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[8]/div/div");
+        private readonly By managementListViewStatus1stRecord = By.XPath("//div[@data-testid='managementFilesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[9]");
 
         private readonly By managementFilesResultsTable = By.CssSelector("div[data-testid='managementFilesTable'] div[class='tbody'] div[class='tr-wrapper']");
 
@@ -262,11 +263,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(managementListViewViewMgmtFile1stRecord);
 
+            if (managementFile.ManagementMinistryRegion != "")
+                AssertTrueContentEquals(managementListViewFilMOTTRegion1stRecord, managementFile.ManagementMinistryRegion);
+
             if (managementFile.ManagementHistoricalFile != "")
                 AssertTrueContentEquals(managementListViewHistFile1stRecord, managementFile.ManagementHistoricalFile);
 
             if(managementFile.ManagementMinistryProject != "")
-                AssertTrueContentEquals(managementListViewProject1stRecord, managementFile.ManagementMinistryProject);
+                AssertTrueElementContains(managementListViewProject1stRecord, managementFile.ManagementMinistryProject);
 
             AssertTrueContentEquals(managementListViewPurpose1stRecord, managementFile.ManagementPurpose);
 

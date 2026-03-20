@@ -657,6 +657,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Choose the given result
             searchProperties.SelectFirstPMBCResult("Create Lease");
+            sharedFileProperties.AddPropertyToFile();
 
             //Fill basic information on the form
             leaseDetails.CreateMinimumLicenseDetails(lease);

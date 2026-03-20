@@ -1314,11 +1314,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueElementContains(By.CssSelector("div[data-testid='pims-files-document-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ elementIndex +") div[role='cell']:nth-child(6)"), document.DocumentStatus);
         }
 
-        public void VerifyActivityRelatedDocumentsList()
-        {
-
-        }
-
         public void VerifyDocumentDetailsViewForm(DigitalDocument document)
         {
             Wait();

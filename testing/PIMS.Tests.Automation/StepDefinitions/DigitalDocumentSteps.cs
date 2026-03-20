@@ -236,13 +236,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.NavigateToFirstPageDocumentsTable();
 
             //Disable Order by Document's type
-            if (fileType != "Lease")
+            if (fileType != "Lease" || fileType != "Management")
             {
                 digitalDocumentsTab.OrderByDocumentFileType();
-                digitalDocumentsTab.OrderByDocumentFileType();
-            }
-            else
-            {
                 digitalDocumentsTab.OrderByDocumentFileType();
             }
 

@@ -74,6 +74,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchPropertyListViewOwnershipInput = By.Id("ownership-selector");
         private readonly By searchPropertyListOwnershipOptions = By.CssSelector("div[id='ownership-selector'] div[class='optionListContainer displayBlock']");
         private readonly By searchPropertyOwnershipFirstOption = By.CssSelector("div[id='ownership-selector'] div[class='optionListContainer displayBlock'] ul[class='optionContainer'] li:nth-child(1)");
+        private readonly By searchPropertyOwnershipDeleteBttns = By.CssSelector("div[id='ownership-selector'] i[class='custom-close']");
 
         private readonly By searchPropertyListViewTenureCleanupLabel = By.XPath("//label[text()='Tenure Cleanup']");
         private readonly By searchPropertyListViewTenureCleanupInput = By.Id("tenure-cleanup-selector_input");
@@ -220,14 +221,17 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilTableSpinnerDisappear();
         }
 
-        public void IncludeAllPropertyOwnershipSearch()
+        public void SelectOwnershipSearch(string ownership)
         {
+            Wait();
+            while (webDriver.FindElements(searchPropertyOwnershipDeleteBttns).Count > 0)
+                webDriver.FindElements(searchPropertyOwnershipDeleteBttns)[0].Click();
+
             Wait();
             webDriver.FindElement(searchPropertyListViewOwnershipInput).Click();
 
             WaitUntilVisible(searchPropertyListOwnershipOptions);
-            while (webDriver.FindElements(searchPropertyOwnershipFirstOption).Count == 1)
-                FocusAndClick(searchPropertyOwnershipFirstOption);
+            ChooseMultiSelectSpecificOption(searchPropertyListOwnershipOptions, ownership);
         }
 
         public void ResetPropertySearch()
