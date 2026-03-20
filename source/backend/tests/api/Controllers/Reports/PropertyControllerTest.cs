@@ -54,14 +54,14 @@ namespace Pims.Api.Test.Controllers.Reports
             new object [] { new Uri("http://host/api/properties?MaxRentableArea=1") },
         };
 
-        private Mock<IPropertyRepository> _repository;
-        private Mock<IPropertyService> _service;
-        private PropertyController _controller;
-        private IMapper _mapper;
-        private TestHelper _helper;
-        private Mock<ILookupRepository> _lookupRepository;
-        private Mock<IWebHostEnvironment> _webHost;
-        private Mock<Microsoft.AspNetCore.Http.IHeaderDictionary> _headers;
+        private readonly Mock<IPropertyRepository> _repository;
+        private readonly Mock<IPropertyService> _service;
+        private readonly PropertyController _controller;
+        private readonly IMapper _mapper;
+        private readonly TestHelper _helper;
+        private readonly Mock<ILookupRepository> _lookupRepository;
+        private readonly Mock<IWebHostEnvironment> _webHost;
+        private readonly Mock<Microsoft.AspNetCore.Http.IHeaderDictionary> _headers;
         #endregion
 
         public PropertyControllerTest()
