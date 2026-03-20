@@ -1,5 +1,5 @@
 import { FormikErrors, FormikProps, getIn } from 'formik';
-import { ChangeEvent, useCallback } from 'react';
+import { ChangeEvent, useCallback, useState } from 'react';
 
 import { SelectOption } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
@@ -37,6 +37,8 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
   onRemove,
 }) => {
   const { setFieldValue } = formikProps;
+  const [replacingFile, setReplacingFile] = useState<boolean>(false);
+
   const errors: FormikErrors<DocumentUploadFormData> =
     getIn(formikProps.errors, namespace ?? '') || {};
 
@@ -67,6 +69,11 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
     [documentTypes, updateDocumentType],
   );
 
+  const onConfirmDocumentReplace = (file: File) => {
+    document.setFile(file);
+    setReplacingFile(!replacingFile);
+  };
+
   return (
     <Section
       header={
@@ -79,6 +86,9 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
           documentStatusOptions={documentStatusOptions}
           onRemove={onRemove}
           onDocumentTypeChange={onDocumentTypeChange}
+          replacingFile={replacingFile}
+          toggleReplacingFile={() => setReplacingFile(!replacingFile)}
+          onConfirmDocumentReplace={onConfirmDocumentReplace}
         />
       }
       isStyledHeader
