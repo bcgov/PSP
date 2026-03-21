@@ -63,10 +63,10 @@ namespace Pims.Core.Api.Middleware
             await _next(context);
 
             string body = null;
-            if (context.Response.ContentLength < maxStreamLength)
+            if (context.Response.ContentLength.HasValue && context.Response.ContentLength.Value < maxStreamLength)
             {
                 context.Response.Body.Seek(0, SeekOrigin.Begin);
-                using var reader = new StreamReader(context.Response.Body);
+                using var reader = new StreamReader(context.Response.Body, leaveOpen: true);
 
                 body = await reader.ReadToEndAsync();
             }

@@ -49,7 +49,7 @@ namespace Pims.Core.Api.Middleware
             context.Request.EnableBuffering();
             await using var requestStream = _recyclableMemoryStreamManager.GetStream();
             string body = null;
-            if (context.Request.ContentLength < maxStreamLength)
+            if (context.Request.ContentLength.HasValue && context.Request.ContentLength.Value < maxStreamLength)
             {
                 await context.Request.Body.CopyToAsync(requestStream);
 
