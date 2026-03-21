@@ -9,7 +9,7 @@ export interface IPropertyImprovementDetailsProps {
 
 export const PropertyImprovementDetails: React.FunctionComponent<
   IPropertyImprovementDetailsProps
-> = ({ propertyImprovement, propertyImprovementIndex }) => {
+> = ({ propertyImprovement, propertyImprovementIndex = 0 }) => {
   return (
     <>
       <SectionField
