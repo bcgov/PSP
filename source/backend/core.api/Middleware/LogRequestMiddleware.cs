@@ -68,7 +68,7 @@ namespace Pims.Core.Api.Middleware
                 }
 
                 _logger.LogDebug("HTTP Request {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}", context.Request.Method, context.User.GetDisplayName(), context.Request.Scheme, context.Request.Host, context.Request.Path, context.Request.QueryString);
-                _logger.LogTrace("Body: {{body}}", body);
+                _logger.LogTrace("Body: {body}", body);
             }
 
             context.Request.Body.Position = 0;
