@@ -6,7 +6,15 @@ import { SelectOption } from '@/components/common/form';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fireEvent, render, RenderOptions, screen, userEvent, waitForEffects } from '@/utils/test-utils';
+import {
+  act,
+  fireEvent,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+  waitForEffects,
+} from '@/utils/test-utils';
 
 import { mockDocumentTypesResponse } from '@/mocks/documentTypes.mock';
 import { BatchUploadFormModel, DocumentUploadFormData } from '../models';
@@ -140,7 +148,7 @@ describe('DocumentUploadView component', () => {
     expect(onUploadDocument).toHaveBeenCalled();
   });
 
-    it('should enable/disable document replace when replace button clicked', async () => {
+  it('should enable/disable document replace when replace button clicked', async () => {
     const { getByTestId, queryByTestId, formikRef } = setup({ initialValues });
 
     expect(formikRef.current).not.toBeNull();
