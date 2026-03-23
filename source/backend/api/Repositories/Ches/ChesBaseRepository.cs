@@ -23,19 +23,18 @@ namespace Pims.Api.Repositories.Ches
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
-        /// <param name="configuration">The injected configuration provider.</param>
+        /// <param name="chesConfig">The injected CHES configuration provider.</param>
         /// <param name="jsonOptions">The json options.</param>
         /// <param name="pollyPipelineProvider">The polly retry policy.</param>
         protected ChesBaseRepository(
             ILogger logger,
             IHttpClientFactory httpClientFactory,
-            IConfiguration configuration,
+            IOptions<ChesConfig> chesConfig,
             IOptions<JsonSerializerOptions> jsonOptions,
             ResiliencePipelineProvider<string> pollyPipelineProvider)
             : base(logger, httpClientFactory, jsonOptions, pollyPipelineProvider)
         {
-            _config = new ChesConfig();
-            configuration.Bind(ChesConfigSectionKey, _config);
+            _config = chesConfig.Value;
         }
 
         public override void AddAuthentication(HttpClient client, string authenticationToken = null)

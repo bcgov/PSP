@@ -8,10 +8,10 @@ using Pims.Api.Models.Requests.Http;
 using Pims.Api.Repositories.Ches;
 
 namespace Pims.Api.Services
-/// <summary>
-/// Default implementation of IEmailService using CHES.
-/// </summary>
 {
+    /// <summary>
+    /// Default implementation of IEmailService using CHES.
+    /// </summary>
     public class ChesService : IEmailService
     {
         private readonly IEmailRepository _chesRepository;
@@ -27,12 +27,32 @@ namespace Pims.Api.Services
 
         public async Task<ExternalResponse<EmailResponse>> SendEmailAsync(EmailRequest request)
         {
-            _logger.LogInformation("Email send requested. Recipient count: {recipientCount}.", request.To?.Count ?? 0);
+            if (request == null)
+            {
+                return new ExternalResponse<EmailResponse>
+                {
+                    Status = ExternalResponseStatus.Error,
+                    Payload = new EmailResponse(),
+                    Message = "Email request cannot be null",
+                };
+            }
+
+            if (request.To == null || request.To.Count == 0)
+            {
+                return new ExternalResponse<EmailResponse>
+                {
+                    Status = ExternalResponseStatus.Error,
+                    Payload = new EmailResponse(),
+                    Message = "Email request must have at least one recipient",
+                };
+            }
 
             if (string.IsNullOrEmpty(request.From))
             {
                 request.From = _chesConfig.FromEmail;
             }
+
+            _logger.LogInformation("Email send requested. Recipient count: {recipientCount}.", request.To?.Count ?? 0);
 
             ExternalResponse<EmailResponse>? response = await _chesRepository.SendEmailAsync(request);
 

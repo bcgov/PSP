@@ -402,6 +402,7 @@ namespace Pims.Api
             });
 
             services.Configure<OpenApiInfo>(Configuration.GetSection(nameof(OpenApiInfo)));
+            services.Configure<ChesConfig>(Configuration.GetSection("Ches"));
             services.AddMultiVersionToSwagger();
             services.AddSwaggerGen(options =>
             {
@@ -534,7 +535,7 @@ namespace Pims.Api
             services.AddScoped<IDocumentGenerationRepository, CdogsRepository>();
             services.AddScoped<IDocumentQueueRepository, DocumentQueueRepository>();
             services.AddScoped<IEmailRepository, ChesRepository>();
-            services.AddScoped<IEmailAuthRepository, ChesAuthRepository>();
+            services.AddSingleton<IEmailAuthRepository, ChesAuthRepository>();
             services.AddSingleton<IDocumentGenerationAuthRepository, CdogsAuthRepository>();
         }
 

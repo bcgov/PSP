@@ -19,19 +19,5 @@ namespace Pims.Api.Controllers
             _emailService = emailService;
         }
 
-        /// <summary>
-        /// Send an email using CHES service.
-        /// </summary>
-        [HttpPost("email")]
-        [ProducesResponseType(typeof(EmailResponse), 200)]
-        public async Task<IActionResult> SendEmail([FromBody] EmailRequest request)
-        {
-            var result = await _emailService.SendEmailAsync(request);
-            if (result.Status == ExternalResponseStatus.Error)
-            {
-                return StatusCode(500, new { error = result.Message, details = result.Payload });
-            }
-            return Ok(result);
-        }
     }
 }

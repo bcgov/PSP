@@ -2,14 +2,15 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
+using System.Security.Authentication;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 using Pims.Api.Models.Ches;
 using Pims.Api.Models.CodeTypes;
+using Pims.Api.Models.Config;
 using Pims.Api.Models.Requests.Http;
 using Polly.Registry;
 
@@ -30,17 +31,17 @@ namespace Pims.Api.Repositories.Ches
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
         /// <param name="authRepository">Injected repository that handles authentication.</param>
-        /// <param name="config">The injected configuration provider.</param>
+        /// <param name="chesConfig">The injected CHES configuration provider.</param>
         /// <param name="jsonOptions">The jsonOptions.</param>
         /// <param name="pollyPipelineProvider">The polly retry policy.</param>
         public ChesRepository(
             ILogger<ChesRepository> logger,
             IHttpClientFactory httpClientFactory,
-            IConfiguration config,
+            IOptions<ChesConfig> chesConfig,
             IEmailAuthRepository authRepository,
             IOptions<JsonSerializerOptions> jsonOptions,
             ResiliencePipelineProvider<string> pollyPipelineProvider)
-            : base(logger, httpClientFactory, config, jsonOptions, pollyPipelineProvider)
+            : base(logger, httpClientFactory, chesConfig, jsonOptions, pollyPipelineProvider)
         {
             _client = httpClientFactory.CreateClient();
             _client.DefaultRequestHeaders.Accept.Clear();
@@ -81,7 +82,7 @@ namespace Pims.Api.Repositories.Ches
                 {
                     var responseBody = await response.Content.ReadAsStringAsync();
                     result.Status = ExternalResponseStatus.Success;
-                    result.Payload = JsonSerializer.Deserialize<EmailResponse>(responseBody);
+                    result.Payload = JsonSerializer.Deserialize<EmailResponse>(responseBody, _serializeOptions);
                     if (result.Payload == null)
                     {
                         result.Status = ExternalResponseStatus.Error;
@@ -96,13 +97,29 @@ namespace Pims.Api.Repositories.Ches
                     result.Message = $"CHES email send failed: {response.StatusCode} {response.ReasonPhrase}. Response body: {errorBody}";
                 }
             }
-            catch (Exception ex)
+            catch (HttpRequestException ex)
             {
                 result.Status = ExternalResponseStatus.Error;
-                result.Message = $"Exception sending CHES email: {ex.Message}";
-                result.Payload = null;
-                result.HttpStatusCode = System.Net.HttpStatusCode.InternalServerError;
-                _logger.LogError(ex, "Exception sending CHES email.");
+                result.Message = $"HTTP error sending CHES email: {ex.Message}";
+                _logger.LogError(ex, "HTTP error sending CHES email.");
+            }
+            catch (TaskCanceledException ex)
+            {
+                result.Status = ExternalResponseStatus.Error;
+                result.Message = $"Timeout sending CHES email: {ex.Message}";
+                _logger.LogError(ex, "Timeout sending CHES email.");
+            }
+            catch (JsonException ex)
+            {
+                result.Status = ExternalResponseStatus.Error;
+                result.Message = $"Serialization error: {ex.Message}";
+                _logger.LogError(ex, "Serialization error sending CHES email.");
+            }
+            catch (AuthenticationException ex)
+            {
+                result.Status = ExternalResponseStatus.Error;
+                result.Message = $"Authentication error: {ex.Message}";
+                _logger.LogError(ex, "Authentication error sending CHES email.");
             }
             _logger.LogDebug($"Finished sending email");
             return result;

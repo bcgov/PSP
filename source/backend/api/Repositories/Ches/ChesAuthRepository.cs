@@ -3,11 +3,11 @@ using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
 using System.Threading.Tasks;
-using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Ches;
+using Pims.Api.Models.CodeTypes;
+using Pims.Api.Models.Config;
 using Pims.Api.Models.Requests.Http;
 using Pims.Core.Api.Exceptions;
 using Polly.Registry;
@@ -25,16 +25,16 @@ namespace Pims.Api.Repositories.Ches.Auth
         /// </summary>
         /// <param name="logger">Injected Logger Provider.</param>
         /// <param name="httpClientFactory">Injected Httpclient factory.</param>
-        /// <param name="configuration">The injected configuration provider.</param>
+        /// <param name="chesConfig">The injected CHES configuration provider.</param>
         /// <param name="jsonOptions">The jsonOptions.</param>
         /// <param name="pollyPipelineProvider">The polly retry policy.</param>
         public ChesAuthRepository(
             ILogger<ChesAuthRepository> logger,
             IHttpClientFactory httpClientFactory,
-            IConfiguration configuration,
+            IOptions<ChesConfig> chesConfig,
             IOptions<JsonSerializerOptions> jsonOptions,
             ResiliencePipelineProvider<string> pollyPipelineProvider)
-            : base(logger, httpClientFactory, configuration, jsonOptions, pollyPipelineProvider)
+            : base(logger, httpClientFactory, chesConfig, jsonOptions, pollyPipelineProvider)
         {
             _currentToken = null;
             _lastSuccessfulRequest = DateTime.UnixEpoch;
