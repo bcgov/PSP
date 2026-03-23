@@ -62,7 +62,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Consultation Types Counting Elements
         private readonly By consultationDistrictCount = By.CssSelector("div[data-testid='consultation-group-section-District'] div[data-testid='consultation-District-items']");
         private readonly By consultationEngineeringCount = By.CssSelector("div[data-testid='consultation-group-section-Engineering'] div[data-testid='consultation-Engineering-items']");
-        private readonly By consultationFirstNationCount = By.CssSelector("div[data-testid='cconsultation-group-section-First Nation'] div[data-testid='consultation-First Nation-items']");
+        private readonly By consultationFirstNationCount = By.CssSelector("div[data-testid='consultation-First Nation-items']");
         private readonly By consultationHeadquarterCount = By.CssSelector("div[data-testid='consultation-group-section-Headquarter (HQ)'] div[data-testid='consultation-Headquarter (HQ)-items']");
         private readonly By consultationRegionalPlanningCount = By.CssSelector("div[data-testid='consultation-group-section-Regional Planning'] div[data-testid='consultation-Regional Planning-items']");
         private readonly By consultationRegionalPropServicesCount = By.CssSelector("div[data-testid='consultation-group-section-Regional Property Services'] div[data-testid='consultation-Regional Property Services-items']");
@@ -231,7 +231,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     break;
                 case "Other":
                     ButtonElement(consultationOtherExpandBttn);
-                    webDriver.FindElement(By.XPath("div[data-testid='consultation-group-section-Other'] consultations[0].delete-btn")).Click();
+                    webDriver.FindElement(By.CssSelector("div[data-testid='consultation-Other-items'] button[data-testid='consultations[0].delete-btn']")).Click();
                     break;
             }
 
@@ -338,25 +338,25 @@ namespace PIMS.Tests.Automation.PageObjects
                 case "First Nation":
                     ButtonElement(consultationFirstNationExpandBttn);
                     int lastFirstNationConsultation = webDriver.FindElements(consultationFirstNationCount).Count;
-                    AssertTrueIsDisplayed(By.CssSelector("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]"));
-                    AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/span"));
-                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationRequestedOn));
+                    AssertTrueIsDisplayed(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Requested on']"));
+                    AssertTrueIsDisplayed(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Requested on']/span"));
+                    AssertTrueContentEquals(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Requested on']/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationRequestedOn));
 
-                    AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Contact')]"));
-                    AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Contact')]/span"));
-                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Contact')]/parent::div/following-sibling::div/a[1]/span"), consultation.leaseConsultationContact);
+                    AssertTrueIsDisplayed(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Contact']"));
+                    AssertTrueIsDisplayed(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Contact']/span"));
+                    AssertTrueContentEquals(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Contact']/parent::div/following-sibling::div/a[1]/span"), consultation.leaseConsultationContact);
                     if (consultation.leaseConsultationContactPrimaryContact != "")
-                        AssertTrueContentEquals(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Contact')]/parent::div/following-sibling::div/a[2]/span"), consultation.leaseConsultationContactPrimaryContact);
+                        AssertTrueContentEquals(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Contact']/parent::div/following-sibling::div/a[2]/span"), consultation.leaseConsultationContactPrimaryContact);
 
-                    AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Response received')]"));
-                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Response received')]/parent::div/following-sibling::div"), consultation.leaseConsultationReceived);
+                    AssertTrueIsDisplayed(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Response received']"));
+                    AssertTrueContentEquals(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Response received']/parent::div/following-sibling::div"), consultation.leaseConsultationReceived);
 
-                    AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]"));
-                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Response received on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
+                    AssertTrueIsDisplayed(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Response received on']"));
+                    AssertTrueContentEquals(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Response received on']/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationReceivedOn));
 
-                    AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]"));
-                    AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/span"));
-                    AssertTrueContentEquals(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/parent::div/following-sibling::div"), consultation.leaseConsultationComment);
+                    AssertTrueIsDisplayed(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Comments']"));
+                    AssertTrueIsDisplayed(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Comments']/span"));
+                    AssertTrueContentEquals(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Comments']/parent::div/following-sibling::div"), consultation.leaseConsultationComment);
                     break;
                 case "Headquarter (HQ)":
                     ButtonElement(consultationHeadquarterExpandBttn);

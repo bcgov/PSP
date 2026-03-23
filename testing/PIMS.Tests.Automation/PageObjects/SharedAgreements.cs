@@ -23,7 +23,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private By agreementsTypeSelect = By.Id("input-agreementTypeCode");
         private By agreementsDateLabel = By.XPath("//label[contains(text(),'Agreement date')]");
         private By agreementsDateInput = By.Id("datepicker-agreementDate");
-        private By agreementCommencementDateInput = By.Id("datepicker-commencementDate");
+        private By agreementCommencementDateInput = By.Id("datepicker-completionDate");
         private By agreementsCompletionDateLabel = By.XPath("//label[contains(text(),'Completion date')]");
         private By agreementsCompletionDateInput = By.Id("datepicker-completionDate");
         private By agreementsTerminationDateLabel = By.XPath("//label[contains(text(),'Termination date')]");
@@ -118,13 +118,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearInput(agreementsDateInput);
                 webDriver.FindElement(agreementsDateInput).SendKeys(agreement.AgreementDate);
                 webDriver.FindElement(agreementsDateInput).SendKeys(Keys.Enter);
-            }
-
-            if (agreement.AgreementCommencementDate != "")
-            {
-                ClearInput(agreementCommencementDateInput);
-                webDriver.FindElement(agreementCommencementDateInput).SendKeys(agreement.AgreementCommencementDate);
-                webDriver.FindElement(agreementCommencementDateInput).SendKeys(Keys.Enter);
             }
 
             if (agreement.AgreementCompletionDate != "")
@@ -256,12 +249,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(By.XPath("//button[@data-testid='agreements["+ agreementNbr +"].edit-btn']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]"));
             AssertTrueContentEquals(By.XPath("//button[@data-testid='agreements["+ agreementNbr +"].edit-btn']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]/parent::div/following-sibling::div"), TransformDateFormat(agreement.AgreementDate));
-
-            if (agreement.AgreementCommencementDate != "")
-            {
-                AssertTrueIsDisplayed(By.XPath("//button[@data-testid='agreements["+ agreementNbr +"].edit-btn']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Commencement date')]"));
-                AssertTrueContentEquals(By.XPath("//button[@data-testid='agreements["+ agreementNbr +"].edit-btn']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Commencement date')]/parent::div/following-sibling::div"), TransformDateFormat(agreement.AgreementCommencementDate));
-            }
 
             AssertTrueIsDisplayed(By.XPath("//button[@data-testid='agreements["+ agreementNbr +"].edit-btn']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Completion date')]"));
             AssertTrueContentEquals(By.XPath("//button[@data-testid='agreements["+ agreementNbr +"].edit-btn']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Completion date')]/parent::div/following-sibling::div"), TransformDateFormat(agreement.AgreementCompletionDate));

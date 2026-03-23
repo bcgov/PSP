@@ -31,7 +31,7 @@ exports[`Property Improvement Details view > renders as expected 1`] = `
     </div>
     <div
       class="c1 text-left col"
-      data-testid="improvement[1000].name"
+      data-testid="improvement[0].name"
     >
       TEST NAME
     </div>
@@ -61,7 +61,7 @@ exports[`Property Improvement Details view > renders as expected 1`] = `
     </div>
     <div
       class="c1 text-left col"
-      data-testid="improvement[1000].type"
+      data-testid="improvement[0].type"
     >
       Commercial Building
     </div>
@@ -91,7 +91,7 @@ exports[`Property Improvement Details view > renders as expected 1`] = `
     </div>
     <div
       class="c1 text-left col"
-      data-testid="improvement[1000].date"
+      data-testid="improvement[0].date"
     >
       Feb 18, 2026
     </div>
@@ -121,7 +121,7 @@ exports[`Property Improvement Details view > renders as expected 1`] = `
     </div>
     <div
       class="c1 text-left col"
-      data-testid="improvement[1000].status"
+      data-testid="improvement[0].status"
     >
       Active
     </div>
@@ -151,7 +151,7 @@ exports[`Property Improvement Details view > renders as expected 1`] = `
     </div>
     <div
       class="c1 text-left col"
-      data-testid="improvement[1000].description"
+      data-testid="improvement[0].description"
     >
       TEST DESCRIPTION
     </div>
