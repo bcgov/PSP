@@ -278,8 +278,7 @@ namespace Pims.Api.Services
 
         public LeaseStatusTypes? GetCurrentLeaseStatus(string pimsLeaseStatusType)
         {
-            LeaseStatusTypes currentLeaseStatus;
-            if (Enum.TryParse(pimsLeaseStatusType, out currentLeaseStatus))
+            if (Enum.TryParse(pimsLeaseStatusType, out LeaseStatusTypes currentLeaseStatus))
             {
                 return currentLeaseStatus;
             }

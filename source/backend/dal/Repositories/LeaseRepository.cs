@@ -767,6 +767,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.ConsultationTypeCodeNavigation)
                 .Include(t => t.PimsLeaseConsultations)
                     .ThenInclude(t => t.ConsultationStatusTypeCodeNavigation)
+
+                .Include(x => x.PimsCompensationRequisitions)
                 .FirstOrDefault(l => l.LeaseId == id) ?? throw new KeyNotFoundException();
 
             lease.PimsLeasePeriods = lease.PimsLeasePeriods.OrderBy(t => t.PeriodStartDate).ThenBy(t => t.LeasePeriodId).Select(t =>

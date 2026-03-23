@@ -1,7 +1,4 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
+using ClosedXML.Excel;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -14,6 +11,10 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -26,6 +27,13 @@ namespace Pims.Dal.Test.Repositories
     [ExcludeFromCodeCoverage]
     public class LeaseRepositoryTest
     {
+        private TestHelper _helper;
+
+        public LeaseRepositoryTest()
+        {
+            this._helper = new TestHelper();
+        }
+
         #region Data
         public static IEnumerable<object[]> LeaseFilterData =>
             new List<object[]>
@@ -66,17 +74,26 @@ namespace Pims.Dal.Test.Repositories
             };
         #endregion
 
+        private LeaseRepository CreateRepositoryWithPermissions(params Permissions[] permissions)
+        {
+            var user = PrincipalHelper.CreateForPermission(permissions);
+            _helper.CreatePimsContext(user, true);
+            _helper.InitializeDatabase(user);
+            return _helper.CreateRepository<LeaseRepository>();
+        }
+
+
         #region Tests
         [Fact]
         public void Lease_Count()
         {
             // Arrange
-            var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
             var elease = EntityHelper.CreateLease(1);
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(elease);
+            _helper.CreatePimsContext(user, true).AddAndSaveChanges(elease);
+            _helper.InitializeDatabase(user);
 
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            var service = _helper.CreateRepository<LeaseRepository>(user);
 
             // Act
             var result = service.Count();
@@ -91,8 +108,8 @@ namespace Pims.Dal.Test.Repositories
         public void Get_Leases_Paged(LeaseFilter filter, int expectedCount)
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
+
             var elease = EntityHelper.CreateLease(456, 789, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true);
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
@@ -102,13 +119,10 @@ namespace Pims.Dal.Test.Repositories
             elease.LeaseStatusTypeCode = "testStatusType";
             elease.LeaseDescription = "details";
 
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(elease);
-
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            _helper.AddAndSaveChanges(elease);
 
             // Act
-            var result = service.GetAllByFilter(filter, new HashSet<short>());
+            var result = repository.GetAllByFilter(filter, new HashSet<short>());
 
             // Assert
             Assert.NotNull(result);
@@ -151,8 +165,8 @@ namespace Pims.Dal.Test.Repositories
         public void Get_Leases_Filter(LeaseFilter filter, int expectedCount)
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
+
             var elease = EntityHelper.CreateLease(456, 789, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true);
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
@@ -162,13 +176,10 @@ namespace Pims.Dal.Test.Repositories
             elease.LeaseStatusTypeCode = "testStatusType";
             elease.LeaseDescription = "details";
 
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(elease);
-
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            _helper.AddAndSaveChanges(elease);
 
             // Act
-            var result = service.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter, new HashSet<short>());
 
             // Assert
             Assert.NotNull(result);
@@ -180,8 +191,8 @@ namespace Pims.Dal.Test.Repositories
         public void Get_Leases_Filter_Historical_LISNO()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
+
             var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true, addProperty: true);
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
@@ -191,8 +202,7 @@ namespace Pims.Dal.Test.Repositories
             elease.LeaseStatusTypeCode = "testStatusType";
             elease.LeaseDescription = "details";
 
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(elease);
+            _helper.AddAndSaveChanges(elease);
 
             var fileNumber = new PimsHistoricalFileNumber();
             fileNumber.PropertyId = elease.PimsPropertyLeases.FirstOrDefault().PropertyId;
@@ -205,13 +215,13 @@ namespace Pims.Dal.Test.Repositories
             fileNumber.DbCreateUserid = "tester";
             fileNumber.DbLastUpdateUserid = "tester";
 
-            context.AddAndSaveChanges(fileNumber);
+            _helper.AddAndSaveChanges(fileNumber);
+
 
             LeaseFilter filter = new LeaseFilter() { Historical = "99999" };
-            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
-            var result = service.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter, new HashSet<short>());
 
             // Assert
             Assert.NotNull(result);
@@ -223,8 +233,8 @@ namespace Pims.Dal.Test.Repositories
         public void Get_Leases_Filter_Historical_PSNO()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
+
             var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true, addProperty: true);
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
@@ -234,8 +244,7 @@ namespace Pims.Dal.Test.Repositories
             elease.LeaseStatusTypeCode = "testStatusType";
             elease.LeaseDescription = "details";
 
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(elease);
+            _helper.AddAndSaveChanges(elease);
 
             var fileNumber = new PimsHistoricalFileNumber();
             fileNumber.PropertyId = elease.PimsPropertyLeases.FirstOrDefault().PropertyId;
@@ -248,13 +257,11 @@ namespace Pims.Dal.Test.Repositories
             fileNumber.DbCreateUserid = "tester";
             fileNumber.DbLastUpdateUserid = "tester";
 
-            context.AddAndSaveChanges(fileNumber);
-
-            LeaseFilter filter = new LeaseFilter() { Historical = "88888" };
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            _helper.AddAndSaveChanges(fileNumber);
 
             // Act
-            var result = service.GetPage(filter, new HashSet<short>());
+            LeaseFilter filter = new LeaseFilter() { Historical = "88888" };
+            var result = repository.GetPage(filter, new HashSet<short>());
 
             // Assert
             Assert.NotNull(result);
@@ -266,8 +273,8 @@ namespace Pims.Dal.Test.Repositories
         public void Get_Leases_Filter_Historical_OTHERNO()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
+
             var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true, addProperty: true);
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
@@ -277,8 +284,7 @@ namespace Pims.Dal.Test.Repositories
             elease.LeaseStatusTypeCode = "testStatusType";
             elease.LeaseDescription = "details";
 
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(elease);
+            _helper.AddAndSaveChanges(elease);
 
             var fileNumber = new PimsHistoricalFileNumber();
             fileNumber.PropertyId = elease.PimsPropertyLeases.FirstOrDefault().PropertyId;
@@ -292,13 +298,11 @@ namespace Pims.Dal.Test.Repositories
             fileNumber.DbCreateUserid = "tester";
             fileNumber.DbLastUpdateUserid = "tester";
 
-            context.AddAndSaveChanges(fileNumber);
-
+            _helper.AddAndSaveChanges(fileNumber);
             LeaseFilter filter = new LeaseFilter() { Historical = "77777" };
-            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
-            var result = service.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter, new HashSet<short>());
 
             // Assert
             Assert.NotNull(result);
@@ -310,8 +314,8 @@ namespace Pims.Dal.Test.Repositories
         public void Get_Leases_Filter_Historical_File_Numbers()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
+
             var elease = EntityHelper.CreateLease(456, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true, addProperty: true);
             elease.LeaseId = 1;
             elease.OrigExpiryDate = new DateTime(2000, 1, 1);
@@ -321,8 +325,7 @@ namespace Pims.Dal.Test.Repositories
             elease.LeaseStatusTypeCode = "testStatusType";
             elease.LeaseDescription = "details";
 
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(elease);
+            _helper.AddAndSaveChanges(elease);
 
             var fileNumber = new PimsHistoricalFileNumber();
             fileNumber.PropertyId = elease.PimsPropertyLeases.FirstOrDefault().PropertyId;
@@ -335,13 +338,12 @@ namespace Pims.Dal.Test.Repositories
             fileNumber.DbCreateUserid = "tester";
             fileNumber.DbLastUpdateUserid = "tester";
 
-            context.AddAndSaveChanges(fileNumber);
+            _helper.AddAndSaveChanges(fileNumber);
 
             LeaseFilter filter = new LeaseFilter() { Historical = "66666" };
-            var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
-            var result = service.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter, new HashSet<short>());
 
             // Assert
             Assert.NotNull(result);
@@ -353,8 +355,8 @@ namespace Pims.Dal.Test.Repositories
         public void GetPage_Contractor_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
+
             var contractorLease = EntityHelper.CreateLease(456, 789, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true, generateTypeIds: true);
             contractorLease.Project = new PimsProject()
             {
@@ -365,14 +367,11 @@ namespace Pims.Dal.Test.Repositories
 
             var secondLease = EntityHelper.CreateLease(100, generateTypeIds: true);
 
-            var context = helper.CreatePimsContext(user, true);
-            context.Add(contractorLease);
-            context.AddAndSaveChanges(secondLease);
-
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            _helper.AddAndSaveChanges(contractorLease);
+            _helper.AddAndSaveChanges(secondLease);
 
             // Act
-            var result = service.GetPage(new LeaseFilter(), new HashSet<short>(), 1);
+            var result = repository.GetPage(new LeaseFilter(), new HashSet<short>(), 1);
 
             // Assert
             result.Should().NotBeNull();
@@ -388,16 +387,14 @@ namespace Pims.Dal.Test.Repositories
         public void Get_Leases_Filter_LFileNo_NoPrefixNoDash_ShouldMatch()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
+
             var elease = EntityHelper.CreateLease(456, 789, lFileNo: "L-000-123");
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(elease);
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            _helper.AddAndSaveChanges(elease);
 
             // Act
             var filter = new LeaseFilter() { LFileNo = "000123" }; // no prefix or dash
-            var result = service.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter, new HashSet<short>());
 
             // Assert
             result.Items.Should().HaveCount(1);
@@ -406,15 +403,13 @@ namespace Pims.Dal.Test.Repositories
         [Fact]
         public void Get_Leases_Filter_LFileNo_WithPrefixAndDash_ShouldMatch()
         {
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
+
             var elease = EntityHelper.CreateLease(456, 789, lFileNo: "L-000-123");
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(elease);
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            _helper.AddAndSaveChanges(elease);
 
             var filter = new LeaseFilter() { LFileNo = "L-000-123" };
-            var result = service.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter, new HashSet<short>());
 
             result.Items.Should().HaveCount(1);
         }
@@ -422,15 +417,13 @@ namespace Pims.Dal.Test.Repositories
         [Fact]
         public void Get_Leases_Filter_LFileNo_Partial_ShouldMatch()
         {
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
+
             var elease = EntityHelper.CreateLease(456, 789, lFileNo: "L-000-123");
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(elease);
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            _helper.AddAndSaveChanges(elease);
 
             var filter = new LeaseFilter() { LFileNo = "123" }; // partial
-            var result = service.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter, new HashSet<short>());
 
             result.Items.Should().HaveCount(1);
         }
@@ -438,15 +431,13 @@ namespace Pims.Dal.Test.Repositories
         [Fact]
         public void Get_Leases_Filter_LFileNo_WithSpaces_ShouldMatch()
         {
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
+
             var elease = EntityHelper.CreateLease(456, 789, lFileNo: "L-000-123");
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(elease);
-            var service = helper.CreateRepository<LeaseRepository>(user);
+            _helper.AddAndSaveChanges(elease);
 
             var filter = new LeaseFilter() { LFileNo = "  000 123  " }; // spaces
-            var result = service.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter, new HashSet<short>());
 
             result.Items.Should().HaveCount(1);
         }
@@ -454,16 +445,14 @@ namespace Pims.Dal.Test.Repositories
         [Fact]
         public void Get_Leases_Filter_LFileNo_InvalidFormat_ShouldThrow()
         {
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
             var elease = EntityHelper.CreateLease(456, 789, lFileNo: "L-000-123");
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(elease);
-            var service = helper.CreateRepository<LeaseRepository>(user);
+
+            _helper.AddAndSaveChanges(elease);
 
             var filter = new LeaseFilter() { LFileNo = "ABC123" }; // invalid
 
-            Action act = () => service.GetPage(filter, new HashSet<short>());
+            Action act = () => repository.GetPage(filter, new HashSet<short>());
 
             act.Should().Throw<ArgumentException>()
                .WithMessage("Invalid L-File number*");
@@ -476,16 +465,13 @@ namespace Pims.Dal.Test.Repositories
         public void Add_Lease_Success()
         {
             // Arrange
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseAdd, Permissions.LeaseView);
-            var lease = EntityHelper.CreateLease(1);
-            helper.CreatePimsContext(user, true);
+            var lease = EntityHelper.CreateLease(1, addStakeholder: false, addProperty: false);
 
             var mockSequenceRepo = new Mock<ISequenceRepository>();
+            _helper.AddSingleton(mockSequenceRepo.Object);
             mockSequenceRepo.Setup(x => x.GetNextSequenceValue(It.IsAny<string>())).Returns(50);
-            helper.AddSingleton(mockSequenceRepo.Object);
 
-            var repository = helper.CreateRepository<LeaseRepository>(user);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseAdd, Permissions.LeaseView);
 
             // Act
             var result = repository.Add(lease);
@@ -573,20 +559,16 @@ namespace Pims.Dal.Test.Repositories
         [Fact]
         public void GetNoTracking_Success()
         {
-            var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseAdd, Permissions.LeaseView);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseAdd, Permissions.LeaseView);
 
-            var lease = EntityHelper.CreateLease(1);
-            var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(lease);
-
-            var repository = helper.CreateRepository<LeaseRepository>(user);
+            var lease = EntityHelper.CreateLease(1, addStakeholder: false, addProperty: false);
+            _helper.AddAndSaveChanges(lease);
 
             // Act
             var response = repository.GetNoTracking(lease.Internal_Id);
 
             // Assert
-            response.Internal_Id.Should().Be(1);
+            response.LeaseId.Should().Be(1);
         }
         #endregion
 
