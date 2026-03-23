@@ -2,7 +2,6 @@ import { AxiosError } from 'axios';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
-import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
@@ -178,7 +177,28 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
   const handleCancel = () => {
     handleCancelClick(() => {
       setIsEditing(false);
-      pathGenerator.showFile('management', managementFile.id);
+      if (location.pathname.includes('property/')) {
+        const segments = location.pathname.split('/');
+
+        const managementIdx = segments.indexOf('management');
+        const propertyIdx = segments.indexOf('property');
+
+        if (managementIdx > -1 && propertyIdx > -1 && propertyIdx > managementIdx) {
+          const fileId = segments[managementIdx + 1];
+          const propertyId = segments[propertyIdx + 1];
+
+          if (fileId && propertyId) {
+            pathGenerator.showFilePropertyDetail(
+              'management',
+              Number(fileId),
+              Number(propertyId),
+              'management',
+            );
+            return;
+          }
+        }
+      }
+      pathGenerator.showFile('management', managementFileId);
     });
   };
 
@@ -273,11 +293,6 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     [managementFileId, getPropertyAssociations],
   );
 
-  const shouldBlockNavigation = useCallback(
-    () => formikRef.current?.dirty && !formikRef.current?.isSubmitting,
-    [formikRef],
-  );
-
   // UI components
   const loading =
     loadingManagementFile ||
@@ -313,7 +328,6 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
         }
         isEditing={isEditing}
       ></View>
-      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
     </>
   );
 };
