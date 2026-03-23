@@ -1,0 +1,465 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="12/31/2024 11:42:01 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{2FB3345A-DE6D-4D0B-8124-AA347EF79412}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="PRE-REQ"
+  DTS:PackageType="5"
+  DTS:VersionBuild="345"
+  DTS:VersionGUID="{50D78552-F11F-4D4A-9AB6-D0A0C222BEEB}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PIMS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{40B89F62-F7B5-460E-A78A-4D6709C31ED0}"
+      DTS:ObjectName="PIMS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_DEV;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{2E05C78A-C673-45EB-8C49-6BB8FEC702D9}sqldevtst.th.gov.bc.ca.PIMS_DEV;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{6F208351-3205-4D60-8815-37A0AA580ECC}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs\GWP_SOURCE_BACKUP"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{BF3534AE-F1AA-4242-A6D5-619E392336C8}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="GWP_SOURCE_BACKUP"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{40B89F62-F7B5-460E-A78A-4D6709C31ED0}"
+              SQLTask:SqlStatementSource="DECLARE @TableName NVARCHAR(200);&#xA;DECLARE @SQL NVARCHAR(MAX);&#xA;&#xA;SET @TableName = 'etl.GWP_SOURCE_' + FORMAT(GETDATE(),'MMddyyyy');&#xA;&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.tables t&#xA;    JOIN sys.schemas s ON t.schema_id = s.schema_id&#xA;    WHERE t.name = 'GWP_SOURCE_' + FORMAT(GETDATE(),'MMddyyyy')&#xA;    AND s.name = 'etl'&#xA;)&#xA;BEGIN&#xA;    SET @SQL = 'SELECT * INTO ' + @TableName + ' FROM etl.GWP_SOURCE;';&#xA;    EXEC(@SQL);&#xA;END&#xA;&#xA; &#xA;&#xA; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs\PAT_SOURCE_BACKUP"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{A4445565-0BD3-49C8-87B6-107D3715B941}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="PAT_SOURCE_BACKUP"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{40B89F62-F7B5-460E-A78A-4D6709C31ED0}"
+              SQLTask:SqlStatementSource="DECLARE @TableName NVARCHAR(200);&#xA;DECLARE @SQL NVARCHAR(MAX);&#xA;&#xA;SET @TableName = 'etl.PAT_SOURCE_' + FORMAT(GETDATE(),'MMddyyyy');&#xA;&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.tables t&#xA;    JOIN sys.schemas s ON t.schema_id = s.schema_id&#xA;    WHERE t.name = 'PAT_SOURCE_' + FORMAT(GETDATE(),'MMddyyyy')&#xA;    AND s.name = 'etl'&#xA;)&#xA;BEGIN&#xA;    SET @SQL = 'SELECT * INTO ' + @TableName + ' FROM etl.PAT_SOURCE;';&#xA;    EXEC(@SQL);&#xA;END&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs\TAP_SOURCE_BACKUP"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{9B2E1608-6941-4D89-BEFE-7FA2BCCDF9D4}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="TAP_SOURCE_BACKUP"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{40B89F62-F7B5-460E-A78A-4D6709C31ED0}"
+              SQLTask:SqlStatementSource="DECLARE @TableName NVARCHAR(200);&#xA;DECLARE @SQL NVARCHAR(MAX);&#xA;&#xA;SET @TableName = 'etl.TAP_SOURCE_' + FORMAT(GETDATE(),'MMddyyyy');&#xA;&#xA;IF NOT EXISTS (&#xA;    SELECT 1&#xA;    FROM sys.tables t&#xA;    JOIN sys.schemas s ON t.schema_id = s.schema_id&#xA;    WHERE t.name = 'TAP_SOURCE_' + FORMAT(GETDATE(),'MMddyyyy')&#xA;    AND s.name = 'etl'&#xA;)&#xA;BEGIN&#xA;    SET @SQL = 'SELECT * INTO ' + @TableName + ' FROM etl.TAP_SOURCE;';&#xA;    EXEC(@SQL);&#xA;END" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs\TRUNC etl TABLES"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{ea228484-03c0-4aa5-9013-df074a09acd7}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="TRUNC etl TABLES"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{40B89F62-F7B5-460E-A78A-4D6709C31ED0}"
+              SQLTask:SqlStatementSource="TRUNCATE TABLE etl.GWP_SOURCE;&#xA;  &#xA;TRUNCATE TABLE etl.TAP_SOURCE;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{5C9B46F2-4328-415D-912E-78C80C85622B}"
+          DTS:From="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs\TAP_SOURCE_BACKUP"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs\PAT_SOURCE_BACKUP" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{9F843E83-2E8E-4C82-B908-FEEC072C07A6}"
+          DTS:From="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs\PAT_SOURCE_BACKUP"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs\GWP_SOURCE_BACKUP" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs.PrecedenceConstraints[Constraint 2]"
+          DTS:CreationName=""
+          DTS:DTSID="{2C573D39-28F4-48D5-B47E-48847721DCA3}"
+          DTS:From="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs\GWP_SOURCE_BACKUP"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 2"
+          DTS:To="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs\TRUNC etl TABLES" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{b35ed10a-5e72-4ff7-b013-947bbc3080ae}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CREATE SRC_LAND_PARCEL_TABLEs in etl schema">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema\GWP"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{ddb46f52-8aee-44a4-a0b8-4612692df54c}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="GWP"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{40B89F62-F7B5-460E-A78A-4D6709C31ED0}"
+              SQLTask:SqlStatementSource=" IF NOT EXISTS (&#xA;  SELECT 1 &#xA;  FROM INFORMATION_SCHEMA.TABLES &#xA;  WHERE TABLE_NAME = 'GWP_SOURCE_LAND_PARCEL ' AND TABLE_SCHEMA = 'etl'&#xA; )&#xA; BEGIN&#xA;  CREATE TABLE etl.GWP_SOURCE_LAND_PARCEL (&#xA;  &#xA;  [MULTIMEDIA_OBJECT_ID] numeric(10,0),&#xA;  LAND_PARCEL_ID numeric(6,0),&#xA;  MOT_NUMBER numeric(38,8)&#xA;  );&#xA; END;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema\PAT"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{1eb676c1-7312-4d62-87cd-f0c19f5605b0}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="PAT"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{40B89F62-F7B5-460E-A78A-4D6709C31ED0}"
+              SQLTask:SqlStatementSource="IF NOT EXISTS (&#xA;  SELECT 1 &#xA;  FROM INFORMATION_SCHEMA.TABLES &#xA;  WHERE TABLE_NAME = 'PAT_SOURCE_LAND_PARCEL ' AND TABLE_SCHEMA = 'etl'&#xA; )&#xA; BEGIN&#xA;  CREATE TABLE etl.PAT_SOURCE_LAND_PARCEL (&#xA;  &#xA;  [MULTIMEDIA_OBJECT_ID] numeric(10,0),&#xA;  LAND_PARCEL_ID numeric(6,0) ,&#xA;  MOT_NUMBER numeric(6,0)&#xA;  );&#xA; END;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema\TAP"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{f4792d39-59f3-4927-90c1-2f9b1025f755}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="TAP"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{40B89F62-F7B5-460E-A78A-4D6709C31ED0}"
+              SQLTask:SqlStatementSource="&#xA;  IF NOT EXISTS (&#xA;  SELECT 1 &#xA;  FROM INFORMATION_SCHEMA.TABLES &#xA;  WHERE TABLE_NAME = 'TAP_SOURCE_LAND_PARCEL ' AND TABLE_SCHEMA = 'etl'&#xA; )&#xA; BEGIN&#xA;  CREATE TABLE etl.TAP_SOURCE_LAND_PARCEL (&#xA;  &#xA;  [MULTIMEDIA_OBJECT_ID] numeric(10,0),&#xA;  LAND_PARCEL_ID numeric(6,0) ,&#xA;  MOT_NUMBER numeric(38,8)&#xA;  );&#xA; END;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{1b6070a4-0090-49e3-81dc-ae5833a7fa8f}"
+          DTS:From="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema\GWP"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema\TAP" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{4ad2b481-7f58-403f-9732-e3bb22cacb26}"
+          DTS:From="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema\TAP"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema\PAT" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\CREATE TAP ONLY SUBDOC TABLE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{0E34AAAD-E22F-4420-9B55-BD4E45507C61}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="CREATE TAP ONLY SUBDOC TABLE"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{40B89F62-F7B5-460E-A78A-4D6709C31ED0}"
+          SQLTask:SqlStatementSource="-- CREATE SUBDOC TABLE&#xA;IF NOT EXISTS (&#xA;    SELECT 1 &#xA;    FROM INFORMATION_SCHEMA.TABLES &#xA;    WHERE TABLE_NAME = 'TAP_SOURCE_SUB_DOCS ' AND TABLE_SCHEMA = 'etl'&#xA;)&#xA;BEGIN&#xA;    CREATE TABLE etl.TAP_SOURCE_SUB_DOCS (&#xA;    [TYPE_DESCRIPTION] nvarchar(500),&#xA;    [FILE_NAME] nvarchar(100),&#xA;    [MULTIMEDIA_OBJECT_ID] numeric(10,0),&#xA;    [DIGITAL_REPRESENTATION] varbinary(max),&#xA;    [CREATE_DATETIME] datetime,&#xA;    [LAST_UPDATE_DATETIME] datetime,&#xA;&#x9;[APP_CREATE_TIMESTAMP] datetime,&#xA;&#x9;[APP_LAST_UPDATE_TIMESTAMP] datetime,&#xA;&#x9;MOT_NUMBER INT&#xA;&#x9;);&#xA;END;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{BCE68052-2924-40CA-892C-7440146A9B4D}"
+      DTS:From="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\CREATE TAP ONLY SUBDOC TABLE" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{868AEB94-800E-44DB-83F5-A737D0015EC6}"
+      DTS:From="Package\CREATE TAP ONLY SUBDOC TABLE"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="206.666666666667,42.6666666666667"
+          Id="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs\GWP_SOURCE_BACKUP"
+          TopLeft="60.8749906588347,270.70176224189" />
+        <NodeLayout
+          Size="201.333333333334,42.6666666666667"
+          Id="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs\PAT_SOURCE_BACKUP"
+          TopLeft="67.1249905657024,137.964917638185" />
+        <NodeLayout
+          Size="201.333333333334,42.6666666666667"
+          Id="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs\TAP_SOURCE_BACKUP"
+          TopLeft="61.4999906495215,26.4385997495052" />
+        <NodeLayout
+          Size="174.666666666667,42.6666666666667"
+          Id="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs\TRUNC etl TABLES"
+          TopLeft="80.9999970942736,385.842105881329" />
+        <EdgeLayout
+          Id="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs.PrecedenceConstraints[Constraint]"
+          TopLeft="164.979157274279,69.1052664161719">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,68.8596512220133"
+              Start="0,0"
+              End="0,61.3596512220133">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,61.3596512220133" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs.PrecedenceConstraints[Constraint 1]"
+          TopLeft="165.999990612269,180.631584304852">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,90.0701779370383"
+              Start="0,0"
+              End="0,82.5701779370383">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,82.5701779370383" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs.PrecedenceConstraints[Constraint 2]"
+          TopLeft="166.270827209888,313.368428908557">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,72.4736769727721"
+              Start="0,0"
+              End="0,64.9736769727721">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,64.9736769727721" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="390,482.666666666667"
+          Size="390,526"
+          Id="Package\BACKUP DOCUMENT MUTLI_MEDIA_OBJECT_IDs"
+          TopLeft="113.749998304993,83.6842120073509" />
+        <NodeLayout
+          Size="104.666666666667,42.6666666666667"
+          Id="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema\GWP"
+          TopLeft="65.999991953373,13.9649166594142" />
+        <NodeLayout
+          Size="100.666666666667,42.6666666666667"
+          Id="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema\PAT"
+          TopLeft="70.3749918881805,191.210532098266" />
+        <NodeLayout
+          Size="100.666666666667,42.6666666666667"
+          Id="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema\TAP"
+          TopLeft="67.2499919347465,107.701760529041" />
+        <EdgeLayout
+          Id="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema.PrecedenceConstraints[Constraint]"
+          TopLeft="117.958325277393,56.6315833260809">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,51.0701772029601"
+              Start="0,0"
+              End="0,43.5701772029601">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,43.5701772029601" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema.PrecedenceConstraints[Constraint 1]"
+          TopLeft="119.145825244797,150.368427195708">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.842104902558"
+              Start="0,0"
+              End="0,33.342104902558">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.342104902558" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="363.333333333334,310.666666666667"
+          Size="363.333333333334,353.333333333334"
+          Id="Package\CREATE SRC_LAND_PARCEL_TABLEs in etl schema"
+          TopLeft="1010.45832310431,167.690061541769" />
+        <NodeLayout
+          Size="264,42.6666666666667"
+          Id="Package\CREATE TAP ONLY SUBDOC TABLE"
+          TopLeft="602.291666843618,324.315795578125" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="503.749998304993,346.166670459405">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="98.5416685386248,0"
+              Start="0,0"
+              End="91.0416685386248,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="91.0416685386248,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="866.291666843618,345.002928559947">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="144.166656260694,0"
+              Start="0,0"
+              End="136.666656260694,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="136.666656260694,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

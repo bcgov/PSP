@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34729.46
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "PIMS_COMPENSATION_ACQ_PAYMENT_FIX", "PIMS_COMPENSATION_ACQ_PAYMENT_FIX.dtproj", "{6FAFAE65-9921-440A-9E19-B85B0AF83457}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6FAFAE65-9921-440A-9E19-B85B0AF83457}.Development|Default.ActiveCfg = Development
+		{6FAFAE65-9921-440A-9E19-B85B0AF83457}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {3685B9A8-B24E-4E24-A70E-F0A2DFCCA436}
+	EndGlobalSection
+EndGlobal
