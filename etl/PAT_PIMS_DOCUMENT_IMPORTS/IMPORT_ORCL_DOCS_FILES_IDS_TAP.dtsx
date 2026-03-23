@@ -11,8 +11,9 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="IMPORT_ORCL_DOCS"
   DTS:PackageType="5"
-  DTS:VersionBuild="323"
-  DTS:VersionGUID="{CEAA6D35-263C-497B-9ED1-5257A3478239}">
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="324"
+  DTS:VersionGUID="{7C64AD64-D417-4594-B57B-4242369B3AE5}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -41,8 +42,7 @@
           DTS:ConnectionString="Data Source=lizzard.th.gov.bc.ca:20208/DEV01;User ID=aparasur;Provider=OraOLEDB.Oracle.1;Persist Security Info=True;">
           <DTS:Password
             DTS:Name="Password"
-            Sensitive="1"
-            Encrypted="1">AQAAANCMnd8BFdERjHoAwE/Cl+sBAAAAqQozFA3JfUaK70lZfHR5MwAAAAAIAAAARABUAFMAAAAQZgAAAAEAACAAAABq9hdDCFK4RE3lyysapQ/LIzFsyMvi9dtCnvs/4hf6VQAAAAAOgAAAAAIAACAAAAADhyb7jFkpc9IiLLrCdeveXHCKv92s8T9chJFeSUmWGSAAAADTl/OVIcVgEym9wJbA2Eut8AT37/p7n0aBzdcC6AdmNUAAAAAdFNKWM7VzEwH4xHVXs1dBa4QtlRlxMlTKUp4P76hnXrz/NfGiabEu9iHY4w+efr5CLwpDkoKVoIQ3UeiMhGa/</DTS:Password>
+            Sensitive="1"></DTS:Password>
         </DTS:ConnectionManager>
       </DTS:ObjectData>
     </DTS:ConnectionManager>

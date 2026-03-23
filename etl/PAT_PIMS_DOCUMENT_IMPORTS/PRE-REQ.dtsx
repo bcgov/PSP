@@ -11,8 +11,9 @@
   DTS:LocaleID="1033"
   DTS:ObjectName="PRE-REQ"
   DTS:PackageType="5"
-  DTS:VersionBuild="345"
-  DTS:VersionGUID="{50D78552-F11F-4D4A-9AB6-D0A0C222BEEB}">
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="346"
+  DTS:VersionGUID="{6F96256E-6E79-46EC-A639-EE581884DF8E}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
