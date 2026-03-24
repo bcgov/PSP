@@ -8,6 +8,7 @@ import { useManagementFileRepository } from '@/hooks/repositories/useManagementF
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { useFilePropertyIdFromUrl } from '@/hooks/useFilePropertyIdFromUrl';
 import { useFormikCancel } from '@/hooks/useFormikCancel';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
@@ -31,6 +32,7 @@ export interface IManagementContainerProps {
 export const ManagementContainer: React.FunctionComponent<IManagementContainerProps> = props => {
   // Load state from props and side-bar context
   const { managementFileId, onClose, View } = props;
+  const { fileId, filePropertyId } = useFilePropertyIdFromUrl();
   const { setLastUpdatedBy, lastUpdatedBy, staleLastUpdatedBy, staleFile, setFile } =
     useContext(SideBarContext);
   const [isValid, setIsValid] = useState<boolean>(true);
@@ -177,28 +179,11 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
   const handleCancel = () => {
     handleCancelClick(() => {
       setIsEditing(false);
-      if (location.pathname.includes('property/')) {
-        const segments = location.pathname.split('/');
-
-        const managementIdx = segments.indexOf('management');
-        const propertyIdx = segments.indexOf('property');
-
-        if (managementIdx > -1 && propertyIdx > -1 && propertyIdx > managementIdx) {
-          const fileId = segments[managementIdx + 1];
-          const propertyId = segments[propertyIdx + 1];
-
-          if (fileId && propertyId) {
-            pathGenerator.showFilePropertyDetail(
-              'management',
-              Number(fileId),
-              Number(propertyId),
-              'management',
-            );
-            return;
-          }
-        }
+      if (exists(fileId) && exists(filePropertyId)) {
+        pathGenerator.showFilePropertyDetail('management', fileId, filePropertyId, 'management');
+      } else {
+        pathGenerator.showFile('management', managementFileId);
       }
-      pathGenerator.showFile('management', managementFileId);
     });
   };
 
