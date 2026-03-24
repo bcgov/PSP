@@ -7,59 +7,31 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Entity continaing the details regarding actions involving a property owner associated with an expropriation.
+/// Catalogs the notification sent to a user.  Multiple notifications may be sent to a user.
 /// </summary>
-[Table("PIMS_EXPROP_OWNER_HISTORY")]
-[Index("AcquisitionFileId", Name = "XPOWNH_ACQUISITION_FILE_ID_IDX")]
-[Index("AcquisitionOwnerId", Name = "XPOWNH_ACQUISITION_OWNER_ID_IDX")]
-[Index("ExpropOwnerHistoryTypeCode", Name = "XPOWNH_EXPROP_OWNER_HISTORY_TYPE_CODE_IDX")]
-[Index("InterestHolderId", Name = "XPOWNH_INTEREST_HOLDER_ID_IDX")]
-public partial class PimsExpropOwnerHistory
+[Table("PIMS_NOTIFICATION_USER")]
+[Index("NotificationId", Name = "NOTUSR_NOTIFICATION_ID_IDX")]
+[Index("UserId", Name = "NOTUSR_USER_ID_IDX")]
+public partial class PimsNotificationUser
 {
     /// <summary>
     /// System-generated unique surrogate primary key.
     /// </summary>
     [Key]
-    [Column("EXPROP_OWNER_HISTORY_ID")]
-    public long ExpropOwnerHistoryId { get; set; }
+    [Column("NOTIFICATION_USER_ID")]
+    public long NotificationUserId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_ACQUISITION_FILE table.
+    /// Foreign key to the PIMS_NOTIFICATION table.
     /// </summary>
-    [Column("ACQUISITION_FILE_ID")]
-    public long AcquisitionFileId { get; set; }
+    [Column("NOTIFICATION_ID")]
+    public long NotificationId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_ACQUISITION_HOLDER table.
+    /// Foreign key to the PIMS_USER table.
     /// </summary>
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_INTEREST_HOLDER table.
-    /// </summary>
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_EXPROP_OWNER_HISTORY_TYPE file.
-    /// </summary>
-    [Required]
-    [Column("EXPROP_OWNER_HISTORY_TYPE_CODE")]
-    [StringLength(20)]
-    public string ExpropOwnerHistoryTypeCode { get; set; }
-
-    /// <summary>
-    /// Date of the expropriation owner event.
-    /// </summary>
-    [Column("EVENT_DT", TypeName = "datetime")]
-    public DateTime? EventDt { get; set; }
-
-    /// <summary>
-    /// Indicates if the record is disabled and therefore not selectable or displayed.
-    /// </summary>
-    [Column("IS_DISABLED")]
-    public bool? IsDisabled { get; set; }
+    [Column("USER_ID")]
+    public long UserId { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -132,7 +104,6 @@ public partial class PimsExpropOwnerHistory
     /// <summary>
     /// The user or proxy account that created the record.
     /// </summary>
-    [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
@@ -151,22 +122,14 @@ public partial class PimsExpropOwnerHistory
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("AcquisitionFileId")]
-    [InverseProperty("PimsExpropOwnerHistories")]
-    public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
+    [ForeignKey("NotificationId")]
+    [InverseProperty("PimsNotificationUsers")]
+    public virtual PimsNotification Notification { get; set; }
 
-    [ForeignKey("AcquisitionOwnerId")]
-    [InverseProperty("PimsExpropOwnerHistories")]
-    public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }
+    [InverseProperty("NotificationUser")]
+    public virtual ICollection<PimsNotificationUserOutput> PimsNotificationUserOutputs { get; set; } = new List<PimsNotificationUserOutput>();
 
-    [ForeignKey("ExpropOwnerHistoryTypeCode")]
-    [InverseProperty("PimsExpropOwnerHistories")]
-    public virtual PimsExpropOwnerHistoryType ExpropOwnerHistoryTypeCodeNavigation { get; set; }
-
-    [ForeignKey("InterestHolderId")]
-    [InverseProperty("PimsExpropOwnerHistories")]
-    public virtual PimsInterestHolder InterestHolder { get; set; }
-
-    [InverseProperty("ExpropOwnerHistory")]
-    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
+    [ForeignKey("UserId")]
+    [InverseProperty("PimsNotificationUsers")]
+    public virtual PimsUser User { get; set; }
 }

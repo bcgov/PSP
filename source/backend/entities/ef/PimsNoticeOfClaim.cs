@@ -6,6 +6,9 @@ using Microsoft.EntityFrameworkCore;
 
 namespace Pims.Dal.Entities;
 
+/// <summary>
+/// Describes the notice of claim that associated with a management file or acquisition file and includes comments and the received date.
+/// </summary>
 [Table("PIMS_NOTICE_OF_CLAIM")]
 [Index("AcquisitionFileId", Name = "NTCCLM_ACQUISITION_FILE_ID_IDX")]
 [Index("ManagementFileId", Name = "NTCCLM_MANAGEMENT_FILE_ID_IDX")]
@@ -139,4 +142,7 @@ public partial class PimsNoticeOfClaim
     [ForeignKey("ManagementFileId")]
     [InverseProperty("PimsNoticeOfClaims")]
     public virtual PimsManagementFile ManagementFile { get; set; }
+
+    [InverseProperty("NoticeOfClaim")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
 }
