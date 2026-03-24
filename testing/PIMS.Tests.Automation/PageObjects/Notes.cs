@@ -269,19 +269,20 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (feature == "Property")
             {
-                AssertTrueContentNotEquals(propNotesTableName1stContent, "");
-                AssertTrueContentNotEquals(propNotesTableNote1stContent, "");
-                AssertTrueContentNotEquals(propNotesTableCreatedDate1stContent, "");
-                AssertTrueContentNotEquals(propNotesTableLastUpdated1stContent, "");
-                AssertTrueIsDisplayed(propNotesTableViewBttn1stContent);
-            }
-            else
-            {
                 AssertTrueContentNotEquals(mgmtNotesTableName1stContent, "");
                 AssertTrueContentNotEquals(mgmtNotesTableNote1stContent, note);
                 AssertTrueContentNotEquals(mgmtNotesTableCreatedDate1stContent, "");
                 AssertTrueContentNotEquals(mgmtNotesTableLastUpdated1stContent, "");
                 AssertTrueIsDisplayed(mgmtNotesTableViewBttn1stContent);
+                
+            }
+            else
+            {
+                AssertTrueContentNotEquals(propNotesTableName1stContent, "");
+                AssertTrueContentNotEquals(propNotesTableNote1stContent, "");
+                AssertTrueContentNotEquals(propNotesTableCreatedDate1stContent, "");
+                AssertTrueContentNotEquals(propNotesTableLastUpdated1stContent, "");
+                AssertTrueIsDisplayed(propNotesTableViewBttn1stContent);
             }
         }
 

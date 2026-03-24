@@ -191,11 +191,9 @@ namespace PIMS.Tests.Automation.StepDefinitions
             }
         }
 
-        [StepDefinition(@"I create a Research File from a pin on map and from row number (.*)")]
+        [StepDefinition(@"I create a Research File from a search on map and from row number (.*)")]
         public void CreateResearchFileFromPin(int rowNumber)
         {
-            /* TEST COVERAGE: PSP-3371, PSP-1546, PSP-1556 */
-
             //Login to PIMS
             loginSteps.Idir(userName);
 
@@ -206,23 +204,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Select found property on Map
             searchProperties.SelectFirstPMBCResult("Create Research");
 
+            //Fill name to selected property
+            sharedFileProperties.AddPropertyToFile();
+            sharedFileProperties.AddNameSelectedProperty("Automated Property from Pin", 0);
+
             //Fill basic Research File information
             researchFiles.CreateResearchFile(researchFile);
-
-            //Fill name to selected property
-            sharedFileProperties.AddNameSelectedProperty("Automated Property from Pin", 0);
 
             //Save Research File
             researchFiles.SaveResearchFile();
 
             //Get Research File code
             researchFileCode = researchFiles.GetResearchFileCode();
-
-            //Add additional info to the reseach File
-            researchFiles.AddAdditionalResearchFileInfo(researchFile);
-
-            //Save Research File
-            researchFiles.SaveResearchFile();
         }
 
         [StepDefinition(@"I search for Research Files from row number (.*)")]

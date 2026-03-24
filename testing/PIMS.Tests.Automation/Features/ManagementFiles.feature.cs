@@ -242,9 +242,6 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line 22
  await testRunner.AndAsync("I create Digital Documents for a \"Management File\" from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 23
- await testRunner.AndAsync("I checked related file documents on properties documents", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
 #line 24
  await testRunner.AndAsync("I edit a Digital Document for a \"Management File\" from row number 15", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden

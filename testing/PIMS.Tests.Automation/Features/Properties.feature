@@ -29,6 +29,7 @@ Scenario: 03._Property_Management_Tab
 Scenario: 04._Property_Documents_Tab
 	Given I review a Property's Information from row number 3
 	When  I create Digital Documents for a "Property" from row number 1
+	When  I create Digital Documents for a "Property" from row number 1
 	And I edit a Digital Document for a "Property" from row number 16
 	Then A Property Information is saved successfully
 
