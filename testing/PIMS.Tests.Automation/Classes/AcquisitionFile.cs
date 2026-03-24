@@ -152,7 +152,6 @@
         public string AgreementType { get; set; } = null!;
         public string AgreementDate { get; set; } = null!;
         public string AgreementCompletionDate { get; set; } = null!;
-        public string AgreementCommencementDate { get; set; } = null!;
         public string AgreementTerminationDate { get; set; } = null!;
         public string AgreementPossessionDate { get; set; } = null!;
         public string AgreementPurchasePrice { get; set; } = null!;

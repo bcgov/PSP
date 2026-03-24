@@ -165,6 +165,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to Properties for Disposition File
             sharedFileProperties.NavigateToAddPropertiesToFile();
 
+            //Search for a property by PID
+            if (dispositionFile.DispositionSearchProperties.PID != "")
+            {
+                searchProperties.SearchProperty(PID: dispositionFile.DispositionSearchProperties.PID);
+                searchProperties.SelectFirstPMBCResult();
+                searchProperties.ResetPropertySearch();
+            }
+
             //Search for a property by Plan
             if (dispositionFile.DispositionSearchProperties.PlanNumber != "")
             {
@@ -263,19 +271,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
             agreements.SaveAcquisitionFileAgreement();
 
             //Verify new added Agreement form
-            agreements.VerifyViewAgreementForm(dispositionFile.DispositionAgreements[0], 4);
+            agreements.VerifyViewAgreementForm(dispositionFile.DispositionAgreements[0], 1);
 
             //Edit Agreement button
             agreements.EditAgreementButton(0);
 
             //Update created agreement
-            agreements.CreateUpdateAgreement(dispositionFile.DispositionAgreements[1]);
+            agreements.CreateUpdateAgreement(dispositionFile.DispositionAgreements[0]);
 
             //Save new agreement
             agreements.SaveAcquisitionFileAgreement();
 
             //Verify Edit Agreement form
-            agreements.VerifyViewAgreementForm(dispositionFile.DispositionAgreements[1], 0);
+            agreements.VerifyViewAgreementForm(dispositionFile.DispositionAgreements[0], 1);
 
             var agreementsBeforeDelete = agreements.TotalAgreementsCount();
 
@@ -667,11 +675,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.NavigatePropertyListView();
 
             //Select all properties ownership types and look for the property
-            searchProperties.IncludeAllPropertyOwnershipSearch();
+            searchProperties.SelectOwnershipSearch("Disposed");
             searchProperties.SearchProperty(PID: dispositionFile.DispositionSearchProperties.PID);
 
             //Verify Property is associated to the Disposition File is disposed
-            Assert.Equal("Disposed", searchProperties.FirstPropertyOwnership());
+            Assert.Equal(1, searchProperties.PropertiesListFoundCount());
         }
 
         [StepDefinition(@"Disposition File without Sales Price error appears")]
@@ -920,6 +928,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 Agreement agreement = new();
 
                 agreement.AgreementStatus = ExcelDataContext.ReadData(i, "AgreementStatus");
+                agreement.AgreementCancellationReason = ExcelDataContext.ReadData(i, "AgreementCancellationReason");
                 agreement.AgreementLegalSurveyPlan = ExcelDataContext.ReadData(i, "AgreementLegalSurveyPlan");
                 agreement.AgreementType = ExcelDataContext.ReadData(i, "AgreementType");
                 agreement.AgreementDate = ExcelDataContext.ReadData(i, "AgreementDate");

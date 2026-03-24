@@ -40,14 +40,16 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchLicenceCreateNewBttn = By.XPath("//div[contains(text(),'Create a Lease/Licence')]/parent::button");
 
         //Search Results Table Elements
-        private readonly By searchLicenceLFileColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'L-File Number')]");
+        private readonly By searchLicenceLFileColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'L-File number')]");
         private readonly By searchLicenseOrderByLFileBttn = By.CssSelector("div[data-testid='sort-column-lFileNo']");
-        private readonly By searchLicenceExpiryDateColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Expiry Date')]");
+        private readonly By searchLicenceExpiryDateColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Expiry date')]");
         private readonly By searchLicenseOrderByExpiryDateBttn = By.CssSelector("div[data-testid='sort-column-expiryDate']");
-        private readonly By searchLicenceProgramNameColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Program Name')]");
+        private readonly By searchLicenceProgramNameColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Program name')]");
         private readonly By searchLicenseOrderByProgramNameBttn = By.CssSelector("div[data-testid='sort-column-programName']");
-        private readonly By searchLicenceTenantNameColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Tenant Names')]");
-        private readonly By searchLicencePropertiesColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Properties')]");
+        private readonly By searchLicenceTenantNameColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Tenant names')]");
+        private readonly By searchLicenceAccountTypeColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Account type')]");
+        private readonly By searchLicencePropertiesColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic address / PID / PIN')]");
+        private readonly By searchLicenceHistoricalFileColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Historical file #')]");
         private readonly By searchLicenceStatusColumnHeader = By.XPath("//div[@data-testid='leasesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");
         private readonly By searchLicenseOrderByStatusBttn = By.CssSelector("div[data-testid='sort-column-fileStatusTypeCode']");
 
@@ -59,8 +61,9 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchLicense1stResultExpiryDateContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[2]/span[1]");
         private readonly By searchLicense1stResultProgramContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[3]");
         private readonly By searchLicense1stResultTenantsContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[4]/div/div");
+        private readonly By searchLicense1stResultAccountTypeContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[5]");
         private readonly By searchLicense1stResultPropertiesContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[6]/div/div");
-        private readonly By searchLicense1stResultHistoricalFileContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[6]");
+        private readonly By searchLicense1stResultHistoricalFileContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[7]");
         private readonly By searchLicense1stResultStatusContent = By.XPath("//div[@data-testid='leasesTable']/div[@class='tbody']/div[@class='tr-wrapper'][1]/div/div[8]");
 
         private readonly By searchLicenseFileHeaderCode = By.XPath("//label[contains(text(),'Lease/Licence #')]/parent::div/following-sibling::div/span[1]");
@@ -338,7 +341,9 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(searchLicenceExpiryDateColumnHeader);
             AssertTrueIsDisplayed(searchLicenceProgramNameColumnHeader);
             AssertTrueIsDisplayed(searchLicenceTenantNameColumnHeader);
+            AssertTrueIsDisplayed(searchLicenceAccountTypeColumnHeader);
             AssertTrueIsDisplayed(searchLicencePropertiesColumnHeader);
+            AssertTrueIsDisplayed(searchLicenceHistoricalFileColumnHeader);
             AssertTrueIsDisplayed(searchLicenceStatusColumnHeader);
             AssertTrueIsDisplayed(searchLicenseResultsTable);
 
@@ -367,6 +372,9 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.NotEmpty(tenants);
             else
                 Assert.Empty(tenants);
+
+            if(lease.AccountType != "")
+                AssertTrueContentEquals(searchLicense1stResultAccountTypeContent, lease.AccountType);
 
             if (lease.SearchPropertiesIndex!= 0)
                 Assert.True(webDriver.FindElements(searchLicense1stResultPropertiesContent).Count > 0);
