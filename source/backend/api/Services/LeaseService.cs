@@ -277,7 +277,6 @@ namespace Pims.Api.Services
             return _leaseRepository.GetNoTracking(lease.LeaseId);
         }
 
-
         public PimsLease UpdateProperties(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
         {
             _logger.LogInformation("Updating lease properties with lease id {id}", lease.LeaseId);

@@ -1,4 +1,3 @@
-using ClosedXML.Excel;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -27,7 +26,7 @@ namespace Pims.Dal.Test.Repositories
     [ExcludeFromCodeCoverage]
     public class LeaseRepositoryTest
     {
-        private TestHelper _helper;
+        private readonly TestHelper _helper;
 
         public LeaseRepositoryTest()
         {
@@ -88,15 +87,12 @@ namespace Pims.Dal.Test.Repositories
         public void Lease_Count()
         {
             // Arrange
-            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseView);
-            var elease = EntityHelper.CreateLease(1);
-            _helper.CreatePimsContext(user, true).AddAndSaveChanges(elease);
-            _helper.InitializeDatabase(user);
-
-            var service = _helper.CreateRepository<LeaseRepository>(user);
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
+            var elease = EntityHelper.CreateLease(1, addStakeholder: false, addProperty: false);
+            _helper.AddAndSaveChanges(elease);
 
             // Act
-            var result = service.Count();
+            var result = repository.Count();
 
             // Assert
             Assert.Equal(1, result);

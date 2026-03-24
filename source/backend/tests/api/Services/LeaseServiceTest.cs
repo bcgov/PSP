@@ -1547,7 +1547,6 @@ namespace Pims.Api.Test.Services
 
             var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
-            var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
@@ -1583,7 +1582,6 @@ namespace Pims.Api.Test.Services
 
             var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
-            var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
