@@ -15,38 +15,38 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Drop trigger dbo.PIMS_PROJCT_I_S_U_TR
-PRINT N'Drop trigger dbo.PIMS_PROJCT_I_S_U_TR'
-GO
-DROP TRIGGER IF EXISTS [dbo].[PIMS_PROJCT_I_S_U_TR]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Drop trigger dbo.PIMS_PROJCT_I_S_U_TR
+--PRINT N'Drop trigger dbo.PIMS_PROJCT_I_S_U_TR'
+--GO
+--DROP TRIGGER IF EXISTS [dbo].[PIMS_PROJCT_I_S_U_TR]
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
--- Drop trigger dbo.PIMS_PROJCT_A_S_IUD_TR
-PRINT N'Drop trigger dbo.PIMS_PROJCT_A_S_IUD_TR'
-GO
-DROP TRIGGER IF EXISTS [dbo].[PIMS_PROJCT_A_S_IUD_TR]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Drop trigger dbo.PIMS_PROJCT_A_S_IUD_TR
+--PRINT N'Drop trigger dbo.PIMS_PROJCT_A_S_IUD_TR'
+--GO
+--DROP TRIGGER IF EXISTS [dbo].[PIMS_PROJCT_A_S_IUD_TR]
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
--- Drop foreign key constraint dbo.PIM_REGION_PIM_PROJCT_FK
-PRINT N'Drop foreign key constraint dbo.PIM_REGION_PIM_PROJCT_FK'
-GO
-ALTER TABLE [dbo].[PIMS_PROJECT]
-	DROP CONSTRAINT IF EXISTS [PIM_REGION_PIM_PROJCT_FK]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Drop foreign key constraint dbo.PIM_REGION_PIM_PROJCT_FK
+--PRINT N'Drop foreign key constraint dbo.PIM_REGION_PIM_PROJCT_FK'
+--GO
+--ALTER TABLE [dbo].[PIMS_PROJECT]
+--	DROP CONSTRAINT IF EXISTS [PIM_REGION_PIM_PROJCT_FK]
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
--- Drop index dbo.PROJCT_REGION_CODE_IDX
-PRINT N'Drop index dbo.PROJCT_REGION_CODE_IDX'
-GO
-DROP INDEX IF EXISTS [dbo].[PIMS_PROJECT].[PROJCT_REGION_CODE_IDX]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Drop index dbo.PROJCT_REGION_CODE_IDX
+--PRINT N'Drop index dbo.PROJCT_REGION_CODE_IDX'
+--GO
+--DROP INDEX IF EXISTS [dbo].[PIMS_PROJECT].[PROJCT_REGION_CODE_IDX]
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Drop trigger dbo.PIMS_AGRMNT_I_S_I_TR
 PRINT N'Drop trigger dbo.PIMS_AGRMNT_I_S_I_TR'
@@ -72,13 +72,13 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Drop trigger dbo.PIMS_PROJCT_I_S_I_TR
-PRINT N'Drop trigger dbo.PIMS_PROJCT_I_S_I_TR'
-GO
-DROP TRIGGER IF EXISTS [dbo].[PIMS_PROJCT_I_S_I_TR]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Drop trigger dbo.PIMS_PROJCT_I_S_I_TR
+--PRINT N'Drop trigger dbo.PIMS_PROJCT_I_S_I_TR'
+--GO
+--DROP TRIGGER IF EXISTS [dbo].[PIMS_PROJCT_I_S_I_TR]
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create sequence dbo.PIMS_NOTIFICATION_ID_SEQ
 PRINT N'Create sequence dbo.PIMS_NOTIFICATION_ID_SEQ'
@@ -95,19 +95,19 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Alter table dbo.PIMS_PROJECT
-PRINT N'Alter table dbo.PIMS_PROJECT'
-GO
-ALTER TABLE [dbo].[PIMS_PROJECT]
-	DROP CONSTRAINT IF EXISTS [PROJCT_REGION_CODE_DEF]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-ALTER TABLE [dbo].[PIMS_PROJECT]
-	DROP COLUMN IF EXISTS [REGION_CODE]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Alter table dbo.PIMS_PROJECT
+--PRINT N'Alter table dbo.PIMS_PROJECT'
+--GO
+--ALTER TABLE [dbo].[PIMS_PROJECT]
+--	DROP CONSTRAINT IF EXISTS [PROJCT_REGION_CODE_DEF]
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
+--ALTER TABLE [dbo].[PIMS_PROJECT]
+--	DROP COLUMN IF EXISTS [REGION_CODE]
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Alter table dbo.PIMS_AGREEMENT
 PRINT N'Alter table dbo.PIMS_AGREEMENT'
@@ -835,142 +835,142 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Create sequence dbo.PIMS_PROJECT_REGION_ID_SEQ
-PRINT N'Create sequence dbo.PIMS_PROJECT_REGION_ID_SEQ'
-GO
-CREATE SEQUENCE [dbo].[PIMS_PROJECT_REGION_ID_SEQ]
-	AS bigint
-	START WITH 1
-	INCREMENT BY 1
-	MINVALUE 1
-	MAXVALUE 2147483647
-	NO CYCLE
-	CACHE 50
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create sequence dbo.PIMS_PROJECT_REGION_ID_SEQ
+--PRINT N'Create sequence dbo.PIMS_PROJECT_REGION_ID_SEQ'
+--GO
+--CREATE SEQUENCE [dbo].[PIMS_PROJECT_REGION_ID_SEQ]
+--	AS bigint
+--	START WITH 1
+--	INCREMENT BY 1
+--	MINVALUE 1
+--	MAXVALUE 2147483647
+--	NO CYCLE
+--	CACHE 50
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
--- Create table dbo.PIMS_PROJECT_REGION
-PRINT N'Create table dbo.PIMS_PROJECT_REGION'
-GO
-CREATE TABLE [dbo].[PIMS_PROJECT_REGION]  ( 
-	[PROJECT_REGION_ID]             	bigint NOT NULL CONSTRAINT [PRJRGN_PROJECT_REGION_ID_DEF]  DEFAULT (NEXT VALUE FOR [PIMS_PROJECT_REGION_ID_SEQ]),
-	[PROJECT_ID]                    	bigint NOT NULL,
-	[REGION_CODE]                   	smallint NOT NULL,
-	[CONCURRENCY_CONTROL_NUMBER]    	bigint NOT NULL CONSTRAINT [PRJRGN_CONCURRENCY_CONTROL_NUMBER_DEF]  DEFAULT ((1)),
-	[APP_CREATE_TIMESTAMP]          	datetime NOT NULL CONSTRAINT [PRJRGN_APP_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
-	[APP_CREATE_USERID]             	nvarchar(30) NOT NULL CONSTRAINT [PRJRGN_APP_CREATE_USERID_DEF]  DEFAULT (user_name()),
-	[APP_CREATE_USER_GUID]          	uniqueidentifier NULL,
-	[APP_CREATE_USER_DIRECTORY]     	nvarchar(30) NOT NULL CONSTRAINT [PRJRGN_APP_CREATE_USER_DIRECTORY_DEF]  DEFAULT (user_name()),
-	[APP_LAST_UPDATE_TIMESTAMP]     	datetime NOT NULL CONSTRAINT [PRJRGN_APP_LAST_UPDATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
-	[APP_LAST_UPDATE_USERID]        	nvarchar(30) NOT NULL CONSTRAINT [PRJRGN_APP_LAST_UPDATE_USERID_DEF]  DEFAULT (user_name()),
-	[APP_LAST_UPDATE_USER_GUID]     	uniqueidentifier NULL,
-	[APP_LAST_UPDATE_USER_DIRECTORY]	nvarchar(30) NOT NULL CONSTRAINT [PRJRGN_APP_LAST_UPDATE_USER_DIRECTORY_DEF]  DEFAULT (user_name()),
-	[DB_CREATE_TIMESTAMP]           	datetime NOT NULL CONSTRAINT [PRJRGN_DB_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
-	[DB_CREATE_USERID]              	nvarchar(30) NOT NULL CONSTRAINT [PRJRGN_DB_CREATE_USERID_DEF]  DEFAULT (user_name()),
-	[DB_LAST_UPDATE_TIMESTAMP]      	datetime NOT NULL CONSTRAINT [PRJRGN_DB_LAST_UPDATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
-	[DB_LAST_UPDATE_USERID]         	nvarchar(30) NOT NULL CONSTRAINT [PRJRGN_DB_LAST_UPDATE_USERID_DEF]  DEFAULT (user_name()),
-	CONSTRAINT [PRJRGN_PK] PRIMARY KEY CLUSTERED([PROJECT_REGION_ID])
- ON [PRIMARY])
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'System-generated unique surrogate primary key.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'PROJECT_REGION_ID'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Foreign key to the PIMS_PROJECT table.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'PROJECT_ID'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Foreign key to the PIMS_REGION table.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'REGION_CODE'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'CONCURRENCY_CONTROL_NUMBER'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'The date and time the user created the record.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'APP_CREATE_TIMESTAMP'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'The user that created the record.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'APP_CREATE_USERID'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'GUID of the user that created the record.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'APP_CREATE_USER_GUID'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'User directory of the user that created the record.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'APP_CREATE_USER_DIRECTORY'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'The date and time the record was updated by the user.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'APP_LAST_UPDATE_TIMESTAMP'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'The user that updated the record.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'APP_LAST_UPDATE_USERID'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'GUID of the user that updated the record.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'APP_LAST_UPDATE_USER_GUID'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'User directory of the user that updated the record.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'APP_LAST_UPDATE_USER_DIRECTORY'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'The date and time the record was created.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'DB_CREATE_TIMESTAMP'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'The user or proxy account that created the record.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'DB_CREATE_USERID'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'The date and time the record was created or last updated.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'DB_LAST_UPDATE_TIMESTAMP'
-GO
-EXEC sp_addextendedproperty 
-	@name = N'MS_Description', @value = N'The user or proxy account that created or last updated the record.' , 
-	@level0type = N'Schema', @level0name = N'dbo', 
-	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
-	@level2type = N'Column', @level2name = N'DB_LAST_UPDATE_USERID'
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create table dbo.PIMS_PROJECT_REGION
+--PRINT N'Create table dbo.PIMS_PROJECT_REGION'
+--GO
+--CREATE TABLE [dbo].[PIMS_PROJECT_REGION]  ( 
+--	[PROJECT_REGION_ID]             	bigint NOT NULL CONSTRAINT [PRJRGN_PROJECT_REGION_ID_DEF]  DEFAULT (NEXT VALUE FOR [PIMS_PROJECT_REGION_ID_SEQ]),
+--	[PROJECT_ID]                    	bigint NOT NULL,
+--	[REGION_CODE]                   	smallint NOT NULL,
+--	[CONCURRENCY_CONTROL_NUMBER]    	bigint NOT NULL CONSTRAINT [PRJRGN_CONCURRENCY_CONTROL_NUMBER_DEF]  DEFAULT ((1)),
+--	[APP_CREATE_TIMESTAMP]          	datetime NOT NULL CONSTRAINT [PRJRGN_APP_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+--	[APP_CREATE_USERID]             	nvarchar(30) NOT NULL CONSTRAINT [PRJRGN_APP_CREATE_USERID_DEF]  DEFAULT (user_name()),
+--	[APP_CREATE_USER_GUID]          	uniqueidentifier NULL,
+--	[APP_CREATE_USER_DIRECTORY]     	nvarchar(30) NOT NULL CONSTRAINT [PRJRGN_APP_CREATE_USER_DIRECTORY_DEF]  DEFAULT (user_name()),
+--	[APP_LAST_UPDATE_TIMESTAMP]     	datetime NOT NULL CONSTRAINT [PRJRGN_APP_LAST_UPDATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+--	[APP_LAST_UPDATE_USERID]        	nvarchar(30) NOT NULL CONSTRAINT [PRJRGN_APP_LAST_UPDATE_USERID_DEF]  DEFAULT (user_name()),
+--	[APP_LAST_UPDATE_USER_GUID]     	uniqueidentifier NULL,
+--	[APP_LAST_UPDATE_USER_DIRECTORY]	nvarchar(30) NOT NULL CONSTRAINT [PRJRGN_APP_LAST_UPDATE_USER_DIRECTORY_DEF]  DEFAULT (user_name()),
+--	[DB_CREATE_TIMESTAMP]           	datetime NOT NULL CONSTRAINT [PRJRGN_DB_CREATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+--	[DB_CREATE_USERID]              	nvarchar(30) NOT NULL CONSTRAINT [PRJRGN_DB_CREATE_USERID_DEF]  DEFAULT (user_name()),
+--	[DB_LAST_UPDATE_TIMESTAMP]      	datetime NOT NULL CONSTRAINT [PRJRGN_DB_LAST_UPDATE_TIMESTAMP_DEF]  DEFAULT (getutcdate()),
+--	[DB_LAST_UPDATE_USERID]         	nvarchar(30) NOT NULL CONSTRAINT [PRJRGN_DB_LAST_UPDATE_USERID_DEF]  DEFAULT (user_name()),
+--	CONSTRAINT [PRJRGN_PK] PRIMARY KEY CLUSTERED([PROJECT_REGION_ID])
+-- ON [PRIMARY])
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'System-generated unique surrogate primary key.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'PROJECT_REGION_ID'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'Foreign key to the PIMS_PROJECT table.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'PROJECT_ID'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'Foreign key to the PIMS_REGION table.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'REGION_CODE'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'CONCURRENCY_CONTROL_NUMBER'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'The date and time the user created the record.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'APP_CREATE_TIMESTAMP'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'The user that created the record.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'APP_CREATE_USERID'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'GUID of the user that created the record.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'APP_CREATE_USER_GUID'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'User directory of the user that created the record.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'APP_CREATE_USER_DIRECTORY'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'The date and time the record was updated by the user.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'APP_LAST_UPDATE_TIMESTAMP'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'The user that updated the record.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'APP_LAST_UPDATE_USERID'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'GUID of the user that updated the record.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'APP_LAST_UPDATE_USER_GUID'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'User directory of the user that updated the record.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'APP_LAST_UPDATE_USER_DIRECTORY'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'The date and time the record was created.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'DB_CREATE_TIMESTAMP'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'The user or proxy account that created the record.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'DB_CREATE_USERID'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'The date and time the record was created or last updated.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'DB_LAST_UPDATE_TIMESTAMP'
+--GO
+--EXEC sp_addextendedproperty 
+--	@name = N'MS_Description', @value = N'The user or proxy account that created or last updated the record.' , 
+--	@level0type = N'Schema', @level0name = N'dbo', 
+--	@level1type = N'Table', @level1name = N'PIMS_PROJECT_REGION', 
+--	@level2type = N'Column', @level2name = N'DB_LAST_UPDATE_USERID'
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create sequence dbo.PIMS_NOTIFICATION_USER_OUTPUT_H_ID_SEQ
 PRINT N'Create sequence dbo.PIMS_NOTIFICATION_USER_OUTPUT_H_ID_SEQ'
@@ -1114,71 +1114,71 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Alter table dbo.PIMS_PROJECT_HIST
-PRINT N'Alter table dbo.PIMS_PROJECT_HIST'
-GO
-ALTER TABLE [dbo].[PIMS_PROJECT_HIST]
-	DROP COLUMN IF EXISTS [REGION_CODE]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Alter table dbo.PIMS_PROJECT_HIST
+--PRINT N'Alter table dbo.PIMS_PROJECT_HIST'
+--GO
+--ALTER TABLE [dbo].[PIMS_PROJECT_HIST]
+--	DROP COLUMN IF EXISTS [REGION_CODE]
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
--- Create sequence dbo.PIMS_PROJECT_REGION_H_ID_SEQ
-PRINT N'Create sequence dbo.PIMS_PROJECT_REGION_H_ID_SEQ'
-GO
-CREATE SEQUENCE [dbo].[PIMS_PROJECT_REGION_H_ID_SEQ]
-	AS bigint
-	START WITH 1
-	INCREMENT BY 1
-	MINVALUE 1
-	MAXVALUE 2147483647
-	NO CYCLE
-	CACHE 50
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create sequence dbo.PIMS_PROJECT_REGION_H_ID_SEQ
+--PRINT N'Create sequence dbo.PIMS_PROJECT_REGION_H_ID_SEQ'
+--GO
+--CREATE SEQUENCE [dbo].[PIMS_PROJECT_REGION_H_ID_SEQ]
+--	AS bigint
+--	START WITH 1
+--	INCREMENT BY 1
+--	MINVALUE 1
+--	MAXVALUE 2147483647
+--	NO CYCLE
+--	CACHE 50
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
--- Create table dbo.PIMS_PROJECT_REGION_HIST
-PRINT N'Create table dbo.PIMS_PROJECT_REGION_HIST'
-GO
-CREATE TABLE [dbo].[PIMS_PROJECT_REGION_HIST]  ( 
-	[_PROJECT_REGION_HIST_ID]       	bigint NOT NULL DEFAULT (NEXT VALUE FOR [PIMS_PROJECT_REGION_H_ID_SEQ]),
-	[EFFECTIVE_DATE_HIST]           	datetime NOT NULL DEFAULT (getutcdate()),
-	[END_DATE_HIST]                 	datetime NULL,
-	[PROJECT_REGION_ID]             	bigint NOT NULL,
-	[PROJECT_ID]                    	bigint NOT NULL,
-	[REGION_CODE]                   	smallint NOT NULL,
-	[CONCURRENCY_CONTROL_NUMBER]    	bigint NOT NULL,
-	[APP_CREATE_TIMESTAMP]          	datetime NOT NULL,
-	[APP_CREATE_USERID]             	nvarchar(30) NOT NULL,
-	[APP_CREATE_USER_GUID]          	uniqueidentifier NULL,
-	[APP_CREATE_USER_DIRECTORY]     	nvarchar(30) NOT NULL,
-	[APP_LAST_UPDATE_TIMESTAMP]     	datetime NOT NULL,
-	[APP_LAST_UPDATE_USERID]        	nvarchar(30) NOT NULL,
-	[APP_LAST_UPDATE_USER_GUID]     	uniqueidentifier NULL,
-	[APP_LAST_UPDATE_USER_DIRECTORY]	nvarchar(30) NOT NULL,
-	[DB_CREATE_TIMESTAMP]           	datetime NOT NULL,
-	[DB_CREATE_USERID]              	nvarchar(30) NOT NULL,
-	[DB_LAST_UPDATE_TIMESTAMP]      	datetime NOT NULL,
-	[DB_LAST_UPDATE_USERID]         	nvarchar(30) NOT NULL,
-	CONSTRAINT [PIMS_PRJRGN_H_PK] PRIMARY KEY CLUSTERED([_PROJECT_REGION_HIST_ID])
- ON [PRIMARY])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create table dbo.PIMS_PROJECT_REGION_HIST
+--PRINT N'Create table dbo.PIMS_PROJECT_REGION_HIST'
+--GO
+--CREATE TABLE [dbo].[PIMS_PROJECT_REGION_HIST]  ( 
+--	[_PROJECT_REGION_HIST_ID]       	bigint NOT NULL DEFAULT (NEXT VALUE FOR [PIMS_PROJECT_REGION_H_ID_SEQ]),
+--	[EFFECTIVE_DATE_HIST]           	datetime NOT NULL DEFAULT (getutcdate()),
+--	[END_DATE_HIST]                 	datetime NULL,
+--	[PROJECT_REGION_ID]             	bigint NOT NULL,
+--	[PROJECT_ID]                    	bigint NOT NULL,
+--	[REGION_CODE]                   	smallint NOT NULL,
+--	[CONCURRENCY_CONTROL_NUMBER]    	bigint NOT NULL,
+--	[APP_CREATE_TIMESTAMP]          	datetime NOT NULL,
+--	[APP_CREATE_USERID]             	nvarchar(30) NOT NULL,
+--	[APP_CREATE_USER_GUID]          	uniqueidentifier NULL,
+--	[APP_CREATE_USER_DIRECTORY]     	nvarchar(30) NOT NULL,
+--	[APP_LAST_UPDATE_TIMESTAMP]     	datetime NOT NULL,
+--	[APP_LAST_UPDATE_USERID]        	nvarchar(30) NOT NULL,
+--	[APP_LAST_UPDATE_USER_GUID]     	uniqueidentifier NULL,
+--	[APP_LAST_UPDATE_USER_DIRECTORY]	nvarchar(30) NOT NULL,
+--	[DB_CREATE_TIMESTAMP]           	datetime NOT NULL,
+--	[DB_CREATE_USERID]              	nvarchar(30) NOT NULL,
+--	[DB_LAST_UPDATE_TIMESTAMP]      	datetime NOT NULL,
+--	[DB_LAST_UPDATE_USERID]         	nvarchar(30) NOT NULL,
+--	CONSTRAINT [PIMS_PRJRGN_H_PK] PRIMARY KEY CLUSTERED([_PROJECT_REGION_HIST_ID])
+-- ON [PRIMARY])
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
--- Create unique constraint dbo.PIMS_PRJRGN_H_UK
-PRINT N'Create unique constraint dbo.PIMS_PRJRGN_H_UK'
-GO
-ALTER TABLE [dbo].[PIMS_PROJECT_REGION_HIST]
-	ADD CONSTRAINT [PIMS_PRJRGN_H_UK]
-	UNIQUE ([_PROJECT_REGION_HIST_ID], [END_DATE_HIST]) 
-	WITH (
-		DATA_COMPRESSION = NONE
-	) ON [PRIMARY]
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create unique constraint dbo.PIMS_PRJRGN_H_UK
+--PRINT N'Create unique constraint dbo.PIMS_PRJRGN_H_UK'
+--GO
+--ALTER TABLE [dbo].[PIMS_PROJECT_REGION_HIST]
+--	ADD CONSTRAINT [PIMS_PRJRGN_H_UK]
+--	UNIQUE ([_PROJECT_REGION_HIST_ID], [END_DATE_HIST]) 
+--	WITH (
+--		DATA_COMPRESSION = NONE
+--	) ON [PRIMARY]
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create sequence dbo.PIMS_NOTIFICATION_USER_H_ID_SEQ
 PRINT N'Create sequence dbo.PIMS_NOTIFICATION_USER_H_ID_SEQ'
@@ -1282,14 +1282,14 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Create index dbo.PRJRGN_REGION_CODE_IDX
-PRINT N'Create index dbo.PRJRGN_REGION_CODE_IDX'
-GO
-CREATE NONCLUSTERED INDEX [PRJRGN_REGION_CODE_IDX]
-	ON [dbo].[PIMS_PROJECT_REGION]([REGION_CODE])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create index dbo.PRJRGN_REGION_CODE_IDX
+--PRINT N'Create index dbo.PRJRGN_REGION_CODE_IDX'
+--GO
+--CREATE NONCLUSTERED INDEX [PRJRGN_REGION_CODE_IDX]
+--	ON [dbo].[PIMS_PROJECT_REGION]([REGION_CODE])
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create index dbo.NOTIFY_DISPOSITION_FILE_ID_IDX
 PRINT N'Create index dbo.NOTIFY_DISPOSITION_FILE_ID_IDX'
@@ -1381,14 +1381,14 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Create index dbo.PRJRGN_PROJECT_ID_IDX
-PRINT N'Create index dbo.PRJRGN_PROJECT_ID_IDX'
-GO
-CREATE NONCLUSTERED INDEX [PRJRGN_PROJECT_ID_IDX]
-	ON [dbo].[PIMS_PROJECT_REGION]([PROJECT_ID])
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create index dbo.PRJRGN_PROJECT_ID_IDX
+--PRINT N'Create index dbo.PRJRGN_PROJECT_ID_IDX'
+--GO
+--CREATE NONCLUSTERED INDEX [PRJRGN_PROJECT_ID_IDX]
+--	ON [dbo].[PIMS_PROJECT_REGION]([PROJECT_ID])
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create index dbo.NOTIFY_TAKE_ID_IDX
 PRINT N'Create index dbo.NOTIFY_TAKE_ID_IDX'
@@ -1477,107 +1477,107 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Create trigger dbo.PIMS_PROJCT_I_S_I_TR
-PRINT N'Create trigger dbo.PIMS_PROJCT_I_S_I_TR'
-GO
-CREATE TRIGGER [dbo].[PIMS_PROJCT_I_S_I_TR] ON PIMS_PROJECT INSTEAD OF INSERT AS
-SET NOCOUNT ON
-BEGIN TRY
-  IF NOT EXISTS(SELECT * FROM inserted) 
-    RETURN;
+---- Create trigger dbo.PIMS_PROJCT_I_S_I_TR
+--PRINT N'Create trigger dbo.PIMS_PROJCT_I_S_I_TR'
+--GO
+--CREATE TRIGGER [dbo].[PIMS_PROJCT_I_S_I_TR] ON PIMS_PROJECT INSTEAD OF INSERT AS
+--SET NOCOUNT ON
+--BEGIN TRY
+--  IF NOT EXISTS(SELECT * FROM inserted) 
+--    RETURN;
+--
+--  
+--  insert into PIMS_PROJECT ("ID",
+--      "PROJECT_STATUS_TYPE_CODE",
+--      "BUSINESS_FUNCTION_CODE_ID",
+--      "COST_TYPE_CODE_ID",
+--      "WORK_ACTIVITY_CODE_ID",
+--      "CODE",
+--      "DESCRIPTION",
+--      "NOTE",
+--      "CONCURRENCY_CONTROL_NUMBER",
+--      "APP_CREATE_TIMESTAMP",
+--      "APP_CREATE_USERID",
+--      "APP_CREATE_USER_GUID",
+--      "APP_CREATE_USER_DIRECTORY",
+--      "APP_LAST_UPDATE_TIMESTAMP",
+--      "APP_LAST_UPDATE_USERID",
+--      "APP_LAST_UPDATE_USER_GUID",
+--      "APP_LAST_UPDATE_USER_DIRECTORY")
+--    select "ID",
+--      "PROJECT_STATUS_TYPE_CODE",
+--      "BUSINESS_FUNCTION_CODE_ID",
+--      "COST_TYPE_CODE_ID",
+--      "WORK_ACTIVITY_CODE_ID",
+--      "CODE",
+--      "DESCRIPTION",
+--      "NOTE",
+--      "CONCURRENCY_CONTROL_NUMBER",
+--      "APP_CREATE_TIMESTAMP",
+--      "APP_CREATE_USERID",
+--      "APP_CREATE_USER_GUID",
+--      "APP_CREATE_USER_DIRECTORY",
+--      "APP_LAST_UPDATE_TIMESTAMP",
+--      "APP_LAST_UPDATE_USERID",
+--      "APP_LAST_UPDATE_USER_GUID",
+--      "APP_LAST_UPDATE_USER_DIRECTORY"
+--    from inserted;
+--
+--END TRY
+--BEGIN CATCH
+--   IF @@trancount > 0 ROLLBACK TRANSACTION
+--   EXEC pims_error_handling
+--END CATCH;
+--
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
-  
-  insert into PIMS_PROJECT ("ID",
-      "PROJECT_STATUS_TYPE_CODE",
-      "BUSINESS_FUNCTION_CODE_ID",
-      "COST_TYPE_CODE_ID",
-      "WORK_ACTIVITY_CODE_ID",
-      "CODE",
-      "DESCRIPTION",
-      "NOTE",
-      "CONCURRENCY_CONTROL_NUMBER",
-      "APP_CREATE_TIMESTAMP",
-      "APP_CREATE_USERID",
-      "APP_CREATE_USER_GUID",
-      "APP_CREATE_USER_DIRECTORY",
-      "APP_LAST_UPDATE_TIMESTAMP",
-      "APP_LAST_UPDATE_USERID",
-      "APP_LAST_UPDATE_USER_GUID",
-      "APP_LAST_UPDATE_USER_DIRECTORY")
-    select "ID",
-      "PROJECT_STATUS_TYPE_CODE",
-      "BUSINESS_FUNCTION_CODE_ID",
-      "COST_TYPE_CODE_ID",
-      "WORK_ACTIVITY_CODE_ID",
-      "CODE",
-      "DESCRIPTION",
-      "NOTE",
-      "CONCURRENCY_CONTROL_NUMBER",
-      "APP_CREATE_TIMESTAMP",
-      "APP_CREATE_USERID",
-      "APP_CREATE_USER_GUID",
-      "APP_CREATE_USER_DIRECTORY",
-      "APP_LAST_UPDATE_TIMESTAMP",
-      "APP_LAST_UPDATE_USERID",
-      "APP_LAST_UPDATE_USER_GUID",
-      "APP_LAST_UPDATE_USER_DIRECTORY"
-    from inserted;
-
-END TRY
-BEGIN CATCH
-   IF @@trancount > 0 ROLLBACK TRANSACTION
-   EXEC pims_error_handling
-END CATCH;
-
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-
--- Create trigger dbo.PIMS_PRJRGN_I_S_I_TR
-PRINT N'Create trigger dbo.PIMS_PRJRGN_I_S_I_TR'
-GO
-CREATE TRIGGER [dbo].[PIMS_PRJRGN_I_S_I_TR] ON PIMS_PROJECT_REGION INSTEAD OF INSERT AS
-SET NOCOUNT ON
-BEGIN TRY
-  IF NOT EXISTS(SELECT * FROM inserted) 
-    RETURN;
-
-  
-  insert into PIMS_PROJECT_REGION ("PROJECT_REGION_ID",
-      "PROJECT_ID",
-      "REGION_CODE",
-      "CONCURRENCY_CONTROL_NUMBER",
-      "APP_CREATE_TIMESTAMP",
-      "APP_CREATE_USERID",
-      "APP_CREATE_USER_GUID",
-      "APP_CREATE_USER_DIRECTORY",
-      "APP_LAST_UPDATE_TIMESTAMP",
-      "APP_LAST_UPDATE_USERID",
-      "APP_LAST_UPDATE_USER_GUID",
-      "APP_LAST_UPDATE_USER_DIRECTORY")
-    select "PROJECT_REGION_ID",
-      "PROJECT_ID",
-      "REGION_CODE",
-      "CONCURRENCY_CONTROL_NUMBER",
-      "APP_CREATE_TIMESTAMP",
-      "APP_CREATE_USERID",
-      "APP_CREATE_USER_GUID",
-      "APP_CREATE_USER_DIRECTORY",
-      "APP_LAST_UPDATE_TIMESTAMP",
-      "APP_LAST_UPDATE_USERID",
-      "APP_LAST_UPDATE_USER_GUID",
-      "APP_LAST_UPDATE_USER_DIRECTORY"
-    from inserted;
-
-END TRY
-BEGIN CATCH
-   IF @@trancount > 0 ROLLBACK TRANSACTION
-   EXEC pims_error_handling
-END CATCH;
-
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create trigger dbo.PIMS_PRJRGN_I_S_I_TR
+--PRINT N'Create trigger dbo.PIMS_PRJRGN_I_S_I_TR'
+--GO
+--CREATE TRIGGER [dbo].[PIMS_PRJRGN_I_S_I_TR] ON PIMS_PROJECT_REGION INSTEAD OF INSERT AS
+--SET NOCOUNT ON
+--BEGIN TRY
+--  IF NOT EXISTS(SELECT * FROM inserted) 
+--    RETURN;
+--
+--  
+--  insert into PIMS_PROJECT_REGION ("PROJECT_REGION_ID",
+--      "PROJECT_ID",
+--      "REGION_CODE",
+--      "CONCURRENCY_CONTROL_NUMBER",
+--      "APP_CREATE_TIMESTAMP",
+--      "APP_CREATE_USERID",
+--      "APP_CREATE_USER_GUID",
+--      "APP_CREATE_USER_DIRECTORY",
+--      "APP_LAST_UPDATE_TIMESTAMP",
+--      "APP_LAST_UPDATE_USERID",
+--      "APP_LAST_UPDATE_USER_GUID",
+--      "APP_LAST_UPDATE_USER_DIRECTORY")
+--    select "PROJECT_REGION_ID",
+--      "PROJECT_ID",
+--      "REGION_CODE",
+--      "CONCURRENCY_CONTROL_NUMBER",
+--      "APP_CREATE_TIMESTAMP",
+--      "APP_CREATE_USERID",
+--      "APP_CREATE_USER_GUID",
+--      "APP_CREATE_USER_DIRECTORY",
+--      "APP_LAST_UPDATE_TIMESTAMP",
+--      "APP_LAST_UPDATE_USERID",
+--      "APP_LAST_UPDATE_USER_GUID",
+--      "APP_LAST_UPDATE_USER_DIRECTORY"
+--    from inserted;
+--
+--END TRY
+--BEGIN CATCH
+--   IF @@trancount > 0 ROLLBACK TRANSACTION
+--   EXEC pims_error_handling
+--END CATCH;
+--
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create trigger dbo.PIMS_NTOUTT_I_S_I_TR
 PRINT N'Create trigger dbo.PIMS_NTOUTT_I_S_I_TR'
@@ -1999,45 +1999,45 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Create trigger dbo.PIMS_PRJRGN_I_S_U_TR
-PRINT N'Create trigger dbo.PIMS_PRJRGN_I_S_U_TR'
-GO
-CREATE TRIGGER [dbo].[PIMS_PRJRGN_I_S_U_TR] ON PIMS_PROJECT_REGION INSTEAD OF UPDATE AS
-SET NOCOUNT ON
-BEGIN TRY
-  IF NOT EXISTS(SELECT * FROM deleted) 
-    RETURN;
-
-  -- validate concurrency control
-  if exists (select 1 from inserted, deleted where inserted.CONCURRENCY_CONTROL_NUMBER != deleted.CONCURRENCY_CONTROL_NUMBER+1 AND inserted.PROJECT_REGION_ID = deleted.PROJECT_REGION_ID)
-    raiserror('CONCURRENCY FAILURE.',16,1)
-
-
-  -- update statement
-  update PIMS_PROJECT_REGION
-    set "PROJECT_REGION_ID" = inserted."PROJECT_REGION_ID",
-      "PROJECT_ID" = inserted."PROJECT_ID",
-      "REGION_CODE" = inserted."REGION_CODE",
-      "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER",
-      "APP_LAST_UPDATE_TIMESTAMP" = inserted."APP_LAST_UPDATE_TIMESTAMP",
-      "APP_LAST_UPDATE_USERID" = inserted."APP_LAST_UPDATE_USERID",
-      "APP_LAST_UPDATE_USER_GUID" = inserted."APP_LAST_UPDATE_USER_GUID",
-      "APP_LAST_UPDATE_USER_DIRECTORY" = inserted."APP_LAST_UPDATE_USER_DIRECTORY"
-    , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
-    , DB_LAST_UPDATE_USERID = user_name()
-    from PIMS_PROJECT_REGION
-    inner join inserted
-    on (PIMS_PROJECT_REGION.PROJECT_REGION_ID = inserted.PROJECT_REGION_ID);
-
-END TRY
-BEGIN CATCH
-   IF @@trancount > 0 ROLLBACK TRANSACTION
-   EXEC pims_error_handling
-END CATCH;
-
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create trigger dbo.PIMS_PRJRGN_I_S_U_TR
+--PRINT N'Create trigger dbo.PIMS_PRJRGN_I_S_U_TR'
+--GO
+--CREATE TRIGGER [dbo].[PIMS_PRJRGN_I_S_U_TR] ON PIMS_PROJECT_REGION INSTEAD OF UPDATE AS
+--SET NOCOUNT ON
+--BEGIN TRY
+--  IF NOT EXISTS(SELECT * FROM deleted) 
+--    RETURN;
+--
+--  -- validate concurrency control
+--  if exists (select 1 from inserted, deleted where inserted.CONCURRENCY_CONTROL_NUMBER != deleted.CONCURRENCY_CONTROL_NUMBER+1 AND inserted.PROJECT_REGION_ID = deleted.PROJECT_REGION_ID)
+--    raiserror('CONCURRENCY FAILURE.',16,1)
+--
+--
+--  -- update statement
+--  update PIMS_PROJECT_REGION
+--    set "PROJECT_REGION_ID" = inserted."PROJECT_REGION_ID",
+--      "PROJECT_ID" = inserted."PROJECT_ID",
+--      "REGION_CODE" = inserted."REGION_CODE",
+--      "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER",
+--      "APP_LAST_UPDATE_TIMESTAMP" = inserted."APP_LAST_UPDATE_TIMESTAMP",
+--      "APP_LAST_UPDATE_USERID" = inserted."APP_LAST_UPDATE_USERID",
+--      "APP_LAST_UPDATE_USER_GUID" = inserted."APP_LAST_UPDATE_USER_GUID",
+--      "APP_LAST_UPDATE_USER_DIRECTORY" = inserted."APP_LAST_UPDATE_USER_DIRECTORY"
+--    , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
+--    , DB_LAST_UPDATE_USERID = user_name()
+--    from PIMS_PROJECT_REGION
+--    inner join inserted
+--    on (PIMS_PROJECT_REGION.PROJECT_REGION_ID = inserted.PROJECT_REGION_ID);
+--
+--END TRY
+--BEGIN CATCH
+--   IF @@trancount > 0 ROLLBACK TRANSACTION
+--   EXEC pims_error_handling
+--END CATCH;
+--
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create trigger dbo.PIMS_NOTFYT_I_S_I_TR
 PRINT N'Create trigger dbo.PIMS_NOTFYT_I_S_I_TR'
@@ -2321,105 +2321,105 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Create foreign key constraint dbo.PIM_REGION_PIM_PRJRGN_FK
-PRINT N'Create foreign key constraint dbo.PIM_REGION_PIM_PRJRGN_FK'
-GO
-ALTER TABLE [dbo].[PIMS_PROJECT_REGION]
-	ADD CONSTRAINT [PIM_REGION_PIM_PRJRGN_FK]
-	FOREIGN KEY([REGION_CODE])
-	REFERENCES [dbo].[PIMS_REGION]([REGION_CODE])
-	ON DELETE NO ACTION 
-	ON UPDATE NO ACTION 
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create foreign key constraint dbo.PIM_REGION_PIM_PRJRGN_FK
+--PRINT N'Create foreign key constraint dbo.PIM_REGION_PIM_PRJRGN_FK'
+--GO
+--ALTER TABLE [dbo].[PIMS_PROJECT_REGION]
+--	ADD CONSTRAINT [PIM_REGION_PIM_PRJRGN_FK]
+--	FOREIGN KEY([REGION_CODE])
+--	REFERENCES [dbo].[PIMS_REGION]([REGION_CODE])
+--	ON DELETE NO ACTION 
+--	ON UPDATE NO ACTION 
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
--- Create foreign key constraint dbo.PIM_PROJCT_PIM_PRJRGN_FK
-PRINT N'Create foreign key constraint dbo.PIM_PROJCT_PIM_PRJRGN_FK'
-GO
-ALTER TABLE [dbo].[PIMS_PROJECT_REGION]
-	ADD CONSTRAINT [PIM_PROJCT_PIM_PRJRGN_FK]
-	FOREIGN KEY([PROJECT_ID])
-	REFERENCES [dbo].[PIMS_PROJECT]([ID])
-	ON DELETE NO ACTION 
-	ON UPDATE NO ACTION 
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create foreign key constraint dbo.PIM_PROJCT_PIM_PRJRGN_FK
+--PRINT N'Create foreign key constraint dbo.PIM_PROJCT_PIM_PRJRGN_FK'
+--GO
+--ALTER TABLE [dbo].[PIMS_PROJECT_REGION]
+--	ADD CONSTRAINT [PIM_PROJCT_PIM_PRJRGN_FK]
+--	FOREIGN KEY([PROJECT_ID])
+--	REFERENCES [dbo].[PIMS_PROJECT]([ID])
+--	ON DELETE NO ACTION 
+--	ON UPDATE NO ACTION 
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
--- Create trigger dbo.PIMS_PROJCT_A_S_IUD_TR
-PRINT N'Create trigger dbo.PIMS_PROJCT_A_S_IUD_TR'
-GO
-CREATE TRIGGER [dbo].[PIMS_PROJCT_A_S_IUD_TR] ON PIMS_PROJECT FOR INSERT, UPDATE, DELETE AS
-SET NOCOUNT ON
-BEGIN TRY
-DECLARE @curr_date datetime;
-SET @curr_date = getutcdate();
-  IF NOT EXISTS(SELECT * FROM inserted) AND NOT EXISTS(SELECT * FROM deleted) 
-    RETURN;
+---- Create trigger dbo.PIMS_PROJCT_A_S_IUD_TR
+--PRINT N'Create trigger dbo.PIMS_PROJCT_A_S_IUD_TR'
+--GO
+--CREATE TRIGGER [dbo].[PIMS_PROJCT_A_S_IUD_TR] ON PIMS_PROJECT FOR INSERT, UPDATE, DELETE AS
+--SET NOCOUNT ON
+--BEGIN TRY
+--DECLARE @curr_date datetime;
+--SET @curr_date = getutcdate();
+--  IF NOT EXISTS(SELECT * FROM inserted) AND NOT EXISTS(SELECT * FROM deleted) 
+--    RETURN;
+--
+--  -- historical
+--  IF EXISTS(SELECT * FROM deleted)
+--    update PIMS_PROJECT_HIST set END_DATE_HIST = @curr_date where ID in (select ID from deleted) and END_DATE_HIST is null;
+--  
+--  IF EXISTS(SELECT * FROM inserted)
+--    insert into PIMS_PROJECT_HIST ([ID], [PROJECT_STATUS_TYPE_CODE], [BUSINESS_FUNCTION_CODE_ID], [COST_TYPE_CODE_ID], [WORK_ACTIVITY_CODE_ID], [CODE], [DESCRIPTION], [NOTE], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], _PROJECT_HIST_ID, END_DATE_HIST, EFFECTIVE_DATE_HIST)
+--      select [ID], [PROJECT_STATUS_TYPE_CODE], [BUSINESS_FUNCTION_CODE_ID], [COST_TYPE_CODE_ID], [WORK_ACTIVITY_CODE_ID], [CODE], [DESCRIPTION], [NOTE], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], (next value for [dbo].[PIMS_PROJECT_H_ID_SEQ]) as [_PROJECT_HIST_ID], null as [END_DATE_HIST], @curr_date as [EFFECTIVE_DATE_HIST] from inserted;
+--
+--END TRY
+--BEGIN CATCH
+--   IF @@trancount > 0 ROLLBACK TRANSACTION
+--   EXEC pims_error_handling
+--END CATCH;
+--
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
-  -- historical
-  IF EXISTS(SELECT * FROM deleted)
-    update PIMS_PROJECT_HIST set END_DATE_HIST = @curr_date where ID in (select ID from deleted) and END_DATE_HIST is null;
-  
-  IF EXISTS(SELECT * FROM inserted)
-    insert into PIMS_PROJECT_HIST ([ID], [PROJECT_STATUS_TYPE_CODE], [BUSINESS_FUNCTION_CODE_ID], [COST_TYPE_CODE_ID], [WORK_ACTIVITY_CODE_ID], [CODE], [DESCRIPTION], [NOTE], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], _PROJECT_HIST_ID, END_DATE_HIST, EFFECTIVE_DATE_HIST)
-      select [ID], [PROJECT_STATUS_TYPE_CODE], [BUSINESS_FUNCTION_CODE_ID], [COST_TYPE_CODE_ID], [WORK_ACTIVITY_CODE_ID], [CODE], [DESCRIPTION], [NOTE], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], (next value for [dbo].[PIMS_PROJECT_H_ID_SEQ]) as [_PROJECT_HIST_ID], null as [END_DATE_HIST], @curr_date as [EFFECTIVE_DATE_HIST] from inserted;
-
-END TRY
-BEGIN CATCH
-   IF @@trancount > 0 ROLLBACK TRANSACTION
-   EXEC pims_error_handling
-END CATCH;
-
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-
--- Create trigger dbo.PIMS_PROJCT_I_S_U_TR
-PRINT N'Create trigger dbo.PIMS_PROJCT_I_S_U_TR'
-GO
-CREATE TRIGGER [dbo].[PIMS_PROJCT_I_S_U_TR] ON PIMS_PROJECT INSTEAD OF UPDATE AS
-SET NOCOUNT ON
-BEGIN TRY
-  IF NOT EXISTS(SELECT * FROM deleted) 
-    RETURN;
-
-  -- validate concurrency control
-  if exists (select 1 from inserted, deleted where inserted.CONCURRENCY_CONTROL_NUMBER != deleted.CONCURRENCY_CONTROL_NUMBER+1 AND inserted.ID = deleted.ID)
-    raiserror('CONCURRENCY FAILURE.',16,1)
-
-
-  -- update statement
-  update PIMS_PROJECT
-    set "ID" = inserted."ID",
-      "PROJECT_STATUS_TYPE_CODE" = inserted."PROJECT_STATUS_TYPE_CODE",
-      "BUSINESS_FUNCTION_CODE_ID" = inserted."BUSINESS_FUNCTION_CODE_ID",
-      "COST_TYPE_CODE_ID" = inserted."COST_TYPE_CODE_ID",
-      "WORK_ACTIVITY_CODE_ID" = inserted."WORK_ACTIVITY_CODE_ID",
-      "CODE" = inserted."CODE",
-      "DESCRIPTION" = inserted."DESCRIPTION",
-      "NOTE" = inserted."NOTE",
-      "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER",
-      "APP_LAST_UPDATE_TIMESTAMP" = inserted."APP_LAST_UPDATE_TIMESTAMP",
-      "APP_LAST_UPDATE_USERID" = inserted."APP_LAST_UPDATE_USERID",
-      "APP_LAST_UPDATE_USER_GUID" = inserted."APP_LAST_UPDATE_USER_GUID",
-      "APP_LAST_UPDATE_USER_DIRECTORY" = inserted."APP_LAST_UPDATE_USER_DIRECTORY"
-    , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
-    , DB_LAST_UPDATE_USERID = user_name()
-    from PIMS_PROJECT
-    inner join inserted
-    on (PIMS_PROJECT.ID = inserted.ID);
-
-END TRY
-BEGIN CATCH
-   IF @@trancount > 0 ROLLBACK TRANSACTION
-   EXEC pims_error_handling
-END CATCH;
-
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create trigger dbo.PIMS_PROJCT_I_S_U_TR
+--PRINT N'Create trigger dbo.PIMS_PROJCT_I_S_U_TR'
+--GO
+--CREATE TRIGGER [dbo].[PIMS_PROJCT_I_S_U_TR] ON PIMS_PROJECT INSTEAD OF UPDATE AS
+--SET NOCOUNT ON
+--BEGIN TRY
+--  IF NOT EXISTS(SELECT * FROM deleted) 
+--    RETURN;
+--
+--  -- validate concurrency control
+--  if exists (select 1 from inserted, deleted where inserted.CONCURRENCY_CONTROL_NUMBER != deleted.CONCURRENCY_CONTROL_NUMBER+1 AND inserted.ID = deleted.ID)
+--    raiserror('CONCURRENCY FAILURE.',16,1)
+--
+--
+--  -- update statement
+--  update PIMS_PROJECT
+--    set "ID" = inserted."ID",
+--      "PROJECT_STATUS_TYPE_CODE" = inserted."PROJECT_STATUS_TYPE_CODE",
+--      "BUSINESS_FUNCTION_CODE_ID" = inserted."BUSINESS_FUNCTION_CODE_ID",
+--      "COST_TYPE_CODE_ID" = inserted."COST_TYPE_CODE_ID",
+--      "WORK_ACTIVITY_CODE_ID" = inserted."WORK_ACTIVITY_CODE_ID",
+--      "CODE" = inserted."CODE",
+--      "DESCRIPTION" = inserted."DESCRIPTION",
+--      "NOTE" = inserted."NOTE",
+--      "CONCURRENCY_CONTROL_NUMBER" = inserted."CONCURRENCY_CONTROL_NUMBER",
+--      "APP_LAST_UPDATE_TIMESTAMP" = inserted."APP_LAST_UPDATE_TIMESTAMP",
+--      "APP_LAST_UPDATE_USERID" = inserted."APP_LAST_UPDATE_USERID",
+--      "APP_LAST_UPDATE_USER_GUID" = inserted."APP_LAST_UPDATE_USER_GUID",
+--      "APP_LAST_UPDATE_USER_DIRECTORY" = inserted."APP_LAST_UPDATE_USER_DIRECTORY"
+--    , DB_LAST_UPDATE_TIMESTAMP = getutcdate()
+--    , DB_LAST_UPDATE_USERID = user_name()
+--    from PIMS_PROJECT
+--    inner join inserted
+--    on (PIMS_PROJECT.ID = inserted.ID);
+--
+--END TRY
+--BEGIN CATCH
+--   IF @@trancount > 0 ROLLBACK TRANSACTION
+--   EXEC pims_error_handling
+--END CATCH;
+--
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create trigger dbo.PIMS_NTOUTT_I_S_U_TR
 PRINT N'Create trigger dbo.PIMS_NTOUTT_I_S_U_TR'
@@ -2511,34 +2511,34 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Create trigger dbo.PIMS_PRJRGN_A_S_IUD_TR
-PRINT N'Create trigger dbo.PIMS_PRJRGN_A_S_IUD_TR'
-GO
-CREATE TRIGGER [dbo].[PIMS_PRJRGN_A_S_IUD_TR] ON PIMS_PROJECT_REGION FOR INSERT, UPDATE, DELETE AS
-SET NOCOUNT ON
-BEGIN TRY
-DECLARE @curr_date datetime;
-SET @curr_date = getutcdate();
-  IF NOT EXISTS(SELECT * FROM inserted) AND NOT EXISTS(SELECT * FROM deleted) 
-    RETURN;
-
-  -- historical
-  IF EXISTS(SELECT * FROM deleted)
-    update PIMS_PROJECT_REGION_HIST set END_DATE_HIST = @curr_date where PROJECT_REGION_ID in (select PROJECT_REGION_ID from deleted) and END_DATE_HIST is null;
-  
-  IF EXISTS(SELECT * FROM inserted)
-    insert into PIMS_PROJECT_REGION_HIST ([PROJECT_REGION_ID], [PROJECT_ID], [REGION_CODE], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], _PROJECT_REGION_HIST_ID, END_DATE_HIST, EFFECTIVE_DATE_HIST)
-      select [PROJECT_REGION_ID], [PROJECT_ID], [REGION_CODE], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], (next value for [dbo].[PIMS_PROJECT_REGION_H_ID_SEQ]) as [_PROJECT_REGION_HIST_ID], null as [END_DATE_HIST], @curr_date as [EFFECTIVE_DATE_HIST] from inserted;
-
-END TRY
-BEGIN CATCH
-   IF @@trancount > 0 ROLLBACK TRANSACTION
-   EXEC pims_error_handling
-END CATCH;
-
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
+---- Create trigger dbo.PIMS_PRJRGN_A_S_IUD_TR
+--PRINT N'Create trigger dbo.PIMS_PRJRGN_A_S_IUD_TR'
+--GO
+--CREATE TRIGGER [dbo].[PIMS_PRJRGN_A_S_IUD_TR] ON PIMS_PROJECT_REGION FOR INSERT, UPDATE, DELETE AS
+--SET NOCOUNT ON
+--BEGIN TRY
+--DECLARE @curr_date datetime;
+--SET @curr_date = getutcdate();
+--  IF NOT EXISTS(SELECT * FROM inserted) AND NOT EXISTS(SELECT * FROM deleted) 
+--    RETURN;
+--
+--  -- historical
+--  IF EXISTS(SELECT * FROM deleted)
+--    update PIMS_PROJECT_REGION_HIST set END_DATE_HIST = @curr_date where PROJECT_REGION_ID in (select PROJECT_REGION_ID from deleted) and END_DATE_HIST is null;
+--  
+--  IF EXISTS(SELECT * FROM inserted)
+--    insert into PIMS_PROJECT_REGION_HIST ([PROJECT_REGION_ID], [PROJECT_ID], [REGION_CODE], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], _PROJECT_REGION_HIST_ID, END_DATE_HIST, EFFECTIVE_DATE_HIST)
+--      select [PROJECT_REGION_ID], [PROJECT_ID], [REGION_CODE], [CONCURRENCY_CONTROL_NUMBER], [APP_CREATE_TIMESTAMP], [APP_CREATE_USERID], [APP_CREATE_USER_GUID], [APP_CREATE_USER_DIRECTORY], [APP_LAST_UPDATE_TIMESTAMP], [APP_LAST_UPDATE_USERID], [APP_LAST_UPDATE_USER_GUID], [APP_LAST_UPDATE_USER_DIRECTORY], [DB_CREATE_TIMESTAMP], [DB_CREATE_USERID], [DB_LAST_UPDATE_TIMESTAMP], [DB_LAST_UPDATE_USERID], (next value for [dbo].[PIMS_PROJECT_REGION_H_ID_SEQ]) as [_PROJECT_REGION_HIST_ID], null as [END_DATE_HIST], @curr_date as [EFFECTIVE_DATE_HIST] from inserted;
+--
+--END TRY
+--BEGIN CATCH
+--   IF @@trancount > 0 ROLLBACK TRANSACTION
+--   EXEC pims_error_handling
+--END CATCH;
+--
+--GO
+--IF @@ERROR <> 0 SET NOEXEC ON
+--GO
 
 -- Create trigger dbo.PIMS_NOTUSR_A_S_IUD_TR
 PRINT N'Create trigger dbo.PIMS_NOTUSR_A_S_IUD_TR'
