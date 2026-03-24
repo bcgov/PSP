@@ -215,6 +215,9 @@ public partial class PimsResearchFile
     public string DbLastUpdateUserid { get; set; }
 
     [InverseProperty("ResearchFile")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
+
+    [InverseProperty("ResearchFile")]
     public virtual ICollection<PimsPropertyResearchFile> PimsPropertyResearchFiles { get; set; } = new List<PimsPropertyResearchFile>();
 
     [InverseProperty("ResearchFile")]

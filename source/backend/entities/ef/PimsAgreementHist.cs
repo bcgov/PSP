@@ -133,4 +133,10 @@ public partial class PimsAgreementHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [Column("AGREEMENT_SIGNED_DATE")]
+    public DateOnly? AgreementSignedDate { get; set; }
+
+    [Column("ADVANCE_PAYMENT_DATE")]
+    public DateOnly? AdvancePaymentDate { get; set; }
 }

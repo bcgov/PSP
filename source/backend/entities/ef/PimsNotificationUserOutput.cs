@@ -7,59 +7,64 @@ using Microsoft.EntityFrameworkCore;
 namespace Pims.Dal.Entities;
 
 /// <summary>
-/// Entity continaing the details regarding actions involving a property owner associated with an expropriation.
+/// Describes the details of the notification sent the user including the sent date and read date.
 /// </summary>
-[Table("PIMS_EXPROP_OWNER_HISTORY")]
-[Index("AcquisitionFileId", Name = "XPOWNH_ACQUISITION_FILE_ID_IDX")]
-[Index("AcquisitionOwnerId", Name = "XPOWNH_ACQUISITION_OWNER_ID_IDX")]
-[Index("ExpropOwnerHistoryTypeCode", Name = "XPOWNH_EXPROP_OWNER_HISTORY_TYPE_CODE_IDX")]
-[Index("InterestHolderId", Name = "XPOWNH_INTEREST_HOLDER_ID_IDX")]
-public partial class PimsExpropOwnerHistory
+[Table("PIMS_NOTIFICATION_USER_OUTPUT")]
+[Index("NotificationOutputTypeCode", Name = "NUTOUT_NOTIFICATION_OUTPUT_TYPE_CODE_IDX")]
+[Index("NotificationUserId", Name = "NUTOUT_NOTIFICATION_USER_ID_IDX")]
+public partial class PimsNotificationUserOutput
 {
     /// <summary>
     /// System-generated unique surrogate primary key.
     /// </summary>
     [Key]
-    [Column("EXPROP_OWNER_HISTORY_ID")]
-    public long ExpropOwnerHistoryId { get; set; }
+    [Column("NOTIFICATION_USER_OUTPUT_ID")]
+    public long NotificationUserOutputId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_ACQUISITION_FILE table.
+    /// Foreign key to the PIMS_NOTIFICATION_USER table.
     /// </summary>
-    [Column("ACQUISITION_FILE_ID")]
-    public long AcquisitionFileId { get; set; }
+    [Column("NOTIFICATION_USER_ID")]
+    public long NotificationUserId { get; set; }
 
     /// <summary>
-    /// Foreign key to the PIMS_ACQUISITION_HOLDER table.
-    /// </summary>
-    [Column("ACQUISITION_OWNER_ID")]
-    public long? AcquisitionOwnerId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_INTEREST_HOLDER table.
-    /// </summary>
-    [Column("INTEREST_HOLDER_ID")]
-    public long? InterestHolderId { get; set; }
-
-    /// <summary>
-    /// Foreign key to the PIMS_EXPROP_OWNER_HISTORY_TYPE file.
+    /// Foreign key to the PIMS_NOTIFICATION_OUTPUT_TYPE table.
     /// </summary>
     [Required]
-    [Column("EXPROP_OWNER_HISTORY_TYPE_CODE")]
+    [Column("NOTIFICATION_OUTPUT_TYPE_CODE")]
     [StringLength(20)]
-    public string ExpropOwnerHistoryTypeCode { get; set; }
+    public string NotificationOutputTypeCode { get; set; }
 
     /// <summary>
-    /// Date of the expropriation owner event.
+    /// Date and time that the notification was sent.
     /// </summary>
-    [Column("EVENT_DT", TypeName = "datetime")]
-    public DateTime? EventDt { get; set; }
+    [Column("NOTIFICATION_SENT_DT", TypeName = "datetime")]
+    public DateTime? NotificationSentDt { get; set; }
 
     /// <summary>
-    /// Indicates if the record is disabled and therefore not selectable or displayed.
+    /// Date and time that the notification was read.
     /// </summary>
-    [Column("IS_DISABLED")]
-    public bool? IsDisabled { get; set; }
+    [Column("NOTIFICATION_READ_DT", TypeName = "datetime")]
+    public DateTime? NotificationReadDt { get; set; }
+
+    /// <summary>
+    /// Number of times to retry sending the notification.
+    /// </summary>
+    [Column("NOTIFICATION_RETRY_CNT")]
+    public short? NotificationRetryCnt { get; set; }
+
+    /// <summary>
+    /// Reason the notification failed.
+    /// </summary>
+    [Column("NOTIFICATION_ERROR_REASON")]
+    [StringLength(500)]
+    public string NotificationErrorReason { get; set; }
+
+    /// <summary>
+    /// The date the notification failed.
+    /// </summary>
+    [Column("NOTIFICATION_ERROR_DT")]
+    public DateOnly? NotificationErrorDt { get; set; }
 
     /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
@@ -132,7 +137,6 @@ public partial class PimsExpropOwnerHistory
     /// <summary>
     /// The user or proxy account that created the record.
     /// </summary>
-    [Required]
     [Column("DB_CREATE_USERID")]
     [StringLength(30)]
     public string DbCreateUserid { get; set; }
@@ -151,22 +155,11 @@ public partial class PimsExpropOwnerHistory
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
-    [ForeignKey("AcquisitionFileId")]
-    [InverseProperty("PimsExpropOwnerHistories")]
-    public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
+    [ForeignKey("NotificationOutputTypeCode")]
+    [InverseProperty("PimsNotificationUserOutputs")]
+    public virtual PimsNotificationOutputType NotificationOutputTypeCodeNavigation { get; set; }
 
-    [ForeignKey("AcquisitionOwnerId")]
-    [InverseProperty("PimsExpropOwnerHistories")]
-    public virtual PimsAcquisitionOwner AcquisitionOwner { get; set; }
-
-    [ForeignKey("ExpropOwnerHistoryTypeCode")]
-    [InverseProperty("PimsExpropOwnerHistories")]
-    public virtual PimsExpropOwnerHistoryType ExpropOwnerHistoryTypeCodeNavigation { get; set; }
-
-    [ForeignKey("InterestHolderId")]
-    [InverseProperty("PimsExpropOwnerHistories")]
-    public virtual PimsInterestHolder InterestHolder { get; set; }
-
-    [InverseProperty("ExpropOwnerHistory")]
-    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
+    [ForeignKey("NotificationUserId")]
+    [InverseProperty("PimsNotificationUserOutputs")]
+    public virtual PimsNotificationUser NotificationUser { get; set; }
 }
