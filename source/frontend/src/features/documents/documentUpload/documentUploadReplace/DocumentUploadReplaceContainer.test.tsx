@@ -58,7 +58,7 @@ describe('document upload replace container component', () => {
     expect(onCancelReplaceFile).toHaveBeenCalled();
   });
 
-    it('handles file replacement on confirm', async () => {
+  it('handles file replacement on confirm', async () => {
     const {} = await setup();
 
     await act(async () => viewProps.onConfirmReplace());

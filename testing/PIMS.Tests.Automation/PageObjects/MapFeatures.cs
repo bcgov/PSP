@@ -13,8 +13,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By mapLayersPIMSAcquisitionLabel = By.CssSelector("label[for='acquisition']");
         private readonly By mapLayersPIMSManagementInput = By.CssSelector("input[id='management']");
         private readonly By mapLayersPIMSManagementLabel = By.CssSelector("label[for='management']");
-        private readonly By mapLayersPIMSDispositionInput = By.CssSelector("input[id='disposition']");
-        private readonly By mapLayersPIMSDispositionLabel = By.CssSelector("label[for='disposition']");
+        private readonly By mapLayersPIMSDipositionExpandBttn = By.XPath("//input[@id='DispositionLayers']/parent::div/parent::div/preceding-sibling::div");
+        private readonly By mapLayersPIMSDispositionInput = By.CssSelector("input[id='DispositionLayers']");
+        private readonly By mapLayersPIMSDispositionLabel = By.CssSelector("label[for='DispositionLayers']");
+        private readonly By mapLayersPIMSDispositionActiveInput = By.CssSelector("input[id='disposition']");
+        private readonly By mapLayersPIMSDispositionActiveLabel = By.CssSelector("label[for='disposition']");
+        private readonly By mapLayersPIMSDispositionCompleteInput = By.CssSelector("input[id='disposition_complete']");
+        private readonly By mapLayersPIMSDispositionCompleteLabel = By.CssSelector("label[for='disposition_complete']");
+
         private readonly By mapLayersPIMSLeasesBttn = By.XPath("//input[@id='LeaseLayers']/parent::div/parent::div/preceding-sibling::div");
         private readonly By mapLayersPIMSLeasesInput = By.CssSelector("input[id='LeaseLayers']");
         private readonly By mapLayersPIMSLeasesLabel = By.CssSelector("label[for='LeaseLayers']");
@@ -144,8 +150,14 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(mapLayersPIMSAcquisitionLabel);
             AssertTrueIsDisplayed(mapLayersPIMSManagementInput);
             AssertTrueIsDisplayed(mapLayersPIMSManagementLabel);
+
+            webDriver.FindElement(mapLayersPIMSDipositionExpandBttn).Click();
             AssertTrueIsDisplayed(mapLayersPIMSDispositionInput);
             AssertTrueIsDisplayed(mapLayersPIMSDispositionLabel);
+            AssertTrueIsDisplayed(mapLayersPIMSDispositionActiveInput);
+            AssertTrueIsDisplayed(mapLayersPIMSDispositionActiveLabel);
+            AssertTrueIsDisplayed(mapLayersPIMSDispositionCompleteInput);
+            AssertTrueIsDisplayed(mapLayersPIMSDispositionCompleteLabel);
 
             webDriver.FindElement(mapLayersPIMSLeasesBttn).Click();
             AssertTrueIsDisplayed(mapLayersPIMSLeasesInput);

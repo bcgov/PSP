@@ -283,15 +283,15 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="05._Research_File_from_Pin")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="05._Research_File_from_Search")]
         [global::Xunit.TraitAttribute("FeatureTitle", "ResearchFiles")]
-        [global::Xunit.TraitAttribute("Description", "05._Research_File_from_Pin")]
-        public async global::System.Threading.Tasks.Task _05__Research_File_From_Pin()
+        [global::Xunit.TraitAttribute("Description", "05._Research_File_from_Search")]
+        public async global::System.Threading.Tasks.Task _05__Research_File_From_Search()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "4";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05._Research_File_from_Pin", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05._Research_File_from_Search", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
 #line 30
@@ -305,7 +305,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 31
- await testRunner.GivenAsync("I create a Research File from a pin on map and from row number 6", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a Research File from a search on map and from row number 6", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 32
  await testRunner.ThenAsync("A new Research File is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");

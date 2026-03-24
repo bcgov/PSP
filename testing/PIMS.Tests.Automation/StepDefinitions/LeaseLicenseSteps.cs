@@ -388,10 +388,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 if (lease.AccountType == "Receivable")
                 {
                     Assert.Equal(lease.AssigneeNumber, tenant.TotalAssignees());
-                    Assert.Equal(lease.TenantsNumber, tenant.TotalTenants());
-                    Assert.Equal(lease.RepresentativeNumber, tenant.TotalRepresentatives());
                     Assert.Equal(lease.PropertyManagerNumber, tenant.TotalManagers());
+                    Assert.Equal(lease.RepresentativeNumber, tenant.TotalRepresentatives());
+                    Assert.Equal(lease.TenantsNumber, tenant.TotalTenants());
                     Assert.Equal(lease.UnknownTenantNumber, tenant.TotalUnknown());
+                    Assert.Equal(lease.OtherTenantNumber, tenant.TotalTenantOther());
                 }
                 else
                 {
@@ -656,6 +657,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Choose the given result
             searchProperties.SelectFirstPMBCResult("Create Lease");
+            sharedFileProperties.AddPropertyToFile();
 
             //Fill basic information on the form
             leaseDetails.CreateMinimumLicenseDetails(lease);
@@ -1089,6 +1091,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             lease.RepresentativeNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "RepresentativeNumber"));
             lease.PropertyManagerNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "PropertyManagerNumber"));
             lease.UnknownTenantNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "UnknownTenantNumber"));
+            lease.OtherTenantNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "OtherTenantNumber"));
             lease.OwnerPayeeNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "OwnerPayeeNumber"));
             lease.OwnerRepresentativeNumber = int.Parse(ExcelDataContext.ReadData(rowNumber, "OwnerRepresentativeNumber"));
             if (lease.TenantsStartRow != 0 && lease.TenantsQuantity != 0)

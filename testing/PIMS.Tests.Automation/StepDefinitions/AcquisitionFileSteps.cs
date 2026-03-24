@@ -1408,7 +1408,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 agreement.AgreementLegalSurveyPlan = ExcelDataContext.ReadData(i, "AgreementLegalSurveyPlan");
                 agreement.AgreementType = ExcelDataContext.ReadData(i, "AgreementType");
                 agreement.AgreementDate = ExcelDataContext.ReadData(i, "AgreementDate");
-                agreement.AgreementCommencementDate = ExcelDataContext.ReadData(i, "AgreementCommencementDate");
                 agreement.AgreementCompletionDate = ExcelDataContext.ReadData(i, "AgreementCompletionDate");
                 agreement.AgreementTerminationDate = ExcelDataContext.ReadData(i, "AgreementTerminationDate");
                 agreement.AgreementPossessionDate = ExcelDataContext.ReadData(i, "AgreementPossessionDate");
