@@ -2,7 +2,7 @@ import { Claims } from '@/constants';
 import { mockAgreementsResponse } from '@/mocks/agreements.mock';
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+import { act, findByTestId, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 import AgreementView, { IAgreementViewProps } from './AgreementView';
 
 // mock auth library
@@ -22,6 +22,7 @@ describe('AgreementView component', () => {
         agreements={mockViewProps.agreements}
         onGenerate={mockViewProps.onGenerate}
         onDelete={mockViewProps.onDelete}
+        isSection3={renderOptions?.props?.isSection3 ?? false}
         isFileFinalStatus={renderOptions?.props?.isFileFinalStatus ?? false}
       />,
       {
@@ -94,5 +95,35 @@ describe('AgreementView component', () => {
     expect(removeButton).toBeNull();
 
     expect(screen.getByTestId(/tooltip-icon-agreement-cannot-add-tooltip/i)).toBeVisible();
+  });
+
+  it('displays section 3 "Advance payment" and "Signed Date"', async () => {
+    const { getByTestId } = setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { isFileFinalStatus: true, isSection3: true },
+    });
+
+    const advancePaymentDate0 = getByTestId('agreement[0].advancePaymentDate');
+    expect(advancePaymentDate0).toHaveTextContent('');
+    const advancePaymentDate1 = getByTestId('agreement[1].advancePaymentDate');
+    expect(advancePaymentDate1).toHaveTextContent('Mar 26, 2026');
+
+    const agreementSignedDate0 = getByTestId('agreement[0].agreementSignedDate');
+    expect(agreementSignedDate0).toHaveTextContent('');
+    const agreementSignedDate1 = getByTestId('agreement[1].agreementSignedDate');
+    expect(agreementSignedDate1).toHaveTextContent('Mar 25, 2026');
+  });
+
+  it('hides section 3 "Advance payment" and "Signed Date"', async () => {
+    const { queryByTestId } = setup({
+      claims: [Claims.ACQUISITION_EDIT],
+      props: { isFileFinalStatus: true, isSection3: false },
+    });
+
+    const advancePaymentDate = queryByTestId('agreement[0].advancePaymentDate');
+    expect(advancePaymentDate).not.toBeInTheDocument();
+
+    const agreementSignedDate = queryByTestId('agreement[0].agreementSignedDate');
+    expect(agreementSignedDate).not.toBeInTheDocument();
   });
 });

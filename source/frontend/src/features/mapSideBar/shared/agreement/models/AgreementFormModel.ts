@@ -4,6 +4,8 @@ import { stringToNull, stringToNumber, toTypeCodeNullable } from '@/utils/formUt
 export class AgreementFormModel {
   public agreementTypeCode: string | null = null;
   public agreementTypeDescription: string | null = null;
+  public advancePaymentDate: string | null = null;
+  public agreementSignedDate: string | null = null;
   public agreementDate: string | null = null;
   public completionDate: string | null = null;
   public terminationDate: string | null = null;
@@ -67,6 +69,8 @@ export class AgreementFormModel {
       agreementId: this.agreementId,
       fileId: this.fileId,
       agreementType: toTypeCodeNullable(this.agreementTypeCode),
+      advancePaymentDate: stringToNull(this.advancePaymentDate),
+      agreementSignedDate: stringToNull(this.agreementSignedDate),
       agreementDate: stringToNull(this.agreementDate),
       agreementStatusType: toTypeCodeNullable(this.agreementStatusTypeCode),
       completionDate: stringToNull(this.completionDate),

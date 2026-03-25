@@ -15,6 +15,7 @@ export interface IUpdateAcquisitionAgreementContainerProps {
   fileId: number;
   agreementId: number;
   fileType: 'acquisition' | 'disposition';
+  isSection3?: boolean;
   View: React.FC<IUpdateAgreementFormProps>;
   onSuccess: () => void;
   updateAgreement: (
@@ -33,6 +34,7 @@ const UpdateAgreementContainer: React.FunctionComponent<
   fileId,
   agreementId,
   fileType,
+  isSection3,
   View,
   onSuccess,
   updateAgreement,
@@ -109,6 +111,7 @@ const UpdateAgreementContainer: React.FunctionComponent<
       onSubmit={handleSubmit}
       onCancel={() => history.push(backUrl)}
       fileType={fileType}
+      isSection3={isSection3}
     ></View>
   );
 };
