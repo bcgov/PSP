@@ -14,6 +14,7 @@ export interface IAddAcquisitionAgreementContainerProps {
   fileId: number;
   fileType: string;
   isNew?: boolean;
+  isSection3?: boolean;
   View: React.FC<IUpdateAgreementFormProps>;
   onSuccess: () => void;
   onCreateAgreement: (
@@ -25,7 +26,16 @@ export interface IAddAcquisitionAgreementContainerProps {
 
 const AddAgreementContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddAcquisitionAgreementContainerProps>
-> = ({ fileId, fileType, isNew, View, onSuccess, onCreateAgreement, isCreatingAgreement }) => {
+> = ({
+  fileId,
+  fileType,
+  isNew,
+  isSection3,
+  View,
+  onSuccess,
+  onCreateAgreement,
+  isCreatingAgreement,
+}) => {
   const history = useHistory();
   const location = useLocation();
   const { setModalContent, setDisplayModal } = useModalContext();
@@ -78,6 +88,7 @@ const AddAgreementContainer: React.FunctionComponent<
         initialValues={initialValues}
         fileType={fileType}
         isNew={isNew}
+        isSection3={isSection3}
         isLoading={isCreatingAgreement}
         onSubmit={handleSubmit}
         onCancel={() => history.push(backUrl)}
