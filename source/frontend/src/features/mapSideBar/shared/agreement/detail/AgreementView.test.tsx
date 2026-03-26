@@ -2,7 +2,7 @@ import { Claims } from '@/constants';
 import { mockAgreementsResponse } from '@/mocks/agreements.mock';
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, findByTestId, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 import AgreementView, { IAgreementViewProps } from './AgreementView';
 
 // mock auth library
