@@ -1,4 +1,5 @@
-﻿using OpenQA.Selenium;
+﻿using Microsoft.CodeAnalysis;
+using OpenQA.Selenium;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -15,15 +16,15 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchPropertiesSelectedDescriptiveNameHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Provide a descriptive name for this land')]");
         private readonly By searchPropertiesSelectedToolTipIcon = By.CssSelector("span[data-testid='tooltip-icon-property-selector-tooltip']");
         private readonly By searchPropertiesSelectedDefault = By.XPath("//span[contains(text(),'No Properties selected')]");
-        private readonly By searchPropertiesPropertiesInFileTotal = By.CssSelector("button[title='move-pin-location']");
+        private readonly By searchPropertiesPropertiesInFileTotal = By.CssSelector("button[data-testid*='delete-property']");
         private readonly By searchPropertiesPropertiesInLeaseTotal = By.CssSelector("div[class='align-items-center my-3 no-gutters row']");
 
         //File - Edit Properties button
         private readonly By fileEditPropertiesBttn = By.CssSelector("button[title='Change properties']");
 
         //File - View list of attached properties Elements
-        private readonly By activePropsCount = By.CssSelector("div[data-testid='Active-section'] div");
-        private readonly By inactivePropsCount = By.CssSelector("div[data-testid='Inactive-section'] div");
+        private readonly By activePropsCount = By.CssSelector("div[data-testid='Active-section']>div");
+        private readonly By inactivePropsCount = By.CssSelector("div[data-testid='Inactive-section']>div");
 
         //File Confirmation Modal Elements
         private readonly By propertiesFileConfirmationModal = By.CssSelector("div[class='modal-content']");
@@ -133,7 +134,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void DisableEnableProperty(int index, string status)
         {
             Wait();
-            var propertystatusSelectElement = By.CssSelector("input-properties."+ index +".isActive");
+            var propertystatusSelectElement = By.CssSelector("select[id='input-properties."+ index +".isActive']");
             ChooseSpecificSelectOption(propertystatusSelectElement, status);
         }
 
@@ -161,7 +162,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 else if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the management file that are not in the MOTT Inventory"))
                 {
                     Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                    Assert.Equal("You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?", sharedModals.SecondaryModalContent());
+                    Assert.Equal("You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an management file. Do you want to proceed?", sharedModals.SecondaryModalContent());
                     sharedModals.SecondaryModalClickOKBttn();
                 }
                 else if (sharedModals.SecondaryModalContent().Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details."))

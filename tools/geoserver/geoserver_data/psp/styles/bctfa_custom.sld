@@ -5,19 +5,19 @@
   xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance">
 
   <NamedLayer>
-    <Name>pims_property</Name>
+    <Name>bctfa_property</Name>
     <UserStyle>
-      <Title>Pims property polygon style</Title>
+      <Title>BCTFA polygon style</Title>
       <FeatureTypeStyle>
         <Rule>
-          <Title>green polygon</Title>
+          <Title>BCTFA ownership</Title>
           <PolygonSymbolizer>
             <Fill>
-              <CssParameter name="fill">#3ab03d</CssParameter>
+              <CssParameter name="fill">#551A8B</CssParameter>
               <CssParameter name="fill-opacity">0.5</CssParameter>
             </Fill>
             <Stroke>
-              <CssParameter name="stroke">#3ab03d</CssParameter>
+              <CssParameter name="stroke">#551A8B</CssParameter>
               <CssParameter name="stroke-opacity">1</CssParameter>
               <CssParameter name="stroke-width">3</CssParameter>
             </Stroke>

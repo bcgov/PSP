@@ -77,7 +77,8 @@ namespace Pims.Api.Services
             managementFile.ManagementFileStatusTypeCode ??= ManagementFileStatusTypes.ACTIVE.ToString();
             ValidateStaff(managementFile);
 
-            MatchProperties(managementFile, userOverrides);
+            // No existing properties when adding a new file
+            MatchProperties(managementFile, userOverrides, new HashSet<long>());
 
             // Update marker locations in the context of this file
             foreach (var incomingManagementProperty in managementFile.PimsManagementFileProperties)
@@ -189,10 +190,10 @@ namespace Pims.Api.Services
 
             ValidateVersion(managementFile.Internal_Id, managementFile.ConcurrencyControlNumber);
 
-            MatchProperties(managementFile, userOverrides);
-
             // Get the current properties in the management file
             var currentFileProperties = _managementFilePropertyRepository.GetPropertiesByManagementFileId(managementFile.Internal_Id);
+            var existingPropertyIds = currentFileProperties.Select(p => p.PropertyId).ToHashSet();
+            MatchProperties(managementFile, userOverrides, existingPropertyIds);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingManagementProperty in managementFile.PimsManagementFileProperties)
@@ -446,7 +447,7 @@ namespace Pims.Api.Services
             _entityNoteRepository.AddNoteRelationship(fileNoteInstance);
         }
 
-        private void MatchProperties(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> overrideCodes)
+        private void MatchProperties(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> overrideCodes, HashSet<long> existingPropertyIds)
         {
             foreach (var managementProperty in managementFile.PimsManagementFileProperties)
             {
@@ -456,9 +457,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         managementProperty.PropertyId = foundProperty.Internal_Id;
@@ -474,7 +477,7 @@ namespace Pims.Api.Services
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.ManagingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an management file. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.ManagingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to a management file. Do you want to proceed?");
                         }
                     }
                 }
@@ -484,9 +487,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         managementProperty.PropertyId = foundProperty.Internal_Id;
@@ -502,7 +507,7 @@ namespace Pims.Api.Services
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an management file. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to a management file. Do you want to proceed?");
                         }
                     }
                 }
@@ -515,7 +520,7 @@ namespace Pims.Api.Services
                     }
                     else
                     {
-                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an management file. Do you want to proceed?");
+                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to a management file. Do you want to proceed?");
                     }
                 }
             }

@@ -686,12 +686,21 @@ namespace Pims.Dal.Repositories
                 }
             }
 
-            if (acquisitionFile.PrntAcquisitionFileId is null)
+            if (acquisitionFile.PrntAcquisitionFileId is null && !acquisitionFile.OverrideFileNumberSequence)
             {
                 // generate file number for "main" files
-                int nextFileNo = GetNextAcquisitionFileNumberSequenceValue();
-                acquisitionFile.FileNo = nextFileNo;
+                acquisitionFile.FileNo = GetNextAcquisitionFileNumberSequenceValue();
                 acquisitionFile.FileNoSuffix = 1;
+            }
+            else if (acquisitionFile.PrntAcquisitionFileId is null && acquisitionFile.OverrideFileNumberSequence && acquisitionFile.FileNo is not null)
+            {
+                acquisitionFile.FileNoSuffix = 1;
+                acquisitionFile.LegacyFileNumber = null;
+            }
+            else if (acquisitionFile.PrntAcquisitionFileId is null && acquisitionFile.OverrideFileNumberSequence && acquisitionFile.LegacyFileNumber is not null)
+            {
+                acquisitionFile.FileNo = null;
+                acquisitionFile.FileNoSuffix = null;
             }
             else
             {
@@ -835,6 +844,28 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Check if another file already exists with the same Legacy file number.
+        /// </summary>
+        /// <param name="legacyFileNo"></param>
+        /// <returns></returns>
+        public bool LegacyFileNumberExists(string legacyFileNo)
+        {
+            return Context.PimsAcquisitionFiles.AsNoTracking()
+                .Where(x => x.LegacyFileNumber == legacyFileNo).Any();
+        }
+
+        /// <summary>
+        /// Verify if a File number override already exists.
+        /// </summary>
+        /// <param name="file"></param>
+        /// <returns></returns>
+        public bool CheckDuplicateFile(short regionCode, int fileNo, short fileNoSuffix = 1)
+        {
+            return Context.PimsAcquisitionFiles.AsNoTracking()
+                .Where(x => x.RegionCode == regionCode && x.FileNo == fileNo && x.FileNoSuffix == fileNoSuffix).Any();
+        }
+
+        /// <summary>
         /// Get the next available value from PIMS_ACQUISITION_FILE_NO_SEQ.
         /// </summary>
         /// <returns>The next value for the sequence.</returns>
@@ -856,8 +887,9 @@ namespace Pims.Dal.Repositories
             }
             else
             {
-                short maxSuffix = existingSubFiles.Select(x => x.FileNoSuffix).Max();
-                return (short)(maxSuffix + 1);
+                short maxSuffix = existingSubFiles.Select(x => x.FileNoSuffix).Max() ?? 0;
+
+                return ++maxSuffix;
             }
         }
 
@@ -951,6 +983,11 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.OrganizationId == long.Parse(filter.AcquisitionTeamMemberOrganizationId)));
             }
 
+            if (filter.HasNoticeOfClaim)
+            {
+                predicate = predicate.And(acq => acq.PimsNoticeOfClaims.Any(x => x.ReceivedDt != null || x.Comment != null));
+            }
+
             var query = Context.PimsAcquisitionFiles.AsNoTracking()
                 .Include(r => r.RegionCodeNavigation)
                 .Include(p => p.Project)
@@ -977,6 +1014,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(x => x.Country)
                 .Include(fp => fp.PimsCompensationRequisitions)
                     .ThenInclude(fp => fp.AlternateProject)
+                .Include(noc => noc.PimsNoticeOfClaims)
                 .Where(predicate);
 
             if (filter.Sort?.Length > 0 && filter.Sort[0].Contains("FileNumber"))

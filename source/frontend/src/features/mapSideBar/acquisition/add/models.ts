@@ -32,6 +32,8 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   id?: number;
   parentAcquisitionFileId: number | null = null;
   fileName?: string = '';
+  overrideFileNumberSequence = false;
+  fileNo: number | null = null;
   legacyFileNumber?: string = '';
   assignedDate?: string = '';
   deliveryDate?: string = '';
@@ -100,7 +102,6 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
         this.expropiationRiskStatusType,
       ),
       totalAllowableCompensation: stringToNumberOrNull(this.totalAllowableCompensation),
-      legacyFileNumber: this.legacyFileNumber ?? null,
       fileStatusTypeCode: toTypeCodeNullable(this.acquisitionFileStatusType),
       acquisitionPhysFileStatusTypeCode: toTypeCodeNullable(this.acquisitionPhysFileStatusType),
       physicalFileDetails: this.physicalFileDetails ?? null,
@@ -127,7 +128,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       ].filter(exists),
       fileChecklistItems: this.fileCheckList.map(x => x.toApi()),
       compensationRequisitions: null,
-      fileNo: 0,
+      overrideFileNumberSequence: this.overrideFileNumberSequence,
+      fileNo: this.overrideFileNumberSequence ? this.fileNo : null,
+      legacyFileNumber: this.legacyFileNumber ?? null,
       fileNumber: null,
       fileNumberSuffix: 0,
       legacyStakeholders: null,

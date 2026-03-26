@@ -268,7 +268,6 @@ describe('LeaseContainer component', () => {
     [LeaseFileTabNames.checklist, false],
     [LeaseFileTabNames.compensation, false],
     [LeaseFileTabNames.insurance, false],
-    [LeaseFileTabNames.surplusDeclaration, false],
   ])(
     'expands the sidebar to full-width for specific tabs - %s',
     async (tabName: LeaseFileTabNames, isFullWidth: boolean) => {

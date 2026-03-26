@@ -1,6 +1,7 @@
 import { AxiosResponse } from 'axios';
 import { FormikProps, getIn } from 'formik';
 import { isEmpty, isNull, isUndefined, lowerFirst, startCase } from 'lodash';
+import { first } from 'lodash';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 import { SelectOption } from '@/components/common/form';
@@ -311,4 +312,8 @@ export const getFilePropertyIndex = (
     }
   }
   return null;
+};
+
+export const formatGuid = (sub: string): string => {
+  return first(sub?.split('@'))?.replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, '$1-$2-$3-$4-$5');
 };

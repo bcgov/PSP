@@ -12,6 +12,7 @@ namespace Pims.Dal.Entities;
 [Table("PIMS_PROPERTY_IMPROVEMENT")]
 [Index("PropertyId", Name = "PIMPRV_PROPERTY_ID_IDX")]
 [Index("PropertyImprovementTypeCode", Name = "PIMPRV_PROPERTY_IMPROVEMENT_TYPE_CODE_IDX")]
+[Index("PropImprvmntStatusTypeCode", Name = "PIMPRV_PROP_IMPRVMNT_STATUS_TYPE_CODE_IDX")]
 [Index("PropertyId", "PropertyImprovementId", Name = "PIMPRV_PROP_IMPRV_TUC", IsUnique = true)]
 public partial class PimsPropertyImprovement
 {
@@ -37,18 +38,40 @@ public partial class PimsPropertyImprovement
     public string PropertyImprovementTypeCode { get; set; }
 
     /// <summary>
+    /// Foreign key to the PIMS_PROP_IMPRVMNT_STATUS_TYPE table.
+    /// </summary>
+    [Required]
+    [Column("PROP_IMPRVMNT_STATUS_TYPE_CODE")]
+    [StringLength(20)]
+    public string PropImprvmntStatusTypeCode { get; set; }
+
+    /// <summary>
+    /// Name assigned to the property improvement.
+    /// </summary>
+    [Required]
+    [Column("IMPROVEMENT_NAME")]
+    [StringLength(500)]
+    public string ImprovementName { get; set; }
+
+    /// <summary>
+    /// Description of the improvement.
+    /// </summary>
+    [Column("IMPROVEMENT_DESCRIPTION")]
+    [StringLength(2000)]
+    public string ImprovementDescription { get; set; }
+
+    /// <summary>
+    /// Date of the property improvement.
+    /// </summary>
+    [Column("IMPROVEMENT_DATE", TypeName = "datetime")]
+    public DateTime? ImprovementDate { get; set; }
+
+    /// <summary>
     /// Size of the structure (house, building, bridge, etc,)
     /// </summary>
     [Column("STRUCTURE_SIZE")]
     [StringLength(2000)]
     public string StructureSize { get; set; }
-
-    /// <summary>
-    /// Description of the improvements
-    /// </summary>
-    [Column("IMPROVEMENT_DESCRIPTION")]
-    [StringLength(2000)]
-    public string ImprovementDescription { get; set; }
 
     /// <summary>
     /// Addresses affected
@@ -146,6 +169,10 @@ public partial class PimsPropertyImprovement
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
+
+    [ForeignKey("PropImprvmntStatusTypeCode")]
+    [InverseProperty("PimsPropertyImprovements")]
+    public virtual PimsPropImprvmntStatusType PropImprvmntStatusTypeCodeNavigation { get; set; }
 
     [ForeignKey("PropertyId")]
     [InverseProperty("PimsPropertyImprovements")]

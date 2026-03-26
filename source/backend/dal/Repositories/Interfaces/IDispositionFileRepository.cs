@@ -10,6 +10,8 @@ namespace Pims.Dal.Repositories
 
         PimsDispositionFile GetById(long id);
 
+        PimsDispositionFile GetDeepById(long id);
+
         PimsDispositionFile Add(PimsDispositionFile disposition);
 
         PimsDispositionFile Update(long dispositionFileId, PimsDispositionFile dispositionFile);
@@ -45,5 +47,15 @@ namespace Pims.Dal.Repositories
         short GetRegion(long id);
 
         List<PimsDispositionFile> GetDispositionFileExportDeep(DispositionFilter filter);
+
+        List<PimsDispositionAgreement> GetAgreementsByDispositionFile(long dispositionFileId);
+
+        PimsDispositionAgreement GetAgreementById(long agreementId);
+
+        PimsDispositionAgreement AddAgreement(PimsDispositionAgreement dispositionAgreement);
+
+        PimsDispositionAgreement UpdateAgreement(PimsDispositionAgreement dispositionAgreement);
+
+        bool TryDeleteAgreement(long dispositionFileId, long agreementId);
     }
 }

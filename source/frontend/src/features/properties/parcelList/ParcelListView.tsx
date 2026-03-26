@@ -10,35 +10,35 @@ export interface IParcelListViewProps {
 }
 
 export const ParcelListView: React.FC<IParcelListViewProps> = ({ parcels }) => {
-  if (parcels.length === 0) {
+  if (parcels.length > 0) {
+    return (
+      <StyledContainer>
+        <StyledHeader>
+          <StyledSpan>
+            {parcels.length}
+            {parcels.length > 1 ? ' properties' : ' property'}
+          </StyledSpan>
+        </StyledHeader>
+        {parcels.map((p, index) => (
+          <ParcelItem
+            key={p.id}
+            parcel={p}
+            onRemove={null}
+            canAddToWorklist={true}
+            parcelIndex={index}
+          />
+        ))}
+      </StyledContainer>
+    );
+  } else {
     return <StyledSection className="p-0">No properties to show</StyledSection>;
   }
-
-  return (
-    <StyledContainer>
-      <StyledHeader>
-        <StyledSpan>
-          {parcels.length}
-          {parcels.length > 1 ? ' properties' : ' property'}
-        </StyledSpan>
-      </StyledHeader>
-      {parcels.map((p, index) => (
-        <ParcelItem
-          key={p.id}
-          parcel={p}
-          onRemove={null}
-          canAddToWorklist={true}
-          parcelIndex={index}
-        />
-      ))}
-    </StyledContainer>
-  );
 };
 
 const StyledContainer = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%; /* make the flex‑children measure against full height */
+  height: 100%;
 `;
 
 const StyledHeader = styled.div`
@@ -48,8 +48,8 @@ const StyledHeader = styled.div`
   width: 100%;
 
   position: sticky;
-  top: 0; /* pin to the top of the scrolling container   */
-  z-index: 1; /* sit above the rows                           */
+  top: 0;
+  z-index: 1;
   background: '#fff';
 `;
 

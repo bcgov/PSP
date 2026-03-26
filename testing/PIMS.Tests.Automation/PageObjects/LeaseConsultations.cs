@@ -338,7 +338,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 case "First Nation":
                     ButtonElement(consultationFirstNationExpandBttn);
                     int lastFirstNationConsultation = webDriver.FindElements(consultationFirstNationCount).Count;
-                    AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]"));
+                    AssertTrueIsDisplayed(By.CssSelector("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/span"));
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/parent::div/following-sibling::div"), TransformDateFormat(consultation.leaseConsultationRequestedOn));
 

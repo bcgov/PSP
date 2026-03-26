@@ -122,7 +122,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
 
             _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
 
-            var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
+            var acqFileEntity = _mapper.Map<PimsAcquisitionFile>(model);
             var acquisitionFile = _acquisitionService.Add(acqFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
 
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
@@ -150,7 +150,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
 
             _logger.LogInformation("Dispatching to service: {Service}", _acquisitionService.GetType());
 
-            var acqFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(model);
+            var acqFileEntity = _mapper.Map<PimsAcquisitionFile>(model);
             var acquisitionFile = _acquisitionService.Update(acqFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }
@@ -167,7 +167,7 @@ namespace Pims.Api.Areas.Acquisition.Controllers
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateAcquisitionFileProperties([FromBody] AcquisitionFileModel acquisitionFileModel, [FromQuery] string[] userOverrideCodes)
         {
-            var acquisitionFileEntity = _mapper.Map<Dal.Entities.PimsAcquisitionFile>(acquisitionFileModel);
+            var acquisitionFileEntity = _mapper.Map<PimsAcquisitionFile>(acquisitionFileModel);
             var acquisitionFile = _acquisitionService.UpdateProperties(acquisitionFileEntity, userOverrideCodes.Select(oc => UserOverrideCode.Parse(oc)));
             return new JsonResult(_mapper.Map<AcquisitionFileModel>(acquisitionFile));
         }

@@ -329,7 +329,7 @@ exports[`LayerFilter component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="suggestionList"
+          class="addressSuggestionList"
         >
           <option>
             1234 Fake St

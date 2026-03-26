@@ -261,7 +261,7 @@ export const createSingleMarker = <P extends MarkerFeature>(
     return icon ? new Marker(latlng, { icon }) : (null as unknown as Layer);
   } else {
     const icon = getNotOwnerMarkerIcon(false);
-    return new Marker(latlng, { icon });
+    return new Marker(latlng, { icon, zIndexOffset: -100 });
   }
 };
 

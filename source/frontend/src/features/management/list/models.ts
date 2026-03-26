@@ -18,6 +18,7 @@ export class ManagementFilterModel {
   fileNameOrNumberOrReference = '';
   managementFilePurposeCode = '';
   projectNameOrNumber = '';
+  hasNoticeOfClaim = false;
 
   toApi(): Api_ManagementFilter {
     const personMemberId =
@@ -39,6 +40,7 @@ export class ManagementFilterModel {
       managementFileStatusCode: this.managementFileStatusCode,
       managementFilePurposeCode: this.managementFilePurposeCode,
       projectNameOrNumber: this.projectNameOrNumber,
+      hasNoticeOfClaim: this.hasNoticeOfClaim,
       // management team members
       teamMemberPersonId:
         personMemberId && isNumber(+personMemberId) ? Number(personMemberId) : null,
@@ -59,6 +61,7 @@ export class ManagementFilterModel {
     newModel.managementFileStatusCode = base.managementFileStatusCode ?? '';
     newModel.managementFilePurposeCode = base.managementFilePurposeCode ?? '';
     newModel.projectNameOrNumber = base.projectNameOrNumber ?? '';
+    newModel.hasNoticeOfClaim = base.hasNoticeOfClaim;
     // management team members
     if (base.teamMemberPersonId) {
       newModel.managementTeamMember =

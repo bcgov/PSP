@@ -25,7 +25,7 @@ import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDist
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { emptyProperty, PIMS_Property_View } from '@/models/layers/pimsPropertyView';
-import { exists, formatApiAddress, pidFormatter } from '@/utils';
+import { exists, formatApiAddress, isPlanNumberSPCP, pidFormatter } from '@/utils';
 
 export enum NameSourceType {
   PID = 'PID',
@@ -41,6 +41,34 @@ export interface PropertyName {
   label: NameSourceType;
   value: string;
 }
+
+export const isStrataPlanCommonPropertyFromSelectedFeatureSet = (
+  selectedFeature: SelectedFeatureDataset | null,
+): boolean => {
+  if (!exists(selectedFeature)) {
+    return false;
+  }
+
+  const pid = pidFromFeatureSet(selectedFeature);
+  const pin = pinFromFeatureSet(selectedFeature);
+  const planNumber = planFromFeatureSet(selectedFeature);
+  const address = addressFromFeatureSet(selectedFeature);
+  const location = selectedFeature.location;
+
+  if (exists(pid) && pid?.toString()?.length > 0 && pid !== '0') {
+    return false;
+  } else if (exists(pin) && pin?.toString()?.length > 0 && pin !== '0') {
+    return false;
+  } else if (exists(planNumber) && planNumber?.toString()?.length > 0) {
+    return isPlanNumberSPCP(planNumber);
+  } else if (exists(location?.lat) && exists(location?.lng)) {
+    return false;
+  } else if (exists(address) && address?.length > 0) {
+    return false;
+  }
+
+  return false;
+};
 
 export const getPropertyNameFromSelectedFeatureSet = (
   selectedFeature: SelectedFeatureDataset | null,
@@ -400,6 +428,35 @@ export interface RegionDistrictResult {
   districtResult: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties>;
 }
 
+const REGION_DISTRICT_CONCURRENCY = 8;
+
+const runWithConcurrency = async <T, R>(
+  items: T[],
+  limit: number,
+  iterator: (item: T) => Promise<R>,
+): Promise<R[]> => {
+  if (items.length === 0) {
+    return [];
+  }
+
+  const results: R[] = new Array(items.length);
+  let nextIndex = 0;
+  const workerCount = Math.min(limit, items.length);
+
+  const runWorker = async () => {
+    while (nextIndex < items.length) {
+      const currentIndex = nextIndex;
+      nextIndex += 1;
+      results[currentIndex] = await iterator(items[currentIndex]);
+    }
+  };
+
+  const workers = Array.from({ length: workerCount }, runWorker);
+
+  await Promise.all(workers);
+  return results;
+};
+
 export function featureSetToLatLngKey(featureSet: SelectedFeatureDataset | null | undefined) {
   if (exists(featureSet.location)) {
     const latLng: LatLngLiteral = {
@@ -453,24 +510,25 @@ export async function getRegionAndDistrictsResults(
     }
   }
 
-  // Prepare all parallel tasks
-  const entries = Array.from(latLngMap.entries()).map(([key, latLng]) =>
-    Promise.all([regionSearch(latLng, 'SHAPE'), districtSearch(latLng, 'SHAPE')]).then(
-      ([regionResult, districtResult]): [string, RegionDistrictResult] => [
-        key,
-        {
-          regionResult: regionResult ?? null,
-          districtResult: districtResult ?? null,
-        },
-      ],
-    ),
+  const fetchedEntries = await runWithConcurrency(
+    Array.from(latLngMap.entries()),
+    REGION_DISTRICT_CONCURRENCY,
+    async ([key, latLng]) => {
+      const [regionResult, districtResult] = await Promise.all([
+        regionSearch(latLng, 'SHAPE'),
+        districtSearch(latLng, 'SHAPE'),
+      ]);
+
+      const value: RegionDistrictResult = {
+        regionResult: regionResult ?? null,
+        districtResult: districtResult ?? null,
+      };
+
+      return [key, value] as [string, RegionDistrictResult];
+    },
   );
 
-  // Resolve in parallel
-  const results = await Promise.all(entries);
-
-  // Convert back into a Map
-  return new Map(results);
+  return new Map(fetchedEntries);
 }
 
 export function apiPropertyToPimsFeature(

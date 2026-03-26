@@ -1,6 +1,6 @@
 import { Formik } from 'formik';
 import { Feature, Geometry } from 'geojson';
-import React, { useMemo, useState } from 'react';
+import React, { useEffect, useMemo, useRef, useState } from 'react';
 import { Row } from 'react-bootstrap';
 import Col from 'react-bootstrap/Col';
 import { toast } from 'react-toastify';
@@ -8,6 +8,7 @@ import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, ProjectSelector, Select } from '@/components/common/form';
+import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { InlineFlexDiv } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { getFeatureLatLng } from '@/components/maps/leaflet/Layers/PointClusterer';
@@ -47,6 +48,35 @@ export interface IPropertyFilterProps {
 }
 
 type SurveyParcelOptions = 'district' | 'district-lot';
+const SURVEY_PARCEL_LAYER_ID = 'crownSurveyParcels';
+
+const SurveyParcelLayerSync: React.FC<{ searchBy: string }> = ({ searchBy }) => {
+  const { activeLayers, setMapLayers } = useMapStateMachine();
+  const previousSearchBy = useRef<string | null>(null);
+
+  useEffect(() => {
+    const wasSurveyParcel = previousSearchBy.current === 'surveyParcel';
+    const isSurveyParcel = searchBy === 'surveyParcel';
+
+    if (isSurveyParcel && !wasSurveyParcel) {
+      if (!activeLayers.has(SURVEY_PARCEL_LAYER_ID)) {
+        const nextLayers = new Set(activeLayers);
+        nextLayers.add(SURVEY_PARCEL_LAYER_ID);
+        setMapLayers(nextLayers);
+      }
+    } else if (!isSurveyParcel && wasSurveyParcel) {
+      if (activeLayers.has(SURVEY_PARCEL_LAYER_ID)) {
+        const nextLayers = new Set(activeLayers);
+        nextLayers.delete(SURVEY_PARCEL_LAYER_ID);
+        setMapLayers(nextLayers);
+      }
+    }
+
+    previousSearchBy.current = searchBy;
+  }, [activeLayers, searchBy, setMapLayers]);
+
+  return null;
+};
 
 /**
  * Property filter bar to search for properties.
@@ -89,26 +119,28 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
   ];
 
   if (toggle === SearchToggleOption.Map) {
-    searchOptions.push({
-      label: 'POI Name',
-      value: 'name',
-    });
-    searchOptions.push({
-      label: 'Lat/Long',
-      value: 'coordinates',
-    });
-    searchOptions.push({
-      label: 'Survey Parcel',
-      value: 'surveyParcel',
-    });
-    searchOptions.push({
-      label: 'Project',
-      value: 'project',
-    });
-    searchOptions.push({
-      label: 'Legal Description',
-      value: 'legalDescription',
-    });
+    searchOptions.push(
+      {
+        label: 'POI Name',
+        value: 'name',
+      },
+      {
+        label: 'Lat/Long',
+        value: 'coordinates',
+      },
+      {
+        label: 'Survey Parcel',
+        value: 'surveyParcel',
+      },
+      {
+        label: 'Project',
+        value: 'project',
+      },
+      {
+        label: 'Legal Description',
+        value: 'legalDescription',
+      },
+    );
   }
 
   return (
@@ -123,277 +155,289 @@ export const PropertyFilter: React.FC<React.PropsWithChildren<IPropertyFilterPro
       }}
     >
       {({ isSubmitting, setFieldValue, values, resetForm, isValid }) => (
-        <Form>
-          <Row noGutters>
-            <Col xs="12">
-              <Select
-                field="searchBy"
-                options={searchOptions}
-                className="idir-input-group"
-                onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
-                  setFieldValue('latitude', null);
-                  setFieldValue('longitude', null);
-                  setFieldValue('pid', null);
-                  setFieldValue('pin', null);
-                  setFieldValue('planNumber', null);
-                  setFieldValue('historical', null);
-                  setFieldValue('name', null);
-                  setFieldValue('district', null);
-                  setFieldValue('section', null);
-                  setFieldValue('township', null);
-                  setFieldValue('range', null);
-                  setFieldValue('districtLot', null);
-                  setFieldValue('project', null);
-                  setFieldValue('legalDescription', null);
-                  if (e.target.value === 'coordinates') {
-                    setFieldValue('coordinates', new DmsCoordinates());
-                  } else {
-                    setFieldValue('coordinates', null);
-                  }
-
-                  if (e.target.value === 'surveyParcel') {
-                    setSelectedSurveyParcelSearch('district');
-
-                    setFieldValue('district', 'ALL');
-                    setFieldValue('section', '');
-                    setFieldValue('township', '');
-                    setFieldValue('range', '');
-                  }
-                }}
-              />
-            </Col>
-            <Col xs="12">
-              {values.searchBy === 'pid' && (
-                <Input field="pid" placeholder="Enter a PID" displayErrorTooltips></Input>
-              )}
-              {values.searchBy === 'pin' && (
-                <Input field="pin" placeholder="Enter a PIN" displayErrorTooltips></Input>
-              )}
-              {values.searchBy === 'address' && useGeocoder && (
-                <GeocoderAutoComplete
-                  data-testid="geocoder-mapview"
-                  field="address"
-                  placeholder="Enter an address"
-                  onSelectionChanged={async val => {
-                    const geocoderPidResponse = await getSitePids(val.siteId);
-                    if (
-                      geocoderPidResponse?.pids?.length === 1 &&
-                      geocoderPidResponse?.pids[0] !== ''
-                    ) {
-                      setFieldValue('pid', geocoderPidResponse?.pids[0]);
+        <>
+          <SurveyParcelLayerSync searchBy={values.searchBy} />
+          <Form>
+            <Row noGutters>
+              <Col xs="12">
+                <Select
+                  field="searchBy"
+                  options={searchOptions}
+                  className="idir-input-group"
+                  onChange={(e: React.ChangeEvent<HTMLSelectElement>) => {
+                    setFieldValue('latitude', null);
+                    setFieldValue('longitude', null);
+                    setFieldValue('pid', null);
+                    setFieldValue('pin', null);
+                    setFieldValue('planNumber', null);
+                    setFieldValue('historical', null);
+                    setFieldValue('name', null);
+                    setFieldValue('district', null);
+                    setFieldValue('section', null);
+                    setFieldValue('township', null);
+                    setFieldValue('range', null);
+                    setFieldValue('districtLot', null);
+                    setFieldValue('project', null);
+                    setFieldValue('legalDescription', null);
+                    if (e.target.value === 'coordinates') {
+                      setFieldValue('coordinates', new DmsCoordinates());
                     } else {
-                      if (geocoderPidResponse?.pids?.length > 1) {
-                        toast.warn(
-                          `Warning, multiple PIDs found for this address:\n ${geocoderPidResponse?.pids
-                            .map(x => pidFormatter(x))
-                            .join(
-                              ',',
-                            )} PIMS will search for the lat/lng of the property provided by geocoder instead of the PID.`,
-                        );
-                      } else {
-                        toast.warn('No valid PIDs found for this address, using lat/long instead.');
-                      }
+                      setFieldValue('coordinates', null);
                     }
-                    setFieldValue('latitude', val.latitude);
-                    setFieldValue('longitude', val.longitude);
-                  }}
-                  value={values.address}
-                  autoSetting="off"
-                ></GeocoderAutoComplete>
-              )}
-              {values.searchBy === 'address' && !useGeocoder && (
-                <Input field="address" placeholder="Enter address"></Input>
-              )}
-              {values.searchBy === 'planNumber' && (
-                <Input field="planNumber" placeholder="Enter a plan number"></Input>
-              )}
-              {values.searchBy === 'historical' && (
-                <Input
-                  field="historical"
-                  placeholder="Enter a historical file# (LIS, PS, etc.)"
-                ></Input>
-              )}
-              {values.searchBy === 'legalDescription' && (
-                <>
-                  <Input
-                    as="textarea"
-                    field="legalDescription"
-                    placeholder="Enter a legal description"
-                  />
-                  <div style={{ marginTop: '-0.5rem', marginBottom: '0.5rem' }}>
-                    <TooltipIcon
-                      toolTipId="legal-description-tooltip"
-                      toolTip="Searching by legal description may result in a slower search"
-                      placement="right"
-                    />
-                  </div>
-                </>
-              )}
-              {values.searchBy === 'name' && (
-                <GeographicNameInput
-                  field="name"
-                  placeholder='Enter a POI name (e.g. "Langford Lake")'
-                  onSelectionChanged={(
-                    selection: Feature<Geometry, IGeographicNamesProperties>,
-                  ) => {
-                    if (exists(selection.geometry)) {
-                      const lngLat = getFeatureLatLng(selection);
-                      setFieldValue('latitude', lngLat[1]);
-                      setFieldValue('longitude', lngLat[0]);
+
+                    if (e.target.value === 'surveyParcel') {
+                      setSelectedSurveyParcelSearch('district');
+
+                      setFieldValue('district', 'ALL');
+                      setFieldValue('section', '');
+                      setFieldValue('township', '');
+                      setFieldValue('range', '');
                     }
                   }}
                 />
-              )}
-            </Col>
-            {values.searchBy === 'coordinates' && (
-              <Col xs="12">
-                <CoordinateSearchForm field="coordinates" innerClassName="flex-nowrap" />
               </Col>
-            )}
-
-            {values.searchBy === 'surveyParcel' && (
-              <>
-                <Row noGutters>
-                  <Col>
-                    <Select
-                      field="district"
-                      options={landTitleDistricts.map(ltd => ({
-                        value: ltd,
-                        label: ltd,
-                      }))}
-                    />
-                  </Col>
-                </Row>
-
-                <Row noGutters>
-                  <StyledRadioGroup>
-                    <div className="radio-group">
-                      <InlineFlexDiv>
-                        <Form.Check
-                          id="input-radio-district"
-                          name="radio-district"
-                          type="radio"
-                          value="district"
-                          checked={selectedSurveyParcelSearch === 'district'}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            setSelectedSurveyParcelSearch(
-                              e.target.value.toString() as SurveyParcelOptions,
-                            );
-                            setFieldValue('districtLot', null);
-                            setFieldValue('district', 'ALL');
-                            setFieldValue('section', '');
-                            setFieldValue('township', '');
-                            setFieldValue('range', '');
-                          }}
-                        ></Form.Check>
-                        <Form.Label className="form-check-label" htmlFor="input-radio-district">
-                          Disctrict
-                        </Form.Label>
-                      </InlineFlexDiv>
-                      <InlineFlexDiv>
-                        <Form.Check
-                          id="input-radio-district-lot"
-                          name="radio-district-lot"
-                          type="radio"
-                          value="district-lot"
-                          checked={selectedSurveyParcelSearch === 'district-lot'}
-                          onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
-                            setSelectedSurveyParcelSearch(
-                              e.target.value.toString() as SurveyParcelOptions,
-                            );
-                            setFieldValue('section', null);
-                            setFieldValue('township', null);
-                            setFieldValue('range', null);
-                            setFieldValue('districtLot', '');
-                          }}
-                        ></Form.Check>
-                        <Form.Label className="form-check-label" htmlFor="input-radio-district-lot">
-                          Disctrict Lot
-                        </Form.Label>
-                      </InlineFlexDiv>
-                    </div>
-                  </StyledRadioGroup>
-                </Row>
-
-                {selectedSurveyParcelSearch === 'district' && (
+              <Col xs="12">
+                {values.searchBy === 'pid' && (
+                  <Input field="pid" placeholder="Enter a PID" displayErrorTooltips></Input>
+                )}
+                {values.searchBy === 'pin' && (
+                  <Input field="pin" placeholder="Enter a PIN" displayErrorTooltips></Input>
+                )}
+                {values.searchBy === 'address' && useGeocoder && (
+                  <GeocoderAutoComplete
+                    data-testid="geocoder-mapview"
+                    field="address"
+                    placeholder="Enter an address"
+                    onSelectionChanged={async val => {
+                      const geocoderPidResponse = await getSitePids(val.siteId);
+                      if (
+                        geocoderPidResponse?.pids?.length === 1 &&
+                        geocoderPidResponse?.pids[0] !== ''
+                      ) {
+                        setFieldValue('pid', geocoderPidResponse?.pids[0]);
+                      } else {
+                        if (geocoderPidResponse?.pids?.length > 1) {
+                          toast.warn(
+                            `Warning, multiple PIDs found for this address:\n ${geocoderPidResponse?.pids
+                              .map(x => pidFormatter(x))
+                              .join(
+                                ',',
+                              )} PIMS will search for the lat/lng of the property provided by geocoder instead of the PID.`,
+                          );
+                        } else {
+                          toast.warn(
+                            'No valid PIDs found for this address, using lat/long instead.',
+                          );
+                        }
+                      }
+                      setFieldValue('latitude', val.latitude);
+                      setFieldValue('longitude', val.longitude);
+                    }}
+                    value={values.address}
+                    autoSetting="off"
+                  ></GeocoderAutoComplete>
+                )}
+                {values.searchBy === 'address' && !useGeocoder && (
+                  <Input field="address" placeholder="Enter address"></Input>
+                )}
+                {values.searchBy === 'planNumber' && (
+                  <Input field="planNumber" placeholder="Enter a plan number"></Input>
+                )}
+                {values.searchBy === 'historical' && (
+                  <Input
+                    field="historical"
+                    placeholder="Enter a historical file# (LIS, PS, etc.)"
+                  ></Input>
+                )}
+                {values.searchBy === 'legalDescription' && (
                   <>
-                    <Row noGutters>
-                      <Col>
-                        <Input placeholder="Section" field="section" displayErrorTooltips></Input>
-                      </Col>
-                    </Row>
-                    <Row noGutters>
-                      <Col>
-                        <Input placeholder="Township" field="township" displayErrorTooltips></Input>
-                      </Col>
-                    </Row>
-                    <Row noGutters>
-                      <Col>
-                        <Input placeholder="Range" field="range" displayErrorTooltips></Input>
-                      </Col>
-                    </Row>
+                    <Input
+                      as="textarea"
+                      field="legalDescription"
+                      placeholder="Enter a legal description"
+                    />
+                    <div style={{ marginTop: '-0.5rem', marginBottom: '0.5rem' }}>
+                      <TooltipIcon
+                        toolTipId="legal-description-tooltip"
+                        toolTip="Searching by legal description may result in a slower search"
+                        placement="right"
+                      />
+                    </div>
                   </>
                 )}
+                {values.searchBy === 'name' && (
+                  <GeographicNameInput
+                    field="name"
+                    placeholder='Enter a POI name (e.g. "Langford Lake")'
+                    onSelectionChanged={(
+                      selection: Feature<Geometry, IGeographicNamesProperties>,
+                    ) => {
+                      if (exists(selection.geometry)) {
+                        const lngLat = getFeatureLatLng(selection);
+                        setFieldValue('latitude', lngLat[1]);
+                        setFieldValue('longitude', lngLat[0]);
+                      }
+                    }}
+                  />
+                )}
+              </Col>
+              {values.searchBy === 'coordinates' && (
+                <Col xs="12">
+                  <CoordinateSearchForm field="coordinates" innerClassName="flex-nowrap" />
+                </Col>
+              )}
 
-                {selectedSurveyParcelSearch === 'district-lot' && (
+              {values.searchBy === 'surveyParcel' && (
+                <>
                   <Row noGutters>
                     <Col>
-                      <Input
-                        placeholder="District Lot"
-                        field="districtLot"
-                        displayErrorTooltips
-                      ></Input>
+                      <Select
+                        field="district"
+                        options={landTitleDistricts.map(ltd => ({
+                          value: ltd,
+                          label: ltd,
+                        }))}
+                      />
                     </Col>
                   </Row>
-                )}
-              </>
-            )}
-            {values.searchBy === 'project' && (
-              <Col xs="12">
-                <ProjectSelector field="project" />
+
+                  <Row noGutters>
+                    <StyledRadioGroup>
+                      <div className="radio-group">
+                        <InlineFlexDiv>
+                          <Form.Check
+                            id="input-radio-district"
+                            name="radio-district"
+                            type="radio"
+                            value="district"
+                            checked={selectedSurveyParcelSearch === 'district'}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                              setSelectedSurveyParcelSearch(
+                                e.target.value.toString() as SurveyParcelOptions,
+                              );
+                              setFieldValue('districtLot', null);
+                              setFieldValue('district', 'ALL');
+                              setFieldValue('section', '');
+                              setFieldValue('township', '');
+                              setFieldValue('range', '');
+                            }}
+                          ></Form.Check>
+                          <Form.Label className="form-check-label" htmlFor="input-radio-district">
+                            District
+                          </Form.Label>
+                        </InlineFlexDiv>
+                        <InlineFlexDiv>
+                          <Form.Check
+                            id="input-radio-district-lot"
+                            name="radio-district-lot"
+                            type="radio"
+                            value="district-lot"
+                            checked={selectedSurveyParcelSearch === 'district-lot'}
+                            onChange={(e: React.ChangeEvent<HTMLInputElement>) => {
+                              setSelectedSurveyParcelSearch(
+                                e.target.value.toString() as SurveyParcelOptions,
+                              );
+                              setFieldValue('section', null);
+                              setFieldValue('township', null);
+                              setFieldValue('range', null);
+                              setFieldValue('districtLot', '');
+                            }}
+                          ></Form.Check>
+                          <Form.Label
+                            className="form-check-label"
+                            htmlFor="input-radio-district-lot"
+                          >
+                            District Lot
+                          </Form.Label>
+                        </InlineFlexDiv>
+                      </div>
+                    </StyledRadioGroup>
+                  </Row>
+
+                  {selectedSurveyParcelSearch === 'district' && (
+                    <>
+                      <Row noGutters>
+                        <Col>
+                          <Input placeholder="Section" field="section" displayErrorTooltips></Input>
+                        </Col>
+                      </Row>
+                      <Row noGutters>
+                        <Col>
+                          <Input
+                            placeholder="Township"
+                            field="township"
+                            displayErrorTooltips
+                          ></Input>
+                        </Col>
+                      </Row>
+                      <Row noGutters>
+                        <Col>
+                          <Input placeholder="Range" field="range" displayErrorTooltips></Input>
+                        </Col>
+                      </Row>
+                    </>
+                  )}
+
+                  {selectedSurveyParcelSearch === 'district-lot' && (
+                    <Row noGutters>
+                      <Col>
+                        <Input
+                          placeholder="District Lot"
+                          field="districtLot"
+                          displayErrorTooltips
+                        ></Input>
+                      </Col>
+                    </Row>
+                  )}
+                </>
+              )}
+              {values.searchBy === 'project' && (
+                <Col xs="12">
+                  <ProjectSelector field="project" />
+                </Col>
+              )}
+            </Row>
+            <Row className="pt-2">
+              <Col xs="auto">
+                <SearchButton
+                  disabled={
+                    isSubmitting ||
+                    !(
+                      values.pid ||
+                      values.pin ||
+                      values.latitude ||
+                      values.longitude ||
+                      values.planNumber ||
+                      values.address ||
+                      values.historical ||
+                      values.township ||
+                      values.section ||
+                      values.range ||
+                      values.district ||
+                      values.districtLot ||
+                      values.project ||
+                      values.legalDescription ||
+                      (values.searchBy === 'coordinates' && isValid)
+                    )
+                  }
+                >
+                  Search
+                </SearchButton>
               </Col>
-            )}
-          </Row>
-          <Row className="pt-2">
-            <Col xs="auto">
-              <SearchButton
-                disabled={
-                  isSubmitting ||
-                  !(
-                    values.pid ||
-                    values.pin ||
-                    values.latitude ||
-                    values.longitude ||
-                    values.planNumber ||
-                    values.address ||
-                    values.historical ||
-                    values.township ||
-                    values.section ||
-                    values.range ||
-                    values.district ||
-                    values.districtLot ||
-                    values.project ||
-                    values.legalDescription ||
-                    (values.searchBy === 'coordinates' && isValid)
-                  )
-                }
-              >
-                Search
-              </SearchButton>
-            </Col>
-            <Col xs="auto">
-              <ResetButton
-                disabled={isSubmitting}
-                onClick={() => {
-                  resetForm();
-                  resetFilter();
-                }}
-              >
-                Clear
-              </ResetButton>
-            </Col>
-          </Row>
-        </Form>
+              <Col xs="auto">
+                <ResetButton
+                  disabled={isSubmitting}
+                  onClick={() => {
+                    resetForm();
+                    resetFilter();
+                  }}
+                >
+                  Clear
+                </ResetButton>
+              </Col>
+            </Row>
+          </Form>
+        </>
       )}
     </Formik>
   );

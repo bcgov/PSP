@@ -25,6 +25,10 @@ namespace Pims.Dal.Repositories
 
         short GetRegion(long id);
 
+        bool LegacyFileNumberExists(string legacyFileNo);
+
+        bool CheckDuplicateFile(short regionCode, int fileNo, short fileNoSuffix = 1);
+
         List<PimsAcquisitionFile> GetByProductId(long productId);
 
         PimsAcquisitionFile GetByAcquisitionFilePropertyId(long acquisitionFilePropertyId);

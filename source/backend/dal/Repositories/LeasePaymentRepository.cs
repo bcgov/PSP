@@ -26,32 +26,48 @@ namespace Pims.Dal.Repositories
 
         public void Delete(long leasePaymentId)
         {
-            PimsLeasePayment payment = this.Context.PimsLeasePayments.Find(leasePaymentId) ?? throw new KeyNotFoundException();
-            this.Context.Remove(payment);
+            PimsLeasePayment payment = Context.PimsLeasePayments.Find(leasePaymentId) ?? throw new KeyNotFoundException();
+            Context.Remove(payment);
         }
 
         public PimsLeasePayment Update(PimsLeasePayment pimsLeasePayment)
         {
-            var updatedEntity = this.Context.Update(pimsLeasePayment);
+            var updatedEntity = Context.Update(pimsLeasePayment);
             return updatedEntity.Entity;
         }
 
         public PimsLeasePayment Add(PimsLeasePayment pimsLeasePayment)
         {
-            var updatedEntity = this.Context.Add(pimsLeasePayment);
+            var updatedEntity = Context.Add(pimsLeasePayment);
             return updatedEntity.Entity;
         }
 
-        public IEnumerable<PimsLeasePayment> GetAllTracking(DateTime startDate, DateTime endDate)
+        public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate, long? contractorPersonId = null)
         {
-            return this.Context.PimsLeasePayments
-                .AsSplitQuery()
+            var query = Context.PimsLeasePayments.AsSplitQuery().AsNoTracking()
                 .Include(p => p.LeasePaymentCategoryTypeCodeNavigation)
+                .Include(p => p.LeasePaymentStatusTypeCodeNavigation)
                 .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.LeasePeriodStatusTypeCodeNavigation)
                 .Include(p => p.LeasePeriod)
                     .ThenInclude(t => t.LeasePmtFreqTypeCodeNavigation)
+                .Include(p => p.LeasePeriod)
+                    .ThenInclude(t => t.Lease)
+                    .ThenInclude(l => l.PimsLeaseLicenseTeams)
+                .Include(p => p.LeasePeriod)
+                    .ThenInclude(t => t.Lease)
+                    .ThenInclude(l => l.Project)
+                    .ThenInclude(lp => lp.PimsProjectPeople)
                 .Where(p => p.PaymentReceivedDate <= endDate && p.PaymentReceivedDate >= startDate);
+
+            // Enforce contractor access to only their leases
+            if (contractorPersonId is not null)
+            {
+                query = query.Where(p => p.LeasePeriod.Lease.PimsLeaseLicenseTeams.Any(lt => lt.PersonId == contractorPersonId) ||
+                    (p.LeasePeriod.Lease.Project != null && p.LeasePeriod.Lease.Project.PimsProjectPeople.Any(pp => pp.PersonId == contractorPersonId)));
+            }
+
+            return query;
         }
     }
 }

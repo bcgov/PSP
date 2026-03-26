@@ -116,7 +116,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
       const dataset: SelectedFeatureDataset[] = result.features.map(p =>
         featureToLocationFeatureDataset(p),
       );
-      const regionDistrictTasks = getRegionAndDisctricts(dataset, findRegion, findDistrict);
+      const regionDistrictTasks = getRegionAndDistricts(dataset, findRegion, findDistrict);
       const regionDistrictResults: Dictionary<RegionDistrictResult> = {};
 
       // Await for all results
@@ -201,7 +201,7 @@ export const PropertySelectorSearchContainer: React.FC<IPropertySelectorSearchCo
       });
 
       // match the region and district for all found properties
-      const regionDistrictTasks = getRegionAndDisctricts(propertyResults, findRegion, findDistrict);
+      const regionDistrictTasks = getRegionAndDistricts(propertyResults, findRegion, findDistrict);
 
       const regionDistrictResults: Dictionary<RegionDistrictResult> = {};
       for (const latLngKey in regionDistrictTasks) {
@@ -288,7 +288,7 @@ export const featureToLocationFeatureDataset = (feature: Feature<Geometry, GeoJs
   return locationDataSet;
 };
 
-function getRegionAndDisctricts(
+function getRegionAndDistricts(
   properties: SelectedFeatureDataset[],
   regionSearch: (
     latlng: LatLngLiteral,

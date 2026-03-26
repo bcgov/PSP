@@ -54,6 +54,11 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         public long? TeamMemberOrganizationId { get; set; }
 
+        /// <summary>
+        /// get/set - Get the Management File that has NOC.
+        /// </summary>
+        public bool HasNoticeOfClaim { get; set; }
+
         #endregion
 
         #region Constructors

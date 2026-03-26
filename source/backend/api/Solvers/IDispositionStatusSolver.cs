@@ -12,6 +12,8 @@ namespace Pims.Api.Services
 
         bool CanEditProperties(DispositionFileStatusTypes? dispositionStatus);
 
+        bool CanEditOrDeleteAgreement(DispositionFileStatusTypes? dispositionStatus);
+
         DispositionFileStatusTypes? GetCurrentDispositionStatus(string pimsDispositionStatusType);
     }
 }

@@ -1,7 +1,7 @@
 import React from 'react';
-import { FaListUl } from 'react-icons/fa';
 import styled from 'styled-components';
 
+import WorkListIcon from '@/assets/images/wl-icon.svg?react';
 import { Button } from '@/components/common/buttons/Button';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
 
@@ -48,8 +48,11 @@ const WorklistControl: React.FC<IWorklistControl> = ({
 
 export default WorklistControl;
 
-const WorklistIcon = styled(FaListUl)`
-  font-size: 3rem;
+const WorklistIcon = styled(WorkListIcon)`
+  width: 3rem;
+  height: 3rem;
+  display: block;
+  margin: auto;
 `;
 
 const BadgeWrapper = styled.div`
@@ -82,8 +85,10 @@ const WorklistButton = styled(Button)<{ $active?: boolean }>`
     height: 5.2rem;
     background-color: ${({ theme, $active }) =>
       $active ? theme.bcTokens.surfaceColorPrimaryButtonDefault : '#FFFFFF'};
-    color: ${({ theme, $active }) =>
-      $active ? '#FFFFFF' : theme.bcTokens.surfaceColorPrimaryButtonDefault};
+    svg path {
+      fill: ${({ theme, $active }) =>
+        $active ? '#FFFFFF' : theme.bcTokens.surfaceColorPrimaryButtonDefault};
+    }
     border-color: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonDefault};
     box-shadow: -0.2rem 0.1rem 0.4rem rgba(0, 0, 0, 0.2);
 

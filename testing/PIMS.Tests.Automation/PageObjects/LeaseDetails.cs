@@ -84,6 +84,17 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsViewTerminateReason = By.XPath("//label[contains(text(),'Termination reason')]/parent::div/following-sibling::div");
         private readonly By licenseDetailsViewCancelReason = By.XPath("//label[contains(text(),'Cancellation reason')]/parent::div/following-sibling::div");
 
+        //Create/View Progress Statuses
+        private readonly By licenseDetailsProgressSubtitle = By.XPath("//h2/div/div[contains(text(),'Progress Statuses')]");
+
+        private readonly By licenseDetailsProgressAppraisalLabel = By.XPath("//label[contains(text(),'Appraisal')]");
+        private readonly By licenseDetailsProgressAppraisalSelector = By.Id("input-appraisalStatusType");
+        private readonly By licenseDetailsProgressAppraisalContent = By.XPath("//label[contains(text(),'Appraisal')]/parent::div/following-sibling::div");
+
+        private readonly By licenseDetailsProgressLegalSurveyLabel = By.XPath("//label[contains(text(),'Legal survey')]");
+        private readonly By licenseDetailsProgressLegalSurveySelector = By.Id("input-legalSurveyStatusType");
+        private readonly By licenseDetailsProgressLegalSurveyContent = By.XPath("//label[contains(text(),'Legal survey')]/parent::div/following-sibling::div");
+
         //Create/View Renewal Options Elements
         private readonly By licenseDetailsRenewalTitle = By.XPath("//h2/div/div[contains(text(),'Renewal Option')]");
         private readonly By licenseDetailsAddRenewButton = By.XPath("//div[contains(text(),'+ Add a Renewal')]/parent::button");
@@ -99,6 +110,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By licenseDetailsMotiRegionSelector = By.Id("input-regionId");
         private readonly By licenseDetailsProgramViewLabel = By.XPath("//label[contains(text(),'Program')]");
         private readonly By licenseDetailsProgramContent = By.XPath("//label[contains(text(),'Program')]/parent::div/following-sibling::div");
+        private readonly By licenseDetailsOtherProgramContent = By.XPath("//label[contains(text(),'Other program')]/parent::div/following-sibling::div");
         private readonly By licenseDetailsProgramLabel = By.XPath("//select[@id='input-programTypeCode']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Program')]");
         private readonly By licenseDetailsProgramSelector = By.Id("input-programTypeCode");
         private readonly By licenseDetailsOtherProgramLabel = By.XPath("//label[contains(text(),'Other Program')]");
@@ -292,7 +304,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     Wait();
                     FocusAndClick(licenseDetailsPurposeMultiselector);
 
-                    Wait(4000);
+                    Wait(5000);
                     ChooseMultiSelectSpecificOption(licenseDetailsPurposeOptions, purpose);
                 }
 
@@ -406,6 +418,22 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearInput(licenseDetailsCancelReasonInput);
                 webDriver.FindElement(licenseDetailsCancelReasonInput).Click();
                 webDriver.FindElement(licenseDetailsCancelReasonInput).SendKeys(lease.LeaseCancellationReason);
+            }
+
+            //PROGRESS STATUSES
+            if (lease.AccountType != "Receivable")
+            {
+                AssertTrueIsDisplayed(licenseDetailsProgressSubtitle);
+
+                //Appraisal
+                AssertTrueIsDisplayed(licenseDetailsProgressAppraisalLabel);
+                if (lease.LeaseProgressAppraisal != "")
+                    ChooseSpecificSelectOption(licenseDetailsProgressAppraisalSelector, lease.LeaseProgressAppraisal);
+
+                //Legal Survey
+                AssertTrueIsDisplayed(licenseDetailsProgressLegalSurveyLabel);
+                if (lease.LeaseProgressLegalSurvey != "")
+                    ChooseSpecificSelectOption(licenseDetailsProgressLegalSurveySelector, lease.LeaseProgressLegalSurvey);
             }
 
             //RENEWAL OPTIONS
@@ -606,7 +634,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
-                else if (sharedModals.ModalContent().Contains("he selected property already exists in the system's inventory"))
+                else if (sharedModals.ModalContent().Contains("The selected property already exists in the system's inventory"))
                 {
                     Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
@@ -624,7 +652,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
-                else if (sharedModals.ConfirmationModalParagraph1() == "If you save it, only the administrator can turn it back on. You will still see it in the management table.")
+                else if (sharedModals.IsConfirmationModalParagraph1Visible())
                 {
                     Assert.Equal("Confirm status change", sharedModals.ModalHeader());
                     Assert.Contains("If you save it, only the administrator can turn it back on. You will still see it in the management table.", sharedModals.ConfirmationModalParagraph1());
@@ -633,7 +661,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
                     Wait();
                 }
-                else if (sharedModals.ConfirmationModalParagraph2() == "Do you wish to save without providing a primary contact?")
+                else if (sharedModals.IsConfirmationModalParagraph2Visible())
                 {
                     Assert.Equal("Confirm status change", sharedModals.ModalHeader());
                     Assert.Contains("A primary contact for", sharedModals.ConfirmationModalParagraph1());
@@ -646,6 +674,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     break;
                 }
+                else sharedModals.SecondaryModalClickOKBttn();
             }
         }
 
@@ -670,8 +699,10 @@ namespace PIMS.Tests.Automation.PageObjects
         public void CancelLicense()
         {
             Wait();
-            ButtonElement("Cancel");
+            FocusAndClick(By.CssSelector("button[data-testid='cancel-button']"));
             sharedModals.CancelActionModal();
+
+            Wait();
         }
 
         public string GetLeaseCode()
@@ -903,6 +934,20 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(licenseDetailsViewCancelReason, lease.LeaseCancellationReason);
             }
 
+            //PROGRESS STATUSES
+            if (lease.AccountType != "Receivable")
+            {
+                AssertTrueIsDisplayed(licenseDetailsProgressSubtitle);
+
+                //Appraisal
+                AssertTrueIsDisplayed(licenseDetailsProgressAppraisalLabel);
+                AssertTrueContentEquals(licenseDetailsProgressAppraisalContent, lease.LeaseProgressAppraisal);
+
+                //Legal Survey
+                AssertTrueIsDisplayed(licenseDetailsProgressLegalSurveyLabel);
+                AssertTrueContentEquals(licenseDetailsProgressLegalSurveyContent, lease.LeaseProgressLegalSurvey);
+            }
+
             //RENEWALS
             AssertTrueIsDisplayed(licenseDetailsRenewalTitle);
             if (lease.LeaseRenewals.Count > 0)
@@ -933,7 +978,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(licenseDetailsProgramContent, lease.Program);
 
             if (lease.ProgramOther != "")
-                AssertTrueElementValueEquals(licenseDetailsProgramContent, "Other - " + lease.ProgramOther);
+                AssertTrueContentEquals(licenseDetailsOtherProgramContent, lease.ProgramOther);
 
             AssertTrueIsDisplayed(licenseDetailsTypeLabel);
             if(lease.AdminType != "")

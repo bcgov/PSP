@@ -5,15 +5,16 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import Claims from '@/constants/claims';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
+import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { exists, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
+import AddAgreementContainer from '../../shared/agreement/add/AddAgreementContainer';
+import UpdateAgreementForm from '../../shared/agreement/common/UpdateAgreementForm';
+import UpdateAgreementContainer from '../../shared/agreement/update/UpdateAgreementContainer';
 import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
 import { AcquisitionFileTabs } from '../tabs/AcquisitionFileTabs';
-import AddAcquisitionAgreementContainer from '../tabs/agreement/add/AddAcquisitionAgreementContainer';
-import UpdateAcquisitionAgreementForm from '../tabs/agreement/common/UpdateAcquisitionAgreementForm';
-import UpdateAcquisitionAgreementContainer from '../tabs/agreement/update/UpdateAcquisitionAgreementContainer';
 import { UpdateAcquisitionChecklistContainer } from '../tabs/checklist/update/UpdateAcquisitionChecklistContainer';
 import AddForm8Container from '../tabs/expropriation/form8/add/AddForm8Container';
 import { UpdateForm8Container } from '../tabs/expropriation/form8/update/UpdateForm8Container';
@@ -35,6 +36,10 @@ export interface IAcquisitionRouterProps {
 
 export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
   const { path, url } = useRouteMatch();
+  const agreementProvider = useAgreementProvider();
+
+  const { execute: postAcquisitionAgreement, loading: loadingAcquisitionAgreement } =
+    agreementProvider.addAcquisitionAgreement;
 
   if (!exists(props.acquisitionFile)) {
     return null;
@@ -91,10 +96,13 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
           path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/add`}
           customRender={() =>
             props.acquisitionFile?.id ? (
-              <AddAcquisitionAgreementContainer
-                acquisitionFileId={props.acquisitionFile?.id}
-                View={UpdateAcquisitionAgreementForm}
+              <AddAgreementContainer
+                fileId={props.acquisitionFile?.id}
+                View={UpdateAgreementForm}
                 onSuccess={props.onSuccess}
+                fileType="acquisition"
+                onCreateAgreement={postAcquisitionAgreement}
+                isCreatingAgreement={loadingAcquisitionAgreement}
               />
             ) : null
           }
@@ -106,11 +114,16 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
           path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/:agreementId/update`}
           customRender={({ match }) =>
             props.acquisitionFile?.id ? (
-              <UpdateAcquisitionAgreementContainer
-                acquisitionFileId={props.acquisitionFile?.id}
+              <UpdateAgreementContainer
+                fileId={props.acquisitionFile?.id}
                 agreementId={match.params.agreementId}
-                View={UpdateAcquisitionAgreementForm}
+                fileType="acquisition"
+                View={UpdateAgreementForm}
                 onSuccess={props.onSuccess}
+                updateAgreement={agreementProvider.updateAcquisitionAgreement.execute}
+                updatingAgreement={agreementProvider.updateAcquisitionAgreement.loading}
+                getAgreement={agreementProvider.getAcquisitionAgreementById.execute}
+                fetchingAgreement={agreementProvider.getAcquisitionAgreementById.loading}
               />
             ) : null
           }

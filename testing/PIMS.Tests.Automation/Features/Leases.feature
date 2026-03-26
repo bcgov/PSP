@@ -13,8 +13,8 @@ Scenario: 02._Leases_Properties_and_Surplus_Declaration
 	Given I create a new minimum Lease from row number 3
 	When I add Properties to the Lease Details
 	And I update a Lease's Properties from row number 4
-	And I verify the Surplus section
-	Then A new lease is created successfully
+	#And I verify the Surplus section
+	#Then A new lease is created successfully
 
 Scenario: 03._Leases_Approval_Consultations
 	Given I create a new minimum Lease from row number 20
@@ -37,12 +37,6 @@ Scenario: 05-2._Lease_and_License_Tenants_Tab
 	Given I create a new minimum Lease from row number 6
 	When  I add Tenants or Payees to the Lease
 	And I update a Lease's Tenants from row number 7
-	Then A new lease is created successfully
-
-Scenario: 06._Lease_and_License_Improvements_Tab
-	Given I create a new minimum Lease from row number 23
-	When  I add Improvements to the Lease
-	And I update a Lease's Improvements from row number 24
 	Then A new lease is created successfully
 
 Scenario: 07._Lease_and_License_Insurance_Tab

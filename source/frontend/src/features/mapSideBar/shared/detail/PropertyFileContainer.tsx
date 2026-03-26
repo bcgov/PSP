@@ -144,7 +144,7 @@ export const PropertyFileContainer: React.FunctionComponent<
     name: 'Value',
   });
 
-  if (props.fileContext === ApiGen_CodeTypes_FileTypes.Research) {
+  if (props.fileContext === ApiGen_CodeTypes_FileTypes.Research && hasClaim(Claims.RESEARCH_VIEW)) {
     tabViews.push({
       content: (
         <PropertyResearchTabView
@@ -158,7 +158,7 @@ export const PropertyFileContainer: React.FunctionComponent<
     });
   }
 
-  if (props.fileContext === ApiGen_CodeTypes_FileTypes.Management) {
+  if (hasClaim(Claims.MANAGEMENT_VIEW)) {
     tabViews.push({
       content: (
         <PropertyManagementTabView
@@ -298,7 +298,10 @@ export const PropertyFileContainer: React.FunctionComponent<
     }
   }
 
-  if (props.fileContext === ApiGen_CodeTypes_FileTypes.Acquisition) {
+  if (
+    props.fileContext === ApiGen_CodeTypes_FileTypes.Acquisition &&
+    hasClaim(Claims.ACQUISITION_VIEW)
+  ) {
     tabViews.push({
       content: (
         <TakesDetailContainer

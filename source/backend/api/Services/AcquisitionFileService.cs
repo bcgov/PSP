@@ -131,6 +131,8 @@ namespace Pims.Api.Services
                     FileDeliveryDate = fileProperty.file.DeliveryDate.HasValue ? fileProperty.file.DeliveryDate.Value.ToString("dd-MMM-yyyy") : string.Empty,
                     FilePhysicalStatus = fileProperty.file.AcqPhysFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcqPhysFileStatusTypeCodeNavigation.Description : string.Empty,
                     FileAcquisitionType = fileProperty.file.AcquisitionTypeCodeNavigation is not null ? fileProperty.file.AcquisitionTypeCodeNavigation.Description : string.Empty,
+                    NOCReceivedDate = fileProperty.file.PimsNoticeOfClaims.FirstOrDefault()?.ReceivedDt?.ToString("dd-MMM-yyyy") ?? string.Empty,
+                    NOCComment = fileProperty.file.PimsNoticeOfClaims?.FirstOrDefault()?.Comment ?? string.Empty,
                     FileAcquisitionTeam = string.Join(", ", fileProperty.file.PimsAcquisitionFileTeams.Select(x => x.PersonId.HasValue ? x.Person.GetFullName(true) : x.Organization.Name)),
                     FileAcquisitionOwners = string.Join(", ", fileProperty.file.PimsAcquisitionOwners.Select(x => x.FormatOwnerName())),
                 }).ToList();
@@ -217,6 +219,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileAdd);
 
             acquisitionFile.ThrowMissingContractorInTeam(_user, _userRepository, _projectRepository);
+            acquisitionFile.ThrowContractorLegacyFileForbidden(_user, _userRepository);
 
             // validate the new acq region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
@@ -225,7 +228,10 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Cannot set an acquisition file's region to 'cannot determine'");
             }
 
-            MatchProperties(acquisitionFile, userOverrides);
+            CheckFileNumberDuplicate(acquisitionFile);
+
+            // No existing properties when adding a new file
+            MatchProperties(acquisitionFile, userOverrides, new HashSet<long>());
             ValidatePropertyRegions(acquisitionFile);
 
             PopulateAcquisitionChecklist(acquisitionFile);
@@ -311,7 +317,10 @@ namespace Pims.Api.Services
 
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
-            MatchProperties(acquisitionFile, userOverrides);
+            // Get the current properties in the acquisition file
+            var currentFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
+            var existingPropertyIds = currentFileProperties.Select(p => p.PropertyId).ToHashSet();
+            MatchProperties(acquisitionFile, userOverrides, existingPropertyIds);
 
             ValidatePropertyRegions(acquisitionFile);
 
@@ -320,9 +329,6 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
-
-            // Get the current properties in the acquisition file
-            var currentFileProperties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(acquisitionFile.Internal_Id);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingAcquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
@@ -672,7 +678,26 @@ namespace Pims.Api.Services
             return _acqFileRepository.GetAcquisitionSubFiles(id, userRegions, contractorPersonId);
         }
 
-        private void MatchProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrideCodes)
+        private void CheckFileNumberDuplicate(PimsAcquisitionFile acquisitionFile)
+        {
+            if (!acquisitionFile.OverrideFileNumberSequence)
+            {
+                if (!string.IsNullOrEmpty(acquisitionFile.LegacyFileNumber) && _acqFileRepository.LegacyFileNumberExists(acquisitionFile.LegacyFileNumber))
+                {
+                    throw new BadRequestException("An acquisition file with this Legacy File number already exists.");
+                }
+            }
+            else
+            {
+                if (acquisitionFile.FileNo is not null && acquisitionFile.PrntAcquisitionFileId is null
+                    && _acqFileRepository.CheckDuplicateFile(acquisitionFile.RegionCode, acquisitionFile.FileNo.Value))
+                {
+                    throw new BadRequestException("An acquisition file with this number already exists.");
+                }
+            }
+        }
+
+        private void MatchProperties(PimsAcquisitionFile acquisitionFile, IEnumerable<UserOverrideCode> userOverrideCodes, HashSet<long> existingPropertyIds)
         {
             foreach (var acquisitionProperty in acquisitionFile.PimsPropertyAcquisitionFiles)
             {
@@ -682,9 +707,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;
@@ -703,9 +730,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         acquisitionProperty.PropertyId = foundProperty.Internal_Id;

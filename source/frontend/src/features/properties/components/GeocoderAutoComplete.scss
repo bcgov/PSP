@@ -2,6 +2,22 @@
 .GeocoderAutoComplete {
   font-size: 1.6rem;
   position: relative;
+  overflow: visible;
+}
+
+.GeographicNameInput {
+  position: relative;
+  overflow: visible;
+}
+
+// Allow suggestion list to escape Bootstrap input group clipping
+.idir-input-group,
+.idir-input-group .input-group,
+.idir-input-group .form-group,
+.GeocoderAutoComplete .form-group,
+.GeographicNameInput .form-group {
+  position: relative;
+  overflow: visible;
 }
 
 .GeocoderAutoComplete form.Control,
@@ -17,7 +33,9 @@
 }
 
 .suggestionList {
+  z-index: 999;
   background-color: white;
+  opacity: 1;
   border-style: solid;
   border-color: lightslategray;
   border-width: thin;
@@ -26,11 +44,32 @@
   max-height: 60rem;
   margin: 0;
   padding: 0;
-  position: absolute;
+  max-height: 40rem;
   overflow-y: auto;
-  z-index: 999;
-  top: 0rem;
-  left: -5rem;
+  box-shadow: 0 0.6rem 1.6rem rgba(0, 0, 0, 0.2);
+}
+
+.suggestionList li {
+  padding: 1rem 0.5rem;
+  word-wrap: break-word;
+  width: 25rem;
+  overflow: hidden;
+  cursor: pointer;
+  color: var(--typography-color-secondary);
+
+  &:hover {
+    background-color: var(--surface-color-primary-button-hover);
+    color: #fff;
+  }
+}
+
+.suggestionList--floating {
+  position: fixed;
+  z-index: 4000;
+}
+
+.suggestionOverlay {
+  z-index: 5000;
 }
 
 .GeocoderAutoComplete option,

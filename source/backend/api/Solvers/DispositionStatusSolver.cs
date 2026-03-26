@@ -33,6 +33,29 @@ namespace Pims.Api.Services
             return canEdit;
         }
 
+        public bool CanEditOrDeleteAgreement(DispositionFileStatusTypes? dispositionStatus)
+        {
+            bool canEdit;
+            switch (dispositionStatus)
+            {
+                case DispositionFileStatusTypes.ACTIVE:
+                case DispositionFileStatusTypes.DRAFT:
+                case DispositionFileStatusTypes.HOLD:
+                    canEdit = true;
+                    break;
+                case DispositionFileStatusTypes.ARCHIVED:
+                case DispositionFileStatusTypes.CANCELLED:
+                case DispositionFileStatusTypes.COMPLETE:
+                    canEdit = false;
+                    break;
+                default:
+                    canEdit = false;
+                    break;
+            }
+
+            return canEdit;
+        }
+
         public bool CanEditOfferSalesValues(DispositionFileStatusTypes? dispositionStatus)
         {
             if (dispositionStatus == null)

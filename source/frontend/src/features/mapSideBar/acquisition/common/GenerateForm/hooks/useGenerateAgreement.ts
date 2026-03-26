@@ -3,12 +3,16 @@ import { createFileDownload } from '@/features/documents/DownloadDocumentButton'
 import { useDocumentGenerationRepository } from '@/features/documents/hooks/useDocumentGenerationRepository';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useAcquisitionProvider } from '@/hooks/repositories/useAcquisitionProvider';
+import { useDispositionProvider } from '@/hooks/repositories/useDispositionProvider';
 import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_AgreementTypes } from '@/models/api/generated/ApiGen_CodeTypes_AgreementTypes';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
 import { ApiGen_CodeTypes_FormTypes } from '@/models/api/generated/ApiGen_CodeTypes_FormTypes';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_DispositionFileTeam } from '@/models/api/generated/ApiGen_Concepts_DispositionFileTeam';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { Api_GenerateAcquisitionFile } from '@/models/generate/acquisition/GenerateAcquisitionFile';
 import { Api_GenerateAgreement } from '@/models/generate/GenerateAgreement';
@@ -16,33 +20,42 @@ import { exists, firstOrNull } from '@/utils/utils';
 
 import { getCancelModalProps } from './../../../../../../hooks/useModalContext';
 
-export const useGenerateAgreement = () => {
+export const useGenerateAgreement = (
+  getFile:
+    | ReturnType<typeof useAcquisitionProvider>['getAcquisitionFile']
+    | ReturnType<typeof useDispositionProvider>['getDispositionFile'],
+  getProperties:
+    | ReturnType<typeof useAcquisitionProvider>['getAcquisitionProperties']
+    | ReturnType<typeof useDispositionProvider>['getDispositionProperties'],
+  isAcquisition = false,
+) => {
   const { getPersonConcept, getOrganizationConcept } = useApiContacts();
-  const { getAcquisitionFile, getAcquisitionProperties } = useAcquisitionProvider();
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
   const { setModalContent, setDisplayModal } = useModalContext();
   const generateAgreement = async (agreement: ApiGen_Concepts_Agreement) => {
     if (!exists(agreement?.agreementType?.id)) {
       throw Error('user must choose agreement type in order to generate a document');
     }
-    const file = await getAcquisitionFile.execute(agreement.acquisitionFileId);
-    const properties = await getAcquisitionProperties.execute(agreement.acquisitionFileId);
+    const file = await getFile.execute(agreement.fileId);
+    const properties = await getProperties.execute(agreement.fileId);
 
     if (!file) {
-      throw Error('Acquisition file not found');
+      throw Error('File not found');
     }
     file.fileProperties = properties ?? null;
 
-    const coordinators = file.acquisitionTeam?.filter(
-      team => team.teamProfileTypeCode === 'PROPCOORD',
-    );
-    const negotiatingAgents = file.acquisitionTeam?.filter(
-      team => team.teamProfileTypeCode === 'NEGOTAGENT',
-    );
-    const provincialSolicitors = file.acquisitionTeam?.filter(
-      team => team.teamProfileTypeCode === 'MOTILAWYER',
-    );
-    const ownerSolicitor = file.acquisitionFileInterestHolders?.find(
+    const team = isAcquisition
+      ? (file as ApiGen_Concepts_AcquisitionFile).acquisitionTeam
+      : (file as ApiGen_Concepts_DispositionFile).dispositionTeam;
+
+    const interestHolders = isAcquisition
+      ? (file as ApiGen_Concepts_AcquisitionFile).acquisitionFileInterestHolders
+      : [];
+
+    const coordinators = team?.filter(team => team.teamProfileTypeCode === 'PROPCOORD');
+    const negotiatingAgents = team?.filter(team => team.teamProfileTypeCode === 'NEGOTAGENT');
+    const provincialSolicitors = team?.filter(team => team.teamProfileTypeCode === 'MOTILAWYER');
+    const ownerSolicitor = interestHolders?.find(
       x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR,
     );
 
@@ -144,6 +157,10 @@ const getTemplateTypeFromAgreementType = (agreementType: string | null): string 
   switch (agreementType) {
     case ApiGen_CodeTypes_AgreementTypes.H179A:
       return ApiGen_CodeTypes_FormTypes.H179A.toString();
+    case ApiGen_CodeTypes_AgreementTypes.H179B:
+      return ApiGen_CodeTypes_FormTypes.H179B.toString();
+    case ApiGen_CodeTypes_AgreementTypes.H179D:
+      return ApiGen_CodeTypes_FormTypes.H179D.toString();
     case ApiGen_CodeTypes_AgreementTypes.H179P:
       return ApiGen_CodeTypes_FormTypes.H179P.toString();
     case ApiGen_CodeTypes_AgreementTypes.H179T:
@@ -156,13 +173,15 @@ const getTemplateTypeFromAgreementType = (agreementType: string | null): string 
       return ApiGen_CodeTypes_FormTypes.H179PTO.toString();
     case ApiGen_CodeTypes_AgreementTypes.H179FS:
       return ApiGen_CodeTypes_FormTypes.H179FS.toString();
+    case ApiGen_CodeTypes_AgreementTypes.H179RC:
+      return ApiGen_CodeTypes_FormTypes.H179RC.toString();
     default:
       throw Error(`Unable to find form type for agreement type: ${agreementType}`);
   }
 };
 
 const setOrganization = (
-  team: ApiGen_Concepts_AcquisitionFileTeam,
+  team: ApiGen_Concepts_AcquisitionFileTeam | ApiGen_Concepts_DispositionFileTeam,
   organization: ApiGen_Concepts_Organization,
 ) => {
   if (team) {

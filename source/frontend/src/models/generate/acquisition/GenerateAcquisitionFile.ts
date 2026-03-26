@@ -1,5 +1,7 @@
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
+import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
+import { ApiGen_Concepts_DispositionFileTeam } from '@/models/api/generated/ApiGen_Concepts_DispositionFileTeam';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
 import { ApiGen_Concepts_InterestHolderProperty } from '@/models/api/generated/ApiGen_Concepts_InterestHolderProperty';
 
@@ -14,10 +16,19 @@ import { Api_GenerateH120Property } from './GenerateH120Property';
 import { Api_GenerateInterestHolder } from './GenerateInterestHolder';
 
 export interface IApiGenerateAcquisitionFileInput {
-  file: ApiGen_Concepts_AcquisitionFile | null;
-  coordinatorContact?: ApiGen_Concepts_AcquisitionFileTeam | null;
-  negotiatingAgent?: ApiGen_Concepts_AcquisitionFileTeam | null;
-  provincialSolicitor?: ApiGen_Concepts_AcquisitionFileTeam | null;
+  file: ApiGen_Concepts_AcquisitionFile | ApiGen_Concepts_DispositionFile | null;
+  coordinatorContact?:
+    | ApiGen_Concepts_AcquisitionFileTeam
+    | ApiGen_Concepts_DispositionFileTeam
+    | null;
+  negotiatingAgent?:
+    | ApiGen_Concepts_AcquisitionFileTeam
+    | ApiGen_Concepts_DispositionFileTeam
+    | null;
+  provincialSolicitor?:
+    | ApiGen_Concepts_AcquisitionFileTeam
+    | ApiGen_Concepts_DispositionFileTeam
+    | null;
   ownerSolicitor?: ApiGen_Concepts_InterestHolder | null;
   interestHolders?: ApiGen_Concepts_InterestHolder[];
 }
@@ -43,6 +54,11 @@ export class Api_GenerateAcquisitionFile implements ICompensationRequisitionFile
   property_coordinator?: Api_GeneratePerson | Api_GenerateOrganization;
   all_owners_string_and: string;
   readonly interestHolders: ApiGen_Concepts_InterestHolder[];
+  purchasers?: {
+    Organization: Api_GenerateOrganization[];
+    Person: Api_GeneratePerson[];
+  };
+  purchaser_solicitor?: Api_GeneratePerson | Api_GenerateOrganization;
   owner_verb: string;
   owner_noun: string;
 
@@ -64,7 +80,25 @@ export class Api_GenerateAcquisitionFile implements ICompensationRequisitionFile
     this.project_name = this.project?.name ?? '';
     this.project_number = this.project?.number ?? '';
 
-    this.owners = file?.acquisitionFileOwners?.map(owner => new Api_GenerateOwner(owner)) ?? [];
+    if (file && 'acquisitionFileOwners' in file) {
+      this.owners = file.acquisitionFileOwners?.map(owner => new Api_GenerateOwner(owner)) ?? [];
+      this.person_owners =
+        file.acquisitionFileOwners
+          ?.filter(owner => !owner.isOrganization)
+          ?.map(owner => new Api_GenerateOwner(owner)) ?? [];
+      this.organization_owners =
+        file.acquisitionFileOwners
+          ?.filter(owner => owner.isOrganization)
+          ?.map(owner => new Api_GenerateOwner(owner)) ?? [];
+      this.primary_owner = new Api_GenerateOwner(
+        file.acquisitionFileOwners?.find(owner => owner.isPrimaryContact) ?? null,
+      );
+    } else {
+      this.owners = [];
+      this.person_owners = [];
+      this.organization_owners = [];
+      this.primary_owner = undefined;
+    }
     this.property_coordinator = this.getTeam(coordinatorContact);
     this.neg_agent = this.getTeam(negotiatingAgent, true);
     this.interestHolders = interestHolders;
@@ -97,25 +131,42 @@ export class Api_GenerateAcquisitionFile implements ICompensationRequisitionFile
         return new Api_GenerateH120Property(fp?.property, interestHoldersForAcquisitionFile);
       }) ?? [];
 
-    this.primary_owner = new Api_GenerateOwner(
-      file?.acquisitionFileOwners?.find(owner => owner.isPrimaryContact) ?? null,
-    );
     this.prov_solicitor = this.getTeam(provincialSolicitor);
     this.prov_solicitor_attn = new Api_GeneratePerson(provincialSolicitor?.primaryContact);
     this.owner_solicitor = new Api_GenerateInterestHolder(ownerSolicitor);
-    this.person_owners =
-      file?.acquisitionFileOwners
-        ?.filter(owner => !owner.isOrganization)
-        ?.map(owner => new Api_GenerateOwner(owner)) ?? [];
-    this.organization_owners =
-      file?.acquisitionFileOwners
-        ?.filter(owner => owner.isOrganization)
-        ?.map(owner => new Api_GenerateOwner(owner)) ?? [];
     this.all_owners_string = this.owners.map(owner => owner.owner_string).join(', ');
     this.all_owners_string_and = this.owners.map(owner => owner.owner_string).join(' And ');
     const { verb, noun } = Api_GenerateAcquisitionFile.getOwnerGrammar(this.owners.length);
     this.owner_verb = verb;
     this.owner_noun = noun;
+
+    if (
+      file &&
+      'dispositionSale' in file &&
+      file.dispositionSale?.dispositionPurchasers &&
+      file.dispositionSale.dispositionPurchasers.length > 0
+    ) {
+      this.purchasers = {
+        Organization: [],
+        Person: [],
+      };
+      file.dispositionSale.dispositionPurchasers.forEach(purchaser => {
+        if (purchaser.organization) {
+          this.purchasers.Organization.push(new Api_GenerateOrganization(purchaser.organization));
+        } else if (purchaser.person) {
+          this.purchasers.Person.push(new Api_GeneratePerson(purchaser.person));
+        }
+      });
+    }
+
+    if (file && 'dispositionSale' in file && file.dispositionSale?.dispositionPurchaserSolicitor) {
+      const solicitor = file.dispositionSale.dispositionPurchaserSolicitor;
+      if (solicitor.organization) {
+        this.purchaser_solicitor = new Api_GenerateOrganization(solicitor.organization);
+      } else if (solicitor.person) {
+        this.purchaser_solicitor = new Api_GeneratePerson(solicitor.person);
+      }
+    }
   }
 
   // Set verb and noun for owner(s) grammar
@@ -123,21 +174,28 @@ export class Api_GenerateAcquisitionFile implements ICompensationRequisitionFile
     return count > 1 ? { verb: 'are', noun: 'owners' } : { verb: 'is', noun: 'owner' };
   }
 
-  getTeam = (team: ApiGen_Concepts_AcquisitionFileTeam | null, overrideOrgAddress = false) => {
+  getTeam = (
+    team: ApiGen_Concepts_AcquisitionFileTeam | ApiGen_Concepts_DispositionFileTeam | null,
+    overrideOrgAddress = false,
+  ) => {
     if (!team) return undefined;
 
-    if (team.person) {
+    if ('person' in team && team.person) {
       return new Api_GeneratePerson(team.person);
     }
 
-    const org = new Api_GenerateOrganization(team.organization);
-    const primary = new Api_GeneratePerson(team.primaryContact);
-    //replace organization contact info with primary contact info but leave address, name.
-    org.phone = primary?.phone;
-    org.email = primary?.email;
-    if (overrideOrgAddress) {
-      org.address = primary?.address;
+    if ('organization' in team && team.organization) {
+      const org = new Api_GenerateOrganization(team.organization);
+      const primary =
+        'primaryContact' in team && team.primaryContact
+          ? new Api_GeneratePerson(team.primaryContact)
+          : undefined;
+      org.phone = primary?.phone ?? '';
+      org.email = primary?.email ?? '';
+      if (overrideOrgAddress) {
+        org.address = primary?.address ?? null;
+      }
+      return org;
     }
-    return org;
   };
 }
