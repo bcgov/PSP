@@ -665,6 +665,42 @@ FROM
 WHERE
     NAME = 'bctfa-ownership-delete';
 
+DECLARE @notificationView BIGINT;
+
+DECLARE @notificationAdd BIGINT;
+
+DECLARE @notificationEdit BIGINT;
+
+DECLARE @notificationDelete BIGINT;
+
+SELECT
+    @notificationView = CLAIM_ID
+FROM
+    PIMS_CLAIM
+WHERE
+    NAME = 'notification-view';
+
+SELECT
+    @notificationAdd = CLAIM_ID
+FROM
+    PIMS_CLAIM
+WHERE
+    NAME = 'notification-add';
+
+SELECT
+    @notificationEdit = CLAIM_ID
+FROM
+    PIMS_CLAIM
+WHERE
+    NAME = 'notification-edit';
+
+SELECT
+    @notificationDelete = CLAIM_ID
+FROM
+    PIMS_CLAIM
+WHERE
+    NAME = 'notification-delete';
+
 INSERT INTO
     [dbo].[PIMS_ROLE_CLAIM] (
         [ROLE_ID],
@@ -1268,6 +1304,46 @@ VALUES
         '',
         ''
     ),
+    (
+        @sysadmn,
+        @notificationView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @sysadmn,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @sysadmn,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @sysadmn,
+        @notificationDelete,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Acquisition Functional
     (
         @acqfunc,
@@ -1579,6 +1655,46 @@ VALUES
         '',
         ''
     ),
+    (
+        @acqfunc,
+        @managementView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @acqfunc,
+        @dispositionView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @acqfunc,
+        @ltsaOwnershipView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @acqfunc,
+        @notificationView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Acquisition Read
     (
         @acgrdon,
@@ -1653,6 +1769,16 @@ VALUES
     (
         @acgrdon,
         @acquisitionView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @acgrdon,
+        @notificationView,
         N'SEED',
         @appUserGuid,
         N'SEED',
@@ -1921,6 +2047,16 @@ VALUES
         '',
         ''
     ),
+    (
+        @llfunc,
+        @notificationView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Lease Read
     (
         @llrdon,
@@ -1985,6 +2121,16 @@ VALUES
     (
         @llrdon,
         @leaseView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @llrdon,
+        @notificationView,
         N'SEED',
         @appUserGuid,
         N'SEED',
@@ -2203,6 +2349,46 @@ VALUES
         '',
         ''
     ),
+    (
+        @mafunc,
+        @notificationView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @mafunc,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @mafunc,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @mafunc,
+        @notificationDelete,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Management Read
     (
         @mardon,
@@ -2264,6 +2450,16 @@ VALUES
         '',
         ''
     ),
+    (
+        @mardon,
+        @notificationView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Project Functional
     (
         @prjfunc,
@@ -2315,6 +2511,16 @@ VALUES
         '',
         ''
     ),
+    (
+        @prjfunc,
+        @notificationView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Project Functional
     (
         @prjrdon,
@@ -2329,6 +2535,16 @@ VALUES
     (
         @prjrdon,
         @propertyView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @prjrdon,
+        @notificationView,
         N'SEED',
         @appUserGuid,
         N'SEED',
@@ -2597,6 +2813,46 @@ VALUES
         '',
         ''
     ),
+    (
+        @resfunc,
+        @notificationView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @resfunc,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @resfunc,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @resfunc,
+        @notificationDelete,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Research Read
     (
         @resrdon,
@@ -2661,6 +2917,16 @@ VALUES
     (
         @resrdon,
         @researchView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @resrdon,
+        @notificationView,
         N'SEED',
         @appUserGuid,
         N'SEED',
@@ -2889,6 +3155,46 @@ VALUES
         '',
         ''
     ),
+    (
+        @dispfunc,
+        @notificationView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @dispfunc,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @dispfunc,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @dispfunc,
+        @notificationDelete,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Disposition Read
     (
         @disprdon,
@@ -2953,6 +3259,16 @@ VALUES
     (
         @disprdon,
         @dispositionView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @disprdon,
+        @notificationView,
         N'SEED',
         @appUserGuid,
         N'SEED',
