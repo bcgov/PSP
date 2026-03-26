@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
@@ -68,7 +69,7 @@ namespace Pims.Core.Api.Middleware
                 }
 
                 _logger.LogDebug("HTTP Request {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}", context.Request.Method, context.User.GetDisplayName(), context.Request.Scheme, context.Request.Host, context.Request.Path, context.Request.QueryString);
-                _logger.LogTrace("Body: {body}", body);
+                _logger.LogTrace("Body: {body}", body?.Replace(Environment.NewLine, string.Empty));
             }
 
             context.Request.Body.Position = 0;
