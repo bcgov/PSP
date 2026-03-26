@@ -315,6 +315,9 @@ jobs:
   database-upgrade:
     name: Upgrade database
     needs: [deploy]
+    if: |
+      always() &&
+      needs.deploy.result == 'success'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -338,6 +341,9 @@ jobs:
   mayan-sync:
     name: sync mayan
     needs: database-upgrade
+    if: |
+      always() &&
+      needs.database-upgrade.result == 'success'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -360,6 +366,9 @@ jobs:
   keycloak-sync:
     name: sync keycloak
     needs: database-upgrade
+    if: |
+      always() &&
+      needs.database-upgrade.result == 'success'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -380,6 +389,7 @@ jobs:
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-22.04
     needs: keycloak-sync
+    if: always()
     steps:
       - name: check workflow status
         uses: martialonline/workflow-status@326830cacf79872efe767e15031f58d1ea0508c4 # v4.2
