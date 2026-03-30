@@ -27,12 +27,12 @@ WHERE  REGION_CODE = @CurrCd;
 
 IF @@ROWCOUNT = 1
   UPDATE PIMS_REGION
-  SET    IS_DISABLED                = 0
+  SET    IS_DISABLED                = 1
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
   WHERE  REGION_CODE = @CurrCd;
 ELSE
-  INSERT INTO PIMS_REGION (REGION_CODE, REGION_NAME)
-  VALUES (0, N'Headquarters (HQ)');
+  INSERT INTO PIMS_REGION (REGION_CODE, REGION_NAME, IS_DISABLED)
+  VALUES (0, N'Headquarters (HQ)', 1);
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
@@ -44,9 +44,9 @@ GO
 DECLARE @Success AS BIT
 SET @Success = 1
 SET NOEXEC OFF
-IF (@Success = 1) 
+IF (@Success = 1)
   PRINT 'The database update succeeded'
-ELSE 
+ELSE
   BEGIN
   IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
     PRINT 'The database update failed'

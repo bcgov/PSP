@@ -13,11 +13,11 @@
 DELETE FROM PIMS_REGION;
 GO
 
-INSERT INTO PIMS_REGION (REGION_CODE, REGION_NAME) 
+INSERT INTO PIMS_REGION (REGION_CODE, REGION_NAME, IS_DISABLED)
 VALUES
-  (0, N'Headquarters (HQ)'),
-  (1, N'South Coast Region'),
-  (2, N'Southern Interior Region'),
-  (3, N'Northern Region'),
-  (4, N'Cannot determine');
+  (0, N'Headquarters (HQ)', 1),
+  (1, N'South Coast Region', 0),
+  (2, N'Southern Interior Region', 0),
+  (3, N'Northern Region', 0),
+  (4, N'Cannot determine', 0);
 GO
