@@ -198,6 +198,7 @@ namespace Pims.Api.Services
             var accessContext = new DocumentAccessContext
             {
                 UserRegions = pimsUser?.PimsRegionUsers?.Select(r => r.RegionCode)?.ToHashSet() ?? new HashSet<short>(),
+                PersonId = pimsUser?.PersonId,
                 ContractorPersonId = pimsUser?.IsContractor == true ? pimsUser.PersonId : null,
                 CanViewAcquisitionFiles = User.HasPermission(Permissions.AcquisitionFileView),
                 CanViewDispositionFiles = User.HasPermission(Permissions.DispositionView),

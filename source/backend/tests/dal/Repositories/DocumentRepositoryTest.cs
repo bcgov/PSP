@@ -148,11 +148,99 @@ namespace Pims.Dal.Test.Repositories
             result.Items.Should().Contain(d => d.FileName == "acq-allowed");
             result.Items.Should().Contain(d => d.FileName == "mgmt-allowed");
             result.Items.Should().Contain(d => d.FileName == "research-allowed");
-            result.Items.Should().Contain(d => d.FileName == "project-non-target");
+            result.Items.Should().NotContain(d => d.FileName == "project-non-target");
 
             result.Items.Should().NotContain(d => d.FileName == "disp-denied");
             result.Items.Should().NotContain(d => d.FileName == "lease-denied");
             result.Items.Should().NotContain(d => d.FileName == "research-denied");
+        }
+
+        [Fact]
+        public void GetPageDeep_NonContractor_CanAccessByTeamOutsideRegion()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
+            var context = helper.CreatePimsContext(user, true);
+
+            var documentType = new PimsDocumentTyp
+            {
+                DocumentTypeId = 1,
+                DocumentType = "TEST",
+                DocumentTypeDescription = "Test",
+                AppCreateUserid = "test",
+                AppCreateUserDirectory = "test",
+                AppLastUpdateUserid = "test",
+                AppLastUpdateUserDirectory = "test",
+                DbCreateUserid = "test",
+                DbLastUpdateUserid = "test",
+            };
+
+            var personId = 77L;
+            var teamProject = EntityHelper.CreateProject(200, "PRJ-200", "Team Project");
+            teamProject.RegionCode = 2;
+            teamProject.PimsProjectPeople.Add(new PimsProjectPerson { PersonId = personId });
+
+            var acq = EntityHelper.CreateAcquisitionFile(201);
+            acq.RegionCode = 2;
+            acq.Project = teamProject;
+
+            var disposition = EntityHelper.CreateDispositionFile(202);
+            disposition.RegionCode = 2;
+            disposition.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam { PersonId = personId });
+
+            var lease = EntityHelper.CreateLease(203, addProperty: false);
+            lease.RegionCode = 2;
+            lease.Project = teamProject;
+
+            var management = EntityHelper.CreateManagementFile(204);
+            management.RegionCode = 2;
+            management.Project = teamProject;
+
+            var acqDoc = EntityHelper.CreateDocument("acq-team-visible", 401);
+            acqDoc.DocumentTypeId = 1;
+            acqDoc.DocumentType = documentType;
+            acqDoc.PimsAcquisitionFileDocuments.Add(new PimsAcquisitionFileDocument { AcquisitionFile = acq });
+
+            var dispDoc = EntityHelper.CreateDocument("disp-team-visible", 402);
+            dispDoc.DocumentTypeId = 1;
+            dispDoc.DocumentType = documentType;
+            dispDoc.PimsDispositionFileDocuments.Add(new PimsDispositionFileDocument { DispositionFile = disposition });
+
+            var leaseDoc = EntityHelper.CreateDocument("lease-team-visible", 403);
+            leaseDoc.DocumentTypeId = 1;
+            leaseDoc.DocumentType = documentType;
+            leaseDoc.PimsLeaseDocuments.Add(new PimsLeaseDocument { Lease = lease });
+
+            var mgmtDoc = EntityHelper.CreateDocument("mgmt-team-visible", 404);
+            mgmtDoc.DocumentTypeId = 1;
+            mgmtDoc.DocumentType = documentType;
+            mgmtDoc.PimsManagementFileDocuments.Add(new PimsManagementFileDocument { ManagementFile = management });
+
+            context.PimsDocumentTyps.Add(documentType);
+            context.PimsDocuments.AddRange(acqDoc, dispDoc, leaseDoc, mgmtDoc);
+            context.CommitTransaction();
+
+            var repository = helper.CreateRepository<DocumentRepository>(user);
+
+            // Act
+            var result = repository.GetPageDeep(
+                new DocumentSearchFilterModel { Page = 1, Quantity = 20 },
+                new DocumentAccessContext
+                {
+                    UserRegions = new HashSet<short> { 1 },
+                    PersonId = personId,
+                    CanViewAcquisitionFiles = true,
+                    CanViewDispositionFiles = true,
+                    CanViewLeases = true,
+                    CanViewManagementFiles = true,
+                });
+
+            // Assert
+            result.Items.Should().Contain(d => d.FileName == "acq-team-visible");
+            result.Items.Should().Contain(d => d.FileName == "disp-team-visible");
+            result.Items.Should().Contain(d => d.FileName == "lease-team-visible");
+            result.Items.Should().Contain(d => d.FileName == "mgmt-team-visible");
         }
 
         #region TryGet

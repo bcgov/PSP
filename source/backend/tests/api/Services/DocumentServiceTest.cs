@@ -324,11 +324,45 @@ namespace Pims.Api.Test.Services
             documentRepository.Verify(x => x.GetPageDeep(
                 It.IsAny<DocumentSearchFilterModel>(),
                 It.Is<DocumentAccessContext>(ctx =>
-                    ctx.ContractorPersonId == pimsUser.PersonId
+                    ctx.PersonId == pimsUser.PersonId
+                    && ctx.ContractorPersonId == pimsUser.PersonId
                     && ctx.UserRegions.Contains(1)
                     && ctx.CanViewAcquisitionFiles
                     && !ctx.CanViewDispositionFiles
                     && ctx.CanViewLeases
+                    && !ctx.CanViewManagementFiles
+                    && !ctx.CanViewResearchFiles
+                    && !ctx.CanViewProjects
+                    && !ctx.CanViewProperties)), Times.Once);
+        }
+
+        [Fact]
+        public void GetPage_ShouldPassNonContractorAccessContextToRepository()
+        {
+            // Arrange
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView, Permissions.AcquisitionFileView);
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            var pimsUser = EntityHelper.CreateUser(1, Guid.NewGuid(), "test-user", isContractor: false, regionCode: 1);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
+
+            documentRepository.Setup(x => x.GetPageDeep(It.IsAny<DocumentSearchFilterModel>(), It.IsAny<DocumentAccessContext>()))
+                .Returns(new Paged<PimsDocument>(new List<PimsDocument>(), 1, 10, 0));
+
+            // Act
+            service.GetPage(new DocumentSearchFilterModel());
+
+            // Assert
+            documentRepository.Verify(x => x.GetPageDeep(
+                It.IsAny<DocumentSearchFilterModel>(),
+                It.Is<DocumentAccessContext>(ctx =>
+                    ctx.PersonId == pimsUser.PersonId
+                    && ctx.ContractorPersonId == null
+                    && ctx.UserRegions.Contains(1)
+                    && ctx.CanViewAcquisitionFiles
+                    && !ctx.CanViewDispositionFiles
+                    && !ctx.CanViewLeases
                     && !ctx.CanViewManagementFiles
                     && !ctx.CanViewResearchFiles
                     && !ctx.CanViewProjects

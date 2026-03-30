@@ -9,6 +9,8 @@ namespace Pims.Api.Models.Concepts.Document
     {
         public HashSet<short> UserRegions { get; set; } = new HashSet<short>();
 
+        public long? PersonId { get; set; }
+
         public long? ContractorPersonId { get; set; }
 
         public bool CanViewAcquisitionFiles { get; set; } = true;

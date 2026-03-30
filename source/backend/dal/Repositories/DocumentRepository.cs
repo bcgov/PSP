@@ -298,41 +298,42 @@ namespace Pims.Dal.Repositories
             return query;
         }
 
-        private ExpressionStarter<PimsDocument> BuildTargetAccessPredicate(DocumentAccessContext accessContext)
+        private static ExpressionStarter<PimsDocument> BuildTargetAccessPredicate(DocumentAccessContext accessContext)
         {
             var userRegions = accessContext.UserRegions ?? new HashSet<short>();
+            var personId = accessContext.PersonId;
             var contractorPersonId = accessContext.ContractorPersonId;
             var targetAccessPredicate = PredicateBuilder.New<PimsDocument>(doc => false);
 
             if (accessContext.CanViewAcquisitionFiles)
             {
-                targetAccessPredicate = targetAccessPredicate.Or(AcquisitionAccessPredicate(userRegions, contractorPersonId));
+                targetAccessPredicate = targetAccessPredicate.Or(AcquisitionAccessPredicate(userRegions, personId, contractorPersonId));
             }
 
             if (accessContext.CanViewDispositionFiles)
             {
-                targetAccessPredicate = targetAccessPredicate.Or(DispositionAccessPredicate(userRegions, contractorPersonId));
+                targetAccessPredicate = targetAccessPredicate.Or(DispositionAccessPredicate(userRegions, personId, contractorPersonId));
             }
 
             if (accessContext.CanViewLeases)
             {
-                targetAccessPredicate = targetAccessPredicate.Or(LeaseAccessPredicate(userRegions));
+                targetAccessPredicate = targetAccessPredicate.Or(LeaseAccessPredicate(userRegions, personId, contractorPersonId));
             }
 
             if (accessContext.CanViewManagementFiles)
             {
-                targetAccessPredicate = targetAccessPredicate.Or(ManagementAccessPredicate(userRegions, contractorPersonId));
-                targetAccessPredicate = targetAccessPredicate.Or(ManagementActivityAccessPredicate(userRegions, contractorPersonId));
+                targetAccessPredicate = targetAccessPredicate.Or(ManagementAccessPredicate(userRegions, personId, contractorPersonId));
+                targetAccessPredicate = targetAccessPredicate.Or(ManagementActivityAccessPredicate(userRegions, personId, contractorPersonId));
             }
 
             if (accessContext.CanViewResearchFiles)
             {
-                targetAccessPredicate = targetAccessPredicate.Or(ResearchAccessPredicate(userRegions, contractorPersonId));
+                targetAccessPredicate = targetAccessPredicate.Or(ResearchAccessPredicate());
             }
 
             if (accessContext.CanViewProjects)
             {
-                targetAccessPredicate = targetAccessPredicate.Or(ProjectAccessPredicate(userRegions, contractorPersonId));
+                targetAccessPredicate = targetAccessPredicate.Or(ProjectAccessPredicate(userRegions, personId, contractorPersonId));
             }
 
             if (accessContext.CanViewProperties)
@@ -343,96 +344,103 @@ namespace Pims.Dal.Repositories
             return targetAccessPredicate;
         }
 
-        private ExpressionStarter<PimsDocument> AcquisitionAccessPredicate(HashSet<short> userRegions, long? contractorPersonId)
+        private static ExpressionStarter<PimsDocument> AcquisitionAccessPredicate(HashSet<short> userRegions, long? personId, long? contractorPersonId)
         {
-            _ = Context;
+            var effectivePersonId = contractorPersonId ?? personId;
             return PredicateBuilder.New<PimsDocument>(doc =>
                 doc.PimsAcquisitionFileDocuments.FirstOrDefault(rel =>
-                    (userRegions.Contains(rel.AcquisitionFile.RegionCode) || rel.AcquisitionFile.RegionCode == 4)
-                    && (!contractorPersonId.HasValue
-                        || rel.AcquisitionFile.PimsAcquisitionFileTeams.Any(t => t.PersonId == contractorPersonId)
-                        || (rel.AcquisitionFile.Project != null
-                            && rel.AcquisitionFile.Project.PimsProjectPeople.Any(p => p.PersonId == contractorPersonId))))
-                != null);
+                    (effectivePersonId.HasValue
+                        && (rel.AcquisitionFile.PimsAcquisitionFileTeams.Any(t => t.PersonId == effectivePersonId)
+                            || (rel.AcquisitionFile.Project != null
+                                && rel.AcquisitionFile.Project.PimsProjectPeople.Any(p => p.PersonId == effectivePersonId))))
+                    || (!contractorPersonId.HasValue
+                        && (userRegions.Contains(rel.AcquisitionFile.RegionCode) || rel.AcquisitionFile.RegionCode == 4))
+                ) != null);
         }
 
-        private ExpressionStarter<PimsDocument> DispositionAccessPredicate(HashSet<short> userRegions, long? contractorPersonId)
+        private static ExpressionStarter<PimsDocument> DispositionAccessPredicate(HashSet<short> userRegions, long? personId, long? contractorPersonId)
         {
-            _ = Context;
+            var effectivePersonId = contractorPersonId ?? personId;
             return PredicateBuilder.New<PimsDocument>(doc => doc.PimsDispositionFileDocuments.FirstOrDefault(rel =>
-                (userRegions.Contains(rel.DispositionFile.RegionCode) || rel.DispositionFile.RegionCode == 4)
-                && (!contractorPersonId.HasValue
-                    || rel.DispositionFile.PimsDispositionFileTeams.Any(t => t.PersonId == contractorPersonId)))
+                (effectivePersonId.HasValue && rel.DispositionFile.PimsDispositionFileTeams.Any(t => t.PersonId == effectivePersonId))
+                || (!contractorPersonId.HasValue
+                    && (userRegions.Contains(rel.DispositionFile.RegionCode) || rel.DispositionFile.RegionCode == 4))
+                )
                 != null);
         }
 
-        private ExpressionStarter<PimsDocument> LeaseAccessPredicate(HashSet<short> userRegions)
+        private static ExpressionStarter<PimsDocument> LeaseAccessPredicate(HashSet<short> userRegions, long? personId, long? contractorPersonId)
         {
-            _ = Context;
+            var effectivePersonId = contractorPersonId ?? personId;
             return PredicateBuilder.New<PimsDocument>(doc => doc.PimsLeaseDocuments.FirstOrDefault(rel =>
-                !rel.Lease.RegionCode.HasValue || userRegions.Contains(rel.Lease.RegionCode.Value) || rel.Lease.RegionCode == 4) != null);
+                (effectivePersonId.HasValue
+                    && (rel.Lease.PimsLeaseLicenseTeams.Any(t => t.PersonId == effectivePersonId)
+                        || (rel.Lease.Project != null
+                            && rel.Lease.Project.PimsProjectPeople.Any(p => p.PersonId == effectivePersonId))))
+                || (!contractorPersonId.HasValue
+                    && (!rel.Lease.RegionCode.HasValue || userRegions.Contains(rel.Lease.RegionCode.Value) || rel.Lease.RegionCode == 4))
+                
+                ) != null);
         }
 
-        private ExpressionStarter<PimsDocument> ManagementAccessPredicate(HashSet<short> userRegions, long? contractorPersonId)
+        private static ExpressionStarter<PimsDocument> ManagementAccessPredicate(HashSet<short> userRegions, long? personId, long? contractorPersonId)
         {
-            _ = Context;
+            var effectivePersonId = contractorPersonId ?? personId;
             return PredicateBuilder.New<PimsDocument>(doc =>
                 doc.PimsManagementFileDocuments.FirstOrDefault(rel =>
-                    (!rel.ManagementFile.RegionCode.HasValue || userRegions.Contains(rel.ManagementFile.RegionCode.Value) || rel.ManagementFile.RegionCode == 4)
-                    && (!contractorPersonId.HasValue
-                        || rel.ManagementFile.PimsManagementFileTeams.Any(t => t.PersonId == contractorPersonId)
-                        || (rel.ManagementFile.Project != null
-                            && rel.ManagementFile.Project.PimsProjectPeople.Any(p => p.PersonId == contractorPersonId))))
-                != null);
+                    (effectivePersonId.HasValue
+                        && (rel.ManagementFile.PimsManagementFileTeams.Any(t => t.PersonId == effectivePersonId)
+                            || (rel.ManagementFile.Project != null
+                                && rel.ManagementFile.Project.PimsProjectPeople.Any(p => p.PersonId == effectivePersonId))))
+                    || (!contractorPersonId.HasValue
+                        && (!rel.ManagementFile.RegionCode.HasValue || userRegions.Contains(rel.ManagementFile.RegionCode.Value) || rel.ManagementFile.RegionCode == 4))
+                    
+                ) != null);
         }
 
-        private ExpressionStarter<PimsDocument> ResearchAccessPredicate(HashSet<short> userRegions, long? contractorPersonId)
+        private static ExpressionStarter<PimsDocument> ResearchAccessPredicate()
         {
-            _ = Context;
-            return PredicateBuilder.New<PimsDocument>(doc => doc.PimsResearchFileDocuments.FirstOrDefault(rel =>
-                rel.ResearchFile.PimsResearchFileProjects.Any(p =>
-                    (userRegions.Contains(p.Project.RegionCode) || p.Project.RegionCode == 4)
-                    && (!contractorPersonId.HasValue || p.Project.PimsProjectPeople.Any(pp => pp.PersonId == contractorPersonId)))
-                || (rel.ResearchFile.PimsResearchFileProjects.Count == 0 && !contractorPersonId.HasValue)) != null);
+            return PredicateBuilder.New<PimsDocument>(doc => doc.PimsResearchFileDocuments.Any());
         }
 
-        private ExpressionStarter<PimsDocument> ProjectAccessPredicate(HashSet<short> userRegions, long? contractorPersonId)
+        private static ExpressionStarter<PimsDocument> ProjectAccessPredicate(HashSet<short> userRegions, long? personId, long? contractorPersonId)
         {
-            _ = Context;
+            var effectivePersonId = contractorPersonId ?? personId;
             return PredicateBuilder.New<PimsDocument>(doc => doc.PimsProjectDocuments.FirstOrDefault(rel =>
-                (userRegions.Contains(rel.Project.RegionCode) || rel.Project.RegionCode == 4)
-                && (!contractorPersonId.HasValue || rel.Project.PimsProjectPeople.Any(p => p.PersonId == contractorPersonId))) != null);
+                (effectivePersonId.HasValue && rel.Project.PimsProjectPeople.Any(p => p.PersonId == effectivePersonId))
+                || (!contractorPersonId.HasValue
+                    && (userRegions.Contains(rel.Project.RegionCode) || rel.Project.RegionCode == 4))
+                ) != null);
         }
 
-        private ExpressionStarter<PimsDocument> PropertyAccessPredicate()
+        private static ExpressionStarter<PimsDocument> PropertyAccessPredicate()
         {
-            _ = Context;
             return PredicateBuilder.New<PimsDocument>(doc => doc.PimsPropertyDocuments.FirstOrDefault(rel => rel.Property != null) != null);
         }
 
-        private ExpressionStarter<PimsDocument> ManagementActivityAccessPredicate(HashSet<short> userRegions, long? contractorPersonId)
+        private static ExpressionStarter<PimsDocument> ManagementActivityAccessPredicate(HashSet<short> userRegions, long? personId, long? contractorPersonId)
         {
-            _ = Context;
+            var effectivePersonId = contractorPersonId ?? personId;
             return PredicateBuilder.New<PimsDocument>(doc => doc.PimsMgmtActivityDocuments.FirstOrDefault(rel =>
                 rel.ManagementActivity != null
                 && ((rel.ManagementActivity.ManagementFile != null
-                        && (!rel.ManagementActivity.ManagementFile.RegionCode.HasValue
-                            || userRegions.Contains(rel.ManagementActivity.ManagementFile.RegionCode.Value)
-                            || rel.ManagementActivity.ManagementFile.RegionCode == 4)
-                        && (!contractorPersonId.HasValue
-                            || rel.ManagementActivity.ManagementFile.PimsManagementFileTeams.Any(t => t.PersonId == contractorPersonId)
-                            || (rel.ManagementActivity.ManagementFile.Project != null
-                                && rel.ManagementActivity.ManagementFile.Project.PimsProjectPeople.Any(p => p.PersonId == contractorPersonId))))
+                        && ((effectivePersonId.HasValue
+                                && (rel.ManagementActivity.ManagementFile.PimsManagementFileTeams.Any(t => t.PersonId == effectivePersonId)
+                                    || (rel.ManagementActivity.ManagementFile.Project != null
+                                        && rel.ManagementActivity.ManagementFile.Project.PimsProjectPeople.Any(p => p.PersonId == effectivePersonId))))
+                            || (!contractorPersonId.HasValue
+                                && (!rel.ManagementActivity.ManagementFile.RegionCode.HasValue
+                                    || userRegions.Contains(rel.ManagementActivity.ManagementFile.RegionCode.Value)
+                                    || rel.ManagementActivity.ManagementFile.RegionCode == 4))))
                     || (rel.ManagementActivity.ManagementFile == null
                         && rel.ManagementActivity.PimsManagementActivityProperties.Any(map => map.Property != null
                             && userRegions.Contains(map.Property.RegionCode))
-                        && !contractorPersonId.HasValue))) != null);
+                        && !contractorPersonId.HasValue))
+                ) != null);
         }
 
-        private ExpressionStarter<PimsDocument> ApplyMayanIdFilter(ExpressionStarter<PimsDocument> predicate, DocumentSearchFilterModel filter)
+        private static ExpressionStarter<PimsDocument> ApplyMayanIdFilter(ExpressionStarter<PimsDocument> predicate, DocumentSearchFilterModel filter)
         {
-            _ = Context;
-
             if (filter.MayanDocumentIds?.Length > 0)
             {
                 predicate = predicate.And(pd => pd.MayanId.HasValue && filter.MayanDocumentIds.Contains(pd.MayanId.Value));
@@ -443,15 +451,13 @@ namespace Pims.Dal.Repositories
 
         private ExpressionStarter<PimsDocument> ApplyTemplateAndOrphanExclusions(ExpressionStarter<PimsDocument> predicate, bool excludeTemplates, bool excludeOrphans)
         {
-            if (!excludeTemplates)
+            if (excludeTemplates)
             {
-                return predicate;
-            }
-
-            var templateCodeType = Context.PimsDocumentTyps.FirstOrDefault(x => x.DocumentType == "CDOGTEMP");
-            if (templateCodeType != null)
-            {
-                predicate = predicate.And(x => x.DocumentTypeId != templateCodeType.DocumentTypeId);
+                var templateCodeType = Context.PimsDocumentTyps.FirstOrDefault(x => x.DocumentType == "CDOGTEMP");
+                if (templateCodeType != null)
+                {
+                    predicate = predicate.And(x => x.DocumentTypeId != templateCodeType.DocumentTypeId);
+                }
             }
 
             if (excludeOrphans)
