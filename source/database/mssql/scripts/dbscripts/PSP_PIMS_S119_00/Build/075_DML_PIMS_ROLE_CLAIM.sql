@@ -702,15 +702,16 @@ WHERE
     NAME = 'notification-delete';
 
 INSERT INTO
-    [dbo].[PIMS_ROLE_CLAIM] (
-        [ROLE_ID],
-        [CLAIM_ID],
-        [APP_CREATE_USERID],
-        [APP_CREATE_USER_GUID],
-        [APP_LAST_UPDATE_USERID],
-        [APP_LAST_UPDATE_USER_GUID],
-        [APP_CREATE_USER_DIRECTORY],
-        [APP_LAST_UPDATE_USER_DIRECTORY]
+    [dbo].[PIMS_ROLE_CLAIM]
+    (
+    [ROLE_ID],
+    [CLAIM_ID],
+    [APP_CREATE_USERID],
+    [APP_CREATE_USER_GUID],
+    [APP_LAST_UPDATE_USERID],
+    [APP_LAST_UPDATE_USER_GUID],
+    [APP_CREATE_USER_DIRECTORY],
+    [APP_LAST_UPDATE_USER_DIRECTORY]
     )
 VALUES
     -- Administrator
@@ -1695,6 +1696,36 @@ VALUES
         '',
         ''
     ),
+    (
+        @acqfunc,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @acqfunc,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @acqfunc,
+        @notificationDelete,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Acquisition Read
     (
         @acgrdon,
@@ -2050,6 +2081,36 @@ VALUES
     (
         @llfunc,
         @notificationView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @llfunc,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @llfunc,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @llfunc,
+        @notificationDelete,
         N'SEED',
         @appUserGuid,
         N'SEED',
@@ -2521,6 +2582,36 @@ VALUES
         '',
         ''
     ),
+    (
+        @prjfunc,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @prjfunc,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @prjfunc,
+        @notificationDelete,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Project Functional
     (
         @prjrdon,
@@ -2552,7 +2643,36 @@ VALUES
         '',
         ''
     ),
-
+    (
+        @prjrdon,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @prjrdon,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @prjrdon,
+        @notificationDelete,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Research Functional
     (
         @resfunc,

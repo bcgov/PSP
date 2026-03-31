@@ -1695,6 +1695,36 @@ VALUES
         '',
         ''
     ),
+    (
+        @acqfunc,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @acqfunc,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @acqfunc,
+        @notificationDelete,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Acquisition Read
     (
         @acgrdon,
@@ -2050,6 +2080,36 @@ VALUES
     (
         @llfunc,
         @notificationView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @llfunc,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @llfunc,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @llfunc,
+        @notificationDelete,
         N'SEED',
         @appUserGuid,
         N'SEED',
@@ -2545,6 +2605,36 @@ VALUES
     (
         @prjrdon,
         @notificationView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @prjrdon,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @prjrdon,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @prjrdon,
+        @notificationDelete,
         N'SEED',
         @appUserGuid,
         N'SEED',
