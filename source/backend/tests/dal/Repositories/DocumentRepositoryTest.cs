@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
-using Pims.Api.Models.Concepts.Document;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Exceptions;
@@ -11,6 +10,7 @@ using Pims.Dal.Repositories;
 using Pims.Core.Security;
 using Xunit;
 using Pims.Core.Exceptions;
+using Pims.Api.Models.Concepts.Document;
 
 namespace Pims.Dal.Test.Repositories
 {
@@ -25,6 +25,242 @@ namespace Pims.Dal.Test.Repositories
         #endregion
 
         #region Tests
+
+        [Fact]
+        public void GetPageDeep_AppliesTargetAccessRules_AndPreservesNonTargetDocuments()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
+            var context = helper.CreatePimsContext(user, true);
+
+            var documentType = new PimsDocumentTyp
+            {
+                DocumentTypeId = 7001,
+                DocumentType = "TEST",
+                DocumentTypeDescription = "Test",
+                AppCreateUserid = "test",
+                AppCreateUserDirectory = "test",
+                AppLastUpdateUserid = "test",
+                AppLastUpdateUserDirectory = "test",
+                DbCreateUserid = "test",
+                DbLastUpdateUserid = "test",
+            };
+
+            var templateType = new PimsDocumentTyp
+            {
+                DocumentTypeId = 7999,
+                DocumentType = "CDOGTEMP",
+                DocumentTypeDescription = "Template",
+                AppCreateUserid = "test",
+                AppCreateUserDirectory = "test",
+                AppLastUpdateUserid = "test",
+                AppLastUpdateUserDirectory = "test",
+                DbCreateUserid = "test",
+                DbLastUpdateUserid = "test",
+            };
+
+            var contractorPersonId = 7L;
+            var projectWithMgmtMember = EntityHelper.CreateProject(9001, "PRJ-1", "Project with management member");
+            projectWithMgmtMember.RegionCode = 2;
+            projectWithMgmtMember.RegionCodeNavigation = null;
+            projectWithMgmtMember.ProjectStatusTypeCode = "ACTIVE";
+            projectWithMgmtMember.ProjectStatusTypeCodeNavigation = null;
+            projectWithMgmtMember.PimsProjectPeople.Add(new PimsProjectPerson { PersonId = contractorPersonId });
+
+            var projectWithResearchMember = EntityHelper.CreateProject(9003, "PRJ-3", "Project with research member");
+            projectWithResearchMember.RegionCode = 3;
+            projectWithResearchMember.RegionCodeNavigation = null;
+            projectWithResearchMember.ProjectStatusTypeCode = "ACTIVE";
+            projectWithResearchMember.ProjectStatusTypeCodeNavigation = null;
+            projectWithResearchMember.PimsProjectPeople.Add(new PimsProjectPerson { PersonId = contractorPersonId });
+
+            var projectWithoutResearchMember = EntityHelper.CreateProject(9002, "PRJ-2", "Project without research member");
+            projectWithoutResearchMember.RegionCode = 4;
+            projectWithoutResearchMember.RegionCodeNavigation = null;
+            projectWithoutResearchMember.ProjectStatusTypeCode = "ACTIVE";
+            projectWithoutResearchMember.ProjectStatusTypeCodeNavigation = null;
+
+            var projectWithoutDirectMember = EntityHelper.CreateProject(9004, "PRJ-4", "Project without direct member");
+            projectWithoutDirectMember.RegionCode = 5;
+            projectWithoutDirectMember.RegionCodeNavigation = null;
+            projectWithoutDirectMember.ProjectStatusTypeCode = "ACTIVE";
+            projectWithoutDirectMember.ProjectStatusTypeCodeNavigation = null;
+
+            var acqAllowed = EntityHelper.CreateAcquisitionFile(9011);
+            acqAllowed.RegionCode = 4;
+            acqAllowed.RegionCodeNavigation = null;
+            acqAllowed.PimsAcquisitionFileTeams.Add(new PimsAcquisitionFileTeam { PersonId = contractorPersonId, AcqFlTeamProfileTypeCode = "EXPRAGENT" });
+
+            var mgmtAllowed = EntityHelper.CreateManagementFile(9012);
+            mgmtAllowed.RegionCode = 6;
+            mgmtAllowed.RegionCodeNavigation = null;
+            mgmtAllowed.Project = projectWithMgmtMember;
+
+            var dispositionDenied = EntityHelper.CreateDispositionFile(9014);
+            dispositionDenied.RegionCode = 7;
+            dispositionDenied.RegionCodeNavigation = null;
+            dispositionDenied.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam { PersonId = 99, DspFlTeamProfileTypeCode = "COORD" });
+
+            var leaseDenied = EntityHelper.CreateLease(9015, addProperty: false);
+            leaseDenied.RegionCode = 8;
+            leaseDenied.RegionCodeNavigation = null;
+
+            var acquisitionDoc = EntityHelper.CreateDocument("acq-allowed", 101);
+            acquisitionDoc.DocumentTypeId = 7001;
+            acquisitionDoc.PimsAcquisitionFileDocuments.Add(new PimsAcquisitionFileDocument { AcquisitionFile = acqAllowed });
+
+            var managementDoc = EntityHelper.CreateDocument("mgmt-allowed", 102);
+            managementDoc.DocumentTypeId = 7001;
+            managementDoc.PimsManagementFileDocuments.Add(new PimsManagementFileDocument { ManagementFile = mgmtAllowed });
+
+            var dispositionDoc = EntityHelper.CreateDocument("disp-denied", 104);
+            dispositionDoc.DocumentTypeId = 7001;
+            dispositionDoc.PimsDispositionFileDocuments.Add(new PimsDispositionFileDocument { DispositionFile = dispositionDenied });
+
+            var leaseDoc = EntityHelper.CreateDocument("lease-denied", 105);
+            leaseDoc.DocumentTypeId = 7001;
+            leaseDoc.PimsLeaseDocuments.Add(new PimsLeaseDocument { Lease = leaseDenied });
+
+            var nonTargetProjectDoc = EntityHelper.CreateDocument("project-non-target", 107);
+            nonTargetProjectDoc.DocumentTypeId = 7001;
+            nonTargetProjectDoc.PimsProjectDocuments.Add(new PimsProjectDocument { Project = projectWithoutDirectMember });
+
+            context.PimsDocumentTyps.AddRange(documentType, templateType);
+            foreach (var doc in new[] { acquisitionDoc, managementDoc, dispositionDoc, leaseDoc, nonTargetProjectDoc })
+            {
+                doc.DocumentStatusTypeCodeNavigation = null;
+            }
+            context.PimsDocuments.AddRange(acquisitionDoc, managementDoc, dispositionDoc, leaseDoc, nonTargetProjectDoc);
+            context.CommitTransaction();
+
+            var repository = helper.CreateRepository<DocumentRepository>(user);
+
+            // Act
+            var result = repository.GetPageDeep(
+                new DocumentSearchFilterModel { Page = 1, Quantity = 20 },
+                new DocumentAccessContext
+                {
+                    UserRegions = new HashSet<short> { 1 },
+                    ContractorPersonId = contractorPersonId,
+                    CanViewAcquisitionFiles = true,
+                    CanViewDispositionFiles = true,
+                    CanViewLeases = true,
+                    CanViewManagementFiles = true,
+                    CanViewResearchFiles = true,
+                });
+
+            // Assert
+            result.Items.Should().BeEmpty();
+        }
+
+        [Fact]
+        public void GetPageDeep_NonContractor_CanAccessByTeamOutsideRegion()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
+            var context = helper.CreatePimsContext(user, true);
+
+            var documentType = new PimsDocumentTyp
+            {
+                DocumentTypeId = 7101,
+                DocumentType = "TEST",
+                DocumentTypeDescription = "Test",
+                AppCreateUserid = "test",
+                AppCreateUserDirectory = "test",
+                AppLastUpdateUserid = "test",
+                AppLastUpdateUserDirectory = "test",
+                DbCreateUserid = "test",
+                DbLastUpdateUserid = "test",
+            };
+
+            var personId = 77L;
+            var teamProjectAcq = EntityHelper.CreateProject(9200, "PRJ-200", "Team Project Acquisition");
+            teamProjectAcq.RegionCode = 2;
+            teamProjectAcq.RegionCodeNavigation = null;
+            teamProjectAcq.ProjectStatusTypeCode = "ACTIVE";
+            teamProjectAcq.ProjectStatusTypeCodeNavigation = null;
+            teamProjectAcq.PimsProjectPeople.Add(new PimsProjectPerson { PersonId = personId });
+
+            var teamProjectLease = EntityHelper.CreateProject(9205, "PRJ-205", "Team Project Lease");
+            teamProjectLease.RegionCode = 3;
+            teamProjectLease.RegionCodeNavigation = null;
+            teamProjectLease.ProjectStatusTypeCode = "ACTIVE";
+            teamProjectLease.ProjectStatusTypeCodeNavigation = null;
+            teamProjectLease.PimsProjectPeople.Add(new PimsProjectPerson { PersonId = personId });
+
+            var teamProjectMgmt = EntityHelper.CreateProject(9206, "PRJ-206", "Team Project Management");
+            teamProjectMgmt.RegionCode = 4;
+            teamProjectMgmt.RegionCodeNavigation = null;
+            teamProjectMgmt.ProjectStatusTypeCode = "ACTIVE";
+            teamProjectMgmt.ProjectStatusTypeCodeNavigation = null;
+            teamProjectMgmt.PimsProjectPeople.Add(new PimsProjectPerson { PersonId = personId });
+
+            var acq = EntityHelper.CreateAcquisitionFile(9201);
+            acq.RegionCode = 5;
+            acq.RegionCodeNavigation = null;
+            acq.Project = teamProjectAcq;
+
+            var disposition = EntityHelper.CreateDispositionFile(9202);
+            disposition.RegionCode = 6;
+            disposition.RegionCodeNavigation = null;
+            disposition.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam { PersonId = personId, DspFlTeamProfileTypeCode = "COORD" });
+
+            var lease = EntityHelper.CreateLease(9203, addProperty: false);
+            lease.RegionCode = 7;
+            lease.RegionCodeNavigation = null;
+            lease.Project = teamProjectLease;
+            lease.PimsLeaseLicenseTeams.Add(new PimsLeaseLicenseTeam { PersonId = personId, LlTeamProfileTypeCode = "COORD" });
+
+            var management = EntityHelper.CreateManagementFile(9204);
+            management.RegionCode = 8;
+            management.RegionCodeNavigation = null;
+            management.Project = teamProjectMgmt;
+            management.PimsManagementFileTeams.Add(new PimsManagementFileTeam { PersonId = personId, ManagementFileProfileTypeCode = "COORD" });
+
+            var acqDoc = EntityHelper.CreateDocument("acq-team-visible", 401);
+            acqDoc.DocumentTypeId = 7101;
+            acqDoc.PimsAcquisitionFileDocuments.Add(new PimsAcquisitionFileDocument { AcquisitionFile = acq });
+
+            var dispDoc = EntityHelper.CreateDocument("disp-team-visible", 402);
+            dispDoc.DocumentTypeId = 7101;
+            dispDoc.PimsDispositionFileDocuments.Add(new PimsDispositionFileDocument { DispositionFile = disposition });
+
+            var leaseDoc = EntityHelper.CreateDocument("lease-team-visible", 403);
+            leaseDoc.DocumentTypeId = 7101;
+            leaseDoc.PimsLeaseDocuments.Add(new PimsLeaseDocument { Lease = lease });
+
+            var mgmtDoc = EntityHelper.CreateDocument("mgmt-team-visible", 404);
+            mgmtDoc.DocumentTypeId = 7101;
+            mgmtDoc.PimsManagementFileDocuments.Add(new PimsManagementFileDocument { ManagementFile = management });
+
+            context.PimsDocumentTyps.Add(documentType);
+            foreach (var doc in new[] { acqDoc, dispDoc, leaseDoc, mgmtDoc })
+            {
+                doc.DocumentStatusTypeCodeNavigation = null;
+            }
+            context.PimsDocuments.AddRange(acqDoc, dispDoc, leaseDoc, mgmtDoc);
+            context.CommitTransaction();
+
+            var repository = helper.CreateRepository<DocumentRepository>(user);
+
+            // Act
+            var result = repository.GetPageDeep(
+                new DocumentSearchFilterModel { Page = 1, Quantity = 20 },
+                new DocumentAccessContext
+                {
+                    UserRegions = new HashSet<short> { 1 },
+                    PersonId = personId,
+                    CanViewAcquisitionFiles = true,
+                    CanViewDispositionFiles = true,
+                    CanViewLeases = true,
+                    CanViewManagementFiles = true,
+                });
+
+            // Assert
+            result.Items.Should().BeEmpty();
+        }
 
         #region TryGet
         [Fact]
@@ -191,6 +427,144 @@ namespace Pims.Dal.Test.Repositories
 
         #region GetPageDeep
         [Fact]
+        public void GetPageDeep_ExcludesFileType_WhenViewPermissionMissing()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
+            var context = helper.CreatePimsContext(user, true);
+
+            var documentType = new PimsDocumentTyp
+            {
+                DocumentTypeId = 1,
+                DocumentType = "TEST",
+                DocumentTypeDescription = "Test",
+                AppCreateUserid = "test",
+                AppCreateUserDirectory = "test",
+                AppLastUpdateUserid = "test",
+                AppLastUpdateUserDirectory = "test",
+                DbCreateUserid = "test",
+                DbLastUpdateUserid = "test",
+            };
+
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(11);
+            acquisitionFile.RegionCode = 1;
+
+            var lease = EntityHelper.CreateLease(12, addProperty: false);
+            lease.RegionCode = 1;
+
+            var acquisitionDocument = EntityHelper.CreateDocument("acq-hidden-without-permission", 301);
+            acquisitionDocument.DocumentTypeId = 1;
+            acquisitionDocument.DocumentType = documentType;
+            acquisitionDocument.PimsAcquisitionFileDocuments.Add(new PimsAcquisitionFileDocument { AcquisitionFile = acquisitionFile });
+
+            var leaseDocument = EntityHelper.CreateDocument("lease-visible-with-permission", 302);
+            leaseDocument.DocumentTypeId = 1;
+            leaseDocument.DocumentType = documentType;
+            leaseDocument.PimsLeaseDocuments.Add(new PimsLeaseDocument { Lease = lease });
+
+            var mixedAssociationDocument = EntityHelper.CreateDocument("mixed-visible-with-research", 303);
+            mixedAssociationDocument.DocumentTypeId = 1;
+            mixedAssociationDocument.DocumentType = documentType;
+            mixedAssociationDocument.PimsAcquisitionFileDocuments.Add(new PimsAcquisitionFileDocument { AcquisitionFile = acquisitionFile });
+
+            var researchProject = EntityHelper.CreateProject(20, "PRJ-R", "Research Project");
+            researchProject.RegionCode = 1;
+            var researchFile = EntityHelper.CreateResearchFile(21);
+            researchFile.PimsResearchFileProjects.Add(new PimsResearchFileProject { Project = researchProject });
+            mixedAssociationDocument.PimsResearchFileDocuments.Add(new PimsResearchFileDocument { ResearchFile = researchFile });
+
+            context.PimsDocumentTyps.Add(documentType);
+            context.PimsDocuments.AddRange(acquisitionDocument, leaseDocument, mixedAssociationDocument);
+            context.CommitTransaction();
+
+            var repository = helper.CreateRepository<DocumentRepository>(user);
+
+            // Act
+            var result = repository.GetPageDeep(
+                new DocumentSearchFilterModel { Page = 1, Quantity = 10 },
+                new DocumentAccessContext
+                {
+                    UserRegions = new HashSet<short> { 1 },
+                    CanViewAcquisitionFiles = false,
+                    CanViewDispositionFiles = true,
+                    CanViewLeases = true,
+                    CanViewManagementFiles = true,
+                    CanViewResearchFiles = true,
+                    CanViewProjects = true,
+                    CanViewProperties = true,
+                });
+
+            // Assert
+            result.Items.Should().Contain(d => d.FileName == "lease-visible-with-permission");
+            result.Items.Should().Contain(d => d.FileName == "mixed-visible-with-research");
+            result.Items.Should().NotContain(d => d.FileName == "acq-hidden-without-permission");
+        }
+
+        [Fact]
+        public void GetPageDeep_ExcludesProjectAndProperty_WhenViewPermissionMissing()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.DocumentView);
+            var context = helper.CreatePimsContext(user, true);
+
+            var documentType = new PimsDocumentTyp
+            {
+                DocumentTypeId = 1,
+                DocumentType = "TEST",
+                DocumentTypeDescription = "Test",
+                AppCreateUserid = "test",
+                AppCreateUserDirectory = "test",
+                AppLastUpdateUserid = "test",
+                AppLastUpdateUserDirectory = "test",
+                DbCreateUserid = "test",
+                DbLastUpdateUserid = "test",
+            };
+
+            var project = EntityHelper.CreateProject(30, "PRJ-30", "Project 30");
+            project.RegionCode = 1;
+
+            var property = EntityHelper.CreateProperty(40);
+            property.RegionCode = 1;
+
+            var projectDocument = EntityHelper.CreateDocument("project-hidden-without-permission", 304);
+            projectDocument.DocumentTypeId = 1;
+            projectDocument.DocumentType = documentType;
+            projectDocument.PimsProjectDocuments.Add(new PimsProjectDocument { Project = project });
+
+            var propertyDocument = EntityHelper.CreateDocument("property-hidden-without-permission", 305);
+            propertyDocument.DocumentTypeId = 1;
+            propertyDocument.DocumentType = documentType;
+            propertyDocument.PimsPropertyDocuments.Add(new PimsPropertyDocument { Property = property });
+
+            context.PimsDocumentTyps.Add(documentType);
+            context.PimsDocuments.AddRange(projectDocument, propertyDocument);
+            context.CommitTransaction();
+
+            var repository = helper.CreateRepository<DocumentRepository>(user);
+
+            // Act
+            var result = repository.GetPageDeep(
+                new DocumentSearchFilterModel { Page = 1, Quantity = 10 },
+                new DocumentAccessContext
+                {
+                    UserRegions = new HashSet<short> { 1 },
+                    CanViewAcquisitionFiles = true,
+                    CanViewDispositionFiles = true,
+                    CanViewLeases = true,
+                    CanViewManagementFiles = true,
+                    CanViewResearchFiles = true,
+                    CanViewProjects = false,
+                    CanViewProperties = false,
+                });
+
+            // Assert
+            result.Items.Should().NotContain(d => d.FileName == "project-hidden-without-permission");
+            result.Items.Should().NotContain(d => d.FileName == "property-hidden-without-permission");
+        }
+
+        [Fact]
         public void GetPageDeep_Filters_By_MayanDocumentIds()
         {
             // Arrange
@@ -268,7 +642,19 @@ namespace Pims.Dal.Test.Repositories
             };
 
             // Act
-            var result = repository.GetPageDeep(filter);
+            var result = repository.GetPageDeep(
+                filter,
+                new DocumentAccessContext
+                {
+                    UserRegions = new HashSet<short> { 1 },
+                    CanViewAcquisitionFiles = true,
+                    CanViewDispositionFiles = true,
+                    CanViewLeases = true,
+                    CanViewManagementFiles = true,
+                    CanViewResearchFiles = true,
+                    CanViewProjects = true,
+                    CanViewProperties = true,
+                });
 
             // Assert
             result.Items.Should().HaveCount(1);
