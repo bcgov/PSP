@@ -1,9 +1,9 @@
 import { FC, useCallback, useState } from 'react';
 import OverlayTrigger, { OverlayTriggerProps } from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
-import { IoAlarm } from 'react-icons/io5';
 import styled from 'styled-components';
 
+import AlarmIcon from '@/assets/images/alarm-clock-solid-full.svg?react';
 import { exists, prettyFormatDate } from '@/utils';
 
 import { ReminderPopoverContent } from './ReminderPopoverContent';
@@ -117,11 +117,16 @@ export const ReminderButton: FC<IReminderButtonProps> = ({
         aria-label={`Reminder for ${keyDateLabel}`}
       >
         {/*
-         * IoAlarm colour is inverted (fills with current colour) when a prior
+         * Alarm colour is inverted (fills with current colour) when a prior
          * notification already exists for this user / file / entity combination.
          * The button's own $isSet state controls the background/foreground swap.
          */}
-        <IoAlarm size={16} aria-hidden="true" style={{ opacity: isReminderSet ? 1 : 0.85 }} />
+        <AlarmIcon
+          width="1.6rem"
+          height="1.6rem"
+          aria-hidden="true"
+          style={{ opacity: isReminderSet ? 1 : 0.85 }}
+        />
 
         {isReminderSet && <StyledBadgeDot aria-hidden="true" />}
       </StyledAlarmButton>
