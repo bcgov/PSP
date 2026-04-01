@@ -1,6 +1,8 @@
+import { useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 
+import ReminderButton from '@/components/common/form/ReminderButton/ReminderButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledLink } from '@/components/common/styles';
@@ -30,6 +32,26 @@ export const LeaseDetailView: React.FunctionComponent<
   const productName = exists(lease?.product)
     ? lease?.product?.code + ' ' + lease?.product?.description
     : '';
+
+  const [leaseExpiryReminderDate, setLeaseExpiryReminderDate] = useState<string | null>(null);
+
+  function handleSetLeaseExpiryReminder(isoDate: string): void {
+    alert('Lease expiry reminder set for ' + prettyFormatDate(isoDate));
+  }
+
+  function handleRemoveLeaseExpiryReminder(): void {
+    alert('Reminder removed.');
+  }
+
+  // TODO: Replace alert() calls with real API integration to save/remove reminders for the lease expiry date.
+  // TODO: Load the existing reminder for the lease expiry date (if any for current user) and pass it as the `savedReminderDate` prop to the ReminderButton component.
+  useEffect(() => {
+    async function loadLeaseExpiryReminder() {
+      setLeaseExpiryReminderDate('2024-12-31'); // FIXME: Example hardcoded reminder date for testing
+      // setLeaseExpiryReminderDate(null);
+    }
+    loadLeaseExpiryReminder();
+  }, []);
 
   return (
     <>
@@ -87,7 +109,16 @@ export const LeaseDetailView: React.FunctionComponent<
             </SectionField>
           </Col>
           <Col>
-            <SectionField label="Expiry">{prettyFormatDate(lease.expiryDate)}</SectionField>
+            <SectionField label="Expiry">
+              {prettyFormatDate(lease.expiryDate)}{' '}
+              <ReminderButton
+                keyDate={lease.expiryDate}
+                keyDateLabel="Lease Expiry Date"
+                savedReminderDate={leaseExpiryReminderDate}
+                onReminderSaved={handleSetLeaseExpiryReminder}
+                onReminderRemoved={handleRemoveLeaseExpiryReminder}
+              />
+            </SectionField>
           </Col>
         </Row>
         {lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED && (
