@@ -1817,6 +1817,36 @@ VALUES
         '',
         ''
     ),
+    (
+        @acgrdon,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @acgrdon,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @acgrdon,
+        @notificationDelete,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Lease Functional
     (
         @llfunc,
@@ -2199,6 +2229,36 @@ VALUES
         '',
         ''
     ),
+    (
+        @llrdon,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @llrdon,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @llrdon,
+        @notificationDelete,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Management Functional
     (
         @mafunc,
@@ -2514,6 +2574,36 @@ VALUES
     (
         @mardon,
         @notificationView,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @mardon,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @mardon,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @mardon,
+        @notificationDelete,
         N'SEED',
         @appUserGuid,
         N'SEED',
@@ -3055,6 +3145,36 @@ VALUES
         '',
         ''
     ),
+    (
+        @resrdon,
+        @notificationAdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @resrdon,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @resrdon,
+        @notificationDelete,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
     -- Disposition Functional
     (
         @dispfunc,
@@ -3396,5 +3516,36 @@ VALUES
         @appUserGuid,
         '',
         ''
+    ),
+    (
+        @disprdon,
+        @notificationdd,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @disprdon,
+        @notificationEdit,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
+    ),
+    (
+        @disprdon,
+        @notificationDelete,
+        N'SEED',
+        @appUserGuid,
+        N'SEED',
+        @appUserGuid,
+        '',
+        ''
     )
+
 GO
