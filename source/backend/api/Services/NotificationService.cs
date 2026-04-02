@@ -4,6 +4,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Extensions;
+using Pims.Api.Helpers.Factories;
 using Pims.Api.Models.Concepts.Notification;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
@@ -19,17 +20,20 @@ namespace Pims.Api.Services
         private readonly IUserRepository _userRepository;
         private readonly ILogger<NotificationService> _logger;
         private readonly INotificationRepository _notificationRepository;
+        private readonly INotificationValidatorFactory _validatorFactory;
 
         public NotificationService(
             ClaimsPrincipal user,
             IUserRepository userRepository,
             ILogger<NotificationService> logger,
-            INotificationRepository notificationRepository)
+            INotificationRepository notificationRepository,
+            INotificationValidatorFactory validatorFactory)
         {
             _user = user;
             _userRepository = userRepository;
             _logger = logger;
             _notificationRepository = notificationRepository;
+            _validatorFactory = validatorFactory;
         }
 
         public IEnumerable<PimsNotification> GetByUser(string username)
@@ -71,7 +75,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Creating notification {Notification} for user {Username}", notification, username);
             _user.ThrowIfNotAllAuthorized(Permissions.NotificationAdd);
             notification.ThrowIfNull(nameof(notification));
-            notification.ThrowIfInvalidFileAndSubId();
+            notification.ThrowIfInvalidFileAndSubId(_validatorFactory);
 
             var user = GetUserByUsername(username);
             var newNotification = _notificationRepository.Add(notification, user.UserId);
@@ -96,7 +100,7 @@ namespace Pims.Api.Services
             {
                 throw new UnauthorizedAccessException("User does not own this notification.");
             }
-            notification.ThrowIfInvalidFileAndSubId();
+            notification.ThrowIfInvalidFileAndSubId(_validatorFactory);
 
             return _notificationRepository.Update(notification, user.UserId);
         }

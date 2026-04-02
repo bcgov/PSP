@@ -1,6 +1,6 @@
 using System;
 using System.Linq;
-using Pims.Api.Helpers.Validators;
+using Pims.Api.Helpers.Factories;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Helpers.Extensions
@@ -11,9 +11,10 @@ namespace Pims.Api.Helpers.Extensions
         /// Validates that only one file id or sub-id is populated, and that sub-ids are only populated with their correct corresponding file id(s).
         /// Throws InvalidOperationException if invalid.
         /// </summary>
-        public static void ThrowIfInvalidFileAndSubId(this PimsNotification notification)
+        public static void ThrowIfInvalidFileAndSubId(this PimsNotification notification, INotificationValidatorFactory validatorFactory)
         {
             ArgumentNullException.ThrowIfNull(notification);
+            ArgumentNullException.ThrowIfNull(validatorFactory);
 
             var fileIds = new[]
             {
@@ -43,7 +44,7 @@ namespace Pims.Api.Helpers.Extensions
                 throw new InvalidOperationException("Exactly one file id and one sub-id must be populated.");
             }
 
-            var validator = NotificationValidatorFactory.GetValidator(notification);
+            var validator = validatorFactory.GetValidator(notification);
             validator?.Validate(notification);
         }
 

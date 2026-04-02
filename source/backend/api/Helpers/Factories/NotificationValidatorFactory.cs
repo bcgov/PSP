@@ -1,57 +1,54 @@
+using System;
+using Microsoft.Extensions.DependencyInjection;
+using Pims.Api.Helpers.Factories;
 using Pims.Dal.Entities;
-using System.Collections.Generic;
 
 namespace Pims.Api.Helpers.Validators
 {
-    public static class NotificationValidatorFactory
+    public class NotificationValidatorFactory : INotificationValidatorFactory
     {
-        private static readonly Dictionary<string, INotificationSubtypeValidator> Validators =
-            new()
-            {
-                { "Agreement", new AgreementValidator() },
-                { "LeaseConsultation", new LeaseConsultationValidator() },
-                { "LeaseRenewal", new LeaseRenewalValidator() },
-                { "NoticeOfClaim", new NoticeOfClaimValidator() },
-                { "Insurance", new InsuranceValidator() },
-                { "ExpropOwnerHistory", new ExpropOwnerHistoryValidator() },
-                { "Take", new TakeValidator() },
-            };
+        private readonly IServiceProvider _serviceProvider;
 
-        public static INotificationSubtypeValidator GetValidator(PimsNotification notification)
+        public NotificationValidatorFactory(IServiceProvider serviceProvider)
+        {
+            _serviceProvider = serviceProvider;
+        }
+
+        public INotificationSubtypeValidator GetValidator(PimsNotification notification)
         {
             if (notification.AgreementId.HasValue)
             {
-                return Validators["Agreement"];
+                return _serviceProvider.GetRequiredService<AgreementValidator>();
             }
 
             if (notification.LeaseConsultationId.HasValue)
             {
-                return Validators["LeaseConsultation"];
+                return _serviceProvider.GetRequiredService<LeaseConsultationValidator>();
             }
 
             if (notification.LeaseRenewalId.HasValue)
             {
-                return Validators["LeaseRenewal"];
+                return _serviceProvider.GetRequiredService<LeaseRenewalValidator>();
             }
 
             if (notification.NoticeOfClaimId.HasValue)
             {
-                return Validators["NoticeOfClaim"];
+                return _serviceProvider.GetRequiredService<NoticeOfClaimValidator>();
             }
 
             if (notification.InsuranceId.HasValue)
             {
-                return Validators["Insurance"];
+                return _serviceProvider.GetRequiredService<InsuranceValidator>();
             }
 
             if (notification.ExpropOwnerHistoryId.HasValue)
             {
-                return Validators["ExpropOwnerHistory"];
+                return _serviceProvider.GetRequiredService<ExpropOwnerHistoryValidator>();
             }
 
             if (notification.TakeId.HasValue)
             {
-                return Validators["Take"];
+                return _serviceProvider.GetRequiredService<TakeValidator>();
             }
 
             return null;
