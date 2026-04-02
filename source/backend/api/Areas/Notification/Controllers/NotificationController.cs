@@ -76,13 +76,19 @@ namespace Pims.Api.Areas.Notification.Controllers
 
             _logger.LogInformation("Dispatching to service: {Service}", _notificationService.GetType());
 
-            var notification = _notificationService.GetById(id);
-            if (notification == null)
+            var username = User.GetUsername();
+            var response = _notificationService.GetByIdForUser(id, username);
+            switch (response.Result)
             {
-                return NotFound();
+                case NotificationAccessResult.NotFound:
+                    return NotFound();
+                case NotificationAccessResult.Forbidden:
+                    return Forbid();
+                case NotificationAccessResult.Success:
+                    return Ok(_mapper.Map<NotificationModel>(response.Notification));
+                default:
+                    return StatusCode(500);
             }
-
-            return Ok(_mapper.Map<NotificationModel>(notification));
         }
 
         /// <summary>

@@ -36,6 +36,14 @@ namespace Pims.Api.Models.Concepts.Notification
                 .Map(dest => dest.DispositionFileId, src => src.DispositionFileId)
                 .Map(dest => dest.ResearchFileId, src => src.ResearchFileId)
                 .Map(dest => dest.ManagementFileId, src => src.ManagementFileId)
+                .Map(dest => dest.LeaseId, src => src.LeaseId)
+                .Map(dest => dest.TakeId, src => src.TakeId)
+                .Map(dest => dest.InsuranceId, src => src.InsuranceId)
+                .Map(dest => dest.LeaseConsultationId, src => src.LeaseConsultationId)
+                .Map(dest => dest.NoticeOfClaimId, src => src.NoticeOfClaimId)
+                .Map(dest => dest.LeaseRenewalId, src => src.LeaseRenewalId)
+                .Map(dest => dest.ExpropOwnerHistoryId, src => src.ExpropOwnerHistoryId)
+                .Map(dest => dest.AgreementId, src => src.AgreementId)
                 .Inherits<BaseConcurrentModel, Entity.IBaseAppEntity>();
         }
     }

@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using Pims.Api.Models.Concepts.Notification;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Services
@@ -7,7 +8,7 @@ namespace Pims.Api.Services
     {
         IEnumerable<PimsNotification> GetByUser(string username);
 
-        PimsNotification GetById(long notificationId);
+        NotificationAccessResponse GetByIdForUser(long notificationId, string username);
 
         PimsNotification Add(PimsNotification notification, string username);
 

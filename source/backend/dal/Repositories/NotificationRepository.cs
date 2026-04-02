@@ -1,8 +1,8 @@
 using System.Collections.Generic;
-using System.Data.Entity;
 using System.Linq;
 using System.Security.Claims;
 using MapsterMapper;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
@@ -40,9 +40,10 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsNotification> GetByUser(long userId)
         {
             using var scope = Logger.QueryScope();
-            return Context.PimsNotifications
+            var response = Context.PimsNotifications
                 .Where(n => n.PimsNotificationUsers.Any(u => u.UserId == userId))
                 .ToList();
+            return response;
         }
 
         /// <summary>
@@ -53,8 +54,12 @@ namespace Pims.Dal.Repositories
         public PimsNotification GetById(long notificationId)
         {
             using var scope = Logger.QueryScope();
-            return Context.PimsNotifications
+            var response = Context.PimsNotifications
+                .Include(n => n.PimsNotificationUsers)
+                    .ThenInclude(nu => nu.User)
                 .FirstOrDefault(n => n.NotificationId == notificationId);
+
+            return response;
         }
 
         /// <summary>
@@ -141,6 +146,11 @@ namespace Pims.Dal.Repositories
                 .Select(nu => nu.NotificationUserId)
                 .ToList();
 
+            if (notificationUserIds.Count == 0)
+            {
+                return false;
+            }
+
             // Remove related notification-user-output for userId
             var notificationUserOutputs = Context.PimsNotificationUserOutputs
                 .Where(nuo => notificationUserIds.Contains(nuo.NotificationUserId));
@@ -151,6 +161,8 @@ namespace Pims.Dal.Repositories
                 .Where(nu => notificationUserIds.Contains(nu.NotificationUserId));
             Context.PimsNotificationUsers.RemoveRange(notificationUsers);
 
+            Context.SaveChanges();
+
             // Check if any other user uses this notification
             bool hasOtherLinks = Context.PimsNotificationUsers.Any(nu => nu.NotificationId == notificationId);
 
@@ -158,9 +170,9 @@ namespace Pims.Dal.Repositories
             if (!hasOtherLinks)
             {
                 Context.PimsNotifications.Remove(notification);
+                Context.SaveChanges();
             }
 
-            Context.SaveChanges();
             return true;
         }
 

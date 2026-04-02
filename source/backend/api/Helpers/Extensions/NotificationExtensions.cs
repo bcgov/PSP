@@ -46,5 +46,12 @@ namespace Pims.Api.Helpers.Extensions
             var validator = NotificationValidatorFactory.GetValidator(notification);
             validator?.Validate(notification);
         }
+
+        public static bool IsOwnedByUser(this PimsNotification notification, long userId)
+        {
+            ArgumentNullException.ThrowIfNull(notification);
+
+            return notification.PimsNotificationUsers.Any(u => u.UserId == userId);
+        }
     }
 }
