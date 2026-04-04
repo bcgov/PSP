@@ -2863,4 +2863,188 @@ VALUES
         @dbUserId
     );
 
+-- Notifications
+INSERT
+    [dbo].[PIMS_CLAIM]
+    (
+    [CLAIM_ID],
+    [CLAIM_UID],
+    [NAME],
+    [KEYCLOAK_ROLE_ID],
+    [DESCRIPTION],
+    [IS_DISABLED],
+    [CONCURRENCY_CONTROL_NUMBER],
+    [APP_CREATE_TIMESTAMP],
+    [APP_CREATE_USERID],
+    [APP_CREATE_USER_GUID],
+    [APP_CREATE_USER_DIRECTORY],
+    [DB_CREATE_TIMESTAMP],
+    [DB_CREATE_USERID],
+    [APP_LAST_UPDATE_TIMESTAMP],
+    [APP_LAST_UPDATE_USERID],
+    [APP_LAST_UPDATE_USER_GUID],
+    [APP_LAST_UPDATE_USER_DIRECTORY],
+    [DB_LAST_UPDATE_TIMESTAMP],
+    [DB_LAST_UPDATE_USERID]
+    )
+VALUES
+    (
+        69,
+        N'dce955aa-e387-4c61-820d-232ae273f16e',
+        N'notification-view',
+        N'dce955aa-e387-4c61-820d-232ae273f16e',
+        N'Ability to view notifications.',
+        0,
+        1,
+        @seedTime,
+        @appUserId,
+        @appUserGuid,
+        @appUserDirectory,
+        @seedTime,
+        @dbUserId,
+        @seedTime,
+        @appUserId,
+        @appUserGuid,
+        @appUserDirectory,
+        @seedTime,
+        @dbUserId
+    );
+
+INSERT
+    [dbo].[PIMS_CLAIM]
+    (
+    [CLAIM_ID],
+    [CLAIM_UID],
+    [NAME],
+    [KEYCLOAK_ROLE_ID],
+    [DESCRIPTION],
+    [IS_DISABLED],
+    [CONCURRENCY_CONTROL_NUMBER],
+    [APP_CREATE_TIMESTAMP],
+    [APP_CREATE_USERID],
+    [APP_CREATE_USER_GUID],
+    [APP_CREATE_USER_DIRECTORY],
+    [DB_CREATE_TIMESTAMP],
+    [DB_CREATE_USERID],
+    [APP_LAST_UPDATE_TIMESTAMP],
+    [APP_LAST_UPDATE_USERID],
+    [APP_LAST_UPDATE_USER_GUID],
+    [APP_LAST_UPDATE_USER_DIRECTORY],
+    [DB_LAST_UPDATE_TIMESTAMP],
+    [DB_LAST_UPDATE_USERID]
+    )
+VALUES
+    (
+        70,
+        N'27603b6a-aec0-4b33-aad8-7a6d6c7d8527',
+        N'notification-add',
+        N'27603b6a-aec0-4b33-aad8-7a6d6c7d8527',
+        N'Ability to add new notifications.',
+        0,
+        1,
+        @seedTime,
+        @appUserId,
+        @appUserGuid,
+        @appUserDirectory,
+        @seedTime,
+        @dbUserId,
+        @seedTime,
+        @appUserId,
+        @appUserGuid,
+        @appUserDirectory,
+        @seedTime,
+        @dbUserId
+    );
+
+INSERT
+    [dbo].[PIMS_CLAIM]
+    (
+    [CLAIM_ID],
+    [CLAIM_UID],
+    [NAME],
+    [KEYCLOAK_ROLE_ID],
+    [DESCRIPTION],
+    [IS_DISABLED],
+    [CONCURRENCY_CONTROL_NUMBER],
+    [APP_CREATE_TIMESTAMP],
+    [APP_CREATE_USERID],
+    [APP_CREATE_USER_GUID],
+    [APP_CREATE_USER_DIRECTORY],
+    [DB_CREATE_TIMESTAMP],
+    [DB_CREATE_USERID],
+    [APP_LAST_UPDATE_TIMESTAMP],
+    [APP_LAST_UPDATE_USERID],
+    [APP_LAST_UPDATE_USER_GUID],
+    [APP_LAST_UPDATE_USER_DIRECTORY],
+    [DB_LAST_UPDATE_TIMESTAMP],
+    [DB_LAST_UPDATE_USERID]
+    )
+VALUES
+    (
+        71,
+        N'c4771de3-3cf1-4200-a73d-1fe05daaa3b9',
+        N'notification-edit',
+        N'c4771de3-3cf1-4200-a73d-1fe05daaa3b9',
+        N'Ability to edit existing notifications.',
+        0,
+        1,
+        @seedTime,
+        @appUserId,
+        @appUserGuid,
+        @appUserDirectory,
+        @seedTime,
+        @dbUserId,
+        @seedTime,
+        @appUserId,
+        @appUserGuid,
+        @appUserDirectory,
+        @seedTime,
+        @dbUserId
+    );
+
+INSERT
+    [dbo].[PIMS_CLAIM]
+    (
+    [CLAIM_ID],
+    [CLAIM_UID],
+    [NAME],
+    [KEYCLOAK_ROLE_ID],
+    [DESCRIPTION],
+    [IS_DISABLED],
+    [CONCURRENCY_CONTROL_NUMBER],
+    [APP_CREATE_TIMESTAMP],
+    [APP_CREATE_USERID],
+    [APP_CREATE_USER_GUID],
+    [APP_CREATE_USER_DIRECTORY],
+    [DB_CREATE_TIMESTAMP],
+    [DB_CREATE_USERID],
+    [APP_LAST_UPDATE_TIMESTAMP],
+    [APP_LAST_UPDATE_USERID],
+    [APP_LAST_UPDATE_USER_GUID],
+    [APP_LAST_UPDATE_USER_DIRECTORY],
+    [DB_LAST_UPDATE_TIMESTAMP],
+    [DB_LAST_UPDATE_USERID]
+    )
+VALUES
+    (
+        72,
+        N'8eab5459-08f5-4c0f-8344-f1ecf61e4e01',
+        N'notification-delete',
+        N'8eab5459-08f5-4c0f-8344-f1ecf61e4e01',
+        N'Ability to delete notifications.',
+        0,
+        1,
+        @seedTime,
+        @appUserId,
+        @appUserGuid,
+        @appUserDirectory,
+        @seedTime,
+        @dbUserId,
+        @seedTime,
+        @appUserId,
+        @appUserGuid,
+        @appUserDirectory,
+        @seedTime,
+        @dbUserId
+    );
 GO
