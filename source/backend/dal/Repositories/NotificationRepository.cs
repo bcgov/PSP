@@ -107,7 +107,11 @@ namespace Pims.Dal.Repositories
             notification.ThrowIfNull(nameof(notification));
 
             var existing = this.Context.PimsNotifications.FirstOrDefault(n => n.NotificationId == notification.NotificationId) ?? throw new KeyNotFoundException($"Notification {notification.NotificationId} not found");
-            Context.Entry(existing).CurrentValues.SetValues(notification);
+
+            // Only update allowed fields
+            existing.NotificationTriggerDate = notification.NotificationTriggerDate;
+            existing.NotificationMessage = notification.NotificationMessage;
+
             Context.SaveChanges();
             return existing;
         }
