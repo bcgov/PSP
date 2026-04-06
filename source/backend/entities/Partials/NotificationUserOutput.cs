@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PimsNotificationUserOutput partial class for custom logic and inheritance.
+    /// PimsNotificationUserOutput describes the details of the notification sent the user including the sent date and read date.
     /// </summary>
     public partial class PimsNotificationUserOutput : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {

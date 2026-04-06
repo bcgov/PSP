@@ -2,7 +2,7 @@ using Mapster;
 using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
 
-namespace Pims.Api.Areas.Notification.Models
+namespace Pims.Api.Models.Concepts.Notification
 {
     public class NotificationUserMap : IRegister
     {

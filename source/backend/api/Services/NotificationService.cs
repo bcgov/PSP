@@ -92,7 +92,7 @@ namespace Pims.Api.Services
             notification.ThrowIfNull(nameof(notification));
             ValidateVersion(notification.NotificationId, notification.ConcurrencyControlNumber);
 
-            var user = _userRepository.GetByUsername(username) ?? throw new KeyNotFoundException($"User '{username}' not found in PIMS_USERS.");
+            var user = GetUserByUsername(username);
             var existingNotification = _notificationRepository.GetById(notification.NotificationId)
                 ?? throw new KeyNotFoundException($"Notification '{notification.NotificationId}' not found.");
 

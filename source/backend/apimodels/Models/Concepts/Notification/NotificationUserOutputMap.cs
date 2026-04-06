@@ -1,5 +1,4 @@
 using Mapster;
-using Pims.Api.Areas.Notification.Models;
 using Pims.Api.Models.Base;
 using Entity = Pims.Dal.Entities;
 

@@ -288,8 +288,6 @@ namespace Pims.Dal.Repositories
         /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
         public PimsUser GetByUsername(string username)
         {
-            User.ThrowIfNotAuthorized(Permissions.AdminUsers);
-
             return Context.PimsUsers
                 .Include(u => u.PimsUserRoles)
                     .ThenInclude(r => r.Role)

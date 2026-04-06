@@ -1,7 +1,7 @@
 using System;
 using Pims.Api.Models.Base;
 
-namespace Pims.Api.Areas.Notification.Models
+namespace Pims.Api.Models.Concepts.Notification
 {
     public class NotificationUserOutputModel : BaseConcurrentModel
     {

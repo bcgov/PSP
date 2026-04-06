@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
@@ -22,9 +21,7 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        /// <param name="sequenceRepository"></param>
-        /// <param name="mapper"></param>
-        public NotificationRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<NotificationRepository> logger, ISequenceRepository sequenceRepository, IMapper mapper)
+        public NotificationRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<NotificationRepository> logger)
             : base(dbContext, user, logger)
         {
         }
@@ -40,10 +37,10 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsNotification> GetByUser(long userId)
         {
             using var scope = Logger.QueryScope();
-            var response = Context.PimsNotifications
+            return Context.PimsNotifications
+                .AsNoTracking()
                 .Where(n => n.PimsNotificationUsers.Any(u => u.UserId == userId))
                 .ToList();
-            return response;
         }
 
         /// <summary>
@@ -54,12 +51,11 @@ namespace Pims.Dal.Repositories
         public PimsNotification GetById(long notificationId)
         {
             using var scope = Logger.QueryScope();
-            var response = Context.PimsNotifications
+            return Context.PimsNotifications
+                .AsNoTracking()
                 .Include(n => n.PimsNotificationUsers)
                     .ThenInclude(nu => nu.User)
-                .FirstOrDefault(n => n.NotificationId == notificationId);
-
-            return response;
+                .FirstOrDefault(n => n.NotificationId == notificationId) ?? throw new KeyNotFoundException();
         }
 
         /// <summary>
@@ -73,41 +69,27 @@ namespace Pims.Dal.Repositories
             using var scope = Logger.QueryScope();
             notification.ThrowIfNull(nameof(notification));
 
+            notification.PimsNotificationUsers = new List<PimsNotificationUser>
+            {
+                new PimsNotificationUser
+                {
+                    UserId = userId,
+                    PimsNotificationUserOutputs = new List<PimsNotificationUserOutput>
+                    {
+                        new PimsNotificationUserOutput
+                        {
+                            NotificationOutputTypeCode = NotificationOutputTypeCode.EMAIL.ToString(),
+                        },
+                        new PimsNotificationUserOutput
+                        {
+                            NotificationOutputTypeCode = NotificationOutputTypeCode.PIMS.ToString(),
+                        },
+                    },
+                },
+            };
+
             Logger.LogInformation("Adding notification to context: {@Notification}", notification);
-            Context.PimsNotifications.Add(notification);
-            Context.SaveChanges();
-
-            // Add the notification user
-            var notificationUser = new PimsNotificationUser
-            {
-                NotificationId = notification.NotificationId,
-                UserId = userId,
-            };
-            Logger.LogInformation("Adding notification user to context: {@NotificationUser}", notificationUser);
-            Context.PimsNotificationUsers.Add(notificationUser);
-
-            // Add two notification user outputs (EMAIL and PIMS)
-            var outputEmail = new PimsNotificationUserOutput
-            {
-                NotificationUserId = notificationUser.NotificationUserId, // will be set after SaveChanges
-                NotificationOutputTypeCode = NotificationOutputTypeCode.EMAIL.ToString(),
-                NotificationSentDt = null,
-                NotificationReadDt = null,
-            };
-            var outputPims = new PimsNotificationUserOutput
-            {
-                NotificationUserId = notificationUser.NotificationUserId, // will be set after SaveChanges
-                NotificationOutputTypeCode = NotificationOutputTypeCode.PIMS.ToString(),
-                NotificationSentDt = null,
-                NotificationReadDt = null,
-            };
-            Context.SaveChanges();
-
-            // Now add outputs with correct NotificationUserId
-            outputEmail.NotificationUserId = notificationUser.NotificationUserId;
-            outputPims.NotificationUserId = notificationUser.NotificationUserId;
-            Context.PimsNotificationUserOutputs.Add(outputEmail);
-            Context.PimsNotificationUserOutputs.Add(outputPims);
+            Context.Add(notification);
             Context.SaveChanges();
 
             return notification;
@@ -139,40 +121,47 @@ namespace Pims.Dal.Repositories
         /// <exception cref="KeyNotFoundException">Thrown when the notification with the specified ID is not found.</exception>
         public bool Delete(long notificationId, long userId)
         {
-            var notification = Context.PimsNotifications.FirstOrDefault(n => n.NotificationId == notificationId) ?? throw new KeyNotFoundException($"Notification {notificationId} not found");
+            var deletedEntity = Context.PimsNotifications
+                .Include(n => n.PimsNotificationUsers)
+                    .ThenInclude(nu => nu.PimsNotificationUserOutputs)
+                .AsNoTracking()
+                .FirstOrDefault(n => n.NotificationId == notificationId &&
+                                     n.PimsNotificationUsers.Any(nu => nu.UserId == userId));
 
-            var notificationUserIds = Context.PimsNotificationUsers
-                .Where(nu => nu.NotificationId == notificationId && nu.UserId == userId)
-                .Select(nu => nu.NotificationUserId)
-                .ToList();
-
-            if (notificationUserIds.Count == 0)
+            if (deletedEntity == null)
             {
                 return false;
             }
 
-            // Remove related notification-user-output for userId
-            var notificationUserOutputs = Context.PimsNotificationUserOutputs
-                .Where(nuo => notificationUserIds.Contains(nuo.NotificationUserId));
-            Context.PimsNotificationUserOutputs.RemoveRange(notificationUserOutputs);
-
-            // Remove notification-user for userId
-            var notificationUsers = Context.PimsNotificationUsers
-                .Where(nu => notificationUserIds.Contains(nu.NotificationUserId));
-            Context.PimsNotificationUsers.RemoveRange(notificationUsers);
-
-            Context.SaveChanges();
-
-            // Check if any other user uses this notification
-            bool hasOtherLinks = Context.PimsNotificationUsers.Any(nu => nu.NotificationId == notificationId);
-
-            // Only remove the notification if no other user links remain
-            if (!hasOtherLinks)
+            foreach (var notificationUser in deletedEntity.PimsNotificationUsers.Where(nu => nu.UserId == userId))
             {
-                Context.PimsNotifications.Remove(notification);
-                Context.SaveChanges();
+                foreach (var output in notificationUser.PimsNotificationUserOutputs)
+                {
+                    Context.PimsNotificationUserOutputs.Remove(
+                        new PimsNotificationUserOutput
+                        {
+                            NotificationUserOutputId = output.NotificationUserOutputId,
+                        });
+                }
+                Context.PimsNotificationUsers.Remove(
+                    new PimsNotificationUser
+                    {
+                        NotificationUserId = notificationUser.NotificationUserId,
+                    });
             }
 
+            // Only remove the parent if no other users are linked
+            bool hasOtherLinks = deletedEntity.PimsNotificationUsers.Any(nu => nu.UserId != userId);
+            if (!hasOtherLinks)
+            {
+                Context.PimsNotifications.Remove(
+                    new PimsNotification
+                    {
+                        NotificationId = notificationId,
+                    });
+            }
+
+            Context.SaveChanges();
             return true;
         }
 

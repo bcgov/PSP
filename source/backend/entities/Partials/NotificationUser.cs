@@ -3,7 +3,7 @@ using System.ComponentModel.DataAnnotations.Schema;
 namespace Pims.Dal.Entities
 {
     /// <summary>
-    /// PimsNotificationUser partial class for custom logic and inheritance.
+    /// Catalogs the notification sent to a user.  Multiple notifications may be sent to a user.
     /// </summary>
     public partial class PimsNotificationUser : StandardIdentityBaseAppEntity<long>, IBaseAppEntity
     {
