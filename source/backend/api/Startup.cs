@@ -35,10 +35,12 @@ using Microsoft.IdentityModel.Tokens;
 using Microsoft.OpenApi.Models;
 using Pims.Api.Handlers;
 using Pims.Api.Helpers;
+using Pims.Api.Helpers.Factories;
 using Pims.Api.Helpers.Healthchecks;
 using Pims.Api.Helpers.HealthChecks;
 using Pims.Api.Helpers.Mapping;
 using Pims.Api.Helpers.Middleware;
+using Pims.Api.Helpers.Validators;
 using Pims.Api.Models.Config;
 using Pims.Api.Repositories.Cdogs;
 using Pims.Api.Repositories.Ches;
@@ -535,6 +537,7 @@ namespace Pims.Api
             services.AddScoped<IDocumentGenerationRepository, CdogsRepository>();
             services.AddScoped<IDocumentQueueRepository, DocumentQueueRepository>();
             services.AddScoped<IEmailRepository, ChesRepository>();
+            services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddSingleton<IEmailAuthRepository, ChesAuthRepository>();
             services.AddSingleton<IDocumentGenerationAuthRepository, CdogsAuthRepository>();
         }
@@ -595,6 +598,15 @@ namespace Pims.Api
                 return chesConfig;
             });
             services.AddScoped<IEmailService, ChesService>();
+            services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<INotificationValidatorFactory, NotificationValidatorFactory>();
+            services.AddScoped<ExpropOwnerHistoryValidator>();
+            services.AddScoped<AgreementValidator>();
+            services.AddScoped<InsuranceValidator>();
+            services.AddScoped<LeaseConsultationValidator>();
+            services.AddScoped<LeaseRenewalValidator>();
+            services.AddScoped<NoticeOfClaimValidator>();
+            services.AddScoped<TakeValidator>();
         }
 
         /// <summary>

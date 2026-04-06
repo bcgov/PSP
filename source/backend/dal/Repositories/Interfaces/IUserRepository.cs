@@ -24,6 +24,8 @@ namespace Pims.Dal.Repositories
 
         PimsUser GetByKeycloakUserId(Guid keycloakUserId);
 
+        PimsUser GetByUsername(string username);
+
         PimsUser GetById(long id);
 
         PimsUser GetTrackingById(long id);

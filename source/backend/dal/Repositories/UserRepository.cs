@@ -279,6 +279,28 @@ namespace Pims.Dal.Repositories
             return new Paged<PimsUser>(users.ToArray(), filter.Page, filter.Quantity, query.Count());
         }
 
+
+        /// <summary>
+        /// Get the user with the specified 'username'.
+        /// </summary>
+        /// <param name="username"></param>
+        /// <returns></returns>
+        /// <exception type="KeyNotFoundException">Entity does not exist in the datasource.</exception>
+        public PimsUser GetByUsername(string username)
+        {
+            return Context.PimsUsers
+                .Include(u => u.PimsUserRoles)
+                    .ThenInclude(r => r.Role)
+                .Include(u => u.Person)
+                    .ThenInclude(p => p.PimsContactMethods)
+                    .ThenInclude(c => c.ContactMethodTypeCodeNavigation)
+                .Include(u => u.PimsRegionUsers)
+                    .ThenInclude(ru => ru.RegionCodeNavigation)
+                .Include(u => u.UserTypeCodeNavigation)
+                .AsNoTracking()
+                .SingleOrDefault(u => u.BusinessIdentifierValue == username) ?? throw new KeyNotFoundException();
+        }
+
         /// <summary>
         /// Get the user with the specified 'id'.
         /// </summary>
