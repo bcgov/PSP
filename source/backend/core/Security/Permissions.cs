@@ -212,5 +212,17 @@ namespace Pims.Core.Security
 
         [Display(GroupName = "bctfaOwnership", Name = "bctfa-ownership-delete", Description = "Ability to delete BCTFA ownership information.")]
         BctfaOwnershipDelete = 69,
+
+        [Display(GroupName = "notification", Name = "notification-view", Description = "Can view notifications.")]
+        NotificationView = 70,
+
+        [Display(GroupName = "notification", Name = "notification-add", Description = "Can add new notifications.")]
+        NotificationAdd = 71,
+
+        [Display(GroupName = "notification", Name = "notification-edit", Description = "Can edit existing notifications.")]
+        NotificationEdit = 72,
+
+        [Display(GroupName = "notification", Name = "notification-delete", Description = "Can delete existing notifications.")]
+        NotificationDelete = 73,
     }
 }
