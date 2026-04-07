@@ -3519,7 +3519,7 @@ VALUES
     ),
     (
         @disprdon,
-        @notificationdd,
+        @notificationAdd,
         N'SEED',
         @appUserGuid,
         N'SEED',
