@@ -29,12 +29,12 @@ export interface IReminderButtonProps {
   /**
    * Called with the chosen ISO date string when the user saves a reminder.
    */
-  onReminderSaved?: (isoDate: string) => void;
+  onReminderSaved?: (isoDate: string) => Promise<void>;
 
   /**
    * Called when the user removes a previously saved reminder.
    */
-  onReminderRemoved?: () => void;
+  onReminderRemoved?: () => Promise<void>;
 
   /**
    * Placement of the popover relative to the trigger button.
@@ -68,18 +68,18 @@ export const ReminderButton: FC<IReminderButtonProps> = ({
   const isReminderSet = exists(savedReminder);
 
   const handleSave = useCallback(
-    (isoDate: string): void => {
+    async (isoDate: string): Promise<void> => {
       setSavedReminder(isoDate);
       setShow(false);
-      onReminderSaved?.(isoDate);
+      await onReminderSaved?.(isoDate);
     },
     [onReminderSaved],
   );
 
-  const handleRemove = useCallback((): void => {
+  const handleRemove = useCallback(async (): Promise<void> => {
     setSavedReminder(null);
     setShow(false);
-    onReminderRemoved?.();
+    await onReminderRemoved?.();
   }, [onReminderRemoved]);
 
   const popover = (
