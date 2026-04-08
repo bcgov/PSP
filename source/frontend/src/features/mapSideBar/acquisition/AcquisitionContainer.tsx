@@ -263,6 +263,9 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     await fetchLastUpdatedBy();
     mapMachine.refreshMapProperties();
     setIsEditing(false);
+    if (acquisitionFileId) {
+      pathGenerator.showFile('acquisition', acquisitionFileId);
+    }
   };
 
   const canRemove = async () => {
