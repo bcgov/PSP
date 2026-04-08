@@ -15,8 +15,8 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Add/enable the KEYCNTCT code.
-PRINT N'Add/enable the KEYCNTCT code.'
+-- Disable the KEYCNTCT code.
+PRINT N'Disable the KEYCNTCT code.'
 GO
 DECLARE @CurrCd NVARCHAR(20)
 SET     @CurrCd = N'KEYCNTCT'
