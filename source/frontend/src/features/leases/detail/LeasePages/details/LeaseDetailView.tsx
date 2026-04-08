@@ -1,16 +1,19 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 
-import ReminderButton from '@/components/common/form/ReminderButton/ReminderButton';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledLink } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
+import ReminderContainer from '@/features/notifications/ReminderContainer';
+import ReminderView from '@/features/notifications/ReminderView';
+import { useNotificationRepository } from '@/hooks/repositories/useNotificationRepository';
 import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { exists, prettyFormatDate } from '@/utils';
+import { exists, firstOrNull, prettyFormatDate } from '@/utils';
 import { formatMinistryProject } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
@@ -25,17 +28,19 @@ export interface ILeaseDetailViewProps {
 export const LeaseDetailView: React.FunctionComponent<
   React.PropsWithChildren<ILeaseDetailViewProps>
 > = ({ lease }) => {
+  const leaseId = lease?.id;
   const projectName = exists(lease?.project)
     ? formatMinistryProject(lease?.project?.code, lease?.project?.description)
     : '';
-
   const productName = exists(lease?.product)
     ? lease?.product?.code + ' ' + lease?.product?.description
     : '';
 
-  const [leaseExpiryReminderDate, setLeaseExpiryReminderDate] = useState<string | null>(null);
+  const {
+    searchNotifications: { execute: searchNotifications, response: expiryNotifications },
+  } = useNotificationRepository();
 
-  function handleSetLeaseExpiryReminder(isoDate: string): void {
+  function handleSaveLeaseExpiryReminder(isoDate: string): void {
     alert('Lease expiry reminder set for ' + prettyFormatDate(isoDate));
   }
 
@@ -46,12 +51,18 @@ export const LeaseDetailView: React.FunctionComponent<
   // TODO: Replace alert() calls with real API integration to save/remove reminders for the lease expiry date.
   // TODO: Load the existing reminder for the lease expiry date (if any for current user) and pass it as the `savedReminderDate` prop to the ReminderButton component.
   useEffect(() => {
-    async function loadLeaseExpiryReminder() {
-      setLeaseExpiryReminderDate('2024-12-31'); // FIXME: Example hardcoded reminder date for testing
-      // setLeaseExpiryReminderDate(null);
+    async function fetchExistingExpiryNotification() {
+      try {
+        await searchNotifications({
+          type: ApiGen_CodeTypes_NotificationTypes.L_RENEWAL,
+          leaseId: leaseId,
+        });
+      } catch (error) {
+        // swallow error and assume no existing reminder
+      }
     }
-    loadLeaseExpiryReminder();
-  }, []);
+    fetchExistingExpiryNotification();
+  }, [leaseId, searchNotifications]);
 
   return (
     <>
@@ -111,12 +122,14 @@ export const LeaseDetailView: React.FunctionComponent<
           <Col>
             <SectionField label="Expiry">
               {prettyFormatDate(lease.expiryDate)}{' '}
-              <ReminderButton
+              <ReminderContainer
                 keyDate={lease.expiryDate}
-                keyDateLabel="Lease Expiry Date"
-                savedReminderDate={leaseExpiryReminderDate}
-                onReminderSaved={handleSetLeaseExpiryReminder}
-                onReminderRemoved={handleRemoveLeaseExpiryReminder}
+                keyDateLabel="Lease Expiry"
+                notificationType={ApiGen_CodeTypes_NotificationTypes.L_RENEWAL}
+                notification={firstOrNull(expiryNotifications)}
+                onReminderSaved={}
+                onReminderRemoved={}
+                View={ReminderView}
               />
             </SectionField>
           </Col>
