@@ -263,7 +263,7 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     await fetchLastUpdatedBy();
     mapMachine.refreshMapProperties();
     setIsEditing(false);
-    if (acquisitionFileId) {
+    if (isValidId(acquisitionFileId)) {
       pathGenerator.showFile('acquisition', acquisitionFileId);
     }
   };
