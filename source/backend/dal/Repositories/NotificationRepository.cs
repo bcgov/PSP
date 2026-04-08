@@ -1,11 +1,13 @@
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using LinqKit;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Enums;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
@@ -40,6 +42,71 @@ namespace Pims.Dal.Repositories
             return Context.PimsNotifications
                 .AsNoTracking()
                 .Where(n => n.PimsNotificationUsers.Any(u => u.UserId == userId))
+                .ToList();
+        }
+
+        public IEnumerable<PimsNotification> Search(NotificationSearchCriteria criteria, long userId)
+        {
+            using var scope = Logger.QueryScope();
+
+            var predicate = PredicateBuilder.New<PimsNotification>(n => n.PimsNotificationUsers.Any(u => u.UserId == userId));
+
+            if (!string.IsNullOrWhiteSpace(criteria.Type))
+            {
+                predicate = predicate.And(n => n.NotificationTypeCode == criteria.Type);
+            }
+            if (criteria.AcquisitionFileId.HasValue)
+            {
+                predicate = predicate.And(n => n.AcquisitionFileId == criteria.AcquisitionFileId.Value);
+            }
+            if (criteria.DispositionFileId.HasValue)
+            {
+                predicate = predicate.And(n => n.DispositionFileId == criteria.DispositionFileId.Value);
+            }
+            if (criteria.ResearchFileId.HasValue)
+            {
+                predicate = predicate.And(n => n.ResearchFileId == criteria.ResearchFileId.Value);
+            }
+            if (criteria.ManagementFileId.HasValue)
+            {
+                predicate = predicate.And(n => n.ManagementFileId == criteria.ManagementFileId.Value);
+            }
+            if (criteria.LeaseId.HasValue)
+            {
+                predicate = predicate.And(n => n.LeaseId == criteria.LeaseId.Value);
+            }
+            if (criteria.TakeId.HasValue)
+            {
+                predicate = predicate.And(n => n.TakeId == criteria.TakeId.Value);
+            }
+            if (criteria.InsuranceId.HasValue)
+            {
+                predicate = predicate.And(n => n.InsuranceId == criteria.InsuranceId.Value);
+            }
+            if (criteria.LeaseConsultationId.HasValue)
+            {
+                predicate = predicate.And(n => n.LeaseConsultationId == criteria.LeaseConsultationId.Value);
+            }
+            if (criteria.NoticeOfClaimId.HasValue)
+            {
+                predicate = predicate.And(n => n.NoticeOfClaimId == criteria.NoticeOfClaimId.Value);
+            }
+            if (criteria.LeaseRenewalId.HasValue)
+            {
+                predicate = predicate.And(n => n.LeaseRenewalId == criteria.LeaseRenewalId.Value);
+            }
+            if (criteria.ExpropOwnerHistoryId.HasValue)
+            {
+                predicate = predicate.And(n => n.ExpropOwnerHistoryId == criteria.ExpropOwnerHistoryId.Value);
+            }
+            if (criteria.AgreementId.HasValue)
+            {
+                predicate = predicate.And(n => n.AgreementId == criteria.AgreementId.Value);
+            }
+
+            return Context.PimsNotifications
+                .AsNoTracking()
+                .Where(predicate)
                 .ToList();
         }
 

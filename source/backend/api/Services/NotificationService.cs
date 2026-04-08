@@ -9,6 +9,7 @@ using Pims.Api.Models.Concepts.Notification;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
 
 namespace Pims.Api.Services
@@ -43,6 +44,15 @@ namespace Pims.Api.Services
 
             var user = GetUserByUsername(username);
             return _notificationRepository.GetByUser(user.UserId);
+        }
+
+        public IEnumerable<PimsNotification> Search(NotificationSearchCriteria criteria, string username)
+        {
+            _logger.LogInformation("Searching notifications with criteria {Criteria} for user {Username}", criteria, username);
+            _user.ThrowIfNotAllAuthorized(Permissions.NotificationView);
+
+            var user = GetUserByUsername(username);
+            return _notificationRepository.Search(criteria, user.UserId);
         }
 
         public NotificationAccessResponse GetByIdForUser(long notificationId, string username)

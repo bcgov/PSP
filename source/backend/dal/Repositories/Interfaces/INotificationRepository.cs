@@ -2,10 +2,13 @@ namespace Pims.Dal.Repositories
 {
     using System.Collections.Generic;
     using Pims.Dal.Entities;
+    using Pims.Dal.Entities.Models;
 
     public interface INotificationRepository : IRepository
     {
         IEnumerable<PimsNotification> GetByUser(long userId);
+
+        IEnumerable<PimsNotification> Search(NotificationSearchCriteria criteria, long userId);
 
         PimsNotification GetById(long notificationId);
 

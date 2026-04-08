@@ -12,6 +12,7 @@ using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Notification.Controllers
@@ -54,6 +55,32 @@ namespace Pims.Api.Areas.Notification.Controllers
             _logger.LogInformation("Dispatching to service: {Service}", _notificationService.GetType());
             var username = User.GetUsername();
             var notifications = _notificationService.GetByUser(username);
+            return Ok(_mapper.Map<IEnumerable<NotificationModel>>(notifications));
+        }
+
+        /// <summary>
+        /// Search notifications for the current user that match the specified criteria.
+        /// </summary>
+        /// <param name="criteria">The search criteria.</param>
+        /// <returns>A list of notifications that match the criteria.</returns>
+        [HttpPost("search")]
+        [HasPermission(Permissions.NotificationView)]
+        [Produces("application/json")]
+        [SwaggerOperation(Tags = new[] { "notifications" })]
+        public IActionResult SearchNotifications([FromBody] NotificationSearchCriteria criteria)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(NotificationController),
+                nameof(SearchNotifications),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _notificationService.GetType());
+
+            var username = User.GetUsername();
+            var notifications = _notificationService.Search(criteria, username);
+
             return Ok(_mapper.Map<IEnumerable<NotificationModel>>(notifications));
         }
 
