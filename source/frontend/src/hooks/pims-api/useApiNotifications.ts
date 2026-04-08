@@ -1,6 +1,7 @@
 import React from 'react';
 
 import { ApiGen_Concepts_Notification } from '@/models/api/generated/ApiGen_Concepts_Notification';
+import { Api_NotificationSearchCriteria } from '@/models/api/NotificationSearchCriteria';
 
 import useAxiosApi from './useApi';
 
@@ -14,6 +15,9 @@ export const useApiNotifications = () => {
   return React.useMemo(
     () => ({
       getUserNotificationsApi: () => api.get<ApiGen_Concepts_Notification[]>(`/notifications/user`),
+
+      searchNotificationsApi: (criteria: Api_NotificationSearchCriteria) =>
+        api.post<ApiGen_Concepts_Notification[]>(`/notifications/search`, criteria),
 
       getNotificationByIdApi: (notificationId: number) =>
         api.get<ApiGen_Concepts_Notification>(`/notifications/${notificationId}`),

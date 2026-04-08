@@ -15,6 +15,7 @@ import { useApiNotifications } from '../pims-api/useApiNotifications';
 export const useNotificationRepository = () => {
   const {
     getUserNotificationsApi,
+    searchNotificationsApi,
     getNotificationByIdApi,
     postNotificationApi,
     putNotificationApi,
@@ -51,16 +52,6 @@ export const useNotificationRepository = () => {
     onError: useAxiosErrorHandler('Failed to delete notification'),
   });
 
-  const getUserNotifications = useApiRequestWrapper<typeof getUserNotificationsApi>({
-    requestFunction: useCallback<typeof getUserNotificationsApi>(
-      async () => await getUserNotificationsApi(),
-      [getUserNotificationsApi],
-    ),
-    requestName: 'GetUserNotifications',
-    onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler('Failed to load user notifications'),
-  });
-
   const getNotificationById = useApiRequestWrapper<typeof getNotificationByIdApi>({
     requestFunction: useCallback<typeof getNotificationByIdApi>(
       async notificationId => await getNotificationByIdApi(notificationId),
@@ -71,20 +62,42 @@ export const useNotificationRepository = () => {
     onError: useAxiosErrorHandlerWithAuthorization('Failed to load notification'),
   });
 
+  const getUserNotifications = useApiRequestWrapper<typeof getUserNotificationsApi>({
+    requestFunction: useCallback<typeof getUserNotificationsApi>(
+      async () => await getUserNotificationsApi(),
+      [getUserNotificationsApi],
+    ),
+    requestName: 'GetUserNotifications',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to load user notifications'),
+  });
+
+  const searchNotifications = useApiRequestWrapper<typeof searchNotificationsApi>({
+    requestFunction: useCallback<typeof searchNotificationsApi>(
+      async criteria => await searchNotificationsApi(criteria),
+      [searchNotificationsApi],
+    ),
+    requestName: 'SearchNotifications',
+    onSuccess: useAxiosSuccessHandler(),
+    onError: useAxiosErrorHandler('Failed to search notifications'),
+  });
+
   return useMemo(
     () => ({
       addNotification: addNotification,
       updateNotification: updateNotification,
       deleteNotification: deleteNotification,
-      getUserNotifications: getUserNotifications,
       getNotificationById: getNotificationById,
+      getUserNotifications: getUserNotifications,
+      searchNotifications: searchNotifications,
     }),
     [
       addNotification,
       updateNotification,
       deleteNotification,
-      getUserNotifications,
       getNotificationById,
+      getUserNotifications,
+      searchNotifications,
     ],
   );
 };
