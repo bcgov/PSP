@@ -55,24 +55,14 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementFileActivitiesTitle = By.CssSelector("div[data-testid='ad-hoc activities']");
         private readonly By managementActivitiesListTable = By.CssSelector("div[data-testid='adhoc-activity-list']");
         private readonly By managementActivitiesListTableActivityTypeColumn = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='thead thead-light'] div[role='columnheader']:nth-child(1) div");
-        private readonly By managementActivitiesListActivityTypeSortBttn = By.CssSelector("div[data-testid='sort-column-activityType']");
         private readonly By managementActivitiesListTableActivitySubtypeColumn = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='thead thead-light'] div[role='columnheader']:nth-child(2) div");
-        private readonly By managementActivitiesListActivitySubtypeSortBttn = By.CssSelector("div[data-testid='sort-column-activitySubTypes']");
         private readonly By managementActivitiesListTableActivityStatusColumn = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='thead thead-light'] div[role='columnheader']:nth-child(3) div");
-        private readonly By managementActivitiesListActivityStatusSortBttn = By.CssSelector("div[data-testid='sort-column-activityStatusType']");
         private readonly By managementActivitiesListTableCommencementColumn = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='thead thead-light'] div[role='columnheader']:nth-child(4) div");
-        private readonly By managementActivitiesListActivityCommencementSortBttn = By.CssSelector("div[data-testid='sort-column-requestedAddedDate]");
         private readonly By managementActivitiesListTableActionsColumn = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='thead thead-light'] div[role='columnheader']:nth-child(5) div");
-        private readonly By managementActivitiesListTable1stActTypeContext = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(1)");
-        private readonly By managementActivitiesListTable1stActSubtypeContext = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(2)");
-        private readonly By managementActivitiesListTable1stActStatusContext = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(3)");
-        private readonly By managementActivitiesListTable1stActCommencementContext = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(4)");
-        private readonly By managementActivitiesListTable1stActViewBttn = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(5) button[title='property-activity view details']");
-        private readonly By managementActivitiesListTable1stActDeleteBttn = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(5) button[title='Delete']");
-        private readonly By managementActivitiesListTable1stActWarning = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(5) svg");
+        
         private readonly By managementActivitiesBodyCount = By.CssSelector("div[data-testid='adhoc-activity-list'] div[class='tbody'] div[class='tr-wrapper']");
         private readonly By managementActivitiesDeleteBttns = By.CssSelector("button[title='Delete']");
-        private readonly By managementActivityPaginationOptions = By.XPath("//div[contains(text(),'Ad-hoc Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li");
+        private readonly By managementActivityPaginationOptions = By.XPath("//div[@data-testid='adhoc-activity-list']/following-sibling::div/div/ul[@class='pagination']/li");
 
         //View Property File Activity Summary Elements
         private readonly By activitiesFileListSubtitle = By.XPath("//div[contains(text(),'Property File Activity Summary')]");
@@ -83,14 +73,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By activitiesFileListTableActivityStatusColumn = By.CssSelector("div[data-testid='mgmt-activity-list-readonly'] div[class='thead thead-light'] div[role='columnheader']:nth-child(3) div");
         private readonly By activitiesFileListTableActivityCommencementColumn = By.CssSelector("div[data-testid='mgmt-activity-list-readonly'] div[class='thead thead-light'] div[role='columnheader']:nth-child(4) div");
         private readonly By activitiesFileListTableActivityNavigationColumn = By.CssSelector("div[data-testid='mgmt-activity-list-readonly'] div[class='thead thead-light'] div[role='columnheader']:nth-child(5) div");
-        private readonly By activitiesFileListTable1stActTypeContext = By.CssSelector("div[data-testid='mgmt-activity-list-readonly'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(1)");
-        private readonly By activitiesFileListTable1stActSubtypeContext = By.XPath("div[data-testid='mgmt-activity-list-readonly'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(1)");
-        private readonly By activitiesFileListTable1stActStatusContext = By.XPath("div[data-testid='mgmt-activity-list-readonly'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(1)");
-        private readonly By activitiesFileListTable1stActCommencementContext = By.XPath("div[data-testid='mgmt-activity-list-readonly'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(1)");
-        private readonly By activitiesFileListTable1stActNavigationContext = By.XPath("div[data-testid='mgmt-activity-list-readonly'] div[class='tbody'] div[class='tr-wrapper']:nth-child(1) div[role='cell']:nth-child(1)");
-        private readonly By activitiesFileActivityPaginationOptions = By.XPath("//div[contains(text(),'Property File Activity Summary')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li");
-
-        private readonly By activitiesTablesEmptyInfo = By.XPath("//div[contains(text(),'No property management activities found')]");
 
         private SharedModals sharedModals;
         private SharedSelectContact sharedSelectContact;
@@ -127,7 +109,7 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             var lastInsertedActivityIndex = webDriver.FindElements(managementActivitiesBodyCount).Count;
-            webDriver.FindElement(By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][5]/div/button[1]")).Click();
+            webDriver.FindElement(By.XPath("//div[@data-testid='adhoc-activity-list']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][5]/div/button[1]")).Click();
         }
 
         public void AddNewPropertyContactButton()
@@ -361,21 +343,21 @@ namespace PIMS.Tests.Automation.PageObjects
 
             var lastInsertedActivityIndex = webDriver.FindElements(managementActivitiesBodyCount).Count;
 
-            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][1]"), activity.PropertyActivityType);
+            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='adhoc-activity-list']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][1]"), activity.PropertyActivityType);
 
             foreach (string subtype in activity.PropertyActivitySubTypeList)
-                AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][2]"), subtype);
+                AssertTrueElementContains(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='adhoc-activity-list']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][2]"), subtype);
 
-            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][3]"), activity.PropertyActivityStatus);
-            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][4]"), TransformDateFormat(activity.PropertyActivityCommenceDate));
-            Assert.True(webDriver.FindElements(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][5]/div/div")).Count > 0);
+            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='adhoc-activity-list']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][3]"), activity.PropertyActivityStatus);
+            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='adhoc-activity-list']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][4]"), TransformDateFormat(activity.PropertyActivityCommenceDate));
+            Assert.True(webDriver.FindElements(By.XPath("//div[contains(text(),'Activities List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='adhoc-activity-list']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][5]/div/button")).Count > 0);
         }
 
         public void ViewLastActivityFromList()
         {
             var paginationLastPage = webDriver.FindElements(managementActivityPaginationOptions).Count() -1;
 
-            webDriver.FindElement(By.XPath("//div[@data-testid='PropertyManagementActivitiesTable']/following-sibling::div/div/ul[@class='pagination']/li["+ paginationLastPage +"]")).Click();
+            webDriver.FindElement(By.XPath("//div[@data-testid='adhoc-activity-list']/following-sibling::div/div/ul[@class='pagination']/li["+ paginationLastPage +"]")).Click();
         }
 
         public string VerifyLeaseActiveStatus()

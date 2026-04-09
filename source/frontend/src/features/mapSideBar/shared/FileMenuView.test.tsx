@@ -1,10 +1,12 @@
 import { Claims } from '@/constants/index';
+import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
+import { getMockApiProperty } from '@/mocks/properties.mock';
+import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { act, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
-import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
-import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import FileMenuView, { IFileMenuProps } from './FileMenuView';
-import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 
 const onSelectFileSummary = vi.fn();
 const onSelectProperty = vi.fn();
@@ -48,6 +50,36 @@ describe('FileMenuView component', () => {
     setup();
     expect(screen.getByText('023-214-937')).toBeVisible();
     expect(screen.getByText('024-996-777')).toBeVisible();
+  });
+
+  it('renders Lat/Long for properties when no other identifier is available ', () => {
+    const mockFile: ApiGen_Concepts_AcquisitionFile = {
+      ...mockAcquisitionFileResponse(),
+      fileProperties: [
+        {
+          id: 1,
+          location: { coordinate: { x: -123.49, y: 48.43 } },
+          property: {
+            ...getMockApiProperty(),
+            id: 37,
+            pid: null,
+            pin: null,
+            latitude: 48.43,
+            longitude: -123.49,
+          },
+          isActive: true,
+          propertyName: null,
+          file: null,
+          fileId: 1,
+          boundary: null,
+          displayOrder: 1,
+          propertyId: 37,
+          rowVersion: 1,
+        },
+      ],
+    };
+    setup({ props: { file: mockFile } });
+    expect(screen.getByText('48.430000, -123.490000')).toBeVisible();
   });
 
   it('renders the currently selected property with different style', () => {

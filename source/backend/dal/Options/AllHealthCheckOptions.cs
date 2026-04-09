@@ -30,6 +30,8 @@ namespace Pims.Dal
         public PimsBaseHealthCheckOptions Cdogs { get; set; }
 
         public PimsBaseHealthCheckOptions Mayan { get; set; }
+
+        public PimsBaseHealthCheckOptions Ches { get; set; }
         #endregion
     }
 }

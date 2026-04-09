@@ -2,7 +2,6 @@ import { AxiosError } from 'axios';
 import React, { useCallback, useContext, useEffect, useMemo, useReducer, useState } from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
-import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
@@ -264,6 +263,9 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     await fetchLastUpdatedBy();
     mapMachine.refreshMapProperties();
     setIsEditing(false);
+    if (isValidId(acquisitionFileId)) {
+      pathGenerator.showFile('acquisition', acquisitionFileId);
+    }
   };
 
   const canRemove = async () => {
@@ -326,11 +328,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     );
   };
 
-  const shouldBlockNavigation = useCallback(() => {
-    const current = formikRef.current;
-    return !!current && current.dirty && !current.isSubmitting;
-  }, [formikRef]);
-
   // UI components
   if (
     loadingAcquisitionFile ||
@@ -362,7 +359,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
         isFormValid={isValid}
         error={error}
       />
-      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
     </>
   );
 };

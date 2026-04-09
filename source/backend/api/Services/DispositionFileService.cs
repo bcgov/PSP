@@ -474,7 +474,7 @@ namespace Pims.Api.Services
                     MotiRegion = file.RegionCodeNavigation?.Description ?? string.Empty,
                     TeamMembers = string.Join("|", file.PimsDispositionFileTeams.Select(x => (x.PersonId.HasValue ? x.Person.GetFullName(true) + $" ({x.DspFlTeamProfileTypeCodeNavigation?.Description})" : x.Organization.Name + $" (Role: {x.DspFlTeamProfileTypeCodeNavigation?.Description}, Primary: {x.PrimaryContact?.GetFullName(true) ?? "N/A"})")) ?? Array.Empty<string>()),
                     CivicAddress = string.Join("|", file.PimsDispositionFileProperties.Select(x => x.Property?.Address?.FormatFullAddressString()).Where(x => x != null)),
-                    Pid = string.Join("|", file.PimsDispositionFileProperties.Select(x => x.Property?.Pid).Where(x => x != null)),
+                    Pid = string.Join("|", file.PimsDispositionFileProperties.Select(x => x.Property?.PidFormatted).Where(x => x != null)),
                     Pin = string.Join("|", file.PimsDispositionFileProperties.Select(x => x.Property?.Pin).Where(x => x != null)),
                     GeneralLocation = string.Join("|", file.PimsDispositionFileProperties.Select(x => x.Property?.GeneralLocation).Where(x => x != null)),
                     DispositionStatusTypeCode = file.DispositionStatusTypeCodeNavigation?.Description ?? string.Empty,

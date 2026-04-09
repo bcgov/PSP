@@ -37,6 +37,8 @@ namespace Pims.Api.Test.Services
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
             this._helper.CreatePimsContext(user, true);
+            _helper.InitializeDatabase(user);
+
             return this._helper.Create<LeaseService>();
         }
 
@@ -935,7 +937,6 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var lease = EntityHelper.CreateLease(1);
-
             var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
             var propertyLeaseRepository = this._helper.GetService<Mock<IPropertyLeaseRepository>>();
@@ -1533,6 +1534,77 @@ namespace Pims.Api.Test.Services
             // Assert
             propertyLeaseRepository.Verify(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<ICollection<PimsPropertyLease>>()));
             propertyRepository.Verify(x => x.Delete(deletedProperty), Times.Once);
+        }
+
+
+        [Fact]
+        public void UpdateAccountType_Fails_HasCompensationReqs()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+            var compRequisition = EntityHelper.CreateCompensationRequisition(1000, null, lease.LeaseId);
+            lease.PimsCompensationRequisitions.Add(compRequisition);
+
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
+            // Act
+            var updatedLease = EntityHelper.CreateLease(1);
+            updatedLease.LeasePayRvblTypeCode = LeasePaymentReceivableTypes.RCVBL.ToString();
+            Action action = () => service.Update(updatedLease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
+
+            // Assert
+            action.Should().Throw<BusinessRuleViolationException>();
+        }
+
+        [Fact]
+        public void UpdateAccountType_Fails_HasPayees()
+        {
+            // Arrange
+            var lease = EntityHelper.CreateLease(1);
+
+            lease.PimsLeaseStakeholders.Add(new() { LeaseId = lease.LeaseId });
+
+            var service = this.CreateLeaseService(Permissions.LeaseEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(lease.PimsPropertyLeases.FirstOrDefault().Property);
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.Get(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
+
+            var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
+            solver.Setup(x => x.GetCurrentLeaseStatus(It.IsAny<string>())).Returns(LeaseStatusTypes.ACTIVE);
+            solver.Setup(x => x.CanEditDetails(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+            solver.Setup(x => x.CanEditProperties(It.IsAny<LeaseStatusTypes?>())).Returns(true);
+
+            // Act
+            var updatedLease = EntityHelper.CreateLease(1);
+            updatedLease.LeasePayRvblTypeCode = LeasePaymentReceivableTypes.RCVBL.ToString();
+            Action action = () => service.Update(updatedLease, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
+
+            // Assert
+            action.Should().Throw<BusinessRuleViolationException>();
         }
 
         #endregion

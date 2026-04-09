@@ -98,9 +98,11 @@ namespace Pims.Dal.Repositories
 
             if (!string.IsNullOrWhiteSpace(filter.FileNameOrNumberOrReference))
             {
-                predicate = predicate.And(x => EF.Functions.Like(x.ManagementFile.FileName, $"%{filter.FileNameOrNumberOrReference}%")
-                || EF.Functions.Like(x.ManagementFile.ManagementFileId.ToString(), $"%{filter.FileNameOrNumberOrReference}%")
-                || EF.Functions.Like(x.ManagementFile.LegacyFileNum, $"%{filter.FileNameOrNumberOrReference}%"));
+                var fileIdSearch = ManagementFileIdExtensions.NormalizeManagementFileIdSearch(filter.FileNameOrNumberOrReference);
+                predicate = predicate.And(
+                    x => EF.Functions.Like(x.ManagementFile.FileName, $"%{filter.FileNameOrNumberOrReference}%")
+                    || EF.Functions.Like(x.ManagementFile.ManagementFileId.ToString(), $"%{fileIdSearch}%")
+                    || EF.Functions.Like(x.ManagementFile.LegacyFileNum, $"%{filter.FileNameOrNumberOrReference}%"));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ActivityTypeCode))
@@ -135,117 +137,6 @@ namespace Pims.Dal.Repositories
             }
 
             return predicate;
-        }
-
-        private IQueryable<PimsManagementActivity> GetCommonManagementActivityQuery(ManagementActivityFilter filter)
-        {
-            var predicate = GetCommonActivityFilterPredicate(filter);
-
-            var query = Context.PimsManagementActivities.AsNoTracking()
-                .Include(s => s.MgmtActivityStatusTypeCodeNavigation)
-                .Include(t => t.MgmtActivityTypeCodeNavigation)
-                .Include(st => st.PimsMgmtActivityActivitySubtyps)
-                    .ThenInclude(x => x.MgmtActivitySubtypeCodeNavigation)
-                .Include(pp => pp.PimsManagementActivityProperties)
-                    .ThenInclude(p => p.Property)
-                        .ThenInclude(a => a.Address)
-                .Include(pp => pp.PimsManagementActivityProperties)
-                    .ThenInclude(p => p.Property)
-                        .ThenInclude(p => p.RegionCodeNavigation)
-                .Include(f => f.ManagementFile)
-                    .ThenInclude(pr => pr.PimsManagementFileProperties)
-                        .ThenInclude(p => p.Property)
-                            .ThenInclude(a => a.Address)
-                .Include(f => f.ManagementFile)
-                    .ThenInclude(pr => pr.RegionCodeNavigation)
-
-                .Where(predicate);
-
-            if (filter.Sort?.Any() == true)
-            {
-                var field = filter.Sort.FirstOrDefault()?.Split(" ")?.FirstOrDefault();
-                var direction = filter.Sort.FirstOrDefault()?.Split(" ")?.LastOrDefault();
-
-                if (field == "Description")
-                {
-                    query = direction == "asc" ? query.OrderBy(x => x.Description) : query.OrderByDescending(c => c.Description);
-                }
-                else if (field == "ActivityStatus")
-                {
-                    query = direction == "asc" ? query.OrderBy(c => c.MgmtActivityStatusTypeCodeNavigation.Description) : query.OrderByDescending(c => c.MgmtActivityStatusTypeCodeNavigation.Description);
-                }
-                else if (field == "ActivityType")
-                {
-                    query = direction == "asc" ? query.OrderBy(c => c.MgmtActivityTypeCodeNavigation.Description) : query.OrderByDescending(c => c.MgmtActivityTypeCodeNavigation.Description);
-                }
-                else if (field == "FileName")
-                {
-                    query = direction == "asc" ? query.OrderBy(c => c.ManagementFile.FileName) : query.OrderByDescending(c => c.ManagementFile.FileName);
-                }
-                else if (field == "LegacyFileNum")
-                {
-                    query = direction == "asc" ? query.OrderBy(c => c.ManagementFile.LegacyFileNum) : query.OrderByDescending(c => c.ManagementFile.LegacyFileNum);
-                }
-            }
-            else
-            {
-                query = query.OrderByDescending(x => x.RequestAddedDt);
-            }
-
-            return query;
-        }
-
-        public IList<PimsManagementActivity> SearchManagementActivities(ManagementActivityFilter filter)
-        {
-            using var scope = Logger.QueryScope();
-
-            filter.ThrowIfNull(nameof(filter));
-
-            var query = Context.PimsManagementActivities.AsNoTracking()
-                .Include(s => s.MgmtActivityStatusTypeCodeNavigation)
-                .Include(t => t.MgmtActivityTypeCodeNavigation)
-                .Include(st => st.PimsMgmtActivityActivitySubtyps)
-                    .ThenInclude(x => x.MgmtActivitySubtypeCodeNavigation)
-                .Include(sp => sp.ServiceProviderPerson)
-                .Include(sp => sp.ServiceProviderOrg)
-                .Include(mc => mc.PimsMgmtActMinContacts)
-                    .ThenInclude(c => c.Person)
-                .Include(ip => ip.PimsMgmtActInvolvedParties)
-                    .ThenInclude(c => c.Person)
-                .Include(ip => ip.PimsMgmtActInvolvedParties)
-                    .ThenInclude(c => c.Organization)
-                .Include(i => i.PimsManagementActivityInvoices)
-                .Include(pp => pp.PimsManagementActivityProperties)
-                    .ThenInclude(p => p.Property)
-                        .ThenInclude(a => a.Address)
-                .Include(pp => pp.PimsManagementActivityProperties)
-                    .ThenInclude(p => p.Property)
-                        .ThenInclude(a => a.RegionCodeNavigation)
-                .Include(f => f.ManagementFile)
-                    .ThenInclude(fp => fp.PimsManagementFileProperties)
-                        .ThenInclude(p => p.Property)
-                            .ThenInclude(a => a.Address)
-                .Include(f => f.ManagementFile)
-                    .ThenInclude(ft => ft.AcquisitionFundingTypeCodeNavigation)
-                .Include(f => f.ManagementFile)
-                    .ThenInclude(pt => pt.ManagementFilePurposeTypeCodeNavigation)
-                .Include(f => f.ManagementFile)
-                    .ThenInclude(pt => pt.ManagementFileStatusTypeCodeNavigation)
-                .Include(f => f.ManagementFile)
-                    .ThenInclude(c => c.PimsManagementFileContacts)
-                        .ThenInclude(p => p.Person)
-                .Include(f => f.ManagementFile)
-                    .ThenInclude(o => o.PimsManagementFileContacts)
-                        .ThenInclude(o => o.Organization)
-                .Include(f => f.ManagementFile)
-                    .ThenInclude(o => o.PimsManagementFileContacts)
-                        .ThenInclude(o => o.PrimaryContact)
-                .Include(f => f.ManagementFile)
-                    .ThenInclude(ft => ft.RegionCodeNavigation);
-
-            var predicate = GetCommonActivityFilterPredicate(filter);
-
-            return query.Where(predicate).OrderByDescending(ma => ma.ManagementFileId).ToList();
         }
 
         public IList<PimsManagementActivityInvoice> SearchManagementActivityInvoices(ManagementActivityFilter filter)
@@ -511,6 +402,117 @@ namespace Pims.Dal.Repositories
             Context.PimsManagementActivities.Remove(managementActivity);
 
             return true;
+        }
+
+        public IList<PimsManagementActivity> SearchManagementActivities(ManagementActivityFilter filter)
+        {
+            using var scope = Logger.QueryScope();
+
+            filter.ThrowIfNull(nameof(filter));
+
+            var query = Context.PimsManagementActivities.AsNoTracking()
+                .Include(s => s.MgmtActivityStatusTypeCodeNavigation)
+                .Include(t => t.MgmtActivityTypeCodeNavigation)
+                .Include(st => st.PimsMgmtActivityActivitySubtyps)
+                    .ThenInclude(x => x.MgmtActivitySubtypeCodeNavigation)
+                .Include(sp => sp.ServiceProviderPerson)
+                .Include(sp => sp.ServiceProviderOrg)
+                .Include(mc => mc.PimsMgmtActMinContacts)
+                    .ThenInclude(c => c.Person)
+                .Include(ip => ip.PimsMgmtActInvolvedParties)
+                    .ThenInclude(c => c.Person)
+                .Include(ip => ip.PimsMgmtActInvolvedParties)
+                    .ThenInclude(c => c.Organization)
+                .Include(i => i.PimsManagementActivityInvoices)
+                .Include(pp => pp.PimsManagementActivityProperties)
+                    .ThenInclude(p => p.Property)
+                        .ThenInclude(a => a.Address)
+                .Include(pp => pp.PimsManagementActivityProperties)
+                    .ThenInclude(p => p.Property)
+                        .ThenInclude(a => a.RegionCodeNavigation)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(fp => fp.PimsManagementFileProperties)
+                        .ThenInclude(p => p.Property)
+                            .ThenInclude(a => a.Address)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(ft => ft.AcquisitionFundingTypeCodeNavigation)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(pt => pt.ManagementFilePurposeTypeCodeNavigation)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(pt => pt.ManagementFileStatusTypeCodeNavigation)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(c => c.PimsManagementFileContacts)
+                        .ThenInclude(p => p.Person)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(o => o.PimsManagementFileContacts)
+                        .ThenInclude(o => o.Organization)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(o => o.PimsManagementFileContacts)
+                        .ThenInclude(o => o.PrimaryContact)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(ft => ft.RegionCodeNavigation);
+
+            var predicate = GetCommonActivityFilterPredicate(filter);
+
+            return query.Where(predicate).OrderByDescending(ma => ma.ManagementFileId).ToList();
+        }
+
+        private IQueryable<PimsManagementActivity> GetCommonManagementActivityQuery(ManagementActivityFilter filter)
+        {
+            var predicate = GetCommonActivityFilterPredicate(filter);
+
+            var query = Context.PimsManagementActivities.AsNoTracking()
+                .Include(s => s.MgmtActivityStatusTypeCodeNavigation)
+                .Include(t => t.MgmtActivityTypeCodeNavigation)
+                .Include(st => st.PimsMgmtActivityActivitySubtyps)
+                    .ThenInclude(x => x.MgmtActivitySubtypeCodeNavigation)
+                .Include(pp => pp.PimsManagementActivityProperties)
+                    .ThenInclude(p => p.Property)
+                        .ThenInclude(a => a.Address)
+                .Include(pp => pp.PimsManagementActivityProperties)
+                    .ThenInclude(p => p.Property)
+                        .ThenInclude(p => p.RegionCodeNavigation)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(pr => pr.PimsManagementFileProperties)
+                        .ThenInclude(p => p.Property)
+                            .ThenInclude(a => a.Address)
+                .Include(f => f.ManagementFile)
+                    .ThenInclude(pr => pr.RegionCodeNavigation)
+
+                .Where(predicate);
+
+            if (filter.Sort?.Any() == true)
+            {
+                var field = filter.Sort.FirstOrDefault()?.Split(" ")?.FirstOrDefault();
+                var direction = filter.Sort.FirstOrDefault()?.Split(" ")?.LastOrDefault();
+
+                if (field == "Description")
+                {
+                    query = direction == "asc" ? query.OrderBy(x => x.Description) : query.OrderByDescending(c => c.Description);
+                }
+                else if (field == "ActivityStatus")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.MgmtActivityStatusTypeCodeNavigation.Description) : query.OrderByDescending(c => c.MgmtActivityStatusTypeCodeNavigation.Description);
+                }
+                else if (field == "ActivityType")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.MgmtActivityTypeCodeNavigation.Description) : query.OrderByDescending(c => c.MgmtActivityTypeCodeNavigation.Description);
+                }
+                else if (field == "FileName")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.ManagementFile.FileName) : query.OrderByDescending(c => c.ManagementFile.FileName);
+                }
+                else if (field == "LegacyFileNum")
+                {
+                    query = direction == "asc" ? query.OrderBy(c => c.ManagementFile.LegacyFileNum) : query.OrderByDescending(c => c.ManagementFile.LegacyFileNum);
+                }
+            }
+            else
+            {
+                query = query.OrderByDescending(x => x.RequestAddedDt);
+            }
+
+            return query;
         }
 
         #endregion

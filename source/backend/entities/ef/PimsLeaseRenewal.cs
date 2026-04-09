@@ -144,4 +144,7 @@ public partial class PimsLeaseRenewal
     [ForeignKey("LeaseId")]
     [InverseProperty("PimsLeaseRenewals")]
     public virtual PimsLease Lease { get; set; }
+
+    [InverseProperty("LeaseRenewal")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
 }

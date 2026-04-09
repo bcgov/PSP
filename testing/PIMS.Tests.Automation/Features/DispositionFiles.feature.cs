@@ -107,7 +107,7 @@ namespace PIMS.Tests.Automation.Features
         
         private static global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages InitializeCucumberMessages()
         {
-            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/DispositionFiles.feature.ndjson", 14);
+            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/DispositionFiles.feature.ndjson", 15);
         }
         
         async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.InitializeAsync()
@@ -212,15 +212,15 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="03._Disposition_Checklist_Tab")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="03._Disposition_Offers_and_Sale_Tab")]
         [global::Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [global::Xunit.TraitAttribute("Description", "03._Disposition_Checklist_Tab")]
-        public async global::System.Threading.Tasks.Task _03__Disposition_Checklist_Tab()
+        [global::Xunit.TraitAttribute("Description", "03._Disposition_Offers_and_Sale_Tab")]
+        public async global::System.Threading.Tasks.Task _03__Disposition_Offers_And_Sale_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "2";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03._Disposition_Checklist_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("03._Disposition_Offers_and_Sale_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
 #line 19
@@ -234,69 +234,35 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 20
- await testRunner.GivenAsync("I create a new Disposition File from row number 7", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 21
- await testRunner.WhenAsync("I insert Checklist information to an Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 22
- await testRunner.ThenAsync("Disposition File\'s Checklist has been saved successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [global::Xunit.SkippableFactAttribute(DisplayName="04._Disposition_Offers_and_Sale_Tab")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [global::Xunit.TraitAttribute("Description", "04._Disposition_Offers_and_Sale_Tab")]
-        public async global::System.Threading.Tasks.Task _04__Disposition_Offers_And_Sale_Tab()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            string pickleIndex = "3";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04._Disposition_Offers_and_Sale_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
-            string[] tagsOfRule = ((string[])(null));
-            global::Reqnroll.RuleInfo ruleInfo = null;
-#line 24
-this.ScenarioInitialize(scenarioInfo, ruleInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                await testRunner.SkipScenarioAsync();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 25
  await testRunner.GivenAsync("I create a new Disposition File from row number 8", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 26
+#line 21
  await testRunner.WhenAsync("I create Appraisal, Assessment, Offers and Sales Details within a Disposition Fil" +
                         "e", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 27
+#line 22
  await testRunner.AndAsync("I update Appraisal, Assessment and Offers section within Disposition File from ro" +
                         "w number 9", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 28
+#line 23
  await testRunner.ThenAsync("A new Disposition file is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="05._Disposition_Files_Digital_Documents")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="04._Disposition_File_Agreements_Tab")]
         [global::Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [global::Xunit.TraitAttribute("Description", "05._Disposition_Files_Digital_Documents")]
-        public async global::System.Threading.Tasks.Task _05__Disposition_Files_Digital_Documents()
+        [global::Xunit.TraitAttribute("Description", "04._Disposition_File_Agreements_Tab")]
+        public async global::System.Threading.Tasks.Task _04__Disposition_File_Agreements_Tab()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            string pickleIndex = "4";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05._Disposition_Files_Digital_Documents", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string pickleIndex = "3";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("04._Disposition_File_Agreements_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 30
+#line 25
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -306,14 +272,48 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 31
- await testRunner.GivenAsync("I create a new Disposition File from row number 10", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line 26
+ await testRunner.GivenAsync("I create a new Disposition File from row number 16", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
+#line 27
+ await testRunner.WhenAsync("I create Agreements within a Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 28
+ await testRunner.AndAsync("I update an Agreement within a Disposition File from row number 17", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 29
+ await testRunner.ThenAsync("A new Acquisition file is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="05._Disposition_Checklist_Tab")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
+        [global::Xunit.TraitAttribute("Description", "05._Disposition_Checklist_Tab")]
+        public async global::System.Threading.Tasks.Task _05__Disposition_Checklist_Tab()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "4";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05._Disposition_Checklist_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 31
+this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
 #line 32
- await testRunner.WhenAsync("I create Digital Documents for a \"Disposition File\" from row number 12", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.GivenAsync("I create a new Disposition File from row number 7", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 33
- await testRunner.AndAsync("I edit a Digital Document for a \"Disposition File\" from row number 13", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.WhenAsync("I insert Checklist information to an Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 34
  await testRunner.ThenAsync("A new Disposition file is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -322,15 +322,15 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="06._Disposition_File_Notes")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="06._Disposition_Files_Digital_Documents")]
         [global::Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [global::Xunit.TraitAttribute("Description", "06._Disposition_File_Notes")]
-        public async global::System.Threading.Tasks.Task _06__Disposition_File_Notes()
+        [global::Xunit.TraitAttribute("Description", "06._Disposition_Files_Digital_Documents")]
+        public async global::System.Threading.Tasks.Task _06__Disposition_Files_Digital_Documents()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "5";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06._Disposition_File_Notes", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06._Disposition_Files_Digital_Documents", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
 #line 36
@@ -344,13 +344,13 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 37
- await testRunner.GivenAsync("I create a new Disposition File from row number 11", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new Disposition File from row number 10", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 38
- await testRunner.WhenAsync("I create a new Note on the Notes Tab from row number 9", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("I create Digital Documents for a \"Disposition File\" from row number 12", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 39
- await testRunner.AndAsync("I edit a Note on the Notes Tab from row number 10", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+ await testRunner.AndAsync("I edit a Digital Document for a \"Disposition File\" from row number 13", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 40
  await testRunner.ThenAsync("A new Disposition file is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
@@ -359,15 +359,15 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="07._Disposition_File_from_Parcel")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="07._Disposition_File_Notes")]
         [global::Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [global::Xunit.TraitAttribute("Description", "07._Disposition_File_from_Parcel")]
-        public async global::System.Threading.Tasks.Task _07__Disposition_File_From_Parcel()
+        [global::Xunit.TraitAttribute("Description", "07._Disposition_File_Notes")]
+        public async global::System.Threading.Tasks.Task _07__Disposition_File_Notes()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "6";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07._Disposition_File_from_Parcel", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07._Disposition_File_Notes", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
 #line 42
@@ -381,27 +381,33 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 43
- await testRunner.GivenAsync("I create a Disposition File from a pin on map from row number 12", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new Disposition File from row number 11", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 44
+ await testRunner.WhenAsync("I create a new Note on the Notes Tab from row number 9", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 45
+ await testRunner.AndAsync("I edit a Note on the Notes Tab from row number 10", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 46
  await testRunner.ThenAsync("A new Disposition file is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="08._Disposition_Files_List_View")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="08._Disposition_File_from_Parcel")]
         [global::Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [global::Xunit.TraitAttribute("Description", "08._Disposition_Files_List_View")]
-        public async global::System.Threading.Tasks.Task _08__Disposition_Files_List_View()
+        [global::Xunit.TraitAttribute("Description", "08._Disposition_File_from_Parcel")]
+        public async global::System.Threading.Tasks.Task _08__Disposition_File_From_Parcel()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "7";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08._Disposition_Files_List_View", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08._Disposition_File_from_Parcel", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 46
+#line 48
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -411,28 +417,59 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 47
+#line 49
+ await testRunner.GivenAsync("I create a Disposition File from a pin on map from row number 12", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 50
+ await testRunner.ThenAsync("A new Disposition file is created successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="09._Disposition_Files_List_View")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
+        [global::Xunit.TraitAttribute("Description", "09._Disposition_Files_List_View")]
+        public async global::System.Threading.Tasks.Task _09__Disposition_Files_List_View()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "8";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("09._Disposition_Files_List_View", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 52
+this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 53
  await testRunner.GivenAsync("I search for an existing Disposition File from row number 3", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 48
+#line 54
  await testRunner.ThenAsync("Expected Disposition File Content is displayed on Disposition File List View", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="09._Disposition_File_Main_Path")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="10._Disposition_File_Main_Path")]
         [global::Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [global::Xunit.TraitAttribute("Description", "09._Disposition_File_Main_Path")]
-        public async global::System.Threading.Tasks.Task _09__Disposition_File_Main_Path()
+        [global::Xunit.TraitAttribute("Description", "10._Disposition_File_Main_Path")]
+        public async global::System.Threading.Tasks.Task _10__Disposition_File_Main_Path()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            string pickleIndex = "8";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("09._Disposition_File_Main_Path", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string pickleIndex = "9";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("10._Disposition_File_Main_Path", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 50
+#line 56
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -442,38 +479,38 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 51
+#line 57
  await testRunner.GivenAsync("I create a new Disposition File from row number 13", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 52
+#line 58
  await testRunner.WhenAsync("I add Properties to the Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 53
+#line 59
  await testRunner.AndAsync("I create Appraisal, Assessment, Offers and Sales Details within a Disposition Fil" +
                         "e", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 54
+#line 60
  await testRunner.AndAsync("I add additional information to the Disposition File Details", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 55
+#line 61
  await testRunner.ThenAsync("Disposition File Main Path completed successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="10._Disposition_File_Sales_Price_Error")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="11._Disposition_File_Sales_Price_Error")]
         [global::Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [global::Xunit.TraitAttribute("Description", "10._Disposition_File_Sales_Price_Error")]
-        public async global::System.Threading.Tasks.Task _10__Disposition_File_Sales_Price_Error()
+        [global::Xunit.TraitAttribute("Description", "11._Disposition_File_Sales_Price_Error")]
+        public async global::System.Threading.Tasks.Task _11__Disposition_File_Sales_Price_Error()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            string pickleIndex = "9";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("10._Disposition_File_Sales_Price_Error", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string pickleIndex = "10";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("11._Disposition_File_Sales_Price_Error", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 57
+#line 63
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -483,66 +520,28 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 58
+#line 64
  await testRunner.GivenAsync("I create a new Disposition File from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 59
+#line 65
  await testRunner.WhenAsync("I change status of the Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 60
+#line 66
  await testRunner.ThenAsync("Disposition File without Sales Price error appears", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableFactAttribute(DisplayName="11._Disposition_File_Not_Sold_Status_Error")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="12._Disposition_File_Not_Sold_Status_Error")]
         [global::Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [global::Xunit.TraitAttribute("Description", "11._Disposition_File_Not_Sold_Status_Error")]
-        public async global::System.Threading.Tasks.Task _11__Disposition_File_Not_Sold_Status_Error()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            string pickleIndex = "10";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("11._Disposition_File_Not_Sold_Status_Error", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
-            string[] tagsOfRule = ((string[])(null));
-            global::Reqnroll.RuleInfo ruleInfo = null;
-#line 62
-this.ScenarioInitialize(scenarioInfo, ruleInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                await testRunner.SkipScenarioAsync();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 63
- await testRunner.GivenAsync("I create a new Disposition File from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 64
- await testRunner.WhenAsync("I create Appraisal, Assessment, Offers and Sales Details within a Disposition Fil" +
-                        "e", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 65
- await testRunner.AndAsync("I change status of the Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
-#line hidden
-#line 66
- await testRunner.ThenAsync("Disposition File without SOLD Status error appears", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [global::Xunit.SkippableFactAttribute(DisplayName="12._Disposition_File_Non-Core_Inventory_Error")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
-        [global::Xunit.TraitAttribute("Description", "12._Disposition_File_Non-Core_Inventory_Error")]
-        public async global::System.Threading.Tasks.Task _12__Disposition_File_Non_Core_Inventory_Error()
+        [global::Xunit.TraitAttribute("Description", "12._Disposition_File_Not_Sold_Status_Error")]
+        public async global::System.Threading.Tasks.Task _12__Disposition_File_Not_Sold_Status_Error()
         {
             string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
             string pickleIndex = "11";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("12._Disposition_File_Non-Core_Inventory_Error", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("12._Disposition_File_Not_Sold_Status_Error", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
 #line 68
@@ -556,19 +555,57 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 69
- await testRunner.GivenAsync("I create a new Disposition File from row number 15", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+ await testRunner.GivenAsync("I create a new Disposition File from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
 #line 70
- await testRunner.WhenAsync("I add Properties to the Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+ await testRunner.WhenAsync("I create Appraisal, Assessment, Offers and Sales Details within a Disposition Fil" +
+                        "e", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 71
+ await testRunner.AndAsync("I change status of the Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 72
+ await testRunner.ThenAsync("Disposition File without SOLD Status error appears", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="13._Disposition_File_Non-Core_Inventory_Error")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "DispositionFiles")]
+        [global::Xunit.TraitAttribute("Description", "13._Disposition_File_Non-Core_Inventory_Error")]
+        public async global::System.Threading.Tasks.Task _13__Disposition_File_Non_Core_Inventory_Error()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "12";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("13._Disposition_File_Non-Core_Inventory_Error", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 74
+this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 75
+ await testRunner.GivenAsync("I create a new Disposition File from row number 15", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 76
+ await testRunner.WhenAsync("I add Properties to the Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 77
  await testRunner.AndAsync("I create Appraisal, Assessment, Offers and Sales Details within a Disposition Fil" +
                         "e", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 72
+#line 78
  await testRunner.AndAsync("I change status of the Disposition File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 73
+#line 79
  await testRunner.ThenAsync("Disposition File with non-Core property error appears", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

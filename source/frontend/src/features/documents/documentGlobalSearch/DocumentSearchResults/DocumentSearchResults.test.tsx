@@ -1,7 +1,13 @@
 import { Claims } from '@/constants/claims';
-import { mockDocumentSearchResultsResponse } from '@/mocks/documents.mock';
+import { getMockApiPropertyDocumentRelationship } from '@/mocks/documents.mock';
+import {
+  getMockApiDocumentSearchResult,
+  mockDocumentSearchResultsResponse,
+} from '@/mocks/documentSearchResults.mock';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
-import { render, RenderOptions } from '@/utils/test-utils';
+import { render, RenderOptions, screen } from '@/utils/test-utils';
+
+import { getMockApiProperty } from '@/mocks/properties.mock';
 import { DocumentSearchResults, IDocumentSearchResultsProps } from './DocumentSearchResults';
 
 // render component under test
@@ -291,5 +297,66 @@ describe('Documents Search Results Table', () => {
     const propertyIdentifier = getByTestId('property-id-37');
     expect(propertyIdentifier).toBeInTheDocument();
     expect(tableRows.length).toBe(1);
+  });
+
+  it('displays PID for properties when available', () => {
+    setup({
+      results: [
+        {
+          ...getMockApiDocumentSearchResult(),
+          propertiesDocuments: [
+            getMockApiPropertyDocumentRelationship(1, {
+              ...getMockApiProperty(),
+              id: 37,
+              pid: 15937551,
+            }),
+          ],
+        },
+      ],
+    });
+
+    expect(screen.getByText('PID: 015-937-551')).toBeInTheDocument();
+  });
+
+  it('displays PIN for properties when available', () => {
+    setup({
+      results: [
+        {
+          ...getMockApiDocumentSearchResult(),
+          propertiesDocuments: [
+            getMockApiPropertyDocumentRelationship(1, {
+              ...getMockApiProperty(),
+              id: 37,
+              pid: null,
+              pin: 90072652,
+            }),
+          ],
+        },
+      ],
+    });
+
+    expect(screen.getByText('PIN: 90072652')).toBeInTheDocument();
+  });
+
+  it('displays Lat/Long for properties when no other identifier is available', () => {
+    setup({
+      results: [
+        {
+          ...getMockApiDocumentSearchResult(),
+          propertiesDocuments: [
+            getMockApiPropertyDocumentRelationship(1, {
+              ...getMockApiProperty(),
+              id: 37,
+              pid: null,
+              pin: null,
+              latitude: 48.43,
+              longitude: -123.49,
+            }),
+          ],
+        },
+      ],
+    });
+
+    expect(screen.getByText('Location: 48.430000, -123.490000')).toBeInTheDocument();
   });
 });

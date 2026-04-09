@@ -1,7 +1,9 @@
 import { FeatureCollection, MultiPolygon, Polygon } from 'geojson';
-import shp from 'shpjs';
 
-import { exists, firstOrNull } from '@/utils';
+import { exists } from '@/utils';
+
+import { KmzHelper } from './helpers/KmzHelper';
+import { ShapefileHelper } from './helpers/ShapefileHelper';
 
 export class ShapeUploadModel {
   public file: File | null;
@@ -14,13 +16,20 @@ export class ShapeUploadModel {
     if (!exists(this.file)) {
       throw new Error('No file provided');
     }
-    try {
-      const arrayBuffer = await this.file.arrayBuffer();
-      const geojson = await shp(arrayBuffer);
-      return Array.isArray(geojson) ? firstOrNull(geojson) : geojson;
-    } catch (error) {
-      throw new Error('Failed to parse shapefile. Please ensure the file is a valid shapefile.');
+
+    const arrayBuffer = await this.file.arrayBuffer();
+
+    if (await ShapefileHelper.isShapefile(arrayBuffer)) {
+      return ShapefileHelper.toGeoJson(arrayBuffer);
     }
+
+    if ((await KmzHelper.isKml(arrayBuffer)) || (await KmzHelper.isKmz(arrayBuffer))) {
+      return KmzHelper.toGeoJson(arrayBuffer);
+    }
+
+    throw new Error(
+      'Unsupported file format. Please upload a valid shapefile (.zip), KMZ, or KML file.',
+    );
   }
 }
 

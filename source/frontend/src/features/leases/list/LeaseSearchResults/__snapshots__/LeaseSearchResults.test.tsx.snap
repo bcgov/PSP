@@ -81,7 +81,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            L-File Number
+            L-File number
             <div
               class="c0"
               data-testid="sort-column-lFileNo"
@@ -127,7 +127,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Expiry Date
+            Expiry date
             <div
               class="c0"
               data-testid="sort-column-expiryDate"
@@ -173,7 +173,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Program Name
+            Program name
             <div
               class="c0"
               data-testid="sort-column-programName"
@@ -219,7 +219,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Tenant Names
+            Tenant names
           </div>
         </div>
         <div
@@ -231,7 +231,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Account Type
+            Account type
           </div>
         </div>
         <div
@@ -243,7 +243,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Properties
+            Civic address / PID / PIN
           </div>
         </div>
         <div
@@ -255,7 +255,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Historical File #
+            Historical file #
           </div>
         </div>
         <div

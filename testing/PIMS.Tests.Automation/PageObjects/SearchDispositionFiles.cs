@@ -37,7 +37,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchDispositionFileOrderTypeBttn = By.CssSelector("div[data-testid='sort-column-dispositionTypeCode']");
         private readonly By searchDispositionMOTIRegionHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTT region')]");
         private readonly By searchDispositionTeamMemberHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Team member')]");
-        private readonly By searchDispositionAddressHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address / PID / PIN')]");
+        private readonly By searchDispositionAddressHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic address / PID / PIN')]");
         private readonly By searchDispositionDispositionStatusHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Disposition status')]");
         private readonly By searchDispositionFileOrderDispositionStatusBttn = By.CssSelector("div[data-testid='sort-column-dispositionStatusTypeCode']");
         private readonly By searchDispositionFileStatusHeader = By.XPath("//div[@role='table']/div[@class='thead thead-light']/div/div/div[contains(text(),'Status')]");

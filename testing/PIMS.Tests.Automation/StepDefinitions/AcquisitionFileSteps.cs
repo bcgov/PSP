@@ -18,7 +18,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SearchProperties searchProperties;
         private readonly AcquisitionTakes acquisitionTakes;
         private readonly AcquisitionChecklist checklist;
-        private readonly AcquisitionAgreements agreements;
+        private readonly SharedAgreements agreements;
         private readonly AcquisitionStakeholders stakeholders;
         private readonly SharedCompensations h120;
         private readonly AcquisitionExpropriation expropriation;
@@ -44,7 +44,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties = new SearchProperties(driver);
             acquisitionTakes = new AcquisitionTakes(driver);
             checklist = new AcquisitionChecklist(driver);
-            agreements = new AcquisitionAgreements(driver);
+            agreements = new SharedAgreements(driver);
             stakeholders = new AcquisitionStakeholders(driver);
             h120 = new SharedCompensations(driver);
             expropriation = new AcquisitionExpropriation(driver);
@@ -230,7 +230,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             sharedImprovementsTab.NavigateImprovementTab();
 
             //Verify Properties' count on Improvement Tabs
-            Assert.Equal(acquisitionFile.AcquisitionSearchProperties.DisplayingList.Count, sharedImprovementsTab.CountProperties());
+            Assert.Equal(sharedImprovementsTab.CountProperties(), acquisitionFile.AcquisitionSearchProperties.DisplayingList.Count);
 
             //Verify Improvements Tab
             sharedImprovementsTab.VerifyImprovementsTab(acquisitionFile.AcquisitionSearchProperties.DisplayingList);
@@ -1396,19 +1396,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateAgreementsCollection(int startRow, int rowsCount)
         {
-            System.Data.DataTable agreementSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionAgreement"]!;
+            System.Data.DataTable agreementSheet = ExcelDataContext.GetInstance().Sheets["Agreements"]!;
             ExcelDataContext.PopulateInCollection(agreementSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                AcquisitionAgreement agreement = new();
+                Agreement agreement = new();
 
                 agreement.AgreementStatus = ExcelDataContext.ReadData(i, "AgreementStatus");
                 agreement.AgreementCancellationReason = ExcelDataContext.ReadData(i, "AgreementCancellationReason");
                 agreement.AgreementLegalSurveyPlan = ExcelDataContext.ReadData(i, "AgreementLegalSurveyPlan");
                 agreement.AgreementType = ExcelDataContext.ReadData(i, "AgreementType");
                 agreement.AgreementDate = ExcelDataContext.ReadData(i, "AgreementDate");
-                agreement.AgreementCommencementDate = ExcelDataContext.ReadData(i, "AgreementCommencementDate");
                 agreement.AgreementCompletionDate = ExcelDataContext.ReadData(i, "AgreementCompletionDate");
                 agreement.AgreementTerminationDate = ExcelDataContext.ReadData(i, "AgreementTerminationDate");
                 agreement.AgreementPossessionDate = ExcelDataContext.ReadData(i, "AgreementPossessionDate");

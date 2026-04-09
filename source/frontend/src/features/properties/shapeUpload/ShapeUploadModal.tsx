@@ -38,7 +38,7 @@ export const ShapeUploadModal: React.FunctionComponent<IShapeUploadModalProps> =
     setUploadResult(result);
   };
 
-  // Warn user if they are about to lose data when cancelling "Upload Shapefile" modal
+  // Warn user if they are about to lose data when cancelling "Upload Boundary File" modal
   const onCloseHandler = () => {
     const dirty = formikRef.current?.dirty ?? false;
     if (dirty && !displayConfirmation) {
@@ -56,7 +56,7 @@ export const ShapeUploadModal: React.FunctionComponent<IShapeUploadModalProps> =
       display={display}
       setDisplay={setDisplay}
       headerIcon={<FaUpload size={22} />}
-      title="Upload Shapefile"
+      title="Upload boundary file"
       message={
         <ShapeUploadContainer
           formikRef={formikRef}

@@ -6,6 +6,7 @@ import Claims from '@/constants/claims';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
+import { ApiGen_CodeTypes_AcquisitionFileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionFileTypeTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { exists, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
@@ -44,6 +45,10 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
   if (!exists(props.acquisitionFile)) {
     return null;
   }
+
+  const isSection3 =
+    props.acquisitionFile.acquisitionTypeCode.id ===
+    ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN3;
 
   // render edit forms
   if (props.isEditing) {
@@ -101,6 +106,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
                 View={UpdateAgreementForm}
                 onSuccess={props.onSuccess}
                 fileType="acquisition"
+                isSection3={isSection3}
                 onCreateAgreement={postAcquisitionAgreement}
                 isCreatingAgreement={loadingAcquisitionAgreement}
               />
@@ -118,6 +124,7 @@ export const AcquisitionRouter: React.FC<IAcquisitionRouterProps> = props => {
                 fileId={props.acquisitionFile?.id}
                 agreementId={match.params.agreementId}
                 fileType="acquisition"
+                isSection3={isSection3}
                 View={UpdateAgreementForm}
                 onSuccess={props.onSuccess}
                 updateAgreement={agreementProvider.updateAcquisitionAgreement.execute}

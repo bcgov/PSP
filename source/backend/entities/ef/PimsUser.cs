@@ -193,6 +193,9 @@ public partial class PimsUser
     public virtual ICollection<PimsAccessRequest> PimsAccessRequests { get; set; } = new List<PimsAccessRequest>();
 
     [InverseProperty("User")]
+    public virtual ICollection<PimsNotificationUser> PimsNotificationUsers { get; set; } = new List<PimsNotificationUser>();
+
+    [InverseProperty("User")]
     public virtual ICollection<PimsRegionUser> PimsRegionUsers { get; set; } = new List<PimsRegionUser>();
 
     [InverseProperty("User")]

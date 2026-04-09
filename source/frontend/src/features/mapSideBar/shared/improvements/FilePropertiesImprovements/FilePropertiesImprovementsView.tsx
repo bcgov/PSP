@@ -68,6 +68,7 @@ export const FilePropertiesImprovementsView: React.FunctionComponent<
               <div key={improvement.id}>
                 <PropertyImprovementDetails
                   propertyImprovement={improvement}
+                  propertyImprovementIndex={index}
                   key={improvement.id}
                 ></PropertyImprovementDetails>
                 {index < propertyImprovements.improvements.length - 1 && <hr></hr>}

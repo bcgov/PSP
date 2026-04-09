@@ -25,6 +25,7 @@ export interface IAgreementViewProps {
   loading: boolean;
   agreements: ApiGen_Concepts_Agreement[];
   isFileFinalStatus?: boolean;
+  isSection3?: boolean;
   onGenerate: (agreement: ApiGen_Concepts_Agreement) => void;
   onDelete: (agreementId: number) => void;
 }
@@ -33,6 +34,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   loading,
   agreements,
   isFileFinalStatus,
+  isSection3,
   onGenerate,
   onDelete,
 }) => {
@@ -67,7 +69,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
             <Section
               header={
                 <StyledHeaderContainer>
-                  <div>{`Agreement ${++index}`}</div>
+                  <div>{`Agreement ${index + 1}`}</div>
                   <div>
                     {exists(agreement.agreementType) && (
                       <StyledButtonContainer>
@@ -146,6 +148,26 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
               <SectionField labelWidth={{ xs: 6 }} label="Agreement type">
                 {agreement.agreementType?.description}
               </SectionField>
+
+              {isSection3 && (
+                <>
+                  <SectionField
+                    labelWidth={{ xs: 6 }}
+                    label="Advance payment date"
+                    valueTestId={`agreement[${index}].advancePaymentDate`}
+                  >
+                    {prettyFormatDate(agreement.advancePaymentDate)}
+                  </SectionField>
+                  <SectionField
+                    labelWidth={{ xs: 6 }}
+                    label="Agreement signed date"
+                    valueTestId={`agreement[${index}].agreementSignedDate`}
+                  >
+                    {prettyFormatDate(agreement.agreementSignedDate)}
+                  </SectionField>
+                </>
+              )}
+
               <SectionField labelWidth={{ xs: 6 }} label="Agreement date">
                 {prettyFormatDate(agreement.agreementDate)}
               </SectionField>

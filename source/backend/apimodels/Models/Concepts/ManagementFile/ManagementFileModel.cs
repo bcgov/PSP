@@ -1,11 +1,11 @@
 using System.Collections.Generic;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.File;
+using Pims.Api.Models.Concepts.NoticeOfClaim;
 using Pims.Api.Models.Concepts.Organization;
 using Pims.Api.Models.Concepts.Person;
 using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Models.Concepts.Project;
-using Pims.Api.Models.Concepts.NoticeOfClaim;
 
 namespace Pims.Api.Models.Concepts.ManagementFile
 {

@@ -59,7 +59,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void Go1stPage()
         {
             webDriver.FindElement(searchTable1stPageButton).Click();
-
         }
 
         public void ResetSearch()

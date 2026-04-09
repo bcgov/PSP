@@ -6,16 +6,16 @@ import {
   mockDocumentTypeMetadataBcAssessment,
   mockDocumentTypesAcquisition,
   mockDocumentTypesAll,
-} from '@/mocks/documents.mock';
+} from '@/mocks/documentTypes.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_CodeTypes_ExternalResponseStatus } from '@/models/api/generated/ApiGen_CodeTypes_ExternalResponseStatus';
+import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 import { ApiGen_System_HttpStatusCode } from '@/models/api/generated/ApiGen_System_HttpStatusCode';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, getByName, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
 
 import { DocumentDetailContainer, IDocumentDetailContainerProps } from './DocumentDetailContainer';
-import { ApiGen_Concepts_DocumentRelationship } from '@/models/api/generated/ApiGen_Concepts_DocumentRelationship';
 
 const history = createMemoryHistory();
 const storeState = {
