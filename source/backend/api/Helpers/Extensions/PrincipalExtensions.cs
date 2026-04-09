@@ -49,9 +49,6 @@ namespace Pims.Core.Extensions
             ArgumentNullException.ThrowIfNull(principal);
             ArgumentNullException.ThrowIfNull(leaseFile);
 
-            // Check region access
-            principal.ThrowInvalidRegion(leaseFile, userRepository);
-
             // Check team/project access for contractors
             if (!principal.HasAccessToLeaseFile(leaseFile, userRepository, projectRepository))
             {
@@ -127,7 +124,10 @@ namespace Pims.Core.Extensions
             {
                 return false;
             }
-
+            else if (pimsUser?.IsContractor != true)
+            {
+                return principal.IsAssignedToLeaseFileRegion(leaseFile, userRepository);
+            }
             return true;
         }
 

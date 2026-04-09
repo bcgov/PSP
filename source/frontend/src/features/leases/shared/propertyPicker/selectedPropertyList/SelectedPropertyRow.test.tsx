@@ -133,7 +133,7 @@ describe('SelectedPropertyRow component', () => {
     mockFeatureSet.location = { lat: 4, lng: 5 };
 
     await setup({ props: { property: PropertyForm.fromFeatureDataset(mockFeatureSet) } });
-    expect(screen.getByText('5.000000, 4.000000')).toBeVisible();
+    expect(screen.getByText('4.000000, 5.000000')).toBeVisible();
   });
 
   it('falls back to address', async () => {

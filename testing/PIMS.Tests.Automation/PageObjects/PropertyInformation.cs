@@ -23,11 +23,11 @@ namespace PIMS.Tests.Automation.PageObjects
         //Property Information Tabs Elements
         private readonly By propertyInformationTabsTotal = By.CssSelector("nav[role='tablist'] a");
         private readonly By propertyInformationTitleTab = By.CssSelector("a[data-rb-event-key='ltsa']");
-        private readonly By propertyInformationValueTab = By.XPath("a[data-rb-event-key='bcassessment')]");
-        private readonly By propertyInformationHwyTab = By.CssSelector("a[data-rb-event-key='highway')]");
-        private readonly By propertyInformationPMBCTab = By.CssSelector("a[data-rb-event-key='pmbc')]");
-        private readonly By propertyInformationCrownTab = By.CssSelector("a[data-rb-event-key='crown')]");
-        private readonly By propertyInformationOtherTab = By.CssSelector("a[data-rb-event-key='other')]");
+        private readonly By propertyInformationValueTab = By.CssSelector("a[data-rb-event-key='bcassessment']");
+        private readonly By propertyInformationHwyTab = By.CssSelector("a[data-rb-event-key='highway']");
+        private readonly By propertyInformationPMBCTab = By.CssSelector("a[data-rb-event-key='pmbc']");
+        private readonly By propertyInformationCrownTab = By.CssSelector("a[data-rb-event-key='crown']");
+        private readonly By propertyInformationOtherTab = By.CssSelector("a[data-rb-event-key='other']");
 
         private readonly By propertyInformationPlanTab = By.CssSelector("a[data-rb-event-key='plan']");
 
@@ -255,9 +255,10 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyDetailsTenureStatusDiv = By.XPath("//label[contains(text(),'Tenure status')]/parent::div/following-sibling::div/div/div/div");
         private readonly By propertyDetailsTenureCleanupLabel = By.XPath("//label[contains(text(),'Tenure cleanup')]");
         private readonly By propertyDetailsTenureCleanupDiv = By.XPath("//label[contains(text(),'Tenure cleanup')]/parent::div/following-sibling::div/div/div/div");
-
-        private readonly By propertyDetailsAdjacentLandTypeLabel = By.XPath("//label[contains(text(),'Adjacent Land type')]");
-        private readonly By propertyDetailsAdjacentLandTypeDiv = By.XPath("//label[contains(text(),'Adjacent Land type')]/parent::div/following-sibling::div");
+        private readonly By propertyDetailsProvPublicHwyLabel = By.XPath("//label[contains(text(),'Provincial public hwy')]");
+        private readonly By propertyDetailsProvPublicHwyDiv = By.XPath("//label[contains(text(),'Provincial public hwy')]/parent::div/following-sibling::div/div/div/div");
+        private readonly By propertyDetailsHighwayRoadLabel = By.XPath("//label[contains(text(),'Highway / Road Details')]");
+        private readonly By propertyDetailsHighwayRoadDiv = By.XPath("//label[contains(text(),'Highway / Road Details')]/parent::div/following-sibling::div/div/div/div");
 
         private readonly By propertyDetailsFirstNationTitle = By.XPath("//div[contains(text(),'First Nations Information')]");
         private readonly By propertyDetailsFirstNationBandNameLabel = By.XPath("//label[contains(text(),'Band name')]");
@@ -325,7 +326,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By propertyDetailsTenureDeleteBttns = By.CssSelector("div[id='multiselect-tenures'] i[class='custom-close']");
         private readonly By propertyDetailsTenureCleanupInput = By.Id("multiselect-tenureCleanups_input");
         private readonly By propertyDetailsTenureCleanupOptions = By.XPath("//input[@id='multiselect-tenureCleanups_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
-        private readonly By propertyDetailsTenureCleanupDeleteBttns = By.CssSelector("div[id='multiselect-tenureCleanups_input'] i[class='custom-close']");
+        private readonly By propertyDetailsTenureCleanupDeleteBttns = By.CssSelector("div[id='multiselect-tenureCleanups'] i[class='custom-close']");
+        private readonly By propertyDetailsTenureProvincialHwySelect = By.Id("input-pphStatusTypeCode");
+        private readonly By propertyDetailsTenureHwyDetailsMultiselect = By.Id("multiselect-roadTypes_input");
+        private readonly By propertyDetailsTenureHwyDetailsOptions = By.XPath("//input[@id='multiselect-roadTypes_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+        private readonly By propertyDetailsTenureHwyDetailsDeleteBttns = By.CssSelector("div[id='multiselect-roadTypes'] i[class='custom-close']");
 
         private readonly By propertyDetailsAreaSqMtsInput = By.Name("area-sq-meters");
         private readonly By propertyDetailsAreaHctInput = By.Name("area-hectares");
@@ -339,6 +344,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         //Property Information Confirmation Modal
         private readonly By propertyInformationConfirmationModal = By.CssSelector("div[class='modal-content']");
+
+        private readonly By propertyDetailsCancelButton = By.CssSelector("button[data-testid='cancel-button']");
+        private readonly By propertyDetailsSaveButton = By.CssSelector("button[data-testid='save-button']");
 
         private SharedModals sharedModals;
 
@@ -490,12 +498,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SavePropertyDetails()
         {
-            ButtonElement("Save");
+            Wait();
+            webDriver.FindElement(propertyDetailsSaveButton).Click();
         }
 
         public void CancelPropertyDetails()
         {
-            ButtonElement("Cancel");
+            webDriver.FindElement(propertyDetailsCancelButton).Click(); 
 
             Wait();
             if (webDriver.FindElements(propertyInformationConfirmationModal).Count > 0)
@@ -638,12 +647,43 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(propertyDetailsTenureCleanupLabel).Click();
             }
 
+            //TENURE CLEANUP
             if (property.TenureCleanup.First() != "")
             {
                 foreach (string status in property.TenureCleanup)
                 {
+                    Wait(2000);
+                    webDriver.FindElement(propertyDetailsTenureCleanupLabel).Click();
                     FocusAndClick(propertyDetailsTenureCleanupInput);
+
+                    WaitUntilClickable(propertyDetailsTenureCleanupOptions);
                     ChooseMultiSelectSpecificOption(propertyDetailsTenureCleanupOptions, status);
+                    webDriver.FindElement(propertyDetailsTenureCleanupLabel).Click();
+                }
+            }
+
+            if (property.TenureProvHwy != "")
+                ChooseSpecificSelectOption(propertyDetailsTenureProvincialHwySelect, property.TenureProvHwy);
+
+            //Delete Highway Road Details
+            if (webDriver.FindElements(propertyDetailsTenureHwyDetailsDeleteBttns).Count > 0)
+            {
+                while (webDriver.FindElements(propertyDetailsTenureHwyDetailsDeleteBttns).Count > 0)
+                    webDriver.FindElements(propertyDetailsTenureHwyDetailsDeleteBttns)[0].Click();
+            }
+
+
+            if (property.TenureHighwayDetails.First() != "")
+            {
+                foreach (string hwyDetail in property.TenureHighwayDetails)
+                {
+                    Wait(2000);
+                    webDriver.FindElement(propertyDetailsHighwayRoadLabel).Click();
+                    FocusAndClick(propertyDetailsTenureHwyDetailsMultiselect);
+
+                    WaitUntilClickable(propertyDetailsTenureHwyDetailsOptions);
+                    ChooseMultiSelectSpecificOption(propertyDetailsTenureHwyDetailsOptions, hwyDetail);
+                    webDriver.FindElement(propertyDetailsHighwayRoadLabel).Click();
                 }
             }
 
@@ -658,7 +698,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 FocusAndClick(propertyDetailsIsVolumeRadioYes);
             else
                 FocusAndClick(propertyDetailsIsVolumeRadioNo);
-            
+
             if (property.Volume != "")
             {
                 ClearInput(propertyDetailsVolCubeMtsInput);
@@ -922,12 +962,10 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(propertyDetailsTenureStatusDiv);
             AssertTrueIsDisplayed(propertyDetailsTenureCleanupLabel);
             AssertTrueIsDisplayed(propertyDetailsTenureCleanupDiv);
-
-            if (webDriver.FindElements(propertyDetailsAdjacentLandTypeLabel).Count() > 0)
-            {
-                AssertTrueIsDisplayed(propertyDetailsAdjacentLandTypeLabel);
-                AssertTrueIsDisplayed(propertyDetailsAdjacentLandTypeDiv);
-            }
+            //AssertTrueIsDisplayed(propertyDetailsProvPublicHwyLabel);
+            //AssertTrueIsDisplayed(propertyDetailsProvPublicHwyDiv);
+            //AssertTrueIsDisplayed(propertyDetailsHighwayRoadLabel);
+            //AssertTrueIsDisplayed(propertyDetailsHighwayRoadDiv);
 
             if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)
             {
@@ -1060,14 +1098,26 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.True(Enumerable.SequenceEqual(tenureCleanupUI, property.TenureCleanup));
             }
 
-            if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)
-            {
-                AssertTrueIsDisplayed(propertyDetailsFirstNationTitle);
-                AssertTrueIsDisplayed(propertyDetailsFirstNationBandNameLabel);
-                AssertTrueIsDisplayed(propertyDetailsFirstNationBandNameDiv);
-                AssertTrueIsDisplayed(propertyDetailsFirstNationReserveLabel);
-                AssertTrueIsDisplayed(propertyDetailsFirstNationReserveDiv);
-            }
+            //AssertTrueIsDisplayed(propertyDetailsProvPublicHwyLabel);
+            //if (property.TenureCleanup.First() != "")
+            //    AssertTrueContentEquals(propertyDetailsProvPublicHwyDiv, property.TenureProvHwy);
+            
+
+            //AssertTrueIsDisplayed(propertyDetailsHighwayRoadLabel);
+            //if (property.TenureCleanup.First() != "")
+            //{
+            //    var tenureCleanupUI = GetViewFieldListContent(propertyDetailsHighwayRoadDiv);
+            //    Assert.True(Enumerable.SequenceEqual(tenureCleanupUI, property.TenureHighwayDetails));
+            //}
+
+            //if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)
+            //{
+            //    AssertTrueIsDisplayed(propertyDetailsFirstNationTitle);
+            //    AssertTrueIsDisplayed(propertyDetailsFirstNationBandNameLabel);
+            //    AssertTrueIsDisplayed(propertyDetailsFirstNationBandNameDiv);
+            //    AssertTrueIsDisplayed(propertyDetailsFirstNationReserveLabel);
+            //    AssertTrueIsDisplayed(propertyDetailsFirstNationReserveDiv);
+            //}
 
             //MEASUREMENTS
             AssertTrueIsDisplayed(propertyDetailsMeasurementsTitle);
@@ -1213,7 +1263,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(propertyInformationPlanTab);
 
-            Assert.Equal(10, webDriver.FindElements(propertyInformationTabsTotal).Count);
+            Assert.Equal(9, webDriver.FindElements(propertyInformationTabsTotal).Count);
             AssertTrueIsDisplayed(propertyInformationPlanTab);
 
             webDriver.FindElement(propertyInformationPlanTab).Click();

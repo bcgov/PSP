@@ -44,17 +44,26 @@ export class DocumentUploadFormData {
   public documentMetadata: Record<string, string>;
   public isDocumentTypeChanged = false;
   public mayanMetadata: ApiGen_Mayan_DocumentTypeMetadataType[];
-  public file: File | null;
+  private _file: File | null;
 
   public constructor(
     initialStatus: string,
     documentType: string,
     metadata: ApiGen_Mayan_DocumentTypeMetadataType[],
+    file: File = null,
   ) {
     this.documentStatusCode = initialStatus;
     this.documentTypeId = documentType;
-    this.file = null;
+    this.setFile(file);
     this.setMayanMetadata(metadata);
+  }
+
+  get file(): File {
+    return this._file;
+  }
+
+  setFile(file: File): void {
+    this._file = file;
   }
 
   public setMayanMetadata(metadata: ApiGen_Mayan_DocumentTypeMetadataType[]) {

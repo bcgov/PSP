@@ -226,6 +226,18 @@ public partial class PimsAgreement
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
+    /// <summary>
+    /// Date the agreement was signed.
+    /// </summary>
+    [Column("AGREEMENT_SIGNED_DATE")]
+    public DateOnly? AgreementSignedDate { get; set; }
+
+    /// <summary>
+    /// Date of the advance payment.
+    /// </summary>
+    [Column("ADVANCE_PAYMENT_DATE")]
+    public DateOnly? AdvancePaymentDate { get; set; }
+
     [ForeignKey("AcquisitionFileId")]
     [InverseProperty("PimsAgreements")]
     public virtual PimsAcquisitionFile AcquisitionFile { get; set; }
@@ -237,4 +249,7 @@ public partial class PimsAgreement
     [ForeignKey("AgreementTypeCode")]
     [InverseProperty("PimsAgreements")]
     public virtual PimsAgreementType AgreementTypeCodeNavigation { get; set; }
+
+    [InverseProperty("Agreement")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
 }

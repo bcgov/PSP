@@ -39,7 +39,6 @@ namespace Pims.Api.Areas.Reports.Controllers
         private readonly ILookupRepository _lookupRepository;
         private readonly ILeaseService _leaseService;
         private readonly ILeaseReportsService _leaseReportService;
-        private readonly ILeasePaymentService _leasePaymentService;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         #endregion
@@ -52,15 +51,13 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <param name="lookupRepository"></param>
         /// <param name="leaseService"></param>
         /// <param name="leaseReportService"></param>
-        /// <param name="leasePaymentService"></param>
         /// <param name="webHostEnvironment"></param>
         /// <param name="mapper"></param>
-        public LeaseController(ILookupRepository lookupRepository, ILeaseService leaseService, ILeaseReportsService leaseReportService, ILeasePaymentService leasePaymentService, IWebHostEnvironment webHostEnvironment, IMapper mapper)
+        public LeaseController(ILookupRepository lookupRepository, ILeaseService leaseService, ILeaseReportsService leaseReportService, IWebHostEnvironment webHostEnvironment, IMapper mapper)
         {
             _lookupRepository = lookupRepository;
             _leaseService = leaseService;
             _leaseReportService = leaseReportService;
-            _leasePaymentService = leasePaymentService;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
         }

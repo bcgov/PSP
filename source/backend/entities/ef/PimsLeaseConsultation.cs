@@ -225,6 +225,9 @@ public partial class PimsLeaseConsultation
     [InverseProperty("PimsLeaseConsultationPeople")]
     public virtual PimsPerson Person { get; set; }
 
+    [InverseProperty("LeaseConsultation")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
+
     [ForeignKey("PrimaryContactId")]
     [InverseProperty("PimsLeaseConsultationPrimaryContacts")]
     public virtual PimsPerson PrimaryContact { get; set; }

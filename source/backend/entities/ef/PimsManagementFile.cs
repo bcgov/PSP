@@ -239,6 +239,9 @@ public partial class PimsManagementFile
     [InverseProperty("ManagementFile")]
     public virtual ICollection<PimsNoticeOfClaim> PimsNoticeOfClaims { get; set; } = new List<PimsNoticeOfClaim>();
 
+    [InverseProperty("ManagementFile")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
+
     [ForeignKey("ProductId")]
     [InverseProperty("PimsManagementFiles")]
     public virtual PimsProduct Product { get; set; }

@@ -11,6 +11,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchSectionInstructions = By.XPath("//div[contains(text(),'Properties to include in this file')]/parent::div/parent::h2/following-sibling::div/div[1]");
         private readonly By searchSectionSubfileInstructions = By.XPath("//div[contains(text(),'Properties to include in this sub-file')]/parent::div/parent::h2/following-sibling::div/div[1]");
 
+        private readonly By searchSectionAddPropertyToFileBttn = By.XPath("//div[contains(text(),'Add selected property')]/parent::button");
+
         //Selected Properties Elements
         private readonly By searchPropertiesSelectedIdentifierHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Identifier')]");
         private readonly By searchPropertiesSelectedDescriptiveNameHeader = By.XPath("//div[@class='collapse show']/div/div[contains(text(),'Provide a descriptive name for this land')]");
@@ -74,6 +76,13 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             webDriver.FindElement(fileEditPropertiesBttn).Click();
+        }
+
+        public void AddPropertyToFile()
+        {
+            Wait();
+            ScrollToElement(searchSectionAddPropertyToFileBttn);
+            webDriver.FindElement(searchSectionAddPropertyToFileBttn).Click();
         }
 
         public void SelectNthPropertyOptionFromFile(int elementIdx)
@@ -162,7 +171,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 else if (sharedModals.SecondaryModalContent().Contains("You have added one or more properties to the management file that are not in the MOTT Inventory"))
                 {
                     Assert.Equal("User Override Required", sharedModals.SecondaryModalHeader());
-                    Assert.Equal("You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an management file. Do you want to proceed?", sharedModals.SecondaryModalContent());
+                    Assert.Equal("You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to a management file. Do you want to proceed?", sharedModals.SecondaryModalContent());
                     sharedModals.SecondaryModalClickOKBttn();
                 }
                 else if (sharedModals.SecondaryModalContent().Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details."))

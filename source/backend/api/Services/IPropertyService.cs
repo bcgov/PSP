@@ -87,6 +87,14 @@ namespace Pims.Api.Services
         PimsProperty TransformPropertyToLatLong(PimsProperty property);
 
         /// <summary>
+        /// Returns the spatial location and boundary polygons in lat/long (4326) for a given PimsPropertyVw instance.
+        /// The spatial values will be modified in-place.
+        /// </summary>
+        /// <param name="propertyVw">The property to re-project.</param>
+        /// <returns>The property with transformed spatial locations.</returns>
+        PimsPropertyVw TransformPropertyVwToLatLong(PimsPropertyVw propertyVw);
+
+        /// <summary>
         /// Returns the spatial location and boundary polygons in lat/long (4326) for a list of file properties.
         /// The spatial values will be modified in-place.
         /// </summary>

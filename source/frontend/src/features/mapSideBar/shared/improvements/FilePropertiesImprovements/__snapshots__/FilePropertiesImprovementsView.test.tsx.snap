@@ -220,7 +220,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
             <div
               class="c9"
             >
-              Location: 123.000000, 48.000000
+              Location: 48.000000, 123.000000
               <a
                 class="c10"
                 href="/mapview/sidebar/property/1/improvements"
@@ -293,7 +293,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
             </div>
             <div
               class="c13 text-left col"
-              data-testid="improvement[1000].name"
+              data-testid="improvement[0].name"
             >
               TEST NAME
             </div>
@@ -312,7 +312,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
             </div>
             <div
               class="c13 text-left col"
-              data-testid="improvement[1000].type"
+              data-testid="improvement[0].type"
             >
               Commercial Building
             </div>
@@ -331,7 +331,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
             </div>
             <div
               class="c13 text-left col"
-              data-testid="improvement[1000].date"
+              data-testid="improvement[0].date"
             >
               Feb 14, 2026
             </div>
@@ -350,7 +350,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
             </div>
             <div
               class="c13 text-left col"
-              data-testid="improvement[1000].status"
+              data-testid="improvement[0].status"
             >
               Active
             </div>
@@ -369,7 +369,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
             </div>
             <div
               class="c13 text-left col"
-              data-testid="improvement[1000].description"
+              data-testid="improvement[0].description"
             >
               TEST DESCRIPTION
             </div>

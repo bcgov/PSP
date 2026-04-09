@@ -1,4 +1,5 @@
 using System;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http.Extensions;
@@ -7,6 +8,7 @@ using Pims.Api.Helpers.Constants;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Helpers.Reporting;
 using Pims.Api.Models.Base;
+using Pims.Api.Services;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Policies;
 using Pims.Core.Security;
@@ -29,6 +31,8 @@ namespace Pims.Api.Areas.Reports.Controllers
     {
         #region Variables
         private readonly IPropertyRepository _propertyRepository;
+        private readonly IPropertyService _propertyService;
+
         private readonly IMapper _mapper;
         #endregion
 
@@ -38,10 +42,12 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// Creates a new instance of a ReportController class, initializes it with the specified arguments.
         /// </summary>
         /// <param name="propertyRepository"></param>
+        /// <param name="propertyService"></param>
         /// <param name="mapper"></param>
-        public PropertyController(IPropertyRepository propertyRepository, IMapper mapper)
+        public PropertyController(IPropertyRepository propertyRepository, IPropertyService propertyService, IMapper mapper)
         {
             _propertyRepository = propertyRepository;
+            _propertyService = propertyService;
             _mapper = mapper;
         }
         #endregion
@@ -83,7 +89,7 @@ namespace Pims.Api.Areas.Reports.Controllers
         [SwaggerOperation(Tags = new[] { "property", "report" })]
         public IActionResult ExportProperties([FromBody] Property.Models.Search.PropertyFilterModel filter, bool all = false)
         {
-            filter.ThrowBadRequestIfNull($"The request must include a filter.");
+            filter.ThrowBadRequestIfNull("The request must include a filter.");
             if (!filter.IsValid())
             {
                 throw new BadRequestException("Property filter must contain valid values.");
@@ -98,12 +104,27 @@ namespace Pims.Api.Areas.Reports.Controllers
 
             filter.Quantity = all ? _propertyRepository.Count() : filter.Quantity;
             var page = _propertyRepository.GetPage((PropertyFilter)filter);
+
+            // Transform all properties to lat/long for returned invoices that have properties, this is required for the front end to properly display the property locations.
+            foreach (var propertyVw in page.Items)
+            {
+                _propertyService.TransformPropertyVwToLatLong(propertyVw);
+            }
+
             var report = _mapper.Map<PageModel<Models.Property.PropertyModel>>(page);
+
+            // Load the tenure cleanup values for each property to include in the report export.
+            var reportData = report.Items.ToList();
+            foreach (var property in reportData)
+            {
+                var tenureCleanups = _propertyService.GetTenureCleanupsForPropertyId(property.Id);
+                property.TenureCleanupValues = string.Join("|", tenureCleanups.Select(tc => tc.TenureCleanupTypeCodeNavigation.Description));
+            }
 
             return acceptHeader.ToString() switch
             {
-                ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv(report.Items),
-                _ => ReportHelper.GenerateExcel(report.Items, "PIMS")
+                ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv(reportData),
+                _ => ReportHelper.GenerateExcel(reportData, "PIMS")
             };
         }
 

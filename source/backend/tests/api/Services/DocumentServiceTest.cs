@@ -105,8 +105,10 @@ namespace Pims.Api.Test.Services
             var documentStorageRepository = this._helper.GetService<Mock<IEdmsDocumentRepository>>();
             var expected = new Paged<PimsDocument>(Array.Empty<PimsDocument>(), 2, 5, 0);
 
-            documentRepository.Setup(r => r.GetPageDeep(It.Is<DocumentSearchFilterModel>(f => f.Page == 2 && f.Quantity == 5)))
-                .Returns(expected);
+            documentRepository.Setup(r => r.GetPageDeep(
+                It.Is<DocumentSearchFilterModel>(f => f.Page == 2 && f.Quantity == 5),
+                It.IsAny<DocumentAccessContext>()))
+            .Returns(expected);
 
             var filter = new DocumentSearchFilterModel
             {
@@ -118,7 +120,7 @@ namespace Pims.Api.Test.Services
             var result = service.GetPage(filter);
 
             result.Should().BeSameAs(expected);
-            documentRepository.Verify(r => r.GetPageDeep(filter), Times.Once);
+            documentRepository.Verify(r => r.GetPageDeep(filter, It.IsAny<DocumentAccessContext>()), Times.Once);
             documentStorageRepository.Verify(r => r.TrySearchByDocumentContent(It.IsAny<string>()), Times.Never);
         }
 
@@ -146,8 +148,10 @@ namespace Pims.Api.Test.Services
                     },
                 });
 
-            documentRepository.Setup(r => r.GetPageDeep(It.Is<DocumentSearchFilterModel>(f => f.MayanDocumentIds != null && f.MayanDocumentIds.SequenceEqual(expectedMayanIds))))
-                .Returns(expected);
+            documentRepository.Setup(r => r.GetPageDeep(
+                It.Is<DocumentSearchFilterModel>(f => f.MayanDocumentIds != null && f.MayanDocumentIds.SequenceEqual(expectedMayanIds)),
+                It.IsAny<DocumentAccessContext>()))
+            .Returns(expected);
 
             var filter = new DocumentSearchFilterModel
             {
@@ -194,7 +198,7 @@ namespace Pims.Api.Test.Services
             result.Total.Should().Be(0);
             result.Page.Should().Be(3);
             result.Quantity.Should().Be(7);
-            documentRepository.Verify(r => r.GetPageDeep(It.IsAny<DocumentSearchFilterModel>()), Times.Never);
+            documentRepository.Verify(r => r.GetPageDeep(It.IsAny<DocumentSearchFilterModel>(), It.IsAny<DocumentAccessContext>()), Times.Never);
         }
 
         [Fact]
@@ -216,7 +220,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.GetPage(filter);
 
             act.Should().Throw<MayanRepositoryException>();
-            documentRepository.Verify(r => r.GetPageDeep(It.IsAny<DocumentSearchFilterModel>()), Times.Never);
+            documentRepository.Verify(r => r.GetPageDeep(It.IsAny<DocumentSearchFilterModel>(), It.IsAny<DocumentAccessContext>()), Times.Never);
         }
 
         [Fact]
@@ -247,7 +251,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.GetPage(filter);
 
             act.Should().Throw<BadRequestException>();
-            documentRepository.Verify(r => r.GetPageDeep(It.IsAny<DocumentSearchFilterModel>()), Times.Never);
+            documentRepository.Verify(r => r.GetPageDeep(It.IsAny<DocumentSearchFilterModel>(), It.IsAny<DocumentAccessContext>()), Times.Never);
         }
 
         [Fact]
@@ -294,6 +298,75 @@ namespace Pims.Api.Test.Services
 
             // Assert
             documentTypeRepository.Verify(x => x.GetByCategory(category), Times.Once);
+        }
+
+        [Fact]
+        public void GetPage_ShouldPassAccessContextToRepository()
+        {
+            // Arrange
+            var service = this.CreateDocumentServiceWithPermissions(
+                Permissions.DocumentView,
+                Permissions.AcquisitionFileView,
+                Permissions.LeaseView);
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            var pimsUser = EntityHelper.CreateUser(1, Guid.NewGuid(), "test-user", isContractor: true, regionCode: 1);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
+
+            documentRepository.Setup(x => x.GetPageDeep(It.IsAny<DocumentSearchFilterModel>(), It.IsAny<DocumentAccessContext>()))
+                .Returns(new Paged<PimsDocument>(new List<PimsDocument>(), 1, 10, 0));
+
+            // Act
+            service.GetPage(new DocumentSearchFilterModel());
+
+            // Assert
+            documentRepository.Verify(x => x.GetPageDeep(
+                It.IsAny<DocumentSearchFilterModel>(),
+                It.Is<DocumentAccessContext>(ctx =>
+                    ctx.PersonId == pimsUser.PersonId
+                    && ctx.ContractorPersonId == pimsUser.PersonId
+                    && ctx.UserRegions.Contains(1)
+                    && ctx.CanViewAcquisitionFiles
+                    && !ctx.CanViewDispositionFiles
+                    && ctx.CanViewLeases
+                    && !ctx.CanViewManagementFiles
+                    && !ctx.CanViewResearchFiles
+                    && !ctx.CanViewProjects
+                    && !ctx.CanViewProperties)), Times.Once);
+        }
+
+        [Fact]
+        public void GetPage_ShouldPassNonContractorAccessContextToRepository()
+        {
+            // Arrange
+            var service = this.CreateDocumentServiceWithPermissions(Permissions.DocumentView, Permissions.AcquisitionFileView);
+            var documentRepository = this._helper.GetService<Mock<IDocumentRepository>>();
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            var pimsUser = EntityHelper.CreateUser(1, Guid.NewGuid(), "test-user", isContractor: false, regionCode: 1);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
+
+            documentRepository.Setup(x => x.GetPageDeep(It.IsAny<DocumentSearchFilterModel>(), It.IsAny<DocumentAccessContext>()))
+                .Returns(new Paged<PimsDocument>(new List<PimsDocument>(), 1, 10, 0));
+
+            // Act
+            service.GetPage(new DocumentSearchFilterModel());
+
+            // Assert
+            documentRepository.Verify(x => x.GetPageDeep(
+                It.IsAny<DocumentSearchFilterModel>(),
+                It.Is<DocumentAccessContext>(ctx =>
+                    ctx.PersonId == pimsUser.PersonId
+                    && ctx.ContractorPersonId == null
+                    && ctx.UserRegions.Contains(1)
+                    && ctx.CanViewAcquisitionFiles
+                    && !ctx.CanViewDispositionFiles
+                    && !ctx.CanViewLeases
+                    && !ctx.CanViewManagementFiles
+                    && !ctx.CanViewResearchFiles
+                    && !ctx.CanViewProjects
+                    && !ctx.CanViewProperties)), Times.Once);
         }
 
         [Fact]

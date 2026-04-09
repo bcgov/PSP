@@ -1108,13 +1108,13 @@ exports[`ManagementActivitiesListView > matches snapshot 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 240px;"
+            style="display: flex; flex: 1 0 auto; min-width: 270px;"
           >
             <div
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
@@ -1154,6 +1154,18 @@ exports[`ManagementActivitiesListView > matches snapshot 1`] = `
                     />
                   </svg>
                 </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
+                Mgmt. file #
               </div>
             </div>
             <div
@@ -1211,19 +1223,19 @@ exports[`ManagementActivitiesListView > matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Region(s)
+                MOTT region
               </div>
             </div>
             <div
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
-                Historical File #
+                Historical file #
                 <div
                   class="c12"
                   data-testid="sort-column-legacyFileNum"
@@ -1269,7 +1281,7 @@ exports[`ManagementActivitiesListView > matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Civic Address / PID / PIN
+                Civic address / PID / PIN
               </div>
             </div>
             <div
@@ -1388,12 +1400,12 @@ exports[`ManagementActivitiesListView > matches snapshot 1`] = `
             <div
               class="tr"
               role="row"
-              style="display: flex; flex: 1 0 auto; min-width: 240px;"
+              style="display: flex; flex: 1 0 auto; min-width: 270px;"
             >
               <div
                 class="td clickable"
                 role="cell"
-                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 <a
@@ -1419,21 +1431,27 @@ exports[`ManagementActivitiesListView > matches snapshot 1`] = `
                 </a>
               </div>
               <div
-                class="td clickable"
-                role="cell"
-                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              />
-              <div
-                class="td clickable"
-                role="cell"
-                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
-                title=""
-              />
-              <div
-                class="td clickable"
+                class="td"
                 role="cell"
                 style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 30 0 auto; min-width: 30px; width: 30px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                title=""
+              />
+              <div
+                class="td clickable"
+                role="cell"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               />
               <div

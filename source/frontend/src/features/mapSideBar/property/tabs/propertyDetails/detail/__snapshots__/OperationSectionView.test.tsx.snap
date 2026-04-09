@@ -283,7 +283,7 @@ exports[`Operation section view > matches snapshot 1`] = `
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      Location: 123.000000, 48.000000
+                      Location: 48.000000, 123.000000
                       <svg
                         class="ml-2"
                         fill="currentColor"
@@ -683,7 +683,7 @@ exports[`Operation section view > matches snapshot 1`] = `
                       rel="noopener noreferrer"
                       target="_blank"
                     >
-                      Location: 123.000000, 48.000000
+                      Location: 48.000000, 123.000000
                       <svg
                         class="ml-2"
                         fill="currentColor"

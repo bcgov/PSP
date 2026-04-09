@@ -3,14 +3,17 @@ import MockAdapter from 'axios-mock-adapter';
 import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants/claims';
+import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
+import { useResearchRepository } from '@/hooks/repositories/useResearchRepository';
 import { mockAcquisitionFileResponse } from '@/mocks/acquisitionFiles.mock';
+import { mockLastUpdatedBy } from '@/mocks/lastUpdatedBy.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockResearchFile } from '@/mocks/researchFile.mock';
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, render, RenderOptions, waitForElementToBeRemoved } from '@/utils/test-utils';
+import { act, getMockRepositoryObj, render, RenderOptions } from '@/utils/test-utils';
 
-import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { SideBarContextProvider, TypedFile } from '../context/sidebarContext';
 import ResearchContainer, { IResearchContainerProps } from './ResearchContainer';
 import ResearchView from './ResearchView';
@@ -18,35 +21,17 @@ import ResearchView from './ResearchView';
 const history = createMemoryHistory();
 const mockAxios = new MockAdapter(axios);
 
-const mockGetPropertyHistoricalNumbers = {
-  error: undefined,
-  response: undefined,
-  execute: vi.fn().mockResolvedValue([]),
-  loading: false,
-  status: undefined,
-};
+const onClose = vi.fn();
 
-vi.mock('@/hooks/epositories/useHistoricalNumberRepository', () => ({
-  useInterestHolderRepository: () => {
-    return {
-      getPropertyHistoricalNumbers: mockGetPropertyHistoricalNumbers,
-    };
-  },
-}));
-
-// Need to mock this library for unit tests
-vi.mock('react-visibility-sensor', () => {
-  return {
-    default: vi.fn().mockImplementation(({ children }) => {
-      if (children instanceof Function) {
-        return children({ isVisible: true });
-      }
-      return children;
-    }),
-  };
+vi.mock('@/hooks/repositories/useResearchRepository');
+vi.mocked(useResearchRepository, { partial: true }).mockReturnValue({
+  getLastUpdatedBy: getMockRepositoryObj(mockLastUpdatedBy(1)),
 });
 
-const onClose = vi.fn();
+vi.mock('@/hooks/repositories/useHistoricalNumberRepository');
+vi.mocked(useHistoricalNumberRepository, { partial: true }).mockReturnValue({
+  getPropertyHistoricalNumbers: getMockRepositoryObj([]),
+});
 
 // Mock ConfirmNavigation to avoid Prompt issues in jsdom
 vi.mock('@/components/common/ConfirmNavigation', () => {
@@ -57,7 +42,7 @@ vi.mock('@/components/common/ConfirmNavigation', () => {
 
 describe('ResearchContainer component', () => {
   // render component under test
-  const setup = (
+  const setup = async (
     renderOptions: RenderOptions & { props?: Partial<IResearchContainerProps> } & {
       context?: { file?: TypedFile };
     } = {},
@@ -79,6 +64,9 @@ describe('ResearchContainer component', () => {
         claims: [Claims.RESEARCH_VIEW, Claims.RESEARCH_ADD],
       },
     );
+
+    // wait for any useEffects to resolve and component to update with mocked data
+    await act(async () => {});
 
     return {
       ...utils,
@@ -106,16 +94,8 @@ describe('ResearchContainer component', () => {
   });
 
   it('renders as expected', async () => {
-    const { getByTestId } = setup();
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+    await setup();
     expect(document.body).toMatchSnapshot();
-  });
-
-  it('renders a spinner while loading', async () => {
-    const { findByTestId, getByTestId } = setup();
-    const spinner = await findByTestId('filter-backdrop-loading');
-    expect(spinner).toBeVisible();
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
   });
 
   it('renders research details when file is in context', async () => {
@@ -123,7 +103,7 @@ describe('ResearchContainer component', () => {
       ...getMockResearchFile(),
       fileType: ApiGen_CodeTypes_FileTypes.Research,
     };
-    const { findByText } = setup({ context: { file: typedFile } });
+    const { findByText } = await setup({ context: { file: typedFile } });
     await act(async () => {});
     expect(await findByText('File Summary')).toBeVisible();
   });
@@ -133,13 +113,11 @@ describe('ResearchContainer component', () => {
       ...mockAcquisitionFileResponse(),
       fileType: ApiGen_CodeTypes_FileTypes.Acquisition,
     };
-    const { getByTestId } = setup({ context: { file: typedFile } });
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+    await setup({ context: { file: typedFile } });
   });
 
   it('displays a properties pid if that is the only valid identifier', async () => {
-    const { getByTestId, findByText } = setup();
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+    const { findByText } = await setup();
     expect(await findByText('123-456-789')).toBeVisible();
   });
 
@@ -148,8 +126,7 @@ describe('ResearchContainer component', () => {
       .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
       .reply(200, [{ id: 1, property: { pin: 123456 } }]);
 
-    const { getByTestId, findByText } = setup();
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+    const { findByText } = await setup();
     expect(await findByText('123456')).toBeVisible();
   });
 
@@ -158,8 +135,7 @@ describe('ResearchContainer component', () => {
       .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
       .reply(200, [{ id: 1, property: { planNumber: 'EPP92028' } }]);
 
-    const { getByTestId, findByText } = setup();
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
+    const { findByText } = await setup();
     expect(await findByText('EPP92028')).toBeVisible();
   });
 
@@ -168,8 +144,7 @@ describe('ResearchContainer component', () => {
       .onGet(`/researchFiles/${mockResearchFile?.id}/properties`)
       .reply(200, [{ id: 1, property: { latitude: 1, longitude: 2 } }]);
 
-    const { getByTestId, findByText } = setup();
-    await waitForElementToBeRemoved(getByTestId('filter-backdrop-loading'));
-    expect(await findByText('2.000000, 1.000000')).toBeVisible();
+    const { findByText } = await setup();
+    expect(await findByText('1.000000, 2.000000')).toBeVisible();
   });
 });

@@ -164,7 +164,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
-                  data-testid="improvement[1000].name"
+                  data-testid="improvement[1].name"
                 >
                   TEST NAME
                 </div>
@@ -183,7 +183,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
-                  data-testid="improvement[1000].type"
+                  data-testid="improvement[1].type"
                 >
                   Commercial Building
                 </div>
@@ -202,7 +202,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
-                  data-testid="improvement[1000].date"
+                  data-testid="improvement[1].date"
                 >
                   Feb 14, 2026
                 </div>
@@ -221,7 +221,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
-                  data-testid="improvement[1000].status"
+                  data-testid="improvement[1].status"
                 >
                   Active
                 </div>
@@ -240,7 +240,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
-                  data-testid="improvement[1000].description"
+                  data-testid="improvement[1].description"
                 >
                   TEST DESCRIPTION
                 </div>

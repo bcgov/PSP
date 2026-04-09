@@ -54,20 +54,22 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By compensationTotalChequeAmountLabel = By.XPath("//label[contains(text(),'Total cheque amount')]");
         private readonly By compensationTotalChequeAmountContent = By.CssSelector("div[data-testid='header-total-amount'] p");
 
-        private readonly By requisitionDetailsViewSubtitle = By.XPath("//div[contains(text(),'Requisition Details')]");
-        private readonly By requisitionDetailsCreateSubtitle = By.XPath("//div[contains(text(),'Requisition details')]");
+        private readonly By requisitionDetailsSubtitle = By.XPath("//div[contains(text(),'Requisition Details')]");
         private readonly By requisitionGenerateH120Bttn = By.XPath("//div[contains(text(),'Requisition Details')]/div/button[2]");
         private readonly By requisitionEditBttn = By.XPath("//div[contains(text(),'Requisition Details')]/div/button[@title='Edit compensation requisition']");
-        private readonly By requisitionStatusLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
+        private readonly By requisitionCreateStatusLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
+        private readonly By requisitionViewStatusLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
         private readonly By requisitionStatusContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]/parent::div/following-sibling::div");
         private readonly By requisitionStatusSelect = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::h2/following-sibling::div/div/div/div/select[@id='input-status']");
-        private readonly By requisitionAltProjectLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Alternate project')]");
+        private readonly By requisitionViewAltProjectLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Alternate project')]");
+        private readonly By requisitionCreateAltProjectLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Alternate project')]");
         private readonly By requisitionAltProjectContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Alternate project')]/parent::div/following-sibling::div");
         private readonly By requisitionAltProjectInput = By.Id("typeahead-alternateProject");
         private readonly By requisitionAltProjectOptions = By.CssSelector("div[data-testid='typeahead-alternateProject'] div[aria-label='menu-options']");
         private readonly By requisitionAltProject1stOption = By.CssSelector("div[data-testid='typeahead-alternateProject'] div[aria-label='menu-options'] a:nth-child(1)");
         private readonly By requisitionFinalDateLabel = By.XPath("//label[contains(text(),'Final date')]");
-        private readonly By requisitionAgreementLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]");
+        private readonly By requisitionViewAgreementLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]");
+        private readonly By requisitionCreateAgreementLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]");
         private readonly By requisitionAgreementContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]/parent::div/following-sibling::div");
         private readonly By requisitionAgreementInput = By.Id("datepicker-agreementDateTime");
         private readonly By requisitionSpecialInstructionLabel = By.XPath("//label[contains(text(),'Special instructions')]");
@@ -457,14 +459,14 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(compensationTotalChequeAmountContent);
 
             //Requisition Details
-            AssertTrueIsDisplayed(requisitionDetailsViewSubtitle);
+            AssertTrueIsDisplayed(requisitionDetailsSubtitle);
             AssertTrueIsDisplayed(requisitionGenerateH120Bttn);
             AssertTrueIsDisplayed(requisitionEditBttn);
-            AssertTrueIsDisplayed(requisitionStatusLabel);
+            AssertTrueIsDisplayed(requisitionViewStatusLabel);
             AssertTrueContentEquals(requisitionStatusContent, "Draft");
-            AssertTrueIsDisplayed(requisitionAltProjectLabel);
+            AssertTrueIsDisplayed(requisitionViewAltProjectLabel);
             AssertTrueIsDisplayed(requisitionFinalDateLabel);
-            AssertTrueIsDisplayed(requisitionAgreementLabel);
+            AssertTrueIsDisplayed(requisitionViewAgreementLabel);
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
 
             //Financial Coding
@@ -504,14 +506,14 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyCompensationDetailsInitCreateForm()
         {
             //Requisition Details
-            AssertTrueIsDisplayed(requisitionDetailsCreateSubtitle);
+            AssertTrueIsDisplayed(requisitionDetailsSubtitle);
             
-            AssertTrueIsDisplayed(requisitionStatusLabel);
+            AssertTrueIsDisplayed(requisitionCreateStatusLabel);
             AssertTrueIsDisplayed(requisitionStatusSelect);
-            AssertTrueIsDisplayed(requisitionAltProjectLabel);
+            AssertTrueIsDisplayed(requisitionCreateAltProjectLabel);
             AssertTrueIsDisplayed(requisitionAltProjectInput);
             AssertTrueIsDisplayed(requisitionFinalDateLabel);
-            AssertTrueIsDisplayed(requisitionAgreementLabel);
+            AssertTrueIsDisplayed(requisitionCreateAgreementLabel);
             AssertTrueIsDisplayed(requisitionAgreementInput);
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
             AssertTrueIsDisplayed(requisitionSpecialInstructionTextarea);
@@ -575,16 +577,16 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(compensationTotalChequeAmountContent, TransformCurrencyFormat(compensation.CompensationTotalAmount));
 
             //Requisition Details
-            AssertTrueIsDisplayed(requisitionDetailsViewSubtitle);
+            AssertTrueIsDisplayed(requisitionDetailsSubtitle);
             AssertTrueIsDisplayed(requisitionGenerateH120Bttn);
             AssertTrueIsDisplayed(requisitionEditBttn);
-            AssertTrueIsDisplayed(requisitionStatusLabel);
+            AssertTrueIsDisplayed(requisitionViewStatusLabel);
             AssertTrueContentEquals(requisitionStatusContent, compensation.CompensationStatus);
-            AssertTrueIsDisplayed(requisitionAltProjectLabel);
+            AssertTrueIsDisplayed(requisitionViewAltProjectLabel);
             if(compensation.CompensationAlternateProject != "")
                 AssertTrueContentEquals(requisitionAltProjectContent, TransformProjectFormat(compensation.CompensationAlternateProject));
             AssertTrueIsDisplayed(requisitionFinalDateLabel);
-            AssertTrueIsDisplayed(requisitionAgreementLabel);
+            AssertTrueIsDisplayed(requisitionViewAgreementLabel);
             AssertTrueContentEquals(requisitionAgreementContent, TransformDateFormat(compensation.CompensationAgreementDate));
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
             AssertTrueContentEquals(requisitionSpecialInstructionContent, compensation.CompensationSpecialInstructions);

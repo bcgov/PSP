@@ -7,12 +7,20 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         private readonly By improvementLink = By.CssSelector("a[data-rb-event-key='improvements']");
         private readonly By improvementAddButton = By.XPath("//div[text()='Property Improvements']/following-sibling::div/button");
-        private readonly By ImprovementTitle = By.XPath("//div[text()='Property Improvements']");
 
-        private readonly By improvementDetailsTitle = By.XPath("//div[text()='Property Improvements Details']");
+        private readonly By improvementDetailsTitle = By.XPath("//div[text()='Property Improvement Details']");
+
+        private readonly By improvementDetailsNameLabel = By.XPath("//label[text()='Name']");
+        private readonly By improvementDetailsNameInput = By.Id("input-name");
 
         private readonly By improvementDetailsTypeLabel = By.XPath("//label[text()='Improvement type']");
-        private readonly By improvementDetailsTypeSelect = By.Id("input-propertyImprovementTypeCode");
+        private readonly By improvementDetailsTypeSelect = By.Id("input-improvementTypeCode");
+
+        private readonly By improvementDetailsStatusLabel = By.XPath("//label[text()='Improvement status']");
+        private readonly By improvementDetailsStatusSelect = By.Id("input-improvementStatusCode");
+
+        private readonly By improvementDetailsDateLabel = By.XPath("//label[text()='Improvement date']");
+        private readonly By improvementDetailsDateInput = By.Id("datepicker-improvementDate");
 
         private readonly By improvementDetailsDescriptionLabel = By.XPath("//label[text()='Description']");
         private readonly By improvementDetailsDescriptionInput = By.Id("input-description");
@@ -54,13 +62,24 @@ namespace PIMS.Tests.Automation.PageObjects
         public void AddUpdateImprovement(PropertyImprovement improvement)
         {
             Wait();
-            AssertTrueIsDisplayed(ImprovementTitle);
+            AssertTrueIsDisplayed(improvementDetailsTitle);
+
+            AssertTrueIsDisplayed(improvementDetailsNameLabel);
+            ClearInput(improvementDetailsNameInput);
+            webDriver.FindElement(improvementDetailsNameInput).SendKeys(improvement.ImprovementName);
 
             AssertTrueIsDisplayed(improvementDetailsTypeLabel);
-            if (improvement.ImprovementType != "")
+            ChooseSpecificSelectOption(improvementDetailsTypeSelect, improvement.ImprovementType);
+
+            AssertTrueIsDisplayed(improvementDetailsStatusLabel);
+            ChooseSpecificSelectOption(improvementDetailsStatusSelect, improvement.ImprovementStatus);
+
+            AssertTrueIsDisplayed(improvementDetailsDateLabel);
+            if (improvement.ImprovementDate != "")
             {
-                ChooseSpecificSelectOption(improvementDetailsTypeSelect, improvement.ImprovementType);
-            }
+                ClearInput(improvementDetailsDateInput);
+                webDriver.FindElement(improvementDetailsDateInput).SendKeys(improvement.ImprovementDate);
+            }  
 
             AssertTrueIsDisplayed(improvementDetailsDescriptionLabel);
             if (improvement.ImprovementDescription != "")
@@ -75,9 +94,18 @@ namespace PIMS.Tests.Automation.PageObjects
             int elementIdx = index + 1;
 
             AssertTrueIsDisplayed(improvementDetailsTitle);
+
+            AssertTrueIsDisplayed(improvementDetailsNameLabel);
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].name']"), improvement.ImprovementName);
+
             AssertTrueIsDisplayed(improvementDetailsTypeLabel);
-            if(improvement.ImprovementType != "")
-                AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].type']"), improvement.ImprovementType);
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].type']"), improvement.ImprovementType);
+
+            AssertTrueIsDisplayed(improvementDetailsDateLabel);
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].date']"), improvement.ImprovementDate);
+
+            AssertTrueIsDisplayed(improvementDetailsStatusLabel);
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].status']"), improvement.ImprovementStatus);
 
             AssertTrueIsDisplayed(improvementDetailsDescriptionLabel);
             if(improvement.ImprovementDescription != "")

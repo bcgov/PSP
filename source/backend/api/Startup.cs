@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using Microsoft.Data.SqlClient;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.IO;
@@ -27,6 +26,7 @@ using Microsoft.AspNetCore.Http.Features;
 using Microsoft.AspNetCore.HttpOverrides;
 using Microsoft.AspNetCore.Mvc.ApiExplorer;
 using Microsoft.AspNetCore.Mvc.Versioning;
+using Microsoft.Data.SqlClient;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Diagnostics.HealthChecks;
@@ -41,6 +41,8 @@ using Pims.Api.Helpers.Mapping;
 using Pims.Api.Helpers.Middleware;
 using Pims.Api.Models.Config;
 using Pims.Api.Repositories.Cdogs;
+using Pims.Api.Repositories.Ches;
+using Pims.Api.Repositories.Ches.Auth;
 using Pims.Api.Repositories.Mayan;
 using Pims.Api.Services;
 using Pims.Api.Services.Interfaces;
@@ -372,6 +374,16 @@ namespace Pims.Api
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Cdogs.Period) });
             }
 
+            if (allHealthCheckOptions.Ches.Enabled)
+            {
+                services.AddHealthChecks().Add(new HealthCheckRegistration(
+                    "Ches",
+                    sp => new ChesHealthCheck(sp.GetService<IEmailRepository>()),
+                    null,
+                    new string[] { SERVICES, EXTERNAL, SYSTEMCHECK })
+                { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Ches.Period) });
+            }
+
             services.AddApiVersioning(options =>
             {
                 options.ReportApiVersions = true;
@@ -390,6 +402,7 @@ namespace Pims.Api
             });
 
             services.Configure<OpenApiInfo>(Configuration.GetSection(nameof(OpenApiInfo)));
+            services.Configure<ChesConfig>(Configuration.GetSection("Ches"));
             services.AddMultiVersionToSwagger();
             services.AddSwaggerGen(options =>
             {
@@ -521,6 +534,8 @@ namespace Pims.Api
             services.AddScoped<IEdmsMetadataRepository, MayanMetadataRepository>();
             services.AddScoped<IDocumentGenerationRepository, CdogsRepository>();
             services.AddScoped<IDocumentQueueRepository, DocumentQueueRepository>();
+            services.AddScoped<IEmailRepository, ChesRepository>();
+            services.AddSingleton<IEmailAuthRepository, ChesAuthRepository>();
             services.AddSingleton<IDocumentGenerationAuthRepository, CdogsAuthRepository>();
         }
 
@@ -572,6 +587,14 @@ namespace Pims.Api
             services.AddScoped<IManagementActivityService, ManagementActivityService>();
             services.AddScoped<IManagementFileStatusSolver, ManagementFileStatusSolver>();
             services.AddScoped<IFilePropertyLocationUpdateSolver, FilePropertyLocationUpdateSolver>();
+            services.AddSingleton(sp =>
+            {
+                var config = sp.GetRequiredService<IConfiguration>();
+                var chesConfig = new ChesConfig();
+                config.GetSection("Ches").Bind(chesConfig);
+                return chesConfig;
+            });
+            services.AddScoped<IEmailService, ChesService>();
         }
 
         /// <summary>

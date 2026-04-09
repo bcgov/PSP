@@ -52,9 +52,9 @@ describe('ParcelItem component', () => {
     ],
     [
       NameSourceType.LOCATION,
-      '-123.100000, 49.250000',
+      '49.250000, -123.100000',
       getMockWorklistParcel('parcel-1', {}, { lat: 49.25, lng: -123.1 }),
-      '-123.100000, 49.250000',
+      '49.250000, -123.100000',
     ], // no prefix
   ])('renders %s as "%s"', (_, __, mockParcel, expected) => {
     setup({ props: { parcel: mockParcel } });

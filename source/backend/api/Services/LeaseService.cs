@@ -104,6 +104,14 @@ namespace Pims.Api.Services
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
             var leases = _leaseRepository.GetAllByIds(leaseIds, pimsUser.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet(), contractorPersonId).ToList();
+
+            // Ensure we return property information with lat/long coordinates for any properties associated to the returned leases.
+            foreach (var lease in leases)
+            {
+                var propertyLeases = lease.PimsPropertyLeases ?? new List<PimsPropertyLease>();
+                lease.PimsPropertyLeases = _propertyService.TransformAllPropertiesToLatLong(propertyLeases.ToList());
+            }
+
             return leases;
         }
 
@@ -245,9 +253,12 @@ namespace Pims.Api.Services
             // Need to check that the user is able to access the current lease as well as has the region for the updated lease.
             _user.ThrowInvalidRegion(currentLease, _userRepository);
             _user.ThrowInvalidRegion(lease, _userRepository);
-
-            // Restrict Contractor lease access to lease team/project team
             _user.ThrowContractorRemovedFromTeam(lease, _userRepository, _projectRepository);
+
+            if (lease.LeasePayRvblTypeCode != currentLease.LeasePayRvblTypeCode)
+            {
+                ValidateLeaseAccountTypeChange(currentLease, lease);
+            }
 
             if (currentLease.LeaseStatusTypeCode != lease.LeaseStatusTypeCode)
             {
@@ -257,13 +268,10 @@ namespace Pims.Api.Services
             }
 
             ValidateRenewalDates(lease, currentLease, userOverrides);
-
             ValidateNewTotalAllowableCompensation(lease.LeaseId, lease.TotalAllowableCompensation);
 
             _leaseRepository.Update(lease, false);
-
             _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
-
             _leaseRepository.CommitTransaction();
 
             return _leaseRepository.GetNoTracking(lease.LeaseId);
@@ -522,6 +530,30 @@ namespace Pims.Api.Services
             return teamFilterOptions;
         }
 
+        /// <summary>
+        /// Validate that changing the Lease Account type is valid.
+        /// If current status is Payable there shouldn't be any Payees or Compensation Requisitions to make the swith.
+        /// When is Receivable there shouldn't be any Tenants assigned.
+        /// </summary>
+        /// <param name="currentLease"></param>
+        /// <param name="updatedLease"></param>
+        /// <exception cref="BusinessRuleViolationException"></exception>
+        private static void ValidateLeaseAccountTypeChange(PimsLease currentLease, PimsLease updatedLease)
+        {
+            if ((currentLease.LeasePayRvblTypeCode == LeasePaymentReceivableTypes.PYBLBCTFA.ToString() || currentLease.LeasePayRvblTypeCode.ToString() == LeasePaymentReceivableTypes.PYBLMOTI.ToString())
+                && updatedLease.LeasePayRvblTypeCode == LeasePaymentReceivableTypes.RCVBL.ToString())
+            {
+                if (currentLease.PimsCompensationRequisitions.Count > 0 || currentLease.PimsLeaseStakeholders.Count > 0)
+                {
+                    throw new BusinessRuleViolationException("This file has active Payees or Compensation Requisitions which should be removed prior to switching to a 'Receivable' Lease.");
+                }
+            }
+            else if (currentLease.LeasePayRvblTypeCode == LeasePaymentReceivableTypes.RCVBL.ToString() && currentLease.PimsLeaseStakeholders.Count > 0)
+            {
+                throw new BusinessRuleViolationException("This file has active Tenants which should be removed prior to switching to a 'Payable' Lease.");
+            }
+        }
+
         private static void ValidateRenewalDates(PimsLease lease, PimsLease currentLease, IEnumerable<UserOverrideCode> userOverrides)
         {
             if (lease.LeaseStatusTypeCode != PimsLeaseStatusTypes.ACTIVE)
@@ -540,7 +572,7 @@ namespace Pims.Api.Services
 
                 if (renewal.IsExercised == true)
                 {
-                    if(!renewal.CommencementDt.HasValue)
+                    if (!renewal.CommencementDt.HasValue)
                     {
                         throw new BusinessRuleViolationException("Exercised renewals must have a commencement date");
                     }

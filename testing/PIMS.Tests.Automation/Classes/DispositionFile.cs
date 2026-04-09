@@ -56,6 +56,9 @@
         public string SPPAmount { get; set; } = null!;
         public string NetProceedsAfterSPP { get; set; } = null!;
         public string RemediationCost { get; set; } = null!;
+        public int DispositionAgreementStartRow { get; set; } = 0;
+        public int DispositionAgreementCount { get; set; } = 0;
+        public List<Agreement> DispositionAgreements { get; set; } = new List<Agreement>() { };
 
     }
     public class DispositionFileChecklist

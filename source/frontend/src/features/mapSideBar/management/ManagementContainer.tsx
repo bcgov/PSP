@@ -2,13 +2,13 @@ import { AxiosError } from 'axios';
 import React, { useCallback, useContext, useEffect, useMemo, useState } from 'react';
 import { matchPath, useHistory, useLocation, useRouteMatch } from 'react-router-dom';
 
-import ConfirmNavigation from '@/components/common/ConfirmNavigation';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
 import { useQuery } from '@/hooks/use-query';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
+import { useFilePropertyIdFromUrl } from '@/hooks/useFilePropertyIdFromUrl';
 import { useFormikCancel } from '@/hooks/useFormikCancel';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
@@ -32,6 +32,7 @@ export interface IManagementContainerProps {
 export const ManagementContainer: React.FunctionComponent<IManagementContainerProps> = props => {
   // Load state from props and side-bar context
   const { managementFileId, onClose, View } = props;
+  const { fileId, filePropertyId } = useFilePropertyIdFromUrl();
   const { setLastUpdatedBy, lastUpdatedBy, staleLastUpdatedBy, staleFile, setFile } =
     useContext(SideBarContext);
   const [isValid, setIsValid] = useState<boolean>(true);
@@ -178,7 +179,11 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
   const handleCancel = () => {
     handleCancelClick(() => {
       setIsEditing(false);
-      pathGenerator.showFile('management', managementFile.id);
+      if (exists(fileId) && exists(filePropertyId)) {
+        pathGenerator.showFilePropertyDetail('management', fileId, filePropertyId, 'management');
+      } else {
+        pathGenerator.showFile('management', managementFileId);
+      }
     });
   };
 
@@ -273,11 +278,6 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
     [managementFileId, getPropertyAssociations],
   );
 
-  const shouldBlockNavigation = useCallback(
-    () => formikRef.current?.dirty && !formikRef.current?.isSubmitting,
-    [formikRef],
-  );
-
   // UI components
   const loading =
     loadingManagementFile ||
@@ -313,7 +313,6 @@ export const ManagementContainer: React.FunctionComponent<IManagementContainerPr
         }
         isEditing={isEditing}
       ></View>
-      <ConfirmNavigation navigate={history.push} shouldBlockNavigation={shouldBlockNavigation} />
     </>
   );
 };
