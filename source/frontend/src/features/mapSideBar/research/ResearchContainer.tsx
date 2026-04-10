@@ -240,6 +240,9 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
           userOverrideCodes,
         ).then(response => {
           onSuccess();
+          if (isValidId(response?.id)) {
+            pathGenerator.showFile('acquisition', response.id);
+          }
           return response;
         });
       },
