@@ -33,6 +33,8 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             webDriver.FindElement(selectContactSearchInput).SendKeys(contactSearchName);
             SafeClick(selectContactSearchButton);
+
+            Wait();
             SafeClick(selectContactSearch1stResultRadioBttn);
             SafeClick(selectContactOkButton);
         }

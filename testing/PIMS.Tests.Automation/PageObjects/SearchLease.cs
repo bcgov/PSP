@@ -177,6 +177,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void FilterLeasesFiles(string pid = "", string pin = "", string address = "", string lfile = "", string historicalFile = "", string program = "", string teamMember = "",
              string status = "", string tenant = "", string expiryDateFrom = "", string expiryDateTo = "", string accountType = "", string region = "", string keyword = "")
         {
+            Wait();
             SafeClick(searchLicenseResetButton);
             webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
 

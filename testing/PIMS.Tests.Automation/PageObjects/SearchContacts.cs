@@ -95,7 +95,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public Boolean GetNoSearchMessage()
         {
-            WaitUntilVisible(searchContactNoResults);
+            Wait();
             return webDriver.FindElements(searchContactNoResults).Count == 1;
         }
 
@@ -151,6 +151,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OrderByContactOrganization()
         {
+            Wait();
             SafeClick(searchContactOrderByOrganizationBttn);
         }
 
@@ -204,7 +205,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyContactTableContent(string summary, string firstName, string lastName, string organization, string email, string address, string city, string province, string country)
         {
-            WaitUntilVisible(searchContact1stResultLink);
+            Wait();
 
             AssertTrueContentEquals(searchContact1stResultLink,summary);
             AssertTrueContentEquals(searchContact1stFirstNameContent, firstName);

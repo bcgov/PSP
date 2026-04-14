@@ -224,7 +224,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyResearchFileTableContent(ResearchFile researchFile, string user)
         {
-            WaitUntilVisible(searchResearchFile1stResultLink);
+            Wait();
 
             AssertTrueIsDisplayed(searchResearchFile1stResultLink);
             AssertTrueContentEquals(searchResearchFile1stResultFileName, researchFile.ResearchFileName);

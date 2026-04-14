@@ -417,7 +417,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public int DigitalDocumentsTableResultNumber()
         {
             WaitForTableToLoad(documentTableContentTotal);
-            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(30));
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(60));
 
             int lastCount = -1;
 

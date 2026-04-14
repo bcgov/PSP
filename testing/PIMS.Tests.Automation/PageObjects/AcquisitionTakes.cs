@@ -110,8 +110,7 @@ namespace PIMS.Tests.Automation.PageObjects
             By editButton = By.CssSelector("div[data-testid='take-" + index + "'] button[data-testid='edit-button']");
 
             WaitUntilSpinnerDisappear();
-            WaitUntilClickable(editButton);
-            webDriver.FindElement(editButton).Click();
+            SafeClick(editButton);
         }
 
         public void SaveTake()

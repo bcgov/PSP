@@ -93,6 +93,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OrderByDispositionFileNumber()
         {
+            Wait();
             SafeClick(searchDispositionOrderFileNumberBttn);
         }
 
@@ -141,13 +142,13 @@ namespace PIMS.Tests.Automation.PageObjects
             var originalWindowHandle = webDriver.CurrentWindowHandle;
 
             WaitUntilClickable(searchDispositionOrderFileNumberBttn);
-            webDriver.FindElement(searchDispositionOrderFileNumberBttn).Click();
+            SafeClick(searchDispositionOrderFileNumberBttn);
 
             WaitUntilClickable(searchDispositionOrderFileNumberBttn);
-            webDriver.FindElement(searchDispositionOrderFileNumberBttn).Click();
+            SafeClick(searchDispositionOrderFileNumberBttn);
 
             WaitUntilClickable(searchDispositionFile1stResultLink);
-            webDriver.FindElement(searchDispositionFile1stResultLink).Click();
+            SafeClick(searchDispositionFile1stResultLink);
 
             Wait();
             var allWindowsHandle = webDriver.WindowHandles;
