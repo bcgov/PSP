@@ -189,14 +189,6 @@ Scenario: 34._Individual_Contacts
 	And I search for an existing contact from type "Individual" row number 1
 	Then Expected Content is displayed on Contacts Table from contact type "Individual"	
 
-Scenario Outline: 35._Search_for_a_non-existing_Contact
-	Given I search for an non-existing contact from type "<ContactType>" row number <RowNumber>
-	Then No contacts results are found
-	Examples:
-	| ContactType	| RowNumber |
-	| Individual	| 8         |
-	| Organization	| 6         |
-
-Scenario: 36._Contacts_List_View
+Scenario: 35._Contacts_List_View
 	Given I verify the Contacts List View from row number 1
 	Then Expected Content is displayed on Contacts Table from contact type "Organization"

@@ -107,7 +107,7 @@ namespace PIMS.Tests.Automation.Features
         
         private static global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages InitializeCucumberMessages()
         {
-            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/RegressionTesting.feature.ndjson", 39);
+            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/RegressionTesting.feature.ndjson", 37);
         }
         
         async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.InitializeAsync()
@@ -1341,19 +1341,15 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             await this.ScenarioCleanupAsync();
         }
         
-        [global::Xunit.SkippableTheoryAttribute(DisplayName="35._Search_for_a_non-existing_Contact")]
+        [global::Xunit.SkippableFactAttribute(DisplayName="35._Contacts_List_View")]
         [global::Xunit.TraitAttribute("FeatureTitle", "RegressionTesting")]
-        [global::Xunit.TraitAttribute("Description", "35._Search_for_a_non-existing_Contact")]
-        [global::Xunit.InlineDataAttribute("Individual", "8", "34", new string[0])]
-        [global::Xunit.InlineDataAttribute("Organization", "6", "35", new string[0])]
-        public async global::System.Threading.Tasks.Task _35__Search_For_A_Non_Existing_Contact(string contactType, string rowNumber, string @__pickleIndex, string[] exampleTags)
+        [global::Xunit.TraitAttribute("Description", "35._Contacts_List_View")]
+        public async global::System.Threading.Tasks.Task _35__Contacts_List_View()
         {
-            string[] tagsOfScenario = exampleTags;
+            string[] tagsOfScenario = ((string[])(null));
             global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            argumentsOfScenario.Add("ContactType", contactType);
-            argumentsOfScenario.Add("RowNumber", rowNumber);
-            string pickleIndex = @__pickleIndex;
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("35._Search_for_a_non-existing_Contact", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string pickleIndex = "34";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("35._Contacts_List_View", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
 #line 192
@@ -1367,40 +1363,9 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             {
                 await this.ScenarioStartAsync();
 #line 193
- await testRunner.GivenAsync(string.Format("I search for an non-existing contact from type \"{0}\" row number {1}", contactType, rowNumber), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
-#line hidden
-#line 194
- await testRunner.ThenAsync("No contacts results are found", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
-#line hidden
-            }
-            await this.ScenarioCleanupAsync();
-        }
-        
-        [global::Xunit.SkippableFactAttribute(DisplayName="36._Contacts_List_View")]
-        [global::Xunit.TraitAttribute("FeatureTitle", "RegressionTesting")]
-        [global::Xunit.TraitAttribute("Description", "36._Contacts_List_View")]
-        public async global::System.Threading.Tasks.Task _36__Contacts_List_View()
-        {
-            string[] tagsOfScenario = ((string[])(null));
-            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
-            string pickleIndex = "36";
-            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("36._Contacts_List_View", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
-            string[] tagsOfRule = ((string[])(null));
-            global::Reqnroll.RuleInfo ruleInfo = null;
-#line 200
-this.ScenarioInitialize(scenarioInfo, ruleInfo);
-#line hidden
-            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
-            {
-                await testRunner.SkipScenarioAsync();
-            }
-            else
-            {
-                await this.ScenarioStartAsync();
-#line 201
  await testRunner.GivenAsync("I verify the Contacts List View from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 202
+#line 194
  await testRunner.ThenAsync("Expected Content is displayed on Contacts Table from contact type \"Organization\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

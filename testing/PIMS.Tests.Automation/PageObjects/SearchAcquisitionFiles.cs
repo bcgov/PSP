@@ -71,6 +71,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OrderByAcquisitionFileNumber()
         {
+            Wait();
             SafeClick(searchAcquisitionOrderFileNumberBttn);
         }
 
