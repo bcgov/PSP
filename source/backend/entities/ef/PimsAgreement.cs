@@ -69,6 +69,12 @@ public partial class PimsAgreement
     public DateOnly? CommencementDate { get; set; }
 
     /// <summary>
+    /// Date the agreement was signed.
+    /// </summary>
+    [Column("AGREEMENT_SIGNED_DATE")]
+    public DateOnly? AgreementSignedDate { get; set; }
+
+    /// <summary>
     /// Amount of the deposit on the agreement.
     /// </summary>
     [Column("DEPOSIT_AMOUNT", TypeName = "money")]
@@ -85,6 +91,12 @@ public partial class PimsAgreement
     /// </summary>
     [Column("PURCHASE_PRICE", TypeName = "money")]
     public decimal? PurchasePrice { get; set; }
+
+    /// <summary>
+    /// Date of the advance payment.
+    /// </summary>
+    [Column("ADVANCE_PAYMENT_DATE")]
+    public DateOnly? AdvancePaymentDate { get; set; }
 
     /// <summary>
     /// Legal survey plan number,
@@ -225,18 +237,6 @@ public partial class PimsAgreement
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    /// <summary>
-    /// Date the agreement was signed.
-    /// </summary>
-    [Column("AGREEMENT_SIGNED_DATE")]
-    public DateOnly? AgreementSignedDate { get; set; }
-
-    /// <summary>
-    /// Date of the advance payment.
-    /// </summary>
-    [Column("ADVANCE_PAYMENT_DATE")]
-    public DateOnly? AdvancePaymentDate { get; set; }
 
     [ForeignKey("AcquisitionFileId")]
     [InverseProperty("PimsAgreements")]
