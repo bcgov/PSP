@@ -322,7 +322,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             propertyImprovement.AddUpdateImprovement(property.PropertyImprovements[0]);
             propertyImprovement.SaveImprovement();
 
-            propertyImprovement.VerifyImprovementView(0, property.PropertyImprovements[0]);
+            propertyImprovement.VerifyImprovementView(1, property.PropertyImprovements[0]);
         }
 
         [StepDefinition(@"I insert information in the Property Management Tab from row number (.*)")]

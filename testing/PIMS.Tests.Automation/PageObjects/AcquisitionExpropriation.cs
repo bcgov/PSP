@@ -106,7 +106,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToExpropriationTab()
         {
-            Wait();
+            WaitUntilClickable(expropriationTab);
             webDriver.FindElement(expropriationTab).Click();
         }
 
@@ -188,29 +188,26 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveExpropriation()
         {
-            Wait();
             ButtonElement("Save");
         }
 
         public void CancelExpropriation()
         {
-            Wait();
             ButtonElement("Cancel");
-
             sharedModals.CancelActionModal();
         }
 
         public void CancelExpropriationHistoryDate()
         {
-            Wait();
+            WaitUntilClickable(expropriationHistoryAddEventModalCancelBttn);
             webDriver.FindElement(expropriationHistoryAddEventModalCancelBttn).Click();
         }
 
         public void CreateUpdateExpropriationDateHistory(AcquisitionExpropriationDateHistory history)
         {
-            Wait();
-            ChooseSpecificSelectOption(expropriationHistoryAddEventModalOwnerSelect, history.ExpropriationDateHistoryOwner);
-            ChooseSpecificSelectOption(expropriationHistoryAddEventModalEventSelect, history.ExpropriationDateHistoryEvent);
+            WaitUntilClickable(expropriationHistoryAddEventModalOwnerSelect);
+            ChooseSelectOption(expropriationHistoryAddEventModalOwnerSelect, history.ExpropriationDateHistoryOwner);
+            ChooseSelectOption(expropriationHistoryAddEventModalEventSelect, history.ExpropriationDateHistoryEvent);
 
             if (history.ExpropriationDateHistoryDate != "")
             {
@@ -222,9 +219,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateForm8(AcquisitionExpropriationForm8 expropriation)
         {
-            Wait();
+            WaitUntilClickable(form8PayeeSelect);
 
-            ChooseSpecificSelectOption(form8PayeeSelect, expropriation.Form8Payee);
+            ChooseSelectOption(form8PayeeSelect, expropriation.Form8Payee);
 
             webDriver.FindElement(form8ExpAuthorityContactBttn).Click();
             sharedSelectContact.SelectContact(expropriation.Form8ExpropriationAuthority!, "");
@@ -247,7 +244,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilSpinnerDisappear();
 
-            ChooseSpecificSelectOption(form8PayeeSelect, expropriation.Form8Payee);
+            ChooseSelectOption(form8PayeeSelect, expropriation.Form8Payee);
 
             webDriver.FindElement(form8ExpAuthorityContactBttn).Click();
             sharedSelectContact.SelectContact(expropriation.Form8ExpropriationAuthority, "");
@@ -283,7 +280,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyExpropriationDateHistoryModalForm()
         {
-            Wait();
+            WaitUntilVisible(expropriationHistoryAddEventModalHeader);
             AssertTrueIsDisplayed(expropriationHistoryAddEventModalHeader);
 
             AssertTrueIsDisplayed(expropriationHistoryAddEventModalOwnerLabel);
@@ -315,7 +312,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifySection3InitExpropriationTab()
         {
-            Wait();
+            WaitUntilClickable(expropriationDateHistoryOpenTable);
 
             //Expropriation Date History
             webDriver.FindElement(expropriationDateHistoryOpenTable).Click();
@@ -338,7 +335,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifySection6InitExpropriationTab()
         {
-            Wait();
+            WaitUntilClickable(expropriationDateHistoryOpenTable);
 
             //Expropriation Date History
             webDriver.FindElement(expropriationDateHistoryOpenTable).Click();
@@ -404,7 +401,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInitCreateForm8()
         {
-            Wait();
+            WaitUntilVisible(form8CreateTitle);
 
             AssertTrueIsDisplayed(form8CreateTitle);
             AssertTrueIsDisplayed(form8PayeeLabel);
@@ -465,12 +462,12 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(form8PaymentAddBttn).Click();
 
             WaitUntilVisible(By.Id("input-paymentItems["+ index +"].paymentItemTypeCode"));
-            ChooseSpecificSelectOption(By.Id("input-paymentItems["+ index +"].paymentItemTypeCode"), payment.ExpPaymentItem);
+            ChooseSelectOption(By.Id("input-paymentItems["+ index +"].paymentItemTypeCode"), payment.ExpPaymentItem);
 
             ClearInput(By.Id("input-paymentItems["+ index +"].pretaxAmount"));
             webDriver.FindElement(By.Id("input-paymentItems["+ index +"].pretaxAmount")).SendKeys(payment.ExpPaymentAmount);
 
-            ChooseSpecificSelectOption(By.Id("input-paymentItems["+ index +"].isGstRequired"), payment.ExpPaymentGSTApplicable);
+            ChooseSelectOption(By.Id("input-paymentItems["+ index +"].isGstRequired"), payment.ExpPaymentGSTApplicable);
 
             if(webDriver.FindElements(By.Id("input-paymentItems["+ index +"].taxAmount")).Count > 0)
                 AssertTrueElementValueEquals(By.Id("input-paymentItems["+ index +"].taxAmount"), TransformCurrencyFormat(payment.ExpPaymentGSTAmount));

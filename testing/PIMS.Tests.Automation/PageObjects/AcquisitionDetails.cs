@@ -113,12 +113,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileStatusesFileProgressCreateLabel = By.XPath("//label[contains(text(),'File progress')]");
         private readonly By acquisitionFileStatusesFileProgressSelect = By.Id("multiselect-progressStatuses_input");
         private readonly By acquisitionFileStatusesDeleteBttns = By.CssSelector("div[id='multiselect-progressStatuses'] i[class='custom-close']");
-        private readonly By acquisitionFileStatusesOptions = By.XPath("//input[@id='multiselect-progressStatuses_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+        private readonly By acquisitionFileStatusesOptions = By.XPath("//input[@id='multiselect-progressStatuses_input']/parent::div/following-sibling::div[contains(@class,'optionListContainer')]");
         private readonly By acquisitionFileStatusesAppraisalSelect = By.Id("input-appraisalStatusType");
         private readonly By acquisitionFileStatusesLegalSurveySelect = By.Id("input-legalSurveyStatusType");
         private readonly By acquisitionFileStatusesTypeTakingSelect = By.Id("multiselect-takingStatuses_input");
         private readonly By acquisitionFileTypeTakingDeleteBttns = By.CssSelector("div[id='multiselect-takingStatuses'] i[class='custom-close']");
-        private readonly By acquisitionFileTypeTakingOptions = By.XPath("//input[@id='multiselect-takingStatuses_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+        private readonly By acquisitionFileTypeTakingOptions = By.XPath("//input[@id='multiselect-takingStatuses_input']/parent::div/following-sibling::div[contains(@class,'optionListContainer')]");
         private readonly By acquisitionFileStatusesExpropriationRiskSelect = By.Id("input-expropiationRiskStatusType");
 
         private readonly By acquisitionFileAssignedDateInput = By.Id("datepicker-assignedDate");
@@ -151,7 +151,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileOwnerRepresentativeContent = By.XPath("//label[contains(text(),'Owner representative')]/parent::div/following-sibling::div/a/span");
         private readonly By acquisitionFileOwnerCommentTextArea = By.Id("input-ownerRepresentative.comment");
         private readonly By acquisitionFileOwnerCommentContent = By.XPath("//label[contains(text(),'Comment')]/parent::div/following-sibling::div");
-        private readonly By acquisitionFileOwnerCommentEditTextArea = By.Id("input-ownerRepresentatives.0.comment");
+        private readonly By acquisitionFileOwnerCommentEditTextArea = By.CssSelector("textarea[id='input-ownerRepresentative.comment']");
         private readonly By acquisitionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Acquisition File')]/parent::div/parent::div/parent::div/parent::div");
 
         private readonly By acquisitionFileNoticeClaimSubtitle = By.XPath("//h2/div/div[contains(text(),'Notice of Claim')]");
@@ -192,18 +192,18 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToCreateNewAcquisitionFile()
         {
-            Wait();
+            WaitUntilClickable(menuAcquisitionButton);
             FocusAndClick(menuAcquisitionButton);
 
-            Wait();
+            WaitUntilClickable(createAcquisitionFileButton);
             FocusAndClick(createAcquisitionFileButton);
         }
 
         public void NavigateToFileSummary()
         {
-            Wait();
+            WaitUntilClickable(acquisitionFileSummaryBttn);
             if (webDriver.FindElements(acquisitionFileSummaryBttn).Count() > 0)
-                FocusAndClick(acquisitionFileSummaryBttn);
+                SafeClick(acquisitionFileSummaryBttn);
         }
 
         public void NavigateToFileDetailsTab()
@@ -220,12 +220,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateMinimumAcquisitionFile(AcquisitionFile acquisition)
         {
-            Wait();
+            WaitUntilVisible(acquisitionFileNameInput);
 
             webDriver.FindElement(acquisitionFileNameInput).SendKeys(acquisition.AcquisitionFileName);
             webDriver.FindElement(acquisitionFileDetailsTypeSelect);
-            ChooseSpecificSelectOption(acquisitionFileDetailsTypeSelect, acquisition.AcquisitionType);
-            ChooseSpecificSelectOption(acquisitionFileDetailsRegionSelect, acquisition.AcquisitionMOTIRegion);
+            ChooseSelectOption(acquisitionFileDetailsTypeSelect, acquisition.AcquisitionType);
+            ChooseSelectOption(acquisitionFileDetailsRegionSelect, acquisition.AcquisitionMOTIRegion);
         }
 
         public void EditAcquisitionFileBttn()
@@ -246,7 +246,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.AcquisitionStatus != "" && acquisitionType == "Main")
             {
                 WaitUntilClickable(acquisitionFileStatusSelect);
-                ChooseSpecificSelectOption(acquisitionFileStatusSelect, acquisition.AcquisitionStatus);
+                ChooseSelectOption(acquisitionFileStatusSelect, acquisition.AcquisitionStatus);
             }
 
             //PROJECT
@@ -254,7 +254,7 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 WaitUntilVisible(acquisitionFileProjectInput);
 
-                if(webDriver.FindElements(acquisitionFileProjectDelete).Count >= 1)
+                if (webDriver.FindElements(acquisitionFileProjectDelete).Count >= 1)
                     webDriver.FindElement(acquisitionFileProjectDelete).Click();
 
                 webDriver.FindElement(acquisitionFileProjectInput).SendKeys(acquisition.AcquisitionProject);
@@ -270,14 +270,14 @@ namespace PIMS.Tests.Automation.PageObjects
                 WaitUntilClickable(acquisitionFileProjectProductSelect);
                 webDriver.FindElement(acquisitionFileProjectProductSelect).Click();
 
-                Wait(2000);
-                ChooseSpecificSelectOption(acquisitionFileProjectProductSelect, acquisition.AcquisitionProjProductCode + " " + acquisition.AcquisitionProjProduct);
+                WaitUntilClickable(acquisitionFileProjectProductSelect);
+                ChooseSelectOption(acquisitionFileProjectProductSelect, acquisition.AcquisitionProjProductCode + " " + acquisition.AcquisitionProjProduct);
             }
 
             if (acquisition.AcquisitionProjFunding != "")
             {
                 WaitUntilClickable(acquisitionFileProjectFundingInput);
-                ChooseSpecificSelectOption(acquisitionFileProjectFundingInput, acquisition.AcquisitionProjFunding);
+                ChooseSelectOption(acquisitionFileProjectFundingInput, acquisition.AcquisitionProjFunding);
             }
 
             if (webDriver.FindElements(acquisitionFileProjectOtherFundingLabel).Count > 0 && acquisition.AcquisitionFundingOther != "")
@@ -291,7 +291,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Delete File Progress statuses previously selected if any
             if (webDriver.FindElements(acquisitionFileStatusesDeleteBttns).Count > 0)
             {
-                Wait();
+                WaitUntilClickable(acquisitionFileStatusesFileProgressSelect);
                 FocusAndClick(acquisitionFileStatusesFileProgressSelect);
                 while (webDriver.FindElements(acquisitionFileStatusesDeleteBttns).Count > 0)
                 {
@@ -304,29 +304,19 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.AcquisitionFileProgressStatuses.First() != "")
             {
                 foreach (string status in acquisition.AcquisitionFileProgressStatuses)
-                {
-                    Wait(2000);
-                    webDriver.FindElement(acquisitionFileStatusesFileProgressCreateLabel).Click();
-                    FocusAndClick(acquisitionFileStatusesFileProgressSelect);
-
-                    WaitUntilClickable(acquisitionFileStatusesOptions);
-                    ChooseMultiSelectSpecificOption(acquisitionFileStatusesOptions, status);
-                    webDriver.FindElement(acquisitionFileStatusesFileProgressCreateLabel).Click();
-                }
-
-                webDriver.FindElement(acquisitionFileStatusesFileProgressCreateLabel).Click();
+                    ChooseMultiSelectOption(acquisitionFileStatusesFileProgressSelect, acquisitionFileStatusesOptions, acquisitionFileStatusesFileProgressCreateLabel, status);
             }
 
-            if(acquisition.AcquisitionAppraisalStatus != "")
-                ChooseSpecificSelectOption(acquisitionFileStatusesAppraisalSelect, acquisition.AcquisitionAppraisalStatus);
+            if (acquisition.AcquisitionAppraisalStatus != "")
+                ChooseSelectOption(acquisitionFileStatusesAppraisalSelect, acquisition.AcquisitionAppraisalStatus);
 
-            if(acquisition.AcquisitionLegalSurveyStatus != "")
-                ChooseSpecificSelectOption(acquisitionFileStatusesLegalSurveySelect, acquisition.AcquisitionLegalSurveyStatus);
+            if (acquisition.AcquisitionLegalSurveyStatus != "")
+                ChooseSelectOption(acquisitionFileStatusesLegalSurveySelect, acquisition.AcquisitionLegalSurveyStatus);
 
             //Delete Type of Taking statuses previously selected if any
             if (webDriver.FindElements(acquisitionFileTypeTakingDeleteBttns).Count > 0)
             {
-                Wait();
+                WaitUntilClickable(acquisitionFileStatusesTypeTakingSelect);
                 FocusAndClick(acquisitionFileStatusesTypeTakingSelect);
                 while (webDriver.FindElements(acquisitionFileTypeTakingDeleteBttns).Count > 0)
                 {
@@ -338,22 +328,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (acquisition.AcquisitionTypeTakingStatuses.First() != "")
             {
-                foreach (string status in acquisition.AcquisitionTypeTakingStatuses)
-                {
-                    Wait(2000);
-                    webDriver.FindElement(acquisitionFileStatusesFileTypeTakingLabel).Click();
-                    FocusAndClick(acquisitionFileStatusesTypeTakingSelect);
-
-                    WaitUntilClickable(acquisitionFileTypeTakingOptions);
-                    ChooseMultiSelectSpecificOption(acquisitionFileTypeTakingOptions, status);
-                    webDriver.FindElement(acquisitionFileStatusesFileTypeTakingLabel).Click();
-                }
-
-                webDriver.FindElement(acquisitionFileStatusesFileTypeTakingLabel).Click();
+                foreach (string status in acquisition.AcquisitionTypeTakingStatuses) 
+                    ChooseMultiSelectOption(acquisitionFileStatusesTypeTakingSelect, acquisitionFileTypeTakingOptions, acquisitionFileStatusesFileTypeTakingLabel, status);
             }
 
             if (acquisition.AcquisitionExpropriationRiskStatus != "")
-                ChooseSpecificSelectOption(acquisitionFileStatusesExpropriationRiskSelect, acquisition.AcquisitionExpropriationRiskStatus);
+                ChooseSelectOption(acquisitionFileStatusesExpropriationRiskSelect, acquisition.AcquisitionExpropriationRiskStatus);
 
             //SCHEDULE
             if (acquisition.AcquisitionAssignedDate != "")
@@ -404,22 +384,22 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (acquisition.PhysicalFileStatus != "")
-                ChooseSpecificSelectOption(acquisitionFilePhysicalStatusSelect, acquisition.PhysicalFileStatus);
+                ChooseSelectOption(acquisitionFilePhysicalStatusSelect, acquisition.PhysicalFileStatus);
 
             if (acquisition.PhysicalFileDetails != "")
             {
                 ClearInput(acquisitionFilePhysicalDetailsInput);
                 webDriver.FindElement(acquisitionFilePhysicalDetailsInput).SendKeys(acquisition.PhysicalFileDetails);
             }
-            
+
             if (acquisition.AcquisitionType != "")
             {
                 WaitUntilClickable(acquisitionFileDetailsTypeSelect);
-                ChooseSpecificSelectOption(acquisitionFileDetailsTypeSelect, acquisition.AcquisitionType);
+                ChooseSelectOption(acquisitionFileDetailsTypeSelect, acquisition.AcquisitionType);
             }
 
             if (acquisition.AcquisitionSubfileInterest != "" && acquisitionType == "Subfile")
-                ChooseSpecificSelectOption(acquisitionFileDetailsSubfileInterestSelect, acquisition.AcquisitionSubfileInterest);
+                ChooseSelectOption(acquisitionFileDetailsSubfileInterestSelect, acquisition.AcquisitionSubfileInterest);
 
             if (acquisition.AcquisitionSubfileInterestOther != "" && acquisitionType == "Subfile")
             {
@@ -430,7 +410,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.AcquisitionMOTIRegion != "")
             {
                 WaitUntilClickable(acquisitionFileDetailsRegionSelect);
-                ChooseSpecificSelectOption(acquisitionFileDetailsRegionSelect, acquisition.AcquisitionMOTIRegion);
+                ChooseSelectOption(acquisitionFileDetailsRegionSelect, acquisition.AcquisitionMOTIRegion);
             }
 
             //TEAM
@@ -441,7 +421,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 for (var i = 0; i < acquisition.AcquisitionTeam.Count; i++)
                     sharedTeams.AddTeamMembers(acquisition.AcquisitionTeam[i]);
-                
+
             }
 
             //OWNERS
@@ -463,14 +443,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (acquisition.OwnerRepresentative != "" && acquisitionType == "Main")
             {
-                Wait();
+                WaitUntilClickable(acquisitionFileOwnerRepresentativeButton);
                 webDriver.FindElement(acquisitionFileOwnerRepresentativeButton).Click();
                 sharedSelectContact.SelectContact(acquisition.OwnerRepresentative, "");
             }
 
             if (acquisition.OwnerSolicitor != "" && acquisitionType == "Subfile")
             {
-                Wait();
+                WaitUntilClickable(acquisitionSubfileOwnerSolicitorButton);
                 webDriver.FindElement(acquisitionSubfileOwnerSolicitorButton).Click();
                 sharedSelectContact.SelectContact(acquisition.OwnerSolicitor, "");
             }
@@ -485,17 +465,8 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.OwnerComment != "")
             {
                 Wait();
-
-                if (webDriver.FindElements(acquisitionFileOwnerCommentEditTextArea).Count > 0)
-                {
-                    ClearInput(acquisitionFileOwnerCommentEditTextArea);
-                    webDriver.FindElement(acquisitionFileOwnerCommentEditTextArea).SendKeys(acquisition.OwnerComment);
-                }
-                else
-                {
-                    ClearInput(acquisitionFileOwnerCommentTextArea);
-                    webDriver.FindElement(acquisitionFileOwnerCommentTextArea).SendKeys(acquisition.OwnerComment);
-                }
+                ClearInput(acquisitionFileOwnerCommentEditTextArea);
+                webDriver.FindElement(acquisitionFileOwnerCommentEditTextArea).SendKeys(acquisition.OwnerComment);
             }
 
             //NOTICE OF CLAIMS
@@ -520,7 +491,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveAcquisitionFileDetails()
         {
-            Wait();
             ButtonElement("Save");
 
             Wait();
@@ -532,7 +502,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Contains("The selected Ministry region is different from that associated to one or more selected properties", sharedModals.ModalContent());
                     Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
-
                     Wait();
                 }
                 else if (sharedModals.ModalContent().Contains("The selected property already exists in the system's inventory."))
@@ -541,8 +510,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
                     Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
-
-                    Wait();  
+                    Wait();
                 }
                 else if (sharedModals.ModalContent().Contains("This change will be reflected on other related entities - generated documents, sub-files, etc."))
                 {
@@ -550,22 +518,24 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Contains("This change will be reflected on other related entities - generated documents, sub-files, etc.", sharedModals.ModalContent());
                     Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
-
                     Wait();
                 }
                 else if (sharedModals.ModalHeader().Contains("Error"))
                 {
                     return;
                 }
+                else
+                {
+                    sharedModals.ModalClickOKBttn();
+                }
             }
         }
 
         public void SaveAcquisitionFileDetailsWithExpectedErrors()
         {
-            Wait(5000);
             ButtonElement("Save");
 
-            Wait();
+            WaitUntilVisible(acquisitionFileConfirmationModal);
             while (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {
                 if (sharedModals.ModalHeader().Contains("Error"))
@@ -577,7 +547,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelAcquisitionFile()
         {
-            Wait();
             ButtonElement("Cancel");
 
             sharedModals.CancelActionModal();
@@ -585,7 +554,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string GetAcquisitionFileCode()
         {
-            Wait(4000);
+            WaitUntilVisible(acquisitionFileHeaderCodeContent);
 
             var totalFileName = webDriver.FindElement(acquisitionFileHeaderCodeContent).Text;
             return Regex.Match(totalFileName, "^[^ ]+").Value;
@@ -593,7 +562,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string GetLinkedFilesCode()
         {
-            Wait();
+            WaitUntilVisible(acquisitionSubfileCreateTableLinkedFilesCode);
             return webDriver.FindElement(acquisitionSubfileCreateTableLinkedFilesCode).Text;
         }
 
@@ -604,7 +573,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyAcquisitionFileView(AcquisitionFile acquisition, string acquisitionType)
         {
-            Wait();
+            WaitUntilVisible(acquisitionFileHeaderCodeLabel);
 
             //Header
             AssertTrueIsDisplayed(acquisitionFileHeaderCodeLabel);
@@ -820,7 +789,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyAcquisitionFileCreate(string acquisitionType)
         {
-            Wait(5000);
+            WaitUntilVisible(acquisitionFileProjectFundingInput);
 
             //if (acquisitionType == "Main")
             //    AssertTrueIsDisplayed(acquisitionFileTitle);
@@ -950,12 +919,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private void AddOwners(AcquisitionOwner owner, int ownerIndex)
         {
             WaitUntilClickable(acquisitionFileAddOwnerLink);
-            FocusAndClick(acquisitionFileAddOwnerLink);
+            SafeClick(acquisitionFileAddOwnerLink);
 
-            Wait();
             if (owner.OwnerContactType.Equals("Individual"))
             {
-                FocusAndClick(By.CssSelector("input[data-testid='radio-owners["+ ownerIndex +"].isorganization-individual']"));
+                SafeClick(By.CssSelector("input[data-testid='radio-owners["+ ownerIndex +"].isorganization-individual']"));
 
                 if (owner.OwnerGivenNames != "")
                     webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].givenName")).SendKeys(owner.OwnerGivenNames);
@@ -966,7 +934,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             else
             {
-                FocusAndClick(By.CssSelector("input[data-testid='radio-owners["+ ownerIndex +"].isorganization-corporation']"));
+                SafeClick(By.CssSelector("input[data-testid='radio-owners["+ ownerIndex +"].isorganization-corporation']"));
 
                 if (owner.OwnerCorporationName != "")
                     webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].lastNameAndCorpName")).SendKeys(owner.OwnerCorporationName);
@@ -994,7 +962,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.streetAddress3")).SendKeys(owner.OwnerMailAddress.AddressLine3);
             }
             if (owner.OwnerMailAddress.Country != "")
-                ChooseSpecificSelectOption(By.Id("input-owners["+ ownerIndex +"].address.countryId"), owner.OwnerMailAddress.Country);
+                ChooseSelectOption(By.Id("input-owners["+ ownerIndex +"].address.countryId"), owner.OwnerMailAddress.Country);
             if (owner.OwnerMailAddress.City != "")
                 webDriver.FindElement(By.Id("input-owners["+ ownerIndex +"].address.municipality")).SendKeys(owner.OwnerMailAddress.City);
             if (owner.OwnerMailAddress.Province != "")

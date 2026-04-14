@@ -185,7 +185,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (dispositionFile.DispositionSearchProperties.HistoricFile != "")
             {
                 searchProperties.SearchProperty(historicFile: dispositionFile.DispositionSearchProperties.HistoricFile);
-                searchProperties.SelectFirstPIMSResultToFile();
+                searchProperties.SelectFirstPIMSResult();
+                sharedFileProperties.AddPropertyToFile();
                 searchProperties.ResetPropertySearch();
             }
 

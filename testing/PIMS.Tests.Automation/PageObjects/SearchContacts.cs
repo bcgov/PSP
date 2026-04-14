@@ -6,6 +6,7 @@ namespace PIMS.Tests.Automation.PageObjects
     {
         private readonly By menuContactsButton = By.CssSelector("div[data-testid='nav-tooltip-contacts'] a");
         private readonly By searchContactButton = By.XPath("//a[contains(text(),'Manage Contacts')]");
+        private readonly By consolidationsBttn = By.CssSelector("div[data-testid='nav-tooltip-subdivision&consolidation']");
 
         private readonly By searchContactOrgRadioBttn = By.Id("input-organizations");
         private readonly By searchContactIndRadioBttn = By.Id("input-persons");
@@ -15,7 +16,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchContactResetBttn = By.Id("reset-button");
         private readonly By searchContactActiveChckBox = By.Id("input-activeContactsOnly");
         private readonly By searchContactActiveSpan = By.XPath("//span[contains(text(),'Show active only')]");
-        private readonly By searchContactAddNewBttn = By.XPath("//body/div[@id='root']/div[2]/div[2]/div[1]/div[1]/h1[1]/div[1]/button[1]");
 
         private readonly By searchContactTableSummaryColumn = By.XPath("//div[contains(text(),'Summary')]");
         private readonly By searchContactOrderBySummaryBttn = By.CssSelector("div[data-testid='sort-column-summary']");
@@ -51,31 +51,23 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchContactUpdateBttn = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(11) button:nth-child(1)");
         private readonly By searchContactViewBttn = By.CssSelector("div[class='tr-wrapper']:nth-child(1) div:nth-child(11) button:nth-child(2)");
 
-        private readonly By searchUpdateForm = By.Id("updateForm");
-        private readonly By searchContactViewContactInfoHeader = By.XPath("//h2[contains(text(), 'Contact info')]");
-        private readonly By searchContactBackLink = By.XPath("//a[contains(text(), 'Contact Search')]");
-
         public SearchContacts(IWebDriver webDriver) : base(webDriver)
         { }
 
         //Navigates to Search a Contact
         public void NavigateToSearchContact()
         {
-            Wait();
-            FocusAndClick(menuContactsButton);
-
-            Wait();
-            FocusAndClick(searchContactButton);
+            SafeClick(consolidationsBttn);
+            SafeClick(menuContactsButton);
+            SafeClick(searchContactButton);
         }
 
         //Search For a general contact
         public void FilterContacts(string contactType = "", string summary = "", string city = "")
         {
-            Wait();
-
+            WaitUntilClickable(searchContactResetBttn);
             webDriver.FindElement(searchContactResetBttn).Click();
 
-            Wait();
             if (contactType != "")
             {
                 if(contactType == "Individual")
@@ -91,19 +83,19 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(searchContactCityInput).SendKeys(city);
 
             webDriver.FindElement(searchContactResultsBttn).Click();
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
         }
 
         //Pick the first Search Result
         public void SelectFirstResultLink()
         {
-            Wait(2000);
+            WaitUntilClickable(searchContact1stResultLink);
             webDriver.FindElement(searchContact1stResultLink).Click();
         }
 
         public Boolean GetNoSearchMessage()
         {
-            Wait();
+            WaitUntilVisible(searchContactNoResults);
             return webDriver.FindElements(searchContactNoResults).Count == 1;
         }
 
@@ -159,8 +151,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OrderByContactOrganization()
         {
-            Wait(4000);
-            webDriver.FindElement(searchContactOrderByOrganizationBttn).Click();
+            SafeClick(searchContactOrderByOrganizationBttn);
         }
 
         public void OrderByContactCity()
@@ -171,49 +162,49 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string FirstContactSummary()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchContact1stResultLink).Text;
         }
 
         public string FirstContactFirstName()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchContact1stFirstNameContent).Text;
         }
 
         public string FirstContactLastName()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchContact1stLastNameContent).Text;
         }
 
         public string FirstContactOrganization()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchContact1stOrganizationContent).Text;
         }
 
         public string FirstContactCity()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchContact1stCityContent).Text;
         }
 
         public int ContactsTableResultNumber()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElements(searchContactTableContent).Count;
         }
 
         public Boolean SearchFoundResults()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElements(searchContact1stRowResult).Count > 0;
         }
 
         public void VerifyContactTableContent(string summary, string firstName, string lastName, string organization, string email, string address, string city, string province, string country)
         {
-            Wait(2000);
+            WaitUntilVisible(searchContact1stResultLink);
 
             AssertTrueContentEquals(searchContact1stResultLink,summary);
             AssertTrueContentEquals(searchContact1stFirstNameContent, firstName);

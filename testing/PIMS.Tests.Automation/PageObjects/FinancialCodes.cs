@@ -101,7 +101,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void CreateNewFinancialCode(FinancialCode financialCode)
         {
             WaitUntilClickable(financialCodeFormTypeSelect);
-            ChooseSpecificSelectOption(financialCodeFormTypeSelect, financialCode.FinnCodeType);
+            ChooseSelectOption(financialCodeFormTypeSelect, financialCode.FinnCodeType);
             webDriver.FindElement(financialCodeFormValueInput).SendKeys(financialCode.FinnCodeValue);
             webDriver.FindElement(financialCodeFormDescriptionInput).SendKeys(financialCode.FinnCodeDescription);
             webDriver.FindElement(financialCodeFormOrderInput).SendKeys(financialCode.FinnDisplayOrder);
@@ -127,7 +127,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(financialCodeFormCancelBttn);
             webDriver.FindElement(financialCodeFormCancelBttn).Click();
 
-            Wait();
+            WaitUntilVisible(financialCodeModal);
             if (webDriver.FindElements(financialCodeModal).Count > 0)
             {
                 Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
@@ -140,8 +140,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void FilterFinancialCode(string value)
         {
-            WaitUntilClickable(financialCodeResetBttn);
-            webDriver.FindElement(financialCodeResetBttn).Click();
+            SafeClick(financialCodeResetBttn);
 
             WaitUntilVisible(financialCodeDescriptionInput);
             webDriver.FindElement(financialCodeDescriptionInput).SendKeys(value);
@@ -154,7 +153,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(financialCodeResetBttn).Click();
 
             WaitUntilVisible(financialCodeTypeSelect);
-            ChooseSpecificSelectOption(financialCodeTypeSelect, value);
+            ChooseSelectOption(financialCodeTypeSelect, value);
             webDriver.FindElement(financialCodeSearchBttn).Click();
         }
 
@@ -190,7 +189,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int CountTotalFinancialCodeResults()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElements(financialCodeTableResultsTotal).Count;
         }
 
@@ -202,31 +201,31 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string FirstFinancialCodeValue()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(financialResults1stResultCodeValue).Text;
         }
 
         public string FirstFinancialCodeDescription()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(financialResults1stResultCodeDescription).Text;
         }
 
         public string FirstFinancialCodeType()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(financialResults1stResultCodeType).Text;
         }
 
         public string FirstFinancialCodeEffectiveDate()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(financialResults1stResultEffectiveDate).Text;
         }
 
         public string FirstFinancialCodeExpiryDate()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(financialResults1stResultExpiryDate).Text;
         }
 

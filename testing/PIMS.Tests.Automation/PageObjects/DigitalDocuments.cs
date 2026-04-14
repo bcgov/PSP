@@ -1,4 +1,5 @@
 ﻿using OpenQA.Selenium;
+using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
 
 namespace PIMS.Tests.Automation.PageObjects
@@ -194,7 +195,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentViewElectoralDistrictContent = By.XPath("//label[contains(text(),'Electoral district')]/parent::div/following-sibling::div");
         private readonly By documentViewEndDateContent = By.XPath("//label[contains(text(),'End date')]/parent::div/following-sibling::div");
         private readonly By documentViewFieldBookContent = By.XPath("//label[contains(text(),'Field book #/Year')]/parent::div/following-sibling::div");
-        private readonly By documentViewFileNumberContent = By.XPath("//div[@class='pr-0 text-left col-4']/label[contains(text(),'MoTI file #')]/parent::div/following-sibling::div");
+        private readonly By documentViewFileNumberContent = By.XPath("//div[@class='pr-0 text-left col-4']/label[contains(text(),'File #')]/parent::div/following-sibling::div");
         private readonly By documentViewGazetteDateContent = By.XPath("//label[contains(text(),'Gazette date')]/parent::div/following-sibling::div");
         private readonly By documentViewGazettePageContent = By.XPath("//label[contains(text(),'Gazette page #')]/parent::div/following-sibling::div");
         private readonly By documentViewGazettePublishedDateContent = By.XPath("//label[contains(text(),'Gazette published date')]/parent::div/following-sibling::div");
@@ -279,7 +280,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By documentsTableColumnStatus = By.CssSelector("div[data-testid='main-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(4) div[class='sortable-column']");
         private readonly By documentsTableColumnStatusSort = By.CssSelector("div[data-testid='main-document-list'] div[data-testid='sort-column-statusTypeCode']");
         private readonly By documentsTableColumnActions = By.CssSelector("div[data-testid='main-document-list'] div[data-testid='documentsTable'] div[role='columnheader']:nth-child(1) div[class='sortable-column']");
-        private readonly By documentTableContentTotal = By.CssSelector("div[data-testid='documentsTable'] div[class='tbody'] div[class='tr-wrapper']");
+        private readonly By documentTableContentTotal = By.CssSelector("div[data-testid='main-document-list'] div[data-testid='documentsTable'] div[class='tbody'] div[class='tr-wrapper']");
         private readonly By documentTableWaitSpinner = By.CssSelector("div[class='table-loading']");
 
         //Documents Tab Ad-hoc List Filters
@@ -403,7 +404,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToFirstPageDocumentsTable()
         {
-            Wait();
+            WaitUntilClickable(documentPaginationPrevPageLink);
             FocusAndClick(documentPaginationPrevPageLink);
         }
 
@@ -415,14 +416,29 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int DigitalDocumentsTableResultNumber()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad(documentTableContentTotal);
+            var wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(30));
+
+            int lastCount = -1;
+
+            wait.Until(driver =>
+            {
+                var rows = driver.FindElements(documentTableContentTotal);
+                int currentCount = rows.Count;
+
+                if (currentCount == lastCount && currentCount > 4)
+                    return true;
+
+                lastCount = currentCount;
+                return false;
+            });
+
             return webDriver.FindElements(documentTableContentTotal).Count;
         }
 
         public void OrderByDocumentFileType()
         {
-            Wait();
-            webDriver.FindElement(documentsTableColumnTypeSort).Click();
+            SafeClick(documentsTableColumnTypeSort);
         }
 
         public void OrderByDocumentFileName()
@@ -439,57 +455,63 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OrderByActivityRelatedDocumentsType()
         {
-            Wait();
+            WaitUntilClickable(activitiesDocumentsColumnTypeSort);
             FocusAndClick(activitiesDocumentsColumnTypeSort);
         }
 
         public string FirstDocumentFileType()
         {
-            WaitUntilTableSpinnerDisappear();
-            Wait(1000);
+            WaitForTableToLoad();
+            WaitUntilVisible(documentTableResults1stDocumentTypeContent);
             return webDriver.FindElement(documentTableResults1stDocumentTypeContent).Text;
         }
 
         public string FirstDocumentFileName()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(documentTableResults1stDocumentNameContent).Text;
         }
 
         public string FirstDocumentFileStatus()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(documentTableResults1stDocumentStatusContent).Text;
         }
 
         public void FilterByType(string documentType)
         {
-            Wait();
+            WaitUntilClickable(documentFilterResetBttn);
             webDriver.FindElement(documentFilterResetBttn).Click();
 
             WaitUntilClickable(documentFilterTypeSelect);
-            ChooseSpecificSelectOption(documentFilterTypeSelect, documentType);
+            ChooseSelectOption(documentFilterTypeSelect, documentType);
             FocusAndClick(documentFilterSearchBttn);
         }
 
         public void FilterByStatus(string documentStatus)
         {
-            Wait();
+            WaitUntilClickable(documentFilterResetBttn);
             webDriver.FindElement(documentFilterResetBttn).Click();
 
             WaitUntilVisible(documentFilterStatusSelect);
-            ChooseSpecificSelectOption(documentFilterStatusSelect, documentStatus);
+            ChooseSelectOption(documentFilterStatusSelect, documentStatus);
             FocusAndClick(documentFilterSearchBttn);
         }
 
         public void FilterByName(string documentName)
         {
-            Wait();
+            WaitUntilClickable(documentFilterResetBttn);
             webDriver.FindElement(documentFilterResetBttn).Click();
 
             WaitUntilVisible(documentFilterNameInput);
             webDriver.FindElement(documentFilterNameInput).SendKeys(documentName);
             FocusAndClick(documentFilterSearchBttn);
+        }
+
+        public void ResetFilters()
+        {
+            WaitUntilClickable(documentFilterResetBttn);
+            webDriver.FindElement(documentFilterResetBttn).Click();
         }
 
         public int TotalSearchDocuments()
@@ -513,7 +535,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveDigitalDocumentUpdate()
         {
-            Wait();
+            WaitUntilClickable(documentSaveEditButton);
             webDriver.FindElement(documentSaveEditButton).Click();
             WaitUntilSpinnerDisappear();
         }
@@ -550,7 +572,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelEditDigitalDocument()
         {
-            Wait();
+            WaitUntilClickable(documentCancelEditButton);
             FocusAndClick(documentCancelEditButton);
 
             WaitUntilVisible(documentConfirmationModal);
@@ -565,14 +587,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CloseDigitalDocumentViewDetails()
         {
-            Wait();
+            WaitUntilClickable(documentModalCloseIcon);
             webDriver.FindElement(documentModalCloseIcon).Click();
         }
 
         public void View1stDocument()
         {
-            Wait();
-            webDriver.FindElement(documentTableResults1stViewBttn).Click();
+            WaitUntilClickable(documentTableResults1stViewBttn);
+            SafeClick(documentTableResults1stViewBttn);
         }
 
         public void WaitUploadDocument()
@@ -584,12 +606,12 @@ namespace PIMS.Tests.Automation.PageObjects
         public void ViewUploadedDocument(int index)
         {
             
-            Wait();
+            WaitUntilClickable(documentPaginationNextPageLink);
 
             if (index > 9)
                 FocusAndClick(documentPaginationNextPageLink);
 
-            FocusAndClick(By.CssSelector("div[data-testid='documentsTable'] div[class='tbody'] button[data-testid='document-view-button-"+ index +"']"));
+            SafeClick(By.CssSelector("div[data-testid='documentsTable'] div[class='tbody'] button[data-testid='document-view-button-"+ index +"']"));
         }
 
         public void Delete1stDocument()
@@ -610,28 +632,27 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditDocumentButton()
         {
-            Wait(2000);
+            WaitUntilClickable(documentEditBttn);
             FocusAndClick(documentEditBttn);
         }
 
         public void InsertDocumentTypeStatus(DigitalDocument document, int docIdx)
         {
-            Wait();
 
             By docTypeSelectElement = By.Id("input-documents."+ docIdx +".documentTypeId");
             By statusSelectElement = By.Id("input-documents." +docIdx +".documentStatusCode");
 
-            WaitUntilExist(docTypeSelectElement);
-            ChooseSpecificSelectOption(docTypeSelectElement, document.DocumentType);
-            ChooseSpecificSelectOption(statusSelectElement, document.DocumentStatus);
+            WaitUntilVisible(docTypeSelectElement);
+            ChooseSelectOption(docTypeSelectElement, document.DocumentType);
+            ChooseSelectOption(statusSelectElement, document.DocumentStatus);
 
-            Wait();
-            webDriver.FindElement(By.XPath("//select[@data-testid='documents."+ docIdx +".document-type']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/*[1]")).Click();
+            var elementType = By.XPath("//select[@data-testid='documents."+ docIdx +".document-type']/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/parent::div/following-sibling::div/*[1]");
+            WaitUntilClickable(elementType);
+            webDriver.FindElement(elementType).Click();
         }
 
         public void InsertDocumentTypeDetails(DigitalDocument document)
         {
-            Wait();
 
             if (document.ApplicationNumber != "" && webDriver.FindElements(documentALCTypeAppNumberInput).Count > 0)
                 webDriver.FindElement(documentALCTypeAppNumberInput).SendKeys(document.ApplicationNumber);
@@ -786,8 +807,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateNewDocumentType(DigitalDocument document)
         {
-            ChooseSpecificSelectOption(documentGeneralUpdateDocumentSelect, document.DocumentType);
-            ChooseSpecificSelectOption(documentUploadStatusSelect, document.DocumentStatus);
+            Wait();
+            ChooseSelectOption(documentGeneralUpdateDocumentSelect, document.DocumentType);
+
+            WaitUntilClickable(documentUploadStatusSelect);
+            ChooseSelectOption(documentUploadStatusSelect, document.DocumentStatus);
 
             if (document.CanadaLandSurvey != "" && webDriver.FindElements(documentCanLandSurveyTypeCanLandSurveyInput).Count > 0)
             {
@@ -1028,7 +1052,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateDocumentName(string documentName)
         {
-            Wait();
+            WaitUntilVisible(documentUpdateNameInput);
             string fullString = webDriver.FindElement(documentUpdateNameInput).GetAttribute("value");
             char separator = '.';
 
@@ -1118,8 +1142,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyFileDocumentsListView()
         {
-            WaitUntilVisible(documentFilterTypeSelect);
-
             AssertTrueIsDisplayed(documentsTitle);
             AssertTrueIsDisplayed(addDocumentBttn);
             AssertTrueIsDisplayed(refresh1stTableBttn);
@@ -1142,7 +1164,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyManagementFilesDocumentsListView()
         {
-            Wait();
+            WaitUntilVisible(documentsTitle);
 
             AssertTrueIsDisplayed(documentsTitle);
             AssertTrueIsDisplayed(addDocumentBttn);
@@ -1286,7 +1308,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyAdhocDocumentsList(DigitalDocument document, int index)
         {
-            Wait();
             WaitUntilSpinnerDisappear();
 
             var elementIndex = index +1;
@@ -1301,7 +1322,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPIMSFilesDocumentsList(DigitalDocument document, int index)
         {
-            Wait();
             WaitUntilSpinnerDisappear();
 
             var elementIndex = index +1;
@@ -1316,7 +1336,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyDocumentDetailsViewForm(DigitalDocument document)
         {
-            Wait();
             WaitUntilSpinnerDisappear();
 
             //Header
@@ -1494,37 +1513,30 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(documentsUploadHeader);
             AssertTrueIsDisplayed(documentUploadInstructionsLabel);
             AssertTrueIsDisplayed(documentUploadDragDropArea);
-            WaitUntilExist(documentUploadDocInput);
         }
 
         public void ChoosePaginationOption(int pagination)
         {
-            Wait();
-
             WaitUntilVisible(searchTableEntriesSpan);
-            FocusAndClick(searchTableEntriesSpan);
+            SafeClick(searchTableEntriesSpan);
 
             switch (pagination)
             {
                 case 5:
-                    //WaitUntilClickable(searchTablePagination5);
-                    FocusAndClick(searchTablePagination5);
+                    SafeClick(searchTablePagination5);
                     break;
                 case 10:
-                    //WaitUntilVisible(searchTablePagination10);
-                    FocusAndClick(searchTablePagination10);
+                    SafeClick(searchTablePagination10);
                     break;
                 case 20:
-                    //WaitUntilClickable(searchTablePagination20);
-                    FocusAndClick(searchTablePagination20);
+                    SafeClick(searchTablePagination20);
                     break;
                 case 50:
-                    //WaitUntilClickable(searchTablePagination50);
-                    FocusAndClick(searchTablePagination50);
+                    SafeClick(searchTablePagination50);
                     break;
                 case 100:
-                    //WaitUntilClickable(searchTablePagination100);
-                    FocusAndClick(searchTablePagination100);
+                    
+                    SafeClick(searchTablePagination100);
                     break;
             }
         }

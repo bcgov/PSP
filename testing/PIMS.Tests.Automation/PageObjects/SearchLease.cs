@@ -77,43 +77,26 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToSearchLicense()
         {
-            Wait();
+            WaitUntilClickable(menuManagementButton);
             FocusAndClick(menuManagementButton);
 
-            Wait();
+            WaitUntilClickable(searchLicenseButton);
             FocusAndClick(searchLicenseButton);
         }
 
         public void SearchLicenseByLFile(string lFile)
         {
-            Wait(2000);
+            WaitUntilClickable(searchLicenseLFileInput);
             webDriver.FindElement(searchLicenseLFileInput).SendKeys(lFile);
-            //webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
-            FocusAndClick(searchLicenseSearchButton);
-        }
-
-        public void SearchLastLease()
-        {
-            Wait(2000);
-            webDriver.FindElement(searchLicenseResetButton).Click();
-
-            Wait(2000);
-            webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
-            webDriver.FindElement(searchLicenseSearchButton).Click();
-
-            WaitUntilClickable(searchLicenseOrderByLFileBttn);
-            webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
-
-            Wait();
-            webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
+            SafeClick(searchLicenseSearchButton);
         }
 
         public void SearchAllLeases()
         {
-            Wait(2000);
+            WaitUntilClickable(searchLicenseResetButton);
             webDriver.FindElement(searchLicenseResetButton).Click();
 
-            Wait(2000);
+            WaitUntilClickable(searchLicenseActiveStatusDeleteBttn);
             webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
             webDriver.FindElement(searchLicenseSearchButton).Click();
         }
@@ -123,7 +106,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(searchLicenseOrderByLFileBttn);
             webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
 
-            Wait();
+            WaitUntilClickable(searchLicenseOrderByLFileBttn);
             webDriver.FindElement(searchLicenseOrderByLFileBttn).Click();
         }
 
@@ -169,95 +152,81 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string FirstLeaseFileNumber()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchLicense1stResultLink).Text;
         }
 
         public string FirstLeaseExpiryDate()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchLicense1stResultExpiryDateContent).Text;
         }
 
         public string FirstLeaseProgramName()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchLicense1stResultProgramContent).Text;
         }
 
         public string FirstLeaseStatus()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchLicense1stResultStatusContent).Text;
         }
 
         public void FilterLeasesFiles(string pid = "", string pin = "", string address = "", string lfile = "", string historicalFile = "", string program = "", string teamMember = "",
              string status = "", string tenant = "", string expiryDateFrom = "", string expiryDateTo = "", string accountType = "", string region = "", string keyword = "")
         {
-            Wait();
-            webDriver.FindElement(searchLicenseResetButton).Click();
+            SafeClick(searchLicenseResetButton);
             webDriver.FindElement(searchLicenseActiveStatusDeleteBttn).Click();
 
             if (pid != "")
             {
                 WaitUntilClickable(searchBySelect);
-                ChooseSpecificSelectOption(searchBySelect, "PID");
+                ChooseSelectOption(searchBySelect, "PID");
                 webDriver.FindElement(searchLicensePIDInput).SendKeys(pid);
             }
 
             if (pin != "")
             {
                 WaitUntilClickable(searchBySelect);
-                ChooseSpecificSelectOption(searchBySelect, "PIN");
+                ChooseSelectOption(searchBySelect, "PIN");
                 webDriver.FindElement(searchLicensePINInput).SendKeys(pin);
             }
 
             if (address != "")
             {
                 WaitUntilClickable(searchBySelect);
-                ChooseSpecificSelectOption(searchBySelect, "Address");
+                ChooseSelectOption(searchBySelect, "Address");
                 webDriver.FindElement(searchLicenseAddressInput).SendKeys(address);
             }
 
             if (lfile != "")
             {
                 WaitUntilClickable(searchBySelect);
-                ChooseSpecificSelectOption(searchBySelect, "L-File #");
+                ChooseSelectOption(searchBySelect, "L-File #");
                 webDriver.FindElement(searchLicenseLFileInput).SendKeys(lfile);
             }
 
             if (historicalFile != "")
             {
                 WaitUntilClickable(searchBySelect);
-                ChooseSpecificSelectOption(searchBySelect, "Historical File #");
+                ChooseSelectOption(searchBySelect, "Historical File #");
                 webDriver.FindElement(searchLicenseHistoricalFile).SendKeys(historicalFile);
             }
 
             if (program != "")
-            {
-                WaitUntilClickable(searchLicenseProgramSelect);
-
-                webDriver.FindElement(searchLicenseProgramSelect).Click();
-                WaitUntilClickable(searchLicenseProgramOptions);
-                ChooseMultiSelectSpecificOption(searchLicenseProgramOptions, program);
+            { 
+                ChooseMultiSelectOption(searchLicenseProgramSelect, searchLicenseProgramOptions, searchLicenseTitle, program);
             }
-
             if (teamMember != "")
             {
-                WaitUntilClickable(searchLicenseTeamMemberInput);
-
-                webDriver.FindElement(searchLicenseTeamMemberInput).Click();
-                WaitUntilClickable(searchLicenseTeamMemberOptions);
-                ChooseMultiSelectSpecificOption(searchLicenseTeamMemberOptions, teamMember);
+                ChooseMultiSelectOption(searchLicenseTeamMemberInput, searchLicenseTeamMemberOptions, searchLicenseTitle, teamMember);
             }
 
             if (status != "")
             {
-                WaitUntilClickable(searchLicenseStatusInput);
-
-                webDriver.FindElement(searchLicenseStatusInput).Click();
-                WaitUntilClickable(searchLicenseStatusOptions);
-                ChooseMultiSelectSpecificOption(searchLicenseStatusOptions, status);
+                ChooseMultiSelectOption(searchLicenseStatusInput, searchLicenseStatusOptions, searchLicenseTitle, status);
             }
 
             if (tenant != "")
@@ -281,13 +250,13 @@ namespace PIMS.Tests.Automation.PageObjects
             if (accountType != "")
             {
                 WaitUntilClickable(searchLicenseAccountTypeSelect);
-                ChooseMultiSelectSpecificOption(searchLicenseAccountTypeSelect, accountType);
+                ChooseSelectOption(searchLicenseAccountTypeSelect, accountType);
             }
 
             if (region != "")
             {
                 WaitUntilClickable(searchLicenseRegionsSelect);
-                ChooseSpecificSelectOption(searchLicenseRegionsSelect, region);
+                ChooseSelectOption(searchLicenseRegionsSelect, region);
             }
 
             if (keyword != "")
@@ -302,13 +271,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public Boolean SearchFoundResults()
         {
-            Wait(2000);
+            Wait();
             return webDriver.FindElements(searchLicenseResultsTable1stResult).Count > 0;
         }
 
         public int LeasesTableResultNumber()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElements(searchLicenseResultsTable).Count;
         }
 
@@ -354,8 +323,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLeaseTableContent(Lease lease)
         {
-            Wait();
-
+            WaitUntilVisible(searchLicense1stResultLink);
             AssertTrueIsDisplayed(searchLicense1stResultLink);
 
             if(lease.LeaseExpiryDate != "")

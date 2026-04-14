@@ -101,7 +101,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToCreateNewManagementFile()
         {
-            Wait();
+            WaitUntilClickable(managementMainMenu);
             FocusAndClick(managementMainMenu);
 
             WaitUntilClickable(managementMainMenuCreateLink);
@@ -110,31 +110,31 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToManagementFileSection()
         {
-            Wait();
+            WaitUntilClickable(managementFileSummaryBttn);
             webDriver.FindElement(managementFileSummaryBttn).Click();
         }
 
         public void CreateMinimumManagementDetails(ManagementFile mgmtFile)
         {
-            Wait();
+            WaitUntilClickable(managementFileNameInput);
 
             //Management File Name
             webDriver.FindElement(managementFileNameInput).SendKeys(mgmtFile.ManagementName);
 
             //Purpose
-            ChooseSpecificSelectOption(managementFilePurposeSelect, mgmtFile.ManagementPurpose);
+            ChooseSelectOption(managementFilePurposeSelect, mgmtFile.ManagementPurpose);
         }
 
         public void UpdateManagementFileDetails(ManagementFile mgmtFile)
         {
-            Wait();
+            WaitUntilVisible(managementFileStatusLabel);
 
             //AssertTrueIsDisplayed(updateManagementTitle);
 
             //Status
             AssertTrueIsDisplayed(managementFileStatusLabel);
             if(mgmtFile.ManagementStatus != "")
-                ChooseSpecificSelectOption(managementFileStatusInput, mgmtFile.ManagementStatus);
+                ChooseSelectOption(managementFileStatusInput, mgmtFile.ManagementStatus);
 
             //PROJECT
             //Project
@@ -146,19 +146,19 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(managementFileProjectInput).SendKeys(Keys.Enter);
                 webDriver.FindElement(managementFileProjectInput).SendKeys(Keys.Backspace);
 
-                Wait();
+                WaitUntilClickable(managementFileProject1stOption);
                 webDriver.FindElement(managementFileProject1stOption).Click();
             }
 
             //Product
             AssertTrueIsDisplayed(managementFileProjectProductLabel);
             if (mgmtFile.ManagementMinistryProduct != "")
-                ChooseSpecificSelectOption(managementFileProjectProductSelect, mgmtFile.ManagementMinistryProduct);
+                ChooseSelectOption(managementFileProjectProductSelect, mgmtFile.ManagementMinistryProduct);
 
             //Funding
             AssertTrueIsDisplayed(managementFileProjectFundingLabel);
             if (mgmtFile.ManagementMinistryFunding != "")
-                ChooseSpecificSelectOption(managementFileProjectFundingInput, mgmtFile.ManagementMinistryFunding);
+                ChooseSelectOption(managementFileProjectFundingInput, mgmtFile.ManagementMinistryFunding);
 
             //MANAGEMENT DETAILS
             //File Name
@@ -180,7 +180,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Purpose
             AssertTrueIsDisplayed(managementFilePurposeLabel);
             if (mgmtFile.ManagementPurpose != "")
-                ChooseSpecificSelectOption(managementFilePurposeSelect, mgmtFile.ManagementPurpose);
+                ChooseSelectOption(managementFilePurposeSelect, mgmtFile.ManagementPurpose);
 
             //Responsible Payer
             AssertTrueIsDisplayed(managementFileResponsiblePayerLabel);
@@ -201,7 +201,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Ministry Region
             AssertTrueIsDisplayed(managementFileMinistryRegionLabel);
             if (mgmtFile.ManagementMinistryRegion != "")
-                ChooseSpecificSelectOption(managementFileMinistryRegionSelect, mgmtFile.ManagementMinistryRegion);
+                ChooseSelectOption(managementFileMinistryRegionSelect, mgmtFile.ManagementMinistryRegion);
 
             //MANAGEMENT TEAM
             if (mgmtFile.ManagementTeam!.Count > 0)
@@ -235,7 +235,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditMgmtFileDetailsBttn()
         {
-            Wait();
+            WaitUntilClickable(managementFileDetailsEditBttn);
             webDriver.FindElement(managementFileDetailsEditBttn).Click();
         }
 
@@ -244,7 +244,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Save
             ButtonElement("Save");
 
-            Wait();
+            WaitUntilVisible(managementFileConfirmationModal);
             while (webDriver.FindElements(managementFileConfirmationModal).Count > 0)
             {
                 if (sharedModals.ModalContent().Contains("The selected property already exists in the system's inventory"))
@@ -254,7 +254,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
 
-                    Wait();
                 }
                 else if (sharedModals.ModalContent().Contains("You have made changes to the properties in this file."))
                 {
@@ -262,8 +261,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Contains("You have made changes to the properties in this file.", sharedModals.ModalContent());
                     Assert.Contains("Do you want to save these changes?", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
-
-                    Wait();
                 }
                 else if (sharedModals.ModalHeader() == "Confirm status change")
                 {
@@ -271,8 +268,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Contains("If you save it, only the administrator can turn it back on. You will still see it in the management table.", sharedModals.ConfirmationModalParagraph1());
                     Assert.Equal("Do you want to acknowledge and proceed?", sharedModals.ConfirmationModalParagraph2());
                     sharedModals.ModalClickOKBttn();
-
-                    Wait();
                 }
                 else
                     break;
@@ -287,13 +282,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string GetManagementCode()
         {
-            Wait();
+            WaitUntilVisible(managementFileHeaderFileNbrContent);
             return webDriver.FindElement(managementFileHeaderFileNbrContent).Text;
         }
 
         public void VerifyManagementFileInitCreateForm()
         {
-            Wait();
+            WaitUntilVisible(managementFileProjectSubtitle);
 
             //Create Title
             //AssertTrueIsDisplayed(createManagementTitle);

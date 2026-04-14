@@ -71,19 +71,19 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Search a Research File
         public void NavigateToSearchResearchFile()
         {
-            Wait(4000);
+            WaitUntilClickable(menuResearchButton);
             FocusAndClick(menuResearchButton);
 
-            Wait();
+            WaitUntilClickable(searchResearchButton);
             FocusAndClick(searchResearchButton);
         }
 
         public void SearchResearchFileByRFile(string RFile)
         {
-            Wait(2000);
-            ChooseSpecificSelectOption(searchResearchBySelect, "Research file #");
+            WaitUntilClickable(searchResearchBySelect);
+            ChooseSelectOption(searchResearchBySelect, "Research file #");
             webDriver.FindElement(searchResearchFileNbrInput).SendKeys(RFile);
-            ChooseSpecificSelectOption(searchResearchStatusSelect, "All Status");
+            ChooseSelectOption(searchResearchStatusSelect, "All Status");
 
             WaitUntilClickable(searchResearchFileButton);
             FocusAndClick(searchResearchFileButton);
@@ -91,8 +91,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SearchAllResearchFiles()
         {
-            Wait(2000);
-            ChooseSpecificSelectOption(searchResearchStatusSelect, "All Status");
+            WaitUntilClickable(searchResearchStatusSelect);
+            ChooseSelectOption(searchResearchStatusSelect, "All Status");
 
             WaitUntilClickable(searchResearchFileButton);
             webDriver.FindElement(searchResearchFileButton).Click();
@@ -142,43 +142,43 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string FirstResearchFileNumber()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchResearchFile1stResultLink).Text;
         }
 
         public string FirstResearchFileName()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchResearchFile1stResultFileName).Text;
         }
 
         public string FirstResearchCreatedBy()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchResearchFile1stResultCreator).Text;
         }
 
         public string FirstResearchCreatedDate()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchResearchFile1stResultCreateDate).Text;
         }
 
         public string FirstResearchUpdatedBy()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchResearchFile1stResultUpdatedBy).Text;
         }
 
         public string FirstResearchUpdatedDate()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchResearchFile1stResultUpdateDate).Text;
         }
 
         public string FirstResearchFileStatus()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchResearchFile1stResultStatus).Text;
         }
 
@@ -224,7 +224,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyResearchFileTableContent(ResearchFile researchFile, string user)
         {
-            Wait(2000);
+            WaitUntilVisible(searchResearchFile1stResultLink);
 
             AssertTrueIsDisplayed(searchResearchFile1stResultLink);
             AssertTrueContentEquals(searchResearchFile1stResultFileName, researchFile.ResearchFileName);
@@ -243,29 +243,29 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchResearchFileResetButton).Click();
 
             if(region != "")
-                ChooseSpecificSelectOption(searchResearchRegionInput, region);
+                ChooseSelectOption(searchResearchRegionInput, region);
 
             if(status != "")
-                ChooseSpecificSelectOption(searchResearchStatusSelect, status);
+                ChooseSelectOption(searchResearchStatusSelect, status);
 
             if (pid != "")
             {
-                ChooseSpecificSelectOption(searchResearchBySelect, "PID");
+                ChooseSelectOption(searchResearchBySelect, "PID");
                 webDriver.FindElement(searchResearchByPID).SendKeys(pid);
             }
             else if (pin != "")
             {
-                ChooseSpecificSelectOption(searchResearchBySelect, "PIN");
+                ChooseSelectOption(searchResearchBySelect, "PIN");
                 webDriver.FindElement(searchResearchByPIN).SendKeys(pin);
             }
             else if (name != "")
             {
-                ChooseSpecificSelectOption(searchResearchBySelect, "Research file name");
+                ChooseSelectOption(searchResearchBySelect, "Research file name");
                 webDriver.FindElement(searchResearchNameInput).SendKeys(name);
             }
             else if (fileNumber != "")
             {
-                ChooseSpecificSelectOption(searchResearchBySelect, "Research file #");
+                ChooseSelectOption(searchResearchBySelect, "Research file #");
                 webDriver.FindElement(searchResearchFileNbrInput).SendKeys(fileNumber);
             }
             if (roadName != "")
@@ -274,23 +274,23 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             if (createdDate != "")
             {
-                ChooseSpecificSelectOption(searchResearchCreateUpdateDateSelect, "Created date");
+                ChooseSelectOption(searchResearchCreateUpdateDateSelect, "Created date");
                 webDriver.FindElement(searchResearchCreateDateInput).SendKeys(createdDate);
             }
             else if (updatedDate != "")
             {
-                ChooseSpecificSelectOption(searchResearchCreateUpdateDateSelect, "Updated date");
+                ChooseSelectOption(searchResearchCreateUpdateDateSelect, "Updated date");
                 webDriver.FindElement(searchResearchUpdateDateInput).SendKeys(updatedDate);
             }
 
             if (createdBy != "")
             {
-                ChooseSpecificSelectOption(searchResearchCreateUpdateBySelect, "Created by");
+                ChooseSelectOption(searchResearchCreateUpdateBySelect, "Created by");
                 webDriver.FindElement(searchResearchFileUserCreatedIdirInput).SendKeys(createdBy);
             }
             else if (updatedBy != "")
             {
-                ChooseSpecificSelectOption(searchResearchCreateUpdateBySelect, "Updated by");
+                ChooseSelectOption(searchResearchCreateUpdateBySelect, "Updated by");
                 webDriver.FindElement(searchResearchUserUpdatedIdirInput).SendKeys(createdBy);
             }
 
@@ -299,13 +299,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public Boolean SearchFoundResults()
         {
-            Wait(2000);
+            Wait();
             return webDriver.FindElements(searchResearchFile1stResult).Count > 0;
         }
 
         public int ResearchFileTableResultNumber()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElements(searchResearchFileTableContent).Count;
         }
     }

@@ -21,31 +21,29 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ChoosePaginationOption(int pagination)
         {
-            Wait();
-           
             WaitUntilVisible(searchTableEntriesSpan);
-            FocusAndClick(searchTableEntriesSpan);
+            SafeClick(searchTableEntriesSpan);
 
             switch (pagination)
             {
                 case 5:
-                    //WaitUntilClickable(searchTablePagination5);
+                    WaitUntilClickable(searchTablePagination5);
                     FocusAndClick(searchTablePagination5);
                     break;
                 case 10:
-                    //WaitUntilVisible(searchTablePagination10);
+                    WaitUntilVisible(searchTablePagination10);
                     FocusAndClick(searchTablePagination10);
                     break;
                 case 20:
-                    //WaitUntilClickable(searchTablePagination20);
+                    WaitUntilClickable(searchTablePagination20);
                     FocusAndClick(searchTablePagination20);
                     break;
                 case 50:
-                    //WaitUntilClickable(searchTablePagination50);
+                    WaitUntilClickable(searchTablePagination50);
                     FocusAndClick(searchTablePagination50);
                     break;
                 case 100:
-                    //WaitUntilClickable(searchTablePagination100);
+                    WaitUntilClickable(searchTablePagination100);
                     FocusAndClick(searchTablePagination100);
                     break;
             }

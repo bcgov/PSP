@@ -359,7 +359,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilSpinnerDisappear();
 
-            Wait();
+            WaitUntilClickable(propertyHideWindowBttn);
             webDriver.FindElement(propertyHideWindowBttn).Click();
         }
 
@@ -367,7 +367,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilSpinnerDisappear();
 
-            Wait();
+            WaitUntilClickable(propertyShowWindowBttn);
             webDriver.FindElement(propertyShowWindowBttn).Click();
         }
 
@@ -391,33 +391,32 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ChooseCreationOptionFromPin(string option)
         {
-            Wait();
             switch(option)
             {
                 case "View Property Info":
-                    ButtonElement(propertyViewInfoBttn);
+                    SafeClick(propertyViewInfoBttn);
                     break;
                 case "Research File":
-                    ButtonElement(propertyNewResearchFileBttn);
+                    SafeClick(propertyNewResearchFileBttn);
                     break;
                 case "Acquisition File":
-                    ButtonElement(propertyNewAcquisitionFileBttn);
+                    SafeClick(propertyNewAcquisitionFileBttn);
                     break;
                 case "Lease/License":
-                    ButtonElement(propertyNewLeaseFileBttn);
+                    SafeClick(propertyNewLeaseFileBttn);
                     break;
                 case "Disposition File":
-                    ButtonElement(propertyNewDispositionFileBttn);
+                    SafeClick(propertyNewDispositionFileBttn);
                     break;
                 case "Subdivision":
-                    ButtonElement(propertyNewSubdivisionFileBttn);
+                    SafeClick(propertyNewSubdivisionFileBttn);
                     break;
                 case "Consolidation":
-                    ButtonElement(propertyNewConsolidationFileBttn);
+                    SafeClick(propertyNewConsolidationFileBttn);
                     break;
             }
 
-            Wait();
+            WaitUntilVisible(propertyInformationConfirmationModal);
             while (webDriver.FindElements(propertyInformationConfirmationModal).Count > 0)
             {
                 Assert.Equal("User Override Required", sharedModals.ModalHeader());
@@ -443,8 +442,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     sharedModals.ModalClickOKBttn();
                     break;
                 }
-
-                Wait();
             }
         }
 
@@ -492,19 +489,18 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditPropertyInfoBttn()
         {
-            Wait();
-            FocusAndClick(propertyDetailsEditBttn);
+            SafeClick(propertyDetailsEditBttn);
         }
 
         public void SavePropertyDetails()
         {
-            Wait();
+            WaitUntilClickable(propertyDetailsSaveButton);
             webDriver.FindElement(propertyDetailsSaveButton).Click();
         }
 
         public void CancelPropertyDetails()
         {
-            webDriver.FindElement(propertyDetailsCancelButton).Click(); 
+           SafeClick(propertyDetailsCancelButton); 
 
             Wait();
             if (webDriver.FindElements(propertyInformationConfirmationModal).Count > 0)
@@ -513,13 +509,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdatePropertyDetails(Property property)
         {
-            Wait();
+            WaitUntilVisible(propertyDetailsAddressLine1Input);
 
             //PROPERTY ADDRESS
             //Delete previous Line 2 or Line 3 if existing
             while (webDriver.FindElements(propertyDetailsAddressLineDeleteBttn).Count > 0)
-                webDriver.FindElements(propertyDetailsAddressLineDeleteBttn)[0].Click();
-            
+                webDriver.FindElements(propertyDetailsAddressLineDeleteBttn)[0].Click();  
 
             if (property.Address.AddressLine1 != "")
             {
@@ -573,16 +568,16 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (property.MOTIRegion != "")
-                ChooseSpecificSelectOption(propertyDetailsMotiRegionSelect, property.MOTIRegion);
+                ChooseSelectOption(propertyDetailsMotiRegionSelect, property.MOTIRegion);
             
             if (property.HighwaysDistrict != "")
-                ChooseSpecificSelectOption(propertyDetailsHighwayDistrictSelect, property.HighwaysDistrict);
+                ChooseSelectOption(propertyDetailsHighwayDistrictSelect, property.HighwaysDistrict);
             
             if (property.RailwayBelt != "")
-                ChooseSpecificSelectOption(propertyDetailsRailwaySelect, property.RailwayBelt);
+                ChooseSelectOption(propertyDetailsRailwaySelect, property.RailwayBelt);
             
             if (property.LandParcelType != "")
-                ChooseSpecificSelectOption(propertyDetailsLandTypeSelect, property.LandParcelType);
+                ChooseSelectOption(propertyDetailsLandTypeSelect, property.LandParcelType);
             
             if (property.MunicipalZoning != "")
             {
@@ -598,16 +593,9 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (property.Anomalies.First() != "")
-            {
                 foreach (string anomaly in property.Anomalies)
-                {
-                    FocusAndClick(propertyDetailsAnomaliesInput);
-
-                    WaitUntilClickable(propertyDetailsAnomaliesOptions);
-                    ChooseMultiSelectSpecificOption(propertyDetailsAnomaliesOptions, anomaly);
-                }
-            }
-
+                    ChooseMultiSelectOption(propertyDetailsAnomaliesInput, propertyDetailsAnomaliesOptions, propertyDetailsAttrAnomaliesLabel, anomaly);
+                
             //Delete Tenure status previously selected if any
             if (webDriver.FindElements(propertyDetailsTenureDeleteBttns).Count > 0)
             {
@@ -622,19 +610,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //TENURE STATUS
             if (property.TenureStatus.First() != "")
-            {
                 foreach (string status in property.TenureStatus)
-                {
-                    Wait(2000);
-                    webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
-                    FocusAndClick(propertyDetailsTenureStatusInput);
-
-                    WaitUntilClickable(propertyDetailsTenureOptions);
-                    ChooseMultiSelectSpecificOption(propertyDetailsTenureOptions, status);
-                    webDriver.FindElement(propertyDetailsTenureStatusLabel).Click();
-                }
-            }
-
+                    ChooseMultiSelectOption(propertyDetailsTenureStatusInput, propertyDetailsTenureOptions, propertyDetailsTenureStatusLabel, status);
+  
             //Delete Tenure cleanup previously selected if any
             if (webDriver.FindElements(propertyDetailsTenureCleanupDeleteBttns).Count > 0)
             {
@@ -649,21 +627,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //TENURE CLEANUP
             if (property.TenureCleanup.First() != "")
-            {
                 foreach (string status in property.TenureCleanup)
-                {
-                    Wait(2000);
-                    webDriver.FindElement(propertyDetailsTenureCleanupLabel).Click();
-                    FocusAndClick(propertyDetailsTenureCleanupInput);
-
-                    WaitUntilClickable(propertyDetailsTenureCleanupOptions);
-                    ChooseMultiSelectSpecificOption(propertyDetailsTenureCleanupOptions, status);
-                    webDriver.FindElement(propertyDetailsTenureCleanupLabel).Click();
-                }
-            }
+                    ChooseMultiSelectOption(propertyDetailsTenureCleanupInput, propertyDetailsTenureCleanupOptions, propertyDetailsTenureCleanupLabel, status);
 
             if (property.TenureProvHwy != "")
-                ChooseSpecificSelectOption(propertyDetailsTenureProvincialHwySelect, property.TenureProvHwy);
+                ChooseSelectOption(propertyDetailsTenureProvincialHwySelect, property.TenureProvHwy);
 
             //Delete Highway Road Details
             if (webDriver.FindElements(propertyDetailsTenureHwyDetailsDeleteBttns).Count > 0)
@@ -672,21 +640,10 @@ namespace PIMS.Tests.Automation.PageObjects
                     webDriver.FindElements(propertyDetailsTenureHwyDetailsDeleteBttns)[0].Click();
             }
 
-
             if (property.TenureHighwayDetails.First() != "")
-            {
                 foreach (string hwyDetail in property.TenureHighwayDetails)
-                {
-                    Wait(2000);
-                    webDriver.FindElement(propertyDetailsHighwayRoadLabel).Click();
-                    FocusAndClick(propertyDetailsTenureHwyDetailsMultiselect);
-
-                    WaitUntilClickable(propertyDetailsTenureHwyDetailsOptions);
-                    ChooseMultiSelectSpecificOption(propertyDetailsTenureHwyDetailsOptions, hwyDetail);
-                    webDriver.FindElement(propertyDetailsHighwayRoadLabel).Click();
-                }
-            }
-
+                    ChooseMultiSelectOption(propertyDetailsTenureHwyDetailsMultiselect, propertyDetailsTenureHwyDetailsOptions, propertyDetailsProvPublicHwyLabel, hwyDetail);
+    
             //MEASUREMENTS
             if (property.SqrMeters != "")
             {
@@ -706,11 +663,11 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (property.VolumeType != "")
-                ChooseSpecificSelectOption(propertyDetailsVolTypeSelect, property.VolumeType);
+                ChooseSelectOption(propertyDetailsVolTypeSelect, property.VolumeType);
 
             //SURPLUS DECLARATION
             if (property.SurplusDeclarationType != "")
-                ChooseSpecificSelectOption(propertyDetailsSurplusDeclarationTypeSelect, property.SurplusDeclarationType);
+                ChooseSelectOption(propertyDetailsSurplusDeclarationTypeSelect, property.SurplusDeclarationType);
 
             if (property.SurplusDeclarationDate != "")
             {
@@ -770,7 +727,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyValueTab()
         {
-            Wait();
+            WaitUntilVisible(propertyValueInfo);
 
             AssertTrueIsDisplayed(propertyValueInfo);
 
@@ -805,7 +762,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyHwyTab()
         {
-            Wait();
+            WaitUntilVisible(propertyHWYTitle);
 
             AssertTrueIsDisplayed(propertyHWYTitle);
             AssertTrueIsDisplayed(propertyHWYTooltip);
@@ -896,7 +853,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPropertyInformationHeader(bool hasHistoricalFile)
         {
-            Wait();
+            WaitUntilVisible(propertyInformationHeaderTitle);
 
             AssertTrueContentEquals(propertyInformationHeaderTitle, "Property Information");
 
@@ -918,7 +875,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPropertyDetailsView()
         {
-            Wait();
+            WaitUntilVisible(propertyDetailsAddressTitle);
 
             AssertTrueIsDisplayed(propertyDetailsAddressTitle);
 
@@ -962,10 +919,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(propertyDetailsTenureStatusDiv);
             AssertTrueIsDisplayed(propertyDetailsTenureCleanupLabel);
             AssertTrueIsDisplayed(propertyDetailsTenureCleanupDiv);
-            //AssertTrueIsDisplayed(propertyDetailsProvPublicHwyLabel);
-            //AssertTrueIsDisplayed(propertyDetailsProvPublicHwyDiv);
-            //AssertTrueIsDisplayed(propertyDetailsHighwayRoadLabel);
-            //AssertTrueIsDisplayed(propertyDetailsHighwayRoadDiv);
 
             if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)
             {
@@ -1097,27 +1050,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 var tenureCleanupUI = GetViewFieldListContent(propertyDetailsTenureCleanupDiv);
                 Assert.True(Enumerable.SequenceEqual(tenureCleanupUI, property.TenureCleanup));
             }
-
-            //AssertTrueIsDisplayed(propertyDetailsProvPublicHwyLabel);
-            //if (property.TenureCleanup.First() != "")
-            //    AssertTrueContentEquals(propertyDetailsProvPublicHwyDiv, property.TenureProvHwy);
-            
-
-            //AssertTrueIsDisplayed(propertyDetailsHighwayRoadLabel);
-            //if (property.TenureCleanup.First() != "")
-            //{
-            //    var tenureCleanupUI = GetViewFieldListContent(propertyDetailsHighwayRoadDiv);
-            //    Assert.True(Enumerable.SequenceEqual(tenureCleanupUI, property.TenureHighwayDetails));
-            //}
-
-            //if (webDriver.FindElements(propertyDetailsFirstNationTitle).Count() > 0)
-            //{
-            //    AssertTrueIsDisplayed(propertyDetailsFirstNationTitle);
-            //    AssertTrueIsDisplayed(propertyDetailsFirstNationBandNameLabel);
-            //    AssertTrueIsDisplayed(propertyDetailsFirstNationBandNameDiv);
-            //    AssertTrueIsDisplayed(propertyDetailsFirstNationReserveLabel);
-            //    AssertTrueIsDisplayed(propertyDetailsFirstNationReserveDiv);
-            //}
 
             //MEASUREMENTS
             AssertTrueIsDisplayed(propertyDetailsMeasurementsTitle);
@@ -1271,7 +1203,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyPlanTabDetails()
         {
-            Wait();
+            WaitUntilVisible(propertyStrataPlanTitle);
 
             AssertTrueIsDisplayed(propertyStrataPlanTitle);
             AssertTrueIsDisplayed(propertyStrataPlanNumberLabel);
@@ -1292,7 +1224,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int PropertyTabs()
         {
-            Wait(5000);
+            Wait(2000);
             return webDriver.FindElements(propertyInformationTabsTotal).Count();
         }
 
@@ -1307,18 +1239,16 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(propertyAttrAddHistoricalFileButton);
             FocusAndClick(propertyAttrAddHistoricalFileButton);
 
-            Wait();
+            WaitUntilVisible(propertyAttrHistoricalFilesTotalCount);
             var historicalFileIndex = webDriver.FindElements(propertyAttrHistoricalFilesTotalCount).Count() -1;
 
             WaitUntilVisible(By.Id("input-historicalNumbers."+ historicalFileIndex +".historicalNumber"));
             webDriver.FindElement(By.Id("input-historicalNumbers."+ historicalFileIndex +".historicalNumber")).SendKeys(historicalFile.HistoricalFileNumber);
 
-            ChooseSpecificSelectOption(By.Id("input-historicalNumbers."+ historicalFileIndex +".historicalNumberType"), historicalFile.HistoricalFileType);
+            ChooseSelectOption(By.Id("input-historicalNumbers."+ historicalFileIndex +".historicalNumberType"), historicalFile.HistoricalFileType);
 
             if(historicalFile.HistoricalFileOtherDetails != "")
                 webDriver.FindElement(By.Id("input-historicalNumbers."+ historicalFileIndex +".otherHistoricalNumberType")).SendKeys(historicalFile.HistoricalFileOtherDetails);
-
-            Wait();
         }
     }
 }

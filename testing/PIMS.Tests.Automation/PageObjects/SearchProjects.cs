@@ -55,13 +55,8 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Search a Project
         public void NavigateToSearchProject()
         {
-            Wait(3000);
-
-            WaitUntilClickable(projectMenuBttn);
-            FocusAndClick(projectMenuBttn);
-
-            WaitUntilClickable(manageProjectButton);
-            FocusAndClick(manageProjectButton);
+            SafeClick(projectMenuBttn);
+            SafeClick(manageProjectButton);
         }
 
         public void SearchProjectByName(string projectName)
@@ -71,7 +66,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(searchProjectNameInput);
             webDriver.FindElement(searchProjectNameInput).SendKeys(projectName);
-            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Status");
+            ChooseSelectOption(searchProjectStatusSelect, "All Status");
             
             webDriver.FindElement(searchProjectButton).Click();
         }
@@ -83,7 +78,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(searchProjectNumberInput);
             webDriver.FindElement(searchProjectNumberInput).SendKeys(projectNumber);
-            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Status");
+            ChooseSelectOption(searchProjectStatusSelect, "All Status");
 
             webDriver.FindElement(searchProjectButton).Click();
         }
@@ -95,7 +90,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             WaitUntilVisible(searchProjectRegionSelect);
             webDriver.FindElement(searchProjectRegionSelect).SendKeys(projectRegion);
-            ChooseSpecificSelectOption(searchProjectStatusSelect, "All Status");
+            ChooseSelectOption(searchProjectStatusSelect, "All Status");
 
             webDriver.FindElement(searchProjectButton).Click();
         }
@@ -106,7 +101,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(searchProjectResetButton).Click();
 
             WaitUntilVisible(searchProjectStatusSelect);
-            ChooseSpecificSelectOption(searchProjectStatusSelect, projectStatus);
+            ChooseSelectOption(searchProjectStatusSelect, projectStatus);
 
             webDriver.FindElement(searchProjectButton).Click();
         }
@@ -115,7 +110,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             var originalWindowHandle = webDriver.CurrentWindowHandle;
 
-            Wait();
+            WaitUntilClickable(searchProject1stResultNbrLink);
             webDriver.FindElement(searchProject1stResultNbrLink).Click();
 
             Wait();
@@ -194,37 +189,37 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int ProjectsTableResultNumber()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElements(searchProjectTotalCount).Count();
         }
 
         public Boolean SearchFoundResults()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElements(searchProject1stResult).Count > 0;
         }
 
         public string FirstProjectCode()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchProject1stResultNbrLink).Text;
         }
 
         public string FirstProjectName()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchProject1stResultNameLink).Text;
         }
 
         public string FirstProjectLastUpdatedBy()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchProject1stResultLastUpdatedByContent).Text;
         }
 
         public string FirstProjectLastUpdatedDate()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchProject1stResultLastUpdatedDateContent).Text;
         }
     }

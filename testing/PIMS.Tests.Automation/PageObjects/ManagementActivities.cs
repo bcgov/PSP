@@ -77,7 +77,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddActivityBttn()
         {
-            Wait(4000);
+            WaitUntilClickable(activitiesBttn);
             webDriver.FindElement(activitiesBttn).Click();
 
             WaitUntilSpinnerDisappear();
@@ -85,15 +85,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OpenActivityDetails(int index)
         {
-            Wait();
-
             WaitUntilClickable(By.XPath("//div[contains(text(),'Activity List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div["+ index +"]/div/div[5]/div/button[@title='property-activity view details']"));
             webDriver.FindElement(By.XPath("//div[contains(text(),'Activity List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div["+ index +"]/div/div[5]/div/button[@title='property-activity view details']")).Click();
         }
 
         public void DeleteNthActivity(int index)
         {
-            Wait();
+            WaitUntilClickable(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button[data-testid='compensation-delete-"+ index +"']"));
             FocusAndClick(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button[data-testid='compensation-delete-"+ index +"']"));
 
             if (webDriver.FindElements(actibityConfirmationModal).Count() > 0)
@@ -108,19 +106,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveActivity()
         {
-            Wait();
             ButtonElement("Save");
-
             AssertTrueIsDisplayed(activityTrayEditBttn);
         }
 
         public void CancelActivity()
         {
-            Wait();
             ButtonElement("Cancel");
 
             sharedModals.CancelActionModal();
-
             AssertTrueIsDisplayed(activityTrayEditBttn);
         }
 
@@ -173,16 +167,16 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ViewLastActivityButton()
         {
-            Wait();
+            WaitUntilClickable(By.CssSelector("div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:first-child button[title='property-activity view details']"));
             webDriver.FindElement(By.CssSelector("div[data-testid='mgmt-activity-list'] div[class='tr-wrapper']:first-child button[title='property-activity view details']")).Click();
         }
 
         public void VerifyLastInsertedActivityTable(PropertyActivity activity)
         {
-            Wait();
+            WaitUntilVisible(By.CssSelector("div[data-testid='mgmt-activity-list'] div[class='tbody'] div[class='tr-wrapper']:first-child [role='cell']:first-child"));
 
             AssertTrueContentEquals(By.CssSelector("div[data-testid='mgmt-activity-list'] div[class='tbody'] div[class='tr-wrapper']:first-child [role='cell']:first-child"), activity.PropertyActivityType);
-//            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activity List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][2]"), activity.PropertyActivitySubType);  TODO
+           //AssertTrueContentEquals(By.XPath("//div[contains(text(),'Activity List')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div[@data-testid='PropertyManagementActivitiesTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][2]"), activity.PropertyActivitySubType);  TODO
             AssertTrueContentEquals(By.CssSelector("div[data-testid='mgmt-activity-list'] div[class='tbody'] div[class='tr-wrapper']:first-child [role='cell']:nth-child(3)"), activity.PropertyActivityStatus);
             AssertTrueContentEquals(By.CssSelector("div[data-testid='mgmt-activity-list'] div[class='tbody'] div[class='tr-wrapper']:first-child [role='cell']:nth-child(4)"), TransformDateFormat(activity.PropertyActivityCommenceDate));
             Assert.True(webDriver.FindElements(By.CssSelector("div[data-testid='mgmt-activity-list'] div[class='tbody'] div[class='tr-wrapper']:first-child [role='cell']:nth-child(5) div div")).Count > 0);
