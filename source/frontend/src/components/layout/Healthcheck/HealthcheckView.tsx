@@ -5,6 +5,7 @@ import { LinkButton } from '@/components/common/buttons/LinkButton';
 import { ModalSize } from '@/components/common/GenericModal';
 import { useModalContext } from '@/hooks/useModalContext';
 import HealthCheckStyled from '@/layouts/Healthcheck';
+import { firstOrNull } from '@/utils/utils';
 
 export interface IHealthCheckIssue {
   key: string;
@@ -23,17 +24,19 @@ const HealthcheckView: React.FunctionComponent<IHealthCheckViewProps> = ({
   systemChecks,
 }) => {
   const { setModalContent, setDisplayModal } = useModalContext();
+  const firstIssue = firstOrNull(systemChecks);
 
   return systemChecked && systemDegraded ? (
     <HealthCheckStyled>
       <StyledWrapperDiv>
-        <StyledIconDiv>
+        <StyledIconDiv aria-label="System degraded icon">
           <FaBan size={24} />
         </StyledIconDiv>
         <StyledContainer>
           <label>
-            <span>{systemChecks[0].key}: </span>
-            {systemChecks[0].msg}
+            <span>{firstIssue?.key ?? 'Unknown'}: </span>
+            {firstIssue?.msg ??
+              'The system is currently experiencing service degradation, you may experience issues using the application until this is resolved.'}
           </label>
           {systemChecks.length > 1 && (
             <LinkButton
