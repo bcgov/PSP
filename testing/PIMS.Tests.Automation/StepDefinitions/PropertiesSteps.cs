@@ -523,7 +523,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.SearchProperty(plan: searchProperty.PlanNumber);
 
             //Click on first property found
-            searchProperties.SelectFirstPMBCResult();
+            searchProperties.SelectFirstPIMSResult();
         }
 
         [StepDefinition(@"I verify the MultiProperty Tabs")]

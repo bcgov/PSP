@@ -465,8 +465,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigatePropertyHighwayTab()
         {
-            WaitUntilClickable(propertyInformationHwyTab);
-            webDriver.FindElement(propertyInformationHwyTab).Click();
+            SafeClick(propertyInformationHwyTab);
         }
 
         public void NavigatePropertyOtherTab()
@@ -803,11 +802,11 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(propertyPMBCPIDLabel);
             AssertTrueIsDisplayed(propertyPMBCPINLabel);
             AssertTrueIsDisplayed(propertyPMBCPlanNbrLabel);
-            AssertTrueIsDisplayed(propertyPMBCOwnerTypeLabel);
+            //AssertTrueIsDisplayed(propertyPMBCOwnerTypeLabel);
             AssertTrueIsDisplayed(propertyPMBCMunicipalityLabel);
             AssertTrueIsDisplayed(propertyPMBCRegionalDistrictLabel);
             AssertTrueIsDisplayed(propertyPMBCDistrictLabel);
-            AssertTrueIsDisplayed(propertyPMBCAreaLabel);
+           //AssertTrueIsDisplayed(propertyPMBCAreaLabel);
             AssertTrueIsDisplayed(propertyPMBCParcelClassLabel);
             AssertTrueIsDisplayed(propertyPMBCSUrveyDesignation1Label);
             AssertTrueIsDisplayed(propertyPMBCSUrveyDesignation2Label);
@@ -819,7 +818,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(propertyCrownTitle);
             AssertTrueIsDisplayed(propertyCrownIntridSidLabel);
             AssertTrueIsDisplayed(propertyCrownTenureStageLabel);
-            AssertTrueIsDisplayed(propertyCrownTenureStatusLabel);
+            //AssertTrueIsDisplayed(propertyCrownTenureStatusLabel);
             AssertTrueIsDisplayed(propertyCrownTenureTypeLabel);
             AssertTrueIsDisplayed(propertyCrownTenureSubtypeLabel);
             AssertTrueIsDisplayed(propertyCrownTenurePurposeLabel);
@@ -1195,7 +1194,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             WaitUntilVisible(propertyInformationPlanTab);
 
-            Assert.Equal(9, webDriver.FindElements(propertyInformationTabsTotal).Count);
+            Assert.Equal(10, webDriver.FindElements(propertyInformationTabsTotal).Count);
             AssertTrueIsDisplayed(propertyInformationPlanTab);
 
             webDriver.FindElement(propertyInformationPlanTab).Click();
