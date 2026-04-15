@@ -26,42 +26,42 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddTeamMembers(TeamMember teamMember)
         {
-            Wait();
+            WaitUntilClickable(membersTeamAddAnotherMemberLink);
             FocusAndClick(membersTeamAddAnotherMemberLink);
 
-            Wait();
             var teamMemberIndex = webDriver.FindElements(fileTeamMembersGroup).Count() -1;
 
             WaitUntilVisible(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"));
-            ChooseSpecificSelectOption(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"), teamMember.TeamMemberRole);
+            ChooseSelectOption(By.CssSelector("select[id='input-team."+ teamMemberIndex +".contactTypeCode']"), teamMember.TeamMemberRole);
             FocusAndClick(By.CssSelector("div[data-testid='teamMemberRow["+ teamMemberIndex +"]'] div[data-testid='contact-input'] button[title='Select Contact']"));
 
-            Wait();
             sharedSelectContact.SelectContact(teamMember.TeamMemberContactName, teamMember.TeamMemberContactType);
 
             Wait();
             if (webDriver.FindElements(By.Id("input-team."+ teamMemberIndex +".primaryContactId")).Count > 0)
-                ChooseSpecificSelectOption(By.Id("input-team."+ teamMemberIndex +".primaryContactId"), teamMember.TeamMemberPrimaryContact);
+            {
+                WaitUntilClickable(By.Id("input-team."+ teamMemberIndex +".primaryContactId"));
+                ChooseSelectOption(By.Id("input-team."+ teamMemberIndex +".primaryContactId"), teamMember.TeamMemberPrimaryContact);
+            }
         }
 
         public void AddMgmtTeamMembers(TeamMember teamMember)
         {
-            Wait();
+            WaitUntilClickable(membersTeamAddAnotherMemberLink);
             FocusAndClick(membersTeamAddAnotherMemberLink);
 
-            Wait();
+            WaitUntilVisible(fileTeamMembersGroup);
             var teamMemberIndex = webDriver.FindElements(fileTeamMembersGroup).Count() -1;
 
             WaitUntilVisible(By.CssSelector("select[id='input-team."+ teamMemberIndex +".teamProfileTypeCode']"));
-            ChooseSpecificSelectOption(By.CssSelector("select[id='input-team."+ teamMemberIndex +".teamProfileTypeCode']"), teamMember.TeamMemberRole);
+            ChooseSelectOption(By.CssSelector("select[id='input-team."+ teamMemberIndex +".teamProfileTypeCode']"), teamMember.TeamMemberRole);
             FocusAndClick(By.CssSelector("div[data-testid='teamMemberRow["+ teamMemberIndex +"]'] div[data-testid='contact-input'] button[title='Select Contact']"));
 
-            Wait();
             sharedSelectContact.SelectContact(teamMember.TeamMemberContactName, teamMember.TeamMemberContactType);
 
-            Wait();
+            WaitUntilClickable(By.Id("input-team."+ teamMemberIndex +".primaryContactId"));
             if (webDriver.FindElements(By.Id("input-team."+ teamMemberIndex +".primaryContactId")).Count > 0)
-                ChooseSpecificSelectOption(By.Id("input-team."+ teamMemberIndex +".primaryContactId"), teamMember.TeamMemberPrimaryContact);
+                ChooseSelectOption(By.Id("input-team."+ teamMemberIndex +".primaryContactId"), teamMember.TeamMemberPrimaryContact);
         }
 
         public void VerifyTeamMembersViewForm(List<TeamMember> teamMembers)
@@ -86,19 +86,17 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyRequiredTeamMemberMessages()
         {
             //Add a new Team member form
-            Wait();
-            WaitUntilClickable(membersTeamAddAnotherMemberLink);
-            webDriver.FindElement(membersTeamAddAnotherMemberLink).Click();
+            SafeClick(membersTeamAddAnotherMemberLink);
 
             //Verify that invalid team member message is displayed
-            ChooseSpecificSelectOption(By.Id("input-team.0.contactTypeCode"), "Expropriation agent");
+            ChooseSelectOption(By.Id("input-team.0.contactTypeCode"), "Expropriation agent");
             webDriver.FindElement(membersTeamSubtitle).Click();
             AssertTrueIsDisplayed(membersTeamInvalidTeamMemberMessage);
 
             //verify that invalid profile message is displayed
             webDriver.FindElement(By.CssSelector("div[data-testid='contact-input'] button[title='Select Contact']")).Click();
             sharedSelectContact.SelectContact("Test", "");
-            ChooseSpecificSelectOption(By.Id("input-team.0.contactTypeCode"), "Select profile...");
+            ChooseSelectOption(By.Id("input-team.0.contactTypeCode"), "Select profile...");
             webDriver.FindElement(membersTeamSubtitle).Click();
             AssertTrueIsDisplayed(membersTeamInvalidProfileMessage);
         }

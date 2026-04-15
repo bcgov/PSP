@@ -144,7 +144,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             Wait();
             var propertystatusSelectElement = By.CssSelector("select[id='input-properties."+ index +".isActive']");
-            ChooseSpecificSelectOption(propertystatusSelectElement, status);
+            ChooseSelectOption(propertystatusSelectElement, status);
         }
 
         public void SaveFileProperties()

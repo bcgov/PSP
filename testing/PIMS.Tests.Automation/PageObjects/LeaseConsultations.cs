@@ -83,7 +83,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToConsultationsTab()
         {
-            Wait();
+            WaitUntilClickable(consultationLink);
             webDriver.FindElement(consultationLink).Click();
         }
 
@@ -95,9 +95,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddUpdateConsultation(LeaseConsultation consultation)
         {
-            Wait();
+            WaitUntilClickable(consultationTypeSelect);
 
-            ChooseSpecificSelectOption(consultationTypeSelect, consultation.leaseConsultationType);
+            ChooseSelectOption(consultationTypeSelect, consultation.leaseConsultationType);
 
             if (consultation.leaseConsultationType == "Other")
             {
@@ -121,9 +121,9 @@ namespace PIMS.Tests.Automation.PageObjects
             if (consultation.leaseConsultationContactPrimaryContact != "")
             {
                 AssertTrueIsDisplayed(consultationContactPrimaryLabel);
-                ChooseSpecificSelectOption(consultationContactPrimarySelect, consultation.leaseConsultationContactPrimaryContact);
+                ChooseSelectOption(consultationContactPrimarySelect, consultation.leaseConsultationContactPrimaryContact);
             }
-            ChooseSpecificSelectOption(consultationResponseReceivedSelect, consultation.leaseConsultationReceived);
+            ChooseSelectOption(consultationResponseReceivedSelect, consultation.leaseConsultationReceived);
             if (consultation.leaseConsultationReceivedOn != "")
             {
                 AssertTrueIsDisplayed(consultationReceivedOnLabel);
@@ -132,7 +132,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(consultationReceivedOnDate).SendKeys(consultation.leaseConsultationReceivedOn);
                 webDriver.FindElement(consultationReceivedOnDate).SendKeys(Keys.Enter);
             }
-            ChooseSpecificSelectOption(consultationOutcomeSelect, consultation.leaseConsultationOutcome);
+            ChooseSelectOption(consultationOutcomeSelect, consultation.leaseConsultationOutcome);
             if (consultation.leaseConsultationComment != "")
             {
                 ClearInput(consultationCommentsTextarea);
@@ -142,100 +142,90 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditLastConsultationByType(string consultationType)
         {
-            Wait();
+            WaitUntilClickable(consultationDistrictExpandBttn);
             switch (consultationType)
             {
                 case "District":
-                    ButtonElement(consultationDistrictExpandBttn);
-                    Wait();
+                    SafeClick(consultationDistrictExpandBttn);
+        
                     int lastDistrictConsultation = webDriver.FindElements(consultationDistrictCount).Count;
                     webDriver.FindElement(By.XPath("//span[contains(text(),'District')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastDistrictConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
                     break;
                 case "Engineering":
-                    ButtonElement(consultationEngineeringExpandBttn);
-                    Wait();
+                    SafeClick(consultationEngineeringExpandBttn);
                     int lastEngineerConsultation = webDriver.FindElements(consultationEngineeringCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastEngineerConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    SafeClick(By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastEngineerConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']"));
                     break;
                 case "First Nation":
-                    ButtonElement(consultationFirstNationExpandBttn);
-                    Wait();
+                    SafeClick(consultationFirstNationExpandBttn);
                     int lastFirstNationConsultation = webDriver.FindElements(consultationFirstNationCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    SafeClick(By.XPath("//span[contains(text(),'First Nation')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastFirstNationConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']"));
                     break;
                 case "Headquarter (HQ)":
-                    ButtonElement(consultationHeadquarterExpandBttn);
-                    Wait();
+                    SafeClick(consultationHeadquarterExpandBttn);
                     int lastHeadquarterConsultation = webDriver.FindElements(consultationHeadquarterCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastHeadquarterConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    SafeClick(By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastHeadquarterConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']"));
                     break;
                 case "Regional planning":
-                    ButtonElement(consultationRegionalPlanningExpandBttn);
-                    Wait();
+                    SafeClick(consultationRegionalPlanningExpandBttn);
                     int lastRegionalPlanningConsultation = webDriver.FindElements(consultationRegionalPlanningCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPlanningConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    SafeClick(By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPlanningConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']"));
                     break;
                 case "Regional property services":
-                    ButtonElement(consultationRegionalPropServicesExpandBttn);
-                    Wait();
+                    SafeClick(consultationRegionalPropServicesExpandBttn);
                     int lastRegionalPropServicesConsultation = webDriver.FindElements(consultationRegionalPropServicesCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPropServicesConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    SafeClick(By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPropServicesConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']"));
                     break;
                 case "Strategic Real Estate (SRE)":
-                    ButtonElement(consultationSREExpandBttn);
-                    Wait();
+                    SafeClick(consultationSREExpandBttn);
                     int lastSREConsultation = webDriver.FindElements(consultationSRECount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastSREConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    SafeClick(By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastSREConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']"));
                     break;
                 case "Other":
-                    ButtonElement(consultationOtherExpandBttn);
-                    Wait();
+                    SafeClick(consultationOtherExpandBttn);
                     int lastOtherConsultation = webDriver.FindElements(consultationOtherCount).Count;
-                    webDriver.FindElement(By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastOtherConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']")).Click();
+                    SafeClick(By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastOtherConsultation +"]/div/h2/div/div/div/div/div/div/button[@title='Edit Consultation']"));
                     break;
             }
         }
 
         public void DeleteFirstConsultationByType(string consultationType)
         {
-            Wait();
             switch (consultationType)
             {
                 case "District":
-                    ButtonElement(consultationDistrictExpandBttn);
+                    SafeClick(consultationDistrictExpandBttn);
                     webDriver.FindElement(By.CssSelector("div[data-testid='consultation-group-section-District'] consultations[0].delete-btn")).Click();
                     break;
                 case "Engineering":
-                    ButtonElement(consultationEngineeringExpandBttn);
+                    SafeClick(consultationEngineeringExpandBttn);
                     webDriver.FindElement(By.CssSelector("div[data-testid='consultation-group-section-Engineering'] consultations[0].delete-btn")).Click();
                     break;
                 case "First Nation":
-                    ButtonElement(consultationFirstNationExpandBttn);
+                    SafeClick(consultationFirstNationExpandBttn);
                     webDriver.FindElement(By.CssSelector("div[data-testid='consultation-group-section-First Nation'] consultations[0].delete-btn")).Click();
                     break;
                 case "Headquarter (HQ)":
-                    ButtonElement(consultationHeadquarterExpandBttn);
+                    SafeClick(consultationHeadquarterExpandBttn);
                     webDriver.FindElement(By.CssSelector("div[data-testid='consultation-group-section-Headquarter (HQ)'] consultations[0].delete-btn")).Click();
                     break;
                 case "Regional planning":
-                    ButtonElement(consultationRegionalPlanningExpandBttn);
+                    SafeClick(consultationRegionalPlanningExpandBttn);
                     webDriver.FindElement(By.CssSelector("div[data-testid='consultation-group-section-Regional Planning'] consultations[0].delete-btn")).Click();
                     break;
                 case "Regional property services":
-                    ButtonElement(consultationRegionalPropServicesExpandBttn);
+                    SafeClick(consultationRegionalPropServicesExpandBttn);
                     webDriver.FindElement(By.CssSelector("div[data-testid='consultation-group-section-Regional Property Services'] consultations[0].delete-btn")).Click();
                     break;
                 case "Strategic Real Estate (SRE)":
-                    ButtonElement(consultationSREExpandBttn);
+                    SafeClick(consultationSREExpandBttn);
                     webDriver.FindElement(By.CssSelector("div[data-testid='consultation-group-section-Strategic Real Estate (SRE)'] consultations[0].delete-btn")).Click();
                     break;
                 case "Other":
-                    ButtonElement(consultationOtherExpandBttn);
+                    SafeClick(consultationOtherExpandBttn);
                     webDriver.FindElement(By.CssSelector("div[data-testid='consultation-Other-items'] button[data-testid='consultations[0].delete-btn']")).Click();
                     break;
             }
-
-            Wait();
             
             Assert.Equal("Delete Consultation", sharedModals.ModalHeader());
             Assert.Contains("You have selected to delete this Consultation.", sharedModals.ModalContent());
@@ -246,7 +236,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInitConsultationTab()
         {
-            Wait();
+            WaitUntilVisible(consultationTitle);
             AssertTrueIsDisplayed(consultationTitle);
             AssertTrueIsDisplayed(consultationAddButton);
             AssertTrueIsDisplayed(consultationDistrictSubtitle);
@@ -284,11 +274,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLastInsertedConsultationView(LeaseConsultation consultation)
         {
-            Wait();
             switch (consultation.leaseConsultationType)
             {
                 case "District":
-                    ButtonElement(consultationDistrictExpandBttn);
+                    SafeClick(consultationDistrictExpandBttn);
                     int lastDistrictConsultation = webDriver.FindElements(consultationDistrictCount).Count;
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'District')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastDistrictConsultation +"]/div/h2/div/div/div/div/div[1]"), consultation.leaseConsultationOutcome);
 
@@ -313,7 +302,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'District')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastDistrictConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/parent::div/following-sibling::div"), consultation.leaseConsultationComment);
                     break;
                 case "Engineering":
-                    ButtonElement(consultationEngineeringExpandBttn);
+                    SafeClick(consultationEngineeringExpandBttn);
                     int lastEngineerConsultation = webDriver.FindElements(consultationEngineeringCount).Count;
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastEngineerConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastEngineerConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/span"));
@@ -336,7 +325,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'Engineering')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastEngineerConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/parent::div/following-sibling::div"), consultation.leaseConsultationComment);
                     break;
                 case "First Nation":
-                    ButtonElement(consultationFirstNationExpandBttn);
+                    SafeClick(consultationFirstNationExpandBttn);
                     int lastFirstNationConsultation = webDriver.FindElements(consultationFirstNationCount).Count;
                     AssertTrueIsDisplayed(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Requested on']"));
                     AssertTrueIsDisplayed(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Requested on']/span"));
@@ -359,7 +348,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//div[@data-testid='consultation-First Nation-items']/div["+ lastFirstNationConsultation +"]/div/div/label[text()='Comments']/parent::div/following-sibling::div"), consultation.leaseConsultationComment);
                     break;
                 case "Headquarter (HQ)":
-                    ButtonElement(consultationHeadquarterExpandBttn);
+                    SafeClick(consultationHeadquarterExpandBttn);
                     int lastHeadquarterConsultation = webDriver.FindElements(consultationHeadquarterCount).Count;
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastHeadquarterConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastHeadquarterConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/span"));
@@ -382,7 +371,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'Headquarter (HQ)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastHeadquarterConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/parent::div/following-sibling::div"), consultation.leaseConsultationComment);
                     break;
                 case "Regional planning":
-                    ButtonElement(consultationRegionalPlanningExpandBttn);
+                    SafeClick(consultationRegionalPlanningExpandBttn);
                     int lastRegionalPlanningConsultation = webDriver.FindElements(consultationRegionalPlanningCount).Count;
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPlanningConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPlanningConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/span"));
@@ -405,7 +394,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'Regional planning')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPlanningConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/parent::div/following-sibling::div"), consultation.leaseConsultationComment);
                     break;
                 case "Regional property services":
-                    ButtonElement(consultationRegionalPropServicesExpandBttn);
+                    SafeClick(consultationRegionalPropServicesExpandBttn);
                     int lastRegionalPropServicesConsultation = webDriver.FindElements(consultationRegionalPropServicesCount).Count;
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPropServicesConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPropServicesConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/span"));
@@ -428,7 +417,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'Regional property services')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastRegionalPropServicesConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/parent::div/following-sibling::div"), consultation.leaseConsultationComment);
                     break;
                 case "Strategic Real Estate (SRE)":
-                    ButtonElement(consultationSREExpandBttn);
+                    SafeClick(consultationSREExpandBttn);
                     int lastSREConsultation = webDriver.FindElements(consultationSRECount).Count;
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastSREConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastSREConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/span"));
@@ -451,7 +440,7 @@ namespace PIMS.Tests.Automation.PageObjects
                     AssertTrueContentEquals(By.XPath("//span[contains(text(),'Strategic Real Estate (SRE)')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastSREConsultation +"]/div/div/div/div/label[contains(text(),'Comments')]/parent::div/following-sibling::div"), consultation.leaseConsultationComment);
                     break;
                 case "Other":
-                    ButtonElement(consultationOtherExpandBttn);
+                    SafeClick(consultationOtherExpandBttn);
                     int lastOtherConsultation = webDriver.FindElements(consultationOtherCount).Count;
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastOtherConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]"));
                     AssertTrueIsDisplayed(By.XPath("//span[contains(text(),'Other')]/parent::div/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ lastOtherConsultation +"]/div/div/div/div/label[contains(text(),'Requested on')]/span"));
