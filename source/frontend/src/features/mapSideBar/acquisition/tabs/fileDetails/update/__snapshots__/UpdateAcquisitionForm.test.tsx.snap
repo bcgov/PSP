@@ -4051,11 +4051,14 @@ exports[`UpdateAcquisitionForm component > renders as expected 1`] = `
             >
               <textarea
                 class="form-control"
-                id="input-ownerRepresentatives.comment"
-                name="ownerRepresentatives.comment"
+                id="input-ownerRepresentatives.0.comment"
+                name="ownerRepresentatives.0.comment"
                 placeholder="Remarks or additional representative(s)"
                 style="word-break: break-all;"
-              />
+                title="test representative comment"
+              >
+                test representative comment
+              </textarea>
             </div>
           </div>
         </div>
