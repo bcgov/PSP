@@ -263,9 +263,6 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
     await fetchLastUpdatedBy();
     mapMachine.refreshMapProperties();
     setIsEditing(false);
-    if (isValidId(acquisitionFileId)) {
-      pathGenerator.showFile('acquisition', acquisitionFileId);
-    }
   };
 
   const canRemove = async () => {
@@ -308,6 +305,9 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
           )
           .then(response => {
             onSuccess();
+            if (isValidId(response?.id)) {
+              pathGenerator.showFile('acquisition', response.id);
+            }
             return response;
           });
       },
