@@ -292,7 +292,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyAutomaticNotes(string fileType, string fromStatus, string toStatus)
         {
             WaitForTableToLoad();
-
+            WaitUntilVisible(note1stNoteContent);
             WaitUntilVisibleText(note1stNoteContent, webDriver.FindElement(note1stNoteContent).Text);
             AssertTrueContentEquals(note1stNoteContent, fileType + " status changed from "+ fromStatus +" to " + toStatus);
         }

@@ -127,9 +127,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void EditNthHistoryDateButton(int index)
         {
             WaitUntilSpinnerDisappear();
-
-            WaitUntilClickable(By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='tbody']/div[1]/div/div[4]/div/button[@data-testid='edit-expropriation-event-"+ index +"']"));
-            webDriver.FindElement(By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='tbody']/div[1]/div/div[4]/div/button[@data-testid='edit-expropriation-event-"+ index +"']")).Click();
+            SafeClick(By.XPath("//div[@data-testid='expropriationHistoryTable']/div[@class='tbody']/div[1]/div/div[4]/div/button[@data-testid='edit-expropriation-event-"+ index +"']"));
         }
 
         public void DeleteNthHistoryDate(int index)
@@ -152,17 +150,13 @@ namespace PIMS.Tests.Automation.PageObjects
         public void EditNthForm8Button(int index)
         {
             WaitUntilSpinnerDisappear();
-
-            WaitUntilClickable(By.CssSelector("button[data-testid='form8["+ index +"].edit-form8']"));
-            webDriver.FindElement(By.CssSelector("button[data-testid='form8["+ index +"].edit-form8']")).Click();
+            SafeClick(By.CssSelector("button[data-testid='form8["+ index +"].edit-form8']"));
         }
 
         public void DeleteNthForm8(int index)
         {
             WaitUntilSpinnerDisappear();
-
-            WaitUntilClickable(By.CssSelector("button[data-testid='form8["+ index +"].delete-form8']"));
-            webDriver.FindElement(By.CssSelector("button[data-testid='form8["+ index +"].delete-form8']")).Click();
+            SafeClick(By.CssSelector("button[data-testid='form8["+ index +"].delete-form8']"));
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
             {

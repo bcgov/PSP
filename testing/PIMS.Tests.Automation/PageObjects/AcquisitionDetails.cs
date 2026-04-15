@@ -55,13 +55,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private readonly By acquisitionFileStatusesSubtitle = By.XPath("//div[contains(text(),'Progress Statuses')]/parent::div/parent::h2");
         private readonly By acquisitionFileStatusesFileProgressLabel = By.XPath("//label[contains(text(),'File progress(es)')]");
-        private readonly By acquisitionFileStatusesFileProgressContent = By.CssSelector("div[data-testid='prg-file-progress-status'] span[class='chip  false disableSelection']");
         private readonly By acquisitionFileStatusesFileAppraisalLabel = By.XPath("//label[contains(text(),'Appraisal')]");
         private readonly By acquisitionFileStatusesFileAppraisalContent = By.XPath("//label[contains(text(),'Appraisal')]/parent::div/following-sibling::div");
         private readonly By acquisitionFileStatusesFileLegalSurveyLabel = By.XPath("//label[contains(text(),'Legal survey')]");
         private readonly By acquisitionFileStatusesFileLegalSurveyContent = By.XPath("//label[contains(text(),'Legal survey')]/parent::div/following-sibling::div");
         private readonly By acquisitionFileStatusesFileTypeTakingLabel = By.XPath("//label[contains(text(),'Type of taking')]");
-        private readonly By acquisitionFileStatusesFileTypeTakingContent = By.CssSelector("div[data-testid='prg-taking-type-status'] span[class='chip  false disableSelection']");
         private readonly By acquisitionFileStatusesFileExpropriationRiskLabel = By.XPath("//label[contains(text(),'Expropriation risk')]");
         private readonly By acquisitionFileStatusesFileExpropriationRiskContent = By.XPath("//label[contains(text(),'Expropriation risk')]/parent::div/following-sibling::div");
 
@@ -80,7 +78,6 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileDetailsNameContent = By.XPath("//label[contains(text(),'Acquisition file name')]/parent::div/following-sibling::div");
         private readonly By acquisitionFileHistoricalNumberLabel = By.XPath("//label[contains(text(),'Historical file number')]");
         private readonly By acquisitionFileHistoricalNumberTooltip = By.XPath("//label[contains(text(),'Historical file number')]/span/span[@data-testid='tooltip-icon-section-field-tooltip']");
-        private readonly By acquisitionFileHistoricalNumberContent = By.XPath("//label[contains(text(),'Historical file number')]/parent::div/following-sibling::div");
         private readonly By acquisitionFileDetailsPhysicalFileLabel = By.XPath("//label[contains(text(),'Physical file status')]");
         private readonly By acquisitionFileDetailsPhysicalFileContent = By.XPath("//label[contains(text(),'Physical file status')]/parent::div/following-sibling::div");
         private readonly By acquisitionFileDetailsPhysicalFileDetailsLabel = By.XPath("//label[contains(text(),'Physical file details')]");
@@ -99,7 +96,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileSubinterestSubtitle = By.XPath("//div[contains(text(),'Sub-Interest Information')]");
         private readonly By acquisitionFileOwnerRepresentativeLabel = By.XPath("//label[contains(text(),'Owner representative')]");
 
-        private readonly By acquisitionFileOwnerCommentLabel = By.XPath("//label[contains(text(),'Comment')]");
+        private readonly By acquisitionFileOwnerCommentLabel = By.XPath("//div[text()='Owners']/parent::div/parent::h2/following-sibling::div/div/div/label[text()='Comment']");
+        private readonly By acquistionFileOwnerViewCommentLabel = By.XPath("//div[text()='Owner Information']/parent::div/parent::h2/following-sibling::div/div/div/label[text()='Comment']");
 
         //Acquisition File Main Form Input Elements
         private readonly By acquisitionFileEditButton = By.CssSelector("button[title='Edit acquisition file']");
@@ -150,8 +148,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By acquisitionFileOwnerRepresentativeButton = By.XPath("//label[contains(text(),'Owner representative')]/parent::div/following-sibling::div/div/div/div/button[@title='Select Contact']");
         private readonly By acquisitionFileOwnerRepresentativeContent = By.XPath("//label[contains(text(),'Owner representative')]/parent::div/following-sibling::div/a/span");
         private readonly By acquisitionFileOwnerCommentTextArea = By.Id("input-ownerRepresentative.comment");
+        private readonly By acquisitionFileUpdateOwnerCommentTextArea = By.Id("input-ownerRepresentatives.0.comment");
         private readonly By acquisitionFileOwnerCommentContent = By.XPath("//label[contains(text(),'Comment')]/parent::div/following-sibling::div");
-        private readonly By acquisitionFileOwnerCommentEditTextArea = By.CssSelector("textarea[id='input-ownerRepresentative.comment']");
         private readonly By acquisitionFileMainFormDiv = By.XPath("//h1[contains(text(),'Create Acquisition File')]/parent::div/parent::div/parent::div/parent::div");
 
         private readonly By acquisitionFileNoticeClaimSubtitle = By.XPath("//h2/div/div[contains(text(),'Notice of Claim')]");
@@ -465,10 +463,18 @@ namespace PIMS.Tests.Automation.PageObjects
             if (acquisition.OwnerComment != "")
             {
                 Wait();
-                ClearInput(acquisitionFileOwnerCommentEditTextArea);
-                webDriver.FindElement(acquisitionFileOwnerCommentEditTextArea).SendKeys(acquisition.OwnerComment);
+                if (webDriver.FindElements(acquisitionFileOwnerCommentTextArea).Count > 0)
+                {
+                    ClearInput(acquisitionFileOwnerCommentTextArea);
+                    webDriver.FindElement(acquisitionFileOwnerCommentTextArea).SendKeys(acquisition.OwnerComment);
+                }
+                else
+                {
+                    ClearInput(acquisitionFileUpdateOwnerCommentTextArea);
+                    webDriver.FindElement(acquisitionFileUpdateOwnerCommentTextArea).SendKeys(acquisition.OwnerComment);
+                }
             }
-
+            
             //NOTICE OF CLAIMS
             AssertTrueIsDisplayed(acquisitionFileNoticeClaimSubtitle);
 
@@ -771,7 +777,10 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueContentEquals(acquisitionSubfileOwnerRepresentativeContent, acquisition.OwnerRepresentative);
 
             if (acquisition.OwnerComment != "")
+            {
+                AssertTrueIsDisplayed(acquistionFileOwnerViewCommentLabel);
                 AssertTrueContentEquals(acquisitionFileOwnerCommentContent, acquisition.OwnerComment);
+            }
 
             //NOTICE OF CLAIMS
             AssertTrueIsDisplayed(acquisitionFileNoticeClaimSubtitle);
@@ -866,6 +875,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 AssertTrueIsDisplayed(acquisitionSubfileOwnerRepresentativeLabel);
                 AssertTrueIsDisplayed(acquisitionSubfileOwnerRepresentativeButton);
             }
+            AssertTrueIsDisplayed(acquisitionFileOwnerCommentLabel);
             AssertTrueIsDisplayed(acquisitionFileOwnerCommentTextArea);
 
             //Notice of Claims
