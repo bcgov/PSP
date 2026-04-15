@@ -1,9 +1,7 @@
-﻿using AventStack.ExtentReports;
-using OpenQA.Selenium;
+﻿using OpenQA.Selenium;
 using OpenQA.Selenium.Support.UI;
 using PIMS.Tests.Automation.Classes;
 using SeleniumExtras.WaitHelpers;
-using System.Xml.Linq;
 
 namespace PIMS.Tests.Automation.PageObjects
 {
@@ -94,34 +92,46 @@ namespace PIMS.Tests.Automation.PageObjects
 
         protected void SafeClick(By by)
         {
+            wait.PollingInterval = TimeSpan.FromMilliseconds(200);
+
             wait.IgnoreExceptionTypes(
-                typeof(StaleElementReferenceException),
                 typeof(NoSuchElementException),
-                typeof(ElementClickInterceptedException)
+                typeof(StaleElementReferenceException)
             );
 
             var js = (IJavaScriptExecutor)webDriver;
 
-            wait.Until(webDriver =>
+            wait.Until(driver =>
             {
+                var element = driver.FindElement(by);
+
+                if (!element.Displayed || !element.Enabled)
+                    return false;
+
+                js.ExecuteScript(
+                    @"arguments[0].scrollIntoView({ block: 'center', inline: 'center' });",
+                    element);
+
+                var clickable = (bool)js.ExecuteScript(@"
+                    const el = arguments[0];
+                    const rect = el.getBoundingClientRect();
+
+                    if (rect.width === 0 || rect.height === 0) return false;
+
+                    const x = rect.left + rect.width / 2;
+                    const y = rect.top + rect.height / 2;
+
+                    const topEl = document.elementFromPoint(x, y);
+                    return topEl === el || el.contains(topEl);
+                    ", element);
+
+                if (!clickable)
+                    return false;
+
                 try
                 {
-                    var element = webDriver.FindElement(by);
-
-                    if (!element.Displayed || !element.Enabled)
-                        return false;
-
-                    js.ExecuteScript("arguments[0].scrollIntoView();", element);
                     element.Click();
                     return true;
-                }
-                catch (StaleElementReferenceException)
-                {
-                    return false;
-                }
-                catch (NoSuchElementException)
-                {
-                    return false;
                 }
                 catch (ElementClickInterceptedException)
                 {

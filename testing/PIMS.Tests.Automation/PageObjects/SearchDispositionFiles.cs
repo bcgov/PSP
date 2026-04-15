@@ -213,7 +213,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string FirstDispositionFileNumber()
         {
-            WaitForTableToLoad();
+            Wait();
             return webDriver.FindElement(searchDispositionFile1stResultLink).Text;
         }
 

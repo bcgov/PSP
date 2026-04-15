@@ -192,3 +192,37 @@ Scenario: 34._Individual_Contacts
 Scenario: 35._Contacts_List_View
 	Given I verify the Contacts List View from row number 1
 	Then Expected Content is displayed on Contacts Table from contact type "Organization"
+
+	Scenario: 36._Properties_List
+	Given I search for a Property in the Properties List by different filters from row number 29
+	Then Properties filters works successfully
+
+Scenario: 37._Non-Inventory_Property_Information
+	Given I search for a non MOTI property from row number 6
+	Then Non-Inventory property renders correctly
+
+Scenario: 38._Invalid_Property_Not_Found
+	Given I search for an Invalid Property from row number 10
+	Then No Properties were found
+
+Scenario: 39._Map_Features
+	Given I verify the Maps Layers
+	Then Map Features rendered successfully
+
+Scenario: 40._Strata_Properties_Tabs
+	Given I search for a property by Plan Number from row number 39
+	When I verify the MultiProperty Tabs
+	Then Multiproperty property rendered successfully
+
+Scenario: 41._Property_Hwy_and_Other_Tabs
+	Given I search for a property by Plan Number from row number 40
+	When I verify the Highway Tab
+	And I verify the Other Tab
+	Then Property Tabs rendered successfully
+
+Scenario: 42._Property_PMBC_and_Crown_Tabs
+	Given I search for a property by PID from row number 41
+	When I verify the PMBC Tab
+	And I verify the Crown Tab
+	Then Property Tabs rendered successfully
+

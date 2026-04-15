@@ -107,7 +107,7 @@ namespace PIMS.Tests.Automation.Features
         
         private static global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages InitializeCucumberMessages()
         {
-            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/RegressionTesting.feature.ndjson", 37);
+            return new global::Reqnroll.Formatters.RuntimeSupport.FeatureLevelCucumberMessages("Features/RegressionTesting.feature.ndjson", 44);
         }
         
         async global::System.Threading.Tasks.Task global::Xunit.IAsyncLifetime.InitializeAsync()
@@ -1367,6 +1367,239 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
 #line 194
  await testRunner.ThenAsync("Expected Content is displayed on Contacts Table from contact type \"Organization\"", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="36._Properties_List")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "RegressionTesting")]
+        [global::Xunit.TraitAttribute("Description", "36._Properties_List")]
+        public async global::System.Threading.Tasks.Task _36__Properties_List()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "35";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("36._Properties_List", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 196
+ this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 197
+ await testRunner.GivenAsync("I search for a Property in the Properties List by different filters from row numb" +
+                        "er 29", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 198
+ await testRunner.ThenAsync("Properties filters works successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="37._Non-Inventory_Property_Information")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "RegressionTesting")]
+        [global::Xunit.TraitAttribute("Description", "37._Non-Inventory_Property_Information")]
+        public async global::System.Threading.Tasks.Task _37__Non_Inventory_Property_Information()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "36";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("37._Non-Inventory_Property_Information", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 200
+this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 201
+ await testRunner.GivenAsync("I search for a non MOTI property from row number 6", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 202
+ await testRunner.ThenAsync("Non-Inventory property renders correctly", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="38._Invalid_Property_Not_Found")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "RegressionTesting")]
+        [global::Xunit.TraitAttribute("Description", "38._Invalid_Property_Not_Found")]
+        public async global::System.Threading.Tasks.Task _38__Invalid_Property_Not_Found()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "37";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("38._Invalid_Property_Not_Found", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 204
+this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 205
+ await testRunner.GivenAsync("I search for an Invalid Property from row number 10", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 206
+ await testRunner.ThenAsync("No Properties were found", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="39._Map_Features")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "RegressionTesting")]
+        [global::Xunit.TraitAttribute("Description", "39._Map_Features")]
+        public async global::System.Threading.Tasks.Task _39__Map_Features()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "38";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("39._Map_Features", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 208
+this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 209
+ await testRunner.GivenAsync("I verify the Maps Layers", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 210
+ await testRunner.ThenAsync("Map Features rendered successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="40._Strata_Properties_Tabs")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "RegressionTesting")]
+        [global::Xunit.TraitAttribute("Description", "40._Strata_Properties_Tabs")]
+        public async global::System.Threading.Tasks.Task _40__Strata_Properties_Tabs()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "39";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("40._Strata_Properties_Tabs", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 212
+this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 213
+ await testRunner.GivenAsync("I search for a property by Plan Number from row number 39", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 214
+ await testRunner.WhenAsync("I verify the MultiProperty Tabs", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 215
+ await testRunner.ThenAsync("Multiproperty property rendered successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="41._Property_Hwy_and_Other_Tabs")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "RegressionTesting")]
+        [global::Xunit.TraitAttribute("Description", "41._Property_Hwy_and_Other_Tabs")]
+        public async global::System.Threading.Tasks.Task _41__Property_Hwy_And_Other_Tabs()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "40";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("41._Property_Hwy_and_Other_Tabs", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 217
+this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 218
+ await testRunner.GivenAsync("I search for a property by Plan Number from row number 40", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 219
+ await testRunner.WhenAsync("I verify the Highway Tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 220
+ await testRunner.AndAsync("I verify the Other Tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 221
+ await testRunner.ThenAsync("Property Tabs rendered successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line hidden
+            }
+            await this.ScenarioCleanupAsync();
+        }
+        
+        [global::Xunit.SkippableFactAttribute(DisplayName="42._Property_PMBC_and_Crown_Tabs")]
+        [global::Xunit.TraitAttribute("FeatureTitle", "RegressionTesting")]
+        [global::Xunit.TraitAttribute("Description", "42._Property_PMBC_and_Crown_Tabs")]
+        public async global::System.Threading.Tasks.Task _42__Property_PMBC_And_Crown_Tabs()
+        {
+            string[] tagsOfScenario = ((string[])(null));
+            global::System.Collections.Specialized.OrderedDictionary argumentsOfScenario = new global::System.Collections.Specialized.OrderedDictionary();
+            string pickleIndex = "41";
+            global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("42._Property_PMBC_and_Crown_Tabs", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
+            string[] tagsOfRule = ((string[])(null));
+            global::Reqnroll.RuleInfo ruleInfo = null;
+#line 223
+this.ScenarioInitialize(scenarioInfo, ruleInfo);
+#line hidden
+            if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
+            {
+                await testRunner.SkipScenarioAsync();
+            }
+            else
+            {
+                await this.ScenarioStartAsync();
+#line 224
+ await testRunner.GivenAsync("I search for a property by PID from row number 41", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
+#line hidden
+#line 225
+ await testRunner.WhenAsync("I verify the PMBC Tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
+#line hidden
+#line 226
+ await testRunner.AndAsync("I verify the Crown Tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
+#line hidden
+#line 227
+ await testRunner.ThenAsync("Property Tabs rendered successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
