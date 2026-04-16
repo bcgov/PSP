@@ -3,6 +3,22 @@ import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { stringToNull } from '@/utils/formUtils';
 import { isValidId, isValidIsoDateTime } from '@/utils/utils';
 
+export interface INotificationSourceOptions {
+  // FK to related entities (e.g. acquisitionFileId, leaseId, etc.) can be added here as needed
+  acquisitionFileId?: number | null;
+  dispositionFileId?: number | null;
+  researchFileId?: number | null;
+  managementFileId?: number | null;
+  leaseId?: number | null;
+  takeId?: number | null;
+  insuranceId?: number | null;
+  leaseConsultationId?: number | null;
+  noticeOfClaimId?: number | null;
+  leaseRenewalId?: number | null;
+  expropOwnerHistoryId?: number | null;
+  agreementId?: number | null;
+}
+
 export class NotificationFormModel {
   id: number | null;
   rowVersion: number | null = null;
@@ -66,6 +82,28 @@ export class NotificationFormModel {
     notification.leaseRenewalId = model.leaseRenewalId ?? null;
     notification.expropOwnerHistoryId = model.expropOwnerHistoryId ?? null;
     notification.agreementId = model.agreementId ?? null;
+    return notification;
+  }
+
+  static createEmpty(
+    notificationType: string,
+    options: INotificationSourceOptions,
+  ): NotificationFormModel {
+    const notification = new NotificationFormModel();
+    notification.notificationType = notificationType;
+    notification.leaseId = options.leaseId ?? null;
+    notification.acquisitionFileId = options.acquisitionFileId ?? null;
+    notification.dispositionFileId = options.dispositionFileId ?? null;
+    notification.researchFileId = options.researchFileId ?? null;
+    notification.managementFileId = options.managementFileId ?? null;
+    notification.takeId = options.takeId ?? null;
+    notification.insuranceId = options.insuranceId ?? null;
+    notification.leaseConsultationId = options.leaseConsultationId ?? null;
+    notification.noticeOfClaimId = options.noticeOfClaimId ?? null;
+    notification.leaseRenewalId = options.leaseRenewalId ?? null;
+    notification.expropOwnerHistoryId = options.expropOwnerHistoryId ?? null;
+    notification.agreementId = options.agreementId ?? null;
+
     return notification;
   }
 }
