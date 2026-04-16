@@ -1,0 +1,640 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="8/29/2025 8:32:04 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{1D9099B8-AFAF-49EF-B27B-941A894BE52B}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="54"
+  DTS:VersionGUID="{3CF085BC-BB65-421E-833E-6989D1AFDACD}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:ConnectionManagers>
+    <DTS:ConnectionManager
+      DTS:refId="Package.ConnectionManagers[PIMS]"
+      DTS:CreationName="OLEDB"
+      DTS:DTSID="{4B73A998-03B3-4D9D-8A17-FAEB77F28A18}"
+      DTS:ObjectName="PIMS">
+      <DTS:ObjectData>
+        <DTS:ConnectionManager
+          DTS:ConnectRetryCount="1"
+          DTS:ConnectRetryInterval="5"
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_DEV;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{4B73A998-03B3-4D9D-8A17-FAEB77F28A18}sqldevtst.th.gov.bc.ca.PIMS_DEV;" />
+      </DTS:ObjectData>
+    </DTS:ConnectionManager>
+  </DTS:ConnectionManagers>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\PIMS_ACQUISITION_OWNER"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{5712EF04-2A4D-41CC-9CB3-7931E82FFD26}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PIMS_ACQUISITION_OWNER"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4B73A998-03B3-4D9D-8A17-FAEB77F28A18}"
+          SQLTask:SqlStatementSource="INSERT INTO PIMS_ACQUISITION_OWNER_HIST&#xA;(&#xA;_ACQUISITION_OWNER_HIST_ID,&#xA;EFFECTIVE_DATE_HIST,&#xA;END_DATE_HIST,&#xA;ACQUISITION_OWNER_ID,&#xA;ACQUISITION_FILE_ID,&#xA;ADDRESS_ID,&#xA;IS_PRIMARY_OWNER,&#xA;IS_ORGANIZATION,&#xA;LAST_NAME_AND_CORP_NAME,&#xA;OTHER_NAME,&#xA;GIVEN_NAME,&#xA;INCORPORATION_NUMBER,&#xA;REGISTRATION_NUMBER,&#xA;CONTACT_EMAIL_ADDR,&#xA;CONTACT_PHONE_NUM,&#xA;EFFECTIVE_DATE,&#xA;[EXPIRY_DATE],&#xA;CONCURRENCY_CONTROL_NUMBER,&#xA;APP_CREATE_TIMESTAMP,&#xA;APP_CREATE_USERID,&#xA;APP_CREATE_USER_GUID,&#xA;APP_CREATE_USER_DIRECTORY,&#xA;APP_LAST_UPDATE_TIMESTAMP,&#xA;APP_LAST_UPDATE_USERID,&#xA;APP_LAST_UPDATE_USER_GUID,&#xA;APP_LAST_UPDATE_USER_DIRECTORY,&#xA;DB_CREATE_TIMESTAMP,&#xA;DB_CREATE_USERID,&#xA;DB_LAST_UPDATE_TIMESTAMP,&#xA;DB_LAST_UPDATE_USERID&#xA;&#xA;)&#xA;SELECT&#xA;(NEXT VALUE FOR [PIMS_ACQUISITION_OWNER_H_ID_SEQ])  AS _ACQUISITION_OWNER_HIST_ID,&#xA;'1900-01-01 00:00:00.000' as EFFECTIVE_DATE_HIST,&#xA;'1900-01-02 00:00:00.000' as END_DATE_HIST,&#xA;ACQUISITION_OWNER_ID,&#xA;ACQUISITION_FILE_ID,&#xA;ADDRESS_ID,&#xA;IS_PRIMARY_OWNER,&#xA;IS_ORGANIZATION,&#xA;LAST_NAME_AND_CORP_NAME,&#xA;OTHER_NAME,&#xA;GIVEN_NAME,&#xA;INCORPORATION_NUMBER,&#xA;REGISTRATION_NUMBER,&#xA;CONTACT_EMAIL_ADDR,&#xA;CONTACT_PHONE_NUM,&#xA;EFFECTIVE_DATE,&#xA;[EXPIRY_DATE],&#xA;CONCURRENCY_CONTROL_NUMBER,&#xA;APP_CREATE_TIMESTAMP,&#xA;APP_CREATE_USERID,&#xA;APP_CREATE_USER_GUID,&#xA;APP_CREATE_USER_DIRECTORY,&#xA;APP_LAST_UPDATE_TIMESTAMP,&#xA;APP_LAST_UPDATE_USERID,&#xA;APP_LAST_UPDATE_USER_GUID,&#xA;APP_LAST_UPDATE_USER_DIRECTORY,&#xA;DB_CREATE_TIMESTAMP,&#xA;DB_CREATE_USERID,&#xA;DB_LAST_UPDATE_TIMESTAMP,&#xA;DB_LAST_UPDATE_USERID&#xA;&#xA;from PIMS_ACQUISITION_OWNER&#xA;&#x9;where ACQUISITION_FILE_ID IN (&#xA;&#x9;select ACQUISITION_FILE_ID from [dbo].[PIMS_COMPENSATION_REQUISITION]&#xA;&#x9;&#x9;where &#xA;&#x9;&#x9;APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;&#x9;AND IS_DRAFT = 0 -- FINAL&#xA;&#x9;) &#xA;&#x9;--AND&#xA;&#x9;--ACQUISITION_OWNER_ID not in (&#xA;&#x9;--Select ACQUISITION_OWNER_ID from PIMS_ACQUISITION_OWNER_HIST&#xA;&#x9;--)&#xA;&#x9;; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PIMS_ACQUISTION_FILE_TEAM"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{DF62A4A6-A581-4BD4-BEAF-50DD032981AB}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PIMS_ACQUISTION_FILE_TEAM"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4B73A998-03B3-4D9D-8A17-FAEB77F28A18}"
+          SQLTask:SqlStatementSource="INSERT INTO PIMS_ACQUISITION_FILE_TEAM_HIST&#xA;(&#xA;_ACQUISITION_FILE_TEAM_HIST_ID,&#xA;EFFECTIVE_DATE_HIST,&#xA;END_DATE_HIST,&#xA;ACQUISITION_FILE_TEAM_ID,&#xA;ACQUISITION_FILE_ID,&#xA;PERSON_ID,&#xA;ORGANIZATION_ID,&#xA;PRIMARY_CONTACT_ID,&#xA;ACQ_FL_TEAM_PROFILE_TYPE_CODE,&#xA;CONCURRENCY_CONTROL_NUMBER,&#xA;APP_CREATE_TIMESTAMP,&#xA;APP_CREATE_USERID,&#xA;APP_CREATE_USER_GUID,&#xA;APP_CREATE_USER_DIRECTORY,&#xA;APP_LAST_UPDATE_TIMESTAMP,&#xA;APP_LAST_UPDATE_USERID,&#xA;APP_LAST_UPDATE_USER_GUID,&#xA;APP_LAST_UPDATE_USER_DIRECTORY,&#xA;DB_CREATE_TIMESTAMP,&#xA;DB_CREATE_USERID,&#xA;DB_LAST_UPDATE_TIMESTAMP,&#xA;DB_LAST_UPDATE_USERID&#xA;)&#xA;SELECT&#xA;(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_TEAM_H_ID_SEQ])  AS _ACQUISITION_FILE_TEAM_HIST_ID,&#xA;'1900-01-01 00:00:00.000' as EFFECTIVE_DATE_HIST,&#xA;'1900-01-02 00:00:00.000' as  END_DATE_HIST,&#xA;ACQUISITION_FILE_TEAM_ID,&#xA;ACQUISITION_FILE_ID,&#xA;PERSON_ID,&#xA;ORGANIZATION_ID,&#xA;PRIMARY_CONTACT_ID,&#xA;ACQ_FL_TEAM_PROFILE_TYPE_CODE,&#xA;CONCURRENCY_CONTROL_NUMBER,&#xA;APP_CREATE_TIMESTAMP,&#xA;APP_CREATE_USERID,&#xA;APP_CREATE_USER_GUID,&#xA;APP_CREATE_USER_DIRECTORY,&#xA;APP_LAST_UPDATE_TIMESTAMP,&#xA;APP_LAST_UPDATE_USERID,&#xA;APP_LAST_UPDATE_USER_GUID,&#xA;APP_LAST_UPDATE_USER_DIRECTORY,&#xA;DB_CREATE_TIMESTAMP,&#xA;DB_CREATE_USERID,&#xA;DB_LAST_UPDATE_TIMESTAMP,&#xA;DB_LAST_UPDATE_USERID&#xA;&#xA;from PIMS_ACQUISITION_FILE_TEAM&#xA;&#x9;where ACQUISITION_FILE_ID IN (&#xA;&#x9;select ACQUISITION_FILE_ID from [dbo].[PIMS_COMPENSATION_REQUISITION]&#xA;&#x9;&#x9;where &#xA;&#x9;&#x9;APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;&#x9;AND IS_DRAFT = 0 -- FINAL&#xA;&#x9;) &#xA;&#x9;--AND&#xA;&#x9;--ACQUISITION_FILE_TEAM_ID not in (&#xA;&#x9;--Select ACQUISITION_FILE_TEAM_ID from PIMS_ACQUISITION_FILE_TEAM_HIST&#xA;&#x9;--)&#xA;&#x9;; &#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PIMS_COMPENSATION_REQUISITION"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{C29F5BE1-220C-4126-9493-DF49B5ACF655}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PIMS_COMPENSATION_REQUISITION"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4B73A998-03B3-4D9D-8A17-FAEB77F28A18}"
+          SQLTask:SqlStatementSource="INSERT INTO [dbo].[PIMS_COMPENSATION_REQUISITION_HIST]&#xA;(&#xA;[_COMPENSATION_REQUISITION_HIST_ID],&#xA;EFFECTIVE_DATE_HIST,&#xA;END_DATE_HIST,&#xA;COMPENSATION_REQUISITION_ID,&#xA;ACQUISITION_FILE_ID,&#xA;&#xA;&#xA;ACQUISITION_OWNER_ID,&#xA;INTEREST_HOLDER_ID,&#xA;ACQUISITION_FILE_TEAM_ID,&#xA;CHART_OF_ACCOUNTS_ID,&#xA;RESPONSIBILITY_ID,&#xA;YEARLY_FINANCIAL_ID,&#xA;ALTERNATE_PROJECT_ID,&#xA;&#xA;&#xA;LEGACY_PAYEE,&#xA;IS_DRAFT,&#xA;IS_PAYMENT_IN_TRUST,&#xA;GST_NUMBER,&#xA;FISCAL_YEAR,&#xA;AGREEMENT_DT,&#xA;EXPROP_NOTICE_SERVED_DT,&#xA;EXPROP_VESTING_DT,&#xA;GENERATION_DT,&#xA;FINALIZED_DATE,&#xA;ADV_PMT_SERVED_DT,&#xA;SPECIAL_INSTRUCTION,&#xA;DETAILED_REMARKS,&#xA;&#xA;&#xA;&#xA;&#xA;IS_DISABLED,&#xA;CONCURRENCY_CONTROL_NUMBER,&#xA;APP_CREATE_TIMESTAMP,&#xA;APP_CREATE_USERID,&#xA;APP_CREATE_USER_GUID,&#xA;APP_CREATE_USER_DIRECTORY,&#xA;APP_LAST_UPDATE_TIMESTAMP,&#xA;APP_LAST_UPDATE_USERID,&#xA;APP_LAST_UPDATE_USER_GUID,&#xA;APP_LAST_UPDATE_USER_DIRECTORY,&#xA;DB_CREATE_TIMESTAMP,&#xA;DB_CREATE_USERID,&#xA;DB_LAST_UPDATE_TIMESTAMP,&#xA;DB_LAST_UPDATE_USERID,&#xA;LEASE_ID&#xA;)&#xA;select&#xA;(next value for [dbo].[PIMS_COMPENSATION_REQUISITION_H_ID_SEQ]) as [_COMPENSATION_REQUISITION_HIST_ID],&#xA;CAST('1900-01-01 00:00:00.000' AS datetime) as EFFECTIVE_DATE_HIST,&#xA;NULL AS END_DATE_HIST,&#xA;COMPENSATION_REQUISITION_ID,&#xA;ACQUISITION_FILE_ID,&#xA;&#xA;NULL AS ACQUISITION_OWNER_ID,&#xA;NULL AS INTEREST_HOLDER_ID,&#xA;NULL AS ACQUISITION_FILE_TEAM_ID,&#xA;CHART_OF_ACCOUNTS_ID,&#xA;RESPONSIBILITY_ID,&#xA;YEARLY_FINANCIAL_ID,&#xA;ALTERNATE_PROJECT_ID,&#xA;&#xA;NULL AS LEGACY_PAYEE,&#xA;IS_DRAFT,&#xA;IS_PAYMENT_IN_TRUST,&#xA;GST_NUMBER,&#xA;FISCAL_YEAR,&#xA;AGREEMENT_DT,&#xA;NULL AS EXPROP_NOTICE_SERVED_DT,&#xA;NULL AS EXPROP_VESTING_DT,&#xA;GENERATION_DT,&#xA;FINALIZED_DATE,&#xA;NULL AS ADV_PMT_SERVED_DT,&#xA;SPECIAL_INSTRUCTION,&#xA;DETAILED_REMARKS,&#xA;&#xA;&#xA;IS_DISABLED,&#xA;CONCURRENCY_CONTROL_NUMBER,&#xA;APP_CREATE_TIMESTAMP,&#xA;APP_CREATE_USERID,&#xA;APP_CREATE_USER_GUID,&#xA;APP_CREATE_USER_DIRECTORY,&#xA;APP_LAST_UPDATE_TIMESTAMP,&#xA;APP_LAST_UPDATE_USERID,&#xA;APP_LAST_UPDATE_USER_GUID,&#xA;APP_LAST_UPDATE_USER_DIRECTORY,&#xA;DB_CREATE_TIMESTAMP,&#xA;DB_CREATE_USERID,&#xA;DB_LAST_UPDATE_TIMESTAMP,&#xA;DB_LAST_UPDATE_USERID,&#xA;LEASE_ID&#xA;from [dbo].[PIMS_COMPENSATION_REQUISITION]&#xA;where &#xA;APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;AND IS_DRAFT = 0&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PIMS_COMP_REQ_ACQ_PAYEE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{DB6016C0-C3A6-41D7-8D7E-249FBC0B182F}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PIMS_COMP_REQ_ACQ_PAYEE"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4B73A998-03B3-4D9D-8A17-FAEB77F28A18}"
+          SQLTask:SqlStatementSource="INSERT INTO dbo.PIMS_COMP_REQ_ACQ_PAYEE_HIST&#xA;(&#xA;_COMP_REQ_ACQ_PAYEE_HIST_ID,&#xA;EFFECTIVE_DATE_HIST,&#xA;END_DATE_HIST,&#xA;COMP_REQ_ACQ_PAYEE_ID,&#xA;COMPENSATION_REQUISITION_ID,&#xA;ACQUISITION_OWNER_ID,&#xA;INTEREST_HOLDER_ID,&#xA;ACQUISITION_FILE_TEAM_ID,&#xA;LEGACY_PAYEE,&#xA;CONCURRENCY_CONTROL_NUMBER,&#xA;APP_CREATE_TIMESTAMP,&#xA;APP_CREATE_USERID,&#xA;APP_CREATE_USER_GUID,&#xA;APP_CREATE_USER_DIRECTORY,&#xA;APP_LAST_UPDATE_TIMESTAMP,&#xA;APP_LAST_UPDATE_USERID,&#xA;APP_LAST_UPDATE_USER_GUID,&#xA;APP_LAST_UPDATE_USER_DIRECTORY,&#xA;DB_CREATE_TIMESTAMP,&#xA;DB_CREATE_USERID,&#xA;DB_LAST_UPDATE_TIMESTAMP,&#xA;DB_LAST_UPDATE_USERID&#xA;&#xA;)&#xA;select &#xA;(NEXT VALUE FOR [PIMS_COMP_REQ_ACQ_PAYEE_H_ID_SEQ]) AS _COMP_REQ_ACQ_PAYEE_HIST_ID,&#xA;'1900-01-01 00:00:00.000' as EFFECTIVE_DATE_HIST,&#xA;DATEADD(MINUTE, 1, B.APP_CREATE_TIMESTAMP) AS END_DATE_HIST,&#xA;A.COMP_REQ_ACQ_PAYEE_ID,&#xA;A.COMPENSATION_REQUISITION_ID,&#xA;A.ACQUISITION_OWNER_ID,&#xA;A.INTEREST_HOLDER_ID,&#xA;A.ACQUISITION_FILE_TEAM_ID,&#xA;A.LEGACY_PAYEE,&#xA;A.CONCURRENCY_CONTROL_NUMBER,&#xA;A.APP_CREATE_TIMESTAMP,&#xA;A.APP_CREATE_USERID,&#xA;A.APP_CREATE_USER_GUID,&#xA;A.APP_CREATE_USER_DIRECTORY,&#xA;A.APP_LAST_UPDATE_TIMESTAMP,&#xA;A.APP_LAST_UPDATE_USERID,&#xA;A.APP_LAST_UPDATE_USER_GUID,&#xA;A.APP_LAST_UPDATE_USER_DIRECTORY,&#xA;A.DB_CREATE_TIMESTAMP,&#xA;A.DB_CREATE_USERID,&#xA;A.DB_LAST_UPDATE_TIMESTAMP,&#xA;A.DB_LAST_UPDATE_USERID&#xA;from PIMS_COMP_REQ_ACQ_PAYEE A&#xA;&#x9;JOIN [dbo].[PIMS_COMPENSATION_REQUISITION] B&#xA;&#x9;&#x9;ON A.COMPENSATION_REQUISITION_ID = B.COMPENSATION_REQUISITION_ID&#xA;&#x9;--where A.COMPENSATION_REQUISITION_ID IN (&#xA;&#x9;--&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;select COMPENSATION_REQUISITION_ID from [dbo].[PIMS_COMPENSATION_REQUISITION]&#xA;&#x9;--&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;where &#xA;&#x9;--&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;--&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;AND IS_DRAFT = 0 -- FINAL&#xA;&#x9;--&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;&#x9;) &#xA;&#x9;AND&#xA;&#x9;B.APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;AND B.IS_DRAFT = 0 &#xA;&#x9;&#xA;&#x9;--AND&#xA;&#x9;--COMP_REQ_ACQ_PAYEE_ID not in (&#xA;&#x9;--Select COMP_REQ_ACQ_PAYEE_ID from PIMS_COMP_REQ_ACQ_PAYEE_HIST&#xA;&#x9;--)&#xA;;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PIMS_COMP_REQ_FINANCIAL"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{76D86F04-55F6-40CD-9E95-9B9D2B1D8A3C}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PIMS_COMP_REQ_FINANCIAL"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4B73A998-03B3-4D9D-8A17-FAEB77F28A18}"
+          SQLTask:SqlStatementSource="INSERT INTO dbo.PIMS_COMP_REQ_FINANCIAL_HIST&#xA;(&#xA;_COMP_REQ_FINANCIAL_HIST_ID,&#xA;EFFECTIVE_DATE_HIST,&#xA;END_DATE_HIST,&#xA;COMP_REQ_FINANCIAL_ID,&#xA;COMPENSATION_REQUISITION_ID,&#xA;FINANCIAL_ACTIVITY_CODE_ID,&#xA;PRETAX_AMT,&#xA;TAX_AMT,&#xA;TOTAL_AMT,&#xA;IS_GST_REQUIRED,&#xA;IS_DISABLED,&#xA;CONCURRENCY_CONTROL_NUMBER,&#xA;APP_CREATE_TIMESTAMP,&#xA;APP_CREATE_USERID,&#xA;APP_CREATE_USER_GUID,&#xA;APP_CREATE_USER_DIRECTORY,&#xA;APP_LAST_UPDATE_TIMESTAMP,&#xA;APP_LAST_UPDATE_USERID,&#xA;APP_LAST_UPDATE_USER_GUID,&#xA;APP_LAST_UPDATE_USER_DIRECTORY,&#xA;DB_CREATE_TIMESTAMP,&#xA;DB_CREATE_USERID,&#xA;DB_LAST_UPDATE_TIMESTAMP,&#xA;DB_LAST_UPDATE_USERID&#xA;&#xA;)&#xA;select &#xA;(NEXT VALUE FOR [PIMS_COMP_REQ_FINANCIAL_H_ID_SEQ]) as _COMP_REQ_FINANCIAL_HIST_ID,&#xA;'1900-01-01 00:00:00.000' as EFFECTIVE_DATE_HIST,&#xA;'1900-01-02 00:00:00.000' as END_DATE_HIST,&#xA;COMP_REQ_FINANCIAL_ID,&#xA;COMPENSATION_REQUISITION_ID,&#xA;FINANCIAL_ACTIVITY_CODE_ID,&#xA;PRETAX_AMT,&#xA;TAX_AMT,&#xA;TOTAL_AMT,&#xA;IS_GST_REQUIRED,&#xA;IS_DISABLED,&#xA;CONCURRENCY_CONTROL_NUMBER,&#xA;APP_CREATE_TIMESTAMP,&#xA;APP_CREATE_USERID,&#xA;APP_CREATE_USER_GUID,&#xA;APP_CREATE_USER_DIRECTORY,&#xA;APP_LAST_UPDATE_TIMESTAMP,&#xA;APP_LAST_UPDATE_USERID,&#xA;APP_LAST_UPDATE_USER_GUID,&#xA;APP_LAST_UPDATE_USER_DIRECTORY,&#xA;DB_CREATE_TIMESTAMP,&#xA;DB_CREATE_USERID,&#xA;DB_LAST_UPDATE_TIMESTAMP,&#xA;DB_LAST_UPDATE_USERID&#xA;from &#xA;&#x9; dbo.PIMS_COMP_REQ_FINANCIAL&#xA;where COMPENSATION_REQUISITION_ID IN (&#xA;select COMPENSATION_REQUISITION_ID from [dbo].[PIMS_COMPENSATION_REQUISITION]&#xA;&#x9;where &#xA;&#x9;APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;AND IS_DRAFT = 0&#xA;) &#xA;--AND&#xA;--COMP_REQ_FINANCIAL_ID not in (&#xA;--Select COMP_REQ_FINANCIAL_ID from PIMS_COMP_REQ_FINANCIAL_HIST&#xA;--)&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PIMS_INTEREST_HOLDER"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F5C82EB6-04A9-4595-B281-413D94F5DF88}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PIMS_INTEREST_HOLDER"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4B73A998-03B3-4D9D-8A17-FAEB77F28A18}"
+          SQLTask:SqlStatementSource="INSERT INTO PIMS_INTEREST_HOLDER_HIST&#xA;(&#xA;_INTEREST_HOLDER_HIST_ID,&#xA;EFFECTIVE_DATE_HIST,&#xA;END_DATE_HIST,&#xA;INTEREST_HOLDER_ID,&#xA;ACQUISITION_FILE_ID,&#xA;PERSON_ID,&#xA;ORGANIZATION_ID,&#xA;PRIMARY_CONTACT_ID,&#xA;INTEREST_HOLDER_TYPE_CODE,&#xA;[COMMENT],&#xA;IS_DISABLED,&#xA;CONCURRENCY_CONTROL_NUMBER,&#xA;APP_CREATE_TIMESTAMP,&#xA;APP_CREATE_USERID,&#xA;APP_CREATE_USER_GUID,&#xA;APP_CREATE_USER_DIRECTORY,&#xA;APP_LAST_UPDATE_TIMESTAMP,&#xA;APP_LAST_UPDATE_USERID,&#xA;APP_LAST_UPDATE_USER_GUID,&#xA;APP_LAST_UPDATE_USER_DIRECTORY,&#xA;DB_CREATE_TIMESTAMP,&#xA;DB_CREATE_USERID,&#xA;DB_LAST_UPDATE_TIMESTAMP,&#xA;DB_LAST_UPDATE_USERID&#xA;&#xA;)&#xA;&#xA;SELECT&#xA;(NEXT VALUE FOR [PIMS_INTEREST_HOLDER_H_ID_SEQ])  AS _INTEREST_HOLDER_HIST_ID,&#xA;'1900-01-01 00:00:00.000' as EFFECTIVE_DATE_HIST,&#xA;'1900-01-02 00:00:00.000' as END_DATE_HIST,&#xA;INTEREST_HOLDER_ID,&#xA;ACQUISITION_FILE_ID,&#xA;PERSON_ID,&#xA;ORGANIZATION_ID,&#xA;PRIMARY_CONTACT_ID,&#xA;INTEREST_HOLDER_TYPE_CODE,&#xA;COMMENT,&#xA;IS_DISABLED,&#xA;CONCURRENCY_CONTROL_NUMBER,&#xA;APP_CREATE_TIMESTAMP,&#xA;APP_CREATE_USERID,&#xA;APP_CREATE_USER_GUID,&#xA;APP_CREATE_USER_DIRECTORY,&#xA;APP_LAST_UPDATE_TIMESTAMP,&#xA;APP_LAST_UPDATE_USERID,&#xA;APP_LAST_UPDATE_USER_GUID,&#xA;APP_LAST_UPDATE_USER_DIRECTORY,&#xA;DB_CREATE_TIMESTAMP,&#xA;DB_CREATE_USERID,&#xA;DB_LAST_UPDATE_TIMESTAMP,&#xA;DB_LAST_UPDATE_USERID&#xA;from PIMS_INTEREST_HOLDER&#xA;&#x9;where ACQUISITION_FILE_ID IN (&#xA;&#x9;select ACQUISITION_FILE_ID from [dbo].[PIMS_COMPENSATION_REQUISITION]&#xA;&#x9;&#x9;where &#xA;&#x9;&#x9;APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;&#x9;AND IS_DRAFT = 0 -- FINAL&#xA;&#x9;) &#xA;&#x9;--AND&#xA;&#x9;--INTEREST_HOLDER_ID not in (&#xA;&#x9;--Select INTEREST_HOLDER_ID from PIMS_INTEREST_HOLDER_HIST&#xA;&#x9;--)&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PIMS_PROPERTY"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{F731D3CF-307F-499A-9A8C-93D11CEC4B60}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PIMS_PROPERTY"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4B73A998-03B3-4D9D-8A17-FAEB77F28A18}"
+          SQLTask:SqlStatementSource="&#xA;WITH X AS&#xA;(&#xA;SELECT&#xA;   PP.PROPERTY_ID&#xA;from PIMS_PROPERTY PP&#xA;&#x9;&#x9;JOIN PIMS_PROPERTY_ACQUISITION_FILE PPAF ON PP.PROPERTY_ID = PPAF.PROPERTY_ID&#xA;&#x9;&#x9;JOIN PIMS_ACQUISITION_FILE PAF ON PAF.ACQUISITION_FILE_ID = PPAF.ACQUISITION_FILE_ID&#xA;&#x9;where PAF.ACQUISITION_FILE_ID IN (&#xA;&#x9;select ACQUISITION_FILE_ID from [dbo].[PIMS_COMPENSATION_REQUISITION]&#xA;&#x9;&#x9;where &#xA;&#x9;&#x9;APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;&#x9;AND IS_DRAFT = 0 -- FINAL&#xA;&#x9;) &#xA;&#x9;--AND&#xA;&#x9;--PP.PROPERTY_ID not in (&#xA;&#x9;--Select PROPERTY_ID from PIMS_PROPERTY_HIST&#xA;&#x9;--)&#xA;)&#xA;&#xA;&#xA;INSERT INTO dbo.PIMS_PROPERTY_HIST&#xA;(&#xA;_PROPERTY_HIST_ID,&#xA;EFFECTIVE_DATE_HIST,&#xA;END_DATE_HIST,&#xA;PROPERTY_ID,&#xA;PROPERTY_MANAGER_ID,&#xA;PROP_MGMT_ORG_ID,&#xA;PROPERTY_TYPE_CODE,&#xA;ADDRESS_ID,&#xA;REGION_CODE,&#xA;DISTRICT_CODE,&#xA;PROPERTY_AREA_UNIT_TYPE_CODE,&#xA;PROPERTY_DATA_SOURCE_TYPE_CODE,&#xA;PROPERTY_STATUS_TYPE_CODE,&#xA;SURPLUS_DECLARATION_TYPE_CODE,&#xA;VOLUMETRIC_TYPE_CODE,&#xA;VOLUME_UNIT_TYPE_CODE,&#xA;PPH_STATUS_TYPE_CODE,&#xA;PROPERTY_CLASSIFICATION_TYPE_CODE,&#xA;PROPERTY_DATA_SOURCE_EFFECTIVE_DATE,&#xA;[NAME],&#xA;[DESCRIPTION],&#xA;PID,&#xA;PIN,&#xA;FILE_NUMBER,&#xA;FILE_NUMBER_SUFFIX,&#xA;LAND_AREA,&#xA;GENERAL_LOCATION,&#xA;SURVEY_PLAN_NUMBER,&#xA;ENCUMBRANCE_REASON,&#xA;SURPLUS_DECLARATION_COMMENT,&#xA;SURPLUS_DECLARATION_DATE,&#xA;MUNICIPAL_ZONING,&#xA;IS_VOLUMETRIC_PARCEL,&#xA;VOLUMETRIC_MEASUREMENT,&#xA;IS_OWNED,&#xA;IS_PROPERTY_OF_INTEREST,&#xA;IS_VISIBLE_TO_OTHER_AGENCIES,&#xA;IS_SENSITIVE,&#xA;IS_PROVINCIAL_PUBLIC_HWY,&#xA;PPH_STATUS_UPDATE_USERID,&#xA;PPH_STATUS_UPDATE_TIMESTAMP,&#xA;PPH_STATUS_UPDATE_USER_GUID,&#xA;IS_RWY_BELT_DOM_PATENT,&#xA;ZONING,&#xA;ZONING_POTENTIAL,&#xA;ADDITIONAL_DETAILS,&#xA;IS_UTILITIES_PAYABLE,&#xA;IS_TAXES_PAYABLE,&#xA;BAND_NAME,&#xA;RESERVE_NAME,&#xA;CONCURRENCY_CONTROL_NUMBER,&#xA;APP_CREATE_TIMESTAMP,&#xA;APP_CREATE_USERID,&#xA;APP_CREATE_USER_GUID,&#xA;APP_CREATE_USER_DIRECTORY,&#xA;APP_LAST_UPDATE_TIMESTAMP,&#xA;APP_LAST_UPDATE_USERID,&#xA;APP_LAST_UPDATE_USER_GUID,&#xA;APP_LAST_UPDATE_USER_DIRECTORY,&#xA;DB_CREATE_TIMESTAMP,&#xA;DB_CREATE_USERID,&#xA;DB_LAST_UPDATE_TIMESTAMP,&#xA;DB_LAST_UPDATE_USERID,&#xA;IS_DISPOSED,&#xA;IS_OTHER_INTEREST,&#xA;IS_RETIRED,&#xA;LAND_LEGAL_DESCRIPTION,&#xA;NOTES,&#xA;UTILITY_RESPONSIBILITY_TYPE_CODE,&#xA;TAX_RESPONSIBILITY_TYPE_CODE,&#xA;GLOBAL_UID&#xA;&#xA;&#xA;)&#xA;SELECT&#xA;(NEXT VALUE FOR [PIMS_PROPERTY_H_ID_SEQ])  AS _PROPERTY_HIST_ID,&#xA;'1900-01-01 00:00:00.000' as EFFECTIVE_DATE_HIST,&#xA;'1900-01-02 00:00:00.000' as END_DATE_HIST,&#xA;PP.PROPERTY_ID,&#xA;NULL AS PROPERTY_MANAGER_ID,&#xA;NULL AS PROP_MGMT_ORG_ID,&#xA;PP.PROPERTY_TYPE_CODE,&#xA;PP.ADDRESS_ID,&#xA;PP.REGION_CODE,&#xA;PP.DISTRICT_CODE,&#xA;PP.PROPERTY_AREA_UNIT_TYPE_CODE,&#xA;PP.PROPERTY_DATA_SOURCE_TYPE_CODE,&#xA;PP.PROPERTY_STATUS_TYPE_CODE,&#xA;PP.SURPLUS_DECLARATION_TYPE_CODE,&#xA;PP.VOLUMETRIC_TYPE_CODE,&#xA;PP.VOLUME_UNIT_TYPE_CODE,&#xA;PP.PPH_STATUS_TYPE_CODE,&#xA;NULL AS PROPERTY_CLASSIFICATION_TYPE_CODE,&#xA;PP.PROPERTY_DATA_SOURCE_EFFECTIVE_DATE,&#xA;NULL AS [NAME],&#xA;NULL AS [DESCRIPTION],&#xA;PP.PID,&#xA;PP.PIN,&#xA;PP.FILE_NUMBER,&#xA;PP.FILE_NUMBER_SUFFIX,&#xA;PP.LAND_AREA,&#xA;PP.GENERAL_LOCATION,&#xA;PP.SURVEY_PLAN_NUMBER,&#xA;NULL AS ENCUMBRANCE_REASON,&#xA;PP.SURPLUS_DECLARATION_COMMENT,&#xA;PP.SURPLUS_DECLARATION_DATE,&#xA;PP.MUNICIPAL_ZONING,&#xA;PP.IS_VOLUMETRIC_PARCEL,&#xA;PP.VOLUMETRIC_MEASUREMENT,&#xA;PP.IS_OWNED,&#xA;NULL AS IS_PROPERTY_OF_INTEREST,&#xA;NULL AS IS_VISIBLE_TO_OTHER_AGENCIES,&#xA;NULL AS IS_SENSITIVE,&#xA;NULL AS IS_PROVINCIAL_PUBLIC_HWY,&#xA;PP.PPH_STATUS_UPDATE_USERID,&#xA;PP.PPH_STATUS_UPDATE_TIMESTAMP,&#xA;PP.PPH_STATUS_UPDATE_USER_GUID,&#xA;PP.IS_RWY_BELT_DOM_PATENT,&#xA;NULL AS ZONING,&#xA;NULL AS ZONING_POTENTIAL,&#xA;PP.ADDITIONAL_DETAILS,&#xA;PP.IS_UTILITIES_PAYABLE,&#xA;PP.IS_TAXES_PAYABLE,&#xA;PP.BAND_NAME,&#xA;PP.RESERVE_NAME,&#xA;PP.CONCURRENCY_CONTROL_NUMBER,&#xA;PP.APP_CREATE_TIMESTAMP,&#xA;PP.APP_CREATE_USERID,&#xA;PP.APP_CREATE_USER_GUID,&#xA;PP.APP_CREATE_USER_DIRECTORY,&#xA;PP.APP_LAST_UPDATE_TIMESTAMP,&#xA;PP.APP_LAST_UPDATE_USERID,&#xA;PP.APP_LAST_UPDATE_USER_GUID,&#xA;PP.APP_LAST_UPDATE_USER_DIRECTORY,&#xA;PP.DB_CREATE_TIMESTAMP,&#xA;PP.DB_CREATE_USERID,&#xA;PP.DB_LAST_UPDATE_TIMESTAMP,&#xA;PP.DB_LAST_UPDATE_USERID,&#xA;NULL AS IS_DISPOSED,&#xA;NULL AS IS_OTHER_INTEREST,&#xA;PP.IS_RETIRED,&#xA;PP.LAND_LEGAL_DESCRIPTION,&#xA;NULL AS NOTES,&#xA;PP.UTILITY_RESPONSIBILITY_TYPE_CODE,&#xA;PP.TAX_RESPONSIBILITY_TYPE_CODE,&#xA;PP.GLOBAL_UID&#xA;FROM PIMS_PROPERTY PP WHERE EXISTS ( Select PROPERTY_ID FROM X )&#xA;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PIMS_PROPERTY_ACQUISITION_FILE"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{2A8A4AE9-5A39-4516-A700-FE3F82BBA7D8}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PIMS_PROPERTY_ACQUISITION_FILE"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4B73A998-03B3-4D9D-8A17-FAEB77F28A18}"
+          SQLTask:SqlStatementSource="INSERT INTO PIMS_PROPERTY_ACQUISITION_FILE_HIST&#xA;(&#xA;_PROPERTY_ACQUISITION_FILE_HIST_ID,&#xA;EFFECTIVE_DATE_HIST,&#xA;END_DATE_HIST,&#xA;PROPERTY_ACQUISITION_FILE_ID,&#xA;ACQUISITION_FILE_ID,&#xA;PROPERTY_ID,&#xA;PROPERTY_NAME,&#xA;DISPLAY_ORDER,&#xA;CONCURRENCY_CONTROL_NUMBER,&#xA;APP_CREATE_TIMESTAMP,&#xA;APP_CREATE_USERID,&#xA;APP_CREATE_USER_GUID,&#xA;APP_CREATE_USER_DIRECTORY,&#xA;APP_LAST_UPDATE_TIMESTAMP,&#xA;APP_LAST_UPDATE_USERID,&#xA;APP_LAST_UPDATE_USER_GUID,&#xA;APP_LAST_UPDATE_USER_DIRECTORY,&#xA;DB_CREATE_TIMESTAMP,&#xA;DB_CREATE_USERID,&#xA;DB_LAST_UPDATE_TIMESTAMP,&#xA;DB_LAST_UPDATE_USERID&#xA;&#xA;)&#xA;SELECT&#xA;(NEXT VALUE FOR [PIMS_PROPERTY_ACQUISITION_FILE_H_ID_SEQ])  AS _PROPERTY_ACQUISITION_FILE_HIST_ID,&#xA;'1900-01-01 00:00:00.000' as EFFECTIVE_DATE_HIST,&#xA;'1900-01-02 00:00:00.000' as END_DATE_HIST,&#xA;PROPERTY_ACQUISITION_FILE_ID,&#xA;ACQUISITION_FILE_ID,&#xA;PROPERTY_ID,&#xA;PROPERTY_NAME,&#xA;DISPLAY_ORDER,&#xA;CONCURRENCY_CONTROL_NUMBER,&#xA;APP_CREATE_TIMESTAMP,&#xA;APP_CREATE_USERID,&#xA;APP_CREATE_USER_GUID,&#xA;APP_CREATE_USER_DIRECTORY,&#xA;APP_LAST_UPDATE_TIMESTAMP,&#xA;APP_LAST_UPDATE_USERID,&#xA;APP_LAST_UPDATE_USER_GUID,&#xA;APP_LAST_UPDATE_USER_DIRECTORY,&#xA;DB_CREATE_TIMESTAMP,&#xA;DB_CREATE_USERID,&#xA;DB_LAST_UPDATE_TIMESTAMP,&#xA;DB_LAST_UPDATE_USERID&#xA;&#xA;from PIMS_PROPERTY_ACQUISITION_FILE&#xA;&#x9;where ACQUISITION_FILE_ID IN (&#xA;&#x9;select ACQUISITION_FILE_ID from [dbo].[PIMS_COMPENSATION_REQUISITION]&#xA;&#x9;&#x9;where &#xA;&#x9;&#x9;APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;&#x9;AND IS_DRAFT = 0 -- FINAL&#xA;&#x9;) &#xA;&#x9;--AND&#xA;&#x9;--PROPERTY_ACQUISITION_FILE_ID not in (&#xA;&#x9;--Select PROPERTY_ACQUISITION_FILE_ID from PIMS_PROPERTY_ACQUISITION_FILE_HIST&#xA;&#x9;--)&#xA;&#x9;;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\PIMS_PROP_ACQ_FL_COMP_REQ"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{B0F9D395-4617-4E69-BE82-FAD1458DBAAC}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="PIMS_PROP_ACQ_FL_COMP_REQ"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{4B73A998-03B3-4D9D-8A17-FAEB77F28A18}"
+          SQLTask:SqlStatementSource="INSERT INTO PIMS_PROP_ACQ_FL_COMP_REQ_HIST&#xA;(&#xA;_PROP_ACQ_FL_COMP_REQ_HIST_ID,&#xA;EFFECTIVE_DATE_HIST,&#xA;END_DATE_HIST,&#xA;A.PROP_ACQ_FL_COMP_REQ_ID,&#xA;A.PROPERTY_ACQUISITION_FILE_ID,&#xA;A.COMPENSATION_REQUISITION_ID,&#xA;A.CONCURRENCY_CONTROL_NUMBER,&#xA;A.APP_CREATE_TIMESTAMP,&#xA;A.APP_CREATE_USERID,&#xA;A.APP_CREATE_USER_GUID,&#xA;A.APP_CREATE_USER_DIRECTORY,&#xA;A.APP_LAST_UPDATE_TIMESTAMP,&#xA;A.APP_LAST_UPDATE_USERID,&#xA;A.APP_LAST_UPDATE_USER_GUID,&#xA;A.APP_LAST_UPDATE_USER_DIRECTORY,&#xA;A.DB_CREATE_TIMESTAMP,&#xA;A.DB_CREATE_USERID,&#xA;A.DB_LAST_UPDATE_TIMESTAMP,&#xA;A.DB_LAST_UPDATE_USERID&#xA;)&#xA;SELECT&#xA;(NEXT VALUE FOR [PIMS_PROP_ACQ_FL_COMP_REQ_H_ID_SEQ])  AS _PROP_ACQ_FL_COMP_REQ_HIST_ID,&#xA;'1900-01-01 00:00:00.000' as EFFECTIVE_DATE_HIST,&#xA;DATEADD(MINUTE, 1, B.APP_CREATE_TIMESTAMP) AS END_DATE_HIST,&#xA;A.PROP_ACQ_FL_COMP_REQ_ID,&#xA;A.PROPERTY_ACQUISITION_FILE_ID,&#xA;A.COMPENSATION_REQUISITION_ID,&#xA;A.CONCURRENCY_CONTROL_NUMBER,&#xA;A.APP_CREATE_TIMESTAMP,&#xA;A.APP_CREATE_USERID,&#xA;A.APP_CREATE_USER_GUID,&#xA;A.APP_CREATE_USER_DIRECTORY,&#xA;A.APP_LAST_UPDATE_TIMESTAMP,&#xA;A.APP_LAST_UPDATE_USERID,&#xA;A.APP_LAST_UPDATE_USER_GUID,&#xA;A.APP_LAST_UPDATE_USER_DIRECTORY,&#xA;A.DB_CREATE_TIMESTAMP,&#xA;A.DB_CREATE_USERID,&#xA;A.DB_LAST_UPDATE_TIMESTAMP,&#xA;A.DB_LAST_UPDATE_USERID&#xA;&#xA;from PIMS_PROP_ACQ_FL_COMP_REQ A&#xA;&#x9;JOIN [dbo].[PIMS_COMPENSATION_REQUISITION] B&#xA;&#x9;&#x9;ON A.COMPENSATION_REQUISITION_ID = B.COMPENSATION_REQUISITION_ID&#xA;&#x9;--where COMPENSATION_REQUISITION_ID IN (&#xA;&#x9;--select COMPENSATION_REQUISITION_ID from [dbo].[PIMS_COMPENSATION_REQUISITION]&#xA;&#x9;--&#x9;where &#xA;&#x9;--&#x9;APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;--&#x9;AND IS_DRAFT = 0 -- FINAL&#xA;&#x9;--) &#xA;&#x9;AND&#xA;&#x9;B.APP_CREATE_USERID = 'PAIMS_PIMS_ACQUISITION'&#xA;&#x9;AND B.IS_DRAFT = 0&#xA;&#x9;--AND&#xA;&#x9;--PROP_ACQ_FL_COMP_REQ_ID not in (&#xA;&#x9;--Select PROP_ACQ_FL_COMP_REQ_ID from PIMS_ACQUISITION_FILE_TEAM_HIST&#xA;&#x9;--)&#xA;&#x9;; " xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{C4057299-AFD8-4329-B2A0-1BAC5AD8B93C}"
+      DTS:From="Package\PIMS_COMPENSATION_REQUISITION"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\PIMS_COMP_REQ_FINANCIAL" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{5F2DD96D-8C33-49E2-BEE7-F07E22EFB81D}"
+      DTS:From="Package\PIMS_COMP_REQ_FINANCIAL"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\PIMS_COMP_REQ_ACQ_PAYEE" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{D9160239-9487-4EDB-88C2-FA343FB8CDC6}"
+      DTS:From="Package\PIMS_COMP_REQ_ACQ_PAYEE"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\PIMS_INTEREST_HOLDER" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
+      DTS:CreationName=""
+      DTS:DTSID="{90C4E1FA-667B-45DC-81EA-236CD88EF00E}"
+      DTS:From="Package\PIMS_INTEREST_HOLDER"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 3"
+      DTS:To="Package\PIMS_ACQUISITION_OWNER" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 4]"
+      DTS:CreationName=""
+      DTS:DTSID="{E34AD84C-264D-4150-94EC-6AB061D61FE3}"
+      DTS:From="Package\PIMS_ACQUISTION_FILE_TEAM"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 4"
+      DTS:To="Package\PIMS_PROP_ACQ_FL_COMP_REQ" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 5]"
+      DTS:CreationName=""
+      DTS:DTSID="{1C0B01D8-E704-427F-A758-75B67CDAA59B}"
+      DTS:From="Package\PIMS_PROP_ACQ_FL_COMP_REQ"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 5"
+      DTS:To="Package\PIMS_PROPERTY" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 6]"
+      DTS:CreationName=""
+      DTS:DTSID="{471EBB96-3BC0-4557-A223-42F0BF639848}"
+      DTS:From="Package\PIMS_PROPERTY"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 6"
+      DTS:To="Package\PIMS_PROPERTY_ACQUISITION_FILE" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 7]"
+      DTS:CreationName=""
+      DTS:DTSID="{A128DEC1-7495-41B0-A3AD-D73D81DF31AE}"
+      DTS:From="Package\PIMS_ACQUISITION_OWNER"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 7"
+      DTS:To="Package\PIMS_ACQUISTION_FILE_TEAM" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="64" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="228,42.6666666666667"
+          Id="Package\PIMS_ACQUISITION_OWNER"
+          TopLeft="983.124985350296,456.368429642635" />
+        <NodeLayout
+          Size="241.333333333334,42.6666666666667"
+          Id="Package\PIMS_ACQUISTION_FILE_TEAM"
+          TopLeft="988.124985275791,547.789483806763" />
+        <NodeLayout
+          Size="242.666666666667,42.6666666666667"
+          Id="Package\PIMS_COMP_REQ_ACQ_PAYEE"
+          TopLeft="978.124985424802,292.842110775184" />
+        <NodeLayout
+          Size="234.666666666667,42.6666666666667"
+          Id="Package\PIMS_COMP_REQ_FINANCIAL"
+          TopLeft="979.374985406176,209.368424993473" />
+        <NodeLayout
+          Size="273.333333333334,42.6666666666667"
+          Id="Package\PIMS_COMPENSATION_REQUISITION"
+          TopLeft="974.374985480682,119.736844359012" />
+        <NodeLayout
+          Size="214.666666666667,42.6666666666667"
+          Id="Package\PIMS_INTEREST_HOLDER"
+          TopLeft="984.374985331669,376.315796556895" />
+        <NodeLayout
+          Size="256,42.6666666666667"
+          Id="Package\PIMS_PROP_ACQ_FL_COMP_REQ"
+          TopLeft="987.499985285104,636.052643362835" />
+        <NodeLayout
+          Size="170.666666666667,42.6666666666667"
+          Id="Package\PIMS_PROPERTY"
+          TopLeft="1024.37498473562,735.94738208521" />
+        <NodeLayout
+          Size="273.333333333334,42.6666666666667"
+          Id="Package\PIMS_PROPERTY_ACQUISITION_FILE"
+          TopLeft="975.267842610234,819.909789680632" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="1111.04165214735,162.403511025679">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-14.3333334078388,46.964913967794"
+              Start="0,0"
+              End="-14.3333334078388,39.464913967794">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,19.482456983897" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,19.482456983897"
+                    Point2="0,23.482456983897"
+                    Point3="-4,23.482456983897" />
+                  <mssgle:LineSegment
+                    End="-10.3333334078388,23.482456983897" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-10.3333334078388,23.482456983897"
+                    Point2="-14.3333334078388,23.482456983897"
+                    Point3="-14.3333334078388,27.482456983897" />
+                  <mssgle:LineSegment
+                    End="-14.3333334078388,39.464913967794" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="1098.08331874882,252.03509166014">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.8070191150443"
+              Start="0,0"
+              End="0,33.3070191150443">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.3070191150443" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="1095.58331871157,335.508777441851">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,40.8070191150443"
+              Start="0,0"
+              End="0,33.3070191150443">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.3070191150443" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 3]"
+          TopLeft="1094.41665200765,418.982463223562">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,37.3859664190733"
+              Start="0,0"
+              End="0,29.8859664190733">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,29.8859664190733" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 4]"
+          TopLeft="1112.14581861378,590.45615047343">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,45.5964928894055"
+              Start="0,0"
+              End="0,38.0964928894055">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,38.0964928894055" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 5]"
+          TopLeft="1112.60415167703,678.719310029502">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,57.2280720557084"
+              Start="0,0"
+              End="0,49.7280720557084">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,49.7280720557084" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 6]"
+          TopLeft="1110.82141367293,778.614048751877">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,41.2957409287553"
+              Start="0,0"
+              End="0,33.7957409287553">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,33.7957409287553" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 7]"
+          TopLeft="1097.1249853503,499.035096309302">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="11.6666665921618,48.7543874974613"
+              Start="0,0"
+              End="11.6666665921618,41.2543874974613">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,20.3771937487306" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,20.3771937487306"
+                    Point2="0,24.3771937487306"
+                    Point3="4,24.3771937487306" />
+                  <mssgle:LineSegment
+                    End="7.66666659216185,24.3771937487306" />
+                  <mssgle:CubicBezierSegment
+                    Point1="7.66666659216185,24.3771937487306"
+                    Point2="11.6666665921618,24.3771937487306"
+                    Point3="11.6666665921618,28.3771937487306" />
+                  <mssgle:LineSegment
+                    End="11.6666665921618,41.2543874974613" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="db version 109.0 tested"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="152,40"
+          Id="7d9853ec-016c-45da-afa0-49614743c4d6"
+          TopLeft="995.624985164031,32.1578953421347" />
+        <AnnotationLayout
+          Text="done - success in PIMS_DEV"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="177.333333333334,40"
+          Id="8328af1b-5a4c-4023-b9de-2500981c33ed"
+          TopLeft="1259.99998122454,116.315791663041" />
+        <AnnotationLayout
+          Text="done - success in PIMS_DEV"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="177.333333333334,40"
+          Id="bdfb0472-4cf3-4245-a0cb-a5d4992da526"
+          TopLeft="1259.99998122454,205.29824754582" />
+        <AnnotationLayout
+          Text="done - success in PIMS_DEV -- change END_DATE_HIST  +1 min"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="365.333333333334,40"
+          Id="b5d6580b-df18-49b2-9eff-de59b8bfb2e2"
+          TopLeft="1269.68748108018,289.627196501524" />
+        <AnnotationLayout
+          Text="done - success in PIMS_DEV"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="177.333333333334,40"
+          Id="7c6c46d7-ec93-489b-8ac6-415079d6306b"
+          TopLeft="1263.74998116866,366.087724256493" />
+        <AnnotationLayout
+          Text="1."
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="38.6666666666667,40"
+          Id="78448284-fb15-4d14-aa32-42a069cf34b2"
+          TopLeft="925.624986207113,114.631580389768" />
+        <AnnotationLayout
+          Text="2."
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="38.6666666666667,40"
+          Id="4d816428-2e92-485c-bd22-fd441ac25715"
+          TopLeft="925.624986207113,205.631582102617" />
+        <AnnotationLayout
+          Text="3."
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="38.6666666666667,40"
+          Id="c170446f-f91c-4d89-8a96-a541245ae28f"
+          TopLeft="928.749986160547,293.894741658689" />
+        <AnnotationLayout
+          Text="4."
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="38.6666666666667,40"
+          Id="9b5df97d-f505-4abb-bca4-43111483d267"
+          TopLeft="927.499986179173,372.57895366604" />
+        <AnnotationLayout
+          Text="5."
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="38.6666666666667,40"
+          Id="c144ce7b-a682-41ed-90d9-2dc15433085a"
+          TopLeft="928.749986160547,450.578955134196" />
+        <AnnotationLayout
+          Text="done - success in PIMS_DEV"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="177.333333333334,40"
+          Id="1a11acf8-5d1e-4da2-be84-d0a31bea28d3"
+          TopLeft="1261.24998120591,449.982462489484" />
+        <AnnotationLayout
+          Text="6."
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="38.6666666666667,40"
+          Id="c3a69691-257e-4385-b3f7-058ac9286b5a"
+          TopLeft="928.12498616986,542.631588219936" />
+        <AnnotationLayout
+          Text="done - success in PIMS_DEV"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="177.333333333334,40"
+          Id="ea98ef27-94f1-4331-8363-8ee3715c0dd4"
+          TopLeft="1265.62498114072,543.71930635911" />
+        <AnnotationLayout
+          Text="7."
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="38.6666666666667,40"
+          Id="1c810f62-22e8-48a1-ba04-fa980535d8da"
+          TopLeft="928.593736162875,633.100887666476" />
+        <AnnotationLayout
+          Text="done - success in PIMS_DEV -- change END_DATE_HIST  +1 min"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="365.333333333334,40"
+          Id="1f4ee84d-d605-47d8-b013-0f784e0e920f"
+          TopLeft="1275.62498099171,634.31580047198" />
+        <AnnotationLayout
+          Text="8."
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="38.6666666666667,40"
+          Id="59c415d7-715e-432d-b2fa-ac880c95d506"
+          TopLeft="930.781236130279,731.456152675665" />
+        <AnnotationLayout
+          Text="done - success in PIMS_DEV"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="177.333333333334,40"
+          Id="84712497-0934-46a0-a91c-c10415b483ac"
+          TopLeft="1271.87498104759,733.929836255141" />
+        <AnnotationLayout
+          Text="9."
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="38.6666666666667,40"
+          Id="fef59f2f-ccd9-48fa-bd2c-098d3f1f523d"
+          TopLeft="931.249986123294,812.192996300599" />
+        <AnnotationLayout
+          Text="done - success in PIMS_DEV"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="177.333333333334,40"
+          Id="6c64ca43-e721-4257-a894-2509f8253412"
+          TopLeft="1281.87498089857,820.764422774661" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
