@@ -4,7 +4,7 @@ import Popover from 'react-bootstrap/Popover';
 import styled from 'styled-components';
 
 import AlarmIcon from '@/assets/images/alarm-clock-solid-full.svg?react';
-import { exists, prettyFormatDate } from '@/utils';
+import { isValidIsoDateTime, prettyFormatDate } from '@/utils';
 
 import { ReminderPopoverContent } from './ReminderPopoverContent';
 
@@ -24,7 +24,7 @@ export interface IReminderButtonProps {
   /**
    * The ISO date string for the saved reminder, or null if none has been set.
    */
-  savedReminderDate?: string | undefined;
+  existingReminderDate?: string | undefined;
 
   /**
    * Called with the chosen ISO date string when the user saves a reminder.
@@ -48,28 +48,23 @@ export interface IReminderButtonProps {
  * A button that opens a popover allowing the user to set or remove a reminder for a key date on PIMS.
  *
  * - Clicking outside the popover closes it and discards unsaved changes.
- * - When `savedReminderDate` is populated the button visually inverts (white icon, navy background)
+ * - When `existingReminderDate` is populated the button visually inverts (white icon, navy background)
  *   to indicate a prior notification exists for this user / file / entity.
  * - A small red dot badge appears on the button while a reminder is active.
- *
- * @param props IReminderButtonProps
  */
 export const ReminderButton: FC<IReminderButtonProps> = ({
   keyDate,
   keyDateLabel,
-  savedReminderDate: initialSavedReminder = undefined,
+  existingReminderDate = undefined,
   onReminderSaved,
   onReminderRemoved,
   popoverPlacement = 'right',
 }) => {
-  const [savedReminder, setSavedReminder] = useState<string | undefined>(initialSavedReminder);
   const [show, setShow] = useState<boolean>(false);
-
-  const isReminderSet = exists(savedReminder);
+  const isReminderSet = isValidIsoDateTime(existingReminderDate);
 
   const handleSave = useCallback(
     async (isoDate: string): Promise<void> => {
-      setSavedReminder(isoDate);
       setShow(false);
       await onReminderSaved?.(isoDate);
     },
@@ -77,7 +72,6 @@ export const ReminderButton: FC<IReminderButtonProps> = ({
   );
 
   const handleRemove = useCallback(async (): Promise<void> => {
-    setSavedReminder(null);
     setShow(false);
     await onReminderRemoved?.();
   }, [onReminderRemoved]);
@@ -88,7 +82,7 @@ export const ReminderButton: FC<IReminderButtonProps> = ({
       <Popover.Content>
         <ReminderPopoverContent
           keyDate={keyDate}
-          savedReminder={savedReminder}
+          existingReminderDate={existingReminderDate}
           onSave={handleSave}
           onRemove={handleRemove}
         />
@@ -111,16 +105,11 @@ export const ReminderButton: FC<IReminderButtonProps> = ({
         type="button"
         title={
           isReminderSet
-            ? `Reminder set for ${prettyFormatDate(savedReminder)}`
+            ? `Reminder set for ${prettyFormatDate(existingReminderDate)}`
             : `Set reminder for ${keyDateLabel}`
         }
         aria-label={`Reminder for ${keyDateLabel}`}
       >
-        {/*
-         * Alarm colour is inverted (fills with current colour) when a prior
-         * notification already exists for this user / file / entity combination.
-         * The button's own $isSet state controls the background/foreground swap.
-         */}
         <AlarmIcon
           width="1.6rem"
           height="1.6rem"
@@ -136,8 +125,8 @@ export const ReminderButton: FC<IReminderButtonProps> = ({
 
 export default ReminderButton;
 
-/** Transient prop — prefixed with $ so styled-components does not forward it to the DOM. */
 interface IStyledAlarmButtonProps {
+  /** Transient prop — prefixed with $ so styled-components does not forward it to the DOM. */
   $isSet: boolean;
 }
 
@@ -189,22 +178,4 @@ const StyledPopover = styled(Popover)`
   border: 1px solid #c8d6e0;
   border-radius: 6px;
   font-family: 'Segoe UI', Arial, sans-serif;
-
-  /* .popover-header {
-    background: #1a5276;
-    color: #fff;
-    font-weight: 600;
-    font-size: 0.92rem;
-    border-radius: 5px 5px 0 0;
-    padding: 10px 14px;
-    border-bottom: none;
-
-    &::before {
-      display: none;
-    }
-  }
-
-  .popover-body {
-    padding: 14px;
-  } */
 `;

@@ -17,7 +17,7 @@ export interface IReminderPopoverContentProps {
   /**
    * The currently saved reminder ISO date, or undefined if none has been set yet.
    */
-  savedReminder?: string | undefined;
+  existingReminderDate?: string | undefined;
 
   /**
    * Called with the chosen ISO date string when the user clicks "Set Reminder".
@@ -52,24 +52,15 @@ export function buildReminderLabel(reminderDate: string, keyDate: string): strin
 
 /**
  * Body of the reminder popover.
- *
- * Owns the local picked-date state and renders:
- * - The key date for reference
- * - A date picker for the reminder trigger date
- * - A contextual label describing the offset between the reminder and the key date
- *   (only visible once a date has been selected)
- * - A "Set Reminder" button to save
- * - A "Remove reminder" link when a reminder is already saved
- *
- * Delegates save / remove actions to the parent via callbacks.
+ * It delegates save / remove actions to the parent via callbacks.
  */
 export const ReminderPopoverContent: FC<IReminderPopoverContentProps> = ({
   keyDate,
-  savedReminder,
+  existingReminderDate,
   onSave,
   onRemove,
 }) => {
-  const [pickedDate, setPickedDate] = useState<string | null>(savedReminder ?? null);
+  const [pickedDate, setPickedDate] = useState<string | null>(existingReminderDate ?? null);
 
   const label: string | null = buildReminderLabel(pickedDate, keyDate);
 
@@ -102,7 +93,7 @@ export const ReminderPopoverContent: FC<IReminderPopoverContentProps> = ({
       <StyledSetReminderButton size="sm" disabled={!pickedDate} onClick={handleSave}>
         <IoAlarm size={16} aria-hidden="true" /> Set Reminder
       </StyledSetReminderButton>
-      {exists(savedReminder) && (
+      {exists(existingReminderDate) && (
         <StyledRemoveButton type="button" onClick={onRemove}>
           Remove reminder
         </StyledRemoveButton>
