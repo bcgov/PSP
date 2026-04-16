@@ -11,4 +11,5 @@ export interface Api_ManagementFilter {
   teamMemberPersonId: number | null;
   teamMemberOrganizationId: number | null;
   hasNoticeOfClaim: boolean;
+  regions: string[];
 }

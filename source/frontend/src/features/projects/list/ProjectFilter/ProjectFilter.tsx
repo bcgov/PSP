@@ -1,28 +1,24 @@
-import { Formik } from 'formik';
+import { Formik, FormikHelpers } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { Input, Select } from '@/components/common/form';
-import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
+import { Input, Multiselect, Select } from '@/components/common/form';
 import { ColButtons, FilterBoxForm } from '@/components/common/styles';
 import { PROJECT_STATUS_TYPES } from '@/constants/API';
 import { IProjectFilter } from '@/features/projects/interfaces';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { mapLookupCode } from '@/utils';
 
-export interface IProjectFilterProps {
-  filter?: IProjectFilter;
-  setFilter: (filter: IProjectFilter) => void;
-  initialFilter?: IProjectFilter;
-}
+import { ProjectFilterModel } from './models/ProjectFilterModel';
 
-export const defaultFilter: IProjectFilter = {
-  projectName: '',
-  projectNumber: '',
-  projectRegionCode: '',
-  projectStatusCode: '',
-};
+export interface IProjectFilterProps {
+  initialValues: ProjectFilterModel;
+  pimsRegionsOptions: MultiSelectOption[];
+  setFilter: (filter: IProjectFilter) => void;
+  onResetFilter: () => void;
+}
 
 /**
  * Filter bar for Projects.
@@ -30,14 +26,13 @@ export const defaultFilter: IProjectFilter = {
  */
 export const ProjectFilter: React.FunctionComponent<
   React.PropsWithChildren<IProjectFilterProps>
-> = ({ setFilter, initialFilter }) => {
-  const onSearchSubmit = (values: IProjectFilter, { setSubmitting }: any) => {
-    setFilter(values);
-    setSubmitting(false);
-  };
-
-  const resetFilter = () => {
-    setFilter(initialFilter ?? defaultFilter);
+> = ({ initialValues, pimsRegionsOptions, setFilter, onResetFilter }) => {
+  const onSearchSubmit = (
+    values: ProjectFilterModel,
+    formikHelpers: FormikHelpers<ProjectFilterModel>,
+  ) => {
+    setFilter(values.toApi());
+    formikHelpers.setSubmitting(false);
   };
 
   const lookupCodes = useLookupCodeHelpers();
@@ -46,9 +41,9 @@ export const ProjectFilter: React.FunctionComponent<
     .map(c => mapLookupCode(c));
 
   return (
-    <Formik
+    <Formik<ProjectFilterModel>
       enableReinitialize
-      initialValues={initialFilter ?? defaultFilter}
+      initialValues={initialValues}
       onSubmit={onSearchSubmit}
     >
       {formikProps => (
@@ -75,14 +70,18 @@ export const ProjectFilter: React.FunctionComponent<
             <Col xl="4">
               <Row>
                 <Col xl="6">
-                  <UserRegionSelectContainer field="projectRegionCode" includeAll />
+                  <Multiselect
+                    field="regions"
+                    options={pimsRegionsOptions}
+                    displayValue="text"
+                    placeholder="Select Region(s)"
+                  />
                 </Col>
                 <Col xl="6">
                   <Select
                     field="projectStatusCode"
                     options={projectStatusOptions}
                     placeholder="All Status"
-                    value={initialFilter?.projectStatusCode}
                   />
                 </Col>
               </Row>
@@ -98,7 +97,7 @@ export const ProjectFilter: React.FunctionComponent<
                     disabled={formikProps.isSubmitting}
                     onClick={() => {
                       formikProps.resetForm();
-                      resetFilter();
+                      onResetFilter();
                     }}
                   />
                 </Col>

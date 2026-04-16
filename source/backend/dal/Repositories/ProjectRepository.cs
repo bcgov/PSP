@@ -56,7 +56,7 @@ namespace Pims.Dal.Repositories
         /// Returns a Paged Result of Projects based on ProjectFilter params.
         /// </summary>
         /// <returns></returns>
-        public Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, IEnumerable<short> userRegions)
+        public Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, long? contractorPersonId = null)
         {
             User.ThrowIfNotAuthorized(Permissions.ProjectView);
             filter.ThrowIfNull(nameof(filter));
@@ -65,7 +65,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            return GetPage(filter, userRegions);
+            return GetPage(filter, contractorPersonId);
         }
 
         /// <summary>
@@ -205,10 +205,9 @@ namespace Pims.Dal.Repositories
             return project;
         }
 
-        private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter, IEnumerable<short> userRegions)
+        private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter, long? contractorPersonId = null)
         {
-            var query = Context.PimsProjects.AsNoTracking()
-                .Where(p => userRegions.Contains(p.RegionCode));
+            var query = Context.PimsProjects.AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNumber))
             {
@@ -225,9 +224,14 @@ namespace Pims.Dal.Repositories
                 query = query.Where(x => x.ProjectStatusTypeCodeNavigation.ProjectStatusTypeCode == filter.ProjectStatusCode);
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.ProjectRegionCode))
+            if (contractorPersonId is not null)
             {
-                query = query.Where(x => x.RegionCode == short.Parse(filter.ProjectRegionCode));
+                query = query.Where(x => x.PimsProjectPeople.Any(x => x.PersonId == contractorPersonId));
+            }
+
+            if (filter.Regions.Any())
+            {
+                query = query.Where(x => filter.Regions.Any(r => r == x.RegionCode));
             }
 
             if (filter.Sort?.Any() == true)

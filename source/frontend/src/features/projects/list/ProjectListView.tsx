@@ -1,4 +1,4 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
@@ -7,14 +7,20 @@ import styled from 'styled-components';
 import ProjectIcon from '@/assets/images/projects-icon.svg?react';
 import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
+import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
 import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
-import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useSearch } from '@/hooks/useSearch';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { formatGuid } from '@/utils/utils';
 
 import { IProjectFilter } from '../interfaces';
-import { defaultFilter, ProjectFilter } from './ProjectFilter/ProjectFilter';
+import { ProjectFilterModel } from './ProjectFilter/models/ProjectFilterModel';
+import ProjectFilter from './ProjectFilter/ProjectFilter';
 import { ProjectSearchResultModel } from './ProjectSearchResults/models';
 import { ProjectSearchResults } from './ProjectSearchResults/ProjectSearchResults';
 
@@ -23,8 +29,26 @@ import { ProjectSearchResults } from './ProjectSearchResults/ProjectSearchResult
  */
 export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { searchProjects } = useApiProjects();
-  const { hasClaim } = useKeycloakWrapper();
+  const { hasClaim, obj } = useKeycloakWrapper();
+  const { sub } = obj.userInfo as IUserInfo;
+  const formattedGuid = formatGuid(sub);
   const history = useHistory();
+
+  const lookupCodes = useLookupCodeHelpers();
+  const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
+
+  const pimsRegionsTypes = lookupCodes.getOptionsByType(API.REGION_TYPES);
+  const pimsRegionOptions: MultiSelectOption[] = pimsRegionsTypes.map<MultiSelectOption>(x => {
+    return { id: x.code as string, text: x.label };
+  });
+
+  const userRegionsIds: string[] =
+    retrieveUserInfoResponse?.userRegions.map(x => x.regionCode.toString()) ?? [];
+  const userRegionsOptions: MultiSelectOption[] = pimsRegionsTypes
+    .filter(opt => userRegionsIds.includes(opt.code))
+    .map<MultiSelectOption>(x => {
+      return { id: x.code as string, text: x.label };
+    });
 
   const {
     results,
@@ -40,7 +64,7 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
     setPageSize,
     loading,
   } = useSearch<ApiGen_Concepts_Project, IProjectFilter>(
-    defaultFilter,
+    new ProjectFilterModel(userRegionsOptions).toApi(),
     searchProjects,
     'No matching results can be found. Try widening your search criteria.',
   );
@@ -52,6 +76,14 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
     },
     [setFilter],
   );
+
+  const handleResetFilter = useCallback(() => {
+    setFilter(new ProjectFilterModel(userRegionsOptions).toApi());
+  }, [setFilter, userRegionsOptions]);
+
+  useEffect(() => {
+    formattedGuid && retrieveUserInfo(formattedGuid);
+  }, [formattedGuid, retrieveUserInfo]);
 
   return (
     <CommonStyled.ListPage>
@@ -75,9 +107,10 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
           <Row>
             <Col>
               <ProjectFilter
-                filter={filter}
+                initialValues={ProjectFilterModel.fromApi(filter, userRegionsOptions)}
+                pimsRegionsOptions={pimsRegionOptions}
                 setFilter={changeFilter}
-                initialFilter={defaultFilter}
+                onResetFilter={handleResetFilter}
               />
             </Col>
           </Row>

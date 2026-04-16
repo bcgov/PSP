@@ -93,12 +93,10 @@ namespace Pims.Api.Services
 
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
-            // Limit search results to user's assigned region(s)
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            return _acqFileRepository.GetPageDeep(filter, userRegions, contractorPersonId);
+            return _acqFileRepository.GetPageDeep(filter, contractorPersonId);
         }
 
         public List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter)
@@ -106,7 +104,6 @@ namespace Pims.Api.Services
             _logger.LogInformation("Searching all Acquisition Files matching the filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
-            // Limit search results to user's assigned region(s)
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
@@ -670,12 +667,10 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Acquisition file should not be a sub-file.");
             }
 
-            // Limit search results to user's assigned region(s)
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            return _acqFileRepository.GetAcquisitionSubFiles(id, userRegions, contractorPersonId);
+            return _acqFileRepository.GetAcquisitionSubFiles(id, contractorPersonId);
         }
 
         private void CheckFileNumberDuplicate(PimsAcquisitionFile acquisitionFile)

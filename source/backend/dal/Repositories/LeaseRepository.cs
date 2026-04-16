@@ -61,7 +61,7 @@ namespace Pims.Dal.Repositories
         /// <param name="loadPayments"></param>
         /// <param name="contractorPersonId"></param>
         /// <returns></returns>
-        public IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false, long? contractorPersonId = null)
+        public IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, bool loadPayments = false, long? contractorPersonId = null)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
@@ -70,7 +70,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            var query = GenerateLeaseQuery(filter, regionCodes, loadPayments, contractorPersonId);
+            var query = GenerateLeaseQuery(filter, loadPayments, contractorPersonId);
 
             // Getting all by the filter will ignore the order by passed and instead use the lease id.
             var leases = query.OrderBy(l => l.LeaseId).ToArray();
@@ -785,20 +785,21 @@ namespace Pims.Dal.Repositories
         /// Note that the 'leaseFilter' will control the 'page' and 'quantity'.
         /// </summary>
         /// <param name="filter"></param>
-        /// <param name="regions"></param>
         /// <param name="contractorPersonId">The contractor person id to filter by. Only applies if calling user is a Contractor.</param>
         /// <returns></returns>
-        public Paged<PimsLease> GetPage(LeaseFilter filter, HashSet<short> regions, long? contractorPersonId = null)
+        public Paged<PimsLease> GetPage(LeaseFilter filter, long? contractorPersonId = null)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
+            User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
+
             if (!filter.IsValid())
             {
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
             var skip = (filter.Page - 1) * filter.Quantity;
-            var query = GenerateLeaseQuery(filter, regions, contractorPersonId: contractorPersonId);
+            var query = GenerateLeaseQuery(filter, contractorPersonId: contractorPersonId);
+
             var items = query
                 .Skip(skip)
                 .Take(filter.Quantity)
@@ -890,7 +891,7 @@ namespace Pims.Dal.Repositories
         /// <param name="loadPayments"></param>
         /// <param name="contractorPersonId">The contractor person id to filter by. Only applies if calling user is a Contractor.</param>
         /// <returns></returns>
-        public IQueryable<PimsLease> GenerateLeaseQuery(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false, long? contractorPersonId = null)
+        public IQueryable<PimsLease> GenerateLeaseQuery(LeaseFilter filter, bool loadPayments = false, long? contractorPersonId = null)
         {
             filter.ThrowIfNull(nameof(filter));
 
@@ -924,7 +925,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(l => l.PimsLeasePayments);
             }
 
-            var predicate = GenerateCommonLeaseQuery(filter, regionCodes, contractorPersonId);
+            var predicate = GenerateCommonLeaseQuery(filter, contractorPersonId);
             query = query.Where(predicate);
 
             if (filter.Sort?.Length > 0)
@@ -1094,16 +1095,13 @@ namespace Pims.Dal.Repositories
         /// Generate an SQL statement for the specified 'region' and 'filter'.
         /// </summary>
         /// <param name="filter"></param>
-        /// <param name="regions"></param>
         /// <param name="contractorPersonId">The contractor person id to filter by. Only applies if calling user is a Contractor.</param>
         /// <returns></returns>
-        private static ExpressionStarter<PimsLease> GenerateCommonLeaseQuery(LeaseFilter filter, HashSet<short> regions, long? contractorPersonId = null)
+        private static ExpressionStarter<PimsLease> GenerateCommonLeaseQuery(LeaseFilter filter, long? contractorPersonId = null)
         {
             filter.ThrowIfNull(nameof(filter));
 
             var predicateBuilder = PredicateBuilder.New<PimsLease>(l => true);
-
-            predicateBuilder = predicateBuilder.And(l => !l.RegionCode.HasValue || regions.Contains(l.RegionCode.Value));
 
             // Enforce contractor access to only their leases
             if (contractorPersonId is not null)
@@ -1222,14 +1220,14 @@ namespace Pims.Dal.Repositories
                         l.OrigExpiryDate <= expiryEndDate);
             }
 
-            if (filter.RegionType.HasValue)
-            {
-                predicateBuilder = predicateBuilder.And(l => l.RegionCode == filter.RegionType);
-            }
-
             if (!string.IsNullOrWhiteSpace(filter.Details))
             {
                 predicateBuilder = predicateBuilder.And(l => EF.Functions.Like(l.LeaseDescription, $"%{filter.Details}%") || EF.Functions.Like(l.LeaseNotes, $"%{filter.Details}%"));
+            }
+
+            if (filter.Regions.Any())
+            {
+                predicateBuilder = predicateBuilder.And(x => x.RegionCode != null && filter.Regions.Any(r => r == x.RegionCode));
             }
 
             return predicateBuilder;

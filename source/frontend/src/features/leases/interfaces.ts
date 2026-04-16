@@ -8,11 +8,11 @@ export interface ILeaseFilter {
   programs: string[];
   expiryStartDate: string;
   expiryEndDate: string;
-  regionType: string;
   details: string;
   leaseTeamPersonId: number | null;
   leaseTeamOrganizationId: number | null;
   isReceivable: string | null;
+  regions: string[];
 }
 
 export interface ILeaseSearchBy {
