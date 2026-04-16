@@ -1,7 +1,7 @@
 import { OverlayTriggerProps } from 'react-bootstrap';
 
 import ReminderButton from '@/components/common/form/ReminderButton/ReminderButton';
-import { ApiGen_Concepts_Notification } from '@/models/api/generated/ApiGen_Concepts_Notification';
+import { isValidId, isValidIsoDateTime } from '@/utils/utils';
 
 import { NotificationFormModel } from './models/NotificationFormModel';
 
@@ -19,24 +19,22 @@ export interface IReminderViewProps {
   keyDateLabel: string;
 
   /**
-   * The existing reminder for this notification type, if any. This is used to determine the initial state of the popover (e.g. whether to show "Save" vs "Update" and whether to pre-populate the date picker with an existing reminder date).
+   * The current reminder state, seeded by the container from the persisted notification.
    */
-  initialValues: NotificationFormModel;
+  notification: NotificationFormModel;
 
   /**
-   * Called with the chosen ISO date string when the user saves a reminder.
    */
-  onReminderSaved?: (reminder: ApiGen_Concepts_Notification) => Promise<void>;
+  onReminderSaved: (values: NotificationFormModel) => Promise<void>;
 
   /**
    * Called when the user removes a previously saved reminder.
    */
-  onReminderRemoved?: (reminder: ApiGen_Concepts_Notification) => Promise<void>;
+  onReminderRemoved: (notificationId: number) => Promise<void>;
 
   /**
    * Placement of the popover relative to the trigger button.
-   * Accepts any value supported by react-bootstrap's OverlayTrigger.
-   * Defaults to `'bottom'`.
+   * Defaults to `'right'`.
    */
   popoverPlacement?: OverlayTriggerProps['placement'];
 }
@@ -44,18 +42,31 @@ export interface IReminderViewProps {
 export const ReminderView: React.FC<IReminderViewProps> = ({
   keyDate,
   keyDateLabel,
-  initialValues,
+  notification,
   onReminderSaved,
   onReminderRemoved,
   popoverPlacement = 'right',
 }) => {
+  const handleSave = async (isoDate: string): Promise<void> => {
+    notification.triggerDate = isoDate;
+    await onReminderSaved(notification);
+  };
+
+  const handleRemove = async (): Promise<void> => {
+    if (isValidId(notification.id)) {
+      await onReminderRemoved(notification.id);
+    }
+  };
+
   return (
     <ReminderButton
       keyDate={keyDate}
       keyDateLabel={keyDateLabel}
-      savedReminderDate={initialValues.triggerDate}
-      onReminderSaved={onReminderSaved}
-      onReminderRemoved={onReminderRemoved}
+      existingReminderDate={
+        isValidIsoDateTime(notification.triggerDate) ? notification.triggerDate : undefined
+      }
+      onReminderSaved={handleSave}
+      onReminderRemoved={handleRemove}
       popoverPlacement={popoverPlacement}
     />
   );

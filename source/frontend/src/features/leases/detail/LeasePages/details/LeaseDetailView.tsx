@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 
@@ -13,7 +13,7 @@ import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/gener
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
 import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { exists, firstOrNull, prettyFormatDate } from '@/utils';
+import { exists, firstOrNull, isValidId, prettyFormatDate } from '@/utils';
 import { formatMinistryProject } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
@@ -40,29 +40,28 @@ export const LeaseDetailView: React.FunctionComponent<
     searchNotifications: { execute: searchNotifications, response: expiryNotifications },
   } = useNotificationRepository();
 
-  function handleSaveLeaseExpiryReminder(isoDate: string): void {
-    alert('Lease expiry reminder set for ' + prettyFormatDate(isoDate));
-  }
+  const fetchReminders = useCallback(
+    async (leaseId: number): Promise<void> => {
+      await searchNotifications({ type: ApiGen_CodeTypes_NotificationTypes.L_RENEWAL, leaseId });
+    },
+    [searchNotifications],
+  );
 
-  function handleRemoveLeaseExpiryReminder(): void {
-    alert('Reminder removed.');
-  }
-
-  // TODO: Replace alert() calls with real API integration to save/remove reminders for the lease expiry date.
-  // TODO: Load the existing reminder for the lease expiry date (if any for current user) and pass it as the `savedReminderDate` prop to the ReminderButton component.
   useEffect(() => {
-    async function fetchExistingExpiryNotification() {
-      try {
-        await searchNotifications({
-          type: ApiGen_CodeTypes_NotificationTypes.L_RENEWAL,
-          leaseId: leaseId,
-        });
-      } catch (error) {
-        // swallow error and assume no existing reminder
-      }
+    if (!exists(expiryNotifications) && isValidId(leaseId)) {
+      fetchReminders(leaseId);
     }
-    fetchExistingExpiryNotification();
-  }, [leaseId, searchNotifications]);
+  }, [expiryNotifications, fetchReminders, leaseId]);
+
+  const onReminderSaved = useCallback(
+    async (): Promise<void> => fetchReminders(leaseId),
+    [fetchReminders, leaseId],
+  );
+
+  const onReminderRemoved = useCallback(
+    async (): Promise<void> => fetchReminders(leaseId),
+    [fetchReminders, leaseId],
+  );
 
   return (
     <>
@@ -125,11 +124,12 @@ export const LeaseDetailView: React.FunctionComponent<
               <ReminderContainer
                 keyDate={lease.expiryDate}
                 keyDateLabel="Lease Expiry"
-                notificationType={ApiGen_CodeTypes_NotificationTypes.L_RENEWAL}
                 notification={firstOrNull(expiryNotifications)}
-                onReminderSaved={}
-                onReminderRemoved={}
+                notificationType={ApiGen_CodeTypes_NotificationTypes.L_RENEWAL}
+                notificationSourceOptions={{ leaseId: leaseId }}
                 View={ReminderView}
+                onReminderSaved={onReminderSaved}
+                onReminderRemoved={onReminderRemoved}
               />
             </SectionField>
           </Col>
