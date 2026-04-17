@@ -94,7 +94,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateTakesTab()
         {
-            Wait();
+            WaitUntilClickable(takesTabLink);
             webDriver.FindElement(takesTabLink).Click();
         }
 
@@ -110,14 +110,12 @@ namespace PIMS.Tests.Automation.PageObjects
             By editButton = By.CssSelector("div[data-testid='take-" + index + "'] button[data-testid='edit-button']");
 
             WaitUntilSpinnerDisappear();
-            WaitUntilClickable(editButton);
-            webDriver.FindElement(editButton).Click();
+            SafeClick(editButton);
         }
 
         public void SaveTake()
         {
             ButtonElement("Save");
-            Wait();
         }
 
         public void CancelTake()
@@ -132,10 +130,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Takes Details
             if (take.TakeType != "")
-                ChooseSpecificSelectOption(takeTypeSelect, take.TakeType);
+                ChooseSelectOption(takeTypeSelect, take.TakeType);
 
             if (take.TakeStatus != "")
-                ChooseSpecificSelectOption(takeStatusSelect, take.TakeStatus);
+                ChooseSelectOption(takeStatusSelect, take.TakeStatus);
 
             if (take.TakeCompleteDate != "")
             {
@@ -144,7 +142,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (take.SiteContamination != "")
-                ChooseSpecificSelectOption(takeSiteContaminationSelect, take.SiteContamination);
+                ChooseSelectOption(takeSiteContaminationSelect, take.SiteContamination);
 
             if (take.TakeDescription != "")
             {
@@ -154,7 +152,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Areas
             //New Highway Dedication
-            ChooseSpecificRadioButton(takeRightOfWayRadioBttnGroup, take.IsNewHighwayDedication);
+            ChooseRadioButton(takeRightOfWayRadioBttnGroup, take.IsNewHighwayDedication);
 
             Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
@@ -170,16 +168,17 @@ namespace PIMS.Tests.Automation.PageObjects
                 ClearDigitsInput(takeRightOfWaySqMetresInput);
                 webDriver.FindElement(takeRightOfWaySqMetresInput).SendKeys(take.IsNewHighwayDedicationArea);
 
+                Wait();
                 AssertTrueDoublesEquals(takeRightOfWayHectaresInput, TransformSqMtToHectares(take.IsNewHighwayDedicationArea));
                 AssertTrueDoublesEquals(takeRightOfWaySqFeetInput, TransformSqMtToSqFt(take.IsNewHighwayDedicationArea));
                 AssertTrueDoublesEquals(takeRightOfWayAcresInput, TransformSqMtToAcres(take.IsNewHighwayDedicationArea));
             }
 
             //MOTI Inventory
-            ChooseSpecificRadioButton(takeMOTIInventoryBttnGroup, take.IsMotiInventory);
+            ChooseRadioButton(takeMOTIInventoryBttnGroup, take.IsMotiInventory);
 
             //New Registered Interest in Land
-            ChooseSpecificRadioButton(takeSRWRadioBttnGroup, take.IsNewInterestLand);
+            ChooseRadioButton(takeSRWRadioBttnGroup, take.IsNewInterestLand);
 
             Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
@@ -205,7 +204,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Land Act Tenure
-            ChooseSpecificRadioButton(takeLandActRadioBttnGroup, take.IsLandActTenure);
+            ChooseRadioButton(takeLandActRadioBttnGroup, take.IsLandActTenure);
 
             Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
@@ -218,7 +217,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (take.IsLandActTenure.Equals("true"))
             {
-                ChooseSpecificSelectOption(takeLandActTypeSelect, take.IsLandActTenureDetail);
+                ChooseSelectOption(takeLandActTypeSelect, take.IsLandActTenureDetail);
 
                 if (take.IsLandActTenureArea != "")
                 {
@@ -239,7 +238,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //License to Construct
-            ChooseSpecificRadioButton(takeLicenseConstructRadioBttnGroup, take.IsLicenseConstruct);
+            ChooseRadioButton(takeLicenseConstructRadioBttnGroup, take.IsLicenseConstruct);
 
             Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
@@ -268,7 +267,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Lease Payable
-            ChooseSpecificRadioButton(takeLeaseRadioBttnGroup, take.IsLeasePayable);
+            ChooseRadioButton(takeLeaseRadioBttnGroup, take.IsLeasePayable);
 
             Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
@@ -288,7 +287,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedModals.ModalClickOKBttn();
             }
 
-            Wait();
             if (take.IsLeasePayable.Equals("true"))
             {
                 if (take.IsLeasePayableArea != "")
@@ -307,7 +305,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             //Surplus
-            ChooseSpecificRadioButton(takeSurplusRadioBttnGroup, take.IsSurplus);
+            ChooseRadioButton(takeSurplusRadioBttnGroup, take.IsSurplus);
 
             Wait();
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
@@ -348,7 +346,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInitTakesView()
         {
-            Wait();
+            WaitUntilVisible(takesTitle);
 
             AssertTrueIsDisplayed(takesTitle);
             AssertTrueIsDisplayed(takesForThisPropertyCurrentFileLabel);
@@ -359,7 +357,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInitCreateForm()
         {
-            Wait();
+            WaitUntilVisible(takeNewSubtitle);
 
             AssertTrueIsDisplayed(takeNewSubtitle);
             AssertTrueIsDisplayed(takeTypeLabel);
@@ -394,7 +392,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreatedTakeViewForm(Take take)
         {
-            Wait(4000);
             var index = 0;
 
             //Take Details

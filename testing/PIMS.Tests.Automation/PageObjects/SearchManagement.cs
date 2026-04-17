@@ -65,10 +65,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToSearchManagement()
         {
-            Wait();
+            WaitUntilClickable(managementMainMenu);
             FocusAndClick(managementMainMenu);
 
-            Wait();
+            WaitUntilClickable(managementMainMenuListViewLink);
             FocusAndClick(managementMainMenuListViewLink);
         }
 
@@ -86,8 +86,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OrderByMgmtPurpose()
         {
-            WaitUntilClickable(managementListViewOrderByPurpose);
-            webDriver.FindElement(managementListViewOrderByPurpose).Click();
+            SafeClick(managementListViewOrderByPurpose);
         }
 
         public void OrderByMgmtStatus()
@@ -114,52 +113,52 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string FirstMgmtFileName()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(managementListViewFileName1stRecord).Text;
         }
 
         public string FirstMgmtHistoricalFile()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(managementListViewHistFile1stRecord).Text;
         }
 
         public string FirstMgmtPurpose()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(managementListViewPurpose1stRecord).Text;
         }
 
         public string FirstMgmtStatus()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(managementListViewStatus1stRecord).Text;
         }
 
         public void FilterManagementFiles(string pid = "", string pin = "", string address = "", string mgmtfile = "", string teamMember = "",
             string status = "", string purpose = "", string project = "", string region = "")
         {
-            Wait();
+            WaitUntilClickable(managementListResetButton);
             webDriver.FindElement(managementListResetButton).Click();
 
             if (pid != "")
             {
                 WaitUntilClickable(managementListSearchBySelect);
-                ChooseSpecificSelectOption(managementListSearchBySelect, "PID");
+                ChooseSelectOption(managementListSearchBySelect, "PID");
                 webDriver.FindElement(managementListSearchByPIDInput).SendKeys(pid);
             }
 
             if (pin != "")
             {
                 WaitUntilClickable(managementListSearchBySelect);
-                ChooseSpecificSelectOption(managementListSearchBySelect, "PIN");
+                ChooseSelectOption(managementListSearchBySelect, "PIN");
                 webDriver.FindElement(managementListSearchByPINInput).SendKeys(pin);
             }
 
             if (address != "")
             {
                 WaitUntilClickable(managementListSearchBySelect);
-                ChooseSpecificSelectOption(managementListSearchBySelect, "Address");
+                ChooseSelectOption(managementListSearchBySelect, "Address");
                 webDriver.FindElement(managementListSearchByAddressInput).SendKeys(address);
             }
 
@@ -181,13 +180,13 @@ namespace PIMS.Tests.Automation.PageObjects
             if (status != "")
             {
                 WaitUntilClickable(managementListSearchByStatusSelect);
-                ChooseSpecificSelectOption(managementListSearchByStatusSelect, status);
+                ChooseSelectOption(managementListSearchByStatusSelect, status);
             }
 
             if (purpose != "")
             {
                 WaitUntilClickable(managementListSearchByPurposeSelect);
-                ChooseSpecificSelectOption(managementListSearchByPurposeSelect, purpose);
+                ChooseSelectOption(managementListSearchByPurposeSelect, purpose);
             }
             if (project != "")
             {
@@ -197,7 +196,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (region != "")
             {
                 WaitUntilClickable(managementListSearchByRegionSelect);
-                ChooseSpecificSelectOption(managementListSearchByRegionSelect, region);
+                ChooseSelectOption(managementListSearchByRegionSelect, region);
 
             }
 
@@ -207,13 +206,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public Boolean SearchFoundResults()
         {
-            Wait(2000);
+            WaitUntilVisible(managementListViewViewMgmtFile1stRecord);
             return webDriver.FindElements(managementListViewViewMgmtFile1stRecord).Count > 0;
         }
 
         public int MgmtTableResultNumber()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElements(managementFilesResultsTable).Count;
         }
 

@@ -47,16 +47,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateAdminTemplates()
         {
-            Wait();
-
-            WaitUntilClickable(adminToolsTemplatesLink);
-            webDriver.FindElement(adminToolsTemplatesLink).Click();
+            SafeClick(adminToolsTemplatesLink);
         }
 
         public void SelectTemplateType(string type)
         {
-            Wait();
-            ChooseSpecificSelectOption(adminToolsTemplateTypeSelect, type);
+            WaitUntilClickable(adminToolsTemplateTypeSelect);
+            ChooseSelectOption(adminToolsTemplateTypeSelect, type);
         }
 
         public void AddNewTemplate()
@@ -87,7 +84,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void Delete1stTemplate()
         {
-            Wait();
+            WaitUntilClickable(CDOGSTableResults1stDeleteBttn);
             webDriver.FindElement(CDOGSTableResults1stDeleteBttn).Click();
             
             WaitUntilVisible(documentDeleteHeader);
@@ -101,7 +98,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyTemplateExistence()
         {
-            Wait();
+            WaitUntilVisible(CDOGSTableResults1stDeleteBttn);
             if (webDriver.FindElements(CDOGSTableResults1stDeleteBttn).Count == 1)
                 Delete1stTemplate();   
         }
