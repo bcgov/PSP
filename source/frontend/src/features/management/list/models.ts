@@ -24,6 +24,7 @@ export class ManagementFilterModel {
 
   constructor(initialRegions: MultiSelectOption[] = []) {
     this.regions = initialRegions;
+    this.searchBy = 'address';
   }
 
   toApi(): Api_ManagementFilter {
@@ -47,7 +48,7 @@ export class ManagementFilterModel {
       managementFilePurposeCode: this.managementFilePurposeCode,
       projectNameOrNumber: this.projectNameOrNumber,
       hasNoticeOfClaim: this.hasNoticeOfClaim,
-      regions: this.regions.map(x => x.id),
+      regions: this.regions?.map(x => x.id) ?? [],
       // management team members
       teamMemberPersonId:
         personMemberId && isNumber(+personMemberId) ? Number(personMemberId) : null,

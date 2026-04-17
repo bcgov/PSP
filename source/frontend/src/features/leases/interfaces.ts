@@ -3,6 +3,7 @@ export interface ILeaseFilter {
   pin: string;
   lFileNo: string;
   searchBy: string;
+  historical: string;
   leaseStatusTypes: string[];
   tenantName: string;
   programs: string[];

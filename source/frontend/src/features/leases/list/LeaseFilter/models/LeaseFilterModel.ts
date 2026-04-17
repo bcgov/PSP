@@ -4,18 +4,19 @@ import { ApiGen_Concepts_LeaseFileTeam } from '@/models/api/generated/ApiGen_Con
 import { formatApiPersonNames, getParameterIdFromOptions } from '@/utils/personUtils';
 
 export class LeaseFilterModel {
-  pin: string;
-  pid: string;
-  lFileNo: string;
-  searchBy: string;
+  pin = '';
+  pid = '';
+  lFileNo = '';
+  searchBy = '';
+  historical = '';
   leaseTeamMembers: MultiSelectOption[] = [];
   programs: MultiSelectOption[] = [];
-  expiryStartDate: string;
+  expiryStartDate = '';
   leaseStatusTypes: MultiSelectOption[] = [];
-  tenantName: string;
-  expiryEndDate: string;
-  regionType: string;
-  details: string;
+  tenantName = '';
+  expiryEndDate = '';
+  regionType = '';
+  details = '';
   isReceivable: string | null;
   regions: MultiSelectOption[] = [];
 
@@ -33,6 +34,7 @@ export class LeaseFilterModel {
       pid: this.pid,
       pin: this.pin,
       lFileNo: this.lFileNo,
+      historical: this.historical,
       searchBy: this.searchBy,
       leaseStatusTypes: this.leaseStatusTypes.map(x => x.id),
       tenantName: this.tenantName,
@@ -42,7 +44,7 @@ export class LeaseFilterModel {
       details: this.details,
       leaseTeamPersonId: leaseTeamPersonId ? +leaseTeamPersonId : null,
       leaseTeamOrganizationId: leaseTeamOrganizationId ? +leaseTeamOrganizationId : null,
-      isReceivable: this.isReceivable,
+      isReceivable: this.isReceivable ?? null,
       regions: this.regions.map(x => x.id),
     };
   }

@@ -96,8 +96,8 @@ export const ProjectFilter: React.FunctionComponent<
                   <ResetButton
                     disabled={formikProps.isSubmitting}
                     onClick={() => {
-                      formikProps.resetForm();
                       onResetFilter();
+                      formikProps.resetForm();
                     }}
                   />
                 </Col>

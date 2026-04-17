@@ -21,36 +21,9 @@ export interface ILeaseFilterProps {
   leaseTeamOptions: MultiSelectOption[];
   leaseStatusOptions: MultiSelectOption[];
   leaseProgramOptions: MultiSelectOption[];
-
   setFilter: (filter: ILeaseFilter) => void;
   onResetFilter: () => void;
 }
-
-export const defaultFilter: ILeaseFilter = {
-  pid: '',
-  pin: '',
-  lFileNo: '',
-  searchBy: 'lFileNo',
-  leaseStatusTypes: [
-    'ACTIVE',
-    'ARCHIVED',
-    'DISCARD',
-    'DRAFT',
-    'DUPLICATE',
-    'EXPIRED',
-    'INACTIVE',
-    'TERMINATED',
-  ],
-  programs: [],
-  tenantName: '',
-  expiryStartDate: '',
-  expiryEndDate: '',
-  details: '',
-  leaseTeamOrganizationId: null,
-  leaseTeamPersonId: null,
-  isReceivable: null,
-  regions: [],
-};
 
 /**
  * Filter bar for leases and license.
@@ -65,39 +38,6 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
   setFilter,
   onResetFilter,
 }) => {
-  // const onSearchSubmit = (values: ILeaseFilter, { setSubmitting }: any) => {
-
-  //   const programIds = selectedPrograms.map<string>(x => x.id);
-  //   const statuses = selectedStatuses.map<string>(x => x.id);
-
-  //   values = {
-  //     ...values,
-  //     programs: programIds,
-  //     leaseStatusTypes: statuses,
-  //     leaseTeamPersonId: isValidId(leaseTeamPersonId) ? leaseTeamPersonId : null,
-  //     leaseTeamOrganizationId:
-  //       exists(selectedTeam) && isValidId(leaseTeamOrganizationId)
-  //         ? leaseTeamOrganizationId
-  //         : undefined,
-  //   };
-  //   setFilter(values);
-  //   setSubmitting(false);
-  // };
-
-  // Necessary since the lookup codes might have not been loaded before the first render
-  // useEffect(() => {
-  //   setSelectedStatus([
-  //     { id: 'ACTIVE', text: 'Active' },
-  //     { id: 'ARCHIVED', text: 'Archived' },
-  //     { id: 'DISCARD', text: 'Cancelled' },
-  //     { id: 'DRAFT', text: 'Draft' },
-  //     { id: 'DUPLICATE', text: 'Duplicate' },
-  //     { id: 'EXPIRED', text: 'Expired' },
-  //     { id: 'INACTIVE', text: 'Hold' },
-  //     { id: 'TERMINATED', text: 'Terminated' },
-  //   ]);
-  // }, []);
-
   const onSearchSubmit = (
     values: LeaseFilterModel,
     formikHelpers: FormikHelpers<LeaseFilterModel>,

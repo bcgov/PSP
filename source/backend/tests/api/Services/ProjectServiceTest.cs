@@ -100,7 +100,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<ArgumentException>();
-            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), It.IsAny<IEnumerable<short>>()), Times.Never);
+            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), null), Times.Never);
         }
 
         [Fact]
@@ -118,7 +118,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<ArgumentException>();
-            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), It.IsAny<IEnumerable<short>>()), Times.Never);
+            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), null), Times.Never);
         }
 
         [Fact]
@@ -128,7 +128,7 @@ namespace Pims.Api.Test.Services
             var service = this.CreateProjectServiceWithPermissions(Permissions.ProjectView);
 
             var repository = this._helper.GetService<Mock<IProjectRepository>>();
-            repository.Setup(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), It.IsAny<IEnumerable<short>>()))
+            repository.Setup(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), null))
                 .ReturnsAsync(new Paged<PimsProject>()
                 {
                     Page = 1,
@@ -141,7 +141,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().NotBeNull();
-            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), It.IsAny<IEnumerable<short>>()), Times.Once);
+            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), null), Times.Once);
         }
 
         [Fact]

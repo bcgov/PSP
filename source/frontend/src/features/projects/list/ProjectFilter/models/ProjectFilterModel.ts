@@ -2,10 +2,9 @@ import { IProjectFilter } from '@/features/projects/interfaces';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 
 export class ProjectFilterModel {
-  projectName: string;
-  projectNumber: string;
-  projectRegionCode: string;
-  projectStatusCode: string;
+  projectName = '';
+  projectNumber = '';
+  projectStatusCode = '';
   regions: MultiSelectOption[] = [];
 
   constructor(initialRegions: MultiSelectOption[] = []) {
@@ -14,11 +13,10 @@ export class ProjectFilterModel {
 
   toApi(): IProjectFilter {
     return {
-      projectRegionCode: this.projectRegionCode,
-      projectStatusCode: this.projectStatusCode,
-      projectName: this.projectName,
-      projectNumber: this.projectNumber,
-      regions: this.regions.map(x => x.id),
+      projectStatusCode: this.projectStatusCode?.trim() ? this.projectStatusCode : null,
+      projectName: this.projectName?.trim() ? this.projectName : null,
+      projectNumber: this.projectNumber?.trim() ? this.projectNumber : null,
+      regions: this.regions?.map(x => x.id) ?? [],
     };
   }
 
@@ -26,7 +24,6 @@ export class ProjectFilterModel {
     const newModel = new ProjectFilterModel();
     newModel.projectName = model.projectName;
     newModel.projectNumber = model.projectNumber;
-    newModel.projectRegionCode = model.projectRegionCode;
     newModel.projectStatusCode = model.projectStatusCode;
     newModel.regions = userRegions ?? [];
 

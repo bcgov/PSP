@@ -11,21 +11,32 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, getByName, render, RenderOptions, screen } from '@/utils/test-utils';
 
 import { ManagementFilterModel } from '../models';
-import ManagementFilter from './ManagementFilter';
+import ManagementFilter, { IManagementFilterProps } from './ManagementFilter';
 
 const setFilter = vi.fn();
+const onResetFilter = vi.fn();
 
 const fileStatusOptions = getMockLookUpsByType(MANAGEMENT_FILE_STATUS_TYPES);
 const managementFilePurposeOptions = getMockLookUpsByType(MANAGEMENT_FILE_PURPOSE_TYPES);
 
+const mockFilterModel = new ManagementFilterModel();
+
 describe('Management filter', () => {
-  const setup = (renderOptions: RenderOptions = {}) => {
+  const setup = async (
+    renderOptions: RenderOptions & { props?: Partial<IManagementFilterProps> },
+  ) => {
     const utils = render(
       <ManagementFilter
+        {...renderOptions.props}
+        initialValues={renderOptions.props?.initialValues ?? mockFilterModel}
+        managementTeamOptions={renderOptions.props?.managementTeamOptions ?? []}
+        fileStatusOptions={renderOptions.props?.fileStatusOptions ?? fileStatusOptions}
+        managementPurposeOptions={
+          renderOptions.props?.managementPurposeOptions ?? managementFilePurposeOptions
+        }
+        pimsRegionsOptions={renderOptions.props?.pimsRegionsOptions ?? []}
         setFilter={setFilter}
-        managementTeam={[]}
-        fileStatusOptions={fileStatusOptions}
-        managementPurposeOptions={managementFilePurposeOptions}
+        onResetFilter={onResetFilter}
       />,
       {
         store: {
@@ -35,6 +46,10 @@ describe('Management filter', () => {
         ...renderOptions,
       },
     );
+
+    // wait for useEffects
+    await act(async () => {});
+
     return {
       ...utils,
       getSearchButton: () => screen.getByTestId('search'),
@@ -49,21 +64,25 @@ describe('Management filter', () => {
       http.get('/api/users/info/*', () => HttpResponse.json(getUserMock(), { status: 200 })),
     );
     setFilter.mockClear();
+    onResetFilter.mockClear();
   });
 
-  it('matches snapshot', () => {
-    const { asFragment } = setup();
+  it('matches snapshot', async () => {
+    const { asFragment } = await setup({});
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('searches for active management files by default', async () => {
-    const { getResetButton } = setup();
-    await act(async () => userEvent.click(getResetButton()));
-    expect(setFilter).toHaveBeenCalledWith(new ManagementFilterModel().toApi());
+    const { getResetButton, getSearchButton } = await setup({});
+
+    await act(async () => userEvent.click(getSearchButton()));
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining<Api_ManagementFilter>(new ManagementFilterModel().toApi()),
+    );
   });
 
   it('searches by management file status', async () => {
-    const { getSearchButton } = setup();
+    const { getSearchButton } = await setup({});
 
     const dropdown = getByName('managementFileStatusCode');
     expect(dropdown).not.toBeNull();
@@ -78,7 +97,7 @@ describe('Management filter', () => {
   });
 
   it('searches by management purpose', async () => {
-    const { getSearchButton } = setup();
+    const { getSearchButton } = await setup({});
 
     const dropdown = getByName('managementFilePurposeCode');
     expect(dropdown).not.toBeNull();
@@ -93,7 +112,7 @@ describe('Management filter', () => {
   });
 
   it('searches by management project', async () => {
-    const { getSearchButton } = setup();
+    const { getSearchButton } = await setup({});
 
     const input = getByName('projectNameOrNumber');
     expect(input).not.toBeNull();
@@ -108,7 +127,7 @@ describe('Management filter', () => {
   });
 
   it('searches by management file name or number', async () => {
-    const { getSearchButton } = setup();
+    const { getSearchButton } = await setup({});
 
     const input = getByName('fileNameOrNumberOrReference');
     expect(input).not.toBeNull();
@@ -123,7 +142,7 @@ describe('Management filter', () => {
   });
 
   it('searches by file has NOC', async () => {
-    const { getSearchButton, getHasNOCCheckbox } = setup();
+    const { getSearchButton, getHasNOCCheckbox } = await setup({});
 
     await act(async () => userEvent.click(getHasNOCCheckbox()));
     await act(async () => userEvent.click(getSearchButton()));
@@ -136,15 +155,13 @@ describe('Management filter', () => {
   });
 
   it('resets the filter when reset button is clicked', async () => {
-    const { getResetButton } = setup();
+    const { getResetButton } = await setup({});
 
     const input = getByName('fileNameOrNumberOrReference');
     expect(input).not.toBeNull();
     await act(async () => userEvent.paste(input!, 'test management'));
     await act(async () => userEvent.click(getResetButton()));
 
-    expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining<Api_ManagementFilter>(new ManagementFilterModel().toApi()),
-    );
+    expect(onResetFilter).toHaveBeenCalledTimes(1);
   });
 });

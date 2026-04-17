@@ -16,14 +16,12 @@ import {
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { ColButtons, FilterBoxForm } from '@/components/common/styles';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
-import { ApiGen_Concepts_ManagementFileTeam } from '@/models/api/generated/ApiGen_Concepts_ManagementFileTeam';
 import { Api_ManagementFilter } from '@/models/api/ManagementFilter';
 
 import { ManagementFilterModel } from '../models';
 
 export interface IManagementFilterProps {
   initialValues: ManagementFilterModel;
-  managementTeam: ApiGen_Concepts_ManagementFileTeam[];
   fileStatusOptions: SelectOption[];
   managementPurposeOptions: SelectOption[];
   pimsRegionsOptions: MultiSelectOption[];

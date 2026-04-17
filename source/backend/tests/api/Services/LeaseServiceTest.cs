@@ -57,7 +57,7 @@ namespace Pims.Api.Test.Services
             user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
 
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
-            leaseRepository.Setup(x => x.GetPage(It.IsAny<LeaseFilter>(), It.IsAny<HashSet<short>>(), null))
+            leaseRepository.Setup(x => x.GetPage(It.IsAny<LeaseFilter>(), null))
                 .Returns(new Paged<PimsLease>(new List<PimsLease>() { lease }, 1, 1, 1));
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
@@ -67,7 +67,7 @@ namespace Pims.Api.Test.Services
             var properties = service.GetPage(filter, false);
 
             // Assert
-            leaseRepository.Verify(x => x.GetPage(filter, It.Is<HashSet<short>>(r => r.Count == 1 && r.Contains(lease.RegionCode.Value)), null), Times.Once);
+            leaseRepository.Verify(x => x.GetPage(filter, null), Times.Once);
         }
         [Fact]
         public void GetPage_Contractor_Success()
@@ -82,7 +82,7 @@ namespace Pims.Api.Test.Services
             user.PersonId = 1;
 
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
-            leaseRepository.Setup(x => x.GetPage(It.IsAny<LeaseFilter>(), It.IsAny<HashSet<short>>(), null))
+            leaseRepository.Setup(x => x.GetPage(It.IsAny<LeaseFilter>(), null))
                 .Returns(new Paged<PimsLease>(new List<PimsLease>() { lease }, 1, 1, 1));
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
@@ -93,7 +93,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             // PersonId should be passed to ensure contractor only sees leases they are assigned to
-            leaseRepository.Verify(x => x.GetPage(filter, It.Is<HashSet<short>>(r => r.Count == 1 && r.Contains(lease.RegionCode.Value)), user.PersonId), Times.Once);
+            leaseRepository.Verify(x => x.GetPage(filter, user.PersonId), Times.Once);
         }
 
         [Fact]
@@ -120,7 +120,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             // Pagination should be ignored and all results should be returned when "all" parameter is true
-            leaseRepository.Verify(x => x.GetPage(It.Is<LeaseFilter>(f => f.Page == 1 && f.Quantity == 55), It.IsAny<HashSet<short>>(), null), Times.Once);
+            leaseRepository.Verify(x => x.GetPage(It.Is<LeaseFilter>(f => f.Page == 1 && f.Quantity == 55), null), Times.Once);
         }
         #endregion
 

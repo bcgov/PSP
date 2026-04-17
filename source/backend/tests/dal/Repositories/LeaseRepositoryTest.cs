@@ -51,7 +51,6 @@ namespace Pims.Dal.Test.Repositories
                 new object[] { new LeaseFilter() { LeaseStatusTypes = new List<string>() { "fake" } }, 0 },
                 new object[] { new LeaseFilter() { Details = "details" }, 1 },
                 new object[] { new LeaseFilter() { Details = "test" }, 0 },
-                new object[] { new LeaseFilter() { RegionType = 2 }, 0 },
                 new object[] { new LeaseFilter() { ExpiryStartDate = new DateOnly(1999, 1,1) }, 1 },
                 new object[] { new LeaseFilter() { ExpiryStartDate = new DateOnly(2001,1,1) }, 0 },
                 new object[] { new LeaseFilter() { ExpiryEndDate = new DateOnly(1999, 1,1) }, 0 },
@@ -118,7 +117,7 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(elease);
 
             // Act
-            var result = repository.GetAllByFilter(filter, new HashSet<short>());
+            var result = repository.GetAllByFilter(filter);
 
             // Assert
             Assert.NotNull(result);
@@ -137,8 +136,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             // Assert
-            Assert.Throws<NotAuthorizedException>(() =>
-                service.GetAllByFilter(null, new HashSet<short>()));
+            Assert.Throws<NotAuthorizedException>(() => service.GetAllByFilter(null));
         }
 
         [Fact]
@@ -153,7 +151,7 @@ namespace Pims.Dal.Test.Repositories
             // Act
             // Assert
             Assert.Throws<ArgumentException>(() =>
-                service.GetAllByFilter(new LeaseFilter() { ExpiryStartDate = DateOnly.MaxValue, ExpiryEndDate = DateOnly.MinValue }, new HashSet<short>()));
+                service.GetAllByFilter(new LeaseFilter() { ExpiryStartDate = DateOnly.MaxValue, ExpiryEndDate = DateOnly.MinValue }));
         }
 
         [Theory]
@@ -175,7 +173,7 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(elease);
 
             // Act
-            var result = repository.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter);
 
             // Assert
             Assert.NotNull(result);
@@ -217,7 +215,7 @@ namespace Pims.Dal.Test.Repositories
             LeaseFilter filter = new LeaseFilter() { Historical = "99999" };
 
             // Act
-            var result = repository.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter);
 
             // Assert
             Assert.NotNull(result);
@@ -257,7 +255,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             LeaseFilter filter = new LeaseFilter() { Historical = "88888" };
-            var result = repository.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter);
 
             // Assert
             Assert.NotNull(result);
@@ -298,7 +296,7 @@ namespace Pims.Dal.Test.Repositories
             LeaseFilter filter = new LeaseFilter() { Historical = "77777" };
 
             // Act
-            var result = repository.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter);
 
             // Assert
             Assert.NotNull(result);
@@ -339,7 +337,7 @@ namespace Pims.Dal.Test.Repositories
             LeaseFilter filter = new LeaseFilter() { Historical = "66666" };
 
             // Act
-            var result = repository.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter);
 
             // Assert
             Assert.NotNull(result);
@@ -367,7 +365,7 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(secondLease);
 
             // Act
-            var result = repository.GetPage(new LeaseFilter(), new HashSet<short>(), 1);
+            var result = repository.GetPage(new LeaseFilter(), 1);
 
             // Assert
             result.Should().NotBeNull();
@@ -390,7 +388,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var filter = new LeaseFilter() { LFileNo = "000123" }; // no prefix or dash
-            var result = repository.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter);
 
             // Assert
             result.Items.Should().HaveCount(1);
@@ -405,7 +403,7 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(elease);
 
             var filter = new LeaseFilter() { LFileNo = "L-000-123" };
-            var result = repository.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter);
 
             result.Items.Should().HaveCount(1);
         }
@@ -419,7 +417,7 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(elease);
 
             var filter = new LeaseFilter() { LFileNo = "123" }; // partial
-            var result = repository.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter);
 
             result.Items.Should().HaveCount(1);
         }
@@ -433,7 +431,7 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(elease);
 
             var filter = new LeaseFilter() { LFileNo = "  000 123  " }; // spaces
-            var result = repository.GetPage(filter, new HashSet<short>());
+            var result = repository.GetPage(filter);
 
             result.Items.Should().HaveCount(1);
         }
@@ -448,7 +446,7 @@ namespace Pims.Dal.Test.Repositories
 
             var filter = new LeaseFilter() { LFileNo = "ABC123" }; // invalid
 
-            Action act = () => repository.GetPage(filter, new HashSet<short>());
+            Action act = () => repository.GetPage(filter);
 
             act.Should().Throw<ArgumentException>()
                .WithMessage("Invalid L-File number*");

@@ -148,7 +148,6 @@ export const ManagementListView: React.FC<unknown> = () => {
                   managementTeamOptions ?? [],
                   userRegionsOptions,
                 )}
-                managementTeam={team ?? []}
                 fileStatusOptions={managementFileStatusOptions}
                 managementPurposeOptions={managementPurposeOptions}
                 pimsRegionsOptions={pimsRegionOptions}

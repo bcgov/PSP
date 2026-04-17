@@ -35,14 +35,19 @@ export class AcquisitionFilterModel {
   }
 
   toApi(): ApiGen_Concepts_AcquisitionFilter {
+    const acquisitionTeamPersonId = getParameterIdFromOptions(this.acquisitionTeamMembers, 'P');
+    const acquistionTeamOrganizationId = getParameterIdFromOptions(
+      this.acquisitionTeamMembers,
+      'O',
+    );
+
     return {
       acquisitionFileStatusTypeCode: this.acquisitionFileStatusTypeCode,
       acquisitionFileNameOrNumber: this.acquisitionFileNameOrNumber,
-      acquisitionTeamMemberPersonId: getParameterIdFromOptions(this.acquisitionTeamMembers, 'P'),
-      acquisitionTeamMemberOrganizationId: getParameterIdFromOptions(
-        this.acquisitionTeamMembers,
-        'O',
-      ),
+      acquisitionTeamMemberPersonId: acquisitionTeamPersonId ? acquisitionTeamPersonId : null,
+      acquisitionTeamMemberOrganizationId: acquistionTeamOrganizationId
+        ? acquistionTeamOrganizationId
+        : null,
       projectNameOrNumber: this.projectNameOrNumber,
       ownerName: this.ownerName,
       searchBy: this.searchBy,

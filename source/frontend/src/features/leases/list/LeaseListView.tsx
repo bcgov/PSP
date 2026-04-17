@@ -37,7 +37,6 @@ const initialLeaseStatusTypes: string[] = [
   'DISCARD',
   'DRAFT',
   'DUPLICATE',
-  'EXPIRED',
   'INACTIVE',
   'TERMINATED',
 ];
