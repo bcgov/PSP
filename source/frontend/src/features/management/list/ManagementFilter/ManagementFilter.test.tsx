@@ -73,7 +73,7 @@ describe('Management filter', () => {
   });
 
   it('searches for active management files by default', async () => {
-    const { getResetButton, getSearchButton } = await setup({});
+    const { getSearchButton } = await setup({});
 
     await act(async () => userEvent.click(getSearchButton()));
     expect(setFilter).toHaveBeenCalledWith(
