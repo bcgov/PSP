@@ -9,7 +9,7 @@ import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Co
 import { ApiGen_Concepts_NoticeOfClaim } from '@/models/api/generated/ApiGen_Concepts_NoticeOfClaim';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { fromTypeCode, fromTypeCodeNullable, toTypeCodeNullable } from '@/utils/formUtils';
-import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
+import { exists, isValidId, isValidIsoDateTime, isValidString } from '@/utils/utils';
 
 import {
   AcquisitionOwnerFormModel,
@@ -79,6 +79,7 @@ export class UpdateAcquisitionSummaryFormModel
   noticeOfClaim: ApiGen_Concepts_NoticeOfClaim;
 
   toApi(): ApiGen_Concepts_AcquisitionFile {
+    console.log(this.noticeOfClaim);
     return {
       id: this.id || 0,
       parentAcquisitionFileId: isValidId(this.parentAcquisitionFileId)
@@ -143,7 +144,11 @@ export class UpdateAcquisitionSummaryFormModel
       product: null,
       project: null,
       totalAllowableCompensation: null,
-      noticeOfClaim: exists(this.noticeOfClaim) ? [this.noticeOfClaim] : [],
+      noticeOfClaim:
+        isValidString(this.noticeOfClaim?.receivedDate) ||
+        isValidString(this.noticeOfClaim?.comment)
+          ? [this.noticeOfClaim]
+          : [],
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }

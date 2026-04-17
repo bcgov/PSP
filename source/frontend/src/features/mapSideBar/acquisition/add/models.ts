@@ -14,7 +14,7 @@ import {
   stringToNumberOrNull,
   toTypeCodeNullable,
 } from '@/utils/formUtils';
-import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
+import { exists, isValidId, isValidIsoDateTime, isValidString } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';
@@ -136,7 +136,11 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       legacyStakeholders: null,
       product: null,
       project: null,
-      noticeOfClaim: exists(this.noticeOfClaim) ? [this.noticeOfClaim] : [],
+      noticeOfClaim:
+        isValidString(this.noticeOfClaim?.receivedDate) ||
+        isValidString(this.noticeOfClaim?.comment)
+          ? [this.noticeOfClaim]
+          : [],
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }

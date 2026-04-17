@@ -12,7 +12,7 @@ import { ApiGen_Concepts_NoticeOfClaim } from '@/models/api/generated/ApiGen_Con
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { applyDisplayOrder } from '@/utils';
 import { fromTypeCode, toNullableId, toTypeCodeNullable } from '@/utils/formUtils';
-import { exists, isValidId } from '@/utils/utils';
+import { exists, isValidId, isValidString } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ManagementTeamSubFormModel, WithManagementTeam } from './ManagementTeamSubFormModel';
@@ -81,7 +81,12 @@ export class ManagementFormModel implements WithManagementTeam {
         .filter(exists),
       fileProperties: sortedProperties ?? [],
       ...getEmptyBaseAudit(this.rowVersion),
-      noticeOfClaim: exists(this.noticeOfClaim) ? [this.noticeOfClaim] : [],
+      noticeOfClaim:
+        isValidString(this.noticeOfClaim?.receivedDate) ||
+        isValidString(this.noticeOfClaim?.comment)
+          ? [this.noticeOfClaim]
+          : [],
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 
