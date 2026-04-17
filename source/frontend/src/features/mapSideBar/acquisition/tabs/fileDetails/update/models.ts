@@ -79,7 +79,20 @@ export class UpdateAcquisitionSummaryFormModel
   noticeOfClaim: ApiGen_Concepts_NoticeOfClaim;
 
   toApi(): ApiGen_Concepts_AcquisitionFile {
-    console.log(this.noticeOfClaim);
+    const noticeOfClaim: ApiGen_Concepts_NoticeOfClaim | null = this.noticeOfClaim
+      ? {
+          ...this.noticeOfClaim,
+          receivedDate: isValidString(this.noticeOfClaim?.receivedDate)
+            ? this.noticeOfClaim.receivedDate
+            : null,
+          comment: isValidString(this.noticeOfClaim?.comment?.trim())
+            ? this.noticeOfClaim.comment.trim()
+            : null,
+        }
+      : null;
+    const hasNoticeOfClaim =
+      isValidString(noticeOfClaim?.receivedDate) || isValidString(noticeOfClaim?.comment);
+
     return {
       id: this.id || 0,
       parentAcquisitionFileId: isValidId(this.parentAcquisitionFileId)
@@ -144,11 +157,7 @@ export class UpdateAcquisitionSummaryFormModel
       product: null,
       project: null,
       totalAllowableCompensation: null,
-      noticeOfClaim:
-        isValidString(this.noticeOfClaim?.receivedDate) ||
-        isValidString(this.noticeOfClaim?.comment)
-          ? [this.noticeOfClaim]
-          : [],
+      noticeOfClaim: hasNoticeOfClaim && noticeOfClaim ? [noticeOfClaim] : [],
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
