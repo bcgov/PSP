@@ -303,8 +303,8 @@ export const AcquisitionContainer: React.FunctionComponent<IAcquisitionContainer
             },
             userOverrideCodes,
           )
-          .then(response => {
-            onSuccess();
+          .then(async response => {
+            await onSuccess();
             if (isValidId(response?.id)) {
               pathGenerator.showFile('acquisition', response.id);
             }

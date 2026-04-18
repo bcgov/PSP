@@ -1,4 +1,3 @@
-import axios, { AxiosError } from 'axios';
 import { FieldArray, Formik, FormikProps } from 'formik';
 import { LatLngLiteral } from 'leaflet';
 import noop from 'lodash/noop';
@@ -175,7 +174,6 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
     try {
       const response = await props.updateFileProperties(file, []);
 
-      formikRef.current?.setSubmitting(false);
       if (isValidId(response?.id)) {
         if (file.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
           toast.warn(
@@ -187,10 +185,8 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
         props.setIsShowingPropertySelector(false);
         await props.onSuccess(true);
       }
-    } catch (e) {
-      if (axios.isAxiosError(e) && (e as AxiosError).code === '409') {
-        setShowAssociatedEntityWarning(true);
-      }
+    } finally {
+      formikRef.current?.setSubmitting(false);
     }
   };
 
