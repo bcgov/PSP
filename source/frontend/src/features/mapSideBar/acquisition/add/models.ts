@@ -14,7 +14,7 @@ import {
   stringToNumberOrNull,
   toTypeCodeNullable,
 } from '@/utils/formUtils';
-import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
+import { exists, isValidId, isValidIsoDateTime, isValidString } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';
@@ -81,6 +81,19 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   toApi(): ApiGen_Concepts_AcquisitionFile {
     const fileProperties = this.properties.map(x => this.toPropertyApi(x));
     const sortedProperties = applyDisplayOrder(fileProperties);
+    const noticeOfClaim: ApiGen_Concepts_NoticeOfClaim | null = exists(this.noticeOfClaim)
+      ? {
+          ...this.noticeOfClaim,
+          receivedDate: isValidString(this.noticeOfClaim?.receivedDate)
+            ? this.noticeOfClaim.receivedDate
+            : null,
+          comment: isValidString(this.noticeOfClaim?.comment?.trim())
+            ? this.noticeOfClaim.comment.trim()
+            : null,
+        }
+      : null;
+    const hasNoticeOfClaim =
+      isValidString(noticeOfClaim?.receivedDate) || isValidString(noticeOfClaim?.comment);
 
     return {
       id: this.id ?? 0,
@@ -136,7 +149,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       legacyStakeholders: null,
       product: null,
       project: null,
-      noticeOfClaim: exists(this.noticeOfClaim) ? [this.noticeOfClaim] : [],
+      noticeOfClaim: hasNoticeOfClaim && exists(noticeOfClaim) ? [noticeOfClaim] : [],
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
