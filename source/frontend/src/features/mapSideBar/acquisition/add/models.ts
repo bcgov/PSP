@@ -81,7 +81,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   toApi(): ApiGen_Concepts_AcquisitionFile {
     const fileProperties = this.properties.map(x => this.toPropertyApi(x));
     const sortedProperties = applyDisplayOrder(fileProperties);
-    const noticeOfClaim: ApiGen_Concepts_NoticeOfClaim | null = this.noticeOfClaim
+    const noticeOfClaim: ApiGen_Concepts_NoticeOfClaim | null = exists(this.noticeOfClaim)
       ? {
           ...this.noticeOfClaim,
           receivedDate: isValidString(this.noticeOfClaim?.receivedDate)
@@ -149,7 +149,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       legacyStakeholders: null,
       product: null,
       project: null,
-      noticeOfClaim: hasNoticeOfClaim && noticeOfClaim ? [noticeOfClaim] : [],
+      noticeOfClaim: hasNoticeOfClaim && exists(noticeOfClaim) ? [noticeOfClaim] : [],
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }

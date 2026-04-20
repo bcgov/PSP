@@ -79,7 +79,7 @@ export class UpdateAcquisitionSummaryFormModel
   noticeOfClaim: ApiGen_Concepts_NoticeOfClaim;
 
   toApi(): ApiGen_Concepts_AcquisitionFile {
-    const noticeOfClaim: ApiGen_Concepts_NoticeOfClaim | null = this.noticeOfClaim
+    const noticeOfClaim: ApiGen_Concepts_NoticeOfClaim | null = exists(this.noticeOfClaim)
       ? {
           ...this.noticeOfClaim,
           receivedDate: isValidString(this.noticeOfClaim?.receivedDate)
