@@ -12,7 +12,6 @@ export class ManagementFilterModel {
   searchBy = 'address';
   pin = '';
   pid = '';
-  regionCode = '';
   address = '';
   managementTeamMember: SelectOption | null = null;
   managementFileStatusCode = '';
@@ -41,7 +40,6 @@ export class ManagementFilterModel {
       searchBy: this.searchBy,
       pin: this.pin,
       pid: this.pid,
-      regionCode: this.regionCode,
       address: this.address,
       fileNameOrNumberOrReference: this.fileNameOrNumberOrReference,
       managementFileStatusCode: this.managementFileStatusCode,

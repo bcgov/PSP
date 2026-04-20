@@ -41,12 +41,11 @@ namespace Pims.Dal.Repositories
         /// <param name="regions"></param>
         /// <param name="maxResults"></param>
         /// <returns></returns>
-        public IList<PimsProject> SearchProjects(string filter, HashSet<short> regions, int maxResults)
+        public IList<PimsProject> SearchProjects(string filter, int maxResults)
         {
             // business requirement - limit search results to user's assigned region(s)
             return this.Context.PimsProjects.AsNoTracking()
                 .Where(p => EF.Functions.Like(p.Description, $"%{filter}%") || EF.Functions.Like(p.Code, $"%{filter}%") || EF.Functions.Like(p.Code + " " + p.Description, $"%{filter}%"))
-                .Where(p => regions.Contains(p.RegionCode))
                 .OrderBy(a => a.Code)
                 .Take(maxResults)
                 .ToArray();

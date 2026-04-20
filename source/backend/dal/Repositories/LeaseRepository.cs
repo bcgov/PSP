@@ -133,7 +133,7 @@ namespace Pims.Dal.Repositories
             return lease;
         }
 
-        public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds, HashSet<short> regions, long? contractorPersonId = null)
+        public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds, long? contractorPersonId = null)
         {
             var query = Context.PimsLeases.AsSplitQuery().AsNoTracking()
                 .Include(l => l.PimsPropertyLeases)
@@ -168,9 +168,6 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.Product)
                 .Include(r => r.PimsLeaseLicenseTeams)
                 .Where(l => leaseIds.Any(leaseId => leaseId == l.LeaseId)) ?? throw new KeyNotFoundException();
-
-            // If the lease has a region, the user must have access to that region to view the lease. If the lease does not have a region, anyone with access to view leases can view it.
-            query = query.Where(l => l.RegionCode == null || regions.Contains(l.RegionCode.Value));
 
             // Enforce contractor access to only their leases
             if (contractorPersonId is not null)

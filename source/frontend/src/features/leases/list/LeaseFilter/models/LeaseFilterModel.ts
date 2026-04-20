@@ -15,7 +15,6 @@ export class LeaseFilterModel {
   leaseStatusTypes: MultiSelectOption[] = [];
   tenantName = '';
   expiryEndDate = '';
-  regionType = '';
   details = '';
   isReceivable: string | null;
   regions: MultiSelectOption[] = [];

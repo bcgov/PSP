@@ -38,7 +38,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ProjectRepository>(user);
 
             // Act
-            var result = repository.SearchProjects("test project", new HashSet<short>() { 1 }, 1);
+            var result = repository.SearchProjects("test project", 1);
 
             // Assert
             result.Should().NotBeNull();
@@ -58,11 +58,11 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ProjectRepository>(user);
 
             // Act
-            var result = repository.SearchProjects("test project", new HashSet<short>() { 2 }, 1);
+            var result = repository.SearchProjects("test project", 1);
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeEmpty();
+            result.Should().ContainSingle();
         }
 
         #region GetPageAsync

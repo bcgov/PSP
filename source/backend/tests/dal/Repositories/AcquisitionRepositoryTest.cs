@@ -795,7 +795,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetAcquisitionFileExportDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetAcquisitionFileExportDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -816,7 +816,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetAcquisitionFileExportDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetAcquisitionFileExportDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);

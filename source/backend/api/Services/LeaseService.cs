@@ -103,7 +103,7 @@ namespace Pims.Api.Services
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            var leases = _leaseRepository.GetAllByIds(leaseIds, pimsUser.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet(), contractorPersonId).ToList();
+            var leases = _leaseRepository.GetAllByIds(leaseIds, contractorPersonId).ToList();
 
             // Ensure we return property information with lat/long coordinates for any properties associated to the returned leases.
             foreach (var lease in leases)

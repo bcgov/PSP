@@ -35,7 +35,7 @@ namespace Pims.Dal.Repositories
 
         PimsProperty GetProperty(long acquisitionFilePropertyId);
 
-        List<PimsAcquisitionFile> GetAcquisitionFileExportDeep(AcquisitionFilter filter, HashSet<short> regions, long? contractorPersonId = null);
+        List<PimsAcquisitionFile> GetAcquisitionFileExportDeep(AcquisitionFilter filter, long? contractorPersonId = null);
 
         List<PimsAcquisitionFile> GetAcquisitionSubFiles(long acquisitionFileId, long? contractorPersonId = null);
 

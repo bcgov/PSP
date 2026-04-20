@@ -47,7 +47,7 @@ namespace Pims.Api.Test.Services
             var projectList = new List<PimsProject>() { project };
 
             var repository = this._helper.GetService<Mock<IProjectRepository>>();
-            repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<HashSet<short>>(), It.IsAny<int>())).Returns(projectList);
+            repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>())).Returns(projectList);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
@@ -56,7 +56,7 @@ namespace Pims.Api.Test.Services
             var result = service.SearchProjects("query string", 1);
 
             // Assert
-            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<HashSet<short>>(), It.IsAny<int>()), Times.Once);
+            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>()), Times.Once);
         }
 
         [Fact]
@@ -155,7 +155,7 @@ namespace Pims.Api.Test.Services
             var projectList = new List<PimsProject>() { project };
 
             var repository = this._helper.GetService<Mock<IProjectRepository>>();
-            repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<HashSet<short>>(), It.IsAny<int>())).Returns(projectList);
+            repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>())).Returns(projectList);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
@@ -164,7 +164,7 @@ namespace Pims.Api.Test.Services
             var result = service.GetAll();
 
             // Assert
-            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<HashSet<short>>(), It.IsAny<int>()), Times.Once);
+            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>()), Times.Once);
         }
 
         [Fact]

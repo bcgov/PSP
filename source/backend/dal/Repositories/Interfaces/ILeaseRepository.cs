@@ -18,7 +18,7 @@ namespace Pims.Dal.Repositories
 
         PimsLease Get(long id);
 
-        IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds, HashSet<short> regions, long? contractorPersonId = null);
+        IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds, long? contractorPersonId = null);
 
         PimsLease GetNoTracking(long id);
 
