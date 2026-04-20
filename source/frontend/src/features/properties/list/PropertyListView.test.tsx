@@ -4,7 +4,6 @@ import { createMemoryHistory } from 'history';
 
 import * as API from '@/constants/API';
 import Claims from '@/constants/claims';
-import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
 import { IGeocoderPidsResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { useApiGeocoder } from '@/hooks/pims-api/useApiGeocoder';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
@@ -28,6 +27,7 @@ import {
 import { IPropertyFilter } from '../filter/IPropertyFilter';
 import PropertyListView, { ownershipFilterOptions } from './PropertyListView';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 
 // Set all module functions to vi.fn
 

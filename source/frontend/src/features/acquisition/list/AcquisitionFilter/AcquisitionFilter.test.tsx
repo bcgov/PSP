@@ -1,24 +1,41 @@
 import userEvent from '@testing-library/user-event';
 
 import { Claims } from '@/constants/index';
-import { mockLookups } from '@/mocks/lookups.mock';
+import { getMockLookUpsByType, mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
+import * as API from '@/constants/API';
 
-import { AcquisitionFilterModel, ApiGen_Concepts_AcquisitionFilter } from '../interfaces';
+import { AcquisitionFilterModel } from '../interfaces';
 import { AcquisitionFilter } from './AcquisitionFilter';
 
 const setFilter = vi.fn();
+const onResetFilter = vi.fn();
+
+const mockFilterModel = new AcquisitionFilterModel();
+
+const acquisitionStatusTypes = getMockLookUpsByType(API.ACQUISITION_FILE_STATUS_TYPES);
+
 
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {
-  const utils = render(<AcquisitionFilter setFilter={setFilter} acquisitionTeam={[]} />, {
-    store: {
-      [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+  const utils = render(
+    <AcquisitionFilter
+      setFilter={setFilter}
+      initialValues={mockFilterModel}
+      pimsRegionsOptions={[]}
+      acquisitionTeamOptions={[]}
+      acquisitionStatusOptions={acquisitionStatusTypes}
+      onResetFilter={onResetFilter}
+    />,
+    {
+      store: {
+        [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+      },
+      claims: [Claims.ACQUISITION_VIEW],
+      ...renderOptions,
     },
-    claims: [Claims.ACQUISITION_VIEW],
-    ...renderOptions,
-  });
+  );
   const searchButton = utils.getByTestId('search');
   const resetButton = utils.getByTestId('reset-button');
   const hasNOCCheckbox = utils.container.querySelector(
@@ -29,7 +46,7 @@ const setup = (renderOptions: RenderOptions = {}) => {
 
 describe('Acquisition Filter', () => {
   beforeEach(() => {
-    setFilter.mockClear();
+    vi.clearAllMocks();
   });
 
   it('matches snapshot', async () => {
@@ -40,10 +57,12 @@ describe('Acquisition Filter', () => {
   });
 
   it('searches for active acquisition files by default', async () => {
-    const { resetButton } = setup();
-    await act(async () => userEvent.click(resetButton));
+    const { searchButton } = setup();
 
-    expect(setFilter).toHaveBeenCalledWith(new AcquisitionFilterModel().toApi());
+    await act(async () => userEvent.click(searchButton));
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining(new AcquisitionFilterModel().toApi()),
+    );
   });
 
   it('searches by acquisition file status', async () => {
@@ -123,10 +142,6 @@ describe('Acquisition Filter', () => {
     fillInput(container, 'acquisitionFileNameOrNumber', 'breaking');
     await act(async () => userEvent.click(resetButton));
 
-    expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining<ApiGen_Concepts_AcquisitionFilter>(
-        new AcquisitionFilterModel().toApi(),
-      ),
-    );
+    expect(onResetFilter).toHaveBeenCalledTimes(1);
   });
 });
