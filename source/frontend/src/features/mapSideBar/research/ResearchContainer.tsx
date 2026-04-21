@@ -238,8 +238,8 @@ export const ResearchContainer: React.FunctionComponent<IResearchContainerProps>
         return updateResearchFileProperties(
           file as ApiGen_Concepts_ResearchFile,
           userOverrideCodes,
-        ).then(response => {
-          onSuccess();
+        ).then(async response => {
+          await onSuccess();
           if (isValidId(response?.id)) {
             pathGenerator.showFile('research', response.id);
           }
