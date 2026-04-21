@@ -1,13 +1,34 @@
 name: FT Smoke Test
 env:
   Base_url: ${{ vars.BASE_URL }}
+  Users__0__Guid: ${{ secrets.USER_1_GUID }}
   Users__0__User: ${{ secrets.USER_1_USERNAME }}
   Users__0__Password: ${{ secrets.USER_1_PASSWORD }}
+  Users__1__Guid: ${{ secrets.USER_2_GUID }}
   Users__1__User: ${{ secrets.USER_2_USERNAME }}
   Users__1__Password: ${{ secrets.USER_2_PASSWORD }}
+  OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
+  # service account: gitaction
+  OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
   npm_config_ignore_scripts: true
+  TARGET_ENVIRONMENT: ${{ github.event.inputs.target_environment || 'dev' }}
+  TARGET_NAMESPACE: ${{ (github.event.inputs.target_environment || 'dev') == 'uat' && '3cd915-test' || '3cd915-dev' }}
+  TARGET_DB_NAME: ${{ (github.event.inputs.target_environment || 'dev') == 'dev' && 'PIMS_DEV' || (github.event.inputs.target_environment || 'dev') == 'test' && 'PIMS_TST' || 'PIMS_UAT' }}
+  TARGET_SERVER_NAME: ${{ (github.event.inputs.target_environment || 'dev') == 'uat' && 'sqlprd.th.gov.bc.ca' || 'sqldevtst.th.gov.bc.ca' }}
+  TARGET_DB_SECRET_NAME: ${{ (github.event.inputs.target_environment || 'dev') == 'dev' && 'pims-database' || (github.event.inputs.target_environment || 'dev') == 'test' && 'pims-database-test' || 'pims-database-uat' }}
+  TARGET_GIT_BRANCH: ${{ (github.event.inputs.target_environment || 'dev') == 'uat' && 'test' || 'dev' }}
 on:
-  workflow_dispatch
+  workflow_dispatch:
+    inputs:
+      target_environment:
+        description: "Target environment"
+        required: true
+        type: choice
+        options:
+          - dev
+          - test
+          - uat
+        default: dev
   #push:
   #  branches: [master, dev, test]
   #pull_request:
@@ -26,7 +47,7 @@ jobs:
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
 
       - name: Setup Node.js
-        uses: actions/setup-node@49933ea5f5257e8e3239177f8295fda8298b857f # v4
+        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v4
         with:
           node-version: "20"
 
@@ -36,5 +57,48 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
-      - name: 🚀 Run Cucumber Smoke Tests
-        run: npx cucumber-js --tags @smokeTest
+  # the command:
+  # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
+  # 2) greps the generated name from the previous step.
+  # 3) waits for the job to complete using the generated name.
+  database-clean-1:
+    name: clean database of test user GUID
+    needs: [smoke-test]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.TARGET_NAMESPACE }}
+      - name: call scripts to clean database
+        shell: bash
+        run: |
+          JOB_NAME=$(oc process -f ./openshift/4.0/templates/jobs/db-clean-guid.yaml -p DB_SECRET_NAME=${{ env.TARGET_DB_SECRET_NAME }} -p GIT_BRANCH=${{ env.TARGET_GIT_BRANCH }} -p SERVER_NAME=${{ env.TARGET_SERVER_NAME }} -p DB_NAME=${{ env.TARGET_DB_NAME }} -p NAMESPACE=${{ env.TARGET_NAMESPACE }} -p TEST_USER_GUID=${{ env.Users__0__Guid }} | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*")
+          oc wait --for=condition=complete job/$JOB_NAME --timeout=300s
+          oc get pods -o custom-columns=POD:.metadata.name --no-headers | grep -Eo $JOB_NAME-[^\s].* | (read POD_NAME; oc logs $POD_NAME)
+
+  database-clean-2:
+    name: clean database of test user GUID
+    needs: [smoke-test]
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.TARGET_NAMESPACE }}
+      - name: call scripts to clean database
+        shell: bash
+        run: |
+          JOB_NAME=$(oc process -f ./openshift/4.0/templates/jobs/db-clean-guid.yaml -p DB_SECRET_NAME=${{ env.TARGET_DB_SECRET_NAME }} -p GIT_BRANCH=${{ env.TARGET_GIT_BRANCH }} -p SERVER_NAME=${{ env.TARGET_SERVER_NAME }} -p DB_NAME=${{ env.TARGET_DB_NAME }} -p NAMESPACE=${{ env.TARGET_NAMESPACE }} -p TEST_USER_GUID=${{ env.Users__1__Guid }} | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*")
+          oc wait --for=condition=complete job/$JOB_NAME --timeout=300s
+          oc get pods -o custom-columns=POD:.metadata.name --no-headers | grep -Eo $JOB_NAME-[^\s].* | (read POD_NAME; oc logs $POD_NAME)
