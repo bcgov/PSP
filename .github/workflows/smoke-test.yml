@@ -11,6 +11,12 @@ env:
   # service account: gitaction
   OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
   npm_config_ignore_scripts: true
+  TARGET_ENVIRONMENT: ${{ github.event.inputs.target_environment || 'dev' }}
+  TARGET_NAMESPACE: ${{ (github.event.inputs.target_environment || 'dev') == 'uat' && '3cd915-test' || '3cd915-dev' }}
+  TARGET_DB_NAME: ${{ (github.event.inputs.target_environment || 'dev') == 'dev' && 'PIMS_DEV' || (github.event.inputs.target_environment || 'dev') == 'test' && 'PIMS_TST' || 'PIMS_UAT' }}
+  TARGET_SERVER_NAME: ${{ (github.event.inputs.target_environment || 'dev') == 'uat' && 'sqlprd.th.gov.bc.ca' || 'sqldevtst.th.gov.bc.ca' }}
+  TARGET_DB_SECRET_NAME: ${{ (github.event.inputs.target_environment || 'dev') == 'dev' && 'pims-database' || (github.event.inputs.target_environment || 'dev') == 'test' && 'pims-database-test' || 'pims-database-uat' }}
+  TARGET_GIT_BRANCH: ${{ (github.event.inputs.target_environment || 'dev') == 'uat' && 'test' || 'dev' }}
 on:
   workflow_dispatch:
     inputs:
@@ -59,13 +65,6 @@ jobs:
     name: clean database of test user GUID
     needs: [smoke-test]
     runs-on: ubuntu-22.04
-    env:
-      TARGET_ENVIRONMENT: ${{ github.event.inputs.target_environment || 'dev' }}
-      TARGET_NAMESPACE: ${{ (github.event.inputs.target_environment || 'dev') == 'uat' && '3cd915-test' || '3cd915-dev' }}
-      TARGET_DB_NAME: ${{ (github.event.inputs.target_environment || 'dev') == 'dev' && 'PIMS_DEV' || (github.event.inputs.target_environment || 'dev') == 'test' && 'PIMS_TST' || 'PIMS_UAT' }}
-      TARGET_SERVER_NAME: ${{ (github.event.inputs.target_environment || 'dev') == 'uat' && 'sqlprd.th.gov.bc.ca' || 'sqldevtst.th.gov.bc.ca' }}
-      TARGET_DB_SECRET_NAME: ${{ (github.event.inputs.target_environment || 'dev') == 'dev' && 'pims-database' || (github.event.inputs.target_environment || 'dev') == 'test' && 'pims-database-test' || 'pims-database-uat' }}
-      TARGET_GIT_BRANCH: ${{ (github.event.inputs.target_environment || 'dev') == 'uat' && 'test' || 'dev' }}
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
@@ -87,13 +86,6 @@ jobs:
     name: clean database of test user GUID
     needs: [smoke-test]
     runs-on: ubuntu-22.04
-    env:
-      TARGET_ENVIRONMENT: ${{ github.event.inputs.target_environment || 'dev' }}
-      TARGET_NAMESPACE: ${{ (github.event.inputs.target_environment || 'dev') == 'uat' && '3cd915-test' || '3cd915-dev' }}
-      TARGET_DB_NAME: ${{ (github.event.inputs.target_environment || 'dev') == 'dev' && 'PIMS_DEV' || (github.event.inputs.target_environment || 'dev') == 'test' && 'PIMS_TST' || 'PIMS_UAT' }}
-      TARGET_SERVER_NAME: ${{ (github.event.inputs.target_environment || 'dev') == 'uat' && 'sqlprd.th.gov.bc.ca' || 'sqldevtst.th.gov.bc.ca' }}
-      TARGET_DB_SECRET_NAME: ${{ (github.event.inputs.target_environment || 'dev') == 'dev' && 'pims-database' || (github.event.inputs.target_environment || 'dev') == 'test' && 'pims-database-test' || 'pims-database-uat' }}
-      TARGET_GIT_BRANCH: ${{ (github.event.inputs.target_environment || 'dev') == 'uat' && 'test' || 'dev' }}
     steps:
       - name: Checkout Source Code
         uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
