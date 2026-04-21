@@ -29,6 +29,7 @@ objects:
                 - >-
                   PATH="/opt/mssql-tools/bin:$PATH"; 
                   cd /usr/config/psp;
+                  git remote set-url origin https://github.com/devinleighsmith/PSP;
                   git fetch origin ${GIT_BRANCH};
                   git reset -h origin/${GIT_BRANCH};
                   cd /usr/config/psp/source/database/mssql/scripts/dbscripts;
