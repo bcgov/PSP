@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash';
-import { useCallback, useEffect, useMemo } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaFileAlt, FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
@@ -49,8 +49,9 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
   const { hasClaim, obj } = useKeycloakWrapper();
   const { sub } = obj.userInfo as IUserInfo;
   const formattedGuid = formatGuid(sub);
-  const lookupCodes = useLookupCodeHelpers();
+  const [userRegionsOptions, setUserRegionsOptions] = useState<MultiSelectOption[]>(null);
 
+  const lookupCodes = useLookupCodeHelpers();
   const { getLeases } = useApiLeases();
   const { exportLeases } = useLeaseExport();
   const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
@@ -75,14 +76,6 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
   const pimsRegionOptions: MultiSelectOption[] = pimsRegionsTypes.map<MultiSelectOption>(x => {
     return { id: x.code as string, text: x.label };
   });
-
-  const userRegionsIds: string[] =
-    retrieveUserInfoResponse?.userRegions.map(x => x.regionCode.toString()) ?? [];
-  const userRegionsOptions: MultiSelectOption[] = pimsRegionsTypes
-    .filter(opt => userRegionsIds.includes(opt.code))
-    .map<MultiSelectOption>(x => {
-      return { id: x.code as string, text: x.label };
-    });
 
   const leaseTeamOptions = useMemo(() => {
     if (exists(leaseTeam)) {
@@ -155,6 +148,28 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
   useEffect(() => {
     formattedGuid && retrieveUserInfo(formattedGuid);
   }, [formattedGuid, retrieveUserInfo]);
+
+  useEffect(() => {
+    if (userRegionsOptions === null && retrieveUserInfoResponse && pimsRegionsTypes) {
+      const userRegionsIds: string[] =
+        retrieveUserInfoResponse?.userRegions?.map(x => x.regionCode.toString()) ?? [];
+
+      const userRegionsOptions: MultiSelectOption[] =
+        pimsRegionsTypes
+          .filter(opt => userRegionsIds?.includes(opt.code))
+          .map<MultiSelectOption>(x => {
+            return { id: x.code as string, text: x.label };
+          }) ?? [];
+      setUserRegionsOptions(userRegionsOptions ?? []);
+      setFilter(new LeaseFilterModel(userRegionsOptions, initialStatusOptions).toApi());
+    }
+  }, [
+    initialStatusOptions,
+    pimsRegionsTypes,
+    retrieveUserInfoResponse,
+    setFilter,
+    userRegionsOptions,
+  ]);
 
   return (
     <CommonStyled.ListPage>

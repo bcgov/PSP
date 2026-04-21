@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
@@ -16,7 +16,8 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useSearch } from '@/hooks/useSearch';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
-import { formatGuid } from '@/utils/utils';
+import { getUserRegionsOptions } from '@/utils/formUtils';
+import { exists, formatGuid } from '@/utils/utils';
 
 import { IProjectFilter } from '../interfaces';
 import { ProjectFilterModel } from './ProjectFilter/models/ProjectFilterModel';
@@ -32,6 +33,8 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   const { hasClaim, obj } = useKeycloakWrapper();
   const { sub } = obj.userInfo as IUserInfo;
   const formattedGuid = formatGuid(sub);
+  const [userRegionsOptions, setUserRegionsOptions] = useState<MultiSelectOption[]>(null);
+
   const history = useHistory();
 
   const lookupCodes = useLookupCodeHelpers();
@@ -41,14 +44,6 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   const pimsRegionOptions: MultiSelectOption[] = pimsRegionsTypes.map<MultiSelectOption>(x => {
     return { id: x.code as string, text: x.label };
   });
-
-  const userRegionsIds: string[] =
-    retrieveUserInfoResponse?.userRegions.map(x => x.regionCode.toString()) ?? [];
-  const userRegionsOptions: MultiSelectOption[] = pimsRegionsTypes
-    .filter(opt => userRegionsIds.includes(opt.code))
-    .map<MultiSelectOption>(x => {
-      return { id: x.code as string, text: x.label };
-    });
 
   const {
     results,
@@ -84,6 +79,21 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   useEffect(() => {
     formattedGuid && retrieveUserInfo(formattedGuid);
   }, [formattedGuid, retrieveUserInfo]);
+
+  useEffect(() => {
+    if (
+      userRegionsOptions === null &&
+      exists(retrieveUserInfoResponse) &&
+      exists(pimsRegionsTypes)
+    ) {
+      const userRegionsOptions = getUserRegionsOptions(
+        retrieveUserInfoResponse?.userRegions,
+        pimsRegionsTypes,
+      );
+      setUserRegionsOptions(userRegionsOptions);
+      setFilter(new ProjectFilterModel(userRegionsOptions).toApi());
+    }
+  }, [pimsRegionsTypes, retrieveUserInfoResponse, setFilter, userRegionsOptions]);
 
   return (
     <CommonStyled.ListPage>

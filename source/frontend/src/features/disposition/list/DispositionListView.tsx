@@ -1,5 +1,5 @@
 import isEmpty from 'lodash/isEmpty';
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
@@ -28,8 +28,9 @@ import { useSearch } from '@/hooks/useSearch';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
-import { formatGuid, generateMultiSortCriteria, mapLookupCode } from '@/utils';
+import { exists, formatGuid, generateMultiSortCriteria, mapLookupCode } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
+import { getUserRegionsOptions } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { useDispositionFileExport } from '../hooks/useDispositionFileExport';
@@ -45,6 +46,7 @@ export const DispositionListView: React.FC<unknown> = () => {
   const { hasClaim, obj } = useKeycloakWrapper();
   const { sub } = obj.userInfo as IUserInfo;
   const formattedGuid = formatGuid(sub);
+  const [userRegionsOptions, setUserRegionsOptions] = useState<MultiSelectOption[]>(null);
 
   const { getDispositionFilesPagedApi } = useApiDispositionFile();
   const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
@@ -72,15 +74,6 @@ export const DispositionListView: React.FC<unknown> = () => {
   const pimsRegionOptions: MultiSelectOption[] = pimsRegionsTypes.map<MultiSelectOption>(x => {
     return { id: x.code as string, text: x.label };
   });
-
-  const userRegionsIds: string[] =
-    retrieveUserInfoResponse?.userRegions.map(x => x.regionCode.toString()) ?? [];
-
-  const userRegionsOptions: MultiSelectOption[] = pimsRegionsTypes
-    .filter(opt => userRegionsIds.includes(opt.code))
-    .map<MultiSelectOption>(x => {
-      return { id: x.code as string, text: x.label };
-    });
 
   const {
     results,
@@ -153,6 +146,21 @@ export const DispositionListView: React.FC<unknown> = () => {
   useEffect(() => {
     formattedGuid && retrieveUserInfo(formattedGuid);
   }, [formattedGuid, retrieveUserInfo]);
+
+  useEffect(() => {
+    if (
+      userRegionsOptions === null &&
+      exists(retrieveUserInfoResponse) &&
+      exists(pimsRegionsTypes)
+    ) {
+      const userRegionsOptions = getUserRegionsOptions(
+        retrieveUserInfoResponse?.userRegions,
+        pimsRegionsTypes,
+      );
+      setUserRegionsOptions(userRegionsOptions);
+      setFilter(new DispositionFilterModel(userRegionsOptions).toApi());
+    }
+  }, [pimsRegionsTypes, retrieveUserInfoResponse, setFilter, userRegionsOptions]);
 
   return (
     <CommonStyled.ListPage>
