@@ -28,8 +28,9 @@ import { useSearch } from '@/hooks/useSearch';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
-import { formatGuid, generateMultiSortCriteria, mapLookupCode } from '@/utils';
+import { exists, formatGuid, generateMultiSortCriteria, mapLookupCode } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
+import { getUserRegionsOptions } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { useDispositionFileExport } from '../hooks/useDispositionFileExport';
@@ -147,17 +148,16 @@ export const DispositionListView: React.FC<unknown> = () => {
   }, [formattedGuid, retrieveUserInfo]);
 
   useEffect(() => {
-    if (userRegionsOptions === null && retrieveUserInfoResponse && pimsRegionsTypes) {
-      const userRegionsIds: string[] =
-        retrieveUserInfoResponse?.userRegions?.map(x => x.regionCode.toString()) ?? [];
-
-      const userRegionsOptions: MultiSelectOption[] =
-        pimsRegionsTypes
-          .filter(opt => userRegionsIds?.includes(opt.code))
-          .map<MultiSelectOption>(x => {
-            return { id: x.code as string, text: x.label };
-          }) ?? [];
-      setUserRegionsOptions(userRegionsOptions ?? []);
+    if (
+      userRegionsOptions === null &&
+      exists(retrieveUserInfoResponse) &&
+      exists(pimsRegionsTypes)
+    ) {
+      const userRegionsOptions = getUserRegionsOptions(
+        retrieveUserInfoResponse?.userRegions,
+        pimsRegionsTypes,
+      );
+      setUserRegionsOptions(userRegionsOptions);
       setFilter(new DispositionFilterModel(userRegionsOptions).toApi());
     }
   }, [pimsRegionsTypes, retrieveUserInfoResponse, setFilter, userRegionsOptions]);

@@ -21,7 +21,8 @@ import { useSearch } from '@/hooks/useSearch';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { Api_ManagementFilter } from '@/models/api/ManagementFilter';
-import { formatGuid, mapLookupCode } from '@/utils';
+import { exists, formatGuid, mapLookupCode } from '@/utils';
+import { getUserRegionsOptions } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import ManagementFilter from './ManagementFilter/ManagementFilter';
@@ -116,17 +117,16 @@ export const ManagementListView: React.FC<unknown> = () => {
   }, [formattedGuid, retrieveUserInfo]);
 
   useEffect(() => {
-    if (userRegionsOptions === null && retrieveUserInfoResponse && pimsRegionsTypes) {
-      const userRegionsIds: string[] =
-        retrieveUserInfoResponse?.userRegions?.map(x => x.regionCode.toString()) ?? [];
-
-      const userRegionsOptions: MultiSelectOption[] =
-        pimsRegionsTypes
-          .filter(opt => userRegionsIds?.includes(opt.code))
-          .map<MultiSelectOption>(x => {
-            return { id: x.code as string, text: x.label };
-          }) ?? [];
-      setUserRegionsOptions(userRegionsOptions ?? []);
+    if (
+      userRegionsOptions === null &&
+      exists(retrieveUserInfoResponse) &&
+      exists(pimsRegionsTypes)
+    ) {
+      const userRegionsOptions = getUserRegionsOptions(
+        retrieveUserInfoResponse?.userRegions,
+        pimsRegionsTypes,
+      );
+      setUserRegionsOptions(userRegionsOptions);
       setFilter(new ManagementFilterModel(userRegionsOptions).toApi());
     }
   }, [pimsRegionsTypes, retrieveUserInfoResponse, setFilter, userRegionsOptions]);

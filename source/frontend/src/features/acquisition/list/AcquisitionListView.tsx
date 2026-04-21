@@ -23,6 +23,7 @@ import { useSearch } from '@/hooks/useSearch';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
+import { getUserRegionsOptions } from '@/utils/formUtils';
 import { mapLookupCode } from '@/utils/mapLookupCode';
 import { formatApiPersonNames } from '@/utils/personUtils';
 import { exists, formatGuid, generateMultiSortCriteria } from '@/utils/utils';
@@ -136,17 +137,16 @@ export const AcquisitionListView: React.FunctionComponent<
   }, [formattedGuid, retrieveUserInfo]);
 
   useEffect(() => {
-    if (userRegionsOptions === null && retrieveUserInfoResponse && pimsRegionsTypes) {
-      const userRegionsIds: string[] =
-        retrieveUserInfoResponse?.userRegions?.map(x => x.regionCode.toString()) ?? [];
-
-      const userRegionsOptions: MultiSelectOption[] =
-        pimsRegionsTypes
-          .filter(opt => userRegionsIds?.includes(opt.code))
-          .map<MultiSelectOption>(x => {
-            return { id: x.code as string, text: x.label };
-          }) ?? [];
-      setUserRegionsOptions(userRegionsOptions ?? []);
+    if (
+      userRegionsOptions === null &&
+      exists(retrieveUserInfoResponse) &&
+      exists(pimsRegionsTypes)
+    ) {
+      const userRegionsOptions = getUserRegionsOptions(
+        retrieveUserInfoResponse?.userRegions,
+        pimsRegionsTypes,
+      );
+      setUserRegionsOptions(userRegionsOptions);
       setFilter(new AcquisitionFilterModel(userRegionsOptions).toApi());
     }
   }, [pimsRegionsTypes, retrieveUserInfoResponse, setFilter, userRegionsOptions]);

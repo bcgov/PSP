@@ -16,7 +16,8 @@ import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useSearch } from '@/hooks/useSearch';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
-import { formatGuid } from '@/utils/utils';
+import { getUserRegionsOptions } from '@/utils/formUtils';
+import { exists, formatGuid } from '@/utils/utils';
 
 import { IProjectFilter } from '../interfaces';
 import { ProjectFilterModel } from './ProjectFilter/models/ProjectFilterModel';
@@ -80,17 +81,16 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   }, [formattedGuid, retrieveUserInfo]);
 
   useEffect(() => {
-    if (userRegionsOptions === null && retrieveUserInfoResponse && pimsRegionsTypes) {
-      const userRegionsIds: string[] =
-        retrieveUserInfoResponse?.userRegions?.map(x => x.regionCode.toString()) ?? [];
-
-      const userRegionsOptions: MultiSelectOption[] =
-        pimsRegionsTypes
-          .filter(opt => userRegionsIds?.includes(opt.code))
-          .map<MultiSelectOption>(x => {
-            return { id: x.code as string, text: x.label };
-          }) ?? [];
-      setUserRegionsOptions(userRegionsOptions ?? []);
+    if (
+      userRegionsOptions === null &&
+      exists(retrieveUserInfoResponse) &&
+      exists(pimsRegionsTypes)
+    ) {
+      const userRegionsOptions = getUserRegionsOptions(
+        retrieveUserInfoResponse?.userRegions,
+        pimsRegionsTypes,
+      );
+      setUserRegionsOptions(userRegionsOptions);
       setFilter(new ProjectFilterModel(userRegionsOptions).toApi());
     }
   }, [pimsRegionsTypes, retrieveUserInfoResponse, setFilter, userRegionsOptions]);
