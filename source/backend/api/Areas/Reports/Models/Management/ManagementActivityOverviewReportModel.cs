@@ -10,14 +10,13 @@ namespace Pims.Api.Areas.Reports.Models.Management
 {
     public class ManagementActivityOverviewReportModel
     {
+        [DisplayName("Management File Number")]
+        [CsvHelper.Configuration.Attributes.Name("Management File Number")]
+        public string ManagementFileNumber { get; set; }
 
         [DisplayName("Management File Name")]
         [CsvHelper.Configuration.Attributes.Name("Management File Name")]
         public string ManagementFileName { get; set; }
-
-        [DisplayName("Management File Number")]
-        [CsvHelper.Configuration.Attributes.Name("Management File Number")]
-        public string ManagementFileNumber { get; set; }
 
         [DisplayName("Historical File Number")]
         [CsvHelper.Configuration.Attributes.Name("Historical File Number")]
