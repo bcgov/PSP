@@ -1,3 +1,4 @@
+import axios, { AxiosError } from 'axios';
 import { FieldArray, Formik, FormikProps } from 'formik';
 import { LatLngLiteral } from 'leaflet';
 import noop from 'lodash/noop';
@@ -184,6 +185,10 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
         formikRef.current?.resetForm();
         props.setIsShowingPropertySelector(false);
         await props.onSuccess(true);
+      }
+    } catch (e) {
+      if (axios.isAxiosError(e) && (e as AxiosError).code === '409') {
+        return;
       }
     } finally {
       formikRef.current?.setSubmitting(false);
