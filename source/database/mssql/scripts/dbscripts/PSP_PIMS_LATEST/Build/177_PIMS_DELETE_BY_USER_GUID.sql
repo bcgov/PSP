@@ -17,6 +17,12 @@ BEGIN
     SET NOCOUNT ON;
     SET XACT_ABORT OFF;
 
+    -- Safety guard: prevent execution in production
+    IF DB_NAME() = N'PIMS_PRD'
+    BEGIN
+        THROW 51000, 'Execution of SafeDeleteByCreateUserGuidStrict is blocked in PIMS_PRD.', 1;
+    END;
+
     DECLARE @PimsUserFullName nvarchar(517) =
         QUOTENAME(@ProtectedSchema) + N'.' + QUOTENAME(N'PIMS_USER');
 
