@@ -70,7 +70,7 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.TARGET_NAMESPACE }}
-      - name: call scripts to upgrade database
+      - name: call scripts to clean database
         shell: bash
         run: |
           JOB_NAME=$(oc process -f ./openshift/4.0/templates/jobs/db-clean-guid.yaml -p DB_SECRET_NAME=${{ env.TARGET_DB_SECRET_NAME }} -p GIT_BRANCH=${{ env.TARGET_GIT_BRANCH }} -p SERVER_NAME=${{ env.TARGET_SERVER_NAME }} -p DB_NAME=${{ env.TARGET_DB_NAME }} -p NAMESPACE=${{ env.TARGET_NAMESPACE }} -p TEST_USER_GUID=${{ env.Users__0__Guid }} | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*")
