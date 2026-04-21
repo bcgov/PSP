@@ -45,6 +45,12 @@ jobs:
         with:
           node-version: "20"
 
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Install Playwright Browsers
+        run: npx playwright install --with-deps
+
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
   # 2) greps the generated name from the previous step.
