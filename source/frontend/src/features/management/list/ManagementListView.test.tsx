@@ -13,7 +13,6 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   cleanup,
-  fillInput,
   getByName,
   render,
   RenderOptions,
@@ -97,8 +96,8 @@ describe('Management List View', () => {
     getManagementFilesPagedApiFn.mockResolvedValue(results);
 
     const { getSearchButton } = setup();
+    await waitForEffects();
 
-    await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
     expect(await screen.queryByText(/test management/i)).toBeNull();
 
     results = mockPagedResults([mockManagementFileResponse(1, 'test management')]);
@@ -110,6 +109,7 @@ describe('Management List View', () => {
     expect((fileInput as HTMLInputElement).value).toBe('test management');
 
     await act(async () => userEvent.click(getSearchButton()));
+    await waitForEffects();
 
     expect(getManagementFilesPagedApiFn).toHaveBeenCalledWith(
       expect.objectContaining<Partial<ManagementFilterModel>>({
@@ -171,7 +171,8 @@ describe('Management List View', () => {
   it('displays an error toast when api call fails', async () => {
     getManagementFilesPagedApiFn.mockRejectedValue(new Error('network error'));
     setup();
-    await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
+    await waitForEffects();
+
     const toast = await screen.findByText('network error');
     expect(toast).toBeVisible();
   });

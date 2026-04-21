@@ -55,7 +55,7 @@ export class AcquisitionFilterModel {
       pin: this.pin,
       pid: this.pid,
       address: this.address,
-      regions: this.regions.map(x => x.id),
+      regions: this.regions?.map(x => x.id) ?? [],
     };
   }
 

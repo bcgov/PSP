@@ -42,7 +42,7 @@ export class DispositionFilterModel {
       dispositionFileStatusCode: this.dispositionFileStatusCode,
       dispositionStatusCode: this.dispositionStatusCode,
       dispositionTypeCode: this.dispositionTypeCode,
-      regions: this.regions.map(x => x.id),
+      regions: this.regions?.map(x => x.id) ?? [],
       // disposition team members
       teamMemberPersonId:
         personMemberId && isNumber(+personMemberId) ? Number(personMemberId) : null,

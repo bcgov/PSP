@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash';
-import React, { useCallback, useEffect, useMemo } from 'react';
+import React, { useCallback, useEffect, useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
@@ -43,6 +43,7 @@ export const AcquisitionListView: React.FunctionComponent<
   const { hasClaim, obj } = useKeycloakWrapper();
   const { sub } = obj.userInfo as IUserInfo;
   const formattedGuid = formatGuid(sub);
+  const [userRegionsOptions, setUserRegionsOptions] = useState<MultiSelectOption[]>(null);
 
   const lookupCodes = useLookupCodeHelpers();
   const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
@@ -59,14 +60,6 @@ export const AcquisitionListView: React.FunctionComponent<
   const acquisitionStatusOptions = lookupCodes
     .getByType(ACQUISITION_FILE_STATUS_TYPES)
     .map(c => mapLookupCode(c));
-
-  const userRegionsIds: string[] =
-    retrieveUserInfoResponse?.userRegions.map(x => x.regionCode.toString()) ?? [];
-  const userRegionsOptions: MultiSelectOption[] = pimsRegionsTypes
-    .filter(opt => userRegionsIds.includes(opt.code))
-    .map<MultiSelectOption>(x => {
-      return { id: x.code as string, text: x.label };
-    });
 
   const {
     results,
@@ -141,6 +134,22 @@ export const AcquisitionListView: React.FunctionComponent<
   useEffect(() => {
     formattedGuid && retrieveUserInfo(formattedGuid);
   }, [formattedGuid, retrieveUserInfo]);
+
+  useEffect(() => {
+    if (userRegionsOptions === null && retrieveUserInfoResponse && pimsRegionsTypes) {
+      const userRegionsIds: string[] =
+        retrieveUserInfoResponse?.userRegions?.map(x => x.regionCode.toString()) ?? [];
+
+      const userRegionsOptions: MultiSelectOption[] =
+        pimsRegionsTypes
+          .filter(opt => userRegionsIds?.includes(opt.code))
+          .map<MultiSelectOption>(x => {
+            return { id: x.code as string, text: x.label };
+          }) ?? [];
+      setUserRegionsOptions(userRegionsOptions ?? []);
+      setFilter(new AcquisitionFilterModel(userRegionsOptions).toApi());
+    }
+  }, [pimsRegionsTypes, retrieveUserInfoResponse, setFilter, userRegionsOptions]);
 
   return (
     <CommonStyled.ListPage>

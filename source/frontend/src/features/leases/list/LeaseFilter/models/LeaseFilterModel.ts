@@ -44,7 +44,7 @@ export class LeaseFilterModel {
       leaseTeamPersonId: leaseTeamPersonId ? +leaseTeamPersonId : null,
       leaseTeamOrganizationId: leaseTeamOrganizationId ? +leaseTeamOrganizationId : null,
       isReceivable: this.isReceivable ?? null,
-      regions: this.regions.map(x => x.id),
+      regions: this.regions?.map(x => x.id) ?? [],
     };
   }
 

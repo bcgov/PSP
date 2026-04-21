@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
@@ -32,6 +32,8 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   const { hasClaim, obj } = useKeycloakWrapper();
   const { sub } = obj.userInfo as IUserInfo;
   const formattedGuid = formatGuid(sub);
+  const [userRegionsOptions, setUserRegionsOptions] = useState<MultiSelectOption[]>(null);
+
   const history = useHistory();
 
   const lookupCodes = useLookupCodeHelpers();
@@ -41,14 +43,6 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   const pimsRegionOptions: MultiSelectOption[] = pimsRegionsTypes.map<MultiSelectOption>(x => {
     return { id: x.code as string, text: x.label };
   });
-
-  const userRegionsIds: string[] =
-    retrieveUserInfoResponse?.userRegions.map(x => x.regionCode.toString()) ?? [];
-  const userRegionsOptions: MultiSelectOption[] = pimsRegionsTypes
-    .filter(opt => userRegionsIds.includes(opt.code))
-    .map<MultiSelectOption>(x => {
-      return { id: x.code as string, text: x.label };
-    });
 
   const {
     results,
@@ -84,6 +78,22 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   useEffect(() => {
     formattedGuid && retrieveUserInfo(formattedGuid);
   }, [formattedGuid, retrieveUserInfo]);
+
+  useEffect(() => {
+    if (userRegionsOptions === null && retrieveUserInfoResponse && pimsRegionsTypes) {
+      const userRegionsIds: string[] =
+        retrieveUserInfoResponse?.userRegions?.map(x => x.regionCode.toString()) ?? [];
+
+      const userRegionsOptions: MultiSelectOption[] =
+        pimsRegionsTypes
+          .filter(opt => userRegionsIds?.includes(opt.code))
+          .map<MultiSelectOption>(x => {
+            return { id: x.code as string, text: x.label };
+          }) ?? [];
+      setUserRegionsOptions(userRegionsOptions ?? []);
+      setFilter(new ProjectFilterModel(userRegionsOptions).toApi());
+    }
+  }, [pimsRegionsTypes, retrieveUserInfoResponse, setFilter, userRegionsOptions]);
 
   return (
     <CommonStyled.ListPage>
