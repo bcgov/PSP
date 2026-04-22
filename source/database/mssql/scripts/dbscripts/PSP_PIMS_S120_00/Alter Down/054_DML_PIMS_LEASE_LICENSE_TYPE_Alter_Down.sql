@@ -1,9 +1,9 @@
 -- -------------------------------------------------------------------------------------------
--- Alter the PIMS_LEASE_PROGRAM_TYPE table.
+-- Alter the PIMS_LEASE_LICENSE_TYPE table.
 -- . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 -- Author        Date         Ticket     Comment
 -- ------------  -----------  ---------  -----------------------------------------------------
--- Doug Filteau  2026-Apr-01  PSP-11377  Added MAJORWORX.
+-- Eduardo H.    2026-Apr-22  PSP-11377  Added MAJORWORX.
 -- -------------------------------------------------------------------------------------------
 
 SET XACT_ABORT ON
@@ -21,15 +21,15 @@ GO
 DECLARE @CurrCd NVARCHAR(20)
 SET     @CurrCd = N'MAJORWORX'
 
-SELECT LEASE_PROGRAM_TYPE_CODE
-FROM   PIMS_LEASE_PROGRAM_TYPE
-WHERE  LEASE_PROGRAM_TYPE_CODE = @CurrCd;
+SELECT LEASE_LICENSE_TYPE_CODE
+FROM   PIMS_LEASE_LICENSE_TYPE
+WHERE  LEASE_LICENSE_TYPE_CODE = @CurrCd;
 
 IF @@ROWCOUNT = 1
-  UPDATE PIMS_LEASE_PROGRAM_TYPE
+  UPDATE PIMS_LEASE_LICENSE_TYPE
   SET    IS_DISABLED                = 1
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
-  WHERE  LEASE_PROGRAM_TYPE_CODE = @CurrCd;
+  WHERE  LEASE_LICENSE_TYPE_CODE = @CurrCd;
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

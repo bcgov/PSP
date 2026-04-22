@@ -20,8 +20,8 @@ PRINT '     == DB TRANSACTION START ========'
    PRINT '- Executing PSP_PIMS_S120_00/Alter Down/020_PIMS_STATIC_VARIABLE_VERSION_Alter_Down.sql '
    :setvar filepath "PSP_PIMS_S120_00/Alter Down/020_PIMS_STATIC_VARIABLE_VERSION_Alter_Down.sql"
    :r $(filepath)
-   PRINT '- Executing PSP_PIMS_S120_00/Alter Down/057_DML_PIMS_LEASE_PROGRAM_TYPE_Alter_Down.sql '
-   :setvar filepath "PSP_PIMS_S120_00/Alter Down/057_DML_PIMS_LEASE_PROGRAM_TYPE_Alter_Down.sql"
+   PRINT '- Executing PSP_PIMS_S120_00/Alter Down/054_DML_PIMS_LEASE_LICENSE_TYPE_Alter_Down.sql '
+   :setvar filepath "PSP_PIMS_S120_00/Alter Down/054_DML_PIMS_LEASE_LICENSE_TYPE_Alter_Down.sql"
    :r $(filepath)
    PRINT '- Executing PSP_PIMS_S120_00/Alter Down/093_DML_PIMS_ACQ_FL_TEAM_PROFILE_TYPE_Alter_Down.sql '
    :setvar filepath "PSP_PIMS_S120_00/Alter Down/093_DML_PIMS_ACQ_FL_TEAM_PROFILE_TYPE_Alter_Down.sql"
