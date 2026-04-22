@@ -4,6 +4,7 @@
 -- Author        Date         Ticket     Comment
 -- ------------  -----------  ---------  -----------------------------------------------------
 -- Doug Filteau  2026-Apr-01  PSP-11377  Added MAJORWORX.
+-- Eduardo H.    2026-Apr-22  PSP-11377  REMOVED MAJORWORX to PIMS_LEASE_LICENSE_TYPE.
 -- -------------------------------------------------------------------------------------------
 
 SET XACT_ABORT ON
@@ -27,12 +28,9 @@ WHERE  LEASE_PROGRAM_TYPE_CODE = @CurrCd;
 
 IF @@ROWCOUNT = 1
   UPDATE PIMS_LEASE_PROGRAM_TYPE
-  SET    IS_DISABLED                = 0
+  SET    IS_DISABLED                = 1
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
   WHERE  LEASE_PROGRAM_TYPE_CODE = @CurrCd;
-ELSE
-  INSERT INTO PIMS_LEASE_PROGRAM_TYPE (LEASE_PROGRAM_TYPE_CODE, DESCRIPTION, IS_DISABLED)
-  VALUES  (N'MAJORWORX', N'Major Works Contract/Notice to Contractor', 0);
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

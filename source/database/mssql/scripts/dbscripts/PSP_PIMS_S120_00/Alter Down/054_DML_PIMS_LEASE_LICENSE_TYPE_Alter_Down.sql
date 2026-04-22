@@ -3,8 +3,7 @@
 -- . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 -- Author        Date         Ticket     Comment
 -- ------------  -----------  ---------  -----------------------------------------------------
--- Doug Filteau  2026-Apr-01  PSP-11377  Added MAJORWORX.
--- Eduardo H.    2026-Apr-22  PSP-11377  REMOVED MAJORWORX to PIMS_LEASE_LICENSE_TYPE.
+-- Eduardo H.    2026-Apr-22  PSP-11377  Added MAJORWORX.
 -- -------------------------------------------------------------------------------------------
 
 SET XACT_ABORT ON
@@ -16,35 +15,21 @@ GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO
 
--- Add/enable the MAJORWORX code.
-PRINT N'Add/enable the MAJORWORX code.'
+-- Disable the MAJORWORX code.
+PRINT N'Disable the MAJORWORX code.'
 GO
 DECLARE @CurrCd NVARCHAR(20)
 SET     @CurrCd = N'MAJORWORX'
 
-SELECT LEASE_PROGRAM_TYPE_CODE
-FROM   PIMS_LEASE_PROGRAM_TYPE
-WHERE  LEASE_PROGRAM_TYPE_CODE = @CurrCd;
+SELECT LEASE_LICENSE_TYPE_CODE
+FROM   PIMS_LEASE_LICENSE_TYPE
+WHERE  LEASE_LICENSE_TYPE_CODE = @CurrCd;
 
 IF @@ROWCOUNT = 1
-  UPDATE PIMS_LEASE_PROGRAM_TYPE
+  UPDATE PIMS_LEASE_LICENSE_TYPE
   SET    IS_DISABLED                = 1
        , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
-  WHERE  LEASE_PROGRAM_TYPE_CODE = @CurrCd;
-GO
-IF @@ERROR <> 0 SET NOEXEC ON
-GO
-
--- --------------------------------------------------------------
--- Update the display order.
--- --------------------------------------------------------------
-UPDATE lpty
-SET    lpty.DISPLAY_ORDER              = seq.ROW_NUM
-     , lpty.CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
-FROM   PIMS_LEASE_PROGRAM_TYPE lpty JOIN
-       (SELECT LEASE_PROGRAM_TYPE_CODE
-             , ROW_NUMBER() OVER (ORDER BY DESCRIPTION) AS ROW_NUM
-        FROM   PIMS_LEASE_PROGRAM_TYPE) seq  ON seq.LEASE_PROGRAM_TYPE_CODE = lpty.LEASE_PROGRAM_TYPE_CODE
+  WHERE  LEASE_LICENSE_TYPE_CODE = @CurrCd;
 GO
 IF @@ERROR <> 0 SET NOEXEC ON
 GO

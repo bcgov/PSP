@@ -1,6 +1,6 @@
 /* -----------------------------------------------------------------------------
 Delete all data from the PIMS_LEASE_LICENSE_TYPE table and repopulate.
-. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
 Doug Filteau  2021-Aug-24  Initial version
@@ -11,6 +11,7 @@ GO
 
 INSERT INTO PIMS_LEASE_LICENSE_TYPE (LEASE_LICENSE_TYPE_CODE, DESCRIPTION, IS_DISABLED)
 VALUES
+  (N'MAJORWORX', N'Major Works Contract/Notice to Contractor',          0),
   (N'LSREG',     N'Lease - Registered (payable)',                       0),
   (N'LSUNREG',   N'Lease - Unregistered (payable)',                     0),
   (N'LSGRND',    N'Land Lease (receivable)',                            0),
