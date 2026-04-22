@@ -197,6 +197,25 @@ public partial class PimsAcquisitionOwner
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
+    /// <summary>
+    /// User Story: As a PIMS user, I need to pre-populate the owner name(s) from LTSA title, as I’m required to use the LTSA title owner as the owner for an Acquisition file, and having that populate automatically based on properties in the file saves me time an
+    /// </summary>
+    [Column("IS_FROM_LTSA")]
+    public bool? IsFromLtsa { get; set; }
+
+    /// <summary>
+    /// PID of the originating LTSA file.
+    /// </summary>
+    [Column("LTSA_PID")]
+    [StringLength(9)]
+    public string LtsaPid { get; set; }
+
+    /// <summary>
+    /// Date that LTSA data was imported into the PIMS system.
+    /// </summary>
+    [Column("LTSA_SOURCED_DATE", TypeName = "datetime")]
+    public DateTime? LtsaSourcedDate { get; set; }
+
     [ForeignKey("AcquisitionFileId")]
     [InverseProperty("PimsAcquisitionOwners")]
     public virtual PimsAcquisitionFile AcquisitionFile { get; set; }

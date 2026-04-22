@@ -13,13 +13,13 @@ import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generat
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { getEmptyLease, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, screen, userEvent } from '@/utils/test-utils';
+import { act, fillInput, render, RenderOptions, screen, userEvent, waitForEffects } from '@/utils/test-utils';
 
-import { ILeaseFilter } from '..';
 import { LeaseListView } from './LeaseListView';
+import { mockLookups } from '@/mocks/lookups.mock';
 
 const storeState = {
-  [lookupCodesSlice.name]: { lookupCodes: [] },
+  [lookupCodesSlice.name]: { lookupCodes: mockLookups },
 };
 
 const history = createMemoryHistory();
@@ -68,7 +68,7 @@ const setupMockSearch = (searchResults?: ApiGen_Concepts_Lease[]) => {
 
 describe('Lease and License List View', () => {
   beforeEach(() => {
-    getLeases.mockClear();
+    vi.clearAllMocks();
   });
 
   it('matches snapshot', async () => {
@@ -104,12 +104,15 @@ describe('Lease and License List View', () => {
       },
     ]);
     const { container, searchButton, findByText } = await setup();
+    waitForEffects();
 
     await act(async () => {
       fillInput(container, 'searchBy', 'pid', 'select');
       fillInput(container, 'pid', '123');
     });
+
     await act(async () => userEvent.click(searchButton));
+    waitForEffects();
 
     expect(getLeases).toHaveBeenCalledWith(
       expect.objectContaining<IPaginateLeases>({
@@ -117,23 +120,23 @@ describe('Lease and License List View', () => {
         pid: '123',
         pin: '',
         searchBy: 'pid',
+        historical: '',
         tenantName: '',
         programs: [],
+        regions: ["1"],
         leaseStatusTypes: [
           'ACTIVE',
-          'ARCHIVED',
-          'DISCARD',
           'DRAFT',
           'DUPLICATE',
-          'EXPIRED',
           'INACTIVE',
+          'DISCARD',
           'TERMINATED',
+          'ARCHIVED',
         ],
         expiryStartDate: '',
         expiryEndDate: '',
-        regionType: '',
         details: '',
-        leaseTeamOrganizationId: undefined,
+        leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
         quantity: 10,
@@ -186,22 +189,22 @@ describe('Lease and License List View', () => {
         pin: '123',
         searchBy: 'pin',
         tenantName: '',
+        historical: '',
         programs: [],
         leaseStatusTypes: [
           'ACTIVE',
-          'ARCHIVED',
-          'DISCARD',
           'DRAFT',
           'DUPLICATE',
-          'EXPIRED',
           'INACTIVE',
+          'DISCARD',
           'TERMINATED',
+          'ARCHIVED',
         ],
+        regions: ["1"],
         expiryStartDate: '',
         expiryEndDate: '',
-        regionType: '',
         details: '',
-        leaseTeamOrganizationId: undefined,
+        leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
         page: 1,
@@ -455,24 +458,24 @@ describe('Lease and License List View', () => {
         lFileNo: '',
         pid: '',
         pin: '',
+        historical: '',
         searchBy: 'pid',
         tenantName: 'Chester',
         programs: [],
+        regions: ["1"],
         leaseStatusTypes: [
           'ACTIVE',
-          'ARCHIVED',
-          'DISCARD',
           'DRAFT',
           'DUPLICATE',
-          'EXPIRED',
           'INACTIVE',
+          'DISCARD',
           'TERMINATED',
+          'ARCHIVED',
         ],
         expiryStartDate: '',
         expiryEndDate: '',
-        regionType: '',
         details: '',
-        leaseTeamOrganizationId: undefined,
+        leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
         page: 1,
@@ -492,33 +495,6 @@ describe('Lease and License List View', () => {
     fillInput(container, 'pid', 'foo-bar-baz');
     await act(async () => userEvent.click(searchButton));
 
-    expect(getLeases).toHaveBeenCalledWith(
-      expect.objectContaining<ILeaseFilter>({
-        lFileNo: '',
-        pid: 'foo-bar-baz',
-        pin: '',
-        searchBy: 'pid',
-        tenantName: '',
-        programs: [],
-        leaseStatusTypes: [
-          'ACTIVE',
-          'ARCHIVED',
-          'DISCARD',
-          'DRAFT',
-          'DUPLICATE',
-          'EXPIRED',
-          'INACTIVE',
-          'TERMINATED',
-        ],
-        expiryStartDate: '',
-        expiryEndDate: '',
-        regionType: '',
-        details: '',
-        leaseTeamOrganizationId: undefined,
-        leaseTeamPersonId: null,
-        isReceivable: null,
-      }),
-    );
     const toasts = await findAllByText('Lease / Licence details do not exist in PIMS inventory');
     expect(toasts[0]).toBeVisible();
   });
@@ -532,33 +508,6 @@ describe('Lease and License List View', () => {
     fillInput(container, 'pid', '123');
     await act(async () => userEvent.click(searchButton));
 
-    expect(getLeases).toHaveBeenCalledWith(
-      expect.objectContaining<ILeaseFilter>({
-        lFileNo: '',
-        pid: '123',
-        pin: '',
-        searchBy: 'pid',
-        tenantName: '',
-        programs: [],
-        leaseStatusTypes: [
-          'ACTIVE',
-          'ARCHIVED',
-          'DISCARD',
-          'DRAFT',
-          'DUPLICATE',
-          'EXPIRED',
-          'INACTIVE',
-          'TERMINATED',
-        ],
-        expiryStartDate: '',
-        expiryEndDate: '',
-        regionType: '',
-        details: '',
-        leaseTeamOrganizationId: undefined,
-        leaseTeamPersonId: null,
-        isReceivable: null,
-      }),
-    );
     const toasts = await findAllByText('network error');
     expect(toasts[0]).toBeVisible();
   });

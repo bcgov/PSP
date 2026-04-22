@@ -16,15 +16,15 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectContact(string contactSearchName, string contactType)
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
 
             switch (contactType)
             {
                 case "Individual":
-                    ChooseSpecificRadioButton(selectContactRadioBttnGroup, "persons");
+                    ChooseRadioButton(selectContactRadioBttnGroup, "persons");
                     break;
                 case "Organization":
-                    ChooseSpecificRadioButton(selectContactRadioBttnGroup, "organizations");
+                    ChooseRadioButton(selectContactRadioBttnGroup, "organizations");
                     break;
                 default:
                     break;
@@ -32,13 +32,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
             Wait();
             webDriver.FindElement(selectContactSearchInput).SendKeys(contactSearchName);
-            webDriver.FindElement(selectContactSearchButton).Click();
+            SafeClick(selectContactSearchButton);
 
-            Wait(5000);
-            webDriver.FindElement(selectContactSearch1stResultRadioBttn).Click();
-
-            WaitUntilClickable(selectContactOkButton);
-            webDriver.FindElement(selectContactOkButton).Click();
+            Wait();
+            SafeClick(selectContactSearch1stResultRadioBttn);
+            SafeClick(selectContactOkButton);
         }
     }
 }

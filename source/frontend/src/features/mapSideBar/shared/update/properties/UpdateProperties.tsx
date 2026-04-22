@@ -175,7 +175,6 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
     try {
       const response = await props.updateFileProperties(file, []);
 
-      formikRef.current?.setSubmitting(false);
       if (isValidId(response?.id)) {
         if (file.fileProperties?.find(fp => !fp.property?.address && !fp.property?.id)) {
           toast.warn(
@@ -189,8 +188,10 @@ export const UpdateProperties: React.FunctionComponent<IUpdatePropertiesProps> =
       }
     } catch (e) {
       if (axios.isAxiosError(e) && (e as AxiosError).code === '409') {
-        setShowAssociatedEntityWarning(true);
+        return;
       }
+    } finally {
+      formikRef.current?.setSubmitting(false);
     }
   };
 

@@ -45,7 +45,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -66,7 +66,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -87,7 +87,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -108,7 +108,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -129,7 +129,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -150,7 +150,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -171,7 +171,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -192,7 +192,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 }, contractorPersonId: 1);
+            var result = repository.GetPageDeep(filter, contractorPersonId: 1);
 
             // Assert
             result.Should().HaveCount(1);
@@ -220,7 +220,7 @@ namespace Pims.Dal.Test.Repositories
             var filter = new AcquisitionFilter() { OwnerName = "DOE" };
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -252,7 +252,7 @@ namespace Pims.Dal.Test.Repositories
             var filter = new AcquisitionFilter() { OwnerName = "DOE" };
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -284,7 +284,7 @@ namespace Pims.Dal.Test.Repositories
             var filter = new AcquisitionFilter() { OwnerName = "DOE" };
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -315,7 +315,7 @@ namespace Pims.Dal.Test.Repositories
             var filter = new AcquisitionFilter() { OwnerName = "DAIRY" };
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -795,7 +795,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetAcquisitionFileExportDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetAcquisitionFileExportDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -816,7 +816,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetAcquisitionFileExportDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetAcquisitionFileExportDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);

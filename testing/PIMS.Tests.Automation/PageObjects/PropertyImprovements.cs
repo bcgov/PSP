@@ -45,8 +45,8 @@ namespace PIMS.Tests.Automation.PageObjects
         public void EditNthImprovements(int index)
         {
             Wait();
-            By editBttn = By.CssSelector("button[data-testid='improvements['"+ index +"'].edit-btn']");
-            webDriver.FindElement(editBttn).Click();
+            By editBttn = By.CssSelector("button[data-testid='improvements["+ index +"].edit-btn']");
+            SafeClick(editBttn);
 
             WaitUntilSpinnerDisappear();
         }
@@ -61,7 +61,7 @@ namespace PIMS.Tests.Automation.PageObjects
         //Create Improvements
         public void AddUpdateImprovement(PropertyImprovement improvement)
         {
-            Wait();
+            WaitUntilVisible(improvementDetailsTitle);
             AssertTrueIsDisplayed(improvementDetailsTitle);
 
             AssertTrueIsDisplayed(improvementDetailsNameLabel);
@@ -69,10 +69,10 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(improvementDetailsNameInput).SendKeys(improvement.ImprovementName);
 
             AssertTrueIsDisplayed(improvementDetailsTypeLabel);
-            ChooseSpecificSelectOption(improvementDetailsTypeSelect, improvement.ImprovementType);
+            ChooseSelectOption(improvementDetailsTypeSelect, improvement.ImprovementType);
 
             AssertTrueIsDisplayed(improvementDetailsStatusLabel);
-            ChooseSpecificSelectOption(improvementDetailsStatusSelect, improvement.ImprovementStatus);
+            ChooseSelectOption(improvementDetailsStatusSelect, improvement.ImprovementStatus);
 
             AssertTrueIsDisplayed(improvementDetailsDateLabel);
             if (improvement.ImprovementDate != "")
@@ -93,7 +93,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             int elementIdx = index + 1;
 
-            AssertTrueIsDisplayed(improvementDetailsTitle);
+            Wait();
 
             AssertTrueIsDisplayed(improvementDetailsNameLabel);
             AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].name']"), improvement.ImprovementName);
@@ -102,7 +102,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].type']"), improvement.ImprovementType);
 
             AssertTrueIsDisplayed(improvementDetailsDateLabel);
-            AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].date']"), improvement.ImprovementDate);
+            AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].date']"), TransformDateFormat(improvement.ImprovementDate));
 
             AssertTrueIsDisplayed(improvementDetailsStatusLabel);
             AssertTrueContentEquals(By.CssSelector("div[data-testid='improvement["+ elementIdx +"].status']"), improvement.ImprovementStatus);
@@ -114,21 +114,18 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveImprovement()
         {
-            Wait();
             ButtonElement("Save");
         }
 
         public void CancelImprovement()
         {
-            Wait();
             ButtonElement("Cancel");
-
             sharedModals.CancelActionModal();
         }
 
         public int ImprovementTotal()
         {
-            Wait();
+            WaitUntilVisible(licenseImproTotal);
             return webDriver.FindElements(licenseImproTotal).Count;
         }
     }

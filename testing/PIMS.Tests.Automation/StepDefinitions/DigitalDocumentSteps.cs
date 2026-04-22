@@ -235,13 +235,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Edit digital document's details
             digitalDocumentsTab.NavigateToFirstPageDocumentsTable();
 
-            //Disable Order by Document's type
-            if (fileType != "Lease" || fileType != "Management")
-            {
-                digitalDocumentsTab.OrderByDocumentFileType();
-                digitalDocumentsTab.OrderByDocumentFileType();
-            }
-
             //Pick 1st available digital document
             digitalDocumentsTab.View1stDocument();
             digitalDocumentsTab.EditDocumentButton();
@@ -261,7 +254,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.SaveEditDigitalDocument();
 
             //Verify Details View Form
-            digitalDocumentsTab.OrderByDocumentFileType();
+            digitalDocumentsTab.FilterByType(digitalDocumentList[0].DocumentType);
             digitalDocumentsTab.View1stDocument();
             digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[0]);
 
@@ -269,6 +262,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.CloseDigitalDocumentViewDetails();
 
             //Verify Pagination Elements
+            digitalDocumentsTab.ResetFilters();
             digitalDocumentsTab.VerifyPaginationElements();
 
             //Verify Pagination Functionality

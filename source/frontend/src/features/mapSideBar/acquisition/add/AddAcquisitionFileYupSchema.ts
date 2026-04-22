@@ -84,6 +84,7 @@ export const AddAcquisitionFileYupSchema = yup
       noticeOfClaim: yup.object().shape({
         comment: yup
           .string()
+          .nullable()
           .max(4000, 'Notice of claim comment must be at most ${max} characters'),
       }),
     },

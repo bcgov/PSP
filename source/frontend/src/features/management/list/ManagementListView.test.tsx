@@ -18,6 +18,7 @@ import {
   RenderOptions,
   screen,
   userEvent,
+  waitForEffects,
   waitForElementToBeRemoved,
 } from '@/utils/test-utils';
 
@@ -64,6 +65,7 @@ describe('Management List View', () => {
         [lookupCodesSlice.name]: { lookupCodes: mockLookups },
       },
     });
+
     return {
       ...utils,
       getSearchButton: () => screen.getByTestId('search'),
@@ -94,16 +96,20 @@ describe('Management List View', () => {
     getManagementFilesPagedApiFn.mockResolvedValue(results);
 
     const { getSearchButton } = setup();
-    await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
+    await waitForEffects();
+
     expect(await screen.queryByText(/test management/i)).toBeNull();
 
     results = mockPagedResults([mockManagementFileResponse(1, 'test management')]);
     getManagementFilesPagedApiFn.mockResolvedValue(results);
 
-    const input = getByName('fileNameOrNumberOrReference');
-    expect(input).not.toBeNull();
-    await act(async () => userEvent.paste(input!, 'test management'));
+    const fileInput = getByName('fileNameOrNumberOrReference');
+    expect(fileInput).not.toBeNull();
+    await act(async () => userEvent.type(fileInput!, 'test management'));
+    expect((fileInput as HTMLInputElement).value).toBe('test management');
+
     await act(async () => userEvent.click(getSearchButton()));
+    await waitForEffects();
 
     expect(getManagementFilesPagedApiFn).toHaveBeenCalledWith(
       expect.objectContaining<Partial<ManagementFilterModel>>({
@@ -165,7 +171,8 @@ describe('Management List View', () => {
   it('displays an error toast when api call fails', async () => {
     getManagementFilesPagedApiFn.mockRejectedValue(new Error('network error'));
     setup();
-    await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
+    await waitForEffects();
+
     const toast = await screen.findByText('network error');
     expect(toast).toBeVisible();
   });
