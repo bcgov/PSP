@@ -6,6 +6,7 @@
 -- Doug Filteau  2021-Aug-24  N/A        Initial version.
 -- Doug Filteau  2024-Jul-12  N/A        Many revision per PSP-8505.
 -- Doug Filteau  2026-Apr-01  PSP-11377  Added MAJORWORX.
+-- Eduardo H.    2026-Apr-22  PSP-11377  REMOVED MAJORWORX.
 -- -------------------------------------------------------------------------------------------
 
 DELETE FROM PIMS_LEASE_PROGRAM_TYPE
@@ -13,7 +14,6 @@ GO
 
 INSERT INTO PIMS_LEASE_PROGRAM_TYPE (LEASE_PROGRAM_TYPE_CODE, DESCRIPTION, IS_DISABLED)
 VALUES
-  (N'MAJORWORX', N'Major Works Contract/Notice to Contractor', 0),
   (N'BCFERRIES', N'BC Ferries',                                1),
   (N'BCTRANSIT', N'BC Transit',                                1),
   (N'BELLETERM', N'Belleville Terminal',                       1),
