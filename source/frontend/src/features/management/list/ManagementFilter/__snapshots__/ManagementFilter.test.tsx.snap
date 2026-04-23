@@ -471,72 +471,45 @@ exports[`Management filter > matches snapshot 1`] = `
           class="row"
         >
           <div
-            class="col-6"
+            class="col-12"
           >
             <div
-              class="required d-flex form-group"
+              class="form-group"
             >
-              <span
-                class="tooltip-icon"
-                data-testid="tooltip-icon-regionCode-tooltip"
-                id="regionCode-tooltip"
-              >
-                <svg
-                  class="tooltip-icon"
-                  fill="currentColor"
-                  height="1em"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="1em"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <path
-                    d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                  />
-                </svg>
-              </span>
-              <select
-                class="form-select form-control"
-                id="input-regionCode"
-                name="regionCode"
-                required=""
-              >
-                <option
-                  value=""
-                >
-                  Select region...
-                </option>
-              </select>
-            </div>
-          </div>
-          <div
-            class="col-6"
-            style="text-align: left;"
-          >
-            <div
-              class="c4 form-group"
-            >
-              <div
-                class="check-field"
-              >
+              <div>
                 <div
-                  class="form-check"
+                  class="multiselect-container multiSelectContainer  "
+                  id="multiselect-regions"
+                  style="width: auto; color: black;"
                 >
-                  <input
-                    class="form-check-input position-static"
-                    id="input-hasNoticeOfClaim"
-                    name="hasNoticeOfClaim"
-                    type="checkbox"
-                    value="false"
-                  />
+                  <div
+                    class="search-wrapper searchWrapper "
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="searchBox "
+                      id="multiselect-regions_input"
+                      name="search_name_input"
+                      placeholder="Select Region(s)"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="optionListContainer displayNone"
+                  >
+                    <ul
+                      class="optionContainer"
+                    >
+                      <span
+                        class="notFound"
+                      >
+                        No Options Available
+                      </span>
+                    </ul>
+                  </div>
                 </div>
-                <label
-                  class="text-wrap form-label"
-                  for="input-hasNoticeOfClaim"
-                >
-                  File has NOC
-                </label>
               </div>
             </div>
           </div>
@@ -624,6 +597,40 @@ exports[`Management filter > matches snapshot 1`] = `
                 title=""
                 value=""
               />
+            </div>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-6"
+            style="text-align: left;"
+          >
+            <div
+              class="c4 form-group"
+            >
+              <div
+                class="check-field"
+              >
+                <div
+                  class="form-check"
+                >
+                  <input
+                    class="form-check-input position-static"
+                    id="input-hasNoticeOfClaim"
+                    name="hasNoticeOfClaim"
+                    type="checkbox"
+                    value="false"
+                  />
+                </div>
+                <label
+                  class="text-wrap form-label"
+                  for="input-hasNoticeOfClaim"
+                >
+                  File has NOC
+                </label>
+              </div>
             </div>
           </div>
         </div>

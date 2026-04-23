@@ -136,10 +136,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToCreateNewDipositionFile()
         {
-            Wait();
+            WaitUntilClickable(menuDispositionButton);
             FocusAndClick(menuDispositionButton);
 
-            Wait();
+            WaitUntilClickable(createDispositionFileButton);
             FocusAndClick(createDispositionFileButton);
         }
 
@@ -163,23 +163,23 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateMinimumDispositionFile(DispositionFile disposition)
         {
-            Wait();
+            WaitUntilVisible(dispositionFileDetailsNameInput);
 
             webDriver.FindElement(dispositionFileDetailsNameInput).SendKeys(disposition.DispositionFileName);
-            ChooseSpecificSelectOption(dispositionFileDetailsStatusSelect, disposition.DispositionStatus);
-            ChooseSpecificSelectOption(dispositionFileDetailsTypeSelect, disposition.DispositionType);
+            ChooseSelectOption(dispositionFileDetailsStatusSelect, disposition.DispositionStatus);
+            ChooseSelectOption(dispositionFileDetailsTypeSelect, disposition.DispositionType);
 
             if(disposition.DispositionType.Equals("Other Transfer"))
                 webDriver.FindElement(dispositionFileDetailsOtherTransferTypeInput).SendKeys(disposition.DispositionOtherTransferType);
 
-            ChooseSpecificSelectOption(dispositionFileDetailsMOTIRegionSelect, disposition.DispositionMOTIRegion);
+            ChooseSelectOption(dispositionFileDetailsMOTIRegionSelect, disposition.DispositionMOTIRegion);
         }
 
         public void AddAdditionalInformation(DispositionFile disposition)
         {
             //Status
             if (disposition.DispositionFileStatus != "")
-                ChooseSpecificSelectOption(dispositionFileStatusSelect, disposition.DispositionFileStatus);
+                ChooseSelectOption(dispositionFileStatusSelect, disposition.DispositionFileStatus);
 
             //Project
             if (disposition.DispositionProject != "")
@@ -187,26 +187,25 @@ namespace PIMS.Tests.Automation.PageObjects
                 WaitUntilVisible(dispositionFileProjectInput);
                 webDriver.FindElement(dispositionFileProjectInput).SendKeys(disposition.DispositionProject);
 
-                Wait();
+                WaitUntilClickable(dispositionFileProjectInput);
                 webDriver.FindElement(dispositionFileProjectInput).SendKeys(Keys.Space);
 
-                Wait();
+                WaitUntilClickable(dispositionFileProjectInput);
                 webDriver.FindElement(dispositionFileProjectInput).SendKeys(Keys.Backspace);
 
-                Wait(2000);
+                Wait();
                 FocusAndClick(dispositionFileProject1stOption);
             }
 
             if (disposition.DispositionProjProduct != "")
             {
-                WaitUntilVisible(dispositionFileProjectProductSelect);
-                webDriver.FindElement(dispositionFileProjectProductSelect).Click();
-
-                ChooseSpecificSelectOption(dispositionFileProjectProductSelect, disposition.DispositionProjProduct);
+                WaitUntilClickable(dispositionFileProjectProductSelect);
+                SafeClick(dispositionFileProjectProductSelect);
+                ChooseSelectOption(dispositionFileProjectProductSelect, disposition.DispositionProjProduct);
             }
 
             if (disposition.DispositionProjFunding != "")
-                ChooseSpecificSelectOption(dispositionFileProjectFundingInput, disposition.DispositionProjFunding);
+                ChooseSelectOption(dispositionFileProjectFundingInput, disposition.DispositionProjFunding);
 
 
             //Disposition Details
@@ -231,10 +230,10 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (disposition.DispositionStatus != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsStatusSelect, disposition.DispositionStatus);
+                ChooseSelectOption(dispositionFileDetailsStatusSelect, disposition.DispositionStatus);
 
             if (disposition.DispositionType != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsTypeSelect, disposition.DispositionType);
+                ChooseSelectOption(dispositionFileDetailsTypeSelect, disposition.DispositionType);
 
             if (disposition.DispositionOtherTransferType != "")
             {
@@ -243,7 +242,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (disposition.InitiatingDocument != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsInitiatingDocumentSelect, disposition.InitiatingDocument);
+                ChooseSelectOption(dispositionFileDetailsInitiatingDocumentSelect, disposition.InitiatingDocument);
 
             if (disposition.OtherInitiatingDocument != "")
             {
@@ -259,18 +258,16 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (disposition.DispositionPhysicalFileStatus != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsPhysicalFileSelect, disposition.DispositionPhysicalFileStatus);
+                ChooseSelectOption(dispositionFileDetailsPhysicalFileSelect, disposition.DispositionPhysicalFileStatus);
 
             if (disposition.InitiatingBranch != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsInitiatingBranchSelect, disposition.InitiatingBranch);
+                ChooseSelectOption(dispositionFileDetailsInitiatingBranchSelect, disposition.InitiatingBranch);
 
             //Disposition File Team Members
             if (disposition.DispositionTeam.Count > 0)
             {
                 for (var i = 0; i < disposition.DispositionTeam.Count; i++)
-                {
                     AddTeamMembers(disposition.DispositionTeam[i]);
-                }
             }
         }
 
@@ -280,7 +277,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (disposition.DispositionFileStatus != "")
             {
                 WaitUntilClickable(dispositionFileStatusSelect);
-                ChooseSpecificSelectOption(dispositionFileStatusSelect, disposition.DispositionFileStatus);
+                ChooseSelectOption(dispositionFileStatusSelect, disposition.DispositionFileStatus);
             }
 
             //Project
@@ -289,13 +286,13 @@ namespace PIMS.Tests.Automation.PageObjects
                 WaitUntilVisible(dispositionFileProjectInput);
                 webDriver.FindElement(dispositionFileProjectInput).SendKeys(disposition.DispositionProject);
 
-                Wait();
+                WaitUntilVisible(dispositionFileProjectInput);
                 webDriver.FindElement(dispositionFileProjectInput).SendKeys(Keys.Space);
 
-                Wait();
+                WaitUntilVisible(dispositionFileProjectInput);
                 webDriver.FindElement(dispositionFileProjectInput).SendKeys(Keys.Backspace);
 
-                Wait(2000);
+                WaitUntilClickable(dispositionFileProject1stOption);
                 FocusAndClick(dispositionFileProject1stOption);
             }
 
@@ -304,11 +301,11 @@ namespace PIMS.Tests.Automation.PageObjects
                 WaitUntilVisible(dispositionFileProjectProductSelect);
                 webDriver.FindElement(dispositionFileProjectProductSelect).Click();
 
-                ChooseSpecificSelectOption(dispositionFileProjectProductSelect, disposition.DispositionProjProduct);
+                ChooseSelectOption(dispositionFileProjectProductSelect, disposition.DispositionProjProduct);
             }
 
             if (disposition.DispositionProjFunding != "")
-                ChooseSpecificSelectOption(dispositionFileProjectFundingInput, disposition.DispositionProjFunding);
+                ChooseSelectOption(dispositionFileProjectFundingInput, disposition.DispositionProjFunding);
 
             //Schedule
             if (disposition.DispositionAssignedDate != "")
@@ -339,13 +336,13 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (disposition.DispositionStatus != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsStatusSelect, disposition.DispositionStatus);
+                ChooseSelectOption(dispositionFileDetailsStatusSelect, disposition.DispositionStatus);
 
             if (disposition.DispositionType != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsTypeSelect, disposition.DispositionType);
+                ChooseSelectOption(dispositionFileDetailsTypeSelect, disposition.DispositionType);
 
             if (disposition.InitiatingDocument != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsInitiatingDocumentSelect, disposition.InitiatingDocument);
+                ChooseSelectOption(dispositionFileDetailsInitiatingDocumentSelect, disposition.InitiatingDocument);
 
             if (disposition.OtherInitiatingDocument != "")
             {
@@ -361,13 +358,13 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (disposition.DispositionPhysicalFileStatus != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsPhysicalFileSelect, disposition.DispositionPhysicalFileStatus);
+                ChooseSelectOption(dispositionFileDetailsPhysicalFileSelect, disposition.DispositionPhysicalFileStatus);
 
             if (disposition.InitiatingBranch != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsInitiatingBranchSelect, disposition.InitiatingBranch);
+                ChooseSelectOption(dispositionFileDetailsInitiatingBranchSelect, disposition.InitiatingBranch);
 
             if (disposition.DispositionMOTIRegion != "")
-                ChooseSpecificSelectOption(dispositionFileDetailsMOTIRegionSelect, disposition.DispositionMOTIRegion);
+                ChooseSelectOption(dispositionFileDetailsMOTIRegionSelect, disposition.DispositionMOTIRegion);
 
             //Disposition File Team Members
             if (disposition.DispositionTeam.Count > 0)
@@ -376,15 +373,12 @@ namespace PIMS.Tests.Automation.PageObjects
                     DeleteFirstStaffMember();
 
                 for (var i = 0; i < disposition.DispositionTeam.Count; i++)
-                {
                     AddTeamMembers(disposition.DispositionTeam[i]);
-                }
             }
         }
 
         public void SaveDispositionFileDetails()
         {
-            Wait();
             ButtonElement("Save");
 
             Wait();
@@ -395,13 +389,14 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Equal("You are changing this file to a non-editable state. (Only system administrators can edit the file when set to Archived, Cancelled or Completed state). Do you wish to continue?", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
-
+                    Wait(500);
                 }
                 else if (sharedModals.ModalContent().Contains("The Ministry region has been changed"))
                 {
                     Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Equal("The Ministry region has been changed, this will result in a change to the file's prefix. This requires user confirmation.", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
+                    Wait(500);
                 }
                 else if (sharedModals.ModalHeader() == "Confirm status change")
                 {
@@ -409,27 +404,22 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Contains("If you save it, only the administrator can turn it back on. You will still see it in the management table.", sharedModals.ConfirmationModalParagraph1());
                     Assert.Equal("Do you want to acknowledge and proceed?", sharedModals.ConfirmationModalParagraph2());
                     sharedModals.ModalClickOKBttn();
-
-                    Wait();
+                    Wait(500);
                 }
-                if (sharedModals.ModalContent().Contains("You are completing this Disposition File with owned PIMS inventory properties"))
+                else if (sharedModals.ModalContent().Contains("You are completing this Disposition File with owned PIMS inventory properties"))
                 {
                     Assert.Equal("User Override Required", sharedModals.ModalHeader());
                     Assert.Equal("You are completing this Disposition File with owned PIMS inventory properties. All properties will be removed from the PIMS inventory (any Other Interests will remain). Do you wish to proceed?", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
-
+                    Wait(500);
                 }
                 else if (sharedModals.ModalHeader() == "Error")
                     break;
-
-                Wait();
             }
-
         }
 
         public void CancelDispositionFile()
         {
-            Wait();
             ButtonElement("Cancel");
 
             sharedModals.CancelActionModal();
@@ -437,7 +427,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CloseDispositionForm()
         {
-            Wait();
+            WaitUntilClickable(dispositionFileCloseFormBttn);
             webDriver.FindElement(dispositionFileCloseFormBttn).Click();
 
         }
@@ -634,10 +624,10 @@ namespace PIMS.Tests.Automation.PageObjects
                     if (disposition.DispositionTeam[i].TeamMemberPrimaryContact != "")
                     {
                         index++;
-                        if (webDriver.FindElements(By.XPath("//h2/div/div[contains(text(),'Disposition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a")).Count > 0)
-                            AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Disposition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a"), disposition.DispositionTeam[i].TeamMemberPrimaryContact);
+                        if (webDriver.FindElements(By.XPath("//div[contains(text(),'Disposition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a/span")).Count > 0)
+                            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Disposition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div/a/span"), disposition.DispositionTeam[i].TeamMemberPrimaryContact);
                         else
-                            AssertTrueContentEquals(By.XPath("//h2/div/div[contains(text(),'Disposition Team')]/parent::div/parent::h2/following-sibling::div/div[" + index + "]/div[2]"), disposition.DispositionTeam[i].TeamMemberPrimaryContact);
+                            AssertTrueContentEquals(By.XPath("//div[contains(text(),'Disposition Team')]/parent::div/parent::h2/following-sibling::div/div["+ index +"]/div[2]"), disposition.DispositionTeam[i].TeamMemberPrimaryContact);
                     }
                     index++;
                 }
@@ -703,17 +693,16 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(dispositionFileAddAnotherMemberLink);
             FocusAndClick(dispositionFileAddAnotherMemberLink);
 
-            Wait();
             var teamMemberIndex = webDriver.FindElements(dispositionFileTeamMembersGroup).Count() -1;
 
             WaitUntilVisible(By.CssSelector("select[id='input-team."+ teamMemberIndex +".teamProfileTypeCode']"));
-            ChooseSpecificSelectOption(By.CssSelector("select[id='input-team."+ teamMemberIndex +".teamProfileTypeCode']"), teamMember.TeamMemberRole);
+            ChooseSelectOption(By.CssSelector("select[id='input-team."+ teamMemberIndex +".teamProfileTypeCode']"), teamMember.TeamMemberRole);
             FocusAndClick(By.CssSelector("div[data-testid='teamMemberRow["+ teamMemberIndex +"]'] div[data-testid='contact-input'] button[title='Select Contact']"));
             sharedSelectContact.SelectContact(teamMember.TeamMemberContactName, teamMember.TeamMemberContactType);
 
             Wait();
             if (webDriver.FindElements(By.Id("input-team."+ teamMemberIndex +".primaryContactId")).Count > 0)
-                ChooseSpecificSelectOption(By.Id("input-team."+ teamMemberIndex +".primaryContactId"), teamMember.TeamMemberPrimaryContact);
+                ChooseSelectOption(By.Id("input-team."+ teamMemberIndex +".primaryContactId"), teamMember.TeamMemberPrimaryContact);
         }
     }
 }

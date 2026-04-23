@@ -164,7 +164,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveDispositionFileChecklist()
         {
-            Wait();
             ButtonElement("Save");
 
             AssertTrueIsDisplayed(checklistEditBttn);
@@ -172,7 +171,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelDispositionFileChecklist()
         {
-            Wait();
             ButtonElement("Cancel");
 
             sharedModals.CancelActionModal();
@@ -180,7 +178,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyChecklistInitViewForm()
         {
-            Wait(2000);
+            WaitUntilVisible(checklistFileInitiationTitle);
 
             AssertTrueIsDisplayed(checklistFileInitiationTitle);
             AssertTrueIsDisplayed(checklistFileInitiation1Label);
@@ -433,86 +431,86 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateChecklist(DispositionFileChecklist checklist)
         {
-            Wait();
+            WaitUntilClickable(checklistFileInitiationItem1Select);
 
             if (checklist.FileInitiationSelect1 != "")
-                ChooseSpecificSelectOption(checklistFileInitiationItem1Select, checklist.FileInitiationSelect1);
+                ChooseSelectOption(checklistFileInitiationItem1Select, checklist.FileInitiationSelect1);
             if (checklist.FileInitiationSelect2 != "")
-                ChooseSpecificSelectOption(checklistFileInitiationItem2Select, checklist.FileInitiationSelect2);
+                ChooseSelectOption(checklistFileInitiationItem2Select, checklist.FileInitiationSelect2);
             if (checklist.FileInitiationSelect3 != "")
-                ChooseSpecificSelectOption(checklistFileInitiationItem3Select, checklist.FileInitiationSelect3);
+                ChooseSelectOption(checklistFileInitiationItem3Select, checklist.FileInitiationSelect3);
             if (checklist.FileInitiationSelect4 != "")
-                ChooseSpecificSelectOption(checklistFileInitiationItem4Select, checklist.FileInitiationSelect4);
+                ChooseSelectOption(checklistFileInitiationItem4Select, checklist.FileInitiationSelect4);
 
             if (checklist.DispositionPreparationSelect1 != "")
-                ChooseSpecificSelectOption(checklistDispositionPreparationItem1Select, checklist.DispositionPreparationSelect1);
+                ChooseSelectOption(checklistDispositionPreparationItem1Select, checklist.DispositionPreparationSelect1);
             if (checklist.DispositionPreparationSelect2 != "")
-                ChooseSpecificSelectOption(checklistDispositionPreparationItem2Select, checklist.DispositionPreparationSelect2);
+                ChooseSelectOption(checklistDispositionPreparationItem2Select, checklist.DispositionPreparationSelect2);
             if (checklist.DispositionPreparationSelect3 != "")
-                ChooseSpecificSelectOption(checklistDispositionPreparationItem3Select, checklist.DispositionPreparationSelect3);
+                ChooseSelectOption(checklistDispositionPreparationItem3Select, checklist.DispositionPreparationSelect3);
             if (checklist.DispositionPreparationSelect4 != "")
-                ChooseSpecificSelectOption(checklistDispositionPreparationItem4Select, checklist.DispositionPreparationSelect4);
+                ChooseSelectOption(checklistDispositionPreparationItem4Select, checklist.DispositionPreparationSelect4);
 
             if (checklist.ReferralsAndConsultationsSelect1 != "")
-                ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem1Select, checklist.ReferralsAndConsultationsSelect1);
+                ChooseSelectOption(checklistReferralsAndConsultationsItem1Select, checklist.ReferralsAndConsultationsSelect1);
             if (checklist.ReferralsAndConsultationsSelect2 != "")
-                ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem2Select, checklist.ReferralsAndConsultationsSelect2);
+                ChooseSelectOption(checklistReferralsAndConsultationsItem2Select, checklist.ReferralsAndConsultationsSelect2);
             if (checklist.ReferralsAndConsultationsSelect3 != "")
-                ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem3Select, checklist.ReferralsAndConsultationsSelect3);
+                ChooseSelectOption(checklistReferralsAndConsultationsItem3Select, checklist.ReferralsAndConsultationsSelect3);
             if (checklist.ReferralsAndConsultationsSelect4 != "")
-                ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem4Select, checklist.ReferralsAndConsultationsSelect4);
+                ChooseSelectOption(checklistReferralsAndConsultationsItem4Select, checklist.ReferralsAndConsultationsSelect4);
             if (checklist.ReferralsAndConsultationsSelect5 != "")
-                ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem5Select, checklist.ReferralsAndConsultationsSelect5);
+                ChooseSelectOption(checklistReferralsAndConsultationsItem5Select, checklist.ReferralsAndConsultationsSelect5);
             if (checklist.ReferralsAndConsultationsSelect6 != "")
-                ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem6Select, checklist.ReferralsAndConsultationsSelect6);
+                ChooseSelectOption(checklistReferralsAndConsultationsItem6Select, checklist.ReferralsAndConsultationsSelect6);
 
             if (checklist.DirectSaleRoadClosureSelect1 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem1Select, checklist.DirectSaleRoadClosureSelect1);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem1Select, checklist.DirectSaleRoadClosureSelect1);
             if (checklist.DirectSaleRoadClosureSelect2 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem2Select, checklist.DirectSaleRoadClosureSelect2);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem2Select, checklist.DirectSaleRoadClosureSelect2);
             if (checklist.DirectSaleRoadClosureSelect3 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem3Select, checklist.DirectSaleRoadClosureSelect3);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem3Select, checklist.DirectSaleRoadClosureSelect3);
             if (checklist.DirectSaleRoadClosureSelect4 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem4Select, checklist.DirectSaleRoadClosureSelect4);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem4Select, checklist.DirectSaleRoadClosureSelect4);
             if (checklist.DirectSaleRoadClosureSelect5 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem5Select, checklist.DirectSaleRoadClosureSelect5);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem5Select, checklist.DirectSaleRoadClosureSelect5);
             if (checklist.DirectSaleRoadClosureSelect6 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem6Select, checklist.DirectSaleRoadClosureSelect6);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem6Select, checklist.DirectSaleRoadClosureSelect6);
             if (checklist.DirectSaleRoadClosureSelect7 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem7Select, checklist.DirectSaleRoadClosureSelect7);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem7Select, checklist.DirectSaleRoadClosureSelect7);
             if (checklist.DirectSaleRoadClosureSelect8 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem8Select, checklist.DirectSaleRoadClosureSelect8);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem8Select, checklist.DirectSaleRoadClosureSelect8);
             if (checklist.DirectSaleRoadClosureSelect9 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem9Select, checklist.DirectSaleRoadClosureSelect9);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem9Select, checklist.DirectSaleRoadClosureSelect9);
             if (checklist.DirectSaleRoadClosureSelect10 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem10Select, checklist.DirectSaleRoadClosureSelect10);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem10Select, checklist.DirectSaleRoadClosureSelect10);
             if (checklist.DirectSaleRoadClosureSelect11 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem11Select, checklist.DirectSaleRoadClosureSelect11);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem11Select, checklist.DirectSaleRoadClosureSelect11);
             if (checklist.DirectSaleRoadClosureSelect12 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem12Select, checklist.DirectSaleRoadClosureSelect12);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem12Select, checklist.DirectSaleRoadClosureSelect12);
 
             if (checklist.SaleInformationSelect1 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem1Select, checklist.SaleInformationSelect1);
+                ChooseSelectOption(checklistSaleInformationItem1Select, checklist.SaleInformationSelect1);
             if (checklist.SaleInformationSelect2 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem2Select, checklist.SaleInformationSelect2);
+                ChooseSelectOption(checklistSaleInformationItem2Select, checklist.SaleInformationSelect2);
             if (checklist.SaleInformationSelect3 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem3Select, checklist.SaleInformationSelect3);
+                ChooseSelectOption(checklistSaleInformationItem3Select, checklist.SaleInformationSelect3);
             if (checklist.SaleInformationSelect4 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem4Select, checklist.SaleInformationSelect4);
+                ChooseSelectOption(checklistSaleInformationItem4Select, checklist.SaleInformationSelect4);
             if (checklist.SaleInformationSelect5 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem5Select, checklist.SaleInformationSelect5);
+                ChooseSelectOption(checklistSaleInformationItem5Select, checklist.SaleInformationSelect5);
             if (checklist.SaleInformationSelect6 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem6Select, checklist.SaleInformationSelect6);
+                ChooseSelectOption(checklistSaleInformationItem6Select, checklist.SaleInformationSelect6);
             if (checklist.SaleInformationSelect7 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem7Select, checklist.SaleInformationSelect7);
+                ChooseSelectOption(checklistSaleInformationItem7Select, checklist.SaleInformationSelect7);
             if (checklist.SaleInformationSelect8 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem8Select, checklist.SaleInformationSelect8);
+                ChooseSelectOption(checklistSaleInformationItem8Select, checklist.SaleInformationSelect8);
             if (checklist.SaleInformationSelect9 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem9Select, checklist.SaleInformationSelect9);
+                ChooseSelectOption(checklistSaleInformationItem9Select, checklist.SaleInformationSelect9);
             if (checklist.SaleInformationSelect10 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem10Select, checklist.SaleInformationSelect10);
+                ChooseSelectOption(checklistSaleInformationItem10Select, checklist.SaleInformationSelect10);
             if (checklist.SaleInformationSelect11 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem11Select, checklist.SaleInformationSelect11);
+                ChooseSelectOption(checklistSaleInformationItem11Select, checklist.SaleInformationSelect11);
         }
     }
 }

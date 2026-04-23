@@ -1,28 +1,23 @@
-import { Formik, FormikHelpers, FormikProps } from 'formik';
-import React, { useMemo } from 'react';
+import { Formik, FormikHelpers } from 'formik';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { Check, Form, Input, Multiselect, Select } from '@/components/common/form';
+import { Check, Form, Input, Multiselect, Select, SelectOption } from '@/components/common/form';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { ColButtons } from '@/components/common/styles';
-import { ACQUISITION_FILE_STATUS_TYPES } from '@/constants/API';
-import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
-import { exists, mapLookupCode } from '@/utils';
-import { formatApiPersonNames } from '@/utils/personUtils';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 
-import {
-  AcquisitionFilterModel,
-  ApiGen_Concepts_AcquisitionFilter,
-  MultiSelectOption,
-} from '../interfaces';
+import { AcquisitionFilterModel, ApiGen_Concepts_AcquisitionFilter } from '../interfaces';
 
 export interface IAcquisitionFilterProps {
-  filter?: ApiGen_Concepts_AcquisitionFilter;
+  initialValues: AcquisitionFilterModel;
+  pimsRegionsOptions: MultiSelectOption[];
+  acquisitionTeamOptions: MultiSelectOption[];
+  acquisitionStatusOptions: SelectOption[];
   setFilter: (filter: ApiGen_Concepts_AcquisitionFilter) => void;
-  acquisitionTeam: ApiGen_Concepts_AcquisitionFileTeam[];
+  onResetFilter: () => void;
 }
 
 /**
@@ -30,9 +25,12 @@ export interface IAcquisitionFilterProps {
  * @param {IAcquisitionFilterProps} props
  */
 export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFilterProps>> = ({
-  filter,
+  initialValues,
+  pimsRegionsOptions,
+  acquisitionTeamOptions,
+  acquisitionStatusOptions,
   setFilter,
-  acquisitionTeam,
+  onResetFilter,
 }) => {
   const onSearchSubmit = (
     values: AcquisitionFilterModel,
@@ -42,40 +40,10 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
     formikHelpers.setSubmitting(false);
   };
 
-  const resetFilter = () => {
-    setFilter(new AcquisitionFilterModel().toApi());
-  };
-
-  const onResetClick = (formikProps: FormikProps<AcquisitionFilterModel>) => {
-    resetFilter();
-    formikProps.resetForm();
-  };
-
-  const lookupCodes = useLookupCodeHelpers();
-
-  const acquisitionStatusOptions = lookupCodes
-    .getByType(ACQUISITION_FILE_STATUS_TYPES)
-    .map(c => mapLookupCode(c));
-
-  const acquisitionTeamOptions = useMemo(() => {
-    if (exists(acquisitionTeam)) {
-      return acquisitionTeam?.map<MultiSelectOption>(x => ({
-        id: x.personId ? `P-${x.personId}` : `O-${x.organizationId}`,
-        text: x.personId ? formatApiPersonNames(x.person) : x.organization?.name ?? '',
-      }));
-    } else {
-      return [];
-    }
-  }, [acquisitionTeam]);
-
   return (
     <Formik<AcquisitionFilterModel>
       enableReinitialize
-      initialValues={
-        filter
-          ? AcquisitionFilterModel.fromApi(filter, acquisitionTeam || [])
-          : new AcquisitionFilterModel()
-      }
+      initialValues={initialValues}
       onSubmit={onSearchSubmit}
     >
       {formikProps => (
@@ -139,18 +107,27 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
             </Col>
             <Col lg="5">
               <Row>
-                <Col lg="12">
+                <Col lg="6">
                   <Input
                     field="acquisitionFileNameOrNumber"
                     placeholder="Acquisition file number or name or historical file number"
                   />
                 </Col>
-              </Row>
-              <Row>
-                <Col lg="9">
+                <Col lg="6">
+                  {' '}
                   <Input
                     field="projectNameOrNumber"
                     placeholder="Ministry or alternate project name or number"
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col lg="9">
+                  <Multiselect
+                    field="regions"
+                    options={pimsRegionsOptions}
+                    displayValue="text"
+                    placeholder="Select Region(s)"
                   />
                 </Col>
                 <Col lg="3">
@@ -170,7 +147,10 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                 <Col lg="auto">
                   <ResetButton
                     disabled={formikProps.isSubmitting}
-                    onClick={() => onResetClick(formikProps)}
+                    onClick={() => {
+                      formikProps.resetForm();
+                      onResetFilter();
+                    }}
                   />
                 </Col>
               </Row>

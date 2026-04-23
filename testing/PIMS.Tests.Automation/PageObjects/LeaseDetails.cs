@@ -196,16 +196,16 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToCreateNewLicense()
         {
-            Wait();
+            WaitUntilClickable(menuManagementButton);
             FocusAndClick(menuManagementButton);
 
-            Wait();
+            WaitUntilClickable(createLicenseButton);
             FocusAndClick(createLicenseButton);
         }
 
         public void NavigateToAddPropertiesLeasesFile()
         {
-            Wait();
+            WaitUntilClickable(leaseEditPropertiesBttn);
             webDriver.FindElement(leaseEditPropertiesBttn).Click();
         }
 
@@ -214,10 +214,9 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             //MAIN DETAILS
-
             //Status
             if (lease.LeaseStatus != "")
-                ChooseSpecificSelectOption(licenseDetailsStatusSelector, lease.LeaseStatus);
+                ChooseSelectOption(licenseDetailsStatusSelector, lease.LeaseStatus);
 
             //Termination reason
             if (lease.LeaseTerminationReason != "")
@@ -245,7 +244,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Account Type
             if (lease.AccountType != "")
-                ChooseSpecificSelectOption(licenseDetailsAccountTypeSelector, lease.AccountType);
+                ChooseSelectOption(licenseDetailsAccountTypeSelector, lease.AccountType);
             
             //Start Date
             if (lease.LeaseStartDate != "")
@@ -262,12 +261,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Administration Details
             //MOTI Region
-            if(lease.MOTIRegion != "")
-                ChooseSpecificSelectOption(licenseDetailsMotiRegionSelector, lease.MOTIRegion);
+            ChooseSelectOption(licenseDetailsMotiRegionSelector, lease.MOTIRegion);
 
             //Program
-            if (lease.Program != "")
-                ChooseSpecificSelectOption(licenseDetailsProgramSelector, lease.Program);
+            ChooseSelectOption(licenseDetailsProgramSelector, lease.Program);
 
             //If other Program is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherProgramInput).Count > 0 && lease.ProgramOther != "")
@@ -279,7 +276,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Type
             if (lease.AdminType != "")
-                ChooseSpecificSelectOption(licenseDetailsTypeSelector, lease.AdminType);
+                ChooseSelectOption(licenseDetailsTypeSelector, lease.AdminType);
 
             //If other Type is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherTypeInput).Count > 0 && lease.TypeOther != "")
@@ -296,20 +293,8 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (lease.LeasePurpose.Count > 0)
-            {
                 foreach (string purpose in lease.LeasePurpose)
-                {
-                    webDriver.FindElement(licenseDetailsPurposeLabel).Click();                 
-
-                    Wait();
-                    FocusAndClick(licenseDetailsPurposeMultiselector);
-
-                    Wait(5000);
-                    ChooseMultiSelectSpecificOption(licenseDetailsPurposeOptions, purpose);
-                }
-
-                webDriver.FindElement(licenseDetailsPurposeLabel).Click();
-            }
+                    ChooseMultiSelectOption(licenseDetailsPurposeMultiselector, licenseDetailsPurposeOptions, licenseDetailsPurposeLabel, purpose);
 
             //If other Purpose is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherPurposeInput).Count > 0 && lease.PurposeOther != "")
@@ -321,7 +306,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateLeaseFileDetails(Lease lease)
         {
-            Wait();
+            WaitUntilVisible(licenseDetailsCreateSubtitle);
 
             //ORIGINAL AGREEMENT
             AssertTrueIsDisplayed(licenseDetailsCreateSubtitle);
@@ -332,18 +317,20 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 ClearInput(licenseDetailsProjectInput);
                 webDriver.FindElement(licenseDetailsProjectInput).SendKeys(lease.MinistryProject);
-                webDriver.FindElement(licenseDetailsProjectInput).SendKeys(Keys.Enter);
+                Wait(500);
+                webDriver.FindElement(licenseDetailsProjectInput).SendKeys(Keys.Space);
+                Wait(500);
                 webDriver.FindElement(licenseDetailsProjectInput).SendKeys(Keys.Backspace);
 
-                Wait();
-                webDriver.FindElement(licenseDetailsProject1stOption).Click();
+                WaitUntilVisible(licenseDetailsProject1stOption);
+                SafeClick(licenseDetailsProject1stOption);
             }
 
             //Product
             if (lease.MinistryProduct != "")
             {
                 AssertTrueIsDisplayed(licenseDetailsProductLabel);
-                ChooseSpecificSelectOption(licenseDetailsProductSelect, lease.MinistryProduct);
+                ChooseSelectOption(licenseDetailsProductSelect, lease.MinistryProduct);
             }
 
             //Status
@@ -355,7 +342,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 IWebElement selectedStatus = selectStatusElement.SelectedOption;
                 string previousStatus = selectedStatus.Text;
 
-                ChooseSpecificSelectOption(licenseDetailsStatusSelector, lease.LeaseStatus);
+                ChooseSelectOption(licenseDetailsStatusSelector, lease.LeaseStatus);
 
                 Wait();
                 if (webDriver.FindElements(licenseDetailsConfirmationModal).Count > 0)
@@ -372,7 +359,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.AccountType != "")
             {
                 webDriver.FindElement(licenseDetailsAccountTypeSelector).Click();
-                ChooseSpecificSelectOption(licenseDetailsAccountTypeSelector, lease.AccountType);
+                ChooseSelectOption(licenseDetailsAccountTypeSelector, lease.AccountType);
             }
 
             //Commencement Date
@@ -428,12 +415,12 @@ namespace PIMS.Tests.Automation.PageObjects
                 //Appraisal
                 AssertTrueIsDisplayed(licenseDetailsProgressAppraisalLabel);
                 if (lease.LeaseProgressAppraisal != "")
-                    ChooseSpecificSelectOption(licenseDetailsProgressAppraisalSelector, lease.LeaseProgressAppraisal);
+                    ChooseSelectOption(licenseDetailsProgressAppraisalSelector, lease.LeaseProgressAppraisal);
 
                 //Legal Survey
                 AssertTrueIsDisplayed(licenseDetailsProgressLegalSurveyLabel);
                 if (lease.LeaseProgressLegalSurvey != "")
-                    ChooseSpecificSelectOption(licenseDetailsProgressLegalSurveySelector, lease.LeaseProgressLegalSurvey);
+                    ChooseSelectOption(licenseDetailsProgressLegalSurveySelector, lease.LeaseProgressLegalSurvey);
             }
 
             //RENEWAL OPTIONS
@@ -444,7 +431,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     webDriver.FindElement(licenceDetailsFirstRenewalDeleteBttn).Click();
 
-                    Wait();
+                    WaitUntilVisible(licenseDetailsConfirmationModal);
                     if (webDriver.FindElements(licenseDetailsConfirmationModal).Count > 0)
                     {
                         Assert.Equal("Remove Renewal", sharedModals.ModalHeader());
@@ -455,11 +442,11 @@ namespace PIMS.Tests.Automation.PageObjects
                 }
 
                 ScrollToElement(licenseDetailsAddRenewButton);
-                Wait();
+                WaitUntilClickable(licenseDetailsAddRenewButton);
                 for (var i = 0; i < lease.LeaseRenewals.Count; i++)
                 {
                     webDriver.FindElement(licenseDetailsAddRenewButton).Click();
-                    ChooseSpecificSelectOption(By.Id("input-renewals."+ i +".isExercised"), lease.LeaseRenewals[i].RenewalIsExercised);
+                    ChooseSelectOption(By.Id("input-renewals."+ i +".isExercised"), lease.LeaseRenewals[i].RenewalIsExercised);
 
                     webDriver.FindElement(By.Id("datepicker-renewals."+ i +".commencementDt")).SendKeys(lease.LeaseRenewals[i].RenewalCommencementDate);
                     webDriver.FindElement(By.Id("datepicker-renewals."+ i +".commencementDt")).SendKeys(Keys.Enter);
@@ -482,13 +469,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //MOTI Region
             AssertTrueIsDisplayed(licenseDetailsMotiRegionLabel);
-            if (lease.MOTIRegion != "")
-                ChooseSpecificSelectOption(licenseDetailsMotiRegionSelector, lease.MOTIRegion);
+            ChooseSelectOption(licenseDetailsMotiRegionSelector, lease.MOTIRegion);
 
             //Program
             AssertTrueIsDisplayed(licenseDetailsProgramLabel);
-            if (lease.Program != "")
-                ChooseSpecificSelectOption(licenseDetailsProgramSelector, lease.Program);
+            ChooseSelectOption(licenseDetailsProgramSelector, lease.Program);
 
             //If other Program is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherProgramInput).Count > 0 && lease.ProgramOther != "")
@@ -501,8 +486,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Type
             AssertTrueIsDisplayed(licenseDetailsTypeLabel);
-            if (lease.AdminType != "")
-                ChooseSpecificSelectOption(licenseDetailsTypeSelector, lease.AdminType);
+            ChooseSelectOption(licenseDetailsTypeSelector, lease.AdminType);
 
             //If other Type is selected, insert input
             if (webDriver.FindElements(licenseDetailsOtherTypeInput).Count > 0 && lease.TypeOther != "")
@@ -524,10 +508,8 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 foreach (string purpose in lease.LeasePurpose)
                 {
-                    FocusAndClick(licenseDetailsPurposeMultiselector);
-
-                    WaitUntilClickable(licenseDetailsPurposeOptions);
-                    ChooseMultiSelectSpecificOption(licenseDetailsPurposeOptions, purpose);
+                    SafeClick(licenseDetailsPurposeMultiselector);
+                    ChooseMultiSelectOption(licenseDetailsPurposeMultiselector, licenseDetailsPurposeOptions, licenseDetailsPurposeLabel, purpose);
                 }
             }
 
@@ -544,13 +526,13 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(licenseDetailsInitiatorLabel);
             AssertTrueIsDisplayed(licenseDetailsInitiatorTooltip);
             if (lease.Initiator != "")
-                ChooseSpecificSelectOption(licenseDetailsInitiatorSelector, lease.Initiator);
+                ChooseSelectOption(licenseDetailsInitiatorSelector, lease.Initiator);
 
             //Responsibility
             AssertTrueIsDisplayed(licenseDetailsResponsibilityLabel);
             AssertTrueIsDisplayed(licenseDetailsResponsibilityTooltip);
             if (lease.Responsibility != "")
-                ChooseSpecificSelectOption(licenseDetailsResposibilitySelector, lease.Responsibility);
+                ChooseSelectOption(licenseDetailsResposibilitySelector, lease.Responsibility);
 
             //Effective date of responsibility
             AssertTrueIsDisplayed(licenseDetailsEffectiveDateLabel);
@@ -593,11 +575,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
             AssertTrueIsDisplayed(licenseDetailsFeeDeterminationPublicBenefitLabel);
             if (lease.FeeDeterminationPublicBenefit != "")
-                ChooseSpecificSelectOption(licenseDetailsFeeDeterminationPublicBenefitInput, lease.FeeDeterminationPublicBenefit);
+                ChooseSelectOption(licenseDetailsFeeDeterminationPublicBenefitInput, lease.FeeDeterminationPublicBenefit);
 
             AssertTrueIsDisplayed(licenseDetailsFeeDeterminationFinancialGainLabel);
             if(lease.FeeDeterminationFinancialGain != "")
-                ChooseSpecificSelectOption(licenseDetailsFeeDeterminationFinancialGainInput, lease.FeeDeterminationFinancialGain);
+                ChooseSelectOption(licenseDetailsFeeDeterminationFinancialGainInput, lease.FeeDeterminationFinancialGain);
 
             AssertTrueIsDisplayed(licenseDetailsFeeDeterminationSuggestedFeeLabel);
             AssertTrueIsDisplayed(licenseDetaulsFeeDeterminationSuggestedFeeTooltip);
@@ -614,7 +596,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void EditLeaseFileDetailsBttn()
         {
-            Wait();
+            WaitUntilClickable(licenseDetailsEditIcon);
             webDriver.FindElement(licenseDetailsEditIcon).Click();
         }
 
@@ -626,13 +608,14 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             while (webDriver.FindElements(licenseDetailsConfirmationModal).Count > 0)
             {
+                Wait(500);
                 //If PID is already associated with another license
                 if (webDriver.FindElements(licensesDetailsPropertiesModal).Count > 0)
                 {
                     Assert.Contains("is attached to L-File #", webDriver.FindElement(licensesDetailsPropertiesModalContent).Text);
-                    webDriver.FindElement(licensesDetailsPropertiesOkBttn).Click();
-
+                    SafeClick(licensesDetailsPropertiesOkBttn);
                     Wait();
+
                 }
                 else if (sharedModals.ModalContent().Contains("The selected property already exists in the system's inventory"))
                 {
@@ -640,7 +623,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Contains("The selected property already exists in the system's inventory. However, the record is missing spatial details.", sharedModals.ModalContent());
                     Assert.Contains("To add the property, the spatial details for this property will need to be updated. The system will attempt to update the property record with spatial information from the current selection.", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
-
                     Wait();
                 }
                 else if (sharedModals.ModalContent().Contains("You have made changes to the properties in this file."))
@@ -649,7 +631,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Contains("You have made changes to the properties in this file.", sharedModals.ModalContent());
                     Assert.Contains("Do you want to save these changes?", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
-
                     Wait();
                 }
                 else if (sharedModals.IsConfirmationModalParagraph1Visible())
@@ -658,7 +639,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Contains("If you save it, only the administrator can turn it back on. You will still see it in the management table.", sharedModals.ConfirmationModalParagraph1());
                     Assert.Equal("Do you want to acknowledge and proceed?", sharedModals.ConfirmationModalParagraph2());
                     sharedModals.ModalClickOKBttn();
-
                     Wait();
                 }
                 else if (sharedModals.IsConfirmationModalParagraph2Visible())
@@ -667,7 +647,6 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Contains("A primary contact for", sharedModals.ConfirmationModalParagraph1());
                     Assert.Equal("Do you want to acknowledge and proceed?", sharedModals.ConfirmationModalParagraph2());
                     sharedModals.SecondaryModalClickOKBttn();
-
                     Wait();
                 }
                 else if (sharedModals.ModalHeader() == "Error")
@@ -680,7 +659,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveLicenseWithExpectedErrors()
         {
-            Wait();
             ButtonElement("Save");
 
             Wait();
@@ -691,23 +669,20 @@ namespace PIMS.Tests.Automation.PageObjects
                     Assert.Contains("Lease File Stakeholder can not be removed since it's assigned as a payee for a compensation requisition", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
                     break;
-                }   
+                }
             }
             
         }
 
         public void CancelLicense()
         {
-            Wait();
-            FocusAndClick(By.CssSelector("button[data-testid='cancel-button']"));
+            SafeClick(By.CssSelector("button[data-testid='cancel-button']"));
             sharedModals.CancelActionModal();
-
-            Wait();
         }
 
         public string GetLeaseCode()
         {
-            Wait();
+            WaitUntilVisible(licenseHeaderNbrContent);
             return webDriver.FindElement(licenseHeaderNbrContent).Text;
         }
 
@@ -719,7 +694,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLicenseDetailsInitCreateForm()
         {
-            Wait(6000);
+            WaitUntilVisible(licenseDetailsCreateSubtitle);
 
             //Create Title
             //AssertTrueIsDisplayed(licenseCreateTitle);
@@ -816,15 +791,17 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLicenseHeader(Lease lease)
         {
+            Wait();
             AssertTrueIsDisplayed(licenseHeaderNbrLabel);
             AssertTrueContentNotEquals(licenseHeaderNbrContent, "");
             AssertTrueContentNotEquals(licenseHeaderAccountType, "");
             AssertTrueIsDisplayed(licenseHeaderProperty);
-            
-            if(lease.AccountType == "Receivable")
+
+            if (lease.AccountType == "Receivable")
                 AssertTrueIsDisplayed(licenseHeaderTenantLabel);
             else
                 AssertTrueIsDisplayed(licenseHeaderPayeeLabel);
+
             AssertTrueIsDisplayed(licenseHeaderStartDateLabel);
             AssertTrueContentEquals(licenseHeaderStartDateContent, TransformDateFormat(lease.LeaseStartDate));
             AssertTrueIsDisplayed(licenseHeaderExpiryDateLabel);

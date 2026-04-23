@@ -371,6 +371,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                       >
                         <button
                           class="c6 Button c7 btn btn-primary"
+                          style="font-size: 1.6rem;"
                           title="Download File"
                           type="button"
                         >
@@ -665,6 +666,7 @@ exports[`AgreementView component > renders as expected 1`] = `
                       >
                         <button
                           class="c6 Button c7 btn btn-primary"
+                          style="font-size: 1.6rem;"
                           title="Download File"
                           type="button"
                         >

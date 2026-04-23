@@ -36,19 +36,19 @@ namespace PIMS.Tests.Automation.PageObjects
         public string ModalContent()
         {
             WaitUntilVisible(generalModal);
-            return (webDriver.FindElement(generalModalContent).Text);
+            return (webDriver.FindElements(generalModalContent).Last().Text);
         }
 
         public void ModalClickOKBttn()
         {
-            Wait();
-            webDriver.FindElement(generalModalOkBttn).Click();
+            WaitUntilClickable(generalModalOkBttn);
+            SafeClick(generalModalOkBttn);
         }
 
         public void ModalClickCancelBttn()
         {
-            Wait();
-            webDriver.FindElement(generalModalCancelBttn).Click();
+            WaitUntilClickable(generalModalCancelBttn);
+            SafeClick(generalModalCancelBttn);
         }
 
         public string SecondaryModalHeader()
@@ -69,11 +69,12 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(secondaryModalOkBttn).Click();
         }
 
-        public string ToastifyText()
+        public string ToastifyMainText()
         {
-            WaitUntilVisible(generalToastBody);
-            return (webDriver.FindElement(generalToastBody).Text);
+            Wait();
+            return (webDriver.FindElements(generalToastBody).Last().Text);
         }
+
 
         public string ConfirmationModalText1()
         {

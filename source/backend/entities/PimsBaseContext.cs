@@ -1947,9 +1947,14 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.ExpiryDate).HasComment("Date the owner record expired.");
             entity.Property(e => e.GivenName).HasComment("Given name of the owner (person).");
             entity.Property(e => e.IncorporationNumber).HasComment("Incorporation number of the organization.");
+            entity.Property(e => e.IsFromLtsa)
+                .HasDefaultValue(false)
+                .HasComment("User Story: As a PIMS user, I need to pre-populate the owner name(s) from LTSA title, as I’m required to use the LTSA title owner as the owner for an Acquisition file, and having that populate automatically based on properties in the file saves me time an");
             entity.Property(e => e.IsOrganization).HasComment("Indicates if the owner is an organization.  Default value is FALSE, indicating that the owner is a person.");
             entity.Property(e => e.IsPrimaryOwner).HasComment("Indicates that this is the file's primary owner.");
             entity.Property(e => e.LastNameAndCorpName).HasComment("Name of the owner (person or organization).  If person, surname.");
+            entity.Property(e => e.LtsaPid).HasComment("PID of the originating LTSA file.");
+            entity.Property(e => e.LtsaSourcedDate).HasComment("Date that LTSA data was imported into the PIMS system.");
             entity.Property(e => e.OtherName).HasComment("Optional name field if required.");
             entity.Property(e => e.RegistrationNumber).HasComment("Registration number of the organization.");
 
