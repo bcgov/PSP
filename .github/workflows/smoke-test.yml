@@ -57,6 +57,9 @@ jobs:
       - name: Install Playwright Browsers
         run: npx playwright install --with-deps
 
+      - name: 🚀 Run Cucumber Smoke Tests
+        run: npx cucumber-js --tags @smokeTest
+
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
   # 2) greps the generated name from the previous step.
