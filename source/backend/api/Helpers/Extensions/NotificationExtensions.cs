@@ -39,9 +39,26 @@ namespace Pims.Api.Helpers.Extensions
             int fileIdCount = fileIds.Count(id => id.HasValue);
             int subIdCount = subIds.Count(id => id.HasValue);
 
-            if (fileIdCount != 1 || subIdCount != 1)
+            // At least one file id or sub-id must be populated, but not more than one of each.
+            if (fileIdCount == 0 && subIdCount == 0)
             {
-                throw new InvalidOperationException("Exactly one file id and one sub-id must be populated.");
+                throw new InvalidOperationException("At least one file id or sub-id must be populated.");
+            }
+
+            if (fileIdCount > 1)
+            {
+                throw new InvalidOperationException("Only one file id can be populated.");
+            }
+
+            if (subIdCount > 1)
+            {
+                throw new InvalidOperationException("Only one sub-id can be populated.");
+            }
+
+            // If a sub-id is populated, its corresponding file id must also be populated. Additionally, only one file id and one sub-id can be populated.
+            if (subIdCount > 0 && fileIdCount == 0)
+            {
+                throw new InvalidOperationException("If a sub-id is populated, its corresponding file id must also be populated.");
             }
 
             var validator = validatorFactory.GetValidator(notification);

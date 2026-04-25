@@ -1,7 +1,8 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using Pims.Dal;
 using Pims.Dal.Entities;
-using System;
-using System.Linq;
 
 namespace Pims.Api.Helpers.Validators
 {
@@ -16,19 +17,18 @@ namespace Pims.Api.Helpers.Validators
 
         public void Validate(PimsNotification notification)
         {
-            if (!notification.AcquisitionFileId.HasValue)
+            ArgumentNullException.ThrowIfNull(notification);
+            var isValid = notification.ExpropOwnerHistoryId.HasValue && notification.AcquisitionFileId.HasValue;
+            if (!isValid)
             {
                 throw new InvalidOperationException("EXPROP_OWNER_HISTORY_ID must be associated with ACQUISITION_FILE_ID.");
             }
 
-            if (notification.ExpropOwnerHistoryId.HasValue && notification.AcquisitionFileId.HasValue)
+            var history = _context.PimsExpropOwnerHistories
+                .FirstOrDefault(eoh => eoh.ExpropOwnerHistoryId == notification.ExpropOwnerHistoryId.Value) ?? throw new KeyNotFoundException("Expropriation Owner History not found.");
+            if (history.AcquisitionFileId != notification.AcquisitionFileId)
             {
-                var history = _context.PimsExpropOwnerHistories
-                    .FirstOrDefault(eoh => eoh.ExpropOwnerHistoryId == notification.ExpropOwnerHistoryId.Value) ?? throw new InvalidOperationException("Expropriation Owner History not found.");
-                if (history.AcquisitionFileId != notification.AcquisitionFileId)
-                {
-                    throw new InvalidOperationException("Expropriation Owner History's AcquisitionFileId does not match the notification's AcquisitionFileId.");
-                }
+                throw new InvalidOperationException("Expropriation Owner History's AcquisitionFileId does not match the notification's AcquisitionFileId.");
             }
         }
     }

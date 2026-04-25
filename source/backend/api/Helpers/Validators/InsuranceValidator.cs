@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Pims.Dal;
 using Pims.Dal.Entities;
@@ -16,19 +17,18 @@ namespace Pims.Api.Helpers.Validators
 
         public void Validate(PimsNotification notification)
         {
-            if (!notification.LeaseId.HasValue)
+            ArgumentNullException.ThrowIfNull(notification);
+            var isValid = notification.InsuranceId.HasValue && notification.LeaseId.HasValue;
+            if (!isValid)
             {
                 throw new InvalidOperationException("INSURANCE_ID must be associated with LEASE_ID.");
             }
 
-            if (notification.InsuranceId.HasValue && notification.LeaseId.HasValue)
+            var insurance = _context.PimsInsurances
+                .FirstOrDefault(i => i.InsuranceId == notification.InsuranceId.Value) ?? throw new KeyNotFoundException("Insurance not found.");
+            if (insurance.LeaseId != notification.LeaseId)
             {
-                var insurance = _context.PimsInsurances
-                    .FirstOrDefault(i => i.InsuranceId == notification.InsuranceId.Value) ?? throw new InvalidOperationException("Insurance not found.");
-                if (insurance.LeaseId != notification.LeaseId)
-                {
-                    throw new InvalidOperationException("Insurance's LeaseId does not match the notification's LeaseId.");
-                }
+                throw new InvalidOperationException("Insurance's LeaseId does not match the notification's LeaseId.");
             }
         }
     }

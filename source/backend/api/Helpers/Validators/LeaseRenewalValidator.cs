@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using System.Linq;
 using Pims.Dal;
 using Pims.Dal.Entities;
@@ -16,19 +17,18 @@ namespace Pims.Api.Helpers.Validators
 
         public void Validate(PimsNotification notification)
         {
-            if (!notification.LeaseId.HasValue)
+            ArgumentNullException.ThrowIfNull(notification);
+            var isValid = notification.LeaseId.HasValue && notification.LeaseRenewalId.HasValue;
+            if (!isValid)
             {
-                throw new InvalidOperationException("LEASE_RENEWAL_ID must be associated with LEASE_ID.");
+                throw new InvalidOperationException("Lease and Licence renewal notification requires LEASE_ID and LEASE_RENEWAL_ID to be set.");
             }
 
-            if (notification.LeaseRenewalId.HasValue && notification.LeaseId.HasValue)
+            var renewal = _context.PimsLeaseRenewals
+                .FirstOrDefault(lr => lr.LeaseRenewalId == notification.LeaseRenewalId.Value) ?? throw new KeyNotFoundException("Lease Renewal not found.");
+            if (renewal.LeaseId != notification.LeaseId)
             {
-                var renewal = _context.PimsLeaseRenewals
-                    .FirstOrDefault(lr => lr.LeaseRenewalId == notification.LeaseRenewalId.Value) ?? throw new InvalidOperationException("Lease Renewal not found.");
-                if (renewal.LeaseId != notification.LeaseId)
-                {
-                    throw new InvalidOperationException("Lease Renewal's LeaseId does not match the notification's LeaseId.");
-                }
+                throw new InvalidOperationException("Lease Renewal's LeaseId does not match the notification's LeaseId.");
             }
         }
     }
