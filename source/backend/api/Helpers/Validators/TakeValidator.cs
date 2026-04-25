@@ -1,4 +1,6 @@
 using System;
+using System.Collections.Generic;
+using System.Data.Entity;
 using System.Linq;
 using Pims.Dal;
 using Pims.Dal.Entities;
@@ -16,25 +18,21 @@ namespace Pims.Api.Helpers.Validators
 
         public void Validate(PimsNotification notification)
         {
-            if (!notification.AcquisitionFileId.HasValue)
+            ArgumentNullException.ThrowIfNull(notification);
+            var isValid = notification.TakeId.HasValue && notification.AcquisitionFileId.HasValue;
+            if (!isValid)
             {
                 throw new InvalidOperationException("TAKE_ID must be associated with ACQUISITION_FILE_ID.");
             }
-            if (notification.TakeId.HasValue && notification.AcquisitionFileId.HasValue)
-            {
-                var take = _context.PimsTakes
-                    .Where(t => t.TakeId == notification.TakeId.Value)
-                    .Select(t => new
-                    {
-                        Take = t,
-                        AcquisitionFileId = t.PropertyAcquisitionFile.AcquisitionFileId,
-                    })
-                    .FirstOrDefault() ?? throw new InvalidOperationException("Take not found.");
 
-                if (take.AcquisitionFileId != notification.AcquisitionFileId)
-                {
-                    throw new InvalidOperationException("Take's AcquisitionFileId does not match the notification's AcquisitionFileId.");
-                }
+            var take = _context.PimsTakes
+                .Include(t => t.PropertyAcquisitionFile)
+                .Where(t => t.TakeId == notification.TakeId.Value)
+                .FirstOrDefault() ?? throw new KeyNotFoundException("Take not found.");
+
+            if (take.PropertyAcquisitionFile == null || take.PropertyAcquisitionFile.AcquisitionFileId != notification.AcquisitionFileId)
+            {
+                throw new InvalidOperationException("Take's AcquisitionFileId does not match the notification's AcquisitionFileId.");
             }
         }
     }

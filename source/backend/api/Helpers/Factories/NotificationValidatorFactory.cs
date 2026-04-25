@@ -1,6 +1,7 @@
 using System;
 using Microsoft.Extensions.DependencyInjection;
 using Pims.Api.Helpers.Factories;
+using Pims.Api.Models.CodeTypes;
 using Pims.Dal.Entities;
 
 namespace Pims.Api.Helpers.Validators
@@ -16,42 +17,22 @@ namespace Pims.Api.Helpers.Validators
 
         public INotificationSubtypeValidator GetValidator(PimsNotification notification)
         {
-            if (notification.AgreementId.HasValue)
-            {
-                return _serviceProvider.GetRequiredService<AgreementValidator>();
-            }
+            ArgumentNullException.ThrowIfNull(notification);
 
-            if (notification.LeaseConsultationId.HasValue)
+            return notification.NotificationTypeCode switch
             {
-                return _serviceProvider.GetRequiredService<LeaseConsultationValidator>();
-            }
-
-            if (notification.LeaseRenewalId.HasValue)
-            {
-                return _serviceProvider.GetRequiredService<LeaseRenewalValidator>();
-            }
-
-            if (notification.NoticeOfClaimId.HasValue)
-            {
-                return _serviceProvider.GetRequiredService<NoticeOfClaimValidator>();
-            }
-
-            if (notification.InsuranceId.HasValue)
-            {
-                return _serviceProvider.GetRequiredService<InsuranceValidator>();
-            }
-
-            if (notification.ExpropOwnerHistoryId.HasValue)
-            {
-                return _serviceProvider.GetRequiredService<ExpropOwnerHistoryValidator>();
-            }
-
-            if (notification.TakeId.HasValue)
-            {
-                return _serviceProvider.GetRequiredService<TakeValidator>();
-            }
-
-            return null;
+                nameof(NotificationTypes.TAKE_SRW) => _serviceProvider.GetRequiredService<TakeValidator>(),
+                nameof(NotificationTypes.TAKE_LAT) => _serviceProvider.GetRequiredService<TakeValidator>(),
+                nameof(NotificationTypes.TAKE_LTC) => _serviceProvider.GetRequiredService<TakeValidator>(),
+                nameof(NotificationTypes.TAKE_LPYBLE) => _serviceProvider.GetRequiredService<TakeValidator>(),
+                nameof(NotificationTypes.L_RENEWAL) => _serviceProvider.GetRequiredService<LeaseRenewalValidator>(),
+                nameof(NotificationTypes.L_INSURANCE) => _serviceProvider.GetRequiredService<InsuranceValidator>(),
+                nameof(NotificationTypes.L_CONSULTFN) => _serviceProvider.GetRequiredService<LeaseConsultationValidator>(),
+                nameof(NotificationTypes.NOC) => _serviceProvider.GetRequiredService<NoticeOfClaimValidator>(),
+                nameof(NotificationTypes.AGMT_SIGND) => _serviceProvider.GetRequiredService<AgreementValidator>(),
+                nameof(NotificationTypes.EXPROPH_APPEFFDT) => _serviceProvider.GetRequiredService<ExpropOwnerHistoryValidator>(),
+                _ => null,
+            };
         }
     }
 }
