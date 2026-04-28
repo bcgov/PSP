@@ -1,11 +1,12 @@
-import { useCallback } from 'react';
+import { useCallback, useEffect, useMemo } from 'react';
 import { OverlayTriggerProps } from 'react-bootstrap';
 
 import { useNotificationRepository } from '@/hooks/repositories/useNotificationRepository';
 import { ApiGen_Concepts_Notification } from '@/models/api/generated/ApiGen_Concepts_Notification';
-import { exists, isValidId } from '@/utils';
+import { Api_NotificationSearchCriteria } from '@/models/api/NotificationSearchCriteria';
+import { exists, firstOrNull, isValidId } from '@/utils';
 
-import { INotificationSourceOptions, NotificationFormModel } from './models/NotificationFormModel';
+import { INotificationSource, NotificationFormModel } from './models/NotificationFormModel';
 import { IReminderViewProps } from './ReminderView';
 
 export interface IReminderContainerProps {
@@ -27,14 +28,10 @@ export interface IReminderContainerProps {
    */
   notificationType: string;
 
-  // Add the relevant foreign-keys when embedding this container next to a supported key date.
-  notificationSourceOptions: INotificationSourceOptions;
-
   /**
-   * The existing reminder for this notification type, if any. Used to seed the
-   * initial state and to supply the row version for update/delete calls.
+   * The relevant foreign-keys when embedding this container next to a supported key date.
    */
-  notification?: ApiGen_Concepts_Notification | null;
+  notificationSource: INotificationSource;
 
   /**
    * Placement of the popover relative to the trigger button.
@@ -68,8 +65,7 @@ const ReminderContainer: React.FC<IReminderContainerProps> = ({
   keyDateLabel,
   popoverPlacement = 'right',
   notificationType,
-  notificationSourceOptions,
-  notification,
+  notificationSource,
   View,
   onReminderSaved,
   onReminderRemoved,
@@ -78,7 +74,30 @@ const ReminderContainer: React.FC<IReminderContainerProps> = ({
     addNotification: { execute: addNotification },
     updateNotification: { execute: updateNotification },
     deleteNotification: { execute: deleteNotification },
+    searchNotifications: { execute: searchNotifications, response: existingNotifications },
   } = useNotificationRepository();
+
+  const fetchNotifications = useCallback(
+    async (notificationType: string, notificationSource: INotificationSource): Promise<void> => {
+      const criteria: Api_NotificationSearchCriteria = {
+        type: notificationType,
+        acquisitionFileId: notificationSource.acquisitionFileId ?? undefined,
+        dispositionFileId: notificationSource.dispositionFileId ?? undefined,
+        researchFileId: notificationSource.researchFileId ?? undefined,
+        managementFileId: notificationSource.managementFileId ?? undefined,
+        leaseId: notificationSource.leaseId ?? undefined,
+        takeId: notificationSource.takeId ?? undefined,
+        insuranceId: notificationSource.insuranceId ?? undefined,
+        leaseConsultationId: notificationSource.leaseConsultationId ?? undefined,
+        noticeOfClaimId: notificationSource.noticeOfClaimId ?? undefined,
+        leaseRenewalId: notificationSource.leaseRenewalId ?? undefined,
+        expropOwnerHistoryId: notificationSource.expropOwnerHistoryId ?? undefined,
+        agreementId: notificationSource.agreementId ?? undefined,
+      };
+      await searchNotifications(criteria);
+    },
+    [searchNotifications],
+  );
 
   const handleSave = useCallback(
     async (values: NotificationFormModel): Promise<void> => {
@@ -91,9 +110,17 @@ const ReminderContainer: React.FC<IReminderContainerProps> = ({
 
       if (exists(saved) && isValidId(saved?.notificationId)) {
         await onReminderSaved?.(saved);
+        await fetchNotifications(notificationType, notificationSource);
       }
     },
-    [addNotification, updateNotification, onReminderSaved],
+    [
+      updateNotification,
+      addNotification,
+      onReminderSaved,
+      fetchNotifications,
+      notificationType,
+      notificationSource,
+    ],
   );
 
   const handleRemove = useCallback(
@@ -104,9 +131,22 @@ const ReminderContainer: React.FC<IReminderContainerProps> = ({
 
       await deleteNotification(notificationId);
       await onReminderRemoved?.();
+      await fetchNotifications(notificationType, notificationSource);
     },
-    [deleteNotification, onReminderRemoved],
+    [
+      deleteNotification,
+      fetchNotifications,
+      notificationSource,
+      notificationType,
+      onReminderRemoved,
+    ],
   );
+
+  useEffect(() => {
+    fetchNotifications(notificationType, notificationSource);
+  }, [fetchNotifications, notificationSource, notificationType]);
+
+  const notification = useMemo(() => firstOrNull(existingNotifications), [existingNotifications]);
 
   return (
     <View
@@ -116,7 +156,7 @@ const ReminderContainer: React.FC<IReminderContainerProps> = ({
       notification={
         exists(notification)
           ? NotificationFormModel.fromApi(notification)
-          : NotificationFormModel.createEmpty(notificationType, notificationSourceOptions)
+          : NotificationFormModel.createEmpty(notificationType, notificationSource)
       }
       onReminderSaved={handleSave}
       onReminderRemoved={handleRemove}

@@ -3,7 +3,7 @@ import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { stringToNull } from '@/utils/formUtils';
 import { isValidId, isValidIsoDateTime } from '@/utils/utils';
 
-export interface INotificationSourceOptions {
+export interface INotificationSource {
   // FK to related entities (e.g. acquisitionFileId, leaseId, etc.) can be added here as needed
   acquisitionFileId?: number | null;
   dispositionFileId?: number | null;
@@ -87,7 +87,7 @@ export class NotificationFormModel {
 
   static createEmpty(
     notificationType: string,
-    options: INotificationSourceOptions,
+    options: INotificationSource,
   ): NotificationFormModel {
     const notification = new NotificationFormModel();
     notification.notificationType = notificationType;
