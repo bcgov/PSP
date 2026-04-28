@@ -1,7 +1,6 @@
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_AcquisitionFileTeam } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileTeam';
-import { formatApiPersonNames } from '@/utils/personUtils';
-
-type IdSelector = 'O' | 'P';
+import { formatApiPersonNames, getParameterIdFromOptions } from '@/utils/personUtils';
 
 export interface ApiGen_Concepts_AcquisitionFilter {
   acquisitionFileStatusTypeCode: string;
@@ -15,6 +14,7 @@ export interface ApiGen_Concepts_AcquisitionFilter {
   pin: string;
   pid: string;
   address: string;
+  regions: string[];
 }
 
 export class AcquisitionFilterModel {
@@ -28,16 +28,26 @@ export class AcquisitionFilterModel {
   pin = '';
   pid = '';
   address = '';
+  regions: MultiSelectOption[] = [];
+
+  constructor(initialRegions: MultiSelectOption[] = []) {
+    this.regions = initialRegions;
+  }
 
   toApi(): ApiGen_Concepts_AcquisitionFilter {
+    const acquisitionTeamPersonId = getParameterIdFromOptions(this.acquisitionTeamMembers, 'P');
+    const acquistionTeamOrganizationId = getParameterIdFromOptions(
+      this.acquisitionTeamMembers,
+      'O',
+    );
+
     return {
       acquisitionFileStatusTypeCode: this.acquisitionFileStatusTypeCode,
       acquisitionFileNameOrNumber: this.acquisitionFileNameOrNumber,
-      acquisitionTeamMemberPersonId: getParameterIdFromOptions(this.acquisitionTeamMembers, 'P'),
-      acquisitionTeamMemberOrganizationId: getParameterIdFromOptions(
-        this.acquisitionTeamMembers,
-        'O',
-      ),
+      acquisitionTeamMemberPersonId: acquisitionTeamPersonId ? acquisitionTeamPersonId : null,
+      acquisitionTeamMemberOrganizationId: acquistionTeamOrganizationId
+        ? acquistionTeamOrganizationId
+        : null,
       projectNameOrNumber: this.projectNameOrNumber,
       ownerName: this.ownerName,
       searchBy: this.searchBy,
@@ -45,12 +55,14 @@ export class AcquisitionFilterModel {
       pin: this.pin,
       pid: this.pid,
       address: this.address,
+      regions: this.regions?.map(x => x.id) ?? [],
     };
   }
 
   static fromApi(
     model: ApiGen_Concepts_AcquisitionFilter,
     teamMembers: ApiGen_Concepts_AcquisitionFileTeam[],
+    userRegions: MultiSelectOption[],
   ): AcquisitionFilterModel {
     const newModel = new AcquisitionFilterModel();
     newModel.acquisitionFileStatusTypeCode = model.acquisitionFileStatusTypeCode;
@@ -62,6 +74,7 @@ export class AcquisitionFilterModel {
     newModel.pid = model.pid;
     newModel.hasNoticeOfClaim = model.hasNoticeOfClaim;
     newModel.address = model.address;
+    newModel.regions = userRegions ?? [];
 
     if (model.acquisitionTeamMemberPersonId) {
       const memberPerson = teamMembers.find(
@@ -92,24 +105,3 @@ export class AcquisitionFilterModel {
     return newModel;
   }
 }
-
-export interface MultiSelectOption {
-  id: string;
-  text: string;
-}
-
-export const getParameterIdFromOptions = (
-  options: MultiSelectOption[],
-  selector: IdSelector = 'P',
-): string => {
-  if (options.length === 0) {
-    return '';
-  }
-
-  const filterOrgItems = options.filter(option => String(option.id).startsWith(selector));
-  if (filterOrgItems.length === 0) {
-    return '';
-  }
-
-  return filterOrgItems[0].id.split('-').pop() ?? '';
-};

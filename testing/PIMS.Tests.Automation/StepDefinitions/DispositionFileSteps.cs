@@ -1,7 +1,6 @@
 ﻿using OpenQA.Selenium;
 using PIMS.Tests.Automation.Classes;
 using PIMS.Tests.Automation.Data;
-using PIMS.Tests.Automation.PageObjects;
 
 namespace PIMS.Tests.Automation.StepDefinitions
 {
@@ -20,6 +19,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly DispositionOfferSale offerSale;
         private readonly SharedPagination sharedPagination;
         private readonly SharedImprovementsTab sharedImprovementsTab;
+        private readonly SharedAgreements agreements;
 
         private readonly string userName = "TRANPSP1";
         private string dispositionFileName = "";
@@ -37,6 +37,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             checklist = new DispositionChecklist(driver);
             offerSale = new DispositionOfferSale(driver);
             sharedImprovementsTab = new SharedImprovementsTab(driver);
+            agreements = new SharedAgreements(driver);
             sharedPagination = new SharedPagination(driver);
 
             dispositionFile = new DispositionFile();
@@ -164,6 +165,14 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Navigate to Properties for Disposition File
             sharedFileProperties.NavigateToAddPropertiesToFile();
 
+            //Search for a property by PID
+            if (dispositionFile.DispositionSearchProperties.PID != "")
+            {
+                searchProperties.SearchProperty(PID: dispositionFile.DispositionSearchProperties.PID);
+                searchProperties.SelectFirstPMBCResult();
+                searchProperties.ResetPropertySearch();
+            }
+
             //Search for a property by Plan
             if (dispositionFile.DispositionSearchProperties.PlanNumber != "")
             {
@@ -176,7 +185,8 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (dispositionFile.DispositionSearchProperties.HistoricFile != "")
             {
                 searchProperties.SearchProperty(historicFile: dispositionFile.DispositionSearchProperties.HistoricFile);
-                searchProperties.SelectFirstPIMSResultToFile();
+                searchProperties.SelectFirstPIMSResult();
+                sharedFileProperties.AddPropertyToFile();
                 searchProperties.ResetPropertySearch();
             }
 
@@ -193,6 +203,96 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify properties order
             sharedFileProperties.VerifyInsertedPropsOrder(dispositionFile.DispositionSearchProperties.DisplayingList);
+        }
+
+        [StepDefinition(@"I create Agreements within a Disposition File")]
+        public void CreateAgreement()
+        {
+            //Navigate to Agreements Tab
+            agreements.NavigateAgreementsTab();
+
+            //Verify initial Agreement Tab View
+            agreements.VerifyInitAgreementTab();
+
+            if (dispositionFile.DispositionAgreementCount > 0)
+            {
+                for (int i = 0; i < dispositionFile.DispositionAgreements.Count; i++)
+                {
+                    //Create Agreement button
+                    agreements.CreateNewAgreementBttn();
+
+                    //Verify Create Agreement form
+                    agreements.VerifyCreateAgreementForm();
+
+                    //Add a new Agreement
+                    agreements.CreateUpdateAgreement(dispositionFile.DispositionAgreements[i]);
+
+                    //Save new agreement
+                    agreements.SaveAcquisitionFileAgreement();
+
+                    //Verify Edit Agreement form
+                    agreements.VerifyViewAgreementForm(dispositionFile.DispositionAgreements[i], i);
+                }
+            }
+        }
+
+        [StepDefinition(@"I update an Agreement within a Disposition File from row number (.*)")]
+        public void UpdateAgreement(int rowNumber)
+        {
+
+            PopulateDispositionFile(rowNumber);
+
+            //Search for an existing Disposition File
+            searchDispositionFiles.NavigateToSearchDispositionFile();
+            searchDispositionFiles.FilterDispositionFiles(name: dispositionFileName);
+            searchDispositionFiles.SelectLastOption();
+
+            //Navigate to Agreements Tab
+            agreements.NavigateAgreementsTab();
+
+            //Create Agreement button
+            agreements.CreateNewAgreementBttn();
+
+            //Verify Create Agreement form
+            agreements.VerifyCreateAgreementForm();
+
+            //Add a new Agreement
+            agreements.CreateUpdateAgreement(dispositionFile.DispositionAgreements[0]);
+
+            //Cancel agreements
+            agreements.CancelAcquisitionFileAgreement();
+
+            //Create Agreement button
+            agreements.CreateNewAgreementBttn();
+
+            //Add a new Agreement
+            agreements.CreateUpdateAgreement(dispositionFile.DispositionAgreements[0]);
+
+            //Save new agreement
+            agreements.SaveAcquisitionFileAgreement();
+
+            //Verify new added Agreement form
+            agreements.VerifyViewAgreementForm(dispositionFile.DispositionAgreements[0], 1);
+
+            //Edit Agreement button
+            agreements.EditAgreementButton(0);
+
+            //Update created agreement
+            agreements.CreateUpdateAgreement(dispositionFile.DispositionAgreements[0]);
+
+            //Save new agreement
+            agreements.SaveAcquisitionFileAgreement();
+
+            //Verify Edit Agreement form
+            agreements.VerifyViewAgreementForm(dispositionFile.DispositionAgreements[0], 1);
+
+            var agreementsBeforeDelete = agreements.TotalAgreementsCount();
+
+            //Delete last agreement
+            agreements.DeleteLastAgreement();
+
+            var agreementsAfterDelete = agreements.TotalAgreementsCount();
+            Assert.True(agreementsBeforeDelete - agreementsAfterDelete == 1);
         }
 
         [StepDefinition(@"I verify the Disposition File Improvements Tab")]
@@ -576,11 +676,11 @@ namespace PIMS.Tests.Automation.StepDefinitions
             searchProperties.NavigatePropertyListView();
 
             //Select all properties ownership types and look for the property
-            searchProperties.IncludeAllPropertyOwnershipSearch();
+            searchProperties.SelectOwnershipSearch("Disposed");
             searchProperties.SearchProperty(PID: dispositionFile.DispositionSearchProperties.PID);
 
             //Verify Property is associated to the Disposition File is disposed
-            Assert.Equal("Disposed", searchProperties.FirstPropertyOwnership());
+            Assert.Equal(1, searchProperties.PropertiesListFoundCount());
         }
 
         [StepDefinition(@"Disposition File without Sales Price error appears")]
@@ -739,6 +839,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             if (dispositionFile.PurchaseNameStartRow > 0 && dispositionFile.PurchaseNameTotalCount > 0)
                 PopulatePurchaseNamesCollection(dispositionFile.PurchaseNameStartRow, dispositionFile.PurchaseNameTotalCount);
 
+            dispositionFile.DispositionAgreementStartRow = int.Parse(ExcelDataContext.ReadData(rowNumber, "DispositionAgreementStartRow"));
+            dispositionFile.DispositionAgreementCount = int.Parse(ExcelDataContext.ReadData(rowNumber, "DispositionAgreementCount"));
+
+            if (dispositionFile.DispositionAgreementStartRow > 0 && dispositionFile.DispositionAgreementCount > 0)
+                PopulateAgreementsCollection(dispositionFile.DispositionAgreementStartRow, dispositionFile.DispositionAgreementCount);
+
             dispositionFile.PurchaserAgent = ExcelDataContext.ReadData(rowNumber, "PurchaserAgent");
             dispositionFile.PurchaserAgentType = ExcelDataContext.ReadData(rowNumber, "PurchaserAgentType");
             dispositionFile.PurchaserAgentPrimaryContact = ExcelDataContext.ReadData(rowNumber, "PurchaserAgentPrimaryContact");
@@ -810,6 +916,31 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 purchaseMember.PurchaseMemberPrimaryContact = ExcelDataContext.ReadData(i, "PurchaseMemberPrimaryContact");
 
                dispositionFile.PurchaserNames.Add(purchaseMember);
+            }
+        }
+
+        private void PopulateAgreementsCollection(int startRow, int rowsCount)
+        {
+            System.Data.DataTable agreementSheet = ExcelDataContext.GetInstance().Sheets["Agreements"]!;
+            ExcelDataContext.PopulateInCollection(agreementSheet);
+
+            for (int i = startRow; i < startRow + rowsCount; i++)
+            {
+                Agreement agreement = new();
+
+                agreement.AgreementStatus = ExcelDataContext.ReadData(i, "AgreementStatus");
+                agreement.AgreementCancellationReason = ExcelDataContext.ReadData(i, "AgreementCancellationReason");
+                agreement.AgreementLegalSurveyPlan = ExcelDataContext.ReadData(i, "AgreementLegalSurveyPlan");
+                agreement.AgreementType = ExcelDataContext.ReadData(i, "AgreementType");
+                agreement.AgreementDate = ExcelDataContext.ReadData(i, "AgreementDate");
+                agreement.AgreementCompletionDate = ExcelDataContext.ReadData(i, "AgreementCompletionDate");
+                agreement.AgreementTerminationDate = ExcelDataContext.ReadData(i, "AgreementTerminationDate");
+                agreement.AgreementPossessionDate = ExcelDataContext.ReadData(i, "AgreementPossessionDate");
+                agreement.AgreementPurchasePrice = ExcelDataContext.ReadData(i, "AgreementPurchasePrice");
+                agreement.AgreementDepositDue = ExcelDataContext.ReadData(i, "AgreementDepositDue");
+                agreement.AgreementDepositAmount = ExcelDataContext.ReadData(i, "AgreementDepositAmount");
+
+                dispositionFile.DispositionAgreements.Add(agreement);
             }
         }
     }

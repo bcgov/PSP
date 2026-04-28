@@ -403,6 +403,16 @@ export function getMockRepositoryObj<T = any>(response: T | undefined = undefine
   };
 }
 
+/**
+ * jsdom does not implement File.arrayBuffer(). This helper creates a File and
+ * stubs arrayBuffer() to return the provided buffer, matching production behaviour.
+ */
+export function getMockFile(buffer: ArrayBuffer, name: string, options?: FilePropertyBag): File {
+  const file = new File([buffer], name, options);
+  file.arrayBuffer = vi.fn().mockResolvedValue(buffer);
+  return file;
+}
+
 // re-export everything from RTL
 export * from '@testing-library/react';
 export { default as userEvent } from '@testing-library/user-event';

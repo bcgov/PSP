@@ -15,20 +15,27 @@ import { DispositionFilterModel } from '../models';
 import DispositionFilter from './DispositionFilter';
 
 const setFilter = vi.fn();
+const onResetFilter = vi.fn();
 
 const fileStatusOptions = getMockLookUpsByType(DISPOSITION_FILE_STATUS_TYPES);
 const dispositionStatusOptions = getMockLookUpsByType(DISPOSITION_STATUS_TYPES);
 const dispositionTypeOptions = getMockLookUpsByType(DISPOSITION_TYPES);
 
+const mockFilterModel = new DispositionFilterModel();
+
 describe('Disposition filter', () => {
   const setup = (renderOptions: RenderOptions = {}) => {
     const utils = render(
       <DispositionFilter
-        setFilter={setFilter}
+        initialValues={mockFilterModel}
         dispositionTeam={[]}
         fileStatusOptions={fileStatusOptions}
         dispositionStatusOptions={dispositionStatusOptions}
         dispositionTypeOptions={dispositionTypeOptions}
+        pimsRegionsOptions={[]}
+        dispositionTeamOptions={[]}
+        setFilter={setFilter}
+        onResetFilter={onResetFilter}
       />,
       {
         store: {
@@ -46,7 +53,7 @@ describe('Disposition filter', () => {
   };
 
   beforeEach(() => {
-    setFilter.mockClear();
+    vi.clearAllMocks();
   });
 
   it('matches snapshot', () => {
@@ -55,9 +62,12 @@ describe('Disposition filter', () => {
   });
 
   it('searches for active disposition files by default', async () => {
-    const { getResetButton } = setup();
-    await act(async () => userEvent.click(getResetButton()));
-    expect(setFilter).toHaveBeenCalledWith(new DispositionFilterModel().toApi());
+    const { getSearchButton } = setup();
+
+    await act(async () => userEvent.click(getSearchButton()));
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining<Api_DispositionFilter>(new DispositionFilterModel().toApi()),
+    );
   });
 
   it('searches by disposition file status', async () => {
@@ -128,8 +138,6 @@ describe('Disposition filter', () => {
     await act(async () => userEvent.paste(input!, 'test disposition'));
     await act(async () => userEvent.click(getResetButton()));
 
-    expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining<Api_DispositionFilter>(new DispositionFilterModel().toApi()),
-    );
+    expect(onResetFilter).toHaveBeenCalledTimes(1);
   });
 });

@@ -165,7 +165,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     },
   },
   {
-    Header: 'Owner',
+    Header: 'Owners',
     accessor: 'owners',
     align: 'left',
     clickable: true,
@@ -188,7 +188,7 @@ export const columns: ColumnWithProps<AcquisitionSearchResultModel>[] = [
     },
   },
   {
-    Header: 'Civic Address / PID / PIN',
+    Header: 'Civic address / PID / PIN',
     accessor: 'fileProperties',
     align: 'left',
     maxWidth: 40,

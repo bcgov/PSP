@@ -36,7 +36,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
   {
     Header: 'File name',
     accessor: 'name',
-    align: 'right',
+    align: 'left',
     clickable: true,
     sortable: true,
     width: 10,
@@ -45,7 +45,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
   {
     Header: 'MOTT region',
     accessor: 'fileProperties',
-    align: 'right',
+    align: 'left',
     clickable: true,
     width: 10,
     maxWidth: 20,
@@ -57,7 +57,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
   {
     Header: 'Created by',
     accessor: 'appCreateUserid',
-    align: 'right',
+    align: 'left',
     clickable: true,
     sortable: true,
     width: 10,
@@ -66,7 +66,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
   {
     Header: 'Created date',
     accessor: 'appCreateTimestamp',
-    align: 'right',
+    align: 'left',
     clickable: true,
     sortable: true,
     width: 10,
@@ -76,7 +76,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
   {
     Header: 'Last updated by',
     accessor: 'appLastUpdateUserid',
-    align: 'right',
+    align: 'left',
     clickable: true,
     sortable: true,
     width: 10,
@@ -85,7 +85,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
   {
     Header: 'Last updated date',
     accessor: 'appLastUpdateTimestamp',
-    align: 'right',
+    align: 'left',
     clickable: true,
     sortable: true,
     width: 10,
@@ -95,7 +95,7 @@ const columns: ColumnWithProps<ResearchSearchResultModel>[] = [
   {
     Header: 'Status',
     accessor: 'researchFileStatusTypeCode',
-    align: 'right',
+    align: 'left',
     clickable: true,
     sortable: true,
     width: 10,

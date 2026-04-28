@@ -14,6 +14,7 @@ export interface IUpdateAgreementFormProps {
   isLoading: boolean;
   fileType: string;
   isNew?: boolean;
+  isSection3?: boolean;
   initialValues: AgreementFormModel | null;
   onSubmit: (
     values: AgreementFormModel,
@@ -24,7 +25,7 @@ export interface IUpdateAgreementFormProps {
 
 const UpdateAgreementForm: React.FunctionComponent<
   React.PropsWithChildren<IUpdateAgreementFormProps>
-> = ({ isLoading, fileType, isNew, initialValues, onSubmit, onCancel }) => {
+> = ({ isLoading, fileType, isNew, isSection3, initialValues, onSubmit, onCancel }) => {
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const cancelFunc = (resetForm: () => void, dirty: boolean) => {
@@ -65,6 +66,7 @@ const UpdateAgreementForm: React.FunctionComponent<
                     formikProps={formikProps}
                     fileType={fileType}
                     isNew={isNew}
+                    isSection3={isSection3}
                   ></AgreementForm>
                 </StyledContent>
                 <StyledFooter>

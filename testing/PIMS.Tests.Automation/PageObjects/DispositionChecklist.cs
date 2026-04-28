@@ -15,93 +15,90 @@ namespace PIMS.Tests.Automation.PageObjects
         private By checklistFileInitiationTitle = By.XPath("//h2/div/div[contains(text(),'File Initiation')]");
         private By checklistFileInitiation1Label = By.CssSelector("div[data-testid='File Initiation'] div:first-child div:nth-child(1) label");
         private By checklistFileInitiation1Content = By.CssSelector("div[data-testid='File Initiation'] div:first-child div:nth-child(1) div:nth-child(2) span");
-        private By checklistFileInitiation2LabelLabel = By.CssSelector("div[data-testid='File Initiation'] div:first-child div:nth-child(2) label");
+        private By checklistFileInitiation2Label = By.CssSelector("div[data-testid='File Initiation'] div div:nth-child(2) label");
         private By checklistFileInitiation2Content = By.CssSelector("div[data-testid='File Initiation'] div:first-child div:nth-child(2) div:nth-child(2) span");
-        private By checklistFileInitiation3Label = By.CssSelector("div[data-testid='File Initiation'] div:first-child div:nth-child(3) label");
-        private By checklistFileInitiation3Content = By.CssSelector("div[data-testid='File Initiation'] div:first-child div:nth-child(3) div:nth-child(2) span");
-        private By checklistFileInitiation4Label = By.CssSelector("div[data-testid='File Initiation'] div:first-child div:nth-child(4) label");
-        private By checklistFileInitiation4Content = By.CssSelector("div[data-testid='File Initiation'] div:first-child div:nth-child(4) div:nth-child(2) span");
+        private By checklistFileInitiation3Label = By.CssSelector("div[data-testid='File Initiation'] div div:nth-child(3) label");
+        private By checklistFileInitiation3Content = By.CssSelector("div[data-testid='File Initiation'] div div:nth-child(3) div:nth-child(2) div:nth-child(2) span");
+        private By checklistFileInitiation4Label = By.CssSelector("div[data-testid='File Initiation'] div div:nth-child(4) label");
+        private By checklistFileInitiation4Content = By.CssSelector("div[data-testid='File Initiation'] div div:nth-child(4) div:nth-child(2) div:nth-child(2) span");
 
         //Disposition Preparation section View Elements
         private By checklistDispositionPreparationTitle = By.XPath("//h2/div/div[contains(text(),'Disposition Preparation')]");
-        private By checklistDispositionPreparation1Label = By.CssSelector("div[data-testid='Disposition Preparation'] div:first-child div:nth-child(1) label");
+        private By checklistDispositionPreparation1Label = By.CssSelector("div[data-testid='Disposition Preparation'] div div:nth-child(1) label");
         private By checklistDispositionPreparation1Content = By.CssSelector("div[data-testid='Disposition Preparation'] div:first-child div:nth-child(1) div:nth-child(2) span");
-        private By checklistDispositionPreparation2Label = By.CssSelector("div[data-testid='Disposition Preparation'] div:first-child div:nth-child(2) label");
+        private By checklistDispositionPreparation2Label = By.CssSelector("div[data-testid='Disposition Preparation'] div div:nth-child(2) label");
         private By checklistDispositionPreparation2Content = By.CssSelector("div[data-testid='Disposition Preparation'] div:first-child div:nth-child(2) div:nth-child(2) span");
-        private By checklistDispositionPreparation3Label = By.CssSelector("div[data-testid='Disposition Preparation'] div:first-child div:nth-child(3) label");
-        private By checklistDispositionPreparation3Content = By.CssSelector("div[data-testid='Disposition Preparation'] div:first-child div:nth-child(3) div:nth-child(2) span");
-        private By checklistDispositionPreparation4Label = By.CssSelector("div[data-testid='Disposition Preparation'] div:first-child div:nth-child(4) label");
-        private By checklistDispositionPreparation4Content = By.CssSelector("div[data-testid='Disposition Preparation'] div:first-child div:nth-child(4) div:nth-child(2) span");
+        private By checklistDispositionPreparation3Label = By.CssSelector("div[data-testid='Disposition Preparation'] div div:nth-child(3) label");
+        private By checklistDispositionPreparation3Content = By.CssSelector("div[data-testid='Disposition Preparation'] div div:nth-child(3) div:nth-child(2) div:nth-child(2) span");
+        private By checklistDispositionPreparation4Label = By.CssSelector("div[data-testid='Disposition Preparation'] div div:nth-child(4) label");
+        private By checklistDispositionPreparation4Content = By.CssSelector("div[data-testid='Disposition Preparation'] div div:nth-child(4) div:nth-child(2) div:nth-child(2) span");
 
         //Referrals and Consultations section View Elements
         private By checklistReferralsAndConsultationsTitle = By.XPath("//h2/div/div[contains(text(),'Referrals and Consultations')]");
-        private By checklistReferralsAndConsultations1lLabel = By.CssSelector("div[data-testid='Referrals and Consultations'] div:first-child div:nth-child(1) label");
+        private By checklistReferralsAndConsultations1lLabel = By.CssSelector("div[data-testid='Referrals and Consultations'] div div:nth-child(1) label");
         private By checklistReferralsAndConsultations1Content = By.CssSelector("div[data-testid='Referrals and Consultations'] div:first-child div:nth-child(1) div:nth-child(2) span");
-        private By checklistReferralsAndConsultations2Label = By.CssSelector("div[data-testid='Referrals and Consultations'] div:first-child div:nth-child(2) label");
+        private By checklistReferralsAndConsultations2Label = By.CssSelector("div[data-testid='Referrals and Consultations'] div div:nth-child(2) label");
         private By checklistReferralsAndConsultations2Content = By.CssSelector("div[data-testid='Referrals and Consultations'] div:first-child div:nth-child(2) div:nth-child(2) span");
-        private By checklistReferralsAndConsultations3Label = By.CssSelector("div[data-testid='Referrals and Consultations'] div:first-child div:nth-child(3) label");
-        private By checklistReferralsAndConsultations3Content = By.CssSelector("div[data-testid='Referrals and Consultations'] div:first-child div:nth-child(3) div:nth-child(2) span");
-        private By checklistReferralsAndConsultations4Label = By.CssSelector("div[data-testid='Referrals and Consultations'] div:first-child div:nth-child(4) label");
-        private By checklistReferralsAndConsultations4Content = By.CssSelector("div[data-testid='Referrals and Consultations'] div:first-child div:nth-child(4) div:nth-child(2) span");
-        private By checklistReferralsAndConsultations5Label = By.CssSelector("div[data-testid='Referrals and Consultations'] div:first-child div:nth-child(5) label");
-        private By checklistReferralsAndConsultations5Content = By.CssSelector("div[data-testid='Referrals and Consultations'] div:first-child div:nth-child(5) div:nth-child(2) span");
-        private By checklistReferralsAndConsultations6Label = By.CssSelector("div[data-testid='Referrals and Consultations'] div:first-child div:nth-child(6) label");
-        private By checklistReferralsAndConsultations6Content = By.CssSelector("div[data-testid='Referrals and Consultations'] div:first-child div:nth-child(6) div:nth-child(2) span");
+        private By checklistReferralsAndConsultations3Label = By.CssSelector("div[data-testid='Referrals and Consultations'] div div:nth-child(3) label");
+        private By checklistReferralsAndConsultations3Content = By.CssSelector("div[data-testid='Referrals and Consultations'] div div:nth-child(3) div:nth-child(2) div:nth-child(2) span");
+        private By checklistReferralsAndConsultations4Label = By.CssSelector("div[data-testid='Referrals and Consultations'] div div:nth-child(4) label");
+        private By checklistReferralsAndConsultations4Content = By.CssSelector("div[data-testid='Referrals and Consultations'] div div:nth-child(4) div:nth-child(2) div:nth-child(2) span");
+        private By checklistReferralsAndConsultations5Label = By.CssSelector("div[data-testid='Referrals and Consultations'] div div:nth-child(5) label");
+        private By checklistReferralsAndConsultations5Content = By.CssSelector("div[data-testid='Referrals and Consultations'] div div:nth-child(5) div:nth-child(2) div:nth-child(2) span");
+        private By checklistReferralsAndConsultations6Label = By.CssSelector("div[data-testid='Referrals and Consultations'] div div:nth-child(6) label");
+        private By checklistReferralsAndConsultations6Content = By.CssSelector("div[data-testid='Referrals and Consultations'] div div:nth-child(6) div:nth-child(2) div:nth-child(2) span");
 
         //Direct Sale or Road Closure section View Elements
         private By checklistDirectSaleRoadClosureTitle = By.XPath("//h2/div/div[contains(text(),'Road Closure')]");
-        private By checklistDirectSaleRoadClosure1Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(1) label");
-        private By checklistDirectSaleRoadClosure1Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(1) div:nth-child(2) span");
-        private By checklistDirectSaleRoadClosure2Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(2) label");
-        private By checklistDirectSaleRoadClosure2Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(2) div:nth-child(2) span");
-        private By checklistDirectSaleRoadClosure3Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(3) label");
-        private By checklistDirectSaleRoadClosure3Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(3) div:nth-child(2) span");
-        private By checklistDirectSaleRoadClosure4Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(4) label");
-        private By checklistDirectSaleRoadClosure4Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(4) div:nth-child(2) span");
-        private By checklistDirectSaleRoadClosure5Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(5) label");
-        private By checklistDirectSaleRoadClosure5Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(5) div:nth-child(2) span");
-        private By checklistDirectSaleRoadClosure6Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(6) label");
-        private By checklistDirectSaleRoadClosure6Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(6) div:nth-child(2) span");
-        private By checklistDirectSaleRoadClosure7Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(7) label");
-        private By checklistDirectSaleRoadClosure7Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(7) div:nth-child(2) span");
-        private By checklistDirectSaleRoadClosure8Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(8) label");
-        private By checklistDirectSaleRoadClosure8Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(8) div:nth-child(2) span");
-        private By checklistDirectSaleRoadClosure9Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(9) label");
-        private By checklistDirectSaleRoadClosure9Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(9) div:nth-child(2) span");
-        private By checklistDirectSaleRoadClosure10Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(10) label");
-        private By checklistDirectSaleRoadClosure10Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(10) div:nth-child(2) span");
-        private By checklistDirectSaleRoadClosure11Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(11) label");
-        private By checklistDirectSaleRoadClosure11Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(11) div:nth-child(2) span");
-        private By checklistDirectSaleRoadClosure12Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(12) label");
-        private By checklistDirectSaleRoadClosure12Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure'] div:first-child div:nth-child(12) div:nth-child(2) span");
+        private By checklistDirectSaleRoadClosure1Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(1) label");
+        private By checklistDirectSaleRoadClosure1Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div:first-child div:nth-child(1) div:nth-child(2) span");
+        private By checklistDirectSaleRoadClosure2Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(2) label");
+        private By checklistDirectSaleRoadClosure2Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div:first-child div:nth-child(2) div:nth-child(2) span");
+        private By checklistDirectSaleRoadClosure3Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(3) label");
+        private By checklistDirectSaleRoadClosure3Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(3) div:nth-child(2) div:nth-child(2) span");
+        private By checklistDirectSaleRoadClosure4Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(4) label");
+        private By checklistDirectSaleRoadClosure4Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(4) div:nth-child(2) div:nth-child(2) span");
+        private By checklistDirectSaleRoadClosure5Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(5) label");
+        private By checklistDirectSaleRoadClosure5Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(5) div:nth-child(2) div:nth-child(2) span");
+        private By checklistDirectSaleRoadClosure6Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(6) label");
+        private By checklistDirectSaleRoadClosure6Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(6) div:nth-child(2) div:nth-child(2) span");
+        private By checklistDirectSaleRoadClosure7Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(7) label");
+        private By checklistDirectSaleRoadClosure7Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(7) div:nth-child(2) div:nth-child(2) span");
+        private By checklistDirectSaleRoadClosure8Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(8) label");
+        private By checklistDirectSaleRoadClosure8Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(8) div:nth-child(2) div:nth-child(2) span");
+        private By checklistDirectSaleRoadClosure9Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(9) label");
+        private By checklistDirectSaleRoadClosure9Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(9) div:nth-child(2) div:nth-child(2) span");
+        private By checklistDirectSaleRoadClosure10Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(10) label");
+        private By checklistDirectSaleRoadClosure10Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(10) div:nth-child(2) div:nth-child(2) span");
+        private By checklistDirectSaleRoadClosure11Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(11) label");
+        private By checklistDirectSaleRoadClosure11Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(11) div:nth-child(2) div:nth-child(2) span");
+        private By checklistDirectSaleRoadClosure12Label = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(12) label");
+        private By checklistDirectSaleRoadClosure12Content = By.CssSelector("div[data-testid='Direct Sale or Road Closure or SRW'] div div:nth-child(12) div:nth-child(2) div:nth-child(2) span");
 
         //Sale Information section View Elements
         private By checklistSaleInformationTitle = By.XPath("//h2/div/div[contains(text(),'Sale Information')]");
-        private By checklistSaleInformation1Label = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(1) label");
-        private By checklistSaleInformation1Content = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(1) div:nth-child(2) span");
-        private By checklistSaleInformation2Label = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(2) label");
-        private By checklistSaleInformation2Content = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(2) div:nth-child(2) span");
-        private By checklistSaleInformation3Label = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(3) label");
-        private By checklistSaleInformation3Content = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(3) div:nth-child(2) span");
-        private By checklistSaleInformation4Label = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(4) label");
-        private By checklistSaleInformation4Content = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(4) div:nth-child(2) span");
-        private By checklistSaleInformation5Label = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(5) label");
-        private By checklistSaleInformation5Content = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(5) div:nth-child(2) span");
-        private By checklistSaleInformation6Label = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(6) label");
-        private By checklistSaleInformation6Content = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(6) div:nth-child(2) span");
-        private By checklistSaleInformation7Label = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(7) label");
-        private By checklistSaleInformation7Content = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(7) div:nth-child(2) span");
-        private By checklistSaleInformation8Label = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(8) label");
-        private By checklistSaleInformation8Content = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(8) div:nth-child(2) span");
-        private By checklistSaleInformation9Label = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(9) label");
-        private By checklistSaleInformation9Content = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(9) div:nth-child(2) span");
-        private By checklistSaleInformation10Label = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(10) label");
-        private By checklistSaleInformation10Content = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(10) div:nth-child(2) span");
-        private By checklistSaleInformation11Label = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(11) label");
-        private By checklistSaleInformation11Content = By.CssSelector("div[data-testid='Sale Information'] div:first-child div:nth-child(11) div:nth-child(2) span");
-
-        // Tool tip element on checklist
-        private By checklistTooltips = By.CssSelector("span[data-testid='tooltip-icon-section-field-tooltip']");
+        private By checklistSaleInformation1Label = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(1) label");
+        private By checklistSaleInformation1Content = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(1) div:nth-child(2) div:nth-child(2) span");
+        private By checklistSaleInformation2Label = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(2) label");
+        private By checklistSaleInformation2Content = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(2) div:nth-child(2) div:nth-child(2) span");
+        private By checklistSaleInformation3Label = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(3) label");
+        private By checklistSaleInformation3Content = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(3) div:nth-child(2) div:nth-child(2) span");
+        private By checklistSaleInformation4Label = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(4) label");
+        private By checklistSaleInformation4Content = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(4) div:nth-child(2) div:nth-child(2) span");
+        private By checklistSaleInformation5Label = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(5) label");
+        private By checklistSaleInformation5Content = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(5) div:nth-child(2) div:nth-child(2) span");
+        private By checklistSaleInformation6Label = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(6) label");
+        private By checklistSaleInformation6Content = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(6) div:nth-child(2) div:nth-child(2) span");
+        private By checklistSaleInformation7Label = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(7) label");
+        private By checklistSaleInformation7Content = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(7) div:nth-child(2) div:nth-child(2) span");
+        private By checklistSaleInformation8Label = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(8) label");
+        private By checklistSaleInformation8Content = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(8) div:nth-child(2) div:nth-child(2) span");
+        private By checklistSaleInformation9Label = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(9) label");
+        private By checklistSaleInformation9Content = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(9) div:nth-child(2) div:nth-child(2) span");
+        private By checklistSaleInformation10Label = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(10) label");
+        private By checklistSaleInformation10Content = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(10) div:nth-child(2) div:nth-child(2) span");
+        private By checklistSaleInformation11Label = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(11) label");
+        private By checklistSaleInformation11Content = By.CssSelector("div[data-testid='Sale Information'] div div:nth-child(11) div:nth-child(2) div:nth-child(2) span");
 
         //Checklist Edit Mode Elements
         private By checklistFileInitiationItem1Select = By.Id("input-checklistSections[0].items[0].statusType");
@@ -167,7 +164,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveDispositionFileChecklist()
         {
-            Wait();
             ButtonElement("Save");
 
             AssertTrueIsDisplayed(checklistEditBttn);
@@ -175,7 +171,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelDispositionFileChecklist()
         {
-            Wait();
             ButtonElement("Cancel");
 
             sharedModals.CancelActionModal();
@@ -183,12 +178,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyChecklistInitViewForm()
         {
-            Wait(2000);
+            WaitUntilVisible(checklistFileInitiationTitle);
 
             AssertTrueIsDisplayed(checklistFileInitiationTitle);
             AssertTrueIsDisplayed(checklistFileInitiation1Label);
             AssertTrueIsDisplayed(checklistFileInitiation1Content);
-            AssertTrueIsDisplayed(checklistFileInitiation2LabelLabel);
+            AssertTrueIsDisplayed(checklistFileInitiation2Label);
             AssertTrueIsDisplayed(checklistFileInitiation2Content);
             AssertTrueIsDisplayed(checklistFileInitiation3Label);
             AssertTrueIsDisplayed(checklistFileInitiation3Content);
@@ -212,12 +207,12 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(checklistReferralsAndConsultations2Content);
             AssertTrueIsDisplayed(checklistReferralsAndConsultations3Label);
             AssertTrueIsDisplayed(checklistReferralsAndConsultations3Content);
-            Assert.Equal(2,webDriver.FindElements(checklistReferralsAndConsultations4Label).Count);
-            Assert.Equal(2, webDriver.FindElements(checklistReferralsAndConsultations4Content).Count);
-            Assert.Equal(2, webDriver.FindElements(checklistReferralsAndConsultations5Label).Count);
-            Assert.Equal(2, webDriver.FindElements(checklistReferralsAndConsultations5Content).Count);
-            Assert.Equal(2, webDriver.FindElements(checklistReferralsAndConsultations6Label).Count);
-            Assert.Equal(2, webDriver.FindElements(checklistReferralsAndConsultations6Content).Count);
+            AssertTrueIsDisplayed(checklistReferralsAndConsultations4Label);
+            AssertTrueIsDisplayed(checklistReferralsAndConsultations4Content);
+            AssertTrueIsDisplayed(checklistReferralsAndConsultations5Label);
+            AssertTrueIsDisplayed(checklistReferralsAndConsultations5Content);
+            AssertTrueIsDisplayed(checklistReferralsAndConsultations6Label);
+            AssertTrueIsDisplayed(checklistReferralsAndConsultations6Content);
 
             AssertTrueIsDisplayed(checklistDirectSaleRoadClosureTitle);
             AssertTrueIsDisplayed(checklistDirectSaleRoadClosure1Label);
@@ -269,7 +264,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(checklistFileInitiationTitle);
             AssertTrueIsDisplayed(checklistFileInitiation1Label);
             AssertTrueIsDisplayed(checklistFileInitiationItem1Select);
-            AssertTrueIsDisplayed(checklistFileInitiation2LabelLabel);
+            AssertTrueIsDisplayed(checklistFileInitiation2Label);
             AssertTrueIsDisplayed(checklistFileInitiationItem2Select);
             AssertTrueIsDisplayed(checklistFileInitiation3Label);
             AssertTrueIsDisplayed(checklistFileInitiationItem3Select);
@@ -352,7 +347,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(checklistFileInitiationTitle);
             AssertTrueIsDisplayed(checklistFileInitiation1Label);
             AssertTrueContentEquals(checklistFileInitiation1Content, checklist.FileInitiationSelect1);
-            AssertTrueIsDisplayed(checklistFileInitiation2LabelLabel);
+            AssertTrueIsDisplayed(checklistFileInitiation2Label);
             AssertTrueContentEquals(checklistFileInitiation2Content, checklist.FileInitiationSelect2);
             AssertTrueIsDisplayed(checklistFileInitiation3Label);
             AssertTrueContentEquals(checklistFileInitiation3Content, checklist.FileInitiationSelect3);
@@ -436,86 +431,86 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateChecklist(DispositionFileChecklist checklist)
         {
-            Wait();
+            WaitUntilClickable(checklistFileInitiationItem1Select);
 
             if (checklist.FileInitiationSelect1 != "")
-                ChooseSpecificSelectOption(checklistFileInitiationItem1Select, checklist.FileInitiationSelect1);
+                ChooseSelectOption(checklistFileInitiationItem1Select, checklist.FileInitiationSelect1);
             if (checklist.FileInitiationSelect2 != "")
-                ChooseSpecificSelectOption(checklistFileInitiationItem2Select, checklist.FileInitiationSelect2);
+                ChooseSelectOption(checklistFileInitiationItem2Select, checklist.FileInitiationSelect2);
             if (checklist.FileInitiationSelect3 != "")
-                ChooseSpecificSelectOption(checklistFileInitiationItem3Select, checklist.FileInitiationSelect3);
+                ChooseSelectOption(checklistFileInitiationItem3Select, checklist.FileInitiationSelect3);
             if (checklist.FileInitiationSelect4 != "")
-                ChooseSpecificSelectOption(checklistFileInitiationItem4Select, checklist.FileInitiationSelect4);
+                ChooseSelectOption(checklistFileInitiationItem4Select, checklist.FileInitiationSelect4);
 
             if (checklist.DispositionPreparationSelect1 != "")
-                ChooseSpecificSelectOption(checklistDispositionPreparationItem1Select, checklist.DispositionPreparationSelect1);
+                ChooseSelectOption(checklistDispositionPreparationItem1Select, checklist.DispositionPreparationSelect1);
             if (checklist.DispositionPreparationSelect2 != "")
-                ChooseSpecificSelectOption(checklistDispositionPreparationItem2Select, checklist.DispositionPreparationSelect2);
+                ChooseSelectOption(checklistDispositionPreparationItem2Select, checklist.DispositionPreparationSelect2);
             if (checklist.DispositionPreparationSelect3 != "")
-                ChooseSpecificSelectOption(checklistDispositionPreparationItem3Select, checklist.DispositionPreparationSelect3);
+                ChooseSelectOption(checklistDispositionPreparationItem3Select, checklist.DispositionPreparationSelect3);
             if (checklist.DispositionPreparationSelect4 != "")
-                ChooseSpecificSelectOption(checklistDispositionPreparationItem4Select, checklist.DispositionPreparationSelect4);
+                ChooseSelectOption(checklistDispositionPreparationItem4Select, checklist.DispositionPreparationSelect4);
 
             if (checklist.ReferralsAndConsultationsSelect1 != "")
-                ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem1Select, checklist.ReferralsAndConsultationsSelect1);
+                ChooseSelectOption(checklistReferralsAndConsultationsItem1Select, checklist.ReferralsAndConsultationsSelect1);
             if (checklist.ReferralsAndConsultationsSelect2 != "")
-                ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem2Select, checklist.ReferralsAndConsultationsSelect2);
+                ChooseSelectOption(checklistReferralsAndConsultationsItem2Select, checklist.ReferralsAndConsultationsSelect2);
             if (checklist.ReferralsAndConsultationsSelect3 != "")
-                ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem3Select, checklist.ReferralsAndConsultationsSelect3);
+                ChooseSelectOption(checklistReferralsAndConsultationsItem3Select, checklist.ReferralsAndConsultationsSelect3);
             if (checklist.ReferralsAndConsultationsSelect4 != "")
-                ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem4Select, checklist.ReferralsAndConsultationsSelect4);
+                ChooseSelectOption(checklistReferralsAndConsultationsItem4Select, checklist.ReferralsAndConsultationsSelect4);
             if (checklist.ReferralsAndConsultationsSelect5 != "")
-                ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem5Select, checklist.ReferralsAndConsultationsSelect5);
+                ChooseSelectOption(checklistReferralsAndConsultationsItem5Select, checklist.ReferralsAndConsultationsSelect5);
             if (checklist.ReferralsAndConsultationsSelect6 != "")
-                ChooseSpecificSelectOption(checklistReferralsAndConsultationsItem6Select, checklist.ReferralsAndConsultationsSelect6);
+                ChooseSelectOption(checklistReferralsAndConsultationsItem6Select, checklist.ReferralsAndConsultationsSelect6);
 
             if (checklist.DirectSaleRoadClosureSelect1 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem1Select, checklist.DirectSaleRoadClosureSelect1);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem1Select, checklist.DirectSaleRoadClosureSelect1);
             if (checklist.DirectSaleRoadClosureSelect2 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem2Select, checklist.DirectSaleRoadClosureSelect2);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem2Select, checklist.DirectSaleRoadClosureSelect2);
             if (checklist.DirectSaleRoadClosureSelect3 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem3Select, checklist.DirectSaleRoadClosureSelect3);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem3Select, checklist.DirectSaleRoadClosureSelect3);
             if (checklist.DirectSaleRoadClosureSelect4 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem4Select, checklist.DirectSaleRoadClosureSelect4);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem4Select, checklist.DirectSaleRoadClosureSelect4);
             if (checklist.DirectSaleRoadClosureSelect5 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem5Select, checklist.DirectSaleRoadClosureSelect5);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem5Select, checklist.DirectSaleRoadClosureSelect5);
             if (checklist.DirectSaleRoadClosureSelect6 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem6Select, checklist.DirectSaleRoadClosureSelect6);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem6Select, checklist.DirectSaleRoadClosureSelect6);
             if (checklist.DirectSaleRoadClosureSelect7 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem7Select, checklist.DirectSaleRoadClosureSelect7);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem7Select, checklist.DirectSaleRoadClosureSelect7);
             if (checklist.DirectSaleRoadClosureSelect8 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem8Select, checklist.DirectSaleRoadClosureSelect8);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem8Select, checklist.DirectSaleRoadClosureSelect8);
             if (checklist.DirectSaleRoadClosureSelect9 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem9Select, checklist.DirectSaleRoadClosureSelect9);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem9Select, checklist.DirectSaleRoadClosureSelect9);
             if (checklist.DirectSaleRoadClosureSelect10 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem10Select, checklist.DirectSaleRoadClosureSelect10);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem10Select, checklist.DirectSaleRoadClosureSelect10);
             if (checklist.DirectSaleRoadClosureSelect11 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem11Select, checklist.DirectSaleRoadClosureSelect11);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem11Select, checklist.DirectSaleRoadClosureSelect11);
             if (checklist.DirectSaleRoadClosureSelect12 != "")
-                ChooseSpecificSelectOption(checklistDirectSaleRoadClosureItem12Select, checklist.DirectSaleRoadClosureSelect12);
+                ChooseSelectOption(checklistDirectSaleRoadClosureItem12Select, checklist.DirectSaleRoadClosureSelect12);
 
             if (checklist.SaleInformationSelect1 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem1Select, checklist.SaleInformationSelect1);
+                ChooseSelectOption(checklistSaleInformationItem1Select, checklist.SaleInformationSelect1);
             if (checklist.SaleInformationSelect2 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem2Select, checklist.SaleInformationSelect2);
+                ChooseSelectOption(checklistSaleInformationItem2Select, checklist.SaleInformationSelect2);
             if (checklist.SaleInformationSelect3 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem3Select, checklist.SaleInformationSelect3);
+                ChooseSelectOption(checklistSaleInformationItem3Select, checklist.SaleInformationSelect3);
             if (checklist.SaleInformationSelect4 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem4Select, checklist.SaleInformationSelect4);
+                ChooseSelectOption(checklistSaleInformationItem4Select, checklist.SaleInformationSelect4);
             if (checklist.SaleInformationSelect5 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem5Select, checklist.SaleInformationSelect5);
+                ChooseSelectOption(checklistSaleInformationItem5Select, checklist.SaleInformationSelect5);
             if (checklist.SaleInformationSelect6 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem6Select, checklist.SaleInformationSelect6);
+                ChooseSelectOption(checklistSaleInformationItem6Select, checklist.SaleInformationSelect6);
             if (checklist.SaleInformationSelect7 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem7Select, checklist.SaleInformationSelect7);
+                ChooseSelectOption(checklistSaleInformationItem7Select, checklist.SaleInformationSelect7);
             if (checklist.SaleInformationSelect8 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem8Select, checklist.SaleInformationSelect8);
+                ChooseSelectOption(checklistSaleInformationItem8Select, checklist.SaleInformationSelect8);
             if (checklist.SaleInformationSelect9 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem9Select, checklist.SaleInformationSelect9);
+                ChooseSelectOption(checklistSaleInformationItem9Select, checklist.SaleInformationSelect9);
             if (checklist.SaleInformationSelect10 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem10Select, checklist.SaleInformationSelect10);
+                ChooseSelectOption(checklistSaleInformationItem10Select, checklist.SaleInformationSelect10);
             if (checklist.SaleInformationSelect11 != "")
-                ChooseSpecificSelectOption(checklistSaleInformationItem11Select, checklist.SaleInformationSelect11);
+                ChooseSelectOption(checklistSaleInformationItem11Select, checklist.SaleInformationSelect11);
         }
     }
 }

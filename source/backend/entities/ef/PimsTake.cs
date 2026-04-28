@@ -281,6 +281,9 @@ public partial class PimsTake
     [InverseProperty("PimsTakes")]
     public virtual PimsLandActType LandActTypeCodeNavigation { get; set; }
 
+    [InverseProperty("Take")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
+
     [ForeignKey("PropertyAcquisitionFileId")]
     [InverseProperty("PimsTakes")]
     public virtual PimsPropertyAcquisitionFile PropertyAcquisitionFile { get; set; }

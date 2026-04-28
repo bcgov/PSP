@@ -682,59 +682,60 @@ exports[`Management List View > matches snapshot 1`] = `
                     class="row"
                   >
                     <div
-                      class="col-6"
+                      class="col-12"
                     >
                       <div
-                        class="required d-flex form-group"
+                        class="form-group"
                       >
-                        <select
-                          class="form-select form-control"
-                          id="input-regionCode"
-                          name="regionCode"
-                          required=""
-                        >
-                          <option
-                            value=""
-                          >
-                            Select region...
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-1"
-                            value="1"
-                          >
-                            South Coast Region
-                          </option>
-                        </select>
-                      </div>
-                    </div>
-                    <div
-                      class="col-6"
-                      style="text-align: left;"
-                    >
-                      <div
-                        class="c10 form-group"
-                      >
-                        <div
-                          class="check-field"
-                        >
+                        <div>
                           <div
-                            class="form-check"
+                            class="multiselect-container multiSelectContainer  "
+                            id="multiselect-regions"
+                            style="width: auto; color: black;"
                           >
-                            <input
-                              class="form-check-input position-static"
-                              id="input-hasNoticeOfClaim"
-                              name="hasNoticeOfClaim"
-                              type="checkbox"
-                              value="false"
-                            />
+                            <div
+                              class="search-wrapper searchWrapper "
+                              style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                            >
+                              <input
+                                autocomplete="off"
+                                class="searchBox "
+                                id="multiselect-regions_input"
+                                name="search_name_input"
+                                placeholder="Select Region(s)"
+                                type="text"
+                                value=""
+                              />
+                            </div>
+                            <div
+                              class="optionListContainer displayNone"
+                            >
+                              <ul
+                                class="optionContainer"
+                              >
+                                <li
+                                  class="option  highlightOption highlight  "
+                                >
+                                  South Coast Region
+                                </li>
+                                <li
+                                  class="option    "
+                                >
+                                  Southern Interior Region
+                                </li>
+                                <li
+                                  class="option    "
+                                >
+                                  Northern Region
+                                </li>
+                                <li
+                                  class="option    "
+                                >
+                                  Cannot determine
+                                </li>
+                              </ul>
+                            </div>
                           </div>
-                          <label
-                            class="text-wrap form-label"
-                            for="input-hasNoticeOfClaim"
-                          >
-                            File has NOC
-                          </label>
                         </div>
                       </div>
                     </div>
@@ -822,6 +823,40 @@ exports[`Management List View > matches snapshot 1`] = `
                           title=""
                           value=""
                         />
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-6"
+                      style="text-align: left;"
+                    >
+                      <div
+                        class="c10 form-group"
+                      >
+                        <div
+                          class="check-field"
+                        >
+                          <div
+                            class="form-check"
+                          >
+                            <input
+                              class="form-check-input position-static"
+                              id="input-hasNoticeOfClaim"
+                              name="hasNoticeOfClaim"
+                              type="checkbox"
+                              value="false"
+                            />
+                          </div>
+                          <label
+                            class="text-wrap form-label"
+                            for="input-hasNoticeOfClaim"
+                          >
+                            File has NOC
+                          </label>
+                        </div>
                       </div>
                     </div>
                   </div>
@@ -914,12 +949,12 @@ exports[`Management List View > matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
-                Management file #
+                Mgmt. file #
                 <div
                   class="c13"
                   data-testid="sort-column-managementFileId"
@@ -1018,12 +1053,12 @@ exports[`Management List View > matches snapshot 1`] = `
               class="th"
               colspan="1"
               role="columnheader"
-              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             >
               <div
                 class="sortable-column"
               >
-                Historical File #
+                Historical file #
                 <div
                   class="c13"
                   data-testid="sort-column-legacyFileNum"
@@ -1127,7 +1162,7 @@ exports[`Management List View > matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Team member
+                Team members
               </div>
             </div>
             <div
@@ -1139,7 +1174,7 @@ exports[`Management List View > matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Civic Address / PID / PIN
+                Civic address / PID / PIN
               </div>
             </div>
             <div
@@ -1205,7 +1240,7 @@ exports[`Management List View > matches snapshot 1`] = `
               <div
                 class="td clickable"
                 role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 <a
@@ -1214,7 +1249,7 @@ exports[`Management List View > matches snapshot 1`] = `
                   rel="noopener noreferrer"
                   target="_blank"
                 >
-                  M-1
+                  FILE_NUMBER 3A8F46B
                   <svg
                     fill="currentColor"
                     height="1em"
@@ -1247,7 +1282,7 @@ exports[`Management List View > matches snapshot 1`] = `
               <div
                 class="td clickable"
                 role="cell"
-                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+                style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
                 title=""
               >
                 legacyfile321

@@ -13,6 +13,7 @@ namespace Pims.Api.Models.Concepts.ManagementFile
             config.NewConfig<Entity.PimsManagementFile, ManagementFileModel>()
                 .PreserveReference(true)
                 .Map(dest => dest.Id, src => src.ManagementFileId)
+                .Map(dest => dest.FileNumber, src => $"M-{src.ManagementFileId}")
                 .Map(dest => dest.FileName, src => src.FileName)
                 .Map(dest => dest.AdditionalDetails, src => src.AdditionalDetails)
                 .Map(dest => dest.FilePurpose, src => src.FilePurpose)

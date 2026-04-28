@@ -9,7 +9,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
     public class DigitalDocumentSteps
     {
         private readonly DigitalDocuments digitalDocumentsTab;
-        private readonly SharedPagination sharedPagination;
         private readonly ManagementDetails managementFilesDetails;
         private readonly IEnumerable<DocumentFile> documentFiles;
         private int documentsRowStart;
@@ -20,7 +19,6 @@ namespace PIMS.Tests.Automation.StepDefinitions
         public DigitalDocumentSteps(IWebDriver driver)
         {
             digitalDocumentsTab = new DigitalDocuments(driver);
-            sharedPagination = new SharedPagination(driver);
             managementFilesDetails = new ManagementDetails(driver);
             documentFiles = UploadFileDocuments();
             documentsRowStart = 0;
@@ -230,19 +228,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
             var document2 = documentFiles.ElementAt(index2);
 
             digitalDocumentsTab.UploadDocument(document2.Url);
-            
+
             //Cancel uploading a new document
             digitalDocumentsTab.CancelDigitalDocument();
 
             //Edit digital document's details
             digitalDocumentsTab.NavigateToFirstPageDocumentsTable();
-
-            //Disable Order by Document's type
-            if (fileType != "Lease")
-            {
-                digitalDocumentsTab.OrderByDocumentFileType();
-                digitalDocumentsTab.OrderByDocumentFileType();
-            }
 
             //Pick 1st available digital document
             digitalDocumentsTab.View1stDocument();
@@ -263,6 +254,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.SaveEditDigitalDocument();
 
             //Verify Details View Form
+            digitalDocumentsTab.FilterByType(digitalDocumentList[0].DocumentType);
             digitalDocumentsTab.View1stDocument();
             digitalDocumentsTab.VerifyDocumentDetailsViewForm(digitalDocumentList[0]);
 
@@ -270,16 +262,17 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.CloseDigitalDocumentViewDetails();
 
             //Verify Pagination Elements
+            digitalDocumentsTab.ResetFilters();
             digitalDocumentsTab.VerifyPaginationElements();
 
             //Verify Pagination Functionality
-            sharedPagination.ChoosePaginationOption(5);
+            digitalDocumentsTab.ChoosePaginationOption(5);
             Assert.Equal(5, digitalDocumentsTab.DigitalDocumentsTableResultNumber());
 
-            sharedPagination.ChoosePaginationOption(10);
+            digitalDocumentsTab.ChoosePaginationOption(10);
             Assert.True(digitalDocumentsTab.DigitalDocumentsTableResultNumber() <= 10);
 
-            sharedPagination.ChoosePaginationOption(20);
+            digitalDocumentsTab.ChoosePaginationOption(20);
             Assert.True(digitalDocumentsTab.DigitalDocumentsTableResultNumber() <= 20);
 
             //Verify Column Sorting by Document Type
@@ -375,13 +368,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             digitalDocumentsTab.VerifyPaginationElements();
 
             //Verify Pagination Functionality
-            sharedPagination.ChoosePaginationOption(5);
+            digitalDocumentsTab.ChoosePaginationOption(5);
             Assert.Equal(5, digitalDocumentsTab.DigitalDocumentsTableResultNumber());
 
-            sharedPagination.ChoosePaginationOption(10);
+            digitalDocumentsTab.ChoosePaginationOption(10);
             Assert.True(digitalDocumentsTab.DigitalDocumentsTableResultNumber() <= 10);
 
-            sharedPagination.ChoosePaginationOption(20);
+            digitalDocumentsTab.ChoosePaginationOption(20);
             Assert.True(digitalDocumentsTab.DigitalDocumentsTableResultNumber() <= 20);
 
             //Verify Column Sorting by Document Type

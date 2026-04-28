@@ -37,8 +37,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchPropertySearchBttn = By.Id("search-button");
         private readonly By searchPropertyResetBttn = By.Id("reset-button");
 
-        private readonly By searchPropertyPOINameOptionList = By.CssSelector("input[data-testid='geographic-name-input']");
-        private readonly By searchPropertyPOINameFirstOption = By.XPath("//input[@data-testid='geographic-name-input']/following-sibling::ul/li[1]");
+        private readonly By searchPropertyPOINameFirstOption = By.CssSelector("div[data-placement='bottom-start'] ul[class='suggestionList'] li:first-child");
 
         private readonly By searchPropertyProjectInput = By.Id("typeahead-project");
         private readonly By searchProject1stOption = By.CssSelector("div[id='typeahead-project'] a");
@@ -54,10 +53,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By search1stPMBCResultCreateLeaseOption = By.CssSelector("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Lease File']");
         private readonly By search1stPMBCResultCreateDispositionOption = By.CssSelector("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Create Disposition File']");
         private readonly By search1stPMBCResultAddToFileOption = By.CssSelector("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Add to Open File']");
-        private readonly By quickInfoCloseModalBttn = By.CssSelector("div[data-testid='quick-info-header'] *[data-testid='close-icon']");
 
         private readonly By search1stPIMSResult = By.XPath("//div[text()='Results (PIMS)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[1]/div");
-        private readonly By search1stPIMSResultEllipsisBttn = By.XPath("//div[text()='Results (PIMS)']/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div/div[@data-testid='search-property-0']/div[2]/div/div/button");
 
         private readonly By searchPropertyMoreOptionsBttn = By.CssSelector("button[data-testid='quick-info-more-options']");
         private readonly By searchPropertyAddToFileOption = By.CssSelector("div[aria-labelledby='dropdown-ellipsis'] a[aria-label='Add to Open File']");
@@ -68,29 +65,29 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By searchPropertyFoundLocationPin = By.CssSelector("div[class='leaflet-pane leaflet-marker-pane'] img:first-child");
 
         //Properties List View Elements
-        private readonly By searchPropertyViewByInput = By.Id("properties-selector_input");
-        private readonly By searchPropertyViewByInputOptions = By.CssSelector("ul[class='optionContainer']");
-        private readonly By searchPropertyViewByFirstOption = By.CssSelector("ul[class='optionContainer'] li:nth-child(1)");
-
         private readonly By searchPropertyListViewTitle = By.XPath("//h3[contains(text(),'PIMS Property Search')]");
-        private readonly By searchPropertyViewByLabel = By.XPath("//div/strong[contains(text(),'Search by')]");
+        private readonly By searchPropertyViewByLabel = By.XPath("//label[contains(text(),'Search By')]");
 
-        private readonly By searchPropertyListViewOwnershipLabel = By.XPath("//label(text()='Ownership:')");
-        private readonly By searchPropertyListViewOwnershipInput = By.Id("ownership-selector_input");
-        private readonly By searchPropertyListViewTenureCleanupLabel = By.XPath("//label(text()='Tenure Cleanup:')");
+        private readonly By searchPropertyListViewOwnershipLabel = By.XPath("//label[text()='Ownership']");
+        private readonly By searchPropertyListViewOwnershipInput = By.Id("ownership-selector");
+        private readonly By searchPropertyListOwnershipOptions = By.CssSelector("div[id='ownership-selector'] div[class='optionListContainer displayBlock']");
+        private readonly By searchPropertyOwnershipFirstOption = By.CssSelector("div[id='ownership-selector'] div[class='optionListContainer displayBlock'] ul[class='optionContainer'] li:nth-child(1)");
+        private readonly By searchPropertyOwnershipDeleteBttns = By.CssSelector("div[id='ownership-selector'] i[class='custom-close']");
+
+        private readonly By searchPropertyListViewTenureCleanupLabel = By.XPath("//label[text()='Tenure Cleanup']");
         private readonly By searchPropertyListViewTenureCleanupInput = By.Id("tenure-cleanup-selector_input");
 
         private readonly By searchPropertyListHeaderPid = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'PID')]");
         private readonly By searchPropertyListHeaderPin = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'PIN')]");
-        private readonly By searchPropertyListHeaderHistoricalFile = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Historical File')]");
-        private readonly By searchPropertyListHeaderAddress = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic Address')]");
+        private readonly By searchPropertyListHeaderHistoricalFile = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Historical file')]");
+        private readonly By searchPropertyListHeaderAddress = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Civic address')]");
         private readonly By searchPropertyListHeaderLocation = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Location')]");
         private readonly By searchPropertyListLocationSortBttn = By.CssSelector("div[data-testid='sort-column-Location']");
-        private readonly By searchPropertyListHeaderLotSize = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Lot Size')]");
-        private readonly By searchPropertyListLotSizeSortBttn = By.CssSelector("div[data-testid='sort-column-Lot Size (in ha)']");
+        private readonly By searchPropertyListHeaderLotSize = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Lot size')]");
+        private readonly By searchPropertyListLotSizeSortBttn = By.XPath("//div[contains(text(),'Lot size')]/div");
         private readonly By searchPropertyListHeaderOwnership = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Ownership')]");
         private readonly By searchPropertyListOwnershipSortBttn = By.CssSelector("div[data-testid='sort-column-Ownership']");
-        private readonly By searchPropertyListHeaderTenureCleanup = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Tenure Cleanup')]");
+        private readonly By searchPropertyListHeaderTenureCleanup = By.XPath("//div[@data-testid='propertiesTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Tenure cleanup')]");
         private readonly By searchPropertyListContent = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']");
         private readonly By searchPropertyListContent1stProp = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child");
         private readonly By searchPropertyListContent1stPID = By.CssSelector("div[data-testid='propertiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(1)");
@@ -114,7 +111,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToHomePage()
         {
-            Wait();
+            WaitUntilClickable(homePageBttn);
             webDriver.FindElement(homePageBttn).Click();
         }
 
@@ -125,53 +122,52 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (PID != "")
             {
-                ChooseSpecificSelectOption(searchPropertyTypeSelect, "PID");
+                ChooseSelectOption(searchPropertyTypeSelect, "PID");
                 ClearInput(searchPropertyByPIDInput);
                 webDriver.FindElement(searchPropertyByPIDInput).SendKeys(PID);
             }
 
             if (PIN != "")
             {
-                ChooseSpecificSelectOption(searchPropertyTypeSelect, "PIN");
+                ChooseSelectOption(searchPropertyTypeSelect, "PIN");
                 ClearInput(searchPropertyByPINInput);
                 webDriver.FindElement(searchPropertyByPINInput).SendKeys(PIN);
             }
 
             if (address != "")
             {
-                ChooseSpecificSelectOption(searchPropertyTypeSelect, "Address");
+                ChooseSelectOption(searchPropertyTypeSelect, "Address");
                 webDriver.FindElement(searchPropertyByAddressInput).SendKeys(address);
 
-                WaitUntilVisible(searchPropertyAddressSuggestionsGroup);
-                FocusAndClick(searchPropertyAddressSuggestions1stOption);
+                Wait();
+                SafeClick(searchPropertyAddressSuggestions1stOption);
             }
 
             if (plan != "")
             {
-                ChooseSpecificSelectOption(searchPropertyTypeSelect, "Plan #");
+                ChooseSelectOption(searchPropertyTypeSelect, "Plan #");
                 webDriver.FindElement(searchPropertyByPlanInput).SendKeys(plan);
             }
 
             if (historicFile != "")
             {
-                ChooseSpecificSelectOption(searchPropertyTypeSelect, "Historical File #");
+                ChooseSelectOption(searchPropertyTypeSelect, "Historical File #");
                 webDriver.FindElement(searchPropertyByHistoricalFileInput).SendKeys(historicFile);
                 
             }
 
             if (POIName != "")
             {
-                ChooseSpecificSelectOption(searchPropertyTypeSelect, "POI Name");
+                ChooseSelectOption(searchPropertyTypeSelect, "POI Name");
                 webDriver.FindElement(searchPropertyByPOINameInput).SendKeys(POIName);
 
-                Wait();
                 WaitUntilVisible(searchPropertyPOINameFirstOption);
                 webDriver.FindElement(searchPropertyPOINameFirstOption).Click();
             }
 
             if (coordinates != null)
             {
-                ChooseSpecificSelectOption(searchPropertyTypeSelect, "Lat/Long");
+                ChooseSelectOption(searchPropertyTypeSelect, "Lat/Long");
 
                 webDriver.FindElement(searchPropertyByLatDegreesInput).SendKeys(coordinates.LatitudeDegree);
                 webDriver.FindElement(searchPropertyByLatMinsInput).SendKeys(coordinates.LatitudeMinutes);
@@ -186,8 +182,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (surveyParcel != null)
             {
-                ChooseSpecificSelectOption(searchPropertyTypeSelect, "Survey Parcel");
-                ChooseSpecificSelectOption(searchSurveyDistricSelect, surveyParcel.District);
+                ChooseSelectOption(searchPropertyTypeSelect, "Survey Parcel");
+                ChooseSelectOption(searchSurveyDistricSelect, surveyParcel.District);
                 webDriver.FindElement(searchSurveySectionInput).SendKeys(surveyParcel.Section);
                 webDriver.FindElement(searchSurveyTownshipInput).SendKeys(surveyParcel.Township);
                 webDriver.FindElement(searchSurveyRangeInput).SendKeys(surveyParcel.Range);
@@ -195,17 +191,17 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (project != "")
             {
-                ChooseSpecificSelectOption(searchPropertyTypeSelect, "Project");
+                ChooseSelectOption(searchPropertyTypeSelect, "Project");
 
                 webDriver.FindElement(searchPropertyProjectInput).SendKeys(project);
                 webDriver.FindElement(searchPropertyProjectInput).SendKeys(Keys.Space);
                 webDriver.FindElement(searchPropertyProjectInput).SendKeys(Keys.Backspace);
 
-                Wait();
+                WaitUntilClickable(searchProject1stOption);
                 FocusAndClick(searchProject1stOption);
             }
-            
-            webDriver.FindElement(searchPropertySearchBttn).Click();
+
+            SafeClick(searchPropertySearchBttn);
             WaitUntilSpinnerDisappear();
         }
 
@@ -214,26 +210,23 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
 
             WaitUntilClickable(searchPropertyTypeSelect);
-            ChooseSpecificSelectOption(searchPropertyTypeSelect, "Address");
+            ChooseSelectOption(searchPropertyTypeSelect, "Address");
             webDriver.FindElement(searchPropertyByAddressInput).SendKeys(address);
 
             webDriver.FindElement(searchPropertySearchBttn).Click();
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
         }
 
-        public void IncludeAllPropertyOwnershipSearch()
+        public void SelectOwnershipSearch(string ownership)
         {
-            Wait();
-            webDriver.FindElement(searchPropertyViewByInput).Click();
+            while (webDriver.FindElements(searchPropertyOwnershipDeleteBttns).Count > 0)
+                webDriver.FindElements(searchPropertyOwnershipDeleteBttns)[0].Click();
 
-            WaitUntilVisible(searchPropertyViewByInputOptions);
-            while (webDriver.FindElements(searchPropertyViewByFirstOption).Count == 1)
-                webDriver.FindElement(searchPropertyViewByFirstOption).Click();
+            ChooseMultiSelectOption(searchPropertyListViewOwnershipInput, searchPropertyListOwnershipOptions, searchPropertyListHeaderAddress, ownership);
         }
 
         public void ResetPropertySearch()
         {
-            Wait();
             WaitUntilClickable(searchPropertyResetBttn);
             webDriver.FindElement(searchPropertyResetBttn).Click();
 
@@ -242,22 +235,21 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFound1stPropFromMap()
         {
-            Wait();
+            WaitUntilClickable(searchPropertyFoundLocationPin);
             webDriver.FindElement(searchPropertyFoundLocationPin).Click();
         }
 
         public void SelectFound1stPropAddToFile()
         {
-            Wait();
+            WaitUntilClickable(searchPropertyFoundLocationPin);
             FocusAndClick(searchPropertyFoundLocationPin);
 
-            Wait();
-            webDriver.FindElement(searchPropertyMoreOptionsBttn).Click();
+            WaitUntilClickable(searchPropertyMoreOptionsBttn);
+            SafeClick(searchPropertyMoreOptionsBttn);
 
             WaitUntilVisible(searchPropertyAddToFileOption);
             webDriver.FindElement(searchPropertyAddToFileOption).Click();
 
-            Wait();
             if (webDriver.FindElements(searchPropertyConfirmationModal).Count > 0 && sharedModals.ModalContent().Contains("You have selected a property not previously in the inventory"))
             {
                 Assert.Equal("Not inventory property", sharedModals.ModalHeader());
@@ -268,7 +260,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SelectFirstFoundPropertyList()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             webDriver.FindElement(searchPropertyListContent1stViewTabBttn).Click();
         }
 
@@ -277,8 +269,8 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             webDriver.FindElement(search1stPMBCResult).Click();
 
-            Wait();
-            FocusAndClick(searchInfoEllipsisBttn);
+            WaitUntilClickable(searchInfoEllipsisBttn);
+            SafeClick(searchInfoEllipsisBttn);
 
             switch (action)
             {
@@ -309,16 +301,15 @@ namespace PIMS.Tests.Automation.PageObjects
                 Assert.Contains("You have selected a property not previously in the inventory. Do you want to add this property to the lease?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
             }
-
-            Wait(10000);
-            webDriver.FindElement(quickInfoCloseModalBttn).Click();
         }
 
         public void SelectSecondPMBCResult(string action = "")
         {
             Wait();
-            Actions hoverAction = new(webDriver);
-            hoverAction.MoveToElement(webDriver.FindElement(search2ndPMBCResult)).MoveToElement(webDriver.FindElement(search2ndPMBCResultEllipsisBttn)).Click().Build().Perform();
+            webDriver.FindElement(search2ndPMBCResult).Click();
+
+            WaitUntilClickable(searchInfoEllipsisBttn);
+            SafeClick(searchInfoEllipsisBttn);
 
             switch (action)
             {
@@ -343,24 +334,14 @@ namespace PIMS.Tests.Automation.PageObjects
             }
         }
 
-        public void SelectFirstPIMSResultToFile()
-        {
-            Wait();
-            Actions action = new(webDriver);
-            action.MoveToElement(webDriver.FindElement(search1stPIMSResult)).MoveToElement(webDriver.FindElement(search1stPIMSResultEllipsisBttn)).Click().Build().Perform();
-            webDriver.FindElement(search1stPMBCResultAddToFileOption).Click();
-        }
-
         public void SelectFirstPIMSResult()
         {
-            Wait();
-            webDriver.FindElement(search1stPIMSResult).Click();
+           SafeClick(search1stPIMSResult);
         }
 
         public void NavigatePropertyListView()
         {
-            Wait(10000);
-            webDriver.FindElement(searchPropertyListViewBttn).Click();
+            SafeClick(searchPropertyListViewBttn);
         }
 
         public void ChooseFirstPropertyFromList()
@@ -389,25 +370,25 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string FirstPropertyPID()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchPropertyListContent1stPID).Text;
         }
 
         public string FirstPropertyLocation()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchPropertyListContent1stLocation).Text;
         }
 
         public string FirstPropertyLotSize()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchPropertyListContent1stLotSize).Text;
         }
 
         public string FirstPropertyOwnership()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchPropertyListContent1stOwnership).Text;
         }
 
@@ -452,33 +433,34 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int PropertiesPinMapFoundCount()
         {
-            Wait();
+            WaitUntilVisible(searchPropertyFoundLocationPin);
             return webDriver.FindElements(searchPropertyFoundLocationPin).Count;
         }
 
         public int PropertiesListFoundCount()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElements(searchPropertyListContent).Count();
         }
 
         public void NoPropertiesFound()
         {
-            Assert.True(sharedModals.ToastifyText() == "No search results found");
+            Assert.True(sharedModals.ToastifyMainText() == "No search results found");
         }
 
         public void DuplicatePropertyInserted()
         {
-            Wait();
-            webDriver.FindElement(search1stPMBCResult).Click();
+            WaitUntilClickable(search1stPMBCResult);
+            SafeClick(search1stPMBCResult);
+
+            WaitUntilClickable(searchInfoEllipsisBttn);
+            SafeClick(searchInfoEllipsisBttn);
+
+            WaitUntilClickable(search1stPMBCResultAddToFileOption);
+            SafeClick(search1stPMBCResultAddToFileOption);
 
             Wait();
-            FocusAndClick(searchInfoEllipsisBttn);
-
-            Wait();
-            webDriver.FindElement(search1stPMBCResultAddToFileOption).Click();
-
-            Assert.Equal("Skipped 1 duplicate property(s).", sharedModals.ToastifyText());
+            Assert.Equal("Skipped 1 duplicate property(s).", sharedModals.ToastifyMainText());
         }
     }
 }

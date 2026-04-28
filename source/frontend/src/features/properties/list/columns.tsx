@@ -68,7 +68,7 @@ export const columns = ({
     width: 7,
   },
   {
-    Header: 'Historical File #',
+    Header: 'Historical file #',
     align: 'left',
     clickable: false,
     sortable: false,
@@ -85,7 +85,7 @@ export const columns = ({
     },
   },
   {
-    Header: 'Civic Address',
+    Header: 'Civic address',
     accessor: p =>
       formatSplitAddress(
         p.streetAddress1,
@@ -119,7 +119,7 @@ export const columns = ({
     },
   },
   {
-    Header: 'Lot Size (in\u00A0ha)',
+    Header: 'Lot size (in\u00A0ha)',
     Cell: (props: CellProps<ApiGen_Concepts_PropertyView>) => {
       const landArea = props.row.original.landArea ?? 0;
       const landUnitCode = props.row.original.propertyAreaUnitTypeCode;
@@ -178,7 +178,7 @@ export const columns = ({
   {
     Header: () => (
       <>
-        Tenure Cleanup
+        Tenure cleanup
         <TooltipIcon
           toolTipId="tenureCleanupTooltip"
           toolTip="The results displayed in this column identify properties that have been flagged for tenure clean-up and should not be taken to be exhaustive as there may be other tenure clean-up issues otherwise not captured by the applied filter criteria"

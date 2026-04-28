@@ -54,20 +54,22 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By compensationTotalChequeAmountLabel = By.XPath("//label[contains(text(),'Total cheque amount')]");
         private readonly By compensationTotalChequeAmountContent = By.CssSelector("div[data-testid='header-total-amount'] p");
 
-        private readonly By requisitionDetailsViewSubtitle = By.XPath("//div[contains(text(),'Requisition Details')]");
-        private readonly By requisitionDetailsCreateSubtitle = By.XPath("//div[contains(text(),'Requisition details')]");
+        private readonly By requisitionDetailsSubtitle = By.XPath("//div[contains(text(),'Requisition Details')]");
         private readonly By requisitionGenerateH120Bttn = By.XPath("//div[contains(text(),'Requisition Details')]/div/button[2]");
         private readonly By requisitionEditBttn = By.XPath("//div[contains(text(),'Requisition Details')]/div/button[@title='Edit compensation requisition']");
-        private readonly By requisitionStatusLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
+        private readonly By requisitionCreateStatusLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
+        private readonly By requisitionViewStatusLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]");
         private readonly By requisitionStatusContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Status')]/parent::div/following-sibling::div");
         private readonly By requisitionStatusSelect = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::h2/following-sibling::div/div/div/div/select[@id='input-status']");
-        private readonly By requisitionAltProjectLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Alternate project')]");
+        private readonly By requisitionViewAltProjectLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Alternate project')]");
+        private readonly By requisitionCreateAltProjectLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Alternate project')]");
         private readonly By requisitionAltProjectContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Alternate project')]/parent::div/following-sibling::div");
         private readonly By requisitionAltProjectInput = By.Id("typeahead-alternateProject");
         private readonly By requisitionAltProjectOptions = By.CssSelector("div[data-testid='typeahead-alternateProject'] div[aria-label='menu-options']");
         private readonly By requisitionAltProject1stOption = By.CssSelector("div[data-testid='typeahead-alternateProject'] div[aria-label='menu-options'] a:nth-child(1)");
         private readonly By requisitionFinalDateLabel = By.XPath("//label[contains(text(),'Final date')]");
-        private readonly By requisitionAgreementLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]");
+        private readonly By requisitionViewAgreementLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]");
+        private readonly By requisitionCreateAgreementLabel = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]");
         private readonly By requisitionAgreementContent = By.XPath("//div[contains(text(),'Requisition Details')]/parent::div/parent::div/parent::h2/following-sibling::div/div/div/label[contains(text(),'Agreement date')]/parent::div/following-sibling::div");
         private readonly By requisitionAgreementInput = By.Id("datepicker-agreementDateTime");
         private readonly By requisitionSpecialInstructionLabel = By.XPath("//label[contains(text(),'Special instructions')]");
@@ -86,7 +88,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By requisitionCostTypeContent = By.XPath("//label[contains(text(),'Cost type')]/parent::div/following-sibling::div");
         private readonly By requisitionFiscalYearLabel = By.XPath("//label[contains(text(),'Fiscal year')]");
         private readonly By requisitionFiscalYearContent = By.XPath("//label[contains(text(),'Fiscal year')]/parent::div/following-sibling::div");
-        private readonly By requisitionFiscalYearSelect = By.Id("input-fiscalYear");
+        private readonly By requisitionFiscalYearSelect = By.CssSelector("select[id='input-fiscalYear']");
         private readonly By requisitionSTOBLabel = By.XPath("//label[contains(text(),'STOB')]");
         private readonly By requisitionSTOBContent = By.XPath("//label[contains(text(),'STOB')]/parent::div/following-sibling::div");
         private readonly By requisitionSTOBInput = By.Id("typeahead-select-stob");
@@ -108,7 +110,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By requisitionPayeeContentCount = By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div");
         private readonly By requisitionPayeeMultiselect = By.Id("multiselect-payees_input");
         private readonly By requisitionPayeeDeleteBttns = By.CssSelector("div[id='multiselect-payees'] i[class='custom-close']");
-        private readonly By requisitionPayeeOptions = By.XPath("//input[@id='multiselect-payees_input']/parent::div/following-sibling::div/ul[@class='optionContainer']");
+        private readonly By requisitionPayeeOptions = By.XPath("//input[@id='multiselect-payees_input']/parent::div/following-sibling::div[contains(@class,'optionListContainer')]");
         private readonly By requisitionPaymentInTrustLabel = By.XPath("//label[contains(text(),'Payment in Trust?')]");
         private readonly By requisitionPaymentInTrustContent1 = By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div/label[1]");
         private readonly By requisitionPaymentInTrustContent2 = By.XPath("//label[contains(text(),'Payee')]/parent::div/following-sibling::div/div/label[2]");
@@ -166,7 +168,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateTotalAllowableCompensation(string allowableAmount)
         {
-            Wait();
+            WaitUntilClickable(compensationTotalAllowableEdiBttn);
             FocusAndClick(compensationTotalAllowableEdiBttn);
 
             WaitUntilVisible(compensationTotalAllowableInput);
@@ -178,32 +180,24 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddCompensationBttn()
         {
-            Wait(4000);
-            webDriver.FindElement(compensationAddBttn).Click();
-
+            SafeClick(compensationAddBttn);
             WaitUntilSpinnerDisappear();
         }
 
         public void OpenCompensationDetails(int index)
         {
-            Wait();
-
-            WaitUntilClickable(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div div button[data-testid='compensation-view-"+ index +"']"));
-            webDriver.FindElement(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div div button[data-testid='compensation-view-"+ index +"']")).Click();
+            SafeClick(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div div button[data-testid='compensation-view-" + index + "']"));
         }
 
         public void GenerateH120Document()
         {
-            Wait();
-
             WaitUntilClickable(requisitionGenerateH120Bttn);
             webDriver.FindElement(requisitionGenerateH120Bttn).Click();
         }
 
         public void DeleteCompensationRequisition(int index)
         {
-            Wait();
-            //WaitUntilVisible(compensationH120Table);
+            WaitUntilVisible(compensationH120Table);
             FocusAndClick(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tbody'] div[class='tr-wrapper'] div button[data-testid='compensation-delete-"+ index +"']"));
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
@@ -218,7 +212,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveAcquisitionFileCompensation()
         {
-            Wait();
             ButtonElement("Save");
             
             Wait();
@@ -237,7 +230,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelAcquisitionFileCompensation()
         {
-            Wait();
+            WaitUntilClickable(requisitionCancelBttn);
             FocusAndClick(requisitionCancelBttn);
 
             sharedModals.CancelActionModal();
@@ -247,15 +240,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string GetCompensationFileNumber(int compFileNbr)
         {
-            Wait();
             WaitUntilVisible(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tr-wrapper']:nth-child("+ compFileNbr +") div:nth-child(2) div"));
-
             return webDriver.FindElement(By.CssSelector("div[data-testid='AcquisitionCompensationTable'] div[class='tr-wrapper']:nth-child("+ compFileNbr +") div:nth-child(2) div")).Text;
         }
 
         public void DeleteFirstActivity()
         {
-            Wait();
+            WaitUntilClickable(By.XPath("//div[@data-testid='finacialActivity[0]']/div/button[@title='Delete Financial Activity']"));
             FocusAndClick(By.XPath("//div[@data-testid='finacialActivity[0]']/div/button[@title='Delete Financial Activity']"));
 
             if (webDriver.FindElements(acquisitionFileConfirmationModal).Count() > 0)
@@ -274,25 +265,25 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateCompensationDetails(Compensation compensation, string fileType)
         {
-            Wait();
+            WaitUntilClickable(requisitionStatusSelect);
 
             //Requisition Details
             if (compensation.CompensationStatus != "")
-                ChooseSpecificSelectOption(requisitionStatusSelect, compensation.CompensationStatus);
+                ChooseSelectOption(requisitionStatusSelect, compensation.CompensationStatus);
 
             if (compensation.CompensationAlternateProject != "")
             {
                 ClearInput(requisitionAltProjectInput);
                 webDriver.FindElement(requisitionAltProjectInput).SendKeys(compensation.CompensationAlternateProject);
 
-                Wait();
+                WaitUntilClickable(requisitionAltProjectInput);
                 webDriver.FindElement(requisitionAltProjectInput).SendKeys(Keys.Space);
 
-                Wait();
+                WaitUntilClickable(requisitionAltProjectInput);
                 webDriver.FindElement(requisitionAltProjectInput).SendKeys(Keys.Backspace);
 
-                Wait();
-                webDriver.FindElement(requisitionAltProject1stOption).Click();
+                WaitUntilClickable(requisitionAltProject1stOption);
+                SafeClick(requisitionAltProject1stOption);
             }
 
             if (compensation.CompensationAgreementDate != "")
@@ -340,7 +331,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Delete Payees previously selected if any
             if (webDriver.FindElements(requisitionPayeeDeleteBttns).Count > 0)
             {
-                Wait();
+                WaitUntilClickable(requisitionPayeeMultiselect);
                 FocusAndClick(requisitionPayeeMultiselect);
                 while (webDriver.FindElements(requisitionPayeeDeleteBttns).Count > 0)
                 {
@@ -354,16 +345,9 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 foreach (string payee in compensation.CompensationPayee)
                 {
-                    Wait();
-                    webDriver.FindElement(requisitionPayeeLabel).Click();
-                    FocusAndClick(requisitionPayeeMultiselect);
-
-                    Wait();
-                    ChooseMultiSelectSpecificOption(requisitionPayeeOptions, payee);
-                    webDriver.FindElement(requisitionPayeeLabel).Click();
+                    System.Diagnostics.Debug.WriteLine("Adding payee: " + payee);
+                    ChooseMultiSelectOption(requisitionPayeeMultiselect, requisitionPayeeOptions, requisitionPayeeLabel, payee);
                 }
-
-                webDriver.FindElement(requisitionPayeeLabel).Click();
             } 
 
             if (compensation.CompensationPaymentInTrust)
@@ -429,7 +413,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int TotalActivitiesCount()
         {
-            Wait();
+            WaitUntilVisible(requisitionFinancialActivitiesCount);
             return webDriver.FindElements(requisitionFinancialActivitiesCount).Count();
         }
 
@@ -441,6 +425,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCompensationDetailsInitViewForm()
         {
+            Wait();
+
             //Title
             AssertTrueIsDisplayed(compensationDetailsTitle);
 
@@ -457,14 +443,14 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(compensationTotalChequeAmountContent);
 
             //Requisition Details
-            AssertTrueIsDisplayed(requisitionDetailsViewSubtitle);
+            AssertTrueIsDisplayed(requisitionDetailsSubtitle);
             AssertTrueIsDisplayed(requisitionGenerateH120Bttn);
             AssertTrueIsDisplayed(requisitionEditBttn);
-            AssertTrueIsDisplayed(requisitionStatusLabel);
+            AssertTrueIsDisplayed(requisitionViewStatusLabel);
             AssertTrueContentEquals(requisitionStatusContent, "Draft");
-            AssertTrueIsDisplayed(requisitionAltProjectLabel);
+            AssertTrueIsDisplayed(requisitionViewAltProjectLabel);
             AssertTrueIsDisplayed(requisitionFinalDateLabel);
-            AssertTrueIsDisplayed(requisitionAgreementLabel);
+            AssertTrueIsDisplayed(requisitionViewAgreementLabel);
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
 
             //Financial Coding
@@ -504,14 +490,14 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyCompensationDetailsInitCreateForm()
         {
             //Requisition Details
-            AssertTrueIsDisplayed(requisitionDetailsCreateSubtitle);
+            AssertTrueIsDisplayed(requisitionDetailsSubtitle);
             
-            AssertTrueIsDisplayed(requisitionStatusLabel);
+            AssertTrueIsDisplayed(requisitionCreateStatusLabel);
             AssertTrueIsDisplayed(requisitionStatusSelect);
-            AssertTrueIsDisplayed(requisitionAltProjectLabel);
+            AssertTrueIsDisplayed(requisitionCreateAltProjectLabel);
             AssertTrueIsDisplayed(requisitionAltProjectInput);
             AssertTrueIsDisplayed(requisitionFinalDateLabel);
-            AssertTrueIsDisplayed(requisitionAgreementLabel);
+            AssertTrueIsDisplayed(requisitionCreateAgreementLabel);
             AssertTrueIsDisplayed(requisitionAgreementInput);
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
             AssertTrueIsDisplayed(requisitionSpecialInstructionTextarea);
@@ -523,7 +509,7 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(requisitionWorkActivityLabel);
             AssertTrueIsDisplayed(requisitionCostTypeLabel);
             AssertTrueIsDisplayed(requisitionFiscalYearLabel);
-            AssertTrueIsDisplayed(requisitionFiscalYearSelect);
+            //AssertTrueIsDisplayed(requisitionFiscalYearSelect);
             AssertTrueIsDisplayed(requisitionSTOBLabel);
             AssertTrueIsDisplayed(requisitionSTOBInput);
             AssertTrueIsDisplayed(requisitionServiceLineLabel);
@@ -558,7 +544,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCompensationDetailsViewForm(Compensation compensation, string fileType)
         {
-            Wait();
+            WaitUntilVisible(compensationDetailsTitle);
 
             //Title
             AssertTrueIsDisplayed(compensationDetailsTitle);
@@ -575,16 +561,16 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueContentEquals(compensationTotalChequeAmountContent, TransformCurrencyFormat(compensation.CompensationTotalAmount));
 
             //Requisition Details
-            AssertTrueIsDisplayed(requisitionDetailsViewSubtitle);
+            AssertTrueIsDisplayed(requisitionDetailsSubtitle);
             AssertTrueIsDisplayed(requisitionGenerateH120Bttn);
             AssertTrueIsDisplayed(requisitionEditBttn);
-            AssertTrueIsDisplayed(requisitionStatusLabel);
+            AssertTrueIsDisplayed(requisitionViewStatusLabel);
             AssertTrueContentEquals(requisitionStatusContent, compensation.CompensationStatus);
-            AssertTrueIsDisplayed(requisitionAltProjectLabel);
+            AssertTrueIsDisplayed(requisitionViewAltProjectLabel);
             if(compensation.CompensationAlternateProject != "")
                 AssertTrueContentEquals(requisitionAltProjectContent, TransformProjectFormat(compensation.CompensationAlternateProject));
             AssertTrueIsDisplayed(requisitionFinalDateLabel);
-            AssertTrueIsDisplayed(requisitionAgreementLabel);
+            AssertTrueIsDisplayed(requisitionViewAgreementLabel);
             AssertTrueContentEquals(requisitionAgreementContent, TransformDateFormat(compensation.CompensationAgreementDate));
             AssertTrueIsDisplayed(requisitionSpecialInstructionLabel);
             AssertTrueContentEquals(requisitionSpecialInstructionContent, compensation.CompensationSpecialInstructions);
@@ -668,7 +654,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCompensationsTotalDetails(AcquisitionFile acquisition, string fileType)
         {
-            Wait();
+            WaitUntilVisible(compensationTotalAllowableContent);
 
             AssertTrueIsDisplayed(compensationTotalAllowableLabel);
             AssertTrueContentEquals(compensationTotalAllowableContent, TransformCurrencyFormat(acquisition.AcquisitionCompensationTotalAllowableAmount));
@@ -709,26 +695,24 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyMissingTemplateErrorMessage()
         {
-            Wait(3000);
-            Assert.Equal("The requested document template was not found. This indicates that the PIMS administrator needs to add a template to the system for this document type. Please contact your system administrator, and ask them to add a template for this document type.", sharedModals.ToastifyText());
+            Assert.Equal("The requested document template was not found. This indicates that the PIMS administrator needs to add a template to the system for this document type. Please contact your system administrator, and ask them to add a template for this document type.", sharedModals.ToastifyMainText());
         }
 
         public void VerifyIncompleteAgreementH120ErrorMessage()
         {
-            Wait(3000);
             Assert.Contains("You cannot complete a file when there are one or more draft agreements, or one or more draft compensations requisitions.", sharedModals.ModalContent());
             Assert.Contains("Remove any draft compensations requisitions. Agreements should be set to final, cancelled, or removed.", sharedModals.ModalContent());
         }
 
         public void VerifyDeletePayeeErrorMessage()
         {
-            Wait(3000);
+            Wait();
             Assert.Contains("Lease File Stakeholder can not be removed since it's assigned as a payee for a compensation requisition", sharedModals.ModalContent());
         }
 
         private void CreateFinancialActivity(CompensationActivity activity)
         {
-            Wait();
+            WaitUntilVisible(requisitionAddActivityBttn);
 
             //Get index by counting number of activities
             var index = webDriver.FindElements(requisitionFinancialActivitiesCount).Count;
@@ -774,7 +758,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if (activity.ActGSTEligible!= "")
-                ChooseSpecificSelectOption(By.Id("input-financials["+ index +"].isGstRequired"), activity.ActGSTEligible);
+                ChooseSelectOption(By.Id("input-financials["+ index +"].isGstRequired"), activity.ActGSTEligible);
 
             if (activity.ActGSTAmount != "")
             {

@@ -18,6 +18,11 @@ namespace Pims.Dal.Entities
         long PropertyId { get; set; }
 
         /// <summary>
+        /// Descriptive reference for the property associated with the file.
+        /// </summary>
+        public string PropertyName { get; set; }
+
+        /// <summary>
         /// Geo-spatial location (pin) of property.
         /// </summary>
         public Geometry Location { get; set; }

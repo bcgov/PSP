@@ -25,6 +25,7 @@ export interface IAgreementViewProps {
   loading: boolean;
   agreements: ApiGen_Concepts_Agreement[];
   isFileFinalStatus?: boolean;
+  isSection3?: boolean;
   onGenerate: (agreement: ApiGen_Concepts_Agreement) => void;
   onDelete: (agreementId: number) => void;
 }
@@ -33,6 +34,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
   loading,
   agreements,
   isFileFinalStatus,
+  isSection3,
   onGenerate,
   onDelete,
 }) => {
@@ -67,7 +69,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
             <Section
               header={
                 <StyledHeaderContainer>
-                  <div>{`Agreement ${++index}`}</div>
+                  <div>{`Agreement ${index + 1}`}</div>
                   <div>
                     {exists(agreement.agreementType) && (
                       <StyledButtonContainer>
@@ -77,6 +79,7 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
                           <>
                             <StyledAddButton
                               title="Download File"
+                              style={{ fontSize: '1.6rem' }}
                               onClick={() => {
                                 onGenerate(agreement);
                               }}
@@ -146,6 +149,26 @@ export const AgreementView: React.FunctionComponent<IAgreementViewProps> = ({
               <SectionField labelWidth={{ xs: 6 }} label="Agreement type">
                 {agreement.agreementType?.description}
               </SectionField>
+
+              {isSection3 && (
+                <>
+                  <SectionField
+                    labelWidth={{ xs: 6 }}
+                    label="Advance payment date"
+                    valueTestId={`agreement[${index}].advancePaymentDate`}
+                  >
+                    {prettyFormatDate(agreement.advancePaymentDate)}
+                  </SectionField>
+                  <SectionField
+                    labelWidth={{ xs: 6 }}
+                    label="Agreement signed date"
+                    valueTestId={`agreement[${index}].agreementSignedDate`}
+                  >
+                    {prettyFormatDate(agreement.agreementSignedDate)}
+                  </SectionField>
+                </>
+              )}
+
               <SectionField labelWidth={{ xs: 6 }} label="Agreement date">
                 {prettyFormatDate(agreement.agreementDate)}
               </SectionField>
@@ -212,7 +235,7 @@ function getAgreementFormName(agreementType: string | null): string {
     case ApiGen_CodeTypes_AgreementTypes.H0074:
       return 'H-0074';
     case ApiGen_CodeTypes_AgreementTypes.H179FSPART:
-      return 'H-179PFS';
+      return 'H-179 (FS-Part)';
     case ApiGen_CodeTypes_AgreementTypes.H179PTO:
       return 'H-179PTO';
     case ApiGen_CodeTypes_AgreementTypes.H179FS:

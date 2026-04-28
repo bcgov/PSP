@@ -14,6 +14,8 @@ export interface ApiGen_Concepts_Agreement extends ApiGen_Base_BaseConcurrent {
   fileId: number;
   agreementType: ApiGen_Base_CodeType<string> | null;
   agreementStatusType: ApiGen_Base_CodeType<string> | null;
+  advancePaymentDate: UtcIsoDate | null;
+  agreementSignedDate: UtcIsoDate | null;
   agreementDate: UtcIsoDate | null;
   isDraft: boolean | null;
   completionDate: UtcIsoDate | null;

@@ -42,6 +42,13 @@ When("I create a file from the worklist", async function () {
   await this.workLists.createFileWithProps();
 });
 
+When(
+  " I verify the Worklist view form for Property Strata Worklist",
+  async function () {
+    await this.worklists.verifyWorklistStrata();
+  }
+);
+
 Then("The Worklist section is rendered successfully", async function () {
   const propsAfterDelete = searchPropertiesData.TotalPropertiesCount - 1;
   await this.worklLists.verifyWorkListForm(propsAfterDelete);

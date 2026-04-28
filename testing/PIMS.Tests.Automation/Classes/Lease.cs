@@ -63,6 +63,7 @@
         public int RepresentativeNumber { get; set; } = 0;
         public int PropertyManagerNumber { get; set; } = 0;
         public int UnknownTenantNumber { get; set; } = 0;
+        public int OtherTenantNumber { get; set; } = 0;
         public int OwnerPayeeNumber { get; set; } = 0;
         public int OwnerRepresentativeNumber { get; set; } = 0;
         public List<Stakeholder> LeaseTenants { get; set; } = new List<Stakeholder>();

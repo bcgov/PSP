@@ -12,7 +12,7 @@ import { ApiGen_Concepts_NoticeOfClaim } from '@/models/api/generated/ApiGen_Con
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { applyDisplayOrder } from '@/utils';
 import { fromTypeCode, toNullableId, toTypeCodeNullable } from '@/utils/formUtils';
-import { exists, isValidId } from '@/utils/utils';
+import { exists, isValidId, isValidString } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ManagementTeamSubFormModel, WithManagementTeam } from './ManagementTeamSubFormModel';
@@ -50,6 +50,19 @@ export class ManagementFormModel implements WithManagementTeam {
     const sortedProperties = applyDisplayOrder(fileProperties);
     const personId = this.responsiblePayer?.personId ?? null;
     const organizationId = !personId ? this.responsiblePayer?.organizationId ?? null : null;
+    const noticeOfClaim: ApiGen_Concepts_NoticeOfClaim | null = this.noticeOfClaim
+      ? {
+          ...this.noticeOfClaim,
+          receivedDate: isValidString(this.noticeOfClaim?.receivedDate)
+            ? this.noticeOfClaim.receivedDate
+            : null,
+          comment: isValidString(this.noticeOfClaim?.comment?.trim())
+            ? this.noticeOfClaim.comment.trim()
+            : null,
+        }
+      : null;
+    const hasNoticeOfClaim =
+      isValidString(noticeOfClaim?.receivedDate) || isValidString(noticeOfClaim?.comment);
 
     return {
       id: this.id ?? 0,
@@ -81,7 +94,8 @@ export class ManagementFormModel implements WithManagementTeam {
         .filter(exists),
       fileProperties: sortedProperties ?? [],
       ...getEmptyBaseAudit(this.rowVersion),
-      noticeOfClaim: exists(this.noticeOfClaim) ? [this.noticeOfClaim] : [],
+      noticeOfClaim: hasNoticeOfClaim && noticeOfClaim ? [noticeOfClaim] : [],
+      ...getEmptyBaseAudit(this.rowVersion),
     };
   }
 

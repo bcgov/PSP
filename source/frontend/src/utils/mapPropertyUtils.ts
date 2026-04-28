@@ -82,6 +82,8 @@ export const getPropertyNameFromSelectedFeatureSet = (
   const planNumber = planFromFeatureSet(selectedFeature);
   const address = addressFromFeatureSet(selectedFeature);
   const location = selectedFeature.location;
+  const latitude = location?.lat ?? 0;
+  const longitude = location?.lng ?? 0;
 
   if (exists(pid) && pid?.toString()?.length > 0 && pid !== '0') {
     return { label: NameSourceType.PID, value: pidFormatter(pid.toString()) };
@@ -92,7 +94,7 @@ export const getPropertyNameFromSelectedFeatureSet = (
   } else if (exists(location?.lat) && exists(location?.lng)) {
     return {
       label: NameSourceType.LOCATION,
-      value: compact([location.lng?.toFixed(6), location.lat?.toFixed(6)]).join(', '),
+      value: compact([latitude.toFixed(6), longitude.toFixed(6)]).join(', '),
     };
   } else if (exists(address) && address?.length > 0) {
     return { label: NameSourceType.ADDRESS, value: address ?? '' };
@@ -167,7 +169,7 @@ export const getApiPropertyName = (
   } else if (exists(latitude) && exists(longitude)) {
     return {
       label: NameSourceType.LOCATION,
-      value: compact([longitude.toFixed(6), latitude.toFixed(6)]).join(', '),
+      value: compact([latitude.toFixed(6), longitude.toFixed(6)]).join(', '),
     };
   } else if (exists(address) && address?.length > 0) {
     return { label: NameSourceType.ADDRESS, value: address ?? '' };

@@ -1,6 +1,7 @@
 import isNumber from 'lodash/isNumber';
 
 import { SelectOption } from '@/components/common/form';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
 import { ApiGen_Concepts_ManagementFileTeam } from '@/models/api/generated/ApiGen_Concepts_ManagementFileTeam';
@@ -11,7 +12,6 @@ export class ManagementFilterModel {
   searchBy = 'address';
   pin = '';
   pid = '';
-  regionCode = '';
   address = '';
   managementTeamMember: SelectOption | null = null;
   managementFileStatusCode = '';
@@ -19,6 +19,12 @@ export class ManagementFilterModel {
   managementFilePurposeCode = '';
   projectNameOrNumber = '';
   hasNoticeOfClaim = false;
+  regions: MultiSelectOption[] = [];
+
+  constructor(initialRegions: MultiSelectOption[] = []) {
+    this.regions = initialRegions;
+    this.searchBy = 'address';
+  }
 
   toApi(): Api_ManagementFilter {
     const personMemberId =
@@ -34,13 +40,13 @@ export class ManagementFilterModel {
       searchBy: this.searchBy,
       pin: this.pin,
       pid: this.pid,
-      regionCode: this.regionCode,
       address: this.address,
       fileNameOrNumberOrReference: this.fileNameOrNumberOrReference,
       managementFileStatusCode: this.managementFileStatusCode,
       managementFilePurposeCode: this.managementFilePurposeCode,
       projectNameOrNumber: this.projectNameOrNumber,
       hasNoticeOfClaim: this.hasNoticeOfClaim,
+      regions: this.regions?.map(x => x.id) ?? [],
       // management team members
       teamMemberPersonId:
         personMemberId && isNumber(+personMemberId) ? Number(personMemberId) : null,
@@ -51,6 +57,7 @@ export class ManagementFilterModel {
   static fromApi(
     base: Api_ManagementFilter,
     teamMemberOptions: SelectOption[] = [],
+    userRegions: MultiSelectOption[],
   ): ManagementFilterModel {
     const newModel = new ManagementFilterModel();
     newModel.searchBy = base.searchBy ?? 'address';
@@ -62,6 +69,8 @@ export class ManagementFilterModel {
     newModel.managementFilePurposeCode = base.managementFilePurposeCode ?? '';
     newModel.projectNameOrNumber = base.projectNameOrNumber ?? '';
     newModel.hasNoticeOfClaim = base.hasNoticeOfClaim;
+    newModel.regions = userRegions ?? [];
+
     // management team members
     if (base.teamMemberPersonId) {
       newModel.managementTeamMember =

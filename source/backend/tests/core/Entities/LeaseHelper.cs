@@ -2,6 +2,7 @@ using System;
 using System.Linq;
 using Pims.Dal;
 using Pims.Dal.Entities;
+using Models = Pims.Api.Models.CodeTypes;
 
 namespace Pims.Core.Test
 {
@@ -15,7 +16,7 @@ namespace Pims.Core.Test
         /// </summary>
         /// <returns></returns>
         public static PimsLease CreateLease(int pid, int? pin = null, string lFileNo = null, string stakeholderFirstName = null, string stakeholderLastName = null, string motiFirstName = null, string motiLastName = null, PimsAddress address = null, bool addStakeholder = false, bool addProperty = true,
-            PimsLeaseProgramType pimsLeaseProgramType = null, PimsLeaseStatusType pimsLeaseStatusType = null, PimsLeasePayRvblType pimsLeasePayRvblType = null, PimsLeaseInitiatorType pimsLeaseInitiatorType = null, PimsLeaseResponsibilityType pimsLeaseResponsibilityType = null, PimsLeaseLicenseType pimsLeaseLicenseType = null, PimsRegion region = null, bool generateTypeIds = false)
+            PimsLeaseProgramType pimsLeaseProgramType = null, PimsLeaseStatusType pimsLeaseStatusType = null, string pimsLeasePayRvblType = null, PimsLeaseInitiatorType pimsLeaseInitiatorType = null, PimsLeaseResponsibilityType pimsLeaseResponsibilityType = null, PimsLeaseLicenseType pimsLeaseLicenseType = null, PimsRegion region = null, bool generateTypeIds = false)
         {
             var lease = new PimsLease()
             {
@@ -23,10 +24,13 @@ namespace Pims.Core.Test
                 LFileNo = lFileNo,
                 ConcurrencyControlNumber = 1,
             };
+
             var person = new PimsPerson() { FirstName = stakeholderFirstName ?? "first", Surname = stakeholderLastName ?? "last" };
             person.PimsPersonAddresses.Add(new PimsPersonAddress() { Person = person, Address = address, AddressUsageTypeCode = AddressUsageTypes.Mailing });
+
             var organization = new PimsOrganization() { OrganizationName = "Lease organization" };
             organization.PimsOrganizationAddresses.Add(new PimsOrganizationAddress() { Organization = organization, Address = address, AddressUsageTypeCode = AddressUsageTypes.Mailing });
+
             if (addProperty)
             {
                 lease.PimsPropertyLeases.Add(new PimsPropertyLease()
@@ -39,8 +43,9 @@ namespace Pims.Core.Test
             lease.LeaseProgramTypeCodeNavigation = pimsLeaseProgramType ?? new PimsLeaseProgramType() { Id = generateTypeIds ? Guid.NewGuid().ToString() : "testProgramType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
             lease.LeaseProgramTypeCode = "testProgramType";
             lease.LeaseStatusTypeCode = "testStatusType";
+            lease.LeasePayRvblTypeCode = pimsLeasePayRvblType ?? Models.LeasePaymentReceivableTypes.PYBLMOTI.ToString();
+
             lease.LeaseStatusTypeCodeNavigation = pimsLeaseStatusType ?? new PimsLeaseStatusType() { Id = generateTypeIds ? Guid.NewGuid().ToString() : "testStatusType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
-            lease.LeasePayRvblTypeCodeNavigation = pimsLeasePayRvblType ?? new PimsLeasePayRvblType() { Id = generateTypeIds ? Guid.NewGuid().ToString() : "testRvblType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
             lease.LeaseInitiatorTypeCodeNavigation = pimsLeaseInitiatorType ?? new PimsLeaseInitiatorType() { Id = generateTypeIds ? Guid.NewGuid().ToString() : "testInitiatorType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
             lease.LeaseResponsibilityTypeCodeNavigation = pimsLeaseResponsibilityType ?? new PimsLeaseResponsibilityType() { Id = generateTypeIds ? Guid.NewGuid().ToString() : "testResponsibilityType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
             lease.LeaseLicenseTypeCodeNavigation = pimsLeaseLicenseType ?? new PimsLeaseLicenseType() { Id = generateTypeIds ? Guid.NewGuid().ToString() : "testType", DbCreateUserid = "test", DbLastUpdateUserid = "test", Description = "desc" };
@@ -69,7 +74,7 @@ namespace Pims.Core.Test
             var leaseResponsibilityType = context.PimsLeaseResponsibilityTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease reponsibility type.");
             var leaseLicenseType = context.PimsLeaseLicenseTypes.FirstOrDefault() ?? throw new InvalidOperationException("Unable to find lease license type.");
 
-            var lease = CreateLease(pid, pin, lFileNo, stakeholderFirstName, stakeholderLastName, motiFirstName, motiLastName, address, addStakeholder, addProperty, programType, leaseStatusType, leasePayRvblType, leaseInitiatorType, leaseResponsibilityType, leaseLicenseType);
+            var lease = CreateLease(pid, pin, lFileNo, stakeholderFirstName, stakeholderLastName, motiFirstName, motiLastName, address, addStakeholder, addProperty, programType, leaseStatusType, leasePayRvblType.LeasePayRvblTypeCode, leaseInitiatorType, leaseResponsibilityType, leaseLicenseType);
             context.PimsLeases.Add(lease);
 
             return lease;

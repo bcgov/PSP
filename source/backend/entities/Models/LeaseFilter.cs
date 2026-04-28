@@ -90,22 +90,24 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         public int? LeaseTeamOrganizationId { get; set; }
 
-        public LeaseFilter(string lFileNo, string tenantName, string pid, string pin, string historical, int? leaseTeamPersonId, int? leaseTeamOrganizationId, string[] sort)
-        {
-            this.LFileNo = lFileNo;
-            this.TenantName = tenantName;
-            this.Pid = pid;
-            this.Pin = pin;
-            this.Historical = historical;
-            this.LeaseTeamPersonId = leaseTeamPersonId;
-            this.LeaseTeamOrganizationId = leaseTeamOrganizationId;
-            this.Sort = sort;
-        }
-
         /// <summary>
-        /// get/set - The region type.
+        /// get/set - The region types.
         /// </summary>
-        public int? RegionType { get; set; }
+        public IList<short> Regions { get; set; } = new List<short>();
+
+        public LeaseFilter(string lFileNo, string tenantName, string pid, string pin, string historical, int? leaseTeamPersonId, int? leaseTeamOrganizationId, short[] regions, string[] sort)
+        {
+            LFileNo = lFileNo;
+            TenantName = tenantName;
+            Pid = pid;
+            Pin = pin;
+            Historical = historical;
+            LeaseTeamPersonId = leaseTeamPersonId;
+            LeaseTeamOrganizationId = leaseTeamOrganizationId;
+            Regions = regions;
+
+            Sort = sort;
+        }
 
         /// <summary>
         /// get/set - Filter for additional lease details.
@@ -147,7 +149,6 @@ namespace Pims.Dal.Entities.Models
                 || (Programs.Count != 0)
                 || ExpiryStartDate.HasValue
                 || ExpiryEndDate.HasValue
-                || RegionType.HasValue
                 || !string.IsNullOrWhiteSpace(Details);
         }
         #endregion

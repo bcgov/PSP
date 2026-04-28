@@ -10,7 +10,7 @@ export const columns: ColumnWithProps<ProjectSearchResultModel>[] = [
   {
     Header: 'Project #',
     accessor: 'code',
-    align: 'center',
+    align: 'right',
     clickable: false,
     sortable: true,
     width: 5,
@@ -36,7 +36,7 @@ export const columns: ColumnWithProps<ProjectSearchResultModel>[] = [
     ),
   },
   {
-    Header: 'Region',
+    Header: 'MOTT region',
     accessor: 'region',
     align: 'left',
     clickable: false,

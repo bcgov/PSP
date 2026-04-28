@@ -1,9 +1,10 @@
-import { render, RenderOptions, waitFor } from '@/utils/test-utils';
-import DocumentSearchFilter from './DocumentSearchFilter';
+import { SelectOption } from '@/components/common/form/Select';
+import { mockDocumentTypesResponse } from '@/mocks/documentTypes.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { mockDocumentTypesResponse } from '@/mocks/documents.mock';
-import { SelectOption } from '@/components/common/form/Select';
+import { render, RenderOptions, waitFor } from '@/utils/test-utils';
+
+import DocumentSearchFilter from './DocumentSearchFilter';
 
 const setFilter = vi.fn();
 const docTypeOptions: SelectOption[] = mockDocumentTypesResponse().map(dt => {

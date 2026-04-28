@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Pims.Dal.Entities.Models
 {
     public class ManagementFilter : PageFilter
@@ -58,6 +61,11 @@ namespace Pims.Dal.Entities.Models
         /// get/set - Get the Management File that has NOC.
         /// </summary>
         public bool HasNoticeOfClaim { get; set; }
+
+        /// <summary>
+        /// get/set - The region types.
+        /// </summary>
+        public IList<short> Regions { get; set; } = new List<short>();
 
         #endregion
 

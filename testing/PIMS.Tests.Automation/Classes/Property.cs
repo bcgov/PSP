@@ -21,6 +21,8 @@
         public List<string> Anomalies { get; set; } = new List<string>();
         public List<string> TenureStatus { get; set; } = new List<string>();
         public List<string> TenureCleanup { get; set; } = new List<string>();
+        public string TenureProvHwy { get; set; } = null!;
+        public List<string> TenureHighwayDetails { get; set; } = new List<string>();
         public string SqrMeters { get; set; } = null!;
         public Boolean IsVolumetric { get; set; } = false;
         public string Volume { get; set; } = null!;
@@ -176,7 +178,10 @@
 
     public class PropertyImprovement
     {
+        public string ImprovementName { get; set; } = null!;
         public string ImprovementType { get; set; } = null!;
+        public string ImprovementStatus { get; set; } = null!;
+        public string ImprovementDate { get; set; } = null!;
         public string ImprovementDescription { get; set; } = null!;
     }
 }

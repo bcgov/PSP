@@ -1,11 +1,12 @@
+import { getMockApiProperty } from '@/mocks/properties.mock';
+import { getMockPropertyImprovementsApi } from '@/mocks/propertyImprovements.mock';
 import { render, RenderOptions, waitFor } from '@/utils/test-utils';
+
+import { IFilePropertyImprovements } from '../models/FilePropertyImprovements';
 import {
   FilePropertiesImprovementsView,
   IFilePropertiesImprovementsViewProps,
 } from './FilePropertiesImprovementsView';
-import { IFilePropertyImprovements } from '../models/FilePropertyImprovements';
-import { getMockApiProperty } from '@/mocks/properties.mock';
-import { getMockPropertyImprovementsApi } from '@/mocks/propertyImprovements.mock';
 
 const mockFilePropertiesImprovements: IFilePropertyImprovements[] = [
   { property: getMockApiProperty(), improvements: getMockPropertyImprovementsApi(1) },
@@ -50,11 +51,11 @@ describe('File properties improvements list view', () => {
   it('displays values', async () => {
     const { queryByTestId } = await setup({});
 
-    expect(queryByTestId('improvement[1000].name')).toHaveTextContent('TEST NAME');
-    expect(queryByTestId('improvement[1000].type')).toHaveTextContent('Commercial Building');
-    expect(queryByTestId('improvement[1000].date')).toHaveTextContent('Feb 14, 2026');
-    expect(queryByTestId('improvement[1000].status')).toHaveTextContent('Active');
-    expect(queryByTestId('improvement[1000].description')).toHaveTextContent('TEST DESCRIPTION');
+    expect(queryByTestId('improvement[0].name')).toHaveTextContent('TEST NAME');
+    expect(queryByTestId('improvement[0].type')).toHaveTextContent('Commercial Building');
+    expect(queryByTestId('improvement[0].date')).toHaveTextContent('Feb 14, 2026');
+    expect(queryByTestId('improvement[0].status')).toHaveTextContent('Active');
+    expect(queryByTestId('improvement[0].description')).toHaveTextContent('TEST DESCRIPTION');
   });
 
   it('displays message when no improvements', async () => {
@@ -68,5 +69,23 @@ describe('File properties improvements list view', () => {
     expect(
       getByText(/There are no commercial, residential, or other improvements indicated with this/i),
     ).toBeInTheDocument();
+  });
+
+  it('displays Lat/Long for properties when no other identifier is available', async () => {
+    const propertyWithoutIdentifier = {
+      ...getMockApiProperty(),
+      pid: null,
+      pin: null,
+      latitude: 48.43,
+      longitude: -123.49,
+    };
+    const { getByText } = await setup({
+      props: {
+        filePropertiesImprovements: [
+          { property: propertyWithoutIdentifier, improvements: getMockPropertyImprovementsApi(1) },
+        ],
+      },
+    });
+    expect(getByText(/Location: 48.430000, -123.490000/i)).toBeInTheDocument();
   });
 });
