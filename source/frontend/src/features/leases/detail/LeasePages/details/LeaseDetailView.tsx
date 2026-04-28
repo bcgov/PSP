@@ -1,4 +1,3 @@
-import { useCallback, useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaExternalLinkAlt } from 'react-icons/fa';
 
@@ -6,14 +5,10 @@ import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledLink } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
-import ReminderContainer from '@/features/notifications/ReminderContainer';
-import ReminderView from '@/features/notifications/ReminderView';
-import { useNotificationRepository } from '@/hooks/repositories/useNotificationRepository';
 import { ApiGen_CodeTypes_LeasePaymentReceivableTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeasePaymentReceivableTypes';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
-import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { exists, firstOrNull, isValidId, prettyFormatDate } from '@/utils';
+import { exists, prettyFormatDate } from '@/utils';
 import { formatMinistryProject } from '@/utils/formUtils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
@@ -28,40 +23,12 @@ export interface ILeaseDetailViewProps {
 export const LeaseDetailView: React.FunctionComponent<
   React.PropsWithChildren<ILeaseDetailViewProps>
 > = ({ lease }) => {
-  const leaseId = lease?.id;
   const projectName = exists(lease?.project)
     ? formatMinistryProject(lease?.project?.code, lease?.project?.description)
     : '';
   const productName = exists(lease?.product)
     ? lease?.product?.code + ' ' + lease?.product?.description
     : '';
-
-  const {
-    searchNotifications: { execute: searchNotifications, response: expiryNotifications },
-  } = useNotificationRepository();
-
-  const fetchReminders = useCallback(
-    async (leaseId: number): Promise<void> => {
-      await searchNotifications({ type: ApiGen_CodeTypes_NotificationTypes.L_RENEWAL, leaseId });
-    },
-    [searchNotifications],
-  );
-
-  useEffect(() => {
-    if (!exists(expiryNotifications) && isValidId(leaseId)) {
-      fetchReminders(leaseId);
-    }
-  }, [expiryNotifications, fetchReminders, leaseId]);
-
-  const onReminderSaved = useCallback(
-    async (): Promise<void> => fetchReminders(leaseId),
-    [fetchReminders, leaseId],
-  );
-
-  const onReminderRemoved = useCallback(
-    async (): Promise<void> => fetchReminders(leaseId),
-    [fetchReminders, leaseId],
-  );
 
   return (
     <>
@@ -119,19 +86,7 @@ export const LeaseDetailView: React.FunctionComponent<
             </SectionField>
           </Col>
           <Col>
-            <SectionField label="Expiry">
-              {prettyFormatDate(lease.expiryDate)}{' '}
-              <ReminderContainer
-                keyDate={lease.expiryDate}
-                keyDateLabel="Lease Expiry"
-                notification={firstOrNull(expiryNotifications)}
-                notificationType={ApiGen_CodeTypes_NotificationTypes.L_RENEWAL}
-                notificationSourceOptions={{ leaseId: leaseId }}
-                View={ReminderView}
-                onReminderSaved={onReminderSaved}
-                onReminderRemoved={onReminderRemoved}
-              />
-            </SectionField>
+            <SectionField label="Expiry">{prettyFormatDate(lease.expiryDate)}</SectionField>
           </Col>
         </Row>
         {lease.fileStatusTypeCode.id === ApiGen_CodeTypes_LeaseStatusTypes.TERMINATED && (
