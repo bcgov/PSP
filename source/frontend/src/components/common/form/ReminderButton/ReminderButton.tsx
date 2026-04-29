@@ -110,12 +110,7 @@ export const ReminderButton: FC<IReminderButtonProps> = ({
         }
         aria-label={`Reminder for ${keyDateLabel}`}
       >
-        <AlarmIcon
-          width="1.6rem"
-          height="1.6rem"
-          aria-hidden="true"
-          style={{ opacity: isReminderSet ? 1 : 0.85 }}
-        />
+        <AlarmIcon width="2rem" height="2rem" aria-hidden="true" fill="currentColor" />
 
         {isReminderSet && <StyledBadgeDot aria-hidden="true" />}
       </StyledAlarmButton>
@@ -137,12 +132,17 @@ const StyledAlarmButton = styled.button<IStyledAlarmButtonProps>`
   width: 3.2rem;
   height: 3.2rem;
   border-radius: 0.4rem;
-  border: 0.15rem solid #1a5276;
+  border: none;
+  border: 0.2rem solid transparent;
+  border-color: ${({ $isSet, theme }) =>
+    $isSet ? 'transparent' : theme.bcTokens.surfaceColorPrimaryButtonDefault};
   background: ${({ $isSet, theme }) =>
-    $isSet ? theme.bcTokens.surfaceColorPrimaryButtonDefault : theme.css.pimsWhite};
+    $isSet
+      ? theme.bcTokens.surfaceColorPrimaryButtonDefault
+      : theme.bcTokens.surfaceColorBackgroundWhite};
   color: ${({ $isSet, theme }) =>
     $isSet
-      ? theme.bcTokens.typographyColorPrimaryInvert
+      ? theme.bcTokens.surfaceColorBackgroundWhite
       : theme.bcTokens.surfaceColorPrimaryButtonDefault};
   cursor: pointer;
   transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
@@ -153,22 +153,20 @@ const StyledAlarmButton = styled.button<IStyledAlarmButtonProps>`
   &:hover,
   &:active,
   &:focus {
-    background: ${({ $isSet, theme }) =>
-      $isSet ? theme.bcTokens.surfaceColorPrimaryButtonHover : '#eaf0f6'};
-    border-color: ${({ $isSet, theme }) =>
-      $isSet ? 'transparent' : theme.bcTokens.surfaceColorPrimaryButtonDefault};
+    background: ${({ theme }) => theme.bcTokens.surfaceColorPrimaryButtonHover};
+    color: ${({ theme }) => theme.bcTokens.surfaceColorBackgroundWhite};
   }
 `;
 
 const StyledBadgeDot = styled.span`
   position: absolute;
-  top: -0.4rem;
-  right: -0.4rem;
-  width: 1rem;
-  height: 1rem;
+  top: -0.7rem;
+  right: -0.7rem;
+  width: 1.4rem;
+  height: 1.4rem;
   border-radius: 50%;
   background-color: ${({ theme }) => theme.bcTokens.iconsColorDanger};
-  border: 2px solid #fff;
+  border: 0.2rem solid #fff;
   pointer-events: none;
 `;
 
