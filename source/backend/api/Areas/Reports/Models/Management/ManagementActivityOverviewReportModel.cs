@@ -10,6 +10,9 @@ namespace Pims.Api.Areas.Reports.Models.Management
 {
     public class ManagementActivityOverviewReportModel
     {
+        [DisplayName("Management File Number")]
+        [CsvHelper.Configuration.Attributes.Name("Management File Number")]
+        public string ManagementFileNumber { get; set; }
 
         [DisplayName("Management File Name")]
         [CsvHelper.Configuration.Attributes.Name("Management File Name")]
@@ -103,6 +106,7 @@ namespace Pims.Api.Areas.Reports.Models.Management
         {
             ArgumentNullException.ThrowIfNull(activity, nameof(activity));
 
+            ManagementFileNumber = activity.ManagementFile?.ManagementFileId != null ? $"M-{activity.ManagementFile?.ManagementFileId}" : string.Empty;
             ManagementFileName = GetNullableString(activity.ManagementFile?.FileName);
             LegacyFileNum = GetNullableString(activity.ManagementFile?.LegacyFileNum);
             Properties = GetPropertiesAsString(activity);

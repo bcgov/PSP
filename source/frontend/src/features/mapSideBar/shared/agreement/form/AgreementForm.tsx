@@ -19,12 +19,14 @@ export interface IAcquisitionFormProps {
   formikProps: FormikProps<AgreementFormModel>;
   fileType: string;
   isNew?: boolean;
+  isSection3?: boolean;
 }
 
 const AgreementForm: React.FunctionComponent<React.PropsWithChildren<IAcquisitionFormProps>> = ({
   formikProps,
   fileType,
   isNew = false,
+  isSection3,
 }) => {
   const { setModalContent, setDisplayModal } = useModalContext();
   const { getAgreementSelectOptions, getOptionsByType } = useLookupCodeHelpers();
@@ -117,6 +119,19 @@ const AgreementForm: React.FunctionComponent<React.PropsWithChildren<IAcquisitio
           }}
         />
       </SectionField>
+
+      {isSection3 && (
+        <>
+          <SectionField labelWidth={{ xs: 5 }} label="Advance payment date">
+            <FastDatePicker field="advancePaymentDate" formikProps={formikProps} />
+          </SectionField>
+
+          <SectionField labelWidth={{ xs: 5 }} label="Agreement signed date">
+            <FastDatePicker field="agreementSignedDate" formikProps={formikProps} />
+          </SectionField>
+        </>
+      )}
+
       <SectionField labelWidth={{ xs: 5 }} label="Agreement date">
         <FastDatePicker field="agreementDate" formikProps={formikProps} />
       </SectionField>

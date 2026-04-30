@@ -32,15 +32,5 @@ namespace Pims.Dal.Entities
         {
         }
         #endregion
-
-        public static class PimsLeaseStatusTypes
-        {
-            public const string ACTIVE = "ACTIVE";
-            public const string DISCARD = "DISCARD";
-            public const string DRAFT = "DRAFT";
-            public const string INACTIVE = "INACTIVE";
-            public const string TERMINATED = "TERMINATED";
-            public const string DUPLICATE = "DUPLICATE";
-        }
     }
 }

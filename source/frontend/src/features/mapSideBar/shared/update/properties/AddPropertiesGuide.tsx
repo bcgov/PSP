@@ -17,29 +17,27 @@ export const AddPropertiesGuide: FunctionComponent<PropsWithChildren<unknown>> =
   const guideBodyContent = (): ReactNode => {
     return (
       <>
-        <ol>
+        <ul>
           <StyledBoldLi>
             <div>Find a Property</div>
             <StyledNormalText>
-              Navigate to an area of the map OR use{' '}
+              Locate an area on the map OR use{' '}
               <LinkButton className="d-inline-block" onClick={handleOpenSearch}>
                 Search
               </LinkButton>
             </StyledNormalText>
           </StyledBoldLi>
           <StyledBoldLi>
-            <div>Select a property</div>
-            <StyledNormalText>
-              Click on the map and the selection will be highlighed
-            </StyledNormalText>
+            <div>Select a Property</div>
+            <StyledNormalText>Click on the map to highlight the selection</StyledNormalText>
           </StyledBoldLi>
           <StyledBoldLi>
-            <div>Add it to this file</div>
+            <div>Add it to this File</div>
             <StyledNormalText>
               Click &quot;Add selected&quot; property button when it appears below
             </StyledNormalText>
           </StyledBoldLi>
-        </ol>
+        </ul>
       </>
     );
   };

@@ -1,12 +1,15 @@
 import { Placement } from 'react-bootstrap/esm/Overlay';
 
+import { SelectOption } from '@/components/common/form';
 import TooltipIcon from '@/components/common/TooltipIcon';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_CodeType } from '@/models/api/generated/ApiGen_Concepts_CodeType';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { NumberFieldValue } from '@/typings/NumberFieldValue';
@@ -282,4 +285,20 @@ export function renderTooltip(
   }
   // we got a custom tooltip - render that
   return tooltip;
+}
+
+export function getUserRegionsOptions(
+  userRegions: ApiGen_Concepts_RegionUser[],
+  regions: SelectOption[],
+): MultiSelectOption[] {
+  const userRegionsIds: string[] = userRegions?.map(x => x.regionCode.toString()) ?? [];
+
+  const userRegionsOptions: MultiSelectOption[] =
+    regions
+      .filter(opt => userRegionsIds?.includes(opt.code))
+      .map<MultiSelectOption>(x => {
+        return { id: x.code as string, text: x.label };
+      }) ?? [];
+
+  return userRegionsOptions;
 }

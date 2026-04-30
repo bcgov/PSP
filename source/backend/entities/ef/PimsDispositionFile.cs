@@ -300,6 +300,9 @@ public partial class PimsDispositionFile
     [InverseProperty("DispositionFile")]
     public virtual ICollection<PimsDispositionSale> PimsDispositionSales { get; set; } = new List<PimsDispositionSale>();
 
+    [InverseProperty("DispositionFile")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
+
     [ForeignKey("ProductId")]
     [InverseProperty("PimsDispositionFiles")]
     public virtual PimsProduct Product { get; set; }

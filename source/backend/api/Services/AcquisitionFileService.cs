@@ -93,12 +93,10 @@ namespace Pims.Api.Services
 
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
-            // Limit search results to user's assigned region(s)
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            return _acqFileRepository.GetPageDeep(filter, userRegions, contractorPersonId);
+            return _acqFileRepository.GetPageDeep(filter, contractorPersonId);
         }
 
         public List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter)
@@ -106,12 +104,10 @@ namespace Pims.Api.Services
             _logger.LogInformation("Searching all Acquisition Files matching the filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
-            // Limit search results to user's assigned region(s)
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            var acqFiles = _acqFileRepository.GetAcquisitionFileExportDeep(filter, userRegions, contractorPersonId);
+            var acqFiles = _acqFileRepository.GetAcquisitionFileExportDeep(filter, contractorPersonId);
 
             return acqFiles.SelectMany(file => file.PimsPropertyAcquisitionFiles.Where(fp => fp.AcquisitionFileId.Equals(file.AcquisitionFileId)).DefaultIfEmpty(), (file, fp) => (file, fp))
                 .Select(fileProperty => new AcquisitionFileExportModel
@@ -123,7 +119,7 @@ namespace Pims.Api.Services
                     MinistryProject = fileProperty.file.Project is not null ? $"{fileProperty.file.Project.Code} {fileProperty.file.Project.Description}" : string.Empty,
                     CivicAddress = (fileProperty.fp?.Property is not null && fileProperty.fp.Property.Address is not null) ? fileProperty.fp.Property.Address.FormatFullAddressString() : string.Empty,
                     GeneralLocation = (fileProperty.fp?.Property is not null) ? fileProperty.fp.Property.GeneralLocation : string.Empty,
-                    Pid = fileProperty.fp is not null && fileProperty.fp.Property.Pid.HasValue ? fileProperty.fp.Property.Pid.ToString() : string.Empty,
+                    Pid = fileProperty.fp is not null && fileProperty.fp.Property.PidFormatted != null ? fileProperty.fp.Property.PidFormatted : string.Empty,
                     Pin = fileProperty.fp is not null && fileProperty.fp.Property.Pin.HasValue ? fileProperty.fp.Property.Pin.ToString() : string.Empty,
                     AcquisitionFileStatusTypeCode = fileProperty.file.AcquisitionFileStatusTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFileStatusTypeCodeNavigation.Description : string.Empty,
                     FileFunding = fileProperty.file.AcquisitionFundingTypeCodeNavigation is not null ? fileProperty.file.AcquisitionFundingTypeCodeNavigation.Description : string.Empty,
@@ -670,12 +666,10 @@ namespace Pims.Api.Services
                 throw new BadRequestException("Acquisition file should not be a sub-file.");
             }
 
-            // Limit search results to user's assigned region(s)
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            return _acqFileRepository.GetAcquisitionSubFiles(id, userRegions, contractorPersonId);
+            return _acqFileRepository.GetAcquisitionSubFiles(id, contractorPersonId);
         }
 
         private void CheckFileNumberDuplicate(PimsAcquisitionFile acquisitionFile)

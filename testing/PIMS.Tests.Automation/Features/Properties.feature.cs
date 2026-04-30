@@ -428,7 +428,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
  await testRunner.AndAsync("I add Properties to the Management File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
 #line 53
- await testRunner.ThenAsync("The related documents appeared as expected", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+ await testRunner.ThenAsync("Property Management Tab has been updated successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();

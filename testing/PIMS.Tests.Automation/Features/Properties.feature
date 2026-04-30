@@ -50,7 +50,7 @@ Scenario: 07._Verify_Digital_Documents_on_Related_Documents
 	When I create Digital Documents for a "Property" from row number 16
 	And  I create a Management File from row number 5 to check common data
 	And I add Properties to the Management File
-	Then The related documents appeared as expected
+	Then Property Management Tab has been updated successfully
 
 Scenario: 08._Properties_List
 	Given I search for a Property in the Properties List by different filters from row number 29

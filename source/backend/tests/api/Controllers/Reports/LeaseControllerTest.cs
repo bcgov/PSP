@@ -64,6 +64,7 @@ namespace Pims.Api.Test.Controllers.Reports
         public LeaseControllerTest()
         {
             this._helper = new TestHelper();
+            this._helper.AddSingletonWithMock<ILeasePaymentService>();
             this._controller = this._helper.CreateController<LeaseController>(Permissions.LeaseView);
             this._mapper = this._helper.GetService<IMapper>();
             this._service = this._helper.GetService<Mock<ILeaseReportsService>>();
@@ -294,8 +295,8 @@ namespace Pims.Api.Test.Controllers.Reports
 
             // Assert
             this._leaseService.Verify(m => m.GetPage(It.IsAny<Entity.Models.LeaseFilter>(), false), Times.Once());
-            result.Pid.Should().Be(1);
-            result.Pin.Should().Be(2);
+            result.Pid.Should().Be("000-000-001");
+            result.Pin.Should().Be("2");
         }
 
         [Fact]

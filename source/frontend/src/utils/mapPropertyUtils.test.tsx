@@ -7,14 +7,17 @@ import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFe
 import { getMockSelectedFeatureDataset } from '@/mocks/featureset.mock';
 import { getEmptyFileProperty } from '@/mocks/fileProperty.mock';
 import { getMockLatLng, getMockLocation, getMockPolygon } from '@/mocks/geometries.mock';
+import { getMockApiProperty } from '@/mocks/properties.mock';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Geometry } from '@/models/api/generated/ApiGen_Concepts_Geometry';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyProperty } from '@/models/defaultInitializers';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
 import { PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 
 import {
   filePropertyToLocationBoundaryDataset,
+  getApiPropertyName,
   getFilePropertyName,
   getLatLng,
   getPrettyLatLng,
@@ -152,7 +155,7 @@ describe('mapPropertyUtils', () => {
         pimsFeature: {} as any,
         parcelFeature: {} as any,
       },
-      { label: NameSourceType.LOCATION, value: '2.000000, 1.000000' },
+      { label: NameSourceType.LOCATION, value: '1.000000, 2.000000' },
     ],
     [
       {
@@ -245,6 +248,40 @@ describe('mapPropertyUtils', () => {
       const fileName = getFilePropertyName(mapProperty, skipName);
       expect(fileName.label).toEqual(expectedName.label);
       expect(fileName.value).toEqual(expectedName.value);
+    },
+  );
+
+  it.each([
+    ['PID', { ...getMockApiProperty(), pid: 123456789 }, 'PID: 123-456-789'],
+    ['PIN', { ...getMockApiProperty(), pid: null, pin: 90072652 }, 'PIN: 90072652'],
+    [
+      'Location',
+      { ...getMockApiProperty(), pid: null, pin: null, latitude: 48.43, longitude: -123.49 },
+      'Location: 48.430000, -123.490000',
+    ],
+  ])(
+    'getFilePropertyName - %s',
+    (_: string, property?: ApiGen_Concepts_Property, expected?: string) => {
+      const propName = getFilePropertyName({ ...getEmptyFileProperty(), property });
+      const actual = propName ? `${propName.label}: ${propName.value}` : undefined;
+      expect(actual).toEqual(expected);
+    },
+  );
+
+  it.each([
+    ['PID', { ...getMockApiProperty(), pid: 123456789 }, 'PID: 123-456-789'],
+    ['PIN', { ...getMockApiProperty(), pid: null, pin: 90072652 }, 'PIN: 90072652'],
+    [
+      'Location',
+      { ...getMockApiProperty(), pid: null, pin: null, latitude: 48.43, longitude: -123.49 },
+      'Location: 48.430000, -123.490000',
+    ],
+  ])(
+    'getApiPropertyName - %s',
+    (_: string, property?: ApiGen_Concepts_Property, expected?: string) => {
+      const propName = getApiPropertyName(property);
+      const actual = propName ? `${propName.label}: ${propName.value}` : undefined;
+      expect(actual).toEqual(expected);
     },
   );
 

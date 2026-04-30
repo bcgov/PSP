@@ -464,6 +464,13 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
                 >
                   Archived
                 </option>
+                <option
+                  class="option"
+                  data-testid="select-option-CLOSED"
+                  value="CLOSED"
+                >
+                  Closed
+                </option>
               </select>
             </div>
           </div>
@@ -476,7 +483,7 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
           class="row"
         >
           <div
-            class="col-lg-12"
+            class="col-lg-6"
           >
             <div
               class="input form-group"
@@ -492,13 +499,10 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
               />
             </div>
           </div>
-        </div>
-        <div
-          class="row"
-        >
           <div
-            class="col-lg-9"
+            class="col-lg-6"
           >
+             
             <div
               class="input form-group"
             >
@@ -511,6 +515,53 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
                 title=""
                 value=""
               />
+            </div>
+          </div>
+        </div>
+        <div
+          class="row"
+        >
+          <div
+            class="col-lg-9"
+          >
+            <div
+              class="form-group"
+            >
+              <div>
+                <div
+                  class="multiselect-container multiSelectContainer  "
+                  id="multiselect-regions"
+                  style="width: auto; color: black;"
+                >
+                  <div
+                    class="search-wrapper searchWrapper "
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="searchBox "
+                      id="multiselect-regions_input"
+                      name="search_name_input"
+                      placeholder="Select Region(s)"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="optionListContainer displayNone"
+                  >
+                    <ul
+                      class="optionContainer"
+                    >
+                      <span
+                        class="notFound"
+                      >
+                        No Options Available
+                      </span>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div

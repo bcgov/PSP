@@ -2,31 +2,25 @@ import { IProjectFilter } from '@/features/projects/interfaces';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import {
+  act,
+  fillInput,
+  render,
+  RenderOptions,
+  userEvent,
+} from '@/utils/test-utils';
 
 import { IProjectFilterProps, ProjectFilter } from './ProjectFilter';
 import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
-
-const storeState = {
-  [lookupCodesSlice.name]: { lookupCodes: mockLookups },
-};
+import { FormikProps } from 'formik';
+import { ProjectFilterModel } from './models/ProjectFilterModel';
+import { createRef } from 'react';
 
 const setFilter = vi.fn();
+const onResetFilter = vi.fn();
 
-// render component under test
-const setup = (
-  renderOptions: RenderOptions & IProjectFilterProps = { store: storeState, setFilter },
-) => {
-  const { filter, setFilter: setFilterFn, ...rest } = renderOptions;
-  const utils = render(<ProjectFilter filter={filter} setFilter={setFilterFn} />, {
-    ...rest,
-    claims: [],
-  });
-  const searchButton = utils.getByTestId('search');
-  const resetButton = utils.getByTestId('reset-button');
-  return { searchButton, resetButton, setFilter: setFilterFn, ...utils };
-};
+const mockFilterModel = new ProjectFilterModel();
 
 const retrieveUserInfo = vi.fn();
 vi.mock('@/hooks/repositories/useUserInfoRepository');
@@ -50,75 +44,98 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
 });
 
 describe('Project Filter', () => {
-  beforeEach(() => {
-    setFilter.mockClear();
+  const setup = async (renderOptions: RenderOptions & { props?: Partial<IProjectFilterProps> }) => {
+    const formikRef = createRef<FormikProps<ProjectFilterModel>>();
+
+    const utils = render(
+      <ProjectFilter
+        {...renderOptions.props}
+        initialValues={renderOptions.props?.initialValues ?? mockFilterModel}
+        pimsRegionsOptions={renderOptions.props?.pimsRegionsOptions ?? []}
+        setFilter={setFilter}
+        onResetFilter={onResetFilter}
+      />,
+      {
+        ...renderOptions,
+        store: {
+          [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+        },
+      },
+    );
+
+    // wait for useEffects
+    await act(async () => {});
+
+    return {
+      ...utils,
+      formikRef,
+      getSearchButton: () => utils.getByTestId('search'),
+      getResetButton: () => utils.getByTestId('reset-button'),
+    };
+  };
+
+  afterEach(() => {
+    vi.clearAllMocks();
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = setup();
+    const { asFragment } = await setup({});
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('searches by project number', async () => {
-    const { container, searchButton, setFilter } = setup();
+    const { container, getSearchButton } = await setup({});
 
     fillInput(container, 'projectNumber', '1201');
-    await act(async () => userEvent.click(searchButton));
+    await act(async () => userEvent.click(getSearchButton()));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<IProjectFilter>({
-        projectName: '',
         projectNumber: '1201',
-        projectStatusCode: '',
-        projectRegionCode: '',
+        projectStatusCode: null,
+        projectName: null,
+        regions: []
       }),
     );
   });
 
   it('searches by project name', async () => {
-    const { container, searchButton, setFilter } = setup();
+    const { container, getSearchButton } = await setup({});
 
     fillInput(container, 'projectName', 'Hwy');
-    await act(async () => userEvent.click(searchButton));
+    await act(async () => userEvent.click(getSearchButton()));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining<IProjectFilter>({
+      expect.objectContaining({
         projectName: 'Hwy',
-        projectNumber: '',
-        projectStatusCode: '',
-        projectRegionCode: '',
+        regions: [],
       }),
     );
   });
 
   it('searches by region', async () => {
-    const { container, searchButton, setFilter } = setup();
+    const { container, getSearchButton } = await setup({});
 
     fillInput(container, 'projectRegionCode', '2', 'select');
-    await act(async () => userEvent.click(searchButton));
+    await act(async () => userEvent.click(getSearchButton()));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining<IProjectFilter>({
-        projectName: '',
-        projectNumber: '',
-        projectStatusCode: '',
-        projectRegionCode: '2',
+      expect.objectContaining({
+        regions: [],
       }),
     );
   });
 
   it('searches by status', async () => {
-    const { container, searchButton, setFilter } = setup();
+    const { container, getSearchButton } = await setup({});
 
     fillInput(container, 'projectStatusCode', 'PL', 'select');
-    await act(async () => userEvent.click(searchButton));
+    await act(async () => userEvent.click(getSearchButton()));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining<IProjectFilter>({
-        projectName: '',
-        projectNumber: '',
+      expect.objectContaining({
         projectStatusCode: 'PL',
-        projectRegionCode: '',
+        regions: [],
       }),
     );
   });

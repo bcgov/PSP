@@ -615,6 +615,24 @@ namespace Pims.Api.Services
             return property;
         }
 
+        /// <inheritdoc />
+        public PimsPropertyVw TransformPropertyVwToLatLong(PimsPropertyVw propertyVw)
+        {
+            // transform property location (map pin)
+            if (propertyVw?.Location != null)
+            {
+                propertyVw.Location = TransformCoordinates(propertyVw.Location);
+            }
+
+            // transform property boundary in-place (polygon/multipolygon)
+            if (propertyVw?.Geometry != null)
+            {
+                _coordinateService.TransformGeometry(SpatialReference.BCALBERS, SpatialReference.WGS84, propertyVw.Geometry);
+            }
+
+            return propertyVw;
+        }
+
         private static void PropertyHasActiveLease(IEnumerable<PimsPropertyLease> propertyLeases, out bool hasActiveLease, out bool hasActiveExpiryDate)
         {
             hasActiveLease = false;

@@ -60,11 +60,6 @@ namespace Pims.Api.Areas.Lease.Models.Search
         public DateOnly? ExpiryEndDate { get; set; }
 
         /// <summary>
-        /// get/set - The region type.
-        /// </summary>
-        public int? RegionType { get; set; }
-
-        /// <summary>
         /// get/set - Filter for additional lease details.
         /// </summary>
         public string Details { get; set; }
@@ -83,6 +78,12 @@ namespace Pims.Api.Areas.Lease.Models.Search
         /// get/set - Filter to return only receivable leases.
         /// </summary>
         public bool? IsReceivable { get; set; }
+
+        /// <summary>
+        /// get/set - The region types.
+        /// </summary>
+        public IList<short> Regions { get; set; } = new List<short>();
+
         #endregion
 
         #region Constructors
@@ -104,22 +105,23 @@ namespace Pims.Api.Areas.Lease.Models.Search
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
-            this.Pid = filter.GetStringValue(nameof(this.Pid));
-            this.Pin = filter.GetStringValue(nameof(this.Pin));
-            this.LFileNo = filter.GetStringValue(nameof(this.LFileNo));
-            this.Address = filter.GetStringValue(nameof(this.Address));
-            this.Historical = filter.GetStringValue(nameof(this.Historical));
-            this.LeaseStatusTypes = filter.GetStringArrayValue(nameof(this.LeaseStatusTypes));
-            this.TenantName = filter.GetStringValue(nameof(this.TenantName));
-            this.Programs = filter.GetStringArrayValue(nameof(this.Programs));
-            this.ExpiryStartDate = filter.GetDateOnlyNullValue(nameof(this.ExpiryStartDate));
-            this.ExpiryEndDate = filter.GetDateOnlyNullValue(nameof(this.ExpiryEndDate));
-            this.RegionType = filter.GetIntNullValue(nameof(this.RegionType));
-            this.Details = filter.GetStringValue(nameof(this.Details));
-            this.LeaseTeamPersonId = filter.GetIntNullValue(nameof(this.LeaseTeamPersonId));
-            this.LeaseTeamOrganizationId = filter.GetIntNullValue(nameof(this.LeaseTeamOrganizationId));
-            this.IsReceivable = filter.GetValue<bool?>(nameof(this.IsReceivable));
-            this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
+            Pid = filter.GetStringValue(nameof(this.Pid));
+            Pin = filter.GetStringValue(nameof(this.Pin));
+            LFileNo = filter.GetStringValue(nameof(this.LFileNo));
+            Address = filter.GetStringValue(nameof(this.Address));
+            Historical = filter.GetStringValue(nameof(this.Historical));
+            LeaseStatusTypes = filter.GetStringArrayValue(nameof(this.LeaseStatusTypes));
+            TenantName = filter.GetStringValue(nameof(this.TenantName));
+            Programs = filter.GetStringArrayValue(nameof(this.Programs));
+            ExpiryStartDate = filter.GetDateOnlyNullValue(nameof(this.ExpiryStartDate));
+            ExpiryEndDate = filter.GetDateOnlyNullValue(nameof(this.ExpiryEndDate));
+            Details = filter.GetStringValue(nameof(this.Details));
+            LeaseTeamPersonId = filter.GetIntNullValue(nameof(this.LeaseTeamPersonId));
+            LeaseTeamOrganizationId = filter.GetIntNullValue(nameof(this.LeaseTeamOrganizationId));
+            IsReceivable = filter.GetValue<bool?>(nameof(this.IsReceivable));
+            Regions = filter.GetShortArrayValue(nameof(Regions));
+
+            Sort = filter.GetStringArrayValue(nameof(this.Sort));
         }
         #endregion
 
@@ -136,21 +138,21 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 Page = model.Page,
                 Quantity = model.Quantity,
 
-                Pid = model.Pid,
-                Pin = model.Pin,
-                LFileNo = model.LFileNo,
-                Address = model.Address,
-                Historical = model.Historical,
+                Pid = model.Pid?.Trim(),
+                Pin = model.Pin?.Trim(),
+                LFileNo = model.LFileNo?.Trim(),
+                Address = model.Address?.Trim(),
+                Historical = model.Historical?.Trim(),
                 LeaseStatusTypes = model.LeaseStatusTypes,
-                TenantName = model.TenantName,
+                TenantName = model.TenantName?.Trim(),
                 Programs = model.Programs,
                 ExpiryStartDate = model.ExpiryStartDate,
                 ExpiryEndDate = model.ExpiryEndDate,
-                RegionType = model.RegionType,
-                Details = model.Details,
+                Details = model.Details?.Trim(),
                 LeaseTeamOrganizationId = model.LeaseTeamOrganizationId,
                 LeaseTeamPersonId = model.LeaseTeamPersonId,
                 IsReceivable = model.IsReceivable,
+                Regions = model.Regions,
 
                 Sort = model.Sort,
             };
@@ -180,7 +182,6 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 || (Programs.Count != 0)
                 || ExpiryStartDate.HasValue
                 || ExpiryEndDate.HasValue
-                || RegionType.HasValue
                 || LeaseTeamPersonId.HasValue
                 || LeaseTeamOrganizationId.HasValue
                 || IsReceivable.HasValue

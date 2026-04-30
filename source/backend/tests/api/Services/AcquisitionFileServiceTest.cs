@@ -184,7 +184,7 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
             repository.Setup(x => x.LegacyFileNumberExists(It.IsAny<string>())).Returns(true);
-            repository.Setup(x => x.CheckDuplicateFile(It.IsAny<short>(),It.IsAny<int>(), 1)).Returns(true);
+            repository.Setup(x => x.CheckDuplicateFile(It.IsAny<short>(), It.IsAny<int>(), 1)).Returns(true);
 
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
@@ -3510,7 +3510,7 @@ namespace Pims.Api.Test.Services
 
             var filter = new AcquisitionFilter();
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
-            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()))
+            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<long?>()))
                         .Returns(new List<PimsAcquisitionFile>()
                         {
                             acquisitionFile,
@@ -3525,7 +3525,7 @@ namespace Pims.Api.Test.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(1, result.Count());
-            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
+            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<long?>()), Times.Once);
         }
 
         [Fact]
@@ -3564,7 +3564,7 @@ namespace Pims.Api.Test.Services
                 },
             };
 
-            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()))
+            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<long?>()))
                         .Returns(new List<PimsAcquisitionFile>()
                         {
                             acquisitionFile,
@@ -3581,9 +3581,9 @@ namespace Pims.Api.Test.Services
             Assert.Equal(2, result.Count());
             Assert.Equal("01-2023-01", result[0].FileNumber);
             Assert.Equal("01-2023-01", result[1].FileNumber);
-            Assert.Equal("8000", result[0].Pid);
-            Assert.Equal("9000", result[1].Pid);
-            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
+            Assert.Equal("000-008-000", result[0].Pid);
+            Assert.Equal("000-009-000", result[1].Pid);
+            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<long?>()), Times.Once);
         }
 
         #endregion

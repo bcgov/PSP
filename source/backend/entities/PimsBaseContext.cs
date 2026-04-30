@@ -472,6 +472,22 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsNoticeOfClaimHist> PimsNoticeOfClaimHists { get; set; }
 
+    public virtual DbSet<PimsNotification> PimsNotifications { get; set; }
+
+    public virtual DbSet<PimsNotificationHist> PimsNotificationHists { get; set; }
+
+    public virtual DbSet<PimsNotificationOutputType> PimsNotificationOutputTypes { get; set; }
+
+    public virtual DbSet<PimsNotificationType> PimsNotificationTypes { get; set; }
+
+    public virtual DbSet<PimsNotificationUser> PimsNotificationUsers { get; set; }
+
+    public virtual DbSet<PimsNotificationUserHist> PimsNotificationUserHists { get; set; }
+
+    public virtual DbSet<PimsNotificationUserOutput> PimsNotificationUserOutputs { get; set; }
+
+    public virtual DbSet<PimsNotificationUserOutputHist> PimsNotificationUserOutputHists { get; set; }
+
     public virtual DbSet<PimsOrgIdentifierType> PimsOrgIdentifierTypes { get; set; }
 
     public virtual DbSet<PimsOrganization> PimsOrganizations { get; set; }
@@ -1931,9 +1947,14 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.ExpiryDate).HasComment("Date the owner record expired.");
             entity.Property(e => e.GivenName).HasComment("Given name of the owner (person).");
             entity.Property(e => e.IncorporationNumber).HasComment("Incorporation number of the organization.");
+            entity.Property(e => e.IsFromLtsa)
+                .HasDefaultValue(false)
+                .HasComment("User Story: As a PIMS user, I need to pre-populate the owner name(s) from LTSA title, as I’m required to use the LTSA title owner as the owner for an Acquisition file, and having that populate automatically based on properties in the file saves me time an");
             entity.Property(e => e.IsOrganization).HasComment("Indicates if the owner is an organization.  Default value is FALSE, indicating that the owner is a person.");
             entity.Property(e => e.IsPrimaryOwner).HasComment("Indicates that this is the file's primary owner.");
             entity.Property(e => e.LastNameAndCorpName).HasComment("Name of the owner (person or organization).  If person, surname.");
+            entity.Property(e => e.LtsaPid).HasComment("PID of the originating LTSA file.");
+            entity.Property(e => e.LtsaSourcedDate).HasComment("Date that LTSA data was imported into the PIMS system.");
             entity.Property(e => e.OtherName).HasComment("Optional name field if required.");
             entity.Property(e => e.RegistrationNumber).HasComment("Registration number of the organization.");
 
@@ -2103,7 +2124,9 @@ public partial class PimsBaseContext : DbContext
                 .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_AGREEMENT_ID_SEQ])")
                 .HasComment("System-generated unique surrogate primary key.");
             entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
+            entity.Property(e => e.AdvancePaymentDate).HasComment("Date of the advance payment.");
             entity.Property(e => e.AgreementDate).HasComment("Date of the agreement.");
+            entity.Property(e => e.AgreementSignedDate).HasComment("Date the agreement was signed.");
             entity.Property(e => e.AgreementStatusTypeCode)
                 .HasDefaultValue("DRAFT")
                 .HasComment("Foreign key to the PIMS_AGREEMENT_STATUS_TYPE table.");
@@ -9051,6 +9074,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.ToTable("PIMS_NOTICE_OF_CLAIM", tb =>
                 {
+                    tb.HasComment("Describes the notice of claim that associated with a management file or acquisition file and includes comments and the received date.");
                     tb.HasTrigger("PIMS_NTCCLM_A_S_IUD_TR");
                     tb.HasTrigger("PIMS_NTCCLM_I_S_I_TR");
                     tb.HasTrigger("PIMS_NTCCLM_I_S_U_TR");
@@ -9109,6 +9133,320 @@ public partial class PimsBaseContext : DbContext
             entity.HasKey(e => e.NoticeOfClaimHistId).HasName("PIMS_NTCCLM_H_PK");
 
             entity.Property(e => e.NoticeOfClaimHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTICE_OF_CLAIM_H_ID_SEQ])");
+            entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+        });
+
+        modelBuilder.Entity<PimsNotification>(entity =>
+        {
+            entity.HasKey(e => e.NotificationId).HasName("NOTIFY_PK");
+
+            entity.ToTable("PIMS_NOTIFICATION", tb =>
+                {
+                    tb.HasComment("Describes the user notification and related field type (e.g. acquisition, disposition, management) provided to the user.");
+                    tb.HasTrigger("PIMS_NOTIFY_A_S_IUD_TR");
+                    tb.HasTrigger("PIMS_NOTIFY_I_S_I_TR");
+                    tb.HasTrigger("PIMS_NOTIFY_I_S_U_TR");
+                });
+
+            entity.Property(e => e.NotificationId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTIFICATION_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AcquisitionFileId).HasComment("Foreign key to the PIMS_ACQUISITION_FILE table.");
+            entity.Property(e => e.AgreementId).HasComment("Foreign key to the PIMS_AGREEMENT table.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.DispositionFileId).HasComment("Foreign key to the PIMS_DISPOSITION_FILE table.");
+            entity.Property(e => e.ExpropOwnerHistoryId).HasComment("Foreign key to the PIMS_EXPROP_OWNER_HISTORY table.");
+            entity.Property(e => e.InsuranceId).HasComment("Foreign key to the PIMS_INSURANCE table.");
+            entity.Property(e => e.LeaseConsultationId).HasComment("Foreign key to the PIMS_LEASE_CONSULTATION table.");
+            entity.Property(e => e.LeaseId).HasComment("Foreign key to the PIMS_LEASE table.");
+            entity.Property(e => e.LeaseRenewalId).HasComment("Foreign key to the PIMS_LEASE_RENEWAL table.");
+            entity.Property(e => e.ManagementFileId).HasComment("Foreign key to the PIMS_MANAGEMENT_FILE table.");
+            entity.Property(e => e.NoticeOfClaimId).HasComment("Foreign key to the PIMS_NOTICE_OF_CLAIM table.");
+            entity.Property(e => e.NotificationMessage).HasComment("Message text of the notification.");
+            entity.Property(e => e.NotificationTriggerDate).HasComment("Date the notification was transmitted to the user.");
+            entity.Property(e => e.NotificationTypeCode).HasComment("Foreign key to thje PIMS_NOTIFICATION_TYPE table.");
+            entity.Property(e => e.ResearchFileId).HasComment("Foreign key to the PIMS_RESEARCH_FILE table.");
+            entity.Property(e => e.TakeId).HasComment("Foreign key to the PIMS_TAKE table.");
+
+            entity.HasOne(d => d.AcquisitionFile).WithMany(p => p.PimsNotifications).HasConstraintName("PIM_ACQNFL_PIM_NOTIFY_FK");
+
+            entity.HasOne(d => d.Agreement).WithMany(p => p.PimsNotifications).HasConstraintName("PIM_AGRMNT_PIM_NOTIFY_FK");
+
+            entity.HasOne(d => d.DispositionFile).WithMany(p => p.PimsNotifications).HasConstraintName("PIM_DISPFL_PIM_NOTIFY_FK");
+
+            entity.HasOne(d => d.ExpropOwnerHistory).WithMany(p => p.PimsNotifications).HasConstraintName("PIM_XPOWNH_PIM_NOTIFY_FK");
+
+            entity.HasOne(d => d.Insurance).WithMany(p => p.PimsNotifications).HasConstraintName("PIM_INSRNC_PIM_NOTIFY_FK");
+
+            entity.HasOne(d => d.LeaseConsultation).WithMany(p => p.PimsNotifications).HasConstraintName("PIM_LESCON_PIM_NOTIFY_FK");
+
+            entity.HasOne(d => d.Lease).WithMany(p => p.PimsNotifications).HasConstraintName("PIM_LEASE_PIM_NOTIFY_FK");
+
+            entity.HasOne(d => d.LeaseRenewal).WithMany(p => p.PimsNotifications).HasConstraintName("PIM_LSRNWL_PIM_NOTIFY_FK");
+
+            entity.HasOne(d => d.ManagementFile).WithMany(p => p.PimsNotifications).HasConstraintName("PIM_MGMTFL_PIM_NOTIFY_FK");
+
+            entity.HasOne(d => d.NoticeOfClaim).WithMany(p => p.PimsNotifications).HasConstraintName("PIM_NTCCLM_PIM_NOTIFY_FK");
+
+            entity.HasOne(d => d.NotificationTypeCodeNavigation).WithMany(p => p.PimsNotifications)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_NOTFYT_PIM_NOTIFY_FK");
+
+            entity.HasOne(d => d.ResearchFile).WithMany(p => p.PimsNotifications).HasConstraintName("PIM_RESRCH_PIM_NOTIFY_FK");
+
+            entity.HasOne(d => d.Take).WithMany(p => p.PimsNotifications).HasConstraintName("PIM_TAKE_PIM_NOTIFY_FK");
+        });
+
+        modelBuilder.Entity<PimsNotificationHist>(entity =>
+        {
+            entity.HasKey(e => e.NotificationHistId).HasName("PIMS_NOTIFY_H_PK");
+
+            entity.Property(e => e.NotificationHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTIFICATION_H_ID_SEQ])");
+            entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+        });
+
+        modelBuilder.Entity<PimsNotificationOutputType>(entity =>
+        {
+            entity.HasKey(e => e.NotificationOutputTypeCode).HasName("NTOUTT_PK");
+
+            entity.ToTable("PIMS_NOTIFICATION_OUTPUT_TYPE", tb =>
+                {
+                    tb.HasComment("Codified description of the output type of the user notification (e.g. TAKE_SRW, TAKE_LAT, TAKE_LTC, TAKE_LPYBLE, L_RENEWAL, L_INSURANCE, L_CONSULTFN, NOC,   ADV_PAY, AGMT_SIGND, EXPROPH_APPEFFDT)");
+                    tb.HasTrigger("PIMS_NTOUTT_I_S_I_TR");
+                    tb.HasTrigger("PIMS_NTOUTT_I_S_U_TR");
+                });
+
+            entity.Property(e => e.NotificationOutputTypeCode).HasComment("Code value of the notification output type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the notification output type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+        });
+
+        modelBuilder.Entity<PimsNotificationType>(entity =>
+        {
+            entity.HasKey(e => e.NotificationTypeCode).HasName("NOTFYT_PK");
+
+            entity.ToTable("PIMS_NOTIFICATION_TYPE", tb =>
+                {
+                    tb.HasComment("Codified description of the type of user notification  (e.g. email, PIMS application notification).");
+                    tb.HasTrigger("PIMS_NOTFYT_I_S_I_TR");
+                    tb.HasTrigger("PIMS_NOTFYT_I_S_U_TR");
+                });
+
+            entity.Property(e => e.NotificationTypeCode).HasComment("Code value of the notification type.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.Description).HasComment("Description of the notification type.");
+            entity.Property(e => e.DisplayOrder).HasComment("Designates a preferred presentation order of the code descriptions.");
+            entity.Property(e => e.IsDisabled).HasComment("Indicates if the record is disabled and therefore not selectable or displayed.");
+        });
+
+        modelBuilder.Entity<PimsNotificationUser>(entity =>
+        {
+            entity.HasKey(e => e.NotificationUserId).HasName("NOTUSR_PK");
+
+            entity.ToTable("PIMS_NOTIFICATION_USER", tb =>
+                {
+                    tb.HasComment("Catalogs the notification sent to a user.  Multiple notifications may be sent to a user.");
+                    tb.HasTrigger("PIMS_NOTUSR_A_S_IUD_TR");
+                    tb.HasTrigger("PIMS_NOTUSR_I_S_I_TR");
+                    tb.HasTrigger("PIMS_NOTUSR_I_S_U_TR");
+                });
+
+            entity.Property(e => e.NotificationUserId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTIFICATION_USER_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.NotificationId).HasComment("Foreign key to the PIMS_NOTIFICATION table.");
+            entity.Property(e => e.UserId).HasComment("Foreign key to the PIMS_USER table.");
+
+            entity.HasOne(d => d.Notification).WithMany(p => p.PimsNotificationUsers)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_NOTIFY_PIM_NOTUSR_FK");
+
+            entity.HasOne(d => d.User).WithMany(p => p.PimsNotificationUsers)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_USER_PIM_NOTUSR_FK");
+        });
+
+        modelBuilder.Entity<PimsNotificationUserHist>(entity =>
+        {
+            entity.HasKey(e => e.NotificationUserHistId).HasName("PIMS_NOTUSR_H_PK");
+
+            entity.Property(e => e.NotificationUserHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTIFICATION_USER_H_ID_SEQ])");
+            entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+        });
+
+        modelBuilder.Entity<PimsNotificationUserOutput>(entity =>
+        {
+            entity.HasKey(e => e.NotificationUserOutputId).HasName("NUTOUT_PK");
+
+            entity.ToTable("PIMS_NOTIFICATION_USER_OUTPUT", tb =>
+                {
+                    tb.HasComment("Describes the details of the notification sent the user including the sent date and read date.");
+                    tb.HasTrigger("PIMS_NUTOUT_A_S_IUD_TR");
+                    tb.HasTrigger("PIMS_NUTOUT_I_S_I_TR");
+                    tb.HasTrigger("PIMS_NUTOUT_I_S_U_TR");
+                });
+
+            entity.Property(e => e.NotificationUserOutputId)
+                .HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTIFICATION_USER_OUTPUT_ID_SEQ])")
+                .HasComment("System-generated unique surrogate primary key.");
+            entity.Property(e => e.AppCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the user created the record.");
+            entity.Property(e => e.AppCreateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that created the record.");
+            entity.Property(e => e.AppCreateUserGuid).HasComment("GUID of the user that created the record.");
+            entity.Property(e => e.AppCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that created the record.");
+            entity.Property(e => e.AppLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was updated by the user.");
+            entity.Property(e => e.AppLastUpdateUserDirectory)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("User directory of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserGuid).HasComment("GUID of the user that updated the record.");
+            entity.Property(e => e.AppLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user that updated the record.");
+            entity.Property(e => e.ConcurrencyControlNumber)
+                .HasDefaultValue(1L)
+                .HasComment("Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o");
+            entity.Property(e => e.DbCreateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created.");
+            entity.Property(e => e.DbCreateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created the record.");
+            entity.Property(e => e.DbLastUpdateTimestamp)
+                .HasDefaultValueSql("(getutcdate())")
+                .HasComment("The date and time the record was created or last updated.");
+            entity.Property(e => e.DbLastUpdateUserid)
+                .HasDefaultValueSql("(user_name())")
+                .HasComment("The user or proxy account that created or last updated the record.");
+            entity.Property(e => e.NotificationErrorDt).HasComment("The date the notification failed.");
+            entity.Property(e => e.NotificationErrorReason).HasComment("Reason the notification failed.");
+            entity.Property(e => e.NotificationOutputTypeCode).HasComment("Foreign key to the PIMS_NOTIFICATION_OUTPUT_TYPE table.");
+            entity.Property(e => e.NotificationReadDt).HasComment("Date and time that the notification was read.");
+            entity.Property(e => e.NotificationRetryCnt)
+                .HasDefaultValue((short)0)
+                .HasComment("Number of times to retry sending the notification.");
+            entity.Property(e => e.NotificationSentDt).HasComment("Date and time that the notification was sent.");
+            entity.Property(e => e.NotificationUserId).HasComment("Foreign key to the PIMS_NOTIFICATION_USER table.");
+
+            entity.HasOne(d => d.NotificationOutputTypeCodeNavigation).WithMany(p => p.PimsNotificationUserOutputs)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_NTOUTT_PIM_NUTOUT_FK");
+
+            entity.HasOne(d => d.NotificationUser).WithMany(p => p.PimsNotificationUserOutputs)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("PIM_NOTUSR_PIM_NUTOUT_FK");
+        });
+
+        modelBuilder.Entity<PimsNotificationUserOutputHist>(entity =>
+        {
+            entity.HasKey(e => e.NotificationUserOutputHistId).HasName("PIMS_NUTOUT_H_PK");
+
+            entity.Property(e => e.NotificationUserOutputHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_NOTIFICATION_USER_OUTPUT_H_ID_SEQ])");
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
         });
 
@@ -14115,12 +14453,6 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_ACQ_FILE_ACQ_PROGRESS_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACQUISITION_ACTIVITY_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACQUISITION_ACTIVITY_INSTANCE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_ACQUISITION_CHECKLIST_ITEM_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -14152,9 +14484,6 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_ACQUISITION_FILE_NOTE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACQUISITION_FILE_PERSON_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_ACQUISITION_FILE_TEAM_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -14167,42 +14496,6 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_ACQUISITION_OWNER_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACQUISITION_PAYEE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACT_INST_PROP_ACQ_FILE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACT_INST_PROP_RSRCH_FILE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACTIVITY_INSTANCE_DOCUMENT_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACTIVITY_INSTANCE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACTIVITY_INSTANCE_NOTE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACTIVITY_MODEL_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACTIVITY_MODEL_TASK_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACTIVITY_SERVICE_FILE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACTIVITY_TASK_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACTIVITY_TEMPLATE_DOCUMENT_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ACTIVITY_TEMPLATE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_ADDRESS_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -14213,27 +14506,6 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_AGREEMENT_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_ASSET_EVALUATION_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_BUILDING_CONSTRUCTION_TYPE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_BUILDING_EVALUATION_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_BUILDING_FISCAL_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_BUILDING_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_BUILDING_OCCUPANT_TYPE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_BUILDING_PREDOMINATE_USE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_BUSINESS_FUNCTION_CODE_H_ID_SEQ")
@@ -14422,22 +14694,10 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_EXPROPRIATION_VESTING_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_FILE_ENTITY_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_FILE_ENTITY_PERMISSIONS_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_FINANCIAL_ACTIVITY_CODE_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_FINANCIAL_ACTIVITY_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_FORM_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_GL_ACCOUNT_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_H120_CATEGORY_H_ID_SEQ")
@@ -14464,9 +14724,6 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_INTEREST_HOLDER_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_INTEREST_HOLDER_PROPERTY_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_INTHLDR_PROP_INTEREST_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -14474,15 +14731,6 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_L_FILE_NO_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_LEASE_ACTIVITY_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_LEASE_ACTIVITY_INSTANCE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_LEASE_ACTIVITY_PERIOD_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_LEASE_CHECKLIST_ITEM_H_ID_SEQ")
@@ -14527,16 +14775,10 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_LEASE_NOTE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_LEASE_PAYMENT_FORECAST_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_LEASE_PAYMENT_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_LEASE_PAYMENT_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_LEASE_PAYMENT_PERIOD_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_LEASE_PERIOD_H_ID_SEQ")
@@ -14551,16 +14793,10 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_LEASE_RENEWAL_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_LEASE_STAKEHOLDER_COMP_REQ_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_LEASE_STAKEHOLDER_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_LEASE_STAKEHOLDER_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_LEASE_TERM_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_MANAGEMENT_ACTIVITY_H_ID_SEQ")
@@ -14579,9 +14815,6 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_MANAGEMENT_ACTIVITY_PROPERTY_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_MANAGEMENT_FILE_ACTIVITY_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_MANAGEMENT_FILE_CONTACT_H_ID_SEQ")
@@ -14653,6 +14886,24 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_NOTICE_OF_CLAIM_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_NOTIFICATION_H_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_NOTIFICATION_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_NOTIFICATION_USER_H_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_NOTIFICATION_USER_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_NOTIFICATION_USER_OUTPUT_H_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
+        modelBuilder.HasSequence("PIMS_NOTIFICATION_USER_OUTPUT_ID_SEQ")
+            .HasMin(1L)
+            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_ORGANIZATION_ADDRESS_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -14663,12 +14914,6 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_ORGANIZATION_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_OWNER_REPRESENTATIVE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(20147483647L);
-        modelBuilder.HasSequence("PIMS_OWNER_SOLICITOR_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PERSON_ADDRESS_H_ID_SEQ")
@@ -14698,19 +14943,10 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_PRF_PROP_RESEARCH_PURPOSE_TYP_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PRODUCT_BUSINESS_FUNCTION_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PRODUCT_COST_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PRODUCT_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PRODUCT_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PRODUCT_WORK_ACTIVITY_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROJECT_DOCUMENT_H_ID_SEQ")
@@ -14731,12 +14967,6 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_PROJECT_NOTE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PROJECT_NUMBER_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PROJECT_ORGANIZATION_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROJECT_PERSON_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -14747,15 +14977,6 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROJECT_PRODUCT_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PROJECT_PROPERTY_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PROJECT_TEAM_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PROJECT_WORKFLOW_MODEL_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROP_ACQ_FL_COMP_REQ_H_ID_SEQ")
@@ -14774,9 +14995,6 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROP_LEASE_COMP_REQ_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PROP_PROP_ADJACENT_LAND_TYPE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROP_PROP_ANOMALY_TYP_H_ID_SEQ")
@@ -14827,9 +15045,6 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_PROPERTY_DOCUMENT_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PROPERTY_EVALUATION_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROPERTY_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
@@ -14870,31 +15085,16 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_PROPERTY_ORGANIZATION_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PROPERTY_PROPERTY_SERVICE_FILE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROPERTY_RESEARCH_FILE_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_PROPERTY_RESEARCH_FILE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PROPERTY_SERVICE_FILE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PROPERTY_STRUCTURE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_PROPERTY_TAX_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_REGION_USER_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_REGION_USER_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_RESEARCH_ACTIVITY_INSTANCE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_RESEARCH_FILE_DOCUMENT_H_ID_SEQ")
@@ -14925,9 +15125,6 @@ public partial class PimsBaseContext : DbContext
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_RESEARCH_FILE_PURPOSE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_RESPONSIBILITY_CENTRE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_RESPONSIBILITY_CODE_H_ID_SEQ")
@@ -14982,22 +15179,10 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_STATIC_VARIABLE_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_STRUCTURE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_TAKE_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_TAKE_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_TASK_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_TASK_TEMPLATE_ACTIVITY_MODEL_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_TASK_TEMPLATE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_TENANT_ID_SEQ")
@@ -15021,16 +15206,10 @@ public partial class PimsBaseContext : DbContext
         modelBuilder.HasSequence("PIMS_USER_ROLE_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_USER_TASK_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_WORK_ACTIVITY_CODE_H_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_WORK_ACTIVITY_ID_SEQ")
-            .HasMin(1L)
-            .HasMax(2147483647L);
-        modelBuilder.HasSequence("PIMS_WORKFLOW_MODEL_ID_SEQ")
             .HasMin(1L)
             .HasMax(2147483647L);
         modelBuilder.HasSequence("PIMS_YEARLY_FINANCIAL_CODE_H_ID_SEQ")
