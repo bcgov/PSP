@@ -29,6 +29,7 @@ export interface IAgreementContainerProps {
     | ReturnType<typeof useAgreementProvider>['deleteDispositionAgreement'];
   statusSolver: AcquisitionFileStatusUpdateSolver | DispositionStatusUpdateSolver;
   isAcquisition?: boolean;
+  isSection3?: boolean;
 }
 
 export const AgreementContainer: React.FunctionComponent<
@@ -42,6 +43,7 @@ export const AgreementContainer: React.FunctionComponent<
   deleteAgreement,
   statusSolver,
   isAcquisition,
+  isSection3,
 }) => {
   const [agreements, setAgreements] = useState<ApiGen_Concepts_Agreement[]>([]);
   const { setStaleLastUpdatedBy } = useContext(SideBarContext);
@@ -86,6 +88,7 @@ export const AgreementContainer: React.FunctionComponent<
       agreements={agreements}
       onGenerate={generateAgreement}
       onDelete={handleAgreementDeleted}
+      isSection3={isSection3}
       isFileFinalStatus={!statusSolver.canEditOrDeleteAgreement()}
     />
   ) : null;

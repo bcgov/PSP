@@ -69,6 +69,11 @@ namespace Pims.Api.Areas.Management.Models.Search
         /// </summary>
         public bool HasNoticeOfClaim { get; set; }
 
+        /// <summary>
+        /// get/set - The region types.
+        /// </summary>
+        public IList<short> Regions { get; set; } = new List<short>();
+
         #endregion
 
         #region Constructors
@@ -101,6 +106,7 @@ namespace Pims.Api.Areas.Management.Models.Search
             TeamMemberPersonId = filter.GetLongNullValue(nameof(TeamMemberPersonId));
             TeamMemberOrganizationId = filter.GetLongNullValue(nameof(TeamMemberOrganizationId));
             HasNoticeOfClaim = filter.GetBoolValue(nameof(HasNoticeOfClaim));
+            Regions = filter.GetShortArrayValue(nameof(Regions));
 
             Sort = filter.GetStringArrayValue(nameof(Sort));
         }
@@ -130,6 +136,7 @@ namespace Pims.Api.Areas.Management.Models.Search
                 TeamMemberPersonId = model.TeamMemberPersonId,
                 TeamMemberOrganizationId = model.TeamMemberOrganizationId,
                 HasNoticeOfClaim = model.HasNoticeOfClaim,
+                Regions = model.Regions,
 
                 Sort = model.Sort,
             };

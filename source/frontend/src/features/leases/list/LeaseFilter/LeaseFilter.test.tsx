@@ -8,12 +8,27 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { ILeaseFilterProps, LeaseFilter } from './LeaseFilter';
+import { FormikProps } from 'formik';
+import { LeaseFilterModel } from './models/LeaseFilterModel';
+import { createRef } from 'react';
+import { getMockLookUpsByType, mockLookups } from '@/mocks/lookups.mock';
 
-const storeState = {
-  [lookupCodesSlice.name]: { lookupCodes: [] },
-};
+import * as API from '@/constants/API';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 
 const setFilter = vi.fn();
+const onResetFilter = vi.fn();
+
+const initialLeaseStatusTypes: string[] = [
+  'ACTIVE',
+  'ARCHIVED',
+  'DISCARD',
+  'DRAFT',
+  'DUPLICATE',
+  'EXPIRED',
+  'INACTIVE',
+  'TERMINATED',
+];
 
 vi.mock('@/hooks/repositories/useUserInfoRepository');
 vi.mocked(useUserInfoRepository).mockReturnValue({
@@ -48,47 +63,64 @@ vi.mocked(useApiLeases).mockReturnValue({
   getLeaseAtTime: vi.fn(),
 });
 
-// render component under test
-const setup = async (
-  renderOptions: RenderOptions & ILeaseFilterProps = { store: storeState, setFilter },
-) => {
-  const { filter, setFilter: setFilterFn, ...rest } = renderOptions;
-  const utils = render(<LeaseFilter filter={filter} setFilter={setFilterFn} />, {
-    ...rest,
-    claims: [],
-  });
-  // wait for effects to run
-  await act(async () => {});
+const leaseStatusTypes = getMockLookUpsByType(API.LEASE_STATUS_TYPES);
+const leaseStatusOptions: MultiSelectOption[] = leaseStatusTypes.map<MultiSelectOption>(x => {
+  return { id: x.value as string, text: x.label };
+});
+const initialStatusOptions = leaseStatusOptions.filter(x => initialLeaseStatusTypes.includes(x.id));
 
-  const searchButton = utils.getByTestId('search');
-  const resetButton = utils.getByTestId('reset-button');
-  return { searchButton, resetButton, setFilter: setFilterFn, ...utils };
-};
+const mockFilterModel = new LeaseFilterModel([], initialStatusOptions);
 
 describe('Lease Filter', () => {
+  const setup = async (renderOptions: RenderOptions & { props?: Partial<ILeaseFilterProps> }) => {
+    const formikRef = createRef<FormikProps<LeaseFilterModel>>();
+    const utils = render(
+      <LeaseFilter
+        {...renderOptions.props}
+        initialValues={renderOptions.props?.initialValues ?? mockFilterModel}
+        pimsRegionsOptions={renderOptions.props?.pimsRegionsOptions ?? []}
+        leaseTeamOptions={renderOptions.props?.leaseTeamOptions ?? []}
+        leaseStatusOptions={renderOptions.props?.leaseStatusOptions ?? leaseStatusOptions}
+        leaseProgramOptions={renderOptions.props?.leaseProgramOptions ?? []}
+        setFilter={setFilter}
+        onResetFilter={onResetFilter}
+      />,
+      {
+        ...renderOptions,
+        store: {
+          [lookupCodesSlice.name]: { lookupCodes: mockLookups },
+        },
+      },
+    );
+
+    return {
+      ...utils,
+      formikRef,
+      getSearchButton: () => utils.getByTestId('search'),
+      getResetButton: () => utils.getByTestId('reset-button'),
+    };
+  };
+
   beforeEach(() => {
-    setFilter.mockClear();
+    vi.clearAllMocks();
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = await setup();
+    const { asFragment } = await setup({});
     expect(asFragment()).toMatchSnapshot();
   });
 
   it('searches by pid', async () => {
-    const { container, searchButton, setFilter } = await setup();
+    const { container, getSearchButton } = await setup({});
 
     fillInput(container, 'searchBy', 'pid', 'select');
     fillInput(container, 'pid', '123');
-    await act(async () => userEvent.click(searchButton));
+    await act(async () => userEvent.click(getSearchButton()));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining<ILeaseFilter>({
-        lFileNo: '',
+      expect.objectContaining({
         pid: '123',
-        pin: '',
         searchBy: 'pid',
-        tenantName: '',
         programs: [],
         leaseStatusTypes: [
           'ACTIVE',
@@ -100,29 +132,27 @@ describe('Lease Filter', () => {
           'INACTIVE',
           'TERMINATED',
         ],
-        expiryStartDate: '',
-        expiryEndDate: '',
-        regionType: '',
-        details: '',
-        leaseTeamOrganizationId: undefined,
+        leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
+        regions: [],
       }),
     );
   });
 
   it('searches by pin', async () => {
-    const { container, searchButton, setFilter } = await setup();
+    const { container, getSearchButton } = await setup({});
 
     fillInput(container, 'searchBy', 'pin', 'select');
     fillInput(container, 'pin', '123');
-    await act(async () => userEvent.click(searchButton));
+    await act(async () => userEvent.click(getSearchButton()));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
         pid: '',
         pin: '123',
+        historical: '',
         searchBy: 'pin',
         tenantName: '',
         programs: [],
@@ -138,9 +168,9 @@ describe('Lease Filter', () => {
         ],
         expiryStartDate: '',
         expiryEndDate: '',
-        regionType: '',
+        regions: [],
         details: '',
-        leaseTeamOrganizationId: undefined,
+        leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
       }),
@@ -148,17 +178,18 @@ describe('Lease Filter', () => {
   });
 
   it('searches by L-file number', async () => {
-    const { container, searchButton, setFilter } = await setup();
+    const { container, getSearchButton } = await setup({});
 
     fillInput(container, 'searchBy', 'lFileNo', 'select');
     fillInput(container, 'lFileNo', '123');
-    await act(async () => userEvent.click(searchButton));
+    await act(async () => userEvent.click(getSearchButton()));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '123',
         pid: '',
         pin: '',
+        historical: '',
         searchBy: 'lFileNo',
         tenantName: '',
         programs: [],
@@ -174,9 +205,9 @@ describe('Lease Filter', () => {
         ],
         expiryStartDate: '',
         expiryEndDate: '',
-        regionType: '',
+        regions: [],
         details: '',
-        leaseTeamOrganizationId: undefined,
+        leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
       }),
@@ -184,17 +215,18 @@ describe('Lease Filter', () => {
   });
 
   it('searches tenant name', async () => {
-    const { container, searchButton, setFilter } = await setup();
+    const { container, getSearchButton } = await setup({});
 
     fillInput(container, 'searchBy', 'pid', 'select');
     fillInput(container, 'tenantName', 'Chester');
-    await act(async () => userEvent.click(searchButton));
+    await act(async () => userEvent.click(getSearchButton()));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<ILeaseFilter>({
         lFileNo: '',
         pid: '',
         pin: '',
+        historical: '',
         searchBy: 'pid',
         tenantName: 'Chester',
         programs: [],
@@ -210,9 +242,9 @@ describe('Lease Filter', () => {
         ],
         expiryStartDate: '',
         expiryEndDate: '',
-        regionType: '',
+        regions: [],
         details: '',
-        leaseTeamOrganizationId: undefined,
+        leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
       }),
@@ -220,10 +252,10 @@ describe('Lease Filter', () => {
   });
 
   it('searches by lease payable/receivable', async () => {
-    const { container, searchButton, setFilter } = await setup();
+    const { container, getSearchButton } = await setup({});
 
     fillInput(container, 'isReceivable', 'true', 'select');
-    await act(async () => userEvent.click(searchButton));
+    await act(async () => userEvent.click(getSearchButton()));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<Partial<ILeaseFilter>>({
@@ -233,38 +265,12 @@ describe('Lease Filter', () => {
   });
 
   it('resets the filter when reset button is clicked', async () => {
-    const { container, resetButton, setFilter } = await setup();
+    const { container, getResetButton } = await setup({});
 
     fillInput(container, 'searchBy', 'pid', 'select');
     fillInput(container, 'pid', 'foo-bar-baz');
-    await act(async () => userEvent.click(resetButton));
+    await act(async () => userEvent.click(getResetButton()));
 
-    expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining<ILeaseFilter>({
-        lFileNo: '',
-        pid: '',
-        pin: '',
-        searchBy: 'lFileNo',
-        tenantName: '',
-        programs: [],
-        leaseStatusTypes: [
-          'ACTIVE',
-          'ARCHIVED',
-          'DISCARD',
-          'DRAFT',
-          'DUPLICATE',
-          'EXPIRED',
-          'INACTIVE',
-          'TERMINATED',
-        ],
-        expiryStartDate: '',
-        expiryEndDate: '',
-        regionType: '',
-        details: '',
-        leaseTeamOrganizationId: null,
-        leaseTeamPersonId: null,
-        isReceivable: null,
-      }),
-    );
+    expect(onResetFilter).toHaveBeenCalledTimes(1);
   });
 });

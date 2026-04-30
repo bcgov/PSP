@@ -87,6 +87,7 @@ exports[`Healthcheck View component > renders as expected 1`] = `
       class="c1"
     >
       <div
+        aria-label="System degraded icon"
         class="c2"
       >
         <svg

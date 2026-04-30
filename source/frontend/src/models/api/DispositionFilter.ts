@@ -9,4 +9,5 @@ export interface Api_DispositionFilter {
   dispositionTypeCode: string;
   teamMemberPersonId: number | null;
   teamMemberOrganizationId: number | null;
+  regions: string[];
 }

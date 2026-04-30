@@ -11,7 +11,7 @@ namespace Pims.Dal.Repositories
     {
         PimsDocument Add(PimsDocument document);
 
-        Paged<PimsDocument> GetPageDeep(DocumentSearchFilterModel filter);
+        Paged<PimsDocument> GetPageDeep(DocumentSearchFilterModel filter, DocumentAccessContext accessContext);
 
         PimsDocument TryGet(long documentId);
 

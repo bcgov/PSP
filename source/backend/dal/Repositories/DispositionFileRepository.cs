@@ -780,6 +780,7 @@ namespace Pims.Dal.Repositories
         private IQueryable<PimsDispositionFile> GetCommonDispositionFileQueryDeep(DispositionFilter filter, long? contractorPersonId = null)
         {
             filter.FileNameOrNumberOrReference = Regex.Replace(filter.FileNameOrNumberOrReference ?? string.Empty, @"^[d,D]-", string.Empty);
+
             var predicate = PredicateBuilder.New<PimsDispositionFile>(disp => true);
             if (!string.IsNullOrWhiteSpace(filter.Pid))
             {
@@ -839,6 +840,11 @@ namespace Pims.Dal.Repositories
             if (filter.TeamMemberOrganizationId.HasValue)
             {
                 predicate = predicate.And(disp => disp.PimsDispositionFileTeams.Any(x => x.OrganizationId == filter.TeamMemberOrganizationId.Value));
+            }
+
+            if (filter.Regions.Any())
+            {
+                predicate = predicate.And(x => filter.Regions.Any(r => r == x.RegionCode));
             }
 
             var query = Context.PimsDispositionFiles.AsNoTracking()

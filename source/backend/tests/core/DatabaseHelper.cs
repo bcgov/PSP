@@ -147,6 +147,7 @@ namespace Pims.Core.Test
             context.AddRange(organizationTypes);
             context.AddRange(organizationIdentifierTypes);
             context.AddRange(EntityHelper.CreateDefaultRoles());
+            context.AddRange(EntityHelper.CreateDefaultPimsLeasePayRvblTypes());
             context.AddRange(EntityHelper.CreateDefaultPropertyTypes());
             context.AddRange(EntityHelper.CreateDefaultPropertyTenureTypes());
             context.AddRange(EntityHelper.CreateDefaultPropertyStatusTypes());

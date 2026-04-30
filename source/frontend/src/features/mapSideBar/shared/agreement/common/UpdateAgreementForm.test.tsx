@@ -3,14 +3,7 @@ import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import UpdateAgreementForm, { IUpdateAgreementFormProps } from './UpdateAgreementForm';
 import { AgreementFormModel } from '../models/AgreementFormModel';
-import {
-  act,
-  RenderOptions,
-  render,
-  fillInput,
-  waitForEffects,
-  selectOptions,
-} from '@/utils/test-utils';
+import { act, RenderOptions, render, fillInput } from '@/utils/test-utils';
 
 export const organizerMock = {
   canEditOrDeleteAgreement: vi.fn(),
@@ -25,7 +18,9 @@ const mockViewProps: IUpdateAgreementFormProps = {
 };
 
 describe('UpdateAcquisitionAgreementView component', () => {
-  const setup = async (renderOptions: RenderOptions = {}) => {
+  const setup = async (
+    renderOptions: RenderOptions & { props?: Partial<IUpdateAgreementFormProps> } = {},
+  ) => {
     const utils = render(
       <UpdateAgreementForm
         isLoading={false}
@@ -33,6 +28,7 @@ describe('UpdateAcquisitionAgreementView component', () => {
         onSubmit={mockViewProps.onSubmit}
         onCancel={mockViewProps.onCancel}
         fileType={mockViewProps.fileType}
+        isSection3={renderOptions?.props?.isSection3 ?? false}
       />,
       {
         store: {
@@ -46,6 +42,10 @@ describe('UpdateAcquisitionAgreementView component', () => {
 
     return {
       ...utils,
+      getAdvancePaymentDatePicker: () =>
+        utils.container.querySelector(`input[name="advancePaymentDate"]`) as HTMLInputElement,
+      getAgreementSignedDatePicker: () =>
+        utils.container.querySelector(`input[name="agreementSignedDate"]`) as HTMLInputElement,
     };
   };
 
@@ -72,5 +72,27 @@ describe('UpdateAcquisitionAgreementView component', () => {
     });
 
     expect(getByText(/Cancellation reason/i)).toBeVisible();
+  });
+
+  it('displays section 3 "Advance payment" and "Signed Date"', async () => {
+    const { getAdvancePaymentDatePicker, getAgreementSignedDatePicker } = await setup({
+      props: {
+        isSection3: true,
+      },
+    });
+
+    expect(getAdvancePaymentDatePicker()).toBeInTheDocument();
+    expect(getAgreementSignedDatePicker()).toBeInTheDocument();
+  });
+
+  it('hides section 3 "Advance payment" and "Signed Date"', async () => {
+    const { getAdvancePaymentDatePicker, getAgreementSignedDatePicker } = await setup({
+      props: {
+        isSection3: false,
+      },
+    });
+
+    expect(getAdvancePaymentDatePicker()).not.toBeInTheDocument();
+    expect(getAgreementSignedDatePicker()).not.toBeInTheDocument();
   });
 });

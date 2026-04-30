@@ -13,6 +13,10 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
 
         public CodeTypeModel<string> AgreementStatusType { get; set; }
 
+        public DateOnly? AdvancePaymentDate { get; set; }
+
+        public DateOnly? AgreementSignedDate { get; set; }
+
         public DateOnly? AgreementDate { get; set; }
 
         public bool? IsDraft { get; set; }

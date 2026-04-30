@@ -370,6 +370,9 @@ public partial class PimsAcquisitionFile
     public virtual ICollection<PimsNoticeOfClaim> PimsNoticeOfClaims { get; set; } = new List<PimsNoticeOfClaim>();
 
     [InverseProperty("AcquisitionFile")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
+
+    [InverseProperty("AcquisitionFile")]
     public virtual ICollection<PimsPropertyAcquisitionFile> PimsPropertyAcquisitionFiles { get; set; } = new List<PimsPropertyAcquisitionFile>();
 
     [ForeignKey("PrntAcquisitionFileId")]

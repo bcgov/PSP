@@ -53,6 +53,12 @@ namespace Pims.Api.Areas.Disposition.Models.Search
         /// get/set - The MOTI Organization id to search by for disposition team members.
         /// </summary>
         public long? TeamMemberOrganizationId { get; set; }
+
+        /// <summary>
+        /// get/set - The region types.
+        /// </summary>
+        public IList<int> Regions { get; set; } = new List<int>();
+
         #endregion
 
         #region Constructors
@@ -74,15 +80,16 @@ namespace Pims.Api.Areas.Disposition.Models.Search
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
-            this.Pid = filter.GetStringValue(nameof(this.Pid));
-            this.Pin = filter.GetStringValue(nameof(this.Pin));
-            this.Address = filter.GetStringValue(nameof(this.Address));
-            this.FileNameOrNumberOrReference = filter.GetStringValue(nameof(this.FileNameOrNumberOrReference));
-            this.DispositionFileStatusCode = filter.GetStringValue(nameof(this.DispositionFileStatusCode));
-            this.DispositionStatusCode = filter.GetStringValue(nameof(this.DispositionStatusCode));
-            this.DispositionTypeCode = filter.GetStringValue(nameof(this.DispositionTypeCode));
-            this.TeamMemberPersonId = filter.GetLongNullValue(nameof(this.TeamMemberPersonId));
-            this.TeamMemberOrganizationId = filter.GetLongNullValue(nameof(this.TeamMemberOrganizationId));
+            Pid = filter.GetStringValue(nameof(this.Pid));
+            Pin = filter.GetStringValue(nameof(this.Pin));
+            Address = filter.GetStringValue(nameof(this.Address));
+            FileNameOrNumberOrReference = filter.GetStringValue(nameof(this.FileNameOrNumberOrReference));
+            DispositionFileStatusCode = filter.GetStringValue(nameof(this.DispositionFileStatusCode));
+            DispositionStatusCode = filter.GetStringValue(nameof(this.DispositionStatusCode));
+            DispositionTypeCode = filter.GetStringValue(nameof(this.DispositionTypeCode));
+            TeamMemberPersonId = filter.GetLongNullValue(nameof(this.TeamMemberPersonId));
+            TeamMemberOrganizationId = filter.GetLongNullValue(nameof(this.TeamMemberOrganizationId));
+            Regions = filter.GetIntArrayValue(nameof(Regions));
 
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
         }
@@ -110,6 +117,7 @@ namespace Pims.Api.Areas.Disposition.Models.Search
                 DispositionTypeCode = model.DispositionTypeCode,
                 TeamMemberPersonId = model.TeamMemberPersonId,
                 TeamMemberOrganizationId = model.TeamMemberOrganizationId,
+                Regions = model.Regions,
 
                 Sort = model.Sort,
             };

@@ -128,7 +128,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyChecklistInitViewForm()
         {
-            Wait();
+            WaitUntilVisible(checklistFileInitiationTitle);
 
             AssertTrueIsDisplayed(checklistFileInitiationTitle);
             AssertTrueIsDisplayed(checklistFileInitiation1Label);
@@ -329,25 +329,25 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateChecklist(LeaseChecklist checklist)
         {
-            Wait();
+            WaitUntilClickable(checklistFileInitiationItem1Select);
 
             if (checklist.FileInitiationSelect1 != "")
-                ChooseSpecificSelectOption(checklistFileInitiationItem1Select, checklist.FileInitiationSelect1);
+                ChooseSelectOption(checklistFileInitiationItem1Select, checklist.FileInitiationSelect1);
             if (checklist.FileInitiationSelect2 != "")
-                ChooseSpecificSelectOption(checklistFileInitiationItem2Select, checklist.FileInitiationSelect2);
+                ChooseSelectOption(checklistFileInitiationItem2Select, checklist.FileInitiationSelect2);
             if (checklist.FileInitiationSelect3 != "")
-                ChooseSpecificSelectOption(checklistFileInitiationItem3Select, checklist.FileInitiationSelect3);
+                ChooseSelectOption(checklistFileInitiationItem3Select, checklist.FileInitiationSelect3);
             if (checklist.FileInitiationSelect4 != "")
-                ChooseSpecificSelectOption(checklistFileInitiationItem4Select, checklist.FileInitiationSelect4);
+                ChooseSelectOption(checklistFileInitiationItem4Select, checklist.FileInitiationSelect4);
             if (checklist.FileInitiationSelect5 != "")
-                ChooseSpecificSelectOption(checklistFileInitiationItem5Select, checklist.FileInitiationSelect5);
+                ChooseSelectOption(checklistFileInitiationItem5Select, checklist.FileInitiationSelect5);
             if (checklist.FileInitiationSelect6 != "")
-                ChooseSpecificSelectOption(checklistFileInitiationItem6Select, checklist.FileInitiationSelect6);
+                ChooseSelectOption(checklistFileInitiationItem6Select, checklist.FileInitiationSelect6);
 
             if (checklist.ReferralsApprovalsSelect1 != "")
-                ChooseSpecificSelectOption(checklistReferralsApprovals1Select, checklist.ReferralsApprovalsSelect1);
+                ChooseSelectOption(checklistReferralsApprovals1Select, checklist.ReferralsApprovalsSelect1);
             if (checklist.ReferralsApprovalsSelect2 != "")
-                ChooseSpecificSelectOption(checklistReferralsApprovals2Select, checklist.ReferralsApprovalsSelect2);
+                ChooseSelectOption(checklistReferralsApprovals2Select, checklist.ReferralsApprovalsSelect2);
             //if (checklist.ReferralsApprovalsSelect3 != "")
             //    ChooseSpecificSelectOption(checklistReferralsApprovals3Select, checklist.ReferralsApprovalsSelect3);
             //if (checklist.ReferralsApprovalsSelect4 != "")
@@ -362,43 +362,41 @@ namespace PIMS.Tests.Automation.PageObjects
             //    ChooseSpecificSelectOption(checklistReferralsApprovals8Select, checklist.ReferralsApprovalsSelect8);
 
             if (checklist.AgreementPreparationSelect1 != "")
-                ChooseSpecificSelectOption(checklistAgreementPreparation1Select, checklist.AgreementPreparationSelect1);
+                ChooseSelectOption(checklistAgreementPreparation1Select, checklist.AgreementPreparationSelect1);
             if (checklist.AgreementPreparationSelect2 != "")
-                ChooseSpecificSelectOption(checklistAgreementPreparation2Select, checklist.AgreementPreparationSelect2);
+                ChooseSelectOption(checklistAgreementPreparation2Select, checklist.AgreementPreparationSelect2);
             if (checklist.AgreementPreparationSelect3 != "")
-                ChooseSpecificSelectOption(checklistAgreementPreparation3Select, checklist.AgreementPreparationSelect3);
+                ChooseSelectOption(checklistAgreementPreparation3Select, checklist.AgreementPreparationSelect3);
             if (checklist.AgreementPreparationSelect4 != "")
-                ChooseSpecificSelectOption(checklistAgreementPreparation4Select, checklist.AgreementPreparationSelect4);
+                ChooseSelectOption(checklistAgreementPreparation4Select, checklist.AgreementPreparationSelect4);
             if (checklist.AgreementPreparationSelect5 != "")
-                ChooseSpecificSelectOption(checklistAgreementPreparation5Select, checklist.AgreementPreparationSelect5);
+                ChooseSelectOption(checklistAgreementPreparation5Select, checklist.AgreementPreparationSelect5);
             if (checklist.AgreementPreparationSelect6 != "")
-                ChooseSpecificSelectOption(checklistAgreementPreparation6Select, checklist.AgreementPreparationSelect6);
+                ChooseSelectOption(checklistAgreementPreparation6Select, checklist.AgreementPreparationSelect6);
             if (checklist.AgreementPreparationSelect7 != "")
-                ChooseSpecificSelectOption(checklistAgreementPreparation7Select, checklist.AgreementPreparationSelect7);
+                ChooseSelectOption(checklistAgreementPreparation7Select, checklist.AgreementPreparationSelect7);
             if (checklist.AgreementPreparationSelect8 != "")
-                ChooseSpecificSelectOption(checklistAgreementPreparation8Select, checklist.AgreementPreparationSelect8);
+                ChooseSelectOption(checklistAgreementPreparation8Select, checklist.AgreementPreparationSelect8);
             if (checklist.AgreementPreparationSelect9 != "")
-                ChooseSpecificSelectOption(checklistAgreementPreparation9Select, checklist.AgreementPreparationSelect9);
+                ChooseSelectOption(checklistAgreementPreparation9Select, checklist.AgreementPreparationSelect9);
             if (checklist.AgreementPreparationSelect10 != "")
-                ChooseSpecificSelectOption(checklistAgreementPreparation10Select, checklist.AgreementPreparationSelect10);
+                ChooseSelectOption(checklistAgreementPreparation10Select, checklist.AgreementPreparationSelect10);
             if (checklist.AgreementPreparationSelect11 != "")
-                ChooseSpecificSelectOption(checklistAgreementPreparation11Select, checklist.AgreementPreparationSelect11);
+                ChooseSelectOption(checklistAgreementPreparation11Select, checklist.AgreementPreparationSelect11);
             if (checklist.AgreementPreparationSelect12 != "")
-                ChooseSpecificSelectOption(checklistAgreementPreparation12Select, checklist.AgreementPreparationSelect12);
+                ChooseSelectOption(checklistAgreementPreparation12Select, checklist.AgreementPreparationSelect12);
             if (checklist.AgreementPreparationSelect13 != "")
-                ChooseSpecificSelectOption(checklistAgreementPreparation13Select, checklist.AgreementPreparationSelect13);
+                ChooseSelectOption(checklistAgreementPreparation13Select, checklist.AgreementPreparationSelect13);
 
             if (checklist.LeaseLicenceCompletionSelect1 != "")
-                ChooseSpecificSelectOption(checklistLeaseLicenseCompletion1Select, checklist.LeaseLicenceCompletionSelect1);
+                ChooseSelectOption(checklistLeaseLicenseCompletion1Select, checklist.LeaseLicenceCompletionSelect1);
             if (checklist.LeaseLicenceCompletionSelect2 != "")
-                ChooseSpecificSelectOption(checklistLeaseLicenseCompletion2Select, checklist.LeaseLicenceCompletionSelect2);
+                ChooseSelectOption(checklistLeaseLicenseCompletion2Select, checklist.LeaseLicenceCompletionSelect2);
         }
 
         public void SaveLeaseChecklist()
         {
-            Wait();
             ButtonElement("Save");
-
             AssertTrueIsDisplayed(checklistEditBttn);
         }
     }

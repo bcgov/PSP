@@ -65,6 +65,8 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
   const getProperties = acquisitionProvider.getAcquisitionProperties;
   const getAgreements = agreementProvider.getAcquisitionAgreements;
   const deleteAgreement = agreementProvider.deleteAcquisitionAgreement;
+  const isSection3 =
+    acquisitionFile?.acquisitionTypeCode?.id === ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN3;
 
   const setActiveTab = (tab: FileTabType) => {
     if (activeTab !== tab) {
@@ -112,6 +114,7 @@ export const AcquisitionFileTabs: React.FC<IAcquisitionFileTabsProps> = ({
           deleteAgreement={deleteAgreement}
           statusSolver={solverStatus}
           isAcquisition={true}
+          isSection3={isSection3}
         />
       ),
       key: FileTabType.AGREEMENTS,

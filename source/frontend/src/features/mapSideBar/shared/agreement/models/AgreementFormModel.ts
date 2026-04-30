@@ -1,9 +1,12 @@
+import { ApiGen_CodeTypes_AcquisitionFileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionFileTypeTypes';
 import { ApiGen_Concepts_Agreement } from '@/models/api/generated/ApiGen_Concepts_Agreement';
 import { stringToNull, stringToNumber, toTypeCodeNullable } from '@/utils/formUtils';
 
 export class AgreementFormModel {
   public agreementTypeCode: string | null = null;
   public agreementTypeDescription: string | null = null;
+  public advancePaymentDate: string | null = null;
+  public agreementSignedDate: string | null = null;
   public agreementDate: string | null = null;
   public completionDate: string | null = null;
   public terminationDate: string | null = null;
@@ -67,6 +70,14 @@ export class AgreementFormModel {
       agreementId: this.agreementId,
       fileId: this.fileId,
       agreementType: toTypeCodeNullable(this.agreementTypeCode),
+      advancePaymentDate:
+        this.agreementTypeCode === ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN3
+          ? stringToNull(this.advancePaymentDate)
+          : null,
+      agreementSignedDate:
+        this.agreementTypeCode === ApiGen_CodeTypes_AcquisitionFileTypeTypes.SECTN3
+          ? stringToNull(this.agreementSignedDate)
+          : null,
       agreementDate: stringToNull(this.agreementDate),
       agreementStatusType: toTypeCodeNullable(this.agreementStatusTypeCode),
       completionDate: stringToNull(this.completionDate),

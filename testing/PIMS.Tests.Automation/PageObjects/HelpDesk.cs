@@ -33,13 +33,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToHelpDesk()
         {
-            Wait();
+            WaitUntilClickable(mainMenuHelpDeskBttn);
             FocusAndClick(mainMenuHelpDeskBttn);
         }
 
         public void VerifyHelpDeskModal()
         {
-            Wait();
+            WaitUntilVisible(mainMenuHeader);
 
             AssertTrueContentEquals(mainMenuHeader, "Help Desk");
 

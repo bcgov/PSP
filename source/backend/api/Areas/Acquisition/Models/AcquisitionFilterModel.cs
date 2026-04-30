@@ -59,6 +59,11 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
         /// </summary>
         public bool HasNoticeOfClaim { get; set; }
 
+        /// <summary>
+        /// get/set - The region types.
+        /// </summary>
+        public IList<int> Regions { get; set; } = new List<int>();
+
         #endregion
 
         #region Constructors
@@ -90,6 +95,7 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
             AcquisitionTeamMemberPersonId = filter.GetStringValue(nameof(AcquisitionTeamMemberPersonId));
             AcquisitionTeamMemberOrganizationId = filter.GetStringValue(nameof(AcquisitionTeamMemberOrganizationId));
             HasNoticeOfClaim = filter.GetBoolValue(nameof(HasNoticeOfClaim));
+            Regions = filter.GetIntArrayValue(nameof(Regions));
 
             Sort = filter.GetStringArrayValue(nameof(Sort));
         }
@@ -118,6 +124,7 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
                 AcquisitionTeamMemberPersonId = model.AcquisitionTeamMemberPersonId,
                 AcquisitionTeamMemberOrganizationId = model.AcquisitionTeamMemberOrganizationId,
                 HasNoticeOfClaim = model.HasNoticeOfClaim,
+                Regions = model.Regions,
 
                 Sort = model.Sort,
             };

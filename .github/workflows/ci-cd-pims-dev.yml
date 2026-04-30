@@ -315,6 +315,9 @@ jobs:
   database-upgrade:
     name: Upgrade database
     needs: [deploy]
+    if: |
+      always() &&
+      needs.deploy.result == 'success'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -330,7 +333,7 @@ jobs:
         shell: bash
         run: |
           JOB_NAME=$(oc process -f ./openshift/4.0/templates/jobs/db-deploy.yaml -p DB_SECRET_NAME=pims-database -p GIT_BRANCH=dev -p SERVER_NAME=sqldevtst.th.gov.bc.ca -p DB_NAME=PIMS_DEV -p NAMESPACE=3cd915-dev | oc create -f - | grep -oP "(?<=job\.batch/)[^\s]*")
-          oc wait --for=condition=complete job/$JOB_NAME --timeout=120s
+          oc wait --for=condition=complete job/$JOB_NAME --timeout=300s
           oc get pods -o custom-columns=POD:.metadata.name --no-headers | grep -Eo $JOB_NAME-[^\s].* | (read POD_NAME; oc logs $POD_NAME)
 
   ## Call the mayan sync task three times, once for each mayan sync endpoint. The task will wait for the job to complete before exiting.
@@ -338,6 +341,9 @@ jobs:
   mayan-sync:
     name: sync mayan
     needs: database-upgrade
+    if: |
+      always() &&
+      needs.database-upgrade.result == 'success'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -352,14 +358,17 @@ jobs:
       - name: call scripts to sync mayan
         shell: bash
         run: |
-          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-dev-only-4700 -p MAYAN_SYNC_URL=https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/mayan/metadatatype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
-          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-dev-only-4700 -p MAYAN_SYNC_URL=https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
-          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-dev-only-4700 -p MAYAN_SYNC_URL=https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=80s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-dev-only-4700 -p MAYAN_SYNC_URL=https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/mayan/metadatatype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=300s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-dev-only-4700 -p MAYAN_SYNC_URL=https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/documenttype -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=300s)
+          oc process -f ./openshift/4.0/templates/jobs/mayan-sync.yaml -p NAMESPACE=3cd915-dev -p TOKEN_URL=https://dev.loginproxy.gov.bc.ca:443/auth/realms/standard/protocol/openid-connect/token -p CLIENT_ID=property-services-project-api-dev-only-4700 -p MAYAN_SYNC_URL=https://pims-app-3cd915-dev.apps.silver.devops.gov.bc.ca:443/api/documents/sync/mayan -p KEYCLOAK_SECRET_NAME=pims-api-sso | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read TASK_NAME; oc wait --for=condition=succeeded taskruns/$TASK_NAME --timeout=300s)
 
   ## Call the tekton pipeline that executes the keycloak sync. Dependent on the pims-api being accessible. Can run in parallel with the mayan sync.
   keycloak-sync:
     name: sync keycloak
     needs: database-upgrade
+    if: |
+      always() &&
+      needs.database-upgrade.result == 'success'
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -374,12 +383,13 @@ jobs:
       - name: call scripts to sync keycloak
         shell: bash
         run: |
-          oc process -f ./openshift/4.0/templates/jobs/keycloak-sync-pipeline-run.yaml -p ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT -p NAMESPACE=3cd915-dev -p BRANCH=$DESTINATION -p API_URL=http://pims-api-dev:8080/api  | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read PIPELINE_NAME; oc wait --for=condition=succeeded pipelineruns/$PIPELINE_NAME --timeout=500s)
+          oc process -f ./openshift/4.0/templates/jobs/keycloak-sync-pipeline-run.yaml -p ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT -p NAMESPACE=3cd915-dev -p BRANCH=$DESTINATION -p API_URL=http://pims-api-dev:8080/api  | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read PIPELINE_NAME; oc wait --for=condition=succeeded pipelineruns/$PIPELINE_NAME --timeout=1200s)
 
   ci-cd-end-notification:
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-22.04
     needs: keycloak-sync
+    if: always()
     steps:
       - name: check workflow status
         uses: martialonline/workflow-status@326830cacf79872efe767e15031f58d1ea0508c4 # v4.2
