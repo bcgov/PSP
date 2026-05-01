@@ -1,0 +1,22 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 16
+VisualStudioVersion = 16.0.34729.46
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{C9674DCB-5085-4A16-B785-4C70DD1589BD}") = "IPS_PIMS", "IPS_PIMS.dtproj", "{D015F599-102C-4F99-8DB6-5E8F74D88564}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Development|Default = Development|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{D015F599-102C-4F99-8DB6-5E8F74D88564}.Development|Default.ActiveCfg = Development
+		{D015F599-102C-4F99-8DB6-5E8F74D88564}.Development|Default.Build.0 = Development
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {81EB754F-2A78-4B7E-9437-B5DC19ED006A}
+	EndGlobalSection
+EndGlobal
