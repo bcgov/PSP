@@ -76,8 +76,8 @@ export const ReminderPopoverContent: FC<IReminderPopoverContentProps> = ({
   };
 
   return (
-    <div>
-      <StyledDatePicker
+    <StyledGroup>
+      <DatePicker
         showIcon
         selected={exists(pickedDate) ? moment(pickedDate, 'YYYY-MM-DD').toDate() : null}
         dateFormat="MMM dd, yyyy"
@@ -87,6 +87,7 @@ export const ReminderPopoverContent: FC<IReminderPopoverContentProps> = ({
         scrollableYearDropdown
         yearDropdownItemNumber={10}
         wrapperClassName="d-block"
+        className="form-control date-picker"
         onChange={handleChange}
       />
       {exists(label) && <StyledReminderLabelText>{label}</StyledReminderLabelText>}
@@ -98,17 +99,18 @@ export const ReminderPopoverContent: FC<IReminderPopoverContentProps> = ({
           Remove reminder
         </StyledRemoveButton>
       )}
-    </div>
+    </StyledGroup>
   );
 };
 
 export default ReminderPopoverContent;
 
 // Move datepicker icon to the right and adjust padding on the input to prevent overlap.
-const StyledDatePicker = styled(DatePicker)`
-  .react-datepicker__view-calendar-icon {
-    input {
+const StyledGroup = styled.div`
+  .react-datepicker-wrapper {
+    .react-datepicker__view-calendar-icon input {
       padding: 0.8rem 1.2rem 0.8rem 1.2rem;
+      border: 0.1rem solid #606060;
     }
 
     .react-datepicker__calendar-icon {
@@ -124,13 +126,12 @@ const StyledDatePicker = styled(DatePicker)`
 `;
 
 const StyledReminderLabelText = styled.div`
-  font-size: 0.8rem;
-  color: #2471a3;
-  background: #eaf4fb;
-  border: 1px solid #aed6f1;
-  border-radius: 4px;
-  padding: 6px 10px;
-  margin-top: 8px;
+  font-size: 1rem;
+  color: ${props => props.theme.css.calloutSuccessColor};
+  background: ${props => props.theme.css.calloutSuccessBackground};
+  border-radius: 0.5rem;
+  padding: 1rem 1.6rem;
+  margin-top: 0.8rem;
   line-height: 1.4;
 `;
 
