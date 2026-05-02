@@ -13,12 +13,16 @@
   borderOutlineColor: $border-outline-color;
 
   // Colors
-  pimsGreen80: $pims-green-80;
   pimsWhite: $pims-white;
   pimsBlue10: $pims-blue-10;
   pimsBlue200: $pims-blue-200;
   pimsGrey80: $pims-grey-80;
   pimsRed80: $pims-red-80;
+  pimsGreen10: $pims-green-10;
+  pimsGreen20: $pims-green-20;
+  pimsGreen60: $pims-green-60;
+  pimsGreen80: $pims-green-80;
+  pimsGreen90: $pims-green-90;
   warningBackgroundColor: $warning-background-color;
   numberBackgroundColor: $number-background-color;
   dangerBackgroundColor: $danger-background-color;
@@ -51,4 +55,7 @@
   uploadFileCheckColor: $upload-file-check-color;
   iconBlueAction: $icons-color-secondary;
   iconBlueHover: $icons-hover-secondary;
+
+  calloutSuccessColor: $callout-success-color;
+  calloutSuccessBackground: $callout-success-background;
 }

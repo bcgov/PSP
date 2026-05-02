@@ -78,7 +78,6 @@ export const ReminderButton: FC<IReminderButtonProps> = ({
 
   const popover = (
     <StyledPopover id={`reminder-popover-${keyDateLabel}`}>
-      <Popover.Title as="h3">{`Set Reminder — ${keyDateLabel}`}</Popover.Title>
       <Popover.Content>
         <ReminderPopoverContent
           keyDate={keyDate}
@@ -172,8 +171,11 @@ const StyledBadgeDot = styled.span`
 
 const StyledPopover = styled(Popover)`
   min-width: 300px;
-  box-shadow: 0 4px 18px rgba(0, 0, 0, 0.14);
+  box-shadow: 5px 5px 5px rgba(0, 0, 0, 0.14);
   border: 1px solid #c8d6e0;
-  border-radius: 6px;
-  font-family: 'Segoe UI', Arial, sans-serif;
+  border-radius: 20px;
+  padding: 0.8rem;
+  font-family: inherit; /* Inherit font from parent */
+  font-size: inherit;
+  font-weight: normal;
 `;
