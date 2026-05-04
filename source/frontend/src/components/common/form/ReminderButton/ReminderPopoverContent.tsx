@@ -1,10 +1,13 @@
 import moment from 'moment';
 import { FC, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import Button from 'react-bootstrap/Button';
 import DatePicker from 'react-datepicker';
-import { IoAlarm } from 'react-icons/io5';
+import { FaTrash } from 'react-icons/fa';
+import { IoCheckmarkCircleOutline } from 'react-icons/io5';
 import styled from 'styled-components';
 
+import AlarmIcon from '@/assets/images/alarm-clock-solid-full.svg?react';
 import { differenceInDays, exists, prettyFormatDate } from '@/utils';
 
 export interface IReminderPopoverContentProps {
@@ -34,20 +37,30 @@ export interface IReminderPopoverContentProps {
  * Builds the contextual label that tells the user how many days before/after
  * the key date the reminder will fire.  Returns null until a date is chosen.
  */
-export function buildReminderLabel(reminderDate: string, keyDate: string): string | null {
+export function buildReminderLabel(reminderDate: string, keyDate: string): JSX.Element | null {
   if (!exists(reminderDate) || !exists(keyDate)) {
     return null;
   }
 
   const diff = differenceInDays(keyDate, reminderDate);
   if (diff === 0) {
-    return `Reminder is set on the same day as the key date (${prettyFormatDate(keyDate)}).`;
+    return (
+      <span>
+        Reminder is set on the <b>same day</b> as the key date ({prettyFormatDate(keyDate)}).
+      </span>
+    );
   }
   const direction = diff > 0 ? 'before' : 'after';
   const absDiff = Math.abs(diff);
-  return `Reminder is set to ${absDiff} day${
-    absDiff !== 1 ? 's' : ''
-  } ${direction} ${prettyFormatDate(keyDate)}.`;
+  return (
+    <span>
+      Reminder is set to{' '}
+      <b>
+        {absDiff} day{absDiff !== 1 ? 's' : ''}
+      </b>{' '}
+      {direction} {prettyFormatDate(keyDate)}.
+    </span>
+  );
 }
 
 /**
@@ -62,7 +75,7 @@ export const ReminderPopoverContent: FC<IReminderPopoverContentProps> = ({
 }) => {
   const [pickedDate, setPickedDate] = useState<string | null>(existingReminderDate ?? null);
 
-  const label: string | null = buildReminderLabel(pickedDate, keyDate);
+  const label = buildReminderLabel(pickedDate, keyDate);
 
   const handleSave = (): void => {
     if (exists(pickedDate)) {
@@ -90,15 +103,32 @@ export const ReminderPopoverContent: FC<IReminderPopoverContentProps> = ({
         className="form-control date-picker"
         onChange={handleChange}
       />
-      {exists(label) && <StyledReminderLabelText>{label}</StyledReminderLabelText>}
-      <StyledSetReminderButton size="sm" disabled={!pickedDate} onClick={handleSave}>
-        <IoAlarm size={16} aria-hidden="true" /> Set Reminder
-      </StyledSetReminderButton>
-      {exists(existingReminderDate) && (
-        <StyledRemoveButton type="button" onClick={onRemove}>
-          Remove reminder
-        </StyledRemoveButton>
+      {exists(label) && (
+        <StyledReminderLabelText>
+          <IoCheckmarkCircleOutline size="1.6rem" aria-hidden="true" />
+          <span>{label}</span>
+        </StyledReminderLabelText>
       )}
+      <Row className="no-gutters">
+        <Col xs="6">
+          <StyledReminderButton
+            variant="link"
+            disabled={!pickedDate}
+            onClick={handleSave}
+            aria-label="Set reminder"
+          >
+            <AlarmIcon width="1.6rem" height="1.6rem" aria-hidden="true" fill="currentColor" /> Set
+            Reminder
+          </StyledReminderButton>
+        </Col>
+        <Col xs="6" className="d-flex justify-content-end">
+          {exists(existingReminderDate) && (
+            <StyledRemoveButton type="button" onClick={onRemove} aria-label="Remove reminder">
+              <FaTrash size="1.6rem" />
+            </StyledRemoveButton>
+          )}
+        </Col>
+      </Row>
     </StyledGroup>
   );
 };
@@ -126,33 +156,43 @@ const StyledGroup = styled.div`
 `;
 
 const StyledReminderLabelText = styled.div`
-  font-size: 1rem;
+  display: flex;
+  align-items: center;
+  gap: 0.9rem;
   color: ${props => props.theme.css.calloutSuccessColor};
   background: ${props => props.theme.css.calloutSuccessBackground};
   border-radius: 0.5rem;
-  padding: 1rem 1.6rem;
+  padding: 0.8rem;
   margin-top: 0.8rem;
   line-height: 1.4;
+
+  span {
+    font-size: 0.875rem;
+  }
 `;
 
-const StyledSetReminderButton = styled(Button)`
+const StyledReminderButton = styled(Button)`
   && {
-    background: #1a5276;
-    border-color: #1a5276;
-    font-size: 0.85rem;
-    padding: 5px 14px;
-    margin-top: 10px;
+    display: flex;
+    align-items: center;
+    gap: 0.4rem;
+    color: ${props => props.theme.css.linkColor};
+    border: none;
     width: 100%;
+    text-align: left;
+    font-size: 1.25rem;
+    font-weight: bold;
+    margin-top: 0.5rem;
 
     &:hover,
-    &:focus {
-      background: #154360;
-      border-color: #154360;
+    &:focus,
+    &:active {
+      color: ${props => props.theme.css.linkHoverColor};
+      border: none;
+      box-shadow: none;
     }
 
     &:disabled {
-      background: #1a5276;
-      border-color: #1a5276;
       opacity: 0.5;
     }
   }
@@ -160,18 +200,16 @@ const StyledSetReminderButton = styled(Button)`
 
 const StyledRemoveButton = styled.button`
   font-size: 0.78rem;
-  color: #922b21;
+  color: ${props => props.theme.css.pimsRed100};
   background: none;
   border: none;
   padding: 0;
   margin-top: 6px;
-  text-decoration: underline;
   cursor: pointer;
-  display: block;
-  width: 100%;
+  display: flex;
   text-align: center;
 
   &:hover {
-    color: #641e16;
+    color: ${props => props.theme.css.pimsRed200};
   }
 `;

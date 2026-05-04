@@ -1,4 +1,5 @@
 import { Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
@@ -32,15 +33,17 @@ export const LeaseRenewalsView: React.FunctionComponent<ILeaseRenewalsViewProps>
               </SectionField>
             </Col>
             <Col>
-              <SectionField label="Expiry" valueClassName="d-flex align-items-top">
-                {prettyFormatDate(renewal.expiryDt)}
-                <ReminderContainer
-                  keyDate={renewal.expiryDt}
-                  keyDateLabel="Lease RenewalExpiry"
-                  notificationType={ApiGen_CodeTypes_NotificationTypes.L_RENEWAL}
-                  notificationSource={{ leaseId: renewal.leaseId, leaseRenewalId: renewal.id }}
-                  View={ReminderView}
-                />
+              <SectionField label="Expiry">
+                <StyledReminderContent>
+                  {prettyFormatDate(renewal.expiryDt)}
+                  <ReminderContainer
+                    keyDate={renewal.expiryDt}
+                    keyDateLabel="Lease RenewalExpiry"
+                    notificationType={ApiGen_CodeTypes_NotificationTypes.L_RENEWAL}
+                    notificationSource={{ leaseId: renewal.leaseId, leaseRenewalId: renewal.id }}
+                    View={ReminderView}
+                  />
+                </StyledReminderContent>
               </SectionField>
             </Col>
           </Row>
@@ -52,3 +55,10 @@ export const LeaseRenewalsView: React.FunctionComponent<ILeaseRenewalsViewProps>
     </Section>
   );
 };
+
+const StyledReminderContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  gap: 1.2rem;
+`;
