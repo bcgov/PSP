@@ -20,3 +20,4 @@ etl/**/obj
 *.bak
 *._*
 tools/geoserver/geoserver_data/psp/mssql/*
+.claude/

@@ -1,7 +1,11 @@
 import { Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
+import ReminderContainer from '@/features/notifications/ReminderContainer';
+import { ReminderView } from '@/features/notifications/ReminderView';
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { prettyFormatDate } from '@/utils';
 import { booleanToYesNoUnknownString } from '@/utils/formUtils';
@@ -29,7 +33,18 @@ export const LeaseRenewalsView: React.FunctionComponent<ILeaseRenewalsViewProps>
               </SectionField>
             </Col>
             <Col>
-              <SectionField label="Expiry">{prettyFormatDate(renewal.expiryDt)}</SectionField>
+              <SectionField label="Expiry">
+                <StyledReminderContent>
+                  {prettyFormatDate(renewal.expiryDt)}
+                  <ReminderContainer
+                    keyDate={renewal.expiryDt}
+                    keyDateLabel="Lease RenewalExpiry"
+                    notificationType={ApiGen_CodeTypes_NotificationTypes.L_RENEWAL}
+                    notificationSource={{ leaseId: renewal.leaseId, leaseRenewalId: renewal.id }}
+                    View={ReminderView}
+                  />
+                </StyledReminderContent>
+              </SectionField>
             </Col>
           </Row>
           <SectionField label="Comments" labelWidth={{ xs: 3 }}>
@@ -40,3 +55,10 @@ export const LeaseRenewalsView: React.FunctionComponent<ILeaseRenewalsViewProps>
     </Section>
   );
 };
+
+const StyledReminderContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  gap: 1.2rem;
+`;
