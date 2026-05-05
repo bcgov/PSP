@@ -388,7 +388,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter)
+        public Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter, long? contractorPersonId = null)
         {
             using var scope = Logger.QueryScope();
 
@@ -398,7 +398,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            var query = GetCommonManagementFileQueryDeep(filter);
+            var query = GetCommonManagementFileQueryDeep(filter, contractorPersonId);
 
             var skip = (filter.Page - 1) * filter.Quantity;
             var pageItems = query.Skip(skip).Take(filter.Quantity).ToList();
@@ -411,7 +411,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter">The filter to apply.</param>
         /// <returns></returns>
-        private IQueryable<PimsManagementFile> GetCommonManagementFileQueryDeep(ManagementFilter filter)
+        private IQueryable<PimsManagementFile> GetCommonManagementFileQueryDeep(ManagementFilter filter, long? contractorPersonId = null)
         {
             filter.FileNameOrNumberOrReference = Regex.Replace(filter.FileNameOrNumberOrReference ?? string.Empty, @"^[m,M]-", string.Empty);
             var predicate = PredicateBuilder.New<PimsManagementFile>(disp => true);
@@ -478,6 +478,16 @@ namespace Pims.Dal.Repositories
             if(filter.HasNoticeOfClaim)
             {
                 predicate = predicate.And(x => x.PimsNoticeOfClaims.Any(y => y.ReceivedDt != null || y.Comment != null));
+            }
+
+            if (filter.Regions.Any())
+            {
+                predicate = predicate.And(x => x.RegionCode != null && filter.Regions.Any(r => r == x.RegionCode));
+            }
+
+            if (contractorPersonId is not null)
+            {
+                predicate = predicate.And(mgmt => mgmt.PimsManagementFileTeams.Any(x => x.PersonId == contractorPersonId) || (mgmt.Project != null && mgmt.Project.PimsProjectPeople.Any(x => x.PersonId == contractorPersonId)));
             }
 
             var query = this.Context.PimsManagementFiles.AsNoTracking()

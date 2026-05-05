@@ -22,7 +22,7 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By notesTab2ndResultViewBttn = By.XPath("//div[@data-testid='notesTable']/div[@class='tbody']/div[@class='tr-wrapper'][2]/div/div[4]/div/button[@title='View Note']");
 
         //Notes 1st result Elements
-        private readonly By note1stNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper'] div:nth-child(1) div:nth-child(1)");
+        private readonly By note1stNoteContent = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper'] div[role='row']:first-child div[role='cell']:first-child");
         private readonly By note2ndDeleteNoteBttn = By.CssSelector("div[data-testid='notesTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child(2) div[role='cell']:nth-child(4) div button[title='Delete Note']");
 
         //Property Notes Table Elements
@@ -96,18 +96,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateNotesTab()
         {
-            Wait(2000);
-
-            WaitUntilClickable(notesTabLink);
-            webDriver.FindElement(notesTabLink).Click();
+            SafeClick(notesTabLink);
         }
 
         public void NavigateToFirstManagementNote()
         {
             var originalWindowHandle = webDriver.CurrentWindowHandle;
 
-            Wait();
-            webDriver.FindElement(mgmtNotesTableName1stContent).Click();
+            SafeClick(mgmtNotesTableName1stContent);
 
             Wait();
             var allWindowsHandle = webDriver.WindowHandles;
@@ -119,7 +115,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             var originalWindowHandle = webDriver.CurrentWindowHandle;
 
-            Wait();
+            WaitUntilClickable(propNotesTableName1stContent);
             webDriver.FindElement(propNotesTableName1stContent).Click();
 
             Wait();
@@ -130,8 +126,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateNotesTabButton()
         {
-            Wait();
-            FocusAndClick(notesTabAddBttn);
+            WaitUntilClickable(notesTabAddBttn);
+            SafeClick(notesTabAddBttn);
         }
 
         public void AddNewNoteDetails(string note)
@@ -142,8 +138,8 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ViewSecondNoteDetails()
         {
-            Wait();
-            webDriver.FindElement(notesTab2ndResultViewBttn).Click();
+            WaitUntilClickable(notesTab2ndResultViewBttn);
+            SafeClick(notesTab2ndResultViewBttn);
         }
 
         public void EditNote(string note)
@@ -157,7 +153,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveNote()
         {
-            Wait();
+            WaitUntilClickable(notesAddDetailsSaveBttn);
             webDriver.FindElement(notesAddDetailsSaveBttn).Click();
         }
 
@@ -166,22 +162,22 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(notesAddDetailsCancelBttn);
             webDriver.FindElement(notesAddDetailsCancelBttn).Click();
 
-            Wait();
+            WaitUntilVisible(notesCancelPopupContent);
             if (webDriver.FindElements(notesCancelPopupContent).Count() > 0)
             {
                 AssertTrueIsDisplayed(notesCancelPopupHeader);
                 Assert.Contains("If you choose to cancel now, your changes will not be saved.", webDriver.FindElement(notesCancelPopupBody).Text);
                 Assert.Contains("Do you want to proceed?", webDriver.FindElement(notesCancelPopupBody).Text);
 
-                Wait(2000);
+                WaitUntilClickable(notesCancelOkBttn);
                 webDriver.FindElement(notesCancelOkBttn).Click();
             }
         }
 
         public void DeleteLastSecondNote()
         {
-            Wait(2000);
-            webDriver.FindElement(note2ndDeleteNoteBttn).Click();
+            WaitUntilClickable(note2ndDeleteNoteBttn);
+            SafeClick(note2ndDeleteNoteBttn);
 
             WaitUntilVisible(notesDeletePopupHeader);
             AssertTrueContentEquals(notesDeletePopupHeader, "Delete Note");
@@ -217,7 +213,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyNotesTabListView()
         {
-            Wait(3000);
+            WaitUntilClickable(notesTabTitle);
 
             AssertTrueIsDisplayed(notesTabTitle);
             AssertTrueIsDisplayed(notesTabAddBttn);
@@ -288,27 +284,28 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int NotesTabCount()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
+            WaitUntilClickable(notesTabTableContentTotal);
             return webDriver.FindElements(notesTabTableContentTotal).Count();
         }
 
         public void VerifyAutomaticNotes(string fileType, string fromStatus, string toStatus)
         {
-            WaitUntilTableSpinnerDisappear();
-
+            WaitForTableToLoad();
+            WaitUntilVisible(note1stNoteContent);
             WaitUntilVisibleText(note1stNoteContent, webDriver.FindElement(note1stNoteContent).Text);
             AssertTrueContentEquals(note1stNoteContent, fileType + " status changed from "+ fromStatus +" to " + toStatus);
         }
 
         public void VerifyAutomaticNotesCompensation(string CompensationNbr, string fromStatus, string toStatus)
         {
-            Wait();
+            WaitUntilClickable(note1stNoteContent);
             AssertTrueContentEquals(note1stNoteContent, "Compensation Requisition with # " + CompensationNbr + ", changed status from '"+ fromStatus +"' to '" + toStatus + "'");
         }
 
         public void VerifyAutomaticNotesPropertyStatus(string status)
         {
-            Wait();
+            WaitUntilClickable(note1stNoteContent);
             AssertTrueElementContains(note1stNoteContent, "Management File property");
             AssertTrueElementContains(note1stNoteContent, status);
         }

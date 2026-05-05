@@ -108,36 +108,28 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToCreateNewProject()
         {
-            Wait(3000);
-
-            WaitUntilClickable(projectMenuBttn);
-            FocusAndClick(projectMenuBttn);
-
-            WaitUntilClickable(createProjectButton);
-            FocusAndClick(createProjectButton);
+            SafeClick(projectMenuBttn);
+            SafeClick(createProjectButton);
         }
 
         public void NavigateProjectDetails()
         {
-            WaitUntilClickable(projectDetailTabLink);
-            FocusAndClick(projectDetailTabLink);
+            SafeClick(projectDetailTabLink);
         }
 
         public void CreateProject(Project project)
         {
-            WaitUntilVisible(projectNameInput);
-
+            WaitUntilClickable(projectNameInput);
             webDriver.FindElement(projectNameInput).SendKeys(project.Name);
+
             if (project.Number != "")
-            {
                 webDriver.FindElement(projectNumberInput).SendKeys(project.Number);
-            }
-            ChooseSpecificSelectOption(projectStatusSelect, project.ProjectStatus);
-            ChooseSpecificSelectOption(projectMOTIRegionInput, project.ProjectMOTIRegion);
+            
+            ChooseSelectOption(projectStatusSelect, project.ProjectStatus);
+            ChooseSelectOption(projectMOTIRegionInput, project.ProjectMOTIRegion);
             if (project.Summary != "")
-            {
                 webDriver.FindElement(projectSummaryTextarea).SendKeys(project.Summary);
-            }
+            
             if (project.CostType != "")
             {
                 webDriver.FindElement(projectCostTypeInput).SendKeys(project.CostType);
@@ -160,8 +152,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateProduct(Product product, int index)
         {
-            Wait(2000);
-
             By productCodeDynamicInput = By.Id("input-products."+ index +".code");
             By productNameDynamicInput = By.Id("input-products."+ index +".description");
             By productStartDateDynamicInput = By.Id("datepicker-products."+ index +".startDate");
@@ -171,7 +161,7 @@ namespace PIMS.Tests.Automation.PageObjects
             By productScopeDynamicInput = By.Id("input-products."+ index +".scope");
 
             WaitUntilClickable(projectAddProductButton);
-            FocusAndClick(projectAddProductButton);
+            SafeClick(projectAddProductButton);
 
             webDriver.FindElement(productCodeDynamicInput).SendKeys(product.ProductCode);
             webDriver.FindElement(productNameDynamicInput).SendKeys(product.ProductName);
@@ -227,10 +217,10 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(projectNumberInput).SendKeys(project.Number);
 
             if (project.ProjectStatus != "")
-                ChooseSpecificSelectOption(projectStatusSelect, project.ProjectStatus);
+                ChooseSelectOption(projectStatusSelect, project.ProjectStatus);
 
             if (project.ProjectMOTIRegion != "")
-                ChooseSpecificSelectOption(projectMOTIRegionInput, project.ProjectMOTIRegion);
+                ChooseSelectOption(projectMOTIRegionInput, project.ProjectMOTIRegion);
 
             if (project.Summary != "")
                 webDriver.FindElement(projectSummaryTextarea).SendKeys(project.Summary);
@@ -264,7 +254,6 @@ namespace PIMS.Tests.Automation.PageObjects
             By productEstimateDateDynamicInput = By.Id("datepicker-products."+ index +".costEstimateDate");
             By productObjectiveDynamicInput = By.Id("input-products."+ index +".objective");
             By productScopeDynamicInput = By.Id("input-products."+ index +".scope");
-
             
             //Cleaning previous input
             if (webDriver.FindElements(productEstimateDateDynamicInput).Count > 0)
@@ -311,7 +300,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (webDriver.FindElements(productDeleteModal).Count > 0)
             {
-                Wait();
                 Assert.Equal("Remove Product", sharedModals.ModalHeader());
                 Assert.Equal("Deleting this product will remove it from all \"Product\" dropdowns. Are you certain you wish to proceed?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
@@ -336,7 +324,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveProject()
         {
-            Wait();
+            WaitUntilClickable(projectSaveButton);
             webDriver.FindElement(projectSaveButton).Click();
 
             Wait();
@@ -363,7 +351,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreateProjectForm()
         {
-            Wait();
+            WaitUntilVisible(projectNameLabel);
 
             //AssertTrueIsDisplayed(projectCreateTitle);
             //AssertTrueIsDisplayed(projectInstructionParagraph);
@@ -401,7 +389,7 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilClickable(projectAddProductButton);
             webDriver.FindElement(projectAddProductButton).Click();
 
-            Wait();
+            WaitUntilVisible(productCodeLabel);
             AssertTrueIsDisplayed(productCodeLabel);
             AssertTrueIsDisplayed(productCodeInput);
             AssertTrueIsDisplayed(productNameLabel);
@@ -548,9 +536,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DuplicateProject()
         {
-            Wait();
-
-            Wait();
+            WaitUntilVisible(projectOverrideConfirmationModal);
             if (webDriver.FindElements(projectOverrideConfirmationModal).Count() > 0 && sharedModals.ModalHeader().Equals("Error"))
             {
               Assert.Contains("Project will not be duplicated.", sharedModals.ModalContent());

@@ -445,7 +445,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             agreements.SaveAcquisitionFileAgreement();
 
             //Verify Edit Agreement form
-            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[1], 0);
+            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[1], 1);
 
             var agreementsBeforeDelete = agreements.TotalAgreementsCount();
 

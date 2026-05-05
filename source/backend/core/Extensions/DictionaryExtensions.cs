@@ -35,6 +35,18 @@ namespace Pims.Core.Extensions
         }
 
         /// <summary>
+        /// Get the value from the dictionary for the specified 'key' and return it as an array of short.
+        /// </summary>
+        /// <param name="dict"></param>
+        /// <param name="key"></param>
+        /// <param name="separator"></param>
+        /// <returns></returns>
+        public static short[] GetShortArrayValue(this IDictionary<string, Microsoft.Extensions.Primitives.StringValues> dict, string key, string separator = ",")
+        {
+            return dict.TryGetValue(key, out Microsoft.Extensions.Primitives.StringValues value) ? value.ToString().Split(separator).Select(v => { return short.TryParse(v, out short iv) ? (short?)iv : null; }).Where(v => v != null).Select(v => (short)v).ToArray() : Array.Empty<short>();
+        }
+
+        /// <summary>
         /// Get the value from the dictionary for the specified 'key' and return it as an int.
         /// </summary>
         /// <param name="dict"></param>

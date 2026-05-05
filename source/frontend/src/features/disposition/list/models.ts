@@ -1,6 +1,7 @@
 import isNumber from 'lodash/isNumber';
 
 import { SelectOption } from '@/components/common/form';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { ApiGen_Concepts_DispositionFileProperty } from '@/models/api/generated/ApiGen_Concepts_DispositionFileProperty';
@@ -16,6 +17,11 @@ export class DispositionFilterModel {
   dispositionFileStatusCode = '';
   dispositionStatusCode = '';
   dispositionTypeCode = '';
+  regions: MultiSelectOption[] = [];
+
+  constructor(initialRegions: MultiSelectOption[] = []) {
+    this.regions = initialRegions;
+  }
 
   toApi(): Api_DispositionFilter {
     const personMemberId =
@@ -36,6 +42,7 @@ export class DispositionFilterModel {
       dispositionFileStatusCode: this.dispositionFileStatusCode,
       dispositionStatusCode: this.dispositionStatusCode,
       dispositionTypeCode: this.dispositionTypeCode,
+      regions: this.regions?.map(x => x.id) ?? [],
       // disposition team members
       teamMemberPersonId:
         personMemberId && isNumber(+personMemberId) ? Number(personMemberId) : null,
@@ -46,6 +53,7 @@ export class DispositionFilterModel {
   static fromApi(
     base: Api_DispositionFilter,
     teamMemberOptions: SelectOption[] = [],
+    userRegions: MultiSelectOption[],
   ): DispositionFilterModel {
     const newModel = new DispositionFilterModel();
     newModel.searchBy = base.searchBy ?? 'address';
@@ -56,6 +64,8 @@ export class DispositionFilterModel {
     newModel.dispositionFileStatusCode = base.dispositionFileStatusCode ?? '';
     newModel.dispositionStatusCode = base.dispositionStatusCode ?? '';
     newModel.dispositionTypeCode = base.dispositionTypeCode ?? '';
+    newModel.regions = userRegions ?? [];
+
     // disposition team members
     newModel.dispositionTeamMember = base.teamMemberPersonId
       ? teamMemberOptions.find(c => c.value === `P-${base.teamMemberPersonId}`) ?? null

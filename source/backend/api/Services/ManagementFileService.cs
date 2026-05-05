@@ -21,6 +21,7 @@ namespace Pims.Api.Services
     {
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
+        private readonly IUserRepository _userRepository;
         private readonly IManagementFileRepository _managementFileRepository;
         private readonly IManagementFilePropertyRepository _managementFilePropertyRepository;
         private readonly IPropertyRepository _propertyRepository;
@@ -44,7 +45,8 @@ namespace Pims.Api.Services
             IManagementFileStatusSolver managementStatusSolver,
             IPropertyOperationService propertyOperationService,
             IManagementActivityRepository managementActivityRepository,
-            IFilePropertyLocationUpdateSolver propertyLocationSolver)
+            IFilePropertyLocationUpdateSolver propertyLocationSolver,
+            IUserRepository userRepository)
         {
             _user = user;
             _logger = logger;
@@ -58,6 +60,7 @@ namespace Pims.Api.Services
             _propertyOperationService = propertyOperationService;
             _managementActivityRepository = managementActivityRepository;
             _propertyLocationSolver = propertyLocationSolver;
+            _userRepository = userRepository;
         }
 
         public PimsManagementFile Add(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> userOverrides)
@@ -288,7 +291,10 @@ namespace Pims.Api.Services
             _logger.LogDebug("Management file search with filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.ManagementView);
 
-            return _managementFileRepository.GetPageDeep(filter);
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            return _managementFileRepository.GetPageDeep(filter, contractorPersonId);
         }
 
         public IEnumerable<PimsManagementFileContact> GetContacts(long id)

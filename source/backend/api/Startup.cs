@@ -382,7 +382,7 @@ namespace Pims.Api
                     "Ches",
                     sp => new ChesHealthCheck(sp.GetService<IEmailRepository>()),
                     null,
-                    new string[] { SERVICES, EXTERNAL, SYSTEMCHECK })
+                    new string[] { SERVICES, EXTERNAL })
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.Ches.Period) });
             }
 
@@ -520,7 +520,7 @@ namespace Pims.Api
                 config.MapControllers();
                 config.MapHealthChecks("health/system", new HealthCheckOptions()
                 {
-                    Predicate = r => r.Tags.Contains("system-check"),
+                    Predicate = r => r.Tags.Contains(SYSTEMCHECK),
                     ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
                 });
 

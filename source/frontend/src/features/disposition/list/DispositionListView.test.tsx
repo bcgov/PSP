@@ -1,5 +1,6 @@
 import { AxiosResponse } from 'axios';
 import { createMemoryHistory } from 'history';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 
 import { Claims } from '@/constants/index';
 import { useApiDispositionFile } from '@/hooks/pims-api/useApiDispositionFile';
@@ -23,6 +24,7 @@ import {
 
 import DispositionListView from './DispositionListView';
 import { DispositionFilterModel } from './models';
+import { getUserMock } from '@/mocks/user.mock';
 
 vi.mock('@/hooks/pims-api/useApiDispositionFile');
 const getDispositionFilesPagedApiFn = vi.fn();
@@ -33,6 +35,13 @@ vi.mocked(useApiDispositionFile).mockReturnValue({
   getAllDispositionFileTeamMembers: getAllDispositionFileTeamMembersFn,
   exportDispositionFiles: exportDispositionFilesFn,
 } as unknown as ReturnType<typeof useApiDispositionFile>);
+
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository).mockReturnValue({
+  retrieveUserInfo: vi.fn(),
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: getUserMock(),
+});
 
 const mockPagedResults = (
   searchResults?: ApiGen_Concepts_DispositionFile[],
