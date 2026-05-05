@@ -108,6 +108,25 @@ public partial class PimsAcquisitionOwner
     public DateTime? ExpiryDate { get; set; }
 
     /// <summary>
+    /// User Story: As a PIMS user, I need to pre-populate the owner name(s) from LTSA title, as I’m required to use the LTSA title owner as the owner for an Acquisition file, and having that populate automatically based on properties in the file saves me time an
+    /// </summary>
+    [Column("IS_FROM_LTSA")]
+    public bool? IsFromLtsa { get; set; }
+
+    /// <summary>
+    /// PID of the originating LTSA file.
+    /// </summary>
+    [Column("LTSA_PID")]
+    [StringLength(9)]
+    public string LtsaPid { get; set; }
+
+    /// <summary>
+    /// Date that LTSA data was imported into the PIMS system.
+    /// </summary>
+    [Column("LTSA_SOURCED_DATE", TypeName = "datetime")]
+    public DateTime? LtsaSourcedDate { get; set; }
+
+    /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
@@ -196,25 +215,6 @@ public partial class PimsAcquisitionOwner
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    /// <summary>
-    /// User Story: As a PIMS user, I need to pre-populate the owner name(s) from LTSA title, as I’m required to use the LTSA title owner as the owner for an Acquisition file, and having that populate automatically based on properties in the file saves me time an
-    /// </summary>
-    [Column("IS_FROM_LTSA")]
-    public bool? IsFromLtsa { get; set; }
-
-    /// <summary>
-    /// PID of the originating LTSA file.
-    /// </summary>
-    [Column("LTSA_PID")]
-    [StringLength(9)]
-    public string LtsaPid { get; set; }
-
-    /// <summary>
-    /// Date that LTSA data was imported into the PIMS system.
-    /// </summary>
-    [Column("LTSA_SOURCED_DATE", TypeName = "datetime")]
-    public DateTime? LtsaSourcedDate { get; set; }
 
     [ForeignKey("AcquisitionFileId")]
     [InverseProperty("PimsAcquisitionOwners")]
