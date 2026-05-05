@@ -48,6 +48,9 @@ public partial class PimsAgreementHist
     [Column("COMMENCEMENT_DATE")]
     public DateOnly? CommencementDate { get; set; }
 
+    [Column("AGREEMENT_SIGNED_DATE")]
+    public DateOnly? AgreementSignedDate { get; set; }
+
     [Column("DEPOSIT_AMOUNT", TypeName = "money")]
     public decimal? DepositAmount { get; set; }
 
@@ -56,6 +59,9 @@ public partial class PimsAgreementHist
 
     [Column("PURCHASE_PRICE", TypeName = "money")]
     public decimal? PurchasePrice { get; set; }
+
+    [Column("ADVANCE_PAYMENT_DATE")]
+    public DateOnly? AdvancePaymentDate { get; set; }
 
     [Column("LEGAL_SURVEY_PLAN_NUM")]
     [StringLength(250)]
@@ -133,10 +139,4 @@ public partial class PimsAgreementHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [Column("AGREEMENT_SIGNED_DATE")]
-    public DateOnly? AgreementSignedDate { get; set; }
-
-    [Column("ADVANCE_PAYMENT_DATE")]
-    public DateOnly? AdvancePaymentDate { get; set; }
 }

@@ -18,14 +18,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateImprovementTab()
         {
-            Wait();
+            WaitUntilClickable(sharedImprovementTab);
             webDriver.FindElement(sharedImprovementTab).Click();
         }
 
         public void VerifyImprovementsTab(List<string> propertiesList)
         {
-            Wait();
-
+            WaitUntilVisible(sharedImprovementTitle);
             AssertTrueIsDisplayed(sharedImprovementTitle);
 
             webDriver.FindElement(sharedImprovementExpandBttn).Click();
@@ -54,7 +53,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int CountProperties()
         {
-            Wait();
+            WaitUntilVisible(sharedImprovementsPropertiesCount);
             return webDriver.FindElements(sharedImprovementsPropertiesCount).Count;
         }
     }

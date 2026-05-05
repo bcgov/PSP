@@ -44,13 +44,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateStakeholderTab()
         {
-            Wait(2000);
+            WaitUntilClickable(stakeholderLinkTab);
             webDriver.FindElement(stakeholderLinkTab).Click();
         }
 
         public void EditStakeholderInterestsButton()
         {
-            Wait();
+            WaitUntilClickable(stakeholderInterestsEditBttn);
             webDriver.FindElement(stakeholderInterestsEditBttn).Click();
         }
 
@@ -68,16 +68,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveAcquisitionFileStakeholder()
         {
-            Wait();
             ButtonElement("Save");
 
-            Wait(4000);
+            WaitUntilVisible(stakeholderInterestsEditBttn);
             AssertTrueIsDisplayed(stakeholderInterestsEditBttn);
         }
 
         public void CancelAcquisitionFileStakeholder()
         {
-            Wait();
             ButtonElement("Cancel");
 
             sharedModals.CancelActionModal();
@@ -100,14 +98,14 @@ namespace PIMS.Tests.Automation.PageObjects
             //If Primary Contact has to be selected, choose one from the select field
             Wait();
             if (webDriver.FindElements(By.CssSelector("select[id='input-interestHolders."+ index +".primaryContactId']")).Count > 0)
-                ChooseSpecificSelectOption(By.CssSelector("select[id='input-interestHolders."+ index +".primaryContactId']"), interest.PrimaryContact);
+                ChooseSelectOption(By.CssSelector("select[id='input-interestHolders."+ index +".primaryContactId']"), interest.PrimaryContact);
 
             //Interest Type label
             AssertTrueIsDisplayed(By.XPath("//select[@id='input-interestHolders."+ index +".propertyInterestTypeCode']/parent::div/parent::div/preceding-sibling::div/label[contains(text(),'Interest type')]"));
 
             //Select Interest Type
             if(interest.InterestType != "")
-                ChooseSpecificSelectOption(By.Id("input-interestHolders."+ index +".propertyInterestTypeCode"), interest.InterestType);
+                ChooseSelectOption(By.Id("input-interestHolders."+ index +".propertyInterestTypeCode"), interest.InterestType);
 
             //Impacted Properties
             AssertTrueIsDisplayed(By.XPath("//select[@id='input-interestHolders."+ index +".propertyInterestTypeCode']/parent::div/parent::div/parent::div/following-sibling::div/div/label[contains(text(),'Impacted properties')]"));
@@ -127,7 +125,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteLastInterestHolder()
         {
-            Wait();
             var lastInterestHoldersIndex = webDriver.FindElements(stakeholderInterestTotalCount).Count -1;
 
             EditStakeholderInterestsButton();
@@ -136,7 +133,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteLastNonInterestHolder()
         {
-            Wait();
             var lastNonInterestHoldersIndex = webDriver.FindElements(stakeholderNonInterestTotalCount).Count -1;
 
             EditStakeholderInterestsButton();
@@ -145,7 +141,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyStakeholdersInitView()
         {
-            Wait();
+            WaitUntilVisible(stakeholderInterestsEditBttn);
 
             AssertTrueIsDisplayed(stakeholderInterestsEditBttn);
             AssertTrueIsDisplayed(stakeholderInterestsSubtitle);
@@ -172,12 +168,11 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInterestStakeholderViewForm(AcquisitionStakeholder interest)
         {
-            Wait();
+            WaitUntilVisible(stakeholderInterestsSubtitle);
             AssertTrueIsDisplayed(stakeholderInterestsSubtitle);
             AssertTrueIsDisplayed(stakeholderInterestsEditBttn);
             AssertTrueIsDisplayed(stakeholderInterestTable);
 
-            Wait();
             var lastStakeholder = webDriver.FindElements(stakeholderInterestTotalCount).Count();
             AssertTrueContentEquals(By.XPath("//div[contains(text(),'Interests')]/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastStakeholder +"]/div/div[1]/a"), interest.InterestHolder);
             AssertTrueContentEquals(By.XPath("//div[contains(text(),'Interests')]/parent::div/parent::h2/following-sibling::div/div[@data-testid='interest-holders-by-property-table']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastStakeholder +"]/div/div[2]"), interest.PrimaryContact);
@@ -186,7 +181,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyNonInterestStakeholderViewForm(AcquisitionStakeholder interest)
         {
-            Wait();
+            WaitUntilVisible(stakeholderNonInterestsSubtitle);
             AssertTrueIsDisplayed(stakeholderNonInterestsSubtitle);
             AssertTrueIsDisplayed(stakeholderInterestsEditBttn);
             AssertTrueIsDisplayed(stakeholderNonInterestTable);
@@ -198,13 +193,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int TotalInterestHolders()
         {
-            Wait();
+            WaitUntilVisible(stakeholderInterestTotalCount);
             return webDriver.FindElements(stakeholderInterestTotalCount).Count();
         }
 
         public int TotalNonInterestHolders()
         {
-            Wait();
+            WaitUntilVisible(stakeholderNonInterestTotalCount);
             return webDriver.FindElements(stakeholderNonInterestTotalCount).Count();
         }
     }

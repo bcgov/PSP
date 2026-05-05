@@ -360,7 +360,7 @@ describe('UpdateProperties component', () => {
     );
   });
 
-  it('if the update fails with a 409 the associated entities modal is displayed', async () => {
+  it('if the update fails with a 409 it does not show the associated entities modal', async () => {
     updateFileProperties.mockRejectedValue({
       isAxiosError: true,
       code: '409',
@@ -373,8 +373,10 @@ describe('UpdateProperties component', () => {
     await act(async () => userEvent.click(saveConfirmButton));
 
     expect(updateFileProperties).toHaveBeenCalled();
-    expect(screen.getByText('Property with associations'));
-    expect(screen.getByText(/This property can not be removed from the file/i));
+    expect(screen.queryByText('Property with associations')).not.toBeInTheDocument();
+    expect(
+      screen.queryByText(/This property can not be removed from the file/i),
+    ).not.toBeInTheDocument();
   });
 
   it('validates form values upon submission', async () => {

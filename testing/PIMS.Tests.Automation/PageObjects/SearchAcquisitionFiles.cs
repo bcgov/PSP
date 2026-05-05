@@ -62,18 +62,17 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Search an Acquisition File
         public void NavigateToSearchAcquisitionFile()
         {
-            Wait(3000);
+            WaitUntilClickable(menuAcquisitionButton);
             FocusAndClick(menuAcquisitionButton);
 
-            Wait(3000);
+            WaitUntilClickable(searchAcquisitionButton);
             FocusAndClick(searchAcquisitionButton);
         }
 
         public void OrderByAcquisitionFileNumber()
         {
             Wait();
-            WaitUntilClickable(searchAcquisitionOrderFileNumberBttn);
-            webDriver.FindElement(searchAcquisitionOrderFileNumberBttn).Click();
+            SafeClick(searchAcquisitionOrderFileNumberBttn);
         }
 
         public void OrderByAcquisitionFileHistoricalNumber()
@@ -92,7 +91,7 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             var originalWindowHandle = webDriver.CurrentWindowHandle;
 
-            Wait();
+            WaitUntilClickable(searchAcquisitionFile1stResultLink);
             webDriver.FindElement(searchAcquisitionFile1stResultLink).Click();
 
             Wait();
@@ -100,7 +99,6 @@ namespace PIMS.Tests.Automation.PageObjects
             var newWindowHandle = allWindowsHandle.Where(handle => handle != originalWindowHandle).First();
             webDriver.SwitchTo().Window(newWindowHandle);
                 
-            
             WaitUntilClickable(searchAcquisitionFileHeaderCode);
             AssertTrueIsDisplayed(searchAcquisitionFileHeaderCode);
         }
@@ -108,25 +106,24 @@ namespace PIMS.Tests.Automation.PageObjects
         public void FilterAcquisitionFiles(string pid = "", string pin = "", string address = "", string name = "", string teamMember = "",
             string status = "", string project = "", string owner = "")
         {
-            Wait(5000);
+            WaitUntilClickable(searchAcquisitionFileResetButton);
             webDriver.FindElement(searchAcquisitionFileResetButton).Click();
 
-            Wait();
             if (pid != "")
             {
-                ChooseSpecificSelectOption(searchAcquisitionFileSearchBySelect, "PID");
+                ChooseSelectOption(searchAcquisitionFileSearchBySelect, "PID");
                 webDriver.FindElement(searchAcquisitionFileSearchByPIDInput).SendKeys(pid);
             }
 
             if (pin != "")
             {
-                ChooseSpecificSelectOption(searchAcquisitionFileSearchBySelect, "PIN");
+                ChooseSelectOption(searchAcquisitionFileSearchBySelect, "PIN");
                 webDriver.FindElement(searchAcquisitionFileSearchByPINInput).SendKeys(pin);
             }
 
             if (address != "")
             {
-                ChooseSpecificSelectOption(searchAcquisitionFileSearchBySelect, "Civic Address");
+                ChooseSelectOption(searchAcquisitionFileSearchBySelect, "Civic Address");
                 webDriver.FindElement(searchAcquisitionFileSearchByAddressInput).SendKeys(address);
             }
             if (name != "")
@@ -140,7 +137,7 @@ namespace PIMS.Tests.Automation.PageObjects
             }
 
             if(status != "")
-                ChooseSpecificSelectOption(searchAcquisitionFileStatusSelect, status);
+                ChooseSelectOption(searchAcquisitionFileStatusSelect, status);
 
             if (project != "")
                 webDriver.FindElement(searchAcquisitionFileOwnerInput).SendKeys(project);
@@ -153,37 +150,37 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public Boolean SearchFoundResults()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElements(searchAcquisitionFile1stResult).Count > 0;
         }
 
         public string FirstAcquisitionFileNumber()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchAcquisitionFile1stResultLink).Text;
         }
 
         public string FirstAcquisitionLegacyFileNumber()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchAcquisitionFile1stResultHistoricalFile).Text;
         }
 
         public string FirstAcquisitionFileName()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(searchAcquisitionFile1stResultName).Text;
         }
 
         public int AcquisitionFileTableResultNumber()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElements(searchAcquisitionFileTableContent).Count;
         }
 
         public void VerifyAcquisitionFileListView()
         {
-            Wait();
+            WaitUntilVisible(searchAcquisitionFileTitle);
 
             //Acquisition File Title
             AssertTrueIsDisplayed(searchAcquisitionFileTitle);

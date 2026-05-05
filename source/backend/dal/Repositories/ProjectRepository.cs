@@ -41,12 +41,11 @@ namespace Pims.Dal.Repositories
         /// <param name="regions"></param>
         /// <param name="maxResults"></param>
         /// <returns></returns>
-        public IList<PimsProject> SearchProjects(string filter, HashSet<short> regions, int maxResults)
+        public IList<PimsProject> SearchProjects(string filter, int maxResults)
         {
             // business requirement - limit search results to user's assigned region(s)
             return this.Context.PimsProjects.AsNoTracking()
                 .Where(p => EF.Functions.Like(p.Description, $"%{filter}%") || EF.Functions.Like(p.Code, $"%{filter}%") || EF.Functions.Like(p.Code + " " + p.Description, $"%{filter}%"))
-                .Where(p => regions.Contains(p.RegionCode))
                 .OrderBy(a => a.Code)
                 .Take(maxResults)
                 .ToArray();
@@ -56,7 +55,7 @@ namespace Pims.Dal.Repositories
         /// Returns a Paged Result of Projects based on ProjectFilter params.
         /// </summary>
         /// <returns></returns>
-        public Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, IEnumerable<short> userRegions)
+        public Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, long? contractorPersonId = null)
         {
             User.ThrowIfNotAuthorized(Permissions.ProjectView);
             filter.ThrowIfNull(nameof(filter));
@@ -65,7 +64,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            return GetPage(filter, userRegions);
+            return GetPage(filter, contractorPersonId);
         }
 
         /// <summary>
@@ -205,10 +204,9 @@ namespace Pims.Dal.Repositories
             return project;
         }
 
-        private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter, IEnumerable<short> userRegions)
+        private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter, long? contractorPersonId = null)
         {
-            var query = Context.PimsProjects.AsNoTracking()
-                .Where(p => userRegions.Contains(p.RegionCode));
+            var query = Context.PimsProjects.AsNoTracking();
 
             if (!string.IsNullOrWhiteSpace(filter.ProjectNumber))
             {
@@ -225,9 +223,14 @@ namespace Pims.Dal.Repositories
                 query = query.Where(x => x.ProjectStatusTypeCodeNavigation.ProjectStatusTypeCode == filter.ProjectStatusCode);
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.ProjectRegionCode))
+            if (contractorPersonId is not null)
             {
-                query = query.Where(x => x.RegionCode == short.Parse(filter.ProjectRegionCode));
+                query = query.Where(x => x.PimsProjectPeople.Any(x => x.PersonId == contractorPersonId));
+            }
+
+            if (filter.Regions.Any())
+            {
+                query = query.Where(x => filter.Regions.Any(r => r == x.RegionCode));
             }
 
             if (filter.Sort?.Any() == true)

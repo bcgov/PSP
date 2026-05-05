@@ -308,12 +308,9 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
  await testRunner.WhenAsync("I create Digital Documents for a \"Property\" from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
 #line 32
- await testRunner.WhenAsync("I create Digital Documents for a \"Property\" from row number 1", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
-#line hidden
-#line 33
  await testRunner.AndAsync("I edit a Digital Document for a \"Property\" from row number 16", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 34
+#line 33
  await testRunner.ThenAsync("A Property Information is saved successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -331,7 +328,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("05._Property_Notes_Tab", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 36
+#line 35
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -341,16 +338,16 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 37
+#line 36
  await testRunner.GivenAsync("I review a Property\'s Information from row number 3", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 38
+#line 37
  await testRunner.WhenAsync("I create a new Note on the Notes Tab from row number 13", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 39
+#line 38
  await testRunner.AndAsync("I edit a Note on the Notes Tab for a \"Property\" from row number 14", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 40
+#line 39
  await testRunner.ThenAsync("A Property Information is saved successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -368,7 +365,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("06._Property_Management_Activity_Digital_Documents", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 42
+#line 41
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -378,19 +375,19 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 43
+#line 42
  await testRunner.GivenAsync("I search for a property in the inventory by PID from row number 23", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 44
+#line 43
  await testRunner.WhenAsync("I insert activities to the Property Management Tab from row number 4", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 45
+#line 44
  await testRunner.AndAsync("I create Digital Documents for a Property Management row number 11", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 46
+#line 45
  await testRunner.AndAsync("I delete all activities from the Property Management Tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 47
+#line 46
  await testRunner.ThenAsync("Property Management Tab has been updated successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -408,7 +405,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("07._Verify_Digital_Documents_on_Related_Documents", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 49
+#line 48
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -418,20 +415,20 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 50
+#line 49
  await testRunner.GivenAsync("I search for a property in the inventory by PID from row number 37", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 51
+#line 50
  await testRunner.WhenAsync("I create Digital Documents for a \"Property\" from row number 16", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 52
+#line 51
  await testRunner.AndAsync("I create a Management File from row number 5 to check common data", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 53
+#line 52
  await testRunner.AndAsync("I add Properties to the Management File", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 54
- await testRunner.ThenAsync("The related documents appeared as expected", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
+#line 53
+ await testRunner.ThenAsync("Property Management Tab has been updated successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
             await this.ScenarioCleanupAsync();
@@ -448,7 +445,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("08._Properties_List", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 56
+#line 55
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -458,11 +455,11 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 57
+#line 56
  await testRunner.GivenAsync("I search for a Property in the Properties List by different filters from row numb" +
                         "er 29", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 58
+#line 57
  await testRunner.ThenAsync("Properties filters works successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -480,7 +477,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("09._Non-Inventory_Property_Information", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 60
+#line 59
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -490,10 +487,10 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 61
+#line 60
  await testRunner.GivenAsync("I search for a non MOTI property from row number 6", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 62
+#line 61
  await testRunner.ThenAsync("Non-Inventory property renders correctly", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -511,7 +508,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("10._Invalid_Property_Not_Found", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 64
+#line 63
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -521,10 +518,10 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 65
+#line 64
  await testRunner.GivenAsync("I search for an Invalid Property from row number 10", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 66
+#line 65
  await testRunner.ThenAsync("No Properties were found", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -542,7 +539,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("11._Map_Features", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 68
+#line 67
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -552,10 +549,10 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 69
+#line 68
  await testRunner.GivenAsync("I verify the Maps Layers", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 70
+#line 69
  await testRunner.ThenAsync("Map Features rendered successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -583,7 +580,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("12._Property_Management_Lease_Active_Indicator", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 72
+#line 71
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -593,19 +590,19 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 73
+#line 72
  await testRunner.GivenAsync(string.Format("I create a new minimum Lease from row number {0}", rowNumber), ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 74
+#line 73
  await testRunner.WhenAsync("I add additional Information to the Lease Details", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 75
+#line 74
  await testRunner.AndAsync("I add Properties to the Lease Details", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 76
+#line 75
  await testRunner.AndAsync("I search for a Property in the Properties List by PID from row number 33", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 77
+#line 76
  await testRunner.ThenAsync(string.Format("Expected Active Lease status is displayed as \"{0}\" successfully", activeLeaseStatus), ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -623,7 +620,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("13._Strata_Properties_Tabs", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 89
+#line 88
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -633,13 +630,13 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 90
+#line 89
  await testRunner.GivenAsync("I search for a property by Plan Number from row number 39", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 91
+#line 90
  await testRunner.WhenAsync("I verify the MultiProperty Tabs", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 92
+#line 91
  await testRunner.ThenAsync("Multiproperty property rendered successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -657,7 +654,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("14._Property_Hwy_and_Other_Tabs", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 94
+#line 93
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -667,16 +664,16 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 95
+#line 94
  await testRunner.GivenAsync("I search for a property by Plan Number from row number 40", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 96
+#line 95
  await testRunner.WhenAsync("I verify the Highway Tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 97
+#line 96
  await testRunner.AndAsync("I verify the Other Tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 98
+#line 97
  await testRunner.ThenAsync("Property Tabs rendered successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }
@@ -694,7 +691,7 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             global::Reqnroll.ScenarioInfo scenarioInfo = new global::Reqnroll.ScenarioInfo("15._Property_PMBC_and_Crown_Tabs", null, tagsOfScenario, argumentsOfScenario, featureTags, pickleIndex);
             string[] tagsOfRule = ((string[])(null));
             global::Reqnroll.RuleInfo ruleInfo = null;
-#line 100
+#line 99
 this.ScenarioInitialize(scenarioInfo, ruleInfo);
 #line hidden
             if ((global::Reqnroll.TagHelper.ContainsIgnoreTag(scenarioInfo.CombinedTags) || global::Reqnroll.TagHelper.ContainsIgnoreTag(featureTags)))
@@ -704,16 +701,16 @@ this.ScenarioInitialize(scenarioInfo, ruleInfo);
             else
             {
                 await this.ScenarioStartAsync();
-#line 101
+#line 100
  await testRunner.GivenAsync("I search for a property by PID from row number 41", ((string)(null)), ((global::Reqnroll.Table)(null)), "Given ");
 #line hidden
-#line 102
+#line 101
  await testRunner.WhenAsync("I verify the PMBC Tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "When ");
 #line hidden
-#line 103
+#line 102
  await testRunner.AndAsync("I verify the Crown Tab", ((string)(null)), ((global::Reqnroll.Table)(null)), "And ");
 #line hidden
-#line 104
+#line 103
  await testRunner.ThenAsync("Property Tabs rendered successfully", ((string)(null)), ((global::Reqnroll.Table)(null)), "Then ");
 #line hidden
             }

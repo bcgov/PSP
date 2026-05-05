@@ -103,7 +103,7 @@ namespace Pims.Api.Services
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            var leases = _leaseRepository.GetAllByIds(leaseIds, pimsUser.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet(), contractorPersonId).ToList();
+            var leases = _leaseRepository.GetAllByIds(leaseIds, contractorPersonId).ToList();
 
             // Ensure we return property information with lat/long coordinates for any properties associated to the returned leases.
             foreach (var lease in leases)
@@ -134,13 +134,14 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting lease page {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+
             filter.Page = all.HasValue && all.Value ? 1 : filter.Page;
             filter.Quantity = all.HasValue && all.Value ? _leaseRepository.Count() : filter.Quantity;
+
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
             long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            var leases = _leaseRepository.GetPage(filter, pimsUser.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet(), contractorPersonId);
-            return leases;
+            return _leaseRepository.GetPage(filter, contractorPersonId);
         }
 
         public IEnumerable<PimsInsurance> GetInsuranceByLeaseId(long leaseId)
@@ -556,7 +557,7 @@ namespace Pims.Api.Services
 
         private static void ValidateRenewalDates(PimsLease lease, PimsLease currentLease, IEnumerable<UserOverrideCode> userOverrides)
         {
-            if (lease.LeaseStatusTypeCode != PimsLeaseStatusTypes.ACTIVE)
+            if (lease.LeaseStatusTypeCode != LeaseStatusTypes.ACTIVE.ToString())
             {
                 return;
             }

@@ -1,8 +1,5 @@
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using FluentAssertions;
+using k8s.KubeConfigModels;
 using Moq;
 using NetTopologySuite.Geometries;
 using Pims.Api.Constants;
@@ -16,6 +13,10 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -1508,13 +1509,17 @@ namespace Pims.Api.Test.Services
             var managementFile = EntityHelper.CreateManagementFile();
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
-            repository.Setup(x => x.GetPageDeep(It.IsAny<ManagementFilter>())).Returns(new Paged<PimsManagementFile>(new[] { managementFile }));
+            repository.Setup(x => x.GetPageDeep(It.IsAny<ManagementFilter>(), null)).Returns(new Paged<PimsManagementFile>(new[] { managementFile }));
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var user = EntityHelper.CreateUser("Test");
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             // Act
             var result = service.GetPage(new ManagementFilter());
 
             // Assert
-            repository.Verify(x => x.GetPageDeep(It.IsAny<ManagementFilter>()), Times.Once);
+            repository.Verify(x => x.GetPageDeep(It.IsAny<ManagementFilter>(), null), Times.Once);
         }
 
         [Fact]
