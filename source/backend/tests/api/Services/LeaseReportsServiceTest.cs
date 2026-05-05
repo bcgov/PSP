@@ -58,7 +58,7 @@ namespace Pims.Api.Test.Services
             var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
 
             this.MockCommonServices();
-            this.leaseRepository.Setup(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), It.IsAny<HashSet<short>>(), true, null)).Returns(new List<PimsLease>() { lease });
+            this.leaseRepository.Setup(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), true, null)).Returns(new List<PimsLease>() { lease });
 
             // Act
             // Assert
@@ -77,7 +77,7 @@ namespace Pims.Api.Test.Services
             var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
 
             this.MockCommonServices();
-            this.leaseRepository.Setup(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), It.IsAny<HashSet<short>>(), true, null)).Returns(new List<PimsLease>() { lease });
+            this.leaseRepository.Setup(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), true, null)).Returns(new List<PimsLease>() { lease });
             this.userRepository.Setup(x => x.GetByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser() { PimsRegionUsers = new List<PimsRegionUser>() });
 
             // Act
@@ -86,7 +86,7 @@ namespace Pims.Api.Test.Services
             // Assert
             leases.Should().HaveCount(1);
             leases.FirstOrDefault().Should().Be(lease);
-            this.leaseRepository.Verify(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), It.IsAny<HashSet<short>>(), true, null));
+            this.leaseRepository.Verify(x => x.GetAllByFilter(It.IsAny<LeaseFilter>(), true, null));
             this.userRepository.Verify(x => x.GetByKeycloakUserId(It.IsAny<Guid>()));
         }
         #endregion

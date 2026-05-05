@@ -120,10 +120,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void InsertNewPropertyActivity(PropertyActivity activity)
         {
-            Wait();
 
             //Choosing Activity type, Sub-type, status
-            ChooseSpecificSelectOption(managementActTypeInput, activity.PropertyActivityType);
+            ChooseSelectOption(managementActTypeInput, activity.PropertyActivityType);
 
             Wait();
             if (webDriver.FindElements(managementActSubTypeDeleteBttns).Count > 0)
@@ -136,14 +135,11 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 foreach (string subtype in activity.PropertyActivitySubTypeList)
                 {
-                    webDriver.FindElement(managementActSubTypeSelect).Click();
-
-                    WaitUntilVisible(managementActSubTypeSelectOptions);
-                    ChooseMultiSelectSpecificOption(managementActSubTypeSelectOptions, subtype);
+                    ChooseMultiSelectOption(managementActSubTypeSelect, managementActSubTypeSelectOptions, managementActSubTypeLabel, subtype);
                 }
             }
 
-            ChooseSpecificSelectOption(managementActStatusInput, activity.PropertyActivityStatus);
+            ChooseSelectOption(managementActStatusInput, activity.PropertyActivityStatus);
 
             //Inserting Requested Added Date
             ClearInput(managementActRequestAddedCommenceDateInput);
@@ -226,7 +222,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     webDriver.FindElements(managementActInvoicesDeleteBttns)[0].Click();
 
-                    Wait();
                     Assert.Equal("Remove Invoice", sharedModals.ModalHeader());
                     Assert.Contains("You have selected to delete an invoice. Are you sure you want to proceed?", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
@@ -240,7 +235,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             ButtonElement("Cancel");
 
-            Wait();
             Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
             Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
             Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
@@ -265,7 +259,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInsertedActivity(PropertyActivity activity, string activityType)
         {
-            Wait(2000);
+            Wait();
 
             //Activity Details section
             AssertTrueIsDisplayed(managementActivityDetailsTitle);
@@ -391,10 +385,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void AddInvoice(ManagementPropertyActivityInvoice invoice, int index)
         {
-            Wait();
+            WaitUntilClickable(managementAddInvoiceBttn);
             webDriver.FindElement(managementAddInvoiceBttn).Click();
 
-            Wait();
+            WaitUntilClickable(By.Id("input-invoices."+ index +".invoiceNum"));
             webDriver.FindElement(By.Id("input-invoices."+ index +".invoiceNum")).SendKeys(invoice.PropertyActivityInvoiceNumber);
 
             webDriver.FindElement(By.Id("datepicker-invoices."+ index +".invoiceDateTime")).SendKeys(invoice.PropertyActivityInvoiceDate);
@@ -405,7 +399,7 @@ namespace PIMS.Tests.Automation.PageObjects
             CleanUpCurrencyInput(By.Id("input-invoices."+ index +".pretaxAmount"));
             SendKeysToCurrencyInput(By.Id("input-invoices."+ index +".pretaxAmount"), invoice.PropertyActivityInvoicePretaxAmount);
 
-            ChooseSpecificSelectOption(By.Id("input-invoices."+ index +".isPstRequired"), invoice.PropertyActivityInvoicePSTApplicable);
+            ChooseSelectOption(By.Id("input-invoices."+ index +".isPstRequired"), invoice.PropertyActivityInvoicePSTApplicable);
 
             AssertTrueElementValueEquals(By.Id("input-invoices."+ index +".gstAmount"), TransformCurrencyFormat(invoice.PropertyActivityInvoiceGSTAmount));
 

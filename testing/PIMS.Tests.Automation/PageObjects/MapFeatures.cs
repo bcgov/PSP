@@ -135,13 +135,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OpenMapLayers()
         {
-            Wait();
+            WaitUntilClickable(mapLayersButton);
             webDriver.FindElement(mapLayersButton).Click();
         }
 
         public void VerifyMapLayers()
         {
-            Wait();
+            WaitUntilVisible(mapLayersTitle);
             AssertTrueIsDisplayed(mapLayersTitle);
             AssertTrueIsDisplayed(mapLayersPIMSSubtitle);
             AssertTrueIsDisplayed(mapLayersPIMSResearchInput);
@@ -186,8 +186,9 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(mapLayersAdminBoundariesLabel);
             webDriver.FindElement(mapLayersAdminBoundariesCollapseBttn).Click();
 
-            Wait(1000);
+            
             ScrollToElement(mapLayersRegionalDistrictsCheck);
+            WaitUntilVisible(mapLayersRegionalDistrictsCheck);
             AssertTrueIsDisplayed(mapLayersCurrentCensusCheck);
             AssertTrueIsDisplayed(mapLayersCurrentCensusLabel);
             AssertTrueIsDisplayed(mapLayersMOTIRegionsCheck);
@@ -202,7 +203,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(mapLayersAdminBoundariesCollapseBttn).Click();
             webDriver.FindElement(mapLayersLegalHighwayResearchCollapseBttn).Click();
 
-            Wait(1000);
+            WaitUntilVisible(mapLayersLegalHighwayResearchCheck);
             AssertTrueIsDisplayed(mapLayersLegalHighwayResearchCheck);
             AssertTrueIsDisplayed(mapLayersLegalHighwayResearchLabel);
             AssertTrueIsDisplayed(mapLayersGazettedHighwayCheck);
@@ -223,7 +224,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(mapLayersLegalHighwayResearchCollapseBttn).Click();
             webDriver.FindElement(mapLayersFirstNationsCollapseBttn).Click();
 
-            Wait(1000);
+            WaitUntilVisible(mapLayersFirstNationsCheck);
             AssertTrueIsDisplayed(mapLayersFirstNationsCheck);
             AssertTrueIsDisplayed(mapLayersFirstNationsLabel);
             AssertTrueIsDisplayed(mapLayersFirstNationsReservesCheck);
@@ -240,7 +241,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(mapLayersFirstNationsCollapseBttn).Click();
             webDriver.FindElement(mapLayersLandOwnershipCollapseBttn).Click();
 
-            Wait(1000);
+            WaitUntilVisible(mapLayersLandOwnershipCheck);
             AssertTrueIsDisplayed(mapLayersLandOwnershipCheck);
             AssertTrueIsDisplayed(mapLayersLandOwnershipLabel);
             AssertTrueIsDisplayed(mapLayersCrownLeasesCheck);
@@ -263,7 +264,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(mapLayersLandOwnershipCollapseBttn).Click();
             webDriver.FindElement(mapLayersZoningCollapseBttn).Click();
 
-            Wait(1000);
+            WaitUntilVisible(mapLayersZoningCheck);
             AssertTrueIsDisplayed(mapLayersZoningCheck);
             AssertTrueIsDisplayed(mapLayersZoningLabel);
             AssertTrueIsDisplayed(mapLayersAgriculturalLandReserveCheck);
@@ -272,7 +273,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(mapLayersZoningCollapseBttn).Click();
             webDriver.FindElement(mapLayersElectoralCollapseBttn).Click();
 
-            Wait(1000);
+            WaitUntilVisible(mapLayersElectoralCheck);
             AssertTrueIsDisplayed(mapLayersElectoralCheck);
             AssertTrueIsDisplayed(mapLayersElectoralLabel);
             AssertTrueIsDisplayed(mapLayersCurrentProvincialElectoralDistrictsBCCheck);
@@ -281,7 +282,7 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(mapLayersElectoralCollapseBttn).Click();
             webDriver.FindElement(mapLayersFederalBCParksCollapseBttn).Click();
 
-            Wait(1000);
+            WaitUntilVisible(mapLayersFederalBCParksCheck);
             AssertTrueIsDisplayed(mapLayersFederalBCParksCheck);
             AssertTrueIsDisplayed(mapLayersFederalBCParksLabel);
             AssertTrueIsDisplayed(mapLayersFederalParksCheck);

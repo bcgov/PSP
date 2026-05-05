@@ -22,38 +22,139 @@ namespace PIMS.Tests.Automation.PageObjects
             wait = new WebDriverWait(webDriver, TimeSpan.FromSeconds(60));
         }
 
-        protected virtual void Wait(int milliseconds = 3000) => Thread.Sleep(milliseconds);
+        protected virtual void Wait(int milliseconds = 1000) => Thread.Sleep(milliseconds);
 
         protected void WaitUntilSpinnerDisappear()
         {
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(loadingSpinner));
-            Wait();
         }
 
-        protected void WaitUntilPropertySpinnerDisappear()
+        protected void WaitForTableToLoad(By rowLocator)
         {
-            wait.Until(ExpectedConditions.InvisibilityOfElementLocated(propertiesSpinner));
+            wait.IgnoreExceptionTypes(
+                typeof(StaleElementReferenceException),
+                typeof(NoSuchElementException)
+            );
+
+            // Wait until spinner disappears
+            wait.Until(driver =>
+            {
+                var spinners = driver.FindElements(tableLoadingSpinner);
+                return spinners.Count == 0 || spinners.All(s => !s.Displayed);
+            });
+
+            // Optional: wait until table rows are present or stable
+            wait.Until(driver =>
+            {
+                var rows = driver.FindElements(rowLocator);
+                return rows.Count >= 0;
+            });
         }
 
-        protected void WaitUntilTableSpinnerDisappear()
+        protected void WaitForTableToLoad()
         {
             wait.Until(ExpectedConditions.InvisibilityOfElementLocated(tableLoadingSpinner));
-            Wait();
         }
-
-        protected void WaitUntilStale(By element) => wait.Until(ExpectedConditions.StalenessOf(webDriver.FindElement(element)));
 
         protected void WaitUntilDisappear(By element) => wait.Until(ExpectedConditions.InvisibilityOfElementLocated(element));
 
-        protected void WaitUntilVisible(By element) => wait.Until(ExpectedConditions.ElementIsVisible(element));
+        protected void WaitUntilVisible(By element)
+        {
+            wait.IgnoreExceptionTypes(typeof(StaleElementReferenceException), typeof(NoSuchElementException));
 
-        protected void WaitUntilExist(By element) => wait.Until(ExpectedConditions.ElementExists(element));
+            wait.Until(d =>
+            {
+                var locator = webDriver.FindElement(element);
 
-        protected void WaitUntilClickable(By element) => wait.Until(ExpectedConditions.ElementToBeClickable(element));
+                if (locator.Displayed)
+                {
+                    return true;
+                }
+
+                return false;
+            });
+        }
+
+        protected IWebElement WaitUntilClickable(By by)
+        {
+            wait.IgnoreExceptionTypes(
+                typeof(StaleElementReferenceException),
+                typeof(NoSuchElementException),
+                typeof(ElementClickInterceptedException)
+            );
+
+            return wait.Until(webDriver =>
+            {
+                var element = webDriver.FindElement(by);
+                return (element.Displayed && element.Enabled) ? element : null;
+            });
+        }
+
+        protected void SafeClick(By by)
+        {
+            wait.PollingInterval = TimeSpan.FromMilliseconds(200);
+
+            wait.IgnoreExceptionTypes(
+                typeof(NoSuchElementException),
+                typeof(StaleElementReferenceException)
+            );
+
+            var js = (IJavaScriptExecutor)webDriver;
+
+            wait.Until(driver =>
+            {
+                var element = driver.FindElement(by);
+
+                if (!element.Displayed || !element.Enabled)
+                    return false;
+
+                js.ExecuteScript(
+                    @"arguments[0].scrollIntoView({ block: 'center', inline: 'center' });",
+                    element);
+
+                var clickable = (bool)js.ExecuteScript(@"
+                    const el = arguments[0];
+                    const rect = el.getBoundingClientRect();
+
+                    if (rect.width === 0 || rect.height === 0) return false;
+
+                    const x = rect.left + rect.width / 2;
+                    const y = rect.top + rect.height / 2;
+
+                    const topEl = document.elementFromPoint(x, y);
+                    return topEl === el || el.contains(topEl);
+                    ", element);
+
+                if (!clickable)
+                    return false;
+
+                try
+                {
+                    element.Click();
+                    return true;
+                }
+                catch (ElementClickInterceptedException)
+                {
+                    return false;
+                }
+            });
+        }
 
         public void WaitUntilVisibleText(By element, string text)
         {
+            wait.IgnoreExceptionTypes(
+                typeof(StaleElementReferenceException),
+                typeof(NoSuchElementException)
+            );
+
+            // Wait until the parent select is visible
+            wait.Until(webDriver =>
+            {
+                var parent = webDriver.FindElement(element);
+                return parent.Displayed ? parent : null;
+            });
             var webElement = webDriver.FindElement(element);
+
             wait.Until(ExpectedConditions.TextToBePresentInElement(webElement, text));
         }
 
@@ -63,27 +164,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
             if (buttonName == "Save")
             {
-                wait.Until(ExpectedConditions.ElementExists(saveButton));
-                wait.Until(ExpectedConditions.ElementToBeClickable(saveButton));
-                FocusAndClick(saveButton);
+                SafeClick(saveButton);
             }
             else
             {
-                wait.Until(ExpectedConditions.ElementExists(cancelButton));
-                wait.Until(ExpectedConditions.ElementToBeClickable(cancelButton));
-                FocusAndClick(cancelButton);
+                SafeClick(cancelButton);
             }
-        }
-
-        protected void ButtonElement(By button)
-        {
-            Wait();
-
-            var js = (IJavaScriptExecutor)webDriver;
-
-            wait.Until(ExpectedConditions.ElementExists(button));
-            wait.Until(ExpectedConditions.ElementToBeClickable(button));
-            webDriver.FindElement(button).Click();
         }
 
         protected void FocusAndClick(By element)
@@ -106,23 +192,40 @@ namespace PIMS.Tests.Automation.PageObjects
             js.ExecuteScript("arguments[0].scrollIntoView();", selectedElement);
         }
 
-        protected void ChooseSpecificSelectOption(By parentElement, string option)
+        protected void ChooseSelectOption(By parentElement, string option)
         {
-            Wait();
+            wait.IgnoreExceptionTypes(
+                typeof(StaleElementReferenceException),
+                typeof(NoSuchElementException)
+            );
 
-            var js = (IJavaScriptExecutor)webDriver;
+            // Wait until the parent select is visible
+            wait.Until(webDriver =>
+            {
+                var parent = webDriver.FindElement(parentElement);
+                return parent.Displayed ? parent : null;
+            });
 
+            // Wait until the desired option exists under the parent
+            wait.Until(webDriver =>
+            {
+                var parent = webDriver.FindElement(parentElement);
+                var options = parent.FindElements(By.TagName("option"));
+
+                return options.Any(o => o.Text.Trim().Equals(option, StringComparison.OrdinalIgnoreCase));
+            });
+
+            // Re-locate after the wait to avoid stale references
             var selectElement = webDriver.FindElement(parentElement);
-            wait.Until(ExpectedConditions.VisibilityOfAllElementsLocatedBy(selectElement.FindElements(By.TagName("option"))));
+            var selectedOption = selectElement
+                .FindElements(By.TagName("option"))
+                .Single(o => o.Text.Trim().Equals(option, StringComparison.OrdinalIgnoreCase));
 
-            var childrenElements = selectElement.FindElements(By.TagName("option"));
-            var selectedOption = childrenElements.Should().ContainSingle(b => b.Text.Equals(option)).Subject;
-
-            js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
+            ((IJavaScriptExecutor)webDriver).ExecuteScript("arguments[0].scrollIntoView({block:'center'});", selectedOption);
             selectedOption.Click();
         }
 
-        protected void ChooseSpecificRadioButton(By parentName, string option)
+        protected void ChooseRadioButton(By parentName, string option)
         {
             var js = (IJavaScriptExecutor)webDriver;
 
@@ -135,16 +238,38 @@ namespace PIMS.Tests.Automation.PageObjects
             js.ExecuteScript("arguments[0].click();", selectedOption);
         }
 
-        protected void ChooseMultiSelectSpecificOption(By element, string option)
+        protected void ChooseMultiSelectOption(By openLocator, By optionsContainerLocator, By closeLocator, string optionText)
         {
             var js = (IJavaScriptExecutor)webDriver;
 
-            var parentElement = webDriver.FindElement(element);
-            var childrenElements = parentElement.FindElements(By.TagName("li"));
-            var selectedOption = childrenElements.Should().ContainSingle(o => o.Text.Equals(option)).Subject;
+            SafeClick(closeLocator);
 
-            js.ExecuteScript("arguments[0].scrollIntoView();", selectedOption);
-            selectedOption.Click();
+            Wait();
+            SafeClick(openLocator);
+
+            var optionElement = wait.Until(driver =>
+            {
+                var container = driver.FindElement(optionsContainerLocator);
+
+                var items = container.FindElements(By.TagName("li"))
+                    .Where(x => x.Displayed)
+                    .ToList();
+
+                return items.FirstOrDefault(x =>
+                    !string.IsNullOrWhiteSpace(x.Text) &&
+                    x.Text.Trim().Equals(optionText.Trim(), StringComparison.OrdinalIgnoreCase));
+            });
+
+            if (optionElement == null)
+            {
+                throw new NoSuchElementException(
+                    $"Could not find option '{optionText}' in multiselect.");
+            }
+
+            js.ExecuteScript("arguments[0].scrollIntoView({block:'center'});", optionElement);
+            optionElement.Click();
+
+            SafeClick(closeLocator);
         }
 
         protected void ClearInput(By elementBy)
@@ -247,10 +372,23 @@ namespace PIMS.Tests.Automation.PageObjects
             Assert.True(webDriver.FindElement(elementBy).Displayed);
         }
 
-        protected void AssertTrueContentEquals(By elementBy, string text = "")
+        protected void AssertTrueContentEquals(By elementBy, string expectedText = "")
         {
-            Wait();
-            Assert.Equal(text, webDriver.FindElement(elementBy).Text);
+            wait.IgnoreExceptionTypes(
+                typeof(StaleElementReferenceException),
+                typeof(NoSuchElementException)
+            );
+
+            bool textMatched = wait.Until(webDriver =>
+            {
+                var element = webDriver.FindElement(elementBy);
+                return element.Displayed && element.Text.Trim().Equals(expectedText.Trim(), StringComparison.Ordinal);
+            });
+
+            Assert.True(
+                textMatched,
+                $"Expected element '{elementBy}' text to equal '{expectedText}'."
+            );
         }
 
         protected void AssertTrueElementValueEquals(By elementBy, string text = "")

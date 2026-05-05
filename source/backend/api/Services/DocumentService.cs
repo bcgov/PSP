@@ -71,6 +71,7 @@ namespace Pims.Api.Services
         private readonly MayanConfig _config;
 
         private readonly IDocumentRepository documentRepository;
+        private readonly IUserRepository userRepository;
         private readonly IEdmsDocumentRepository documentStorageRepository;
         private readonly IDocumentTypeRepository documentTypeRepository;
         private readonly IAvService avService;
@@ -83,6 +84,7 @@ namespace Pims.Api.Services
             IConfiguration configuration,
             ILogger<DocumentService> logger,
             IDocumentRepository documentRepository,
+            IUserRepository userRepository,
             IEdmsDocumentRepository documentStorageRepository,
             IDocumentTypeRepository documentTypeRepository,
             IAvService avService,
@@ -92,6 +94,7 @@ namespace Pims.Api.Services
             : base(user, logger)
         {
             this.documentRepository = documentRepository;
+            this.userRepository = userRepository;
             this.documentStorageRepository = documentStorageRepository;
             this.documentTypeRepository = documentTypeRepository;
             this.avService = avService;
@@ -191,8 +194,22 @@ namespace Pims.Api.Services
                     return new Paged<PimsDocument>(Array.Empty<PimsDocument>(), filter.Page, filter.Quantity, 0);
                 }
             }
+            var pimsUser = userRepository.GetUserInfoByKeycloakUserId(User.GetUserKey());
+            var accessContext = new DocumentAccessContext
+            {
+                UserRegions = pimsUser?.PimsRegionUsers?.Select(r => r.RegionCode)?.ToHashSet() ?? new HashSet<short>(),
+                PersonId = pimsUser?.PersonId,
+                ContractorPersonId = pimsUser?.IsContractor == true ? pimsUser.PersonId : null,
+                CanViewAcquisitionFiles = User.HasPermission(Permissions.AcquisitionFileView),
+                CanViewDispositionFiles = User.HasPermission(Permissions.DispositionView),
+                CanViewLeases = User.HasPermission(Permissions.LeaseView),
+                CanViewManagementFiles = User.HasPermission(Permissions.ManagementView),
+                CanViewResearchFiles = User.HasPermission(Permissions.ResearchFileView),
+                CanViewProjects = User.HasPermission(Permissions.ProjectView),
+                CanViewProperties = User.HasPermission(Permissions.PropertyView),
+            };
 
-            return documentRepository.GetPageDeep(filter);
+            return documentRepository.GetPageDeep(filter, accessContext);
         }
 
         public async Task<DocumentUploadResponse> UploadDocumentSync(DocumentUploadRequest uploadRequest)

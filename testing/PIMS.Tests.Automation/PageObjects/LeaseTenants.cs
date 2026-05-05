@@ -85,26 +85,22 @@ namespace PIMS.Tests.Automation.PageObjects
         //Edit Tenant section
         public void EditStakeholderButton()
         {
-            Wait(3000);
-            webDriver.FindElement(StakeholderEditButton).Click();
+            WaitUntilClickable(StakeholderEditButton);
+            SafeClick(StakeholderEditButton);
         }
 
         //Search and add a new tenant
         public void AddIndividualStakeholder(string leaseType, Stakeholder stakeholder)
         {
-            Wait();
-
             if (leaseType == "Receivable")
-                webDriver.FindElement(stakeholderAddTenantsBttn).Click();
+                SafeClick(stakeholderAddTenantsBttn);
             else
-                webDriver.FindElement(stakeholderAddPayeesBttn).Click();
+                SafeClick(stakeholderAddPayeesBttn);
 
-            Wait();
             sharedSelectContact.SelectContact(stakeholder.Summary, "Individual");
 
             //Choose stakeholder type
-            Wait();
-            ChooseSpecificSelectOption(stakeholderType1stSelect, stakeholder.StakeholderType);
+            ChooseSelectOption(stakeholderType1stSelect, stakeholder.StakeholderType);
 
             //Verify that the Primary Contact displays "Not applicable"
             Assert.Equal("Not applicable", webDriver.FindElement(stakeholderPrimaryContact1stCell).Text);
@@ -112,50 +108,38 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddOrganizationTenant(string leaseType, Stakeholder stakeholder)
         {
-            Wait();
-
             if (leaseType == "Receivable")
-                webDriver.FindElement(stakeholderAddTenantsBttn).Click();
+                SafeClick(stakeholderAddTenantsBttn);
             else
-                webDriver.FindElement(stakeholderAddPayeesBttn).Click();
+                SafeClick(stakeholderAddPayeesBttn);
 
-            Wait();
-            webDriver.FindElement(stakeholderSearchInput).SendKeys(stakeholder.Summary);
-            webDriver.FindElement(stakeholderOrganizationRadioBttn).Click();
-            webDriver.FindElement(tenantSearchBttn).Click();
-
-            ScrollToElement(stakeholderSearchInput);
-            WaitUntilClickable(stakeholderFirstResultRadioBttn);
-            webDriver.FindElement(stakeholderFirstResultRadioBttn).Click();
-
-            WaitUntilClickable(stakeholderAddSelectedButton);
-            webDriver.FindElement(stakeholderAddSelectedButton).Click();
+            sharedSelectContact.SelectContact(stakeholder.Summary, "Organization");
 
             //Choose a primary contact if there's the option
             if (webDriver.FindElements(stakeholderPrimaryContact1stSelect).Count > 0)
             {
                 WaitUntilClickable(stakeholderPrimaryContact1stSelect);
-                ChooseSpecificSelectOption(stakeholderPrimaryContact1stSelect, stakeholder.PrimaryContact);
+                ChooseSelectOption(stakeholderPrimaryContact1stSelect, stakeholder.PrimaryContact);
             }
 
             //Choose stakeholder type
-            ChooseSpecificSelectOption(stakeholderType1stSelect, stakeholder.StakeholderType);
+            ChooseSelectOption(stakeholderType1stSelect, stakeholder.StakeholderType);
         }
 
         public void DeleteNthStakeholder(int index)
         {
-            Wait();
             var nthStakeholderRemoveButton = By.CssSelector("div[data-testid='selected-items'] div[class='tr-wrapper']:nth-child("+ index +") button[title='Click to remove']");
+            WaitUntilClickable(nthStakeholderRemoveButton);
             webDriver.FindElement(nthStakeholderRemoveButton).Click();
         }
 
         public void EditStakeholder(Stakeholder tenant)
         {
-            Wait();
+            WaitUntilVisible(stakeholderTotalSelected);
             var totalStakeholderIndex = webDriver.FindElements(stakeholderTotalSelected).Count -1;
             By lastStakeholderSelector = By.Id("input-stakeholders."+ totalStakeholderIndex +".stakeholderType");
 
-            ChooseSpecificSelectOption(lastStakeholderSelector, tenant.StakeholderType);
+            ChooseSelectOption(lastStakeholderSelector, tenant.StakeholderType);
         }
 
         public void SaveTenant()
@@ -175,49 +159,49 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int TotalAssignees()
         {
-            Wait();
+            Wait(500);
             return webDriver.FindElements(stakeholderTotalAssigneeView).Count;
         }
 
         public int TotalTenants()
         {
-            Wait();
+            Wait(500);
             return webDriver.FindElements(stakeholderTotalTenantsView).Count;
         }
 
         public int TotalRepresentatives()
         {
-            Wait();
+            Wait(500);
             return webDriver.FindElements(stakeholderTotalRepresentativeView).Count;
         }
 
         public int TotalManagers()
         {
-            Wait();
+            Wait(500);
             return webDriver.FindElements(stakeholderTotalManagerView).Count;
         }
 
         public int TotalUnknown()
         {
-            Wait();
+            Wait(500);
             return webDriver.FindElements(stakeholderTotalUnknownView).Count;
         }
 
         public int TotalOwners()
         {
-            Wait();
+            Wait(500);
             return webDriver.FindElements(stakeholderTotalOwnerView).Count;
         }
 
         public int TotalOwnerRepresentatives()
         {
-            Wait();
+            Wait(500);
             return webDriver.FindElements(stakeholderTotalOwnerRepView).Count;
         }
 
         public int TotalTenantOther()
         {
-            Wait();
+            Wait(500);
             return webDriver.FindElements(stakeholderTotalOtherView).Count;
         }
 

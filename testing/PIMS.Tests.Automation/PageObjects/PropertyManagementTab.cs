@@ -98,7 +98,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateLastContactButton()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
 
             var lastInsertedContactIndex = webDriver.FindElements(managementContactsBodyCount).Count;
             webDriver.FindElement(By.CssSelector("div[data-testid='PropertyContactsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ lastInsertedContactIndex +") div[role='cell']:nth-child(4) button:nth-child(1)")).Click();
@@ -106,7 +106,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void ViewLastActivityButton()
         {
-            Wait();
+            WaitUntilVisible(managementActivitiesBodyCount);
 
             var lastInsertedActivityIndex = webDriver.FindElements(managementActivitiesBodyCount).Count;
             webDriver.FindElement(By.XPath("//div[@data-testid='adhoc-activity-list']/div[@class='tbody']/div[@class='tr-wrapper']["+ lastInsertedActivityIndex +"]/div/div[@role='cell'][5]/div/button[1]")).Click();
@@ -114,7 +114,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddNewPropertyContactButton()
         {
-            Wait();
+            WaitUntilClickable(managementeAddContactBttn);
             webDriver.FindElement(managementeAddContactBttn).Click();
         }
 
@@ -126,7 +126,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void InsertManagementSummaryInformation(PropertyManagement managementProperty)
         {
-            Wait();
+            WaitUntilClickable(managementPropertyPurposeInput);
 
             //Delete Property Purpose if any
             if (webDriver.FindElements(managementPropertyPurposeDeleteBttns).Count > 0)
@@ -138,23 +138,15 @@ namespace PIMS.Tests.Automation.PageObjects
             }
             //Add Property Purpose
             if (managementProperty.ManagementPropertyPurpose.First() != "")
-            {
                 ClearMultiSelectInput(managementPropertyPurposeInput);
                 foreach (string purpose in managementProperty.ManagementPropertyPurpose)
-                {
-                    Wait();
-                    webDriver.FindElement(managementPropertyPurposeLabel).Click();
-                    FocusAndClick(managementPropertyPurposeInput);
-
-                    ChooseMultiSelectSpecificOption(managementPropertyPurposeOptions, purpose);
-                    webDriver.FindElement(managementPropertyPurposeLabel).Click();
-                }
-            }
+                    ChooseMultiSelectOption(managementPropertyPurposeInput, managementPropertyPurposeOptions, managementPropertyPurposeLabel, purpose);
+            
             if (managementProperty.ManagementUtilitiesPayable != "")
-                ChooseSpecificSelectOption(managementUtilitiesPayableSelect, managementProperty.ManagementUtilitiesPayable);
+                ChooseSelectOption(managementUtilitiesPayableSelect, managementProperty.ManagementUtilitiesPayable);
 
             if (managementProperty.ManagementTaxesPayable != "")
-                ChooseSpecificSelectOption(managementTaxesPayableSelect, managementProperty.ManagementTaxesPayable);
+                ChooseSelectOption(managementTaxesPayableSelect, managementProperty.ManagementTaxesPayable);
 
             ClearInput(managementAdditionalDetailsTextarea);
             if (managementProperty.ManagementPropertyAdditionalDetails != "")
@@ -164,16 +156,19 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void InsertNewPropertyContact(PropertyContact contact)
         {
-            Wait();
+            WaitUntilClickable(managementContactsButton);
 
             //Choosing a contact
             webDriver.FindElement(managementContactsButton).Click();
             sharedSelectContact.SelectContact(contact.PropertyContactFullName, contact.PropertyContactType);
 
             //Choosing Primary Contact
-            Wait();
             if (contact.PropertyPrimaryContact != "" && webDriver.FindElements(managementContactPrimaryContactSelect).Count > 0)
-                ChooseSpecificSelectOption(managementContactPrimaryContactSelect, contact.PropertyPrimaryContact);
+            {
+                WaitUntilClickable(managementContactPrimaryContactSelect);
+                ChooseSelectOption(managementContactPrimaryContactSelect, contact.PropertyPrimaryContact);
+            }
+
 
             //Inserting Purpose Description
             webDriver.FindElement(managementContactsPurposeDescriptionTextarea).Click();
@@ -183,7 +178,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdatePropertyContact(PropertyContact contact)
         {
-            Wait();
+            WaitUntilClickable(managementContactsPurposeDescriptionTextarea);
 
             //Update Purpose Description
             webDriver.FindElement(managementContactsPurposeDescriptionTextarea).Click();
@@ -199,36 +194,34 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteAllContacts()
         {
-            Wait();
 
             while (webDriver.FindElements(managementContactsDeleteBttns).Count > 0)
             {
-                Wait();
+                WaitUntilClickable(managementContactsFirstDeleteBttn);
                 webDriver.FindElement(managementContactsFirstDeleteBttn).Click();
 
                 Assert.Equal("Confirm delete", sharedModals.ModalHeader());
                 Assert.Equal("This contact will be removed from the Property contacts. Do you wish to proceed?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
 
-                WaitUntilTableSpinnerDisappear();
+                WaitForTableToLoad();
             }
         }
 
         public void DeleteAllActivities()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
 
             while (webDriver.FindElements(managementActivitiesDeleteBttns).Count > 0)
             {
-                Wait();
+                WaitUntilClickable(managementActivitiesDeleteBttns);
                 webDriver.FindElements(managementActivitiesDeleteBttns)[0].Click();
 
-                Wait();
                 Assert.Equal("Confirm Delete", sharedModals.ModalHeader());
                 Assert.Equal("Are you sure you want to delete this item?", sharedModals.ModalContent());
                 sharedModals.ModalClickOKBttn();
 
-                WaitUntilTableSpinnerDisappear();
+                WaitForTableToLoad();
             }
         }
 
@@ -297,7 +290,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInsertedSummaryForm(PropertyManagement managementProperty)
         {
-            Wait();
+            WaitUntilVisible(managementSummaryTitle);
 
             AssertTrueIsDisplayed(managementSummaryTitle);
             AssertTrueIsDisplayed(managementPropertyPurposeLabel);
@@ -320,7 +313,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLastInsertedPropertyContactTable(PropertyContact contact)
         {
-            Wait(3000);
+            WaitUntilVisible(managementContactsBodyCount);
 
             var lastInsertedContactIndex = webDriver.FindElements(managementContactsBodyCount).Count;
 
@@ -339,7 +332,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyLastInsertedActivityTable(PropertyActivity activity)
         {
-            Wait();
+            WaitUntilVisible(managementActivitiesBodyCount);
 
             var lastInsertedActivityIndex = webDriver.FindElements(managementActivitiesBodyCount).Count;
 
@@ -356,13 +349,12 @@ namespace PIMS.Tests.Automation.PageObjects
         public void ViewLastActivityFromList()
         {
             var paginationLastPage = webDriver.FindElements(managementActivityPaginationOptions).Count() -1;
-
             webDriver.FindElement(By.XPath("//div[@data-testid='adhoc-activity-list']/following-sibling::div/div/ul[@class='pagination']/li["+ paginationLastPage +"]")).Click();
         }
 
         public string VerifyLeaseActiveStatus()
         {
-            Wait();
+            WaitUntilVisible(managementLeaseContent);
             return webDriver.FindElement(managementLeaseContent).Text;
         }
     }
