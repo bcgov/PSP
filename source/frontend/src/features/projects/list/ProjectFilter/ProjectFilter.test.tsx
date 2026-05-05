@@ -2,13 +2,7 @@ import { IProjectFilter } from '@/features/projects/interfaces';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import {
-  act,
-  fillInput,
-  render,
-  RenderOptions,
-  userEvent,
-} from '@/utils/test-utils';
+import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { IProjectFilterProps, ProjectFilter } from './ProjectFilter';
 import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
@@ -94,7 +88,7 @@ describe('Project Filter', () => {
         projectNumber: '1201',
         projectStatusCode: null,
         projectName: null,
-        regions: []
+        regions: [],
       }),
     );
   });

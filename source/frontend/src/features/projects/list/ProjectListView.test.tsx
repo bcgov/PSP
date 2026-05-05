@@ -95,7 +95,7 @@ describe('Project List View', () => {
         projectName: 'NAME',
         projectNumber: null,
         projectStatusCode: null,
-        regions: []
+        regions: [],
       }),
     );
 
