@@ -17,7 +17,7 @@ public partial class PimsPropertyLocationLiteVw
     public Geometry Geometry { get; set; }
 
     [Column("IS_OWNED")]
-    public bool IsOwned { get; set; }
+    public bool? IsOwned { get; set; }
 
     [Column("IS_RETIRED")]
     public bool? IsRetired { get; set; }

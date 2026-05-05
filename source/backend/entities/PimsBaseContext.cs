@@ -316,6 +316,10 @@ public partial class PimsBaseContext : DbContext
 
     public virtual DbSet<PimsInthldrPropInterestHist> PimsInthldrPropInterestHists { get; set; }
 
+    public virtual DbSet<PimsIsPropertyDisposedVw> PimsIsPropertyDisposedVws { get; set; }
+
+    public virtual DbSet<PimsIsPropertyOwnedVw> PimsIsPropertyOwnedVws { get; set; }
+
     public virtual DbSet<PimsLandActType> PimsLandActTypes { get; set; }
 
     public virtual DbSet<PimsLandSurveyorType> PimsLandSurveyorTypes { get; set; }
@@ -3256,7 +3260,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.DispositionAgreementTypeCode).HasComment("Foreign key to the PIMS_DISPOSITION_AGREEMENT_TYPE table.");
             entity.Property(e => e.DispositionFileId).HasComment("Foreign key to the PIMS_DISPOSITION_FILE table.");
             entity.Property(e => e.DspAgreementStatusTypeCode)
-                .HasDefaultValue("N''DRAFT''")
+                .HasDefaultValue("DRAFT")
                 .HasComment("Foreign key to the PIMS_DSP_AGREEMENT_STATUS_TYPE table.");
             entity.Property(e => e.ExpiryTs).HasComment("Expiry date and time of acquisition offer.");
             entity.Property(e => e.ExpropriationDate).HasComment("Date of expropriation of the property.");
@@ -6196,6 +6200,16 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.InthldrPropInterestHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_INTHLDR_PROP_INTEREST_H_ID_SEQ])");
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+        });
+
+        modelBuilder.Entity<PimsIsPropertyDisposedVw>(entity =>
+        {
+            entity.ToView("PIMS_IS_PROPERTY_DISPOSED_VW");
+        });
+
+        modelBuilder.Entity<PimsIsPropertyOwnedVw>(entity =>
+        {
+            entity.ToView("PIMS_IS_PROPERTY_OWNED_VW");
         });
 
         modelBuilder.Entity<PimsLandActType>(entity =>
