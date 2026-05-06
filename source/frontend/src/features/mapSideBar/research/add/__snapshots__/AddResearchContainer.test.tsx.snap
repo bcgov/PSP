@@ -346,7 +346,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c26 {
+.c28 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -364,25 +364,36 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c21 {
+.c23 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
 }
 
-.c15 {
+.c15.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c14 {
+  font-weight: bold;
+}
+
+.c17 {
   margin: 0 1.6rem 0 1.6rem;
   padding: 1.6rem;
   text-align: left;
   text-underline-offset: 2px;
 }
 
-.c15 button {
+.c17 button {
   font-size: 14px;
 }
 
-.c16 {
+.c18 {
   font-size: 16px;
   color: #1a5a96;
   font-style: italic;
@@ -393,7 +404,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   margin-bottom: 1rem;
 }
 
-.c20 {
+.c22 {
   padding: 1.5rem 1.8rem;
   border-radius: 4px;
   background-color: #f0f7fc;
@@ -405,30 +416,30 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   line-height: 24px;
 }
 
-.c19 {
+.c21 {
   float: right;
   cursor: pointer;
   color: #1a5a96;
   font-size: 2.8rem;
 }
 
-.c22 {
+.c24 {
   float: right;
   cursor: pointer;
   color: #1a5a96;
   font-size: 2.8rem;
 }
 
-.c18 {
+.c20 {
   margin-right: 1.5rem;
   font-size: 1.3rem;
 }
 
-.c17 {
+.c19 {
   cursor: pointer;
 }
 
-.c25 {
+.c27 {
   margin: 0;
   padding: 1.6rem;
   font-size: 1.6rem;
@@ -439,15 +450,15 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c24 {
+.c26 {
   font-weight: normal;
 }
 
-.c23 {
+.c25 {
   font-weight: bold;
 }
 
-.c14 input.form-control {
+.c16 input.form-control {
   min-width: 50rem;
   max-width: 50rem;
 }
@@ -580,20 +591,22 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                 class="collapse show"
               >
                 <div
-                  class="py-4 no-gutters row"
+                  class="pb-2 row"
                 >
                   <div
-                    class="pr-5 col-auto"
+                    class="pr-0 text-left col-4"
                   >
-                    <strong>
+                    <label
+                      class="c14"
+                    >
                       Name this research file:
-                    </strong>
+                    </label>
                   </div>
                   <div
-                    class="col-auto"
+                    class="c15 required text-left col"
                   >
                     <div
-                      class="c14 input form-group"
+                      class="c16 input form-group"
                     >
                       <input
                         class="form-control"
@@ -609,19 +622,19 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                   </div>
                 </div>
                 <div
-                  class="c15"
+                  class="c17"
                 >
                   <div
-                    class="c16"
+                    class="c18"
                   >
                     <div
-                      class="c17 no-gutters row"
+                      class="c19 no-gutters row"
                     >
                       <div
                         class="col"
                       >
                         <svg
-                          class="c18"
+                          class="c20"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -640,7 +653,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                         class="col-1"
                       >
                         <svg
-                          class="c19"
+                          class="c21"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -661,7 +674,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                     </div>
                   </div>
                   <div
-                    class="c20 collapsing"
+                    class="c22 collapsing"
                   >
                     <p
                       class="mb-4"
@@ -730,7 +743,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
               class="c13 form-section"
             >
               <h2
-                class="c21"
+                class="c23"
               >
                 <div
                   class="no-gutters row"
@@ -762,7 +775,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
               class="c13 form-section"
             >
               <h2
-                class="c21"
+                class="c23"
               >
                 <div
                   class="no-gutters row"
@@ -778,19 +791,19 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                 class="collapse show"
               >
                 <div
-                  class="c15"
+                  class="c17"
                 >
                   <div
-                    class="c16"
+                    class="c18"
                   >
                     <div
-                      class="c17 no-gutters row"
+                      class="c19 no-gutters row"
                     >
                       <div
                         class="col"
                       >
                         <svg
-                          class="c18"
+                          class="c20"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -809,7 +822,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                         class="col-1"
                       >
                         <svg
-                          class="c22"
+                          class="c24"
                           fill="currentColor"
                           height="1em"
                           stroke="currentColor"
@@ -830,17 +843,17 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                     </div>
                   </div>
                   <div
-                    class="c20 collapse show"
+                    class="c22 collapse show"
                   >
                     <ul>
                       <li
-                        class="c23"
+                        class="c25"
                       >
                         <div>
                           Find a Property
                         </div>
                         <div
-                          class="c24"
+                          class="c26"
                         >
                           Locate an area on the map OR use 
                           <button
@@ -856,25 +869,25 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                         </div>
                       </li>
                       <li
-                        class="c23"
+                        class="c25"
                       >
                         <div>
                           Select a Property
                         </div>
                         <div
-                          class="c24"
+                          class="c26"
                         >
                           Click on the map to highlight the selection
                         </div>
                       </li>
                       <li
-                        class="c23"
+                        class="c25"
                       >
                         <div>
                           Add it to this File
                         </div>
                         <div
-                          class="c24"
+                          class="c26"
                         >
                           Click "Add selected" property button when it appears below
                         </div>
@@ -886,7 +899,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                   class="c13 form-section"
                 >
                   <h2
-                    class="c21"
+                    class="c23"
                   >
                     <div
                       class="no-gutters row"
@@ -910,7 +923,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
                     class="collapse show"
                   >
                     <div
-                      class="c25 no-gutters row"
+                      class="c27 no-gutters row"
                     >
                       <div
                         class="col-md-3"
@@ -957,7 +970,7 @@ exports[`AddResearchContainer component > renders as expected 1`] = `
         class=""
       >
         <div
-          class="c26 justify-content-end pt-4 p-0 no-gutters row"
+          class="c28 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"
