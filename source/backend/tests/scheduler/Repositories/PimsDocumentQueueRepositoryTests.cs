@@ -11,7 +11,10 @@ using Xunit;
 
 namespace Pims.Scheduler.Test.Repositories
 {
-    public class PimsDocumentQueueRepositoryTest
+    /// <summary>
+    /// Class that provides the collection of tests for Document Queue repository.
+    /// </summary>
+    public class PimsDocumentQueueRepositoryTests
     {
         [Fact]
         public async Task PollQueuedDocument_ValidDocument_ReturnsExternalResponse()

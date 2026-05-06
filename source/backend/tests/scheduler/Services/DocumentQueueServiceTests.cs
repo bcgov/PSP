@@ -328,7 +328,5 @@ namespace Pims.Scheduler.Test.Services
             result.Status.Should().Be(TaskResponseStatusTypes.ERROR);
             result.DocumentQueueResponses.FirstOrDefault()?.Message.Should().Be("Document processing for document 1 has exceeded maximum processing time of 100");
         }
-
-
     }
 }

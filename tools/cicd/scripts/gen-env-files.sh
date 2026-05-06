@@ -59,7 +59,13 @@ Mayan__ConnectionPassword=
 Cdogs__AuthEndpoint=
 Cdogs__CDogsHost=
 Cdogs__ServiceClientId=
-Cdogs__ServiceClientSecret=" >> ./source/backend/api/.env
+Cdogs__ServiceClientSecret=
+
+Ches__AuthEndpoint=
+Ches__ChesHost=
+Ches__ServiceClientId=
+Ches__ServiceClientSecret=
+Ches__FromEmail=" >> ./source/backend/api/.env
 fi
 
 # Proxy

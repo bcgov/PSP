@@ -63,6 +63,8 @@ namespace Pims.Api.Repositories.Ches
                 Status = ExternalResponseStatus.Error,
             };
 
+            request.From ??= _config.FromEmail;
+
             try
             {
                 var token = await _authRepository.GetTokenAsync();
@@ -121,7 +123,7 @@ namespace Pims.Api.Repositories.Ches
                 result.Message = $"Authentication error: {ex.Message}";
                 _logger.LogError(ex, "Authentication error sending CHES email.");
             }
-            _logger.LogDebug($"Finished sending email");
+
             return result;
         }
 
