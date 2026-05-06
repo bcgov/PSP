@@ -61,6 +61,7 @@ namespace Pims.Scheduler.Services
 
                 return _pimsDocumentQueueRepository.UploadQueuedDocument(qd).ContinueWith(response => HandleDocumentQueueResponse("UploadQueuedDocument", qd, response));
             });
+
             var results = await Task.WhenAll(responses);
             return new ScheduledTaskResponseModel() { Status = GetMergedStatus(results), DocumentQueueResponses = results };
         }
@@ -137,6 +138,7 @@ namespace Pims.Scheduler.Services
             {
                 return TaskResponseStatusTypes.ERROR;
             }
+
             return TaskResponseStatusTypes.PARTIAL;
         }
 
@@ -155,6 +157,7 @@ namespace Pims.Scheduler.Services
                 _logger.LogInformation("No documents to process, skipping execution.");
                 scheduledTaskResponseModel = new ScheduledTaskResponseModel() { Status = TaskResponseStatusTypes.SKIPPED, Message = "No documents to process, skipping execution." };
             }
+
             return new SearchQueuedDocumentsResponseModel() { ScheduledTaskResponseModel = scheduledTaskResponseModel, SearchResults = queuedDocuments };
         }
 

@@ -101,6 +101,7 @@ namespace Pims.Dal
             repositories.AddScoped<Repositories.INoteRelationshipRepository<PimsProjectNote>, Repositories.ProjectNoteRepository>();
             repositories.AddScoped<Repositories.INoteRelationshipRepository<PimsPropertyNote>, Repositories.PropertyNoteRepository>();
             repositories.AddScoped<Repositories.INoteRelationshipRepository<PimsResearchFileNote>, Repositories.ResearchFileNoteRepository>();
+            repositories.AddScoped<Repositories.INotificationUserRepository, Repositories.NotificationUserRepository>();
 
             return repositories;
         }
