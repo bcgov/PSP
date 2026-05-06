@@ -1,9 +1,9 @@
 import React from 'react';
-import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { Input } from '@/components/common/form/';
 import { Section } from '@/components/common/Section/Section';
+import { SectionField } from '@/components/common/Section/SectionField';
 
 import { PropertyForm } from '../../shared/models';
 import { ResearchFileNameGuide } from '../common/ResearchFileNameGuide';
@@ -18,18 +18,13 @@ const AddResearchForm: React.FC<IAddResearchFormProps> = props => {
   return (
     <StyledFormWrapper>
       <Section>
-        <Row className="py-4 no-gutters">
-          <Col xs="auto" className="pr-5">
-            <strong>Name this research file:</strong>
-          </Col>
-          <Col xs="auto">
-            <LargeInput
-              field="name"
-              placeholder="Road name - MOTT District - Location or description"
-            />
-            A unique file number will be generated for this research file on save.
-          </Col>
-        </Row>
+        <SectionField label="Name this research file" required>
+          <LargeInput
+            field="name"
+            placeholder="Road name - MOTT District - Location or description"
+          />
+          A unique file number will be generated for this research file on save.
+        </SectionField>
         <ResearchFileNameGuide />
       </Section>
       <Section header="Project">

@@ -6,7 +6,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c10.btn {
+  .c12.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +35,17 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c10.btn .Button__value {
+.c12.btn .Button__value {
   width: auto;
 }
 
-.c10.btn:hover {
+.c12.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c10.btn:focus {
+.c12.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +53,31 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c10.btn.btn-primary {
+.c12.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c10.btn.btn-primary:hover,
-.c10.btn.btn-primary:active,
-.c10.btn.btn-primary:focus {
+.c12.btn.btn-primary:hover,
+.c12.btn.btn-primary:active,
+.c12.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c10.btn.btn-secondary {
+.c12.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c10.btn.btn-secondary:hover,
-.c10.btn.btn-secondary:active,
-.c10.btn.btn-secondary:focus {
+.c12.btn.btn-secondary:hover,
+.c12.btn.btn-secondary:active,
+.c12.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c10.btn.btn-info {
+.c12.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +85,66 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c10.btn.btn-info:hover,
-.c10.btn.btn-info:active,
-.c10.btn.btn-info:focus {
+.c12.btn.btn-info:hover,
+.c12.btn.btn-info:active,
+.c12.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c10.btn.btn-light {
+.c12.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c10.btn.btn-light:hover,
-.c10.btn.btn-light:active,
-.c10.btn.btn-light:focus {
+.c12.btn.btn-light:hover,
+.c12.btn.btn-light:active,
+.c12.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c10.btn.btn-dark {
+.c12.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c10.btn.btn-dark:hover,
-.c10.btn.btn-dark:active,
-.c10.btn.btn-dark:focus {
+.c12.btn.btn-dark:hover,
+.c12.btn.btn-dark:active,
+.c12.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c10.btn.btn-danger {
+.c12.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c10.btn.btn-danger:hover,
-.c10.btn.btn-danger:active,
-.c10.btn.btn-danger:focus {
+.c12.btn.btn-danger:hover,
+.c12.btn.btn-danger:active,
+.c12.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c10.btn.btn-warning {
+.c12.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c10.btn.btn-warning:hover,
-.c10.btn.btn-warning:active,
-.c10.btn.btn-warning:focus {
+.c12.btn.btn-warning:hover,
+.c12.btn.btn-warning:active,
+.c12.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c10.btn.btn-link {
+.c12.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +168,9 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c10.btn.btn-link:hover,
-.c10.btn.btn-link:active,
-.c10.btn.btn-link:focus {
+.c12.btn.btn-link:hover,
+.c12.btn.btn-link:active,
+.c12.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +180,15 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   outline: none;
 }
 
-.c10.btn.btn-link:disabled,
-.c10.btn.btn-link.disabled {
+.c12.btn.btn-link:disabled,
+.c12.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c10.btn:disabled,
-.c10.btn:disabled:hover {
+.c12.btn:disabled,
+.c12.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,15 +200,15 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c10.Button .Button__icon {
+.c12.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c10.Button--icon-only:focus {
+.c12.Button--icon-only:focus {
   outline: none;
 }
 
-.c10.Button--icon-only .Button__icon {
+.c12.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -220,25 +220,36 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c9 {
+.c11 {
   font-weight: bold;
   color: var(--theme-blue-100);
   border-bottom: 0.2rem var(--theme-blue-90) solid;
   margin-bottom: 2.4rem;
 }
 
-.c3 {
+.c3.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c2 {
+  font-weight: bold;
+}
+
+.c5 {
   margin: 0 1.6rem 0 1.6rem;
   padding: 1.6rem;
   text-align: left;
   text-underline-offset: 2px;
 }
 
-.c3 button {
+.c5 button {
   font-size: 14px;
 }
 
-.c4 {
+.c6 {
   font-size: 16px;
   color: #1a5a96;
   font-style: italic;
@@ -249,7 +260,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   margin-bottom: 1rem;
 }
 
-.c8 {
+.c10 {
   padding: 1.5rem 1.8rem;
   border-radius: 4px;
   background-color: #f0f7fc;
@@ -261,30 +272,30 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   line-height: 24px;
 }
 
-.c7 {
+.c9 {
   float: right;
   cursor: pointer;
   color: #1a5a96;
   font-size: 2.8rem;
 }
 
-.c11 {
+.c13 {
   float: right;
   cursor: pointer;
   color: #1a5a96;
   font-size: 2.8rem;
 }
 
-.c6 {
+.c8 {
   margin-right: 1.5rem;
   font-size: 1.3rem;
 }
 
-.c5 {
+.c7 {
   cursor: pointer;
 }
 
-.c14 {
+.c16 {
   margin: 0;
   padding: 1.6rem;
   font-size: 1.6rem;
@@ -295,15 +306,15 @@ exports[`AddResearchForm component > renders as expected 1`] = `
   font-family: 'BcSans-Bold';
 }
 
-.c13 {
+.c15 {
   font-weight: normal;
 }
 
-.c12 {
+.c14 {
   font-weight: bold;
 }
 
-.c2 input.form-control {
+.c4 input.form-control {
   min-width: 50rem;
   max-width: 50rem;
 }
@@ -324,20 +335,22 @@ exports[`AddResearchForm component > renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="py-4 no-gutters row"
+          class="pb-2 row"
         >
           <div
-            class="pr-5 col-auto"
+            class="pr-0 text-left col-4"
           >
-            <strong>
+            <label
+              class="c2"
+            >
               Name this research file:
-            </strong>
+            </label>
           </div>
           <div
-            class="col-auto"
+            class="c3 required text-left col"
           >
             <div
-              class="c2 input form-group"
+              class="c4 input form-group"
             >
               <input
                 class="form-control"
@@ -353,19 +366,19 @@ exports[`AddResearchForm component > renders as expected 1`] = `
           </div>
         </div>
         <div
-          class="c3"
+          class="c5"
         >
           <div
-            class="c4"
+            class="c6"
           >
             <div
-              class="c5 no-gutters row"
+              class="c7 no-gutters row"
             >
               <div
                 class="col"
               >
                 <svg
-                  class="c6"
+                  class="c8"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -384,7 +397,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c7"
+                  class="c9"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -405,7 +418,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c8 collapsing"
+            class="c10 collapsing"
           >
             <p
               class="mb-4"
@@ -474,7 +487,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
       class="c1 form-section"
     >
       <h2
-        class="c9"
+        class="c11"
       >
         <div
           class="no-gutters row"
@@ -490,7 +503,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
         class="collapse show"
       >
         <button
-          class="c10 Button btn btn-link"
+          class="c12 Button btn btn-link"
           data-testid="add-project"
           type="button"
         >
@@ -506,7 +519,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
       class="c1 form-section"
     >
       <h2
-        class="c9"
+        class="c11"
       >
         <div
           class="no-gutters row"
@@ -522,19 +535,19 @@ exports[`AddResearchForm component > renders as expected 1`] = `
         class="collapse show"
       >
         <div
-          class="c3"
+          class="c5"
         >
           <div
-            class="c4"
+            class="c6"
           >
             <div
-              class="c5 no-gutters row"
+              class="c7 no-gutters row"
             >
               <div
                 class="col"
               >
                 <svg
-                  class="c6"
+                  class="c8"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -553,7 +566,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
                 class="col-1"
               >
                 <svg
-                  class="c11"
+                  class="c13"
                   fill="currentColor"
                   height="1em"
                   stroke="currentColor"
@@ -574,21 +587,21 @@ exports[`AddResearchForm component > renders as expected 1`] = `
             </div>
           </div>
           <div
-            class="c8 collapse show"
+            class="c10 collapse show"
           >
             <ul>
               <li
-                class="c12"
+                class="c14"
               >
                 <div>
                   Find a Property
                 </div>
                 <div
-                  class="c13"
+                  class="c15"
                 >
                   Locate an area on the map OR use 
                   <button
-                    class="c10 Button d-inline-block btn btn-link"
+                    class="c12 Button d-inline-block btn btn-link"
                     type="button"
                   >
                     <div
@@ -600,25 +613,25 @@ exports[`AddResearchForm component > renders as expected 1`] = `
                 </div>
               </li>
               <li
-                class="c12"
+                class="c14"
               >
                 <div>
                   Select a Property
                 </div>
                 <div
-                  class="c13"
+                  class="c15"
                 >
                   Click on the map to highlight the selection
                 </div>
               </li>
               <li
-                class="c12"
+                class="c14"
               >
                 <div>
                   Add it to this File
                 </div>
                 <div
-                  class="c13"
+                  class="c15"
                 >
                   Click "Add selected" property button when it appears below
                 </div>
@@ -630,7 +643,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
           class="c1 form-section"
         >
           <h2
-            class="c9"
+            class="c11"
           >
             <div
               class="no-gutters row"
@@ -654,7 +667,7 @@ exports[`AddResearchForm component > renders as expected 1`] = `
             class="collapse show"
           >
             <div
-              class="c14 no-gutters row"
+              class="c16 no-gutters row"
             >
               <div
                 class="col-md-3"

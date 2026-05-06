@@ -79,7 +79,7 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
             placeholder={values.statusTypeCode ? undefined : 'Please Select'}
           />
         </SectionField>
-        <SectionField label="R-file name">
+        <SectionField label="R-file name" required>
           <Input field="name" />
         </SectionField>
         <ResearchFileNameGuide />
