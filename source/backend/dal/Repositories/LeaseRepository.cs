@@ -25,7 +25,6 @@ namespace Pims.Dal.Repositories
     {
         private readonly ISequenceRepository _sequenceRepository;
         private readonly IMapper _mapper;
-        private readonly IUserRepository _userRepository;
         private readonly INotificationRepository _notificationRepository;
 
         #region Constructors
@@ -36,12 +35,11 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger, ISequenceRepository sequenceRepository, IMapper mapper, IUserRepository userRepository, INotificationRepository notificationRepository)
+        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger, ISequenceRepository sequenceRepository, IMapper mapper, INotificationRepository notificationRepository)
             : base(dbContext, user, logger)
         {
             _sequenceRepository = sequenceRepository;
             _mapper = mapper;
-            _userRepository = userRepository;
             _notificationRepository = notificationRepository;
         }
         #endregion
@@ -876,7 +874,6 @@ namespace Pims.Dal.Repositories
             var existingLease = Context.PimsLeases
                 .AsNoTracking()
                 .Include(l => l.PimsLeaseRenewals)
-                    .ThenInclude(n => n.PimsNotifications)
                 .FirstOrDefault(l => l.LeaseId == leaseId) ?? throw new KeyNotFoundException();
 
             if (existingLease.ConcurrencyControlNumber != rowVersion)
@@ -887,15 +884,16 @@ namespace Pims.Dal.Repositories
             var removedRenewals = existingLease.PimsLeaseRenewals.Where(o => !renewals.Any(u => u.LeaseRenewalId == o.LeaseRenewalId)).ToList();
             if (removedRenewals.Count > 0)
             {
-                var user = _userRepository.GetByUsername(User.GetUsername());
                 foreach (var delRenewal in removedRenewals)
                 {
-                    var notificationEntity = Context.PimsNotifications.AsNoTracking()
-                        .FirstOrDefault(n => n.LeaseId == leaseId
-                                        && n.LeaseRenewalId == delRenewal.LeaseRenewalId
-                                        && n.PimsNotificationUsers.Any(u => u.UserId == user.UserId));
+                    var notificationsRemoved = Context.PimsNotifications.AsNoTracking()
+                                                .Where(n => n.LeaseId == leaseId && n.LeaseRenewalId == delRenewal.LeaseRenewalId)
+                                                .ToList();
 
-                    _notificationRepository.Delete(notificationEntity.NotificationId, user.UserId);
+                    foreach(var notification in notificationsRemoved)
+                    {
+                        _notificationRepository.Delete(notification.NotificationId);
+                    }
                 }
             }
 
