@@ -199,9 +199,9 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(n => n.NotificationId == notificationId &&
                                      n.PimsNotificationUsers.Any(nu => nu.UserId == userId));
 
-            if (deletedEntity == null)
+            if (deletedEntity is null)
             {
-                return false;
+                return true;
             }
 
             foreach (var notificationUser in deletedEntity.PimsNotificationUsers.Where(nu => nu.UserId == userId))
