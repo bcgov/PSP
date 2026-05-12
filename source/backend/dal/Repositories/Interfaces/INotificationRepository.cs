@@ -18,6 +18,8 @@ namespace Pims.Dal.Repositories
 
         bool Delete(long notificationId, long userId);
 
+        bool Delete(long notificationId);
+
         long GetRowVersion(long id);
     }
 }

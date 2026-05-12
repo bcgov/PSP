@@ -239,12 +239,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating lease {leaseId}", lease.LeaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
 
-            var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
-            if (currentLease == null)
-            {
-                throw new InvalidDataException("Invalid lease");
-            }
-
+            var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId) ?? throw new InvalidDataException("Invalid lease");
             var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditDetails(currentLeaseStatus) && !_user.HasPermission(Permissions.SystemAdmin))
             {
