@@ -25,6 +25,8 @@ namespace Pims.Dal.Repositories
     {
         private readonly ISequenceRepository _sequenceRepository;
         private readonly IMapper _mapper;
+        private readonly INotificationRepository _notificationRepository;
+
         #region Constructors
 
         /// <summary>
@@ -33,11 +35,12 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger, ISequenceRepository sequenceRepository, IMapper mapper)
+        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger, ISequenceRepository sequenceRepository, IMapper mapper, INotificationRepository notificationRepository)
             : base(dbContext, user, logger)
         {
             _sequenceRepository = sequenceRepository;
             _mapper = mapper;
+            _notificationRepository = notificationRepository;
         }
         #endregion
 
@@ -868,14 +871,33 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsLease UpdateLeaseRenewals(long leaseId, long? rowVersion, ICollection<PimsLeaseRenewal> renewals)
         {
-            var existingLease = this.Context.PimsLeases.Include(l => l.PimsLeaseRenewals).AsNoTracking().FirstOrDefault(l => l.LeaseId == leaseId)
-                 ?? throw new KeyNotFoundException();
+            var existingLease = Context.PimsLeases
+                .AsNoTracking()
+                .Include(l => l.PimsLeaseRenewals)
+                .FirstOrDefault(l => l.LeaseId == leaseId) ?? throw new KeyNotFoundException();
+
             if (existingLease.ConcurrencyControlNumber != rowVersion)
             {
                 throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
             }
 
-            this.Context.UpdateChild<PimsLease, long, PimsLeaseRenewal, long>(l => l.PimsLeaseRenewals, leaseId, renewals.ToArray());
+            var removedRenewals = existingLease.PimsLeaseRenewals.Where(o => !renewals.Any(u => u.LeaseRenewalId == o.LeaseRenewalId)).ToList();
+            if (removedRenewals.Count > 0)
+            {
+                foreach (var delRenewal in removedRenewals)
+                {
+                    var notificationsRemoved = Context.PimsNotifications.AsNoTracking()
+                                                .Where(n => n.LeaseId == leaseId && n.LeaseRenewalId == delRenewal.LeaseRenewalId)
+                                                .ToList();
+
+                    foreach(var notification in notificationsRemoved)
+                    {
+                        _notificationRepository.Delete(notification.NotificationId);
+                    }
+                }
+            }
+
+            Context.UpdateChild<PimsLease, long, PimsLeaseRenewal, long>(l => l.PimsLeaseRenewals, leaseId, renewals.ToArray());
 
             return GetNoTracking(existingLease.LeaseId);
         }
