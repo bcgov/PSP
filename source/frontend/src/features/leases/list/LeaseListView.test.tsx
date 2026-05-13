@@ -13,7 +13,15 @@ import { ApiGen_CodeTypes_HistoricalFileNumberTypes } from '@/models/api/generat
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { getEmptyLease, getEmptyProperty } from '@/models/defaultInitializers';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fillInput, render, RenderOptions, screen, userEvent, waitForEffects } from '@/utils/test-utils';
+import {
+  act,
+  fillInput,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+  waitForEffects,
+} from '@/utils/test-utils';
 
 import { LeaseListView } from './LeaseListView';
 import { mockLookups } from '@/mocks/lookups.mock';
@@ -123,7 +131,7 @@ describe('Lease and License List View', () => {
         historical: '',
         tenantName: '',
         programs: [],
-        regions: ["1"],
+        regions: ['1'],
         leaseStatusTypes: [
           'ACTIVE',
           'DRAFT',
@@ -200,7 +208,7 @@ describe('Lease and License List View', () => {
           'TERMINATED',
           'ARCHIVED',
         ],
-        regions: ["1"],
+        regions: ['1'],
         expiryStartDate: '',
         expiryEndDate: '',
         details: '',
@@ -462,7 +470,7 @@ describe('Lease and License List View', () => {
         searchBy: 'pid',
         tenantName: 'Chester',
         programs: [],
-        regions: ["1"],
+        regions: ['1'],
         leaseStatusTypes: [
           'ACTIVE',
           'DRAFT',

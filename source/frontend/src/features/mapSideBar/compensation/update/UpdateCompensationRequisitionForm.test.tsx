@@ -160,6 +160,16 @@ describe('Compensation Requisition UpdateForm component', () => {
     };
   };
 
+  beforeAll(() => {
+    // Lock the current datetime as our snapshot has date-dependent fiscal year options
+    vi.useFakeTimers();
+    vi.setSystemTime(new Date('2025-05-13T17:00:00.000Z').getTime());
+  });
+
+  afterAll(() => {
+    vi.useRealTimers();
+  });
+
   beforeEach(() => {
     mockUseProjectTypeahead.mockReturnValue({
       handleTypeaheadSearch,

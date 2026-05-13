@@ -110,7 +110,7 @@ public partial class PimsPropertyBoundaryVw
     public string SurveyPlanNumber { get; set; }
 
     [Column("IS_OWNED")]
-    public bool IsOwned { get; set; }
+    public bool? IsOwned { get; set; }
 
     [Column("IS_RETIRED")]
     public bool? IsRetired { get; set; }
