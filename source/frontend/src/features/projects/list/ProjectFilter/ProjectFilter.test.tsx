@@ -147,7 +147,7 @@ describe('Project Filter', () => {
   });
 
   it('searches by team member', async () => {
-    const { container, getSearchButton, getTeamMemberInput, getByText, queryByText } = await setup(
+    const { container, getSearchButton, getTeamMemberInput } = await setup(
       {},
     );
 
