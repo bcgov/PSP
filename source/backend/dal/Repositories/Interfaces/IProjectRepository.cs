@@ -24,5 +24,7 @@ namespace Pims.Dal.Repositories
         PimsProject Update(PimsProject project);
 
         PimsProject GetProjectAtTime(long projectId, DateTime time);
+
+        IEnumerable<PimsProjectPerson> GetTeamMembers(long? contractorPersonId = null);
     }
 }

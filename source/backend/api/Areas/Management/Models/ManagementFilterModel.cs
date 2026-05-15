@@ -60,6 +60,11 @@ namespace Pims.Api.Areas.Management.Models.Search
         public long? TeamMemberOrganizationId { get; set; }
 
         /// <summary>
+        /// get/set - The MOTI person profile type to search by for management team members.
+        /// </summary>
+        public string TeamMemberProfileTypeCode { get; set; }
+
+        /// <summary>
         /// get/set - The ministry region of the file.
         /// </summary>
         public long? ManagementRegionCd { get; set; }
@@ -105,6 +110,7 @@ namespace Pims.Api.Areas.Management.Models.Search
             ManagementFilePurposeCode = filter.GetStringValue(nameof(ManagementFilePurposeCode));
             TeamMemberPersonId = filter.GetLongNullValue(nameof(TeamMemberPersonId));
             TeamMemberOrganizationId = filter.GetLongNullValue(nameof(TeamMemberOrganizationId));
+            TeamMemberProfileTypeCode = filter.GetStringValue(nameof(TeamMemberProfileTypeCode));
             HasNoticeOfClaim = filter.GetBoolValue(nameof(HasNoticeOfClaim));
             Regions = filter.GetShortArrayValue(nameof(Regions));
 
@@ -135,6 +141,7 @@ namespace Pims.Api.Areas.Management.Models.Search
                 ManagementFilePurposeCode = model.ManagementFilePurposeCode,
                 TeamMemberPersonId = model.TeamMemberPersonId,
                 TeamMemberOrganizationId = model.TeamMemberOrganizationId,
+                TeamMemberProfileTypeCode = model.TeamMemberProfileTypeCode,
                 HasNoticeOfClaim = model.HasNoticeOfClaim,
                 Regions = model.Regions,
 

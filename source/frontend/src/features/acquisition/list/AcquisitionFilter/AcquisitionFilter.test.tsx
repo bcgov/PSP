@@ -15,6 +15,7 @@ const onResetFilter = vi.fn();
 const mockFilterModel = new AcquisitionFilterModel();
 
 const acquisitionStatusTypes = getMockLookUpsByType(API.ACQUISITION_FILE_STATUS_TYPES);
+const teamProfileTypes = getMockLookUpsByType(API.ACQUISITION_FILE_TEAM_PROFILE_TYPES);
 
 
 // render component under test
@@ -26,6 +27,7 @@ const setup = (renderOptions: RenderOptions = {}) => {
       pimsRegionsOptions={[]}
       acquisitionTeamOptions={[]}
       acquisitionStatusOptions={acquisitionStatusTypes}
+      teamProfileOptions={teamProfileTypes}
       onResetFilter={onResetFilter}
     />,
     {

@@ -71,6 +71,8 @@ export const DispositionListView: React.FC<unknown> = () => {
     .map(c => mapLookupCode(c));
 
   const pimsRegionsTypes = lookupCodes.getOptionsByType(API.REGION_TYPES);
+  const teamProfileOptions = lookupCodes.getOptionsByType(API.DISPOSITION_TEAM_PROFILE_TYPES);
+
   const pimsRegionOptions: MultiSelectOption[] = pimsRegionsTypes.map<MultiSelectOption>(x => {
     return { id: x.code as string, text: x.label };
   });
@@ -195,6 +197,7 @@ export const DispositionListView: React.FC<unknown> = () => {
                 dispositionTypeOptions={dispositionTypeOptions}
                 pimsRegionsOptions={pimsRegionOptions}
                 dispositionTeamOptions={dispositionTeamOptions}
+                teamProfileOptions={teamProfileOptions}
                 onResetFilter={handleResetFilter}
               />
             </Col>

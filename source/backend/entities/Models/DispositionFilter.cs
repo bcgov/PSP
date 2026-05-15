@@ -52,6 +52,11 @@ namespace Pims.Dal.Entities.Models
         public long? TeamMemberOrganizationId { get; set; }
 
         /// <summary>
+        /// get/set - The MOTI Profile type code to search by for disposition team members.
+        /// </summary>
+        public string TeamMemberProfileTypeCode { get; set; }
+
+        /// <summary>
         /// get/set - The region types.
         /// </summary>
         public IList<int> Regions { get; set; } = new List<int>();

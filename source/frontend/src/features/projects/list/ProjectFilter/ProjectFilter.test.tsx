@@ -52,6 +52,7 @@ describe('Project Filter', () => {
         {...renderOptions.props}
         initialValues={renderOptions.props?.initialValues ?? mockFilterModel}
         pimsRegionsOptions={renderOptions.props?.pimsRegionsOptions ?? []}
+        projectTeamMembersOptions={[]}
         setFilter={setFilter}
         onResetFilter={onResetFilter}
       />,
@@ -94,7 +95,8 @@ describe('Project Filter', () => {
         projectNumber: '1201',
         projectStatusCode: null,
         projectName: null,
-        regions: []
+        regions: [],
+        teamMemberPersonId: ''
       }),
     );
   });

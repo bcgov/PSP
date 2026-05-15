@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 
-import { MANAGEMENT_FILE_STATUS_TYPES, MANAGEMENT_FILE_PURPOSE_TYPES } from '@/constants/API';
+import { MANAGEMENT_FILE_STATUS_TYPES, MANAGEMENT_FILE_PURPOSE_TYPES, MANAGEMENT_TEAM_PROFILE_TYPES } from '@/constants/API';
 import { Claims } from '@/constants/index';
 import { getMockLookUpsByType, mockLookups } from '@/mocks/lookups.mock';
 import { server } from '@/mocks/msw/server';
@@ -18,6 +18,7 @@ const onResetFilter = vi.fn();
 
 const fileStatusOptions = getMockLookUpsByType(MANAGEMENT_FILE_STATUS_TYPES);
 const managementFilePurposeOptions = getMockLookUpsByType(MANAGEMENT_FILE_PURPOSE_TYPES);
+const teamProfileTypes = getMockLookUpsByType(MANAGEMENT_TEAM_PROFILE_TYPES);
 
 const mockFilterModel = new ManagementFilterModel();
 
@@ -35,6 +36,7 @@ describe('Management filter', () => {
           renderOptions.props?.managementPurposeOptions ?? managementFilePurposeOptions
         }
         pimsRegionsOptions={renderOptions.props?.pimsRegionsOptions ?? []}
+        teamProfileOptions={teamProfileTypes}
         setFilter={setFilter}
         onResetFilter={onResetFilter}
       />,

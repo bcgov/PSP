@@ -3,6 +3,7 @@ import userEvent from '@testing-library/user-event';
 import {
   DISPOSITION_FILE_STATUS_TYPES,
   DISPOSITION_STATUS_TYPES,
+  DISPOSITION_TEAM_PROFILE_TYPES,
   DISPOSITION_TYPES,
 } from '@/constants/API';
 import { Claims } from '@/constants/index';
@@ -20,6 +21,7 @@ const onResetFilter = vi.fn();
 const fileStatusOptions = getMockLookUpsByType(DISPOSITION_FILE_STATUS_TYPES);
 const dispositionStatusOptions = getMockLookUpsByType(DISPOSITION_STATUS_TYPES);
 const dispositionTypeOptions = getMockLookUpsByType(DISPOSITION_TYPES);
+const teamProfileOptions = getMockLookUpsByType(DISPOSITION_TEAM_PROFILE_TYPES);
 
 const mockFilterModel = new DispositionFilterModel();
 
@@ -34,6 +36,7 @@ describe('Disposition filter', () => {
         dispositionTypeOptions={dispositionTypeOptions}
         pimsRegionsOptions={[]}
         dispositionTeamOptions={[]}
+        teamProfileOptions={teamProfileOptions}
         setFilter={setFilter}
         onResetFilter={onResetFilter}
       />,

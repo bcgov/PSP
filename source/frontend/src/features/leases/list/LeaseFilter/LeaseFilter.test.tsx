@@ -64,6 +64,8 @@ vi.mocked(useApiLeases).mockReturnValue({
 });
 
 const leaseStatusTypes = getMockLookUpsByType(API.LEASE_STATUS_TYPES);
+const teamProfileTypes = getMockLookUpsByType(API.LEASE_TEAM_PROFILE_TYPES);
+
 const leaseStatusOptions: MultiSelectOption[] = leaseStatusTypes.map<MultiSelectOption>(x => {
   return { id: x.value as string, text: x.label };
 });
@@ -82,6 +84,7 @@ describe('Lease Filter', () => {
         leaseTeamOptions={renderOptions.props?.leaseTeamOptions ?? []}
         leaseStatusOptions={renderOptions.props?.leaseStatusOptions ?? leaseStatusOptions}
         leaseProgramOptions={renderOptions.props?.leaseProgramOptions ?? []}
+        teamProfileOptions={teamProfileTypes}
         setFilter={setFilter}
         onResetFilter={onResetFilter}
       />,
@@ -173,6 +176,7 @@ describe('Lease Filter', () => {
         leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
+        leaseTeamMemberProfileTypeCode: ''
       }),
     );
   });
@@ -210,6 +214,7 @@ describe('Lease Filter', () => {
         leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
+        leaseTeamMemberProfileTypeCode: ''
       }),
     );
   });
@@ -247,6 +252,7 @@ describe('Lease Filter', () => {
         leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
+        leaseTeamMemberProfileTypeCode: ''
       }),
     );
   });

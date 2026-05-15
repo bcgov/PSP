@@ -1,10 +1,8 @@
-using System;
-using System.Collections.Generic;
-using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Models.Concepts.AcquisitionFile;
 using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Models.Concepts.Project;
 using Pims.Api.Services;
@@ -17,6 +15,9 @@ using Pims.Core.Security;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 
 namespace Pims.Api.Areas.Projects.Controllers
 {
@@ -203,6 +204,24 @@ namespace Pims.Api.Areas.Projects.Controllers
 
             var pimsProject = _projectRepository.GetProjectAtTime(id, time);
             return new JsonResult(_mapper.Map<ProjectModel>(pimsProject));
+        }
+
+        /// <summary>
+        /// Get all unique persons that belong to at least one project as a team member.
+        /// </summary>
+        /// <returns></returns>
+        [HttpGet("team-members")]
+        [HasPermission(Permissions.ProjectView)]
+        [HasPermission(Permissions.ContactView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(IEnumerable<ProjectPersonModel>), 200)]
+        [SwaggerOperation(Tags = new[] { "project" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GeProjectsTeamMembers()
+        {
+            var team = _projectService.GetTeamMembers();
+
+            return new JsonResult(_mapper.Map<IEnumerable<ProjectPersonModel>>(team));
         }
     }
 }

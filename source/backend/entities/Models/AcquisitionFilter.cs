@@ -47,6 +47,11 @@ namespace Pims.Dal.Entities.Models
         public string AcquisitionTeamMemberPersonId { get; set; }
 
         /// <summary>
+        /// get/set - The MOTI person profile type to search by for acquisition team members.
+        /// </summary>
+        public string AcquisitionTeamMemberProfileTypeCode { get; set; }
+
+        /// <summary>
         /// get/set - The MOTI Organization id to search by for acquisition team members.
         /// </summary>
         public string AcquisitionTeamMemberOrganizationId { get; set; }

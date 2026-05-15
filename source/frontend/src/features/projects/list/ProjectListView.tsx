@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
@@ -10,6 +10,7 @@ import { StyledAddButton } from '@/components/common/styles';
 import * as API from '@/constants/API';
 import { Claims } from '@/constants/claims';
 import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
+import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
@@ -17,6 +18,7 @@ import { useSearch } from '@/hooks/useSearch';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { getUserRegionsOptions } from '@/utils/formUtils';
+import { formatApiPersonNames } from '@/utils/personUtils';
 import { exists, formatGuid } from '@/utils/utils';
 
 import { IProjectFilter } from '../interfaces';
@@ -39,6 +41,9 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
 
   const lookupCodes = useLookupCodeHelpers();
   const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
+  const {
+    getAllProjectsTeamMembersApi: { response: team, execute: loadTeamMembers },
+  } = useProjectProvider();
 
   const pimsRegionsTypes = lookupCodes.getOptionsByType(API.REGION_TYPES);
   const pimsRegionOptions: MultiSelectOption[] = pimsRegionsTypes.map<MultiSelectOption>(x => {
@@ -76,6 +81,17 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
     setFilter(new ProjectFilterModel(userRegionsOptions).toApi());
   }, [setFilter, userRegionsOptions]);
 
+  const projectTeamMembersOptions = useMemo(() => {
+    if (exists(team)) {
+      return team?.map<MultiSelectOption>(x => ({
+        id: `P-${x.personId}`,
+        text: formatApiPersonNames(x.person),
+      }));
+    } else {
+      return [];
+    }
+  }, [team]);
+
   useEffect(() => {
     formattedGuid && retrieveUserInfo(formattedGuid);
   }, [formattedGuid, retrieveUserInfo]);
@@ -94,6 +110,10 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
       setFilter(new ProjectFilterModel(userRegionsOptions).toApi());
     }
   }, [pimsRegionsTypes, retrieveUserInfoResponse, setFilter, userRegionsOptions]);
+
+  useEffect(() => {
+    loadTeamMembers();
+  }, [loadTeamMembers]);
 
   return (
     <CommonStyled.ListPage>
@@ -117,8 +137,9 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
           <Row>
             <Col>
               <ProjectFilter
-                initialValues={ProjectFilterModel.fromApi(filter, userRegionsOptions)}
+                initialValues={ProjectFilterModel.fromApi(filter, team || [], userRegionsOptions)}
                 pimsRegionsOptions={pimsRegionOptions}
+                projectTeamMembersOptions={projectTeamMembersOptions}
                 setFilter={changeFilter}
                 onResetFilter={handleResetFilter}
               />

@@ -13,6 +13,7 @@ export class DispositionFilterModel {
   pid = '';
   address = '';
   dispositionTeamMember: SelectOption | null = null;
+  dispositionTeamMemberProfileTypeCode: string;
   fileNameOrNumberOrReference = '';
   dispositionFileStatusCode = '';
   dispositionStatusCode = '';
@@ -44,6 +45,7 @@ export class DispositionFilterModel {
       dispositionTypeCode: this.dispositionTypeCode,
       regions: this.regions?.map(x => x.id) ?? [],
       // disposition team members
+      teamMemberProfileTypeCode: this.dispositionTeamMemberProfileTypeCode,
       teamMemberPersonId:
         personMemberId && isNumber(+personMemberId) ? Number(personMemberId) : null,
       teamMemberOrganizationId: orgMemberId && isNumber(+orgMemberId) ? Number(orgMemberId) : null,
@@ -67,6 +69,7 @@ export class DispositionFilterModel {
     newModel.regions = userRegions ?? [];
 
     // disposition team members
+    newModel.dispositionTeamMemberProfileTypeCode = base.teamMemberProfileTypeCode;
     newModel.dispositionTeamMember = base.teamMemberPersonId
       ? teamMemberOptions.find(c => c.value === `P-${base.teamMemberPersonId}`) ?? null
       : base.teamMemberOrganizationId

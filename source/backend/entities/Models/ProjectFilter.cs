@@ -14,10 +14,11 @@ namespace Pims.Dal.Entities.Models
 
         public string ProjectStatusCode { get; set; }
 
+        public long? TeamMemberPersonId { get; set; }
+
         /// <summary>
         /// get/set - The region types.
         /// </summary>
         public IList<short> Regions { get; set; } = new List<short>();
-
     }
 }

@@ -7,6 +7,7 @@ export interface Api_ManagementFilter {
   managementFileStatusCode: string;
   managementFilePurposeCode: string;
   projectNameOrNumber: string;
+  teamMemberProfileTypeCode: string;
   teamMemberPersonId: number | null;
   teamMemberOrganizationId: number | null;
   hasNoticeOfClaim: boolean;
