@@ -390,18 +390,18 @@ exports[`Project List View > matches snapshot 1`] = `
                 class="row"
               >
                 <div
-                  class="col-xl-7"
+                  class="col-xl-1"
+                >
+                  <strong>
+                    Search by:
+                  </strong>
+                </div>
+                <div
+                  class="col-xl-6"
                 >
                   <div
                     class="row"
                   >
-                    <div
-                      class="col-xl-auto"
-                    >
-                      <strong>
-                        Search by:
-                      </strong>
-                    </div>
                     <div
                       class="col"
                     >
@@ -438,6 +438,53 @@ exports[`Project List View > matches snapshot 1`] = `
                               style="word-break: break-all;"
                               value=""
                             />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-lg-8"
+                    >
+                      <div
+                        class="form-group"
+                      >
+                        <div>
+                          <div
+                            class="multiselect-container multiSelectContainer  "
+                            id="multiselect-projectTeamMembers"
+                            style="width: auto; color: black;"
+                          >
+                            <div
+                              class="search-wrapper searchWrapper "
+                              style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                            >
+                              <input
+                                autocomplete="off"
+                                class="searchBox "
+                                id="multiselect-projectTeamMembers_input"
+                                name="search_name_input"
+                                placeholder="Team member"
+                                type="text"
+                                value=""
+                              />
+                            </div>
+                            <div
+                              class="optionListContainer displayNone"
+                            >
+                              <ul
+                                class="optionContainer"
+                              >
+                                <span
+                                  class="notFound"
+                                >
+                                  No Options Available
+                                </span>
+                              </ul>
+                            </div>
                           </div>
                         </div>
                       </div>

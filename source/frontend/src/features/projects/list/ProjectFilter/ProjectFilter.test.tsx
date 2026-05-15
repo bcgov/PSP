@@ -2,13 +2,7 @@ import { IProjectFilter } from '@/features/projects/interfaces';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import {
-  act,
-  fillInput,
-  render,
-  RenderOptions,
-  userEvent,
-} from '@/utils/test-utils';
+import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { IProjectFilterProps, ProjectFilter } from './ProjectFilter';
 import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
@@ -16,6 +10,7 @@ import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_Use
 import { FormikProps } from 'formik';
 import { ProjectFilterModel } from './models/ProjectFilterModel';
 import { createRef } from 'react';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 
 const setFilter = vi.fn();
 const onResetFilter = vi.fn();
@@ -43,6 +38,13 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
   } as ApiGen_Concepts_User,
 });
 
+const mockTeamMemberOptions: MultiSelectOption[] = [
+  {
+    id: 'P-1001',
+    text: 'John Doe',
+  },
+];
+
 describe('Project Filter', () => {
   const setup = async (renderOptions: RenderOptions & { props?: Partial<IProjectFilterProps> }) => {
     const formikRef = createRef<FormikProps<ProjectFilterModel>>();
@@ -52,7 +54,7 @@ describe('Project Filter', () => {
         {...renderOptions.props}
         initialValues={renderOptions.props?.initialValues ?? mockFilterModel}
         pimsRegionsOptions={renderOptions.props?.pimsRegionsOptions ?? []}
-        projectTeamMembersOptions={[]}
+        projectTeamMembersOptions={mockTeamMemberOptions}
         setFilter={setFilter}
         onResetFilter={onResetFilter}
       />,
@@ -70,6 +72,8 @@ describe('Project Filter', () => {
     return {
       ...utils,
       formikRef,
+      getTeamMemberInput: () =>
+        utils.container.querySelector(`#multiselect-projectTeamMembers_input`) as HTMLElement,
       getSearchButton: () => utils.getByTestId('search'),
       getResetButton: () => utils.getByTestId('reset-button'),
     };
@@ -96,7 +100,7 @@ describe('Project Filter', () => {
         projectStatusCode: null,
         projectName: null,
         regions: [],
-        teamMemberPersonId: ''
+        teamMemberPersonId: '',
       }),
     );
   });
@@ -138,6 +142,33 @@ describe('Project Filter', () => {
       expect.objectContaining({
         projectStatusCode: 'PL',
         regions: [],
+      }),
+    );
+  });
+
+  it('searches by team member', async () => {
+    const { container, getSearchButton, getTeamMemberInput, getByText, queryByText } = await setup(
+      {},
+    );
+
+    await act(async () => {
+      userEvent.click(getTeamMemberInput());
+    });
+
+    await act(async () => {
+      userEvent.type(getTeamMemberInput(), 'John Doe');
+    });
+
+    await act(async () => {
+      const firstOption = container.querySelector(`div.optionListContainer ul li`) as HTMLElement;
+      userEvent.click(firstOption);
+    });
+
+    await act(async () => userEvent.click(getSearchButton()));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({
+        teamMemberPersonId: '1001',
       }),
     );
   });

@@ -103,7 +103,7 @@ export const TypeaheadSelect = React.forwardRef<Typeahead<SelectOption>, ITypeah
             clearButton
             highlightOnlyResult
             multiple={false}
-            isInvalid={touch && error}
+            isInvalid={!!(touch && error)}
             placeholder={placeholder ?? 'Type to search...'}
             options={options}
             labelKey="label"

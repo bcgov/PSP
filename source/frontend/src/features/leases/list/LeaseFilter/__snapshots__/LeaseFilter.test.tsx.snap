@@ -667,69 +667,73 @@ exports[`Lease Filter > matches snapshot 1`] = `
               class="row"
             >
               <div
-                class="col-xl-7"
+                class="col-xl-5"
               >
                 <div
                   class="form-group"
                 >
-                  <div>
-                    <div
-                      class="multiselect-container multiSelectContainer  "
-                      id="multiselect-programs"
-                      style="width: auto; color: black;"
+                  <select
+                    class="form-select form-control"
+                    id="input-leaseTeamMemberProfileTypeCode"
+                    name="leaseTeamMemberProfileTypeCode"
+                  >
+                    <option
+                      value=""
                     >
-                      <div
-                        class="search-wrapper searchWrapper "
-                        style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
-                      >
-                        <input
-                          autocomplete="off"
-                          class="searchBox "
-                          id="multiselect-programs_input"
-                          name="search_name_input"
-                          placeholder="Select Program(s)"
-                          type="text"
-                          value=""
-                        />
-                      </div>
-                      <div
-                        class="optionListContainer displayNone"
-                      >
-                        <ul
-                          class="optionContainer"
-                        >
-                          <span
-                            class="notFound"
-                          >
-                            No Options Available
-                          </span>
-                        </ul>
-                      </div>
-                    </div>
-                  </div>
+                      Team member role
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-LANDOPSMGR"
+                      value="LANDOPSMGR"
+                    >
+                      Land operations manager
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-LANDPRJMGR"
+                      value="LANDPRJMGR"
+                    >
+                      Land project manager
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-MOTTCONTACT"
+                      value="MOTTCONTACT"
+                    >
+                      MoTT contact
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-MOTTLAWYER"
+                      value="MOTTLAWYER"
+                    >
+                      MoTT Solicitor
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-PROPADMIN"
+                      value="PROPADMIN"
+                    >
+                      Property administrator
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-PROPANALYST"
+                      value="PROPANALYST"
+                    >
+                      Property analyst
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-PROPCOORD"
+                      value="PROPCOORD"
+                    >
+                      Property coordinator
+                    </option>
+                  </select>
                 </div>
               </div>
-              <div
-                class="col-xl-5"
-              >
-                <div
-                  class="input form-group"
-                >
-                  <input
-                    class="form-control"
-                    id="input-tenantName"
-                    name="tenantName"
-                    placeholder="Tenant Name"
-                    style="word-break: break-all;"
-                    title=""
-                    value=""
-                  />
-                </div>
-              </div>
-            </div>
-            <div
-              class="row"
-            >
               <div
                 class="col-xl-7"
               >
@@ -762,15 +766,36 @@ exports[`Lease Filter > matches snapshot 1`] = `
                         <ul
                           class="optionContainer"
                         >
-                          <span
-                            class="notFound"
+                          <li
+                            class="option  highlightOption highlight  "
                           >
-                            No Options Available
-                          </span>
+                            John Doe
+                          </li>
                         </ul>
                       </div>
                     </div>
                   </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="col-xl-5"
+              >
+                <div
+                  class="input form-group"
+                >
+                  <input
+                    class="form-control"
+                    id="input-tenantName"
+                    name="tenantName"
+                    placeholder="Tenant Name"
+                    style="word-break: break-all;"
+                    title=""
+                    value=""
+                  />
                 </div>
               </div>
             </div>
@@ -1002,6 +1027,53 @@ exports[`Lease Filter > matches snapshot 1`] = `
                           id="multiselect-regions_input"
                           name="search_name_input"
                           placeholder="Select Region(s)"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                      <div
+                        class="optionListContainer displayNone"
+                      >
+                        <ul
+                          class="optionContainer"
+                        >
+                          <span
+                            class="notFound"
+                          >
+                            No Options Available
+                          </span>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
+            <div
+              class="row"
+            >
+              <div
+                class="col"
+              >
+                <div
+                  class="form-group"
+                >
+                  <div>
+                    <div
+                      class="multiselect-container multiSelectContainer  "
+                      id="multiselect-programs"
+                      style="width: auto; color: black;"
+                    >
+                      <div
+                        class="search-wrapper searchWrapper "
+                        style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                      >
+                        <input
+                          autocomplete="off"
+                          class="searchBox "
+                          id="multiselect-programs_input"
+                          name="search_name_input"
+                          placeholder="Select Program(s)"
                           type="text"
                           value=""
                         />
