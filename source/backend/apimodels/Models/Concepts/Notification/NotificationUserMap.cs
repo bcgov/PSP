@@ -12,6 +12,7 @@ namespace Pims.Api.Models.Concepts.Notification
                 .Map(dest => dest.NotificationUserId, src => src.NotificationUserId)
                 .Map(dest => dest.NotificationId, src => src.NotificationId)
                 .Map(dest => dest.UserId, src => src.UserId)
+                .Map(dest => dest.Notification, src => src.Notification)
                 .Inherits<Entity.IBaseAppEntity, BaseConcurrentModel>();
 
             config.NewConfig<NotificationUserModel, Entity.PimsNotificationUser>()

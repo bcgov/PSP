@@ -17,6 +17,7 @@ namespace Pims.Api.Models.Concepts.Notification
                 .Map(dest => dest.NotificationRetryCnt, src => src.NotificationRetryCnt)
                 .Map(dest => dest.NotificationErrorReason, src => src.NotificationErrorReason)
                 .Map(dest => dest.NotificationErrorDt, src => src.NotificationErrorDt)
+                .Map(dest => dest.NotificationUser, src => src.NotificationUser)
                 .Inherits<Entity.IBaseAppEntity, BaseConcurrentModel>();
 
             config.NewConfig<NotificationUserOutputModel, Entity.PimsNotificationUserOutput>()

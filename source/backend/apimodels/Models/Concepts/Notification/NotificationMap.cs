@@ -25,6 +25,7 @@ namespace Pims.Api.Models.Concepts.Notification
                 .Map(dest => dest.AgreementId, src => src.AgreementId)
                 .Map(dest => dest.NotificationTriggerDate, src => src.NotificationTriggerDate)
                 .Map(dest => dest.NotificationMessage, src => src.NotificationMessage)
+                .Map(dest => dest.NotificationType, src => src.NotificationTypeCodeNavigation)
                 .Inherits<Entity.IBaseAppEntity, BaseConcurrentModel>();
 
             config.NewConfig<NotificationModel, Entity.PimsNotification>()

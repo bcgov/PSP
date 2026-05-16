@@ -20,5 +20,11 @@ namespace Pims.Api.Models.Concepts.Notification
         public string? NotificationErrorReason { get; set; }
 
         public DateOnly? NotificationErrorDt { get; set; }
+
+        /// <summary>
+        /// Navigation to the parent notification-user (and its notification + type). Populated
+        /// when the row is fetched with the joins loaded; null on writes.
+        /// </summary>
+        public NotificationUserModel NotificationUser { get; set; }
     }
 }
