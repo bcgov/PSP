@@ -896,6 +896,13 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                   </option>
                   <option
                     class="option"
+                    data-testid="select-option-2024/2025"
+                    value="2024/2025"
+                  >
+                    2024/2025
+                  </option>
+                  <option
+                    class="option"
                     data-testid="select-option-2025/2026"
                     value="2025/2026"
                   >
@@ -907,13 +914,6 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
                     value="2026/2027"
                   >
                     2026/2027
-                  </option>
-                  <option
-                    class="option"
-                    data-testid="select-option-2027/2028"
-                    value="2027/2028"
-                  >
-                    2027/2028
                   </option>
                 </select>
               </div>
