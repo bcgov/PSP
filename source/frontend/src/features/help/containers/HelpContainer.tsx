@@ -99,6 +99,7 @@ export function HelpContainer() {
             });
             setDisplayModal(true);
           }}
+          data-testid="help-desk-container-btn"
         >
           <StyledHelpIcon size="24px" />
           <label>Help</label>

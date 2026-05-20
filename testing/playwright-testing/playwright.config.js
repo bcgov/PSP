@@ -43,11 +43,21 @@ export default defineConfig({
       testMatch: /.*\.setup\.ts/,
     },
     {
+      name: "smoke-test",
+      testMatch: /smoke-tests\/.*\.spec\.ts/,
+      use: {
+        ...devices["Desktop Chrome"],
+        viewport: { width: 1920, height: 1080 },
+        storageState: ".auth/user.json",
+      },
+      dependencies: ["setup"], // Forces setup to run first!
+    },
+    {
       name: "chromium",
       use: {
         ...devices["Desktop Chrome"],
         viewport: { width: 1920, height: 1080 },
-        storageState: "playwright-testing/.auth/user.json",
+        storageState: ".auth/user.json",
       },
       dependencies: ["setup"], // Forces setup to run first!
     },
