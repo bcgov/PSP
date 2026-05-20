@@ -13,7 +13,7 @@ import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen
 import { exists, isValidId, prettyFormatUTCDate } from '@/utils';
 
 import { StyledSectionCentered } from '../detail/styles';
-import ChecklistSectionStatusApply from './ChecklistSectionStatupsApply/ChecklistSectionStatupsApply';
+import ChecklistSectionStatusApply from './ChecklistSectionStatusApply/ChecklistSectionStatusApply';
 import { ChecklistFormModel } from './models';
 
 export interface IUpdateChecklistFormProps {
