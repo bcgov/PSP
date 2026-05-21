@@ -16,7 +16,6 @@ const mockFilterModel = new AcquisitionFilterModel();
 
 const acquisitionStatusTypes = getMockLookUpsByType(API.ACQUISITION_FILE_STATUS_TYPES);
 
-
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {
   const utils = render(

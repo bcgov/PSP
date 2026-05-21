@@ -69,6 +69,16 @@ public partial class PimsAcquisitionOwnerHist
     [Column("EXPIRY_DATE", TypeName = "datetime")]
     public DateTime? ExpiryDate { get; set; }
 
+    [Column("IS_FROM_LTSA")]
+    public bool? IsFromLtsa { get; set; }
+
+    [Column("LTSA_PID")]
+    [StringLength(9)]
+    public string LtsaPid { get; set; }
+
+    [Column("LTSA_SOURCED_DATE", TypeName = "datetime")]
+    public DateTime? LtsaSourcedDate { get; set; }
+
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }
 
@@ -119,14 +129,4 @@ public partial class PimsAcquisitionOwnerHist
     [Column("DB_LAST_UPDATE_USERID")]
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
-
-    [Column("IS_FROM_LTSA")]
-    public bool? IsFromLtsa { get; set; }
-
-    [Column("LTSA_PID")]
-    [StringLength(9)]
-    public string LtsaPid { get; set; }
-
-    [Column("LTSA_SOURCED_DATE", TypeName = "datetime")]
-    public DateTime? LtsaSourcedDate { get; set; }
 }
