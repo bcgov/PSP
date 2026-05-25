@@ -33,12 +33,14 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   const { hasClaim, obj } = useKeycloakWrapper();
   const { sub } = obj.userInfo as IUserInfo;
   const formattedGuid = formatGuid(sub);
+  const [createdByOptions, setCreatedByOptions] = useState<MultiSelectOption[]>([]);
   const [userRegionsOptions, setUserRegionsOptions] = useState<MultiSelectOption[]>(null);
 
   const history = useHistory();
 
   const lookupCodes = useLookupCodeHelpers();
   const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
+  const { retrieveUserLookup } = useUserInfoRepository();
 
   const pimsRegionsTypes = lookupCodes.getOptionsByType(API.REGION_TYPES);
   const pimsRegionOptions: MultiSelectOption[] = pimsRegionsTypes.map<MultiSelectOption>(x => {
@@ -95,6 +97,25 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
     }
   }, [pimsRegionsTypes, retrieveUserInfoResponse, setFilter, userRegionsOptions]);
 
+  useEffect(() => {
+    retrieveUserLookup({
+      page: 1,
+      quantity: 100,
+      activeOnly: true,
+    }).then(response => {
+      setCreatedByOptions(
+        response?.items
+          ?.filter(user => !!user.businessIdentifierValue)
+          .map(user => ({
+            id: user.businessIdentifierValue!,
+            text: `${user.person?.firstName ?? ''} ${user.person?.surname ?? ''} (${
+              user.businessIdentifierValue
+            })`,
+          })) ?? [],
+      );
+    });
+  }, [retrieveUserLookup]);
+
   return (
     <CommonStyled.ListPage>
       <CommonStyled.PaddedScrollable>
@@ -117,10 +138,15 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
           <Row>
             <Col>
               <ProjectFilter
-                initialValues={ProjectFilterModel.fromApi(filter, userRegionsOptions)}
+                initialValues={ProjectFilterModel.fromApi(
+                  filter,
+                  userRegionsOptions,
+                  createdByOptions,
+                )}
                 pimsRegionsOptions={pimsRegionOptions}
                 setFilter={changeFilter}
                 onResetFilter={handleResetFilter}
+                createdByOptions={createdByOptions}
               />
             </Col>
           </Row>
