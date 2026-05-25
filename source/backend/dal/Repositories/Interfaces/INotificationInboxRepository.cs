@@ -9,7 +9,7 @@ namespace Pims.Dal.Repositories
         /// Returns a paged list of sent in-app notification deliveries for the given user.
         /// Only rows where NotificationSentDt IS NOT NULL and NotificationOutputTypeCode == PIMS are included.
         /// </summary>
-        Paged<PimsNotificationUserOutput> GetInboxPage(long userId, int page, int quantity);
+        Paged<PimsNotificationUserOutput> GetUserInbox(long userId, int page, int quantity);
 
         /// <summary>
         /// Returns the count of unread in-app notifications for the given user.
@@ -20,12 +20,12 @@ namespace Pims.Dal.Repositories
         /// Returns a single in-app notification delivery by id, scoped to the given user.
         /// Returns null when not found or the notification delivery does not belong to the user.
         /// </summary>
-        PimsNotificationUserOutput GetNotificationOutput(long notificationOutputId, long userId);
+        PimsNotificationUserOutput GetUserNotification(long outputId, long userId);
 
         /// <summary>
         /// Updates the read status of a notification delivery.
         /// </summary>
-        PimsNotificationUserOutput UpdateReadStatus(long notificationUserOutputId, long userId, bool isRead);
+        PimsNotificationUserOutput UpdateReadStatus(long outputId, long userId, bool isRead);
 
         /// <summary>
         /// Marks all unread in-app notifications as read for the given user.
@@ -33,8 +33,9 @@ namespace Pims.Dal.Repositories
         void MarkAllRead(long userId);
 
         /// <summary>
-        /// Removes a notification delivery for a given user.
+        /// Removes a user notification. It will no longer appear in the user's inbox.
+        /// Returns false if the notification delivery was not found or does not belong to the user.
         /// </summary>
-        bool Delete(long notificationOutputId, long userId);
+        bool DeleteUserNotification(long outputId, long userId);
     }
 }

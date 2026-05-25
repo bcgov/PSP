@@ -25,7 +25,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <inheritdoc />
-        public Paged<PimsNotificationUserOutput> GetInboxPage(long userId, int page, int quantity)
+        public Paged<PimsNotificationUserOutput> GetUserInbox(long userId, int page, int quantity)
         {
             using var scope = Logger.QueryScope();
 
@@ -54,18 +54,18 @@ namespace Pims.Dal.Repositories
         }
 
         /// <inheritdoc />
-        public PimsNotificationUserOutput GetNotificationOutput(long notificationOutputId, long userId)
+        public PimsNotificationUserOutput GetUserNotification(long outputId, long userId)
         {
             using var scope = Logger.QueryScope();
 
             var query = BuildSentNotificationsQuery(userId);
-            return query.FirstOrDefault(o => o.NotificationUserOutputId == notificationOutputId) ?? throw new KeyNotFoundException();
+            return query.FirstOrDefault(o => o.NotificationUserOutputId == outputId) ?? throw new KeyNotFoundException();
         }
 
         /// <inheritdoc />
-        public PimsNotificationUserOutput UpdateReadStatus(long notificationUserOutputId, long userId, bool isRead)
+        public PimsNotificationUserOutput UpdateReadStatus(long outputId, long userId, bool isRead)
         {
-            var existing = GetNotificationOutput(notificationUserOutputId, userId);
+            var existing = GetUserNotification(outputId, userId);
             existing.NotificationReadDt = isRead ? DateTime.UtcNow : (DateTime?)null;
             Context.SaveChanges();
             return existing;
@@ -87,18 +87,18 @@ namespace Pims.Dal.Repositories
         }
 
         /// <inheritdoc />
-        public bool Delete(long notificationOutputId, long userId)
+        public bool DeleteUserNotification(long outputId, long userId)
         {
-            var existing = GetNotificationOutput(notificationOutputId, userId);
+            var existing = GetUserNotification(outputId, userId);
 
             if (existing is null)
             {
-                return true;
+                return false;
             }
 
             Context.PimsNotificationUserOutputs.Remove(new PimsNotificationUserOutput
             {
-                NotificationUserOutputId = notificationOutputId,
+                NotificationUserOutputId = outputId,
             });
             Context.SaveChanges();
             return true;
