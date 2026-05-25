@@ -29,7 +29,7 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
   retrieveUserInfoResponse: getUserMock(),
   retrieveUserLookup: vi.fn(),
   retrieveUserLookupLoading: false,
-  retrieveUserLookupResponse: getUserMock()
+  retrieveUserLookupResponse: undefined,
 });
 
 vi.mock('@/hooks/pims-api/useApiProjects');
