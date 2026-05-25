@@ -52,7 +52,7 @@ export const UpdateChecklistForm: React.FC<IUpdateChecklistFormProps> = ({
 
     const formikRefObject =
       formikRef as React.MutableRefObject<FormikProps<ChecklistFormModel> | null>;
-    const sectionIndex = formikRefObject?.current?.values.checklistSections.findIndex(
+    const sectionIndex = formikRefObject?.current?.values?.checklistSections.findIndex(
       checklistSection => checklistSection.id === sectionId,
     );
     const section =
