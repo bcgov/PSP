@@ -15,7 +15,7 @@ const storeState = {
 const setFilter = vi.fn();
 // render component under test
 const setup = (renderOptions: RenderOptions = { store: storeState }) => {
-  const utils = render(<ResearchFilter setFilter={setFilter} />, {
+  const utils = render(<ResearchFilter setFilter={setFilter} createdByOptions={[]} />, {
     ...renderOptions,
     claims: [Claims.RESEARCH_VIEW],
   });
@@ -66,6 +66,7 @@ describe('Research Filter', () => {
       roadOrAlias: '',
       updatedOnEndDate: '',
       updatedOnStartDate: '',
+      selectedUser: [],
     });
   });
 
@@ -91,6 +92,7 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
+        selectedUser: [],
       }),
     );
   });
@@ -117,6 +119,7 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
+        selectedUser: [],
       }),
     );
   });
@@ -145,6 +148,7 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
+        selectedUser: [],
       }),
     );
   });
@@ -173,6 +177,7 @@ describe('Research Filter', () => {
         roadOrAlias: 'a road name',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
+        selectedUser: [],
       }),
     );
   });
@@ -203,6 +208,7 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
+        selectedUser: [],
       }),
     );
   });
@@ -233,6 +239,7 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '2021-02-02',
         updatedOnStartDate: '2021-01-01',
+        selectedUser: [],
       }),
     );
   });
@@ -241,14 +248,14 @@ describe('Research Filter', () => {
     const { container, searchButton } = setup();
 
     fillInput(container, 'createOrUpdateBy', 'appCreateUserid', 'select');
-    fillInput(container, 'appCreateUserid', 'createUser');
+    fillInput(container, 'selectedUser', 'DSMITH', );
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
         pid: '',
         pin: '',
-        appCreateUserid: 'createUser',
+        appCreateUserid: 'DSMITH',
         appLastUpdateUserid: '',
         createOrUpdateBy: 'appCreateUserid',
         createOrUpdateRange: 'updatedOnStartDate',
@@ -262,6 +269,7 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
+        selectedUser: [],
       }),
     );
   });
@@ -270,7 +278,7 @@ describe('Research Filter', () => {
     const { container, searchButton, setFilter } = setup();
 
     fillInput(container, 'createOrUpdateBy', 'appLastUpdateUserid', 'select');
-    fillInput(container, 'appLastUpdateUserid', 'updateUser');
+    fillInput(container, 'selectedUser', 'DSMITH', 'select');
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
@@ -291,6 +299,7 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
+        selectedUser: [],
       }),
     );
   });

@@ -3,7 +3,7 @@ import userEvent from '@testing-library/user-event';
 import { Claims } from '@/constants/index';
 import { useApiProjects } from '@/hooks/pims-api/useApiProjects';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
-import { getUserMock } from '@/mocks/user.mock';
+import { getMockPagedUsers, getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -27,9 +27,9 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
   retrieveUserInfo: vi.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: getUserMock(),
-  retrieveUserLookup: vi.fn(),
+  retrieveUserLookup: vi.fn().mockResolvedValue(getMockPagedUsers()),
   retrieveUserLookupLoading: false,
-  retrieveUserLookupResponse: undefined,
+  retrieveUserLookupResponse: getMockPagedUsers(),
 });
 
 vi.mock('@/hooks/pims-api/useApiProjects');
@@ -85,6 +85,7 @@ describe('Project List View', () => {
         status: 'ACTIVE',
         lastUpdatedBy: 'USER',
         lastUpdatedDate: '',
+        createdBy: ''
       },
     ]);
     const { container, searchButton, findByText, getByTitle } = setup();

@@ -1,3 +1,5 @@
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
+
 export interface IResearchFilter {
   pid: string;
   pin: string;
@@ -15,4 +17,5 @@ export interface IResearchFilter {
   appLastUpdateUserid: string;
   updatedOnStartDate: string;
   updatedOnEndDate: string;
+  selectedUser?: MultiSelectOption[];
 }

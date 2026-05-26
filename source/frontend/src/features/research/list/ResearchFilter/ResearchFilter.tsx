@@ -4,11 +4,11 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { Form, Input, Select } from '@/components/common/form';
-import { SelectInput } from '@/components/common/List/SelectInput';
+import { Form, Input, Multiselect, Select } from '@/components/common/form';
 import { ColButtons } from '@/components/common/styles';
 import { REGION_TYPES, RESEARCH_FILE_STATUS_TYPES } from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { mapLookupCode } from '@/utils';
 
 import { IResearchFilter } from '../../interfaces';
@@ -17,6 +17,7 @@ import { ResearchFileSelect } from './ResearchFileSelect';
 
 export interface IResearchFilterProps {
   filter?: IResearchFilter;
+  createdByOptions: MultiSelectOption[];
   setFilter: (filter: IResearchFilter) => void;
 }
 
@@ -37,6 +38,7 @@ export const defaultResearchFilter: IResearchFilter = {
   researchSearchBy: 'pid',
   createOrUpdateRange: 'updatedOnStartDate',
   createOrUpdateBy: 'appLastUpdateUserid',
+  selectedUser: [],
 };
 
 /**
@@ -45,10 +47,16 @@ export const defaultResearchFilter: IResearchFilter = {
  */
 export const ResearchFilter: React.FunctionComponent<
   React.PropsWithChildren<IResearchFilterProps>
-> = ({ filter, setFilter }) => {
+> = ({ filter, createdByOptions, setFilter }) => {
   const onSearchSubmit = (values: IResearchFilter, { setSubmitting }: any) => {
-    values = { ...values };
-    setFilter(values);
+    const selectedUser = values.selectedUser?.[0]?.id as string | undefined;
+    const nextValues = {
+      ...values,
+      appCreateUserid: values.createOrUpdateBy === 'appCreateUserid' ? selectedUser ?? '' : '',
+      appLastUpdateUserid:
+        values.createOrUpdateBy === 'appLastUpdateUserid' ? selectedUser ?? '' : '',
+    };
+    setFilter(nextValues);
     setSubmitting(false);
   };
   const resetFilter = () => {
@@ -116,30 +124,27 @@ export const ResearchFilter: React.FunctionComponent<
                 </Col>
               </Row>
               <Row>
-                <Col lg="8">
-                  <SelectInput<
-                    {
-                      appCreateUserid: string;
-                      appLastUpdateUserid: string;
-                    },
-                    IResearchFilterProps
-                  >
-                    field="createOrUpdateBy"
-                    defaultKey="appLastUpdateUserid"
-                    selectOptions={[
-                      {
-                        key: 'appCreateUserid',
-                        placeholder: `User's IDIR`,
-                        label: 'Created by',
-                      },
-                      {
-                        key: 'appLastUpdateUserid',
-                        placeholder: `User's IDIR`,
-                        label: 'Updated by',
-                      },
-                    ]}
-                    className="idir-input-group"
-                  />
+                <Col lg="9">
+                  <Row className="gx-1 align-items-start">
+                    <Col lg="4" className="ps-0">
+                      <Select
+                        field="createOrUpdateBy"
+                        options={[
+                          { value: 'appCreateUserid', label: 'Created by' },
+                          { value: 'appLastUpdateUserid', label: 'Last updated by' },
+                        ]}
+                      />
+                    </Col>
+                    <Col lg="6" className="pl-0 ps-0">
+                      <StyledMultiSelect
+                        field="selectedUser"
+                        displayValue="text"
+                        placeholder="Search user"
+                        options={createdByOptions}
+                        selectionLimit={1}
+                      />
+                    </Col>
+                  </Row>
                 </Col>
               </Row>
             </Col>
@@ -181,5 +186,12 @@ const FilterBoxForm = styled(Form)`
     .input-group-prepend select {
       width: 16rem;
     }
+  }
+`;
+
+const StyledMultiSelect = styled(Multiselect)`
+  searchwrapper: {
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
   }
 `;
