@@ -2,9 +2,9 @@ using Pims.Api.Models.Base;
 
 namespace Pims.Api.Models.Concepts.Notification
 {
-    public class NotificationUserModel : BaseConcurrentModel
+    public class NotificationRecipientModel : BaseConcurrentModel
     {
-        public long NotificationUserId { get; set; }
+        public long Id { get; set; }
 
         public long NotificationId { get; set; }
 

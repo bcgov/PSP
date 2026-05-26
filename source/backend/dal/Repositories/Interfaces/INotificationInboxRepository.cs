@@ -17,13 +17,13 @@ namespace Pims.Dal.Repositories
         int GetUnreadCount(long userId);
 
         /// <summary>
-        /// Returns a single in-app notification delivery by id, scoped to the given user.
-        /// Returns null when not found or the notification delivery does not belong to the user.
+        /// Returns a single in-app user notification by id, scoped to the given user.
+        /// Only includes rows where NotificationSentDt IS NOT NULL and NotificationOutputTypeCode == PIMS.
         /// </summary>
-        PimsNotificationUserOutput GetUserNotification(long outputId, long userId);
+        PimsNotificationUserOutput GetDeliveredUserNotification(long outputId, long userId);
 
         /// <summary>
-        /// Updates the read status of a notification delivery.
+        /// Updates the read status of a user notification.
         /// </summary>
         PimsNotificationUserOutput UpdateReadStatus(long outputId, long userId, bool isRead);
 

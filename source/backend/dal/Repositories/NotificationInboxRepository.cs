@@ -29,7 +29,7 @@ namespace Pims.Dal.Repositories
         {
             using var scope = Logger.QueryScope();
 
-            var baseQuery = BuildSentNotificationsQuery(userId);
+            var baseQuery = BuildUserNotificationsQuery(userId);
             var total = baseQuery.Count();
 
             page = page < 1 ? 1 : page;
@@ -54,18 +54,18 @@ namespace Pims.Dal.Repositories
         }
 
         /// <inheritdoc />
-        public PimsNotificationUserOutput GetUserNotification(long outputId, long userId)
+        public PimsNotificationUserOutput GetDeliveredUserNotification(long outputId, long userId)
         {
             using var scope = Logger.QueryScope();
 
-            var query = BuildSentNotificationsQuery(userId);
+            var query = BuildUserNotificationsQuery(userId);
             return query.FirstOrDefault(o => o.NotificationUserOutputId == outputId) ?? throw new KeyNotFoundException();
         }
 
         /// <inheritdoc />
         public PimsNotificationUserOutput UpdateReadStatus(long outputId, long userId, bool isRead)
         {
-            var existing = GetUserNotification(outputId, userId);
+            var existing = GetDeliveredUserNotification(outputId, userId);
             existing.NotificationReadDt = isRead ? DateTime.UtcNow : (DateTime?)null;
             Context.SaveChanges();
             return existing;
@@ -89,7 +89,7 @@ namespace Pims.Dal.Repositories
         /// <inheritdoc />
         public bool DeleteUserNotification(long outputId, long userId)
         {
-            var existing = GetUserNotification(outputId, userId);
+            var existing = GetDeliveredUserNotification(outputId, userId);
 
             if (existing is null)
             {
@@ -110,7 +110,7 @@ namespace Pims.Dal.Repositories
         /// - in-app channel only (PIMS output type)
         /// - sent only (NotificationSentDt IS NOT NULL).
         /// </summary>
-        private IQueryable<PimsNotificationUserOutput> BuildSentNotificationsQuery(long userId)
+        private IQueryable<PimsNotificationUserOutput> BuildUserNotificationsQuery(long userId)
         {
             return Context.PimsNotificationUserOutputs
                 .AsNoTracking()
@@ -124,7 +124,7 @@ namespace Pims.Dal.Repositories
 
         private IQueryable<PimsNotificationUserOutput> BuildUnreadNotificationsQuery(long userId)
         {
-            return BuildSentNotificationsQuery(userId)
+            return BuildUserNotificationsQuery(userId)
                 .Where(o => o.NotificationReadDt == null);
         }
     }
