@@ -85,7 +85,7 @@ describe('Project List View', () => {
         status: 'ACTIVE',
         lastUpdatedBy: 'USER',
         lastUpdatedDate: '',
-        createdBy: ''
+        createdBy: '',
       },
     ]);
     const { container, searchButton, findByText, getByTitle } = setup();

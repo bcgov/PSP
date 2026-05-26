@@ -248,7 +248,7 @@ describe('Research Filter', () => {
     const { container, searchButton } = setup();
 
     fillInput(container, 'createOrUpdateBy', 'appCreateUserid', 'select');
-    fillInput(container, 'selectedUser', 'DSMITH', );
+    fillInput(container, 'selectedUser', 'DSMITH');
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
