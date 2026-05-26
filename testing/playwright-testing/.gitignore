@@ -6,6 +6,5 @@ node_modules/
 /blob-report/
 /playwright/.cache/
 tmp-profile/
-tests/
 tests-examples/
 .env
