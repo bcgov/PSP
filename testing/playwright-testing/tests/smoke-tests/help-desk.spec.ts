@@ -1,57 +1,52 @@
-import { expect, test as base } from '@playwright/test';
+import { expect, test, type BrowserContext, type Page } from '@playwright/test';
 import { HelpDeskPage } from '../../pages/help-desk.page';
 
-// Extend basic test by providing a "HelpDeskPage" fixture.
-const test = base.extend<{ helpDeskPage: HelpDeskPage }>({
-  helpDeskPage: async ({ page }, use) => {
-    const helpDeskPage = new HelpDeskPage(page);
+let context: BrowserContext;
+let page: Page;
+let helpDeskPage: HelpDeskPage;
+
+const userFullName = process.env.USER_TRANPSP1_FULLNAME;
+const userEmail = process.env.USER_TRANPSP1_EMAIL;
+
+test.describe.serial('Help desk modal', () => {
+  test.beforeAll(async ({ browser }) => {
+    context = await browser.newContext();
+    page = await context.newPage();
+    helpDeskPage = new HelpDeskPage(page);
     await helpDeskPage.goto();
     await helpDeskPage.openHelpDeskForm();
-    await use(helpDeskPage);
-  },
-});
+  });
 
-test.describe('Help desk modal', () => {
-  //   test.beforeEach(async ({ page }) => {
-  //     // Go to the starting url before each test.
-  //     await page.goto('https://playwright.dev/');
-  //   });
-
-  test.afterEach(async ({ helpDeskPage }) => {
-    // Close the modal after each test
+  test.afterAll(async () => {
     await helpDeskPage.cancelButtonClick();
+    await context.close();
   });
 
-  // Pulling variables directly from the environment
-  const userFullName = process.env.USER_TRANPSP1_FULLNAME;
-  const userEmail = process.env.USER_TRANPSP1_EMAIL;
-
-  test('displays the title properly', async ({ helpDeskPage }) => {
-    // Assertions use the expect API.
+  test('displays the title properly', async () => {
     await expect(helpDeskPage.helpDeskTitle).toBeVisible();
-    expect(await helpDeskPage.getTitleText()).toEqual("Help Desk");
+    expect(await helpDeskPage.getTitleText()).toEqual('Help Desk');
   });
 
-  test('displays the sub-title properly', async ({ helpDeskPage }) => {
+  test('displays the sub-title properly', async () => {
     await expect(helpDeskPage.helpDeskSubTitle).toBeVisible();
-    expect(await helpDeskPage.getSubTitleText()).toEqual("Get started with PIMS");
+    expect(await helpDeskPage.getSubTitleText()).toEqual('Get started with PIMS');
   });
 
-  test('displays the instructions properly', async ({ helpDeskPage }) => {
+  test('displays the instructions properly', async () => {
     await expect(helpDeskPage.helpDeskInstructions).toBeVisible();
-    expect(await helpDeskPage.getInstructionsText()).toEqual("This overview has useful tools that will support you to start using the application. You can also watch the video demos.");
+    expect(await helpDeskPage.getInstructionsText()).toEqual('This overview has useful tools that will support you to start using the application. You can also watch the video demos.');
   });
 
-  test('displays the resources link', async ({ helpDeskPage }) => {
+  test('displays the resources link', async () => {
     await expect(helpDeskPage.helpDeskPIMSResourcesLink).toBeVisible();
   });
 
-  test('displays the contact us sub-title', async ({ helpDeskPage }) => {
+  test('displays the contact us sub-title', async () => {
     await expect(helpDeskPage.helpDeskContactUsSubtitle).toBeVisible();
-    expect(await helpDeskPage.getContactUsSubtitleText()).toEqual("Contact us:");
+    expect(await helpDeskPage.getContactUsSubtitleText()).toEqual('Contact us:');
   });
 
-  test('displays the user fullname and email in the form', async ({ helpDeskPage }) => {
+  test('displays the user fullname and email in the form', async () => {
     await expect(helpDeskPage.helpDeskUserLabel).toBeVisible();
     await expect(helpDeskPage.helpDeskUserInput).toBeVisible();
 
