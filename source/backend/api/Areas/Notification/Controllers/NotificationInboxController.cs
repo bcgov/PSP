@@ -115,7 +115,7 @@ namespace Pims.Api.Areas.Notification.Controllers
         [HttpPatch("{outputId:long}/read")]
         [HasPermission(Permissions.NotificationEdit)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(NotificationOutputModel), 200)]
+        [ProducesResponseType(204)]
         [SwaggerOperation(Tags = new[] { "notifications-inbox" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public IActionResult UpdateReadStatus(long outputId, [FromBody] bool isRead = true)
@@ -167,10 +167,43 @@ namespace Pims.Api.Areas.Notification.Controllers
         /// The service layer verifies the delivery belongs to the calling user.
         /// </summary>
         /// <param name="outputId">Delivery identifier.</param>
+        [HttpGet("{outputId:long}")]
+        [HasPermission(Permissions.NotificationView)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(NotificationOutputModel), 200)]
+        [ProducesResponseType(404)]
+        [SwaggerOperation(Tags = new[] { "notifications-inbox" })]
+        public IActionResult GetDeliveredUserNotification(long outputId)
+        {
+            _logger.LogInformation(
+                "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+                nameof(NotificationInboxController),
+                nameof(GetDeliveredUserNotification),
+                User.GetUsername(),
+                DateTime.Now);
+
+            _logger.LogInformation("Dispatching to service: {Service}", _notificationInboxService.GetType());
+
+            var username = User.GetUsername();
+            var output = _notificationInboxService.GetDeliveredUserNotification(outputId, username);
+            if (output == null)
+            {
+                return NotFound();
+            }
+
+            return Ok(_mapper.Map<NotificationOutputModel>(output));
+        }
+
+        /// <summary>
+        /// Delete a single in-app delivery for the current user.
+        /// The service layer verifies the delivery belongs to the calling user.
+        /// </summary>
+        /// <param name="outputId">Delivery identifier.</param>
         [HttpDelete("{outputId:long}")]
         [HasPermission(Permissions.NotificationDelete)]
         [Produces("application/json")]
         [ProducesResponseType(204)]
+        [ProducesResponseType(404)]
         [SwaggerOperation(Tags = new[] { "notifications-inbox" })]
         public IActionResult DeleteUserNotification(long outputId)
         {
@@ -185,12 +218,8 @@ namespace Pims.Api.Areas.Notification.Controllers
 
             var username = User.GetUsername();
             var deleted = _notificationInboxService.DeleteUserNotification(outputId, username);
-            if (!deleted)
-            {
-                throw new InvalidOperationException($"Failed to delete user notification with ID {outputId}.");
-            }
 
-            return NoContent();
+            return new JsonResult(deleted);
         }
     }
 }
