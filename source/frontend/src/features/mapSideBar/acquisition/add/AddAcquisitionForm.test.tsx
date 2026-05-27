@@ -25,8 +25,6 @@ import {
 import { AddAcquisitionFileYupSchema } from './AddAcquisitionFileYupSchema';
 import { AddAcquisitionForm, IAddAcquisitionFormProps } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
-import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
-import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 
 const history = createMemoryHistory();
 

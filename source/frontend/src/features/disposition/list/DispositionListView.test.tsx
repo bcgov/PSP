@@ -25,8 +25,6 @@ import {
 import DispositionListView from './DispositionListView';
 import { DispositionFilterModel } from './models';
 import { getUserMock } from '@/mocks/user.mock';
-import { IPaginateParams } from '@/constants/API';
-import { IUsersFilter } from '@/interfaces';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 
 vi.mock('@/hooks/pims-api/useApiDispositionFile');

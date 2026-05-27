@@ -13,22 +13,6 @@ const onResetFilter = vi.fn();
 
 const mockFilterModel = new ProjectFilterModel();
 
-const retrieveUserLookup = vi.fn().mockResolvedValue({
-  items: [
-    {
-      id: 1,
-      businessIdentifierValue: 'DSMITH',
-      person: {
-        firstName: 'Devin',
-        surname: 'Smith',
-      },
-    },
-  ],
-  page: 1,
-  quantity: 100,
-  total: 1,
-});
-
 describe('Project Filter', () => {
   const setup = async (renderOptions: RenderOptions & { props?: Partial<IProjectFilterProps> }) => {
     const formikRef = createRef<FormikProps<ProjectFilterModel>>();

@@ -37,8 +37,6 @@ import {
 import { useAddLease } from '../hooks/useAddLease';
 import AddLeaseContainer, { IAddLeaseContainerProps } from './AddLeaseContainer';
 import AddLeaseForm from './AddLeaseForm';
-import { IPaginateParams } from '@/constants/API';
-import { IUsersFilter } from '@/interfaces';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 
 const retrieveUserInfo = vi.fn();
