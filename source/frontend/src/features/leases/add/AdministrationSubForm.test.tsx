@@ -31,7 +31,12 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
   retrieveUserInfoResponse: getUserMock(),
   retrieveUserLookup: vi.fn(),
   retrieveUserLookupLoading: false,
-  retrieveUserLookupResponse: {items: [], page:0, quantity: 0, total: 0} as ApiGen_Base_Page<ApiGen_Concepts_User>,
+  retrieveUserLookupResponse: {
+    items: [],
+    page: 0,
+    quantity: 0,
+    total: 0,
+  } as ApiGen_Base_Page<ApiGen_Concepts_User>,
 });
 
 describe('AdministrationSubForm component', () => {

@@ -97,7 +97,11 @@ vi.mocked(useApiUsers).mockReturnValue({
   getUsersPaged: vi.fn().mockResolvedValue({ data: getMockPagedUsers() }),
   putUser: vi.fn(),
   exportUsers: vi.fn(),
-  getUserLookup: vi.fn().mockResolvedValue({ data: { items: [], page: 0, quantity: 0, total: 0 } as ApiGen_Base_Page<ApiGen_Concepts_User> }),
+  getUserLookup: vi
+    .fn()
+    .mockResolvedValue({
+      data: { items: [], page: 0, quantity: 0, total: 0 } as ApiGen_Base_Page<ApiGen_Concepts_User>,
+    }),
 });
 
 vi.mock('./hooks/pims-api/useApiProperties');
