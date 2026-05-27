@@ -100,8 +100,8 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   useEffect(() => {
     retrieveUserLookup({
       page: 1,
-      quantity: 100,
-      activeOnly: true,
+      quantity: 1000,
+      activeOnly: false,
     }).then(response => {
       setCreatedByOptions(
         response?.items

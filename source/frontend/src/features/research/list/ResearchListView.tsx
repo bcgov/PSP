@@ -67,8 +67,8 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
   useEffect(() => {
     retrieveUserLookup({
       page: 1,
-      quantity: 100,
-      activeOnly: true,
+      quantity: 1000,
+      activeOnly: false,
     }).then(response => {
       setCreatedByOptions(
         response?.items

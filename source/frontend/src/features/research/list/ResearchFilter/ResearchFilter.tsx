@@ -18,6 +18,7 @@ import { ResearchFileSelect } from './ResearchFileSelect';
 export interface IResearchFilterProps {
   filter?: IResearchFilter;
   createdByOptions: MultiSelectOption[];
+  initialValues?: IResearchFilter;
   setFilter: (filter: IResearchFilter) => void;
 }
 
@@ -136,7 +137,7 @@ export const ResearchFilter: React.FunctionComponent<
                       />
                     </Col>
                     <Col lg="6" className="pl-0 ps-0">
-                      <StyledMultiSelect
+                      <Multiselect
                         field="selectedUser"
                         displayValue="text"
                         placeholder="Search user"
@@ -186,12 +187,5 @@ const FilterBoxForm = styled(Form)`
     .input-group-prepend select {
       width: 16rem;
     }
-  }
-`;
-
-const StyledMultiSelect = styled(Multiselect)`
-  searchwrapper: {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
   }
 `;

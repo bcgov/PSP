@@ -7,6 +7,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import ResearchFilter, { defaultResearchFilter } from './ResearchFilter';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -14,8 +15,11 @@ const storeState = {
 
 const setFilter = vi.fn();
 // render component under test
-const setup = (renderOptions: RenderOptions = { store: storeState }) => {
-  const utils = render(<ResearchFilter setFilter={setFilter} createdByOptions={[]} />, {
+const setup = (
+  filter = defaultResearchFilter,
+  createdByOptions: MultiSelectOption[] = [],
+  renderOptions: RenderOptions = { store: storeState }) => {
+  const utils = render(<ResearchFilter filter={filter} setFilter={setFilter} createdByOptions={createdByOptions} />, {
     ...renderOptions,
     claims: [Claims.RESEARCH_VIEW],
   });
@@ -245,10 +249,10 @@ describe('Research Filter', () => {
   });
 
   it('searches by create user', async () => {
-    const { container, searchButton } = setup();
+    const selectedUser = [{ id: 'DSMITH', text: 'Devin Smith (DSMITH)' }];
+    const { searchButton } = setup({...defaultResearchFilter, createOrUpdateBy: 'appCreateUserid',
+    selectedUser }, selectedUser);
 
-    fillInput(container, 'createOrUpdateBy', 'appCreateUserid', 'select');
-    fillInput(container, 'selectedUser', 'DSMITH');
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
@@ -269,16 +273,21 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
-        selectedUser: [],
+        selectedUser: [
+          {
+            "id": "DSMITH",
+            "text": "Devin Smith (DSMITH)",
+          },
+        ],
       }),
     );
   });
 
   it('searches by update user', async () => {
-    const { container, searchButton, setFilter } = setup();
+    const selectedUser = [{ id: 'DSMITH', text: 'Devin Smith (DSMITH)' }];
+    const { searchButton } = setup({...defaultResearchFilter, createOrUpdateBy: 'appLastUpdateUserid',
+    selectedUser }, selectedUser);
 
-    fillInput(container, 'createOrUpdateBy', 'appLastUpdateUserid', 'select');
-    fillInput(container, 'selectedUser', 'DSMITH', 'select');
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
@@ -286,7 +295,7 @@ describe('Research Filter', () => {
         pid: '',
         pin: '',
         appCreateUserid: '',
-        appLastUpdateUserid: 'updateUser',
+        appLastUpdateUserid: 'DSMITH',
         createOrUpdateBy: 'appLastUpdateUserid',
         createOrUpdateRange: 'updatedOnStartDate',
         createdOnEndDate: '',
@@ -299,7 +308,10 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
-        selectedUser: [],
+        selectedUser: [{
+            "id": "DSMITH",
+            "text": "Devin Smith (DSMITH)",
+          }],
       }),
     );
   });
