@@ -15,6 +15,8 @@ import { getMockLookUpsByType, mockLookups } from '@/mocks/lookups.mock';
 
 import * as API from '@/constants/API';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
+import { IUsersFilter } from '@/interfaces';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 
 const setFilter = vi.fn();
 const onResetFilter = vi.fn();
@@ -35,6 +37,11 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
   retrieveUserInfo: vi.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: getUserMock(),
+  retrieveUserLookup: function (filter: IUsersFilter & API.IPaginateParams): Promise<ApiGen_Base_Page<ApiGen_Concepts_User>> {
+    throw new Error('Function not implemented.');
+  },
+  retrieveUserLookupLoading: false,
+  retrieveUserLookupResponse: undefined
 });
 
 vi.mock('@/hooks/pims-api/useApiLeases');

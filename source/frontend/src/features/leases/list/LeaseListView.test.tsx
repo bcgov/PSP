@@ -25,6 +25,10 @@ import {
 
 import { LeaseListView } from './LeaseListView';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { IPaginateParams } from '@/constants/API';
+import { IUsersFilter } from '@/interfaces';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -46,6 +50,11 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
   retrieveUserInfo: vi.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: getUserMock(),
+  retrieveUserLookup: function (filter: IUsersFilter & IPaginateParams): Promise<ApiGen_Base_Page<ApiGen_Concepts_User>> {
+    throw new Error('Function not implemented.');
+  },
+  retrieveUserLookupLoading: false,
+  retrieveUserLookupResponse: undefined
 });
 
 // render component under test

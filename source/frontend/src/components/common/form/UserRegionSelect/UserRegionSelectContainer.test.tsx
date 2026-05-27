@@ -14,6 +14,9 @@ import {
 } from './UserRegionSelectContainer';
 import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
+import { IPaginateParams } from '@/constants/API';
+import { IUsersFilter } from '@/interfaces';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 
 // mock auth library
 
@@ -40,6 +43,11 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
       } as ApiGen_Concepts_RegionUser,
     ],
   } as ApiGen_Concepts_User,
+  retrieveUserLookup: function (filter: IUsersFilter & IPaginateParams): Promise<ApiGen_Base_Page<ApiGen_Concepts_User>> {
+    throw new Error('Function not implemented.');
+  },
+  retrieveUserLookupLoading: false,
+  retrieveUserLookupResponse: undefined
 });
 
 describe('User Region Select', () => {
@@ -106,6 +114,11 @@ describe('User Region Select', () => {
       retrieveUserInfoResponse: {
         userRegions: [],
       } as ApiGen_Concepts_User,
+      retrieveUserLookup: function (filter: IUsersFilter & IPaginateParams): Promise<ApiGen_Base_Page<ApiGen_Concepts_User>> {
+        throw new Error('Function not implemented.');
+      },
+      retrieveUserLookupLoading: false,
+      retrieveUserLookupResponse: undefined
     });
     const { findByTestId } = await setup();
 

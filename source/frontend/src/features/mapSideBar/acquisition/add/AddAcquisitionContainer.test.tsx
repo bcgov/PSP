@@ -27,6 +27,9 @@ import { AcquisitionOwnerFormModel, OwnerAddressFormModel } from '../common/mode
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
 import AddAcquisitionForm from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
+import { IPaginateParams } from '@/constants/API';
+import { IUsersFilter } from '@/interfaces';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 
 const history = createMemoryHistory();
 
@@ -71,6 +74,11 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
       },
     ],
   } as ApiGen_Concepts_User,
+  retrieveUserLookup: function (filter: IUsersFilter & IPaginateParams): Promise<ApiGen_Base_Page<ApiGen_Concepts_User>> {
+    throw new Error('Function not implemented.');
+  },
+  retrieveUserLookupLoading: false,
+  retrieveUserLookupResponse: undefined
 });
 
 // Mock API service calls
