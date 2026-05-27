@@ -119,7 +119,12 @@ describe('User Region Select', () => {
       } as ApiGen_Concepts_User,
       retrieveUserLookup: vi.fn(),
       retrieveUserLookupLoading: false,
-      retrieveUserLookupResponse: {items: [], page: 0, quantity: 0, total: 0} as unknown as ApiGen_Base_Page<ApiGen_Concepts_User>,
+      retrieveUserLookupResponse: {
+        items: [],
+        page: 0,
+        quantity: 0,
+        total: 0,
+      } as unknown as ApiGen_Base_Page<ApiGen_Concepts_User>,
     });
     const { findByTestId } = await setup();
 
