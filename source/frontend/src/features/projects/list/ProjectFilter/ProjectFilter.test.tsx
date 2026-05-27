@@ -8,8 +8,6 @@ import { IProjectFilterProps, ProjectFilter } from './ProjectFilter';
 import { FormikProps } from 'formik';
 import { ProjectFilterModel } from './models/ProjectFilterModel';
 import { createRef } from 'react';
-
-
 const setFilter = vi.fn();
 const onResetFilter = vi.fn();
 
@@ -130,28 +128,28 @@ describe('Project Filter', () => {
   });
 
   it('searches by created by', async () => {
-  const selectedUser = [{ id: 'DSMITH', text: 'Devin Smith (DSMITH)' }];
+    const selectedUser = [{ id: 'DSMITH', text: 'Devin Smith (DSMITH)' }];
 
-  const initialValues = new ProjectFilterModel();
-  initialValues.projectCreatedBy = selectedUser;
+    const initialValues = new ProjectFilterModel();
+    initialValues.projectCreatedBy = selectedUser;
 
-  const { getSearchButton } = await setup({
-    props: {
-      initialValues,
-      createdByOptions: selectedUser,
-    },
+    const { getSearchButton } = await setup({
+      props: {
+        initialValues,
+        createdByOptions: selectedUser,
+      },
+    });
+
+    await act(async () => userEvent.click(getSearchButton()));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({
+        projectCreatedBy: 'DSMITH',
+        projectNumber: null,
+        projectName: null,
+        projectStatusCode: null,
+        regions: [],
+      }),
+    );
   });
-
-  await act(async () => userEvent.click(getSearchButton()));
-
-  expect(setFilter).toHaveBeenCalledWith(
-    expect.objectContaining({
-      projectCreatedBy: 'DSMITH',
-      projectNumber: null,
-      projectName: null,
-      projectStatusCode: null,
-      regions: [],
-    }),
-  );
-});
 });

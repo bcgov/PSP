@@ -18,11 +18,15 @@ const setFilter = vi.fn();
 const setup = (
   filter = defaultResearchFilter,
   createdByOptions: MultiSelectOption[] = [],
-  renderOptions: RenderOptions = { store: storeState }) => {
-  const utils = render(<ResearchFilter filter={filter} setFilter={setFilter} createdByOptions={createdByOptions} />, {
-    ...renderOptions,
-    claims: [Claims.RESEARCH_VIEW],
-  });
+  renderOptions: RenderOptions = { store: storeState },
+) => {
+  const utils = render(
+    <ResearchFilter filter={filter} setFilter={setFilter} createdByOptions={createdByOptions} />,
+    {
+      ...renderOptions,
+      claims: [Claims.RESEARCH_VIEW],
+    },
+  );
   const searchButton = utils.getByTestId('search');
   const resetButton = utils.getByTestId('reset-button');
   return { searchButton, setFilter, resetButton, ...utils };
@@ -250,8 +254,10 @@ describe('Research Filter', () => {
 
   it('searches by create user', async () => {
     const selectedUser = [{ id: 'DSMITH', text: 'Devin Smith (DSMITH)' }];
-    const { searchButton } = setup({...defaultResearchFilter, createOrUpdateBy: 'appCreateUserid',
-    selectedUser }, selectedUser);
+    const { searchButton } = setup(
+      { ...defaultResearchFilter, createOrUpdateBy: 'appCreateUserid', selectedUser },
+      selectedUser,
+    );
 
     await act(async () => userEvent.click(searchButton));
 
@@ -275,8 +281,8 @@ describe('Research Filter', () => {
         updatedOnStartDate: '',
         selectedUser: [
           {
-            "id": "DSMITH",
-            "text": "Devin Smith (DSMITH)",
+            id: 'DSMITH',
+            text: 'Devin Smith (DSMITH)',
           },
         ],
       }),
@@ -285,8 +291,10 @@ describe('Research Filter', () => {
 
   it('searches by update user', async () => {
     const selectedUser = [{ id: 'DSMITH', text: 'Devin Smith (DSMITH)' }];
-    const { searchButton } = setup({...defaultResearchFilter, createOrUpdateBy: 'appLastUpdateUserid',
-    selectedUser }, selectedUser);
+    const { searchButton } = setup(
+      { ...defaultResearchFilter, createOrUpdateBy: 'appLastUpdateUserid', selectedUser },
+      selectedUser,
+    );
 
     await act(async () => userEvent.click(searchButton));
 
@@ -308,10 +316,12 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
-        selectedUser: [{
-            "id": "DSMITH",
-            "text": "Devin Smith (DSMITH)",
-          }],
+        selectedUser: [
+          {
+            id: 'DSMITH',
+            text: 'Devin Smith (DSMITH)',
+          },
+        ],
       }),
     );
   });

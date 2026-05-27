@@ -45,7 +45,7 @@ const setup = (
   renderOptions: RenderOptions = { store: storeState },
   filter = defaultResearchFilter,
   createdByOptions = [],
-  ) => {
+) => {
   const utils = render(<ResearchListView />, {
     ...renderOptions,
     history,
@@ -74,22 +74,22 @@ describe('Research List View', () => {
   beforeEach(() => {
     getResearchFiles.mockClear();
     retrieveUserLookup.mockResolvedValue({
-  data: {
-    items: [
-      {
-        id: 1,
-        businessIdentifierValue: 'DSMITH',
-        person: {
-          firstName: 'Devin',
-          surname: 'Smith',
-        },
+      data: {
+        items: [
+          {
+            id: 1,
+            businessIdentifierValue: 'DSMITH',
+            person: {
+              firstName: 'Devin',
+              surname: 'Smith',
+            },
+          },
+        ],
+        page: 1,
+        quantity: 1000,
+        total: 1,
       },
-    ],
-    page: 1,
-    quantity: 1000,
-    total: 1,
-  },
-});
+    });
   });
 
   it('matches snapshot', async () => {
@@ -168,7 +168,11 @@ describe('Research List View', () => {
   it('navigates to create research route when user clicks the create button', async () => {
     setupMockSearch([]);
     const selectedUser = [{ id: 'DSMITH', text: 'David Smith (DSMITH)' }];
-    setup({ claims: [Claims.RESEARCH_VIEW, Claims.RESEARCH_ADD] }, defaultResearchFilter, selectedUser);
+    setup(
+      { claims: [Claims.RESEARCH_VIEW, Claims.RESEARCH_ADD] },
+      defaultResearchFilter,
+      selectedUser,
+    );
 
     await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
     const button = await screen.findByText(/Create a Research File/i);
