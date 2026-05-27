@@ -29,11 +29,13 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
   retrieveUserInfo: vi.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: getUserMock(),
-  retrieveUserLookup: function (filter: IUsersFilter & IPaginateParams): Promise<ApiGen_Base_Page<ApiGen_Concepts_User>> {
+  retrieveUserLookup: function (
+    filter: IUsersFilter & IPaginateParams,
+  ): Promise<ApiGen_Base_Page<ApiGen_Concepts_User>> {
     throw new Error('Function not implemented.');
   },
   retrieveUserLookupLoading: false,
-  retrieveUserLookupResponse: undefined
+  retrieveUserLookupResponse: undefined,
 });
 
 describe('AdministrationSubForm component', () => {

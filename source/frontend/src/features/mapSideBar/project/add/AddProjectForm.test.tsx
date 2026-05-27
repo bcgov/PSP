@@ -51,11 +51,13 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
       },
     ],
   },
-  retrieveUserLookup: function (filter: IUsersFilter & API.IPaginateParams): Promise<ApiGen_Base_Page<ApiGen_Concepts_User>> {
+  retrieveUserLookup: function (
+    filter: IUsersFilter & API.IPaginateParams,
+  ): Promise<ApiGen_Base_Page<ApiGen_Concepts_User>> {
     throw new Error('Function not implemented.');
   },
   retrieveUserLookupLoading: false,
-  retrieveUserLookupResponse: undefined
+  retrieveUserLookupResponse: undefined,
 });
 
 const mockStatusOptions: SelectOption[] = getMockLookUpsByType(API.PROJECT_STATUS_TYPES);

@@ -56,11 +56,13 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
       } as ApiGen_Concepts_RegionUser,
     ],
   } as ApiGen_Concepts_User,
-  retrieveUserLookup: function (filter: IUsersFilter & IPaginateParams): Promise<ApiGen_Base_Page<ApiGen_Concepts_User>> {
+  retrieveUserLookup: function (
+    filter: IUsersFilter & IPaginateParams,
+  ): Promise<ApiGen_Base_Page<ApiGen_Concepts_User>> {
     throw new Error('Function not implemented.');
   },
   retrieveUserLookupLoading: false,
-  retrieveUserLookupResponse: undefined
+  retrieveUserLookupResponse: undefined,
 });
 
 vi.mock('@/hooks/repositories/useProjectProvider');
