@@ -1,5 +1,5 @@
 // tests/auth.setup.ts
-import { test as setup, expect } from '@playwright/test';
+import { test as setup } from '@playwright/test';
 import path from 'path';
 import { LoginPage } from '../pages/login.page'; // Import your POM
 
@@ -14,7 +14,7 @@ setup('authenticate', async ({ page }) => {
 
 // Defensive check: Crash early if someone forgot to set up their .env file
   if (!username || !password) {
-    throw new Error('Missing TEST_USER or TEST_PASSWORD in environment variables!');
+    throw new Error('Missing USER_TRANPSP1_ID or USER_TRANPSP1_PASSWORD in environment variables!');
   }
 
   // 1. Inject the page fixture into your Login Page Object
