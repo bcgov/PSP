@@ -74,23 +74,6 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
     'fileProperties',
   );
 
-  useEffect(() => {
-    if (featuresWithAddresses?.length > 0 && !formikRef?.current?.values?.regionCode) {
-      const firstPropertyFeature = firstOrNull(featuresWithAddresses)?.feature;
-
-      if (exists(firstPropertyFeature)) {
-        const firstProperty = PropertyForm.fromFeatureDataset(firstPropertyFeature);
-        formikRef?.current?.setFieldValue(
-          'regionCode',
-          firstProperty.regionName !== 'Cannot determine' &&
-            userRegionCodes.includes(firstProperty.region?.toString())
-            ? firstProperty.region
-            : '',
-        );
-      }
-    }
-  }, [featuresWithAddresses, userRegionCodes]);
-
   const initialForm = useMemo(() => {
     return new DispositionFormModel();
   }, []);
@@ -160,6 +143,27 @@ const AddDispositionContainer: React.FC<IAddDispositionContainerProps> = ({
       formikHelpers?.setSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    formattedGuid && retrieveUserInfo(formattedGuid);
+  }, [formattedGuid, retrieveUserInfo]);
+
+  useEffect(() => {
+    if (featuresWithAddresses?.length > 0 && !formikRef?.current?.values?.regionCode) {
+      const firstPropertyFeature = firstOrNull(featuresWithAddresses)?.feature;
+
+      if (exists(firstPropertyFeature)) {
+        const firstProperty = PropertyForm.fromFeatureDataset(firstPropertyFeature);
+        formikRef?.current?.setFieldValue(
+          'regionCode',
+          firstProperty.regionName !== 'Cannot determine' &&
+            userRegionCodes.includes(firstProperty.region?.toString())
+            ? firstProperty.region
+            : '',
+        );
+      }
+    }
+  }, [featuresWithAddresses, userRegionCodes]);
 
   return (
     <View
