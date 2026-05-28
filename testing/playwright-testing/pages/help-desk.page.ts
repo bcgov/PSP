@@ -1,4 +1,4 @@
-import { Locator, type Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import { LayoutPage } from './layout/layout.page';
 
 export class HelpDeskPage extends LayoutPage {
