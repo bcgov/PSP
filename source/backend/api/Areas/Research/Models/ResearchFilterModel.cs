@@ -121,15 +121,15 @@ namespace Pims.Api.Areas.Research.Models.Search
         {
             var filter = new ResearchFilter
             {
-                Pid = model.Pid,
-                Pin = model.Pin,
+                Pid = model.Pid?.Trim(),
+                Pin = model.Pin?.Trim(),
                 Page = model.Page,
                 Quantity = model.Quantity,
                 RegionCode = model.RegionCode,
-                RFileNumber = model.RFileNumber,
+                RFileNumber = model.RFileNumber?.Trim(),
                 ResearchFileStatusTypeCode = model.ResearchFileStatusTypeCode,
-                Name = model.Name,
-                RoadOrAlias = model.RoadOrAlias,
+                Name = model.Name?.Trim(),
+                RoadOrAlias = model.RoadOrAlias?.Trim(),
                 AppCreateUserid = model.AppCreateUserid,
                 CreatedOnStartDate = model.CreatedOnStartDate,
                 CreatedOnEndDate = model.CreatedOnEndDate,

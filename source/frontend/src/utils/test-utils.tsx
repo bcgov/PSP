@@ -393,13 +393,25 @@ export async function focusOptionMultiselect(
   });
 }
 
-export const getMockRepositoryObj = (response = undefined) => ({
-  error: undefined,
-  response,
-  execute: vi.fn().mockResolvedValue(response),
-  loading: false,
-  status: 200,
-});
+export function getMockRepositoryObj<T = any>(response: T | undefined = undefined) {
+  return {
+    error: undefined,
+    response,
+    execute: vi.fn().mockResolvedValue(response),
+    loading: false,
+    status: 200,
+  };
+}
+
+/**
+ * jsdom does not implement File.arrayBuffer(). This helper creates a File and
+ * stubs arrayBuffer() to return the provided buffer, matching production behaviour.
+ */
+export function getMockFile(buffer: ArrayBuffer, name: string, options?: FilePropertyBag): File {
+  const file = new File([buffer], name, options);
+  file.arrayBuffer = vi.fn().mockResolvedValue(buffer);
+  return file;
+}
 
 // re-export everything from RTL
 export * from '@testing-library/react';

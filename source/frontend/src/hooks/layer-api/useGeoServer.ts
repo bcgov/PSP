@@ -20,7 +20,6 @@ function buildUrl(inputUrl: string, cqlFilter: Record<string, any>) {
 export const useGeoServer = () => {
   const { tenant } = useContext(TenantContext);
   const baseUrl = tenant.propertiesUrl || '';
-  const baseBoundaryUrl = tenant.boundaryLayerUrl || '';
 
   const getPropertyWfs = useCallback(
     async function (id: number): Promise<Feature<Point> | null> {
@@ -47,11 +46,12 @@ export const useGeoServer = () => {
   const getPropertyByBoundaryWfsWrapper = useApiRequestWrapper({
     requestFunction: useCallback(
       async (boundary: Geometry) => {
-        return await CustomAxios().get<FeatureCollection>(
-          `${baseBoundaryUrl}&cql_filter=INTERSECTS(GEOMETRY,SRID=4326;${geojsonToWKT(boundary)})`,
-        );
+        const wkt = geojsonToWKT(boundary);
+        const params = new URLSearchParams();
+        params.append('cql_filter', `INTERSECTS(GEOMETRY,SRID=4326;${wkt})`);
+        return await CustomAxios().post<FeatureCollection>(baseUrl, params);
       },
-      [baseBoundaryUrl],
+      [baseUrl],
     ),
     requestName: 'getPropertyBoundaryWfs',
     onError: useAxiosErrorHandler('Failed to retrieve property information from BC Data Warehouse'),

@@ -3,31 +3,42 @@ import React from 'react';
 import { Col, Row } from 'react-bootstrap';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { Input, Select, SelectOption, TypeaheadSelect } from '@/components/common/form';
+import {
+  Input,
+  Multiselect,
+  Select,
+  SelectOption,
+  TypeaheadSelect,
+} from '@/components/common/form';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { ColButtons, FilterBoxForm } from '@/components/common/styles';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
 import { ApiGen_Concepts_DispositionFileTeam } from '@/models/api/generated/ApiGen_Concepts_DispositionFileTeam';
-import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { DispositionFilterModel } from '../models';
 
 export interface IDispositionFilterProps {
-  filter?: Api_DispositionFilter;
-  setFilter: (filter: Api_DispositionFilter) => void;
+  initialValues: DispositionFilterModel;
   dispositionTeam: ApiGen_Concepts_DispositionFileTeam[];
   fileStatusOptions: SelectOption[];
   dispositionStatusOptions: SelectOption[];
   dispositionTypeOptions: SelectOption[];
+  pimsRegionsOptions: MultiSelectOption[];
+  dispositionTeamOptions: SelectOption[];
+  onResetFilter: () => void;
+  setFilter: (filter: Api_DispositionFilter) => void;
 }
 
 export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
-  filter,
-  setFilter,
-  dispositionTeam,
+  initialValues,
   fileStatusOptions,
   dispositionStatusOptions,
   dispositionTypeOptions,
+  pimsRegionsOptions,
+  dispositionTeamOptions,
+  setFilter,
+  onResetFilter,
 }) => {
   const onSearchSubmit = async (
     values: DispositionFilterModel,
@@ -37,26 +48,10 @@ export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
     formikHelpers.setSubmitting(false);
   };
 
-  const resetFilter = () => {
-    setFilter(new DispositionFilterModel().toApi());
-  };
-
-  const dispositionTeamOptions = React.useMemo<SelectOption[]>(() => {
-    const arr = dispositionTeam || [];
-    return arr.map<SelectOption>(t => ({
-      value: t.personId ? `P-${t.personId}` : `O-${t.organizationId}`,
-      label: t.personId && t.person ? formatApiPersonNames(t.person) : t.organization?.name ?? '',
-    }));
-  }, [dispositionTeam]);
-
   return (
     <Formik<DispositionFilterModel>
       enableReinitialize
-      initialValues={
-        filter
-          ? DispositionFilterModel.fromApi(filter, dispositionTeamOptions || [])
-          : new DispositionFilterModel()
-      }
+      initialValues={initialValues}
       onSubmit={onSearchSubmit}
     >
       {formikProps => (
@@ -110,6 +105,16 @@ export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
                   />
                 </Col>
               </Row>
+              <Row>
+                <Col xl="12">
+                  <Multiselect
+                    field="regions"
+                    options={pimsRegionsOptions}
+                    displayValue="text"
+                    placeholder="Select Region(s)"
+                  />
+                </Col>
+              </Row>
             </Col>
             <Col xl="5">
               <Row>
@@ -147,7 +152,7 @@ export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
                     disabled={formikProps.isSubmitting}
                     onClick={() => {
                       formikProps.resetForm();
-                      resetFilter();
+                      onResetFilter();
                     }}
                   />
                 </Col>

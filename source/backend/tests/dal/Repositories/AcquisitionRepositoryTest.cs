@@ -13,6 +13,7 @@ using Pims.Dal.Repositories;
 using Pims.Core.Security;
 using Xunit;
 using Pims.Api.Models.CodeTypes;
+using NetTopologySuite.Utilities;
 
 namespace Pims.Dal.Test.Repositories
 {
@@ -44,7 +45,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -65,7 +66,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -86,7 +87,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -107,7 +108,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -128,7 +129,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -149,7 +150,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -170,7 +171,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -191,7 +192,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 }, contractorPersonId: 1);
+            var result = repository.GetPageDeep(filter, contractorPersonId: 1);
 
             // Assert
             result.Should().HaveCount(1);
@@ -219,7 +220,7 @@ namespace Pims.Dal.Test.Repositories
             var filter = new AcquisitionFilter() { OwnerName = "DOE" };
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -251,7 +252,7 @@ namespace Pims.Dal.Test.Repositories
             var filter = new AcquisitionFilter() { OwnerName = "DOE" };
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -283,7 +284,7 @@ namespace Pims.Dal.Test.Repositories
             var filter = new AcquisitionFilter() { OwnerName = "DOE" };
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -314,7 +315,7 @@ namespace Pims.Dal.Test.Repositories
             var filter = new AcquisitionFilter() { OwnerName = "DAIRY" };
 
             // Act
-            var result = repository.GetPageDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -355,6 +356,75 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
+        public void Add_WithOverride_FileNo_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.OverrideFileNumberSequence = true;
+            acqFile.FileNo = 1234;
+
+            helper.CreatePimsContext(user, true);
+
+            var mockSequenceRepo = new Mock<ISequenceRepository>();
+            helper.AddSingleton(mockSequenceRepo.Object);
+            mockSequenceRepo.Setup(x => x.GetNextSequenceValue(It.IsAny<string>())).Returns(888999);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.Add(acqFile);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsAcquisitionFile>();
+            result.FileName.Should().Be("Test Acquisition File");
+            result.AcquisitionFileId.Should().Be(1);
+            result.RegionCode.Should().Be(1);
+            result.FileNo.Should().Be(1234);
+            result.FileNoSuffix.Should().Be(1);
+            result.LegacyFileNumber.Should().BeNull();
+            result.FileNumberFormatted.Should().Be("01-1234-01");
+            mockSequenceRepo.Verify(s => s.GetNextSequenceValue(It.IsAny<string>()), Times.Never());
+        }
+
+        [Fact]
+        public void Add_WithOverride_LegacyFileNumber_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.OverrideFileNumberSequence = true;
+            acqFile.FileNo = null;
+            acqFile.LegacyFileNumber = "BC-20000";
+
+            helper.CreatePimsContext(user, true);
+
+            var mockSequenceRepo = new Mock<ISequenceRepository>();
+            helper.AddSingleton(mockSequenceRepo.Object);
+            mockSequenceRepo.Setup(x => x.GetNextSequenceValue(It.IsAny<string>())).Returns(888999);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var result = repository.Add(acqFile);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().BeAssignableTo<PimsAcquisitionFile>();
+            result.FileName.Should().Be("Test Acquisition File");
+            result.AcquisitionFileId.Should().Be(1);
+            result.RegionCode.Should().Be(1);
+            result.FileNo.Should().BeNull();
+            result.FileNoSuffix.Should().BeNull();
+            result.LegacyFileNumber.Should().Be("BC-20000");
+            result.FileNumberFormatted.Should().Be("");
+            mockSequenceRepo.Verify(s => s.GetNextSequenceValue(It.IsAny<string>()), Times.Never());
+        }
+
+        [Fact]
         public void Add_SubFile_Success()
         {
             // Arrange
@@ -391,6 +461,7 @@ namespace Pims.Dal.Test.Repositories
                 acquisitionType: acqMainFile.AcquisitionTypeCodeNavigation,
                 region: acqMainFile.RegionCodeNavigation);
             newSubFile.PrntAcquisitionFileId = 1;
+
             var result = repository.Add(newSubFile);
 
             // Assert
@@ -724,7 +795,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetAcquisitionFileExportDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetAcquisitionFileExportDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -745,7 +816,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetAcquisitionFileExportDeep(filter, new HashSet<short>() { 1 });
+            var result = repository.GetAcquisitionFileExportDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);

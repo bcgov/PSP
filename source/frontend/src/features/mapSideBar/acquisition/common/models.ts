@@ -99,6 +99,9 @@ export class AcquisitionOwnerFormModel {
   contactEmailAddress: string | '' = '';
   contactPhoneNumber: string | '' = '';
   address?: OwnerAddressFormModel = new OwnerAddressFormModel();
+  isFromLtsa: boolean | null;
+  ltsaPid: string | null;
+  ltsaSourcedDate: string | null;
 
   isEmpty(): boolean {
     if (this.isOrganization === 'true') {
@@ -149,6 +152,9 @@ export class AcquisitionOwnerFormModel {
       contactPhoneNum:
         this.contactPhoneNumber.trim() === '' ? null : this.contactPhoneNumber.trim(),
       address: OwnerAddressFormModel.toApi(this.address),
+      isFromLtsa: this.isFromLtsa,
+      ltsaPid: this.ltsaPid,
+      ltsaSourcedDate: this.ltsaSourcedDate,
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }

@@ -303,13 +303,19 @@ export const CompensationRequisitionDetailView: React.FunctionComponent<
           {fileProduct?.code ?? ''}
         </SectionField>
         <SectionField label="Business function" labelWidth={{ xl: '4' }}>
-          {fileProject?.businessFunctionCode?.code ?? ''}
+          {compensation?.alternateProject?.businessFunctionCode?.code ??
+            fileProject?.businessFunctionCode?.code ??
+            ''}
         </SectionField>
         <SectionField label="Work activity" labelWidth={{ xl: '4' }}>
-          {fileProject?.workActivityCode?.code ?? ''}
+          {compensation?.alternateProject?.workActivityCode?.code ??
+            fileProject?.workActivityCode?.code ??
+            ''}
         </SectionField>
         <SectionField label="Cost type" labelWidth={{ xl: '4' }}>
-          {fileProject?.costTypeCode?.code ?? ''}
+          {compensation?.alternateProject?.costTypeCode?.code ??
+            fileProject?.costTypeCode?.code ??
+            ''}
         </SectionField>
         <SectionField label="Fiscal year" labelWidth={{ xl: '4' }}>
           {compensation.fiscalYear ?? ''}

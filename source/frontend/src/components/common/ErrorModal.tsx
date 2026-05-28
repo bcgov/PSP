@@ -1,3 +1,4 @@
+import { FallbackProps } from 'react-error-boundary';
 import { useHistory } from 'react-router-dom';
 
 import GenericModal from './GenericModal';
@@ -10,7 +11,7 @@ import GenericModal from './GenericModal';
  * see https://reactjs.org/docs/error-boundaries.html for more details.
  * @param props
  */
-const ErrorModal = (props: any) => {
+const ErrorModal = (props: FallbackProps) => {
   const history = useHistory();
   return (
     <GenericModal

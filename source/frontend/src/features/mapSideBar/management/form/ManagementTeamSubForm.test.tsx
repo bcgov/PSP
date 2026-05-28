@@ -1,4 +1,5 @@
 import { Formik, FormikProps, getIn } from 'formik';
+import { createRef } from 'react';
 
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -13,7 +14,6 @@ import {
 
 import { WithManagementTeam } from '../models/ManagementTeamSubFormModel';
 import ManagementTeamSubForm from './ManagementTeamSubForm';
-import { createRef } from 'react';
 
 describe('ManagementTeamSubForm component', () => {
   // render component under test

@@ -30,7 +30,7 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
     clickable: true,
     sortable: true,
     width: 10,
-    maxWidth: 20,
+    maxWidth: 25,
     Cell: (props: CellProps<DispositionSearchResultModel>) => {
       const { hasClaim } = useKeycloakWrapper();
       if (hasClaim(Claims.DISPOSITION_VIEW)) {
@@ -50,7 +50,7 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
     clickable: true,
     sortable: true,
     width: 10,
-    maxWidth: 20,
+    maxWidth: 25,
   },
   {
     Header: 'Disposition file name',
@@ -77,7 +77,7 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
     maxWidth: 20,
   },
   {
-    Header: 'Team member',
+    Header: 'Team members',
     accessor: 'dispositionTeam',
     align: 'left',
     clickable: true,
@@ -138,7 +138,7 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
     },
   },
   {
-    Header: 'Civic Address / PID / PIN',
+    Header: 'Civic address / PID / PIN',
     accessor: 'fileProperties',
     align: 'left',
     Cell: (props: CellProps<DispositionSearchResultModel>) => {
@@ -159,7 +159,7 @@ export const columns: ColumnWithProps<DispositionSearchResultModel>[] = [
     clickable: true,
     sortable: true,
     width: 10,
-    maxWidth: 20,
+    maxWidth: 25,
   },
   {
     Header: 'Status',

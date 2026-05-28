@@ -11,9 +11,9 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IProjectRepository : IRepository<PimsProject>
     {
-        Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, IEnumerable<short> userRegions);
+        Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, long? contractorPersonId = null);
 
-        IList<PimsProject> SearchProjects(string filter, HashSet<short> regions, int maxResults);
+        IList<PimsProject> SearchProjects(string filter, int maxResults);
 
         PimsProject Add(PimsProject project);
 

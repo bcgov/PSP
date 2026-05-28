@@ -34,21 +34,21 @@ export const useGenerateResearchNotice = () => {
       pimsProperties.forEach(pimsProperty => {
         if (isValidId(pimsProperty?.property?.pid)) {
           fullyAttributedTasks.push(
-            fullyAttributedRepository.findByPid(pimsProperty.property.pid.toString()),
+            fullyAttributedRepository.findByPid(pimsProperty.property.pid.toString(), true),
           );
         } else if (isValidId(pimsProperty?.property?.pin)) {
           fullyAttributedTasks.push(
-            fullyAttributedRepository.findByPin(pimsProperty.property.pin.toString()),
+            fullyAttributedRepository.findByPin(pimsProperty.property.pin.toString(), true),
           );
         }
       });
 
-      const fulltyAttributedResults: FeatureCollection<
+      const fullyAttributedResults: FeatureCollection<
         Geometry,
         PMBC_FullyAttributed_Feature_Properties
       >[] = await Promise.all(fullyAttributedTasks);
 
-      const flatFA = fulltyAttributedResults.flatMap(x => x.features).map(x => x.properties);
+      const flatFA = fullyAttributedResults.flatMap(x => x.features).map(x => x.properties);
 
       const composedProperties = pimsProperties.map(pimsResearchProperty => {
         const pimsProperty = pimsResearchProperty.property;

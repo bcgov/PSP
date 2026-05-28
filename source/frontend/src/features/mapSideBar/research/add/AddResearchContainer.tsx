@@ -1,5 +1,5 @@
 import { Formik, FormikProps } from 'formik';
-import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useMemo, useRef } from 'react';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 
@@ -9,9 +9,9 @@ import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
+import { useAddFileConfirmation } from '@/hooks/useAddFileConfirmation';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
-import { useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { exists, isValidId } from '@/utils';
@@ -35,11 +35,8 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
   const history = useHistory();
   const formikRef = useRef<FormikProps<ResearchForm>>(null);
   const mapMachine = useMapStateMachine();
-  const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
   const { addResearchFile } = useAddResearch();
-
-  const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
 
   // Warn user that property is part of an existing research file
   const confirmBeforeAdd = useCallback(
@@ -58,7 +55,12 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
   );
 
   // Get PropertyForms with addresses for all selected features
-  const { bcaLoading } = useEditPropertiesNotifier(formikRef, 'properties');
+  const { featuresWithAddresses, bcaLoading } = useEditPropertiesNotifier(formikRef, 'properties');
+
+  const incomingProperties = useMemo(
+    () => featuresWithAddresses?.map(f => PropertyForm.fromFeatureDataset(f.feature)) ?? [],
+    [featuresWithAddresses],
+  );
 
   // Memoize the initial form with all properties
   const initialForm = useMemo(() => {
@@ -69,56 +71,25 @@ export const AddResearchContainer: React.FunctionComponent<IAddResearchContainer
     (userOverrideCodes: UserOverrideCode[]) => Promise<any | void>
   >('Failed to add Research File');
 
+  const confirmationMessage = useMemo(
+    () => (
+      <>
+        <p>One or more properties have already been added to one or more research files.</p>
+        <p>Do you want to acknowledge and proceed?</p>
+      </>
+    ),
+    [],
+  );
+
   // Require user confirmation before adding a property to file
   // This is the flow for Map Marker -> right-click -> create Research File
-  useEffect(() => {
-    const runAsync = async () => {
-      if (exists(initialForm) && exists(formikRef.current) && needsUserConfirmation) {
-        if (initialForm.properties.length > 0) {
-          // Check all properties for confirmation
-          const needsConfirmation = await Promise.all(
-            initialForm.properties.map(formProperty => confirmBeforeAdd(formProperty)),
-          );
-          if (needsConfirmation.some(confirm => confirm)) {
-            setModalContent({
-              variant: 'warning',
-              title: 'User Override Required',
-              message: (
-                <>
-                  <p>
-                    One or more properties have already been added to one or more research files.
-                  </p>
-                  <p>Do you want to acknowledge and proceed?</p>
-                </>
-              ),
-              okButtonText: 'Yes',
-              cancelButtonText: 'No',
-              handleOk: () => {
-                // allow the properties to be added to the file being created
-                formikRef.current.resetForm();
-                formikRef.current.setFieldValue('properties', initialForm.properties);
-                setDisplayModal(false);
-                // show the user confirmation modal only once when creating a file
-                setNeedsUserConfirmation(false);
-              },
-              handleCancel: () => {
-                // clear out the properties array as the user did not agree to the popup
-                initialForm.properties.splice(0, initialForm.properties.length);
-                formikRef.current.resetForm();
-                formikRef.current.setFieldValue('properties', initialForm.properties);
-                setDisplayModal(false);
-                // show the user confirmation modal only once when creating a file
-                setNeedsUserConfirmation(false);
-              },
-            });
-            setDisplayModal(true);
-          }
-        }
-      }
-    };
-
-    runAsync();
-  }, [confirmBeforeAdd, initialForm, needsUserConfirmation, setDisplayModal, setModalContent]);
+  useAddFileConfirmation({
+    formikRef,
+    confirmBeforeAdd,
+    fieldName: 'properties',
+    properties: incomingProperties,
+    message: confirmationMessage,
+  });
 
   const saveResearchFile = async (
     researchFile: ApiGen_Concepts_ResearchFile,

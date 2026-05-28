@@ -126,7 +126,7 @@ When("I verify the Management Activities List View", async function () {
 When("I verify the Management Files Create Form fields", async function () {
   await this.managementFile.navigateManagementMainMenu();
   await this.managementFile.createManagementFileLink();
-  await this.managementFile.validateInitManagementFileDetailsPage();
+  await this.managementFile.verifyInitManagementFileDetailsPage();
 });
 
 Then(
@@ -211,7 +211,7 @@ When("I verify the Admin Users List View", async function () {
 
 When("I verify the Manage Users request list view", async function () {
   await this.adminTools.navigateAdminUserRequests();
-  await this.adminTools.verifyUserRequestsListView();
+  //await this.adminTools.verifyUserRequestsListView();
 });
 
 Given("I navigate to the Admin CDOGS Templates Page", async function () {

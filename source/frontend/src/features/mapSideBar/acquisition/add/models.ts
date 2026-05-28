@@ -1,8 +1,11 @@
+import { first } from 'lodash';
+
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_AcquisitionFileProperty } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileProperty';
+import { ApiGen_Concepts_NoticeOfClaim } from '@/models/api/generated/ApiGen_Concepts_NoticeOfClaim';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { applyDisplayOrder } from '@/utils';
 import {
@@ -11,7 +14,7 @@ import {
   stringToNumberOrNull,
   toTypeCodeNullable,
 } from '@/utils/formUtils';
-import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
+import { exists, isValidId, isValidIsoDateTime, isValidString } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ChecklistItemFormModel } from '../../shared/tabs/checklist/update/models';
@@ -29,6 +32,8 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   id?: number;
   parentAcquisitionFileId: number | null = null;
   fileName?: string = '';
+  overrideFileNumberSequence = false;
+  fileNo: number | null = null;
   legacyFileNumber?: string = '';
   assignedDate?: string = '';
   deliveryDate?: string = '';
@@ -71,10 +76,24 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   );
   totalAllowableCompensation: number | '' = '';
   physicalFileDetails?: string = '';
+  noticeOfClaim: ApiGen_Concepts_NoticeOfClaim;
 
   toApi(): ApiGen_Concepts_AcquisitionFile {
     const fileProperties = this.properties.map(x => this.toPropertyApi(x));
     const sortedProperties = applyDisplayOrder(fileProperties);
+    const noticeOfClaim: ApiGen_Concepts_NoticeOfClaim | null = exists(this.noticeOfClaim)
+      ? {
+          ...this.noticeOfClaim,
+          receivedDate: isValidString(this.noticeOfClaim?.receivedDate)
+            ? this.noticeOfClaim.receivedDate
+            : null,
+          comment: isValidString(this.noticeOfClaim?.comment?.trim())
+            ? this.noticeOfClaim.comment.trim()
+            : null,
+        }
+      : null;
+    const hasNoticeOfClaim =
+      isValidString(noticeOfClaim?.receivedDate) || isValidString(noticeOfClaim?.comment);
 
     return {
       id: this.id ?? 0,
@@ -96,7 +115,6 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
         this.expropiationRiskStatusType,
       ),
       totalAllowableCompensation: stringToNumberOrNull(this.totalAllowableCompensation),
-      legacyFileNumber: this.legacyFileNumber ?? null,
       fileStatusTypeCode: toTypeCodeNullable(this.acquisitionFileStatusType),
       acquisitionPhysFileStatusTypeCode: toTypeCodeNullable(this.acquisitionPhysFileStatusType),
       physicalFileDetails: this.physicalFileDetails ?? null,
@@ -123,12 +141,15 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
       ].filter(exists),
       fileChecklistItems: this.fileCheckList.map(x => x.toApi()),
       compensationRequisitions: null,
-      fileNo: 0,
+      overrideFileNumberSequence: this.overrideFileNumberSequence,
+      fileNo: this.overrideFileNumberSequence ? this.fileNo : null,
+      legacyFileNumber: this.legacyFileNumber ?? null,
       fileNumber: null,
       fileNumberSuffix: 0,
       legacyStakeholders: null,
       product: null,
       project: null,
+      noticeOfClaim: hasNoticeOfClaim && exists(noticeOfClaim) ? [noticeOfClaim] : [],
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
@@ -241,6 +262,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.ownerRepresentative =
       interestHolders?.find(x => x.interestTypeCode === InterestHolderType.OWNER_REPRESENTATIVE) ??
       new InterestHolderForm(InterestHolderType.OWNER_REPRESENTATIVE, model.id);
+    newForm.noticeOfClaim = exists(model.noticeOfClaim) ? first(model.noticeOfClaim) : null;
 
     return newForm;
   }

@@ -8,12 +8,19 @@ import { Button } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
+import { useModalContext } from '@/hooks/useModalContext';
 import { featuresetToLocationBoundaryDataset } from '@/utils';
-import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
+import {
+  addPropertiesToCurrentFile,
+  addShapeToProperty,
+  removeShapeFromPropertyWithConfirmation,
+} from '@/utils/propertyUtils';
 import { exists, firstOrNull } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
@@ -30,6 +37,7 @@ const ManagementPropertiesSubForm: React.FunctionComponent<ManagementPropertiesS
 }) => {
   const localRef = useRef<FormikProps<ManagementFormModel>>(null);
 
+  const { setModalContent, setDisplayModal } = useModalContext();
   const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
     useMapStateMachine();
 
@@ -99,14 +107,31 @@ const ManagementPropertiesSubForm: React.FunctionComponent<ManagementPropertiesS
       </div>
 
       <FieldArray name="fileProperties">
-        {({ remove }) => (
-          <Section header="Selected Properties">
+        {({ remove, replace }) => (
+          <Section
+            header={
+              <Row>
+                <Col xs="11">Selected Properties</Col>
+                {formikProps?.values?.fileProperties?.length > 0 && (
+                  <Col>
+                    <ZoomToLocation
+                      formProperties={formikProps?.values?.fileProperties}
+                      icon={ZoomIconType.area}
+                    />
+                  </Col>
+                )}
+              </Row>
+            }
+          >
             <AddPropertiesGuide />
-            {exists(selectedFeatureDataset?.parcelFeature) && (
+            {exists(selectedFeatureDataset?.parcelFeature) ||
+            exists(selectedFeatureDataset?.pimsFeature) ||
+            exists(selectedFeatureDataset?.location) ? (
               <StyledButtonWrapper>
                 <Button onClick={handleAddToSelection}>Add selected property</Button>
               </StyledButtonWrapper>
-            )}
+            ) : null}
+
             <SelectedPropertyHeaderRow />
             {formikProps.values.fileProperties.map((property, index) => (
               <SelectedPropertyRow
@@ -114,7 +139,22 @@ const ManagementPropertiesSubForm: React.FunctionComponent<ManagementPropertiesS
                 onRemove={() => remove(index)}
                 nameSpace={`fileProperties.${index}`}
                 index={index}
-                property={property.toFeatureDataset()}
+                property={property}
+                canUploadShapefile={true}
+                onUploadShapefile={(result: UploadResponseModel | null) => {
+                  const updatedFormProperty = addShapeToProperty(property, result);
+                  replace(index, updatedFormProperty);
+                }}
+                onRemoveShapefile={() => {
+                  removeShapeFromPropertyWithConfirmation(
+                    property,
+                    setModalContent,
+                    setDisplayModal,
+                    updatedProperty => {
+                      replace(index, updatedProperty);
+                    },
+                  );
+                }}
               />
             ))}
             {formikProps.values.fileProperties.length === 0 && (

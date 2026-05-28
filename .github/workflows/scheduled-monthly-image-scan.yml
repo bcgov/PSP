@@ -1,0 +1,125 @@
+name: Scheduled Monthly Image Scan
+
+on:
+  schedule:
+    - cron: "0 6 1 * *" # 1st of every month at 06:00 UTC
+  workflow_dispatch: {}
+
+jobs:
+  scan-start-notification:
+    name: Monthly Scan Start Notification
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Notify scan start
+        uses: dragos-cojocari/ms-teams-notification@bdee8c5584729d6a2dcaad8fc21ecfd40d1418ab # v1.0.2
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
+          notification-summary: Monthly Container Image Security Scan STARTED
+          notification-color: 17a2b8
+          timezone: America/Los_Angeles
+
+  scan-deployed-and-bases:
+    name: Scan Deployed and Base Images
+    needs: scan-start-notification
+    runs-on: ubuntu-22.04
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    env:
+      OPENSHIFT_NAMESPACE: 3cd915-tools
+      OPENSHIFT_REGISTRY: ${{ secrets.OPENSHIFT_REGISTRY }}
+      OPENSHIFT_SERVER: ${{ secrets.OPENSHIFT_SERVER }}
+      OPENSHIFT_TOKEN: ${{ secrets.OPENSHIFT_TOKEN }}
+      OC_USERNAME_SA: ${{ secrets.OC_USERNAME_SA }}
+      NODEJS20_BASE_TAG: ${{ secrets.NODEJS20_BASE_TAG }}
+      NGINX_BASE_TAG: ${{ secrets.NGINX_BASE_TAG }}
+    steps:
+      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - name: Authenticate OpenShift
+        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+
+      - name: Docker login to OpenShift registry
+        run: echo "${{ env.OPENSHIFT_TOKEN }}" | docker login ${{ env.OPENSHIFT_REGISTRY }} -u unused --password-stdin
+
+      - name: Define images to scan
+        id: define
+        run: |
+          IMAGES=(
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/pims-app:prod"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/pims-api:prod"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/pims-proxy:prod"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/pims-scheduler:prod"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/dotnet-aspnet:8.0"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/dotnet-sdk:8.0"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/nodejs-20-ubi9:${NODEJS20_BASE_TAG}"
+            "${OPENSHIFT_REGISTRY}/${OPENSHIFT_NAMESPACE}/nginx-base:${NGINX_BASE_TAG}"
+          )
+          printf "%s\n" "${IMAGES[@]}" > images.txt
+
+      - name: Pull images
+        run: |
+          while read IMG; do
+            echo "Pulling $IMG";
+            docker pull "$IMG";
+          done < images.txt
+
+      - name: Scan all images with Trivy
+        run: |
+          SCAN_FAILED=0
+          while read IMG; do
+            echo "Scanning $IMG"
+            FILENAME="$(echo $IMG | tr '/' '_' | tr ':' '_')"
+            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --exit-code 1 --scanners vuln,secret,misconfig --format table --severity CRITICAL,HIGH "$IMG" | tee "${FILENAME}.txt" || SCAN_FAILED=1
+            docker run --rm -v /var/run/docker.sock:/var/run/docker.sock -v "$PWD:/workspace" aquasec/trivy@sha256:b7dc41ff0c3224dea024ee21bb9f6920a8af2fb343bba7139140d8fd0df1bac3 image --scanners vuln,secret,misconfig --format sarif --severity CRITICAL,HIGH "$IMG" -o "/workspace/${FILENAME}.sarif"
+          done < images.txt
+          if [ $SCAN_FAILED -eq 1 ]; then
+            echo "One or more scans found CRITICAL/HIGH vulnerabilities"
+            exit 1
+          fi
+
+      - name: Upload SARIF files to Security tab
+        if: always()
+        run: |
+          for sarif in *.sarif; do
+            category="monthly-$(echo $sarif | sed 's/_prod_predeploy_scan.sarif//' | sed 's/\.sarif//')"
+            # Upload each SARIF individually using codeql-action
+          done
+
+      - name: Upload scan reports
+        if: always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: monthly-image-scan-reports
+          path: "*.txt"
+          retention-days: 90
+
+      - name: Upload SARIF files
+        if: always()
+        uses: actions/upload-artifact@b4b15b8c7c6ac21ea08fcf65892d2ee8f75cf882 # v4.4.3
+        with:
+          name: monthly-image-scan-sarif-reports
+          path: "*.sarif"
+          retention-days: 90
+
+  scan-end-notification:
+    name: Monthly Scan End Notification to Teams Channel
+    runs-on: ubuntu-22.04
+    needs: scan-deployed-and-bases
+    if: always()
+    steps:
+      - name: check workflow status
+        uses: martialonline/workflow-status@326830cacf79872efe767e15031f58d1ea0508c4 # v4.2
+        id: check
+      - name: End notification to Teams Channel
+        uses: dragos-cojocari/ms-teams-notification@bdee8c5584729d6a2dcaad8fc21ecfd40d1418ab # v1.0.2
+        with:
+          github-token: ${{ github.token }}
+          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
+          notification-summary: Monthly Container Image Security Scan COMPLETED with status ${{ steps.check.outputs.status }}. Review scan reports in GitHub Actions artifacts.
+          notification-color: 17a2b8
+          timezone: America/Los_Angeles

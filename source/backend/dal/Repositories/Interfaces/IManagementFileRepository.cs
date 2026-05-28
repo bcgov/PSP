@@ -20,7 +20,7 @@ namespace Pims.Dal.Repositories
 
         long GetRowVersion(long id);
 
-        Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter);
+        Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter, long? contractorPersonId = null);
 
         List<PimsManagementFileContact> GetContacts(long managementFileId);
 

@@ -11,7 +11,7 @@ import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import { ParcelDataset } from '@/features/properties/parcelList/models';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import { PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import {
   boundaryFromFileProperty,
   exists,
@@ -27,7 +27,7 @@ export interface IUpdatePropertiesProps {
   pimsFileProperties?: ApiGen_Concepts_FileProperty[] | null;
   parcelDataset?: ParcelDataset | null;
   featureCollection?: Feature<Geometry, GeoJsonProperties>[] | null;
-  pimsFeatures?: Feature<Geometry, PIMS_Property_Location_View>[] | null;
+  pimsFeatures?: Feature<Geometry, PIMS_Property_View>[] | null;
 
   geometry?: Geometry | null;
   icon: ZoomIconType;

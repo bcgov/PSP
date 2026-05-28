@@ -19,6 +19,8 @@ export interface ApiGen_Concepts_ManagementActivityInvoice extends ApiGen_Base_B
   totalAmount: number | null;
   isPstRequired: boolean | null;
   isDisabled: boolean | null;
+  isPaymentApproved: boolean;
+  isPaymentForwarded: boolean;
   managementActivityId: number;
   managementActivity: ApiGen_Concepts_ManagementActivity | null;
 }

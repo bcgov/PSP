@@ -5,6 +5,8 @@
 import { UtcIsoDate } from '@/models/api/UtcIsoDateTime';
 
 import { ApiGen_Base_BaseAudit } from './ApiGen_Base_BaseAudit';
+import { ApiGen_Concepts_Organization } from './ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from './ApiGen_Concepts_Person';
 import { ApiGen_Concepts_PropertyManagementPurpose } from './ApiGen_Concepts_PropertyManagementPurpose';
 
 // LINK: @backend/apimodels/Models/Concepts/Property/PropertyManagementModel.cs
@@ -18,4 +20,10 @@ export interface ApiGen_Concepts_PropertyManagement extends ApiGen_Base_BaseAudi
   leaseExpiryDate: UtcIsoDate | null;
   hasActiveLease: boolean | null;
   activeLeaseHasExpiryDate: boolean | null;
+  responsiblePayerPersonId: number | null;
+  responsiblePayerPerson: ApiGen_Concepts_Person | null;
+  responsiblePayerOrganizationId: number | null;
+  responsiblePayerOrganization: ApiGen_Concepts_Organization | null;
+  responsiblePayerPrimaryContactId: number | null;
+  responsiblePayerPrimaryContact: ApiGen_Concepts_Person | null;
 }

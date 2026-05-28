@@ -60,12 +60,12 @@ namespace Pims.Api.Areas.Property.Controllers
         [ProducesResponseType(typeof(IEnumerable<PropertyTenureCleanupModel>), 200)]
         [SwaggerOperation(Tags = new[] { "property" })]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult GetHistoricalNumbersForPropertyId(long propertyId)
+        public IActionResult GetTenureCleanupsForPropertyId(long propertyId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
                 nameof(PropertyTenureCleanupController),
-                nameof(GetHistoricalNumbersForPropertyId),
+                nameof(GetTenureCleanupsForPropertyId),
                 User.GetUsername(),
                 DateTime.Now
             );

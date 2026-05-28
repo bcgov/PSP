@@ -23,6 +23,13 @@ const mockProps: IProjectContainerViewProps = {
   displayRequiredFieldsError: false,
 };
 
+// Mock ConfirmNavigation to avoid Prompt issues in jsdom
+vi.mock('@/components/common/ConfirmNavigation', () => {
+  return {
+    default: () => null,
+  };
+});
+
 vi.mock('react-visibility-sensor', () => {
   return {
     default: vi.fn().mockImplementation(({ children }) => {

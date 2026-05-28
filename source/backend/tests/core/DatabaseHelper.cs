@@ -147,6 +147,7 @@ namespace Pims.Core.Test
             context.AddRange(organizationTypes);
             context.AddRange(organizationIdentifierTypes);
             context.AddRange(EntityHelper.CreateDefaultRoles());
+            context.AddRange(EntityHelper.CreateDefaultPimsLeasePayRvblTypes());
             context.AddRange(EntityHelper.CreateDefaultPropertyTypes());
             context.AddRange(EntityHelper.CreateDefaultPropertyTenureTypes());
             context.AddRange(EntityHelper.CreateDefaultPropertyStatusTypes());
@@ -155,10 +156,13 @@ namespace Pims.Core.Test
             context.AddRange(EntityHelper.CreateDefaultContactMethodTypes());
             context.AddRange(EntityHelper.CreateDefaultAcquisitionFileStatusTypes());
             context.AddRange(EntityHelper.CreateDefaultAcquisitionTypes());
-            context.AddRange(EntityHelper.CreateDefaultProvinces(countries.First()));
+            context.AddRange(EntityHelper.CreateDefaultSurplusDeclarationTypes());
+            context.AddRange(EntityHelper.CreateDefaultProvinces());
             context.AddRange(EntityHelper.CreateDefaultDistricts(regions.First()));
             context.AddRange(EntityHelper.CreateDefaultOrganizations(organizationTypes.First(), organizationIdentifierTypes.First()));
+
             context.SaveChanges();
+
             return context;
         }
 

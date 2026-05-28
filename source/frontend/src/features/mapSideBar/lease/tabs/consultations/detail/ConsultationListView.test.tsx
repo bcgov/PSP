@@ -1,6 +1,4 @@
-import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
-import { forwardRef } from 'react';
 
 import { mockLookups } from '@/mocks/lookups.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -10,8 +8,6 @@ import { vi } from 'vitest';
 import ConsultationListView, { IConsultationListViewProps } from './ConsultationListView';
 import { getMockApiConsultation } from '@/mocks/consultations.mock';
 import Claims from '@/constants/claims';
-import { user } from '@/constants/toasts';
-import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 import { ApiGen_CodeTypes_ConsultationOutcomeTypes } from '@/models/api/generated/ApiGen_CodeTypes_ConsultationOutcomeTypes';

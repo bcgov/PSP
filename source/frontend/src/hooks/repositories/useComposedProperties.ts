@@ -182,8 +182,11 @@ export const useComposedProperties = ({
     ? getPropertyWrapper?.response?.planNumber?.toString()
     : planNumber?.toString();
 
-  const getPimsProperty = getPropertyWrapper.execute;
-  const getParcelMapParcel = findParcelByWrapper.execute;
+  const getPimsProperty = useMemo(() => getPropertyWrapper.execute, [getPropertyWrapper.execute]);
+  const getParcelMapParcel = useMemo(
+    () => findParcelByWrapper.execute,
+    [findParcelByWrapper.execute],
+  );
   const parcelResponse = findParcelByWrapper.response as
     | FeatureCollection<Geometry, PMBC_FullyAttributed_Feature_Properties>
     | undefined;
@@ -213,10 +216,8 @@ export const useComposedProperties = ({
   }, [id, pid, getPimsProperty, pin, getParcelMapParcel]);
 
   useEffect(() => {
-    if (!retrievedBoundary) {
-      getBoundaries();
-    }
-  }, [retrievedBoundary, getBoundaries]);
+    getBoundaries();
+  }, [getBoundaries]);
 
   const [composedProperty, setComposedProperty] = useState<ComposedProperty>({
     pid: undefined,

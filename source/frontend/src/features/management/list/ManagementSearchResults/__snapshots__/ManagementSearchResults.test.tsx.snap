@@ -50,18 +50,18 @@ exports[`Management search results table > matches snapshot 1`] = `
       <div
         class="tr"
         role="row"
-        style="display: flex; flex: 1 0 auto; min-width: 240px;"
+        style="display: flex; flex: 1 0 auto; min-width: 270px;"
       >
         <div
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
           >
-            Management file #
+            Mgmt. file #
             <div
               class="c0"
               data-testid="sort-column-managementFileId"
@@ -153,7 +153,19 @@ exports[`Management search results table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Historical File #
+            MOTT region
+          </div>
+        </div>
+        <div
+          class="th"
+          colspan="1"
+          role="columnheader"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+        >
+          <div
+            class="sortable-column"
+          >
+            Historical file #
             <div
               class="c0"
               data-testid="sort-column-legacyFileNum"
@@ -257,7 +269,7 @@ exports[`Management search results table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Team member
+            Team members
           </div>
         </div>
         <div
@@ -269,7 +281,7 @@ exports[`Management search results table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Civic Address / PID / PIN
+            Civic address / PID / PIN
           </div>
         </div>
         <div
@@ -330,15 +342,15 @@ exports[`Management search results table > matches snapshot 1`] = `
         <div
           class="tr"
           role="row"
-          style="display: flex; flex: 1 0 auto; min-width: 240px;"
+          style="display: flex; flex: 1 0 auto; min-width: 270px;"
         >
           <div
             class="td clickable"
             role="cell"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: center; text-align: center; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
-            M-1
+            FILE_NUMBER 3A8F46B
           </div>
           <div
             class="td clickable"
@@ -349,9 +361,15 @@ exports[`Management search results table > matches snapshot 1`] = `
             test management
           </div>
           <div
-            class="td clickable"
+            class="td"
             role="cell"
             style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            title=""
+          />
+          <div
+            class="td clickable"
+            role="cell"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             legacyfile321

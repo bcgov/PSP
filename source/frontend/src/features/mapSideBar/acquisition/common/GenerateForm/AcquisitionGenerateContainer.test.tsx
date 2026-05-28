@@ -49,7 +49,7 @@ const GenerateFormViewStub = (props: IGenerateFormViewProps) => {
   );
 };
 const DEFAULT_PROPS: IGenerateFormContainerProps = {
-  acquisitionFileId: 1,
+  acquisitionFile: mockAcquisitionFileResponse(),
   View: GenerateFormViewStub,
 };
 
@@ -62,7 +62,7 @@ describe('GenerateFormContainer component', () => {
     const utils = render(
       <SideBarContextProvider
         file={{
-          ...mockAcquisitionFileResponse(),
+          ...props.acquisitionFile,
           fileType: ApiGen_CodeTypes_FileTypes.Acquisition,
         }}
       >

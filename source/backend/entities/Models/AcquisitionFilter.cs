@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Pims.Dal.Entities.Models
 {
     public class AcquisitionFilter : PageFilter
@@ -48,6 +50,16 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The MOTI Organization id to search by for acquisition team members.
         /// </summary>
         public string AcquisitionTeamMemberOrganizationId { get; set; }
+
+        /// <summary>
+        /// get/set - Get the Acquisition files that have NOC.
+        /// </summary>
+        public bool HasNoticeOfClaim { get; set; }
+
+        /// <summary>
+        /// get/set - The region types.
+        /// </summary>
+        public IList<int> Regions { get; set; } = new List<int>();
 
         #endregion
 

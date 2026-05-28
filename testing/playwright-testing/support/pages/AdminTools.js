@@ -17,8 +17,14 @@ class AdminTools {
   async navigateAdminUserRequests() {
     clickAndWaitFor(
       this.page,
-      "div[data-testid='nav-tooltip-admintools'] a",
+      "div[data-testid='nav-tooltip-contacts'] a",
       "div[data-testid='side-tray']"
+    );
+
+    clickAndWaitFor(
+      this.page,
+      "div[data-testid='nav-tooltip-admintools'] a",
+      "//a[text()='Manage Access Requests']"
     );
     await this.page.locator("//a[text()='Manage Access Requests']").click();
   }
@@ -57,7 +63,11 @@ class AdminTools {
   }
 
   async navigateHome() {
-    await this.page.getByTestId("nav-tooltip-mapview").click();
+    await this.page
+      .locator(
+        "//div[@data-testid='nav-tooltip-pimspropertylistview']/preceding-sibling::div[@data-testid='nav-tooltip-mapview']/a"
+      )
+      .click();
   }
 
   async verifyManageUsersListView() {
@@ -189,7 +199,7 @@ class AdminTools {
     expect(cdogsTemplateSelect).toBeVisible();
 
     const optionsLocator = cdogsTemplateSelect.locator("option");
-    await expect(optionsLocator).toHaveCount(19);
+    await expect(optionsLocator).toHaveCount(26);
 
     await cdogsTemplateSelect.selectOption({
       label: "Notice of Expropriation (Form 1)",

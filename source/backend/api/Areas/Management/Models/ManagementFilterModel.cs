@@ -25,6 +25,11 @@ namespace Pims.Api.Areas.Management.Models.Search
         public string Address { get; set; }
 
         /// <summary>
+        /// get/set - The region to search by.
+        /// </summary>
+        public string RegionCode { get; set; }
+
+        /// <summary>
         /// get/set - The management file name or the file number or the legacy reference number, search for all simultaneously.
         /// </summary>
         public string FileNameOrNumberOrReference { get; set; }
@@ -53,6 +58,22 @@ namespace Pims.Api.Areas.Management.Models.Search
         /// get/set - The MOTI Organization id to search by for management team members.
         /// </summary>
         public long? TeamMemberOrganizationId { get; set; }
+
+        /// <summary>
+        /// get/set - The ministry region of the file.
+        /// </summary>
+        public long? ManagementRegionCd { get; set; }
+
+        /// <summary>
+        /// get/set - Get the Management File that has NOC.
+        /// </summary>
+        public bool HasNoticeOfClaim { get; set; }
+
+        /// <summary>
+        /// get/set - The region types.
+        /// </summary>
+        public IList<short> Regions { get; set; } = new List<short>();
+
         #endregion
 
         #region Constructors
@@ -74,17 +95,20 @@ namespace Pims.Api.Areas.Management.Models.Search
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
-            this.Pid = filter.GetStringValue(nameof(this.Pid));
-            this.Pin = filter.GetStringValue(nameof(this.Pin));
-            this.Address = filter.GetStringValue(nameof(this.Address));
-            this.FileNameOrNumberOrReference = filter.GetStringValue(nameof(this.FileNameOrNumberOrReference));
-            this.ManagementFileStatusCode = filter.GetStringValue(nameof(this.ManagementFileStatusCode));
-            this.ProjectNameOrNumber = filter.GetStringValue(nameof(this.ProjectNameOrNumber));
-            this.ManagementFilePurposeCode = filter.GetStringValue(nameof(this.ManagementFilePurposeCode));
-            this.TeamMemberPersonId = filter.GetLongNullValue(nameof(this.TeamMemberPersonId));
-            this.TeamMemberOrganizationId = filter.GetLongNullValue(nameof(this.TeamMemberOrganizationId));
+            Pid = filter.GetStringValue(nameof(Pid));
+            Pin = filter.GetStringValue(nameof(Pin));
+            RegionCode = filter.GetStringValue(nameof(RegionCode));
+            Address = filter.GetStringValue(nameof(Address));
+            FileNameOrNumberOrReference = filter.GetStringValue(nameof(FileNameOrNumberOrReference));
+            ManagementFileStatusCode = filter.GetStringValue(nameof(ManagementFileStatusCode));
+            ProjectNameOrNumber = filter.GetStringValue(nameof(ProjectNameOrNumber));
+            ManagementFilePurposeCode = filter.GetStringValue(nameof(ManagementFilePurposeCode));
+            TeamMemberPersonId = filter.GetLongNullValue(nameof(TeamMemberPersonId));
+            TeamMemberOrganizationId = filter.GetLongNullValue(nameof(TeamMemberOrganizationId));
+            HasNoticeOfClaim = filter.GetBoolValue(nameof(HasNoticeOfClaim));
+            Regions = filter.GetShortArrayValue(nameof(Regions));
 
-            this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
+            Sort = filter.GetStringArrayValue(nameof(Sort));
         }
         #endregion
 
@@ -101,15 +125,18 @@ namespace Pims.Api.Areas.Management.Models.Search
                 Page = model.Page,
                 Quantity = model.Quantity,
 
-                Pid = model.Pid,
-                Pin = model.Pin,
-                Address = model.Address,
-                FileNameOrNumberOrReference = model.FileNameOrNumberOrReference,
+                Pid = model.Pid?.Trim(),
+                Pin = model.Pin?.Trim(),
+                RegionCode = model.RegionCode,
+                Address = model.Address?.Trim(),
+                FileNameOrNumberOrReference = model.FileNameOrNumberOrReference?.Trim(),
                 ManagementFileStatusCode = model.ManagementFileStatusCode,
-                ProjectNameOrNumber = model.ProjectNameOrNumber,
+                ProjectNameOrNumber = model.ProjectNameOrNumber?.Trim(),
                 ManagementFilePurposeCode = model.ManagementFilePurposeCode,
                 TeamMemberPersonId = model.TeamMemberPersonId,
                 TeamMemberOrganizationId = model.TeamMemberOrganizationId,
+                HasNoticeOfClaim = model.HasNoticeOfClaim,
+                Regions = model.Regions,
 
                 Sort = model.Sort,
             };

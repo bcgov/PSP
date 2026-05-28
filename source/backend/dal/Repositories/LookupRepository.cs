@@ -194,6 +194,11 @@ namespace Pims.Dal.Repositories
             return this.Context.PimsPropertyImprovementTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
         }
 
+        public IEnumerable<PimsPropImprvmntStatusType> GetAllPropertyImprovementStatusTypes()
+        {
+            return Context.PimsPropImprvmntStatusTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToArray();
+        }
+
         public IEnumerable<PimsSecurityDepositType> GetAllSecurityDepositTypes()
         {
             return this.Context.PimsSecurityDepositTypes.AsNoTracking().OrderBy(d => d.DisplayOrder).ToArray();
@@ -488,6 +493,16 @@ namespace Pims.Dal.Repositories
         public IEnumerable<PimsManagementFilePurposeType> GetAllManagementFilePurposeTypes()
         {
             return Context.PimsManagementFilePurposeTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
+
+        public IEnumerable<PimsTenureCleanupType> GetAllTenureCleanupTypes()
+        {
+            return Context.PimsTenureCleanupTypes.AsNoTracking().OrderBy(a => a.DisplayOrder).ToList();
+        }
+        
+        public IEnumerable<PimsSurplusDeclarationType> GetAllSurplusDeclarationTypes()
+        {
+            return Context.PimsSurplusDeclarationTypes.AsNoTracking().OrderBy(a => a.SurplusDeclarationTypeCode).ToList();
         }
         #endregion
     }

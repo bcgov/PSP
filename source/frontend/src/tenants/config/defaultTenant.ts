@@ -17,8 +17,6 @@ const ALR_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_POLYS/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_LEGAL_ADMIN_BOUNDARIES.OATS_ALR_POLYS';
 const INDIAN_RESERVES_LAYER_URL =
   'https://openmaps.gov.bc.ca/geo/pub/WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP/wfs?SERVICE=WFS&REQUEST=GetFeature&VERSION=1.3.0&outputFormat=application/json&typeNames=pub:WHSE_ADMIN_BOUNDARIES.ADM_INDIAN_RESERVES_BANDS_SP';
-const PIMS_BOUNDARY_LAYER_URL =
-  '/ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_BOUNDARY_VW&outputformat=json&version=2.0.0';
 const PIMS_HIGHWAY_LAYER_URL =
   '/ogs-internal/ows?service=wfs&request=GetFeature&typeName=ISS_PROVINCIAL_PUBLIC_HIGHWAY&outputformat=json&version=2.0.0';
 
@@ -59,11 +57,9 @@ export const defaultTenant: ITenantConfig2 = {
   },
   layers: {},
   propertiesUrl:
-    'ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LOCATION_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&',
-  propertiesBoundaryUrl:
-    'ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_BOUNDARY_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&',
+    '/ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0&',
   minimalPropertiesUrl:
-    'ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LITE_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0',
+    '/ogs-internal/ows?service=wfs&request=GetFeature&typeName=PIMS_PROPERTY_LITE_VW&outputformat=json&srsName=EPSG:4326&version=2.0.0',
   //NOTE: The fully attributed parcel layer does not work locally unless the SITEMINDER cookie SameSite=None; is set manually in the browser.
   fullyAttributedParcelsLayerUrl: FULLY_ATTRIBUTED_PARCELS_LAYER_URL,
   parcelMapFullyAttributed: {
@@ -78,7 +74,6 @@ export const defaultTenant: ITenantConfig2 = {
   hwyDistrictLayerUrl: HWY_DISTRICT_LAYER_URL,
   alrLayerUrl: ALR_LAYER_URL,
   reservesLayerUrl: INDIAN_RESERVES_LAYER_URL,
-  boundaryLayerUrl: PIMS_BOUNDARY_LAYER_URL,
   highwayLayerUrl: PIMS_HIGHWAY_LAYER_URL,
   crownLandLicensesUrl: CROWN_LAND_LICENSES_LAYER_URL,
   crownLandTenuresUrl: CROWN_LAND_TENURES_LAYER_URL,
@@ -104,6 +99,7 @@ export const defaultTenant: ITenantConfig2 = {
     'https://sp.th.gov.bc.ca/sites/PropertiesServices/Project%20Management/03.%20Execution%20and%20Control/PIMS%20Training',
   geographicNamesUrl: 'https://apps.gov.bc.ca/pub/bcgnws',
   geographicNamesResultLimit: 20,
+  apiDbVersionCompatibility: { '115': [117] },
   pimsHealthcheckMessages: {
     PIMS_API:
       'The PIMS server is currently unavailable, PIMS will not be useable until this is resolved.',

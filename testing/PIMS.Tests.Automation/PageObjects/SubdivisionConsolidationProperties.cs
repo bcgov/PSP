@@ -117,7 +117,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToCreateNewSubdivision()
         {
-            Wait();
+            WaitUntilClickable(menuSubdivisionConsolidationButton);
             FocusAndClick(menuSubdivisionConsolidationButton);
 
             WaitUntilVisible(createSubdivisionFileButton);
@@ -126,7 +126,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToCreateNewConsolidation()
         {
-            Wait();
+            WaitUntilClickable(menuSubdivisionConsolidationButton);
             FocusAndClick(menuSubdivisionConsolidationButton);
 
             WaitUntilVisible(createConsolidationFileButton);
@@ -135,10 +135,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveSubdivision()
         {
-            Wait();
+            WaitUntilClickable(subdivisionPropertiesCreateButton);
             webDriver.FindElement(subdivisionPropertiesCreateButton).Click();
 
-            Wait();
+            WaitUntilVisible(subconModalWindow);
             if (webDriver.FindElements(subconModalWindow).Count > 0)
             {
                 WaitUntilVisible(subconWarningHeader);
@@ -151,10 +151,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void SaveConsolidation()
         {
-            Wait();
+            WaitUntilClickable(consolidationPropertiesCreateButton);
             webDriver.FindElement(consolidationPropertiesCreateButton).Click();
 
-            Wait();
+            WaitUntilVisible(subconModalWindow);
             if (webDriver.FindElements(subconModalWindow).Count > 0)
             {
                 WaitUntilVisible(subconWarningHeader);
@@ -167,7 +167,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelSubdivisionConsolidation()
         {
-            Wait(4000);
+            WaitUntilClickable(subconPropertiesCancelButton);
             webDriver.FindElement(subconPropertiesCancelButton).Click();
 
             sharedModals.CancelActionModal();
@@ -175,7 +175,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateSubdivision(PropertySubdivision subdivision)
         {
-            Wait();
+            WaitUntilClickable(subdconSearchParentByPIDInput);
 
             webDriver.FindElement(subdconSearchParentByPIDInput).SendKeys(subdivision.SubdivisionSource.PropertyHistoryIdentifier);
             webDriver.FindElement(subconSearchParentBttn).Click();
@@ -183,12 +183,12 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(subconChildrenSearchTab).Click();
             foreach (PropertyHistory child in subdivision.SubdivisionDestination)
             {
-                Wait();
+                WaitUntilClickable(subconChildrenResetButton);
                 webDriver.FindElement(subconChildrenResetButton).Click();
                 webDriver.FindElement(subconChildrenSearchByPIDInput).SendKeys(child.PropertyHistoryIdentifier);
                 webDriver.FindElement(subconChildrenSearchButton).Click();
 
-                WaitUntilTableSpinnerDisappear();
+                WaitForTableToLoad();
                 webDriver.FindElement(subconChildren1stResultCheckbox).Click();
                 webDriver.FindElement(subconChildernAddToSelectionBttn).Click();
             }
@@ -203,14 +203,14 @@ namespace PIMS.Tests.Automation.PageObjects
             webDriver.FindElement(subconChildrenSearchByPIDInput).SendKeys(consolidation.ConsolidationDestination.PropertyHistoryIdentifier);
             webDriver.FindElement(subconChildrenSearchButton).Click();
 
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             webDriver.FindElement(subconChildren1stResultCheckbox).Click();
             webDriver.FindElement(subconChildernAddToSelectionBttn).Click();
         }
 
         public void InsertParentConsolidation(string propertyID)
         {
-                Wait();
+                WaitUntilClickable(subconSearchParentResetBttn);
                 webDriver.FindElement(subconSearchParentResetBttn).Click();
                 webDriver.FindElement(subdconSearchParentByPIDInput).SendKeys(propertyID);
                 webDriver.FindElement(subconSearchParentBttn).Click();
@@ -303,7 +303,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInvalidConsolidationChildMessage()
         {
-            Wait();
             WaitUntilVisible(subconErrorHeader);
             Assert.Equal("Consolidated child property may not be in the PIMS inventory unless also in the parent property list.", sharedModals.ModalContent());
             sharedModals.ModalClickOKBttn();
@@ -311,8 +310,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInvalidConsolidationRepeatedParentMessage()
         {
-            Wait();
-
             WaitUntilVisible(subconErrorHeader);
             Assert.Equal("Consolidations must contain at least two different parent properties.", sharedModals.ModalContent());
             sharedModals.ModalClickOKBttn();
@@ -320,8 +317,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyInvalidSubdivisionChildMessage()
         {
-            Wait();
-            Assert.Equal("A property that the user is trying to select has already been added to the selected properties list", sharedModals.ToastifyText());
+            Assert.Equal("A property that the user is trying to select has already been added to the selected properties list", sharedModals.ToastifyMainText());
         }
 
         public void VerifyMissingParentMessageModal()
@@ -345,7 +341,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifySubdivisionHistory(PropertySubdivision subdivision)
         {
-            Wait();
+            WaitUntilVisible(subdivisionHistorySubtitle);
            
             AssertTrueIsDisplayed(subdivisionHistorySubtitle);
 
@@ -384,7 +380,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(subconHistoryTableStatusColumn);
             AssertTrueIsDisplayed(subconHistoryTableAreaColumn);
 
-            Wait();
             for (int i = 0; i < consolidation.ConsolidationSource.Count; i++)
             {
                 var parentsElementNbr = i + 1;

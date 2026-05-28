@@ -11,6 +11,7 @@ import {
   electoralLayerConfig,
   firstNationsLayerConfig,
   getDynamicFeatureConfig,
+  highwayLayerConfig,
   municipalityLayerConfig,
   parcelLayerConfig,
   pimsLayerConfig,
@@ -83,8 +84,7 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
   const [activeGroupedPages, setActiveGroupedPages] = useState<Record<string, number>>({});
 
   useEffect(() => {
-    setActivePage(0); // reset the page whenever the tab changes.
-    setActiveGroupedPages({}); // reset grouped pages as well
+    setActivePage(0); // reset the page whenever the tab changes
   }, [activeTab]);
 
   const layersData = useMemo(() => {
@@ -182,8 +182,8 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
         features: composedProperty.highwayFeatures,
         titlePrefix: 'Highway Research',
         tab: InventoryTabNames.highway,
-        config: {},
-        dynamicConfig: true,
+        config: highwayLayerConfig,
+        dynamicConfig: false,
       }),
     ];
   }, [composedProperty]);
@@ -194,8 +194,10 @@ export const LayerTabContainer: React.FC<React.PropsWithChildren<ILayerTabContai
   );
 
   // Always pass all props, both views will ignore unused ones
+  // Use composedProperty.id as key to force remount when property changes
   return (
     <View
+      key={composedProperty?.id ?? 'no-property'}
       layersData={activeLayersData}
       activePage={activePage}
       setActivePage={setActivePage}

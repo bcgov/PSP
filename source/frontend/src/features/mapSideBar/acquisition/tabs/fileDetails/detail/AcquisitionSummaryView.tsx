@@ -1,3 +1,4 @@
+import { first } from 'lodash';
 import Multiselect from 'multiselect-react-dropdown';
 import React from 'react';
 import { FaExternalLinkAlt } from 'react-icons/fa';
@@ -55,6 +56,10 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
   const ownerSolicitors = acquisitionFile?.acquisitionFileInterestHolders?.filter(
     x => x.interestHolderType?.id === InterestHolderType.OWNER_SOLICITOR,
   );
+
+  const noticeOfClaim = exists(acquisitionFile?.noticeOfClaim)
+    ? first(acquisitionFile.noticeOfClaim)
+    : null;
 
   useDeepCompareEffect(() => {
     const getSolicitorPrimaryContacts = async () => {
@@ -314,6 +319,12 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
               <SectionField label="Comment">{ownerRepresentative?.comment}</SectionField>
             </React.Fragment>
           ))}
+      </Section>
+      <Section header="Notice of Claim">
+        <SectionField label="Received date">
+          {prettyFormatDate(noticeOfClaim?.receivedDate)}
+        </SectionField>
+        <SectionField label="Comment">{noticeOfClaim?.comment}</SectionField>
       </Section>
     </StyledSummarySection>
   );

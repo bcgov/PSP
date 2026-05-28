@@ -80,8 +80,17 @@ describe('Add Disposition Container View', () => {
     vi.clearAllMocks();
   });
 
-  it('matches snapshot', async () => {
-    const { asFragment } = await setup();
-    expect(asFragment()).toMatchSnapshot();
+  it('renders create disposition sidebar with cancel button', async () => {
+    const { getByText, queryByTestId } = await setup();
+
+    expect(getByText(/Create Disposition File/i)).toBeVisible();
+    expect(getByText(/Cancel/i)).toBeVisible();
+    expect(queryByTestId('filter-backdrop-loading')).toBeNull();
+  });
+
+  it('shows loading backdrop when loading is true', async () => {
+    const { getByTestId } = await setup({ props: { loading: true } });
+
+    expect(getByTestId('filter-backdrop-loading')).toBeVisible();
   });
 });

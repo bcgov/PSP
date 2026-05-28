@@ -1,3 +1,6 @@
+using System;
+using System.Collections.Generic;
+
 namespace Pims.Dal.Entities.Models
 {
     public class ManagementFilter : PageFilter
@@ -13,6 +16,11 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The pin identifier to search by.
         /// </summary>
         public string Pin { get; set; }
+
+        /// <summary>
+        /// get/set - The region to search by.
+        /// </summary>
+        public string RegionCode { get; set; }
 
         /// <summary>
         /// get/set - The address to search by.
@@ -48,6 +56,16 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The MOTI Organization id to search by for management team members.
         /// </summary>
         public long? TeamMemberOrganizationId { get; set; }
+
+        /// <summary>
+        /// get/set - Get the Management File that has NOC.
+        /// </summary>
+        public bool HasNoticeOfClaim { get; set; }
+
+        /// <summary>
+        /// get/set - The region types.
+        /// </summary>
+        public IList<short> Regions { get; set; } = new List<short>();
 
         #endregion
 

@@ -12,6 +12,8 @@ import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Conc
 
 import { SideBarContext } from '../../context/sidebarContext';
 import { FileTabs, FileTabType, TabFileView } from '../../shared/detail/FileTabs';
+import FilePropertiesImprovementsContainer from '../../shared/improvements/FilePropertiesImprovements/FilePropertiesImprovementsContainer';
+import { FilePropertiesImprovementsView } from '../../shared/improvements/FilePropertiesImprovements/FilePropertiesImprovementsView';
 import DocumentsTab from '../../shared/tabs/DocumentsTab';
 import ResearchSummaryView from './fileDetails/details/ResearchSummaryView';
 import ResearchStatusUpdateSolver from './fileDetails/ResearchStatusUpdateSolver';
@@ -31,7 +33,7 @@ export const ResearchTabsContainer: React.FunctionComponent<
   const { hasClaim } = useKeycloakWrapper();
   const { setFullWidthSideBar } = useMapStateMachine();
 
-  const { setStaleLastUpdatedBy } = React.useContext(SideBarContext);
+  const { setStaleLastUpdatedBy, file } = React.useContext(SideBarContext);
 
   const history = useHistory();
   const defaultTab = FileTabType.FILE_DETAILS;
@@ -59,6 +61,17 @@ export const ResearchTabsContainer: React.FunctionComponent<
     ),
     key: FileTabType.FILE_DETAILS,
     name: 'File Details',
+  });
+
+  tabViews.push({
+    content: (
+      <FilePropertiesImprovementsContainer
+        fileProperties={file?.fileProperties?.map(x => x.property) ?? []}
+        View={FilePropertiesImprovementsView}
+      ></FilePropertiesImprovementsContainer>
+    ),
+    key: FileTabType.IMPROVEMENTS,
+    name: 'Improvements',
   });
 
   if (researchFile?.id && hasClaim(Claims.DOCUMENT_VIEW)) {

@@ -1,4 +1,4 @@
-import { Formik, FormikProps } from 'formik';
+import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 

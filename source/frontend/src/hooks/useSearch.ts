@@ -1,4 +1,4 @@
-import { AxiosResponse } from 'axios';
+import axios, { AxiosResponse } from 'axios';
 import { useCallback, useMemo, useReducer, useState } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
@@ -8,6 +8,7 @@ import { SortDirection, TableSort } from '@/components/Table/TableSort';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useIsMounted from '@/hooks/util/useIsMounted';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { exists } from '@/utils/utils';
 
 import { IPaginateRequest } from './pims-api/interfaces/IPaginateRequest';
 import { useFetcher } from './useFetcher';
@@ -76,6 +77,7 @@ export function useSearch<ISearchResult extends object, IFilter extends object>(
   // is this component/hook mounted?
   const isMounted = useIsMounted();
   const dispatch = useDispatch();
+  const inError = exists(state.error);
 
   const setSearchOutput = useCallback(
     (apiResponse?: ApiGen_Base_Page<ISearchResult>, pageSize = 10) => {
@@ -94,12 +96,12 @@ export function useSearch<ISearchResult extends object, IFilter extends object>(
           totalItems: 0,
           totalPages: 0,
         });
-        if (noResultsWarning) {
+        if (noResultsWarning && !inError) {
           toast.warn(noResultsWarning);
         }
       }
     },
-    [noResultsWarning],
+    [noResultsWarning, inError],
   );
 
   const pageSize = state.pageSize;
@@ -119,7 +121,17 @@ export function useSearch<ISearchResult extends object, IFilter extends object>(
       } catch (e) {
         if (isMounted()) {
           setSearchOutput(undefined, 0);
-          setState({ error: (e as Error) ?? new Error('Something went wrong. Please try again.') });
+          if (axios.isAxiosError(e)) {
+            if (exists(e.response.data?.details)) {
+              setState({ error: { message: e.response.data.details, name: '' } });
+            } else {
+              setState({ error: { message: e.message, name: '' } });
+            }
+          } else {
+            setState({
+              error: (e as Error) ?? new Error('Something went wrong. Please try again.'),
+            });
+          }
         }
       } finally {
         setState({ loading: false });

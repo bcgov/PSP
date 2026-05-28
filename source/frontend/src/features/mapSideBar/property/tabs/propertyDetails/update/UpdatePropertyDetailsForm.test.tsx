@@ -1,6 +1,6 @@
 import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
-import { Formik } from 'formik';
+import { Formik, FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 
 import { getEmptyAddress } from '@/mocks/address.mock';
@@ -16,6 +16,8 @@ import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { UpdatePropertyDetailsFormModel } from './models';
 import { UpdatePropertyDetailsForm } from './UpdatePropertyDetailsForm';
+import { ApiGen_CodeTypes_SurplusDeclarationTypes } from '@/models/api/generated/ApiGen_CodeTypes_SurplusDeclarationTypes';
+import { createRef } from 'react';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -130,6 +132,14 @@ const fakeProperty: ApiGen_Concepts_Property = {
     isDisabled: false,
     displayOrder: null,
   },
+  surplusDeclarationType: {
+    id: ApiGen_CodeTypes_SurplusDeclarationTypes.UNKNOWN,
+    description: 'Unknown',
+    isDisabled: false,
+    displayOrder: null,
+  },
+  surplusDeclarationDate: null,
+  surplusDeclarationComment: null,
   dataSourceEffectiveDateOnly: '2021-08-31T00:00:00',
   latitude: 925866.6022023489,
   longitude: 1406876.1727310908,
@@ -203,8 +213,9 @@ describe('UpdatePropertyDetailsForm component', () => {
   const setup = async (
     renderOptions: RenderOptions & { initialValues: UpdatePropertyDetailsFormModel },
   ) => {
+    const formikRef = createRef<FormikProps<UpdatePropertyDetailsFormModel>>();
     const utils = render(
-      <Formik onSubmit={onSubmit} initialValues={renderOptions.initialValues}>
+      <Formik onSubmit={onSubmit} initialValues={renderOptions.initialValues} innerRef={formikRef}>
         {formikProps => <UpdatePropertyDetailsForm formikProps={formikProps} />}
       </Formik>,
       {
@@ -218,6 +229,15 @@ describe('UpdatePropertyDetailsForm component', () => {
 
     return {
       ...utils,
+      formikRef,
+      getSurplusDeclarationTypeDropDown: () =>
+        utils.container.querySelector(`select[name="surplusDeclarationType"]`) as HTMLInputElement,
+      getSurplusDeclarationDate: () =>
+        utils.container.querySelector(`input[name="surplusDeclarationDate"]`) as HTMLInputElement,
+      getSurplusDeclarationComment: () =>
+        utils.container.querySelector(
+          `textarea[name="suplusDelarationComment"]`,
+        ) as HTMLTextAreaElement,
     };
   };
 

@@ -30,7 +30,7 @@ exports[`ShapeUploadResultView > matches snapshot for failure 1`] = `
       <label
         class="c1"
       >
-        Shapefile upload failed:
+        Boundary file upload failed:
       </label>
     </div>
     <div
@@ -94,7 +94,7 @@ exports[`ShapeUploadResultView > matches snapshot for success 1`] = `
       <label
         class="c1"
       >
-        Shapefile uploaded successfully:
+        Boundary file uploaded successfully:
       </label>
     </div>
     <div

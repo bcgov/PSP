@@ -51,6 +51,8 @@ export const useApiDispositionFile = () => {
         ),
       getDispositionFile: (dispositionFileId: number) =>
         api.get<ApiGen_Concepts_DispositionFile>(`/dispositionfiles/${dispositionFileId}`),
+      getDispositionFileDeep: (dispositionFileId: number) =>
+        api.get<ApiGen_Concepts_DispositionFile>(`/dispositionfiles/${dispositionFileId}/deep`),
       putDispositionFileApi: (
         dispositionFileId: number,
         dispositionFile: ApiGen_Concepts_DispositionFile,

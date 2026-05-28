@@ -2,7 +2,7 @@ import { Feature, Geometry } from 'geojson';
 import { useCallback, useState } from 'react';
 
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
-import { PIMS_Property_Boundary_View } from '@/models/layers/pimsPropertyLocationView';
+import { PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import { exists, isValidString, pidFromFeatureSet, pinFromFeatureSet } from '@/utils';
 
 import { usePimsPropertyLayer } from './repositories/mapLayer/usePimsPropertyLayer';
@@ -45,7 +45,7 @@ export function useEnrichWithPimsFeatures(): UseEnrichWithPimsFeaturesResult {
           if (!isValidString(pid) && !isValidString(pin)) return dataset;
 
           try {
-            const pimsFeature: Feature<Geometry, PIMS_Property_Boundary_View> | undefined =
+            const pimsFeature: Feature<Geometry, PIMS_Property_View> | undefined =
               await findOneByPidOrPin(pid, pin);
             dataset.pimsFeature = pimsFeature ?? null;
             return dataset;

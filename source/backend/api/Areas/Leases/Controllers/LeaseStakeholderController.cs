@@ -40,7 +40,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
         ///
-        public LeaseStakeholderController(ILeaseService leaseService, IMapper mapper, ILogger<PropertyImprovementController> logger)
+        public LeaseStakeholderController(ILeaseService leaseService, IMapper mapper, ILogger<LeaseStakeholderController> logger)
         {
             _leaseService = leaseService;
             _mapper = mapper;

@@ -250,7 +250,7 @@ const AppRouter: FC<PropsWithChildren<unknown>> = () => {
           ></AppRoute>
           <AppRoute
             protected
-            path="/mapView/:id?"
+            path="/mapview/:id?"
             customComponent={MapView}
             layout={AuthLayout}
             claim={Claims.PROPERTY_VIEW}

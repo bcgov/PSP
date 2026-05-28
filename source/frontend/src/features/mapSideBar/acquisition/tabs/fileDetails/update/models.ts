@@ -1,12 +1,15 @@
+import { first } from 'lodash';
+
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { ChecklistItemFormModel } from '@/features/mapSideBar/shared/tabs/checklist/update/models';
 import { IAutocompletePrediction } from '@/interfaces';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { ApiGen_Concepts_AcquisitionFileOwner } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFileOwner';
 import { ApiGen_Concepts_InterestHolder } from '@/models/api/generated/ApiGen_Concepts_InterestHolder';
+import { ApiGen_Concepts_NoticeOfClaim } from '@/models/api/generated/ApiGen_Concepts_NoticeOfClaim';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { fromTypeCode, fromTypeCodeNullable, toTypeCodeNullable } from '@/utils/formUtils';
-import { exists, isValidId, isValidIsoDateTime } from '@/utils/utils';
+import { exists, isValidId, isValidIsoDateTime, isValidString } from '@/utils/utils';
 
 import {
   AcquisitionOwnerFormModel,
@@ -23,6 +26,7 @@ export class UpdateAcquisitionSummaryFormModel
 {
   id?: number;
   parentAcquisitionFileId: number | null = null;
+  overrideFileNumberSequence = false;
   fileNo?: number;
   fileNumberSuffix?: number;
   fileNumber?: string;
@@ -72,14 +76,30 @@ export class UpdateAcquisitionSummaryFormModel
   ];
   otherInterestHolders: ApiGen_Concepts_InterestHolder[] = [];
   legacyStakeholders: string[] = [];
+  noticeOfClaim: ApiGen_Concepts_NoticeOfClaim;
 
   toApi(): ApiGen_Concepts_AcquisitionFile {
+    const noticeOfClaim: ApiGen_Concepts_NoticeOfClaim | null = exists(this.noticeOfClaim)
+      ? {
+          ...this.noticeOfClaim,
+          receivedDate: isValidString(this.noticeOfClaim?.receivedDate)
+            ? this.noticeOfClaim.receivedDate
+            : null,
+          comment: isValidString(this.noticeOfClaim?.comment?.trim())
+            ? this.noticeOfClaim.comment.trim()
+            : null,
+        }
+      : null;
+    const hasNoticeOfClaim =
+      isValidString(noticeOfClaim?.receivedDate) || isValidString(noticeOfClaim?.comment);
+
     return {
       id: this.id || 0,
       parentAcquisitionFileId: isValidId(this.parentAcquisitionFileId)
         ? this.parentAcquisitionFileId
         : null,
       fileNo: this.fileNo ?? 0,
+      overrideFileNumberSequence: this.overrideFileNumberSequence,
       fileNumber: this.fileNumber ?? null,
       fileNumberSuffix: this.fileNumberSuffix ?? 0,
       legacyFileNumber: this.legacyFileNumber ?? null,
@@ -137,6 +157,7 @@ export class UpdateAcquisitionSummaryFormModel
       product: null,
       project: null,
       totalAllowableCompensation: null,
+      noticeOfClaim: hasNoticeOfClaim && noticeOfClaim ? [noticeOfClaim] : [],
       ...getEmptyBaseAudit(this.rowVersion),
     };
   }
@@ -201,6 +222,7 @@ export class UpdateAcquisitionSummaryFormModel
     newForm.ownerRepresentatives = interestHolders?.filter(
       x => x.interestTypeCode === InterestHolderType.OWNER_REPRESENTATIVE,
     ) ?? [new InterestHolderForm(InterestHolderType.OWNER_REPRESENTATIVE, model.id)];
+    newForm.noticeOfClaim = exists(model.noticeOfClaim) ? first(model.noticeOfClaim) : null;
 
     newForm.otherInterestHolders =
       model.acquisitionFileInterestHolders?.filter(

@@ -121,11 +121,11 @@ namespace Pims.Api.Areas.Property.Models.Search
                 Quantity = model.Quantity,
                 Sort = model.Sort,
 
-                Pid = model.Pid,
-                Pin = model.Pin,
-                Address = model.Address,
-                PlanNumber = model.PlanNumber,
-                Historical = model.Historical,
+                Pid = model.Pid?.Trim(),
+                Pin = model.Pin?.Trim(),
+                Address = model.Address?.Trim(),
+                PlanNumber = model.PlanNumber?.Trim(),
+                Historical = model.Historical?.Trim(),
                 Ownership = model.Ownership,
                 TenureCleanup = model.TenureCleanup,
             };

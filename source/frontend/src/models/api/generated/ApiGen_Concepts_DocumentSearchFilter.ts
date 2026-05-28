@@ -11,4 +11,6 @@ export interface ApiGen_Concepts_DocumentSearchFilter {
   pid: string | null;
   pin: string | null;
   plan: string | null;
+  content: string | null;
+  mayanDocumentIds: number[] | null;
 }

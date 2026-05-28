@@ -76,6 +76,15 @@ public partial class PimsPropertyHist
     [StringLength(20)]
     public string TaxResponsibilityTypeCode { get; set; }
 
+    [Column("RESPONSIBLE_PAYER_PERSON_ID")]
+    public long? ResponsiblePayerPersonId { get; set; }
+
+    [Column("RESPONSIBLE_PAYER_ORGANIZATION_ID")]
+    public long? ResponsiblePayerOrganizationId { get; set; }
+
+    [Column("RESPONSIBLE_PAYER_PRIMARY_CONTACT_ID")]
+    public long? ResponsiblePayerPrimaryContactId { get; set; }
+
     [Column("PROPERTY_DATA_SOURCE_EFFECTIVE_DATE")]
     public DateOnly PropertyDataSourceEffectiveDate { get; set; }
 
@@ -164,6 +173,13 @@ public partial class PimsPropertyHist
     [Column("GLOBAL_UID")]
     [StringLength(254)]
     public string GlobalUid { get; set; }
+
+    [Column("NET_BOOK_AMT", TypeName = "money")]
+    public decimal? NetBookAmt { get; set; }
+
+    [Column("NET_BOOK_NOTE")]
+    [StringLength(4000)]
+    public string NetBookNote { get; set; }
 
     [Column("CONCURRENCY_CONTROL_NUMBER")]
     public long ConcurrencyControlNumber { get; set; }

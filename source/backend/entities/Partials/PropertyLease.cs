@@ -11,6 +11,9 @@ namespace Pims.Dal.Entities
         #region Properties
         [NotMapped]
         public override long Internal_Id { get => this.PropertyLeaseId; set => this.PropertyLeaseId = value; }
+
+        [NotMapped]
+        public string PropertyName { get => this.Name; set => this.Name = value; }
         #endregion
 
         #region Constructors

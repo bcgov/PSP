@@ -37,6 +37,13 @@ vi.mocked(useLeaseRepository, { partial: true }).mockReturnValue({
 vi.mock('@/features/leases/hooks/useLeaseDetail');
 let useLeaseDetailMock: ReturnType<typeof useLeaseDetail>;
 
+// Mock ConfirmNavigation to avoid Prompt issues in jsdom
+vi.mock('@/components/common/ConfirmNavigation', () => {
+  return {
+    default: () => null,
+  };
+});
+
 const history = createMemoryHistory();
 const onClose = vi.fn();
 
@@ -261,7 +268,6 @@ describe('LeaseContainer component', () => {
     [LeaseFileTabNames.checklist, false],
     [LeaseFileTabNames.compensation, false],
     [LeaseFileTabNames.insurance, false],
-    [LeaseFileTabNames.surplusDeclaration, false],
   ])(
     'expands the sidebar to full-width for specific tabs - %s',
     async (tabName: LeaseFileTabNames, isFullWidth: boolean) => {

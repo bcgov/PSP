@@ -199,15 +199,45 @@ namespace Pims.Api.Test
             {
                 PimsManagementActivityInvoices = new List<PimsManagementActivityInvoice>
                 {
-                    new PimsManagementActivityInvoice { PretaxAmt = 10, TotalAmt = 15 },
-                    new PimsManagementActivityInvoice { PretaxAmt = 20, TotalAmt = 25 }
+                    new PimsManagementActivityInvoice { PretaxAmt = 10, TotalAmt = 15, IsPaymentApproved = false },
+                    new PimsManagementActivityInvoice { PretaxAmt = 20, TotalAmt = 25, IsPaymentApproved = false }
                 }
             };
 
             var model = new ManagementActivityOverviewReportModel(activity);
 
+            // Totals for approved invoices should be zero since none are approved.
+            model.ApprovedInvoicesPreTaxTotal.Should().Be(0);
+            model.ApprovedInvoicesTotal.Should().Be(0);
+
+            // Totals across all invoices for the activity.
             model.InvoicesPreTaxTotal.Should().Be(30);
             model.InvoicesTotal.Should().Be(40);
+        }
+
+        [Fact]
+        public void Constructor_Invoices_SumsCorrectly_With_ApprovedInvoices()
+        {
+            var activity = new PimsManagementActivity
+            {
+                PimsManagementActivityInvoices = new List<PimsManagementActivityInvoice>
+                {
+                    new PimsManagementActivityInvoice { PretaxAmt = 10, TotalAmt = 15, IsPaymentApproved = false },
+                    new PimsManagementActivityInvoice { PretaxAmt = 20, TotalAmt = 25, IsPaymentApproved = false },
+                    new PimsManagementActivityInvoice { PretaxAmt = 100, TotalAmt = 150, IsPaymentApproved = true },
+                    new PimsManagementActivityInvoice { PretaxAmt = 100, TotalAmt = 150, IsPaymentApproved = true }
+                }
+            };
+
+            var model = new ManagementActivityOverviewReportModel(activity);
+
+            // Totals for approved invoices.
+            model.ApprovedInvoicesPreTaxTotal.Should().Be(200);
+            model.ApprovedInvoicesTotal.Should().Be(300);
+
+            // Totals across all invoices for the activity.
+            model.InvoicesPreTaxTotal.Should().Be(230);
+            model.InvoicesTotal.Should().Be(340);
         }
     }
 }

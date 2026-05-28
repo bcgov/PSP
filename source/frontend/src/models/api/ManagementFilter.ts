@@ -9,4 +9,6 @@ export interface Api_ManagementFilter {
   projectNameOrNumber: string;
   teamMemberPersonId: number | null;
   teamMemberOrganizationId: number | null;
+  hasNoticeOfClaim: boolean;
+  regions: string[];
 }

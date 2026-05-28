@@ -1,11 +1,10 @@
-import { first } from 'lodash';
 import { useEffect } from 'react';
 
 import * as API from '@/constants/API';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { exists } from '@/utils';
+import { exists, formatGuid } from '@/utils';
 
 import { Select, SelectProps } from '../Select';
 
@@ -21,10 +20,7 @@ export const UserRegionSelectContainer: React.FunctionComponent<
   const { getOptionsByType } = useLookupCodeHelpers();
   const { obj } = useKeycloakWrapper();
   const { sub } = obj.userInfo as IUserInfo;
-  const formattedGuid = first(sub?.split('@'))?.replace(
-    /(.{8})(.{4})(.{4})(.{4})(.{12})/,
-    '$1-$2-$3-$4-$5',
-  );
+  const formattedGuid = formatGuid(sub);
   const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
   const regionTypes = getOptionsByType(API.REGION_TYPES);
   const userRegionCodes =

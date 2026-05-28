@@ -1,7 +1,7 @@
 import { createMemoryHistory } from 'history';
 
 import { Claims } from '@/constants/claims';
-import { mockDocumentTypesResponse } from '@/mocks/documents.mock';
+import { mockDocumentTypesResponse } from '@/mocks/documentTypes.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_Mayan_DocumentMetadata';
@@ -10,8 +10,8 @@ import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
-import { DocumentDetailView, IDocumentDetailsViewProps } from './DocumentDetailView';
 import { ComposedDocument } from '../models/ComposedDocument';
+import { DocumentDetailView, IDocumentDetailsViewProps } from './DocumentDetailView';
 
 // mock auth library
 

@@ -81,7 +81,7 @@ describe('WorklistContextProvider', () => {
 
     expect(result.current.parcels).toHaveLength(1);
     expect(mockNotifier.error).toHaveBeenCalledWith(
-      'Duplicate parcel detected. Add to worklist skipped.',
+      'Duplicate parcel detected. Add to working list skipped.',
     );
   });
 
@@ -96,7 +96,7 @@ describe('WorklistContextProvider', () => {
 
     expect(result.current.parcels).toHaveLength(1);
     expect(mockNotifier.error).toHaveBeenCalledWith(
-      'Duplicate parcel detected. Add to worklist skipped.',
+      'Duplicate parcel detected. Add to working list skipped.',
     );
   });
 
@@ -111,7 +111,7 @@ describe('WorklistContextProvider', () => {
 
     expect(result.current.parcels).toHaveLength(1);
     expect(mockNotifier.error).toHaveBeenCalledWith(
-      'Duplicate parcel detected. Add to worklist skipped.',
+      'Duplicate parcel detected. Add to working list skipped.',
     );
   });
 
@@ -126,7 +126,7 @@ describe('WorklistContextProvider', () => {
 
     expect(result.current.parcels).toHaveLength(1);
     expect(mockNotifier.error).toHaveBeenCalledWith(
-      'Duplicate parcel detected. Add to worklist skipped.',
+      'Duplicate parcel detected. Add to working list skipped.',
     );
   });
 
@@ -141,7 +141,7 @@ describe('WorklistContextProvider', () => {
 
     expect(result.current.parcels).toHaveLength(1);
     expect(mockNotifier.error).toHaveBeenCalledWith(
-      'Duplicate parcel detected. Add to worklist skipped.',
+      'Duplicate parcel detected. Add to working list skipped.',
     );
   });
 

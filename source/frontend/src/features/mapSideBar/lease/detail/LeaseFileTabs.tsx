@@ -25,7 +25,6 @@ export enum LeaseFileTabNames {
   insurance = 'insurance',
   deposit = 'deposit',
   payments = 'payments',
-  surplusDeclaration = 'surplusDeclaration',
   checklist = 'checklist',
   documents = 'documents',
   notes = 'notes',

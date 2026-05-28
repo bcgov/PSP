@@ -3,6 +3,7 @@
  * Do not manually modify, changes made to this file will be lost when this file is regenerated.
  */
 export enum ApiGen_CodeTypes_DispositionStatusTypes {
+  ACTIVE = 'ACTIVE',
   LISTED = 'LISTED',
   ONHOLD = 'ONHOLD',
   PENDING = 'PENDING',

@@ -9,8 +9,14 @@ class ResearchFiles {
   async navigateCreateResearch() {
     clickAndWaitFor(
       this.page,
-      "div[data-testid='nav-tooltip-research'] a",
+      "div[data-testid='nav-tooltip-project'] a",
       "div[data-testid='side-tray']"
+    );
+
+    clickAndWaitFor(
+      this.page,
+      "div[data-testid='nav-tooltip-research'] a",
+      "//a[text()='Create a Research File']"
     );
     await this.page.locator("//a[text()='Create a Research File']").click();
   }
@@ -22,6 +28,14 @@ class ResearchFiles {
       "div[data-testid='side-tray']"
     );
     await this.page.locator("//a[text()='Manage Research Files']").click();
+  }
+
+  async createMinimumResearchFile(researchFile) {
+    const researchFileName = await this.page.locator("#input-name");
+    expect(researchFileName).toBeVisible();
+    await this.page(researchFileName).fill(researchFile.ResearchFileName);
+
+    await this.page.getByTestId("save-button").click();
   }
 
   async verifyCreateResearchFileForm() {
@@ -55,7 +69,7 @@ class ResearchFiles {
       this.page.locator("//div[contains(text(),'New workflow')]")
     ).toBeVisible();
     await expect(
-      this.page.locator("//h2/div/div[text()='Selected Properties']")
+      this.page.locator("//h2/div/div/div/div[text()='Selected Properties']")
     ).toBeVisible();
     await expect(
       this.page.locator("//div[contains(text(),'Identifier')]")

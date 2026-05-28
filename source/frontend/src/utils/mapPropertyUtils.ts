@@ -24,11 +24,8 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { MOT_DistrictBoundary_Feature_Properties } from '@/models/layers/motDistrictBoundary';
 import { MOT_RegionalBoundary_Feature_Properties } from '@/models/layers/motRegionalBoundary';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
-import {
-  emptyPropertyLocation,
-  PIMS_Property_Location_View,
-} from '@/models/layers/pimsPropertyLocationView';
-import { exists, formatApiAddress, pidFormatter } from '@/utils';
+import { emptyProperty, PIMS_Property_View } from '@/models/layers/pimsPropertyView';
+import { exists, formatApiAddress, isPlanNumberSPCP, pidFormatter } from '@/utils';
 
 export enum NameSourceType {
   PID = 'PID',
@@ -45,6 +42,34 @@ export interface PropertyName {
   value: string;
 }
 
+export const isStrataPlanCommonPropertyFromSelectedFeatureSet = (
+  selectedFeature: SelectedFeatureDataset | null,
+): boolean => {
+  if (!exists(selectedFeature)) {
+    return false;
+  }
+
+  const pid = pidFromFeatureSet(selectedFeature);
+  const pin = pinFromFeatureSet(selectedFeature);
+  const planNumber = planFromFeatureSet(selectedFeature);
+  const address = addressFromFeatureSet(selectedFeature);
+  const location = selectedFeature.location;
+
+  if (exists(pid) && pid?.toString()?.length > 0 && pid !== '0') {
+    return false;
+  } else if (exists(pin) && pin?.toString()?.length > 0 && pin !== '0') {
+    return false;
+  } else if (exists(planNumber) && planNumber?.toString()?.length > 0) {
+    return isPlanNumberSPCP(planNumber);
+  } else if (exists(location?.lat) && exists(location?.lng)) {
+    return false;
+  } else if (exists(address) && address?.length > 0) {
+    return false;
+  }
+
+  return false;
+};
+
 export const getPropertyNameFromSelectedFeatureSet = (
   selectedFeature: SelectedFeatureDataset | null,
 ): PropertyName => {
@@ -57,6 +82,8 @@ export const getPropertyNameFromSelectedFeatureSet = (
   const planNumber = planFromFeatureSet(selectedFeature);
   const address = addressFromFeatureSet(selectedFeature);
   const location = selectedFeature.location;
+  const latitude = location?.lat ?? 0;
+  const longitude = location?.lng ?? 0;
 
   if (exists(pid) && pid?.toString()?.length > 0 && pid !== '0') {
     return { label: NameSourceType.PID, value: pidFormatter(pid.toString()) };
@@ -67,7 +94,7 @@ export const getPropertyNameFromSelectedFeatureSet = (
   } else if (exists(location?.lat) && exists(location?.lng)) {
     return {
       label: NameSourceType.LOCATION,
-      value: compact([location.lng?.toFixed(6), location.lat?.toFixed(6)]).join(', '),
+      value: compact([latitude.toFixed(6), longitude.toFixed(6)]).join(', '),
     };
   } else if (exists(address) && address?.length > 0) {
     return { label: NameSourceType.ADDRESS, value: address ?? '' };
@@ -142,7 +169,7 @@ export const getApiPropertyName = (
   } else if (exists(latitude) && exists(longitude)) {
     return {
       label: NameSourceType.LOCATION,
-      value: compact([longitude.toFixed(6), latitude.toFixed(6)]).join(', '),
+      value: compact([latitude.toFixed(6), longitude.toFixed(6)]).join(', '),
     };
   } else if (exists(address) && address?.length > 0) {
     return { label: NameSourceType.ADDRESS, value: address ?? '' };
@@ -164,13 +191,19 @@ export const getFeatureBoundedCenter = (feature: Feature<Geometry, GeoJsonProper
       ONE_HUNDRED_METER_PRECISION,
     );
     return boundedCenter;
+  } else if (feature?.geometry?.type === ApiGen_CodeTypes_GeoJsonTypes.Point) {
+    const boundedCenter = feature.geometry.coordinates;
+    return boundedCenter;
+  } else if (exists(feature?.properties?.LOCATION)) {
+    const boundedCenter = feature.properties.LOCATION as Point;
+    return boundedCenter.coordinates;
+  } else if (exists(feature?.properties?.LATITUDE) && exists(feature?.properties?.LONGITUDE)) {
+    return [feature.properties.LONGITUDE, feature.properties.LATITUDE];
   } else {
     toast.error(
       'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
     );
-    throw Error(
-      'Unsupported geometry type, unable to determine bounded center. You will need to drop a pin instead.',
-    );
+    return null;
   }
 };
 
@@ -377,12 +410,11 @@ export const isEmptyFeatureCollection = (collection: FeatureCollection) => {
 
 export const isEmptyMapFeatureData = (mapFeatureData: MapFeatureData) => {
   return (
-    isEmptyFeatureCollection(mapFeatureData.pimsLocationFeatures) &&
-    //isEmptyFeatureCollection(mapFeatureData.pimsLocationLiteFeatures) && TODO: For now this is loading always. Investigate if it needs to be removed completly
-    isEmptyFeatureCollection(mapFeatureData.pimsBoundaryFeatures) &&
-    isEmptyFeatureCollection(mapFeatureData.fullyAttributedFeatures) &&
-    isEmptyFeatureCollection(mapFeatureData.surveyedParcelsFeatures) &&
-    isEmptyFeatureCollection(mapFeatureData.highwayPlanFeatures)
+    isEmptyFeatureCollection(mapFeatureData?.pimsFeatures) &&
+    //isEmptyFeatureCollection(mapFeatureData.pimsLiteFeatures) && TODO: For now this is loading always. Investigate if it needs to be removed completly
+    isEmptyFeatureCollection(mapFeatureData?.fullyAttributedFeatures) &&
+    isEmptyFeatureCollection(mapFeatureData?.surveyedParcelsFeatures) &&
+    isEmptyFeatureCollection(mapFeatureData?.highwayPlanFeatures)
   );
 };
 
@@ -397,6 +429,35 @@ export interface RegionDistrictResult {
   regionResult: Feature<Geometry, MOT_RegionalBoundary_Feature_Properties>;
   districtResult: Feature<Geometry, MOT_DistrictBoundary_Feature_Properties>;
 }
+
+const REGION_DISTRICT_CONCURRENCY = 8;
+
+const runWithConcurrency = async <T, R>(
+  items: T[],
+  limit: number,
+  iterator: (item: T) => Promise<R>,
+): Promise<R[]> => {
+  if (items.length === 0) {
+    return [];
+  }
+
+  const results: R[] = new Array(items.length);
+  let nextIndex = 0;
+  const workerCount = Math.min(limit, items.length);
+
+  const runWorker = async () => {
+    while (nextIndex < items.length) {
+      const currentIndex = nextIndex;
+      nextIndex += 1;
+      results[currentIndex] = await iterator(items[currentIndex]);
+    }
+  };
+
+  const workers = Array.from({ length: workerCount }, runWorker);
+
+  await Promise.all(workers);
+  return results;
+};
 
 export function featureSetToLatLngKey(featureSet: SelectedFeatureDataset | null | undefined) {
   if (exists(featureSet.location)) {
@@ -451,38 +512,39 @@ export async function getRegionAndDistrictsResults(
     }
   }
 
-  // Prepare all parallel tasks
-  const entries = Array.from(latLngMap.entries()).map(([key, latLng]) =>
-    Promise.all([regionSearch(latLng, 'SHAPE'), districtSearch(latLng, 'SHAPE')]).then(
-      ([regionResult, districtResult]): [string, RegionDistrictResult] => [
-        key,
-        {
-          regionResult: regionResult ?? null,
-          districtResult: districtResult ?? null,
-        },
-      ],
-    ),
+  const fetchedEntries = await runWithConcurrency(
+    Array.from(latLngMap.entries()),
+    REGION_DISTRICT_CONCURRENCY,
+    async ([key, latLng]) => {
+      const [regionResult, districtResult] = await Promise.all([
+        regionSearch(latLng, 'SHAPE'),
+        districtSearch(latLng, 'SHAPE'),
+      ]);
+
+      const value: RegionDistrictResult = {
+        regionResult: regionResult ?? null,
+        districtResult: districtResult ?? null,
+      };
+
+      return [key, value] as [string, RegionDistrictResult];
+    },
   );
 
-  // Resolve in parallel
-  const results = await Promise.all(entries);
-
-  // Convert back into a Map
-  return new Map(results);
+  return new Map(fetchedEntries);
 }
 
 export function apiPropertyToPimsFeature(
   property: ApiGen_Concepts_Property | undefined | null,
-): Feature<Geometry, PIMS_Property_Location_View> | null {
+): Feature<Geometry, PIMS_Property_View> | null {
   if (!exists(property)) {
     return null;
   }
 
-  const feature: Feature<Geometry, PIMS_Property_Location_View> = {
+  const feature: Feature<Geometry, PIMS_Property_View> = {
     type: 'Feature',
     geometry: property.boundary ?? null,
     properties: {
-      ...emptyPropertyLocation,
+      ...emptyProperty,
       // core fields
       PROPERTY_ID: property.id ?? null,
       PID: property.pid ?? null,

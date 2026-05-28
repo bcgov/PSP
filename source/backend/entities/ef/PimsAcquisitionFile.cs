@@ -127,13 +127,13 @@ public partial class PimsAcquisitionFile
     /// File number assigned to the acquisition file.
     /// </summary>
     [Column("FILE_NO")]
-    public int FileNo { get; set; }
+    public int? FileNo { get; set; }
 
     /// <summary>
     /// Acquisition file number suffix
     /// </summary>
     [Column("FILE_NO_SUFFIX")]
-    public short FileNoSuffix { get; set; }
+    public short? FileNoSuffix { get; set; }
 
     /// <summary>
     /// Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTT region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to &apos;01&apos;).   Required due to some files having t
@@ -365,6 +365,12 @@ public partial class PimsAcquisitionFile
 
     [InverseProperty("AcquisitionFile")]
     public virtual ICollection<PimsInterestHolder> PimsInterestHolders { get; set; } = new List<PimsInterestHolder>();
+
+    [InverseProperty("AcquisitionFile")]
+    public virtual ICollection<PimsNoticeOfClaim> PimsNoticeOfClaims { get; set; } = new List<PimsNoticeOfClaim>();
+
+    [InverseProperty("AcquisitionFile")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
 
     [InverseProperty("AcquisitionFile")]
     public virtual ICollection<PimsPropertyAcquisitionFile> PimsPropertyAcquisitionFiles { get; set; } = new List<PimsPropertyAcquisitionFile>();

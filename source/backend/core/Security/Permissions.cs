@@ -212,5 +212,6 @@ namespace Pims.Core.Security
 
         [Display(GroupName = "bctfaOwnership", Name = "bctfa-ownership-delete", Description = "Ability to delete BCTFA ownership information.")]
         BctfaOwnershipDelete = 69,
+
     }
 }

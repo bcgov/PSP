@@ -1,0 +1,97 @@
+-- -------------------------------------------------------------------------------------------
+-- Alter the PIMS_LEASE_STAKEHOLDER_TYPE table.
+-- . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
+-- Author        Date         Ticket     Comment
+-- ------------  -----------  ---------  -----------------------------------------------------
+-- Doug Filteau  2025-Oct-15  N/A        Added OWNSOL.
+-- Doug Filteau  2026-Jan-07  N/A        Edited OWNSOL for payable leases.
+-- Doug Filteau  2026-Jan-08  PSP-11108  Added OTHRCV and OTHPAY.
+-- -------------------------------------------------------------------------------------------
+
+SET XACT_ABORT ON
+GO
+SET TRANSACTION ISOLATION LEVEL SERIALIZABLE
+GO
+BEGIN TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Edit the "OWNSOL" type.
+PRINT N'Edit the "OWNSOL" type.'
+GO
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'OWNSOL'
+
+SELECT LEASE_STAKEHOLDER_TYPE_CODE
+FROM   PIMS_LEASE_STAKEHOLDER_TYPE
+WHERE  LEASE_STAKEHOLDER_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+  UPDATE PIMS_LEASE_STAKEHOLDER_TYPE
+  SET    IS_PAYABLE_RELATED         = 1
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  LEASE_STAKEHOLDER_TYPE_CODE = @CurrCd;
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Add/enable the "OTHRCV" type.
+PRINT N'Add/enable the "OTHRCV" type.'
+GO
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'OTHRCV'
+
+SELECT LEASE_STAKEHOLDER_TYPE_CODE
+FROM   PIMS_LEASE_STAKEHOLDER_TYPE
+WHERE  LEASE_STAKEHOLDER_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+  UPDATE PIMS_LEASE_STAKEHOLDER_TYPE
+  SET    IS_DISABLED                = 0
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  LEASE_STAKEHOLDER_TYPE_CODE = @CurrCd;
+ELSE
+  INSERT INTO PIMS_LEASE_STAKEHOLDER_TYPE (LEASE_STAKEHOLDER_TYPE_CODE, DESCRIPTION, IS_PAYABLE_RELATED, DISPLAY_ORDER)
+  VALUES (N'OTHRCV', N'Other', 0, 99);
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+-- Add/enable the "OTHPAY" type.
+PRINT N'Add/enable the "OTHPAY" type.'
+GO
+DECLARE @CurrCd NVARCHAR(20)
+SET     @CurrCd = N'OTHPAY'
+
+SELECT LEASE_STAKEHOLDER_TYPE_CODE
+FROM   PIMS_LEASE_STAKEHOLDER_TYPE
+WHERE  LEASE_STAKEHOLDER_TYPE_CODE = @CurrCd;
+
+IF @@ROWCOUNT = 1
+  UPDATE PIMS_LEASE_STAKEHOLDER_TYPE
+  SET    IS_DISABLED                = 0
+       , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
+  WHERE  LEASE_STAKEHOLDER_TYPE_CODE = @CurrCd;
+ELSE
+  INSERT INTO PIMS_LEASE_STAKEHOLDER_TYPE (LEASE_STAKEHOLDER_TYPE_CODE, DESCRIPTION, IS_PAYABLE_RELATED, DISPLAY_ORDER)
+  VALUES (N'OTHPAY', N'Other', 1, 99);
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+
+COMMIT TRANSACTION
+GO
+IF @@ERROR <> 0 SET NOEXEC ON
+GO
+DECLARE @Success AS BIT
+SET @Success = 1
+SET NOEXEC OFF
+IF (@Success = 1) 
+  PRINT 'The database update succeeded'
+ELSE 
+  BEGIN
+  IF @@TRANCOUNT > 0 ROLLBACK TRANSACTION
+    PRINT 'The database update failed'
+  END
+GO

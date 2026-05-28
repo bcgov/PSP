@@ -38,7 +38,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ProjectRepository>(user);
 
             // Act
-            var result = repository.SearchProjects("test project", new HashSet<short>() { 1 }, 1);
+            var result = repository.SearchProjects("test project", 1);
 
             // Assert
             result.Should().NotBeNull();
@@ -58,11 +58,11 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ProjectRepository>(user);
 
             // Act
-            var result = repository.SearchProjects("test project", new HashSet<short>() { 2 }, 1);
+            var result = repository.SearchProjects("test project", 1);
 
             // Assert
             result.Should().NotBeNull();
-            result.Should().BeEmpty();
+            result.Should().ContainSingle();
         }
 
         #region GetPageAsync
@@ -88,7 +88,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ProjectRepository>(user);
 
             // Act
-            var result = await repository.GetPageAsync(new Dal.Entities.Models.ProjectFilter() { ProjectName = "test project", ProjectNumber = "551234", ProjectStatusCode = "ACTIVE", ProjectRegionCode = "1", Sort = new string[] { "LastUpdatedBy" } }, new HashSet<short>() { 1 });
+            var result = await repository.GetPageAsync(new Dal.Entities.Models.ProjectFilter() { ProjectName = "test project", ProjectNumber = "551234", ProjectStatusCode = "ACTIVE", Sort = new string[] { "LastUpdatedBy" } });
 
             // Assert
             result.Should().NotBeNull();
@@ -108,7 +108,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ProjectRepository>(user);
 
             // Act
-            Action act = () => repository.GetPageAsync(new Dal.Entities.Models.ProjectFilter() { ProjectName = "test project" }, new HashSet<short>() { 1 });
+            Action act = () => repository.GetPageAsync(new Dal.Entities.Models.ProjectFilter() { ProjectName = "test project" });
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -127,7 +127,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ProjectRepository>(user);
 
             // Act
-            Action act = () => repository.GetPageAsync(null, new HashSet<short>() { 1 });
+            Action act = () => repository.GetPageAsync(null);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
@@ -146,7 +146,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ProjectRepository>(user);
 
             // Act
-            Action act = () => repository.GetPageAsync(new Dal.Entities.Models.ProjectFilter() { Page = -1 }, new HashSet<short>() { 1 });
+            Action act = () => repository.GetPageAsync(new Dal.Entities.Models.ProjectFilter() { Page = -1 });
 
             // Assert
             act.Should().Throw<ArgumentException>();

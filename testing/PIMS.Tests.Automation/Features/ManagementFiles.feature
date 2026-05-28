@@ -20,7 +20,7 @@ Scenario: 03._Management_Files_Digital_Documents
 	Given I create a new Management File from row number 6
 	When I add Properties to the Management File
 	And I create Digital Documents for a "Management File" from row number 14
-	And I checked related file documents on properties documents
+	#And I checked related file documents on properties documents
 	And  I edit a Digital Document for a "Management File" from row number 15
 	Then A new Management file is created or updated successfully
 

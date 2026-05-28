@@ -281,6 +281,10 @@ export const ManagementActivityEditForm: React.FunctionComponent<
                         formikProps={formikProps}
                         gstConstant={gstConstant}
                         pstConstant={pstConstant}
+                        isResponsiblePayerSet={
+                          isValidId(managementFile.responsiblePayerPersonId) ||
+                          isValidId(managementFile.responsiblePayerOrganizationId)
+                        }
                       />
                       <SaveCancelButtons
                         onCancel={() => {

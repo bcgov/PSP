@@ -10,6 +10,6 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsCompReqFinancial> GetAllByLeaseFileId(long leaseFileId, bool? finalOnly);
 
-        IEnumerable<PimsCompReqFinancial> SearchCompensationRequisitionFinancials(AcquisitionReportFilterModel filter, bool includeAcquisitions = true, bool includeLeases = true);
+        IEnumerable<PimsCompReqFinancial> SearchCompensationRequisitionFinancials(AcquisitionReportFilterModel filter, HashSet<short> regions, long? contractorPersonId = null, bool includeAcquisitions = true, bool includeLeases = true);
     }
 }

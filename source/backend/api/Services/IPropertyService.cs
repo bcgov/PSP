@@ -33,6 +33,16 @@ namespace Pims.Api.Services
 
         PropertyManagementModel UpdatePropertyManagement(PimsProperty property);
 
+        IEnumerable<PimsPropertyImprovement> GetImprovementsByPropertyId(long propertyId);
+
+        PimsPropertyImprovement AddPropertyImprovement(PimsPropertyImprovement propertyImprovement);
+
+        PimsPropertyImprovement GetPropertyImprovementByID(long propertyId, long propertyImprovementId);
+
+        PimsPropertyImprovement UpdatePropertyImprovement(long propertyId, PimsPropertyImprovement propertyImprovement);
+
+        bool DeletePropertyImprovement(long propertyId, long propertyImprovementId);
+
         IList<PimsManagementActivity> GetActivities(long propertyId);
 
         IList<PimsManagementActivity> GetFileActivities(long managementFileId);
@@ -59,6 +69,9 @@ namespace Pims.Api.Services
         void UpdateFilePropertyLocation<T>(T incomingFileProperty, T filePropertyToUpdate)
             where T : IFilePropertyEntity;
 
+        void UpdateFilePropertyBoundary<T>(T incomingFileProperty, T filePropertyToUpdate)
+            where T : IFilePropertyEntity;
+
         IList<PimsHistoricalFileNumber> GetHistoricalNumbersForPropertyId(long propertyId);
 
         IList<PimsHistoricalFileNumber> UpdateHistoricalFileNumbers(long propertyId, IEnumerable<PimsHistoricalFileNumber> pimsHistoricalNumbers);
@@ -74,6 +87,14 @@ namespace Pims.Api.Services
         PimsProperty TransformPropertyToLatLong(PimsProperty property);
 
         /// <summary>
+        /// Returns the spatial location and boundary polygons in lat/long (4326) for a given PimsPropertyVw instance.
+        /// The spatial values will be modified in-place.
+        /// </summary>
+        /// <param name="propertyVw">The property to re-project.</param>
+        /// <returns>The property with transformed spatial locations.</returns>
+        PimsPropertyVw TransformPropertyVwToLatLong(PimsPropertyVw propertyVw);
+
+        /// <summary>
         /// Returns the spatial location and boundary polygons in lat/long (4326) for a list of file properties.
         /// The spatial values will be modified in-place.
         /// </summary>
@@ -81,5 +102,12 @@ namespace Pims.Api.Services
         /// <returns>The file properties with transformed spatial locations.</returns>
         List<T> TransformAllPropertiesToLatLong<T>(List<T> fileProperties)
             where T : IFilePropertyEntity;
+
+        /// <summary>
+        /// Update the net book value and note for the specified property.
+        /// </summary>
+        /// <param name="property">The property to update.</param>
+        /// <returns>The updated property.</returns>
+        PimsProperty UpdateNetBook(PimsProperty property);
     }
 }

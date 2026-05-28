@@ -13,6 +13,7 @@ using Pims.Core.Api.Policies;
 using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Core.Security;
+using Pims.Dal.Entities;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Documents
@@ -29,12 +30,14 @@ namespace Pims.Api.Areas.Documents
     public class SearchController : ControllerBase
     {
         private readonly IDocumentService _documentService;
+        private readonly IPropertyService _propertyService;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
 
-        public SearchController(IDocumentService documentService, IMapper mapper, ILogger<SearchController> logger)
+        public SearchController(IDocumentService documentService, IPropertyService propertyService, IMapper mapper, ILogger<SearchController> logger)
         {
             _documentService = documentService;
+            _propertyService = propertyService;
             _mapper = mapper;
             _logger = logger;
         }
@@ -70,7 +73,36 @@ namespace Pims.Api.Areas.Documents
             _logger.LogInformation("Dispatching to service: {Service}", _documentService.GetType());
             var documents = _documentService.GetPage(filter);
 
+            // Transform all properties to lat/long for returned documents that have properties, this is required for the front end to properly display the property locations.
+            foreach (var document in documents.Items)
+            {
+                var propertyDocuments = document.PimsPropertyDocuments ?? new List<PimsPropertyDocument>();
+                document.PimsPropertyDocuments = TransformAllPropertiesToLatLong(propertyDocuments);
+            }
+
             return new JsonResult(_mapper.Map<PageModel<DocumentSearchResultModel>>(documents));
         }
+
+        /// <summary>
+        /// Returns the spatial location and boundary polygons in lat/long (4326) for a list of document properties.
+        /// The spatial values will be modified in-place.
+        /// </summary>
+        /// <param name="propertyDocuments">The document properties to re-project.</param>
+        /// <returns>The document properties with transformed spatial locations.</returns>
+        private ICollection<PimsPropertyDocument> TransformAllPropertiesToLatLong(ICollection<PimsPropertyDocument> propertyDocuments)
+        {
+            if (propertyDocuments == null)
+            {
+                return propertyDocuments;
+            }
+
+            foreach (var propertyDocument in propertyDocuments)
+            {
+                propertyDocument.Property = _propertyService.TransformPropertyToLatLong(propertyDocument.Property);
+            }
+
+            return propertyDocuments;
+        }
+
     }
 }

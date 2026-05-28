@@ -202,11 +202,11 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigates to Payments Section
         public void NavigateToPaymentSection()
         {
-            Wait();
+            WaitUntilClickable(licensePaymentsLink);
             webDriver.FindElement(licensePaymentsLink).Click();
         }
 
-        public void AddPeriodBttn() => ButtonElement(licencePaymentAddBttn);
+        public void AddPeriodBttn() => SafeClick(licencePaymentAddBttn);
 
         public void AddPeriod(Period period)    
         {
@@ -224,7 +224,7 @@ namespace PIMS.Tests.Automation.PageObjects
             //Period Duration
             AssertTrueIsDisplayed(licensePaymentPeriodDurationLabel);
             AssertTrueIsDisplayed(licensePaymentPeriodDurationTooltip);
-            ChooseSpecificSelectOption(licensePaymentPeriodDurationSelect, period.PeriodDuration);
+            ChooseSelectOption(licensePaymentPeriodDurationSelect, period.PeriodDuration);
 
             //Start Date
             AssertTrueIsDisplayed(licensePaymentPeriodStartDateLabel);
@@ -254,14 +254,14 @@ namespace PIMS.Tests.Automation.PageObjects
             //Period Status
             AssertTrueIsDisplayed(licensePaymentPeriodStatusLabel);
             AssertTrueIsDisplayed(licensePaymentPeriodStatusTooltip);
-            ChooseSpecificSelectOption(licensePaymentPeriodStatusSelect, period.PeriodStatus);
+            ChooseSelectOption(licensePaymentPeriodStatusSelect, period.PeriodStatus);
 
             //Predetermined Base Rent
             if (period.PeriodPaymentType == "Predetermined")
             {
                 //Payment Frequency
                 AssertTrueIsDisplayed(licensePaymentPeriodFrequencySelectLabel);
-                ChooseSpecificSelectOption(licensePaymentPeriodFrequencySelect, period.PeriodBasePaymentFrequency);
+                ChooseSelectOption(licensePaymentPeriodFrequencySelect, period.PeriodBasePaymentFrequency);
 
                 //Agreed Payment
                 AssertTrueIsDisplayed(licensePaymentPeriodAgreedPaymentLabel);
@@ -293,7 +293,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
                 //Payment Frequency
                 AssertTrueIsDisplayed(licensePaymentPeriodBaseFrequencyLabel);
-                ChooseSpecificSelectOption(licensePaymentPeriodFrequencySelect, period.PeriodBasePaymentFrequency);
+                ChooseSelectOption(licensePaymentPeriodFrequencySelect, period.PeriodBasePaymentFrequency);
 
                 //Agreed Payment
                 AssertTrueIsDisplayed(licensePaymentPeriodBaseAgreedPaymentLabel);
@@ -327,7 +327,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 //Additional Payment Frequency
                 AssertTrueIsDisplayed(licensePaymentPeriodAdditionalFrequencyLabel);
                 if (period.PeriodAdditionalPaymentFrequency != "")
-                    ChooseSpecificSelectOption(licensePaymentPeriodAdditionalSelect, period.PeriodAdditionalPaymentFrequency);
+                    ChooseSelectOption(licensePaymentPeriodAdditionalSelect, period.PeriodAdditionalPaymentFrequency);
 
                 //Additional Agreed Payment
                 AssertTrueIsDisplayed(licensePaymentPeriodAdditionalAgreedPaymentLabel);
@@ -364,7 +364,7 @@ namespace PIMS.Tests.Automation.PageObjects
                 //Variable Payment Frequency
                 AssertTrueIsDisplayed(licensePaymentPeriodVariableFrequencyLabel);
                 if (period.PeriodVariablePaymentFrequency != "")
-                    ChooseSpecificSelectOption(licensePaymentPeriodVariableSelect, period.PeriodVariablePaymentFrequency);
+                    ChooseSelectOption(licensePaymentPeriodVariableSelect, period.PeriodVariablePaymentFrequency);
 
                 //Variable Agreed Payment
                 AssertTrueIsDisplayed(licensePaymentPeriodVariableAgreedPaymentLabel);
@@ -403,22 +403,18 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OpenClosePeriodCategoryPayments(int elementIdx)
         {
-            Wait();
-            var selectedExpander = webDriver.FindElement(By.XPath("//div[@class='tr-wrapper']["+ elementIdx +"]/div/div[@class='td expander svg-btn']"));
-
-            WaitUntilClickable(By.XPath("//div[@class='tr-wrapper']["+ elementIdx +"]/div/div[@class='td expander svg-btn']"));
-            selectedExpander.Click();
+           SafeClick(By.XPath("//div[@class='tr-wrapper'][" + elementIdx + "]/div/div[@class='td expander svg-btn']"));
         }
 
         public void AddPaymentBttn(int parentIdx)
         {
             By addPaymentButton = By.XPath("//b[contains(text(),'Period "+ parentIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/h2/div/div/div/div/button");
-            ButtonElement(addPaymentButton);
+            SafeClick(addPaymentButton);
         }
 
         public void AddPayment(Payment payment, string periodType)
         {
-            Wait();
+            WaitUntilVisible(licensePaymentSendDateLabel);
 
             //Sent Date
             AssertTrueIsDisplayed(licensePaymentSendDateLabel);
@@ -430,13 +426,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Method
             AssertTrueIsDisplayed(licensePaymentMethodLabel);
-            ChooseSpecificSelectOption(licensePaymentMethodSelect, payment.PaymentMethod);
+            ChooseSelectOption(licensePaymentMethodSelect, payment.PaymentMethod);
 
             //Payment Category - for variable payments
             if (periodType ==  "Variable")
             {
                 AssertTrueIsDisplayed(licensePaymentCategoryLabel);
-                ChooseSpecificSelectOption(licensePaymentCategorySelect, payment.PaymentCategory);  
+                ChooseSelectOption(licensePaymentCategorySelect, payment.PaymentCategory);  
             }
 
             //Total Received
@@ -471,17 +467,17 @@ namespace PIMS.Tests.Automation.PageObjects
            
 
             //Save Button
-            ButtonElement(licensePaymentSaveBttn);
+            SafeClick(licensePaymentSaveBttn);
             OpenClosePeriodCategoryPayments(payment.PeriodParentIndex);
 
-            Wait();
+            WaitUntilVisible(By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper']:nth-child("+ payment.PeriodParentIndex +") div[data-testid='paymentsTable'] div[class='tr-wrapper']"));
             totalPaymentInPeriod = webDriver.FindElements(By.CssSelector("div[data-testid='leasePaymentsTable'] div[class='tr-wrapper']:nth-child("+ payment.PeriodParentIndex +") div[data-testid='paymentsTable'] div[class='tr-wrapper']")).Count;
             System.Diagnostics.Debug.WriteLine(totalPaymentInPeriod);
         }
 
         public void DeleteLastPeriod()
         {
-            Wait();
+            WaitUntilClickable(licensePaymentDeleteTermBttn);
             webDriver.FindElement(licensePaymentDeleteTermBttn).Click();
 
             WaitUntilVisible(licensePaymentsModal);
@@ -492,7 +488,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteLastPayment(int periodIdx)
         {
-            Wait(5000);
             WaitUntilVisible(By.XPath("//b[contains(text(), 'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div/div"));
 
             var totalPayments = webDriver.FindElements(By.XPath("//b[contains(text(), 'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div/div")).Count;
@@ -502,12 +497,13 @@ namespace PIMS.Tests.Automation.PageObjects
             WaitUntilVisible(licensePaymentsModal);
             sharedModals.ModalClickOKBttn();
 
+            Wait();
             totalPaymentInPeriod = webDriver.FindElements(By.XPath("//b[contains(text(), 'Period "+ periodIdx +"')]/parent::div/parent::div/parent::div/following-sibling::div/div/div/div[@data-testid='paymentsTable']/div[@class='tbody']/div/div")).Count;
         }
 
         public void VerifyPeriodsTabInit()
         {
-            Wait();
+            WaitUntilVisible(licencePaymentsSubtitle);
 
             AssertTrueIsDisplayed(licencePaymentsSubtitle);
             AssertTrueIsDisplayed(licencePaymentAddBttn);
@@ -535,7 +531,6 @@ namespace PIMS.Tests.Automation.PageObjects
         public void VerifyInsertedPeriodTable(Period period)
         {
             Wait();
-            WaitUntilVisible(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPeriodsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[2]"));
 
             AssertTrueElementContains(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPeriodsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[2]"), ConcatenateDates(period.PeriodStartDate, period.PeriodEndDate));
             AssertTrueContentEquals(By.XPath("//div[@data-testid='leasePaymentsTable']/div[@class='tbody']/div[@class='tr-wrapper']["+ totalPeriodsInLease +"]/div[@class='tr']/div[@class='td expander svg-btn']/following-sibling::div[3]"), period.PeriodBasePaymentFrequency);

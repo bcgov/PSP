@@ -35,6 +35,8 @@
         public string OwnerSolicitor { get; set; } = null!;
         public string OwnerRepresentative { get; set; } = null!;
         public string OwnerComment { get; set; } = null!;
+        public string AcquisitionNOCReceivedDate { get; set; } = null!;
+        public string AcquisitionNOCComments { get; set; } = null!;
         public int AcquisitionSearchPropertiesIndex { get; set; } = 0;
         public SearchProperty AcquisitionSearchProperties { get; set; } = new SearchProperty() { };
         public int TakesStartRow { get; set; } = 0;
@@ -44,7 +46,7 @@
         public AcquisitionFileChecklist AcquisitionFileChecklist { get; set; } = new AcquisitionFileChecklist() { };
         public int AgreementStartRow { get; set; } = 0;
         public int AgreementCount { get; set; } = 0;
-        public List<AcquisitionAgreement> AcquisitionAgreements { get; set; } = new List<AcquisitionAgreement>() { };
+        public List<Agreement> AcquisitionAgreements { get; set; } = new List<Agreement>() { };
         public int StakeholderStartRow { get; set; } = 0;
         public int StakeholderCount { get; set; } = 0;
         public List<AcquisitionStakeholder> AcquisitionStakeholders { get; set; } = new List<AcquisitionStakeholder>();
@@ -142,7 +144,7 @@
         public string AcquisitionCompletionSelect1 { get; set; } = null!;
     }
 
-    public class AcquisitionAgreement
+    public class Agreement
     {
         public string AgreementStatus { get; set; } = null!;
         public string AgreementCancellationReason { get; set; } = null!;
@@ -150,7 +152,6 @@
         public string AgreementType { get; set; } = null!;
         public string AgreementDate { get; set; } = null!;
         public string AgreementCompletionDate { get; set; } = null!;
-        public string AgreementCommencementDate { get; set; } = null!;
         public string AgreementTerminationDate { get; set; } = null!;
         public string AgreementPossessionDate { get; set; } = null!;
         public string AgreementPurchasePrice { get; set; } = null!;

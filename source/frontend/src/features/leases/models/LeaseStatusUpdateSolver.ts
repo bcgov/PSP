@@ -26,8 +26,6 @@ export class LeaseStatusUpdateSolver
       case LeasePageNames.PAYEE:
       case LeasePageNames.TENANT:
         return this.canEditTenants();
-      case LeasePageNames.IMPROVEMENTS:
-        return this.canEditImprovements();
       case LeasePageNames.INSURANCE:
         return this.canEditInsurance();
       case LeasePageNames.PAYMENTS:

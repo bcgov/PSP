@@ -312,35 +312,43 @@ exports[`Project Filter > matches snapshot 1`] = `
             class="col-xl-6"
           >
             <div
-              class="d-flex form-group"
+              class="form-group"
             >
-              <select
-                class="form-select form-control"
-                id="input-projectRegionCode"
-                name="projectRegionCode"
-              >
-                <option
-                  class="option"
-                  data-testid="select-option-"
-                  value=""
+              <div>
+                <div
+                  class="multiselect-container multiSelectContainer  "
+                  id="multiselect-regions"
+                  style="width: auto; color: black;"
                 >
-                  All Regions
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-1"
-                  value="1"
-                >
-                  South Coast Region
-                </option>
-                <option
-                  class="option"
-                  data-testid="select-option-2"
-                  value="2"
-                >
-                  Southern Interior Region
-                </option>
-              </select>
+                  <div
+                    class="search-wrapper searchWrapper "
+                    style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                  >
+                    <input
+                      autocomplete="off"
+                      class="searchBox "
+                      id="multiselect-regions_input"
+                      name="search_name_input"
+                      placeholder="Select Region(s)"
+                      type="text"
+                      value=""
+                    />
+                  </div>
+                  <div
+                    class="optionListContainer displayNone"
+                  >
+                    <ul
+                      class="optionContainer"
+                    >
+                      <span
+                        class="notFound"
+                      >
+                        No Options Available
+                      </span>
+                    </ul>
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
           <div

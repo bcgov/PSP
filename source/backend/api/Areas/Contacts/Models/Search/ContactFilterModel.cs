@@ -71,8 +71,8 @@ namespace Pims.Api.Areas.Contact.Models.Search
                 Quantity = model.Quantity,
 
                 SearchBy = model.SearchBy,
-                Summary = model.Summary,
-                Municipality = model.Municipality,
+                Summary = model.Summary?.Trim(),
+                Municipality = model.Municipality?.Trim(),
                 ActiveContactsOnly = model.ActiveContactsOnly,
 
                 Sort = model.Sort,

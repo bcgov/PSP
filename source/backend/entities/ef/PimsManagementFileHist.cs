@@ -46,6 +46,15 @@ public partial class PimsManagementFileHist
     [Column("REGION_CODE")]
     public short? RegionCode { get; set; }
 
+    [Column("RESPONSIBLE_PAYER_PERSON_ID")]
+    public long? ResponsiblePayerPersonId { get; set; }
+
+    [Column("RESPONSIBLE_PAYER_ORGANIZATION_ID")]
+    public long? ResponsiblePayerOrganizationId { get; set; }
+
+    [Column("RESPONSIBLE_PAYER_PRIMARY_CONTACT_ID")]
+    public long? ResponsiblePayerPrimaryContactId { get; set; }
+
     [Required]
     [Column("FILE_NAME")]
     [StringLength(500)]

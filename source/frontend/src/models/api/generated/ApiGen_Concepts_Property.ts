@@ -57,5 +57,7 @@ export interface ApiGen_Concepts_Property extends ApiGen_Base_BaseConcurrent {
   tenureCleanups: ApiGen_Concepts_PropertyTenureCleanup[] | null;
   surplusDeclarationType: ApiGen_Base_CodeType<string> | null;
   surplusDeclarationComment: string | null;
-  surplusDeclarationDate: UtcIsoDate;
+  surplusDeclarationDate: UtcIsoDate | null;
+  netBookAmount: number | null;
+  netBookNote: string | null;
 }

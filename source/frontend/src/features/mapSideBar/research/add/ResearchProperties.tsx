@@ -1,19 +1,27 @@
 import { FieldArray, FormikProps, useFormikContext } from 'formik';
 import noop from 'lodash/noop';
 import { useCallback, useEffect, useMemo, useRef } from 'react';
+import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { SelectedFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { Section } from '@/components/common/Section/Section';
+import { ZoomIconType, ZoomToLocation } from '@/components/maps/ZoomToLocation';
 import SelectedPropertyHeaderRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyHeaderRow';
 import SelectedPropertyRow from '@/components/propertySelector/selectedPropertyList/SelectedPropertyRow';
+import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useEditPropertiesMode } from '@/hooks/useEditPropertiesMode';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
+import { useModalContext } from '@/hooks/useModalContext';
 import { featuresetToLocationBoundaryDataset } from '@/utils';
-import { addPropertiesToCurrentFile } from '@/utils/propertyUtils';
+import {
+  addPropertiesToCurrentFile,
+  addShapeToProperty,
+  removeShapeFromPropertyWithConfirmation,
+} from '@/utils/propertyUtils';
 import { exists, firstOrNull } from '@/utils/utils';
 
 import { PropertyForm } from '../../shared/models';
@@ -29,6 +37,7 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
   const { values } = useFormikContext<ResearchForm>();
   useEditPropertiesMode();
 
+  const { setModalContent, setDisplayModal } = useModalContext();
   const { selectedFeatures, processCreation, mapLocationFeatureDataset, prepareForCreation } =
     useMapStateMachine();
 
@@ -90,14 +99,28 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
   return (
     <Section header="Properties to include in this file:">
       <AddPropertiesGuide />
-      {exists(selectedFeatureDataset?.parcelFeature) && (
+      {exists(selectedFeatureDataset?.parcelFeature) ||
+      exists(selectedFeatureDataset?.pimsFeature) ||
+      exists(selectedFeatureDataset?.location) ? (
         <StyledButtonWrapper>
           <Button onClick={handleAddToSelection}>Add selected property</Button>
         </StyledButtonWrapper>
-      )}
+      ) : null}
+
       <FieldArray name="properties">
-        {({ remove }) => (
-          <Section header="Selected Properties">
+        {({ remove, replace }) => (
+          <Section
+            header={
+              <Row>
+                <Col xs="11">Selected Properties</Col>
+                {values?.properties?.length > 0 && (
+                  <Col>
+                    <ZoomToLocation formProperties={values?.properties} icon={ZoomIconType.area} />
+                  </Col>
+                )}
+              </Row>
+            }
+          >
             <SelectedPropertyHeaderRow />
             {values.properties.map((property, index) => (
               <SelectedPropertyRow
@@ -105,7 +128,22 @@ const ResearchProperties: React.FC<IResearchPropertiesProps> = () => {
                 onRemove={() => remove(index)}
                 nameSpace={`properties.${index}`}
                 index={index}
-                property={property.toFeatureDataset()}
+                property={property}
+                canUploadShapefile={true}
+                onUploadShapefile={(result: UploadResponseModel | null) => {
+                  const updatedFormProperty = addShapeToProperty(property, result);
+                  replace(index, updatedFormProperty);
+                }}
+                onRemoveShapefile={() => {
+                  removeShapeFromPropertyWithConfirmation(
+                    property,
+                    setModalContent,
+                    setDisplayModal,
+                    updatedProperty => {
+                      replace(index, updatedProperty);
+                    },
+                  );
+                }}
               />
             ))}
             {values.properties.length === 0 && <span>No Properties selected</span>}

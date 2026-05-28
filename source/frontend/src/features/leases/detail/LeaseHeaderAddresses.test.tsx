@@ -51,6 +51,7 @@ describe('LeaseHeaderAddresses component', () => {
     expect(text).toHaveLength(2);
     expect(getByText('[+1 more...]')).toBeVisible();
   });
+
   it('formats addresses as expected', async () => {
     const { getByText, getAllByText } = setup({
       propertyLeases: [

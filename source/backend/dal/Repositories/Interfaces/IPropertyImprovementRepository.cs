@@ -8,9 +8,14 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IPropertyImprovementRepository : IRepository<PimsPropertyImprovement>
     {
-
         IEnumerable<PimsPropertyImprovement> GetByPropertyId(long propertyId);
 
-        IEnumerable<PimsPropertyImprovement> Update(long propertyId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements);
+        PimsPropertyImprovement Add(PimsPropertyImprovement propertyImprovement);
+
+        PimsPropertyImprovement Get(long propertyId, long propertyImprovementId);
+
+        PimsPropertyImprovement Update(long propertyId, PimsPropertyImprovement propertyImprovement);
+
+        bool TryDelete(long propertyId, long propertyImprovementId);
     }
 }

@@ -498,7 +498,10 @@ namespace Pims.Api.Test.Services
                 new PimsAcquisitionFile()
                 {
                     TotalAllowableCompensation = 100,
-                    AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString()
+                    AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString(),
+                    ProductId = 1,
+                    ProjectId = 1,
+                    Project = new PimsProject() { Code = "Test Project", BusinessFunctionCodeId = 100, WorkActivityCodeId = 200, CostTypeCodeId = 300 }
                 });
 
             var currentCompensationStub = new PimsCompensationRequisition
@@ -849,7 +852,7 @@ namespace Pims.Api.Test.Services
                 Internal_Id = 1,
                 AcquisitionFileId = 1,
                 ConcurrencyControlNumber = 2,
-                IsDraft = false,
+                IsDraft = true,
                 PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 200 } },
             });
 

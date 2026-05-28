@@ -1,10 +1,13 @@
 import { FormikProps } from 'formik';
+import { http, HttpResponse } from 'msw';
 import { createRef } from 'react';
 
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import { IAutocompletePrediction } from '@/interfaces/IAutocomplete';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { mockManagementFileResponse } from '@/mocks/managementFiles.mock';
+import { server } from '@/mocks/msw/server';
+import { getUserMock } from '@/mocks/user.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, render, RenderOptions, userEvent, waitFor, waitForEffects } from '@/utils/test-utils';
 
@@ -76,6 +79,10 @@ describe('UpdateManagementForm component', () => {
   let initialValues: ManagementFormModel;
 
   beforeEach(() => {
+    server.use(
+      http.get('/api/users/info/*', () => HttpResponse.json(getUserMock(), { status: 200 })),
+    );
+
     initialValues = ManagementFormModel.fromApi(mockManagementFileResponse());
   });
 

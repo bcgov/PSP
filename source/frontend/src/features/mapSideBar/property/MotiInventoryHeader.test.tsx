@@ -4,7 +4,7 @@ import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistorica
 import { getMockPimsLocationViewLayerResponse } from '@/mocks/data.mock';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { getEmptyProperty } from '@/models/defaultInitializers';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import { PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import { act, render, RenderOptions, RenderResult } from '@/utils/test-utils';
 
 import { ComposedProperty } from './ComposedProperty';
@@ -136,7 +136,7 @@ describe('MotiInventoryHeader component', () => {
   });
 
   it('displays DISPOSED indicator for retired properties', async () => {
-    const testProperty: Feature<Geometry, PIMS_Property_Location_View> =
+    const testProperty: Feature<Geometry, PIMS_Property_View> =
       getMockPimsLocationViewLayerResponse().features[0];
     testProperty.properties = { ...testProperty.properties, IS_DISPOSED: true };
 

@@ -31,7 +31,7 @@ const NoticeGenerateContainer: React.FunctionComponent<
   >([]);
 
   const {
-    getAcquisitionFile: { execute: getAcquisitionFile, loading: loadingProperties },
+    getAcquisitionFile: { execute: getAcquisitionFile, loading: loadingFile },
     getAcquisitionOwners: {
       execute: retrieveAcquisitionFileOwners,
       loading: loadingAcquisitionFileOwners,
@@ -80,8 +80,8 @@ const NoticeGenerateContainer: React.FunctionComponent<
   };
 
   const isLoading = useMemo(
-    () => loadingAcquisitionFileOwners || loadingProperties,
-    [loadingAcquisitionFileOwners, loadingProperties],
+    () => loadingAcquisitionFileOwners || loadingFile,
+    [loadingAcquisitionFileOwners, loadingFile],
   );
 
   return (

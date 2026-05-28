@@ -93,7 +93,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToDepositSection()
         {
-            Wait();
+            WaitUntilClickable(licenseDepositsLink);
             webDriver.FindElement(licenseDepositsLink).Click();
         }
 
@@ -111,7 +111,7 @@ namespace PIMS.Tests.Automation.PageObjects
         public void AddDeposit(Deposit deposit)
         {
             WaitUntilClickable(licenseDepositAddTypeSelect);
-            ChooseSpecificSelectOption(licenseDepositAddTypeSelect, deposit.DepositType);
+            ChooseSelectOption(licenseDepositAddTypeSelect, deposit.DepositType);
 
             WaitUntilVisible(licenseDepositAddDescriptionTextarea);
             if (webDriver.FindElements(licenseDepositAddOtherTypeInput).Count() > 0)
@@ -159,7 +159,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void AddNotes(string notes)
         {
-            Wait();
+            WaitUntilClickable(licenseDepositEditNotesBttn);
             FocusAndClick(licenseDepositEditNotesBttn);
 
             WaitUntilVisible(licenseDepositNotesTextarea);
@@ -168,7 +168,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void DeleteFirstReturn()
         {
-            Wait();
+            WaitUntilClickable(licenseDepositReturn1stRowDeleteBttn);
             FocusAndClick(licenseDepositReturn1stRowDeleteBttn);
 
             WaitUntilVisible(licenseDepositModal);
@@ -182,10 +182,9 @@ namespace PIMS.Tests.Automation.PageObjects
             Wait();
             var totalDeposits = webDriver.FindElements(licenseDepositTableTotal).Count;
 
-            Wait();
-            webDriver.FindElement(By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") button[title='edit deposit']")).Click();
+            SafeClick(By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") button[title='edit deposit']"));
 
-            ChooseSpecificSelectOption(licenseDepositAddTypeSelect, deposit.DepositType);
+            ChooseSelectOption(licenseDepositAddTypeSelect, deposit.DepositType);
 
             WaitUntilVisible(licenseDepositAddDescriptionTextarea);
             if (webDriver.FindElements(licenseDepositAddOtherTypeInput).Count() > 0)
@@ -278,7 +277,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreatedDepositTable(Deposit deposit)
         {
-            Wait(5000);
+            Wait();
             var totalDeposits = webDriver.FindElements(licenseDepositTableTotal).Count;
 
             var licenseDepositTableLastRowDepositTypeContent = By.CssSelector("div[data-testid='securityDepositsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalDeposits +") div[class='td']:nth-child(1)");
@@ -342,7 +341,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreatedReturnTable(Deposit deposit)
         {
-            Wait(3000);
+            Wait();
             var totalReturns = webDriver.FindElements(licenseDepositReturnTableTotal).Count;
 
             var licenseDepositReturnTableLastRowDepositTypeContent = By.CssSelector("div[data-testid='securityDepositReturnsTable'] div[class='tbody'] div[class='tr-wrapper']:nth-child("+ totalReturns + ") div[class='td']:nth-child(1)");

@@ -7,7 +7,7 @@ namespace Pims.Dal.Repositories
 {
     public interface IAcquisitionFileRepository : IRepository
     {
-        Paged<PimsAcquisitionFile> GetPageDeep(AcquisitionFilter filter, HashSet<short> regions, long? contractorPersonId = null);
+        Paged<PimsAcquisitionFile> GetPageDeep(AcquisitionFilter filter, long? contractorPersonId = null);
 
         PimsAcquisitionFile GetById(long id);
 
@@ -25,15 +25,19 @@ namespace Pims.Dal.Repositories
 
         short GetRegion(long id);
 
+        bool LegacyFileNumberExists(string legacyFileNo);
+
+        bool CheckDuplicateFile(short regionCode, int fileNo, short fileNoSuffix = 1);
+
         List<PimsAcquisitionFile> GetByProductId(long productId);
 
         PimsAcquisitionFile GetByAcquisitionFilePropertyId(long acquisitionFilePropertyId);
 
         PimsProperty GetProperty(long acquisitionFilePropertyId);
 
-        List<PimsAcquisitionFile> GetAcquisitionFileExportDeep(AcquisitionFilter filter, HashSet<short> regions, long? contractorPersonId = null);
+        List<PimsAcquisitionFile> GetAcquisitionFileExportDeep(AcquisitionFilter filter, long? contractorPersonId = null);
 
-        List<PimsAcquisitionFile> GetAcquisitionSubFiles(long acquisitionFileId, HashSet<short> regions, long? contractorPersonId = null);
+        List<PimsAcquisitionFile> GetAcquisitionSubFiles(long acquisitionFileId, long? contractorPersonId = null);
 
         PimsAcquisitionFile GetAcquisitionAtTime(long acquisitionFileId, DateTime time);
     }

@@ -142,34 +142,32 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateoffersAndSaleTab()
         {
-            Wait();
+            WaitUntilClickable(offersAndSaleTab);
             webDriver.FindElement(offersAndSaleTab).Click();
         }
 
         public void EditAppraisalAndAssessmentButton()
         {
-            Wait();
+            WaitUntilClickable(dispositionAppraisalEditButton);
             webDriver.FindElement(dispositionAppraisalEditButton).Click();
         }
 
         public void EditSalesDetailsButton()
         {
-            Wait(2000);
-            webDriver.FindElement(dispositionSalesDetailsEditButton).Click();
+            SafeClick(dispositionSalesDetailsEditButton);
         }
 
         public void SaveDispositionFileOffersAndSale()
         {
-            Wait();
             ButtonElement("Save");
         }
 
         public void DeleteOffer(int index)
         {
-            Wait();
+            WaitUntilClickable(By.CssSelector("button[data-testid='Offer["+ index +"].delete-btn']"));
             webDriver.FindElement(By.CssSelector("button[data-testid='Offer["+ index +"].delete-btn']")).Click();
 
-            Wait();
+            WaitUntilVisible(dispositionFileConfirmationModal);
             if (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
             {
                 Assert.Equal("Delete Offer", sharedModals.ModalHeader());
@@ -182,7 +180,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CancelDispositionFileOffersAndSale()
         {
-            Wait();
             ButtonElement("Cancel");
 
             if (webDriver.FindElements(dispositionFileConfirmationModal).Count() > 0)
@@ -199,7 +196,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateNewAppraisalAndAssessment(DispositionFile dispositionFile)
         {
-            Wait();
+            WaitUntilClickable(dispositionAppraisalValueInput);
 
             webDriver.FindElement(dispositionAppraisalValueInput).SendKeys(dispositionFile.AppraisalAndAssessmentValue);
 
@@ -223,14 +220,14 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void CreateNewOffer(DispositionOfferAndSale offer)
         {
-            Wait();
+            WaitUntilClickable(addOffersButton);
             webDriver.FindElement(addOffersButton).Click();
 
             VerifyInitOfferForm();
 
-            Wait();
+            WaitUntilClickable(dispositionOfferStatusSelect);
             if(offer.OfferOfferStatus != "")
-                ChooseSpecificSelectOption(dispositionOfferStatusSelect, offer.OfferOfferStatus);
+                ChooseSelectOption(dispositionOfferStatusSelect, offer.OfferOfferStatus);
 
             if (offer.OfferOfferName != "")
                 webDriver.FindElement(dispositionOfferNameInput).SendKeys(offer.OfferOfferName);
@@ -262,7 +259,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateAppraisalAndAssessment(DispositionFile dispositionFile)
         {
-            Wait();
+            WaitUntilClickable(dispositionAppraisalValueInput);
             if (dispositionFile.AppraisalAndAssessmentValue != "")
             {
                 ClearInput(dispositionAppraisalValueInput);
@@ -298,12 +295,12 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void UpdateOffers(DispositionOfferAndSale offerUpdate, int index) {
 
-            Wait(5000);
+            WaitUntilClickable(By.CssSelector("button[data-testid='Offer["+ index +"].edit-btn']"));
             webDriver.FindElement(By.CssSelector("button[data-testid='Offer["+ index +"].edit-btn']")).Click();
 
-            Wait();
+            WaitUntilClickable(dispositionOfferStatusSelect);
             if(offerUpdate.OfferOfferStatus != "")
-                ChooseSpecificSelectOption(dispositionOfferStatusSelect, offerUpdate.OfferOfferStatus);
+                ChooseSelectOption(dispositionOfferStatusSelect, offerUpdate.OfferOfferStatus);
 
             if (offerUpdate.OfferOfferName != "")
             {
@@ -344,7 +341,6 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 webDriver.FindElement(dispositionSalesDetails1stPurchaserNameDeleteBttn).Click();
 
-                Wait();
                 Assert.Equal("Remove Purchaser", sharedModals.ModalHeader());
                 Assert.Equal("Do you wish to remove this purchaser?", sharedModals.ModalContent());
 
@@ -364,9 +360,9 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedSelectContact.SelectContact(dispositionFile.PurchaserAgent, dispositionFile.PurchaserAgentType);
             }
 
-            Wait();
+            Wait(500);
             if (webDriver.FindElements(dispositionSalesDetailsPurchaserAgentPrimaryContactSelect).Count > 0)
-                ChooseSpecificSelectOption(dispositionSalesDetailsPurchaserAgentPrimaryContactSelect, dispositionFile.PurchaserAgentPrimaryContact);
+                ChooseSelectOption(dispositionSalesDetailsPurchaserAgentPrimaryContactSelect, dispositionFile.PurchaserAgentPrimaryContact);
 
             if (dispositionFile.PurchaserSolicitor != "")
             {
@@ -375,9 +371,9 @@ namespace PIMS.Tests.Automation.PageObjects
                 sharedSelectContact.SelectContact(dispositionFile.PurchaserSolicitor, dispositionFile.PurchaserSolicitorType);
             }
 
-            Wait();
+            Wait(500);
             if (webDriver.FindElements(dispositionSalesDetailsPurchaserSolicitorPrimaryContactSelect).Count > 0)
-                ChooseSpecificSelectOption(dispositionSalesDetailsPurchaserSolicitorPrimaryContactSelect, dispositionFile.PurchaserSolicitorPrimaryContact);
+                ChooseSelectOption(dispositionSalesDetailsPurchaserSolicitorPrimaryContactSelect, dispositionFile.PurchaserSolicitorPrimaryContact);
 
             if (dispositionFile.LastConditionRemovalDate != "")
             {
@@ -410,9 +406,9 @@ namespace PIMS.Tests.Automation.PageObjects
                 webDriver.FindElement(dispositionSalesDetailsRealtorCommissionInput).SendKeys(dispositionFile.RealtorCommission);
             }
 
-            ChooseSpecificSelectOption(dispositionSalesDetailsGSTSelect, dispositionFile.GSTRequired);
+            ChooseSelectOption(dispositionSalesDetailsGSTSelect, dispositionFile.GSTRequired);
 
-            Wait();
+            Wait(500);
             if (webDriver.FindElements(dispositionFileConfirmationModal).Count > 0)
             {
                 Assert.Equal("Confirm Change", sharedModals.ModalHeader());
@@ -564,7 +560,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifyCreatedOffer(DispositionOfferAndSale offer, int index)
         {
-            Wait();
             var totalOffers = index + 1;
 
             AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Offers')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ totalOffers +"]/div/div/label[contains(text(),'Offer status')]"));
@@ -587,8 +582,6 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(By.XPath("//div[contains(text(),'Offers')]/parent::div/parent::div/parent::div/parent::h2/following-sibling::div/div["+ totalOffers +"]/div/div/label[contains(text(),'Comments')]"));
             if(offer.OfferNotes != "")
                 AssertTrueContentEquals(By.CssSelector("div[data-testid='offer["+ index +"].notes']"), offer.OfferNotes);
-
-
         }
 
         public void VerifyCreatedSalesDetails(DispositionFile disposition)
@@ -664,7 +657,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void VerifySalePriceError()
         {
-            Wait();
             Assert.Equal("Error", sharedModals.ModalHeader());
             Assert.Equal("You have not added a Sales Price. Please add a Sales Price before completion.", sharedModals.ModalContent());
         }
@@ -696,7 +688,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void AddPurchaseNames(PurchaseMember purchaseMember, int index)
         {
-            Wait();
+            WaitUntilClickable(dispositionSalesDetailsPurchaserNameLink);
             FocusAndClick(dispositionSalesDetailsPurchaserNameLink);
 
             FocusAndClick(By.CssSelector("div[data-testid='purchaserRow["+ index +"]'] button[title='Select Contact']"));

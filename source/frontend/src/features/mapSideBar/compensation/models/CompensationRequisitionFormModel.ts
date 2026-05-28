@@ -9,6 +9,7 @@ import { ApiGen_Concepts_CompReqAcquisitionProperty } from '@/models/api/generat
 import { ApiGen_Concepts_CompReqLeaseProperty } from '@/models/api/generated/ApiGen_Concepts_CompReqLeaseProperty';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
+import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { exists, isValidId, isValidIsoDateTime } from '@/utils';
 import { stringToNull } from '@/utils/formUtils';
@@ -34,6 +35,7 @@ export class CompensationRequisitionFormModel {
   financials: FinancialActivityFormModel[] = [];
   payees: PayeeOption[] = [];
   alternateProject: IAutocompletePrediction | null = null;
+  alternateProjectConcept: ApiGen_Concepts_Project | null = null;
   selectedProperties: ApiGen_Concepts_FileProperty[] = [];
   isPaymentInTrust = false;
   pretaxAmount = 0;
@@ -173,6 +175,7 @@ export class CompensationRequisitionFormModel {
             text: apiModel.alternateProject?.description || '',
           }
         : null;
+    compensation.alternateProjectConcept = apiModel.alternateProject ?? null;
     compensation.agreementDateTime = apiModel.agreementDate || '';
     compensation.generationDateTime = apiModel.generationDate || '';
     compensation.specialInstruction = apiModel.specialInstruction || '';

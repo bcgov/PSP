@@ -31,6 +31,8 @@ namespace Pims.Dal.Repositories
 
         PimsProperty Update(PimsProperty property, bool overrideLocation = false, bool allowRetired = false);
 
+        PimsProperty UpdateNetBook(PimsProperty property);
+
         PimsProperty UpdatePropertyManagement(PimsProperty property);
 
         void Delete(PimsProperty property);

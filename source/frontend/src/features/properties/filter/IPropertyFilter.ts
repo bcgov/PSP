@@ -21,6 +21,8 @@ export interface IPropertyFilter {
   historical: string;
   /** The address of the property. */
   address: string;
+  /** The legal description of the property. */
+  legalDescription: string | null;
   /** The geocoder-returned latitude  */
   latitude: number | string | undefined;
   /** The geocoder-returned longitude  */
@@ -58,6 +60,7 @@ export const defaultPropertyFilter: IPropertyFilter = {
   pin: '',
   address: '',
   planNumber: '',
+  legalDescription: null,
   latitude: '',
   longitude: '',
   historical: '',

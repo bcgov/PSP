@@ -67,19 +67,19 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
   overflow: hidden;
 }
 
-.c5 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c4 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c5 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c7.required::before {
@@ -123,6 +123,15 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
         role="tab"
       >
         File Details
+      </a>
+      <a
+        aria-selected="false"
+        class="nav-item nav-link"
+        data-rb-event-key="improvements"
+        href="#"
+        role="tab"
+      >
+        Improvements
       </a>
       <a
         aria-selected="false"

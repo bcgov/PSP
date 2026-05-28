@@ -4,7 +4,7 @@ import { useCallback, useContext } from 'react';
 import { IGeoSearchParams } from '@/constants/API';
 import CustomAxios from '@/customAxios';
 import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
-import { PIMS_Property_Location_View } from '@/models/layers/pimsPropertyLocationView';
+import { PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import { TenantContext } from '@/tenants';
 
 import { toCqlFilter } from '../layer-api/layerUtils';
@@ -26,7 +26,7 @@ export const useMapProperties = () => {
       const url = `${propertiesUrl}${
         geoserver_params ? toCqlFilter(geoserver_params, params?.forceExactMatch) : ''
       }`;
-      return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_Location_View>>(url);
+      return CustomAxios().get<FeatureCollection<Geometry, PIMS_Property_View>>(url);
     },
     [propertiesUrl],
   );

@@ -23,6 +23,7 @@ export enum FileTabType {
   NOTES = 'notes',
   FORMS = 'forms',
   AGREEMENTS = 'agreements',
+  IMPROVEMENTS = 'improvements',
   COMPENSATIONS = 'compensations',
   STAKEHOLDERS = 'stakeholders',
   EXPROPRIATION = 'expropriation',

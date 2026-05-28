@@ -5,8 +5,11 @@ import { ApiGen_Concepts_PropertyImprovement } from '@/models/api/generated/ApiG
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
 import {
-  getPropertyImprovements,
-  updatePropertyImprovements,
+  deletePropertyImprovementsApi,
+  getPropertyImprovementApi,
+  getPropertyImprovementsApi,
+  postPropertyImprovementsApi,
+  putPropertyImprovementsApi,
 } from '../pims-api/useApiPropertyImprovements';
 import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
 
@@ -14,11 +17,11 @@ import { useApiRequestWrapper } from '../util/useApiRequestWrapper';
  * hook that interacts with the property improvements API.
  */
 export const usePropertyImprovementRepository = () => {
-  const getPropertyImprovementsApi = useApiRequestWrapper<
-    (leaseId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyImprovement[], any>>
+  const getPropertyImprovements = useApiRequestWrapper<
+    (propertyId: number) => Promise<AxiosResponse<ApiGen_Concepts_PropertyImprovement[], any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number) => await getPropertyImprovements(leaseId),
+      async (propertyId: number) => await getPropertyImprovementsApi(propertyId),
       [],
     ),
     requestName: 'getPropertyImprovements',
@@ -26,27 +29,82 @@ export const usePropertyImprovementRepository = () => {
     onError: useAxiosErrorHandler(),
   });
 
-  const updatePropertyImprovementsApi = useApiRequestWrapper<
+  const postPropertyImprovement = useApiRequestWrapper<
     (
-      leaseId: number,
-      improvements: ApiGen_Concepts_PropertyImprovement[],
-    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyImprovement[], any>>
+      propertyId: number,
+      propertyImprovement: ApiGen_Concepts_PropertyImprovement,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyImprovement, any>>
   >({
     requestFunction: useCallback(
-      async (leaseId: number, improvements: ApiGen_Concepts_PropertyImprovement[]) =>
-        await updatePropertyImprovements(leaseId, improvements),
+      async (propertyId: number, improvement: ApiGen_Concepts_PropertyImprovement) =>
+        await postPropertyImprovementsApi(propertyId, improvement),
       [],
     ),
-    requestName: 'updatePropertyImprovements',
+    requestName: 'postPropertyImprovement',
+    onError: useAxiosErrorHandler('Failed to create Property Improvement'),
+  });
+
+  const getPropertyImprovement = useApiRequestWrapper<
+    (
+      propertyId: number,
+      propertyImprovementId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyImprovement, any>>
+  >({
+    requestFunction: useCallback(
+      async (propertyId: number, propertyImprovementId: number) =>
+        await getPropertyImprovementApi(propertyId, propertyImprovementId),
+      [],
+    ),
+    requestName: 'getPropertyImprovement',
     onSuccess: useAxiosSuccessHandler(),
-    onError: useAxiosErrorHandler(),
+    onError: useAxiosErrorHandler('Failed to get Property Improvement by Id'),
+  });
+
+  const putPropertyImprovement = useApiRequestWrapper<
+    (
+      propertyId: number,
+      propertyImprovementId: number,
+      propertyImprovement: ApiGen_Concepts_PropertyImprovement,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_PropertyImprovement, any>>
+  >({
+    requestFunction: useCallback(
+      async (
+        propertyId: number,
+        propertyImprovementId: number,
+        improvement: ApiGen_Concepts_PropertyImprovement,
+      ) => await putPropertyImprovementsApi(propertyId, propertyImprovementId, improvement),
+      [],
+    ),
+    requestName: 'putPropertyImprovement',
+    onError: useAxiosErrorHandler('Failed to update Property Improvement'),
+  });
+
+  const deletePropertyImprovement = useApiRequestWrapper<
+    (propertyId: number, propertyImprovementId: number) => Promise<AxiosResponse<boolean, any>>
+  >({
+    requestFunction: useCallback(
+      async (propertyId: number, propertyImprovementId: number) =>
+        await deletePropertyImprovementsApi(propertyId, propertyImprovementId),
+      [],
+    ),
+    requestName: 'deletePropertyImprovement',
+    onError: useAxiosErrorHandler('Failed to delete Property Improvement'),
   });
 
   return useMemo(
     () => ({
-      getPropertyImprovements: getPropertyImprovementsApi,
-      updatePropertyImprovements: updatePropertyImprovementsApi,
+      getPropertyImprovements,
+      postPropertyImprovement,
+      getPropertyImprovement,
+      putPropertyImprovement,
+      deletePropertyImprovement,
     }),
-    [getPropertyImprovementsApi, updatePropertyImprovementsApi],
+    [
+      deletePropertyImprovement,
+      getPropertyImprovement,
+      getPropertyImprovements,
+      postPropertyImprovement,
+      putPropertyImprovement,
+    ],
   );
 };

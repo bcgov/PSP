@@ -1,6 +1,8 @@
+using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.Organization;
+using Pims.Api.Models.Concepts.Person;
 using System;
 using System.Collections.Generic;
-using Pims.Api.Models.Base;
 
 namespace Pims.Api.Models.Concepts.Property
 {
@@ -54,5 +56,35 @@ namespace Pims.Api.Models.Concepts.Property
         /// The active lease has expiry date.
         /// </summary>
         public bool? ActiveLeaseHasExpiryDate { get; set; }
+
+        /// <summary>
+        /// Responsible payer PersonId.
+        /// </summary>
+        public long? ResponsiblePayerPersonId { get; set; }
+
+        /// <summary>
+        /// Responsible payer Person.
+        /// </summary>
+        public PersonModel ResponsiblePayerPerson { get; set; }
+
+        /// <summary>
+        /// Responsible payer Organization Id.
+        /// </summary>
+        public long? ResponsiblePayerOrganizationId { get; set; }
+
+        /// <summary>
+        /// Responsible payer Organization.
+        /// </summary>
+        public OrganizationModel ResponsiblePayerOrganization { get; set; }
+
+        /// <summary>
+        /// Responsible payer Organization primary contact Id.
+        /// </summary>
+        public long? ResponsiblePayerPrimaryContactId { get; set; }
+
+        /// <summary>
+        /// Responsible payer Organization primary contact person.
+        /// </summary>
+        public PersonModel ResponsiblePayerPrimaryContact { get; set; }
     }
 }

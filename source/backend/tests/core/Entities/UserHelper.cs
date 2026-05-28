@@ -14,10 +14,11 @@ namespace Pims.Core.Test
         /// Create a new instance of an AccessRequest for a default user.
         /// </summary>
         /// <param name="username"></param>
+        /// <param name="isContractor"></param>
         /// <returns></returns>
-        public static Entity.PimsUser CreateUser(string username)
+        public static Entity.PimsUser CreateUser(string username, bool isContractor = false)
         {
-            return CreateUser(1, Guid.NewGuid(), username);
+            return CreateUser(1, Guid.NewGuid(), username, isContractor: isContractor);
         }
 
         /// <summary>

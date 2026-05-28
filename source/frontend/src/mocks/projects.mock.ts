@@ -1,5 +1,6 @@
 import { ApiGen_Concepts_FinancialCode } from '@/models/api/generated/ApiGen_Concepts_FinancialCode';
 import { ApiGen_Concepts_FinancialCodeTypes } from '@/models/api/generated/ApiGen_Concepts_FinancialCodeTypes';
+import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { ApiGen_Concepts_ProjectPerson } from '@/models/api/generated/ApiGen_Concepts_ProjectPerson';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
@@ -185,5 +186,52 @@ export const getMockProjectPerson = (
     firstName: name,
     surname: lastname,
   },
+  ...getEmptyBaseAudit(1),
+});
+
+export const getMockProduct = (): ApiGen_Concepts_Product => ({
+  id: 1,
+  projectProducts: [],
+  acquisitionFiles: [],
+  code: 'PROD-A',
+  description: 'Product A',
+  startDate: '2023-02-01T00:00:00',
+  costEstimate: 60.0,
+  costEstimateDate: '2023-02-02T00:00:00',
+  objective: 'Objective of Product A',
+  scope: 'Scope of Product A',
+  ...getEmptyBaseAudit(1),
+});
+
+export const getMockProjectCostType = (): ApiGen_Concepts_FinancialCode => ({
+  id: 1,
+  type: ApiGen_Concepts_FinancialCodeTypes.CostType,
+  code: 'HWY PLAN',
+  description: 'HIGHWAY PLANNING',
+  displayOrder: 2,
+  effectiveDate: '1999-11-22T18:22:17',
+  expiryDate: null,
+  ...getEmptyBaseAudit(1),
+});
+
+export const getMockProjectBusinessFunction = (): ApiGen_Concepts_FinancialCode => ({
+  id: 2,
+  type: ApiGen_Concepts_FinancialCodeTypes.BusinessFunction,
+  code: 'FERRIES',
+  description: 'FERRY SERVICES',
+  displayOrder: 3,
+  effectiveDate: '1990-01-01T00:00:00',
+  expiryDate: null,
+  ...getEmptyBaseAudit(1),
+});
+
+export const getMockProjectWorkActivity = (): ApiGen_Concepts_FinancialCode => ({
+  id: 3,
+  type: ApiGen_Concepts_FinancialCodeTypes.WorkActivity,
+  code: 'SURVEY',
+  description: 'SURVEY',
+  displayOrder: 4,
+  effectiveDate: '1990-01-01T00:00:00',
+  expiryDate: null,
   ...getEmptyBaseAudit(1),
 });

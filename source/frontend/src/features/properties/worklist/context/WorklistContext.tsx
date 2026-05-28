@@ -55,7 +55,7 @@ export function WorklistContextProvider({
       setParcels(prev => {
         const alreadyExists = prev.some(p => areParcelsEqual(p, parcel));
         if (alreadyExists) {
-          notifier.error('Duplicate parcel detected. Add to worklist skipped.');
+          notifier.error('Duplicate parcel detected. Add to working list skipped.');
           return prev;
         }
         return [...prev, parcel];

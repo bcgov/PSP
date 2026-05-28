@@ -2,11 +2,8 @@ import axios from 'axios';
 import MockAdapter from 'axios-mock-adapter';
 
 import Claims from '@/constants/claims';
-import {
-  mockDocumentBatchUploadResponse,
-  mockDocumentsResponse,
-  mockDocumentTypesResponse,
-} from '@/mocks/documents.mock';
+import { mockDocumentBatchUploadResponse, mockDocumentsResponse } from '@/mocks/documents.mock';
+import { mockDocumentTypesResponse } from '@/mocks/documentTypes.mock';
 import { mockLookups } from '@/mocks/index.mock';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -20,8 +17,8 @@ import {
   userEvent,
 } from '@/utils/test-utils';
 
-import { DocumentListView, IDocumentListViewProps } from './DocumentListView';
 import { DocumentRow } from '../models/DocumentRow';
+import { DocumentListView, IDocumentListViewProps } from './DocumentListView';
 
 const mockAxios = new MockAdapter(axios);
 const storeState = {

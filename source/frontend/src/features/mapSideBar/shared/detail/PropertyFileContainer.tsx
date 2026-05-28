@@ -133,6 +133,7 @@ export const PropertyFileContainer: React.FunctionComponent<
   tabViews.push({
     content: (
       <BcAssessmentTabView
+        property={composedProperties?.apiWrapper?.response}
         summaryData={composedProperties.bcAssessmentWrapper?.response}
         requestedOn={composedProperties.bcAssessmentWrapper?.requestedOn}
         loading={composedProperties.bcAssessmentWrapper?.loading ?? false}
@@ -143,7 +144,7 @@ export const PropertyFileContainer: React.FunctionComponent<
     name: 'Value',
   });
 
-  if (props.fileContext === ApiGen_CodeTypes_FileTypes.Research) {
+  if (props.fileContext === ApiGen_CodeTypes_FileTypes.Research && hasClaim(Claims.RESEARCH_VIEW)) {
     tabViews.push({
       content: (
         <PropertyResearchTabView
@@ -157,7 +158,7 @@ export const PropertyFileContainer: React.FunctionComponent<
     });
   }
 
-  if (props.fileContext === ApiGen_CodeTypes_FileTypes.Management) {
+  if (hasClaim(Claims.MANAGEMENT_VIEW)) {
     tabViews.push({
       content: (
         <PropertyManagementTabView
@@ -297,7 +298,10 @@ export const PropertyFileContainer: React.FunctionComponent<
     }
   }
 
-  if (props.fileContext === ApiGen_CodeTypes_FileTypes.Acquisition) {
+  if (
+    props.fileContext === ApiGen_CodeTypes_FileTypes.Acquisition &&
+    hasClaim(Claims.ACQUISITION_VIEW)
+  ) {
     tabViews.push({
       content: (
         <TakesDetailContainer

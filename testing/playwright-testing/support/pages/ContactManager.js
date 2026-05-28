@@ -17,8 +17,14 @@ class ContactManager {
   async navigateContactsListView() {
     clickAndWaitFor(
       this.page,
-      "div[data-testid='nav-tooltip-contacts'] a",
+      "div[data-testid='nav-tooltip-project'] a",
       "div[data-testid='side-tray']"
+    );
+
+    clickAndWaitFor(
+      this.page,
+      "div[data-testid='nav-tooltip-contacts'] a",
+      "//a[text()='Manage Contacts']"
     );
     await this.page.locator("//a[text()='Manage Contacts']").click();
   }

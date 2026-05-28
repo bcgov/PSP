@@ -6,16 +6,215 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
     class="Toastify"
   />
   <div />
-  .c0 {
-  background-color: #f2f2f2;
-  padding-top: 1rem;
+  .c5.btn {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  -webkit-box-pack: center;
+  -webkit-justify-content: center;
+  -ms-flex-pack: center;
+  justify-content: center;
+  padding: 0.4rem 1.2rem;
+  border: 0.2rem solid transparent;
+  border-radius: 0.4rem;
+  text-align: center;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  font-size: 1.8rem;
+  font-family: 'BCSans','Noto Sans',Verdana,Arial,sans-serif;
+  font-weight: 700;
+  -webkit-letter-spacing: 0.1rem;
+  -moz-letter-spacing: 0.1rem;
+  -ms-letter-spacing: 0.1rem;
+  letter-spacing: 0.1rem;
+  cursor: pointer;
 }
 
-.c3 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
+.c5.btn .Button__value {
+  width: auto;
+}
+
+.c5.btn:hover {
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  opacity: 0.8;
+}
+
+.c5.btn:focus {
+  outline-width: 2px;
+  outline-style: solid;
+  outline-color: #2E5DD7;
+  outline-offset: 2px;
+  box-shadow: none;
+}
+
+.c5.btn.btn-primary {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c5.btn.btn-primary:hover,
+.c5.btn.btn-primary:active,
+.c5.btn.btn-primary:focus {
+  background-color: #1E5189;
+}
+
+.c5.btn.btn-secondary {
+  color: #013366;
+  background: none;
+  border-color: #013366;
+}
+
+.c5.btn.btn-secondary:hover,
+.c5.btn.btn-secondary:active,
+.c5.btn.btn-secondary:focus {
+  color: #FFFFFF;
+  background-color: #013366;
+}
+
+.c5.btn.btn-info {
+  color: #9F9D9C;
+  border: none;
+  background: none;
+  padding-left: 0.6rem;
+  padding-right: 0.6rem;
+}
+
+.c5.btn.btn-info:hover,
+.c5.btn.btn-info:active,
+.c5.btn.btn-info:focus {
+  color: var(--surface-color-primary-button-hover);
+  background: none;
+}
+
+.c5.btn.btn-light {
+  color: #FFFFFF;
+  background-color: #606060;
+  border: none;
+}
+
+.c5.btn.btn-light:hover,
+.c5.btn.btn-light:active,
+.c5.btn.btn-light:focus {
+  color: #FFFFFF;
+  background-color: #606060;
+}
+
+.c5.btn.btn-dark {
+  color: #FFFFFF;
+  background-color: #474543;
+  border: none;
+}
+
+.c5.btn.btn-dark:hover,
+.c5.btn.btn-dark:active,
+.c5.btn.btn-dark:focus {
+  color: #FFFFFF;
+  background-color: #474543;
+}
+
+.c5.btn.btn-danger {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c5.btn.btn-danger:hover,
+.c5.btn.btn-danger:active,
+.c5.btn.btn-danger:focus {
+  color: #FFFFFF;
+  background-color: #CE3E39;
+}
+
+.c5.btn.btn-warning {
+  color: #FFFFFF;
+  background-color: #FCBA19;
+  border-color: #FCBA19;
+}
+
+.c5.btn.btn-warning:hover,
+.c5.btn.btn-warning:active,
+.c5.btn.btn-warning:focus {
+  color: #FFFFFF;
+  border-color: #FCBA19;
+  background-color: #FCBA19;
+}
+
+.c5.btn.btn-link {
+  font-size: 1.6rem;
+  font-weight: 400;
+  color: var(--surface-color-primary-button-default);
+  background: none;
+  border: none;
+  -webkit-text-decoration: none;
+  text-decoration: none;
+  min-height: 2.5rem;
+  line-height: 3rem;
+  -webkit-box-pack: left;
+  -webkit-justify-content: left;
+  -ms-flex-pack: left;
+  justify-content: left;
+  -webkit-letter-spacing: unset;
+  -moz-letter-spacing: unset;
+  -ms-letter-spacing: unset;
+  letter-spacing: unset;
+  text-align: left;
+  padding: 0;
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+}
+
+.c5.btn.btn-link:hover,
+.c5.btn.btn-link:active,
+.c5.btn.btn-link:focus {
+  color: var(--surface-color-primary-button-hover);
+  -webkit-text-decoration: underline;
+  text-decoration: underline;
+  border: none;
+  background: none;
+  box-shadow: none;
+  outline: none;
+}
+
+.c5.btn.btn-link:disabled,
+.c5.btn.btn-link.disabled {
+  color: #9F9D9C;
+  background: none;
+  pointer-events: none;
+}
+
+.c5.btn:disabled,
+.c5.btn:disabled:hover {
+  color: #9F9D9C;
+  background-color: #EDEBE9;
+  box-shadow: none;
+  -webkit-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  pointer-events: none;
+  cursor: not-allowed;
+}
+
+.c5.Button .Button__icon {
+  margin-right: 1.6rem;
+}
+
+.c5.Button--icon-only:focus {
+  outline: none;
+}
+
+.c5.Button--icon-only .Button__icon {
+  margin-right: 0;
+}
+
+.c0 {
+  background-color: #f2f2f2;
+  padding-top: 1rem;
 }
 
 .c1 {
@@ -26,20 +225,64 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
   border-radius: 0.5rem;
 }
 
-.c5.required::before {
+.c3 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c7.required::before {
   content: '*';
   position: absolute;
   top: 0.75rem;
   left: 0rem;
 }
 
-.c4 {
+.c6 {
   font-weight: bold;
 }
 
 .c2 {
   font-size: 1.4rem;
   text-align: center;
+}
+
+.c4 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+}
+
+.c4 .section-title {
+  -webkit-box-flex: 1;
+  -webkit-flex-grow: 1;
+  -ms-flex-positive: 1;
+  flex-grow: 1;
+}
+
+.c4 .section-actions {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-align-items: center;
+  -webkit-box-align: center;
+  -ms-flex-align: center;
+  align-items: center;
+  gap: 1.75rem;
+}
+
+.c4 .section-actions button {
+  margin-bottom: 0.75rem;
 }
 
 <div
@@ -67,6 +310,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
     </div>
     <div
       class="c1 form-section"
+      data-testid="File Initiation"
     >
       <h2
         class="c3"
@@ -77,7 +321,66 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
           <div
             class="align-content-end col"
           >
-            File Initiation
+            <div
+              class="c4"
+            >
+              <div
+                class="section-title"
+              >
+                File Initiation
+              </div>
+              <div
+                class="section-actions"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-section-File Initiation"
+                    name="section-File Initiation"
+                  >
+                    <option
+                      value=""
+                    >
+                      Apply to section
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+                <button
+                  class="c5 Button btn btn-link"
+                  data-testid="apply-to-File Initiation-btn"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    Apply
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </h2>
@@ -91,13 +394,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Pre-acquisition title:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -139,13 +442,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               BC Assessment:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -187,13 +490,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Company search:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -235,13 +538,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Land Title documents or plans:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -283,7 +586,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Property Acquisition (PA) Plan:
               <span>
@@ -311,7 +614,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -350,6 +653,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
     </div>
     <div
       class="c1 form-section"
+      data-testid="Active File Management"
     >
       <h2
         class="c3"
@@ -360,7 +664,66 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
           <div
             class="align-content-end col"
           >
-            Active File Management
+            <div
+              class="c4"
+            >
+              <div
+                class="section-title"
+              >
+                Active File Management
+              </div>
+              <div
+                class="section-actions"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-section-Active File Management"
+                    name="section-Active File Management"
+                  >
+                    <option
+                      value=""
+                    >
+                      Apply to section
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+                <button
+                  class="c5 Button btn btn-link"
+                  data-testid="apply-to-Active File Management-btn"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    Apply
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </h2>
@@ -374,13 +737,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Photos:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -422,13 +785,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Appraisals and reviews:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -470,7 +833,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Other reports:
               <span>
@@ -498,7 +861,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -540,13 +903,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Record of negotiation:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -588,13 +951,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Copies of correspondence:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -636,7 +999,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Spending Authority Approval(s) - SAA:
               <span>
@@ -664,7 +1027,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -706,7 +1069,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Final agreements with owner(s):
               <span>
@@ -734,7 +1097,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -776,13 +1139,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               H120(s) processed for compensation:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -824,13 +1187,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Instructions or documents sent to lawyer:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -872,13 +1235,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Copy of owners' compensation cheque(s):
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -920,13 +1283,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Conditions of Entry (H0443):
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -968,13 +1331,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Conveyance closing documents:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1016,7 +1379,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Registered Plan:
               <span>
@@ -1044,7 +1407,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1086,7 +1449,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Copy of new title:
               <span>
@@ -1114,7 +1477,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1156,13 +1519,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               If this a total take with a surplus, then BCTFA notified:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1201,6 +1564,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
     </div>
     <div
       class="c1 form-section"
+      data-testid="Crown Land"
     >
       <h2
         class="c3"
@@ -1211,7 +1575,66 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
           <div
             class="align-content-end col"
           >
-            Crown Land
+            <div
+              class="c4"
+            >
+              <div
+                class="section-title"
+              >
+                Crown Land
+              </div>
+              <div
+                class="section-actions"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-section-Crown Land"
+                    name="section-Crown Land"
+                  >
+                    <option
+                      value=""
+                    >
+                      Apply to section
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+                <button
+                  class="c5 Button btn btn-link"
+                  data-testid="apply-to-Crown Land-btn"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    Apply
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </h2>
@@ -1221,6 +1644,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
     </div>
     <div
       class="c1 form-section"
+      data-testid="Section 3 - Agreement"
     >
       <h2
         class="c3"
@@ -1231,7 +1655,66 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
           <div
             class="align-content-end col"
           >
-            Section 3 - Agreement
+            <div
+              class="c4"
+            >
+              <div
+                class="section-title"
+              >
+                Section 3 - Agreement
+              </div>
+              <div
+                class="section-actions"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-section-Section 3 - Agreement"
+                    name="section-Section 3 - Agreement"
+                  >
+                    <option
+                      value=""
+                    >
+                      Apply to section
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+                <button
+                  class="c5 Button btn btn-link"
+                  data-testid="apply-to-Section 3 - Agreement-btn"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    Apply
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </h2>
@@ -1245,7 +1728,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Notice of Advanced Payment (Form 8):
               <span>
@@ -1273,7 +1756,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1315,13 +1798,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Release of Claims:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1363,13 +1846,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Conveyance Letter:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1411,13 +1894,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Signed Agreement:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1459,13 +1942,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Title and charges:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1507,13 +1990,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Current year property assessment:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1555,7 +2038,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               ALC order:
               <span>
@@ -1583,7 +2066,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1622,6 +2105,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
     </div>
     <div
       class="c1 form-section"
+      data-testid="Section 6 - Expropriation"
     >
       <h2
         class="c3"
@@ -1632,7 +2116,66 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
           <div
             class="align-content-end col"
           >
-            Section 6 - Expropriation
+            <div
+              class="c4"
+            >
+              <div
+                class="section-title"
+              >
+                Section 6 - Expropriation
+              </div>
+              <div
+                class="section-actions"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-section-Section 6 - Expropriation"
+                    name="section-Section 6 - Expropriation"
+                  >
+                    <option
+                      value=""
+                    >
+                      Apply to section
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+                <button
+                  class="c5 Button btn btn-link"
+                  data-testid="apply-to-Section 6 - Expropriation-btn"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    Apply
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </h2>
@@ -1646,7 +2189,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Copy of expropriation approval packages:
               <span>
@@ -1674,7 +2217,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1716,7 +2259,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Notice of Expropriation (Form 1):
               <span>
@@ -1744,7 +2287,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1786,7 +2329,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Approval of Expropriation (Form 5):
               <span>
@@ -1814,7 +2357,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1856,7 +2399,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Vesting Notice (Form 9):
               <span>
@@ -1884,7 +2427,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1926,13 +2469,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Copies of Affidavits of Service:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -1974,13 +2517,13 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               Release of Claims:
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"
@@ -2019,6 +2562,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
     </div>
     <div
       class="c1 form-section"
+      data-testid="Acquisition Completion"
     >
       <h2
         class="c3"
@@ -2029,7 +2573,66 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
           <div
             class="align-content-end col"
           >
-            Acquisition Completion
+            <div
+              class="c4"
+            >
+              <div
+                class="section-title"
+              >
+                Acquisition Completion
+              </div>
+              <div
+                class="section-actions"
+              >
+                <div
+                  class="form-group"
+                >
+                  <select
+                    class="form-select form-control"
+                    id="input-section-Acquisition Completion"
+                    name="section-Acquisition Completion"
+                  >
+                    <option
+                      value=""
+                    >
+                      Apply to section
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-INCOMP"
+                      value="INCOMP"
+                    >
+                      Incomplete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-COMPLT"
+                      value="COMPLT"
+                    >
+                      Complete
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-NOTAPP"
+                      value="NOTAPP"
+                    >
+                      Not applicable
+                    </option>
+                  </select>
+                </div>
+                <button
+                  class="c5 Button btn btn-link"
+                  data-testid="apply-to-Acquisition Completion-btn"
+                  type="button"
+                >
+                  <div
+                    class="Button__value"
+                  >
+                    Apply
+                  </div>
+                </button>
+              </div>
+            </div>
           </div>
         </div>
       </h2>
@@ -2043,7 +2646,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             class="pr-0 text-left col-7"
           >
             <label
-              class="c4"
+              class="c6"
             >
               File data entered into PIMS:
               <span>
@@ -2071,7 +2674,7 @@ exports[`UpdateChecklist form > renders as expected 1`] = `
             </label>
           </div>
           <div
-            class="c5 text-left col"
+            class="c7 text-left col"
           >
             <div
               class="form-group"

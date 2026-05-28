@@ -220,20 +220,16 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   margin-right: 0;
 }
 
-.c32.c32.btn {
+.c33.c33.btn {
   color: #aaaaaa;
   -webkit-text-decoration: none;
   text-decoration: none;
   line-height: unset;
 }
 
-.c32.c32.btn .text {
-  display: none;
-}
-
-.c32.c32.btn:hover,
-.c32.c32.btn:active,
-.c32.c32.btn:focus {
+.c33.c33.btn:hover,
+.c33.c33.btn:active,
+.c33.c33.btn:focus {
   color: #d8292f;
   -webkit-text-decoration: none;
   text-decoration: none;
@@ -245,13 +241,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
-}
-
-.c32.c32.btn:hover .text,
-.c32.c32.btn:active .text,
-.c32.c32.btn:focus .text {
-  display: inline;
-  line-height: 2rem;
 }
 
 .c17 .react-datepicker__calendar-icon {
@@ -286,7 +275,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   margin-bottom: 2.4rem;
 }
 
-.c33 {
+.c34 {
   color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
@@ -409,7 +398,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   overflow-y: auto;
 }
 
-.c35 {
+.c36 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -419,7 +408,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   z-index: 10;
 }
 
-.c34 {
+.c35 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -433,11 +422,11 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   cursor: pointer;
 }
 
-.c34.is-invalid {
+.c35.is-invalid {
   border: #CE3E39 solid 0.1rem;
 }
 
-.c30 {
+.c31 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -451,11 +440,11 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   cursor: default;
 }
 
-.c30.is-invalid {
+.c31.is-invalid {
   border: #CE3E39 solid 0.1rem;
 }
 
-.c31.c31.btn {
+.c32.c32.btn {
   position: absolute;
   top: calc(50% - 1.4rem);
   padding-top: 0.8rem;
@@ -469,24 +458,17 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   line-height: unset;
 }
 
-.c31.c31.btn .text {
+.c32.c32.btn .text {
   display: none;
 }
 
-.c31.c31.btn:hover,
-.c31.c31.btn:active,
-.c31.c31.btn:focus {
+.c32.c32.btn:hover,
+.c32.c32.btn:active,
+.c32.c32.btn:focus {
   color: #CE3E39;
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
-}
-
-.c14 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
 }
 
 .c13 {
@@ -495,6 +477,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c14 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c16.required::before {
@@ -607,6 +596,15 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   max-width: 25rem;
 }
 
+.c30 {
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+
+.c30 label {
+  margin-bottom: 0;
+}
+
 @media only screen and (max-width:1199px) {
   .c0.expanded {
     min-width: 70rem;
@@ -650,6 +648,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
       </div>
       <div
         class="c3 d-flex col-auto"
+        data-testid="leaflet-buttons-section"
       >
         <span>
           <button
@@ -688,6 +687,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
         />
         <svg
           class="c7"
+          data-testid="close-leaflet-button"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -1677,7 +1677,15 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         <div
                           class="align-content-end col"
                         >
-                          Selected Properties
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="col-11"
+                            >
+                              Selected Properties
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </h2>
@@ -1739,7 +1747,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         <div
                           class="c25 collapse show"
                         >
-                          <ol>
+                          <ul>
                             <li
                               class="c26"
                             >
@@ -1749,7 +1757,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                               <div
                                 class="c27"
                               >
-                                Navigate to an area of the map OR use 
+                                Locate an area on the map OR use 
                                 <button
                                   class="c4 Button d-inline-block btn btn-link"
                                   type="button"
@@ -1766,19 +1774,19 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                               class="c26"
                             >
                               <div>
-                                Select a property
+                                Select a Property
                               </div>
                               <div
                                 class="c27"
                               >
-                                Click on the map and the selection will be highlighed
+                                Click on the map to highlight the selection
                               </div>
                             </li>
                             <li
                               class="c26"
                             >
                               <div>
-                                Add it to this file
+                                Add it to this File
                               </div>
                               <div
                                 class="c27"
@@ -1786,7 +1794,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                                 Click "Add selected" property button when it appears below
                               </div>
                             </li>
-                          </ol>
+                          </ul>
                         </div>
                       </div>
                       <div
@@ -1876,6 +1884,64 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         title=""
                         value=""
                       />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c15"
+                    >
+                      Legacy File:
+                      <span>
+                        <span
+                          class="tooltip-icon"
+                          data-testid="tooltip-icon-section-field-tooltip"
+                          id="section-field-tooltip"
+                        >
+                          <svg
+                            class="tooltip-icon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    class="c16 text-left col"
+                  >
+                    <div
+                      class="c30 form-group"
+                    >
+                      <div
+                        class="check-field"
+                      >
+                        <div
+                          class="form-check"
+                        >
+                          <input
+                            class="form-check-input position-static"
+                            id="input-overrideFileNumberSequence"
+                            name="overrideFileNumberSequence"
+                            type="checkbox"
+                            value="false"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -2374,11 +2440,11 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           class="col"
                         >
                           <div
-                            class="c30"
+                            class="c31"
                           >
                             Bob Billy Smith
                             <button
-                              class="c4 Button c31 btn btn-link"
+                              class="c4 Button c32 btn btn-link"
                               title="remove"
                               type="button"
                             >
@@ -2454,7 +2520,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                     class="pl-0 mt-2 col-xl-2 col-auto"
                   >
                     <button
-                      class="c4 Button c32 btn btn-link"
+                      class="c4 Button c33 btn btn-link"
                       data-testid="team.0.remove-button"
                       type="button"
                     >
@@ -2481,12 +2547,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                             d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                           />
                         </svg>
-                         
-                        <span
-                          class="text"
-                        >
-                          Remove
-                        </span>
                       </div>
                     </button>
                   </div>
@@ -2571,11 +2631,11 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           class="col"
                         >
                           <div
-                            class="c30"
+                            class="c31"
                           >
                             Stinky Cheese
                             <button
-                              class="c4 Button c31 btn btn-link"
+                              class="c4 Button c32 btn btn-link"
                               title="remove"
                               type="button"
                             >
@@ -2651,7 +2711,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                     class="pl-0 mt-2 col-xl-2 col-auto"
                   >
                     <button
-                      class="c4 Button c32 btn btn-link"
+                      class="c4 Button c33 btn btn-link"
                       data-testid="team.1.remove-button"
                       type="button"
                     >
@@ -2678,12 +2738,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                             d="M19 6.41 17.59 5 12 10.59 6.41 5 5 6.41 10.59 12 5 17.59 6.41 19 12 13.41 17.59 19 19 17.59 13.41 12z"
                           />
                         </svg>
-                         
-                        <span
-                          class="text"
-                        >
-                          Remove
-                        </span>
                       </div>
                     </button>
                   </div>
@@ -2722,7 +2776,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 class="collapse show"
               >
                 <p
-                  class="c33"
+                  class="c34"
                 >
                   Each property in this sub-file should be impacted by the sub-interest(s) in this section
                 </p>
@@ -2763,7 +2817,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           class="col"
                         >
                           <div
-                            class="c34"
+                            class="c35"
                           >
                             Select from contacts
                           </div>
@@ -2837,7 +2891,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           class="col"
                         >
                           <div
-                            class="c34"
+                            class="c35"
                           >
                             Select from contacts
                           </div>
@@ -2916,6 +2970,101 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                 </div>
               </div>
             </div>
+            <div
+              class="c13 form-section"
+            >
+              <h2
+                class="c14"
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="align-content-end col"
+                  >
+                    Notice of Claim
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c15"
+                    >
+                      Received date:
+                    </label>
+                  </div>
+                  <div
+                    class="c16 text-left col"
+                  >
+                    <div
+                      class="c17 form-group"
+                    >
+                      <div
+                        class="react-datepicker-wrapper d-block"
+                      >
+                        <div
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                        >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
+                          <input
+                            autocomplete="off"
+                            class="c18 form-control date-picker"
+                            id="datepicker-noticeOfClaim.receivedDate"
+                            name="noticeOfClaim.receivedDate"
+                            placeholder="MMM DD, YYYY"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c15"
+                    >
+                      Comment:
+                    </label>
+                  </div>
+                  <div
+                    class="c16 text-left col"
+                  >
+                    <div
+                      class="textarea input form-group"
+                    >
+                      <textarea
+                        class="form-control"
+                        id="input-noticeOfClaim.comment"
+                        name="noticeOfClaim.comment"
+                        style="word-break: break-all;"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div />
         </div>
@@ -2924,7 +3073,7 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
         class=""
       >
         <div
-          class="c35 justify-content-end pt-4 p-0 no-gutters row"
+          class="c36 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"
@@ -3222,7 +3371,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c31 {
+.c32 {
   color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
@@ -3345,7 +3494,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   overflow-y: auto;
 }
 
-.c33 {
+.c34 {
   position: -webkit-sticky;
   position: sticky;
   padding-top: 2rem;
@@ -3355,7 +3504,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   z-index: 10;
 }
 
-.c32 {
+.c33 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -3369,15 +3518,8 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c32.is-invalid {
+.c33.is-invalid {
   border: #CE3E39 solid 0.1rem;
-}
-
-.c14 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
 }
 
 .c13 {
@@ -3386,6 +3528,13 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c14 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c16.required::before {
@@ -3498,6 +3647,15 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   max-width: 25rem;
 }
 
+.c31 {
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+
+.c31 label {
+  margin-bottom: 0;
+}
+
 @media only screen and (max-width:1199px) {
   .c0.expanded {
     min-width: 70rem;
@@ -3541,6 +3699,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
       </div>
       <div
         class="c3 d-flex col-auto"
+        data-testid="leaflet-buttons-section"
       >
         <span>
           <button
@@ -3579,6 +3738,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
         />
         <svg
           class="c7"
+          data-testid="close-leaflet-button"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -4560,7 +4720,15 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                         <div
                           class="align-content-end col"
                         >
-                          Selected Properties
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="col-11"
+                            >
+                              Selected Properties
+                            </div>
+                          </div>
                         </div>
                       </div>
                     </h2>
@@ -4622,7 +4790,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                         <div
                           class="c26 collapse show"
                         >
-                          <ol>
+                          <ul>
                             <li
                               class="c27"
                             >
@@ -4632,7 +4800,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                               <div
                                 class="c28"
                               >
-                                Navigate to an area of the map OR use 
+                                Locate an area on the map OR use 
                                 <button
                                   class="c4 Button d-inline-block btn btn-link"
                                   type="button"
@@ -4649,19 +4817,19 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                               class="c27"
                             >
                               <div>
-                                Select a property
+                                Select a Property
                               </div>
                               <div
                                 class="c28"
                               >
-                                Click on the map and the selection will be highlighed
+                                Click on the map to highlight the selection
                               </div>
                             </li>
                             <li
                               class="c27"
                             >
                               <div>
-                                Add it to this file
+                                Add it to this File
                               </div>
                               <div
                                 class="c28"
@@ -4669,7 +4837,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                                 Click "Add selected" property button when it appears below
                               </div>
                             </li>
-                          </ol>
+                          </ul>
                         </div>
                       </div>
                       <div
@@ -4759,6 +4927,64 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                         title=""
                         value=""
                       />
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c15"
+                    >
+                      Legacy File:
+                      <span>
+                        <span
+                          class="tooltip-icon"
+                          data-testid="tooltip-icon-section-field-tooltip"
+                          id="section-field-tooltip"
+                        >
+                          <svg
+                            class="tooltip-icon"
+                            fill="currentColor"
+                            height="1em"
+                            stroke="currentColor"
+                            stroke-width="0"
+                            viewBox="0 0 512 512"
+                            width="1em"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                            />
+                          </svg>
+                        </span>
+                      </span>
+                    </label>
+                  </div>
+                  <div
+                    class="c16 text-left col"
+                  >
+                    <div
+                      class="c31 form-group"
+                    >
+                      <div
+                        class="check-field"
+                      >
+                        <div
+                          class="form-check"
+                        >
+                          <input
+                            class="form-check-input position-static"
+                            id="input-overrideFileNumberSequence"
+                            name="overrideFileNumberSequence"
+                            type="checkbox"
+                            value="false"
+                          />
+                        </div>
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -5093,7 +5319,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 class="collapse show"
               >
                 <p
-                  class="c31"
+                  class="c32"
                 >
                   Each property in this file should be owned by the owner(s) in this section
                 </p>
@@ -5134,7 +5360,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                           class="col"
                         >
                           <div
-                            class="c32"
+                            class="c33"
                           >
                             Select from contacts
                           </div>
@@ -5208,7 +5434,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                           class="col"
                         >
                           <div
-                            class="c32"
+                            class="c33"
                           >
                             Select from contacts
                           </div>
@@ -5287,6 +5513,101 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                 </div>
               </div>
             </div>
+            <div
+              class="c13 form-section"
+            >
+              <h2
+                class="c14"
+              >
+                <div
+                  class="no-gutters row"
+                >
+                  <div
+                    class="align-content-end col"
+                  >
+                    Notice of Claim
+                  </div>
+                </div>
+              </h2>
+              <div
+                class="collapse show"
+              >
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c15"
+                    >
+                      Received date:
+                    </label>
+                  </div>
+                  <div
+                    class="c16 text-left col"
+                  >
+                    <div
+                      class="c18 form-group"
+                    >
+                      <div
+                        class="react-datepicker-wrapper d-block"
+                      >
+                        <div
+                          class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                        >
+                          <svg
+                            class="react-datepicker__calendar-icon"
+                            viewBox="0 0 448 512"
+                            xmlns="http://www.w3.org/2000/svg"
+                          >
+                            <path
+                              d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                            />
+                          </svg>
+                          <input
+                            autocomplete="off"
+                            class="c19 form-control date-picker"
+                            id="datepicker-noticeOfClaim.receivedDate"
+                            name="noticeOfClaim.receivedDate"
+                            placeholder="MMM DD, YYYY"
+                            type="text"
+                            value=""
+                          />
+                        </div>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="pb-2 row"
+                >
+                  <div
+                    class="pr-0 text-left col-4"
+                  >
+                    <label
+                      class="c15"
+                    >
+                      Comment:
+                    </label>
+                  </div>
+                  <div
+                    class="c16 text-left col"
+                  >
+                    <div
+                      class="textarea input form-group"
+                    >
+                      <textarea
+                        class="form-control"
+                        id="input-noticeOfClaim.comment"
+                        name="noticeOfClaim.comment"
+                        style="word-break: break-all;"
+                      />
+                    </div>
+                  </div>
+                </div>
+              </div>
+            </div>
           </div>
           <div />
         </div>
@@ -5295,7 +5616,7 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
         class=""
       >
         <div
-          class="c33 justify-content-end pt-4 p-0 no-gutters row"
+          class="c34 justify-content-end pt-4 p-0 no-gutters row"
         >
           <div
             class="pr-3 col-auto"

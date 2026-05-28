@@ -1,5 +1,5 @@
 import { isEmpty } from 'lodash';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useMemo, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaFileAlt, FaFileExcel, FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
@@ -11,26 +11,83 @@ import { StyledIconButton } from '@/components/common/buttons';
 import * as CommonStyled from '@/components/common/styles';
 import { PaddedScrollable, StyledAddButton } from '@/components/common/styles';
 import TooltipWrapper from '@/components/common/TooltipWrapper';
+import * as API from '@/constants/API';
 import Claims from '@/constants/claims';
 import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
-import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useSearch } from '@/hooks/useSearch';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
-import { generateMultiSortCriteria } from '@/utils';
+import { exists, formatGuid, generateMultiSortCriteria } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
+import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { useLeaseExport } from '../hooks/useLeaseExport';
 import { ILeaseFilter } from '../interfaces';
-import { defaultFilter, LeaseFilter } from './LeaseFilter/LeaseFilter';
+import { LeaseFilter } from './LeaseFilter/LeaseFilter';
+import { LeaseFilterModel } from './LeaseFilter/models/LeaseFilterModel';
 import { LeaseSearchResults } from './LeaseSearchResults/LeaseSearchResults';
+
+const initialLeaseStatusTypes: string[] = [
+  'ACTIVE',
+  'ARCHIVED',
+  'DISCARD',
+  'DRAFT',
+  'DUPLICATE',
+  'INACTIVE',
+  'TERMINATED',
+];
 
 /**
  * Page that displays leases information.
  */
 export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const history = useHistory();
+  const { hasClaim, obj } = useKeycloakWrapper();
+  const { sub } = obj.userInfo as IUserInfo;
+  const formattedGuid = formatGuid(sub);
+  const [userRegionsOptions, setUserRegionsOptions] = useState<MultiSelectOption[]>(null);
+
+  const lookupCodes = useLookupCodeHelpers();
   const { getLeases } = useApiLeases();
-  const { hasClaim } = useKeycloakWrapper();
+  const { exportLeases } = useLeaseExport();
+  const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
+  const {
+    getAllLeaseTeamMembers: { response: leaseTeam, execute: loadLeaseTeam },
+  } = useLeaseRepository();
+
+  const leaseProgramTypes = lookupCodes.getOptionsByType(API.LEASE_PROGRAM_TYPES);
+  const leaseProgramOptions: MultiSelectOption[] = leaseProgramTypes.map<MultiSelectOption>(x => {
+    return { id: x.value as string, text: x.label };
+  });
+
+  const leaseStatusTypes = lookupCodes.getOptionsByType(API.LEASE_STATUS_TYPES);
+  const leaseStatusOptions: MultiSelectOption[] = leaseStatusTypes.map<MultiSelectOption>(x => {
+    return { id: x.value as string, text: x.label };
+  });
+  const initialStatusOptions = leaseStatusOptions.filter(x =>
+    initialLeaseStatusTypes.includes(x.id),
+  );
+
+  const pimsRegionsTypes = lookupCodes.getOptionsByType(API.REGION_TYPES);
+  const pimsRegionOptions: MultiSelectOption[] = pimsRegionsTypes.map<MultiSelectOption>(x => {
+    return { id: x.code as string, text: x.label };
+  });
+
+  const leaseTeamOptions = useMemo(() => {
+    if (exists(leaseTeam)) {
+      return leaseTeam?.map<MultiSelectOption>(x => ({
+        id: x.personId ? `P-${x.personId}` : `O-${x.organizationId}`,
+        text: x.personId ? formatApiPersonNames(x.person) : x.organization?.name ?? '',
+      }));
+    } else {
+      return [];
+    }
+  }, [leaseTeam]);
+
   const {
     results,
     filter,
@@ -45,9 +102,10 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
     setCurrentPage,
     setPageSize,
     loading,
-  } = useSearch<ApiGen_Concepts_Lease, ILeaseFilter>(defaultFilter, getLeases);
-
-  const { exportLeases } = useLeaseExport();
+  } = useSearch<ApiGen_Concepts_Lease, ILeaseFilter>(
+    new LeaseFilterModel(userRegionsOptions, initialStatusOptions).toApi(),
+    getLeases,
+  );
 
   /**
    * @param {'csv' | 'excel'} accept Whether the fetch is for type of CSV or EXCEL
@@ -73,11 +131,45 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
     [setFilter],
   );
 
+  const handleResetFilter = useCallback(() => {
+    setFilter(new LeaseFilterModel(userRegionsOptions, initialStatusOptions).toApi());
+  }, [initialStatusOptions, setFilter, userRegionsOptions]);
+
+  useEffect(() => {
+    loadLeaseTeam();
+  }, [loadLeaseTeam]);
+
   useEffect(() => {
     if (error) {
       toast.error(error?.message);
     }
   }, [error]);
+
+  useEffect(() => {
+    formattedGuid && retrieveUserInfo(formattedGuid);
+  }, [formattedGuid, retrieveUserInfo]);
+
+  useEffect(() => {
+    if (userRegionsOptions === null && retrieveUserInfoResponse && pimsRegionsTypes) {
+      const userRegionsIds: string[] =
+        retrieveUserInfoResponse?.userRegions?.map(x => x.regionCode.toString()) ?? [];
+
+      const userRegionsOptions: MultiSelectOption[] =
+        pimsRegionsTypes
+          .filter(opt => userRegionsIds?.includes(opt.code))
+          .map<MultiSelectOption>(x => {
+            return { id: x.code as string, text: x.label };
+          }) ?? [];
+      setUserRegionsOptions(userRegionsOptions ?? []);
+      setFilter(new LeaseFilterModel(userRegionsOptions, initialStatusOptions).toApi());
+    }
+  }, [
+    initialStatusOptions,
+    pimsRegionsTypes,
+    retrieveUserInfoResponse,
+    setFilter,
+    userRegionsOptions,
+  ]);
 
   return (
     <CommonStyled.ListPage>
@@ -99,7 +191,20 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
         <CommonStyled.PageToolbar>
           <Row>
             <Col>
-              <LeaseFilter filter={filter} setFilter={changeFilter} />
+              <LeaseFilter
+                initialValues={LeaseFilterModel.fromApi(
+                  filter,
+                  leaseTeam || [],
+                  userRegionsOptions,
+                  initialStatusOptions,
+                )}
+                pimsRegionsOptions={pimsRegionOptions}
+                leaseStatusOptions={leaseStatusOptions}
+                leaseTeamOptions={leaseTeamOptions}
+                leaseProgramOptions={leaseProgramOptions}
+                setFilter={changeFilter}
+                onResetFilter={handleResetFilter}
+              />
             </Col>
             <Col md="auto" className="px-0">
               <TooltipWrapper tooltipId="export-to-excel" tooltip="Export to Excel">

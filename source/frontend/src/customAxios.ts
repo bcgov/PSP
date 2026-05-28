@@ -1,4 +1,4 @@
-import { Attributes, Span, SpanStatusCode } from '@opentelemetry/api';
+import { Attributes, Span } from '@opentelemetry/api';
 import { ATTR_HTTP_REQUEST_METHOD, ATTR_URL_FULL } from '@opentelemetry/semantic-conventions';
 import { Dispatch } from '@reduxjs/toolkit';
 import axios, { AxiosError, AxiosRequestHeaders } from 'axios';
@@ -9,11 +9,10 @@ import { toast } from 'react-toastify';
 import { IGenericNetworkAction } from '@/store/slices/network/interfaces';
 import { logError } from '@/store/slices/network/networkSlice';
 import { RootState, store } from '@/store/store';
+import { Telemetry } from '@/telemetry';
+import { SpanEnrichment } from '@/telemetry/traces/SpanEnrichment';
 
-import { startTrace } from './telemetry/traces';
-import { SpanEnrichment } from './telemetry/traces/SpanEnrichment';
-import { buildUrl } from './telemetry/utils';
-import { exists } from './utils';
+import { buildUrl, exists } from './utils';
 
 export const defaultEnvelope = (x: any) => ({ data: { records: x } });
 
@@ -67,7 +66,7 @@ export const CustomAxios = ({
     // clear query parameters - we don't want to include them in the span name
     url.search = '';
     const spanName = `HTTP ${method} ${url.href}`;
-    span = startTrace(spanName, spanAttributes);
+    span = Telemetry.startSpan(spanName, spanAttributes);
 
     if (config.headers === undefined) {
       config.headers = {} as AxiosRequestHeaders;
@@ -90,8 +89,7 @@ export const CustomAxios = ({
   instance.interceptors.response.use(
     response => {
       SpanEnrichment.enrichWithXhrResponse(span, response);
-      span.setStatus({ code: SpanStatusCode.OK });
-      span.end();
+      Telemetry.endSpan(span);
 
       if (lifecycleToasts?.successToast && response.status < 300) {
         loadingToastId && toast.dismiss(loadingToastId);
@@ -102,9 +100,7 @@ export const CustomAxios = ({
       return response;
     },
     error => {
-      span.recordException(error);
-      span.setStatus({ code: SpanStatusCode.ERROR });
-      span.end();
+      Telemetry.endSpan(span, error);
 
       if (axios.isCancel(error)) {
         return Promise.resolve(error.message);

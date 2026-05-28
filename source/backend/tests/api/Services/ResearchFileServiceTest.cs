@@ -166,6 +166,10 @@ namespace Pims.Api.Test.Services
             var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(false);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>())).Returns(true);
+
             // Act
             Action act = () => service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
 
@@ -205,6 +209,10 @@ namespace Pims.Api.Test.Services
 
             var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>())).Returns(true);
 
             // Act
             updatedResearchFile = service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
@@ -248,6 +256,10 @@ namespace Pims.Api.Test.Services
             var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>())).Returns(true);
+
             // Act
             Action act = () => service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
 
@@ -288,6 +300,10 @@ namespace Pims.Api.Test.Services
             var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>())).Returns(true);
+
             // Act
             updatedResearchFile = service.UpdateProperties(updatedResearchFile, new List<UserOverrideCode>());
 
@@ -321,9 +337,14 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), true));
             propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()));
+            propertyService.Setup(x => x.UpdateFilePropertyBoundary<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()));
 
             var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>())).Returns(true);
 
             // Act
             service.UpdateProperties(researchFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
@@ -332,6 +353,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsPropertyResearchFile>()), Times.Once);
             propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), true), Times.Once);
             propertyService.Verify(x => x.UpdateFilePropertyLocation<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()), Times.Once);
+            propertyService.Verify(x => x.UpdateFilePropertyBoundary<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()), Times.Once);
         }
 
         [Fact]
@@ -360,9 +382,14 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), true));
             propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()));
+            propertyService.Setup(x => x.UpdateFilePropertyBoundary<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()));
 
             var solver = this._helper.GetService<Mock<IResearchStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<ResearchFileStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>())).Returns(true);
 
             // Act
             service.UpdateProperties(researchFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
@@ -371,6 +398,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsPropertyResearchFile>()), Times.Once);
             propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), true), Times.Once);
             propertyService.Verify(x => x.UpdateFilePropertyLocation<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()), Times.Once);
+            propertyService.Verify(x => x.UpdateFilePropertyBoundary<PimsPropertyResearchFile>(It.IsAny<PimsPropertyResearchFile>(), It.IsAny<PimsPropertyResearchFile>()), Times.Once);
         }
 
         [Fact]

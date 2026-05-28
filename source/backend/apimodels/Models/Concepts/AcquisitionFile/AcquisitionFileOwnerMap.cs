@@ -1,4 +1,5 @@
 using Mapster;
+using Pims.Core.Extensions;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.AcquisitionFile
@@ -21,6 +22,9 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.ContactPhoneNum, src => src.ContactPhoneNum)
                 .Map(dest => dest.IncorporationNumber, src => src.IncorporationNumber)
                 .Map(dest => dest.RegistrationNumber, src => src.RegistrationNumber)
+                .Map(dest => dest.IsFromLtsa, src => src.IsFromLtsa ?? false)
+                .Map(dest => dest.LtsaPid, src => src.LtsaPid)
+                .Map(dest => dest.LtsaSourcedDate, src => src.LtsaSourcedDate.ToNullableDateOnly())
                 .Map(dest => dest.Address, src => src.Address);
 
             config
@@ -37,6 +41,9 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.ContactPhoneNum, src => src.ContactPhoneNum)
                 .Map(dest => dest.IncorporationNumber, src => src.IncorporationNumber)
                 .Map(dest => dest.RegistrationNumber, src => src.RegistrationNumber)
+                .Map(dest => dest.IsFromLtsa, src => src.IsFromLtsa)
+                .Map(dest => dest.LtsaPid, src => src.LtsaPid)
+                .Map(dest => dest.LtsaSourcedDate, src => src.LtsaSourcedDate.ToNullableDateTime())
                 .Map(dest => dest.AddressId, src => src.Address.Id)
                 .Map(dest => dest.Address, src => src.Address);
 
@@ -53,6 +60,9 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.ContactPhoneNum, src => src.ContactPhoneNum)
                 .Map(dest => dest.IncorporationNumber, src => src.IncorporationNumber)
                 .Map(dest => dest.RegistrationNumber, src => src.RegistrationNumber)
+                .Map(dest => dest.IsFromLtsa, src => src.IsFromLtsa)
+                .Map(dest => dest.LtsaPid, src => src.LtsaPid)
+                .Map(dest => dest.LtsaSourcedDate, src => src.LtsaSourcedDate)
                 .Map(dest => dest.AddressId, src => src.AddressId);
         }
     }

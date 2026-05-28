@@ -4,6 +4,7 @@ import { FaPlus } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import AcquisitionIcon from '@/assets/images/acquisition-icon.svg?react';
+import AddToWorklistIcon from '@/assets/images/add-to-wl-icon.svg?react';
 import DispositionIcon from '@/assets/images/disposition-icon.svg?react';
 import LeaseIcon from '@/assets/images/lease-icon.svg?react';
 import ManagementIcon from '@/assets/images/management-icon.svg?react';
@@ -24,11 +25,22 @@ import { ParcelDataset } from './models';
 export interface IParcelItemProps {
   canAddToWorklist: boolean;
   parcel: ParcelDataset;
-  onRemove: (id: string) => void | null;
   parcelIndex: number;
+  overridePropertyIdentifier?: string;
+  removeIndentation?: boolean;
+  dataTestid?: string;
+  onRemove: (id: string) => void | null;
 }
 
-export function ParcelItem({ parcel, onRemove, canAddToWorklist, parcelIndex }: IParcelItemProps) {
+export function ParcelItem({
+  parcel,
+  canAddToWorklist,
+  parcelIndex,
+  overridePropertyIdentifier,
+  removeIndentation,
+  dataTestid,
+  onRemove,
+}: IParcelItemProps) {
   const propertyName = getPropertyNameFromSelectedFeatureSet(parcel.toSelectedFeatureDataset());
   let propertyIdentifier = '';
   switch (propertyName.label) {
@@ -119,9 +131,9 @@ export function ParcelItem({ parcel, onRemove, canAddToWorklist, parcelIndex }: 
 
     if (canAddToWorklist) {
       options.push({
-        label: 'Add to Worklist',
+        label: 'Add to Working List',
         onClick: onAddToWorklist,
-        icon: <ResearchIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
+        icon: <AddToWorklistIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
       });
     }
 
@@ -185,21 +197,47 @@ export function ParcelItem({ parcel, onRemove, canAddToWorklist, parcelIndex }: 
   ]);
 
   return (
-    <StyledRow data-testid={`search-property-${parcelIndex}`}>
-      <StyledPidCol
-        onClick={e => {
-          e.preventDefault();
-          e.stopPropagation();
-          handleSelect();
-        }}
-      >
-        <StyledOverflowTip fullText={propertyIdentifier}></StyledOverflowTip>
-      </StyledPidCol>
+    <StyledRow data-testid={dataTestid ?? `search-property-${parcelIndex}`}>
+      {removeIndentation && (
+        <StyledCommonPropCol
+          onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleSelect();
+          }}
+        >
+          <StyledOverflowTip
+            fullText={overridePropertyIdentifier ?? propertyIdentifier}
+            valueTestId={
+              dataTestid ? `${dataTestid}.identifier` : `search-property-${parcelIndex}.identifier`
+            }
+          ></StyledOverflowTip>
+        </StyledCommonPropCol>
+      )}
+
+      {!removeIndentation && (
+        <StyledPidCol
+          onClick={e => {
+            e.preventDefault();
+            e.stopPropagation();
+            handleSelect();
+          }}
+        >
+          <StyledOverflowTip
+            fullText={overridePropertyIdentifier ?? propertyIdentifier}
+            valueTestId={
+              dataTestid ? `${dataTestid}.identifier` : `search-property-${parcelIndex}.identifier`
+            }
+          ></StyledOverflowTip>
+        </StyledPidCol>
+      )}
+
       <StyledButtonCol>
         <ButtonContainer>
           <ZoomToLocation icon={ZoomIconType.single} parcelDataset={parcel} />
           {exists(onRemove) && (
             <RemoveIconButton
+              style={{ padding: 0 }}
               title="Delete parcel from list"
               data-testId={`delete-list-parcel-${parcel.id ?? 'unknown'}`}
               onRemove={e => {
@@ -224,9 +262,9 @@ const StyledRow = styled(Row)`
   margin-left: 0;
   margin-right: 0;
   min-height: 4.5rem;
+  flex-wrap: nowrap;
 
   &:hover {
-    // Adding a 38% opacity to the background color (to match the mockups)
     background-color: ${props => props.theme.css.pimsBlue10 + '38'};
   }
 `;
@@ -245,11 +283,20 @@ const StyledPidCol = styled(Col)`
   cursor: pointer;
 `;
 
+const StyledCommonPropCol = styled(Col)`
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 0;
+  padding-right: 0;
+  cursor: pointer;
+  font-weight: bold;
+`;
+
 const StyledButtonCol = styled(Col)`
-  width: 10rem;
-  flex: 0 0 10rem; /* Prevents shrinking/growing */
+  flex: 0 0 10rem;
   display: flex;
   justify-content: flex-end;
+  gap: 0.5rem;
 `;
 
 const ButtonContainer = styled.div`
@@ -259,5 +306,8 @@ const ButtonContainer = styled.div`
 
   ${StyledRow}:hover & {
     display: flex;
+    flex-wrap: nowrap;
+    gap: 0.5rem;
+    justify-content: flex-end;
   }
 `;

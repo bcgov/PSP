@@ -30,5 +30,5 @@ Before({ timeout: 60000 }, async function () {
 
 // --- AFTER HOOK ---
 After(async function () {
-  await this.closeBrowser();
+  //await this.closeBrowser();
 });

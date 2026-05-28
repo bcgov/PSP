@@ -111,6 +111,14 @@ export const InvoiceForm: React.FunctionComponent<React.PropsWithChildren<IInvoi
         <TextArea field={`${namespace}.description`} />
       </SectionField>
 
+      <SectionField label="Payment approved" contentWidth={{ xs: 3 }}>
+        <YesNoSelect field={`${namespace}.isPaymentApproved`} notNullable />
+      </SectionField>
+
+      <SectionField label="Payment forwarded" contentWidth={{ xs: 3 }}>
+        <YesNoSelect field={`${namespace}.isPaymentForwarded`} notNullable />
+      </SectionField>
+
       <SectionField label="Amount (before tax)" contentWidth={{ xs: 7 }} required>
         <FastCurrencyInput
           field={`${namespace}.pretaxAmount`}

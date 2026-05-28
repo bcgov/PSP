@@ -1,3 +1,4 @@
+using System;
 using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.Address;
 
@@ -28,5 +29,11 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public string ContactPhoneNum { get; set; }
 
         public AddressModel Address { get; set; }
+
+        public bool? IsFromLtsa { get; set; }
+
+        public string LtsaPid { get; set; }
+
+        public DateOnly? LtsaSourcedDate { get; set; }
     }
 }

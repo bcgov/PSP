@@ -401,19 +401,19 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
   z-index: 10;
 }
 
-.c13 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c12 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c13 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c19 {
@@ -555,6 +555,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
       </div>
       <div
         class="c3 d-flex col-auto"
+        data-testid="leaflet-buttons-section"
       >
         <span>
           <button
@@ -593,6 +594,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
         />
         <svg
           class="c7"
+          data-testid="close-leaflet-button"
           fill="currentColor"
           height="1em"
           stroke="currentColor"
@@ -1084,7 +1086,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                 <div
                   class="c24 collapse show"
                 >
-                  <ol>
+                  <ul>
                     <li
                       class="c25"
                     >
@@ -1094,7 +1096,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       <div
                         class="c26"
                       >
-                        Navigate to an area of the map OR use 
+                        Locate an area on the map OR use 
                         <button
                           class="c4 Button d-inline-block btn btn-link"
                           type="button"
@@ -1111,19 +1113,19 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                       class="c25"
                     >
                       <div>
-                        Select a property
+                        Select a Property
                       </div>
                       <div
                         class="c26"
                       >
-                        Click on the map and the selection will be highlighed
+                        Click on the map to highlight the selection
                       </div>
                     </li>
                     <li
                       class="c25"
                     >
                       <div>
-                        Add it to this file
+                        Add it to this File
                       </div>
                       <div
                         class="c26"
@@ -1131,7 +1133,7 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                         Click "Add selected" property button when it appears below
                       </div>
                     </li>
-                  </ol>
+                  </ul>
                 </div>
               </div>
               <div
@@ -1153,30 +1155,6 @@ exports[`AddLeaseContainer component > renders as expected 1`] = `
                           class="col-11"
                         >
                           Selected Properties
-                        </div>
-                        <div
-                          class="col"
-                        >
-                          <span
-                            class="tooltip-icon"
-                            data-testid="tooltip-icon-no-location-tooltip"
-                            id="no-location-tooltip"
-                          >
-                            <svg
-                              class="tooltip-icon"
-                              fill="currentColor"
-                              height="1em"
-                              stroke="currentColor"
-                              stroke-width="0"
-                              viewBox="0 0 512 512"
-                              width="1em"
-                              xmlns="http://www.w3.org/2000/svg"
-                            >
-                              <path
-                                d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
-                              />
-                            </svg>
-                          </span>
                         </div>
                       </div>
                     </div>

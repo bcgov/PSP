@@ -1,11 +1,14 @@
 import { AxiosResponse } from 'axios';
 import { FormikProps, getIn } from 'formik';
+import isAbsoluteUrl from 'is-absolute-url';
 import { isEmpty, isNull, isUndefined, lowerFirst, startCase } from 'lodash';
+import { first } from 'lodash';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
 import { SelectOption } from '@/components/common/form';
 import { TableSort } from '@/components/Table/TableSort';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
+import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
 
@@ -280,3 +283,50 @@ export function relationshipTypeToPathName(
       return 'property';
   }
 }
+
+export const getFilePropertyIndex = (
+  fileProperty: ApiGen_Concepts_FileProperty,
+  fileProperties: ApiGen_Concepts_FileProperty[],
+): number | null => {
+  if (
+    !(
+      exists(fileProperty.location) ||
+      exists(fileProperty.boundary) ||
+      exists(fileProperty.property.location) ||
+      exists(fileProperty.property.boundary)
+    )
+  ) {
+    return null;
+  }
+  let index = 0;
+  for (const p of fileProperties) {
+    if (
+      exists(p.location) ||
+      exists(p.boundary) ||
+      exists(p.property.location) ||
+      exists(p.property.boundary)
+    ) {
+      index++;
+    }
+    if (p.id === fileProperty.id) {
+      return index;
+    }
+  }
+  return null;
+};
+
+export const formatGuid = (sub: string): string => {
+  return first(sub?.split('@'))?.replace(/(.{8})(.{4})(.{4})(.{4})(.{12})/, '$1-$2-$3-$4-$5');
+};
+
+// creates URL and appends query parameters
+export const buildUrl = (inputUrl: string, queryParams: Record<string, any> = {}): URL => {
+  const baseUrl = window.location.origin;
+  const urlInstance = isAbsoluteUrl(inputUrl) ? new URL(inputUrl) : new URL(inputUrl, baseUrl);
+  Object.keys(queryParams).forEach(k => {
+    if (queryParams[k] !== undefined) {
+      urlInstance.searchParams.set(k, queryParams[k]);
+    }
+  });
+  return urlInstance;
+};

@@ -100,16 +100,6 @@ else
 		echo "---> Cleaning the $NPM_TMP/npm-*"
 		rm -rf $NPM_TMP/npm-*
 	fi
-
-	# Clear the npm's cache and tmp directories only if they are not a docker volumes
-	NPM_CACHE=$(npm config get cache)
-	if ! mountpoint $NPM_CACHE; then
-		echo "---> Cleaning the npm cache $NPM_CACHE"
-		#As of npm@5 even the 'npm cache clean --force' does not fully remove the cache directory
-		# instead of $NPM_CACHE* use $NPM_CACHE/*.
-		# We do not want to delete .npmrc file.
-		rm -rf "${NPM_CACHE:?}/"
-	fi
 fi
 
 # Fix source directory permissions

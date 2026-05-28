@@ -24,11 +24,13 @@ export interface UpdateLeaseContainerProps {
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
   onEdit: (isEditing: boolean) => void;
   View: React.FunctionComponent<IUpdateLeaseFormProps>;
+  onChildSuccess?: () => void;
 }
 
 export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerProps> = ({
   formikRef,
   onEdit,
+  onChildSuccess,
   View,
 }) => {
   const { lease } = useContext(LeaseStateContext);
@@ -68,10 +70,11 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
       if (isValidId(updatedLease?.id)) {
         formikRef?.current?.resetForm({ values: formikRef?.current?.values });
         await refresh();
+        onChildSuccess?.();
         onEdit(false);
       }
     },
-    [formikRef, onEdit, refresh],
+    [formikRef, onEdit, onChildSuccess, refresh],
   );
 
   const onSubmit = useCallback(
@@ -99,6 +102,14 @@ export const UpdateLeaseContainer: React.FunctionComponent<UpdateLeaseContainerP
           await refreshCompleteLease(leaseId);
           setDisplayModal(false);
         },
+      });
+      setDisplayModal(true);
+    } else if (e?.response?.data?.type === 'ContractorNotInTeamException') {
+      setModalContent({
+        variant: 'error',
+        title: 'Error',
+        message: e?.response?.data.error,
+        okButtonText: 'Close',
       });
       setDisplayModal(true);
     } else {

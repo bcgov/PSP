@@ -17,7 +17,7 @@ export const useGenerateForm12 = () => {
     getMultiplePropertiesById: { execute: getMultipleProperties },
   } = useProperties();
 
-  const fullyAttrubutedRepository = useFullyAttributedParcelMapLayer();
+  const fullyAttributedRepository = useFullyAttributedParcelMapLayer();
 
   const { generateDocumentDownloadWrappedRequest: generate } = useDocumentGenerationRepository();
 
@@ -28,9 +28,13 @@ export const useGenerateForm12 = () => {
 
     properties.forEach(pimsProperty => {
       if (isValidId(pimsProperty?.pid)) {
-        fullyAttributedTasks.push(fullyAttrubutedRepository.findByPid(pimsProperty.pid.toString()));
+        fullyAttributedTasks.push(
+          fullyAttributedRepository.findByPid(pimsProperty.pid.toString(), true),
+        );
       } else if (isValidId(pimsProperty?.pin)) {
-        fullyAttributedTasks.push(fullyAttrubutedRepository.findByPin(pimsProperty.pin.toString()));
+        fullyAttributedTasks.push(
+          fullyAttributedRepository.findByPin(pimsProperty.pin.toString(), true),
+        );
       }
     });
 

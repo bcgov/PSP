@@ -1,5 +1,7 @@
 using System.Collections.Generic;
 using System.Linq;
+using NetTopologySuite.Geometries;
+using Pims.Core.Helpers;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal.Helpers.Extensions
@@ -35,26 +37,92 @@ namespace Pims.Dal.Helpers.Extensions
                 return string.Empty;
             }
 
-            if (property.Pid.HasValue && property?.Pid.Value.ToString().Length > 0 && property?.Pid != '0')
+            return new PropertyIdentifiers(property).GetAsString();
+        }
+
+        public static string GetPropertyName(this IFilePropertyEntity fileProperty)
+        {
+            if (fileProperty == null)
             {
-                return $"{property.Pid:000-000-000}";
+                return string.Empty;
             }
-            else if (property.Pin.HasValue && property?.Pin.Value.ToString()?.Length > 0 && property?.Pin != '0')
+
+            return new PropertyIdentifiers(fileProperty).GetAsString();
+        }
+    }
+
+    // Helper class to aggregate property identifiers into a single object.
+    public class PropertyIdentifiers
+    {
+        public string Pid { get; set; }
+
+        public string Pin { get; set; }
+
+        public string SurveyPlanNumber { get; set; }
+
+        public Geometry Location { get; set; }
+
+        public PimsAddress Address { get; set; }
+
+        public string DisplayName { get; set; }
+
+        public PropertyIdentifiers()
+        {
+        }
+
+        public PropertyIdentifiers(PimsProperty property)
+        {
+            Pid = property?.Pid != null ? property.Pid.ToString() : null;
+            Pin = property?.Pin != null ? property.Pin.ToString() : null;
+            SurveyPlanNumber = !string.IsNullOrEmpty(property?.SurveyPlanNumber) ? property?.SurveyPlanNumber : null;
+            Location = property?.Location;
+            Address = property?.Address;
+        }
+
+        public PropertyIdentifiers(IFilePropertyEntity fileProperty)
+            : this(fileProperty?.Property)
+        {
+            DisplayName = fileProperty?.PropertyName;
+        }
+
+        public string GetAsString()
+        {
+            if (!string.IsNullOrEmpty(Pid))
             {
-                return property.Pin.ToString();
+                return PidTranslator.ConvertPIDToDash(Pid);
             }
-            else if (property?.SurveyPlanNumber != null && property?.SurveyPlanNumber.Length > 0)
+
+            if (!string.IsNullOrEmpty(Pin))
             {
-                return property.SurveyPlanNumber;
+                return Pin;
             }
-            else if (property?.Location != null)
+
+            if (Address is not null)
             {
-                return $"{property.Location.Coordinate.X}, {property.Location.Coordinate.Y}";
+                return Address.FormatFullAddressString();
             }
-            else if (property?.Address != null)
+
+            if (!string.IsNullOrEmpty(SurveyPlanNumber))
             {
-                return property.Address.FormatAddress();
+                return SurveyPlanNumber;
             }
+
+            if (!string.IsNullOrEmpty(DisplayName))
+            {
+                return DisplayName;
+            }
+
+            if (Location is not null)
+            {
+                var latitude = Location.Coordinate?.Y;
+                var longitude = Location.Coordinate?.X;
+                if (latitude is not null && longitude is not null)
+                {
+                    return $"({latitude}, {longitude})";
+                }
+            }
+
+            // Fallback
             return string.Empty;
         }
     }

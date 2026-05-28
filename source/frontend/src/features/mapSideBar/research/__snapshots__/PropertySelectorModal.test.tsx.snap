@@ -476,7 +476,7 @@ exports[`PropertySelectorModal modal > renders as expected 1`] = `
           style="white-space: pre-line;"
         >
           <p>
-            Select the properties that should be included in this Form 12 notice
+            Select the properties that should be included in this form.
           </p>
           <p>
             <strong>
@@ -492,7 +492,7 @@ exports[`PropertySelectorModal modal > renders as expected 1`] = `
             <div
               class="c4 m-4"
             >
-              No Properties availiable
+              No Properties available
             </div>
           </div>
         </div>

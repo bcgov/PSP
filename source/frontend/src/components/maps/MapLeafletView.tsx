@@ -181,6 +181,8 @@ const MapLeafletView: React.FC<React.PropsWithChildren<MapLeafletViewProps>> = (
         const activeFeature = mapLocationFeatureDataset.parcelFeatures[0];
         activeFeatureLayer?.addData(activeFeature);
       }
+    } else if (exists(activeFeatureLayer)) {
+      activeFeatureLayer?.clearLayers();
     }
   }, [activeFeatureLayer, isRepositioning, mapLocationFeatureDataset, repositioningFeatureDataset]);
 

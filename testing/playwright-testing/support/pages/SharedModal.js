@@ -1,3 +1,5 @@
+const { expect } = require("@playwright/test");
+
 class SharedModal {
   constructor(page) {
     this.page = page;

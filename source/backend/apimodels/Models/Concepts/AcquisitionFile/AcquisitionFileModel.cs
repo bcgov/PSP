@@ -4,6 +4,7 @@ using Pims.Api.Models.Base;
 using Pims.Api.Models.Concepts.CompensationRequisition;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Models.Concepts.InterestHolder;
+using Pims.Api.Models.Concepts.NoticeOfClaim;
 using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Models.Concepts.Project;
 
@@ -21,12 +22,17 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// <summary>
         /// get/set - The auto-generated portion of the acquisition file number.
         /// </summary>
-        public long FileNo { get; set; }
+        public long? FileNo { get; set; }
+
+        /// <summary>
+        /// get/set - Flag to override FileNo Sequence in favor of Legacy/pre-Legacy number.
+        /// </summary>
+        public bool OverrideFileNumberSequence { get; set; }
 
         /// <summary>
         /// get/set - The File number Suffix.
         /// </summary>
-        public short FileNumberSuffix { get; set; }
+        public short? FileNumberSuffix { get; set; }
 
         /// <summary>
         /// get/set - A historical reference number of this file in a legacy system (likely PAIMS).
@@ -167,6 +173,11 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         /// get/set - A list of compensation requisitions related to the acquisition file.
         /// </summary>
         public IList<CompensationRequisitionModel> CompensationRequisitions { get; set; }
+
+        /// <summary>
+        /// get/set - The notice of claims associated with this acquisition file, if any.
+        /// </summary>
+        public IList<NoticeOfClaimModel> NoticeOfClaim { get; set; }
 
         #endregion
     }

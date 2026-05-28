@@ -40,8 +40,6 @@ export interface ITenantConfig2 {
   layers: Dictionary<Partial<LayerDefinition>>;
   // the url that should be used to query the PSP properties layer.
   propertiesUrl: string;
-  // the url that should be used to query the PSP properties layer.
-  propertiesBoundaryUrl: string;
   // the url that should be used to display PSP properties on the map.
   minimalPropertiesUrl: string;
   // configuration pertaining the Fully Attributed Parcel Map layer
@@ -55,7 +53,6 @@ export interface ITenantConfig2 {
   hwyDistrictLayerUrl: string;
   alrLayerUrl: string;
   reservesLayerUrl: string;
-  boundaryLayerUrl: string;
   highwayLayerUrl: string;
   bcAssessment: IBcAssessmentLayerConfig;
   crownLandLicensesUrl: string;
@@ -76,6 +73,8 @@ export interface ITenantConfig2 {
   geographicNamesUrl: string;
   // the number of results to display when searching for geographic names
   geographicNamesResultLimit: number;
+  // API build version compatibility map (API build number to DB build numbers). ie {'115': [116,117]}
+  apiDbVersionCompatibility?: Record<string, number[]>;
   landTitleDistricts: string[];
 }
 

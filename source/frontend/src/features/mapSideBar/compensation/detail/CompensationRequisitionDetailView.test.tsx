@@ -17,11 +17,13 @@ import {
   getMockCompReqAcqPayee,
   getMockCompReqLeasePayee,
 } from '@/mocks/compensations.mock';
+import { getMockApiFileProperty } from '@/mocks/fileProperty.mock';
 import {
   getMockApiInterestHolderOrganization,
   getMockApiInterestHolderPerson,
 } from '@/mocks/interestHolders.mock';
 import { getMockLeaseStakeholders } from '@/mocks/lease.mock';
+import { getMockApiProperty } from '@/mocks/properties.mock';
 import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_Concepts_CompensationRequisition } from '@/models/api/generated/ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_CompReqAcqPayee } from '@/models/api/generated/ApiGen_Concepts_CompReqAcqPayee';
@@ -236,6 +238,30 @@ describe('Compensation Detail View Component', () => {
 
     expect(await findByText(/Property Test Name 1/)).toBeVisible();
     expect(await findByText(/Property Test Name 2/)).toBeVisible();
+  });
+
+  it('displays Lat/Long for properties when no other identifier is available', async () => {
+    const { findByText } = await setup({
+      claims: [Claims.COMPENSATION_REQUISITION_EDIT],
+      props: {
+        compensation: getMockApiCompensationWithProperty(),
+        compensationProperties: [
+          {
+            ...getMockApiFileProperty(1, {
+              ...getMockApiProperty(),
+              id: 1,
+              pid: null,
+              pin: null,
+              latitude: 48.43,
+              longitude: -123.49,
+            }),
+            propertyName: null,
+          },
+        ],
+      },
+    });
+
+    expect(await findByText('48.430000, -123.490000')).toBeVisible();
   });
 
   it('displays the compensation finalized date', async () => {

@@ -164,4 +164,7 @@ public partial class PimsInsurance
     [ForeignKey("LeaseId")]
     [InverseProperty("PimsInsurances")]
     public virtual PimsLease Lease { get; set; }
+
+    [InverseProperty("Insurance")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
 }

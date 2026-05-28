@@ -1,170 +1,55 @@
-import { Formik } from 'formik';
-import Multiselect from 'multiselect-react-dropdown';
-import React, { useEffect, useMemo, useState } from 'react';
+import { Formik, FormikHelpers } from 'formik';
+import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { FastDatePicker, Form, Input, Select } from '@/components/common/form';
-import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
+import { FastDatePicker, Form, Input, Multiselect, Select } from '@/components/common/form';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { ColButtons } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
-import { LEASE_PROGRAM_TYPES, LEASE_STATUS_TYPES } from '@/constants/API';
-import { getParameterIdFromOptions } from '@/features/acquisition/list/interfaces';
-import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
-import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
-import { exists, isValidId } from '@/utils';
-import { formatApiPersonNames } from '@/utils/personUtils';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 
 import { ILeaseFilter, ILeaseSearchBy } from '../../interfaces';
 import { LeaseFilterSchema } from './LeaseFilterYupSchema';
+import { LeaseFilterModel } from './models/LeaseFilterModel';
 
 export interface ILeaseFilterProps {
-  filter?: ILeaseFilter;
+  initialValues: LeaseFilterModel;
+  pimsRegionsOptions: MultiSelectOption[];
+  leaseTeamOptions: MultiSelectOption[];
+  leaseStatusOptions: MultiSelectOption[];
+  leaseProgramOptions: MultiSelectOption[];
   setFilter: (filter: ILeaseFilter) => void;
+  onResetFilter: () => void;
 }
-
-interface MultiSelectOption {
-  id: string;
-  text: string;
-}
-
-export const defaultFilter: ILeaseFilter = {
-  pid: '',
-  pin: '',
-  lFileNo: '',
-  searchBy: 'lFileNo',
-  leaseStatusTypes: [
-    'ACTIVE',
-    'ARCHIVED',
-    'DISCARD',
-    'DRAFT',
-    'DUPLICATE',
-    'EXPIRED',
-    'INACTIVE',
-    'TERMINATED',
-  ],
-  programs: [],
-  tenantName: '',
-  expiryStartDate: '',
-  expiryEndDate: '',
-  regionType: '',
-  details: '',
-  leaseTeamOrganizationId: null,
-  leaseTeamPersonId: null,
-  isReceivable: null,
-};
 
 /**
  * Filter bar for leases and license.
  * @param {ILeaseFilterProps} props
  */
 export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILeaseFilterProps>> = ({
-  filter,
+  initialValues,
+  pimsRegionsOptions,
+  leaseTeamOptions,
+  leaseStatusOptions,
+  leaseProgramOptions,
   setFilter,
+  onResetFilter,
 }) => {
-  const onSearchSubmit = (values: ILeaseFilter, { setSubmitting }: any) => {
-    const selectedPrograms: MultiSelectOption[] = multiselectProgramRef.current?.getSelectedItems();
-    const selectedStatuses: MultiSelectOption[] = multiselectStatusRef.current?.getSelectedItems();
-    const selectedTeam: MultiSelectOption[] = multiselectTeamRef.current?.getSelectedItems();
-    const programIds = selectedPrograms.map<string>(x => x.id);
-    const statuses = selectedStatuses.map<string>(x => x.id);
-    const leaseTeamPersonId = exists(selectedTeam)
-      ? +getParameterIdFromOptions(selectedTeam, 'P')
-      : undefined;
-    const leaseTeamOrganizationId = exists(selectedTeam)
-      ? +getParameterIdFromOptions(selectedTeam, 'O')
-      : undefined;
-    values = {
-      ...values,
-      programs: programIds,
-      leaseStatusTypes: statuses,
-      leaseTeamPersonId: isValidId(leaseTeamPersonId) ? leaseTeamPersonId : null,
-      leaseTeamOrganizationId:
-        exists(selectedTeam) && isValidId(leaseTeamOrganizationId)
-          ? leaseTeamOrganizationId
-          : undefined,
-    };
-    setFilter(values);
-    setSubmitting(false);
+  const onSearchSubmit = (
+    values: LeaseFilterModel,
+    formikHelpers: FormikHelpers<LeaseFilterModel>,
+  ) => {
+    setFilter(values.toApi());
+    formikHelpers.setSubmitting(false);
   };
-  const resetFilter = () => {
-    multiselectProgramRef.current?.resetSelectedValues();
-    multiselectTeamRef.current?.resetSelectedValues();
-    setSelectedStatus(
-      statusFilterOptions.filter(x => defaultFilter.leaseStatusTypes.includes(x.id)),
-    );
-
-    setFilter(defaultFilter);
-  };
-
-  const {
-    getAllLeaseTeamMembers: { response: leaseTeam, execute: loadLeaseTeam },
-  } = useLeaseRepository();
-
-  useEffect(() => {
-    loadLeaseTeam();
-  }, [loadLeaseTeam]);
-
-  const multiselectProgramRef = React.createRef<Multiselect>();
-  const multiselectStatusRef = React.createRef<Multiselect>();
-  const multiselectTeamRef = React.createRef<Multiselect>();
-
-  const lookupCodes = useLookupCodeHelpers();
-
-  const leaseStatusOptions = lookupCodes.getByType(LEASE_STATUS_TYPES);
-
-  const leaseProgramTypes = lookupCodes.getByType(LEASE_PROGRAM_TYPES);
-  const programFilterOptions: MultiSelectOption[] = leaseProgramTypes.map<MultiSelectOption>(x => {
-    return { id: x.id as string, text: x.name };
-  });
-
-  const statusFilterOptions: MultiSelectOption[] = leaseStatusOptions.map<MultiSelectOption>(x => {
-    return { id: x.id as string, text: x.name };
-  });
-
-  const leaseTeamOptions = useMemo(() => {
-    if (exists(leaseTeam)) {
-      return leaseTeam?.map<MultiSelectOption>(x => ({
-        id: x.personId ? `P-${x.personId}` : `O-${x.organizationId}`,
-        text: x.personId ? formatApiPersonNames(x.person) : x.organization?.name ?? '',
-      }));
-    } else {
-      return [];
-    }
-  }, [leaseTeam]);
-
-  const initialLeaseStatusList = statusFilterOptions.filter(x =>
-    defaultFilter.leaseStatusTypes.includes(x.id),
-  );
-
-  const [selectedStatus, setSelectedStatus] = useState<MultiSelectOption[]>(initialLeaseStatusList);
-
-  // Necessary since the lookup codes might have not been loaded before the first render
-  useEffect(() => {
-    setSelectedStatus([
-      { id: 'ACTIVE', text: 'Active' },
-      { id: 'ARCHIVED', text: 'Archived' },
-      { id: 'DISCARD', text: 'Cancelled' },
-      { id: 'DRAFT', text: 'Draft' },
-      { id: 'DUPLICATE', text: 'Duplicate' },
-      { id: 'EXPIRED', text: 'Expired' },
-      { id: 'INACTIVE', text: 'Hold' },
-      { id: 'TERMINATED', text: 'Terminated' },
-    ]);
-  }, []);
-
-  function onSelectedStatusChange(selectedList: MultiSelectOption[]) {
-    setSelectedStatus(selectedList);
-  }
 
   return (
-    <Formik
+    <Formik<LeaseFilterModel>
       enableReinitialize
-      initialValues={filter ?? defaultFilter}
+      initialValues={initialValues}
       onSubmit={onSearchSubmit}
       validationSchema={LeaseFilterSchema}
     >
@@ -203,65 +88,21 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                     </Col>
                     <Col xl="5">
                       <Multiselect
-                        id="status-selector"
-                        ref={multiselectStatusRef}
-                        options={statusFilterOptions}
-                        onSelect={onSelectedStatusChange}
-                        onRemove={onSelectedStatusChange}
-                        selectedValues={selectedStatus}
+                        field="leaseStatusTypes"
+                        options={leaseStatusOptions}
                         displayValue="text"
                         placeholder="Select Status(s)"
-                        customCloseIcon={<FaTimes size="18px" className="ml-3" />}
                         hidePlaceholder={true}
-                        style={{
-                          chips: {
-                            background: '#F2F2F2',
-                            borderRadius: '4px',
-                            color: 'black',
-                            fontSize: '16px',
-                            marginRight: '1em',
-                          },
-                          multiselectContainer: {
-                            width: 'auto',
-                            color: 'black',
-                            paddingBottom: '12px',
-                          },
-                          searchBox: {
-                            background: 'white',
-                            border: '1px solid #606060',
-                          },
-                        }}
                       />
                     </Col>
                   </Row>
                   <Row>
                     <Col xl="7">
                       <Multiselect
-                        id="properties-selector"
-                        ref={multiselectProgramRef}
-                        options={programFilterOptions}
+                        field="programs"
+                        options={leaseProgramOptions}
                         displayValue="text"
                         placeholder="Select Program(s)"
-                        customCloseIcon={<FaTimes size="18px" className="ml-3" />}
-                        hidePlaceholder={true}
-                        style={{
-                          chips: {
-                            background: '#F2F2F2',
-                            borderRadius: '4px',
-                            color: 'black',
-                            fontSize: '16px',
-                            marginRight: '1em',
-                          },
-                          multiselectContainer: {
-                            width: 'auto',
-                            color: 'black',
-                            paddingBottom: '12px',
-                          },
-                          searchBox: {
-                            background: 'white',
-                            border: '1px solid #606060',
-                          },
-                        }}
                       />
                     </Col>
                     <Col xl="5">
@@ -271,8 +112,7 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                   <Row>
                     <Col xl={7}>
                       <StyledMultiselect
-                        field="acquisitionTeamMembers"
-                        ref={multiselectTeamRef}
+                        field="leaseTeamMembers"
                         displayValue="text"
                         placeholder="Team member"
                         hidePlaceholder
@@ -306,7 +146,14 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
               <SectionField label="" labelWidth={{ xl: '2' }}>
                 <Row>
                   <Col>
-                    <UserRegionSelectContainer field="regionType" placeholder="All Regions" />
+                    <Select
+                      options={[
+                        { value: 'null', label: 'All Account Types' },
+                        { value: 'false', label: 'Payable' },
+                        { value: 'true', label: 'Receivable' },
+                      ]}
+                      field="isReceivable"
+                    />
                   </Col>
                   <Col>
                     <Row noGutters>
@@ -326,16 +173,13 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
               <SectionField label="" labelWidth={{ xl: '2' }}>
                 <Row>
                   <Col>
-                    <Select
-                      options={[
-                        { value: 'null', label: 'All Account Types' },
-                        { value: 'false', label: 'Payable' },
-                        { value: 'true', label: 'Receivable' },
-                      ]}
-                      field="isReceivable"
+                    <Multiselect
+                      field="regions"
+                      options={pimsRegionsOptions}
+                      displayValue="text"
+                      placeholder="Select Region(s)"
                     />
                   </Col>
-                  <Col></Col>
                 </Row>
               </SectionField>
             </Col>
@@ -349,7 +193,7 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                     disabled={formikProps.isSubmitting}
                     onClick={() => {
                       formikProps.resetForm();
-                      resetFilter();
+                      onResetFilter();
                     }}
                   />
                 </Col>

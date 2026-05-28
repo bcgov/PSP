@@ -1,11 +1,16 @@
+import { featureCollection } from '@turf/turf';
 import { Feature, Geometry } from 'geojson';
 import { Popup as LeafletPopup } from 'leaflet';
 import React, { useCallback, useMemo } from 'react';
 import { Popup } from 'react-leaflet/Popup';
 
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
-import { LocationFeatureDataset } from '@/components/common/mapFSM/useLocationFeatureLoader';
+import {
+  LocationFeatureDataset,
+  WorklistLocationFeatureDataset,
+} from '@/components/common/mapFSM/useLocationFeatureLoader';
 import { PMBC_FullyAttributed_Feature_Properties } from '@/models/layers/parcelMapBC';
+import { exists, firstOrNull } from '@/utils';
 
 import { MultiplePropertyPopupView } from './MultiplePropertyPopupView';
 
@@ -31,6 +36,44 @@ export const LocationPopupContainer = React.forwardRef<
     [mapMachine],
   );
 
+  const onAddPropertyToWorklist = useCallback(
+    (
+      feature: Feature<Geometry, PMBC_FullyAttributed_Feature_Properties>,
+      featureDataset: LocationFeatureDataset,
+    ) => {
+      const worklistDataSet: WorklistLocationFeatureDataset = {
+        fullyAttributedFeatures: exists(feature) ? featureCollection([feature]) : null,
+        pimsFeature: null,
+        regionFeature: featureDataset?.regionFeature ?? null,
+        districtFeature: featureDataset?.districtFeature ?? null,
+        location: featureDataset?.location ?? null,
+      };
+      mapMachine.worklistAdd(worklistDataSet);
+    },
+    [mapMachine],
+  );
+
+  const onAddAllToWorklist = useCallback(
+    (featureDataset: LocationFeatureDataset) => {
+      const worklistDataSet: WorklistLocationFeatureDataset = {
+        fullyAttributedFeatures: exists(featureDataset?.parcelFeatures)
+          ? featureCollection(featureDataset.parcelFeatures)
+          : null,
+        pimsFeature: firstOrNull(featureDataset?.pimsFeatures),
+        regionFeature: featureDataset?.regionFeature ?? null,
+        districtFeature: featureDataset?.districtFeature ?? null,
+        location: featureDataset?.location ?? null,
+      };
+      mapMachine.worklistAdd(worklistDataSet);
+    },
+    [mapMachine],
+  );
+
+  const onCloseButtonPressed = (event: React.MouseEvent<HTMLElement, MouseEvent>) => {
+    event.stopPropagation();
+    mapMachine.closePopup();
+  };
+
   return (
     <Popup
       ref={ref}
@@ -46,6 +89,9 @@ export const LocationPopupContainer = React.forwardRef<
         <MultiplePropertyPopupView
           featureDataset={mapMachine.mapLocationFeatureDataset}
           onSelectProperty={onSelectProperty}
+          onAddPropertyToWorklist={onAddPropertyToWorklist}
+          onAddAllToWorklist={onAddAllToWorklist}
+          onClose={onCloseButtonPressed}
         />
       )}
     </Popup>

@@ -10,16 +10,11 @@ export const columns: ColumnWithProps<ProjectSearchResultModel>[] = [
   {
     Header: 'Project #',
     accessor: 'code',
-    align: 'center',
+    align: 'right',
     clickable: false,
     sortable: true,
     width: 5,
     maxWidth: 20,
-    Cell: (props: CellProps<ProjectSearchResultModel>) => (
-      <ExternalLink to={`/mapview/sidebar/project/${props.row.original.id}`}>
-        {props.row.original.code}
-      </ExternalLink>
-    ),
   },
   {
     Header: 'Project name',
@@ -36,7 +31,7 @@ export const columns: ColumnWithProps<ProjectSearchResultModel>[] = [
     ),
   },
   {
-    Header: 'Region',
+    Header: 'MOTT region',
     accessor: 'region',
     align: 'left',
     clickable: false,

@@ -57,8 +57,11 @@ namespace Pims.Dal.Repositories
         /// Note that the 'leaseFilter' will control the 'page' and 'quantity'.
         /// </summary>
         /// <param name="filter"></param>
+        /// <param name="regionCodes"></param>
+        /// <param name="loadPayments"></param>
+        /// <param name="contractorPersonId"></param>
         /// <returns></returns>
-        public IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false)
+        public IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, bool loadPayments = false, long? contractorPersonId = null)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
@@ -67,7 +70,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            var query = GenerateLeaseQuery(filter, regionCodes, loadPayments);
+            var query = GenerateLeaseQuery(filter, loadPayments, contractorPersonId);
 
             // Getting all by the filter will ignore the order by passed and instead use the lease id.
             var leases = query.OrderBy(l => l.LeaseId).ToArray();
@@ -84,9 +87,9 @@ namespace Pims.Dal.Repositories
 
         public PimsLease Get(long id)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
+            User.ThrowIfNotAuthorized(Permissions.LeaseView);
 
-            PimsLease lease = this.Context.PimsLeases.AsSplitQuery().AsNoTracking()
+            PimsLease lease = Context.PimsLeases.AsSplitQuery().AsNoTracking()
                 .Include(l => l.PimsPropertyLeases)
                 .Include(l => l.RegionCodeNavigation)
                 .Include(l => l.LeaseProgramTypeCodeNavigation)
@@ -109,6 +112,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(x => x.CostTypeCode)
                 .Include(r => r.Project)
                     .ThenInclude(x => x.BusinessFunctionCode)
+                .Include(r => r.Project)
+                    .ThenInclude(x => x.PimsProjectPeople)
                 .Include(r => r.Product)
                 .Include(r => r.PimsLeaseLicenseTeams)
                     .ThenInclude(r => r.LlTeamProfileTypeCodeNavigation)
@@ -128,11 +133,9 @@ namespace Pims.Dal.Repositories
             return lease;
         }
 
-        public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds)
+        public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds, long? contractorPersonId = null)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
-
-            IEnumerable<PimsLease> leases = this.Context.PimsLeases.AsSplitQuery().AsNoTracking()
+            var query = Context.PimsLeases.AsSplitQuery().AsNoTracking()
                 .Include(l => l.PimsPropertyLeases)
                     .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.PimsHistoricalFileNumbers)
@@ -160,8 +163,20 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(x => x.CostTypeCode)
                 .Include(r => r.Project)
                     .ThenInclude(x => x.BusinessFunctionCode)
+                .Include(r => r.Project)
+                    .ThenInclude(x => x.PimsProjectPeople)
                 .Include(r => r.Product)
+                .Include(r => r.PimsLeaseLicenseTeams)
                 .Where(l => leaseIds.Any(leaseId => leaseId == l.LeaseId)) ?? throw new KeyNotFoundException();
+
+            // Enforce contractor access to only their leases
+            if (contractorPersonId is not null)
+            {
+                query = query.Where(l => l.PimsLeaseLicenseTeams.Any(lt => lt.PersonId == contractorPersonId) ||
+                    (l.Project != null && l.Project.PimsProjectPeople.Any(pp => pp.PersonId == contractorPersonId)));
+            }
+
+            var leases = query.ToArray();
             return leases;
         }
 
@@ -214,8 +229,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -249,8 +264,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -284,8 +299,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -319,8 +334,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -354,8 +369,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -396,8 +411,8 @@ namespace Pims.Dal.Repositories
             .Select(rdh => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = rdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = rdh.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = rdh.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -438,8 +453,8 @@ namespace Pims.Dal.Repositories
             .Select(sdh => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = sdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = sdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = sdh.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = sdh.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = sdh.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -473,8 +488,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -515,14 +530,34 @@ namespace Pims.Dal.Repositories
             .Select(rdh => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = rdh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = rdh.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = rdh.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = rdh.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
             .Take(1)
             .ToList();
             lastUpdatedByAggregate.AddRange(periodPaymentHistoryLastUpdatedBy);
+
+            // Lease Deleted Renewals
+            // This is needed to get the renewals last-updated-by when deleted
+            var deletedRenewals = this.Context.PimsLeaseRenewalHists.AsNoTracking()
+            .Where(aph => aph.LeaseId == leaseId)
+            .GroupBy(aph => aph.LeaseRenewalId)
+            .Select(gaph => gaph.OrderByDescending(a => a.EffectiveDateHist).FirstOrDefault()).ToList();
+
+            var renewalHistoryLastUpdatedBy = deletedRenewals
+            .Select(aph => new LastUpdatedByModel()
+            {
+                ParentId = leaseId,
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
+                AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
+            })
+            .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
+            .Take(1)
+            .ToList();
+            lastUpdatedByAggregate.AddRange(renewalHistoryLastUpdatedBy);
 
             // Lease Documents
             var documentsUpdatedBy = this.Context.PimsLeaseDocuments.AsNoTracking()
@@ -550,8 +585,8 @@ namespace Pims.Dal.Repositories
             .Select(aph => new LastUpdatedByModel()
             {
                 ParentId = leaseId,
-                AppLastUpdateUserid = aph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = aph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = aph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = aph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -586,8 +621,8 @@ namespace Pims.Dal.Repositories
                 .Select(anh => new LastUpdatedByModel()
                 {
                     ParentId = leaseId,
-                    AppLastUpdateUserid = anh.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                    AppLastUpdateUserGuid = anh.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                    AppLastUpdateUserid = anh.AppLastUpdateUserid,
+                    AppLastUpdateUserGuid = anh.AppLastUpdateUserGuid,
                     AppLastUpdateTimestamp = anh.EndDateHist ?? DateTime.UnixEpoch,
                 })
                 .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -603,7 +638,7 @@ namespace Pims.Dal.Repositories
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
 
-            PimsLease lease = this.Context.PimsLeases.AsSplitQuery()
+            PimsLease lease = Context.PimsLeases.AsSplitQuery()
                 .AsNoTracking()
                 .Include(l => l.PimsPropertyLeases)
                 .ThenInclude(p => p.Property)
@@ -622,11 +657,25 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(p => p.Property)
                     .ThenInclude(p => p.PropertyAreaUnitTypeCodeNavigation)
                 .Include(l => l.RegionCodeNavigation)
-
                 .Include(l => l.FileAppraisalTypeCodeNavigation)
                 .Include(l => l.FileLglSrvyTypeCodeNavigation)
-
                 .Include(l => l.Project)
+                    .ThenInclude(x => x.WorkActivityCode)
+                .Include(r => r.Project)
+                    .ThenInclude(x => x.CostTypeCode)
+                .Include(r => r.Project)
+                    .ThenInclude(x => x.BusinessFunctionCode)
+                .Include(r => r.Project)
+                    .ThenInclude(x => x.PimsProjectPeople)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.LlTeamProfileTypeCodeNavigation)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.Person)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.Organization)
+                .Include(r => r.PimsLeaseLicenseTeams)
+                    .ThenInclude(r => r.PrimaryContact)
+
                 .Include(l => l.LeaseProgramTypeCodeNavigation)
                 .Include(l => l.LeasePayRvblTypeCodeNavigation)
                 .Include(l => l.LeaseLicenseTypeCodeNavigation)
@@ -715,6 +764,8 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(t => t.ConsultationTypeCodeNavigation)
                 .Include(t => t.PimsLeaseConsultations)
                     .ThenInclude(t => t.ConsultationStatusTypeCodeNavigation)
+
+                .Include(x => x.PimsCompensationRequisitions)
                 .FirstOrDefault(l => l.LeaseId == id) ?? throw new KeyNotFoundException();
 
             lease.PimsLeasePeriods = lease.PimsLeasePeriods.OrderBy(t => t.PeriodStartDate).ThenBy(t => t.LeasePeriodId).Select(t =>
@@ -731,18 +782,21 @@ namespace Pims.Dal.Repositories
         /// Note that the 'leaseFilter' will control the 'page' and 'quantity'.
         /// </summary>
         /// <param name="filter"></param>
+        /// <param name="contractorPersonId">The contractor person id to filter by. Only applies if calling user is a Contractor.</param>
         /// <returns></returns>
-        public Paged<PimsLease> GetPage(LeaseFilter filter, HashSet<short> regions)
+        public Paged<PimsLease> GetPage(LeaseFilter filter, long? contractorPersonId = null)
         {
-            this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
+            User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
+
             if (!filter.IsValid())
             {
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
             var skip = (filter.Page - 1) * filter.Quantity;
-            var query = GenerateLeaseQuery(filter, regions);
+            var query = GenerateLeaseQuery(filter, contractorPersonId: contractorPersonId);
+
             var items = query
                 .Skip(skip)
                 .Take(filter.Quantity)
@@ -832,12 +886,13 @@ namespace Pims.Dal.Repositories
         /// <param name="filter"></param>
         /// <param name="regionCodes"></param>
         /// <param name="loadPayments"></param>
+        /// <param name="contractorPersonId">The contractor person id to filter by. Only applies if calling user is a Contractor.</param>
         /// <returns></returns>
-        public IQueryable<PimsLease> GenerateLeaseQuery(LeaseFilter filter, HashSet<short> regionCodes, bool loadPayments = false)
+        public IQueryable<PimsLease> GenerateLeaseQuery(LeaseFilter filter, bool loadPayments = false, long? contractorPersonId = null)
         {
             filter.ThrowIfNull(nameof(filter));
 
-            var query = Context.PimsLeases
+            IQueryable<PimsLease> query = Context.PimsLeases.AsNoTracking()
                         .Include(l => l.PimsPropertyLeases)
                             .ThenInclude(p => p.Property)
                             .ThenInclude(p => p.Address)
@@ -858,7 +913,8 @@ namespace Pims.Dal.Repositories
                         .Include(l => l.RegionCodeNavigation)
                         .Include(l => l.PimsLeasePeriods)
                         .Include(l => l.PimsLeaseRenewals)
-                        .AsNoTracking();
+                        .Include(p => p.Project)
+                            .ThenInclude(p => p.PimsProjectPeople);
 
             if (loadPayments)
             {
@@ -866,10 +922,10 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(l => l.PimsLeasePayments);
             }
 
-            var predicate = GenerateCommonLeaseQuery(filter, regionCodes);
+            var predicate = GenerateCommonLeaseQuery(filter, contractorPersonId);
             query = query.Where(predicate);
 
-            if (filter.Sort?.Any() == true)
+            if (filter.Sort?.Length > 0)
             {
                 var sortList = filter.Sort.ToList();
                 MapSortField("ExpiryDate", "OrigExpiryDate", sortList);
@@ -1036,15 +1092,20 @@ namespace Pims.Dal.Repositories
         /// Generate an SQL statement for the specified 'region' and 'filter'.
         /// </summary>
         /// <param name="filter"></param>
-        /// <param name="regions"></param>
+        /// <param name="contractorPersonId">The contractor person id to filter by. Only applies if calling user is a Contractor.</param>
         /// <returns></returns>
-        private static ExpressionStarter<PimsLease> GenerateCommonLeaseQuery(LeaseFilter filter, HashSet<short> regions)
+        private static ExpressionStarter<PimsLease> GenerateCommonLeaseQuery(LeaseFilter filter, long? contractorPersonId = null)
         {
             filter.ThrowIfNull(nameof(filter));
 
             var predicateBuilder = PredicateBuilder.New<PimsLease>(l => true);
 
-            predicateBuilder = predicateBuilder.And(l => !l.RegionCode.HasValue || regions.Contains(l.RegionCode.Value));
+            // Enforce contractor access to only their leases
+            if (contractorPersonId is not null)
+            {
+                predicateBuilder = predicateBuilder.And(l => l.PimsLeaseLicenseTeams.Any(teamMember => teamMember.PersonId == contractorPersonId) ||
+                    (l.Project != null && l.Project.PimsProjectPeople.Any(projectTeam => projectTeam.PersonId == contractorPersonId)));
+            }
 
             if (!string.IsNullOrWhiteSpace(filter.TenantName))
             {
@@ -1156,14 +1217,14 @@ namespace Pims.Dal.Repositories
                         l.OrigExpiryDate <= expiryEndDate);
             }
 
-            if (filter.RegionType.HasValue)
-            {
-                predicateBuilder = predicateBuilder.And(l => l.RegionCode == filter.RegionType);
-            }
-
             if (!string.IsNullOrWhiteSpace(filter.Details))
             {
                 predicateBuilder = predicateBuilder.And(l => EF.Functions.Like(l.LeaseDescription, $"%{filter.Details}%") || EF.Functions.Like(l.LeaseNotes, $"%{filter.Details}%"));
+            }
+
+            if (filter.Regions.Any())
+            {
+                predicateBuilder = predicateBuilder.And(x => x.RegionCode != null && filter.Regions.Any(r => r == x.RegionCode));
             }
 
             return predicateBuilder;

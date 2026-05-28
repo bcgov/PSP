@@ -3,7 +3,7 @@ import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 
 import { Claims } from '@/constants/claims';
-import { mockDocumentTypesAcquisition } from '@/mocks/documents.mock';
+import { mockDocumentTypesAcquisition } from '@/mocks/documentTypes.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { ApiGen_Mayan_DocumentMetadata } from '@/models/api/generated/ApiGen_Mayan_DocumentMetadata';
@@ -15,8 +15,8 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { mockKeycloak, render, RenderOptions } from '@/utils/test-utils';
 
 import { DocumentUpdateFormData } from '../models';
-import { DocumentDetailForm, IDocumentDetailFormProps } from './DocumentDetailForm';
 import { ComposedDocument } from '../models/ComposedDocument';
+import { DocumentDetailForm, IDocumentDetailFormProps } from './DocumentDetailForm';
 
 // mock auth library
 

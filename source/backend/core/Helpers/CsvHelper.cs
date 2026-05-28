@@ -6,6 +6,7 @@ using System.Globalization;
 using System.IO;
 using System.Linq;
 using System.Reflection;
+using System.Runtime.Serialization;
 using CsvHelper;
 using CsvHelper.Configuration;
 using Pims.Core.Extensions;
@@ -56,6 +57,13 @@ namespace Pims.Core.Helpers
             var properties = type.GetCachedProperties();
             properties.ForEach(p =>
             {
+                // Check if the property has the [IgnoreDataMember] attribute, and ignore the property if it does.
+                // This allows us to include properties in the model that we don't want to include in the export.
+                if (p.GetCustomAttribute<IgnoreDataMemberAttribute>() != null)
+                {
+                    return;
+                }
+
                 var pType = p.PropertyType;
                 var isNullable = pType.IsGenericType && pType.GetGenericTypeDefinition() == typeof(Nullable<>);
 

@@ -38,6 +38,13 @@ const mockManagementFileApi = mockManagementFileResponse();
 
 const onClose = vi.fn();
 
+// Mock ConfirmNavigation to avoid Prompt issues in jsdom
+vi.mock('@/components/common/ConfirmNavigation', () => {
+  return {
+    default: () => null,
+  };
+});
+
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
   return {

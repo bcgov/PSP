@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using Pims.Dal.Entities.Models;
 
 namespace Pims.Api.Areas.Projects.Models
@@ -14,7 +15,10 @@ namespace Pims.Api.Areas.Projects.Models
 
         public string ProjectStatusCode { get; set; }
 
-        public string ProjectRegionCode { get; set; }
+        /// <summary>
+        /// get/set - The region types.
+        /// </summary>
+        public IList<short> Regions { get; set; } = new List<short>();
 
         public static explicit operator ProjectFilter(ProjectFilterModel model)
         {
@@ -23,10 +27,10 @@ namespace Pims.Api.Areas.Projects.Models
                 Page = model.Page,
                 Quantity = model.Quantity,
 
-                ProjectNumber = model.ProjectNumber,
-                ProjectName = model.ProjectName,
+                ProjectNumber = model.ProjectNumber?.Trim(),
+                ProjectName = model.ProjectName?.Trim(),
                 ProjectStatusCode = model.ProjectStatusCode,
-                ProjectRegionCode = model.ProjectRegionCode,
+                Regions = model.Regions,
 
                 Sort = model.Sort,
             };

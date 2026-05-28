@@ -37,6 +37,8 @@ describe('Property management model tests', () => {
       expect(model.isTaxesPayable).toBe(null);
       expect(model.isUtilitiesPayable).toBe(null);
       expect(model.formattedLeaseInformation).toBe('No');
+      expect(model.responsiblePayer).toBe(null);
+      expect(model.responsiblePayerPrimaryContactId).toBe(null);
     });
 
     it.each([

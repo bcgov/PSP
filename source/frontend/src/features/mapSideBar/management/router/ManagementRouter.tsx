@@ -1,6 +1,6 @@
 import { FormikProps } from 'formik';
 import React from 'react';
-import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
+import { Redirect, Route, Switch, useHistory, useRouteMatch } from 'react-router-dom';
 
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
@@ -26,6 +26,7 @@ export interface IManagementRouterProps {
 
 export const ManagementRouter: React.FC<IManagementRouterProps> = props => {
   const { path, url } = useRouteMatch();
+  const history = useHistory();
 
   if (!exists(props.managementFile)) {
     return null;
@@ -48,6 +49,9 @@ export const ManagementRouter: React.FC<IManagementRouterProps> = props => {
               onSuccess={() => {
                 props.setIsEditing(false);
                 props.onSuccess();
+                history.replace({
+                  pathname: `${stripTrailingSlash(url)}/${FileTabType.FILE_DETAILS}`,
+                });
               }}
               ref={props.formikRef}
             />

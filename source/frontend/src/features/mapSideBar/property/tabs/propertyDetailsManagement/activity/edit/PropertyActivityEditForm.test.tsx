@@ -17,6 +17,7 @@ import {
   PropertyActivityEditForm,
 } from './PropertyActivityEditForm';
 import { PropertyActivityFormModel } from './models';
+import { getMockApiPropertyManagement } from '@/mocks/propertyManagement.mock';
 
 // Need to mock this library for unit tests
 vi.mock('react-visibility-sensor', () => {
@@ -53,6 +54,9 @@ describe('PropertyActivityEditForm component', () => {
     const result = render(
       <PropertyActivityEditForm
         propertyId={renderOptions?.props?.propertyId ?? 1}
+        propertyManagement={
+          renderOptions?.props?.propertyManagement ?? getMockApiPropertyManagement()
+        }
         gstConstant={renderOptions?.props?.gstConstant ?? 0}
         pstConstant={renderOptions?.props?.pstConstant ?? 0}
         onCancel={renderOptions?.props?.onCancel ?? onCancel}

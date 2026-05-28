@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Pims.Dal.Entities.Models
 {
     public class DispositionFilter : PageFilter
@@ -48,6 +50,11 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The MOTI Organization id to search by for disposition team members.
         /// </summary>
         public long? TeamMemberOrganizationId { get; set; }
+
+        /// <summary>
+        /// get/set - The region types.
+        /// </summary>
+        public IList<int> Regions { get; set; } = new List<int>();
 
         #endregion
 

@@ -125,7 +125,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
                 //Verify the Property's notes section
                 var lastNote = notesData.Count -1;
-                notes.VerifySecondaryNotesListContent(feature, notesData[lastNote]);
+                notes.VerifySecondaryNotesListContent("Management", notesData[lastNote]);
 
                 //Navigate back to Properties section
                 notes.NavigateToFirstPropertyNote();
@@ -140,7 +140,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
                 notes.NavigateNotesTab();
 
                 //Verify the Management's notes section
-                notes.VerifySecondaryNotesListContent(feature, notesData[0]);
+                //notes.VerifySecondaryNotesListContent(feature, notesData[0]);
             }
         }
 

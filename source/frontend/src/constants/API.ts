@@ -36,6 +36,7 @@ export interface IGeoSearchParams {
   RANGE?: number | string;
   DISTRICT?: string;
   DISTRICT_LOT?: string;
+  LEGAL_DESCRIPTION?: string;
   PROJECT?: number | string;
   latitude?: number | string;
   longitude?: number | string;
@@ -68,6 +69,7 @@ export const LEASE_PAYMENT_METHOD_TYPES = 'PimsLeasePaymentMethodType';
 export const LEASE_PAYMENT_STATUS_TYPES = 'PimsLeasePaymentStatusType';
 export const PROPERTY_CLASSIFICATION_TYPES = 'PimsPropertyClassification';
 export const PROPERTY_IMPROVEMENT_TYPES = 'PimsPropertyImprovementType';
+export const PROPERTY_IMPROVEMENT_STATUS_TYPES = 'PimsPropImprvmntStatusType';
 export const PROPERTY_ANOMALY_TYPES = 'PimsPropertyAnomalyType';
 export const PROPERTY_TENURE_TYPES = 'PimsPropertyTenureType';
 export const PROPERTY_ROAD_TYPES = 'PimsPropertyRoadType';
@@ -137,6 +139,8 @@ export const ACQUISITION_EXPROPRIATION_EVENT_TYPES = 'PimsExpropOwnerHistoryType
 export const MANAGEMENT_FILE_STATUS_TYPES = 'PimsManagementFileStatusType';
 export const MANAGEMENT_FILE_PURPOSE_TYPES = 'PimsManagementFilePurposeType';
 export const MANAGEMENT_TEAM_PROFILE_TYPES = 'PimsManagementFileProfileType';
+export const TENURE_CLEANUP_TYPES = 'PimsTenureCleanupType';
+export const SURPLUS_DECLARATION_TYPES = 'PimsSurplusDeclarationType';
 
 // TODO: PSP-4395 This should all be removed from this and moved to the useApi* hooks.
 // Auth Service

@@ -1,24 +1,32 @@
 import moment from 'moment';
+import { Col, Row } from 'react-bootstrap';
+import { useHistory } from 'react-router-dom';
 import styled from 'styled-components';
 
 import { Button } from '@/components/common/buttons';
+import EditButton from '@/components/common/buttons/EditButton';
 import { FormSection } from '@/components/common/form/styles';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import {
   InlineMessage,
+  StyledEditWrapper,
   StyledInlineMessageSection,
 } from '@/components/common/Section/SectionStyles';
+import { Claims } from '@/constants';
+import { useQuery } from '@/hooks/use-query';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
-import { formatBcaAddress } from '@/utils';
+import { exists, formatBcaAddress, formatMoney } from '@/utils';
 import { pidFormatter } from '@/utils/propertyUtils';
 
 import AssessedValuesTable from './AssessedValuesTable';
 import SalesTable from './SalesTable';
 
 export interface IBcAssessmentTabViewProps {
+  property?: ApiGen_Concepts_Property;
   summaryData?: IBcAssessmentSummary;
   requestedOn?: Date;
   loading: boolean;
@@ -26,20 +34,23 @@ export interface IBcAssessmentTabViewProps {
 }
 
 export const BcAssessmentTabView: React.FunctionComponent<IBcAssessmentTabViewProps> = ({
+  property,
   summaryData,
   requestedOn,
   loading,
   pid,
 }) => {
   const address = summaryData?.ADDRESSES?.find(a => a.PRIMARY_IND === 'true');
-  const keycloak = useKeycloakWrapper();
-  const logout = keycloak.obj.logout;
+  const { hasClaim, obj } = useKeycloakWrapper();
+  const logout = obj.logout;
+  const query = useQuery();
+  const history = useHistory();
 
   return (
     <>
       <LoadingBackdrop show={loading} parentScreen={true} />
 
-      {!pid ? (
+      {!exists(pid) ? (
         <FormSection>
           <b>
             This property does not have a valid PID.
@@ -48,7 +59,7 @@ export const BcAssessmentTabView: React.FunctionComponent<IBcAssessmentTabViewPr
             from LTSA.
           </b>
         </FormSection>
-      ) : !loading && !summaryData ? (
+      ) : !loading && !exists(summaryData) ? (
         <FormSection>
           <b>
             Failed to load data from BC Assessment.
@@ -70,6 +81,33 @@ export const BcAssessmentTabView: React.FunctionComponent<IBcAssessmentTabViewPr
                 {moment(requestedOn).format('DD-MMM-YYYY h:mm A')}
               </InlineMessage>
             </StyledInlineMessageSection>
+          )}
+          {exists(property) && (
+            <Section
+              header={
+                <Row>
+                  <Col md="10">Net Book</Col>
+                  <Col md="2" className="d-flex align-items-center justify-content-end pr-0">
+                    <StyledEditWrapper>
+                      {hasClaim(Claims.DISPOSITION_EDIT) && (
+                        <EditButton
+                          title="Edit net book value"
+                          onClick={() => {
+                            query.set('edit', 'true');
+                            history.push({ search: query.toString() });
+                          }}
+                        />
+                      )}
+                    </StyledEditWrapper>
+                  </Col>
+                </Row>
+              }
+            >
+              <SectionField label="Net book value">
+                {formatMoney(property.netBookAmount)}
+              </SectionField>
+              <SectionField label="Notes">{property.netBookNote}</SectionField>
+            </Section>
           )}
           <Section header="Assessment Overview">
             <SectionField label="PID">{pidFormatter(pid)}</SectionField>

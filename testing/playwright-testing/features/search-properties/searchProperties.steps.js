@@ -1,40 +1,42 @@
-const { Given, When, Then } = require("@cucumber/cucumber");
-const searchPropertiesData = require("../../data/SearchProperties.json");
+const { Given, setDefaultTimeout } = require("@cucumber/cucumber");
+const searchPropertiesJson = require("../../data/SearchProperties.json");
 
-let searchPropertiesData = [];
+let searchPropertiesData = {};
+setDefaultTimeout(100000);
 
 Given("I navigate to the Search Control", async function () {
   await this.searchProperties.navigateSearchProperties();
 });
 
-When(
-  "I search for several properties from row number {int}",
+Given(
+  "I search for several properties from row number {int} and add to the worklist",
   async function (rowNbr) {
-    searchPropertiesData = searchPropertiesData[rowNbr];
-    if (!searchPropertiesData.PID.equals("")) {
+    searchPropertiesData = searchPropertiesJson[rowNbr];
+    if (searchPropertiesData.PID != "") {
       await this.searchProperties.searchPropertyByPID(searchPropertiesData.PID);
       await this.searchProperties.selectNthPMBCSearchResult(0);
       await this.searchProperties.addPropertyToWorklistFromQuickInfo();
       await this.searchProperties.resetSearch();
     }
 
-    if (!searchPropertiesData.PIN.equals("")) {
+    if (searchPropertiesData.PIN != "") {
       await this.searchProperties.searchPropertyByPIN(searchPropertiesData.PIN);
       await this.searchProperties.selectNthPMBCSearchResult(0);
       await this.searchProperties.addPropertyToWorklistFromQuickInfo();
       await this.searchProperties.resetSearch();
     }
 
-    if (!searchPropertiesData.Address.equals("")) {
+    if (searchPropertiesData.Address != "") {
       await this.searchProperties.searchPropertyByAddress(
         searchPropertiesData.Address
       );
+      await this.searchProperties.closePropertyLeaflet();
       await this.searchProperties.selectNthPMBCSearchResult(0);
       await this.searchProperties.addPropertyToWorklistFromQuickInfo();
       await this.searchProperties.resetSearch();
     }
 
-    if (!searchPropertiesData.PlanNumber.equals("")) {
+    if (searchPropertiesData.PlanNumber != "") {
       await this.searchProperties.searchPropertyByPlan(
         searchPropertiesData.PlanNumber
       );
@@ -43,49 +45,70 @@ When(
       await this.searchProperties.resetSearch();
     }
 
-    if (!searchPropertiesData.HistoricalFile.equals("")) {
+    if (searchPropertiesData.HistoricalFile != "") {
       await this.searchProperties.searchPropertyByHistoricalFile(
         searchPropertiesData.HistoricalFile
       );
-      await this.searchProperties.selectNthPMBCSearchResult(0);
+      await this.searchProperties.selectNthPIMSSearchResult(0);
       await this.searchProperties.addPropertyToWorklistFromQuickInfo();
       await this.searchProperties.resetSearch();
     }
 
-    if (!searchPropertiesData.POIName.equals("")) {
+    if (searchPropertiesData.POIName != "") {
       await this.searchProperties.searchPropertyByPOIName(
         searchPropertiesData.POIName
       );
-      await this.searchProperties.selectNthPMBCSearchResult(0);
+      await this.searchProperties.selectPinOnMap();
       await this.searchProperties.addPropertyToWorklistFromQuickInfo();
       await this.searchProperties.resetSearch();
     }
 
-    if (!searchPropertiesData.Coordinates.LatitudeDegree.equals("")) {
-      await this.searchProperties.selectPropertyByLongLant(
+    if (searchPropertiesData.Coordinates.LatitudeDegree != "") {
+      await this.searchProperties.searchPropertyByLongLant(
         searchPropertiesData.Coordinates
       );
-      await this.searchProperties.selectNthPMBCSearchResult(0);
+      await this.searchProperties.selectPinOnMap();
       await this.searchProperties.addPropertyToWorklistFromQuickInfo();
       await this.searchProperties.resetSearch();
     }
 
-    if (!searchPropertiesData.SurveyParcel.equals("")) {
+    if (searchPropertiesData.SurveyParcel.DistrictInput != null) {
       await this.searchProperties.searchPropertyBySurveyParcel(
         searchPropertiesData.SurveyParcel
       );
-      await this.searchProperties.selectNthPMBCSearchResult(0);
-      await this.searchProperties.addPropertyToWorklistFromQuickInfo();
-      await this.searchProperties.resetSearch();
     }
 
-    if (!searchPropertiesData.Project.equals("")) {
+    if (searchPropertiesData.Project != "") {
       await this.searchProperties.searchPropertyByProject(
         searchPropertiesData.Project
       );
-      await this.searchProperties.selectNthPMBCSearchResult(0);
+      await this.searchProperties.selectNthPIMSSearchResult(0);
       await this.searchProperties.addPropertyToWorklistFromQuickInfo();
       await this.searchProperties.resetSearch();
     }
+  }
+);
+
+Given(
+  "I search for a Strata plan and several properties from row number {int} and add to the worklist",
+  async function (rowNbr) {
+    searchPropertiesData = searchPropertiesJson[rowNbr];
+
+    await this.searchProperties.searchPropertyByPlan(
+      searchPropertiesData.PlanNumber
+    );
+    await this.searchProperties.selectNthPMBCSearchResult(0);
+    await this.searchProperties.addPropertyToWorklistFromQuickInfo();
+
+    //Add Child 1
+    await this.searchProperties.selectNthPMBCSearchResult(1);
+    await this.searchProperties.addPropertyToWorklistFromQuickInfo();
+
+    //Add Child 2
+    await this.searchProperties.selectNthPMBCSearchResult(2);
+    await this.searchProperties.addPropertyToWorklistFromQuickInfo();
+
+    //reset search
+    await this.searchProperties.resetSearch();
   }
 );

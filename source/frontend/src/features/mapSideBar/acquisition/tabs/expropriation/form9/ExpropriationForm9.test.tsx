@@ -1,12 +1,13 @@
+import { FormikProps } from 'formik';
+import { createRef } from 'react';
+
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { getMockContactOrganizationWithOnePerson } from '@/mocks/contacts.mock';
 import { getMockExpropriationFile } from '@/mocks/index.mock';
-import { act, findAllByText, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import ExpropriationForm9, { IExpropriationForm9Props } from './ExpropriationForm9';
 import { ExpropriationForm9Model } from '../models';
-import { FormikProps } from 'formik';
-import { createRef } from 'react';
+import ExpropriationForm9, { IExpropriationForm9Props } from './ExpropriationForm9';
 
 // mock auth library
 
@@ -70,7 +71,7 @@ describe('Expropriation Form 9', () => {
     await act(async () => formikRef.current.submitForm());
 
     expect(getByText('Expropriation authority is required')).toBeInTheDocument();
-    expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
+    expect(getByText('At least one impacted property is required')).toBeInTheDocument();
   });
 
   it(`submits the form when Generate form 9 button is clicked`, async () => {

@@ -52,6 +52,7 @@ namespace Pims.Dal.Test.Repositories
         {
             var user = PrincipalHelper.CreateForPermission(permissions);
             _helper.CreatePimsContext(user, true);
+            _helper.InitializeDatabase(user);
             return _helper.CreateRepository<PropertyRepository>();
         }
 
@@ -171,8 +172,10 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
+
             var property = EntityHelper.CreateProperty(100);
-            property.Internal_Id = 1;
+            property.PropertyId = 1;
+
             _helper.AddAndSaveChanges(property);
 
             // Act
@@ -453,7 +456,16 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var propertyOne = EntityHelper.CreateProperty(100, isCoreInventory: true);
+            PimsAddress propertyOneAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var propertyOne = EntityHelper.CreateProperty(100, isCoreInventory: true, address: propertyOneAddress);
             var lease = EntityHelper.CreateLease(1, addProperty: false);
 
             lease.PimsLeaseLeasePurposes.Add(new PimsLeaseLeasePurpose()
@@ -465,7 +477,17 @@ namespace Pims.Dal.Test.Repositories
             propertyOne.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = propertyOne.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
             _helper.AddAndSaveChanges(propertyOne);
 
-            var propertyTwo = EntityHelper.CreateProperty(101, isCoreInventory: true);
+            PimsAddress propertyTwoAddress = new()
+            {
+                AddressId = 200,
+                PostalCode = "V8V8V8",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+
+            var propertyTwo = EntityHelper.CreateProperty(101, isCoreInventory: true, address: propertyTwoAddress);
             var anotherLease = EntityHelper.CreateLease(2, addProperty: false, generateTypeIds: true);
             anotherLease.PimsLeaseLeasePurposes.Add(new PimsLeaseLeasePurpose()
             {
@@ -490,7 +512,16 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var propertyOne = EntityHelper.CreateProperty(100, isCoreInventory: true);
+            PimsAddress propertyOneAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var propertyOne = EntityHelper.CreateProperty(100, isCoreInventory: true, address: propertyOneAddress);
             var lease = EntityHelper.CreateLease(1, addProperty: false);
 
             lease.PimsLeaseLeasePurposes.Add(new PimsLeaseLeasePurpose()
@@ -502,7 +533,16 @@ namespace Pims.Dal.Test.Repositories
             propertyOne.PimsPropertyLeases.Add(new PimsPropertyLease() { PropertyId = propertyOne.Internal_Id, LeaseId = lease.Internal_Id, Lease = lease });
             _helper.AddAndSaveChanges(propertyOne);
 
-            var propertyTwo = EntityHelper.CreateProperty(101, isCoreInventory: true);
+            PimsAddress propertyTwoAddress = new()
+            {
+                AddressId = 200,
+                PostalCode = "V8V8V8",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var propertyTwo = EntityHelper.CreateProperty(101, isCoreInventory: true, address: propertyTwoAddress);
             var anotherLease = EntityHelper.CreateLease(2, addProperty: false, generateTypeIds: true);
             anotherLease.PimsLeaseLeasePurposes.Add(new PimsLeaseLeasePurpose()
             {
@@ -544,10 +584,31 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
-            var property = EntityHelper.CreateProperty(100, isCoreInventory: true);
-            var file = EntityHelper.CreateAcquisitionFile(1);
-            file.ProjectId = 1;
-            property.PimsPropertyAcquisitionFiles.Add(new PimsPropertyAcquisitionFile() { AcquisitionFile = file });
+            PimsAddress propertyAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var property = EntityHelper.CreateProperty(100, isCoreInventory: true, address: propertyAddress);
+            property.PimsPropertyAcquisitionFiles.Add(new PimsPropertyAcquisitionFile()
+            {
+                PropertyId = 100,
+                AcquisitionFile = new()
+                {
+                    AcquisitionFileId = 1,
+                    ProjectId = 1,
+                    FileName = "Test Acquisition File",
+                    FileNo = 12345,
+                    FileNoSuffix = 1,
+                    AcquisitionFileStatusTypeCode = AcquisitionStatusTypes.ACTIVE.ToString(),
+                    AcquisitionTypeCode = AcquisitionFileTypeTypes.CONSEN.ToString(),
+                    RegionCode = 1,
+                }
+            });
             _helper.AddAndSaveChanges(property);
 
             // Act
@@ -670,7 +731,16 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var pin = 1111;
-            var property = EntityHelper.CreateProperty(1, pin);
+            PimsAddress propertyAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var property = EntityHelper.CreateProperty(1, pin, address: propertyAddress);
             _helper.AddAndSaveChanges(property);
 
             // Act
@@ -687,7 +757,16 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var pin = 1111;
-            var property = EntityHelper.CreateProperty(1, pin);
+            PimsAddress propertyAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var property = EntityHelper.CreateProperty(1, pin, address: propertyAddress);
             property.IsRetired = true;
             _helper.AddAndSaveChanges(property);
 
@@ -705,7 +784,16 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView);
             var pin = 1111;
-            var property = EntityHelper.CreateProperty(1, pin);
+            PimsAddress propertyAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var property = EntityHelper.CreateProperty(1, pin, address: propertyAddress);
             property.IsRetired = true;
             _helper.AddAndSaveChanges(property);
 
@@ -725,7 +813,16 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var property = EntityHelper.CreateProperty(1, isRetired: isRetired);
+            PimsAddress propertyAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var property = EntityHelper.CreateProperty(1, isRetired: isRetired, address: propertyAddress);
             _helper.AddAndSaveChanges(property);
 
             var newValues = new PimsProperty();
@@ -744,7 +841,16 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var property = EntityHelper.CreateProperty(1, isRetired: true);
+            PimsAddress propertyAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var property = EntityHelper.CreateProperty(1, isRetired: true, address: propertyAddress);
             _helper.AddAndSaveChanges(property);
 
             var newValues = new PimsProperty();
@@ -779,7 +885,16 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var property = EntityHelper.CreateProperty(1);
+            PimsAddress propertyAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var property = EntityHelper.CreateProperty(1, address: propertyAddress);
             _helper.AddAndSaveChanges(property);
 
             // Act
@@ -794,7 +909,16 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var property = EntityHelper.CreateProperty(1);
+            PimsAddress propertyAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var property = EntityHelper.CreateProperty(1, address: propertyAddress);
             property.PphStatusTypeCode = null;
             property.PphStatusUpdateTimestamp = null;
             property.PphStatusUpdateUserid = null;
@@ -821,7 +945,16 @@ namespace Pims.Dal.Test.Repositories
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
 
-            var property = EntityHelper.CreateProperty(1);
+            PimsAddress propertyAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var property = EntityHelper.CreateProperty(1, address: propertyAddress);
             property.PphStatusTypeCode = PropertyPPHStatusTypes.UNKNOWN.ToString();
             property.PphStatusUpdateTimestamp = null;
             property.PphStatusUpdateUserid = null;
@@ -870,7 +1003,16 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var property = EntityHelper.CreateProperty(1);
+            PimsAddress propertyAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var property = EntityHelper.CreateProperty(1, address: propertyAddress);
             var context = _helper.AddAndSaveChanges(property);
 
 
@@ -887,9 +1029,17 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var property = EntityHelper.CreateProperty(1);
+            PimsAddress propertyAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var property = EntityHelper.CreateProperty(1, address: propertyAddress);
             var context = _helper.AddAndSaveChanges(property);
-
 
             // Act
             var transferredProperty = repository.TransferFileProperty(property, false);
@@ -906,7 +1056,16 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var property = EntityHelper.CreateProperty(1);
+            PimsAddress propertyAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var property = EntityHelper.CreateProperty(1, address: propertyAddress);
             _helper.AddAndSaveChanges(property);
 
             var newValues = new PimsProperty();
@@ -929,7 +1088,16 @@ namespace Pims.Dal.Test.Repositories
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.PropertyView, Permissions.PropertyEdit);
-            var property = EntityHelper.CreateProperty(1);
+            PimsAddress propertyAddress = new()
+            {
+                AddressId = 100,
+                PostalCode = "V9V9V9",
+                ProvinceStateId = 1,
+                RegionCode = 1,
+                DistrictCode = 1,
+                CountryId = 1,
+            };
+            var property = EntityHelper.CreateProperty(1, address: propertyAddress);
             _helper.AddAndSaveChanges(property);
 
             var newValues = new PimsProperty();

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics.CodeAnalysis;
 using System.Linq;
 using FluentAssertions;
+using Microsoft.AspNetCore.Http.Features;
 using Microsoft.EntityFrameworkCore;
 using Moq;
 using NetTopologySuite.Geometries;
@@ -144,6 +145,61 @@ namespace Pims.Api.Test.Services
         }
 
         [Fact]
+        public void Add_Duplicate_LegacyFileNumber_Error()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.LegacyFileNumber = "BC-99999";
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            repository.Setup(x => x.LegacyFileNumberExists(It.IsAny<string>())).Returns(true);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            // Act
+            Action act = () => service.Add(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void Add_Duplicate_OverrideFileNumber_Error()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.LegacyFileNumber = null;
+            acqFile.FileNo = 9999;
+            acqFile.OverrideFileNumberSequence = true;
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            repository.Setup(x => x.LegacyFileNumberExists(It.IsAny<string>())).Returns(true);
+            repository.Setup(x => x.CheckDuplicateFile(It.IsAny<short>(), It.IsAny<int>(), 1)).Returns(true);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            // Act
+            Action act = () => service.Add(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
         public void Add_NoPermission_Error()
         {
             // Arrange
@@ -208,6 +264,70 @@ namespace Pims.Api.Test.Services
 
             // Assert
             repository.Verify(x => x.Add(It.IsAny<PimsAcquisitionFile>()), Times.Once);
+        }
+
+        [Fact]
+        public void Add_LegacyFileNo_Override_Fails_IsContractor()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionFileTeams.Add(new PimsAcquisitionFileTeam() { PersonId = 1, AcqFlTeamProfileTypeCode = "test" });
+            acqFile.ConcurrencyControlNumber = 1;
+            acqFile.OverrideFileNumberSequence = true;
+            acqFile.FileNo = null;
+            acqFile.LegacyFileNumber = null;
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            var newGuid = Guid.NewGuid();
+            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true);
+            contractorUser.PersonId = 1;
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            // Act
+            Action act = () => service.Add(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
+        }
+
+        [Fact]
+        public void Add_LegacyFileNo_Fails_IsContractor()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileAdd);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.PimsAcquisitionFileTeams.Add(new PimsAcquisitionFileTeam() { PersonId = 1, AcqFlTeamProfileTypeCode = "test" });
+            acqFile.ConcurrencyControlNumber = 1;
+            acqFile.OverrideFileNumberSequence = false;
+            acqFile.FileNo = 9999;
+            acqFile.LegacyFileNumber = null;
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+
+            var newGuid = Guid.NewGuid();
+            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true);
+            contractorUser.PersonId = 1;
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.Add(It.IsAny<PimsAcquisitionFile>())).Returns(acqFile);
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            // Act
+            Action act = () => service.Add(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().Throw<BadRequestException>();
         }
 
         [Fact]
@@ -321,7 +441,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
+            ex.WithMessage("New retired property can not be added.");
         }
 
         #endregion
@@ -1461,6 +1581,10 @@ namespace Pims.Api.Test.Services
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
+
             // Act
             service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
@@ -1490,6 +1614,10 @@ namespace Pims.Api.Test.Services
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
 
             // Act
             service.UpdateProperties(acqFile, new List<UserOverrideCode>());
@@ -1560,9 +1688,18 @@ namespace Pims.Api.Test.Services
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
+            propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsPropertyAcquisitionFile>(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>()));
+            propertyService.Setup(x => x.UpdateFilePropertyBoundary<PimsPropertyAcquisitionFile>(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>()));
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             // Act
             service.UpdateProperties(acqFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
@@ -1572,6 +1709,7 @@ namespace Pims.Api.Test.Services
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
             propertyService.Verify(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false), Times.Once);
             propertyService.Verify(x => x.UpdateFilePropertyLocation<PimsPropertyAcquisitionFile>(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
+            propertyService.Verify(x => x.UpdateFilePropertyBoundary<PimsPropertyAcquisitionFile>(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
         }
 
         [Fact]
@@ -1604,15 +1742,21 @@ namespace Pims.Api.Test.Services
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.UpdateLocation(It.IsAny<PimsProperty>(), ref It.Ref<PimsProperty>.IsAny, It.IsAny<IEnumerable<UserOverrideCode>>(), false));
 
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
 
             // Act
             var response = service.UpdateProperties(acqFile, new List<UserOverrideCode>() { UserOverrideCode.AddLocationToProperty });
 
             // Assert
             var updatedProperty = response.PimsPropertyAcquisitionFiles.FirstOrDefault().Internal_Id.Should().Be(1);
-
         }
 
         [Fact]
@@ -1639,6 +1783,9 @@ namespace Pims.Api.Test.Services
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
             propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(1);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
             propertyService.Setup(x => x.PopulateNewProperty(It.IsAny<PimsProperty>(), It.IsAny<Boolean>(), It.IsAny<Boolean>())).Returns(
@@ -1701,17 +1848,30 @@ namespace Pims.Api.Test.Services
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Throws<KeyNotFoundException>();
             propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(1);
 
+            var propertyService = this._helper.GetService<Mock<IPropertyService>>();
+            propertyService.Setup(x => x.UpdateFilePropertyLocation<PimsPropertyAcquisitionFile>(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>()));
+            propertyService.Setup(x => x.UpdateFilePropertyBoundary<PimsPropertyAcquisitionFile>(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>()));
+
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
 
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
 
             // Act
             service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
             filePropertyRepository.Verify(x => x.Update(It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
+            propertyService.Verify(x => x.UpdateFilePropertyLocation<PimsPropertyAcquisitionFile>(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
+            propertyService.Verify(x => x.UpdateFilePropertyBoundary<PimsPropertyAcquisitionFile>(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>()), Times.Once);
         }
 
         [Fact]
@@ -1743,6 +1903,10 @@ namespace Pims.Api.Test.Services
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
 
             var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
@@ -1791,6 +1955,10 @@ namespace Pims.Api.Test.Services
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
 
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
+
             var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>());
 
@@ -1837,6 +2005,10 @@ namespace Pims.Api.Test.Services
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
 
             var propertyOperationService = this._helper.GetService<Mock<IPropertyOperationService>>();
             propertyOperationService.Setup(x => x.GetOperationsForProperty(It.IsAny<long>())).Returns(new List<PimsPropertyOperation>() { new() { Internal_Id = 1, SourcePropertyId = deletedProperty.Internal_Id, SourceProperty = deletedProperty } });
@@ -1894,7 +2066,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>().WithMessage("Contractor is not assigned to the Acquisition File's team");
+            act.Should().Throw<NotAuthorizedException>().WithMessage("Contractor is not assigned to the Acquisition File's team or the associated Project's team");
         }
 
         [Fact]
@@ -2022,8 +2194,15 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
 
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
 
             // Act
             service.UpdateProperties(acqFile, new List<UserOverrideCode>());
@@ -2058,6 +2237,9 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
 
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
             // Act
             Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>());
 
@@ -2068,7 +2250,7 @@ namespace Pims.Api.Test.Services
 
 
         [Fact]
-        public void UpdateProperties_WithRetiredProperty_Should_Fail()
+        public void UpdateProperties_WithRetired_New_Property_Should_Fail()
         {
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
@@ -2084,11 +2266,9 @@ namespace Pims.Api.Test.Services
                 IsRetired = true,
             };
 
+            // Simulate adding a new retired property (not already attached)
             acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() {
-                new()
-                {
-                    Property = retiredProperty
-                }
+                new PimsPropertyAcquisitionFile() { Property = retiredProperty, Internal_Id = 0 }
             };
 
 
@@ -2111,7 +2291,50 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var ex = act.Should().Throw<BusinessRuleViolationException>();
-            ex.WithMessage("Retired property can not be selected.");
+            ex.WithMessage("New retired property can not be added.");
+        }
+
+        public void UpdateProperties_WithRetired_Existing_Property_Success()
+        {
+            // Arrange
+            var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit, Permissions.PropertyAdd, Permissions.PropertyView);
+
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.ConcurrencyControlNumber = 1;
+
+            PimsProperty property = EntityHelper.CreateProperty(12345, regionCode: 3);
+            PimsProperty retiredProperty = new PimsProperty()
+            {
+                PropertyId = 100,
+                Pid = 1000,
+                IsRetired = true,
+            };
+
+            // Simulate the retired property is already attached to the file
+            acqFile.PimsPropertyAcquisitionFiles = new List<PimsPropertyAcquisitionFile>() {
+                new PimsPropertyAcquisitionFile() { Property = retiredProperty, Internal_Id = 1 }
+            };
+
+
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
+            propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(retiredProperty);
+            propertyRepository.Setup(x => x.GetPropertyRegion(It.IsAny<long>())).Returns(3);
+
+            var filePropertyRepository = this._helper.GetService<Mock<IAcquisitionFilePropertyRepository>>();
+            filePropertyRepository.Setup(x => x.GetPropertiesByAcquisitionFileId(It.IsAny<long>())).Returns(acqFile.PimsPropertyAcquisitionFiles.ToList());
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser(1, Guid.NewGuid(), "Test", regionCode: 1));
+
+            // Act
+            Action act = () => service.UpdateProperties(acqFile, new List<UserOverrideCode>());
+
+            // Assert
+            act.Should().NotThrow();
         }
 
         [Fact]
@@ -2149,6 +2372,13 @@ namespace Pims.Api.Test.Services
 
             var solver = this._helper.GetService<Mock<IAcquisitionStatusSolver>>();
             solver.Setup(x => x.CanEditProperties(It.IsAny<AcquisitionStatusTypes?>())).Returns(true);
+
+            var locationSolver = this._helper.GetService<Mock<IFilePropertyLocationUpdateSolver>>();
+            locationSolver.Setup(x => x.CanEditFilePropertyLocation(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
+            locationSolver.Setup(x => x.CanEditFilePropertyBoundary(It.IsAny<PimsPropertyAcquisitionFile>(), It.IsAny<PimsPropertyAcquisitionFile>())).Returns(true);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             var property2 = EntityHelper.CreateProperty(56789, regionCode: 1);
 
@@ -3280,7 +3510,7 @@ namespace Pims.Api.Test.Services
 
             var filter = new AcquisitionFilter();
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
-            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()))
+            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<long?>()))
                         .Returns(new List<PimsAcquisitionFile>()
                         {
                             acquisitionFile,
@@ -3295,7 +3525,7 @@ namespace Pims.Api.Test.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(1, result.Count());
-            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
+            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<long?>()), Times.Once);
         }
 
         [Fact]
@@ -3334,7 +3564,7 @@ namespace Pims.Api.Test.Services
                 },
             };
 
-            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()))
+            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<long?>()))
                         .Returns(new List<PimsAcquisitionFile>()
                         {
                             acquisitionFile,
@@ -3351,9 +3581,9 @@ namespace Pims.Api.Test.Services
             Assert.Equal(2, result.Count());
             Assert.Equal("01-2023-01", result[0].FileNumber);
             Assert.Equal("01-2023-01", result[1].FileNumber);
-            Assert.Equal("8000", result[0].Pid);
-            Assert.Equal("9000", result[1].Pid);
-            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<HashSet<short>>(), It.IsAny<long?>()), Times.Once);
+            Assert.Equal("000-008-000", result[0].Pid);
+            Assert.Equal("000-009-000", result[1].Pid);
+            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<long?>()), Times.Once);
         }
 
         #endregion

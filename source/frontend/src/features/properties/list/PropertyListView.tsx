@@ -3,8 +3,7 @@ import './PropertyListView.scss';
 import isEmpty from 'lodash/isEmpty';
 import Multiselect from 'multiselect-react-dropdown';
 import React, { useCallback, useMemo, useRef, useState } from 'react';
-import { Row } from 'react-bootstrap';
-import { Col } from 'react-bootstrap';
+import { Col, Row } from 'react-bootstrap';
 import Container from 'react-bootstrap/Container';
 import { FaFileAlt, FaFileExcel, FaTimes } from 'react-icons/fa';
 import styled from 'styled-components';
@@ -15,12 +14,12 @@ import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { Table } from '@/components/Table';
 import { TableSort } from '@/components/Table/TableSort';
 import * as API from '@/constants/API';
-import { MultiSelectOption } from '@/features/acquisition/list/interfaces';
 import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useProperties } from '@/hooks/repositories/useProperties';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import useDeepCompareMemo from '@/hooks/util/useDeepCompareMemo';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { generateMultiSortCriteria } from '@/utils';
 import { toFilteredApiPaginateParams } from '@/utils/CommonFunctions';
@@ -38,16 +37,14 @@ export const ownershipFilterOptions: MultiSelectOption[] = [
   { id: 'isRetired', text: 'Retired' },
 ];
 
-export const tenureCleanupFilterOptions: MultiSelectOption[] = [
-  { id: 'FORM12', text: 'Form 12' },
-  { id: 'NEEDSRVY', text: 'Needs Survey' },
-  { id: 'SECT42', text: 'Section 42 Roads' },
-  { id: 'TBD', text: 'TBD' },
-];
-
 const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const { getByType } = useLookupCodeHelpers();
   const municipalities = useMemo(() => getByType(API.ADMINISTRATIVE_AREA_TYPES), [getByType]);
+  const tenureCleanups = useMemo(() => getByType(API.TENURE_CLEANUP_TYPES), [getByType]);
+  const tenureCleanupFilterOptions: MultiSelectOption[] = tenureCleanups.map(tc => ({
+    id: tc.id.toString(),
+    text: tc.name,
+  }));
 
   const columns = useMemo(() => columnDefinitions({ municipalities }), [municipalities]);
 
@@ -149,6 +146,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
   const appliedFilter = { ...filter };
 
   const multiselectOwnershipRef = React.createRef<Multiselect>();
+  const multiselectTenureCleanupRef = React.createRef<Multiselect>();
 
   const onSelectedOwnershipChange = (selectedList: MultiSelectOption[]) => {
     setPageIndex(0);
@@ -185,7 +183,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
       <div className="mt-5 mx-5">
         <StyledPageHeader>PIMS Property Search</StyledPageHeader>
         <Row className="pb-2">
-          <Col xs="10">
+          <Col xs="12">
             <StyledFilterBox className="p-3">
               <SectionField label="Search By" labelWidth={{ xs: '1' }}>
                 <StyledFilterContainer fluid className="px-0">
@@ -204,8 +202,8 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
           </Col>
           <Col></Col>
         </Row>
-        <Row>
-          <Col xs="10">
+        <Row className="pb-1">
+          <Col xs="12">
             <StyledFilterBox className="p-3">
               <SectionField label="Ownership" labelWidth={{ xs: '2' }}>
                 <Multiselect
@@ -225,7 +223,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
               <SectionField label="Tenure Cleanup" labelWidth={{ xs: '2' }}>
                 <Multiselect
                   id="tenure-cleanup-selector"
-                  ref={multiselectOwnershipRef}
+                  ref={multiselectTenureCleanupRef}
                   options={tenureCleanupFilterOptions}
                   selectedValues={tenureCleanup}
                   onSelect={onSelectedTenureCleanupChange}
@@ -335,6 +333,7 @@ const defaultStyle = {
   multiselectContainer: {
     width: 'auto',
     color: 'black',
+    zIndex: 200,
   },
   searchBox: {
     background: 'white',

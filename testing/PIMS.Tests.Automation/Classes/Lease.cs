@@ -13,6 +13,9 @@
         public string LeaseStartDate { get; set; } = null!;
         public string LeaseExpiryDate { get; set; } = null!;
 
+        public string LeaseProgressAppraisal { get; set; } = null!;
+        public string LeaseProgressLegalSurvey { get; set; } = null!;
+
         public int LeaseRenewalStartRow { get; set; } = 0;
         public int LeaseRenewalQuantity { get; set; } = 0;
         public List<LeaseRenewal> LeaseRenewals { get; set; } = new List<LeaseRenewal>() { };
@@ -60,20 +63,10 @@
         public int RepresentativeNumber { get; set; } = 0;
         public int PropertyManagerNumber { get; set; } = 0;
         public int UnknownTenantNumber { get; set; } = 0;
+        public int OtherTenantNumber { get; set; } = 0;
         public int OwnerPayeeNumber { get; set; } = 0;
         public int OwnerRepresentativeNumber { get; set; } = 0;
         public List<Stakeholder> LeaseTenants { get; set; } = new List<Stakeholder>();
-
-        public string CommercialImprovementUnit { get; set; } = null!;
-        public string CommercialImprovementBuildingSize { get; set; } = null!;
-        public string CommercialImprovementDescription { get; set; } = null!;
-        public string ResidentialImprovementUnit { get; set; } = null!;
-        public string ResidentialImprovementBuildingSize { get; set; } = null!;
-        public string ResidentialImprovementDescription { get; set; } = null!;
-        public string OtherImprovementUnit { get; set; } = null!;
-        public string OtherImprovementBuildingSize { get; set; } = null!;
-        public string OtherImprovementDescription { get; set; } = null!;
-        public int TotalImprovementCount { get; set; } = 0;
 
         public string AccidentalInsuranceInPlace { get; set; } = null!;
         public string AccidentalLimit { get; set; } = null!;

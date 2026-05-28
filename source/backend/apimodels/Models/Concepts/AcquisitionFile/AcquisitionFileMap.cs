@@ -1,6 +1,8 @@
+using System.Collections.Generic;
 using System.Collections.Immutable;
 using Mapster;
 using Pims.Api.Models.Base;
+using Pims.Api.Models.Concepts.NoticeOfClaim;
 using Pims.Core.Extensions;
 using Pims.Dal.Entities;
 using Pims.Dal.Helpers.Extensions;
@@ -16,6 +18,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.Id, src => src.AcquisitionFileId)
                 .Map(dest => dest.ParentAcquisitionFileId, src => src.PrntAcquisitionFileId)
                 .Map(dest => dest.FileNo, src => src.FileNo)
+                .Map(dest => dest.OverrideFileNumberSequence, src => src.OverrideFileNumberSequence)
                 .Map(dest => dest.FileNumber, src => src.FileNumberFormatted)
                 .Map(dest => dest.FileNumberSuffix, src => src.FileNoSuffix)
                 .Map(dest => dest.FileName, src => src.FileName)
@@ -50,12 +53,14 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.FileChecklistItems, src => src.PimsAcquisitionChecklistItems)
                 .Map(dest => dest.LegacyStakeholders, src => src.GetLegacyInterestHolders())
                 .Map(dest => dest.CompensationRequisitions, src => src.PimsCompensationRequisitions)
+                .Map(dest => dest.NoticeOfClaim, src => src.PimsNoticeOfClaims)
                 .Inherits<IBaseAppEntity, BaseAuditModel>();
 
             config.NewConfig<AcquisitionFileModel, PimsAcquisitionFile>()
                 .PreserveReference(true)
                 .Map(dest => dest.AcquisitionFileId, src => src.Id)
                 .Map(dest => dest.PrntAcquisitionFileId, src => src.ParentAcquisitionFileId)
+                .Map(dest => dest.OverrideFileNumberSequence, src => src.OverrideFileNumberSequence)
                 .Map(dest => dest.FileNo, src => src.FileNo)
                 .Map(dest => dest.FileNoSuffix, src => src.FileNumberSuffix)
                 .Map(dest => dest.FileName, src => src.FileName)
@@ -87,6 +92,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.PimsAcquisitionOwners, src => src.AcquisitionFileOwners)
                 .Map(dest => dest.PimsInterestHolders, src => src.AcquisitionFileInterestHolders)
                 .Map(dest => dest.PimsAcquisitionChecklistItems, src => src.FileChecklistItems)
+                .Map(dest => dest.PimsNoticeOfClaims, src => src.NoticeOfClaim == null ? new List<NoticeOfClaimModel>() : src.NoticeOfClaim)
                 .Inherits<BaseAuditModel, IBaseAppEntity>();
 
             config.NewConfig<PimsAcquisitionFileHist, PimsAcquisitionFile>()

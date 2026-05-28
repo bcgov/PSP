@@ -3,6 +3,32 @@ import { ApiGen_CodeTypes_DispositionFileStatusTypes } from '@/models/api/genera
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 
 class DispositionStatusUpdateSolver implements IUpdateChecklistStrategy {
+  canEditOrDeleteAgreement(): boolean {
+    if (this.dispositionFile === null) {
+      return false;
+    }
+
+    const statusCode = this.dispositionFile.fileStatusTypeCode?.id;
+    let canEdit = false;
+
+    switch (statusCode) {
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ACTIVE:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.DRAFT:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.HOLD:
+        canEdit = true;
+        break;
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.ARCHIVED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.CANCELLED:
+      case ApiGen_CodeTypes_DispositionFileStatusTypes.COMPLETE:
+        canEdit = false;
+        break;
+      default:
+        canEdit = false;
+        break;
+    }
+
+    return canEdit;
+  }
   private readonly dispositionFile: ApiGen_Concepts_DispositionFile | null;
 
   constructor(apiModel: ApiGen_Concepts_DispositionFile | undefined | null) {

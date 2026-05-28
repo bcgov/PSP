@@ -19,6 +19,8 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.TotalAmount, src => src.TotalAmt)
                 .Map(dest => dest.IsPstRequired, src => src.IsPstRequired)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.IsPaymentApproved, src => src.IsPaymentApproved)
+                .Map(dest => dest.IsPaymentForwarded, src => src.IsPaymentForwarded)
                 .Map(dest => dest.ManagementActivityId, src => src.ManagementActivityId)
                 .Map(dest => dest.ManagementActivity, src => src.ManagementActivity)
                 .Inherits<Entity.IBaseAppEntity, BaseAuditModel>();
@@ -34,6 +36,8 @@ namespace Pims.Api.Models.Concepts.Property
                 .Map(dest => dest.TotalAmt, src => src.TotalAmount)
                 .Map(dest => dest.IsPstRequired, src => src.IsPstRequired)
                 .Map(dest => dest.IsDisabled, src => src.IsDisabled)
+                .Map(dest => dest.IsPaymentApproved, src => src.IsPaymentApproved)
+                .Map(dest => dest.IsPaymentForwarded, src => src.IsPaymentForwarded)
                 .Map(dest => dest.ManagementActivityId, src => src.ManagementActivityId)
                 .Inherits<BaseAuditModel, Entity.IBaseAppEntity>();
         }

@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
-.c6.btn {
+.c7.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -30,17 +30,17 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c6.btn .Button__value {
+.c7.btn .Button__value {
   width: auto;
 }
 
-.c6.btn:hover {
+.c7.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c6.btn:focus {
+.c7.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -48,31 +48,31 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   box-shadow: none;
 }
 
-.c6.btn.btn-primary {
+.c7.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c6.btn.btn-primary:hover,
-.c6.btn.btn-primary:active,
-.c6.btn.btn-primary:focus {
+.c7.btn.btn-primary:hover,
+.c7.btn.btn-primary:active,
+.c7.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c6.btn.btn-secondary {
+.c7.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c6.btn.btn-secondary:hover,
-.c6.btn.btn-secondary:active,
-.c6.btn.btn-secondary:focus {
+.c7.btn.btn-secondary:hover,
+.c7.btn.btn-secondary:active,
+.c7.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c6.btn.btn-info {
+.c7.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -80,66 +80,66 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   padding-right: 0.6rem;
 }
 
-.c6.btn.btn-info:hover,
-.c6.btn.btn-info:active,
-.c6.btn.btn-info:focus {
+.c7.btn.btn-info:hover,
+.c7.btn.btn-info:active,
+.c7.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c6.btn.btn-light {
+.c7.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c6.btn.btn-light:hover,
-.c6.btn.btn-light:active,
-.c6.btn.btn-light:focus {
+.c7.btn.btn-light:hover,
+.c7.btn.btn-light:active,
+.c7.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c6.btn.btn-dark {
+.c7.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c6.btn.btn-dark:hover,
-.c6.btn.btn-dark:active,
-.c6.btn.btn-dark:focus {
+.c7.btn.btn-dark:hover,
+.c7.btn.btn-dark:active,
+.c7.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c6.btn.btn-danger {
+.c7.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c6.btn.btn-danger:hover,
-.c6.btn.btn-danger:active,
-.c6.btn.btn-danger:focus {
+.c7.btn.btn-danger:hover,
+.c7.btn.btn-danger:active,
+.c7.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c6.btn.btn-warning {
+.c7.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c6.btn.btn-warning:hover,
-.c6.btn.btn-warning:active,
-.c6.btn.btn-warning:focus {
+.c7.btn.btn-warning:hover,
+.c7.btn.btn-warning:active,
+.c7.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c6.btn.btn-link {
+.c7.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -163,9 +163,9 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   text-decoration: underline;
 }
 
-.c6.btn.btn-link:hover,
-.c6.btn.btn-link:active,
-.c6.btn.btn-link:focus {
+.c7.btn.btn-link:hover,
+.c7.btn.btn-link:active,
+.c7.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -175,15 +175,15 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   outline: none;
 }
 
-.c6.btn.btn-link:disabled,
-.c6.btn.btn-link.disabled {
+.c7.btn.btn-link:disabled,
+.c7.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c6.btn:disabled,
-.c6.btn:disabled:hover {
+.c7.btn:disabled,
+.c7.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -195,15 +195,15 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   cursor: not-allowed;
 }
 
-.c6.Button .Button__icon {
+.c7.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c6.Button--icon-only:focus {
+.c7.Button--icon-only:focus {
   outline: none;
 }
 
-.c6.Button--icon-only .Button__icon {
+.c7.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -211,11 +211,11 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
   width: 0.8rem;
 }
 
-.c5 {
+.c6 {
   min-width: 2.4rem;
 }
 
-.c4 {
+.c5 {
   padding: 0px;
   margin: 0px;
   margin-left: 1.6rem;
@@ -347,6 +347,11 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
 .c0.warning-variant .modal-close-btn {
   color: #474543;
   cursor: pointer;
+}
+
+.c4 {
+  text-align: center;
+  font-style: italic;
 }
 
 .c1 {
@@ -484,10 +489,15 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
             <div
               class="form-group"
             />
+            <div
+              class="c4 m-4"
+            >
+              No recipients available
+            </div>
           </div>
         </div>
         <hr
-          class="c4"
+          class="c5"
         />
         <div
           class="modal-footer"
@@ -496,10 +506,10 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
             class="button-wrap"
           >
             <span
-              class="c5"
+              class="c6"
             />
             <button
-              class="c6 Button btn btn-secondary"
+              class="c7 Button btn btn-secondary"
               data-testid="cancel-modal-button"
               title="cancel-modal"
               type="button"
@@ -511,10 +521,10 @@ exports[`GenerateLetterRecipients modal > renders as expected 1`] = `
               </div>
             </button>
             <span
-              class="c5"
+              class="c6"
             />
             <button
-              class="c6 Button btn btn-primary"
+              class="c7 Button btn btn-primary"
               data-testid="ok-modal-button"
               title="ok-modal"
               type="button"

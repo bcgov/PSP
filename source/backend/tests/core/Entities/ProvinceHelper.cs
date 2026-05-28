@@ -1,7 +1,11 @@
+using DocumentFormat.OpenXml.Bibliography;
+using DocumentFormat.OpenXml.Drawing.Spreadsheet;
+using Pims.Dal;
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Pims.Dal;
+using System.Runtime.CompilerServices;
 using Entity = Pims.Dal.Entities;
 
 namespace Pims.Core.Test
@@ -27,15 +31,25 @@ namespace Pims.Core.Test
         /// <summary>
         /// Creates a default list of Province.
         /// </summary>
-        /// <param name="country"></param>
         /// <returns></returns>
-        public static List<Entity.PimsProvinceState> CreateDefaultProvinces(Entity.PimsCountry country = null)
+        public static List<Entity.PimsProvinceState> CreateDefaultProvinces()
         {
-            country ??= EntityHelper.CreateCountry(1, "CAN");
             return new List<Entity.PimsProvinceState>()
             {
-                new Entity.PimsProvinceState("ON", country) { ProvinceStateId = 1, ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
-                new Entity.PimsProvinceState("BC", country) { ProvinceStateId = 2,  ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now, Description = "desc" },
+                new () { ProvinceStateId = 1, CountryId = 1, ProvinceStateCode = "BC", Description = "British Columbia", ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new () { ProvinceStateId = 2, CountryId = 1, ProvinceStateCode = "AB", Description = "Alberta", ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new () { ProvinceStateId = 3, CountryId = 1, ProvinceStateCode = "MB", Description = "Manitoba", ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new () { ProvinceStateId = 4, CountryId = 1, ProvinceStateCode = "NL", Description = "Newfoundland", ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new () { ProvinceStateId = 5, CountryId = 1, ProvinceStateCode = "NB", Description = "New Brunswick", ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new () { ProvinceStateId = 6, CountryId = 1, ProvinceStateCode = "NS", Description = "Nova Scotia", ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new () { ProvinceStateId = 7, CountryId = 1, ProvinceStateCode = "NT", Description = "North West Territories", ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new () { ProvinceStateId = 8, CountryId = 1, ProvinceStateCode = "NU", Description = "Nunavut", ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new () { ProvinceStateId = 9, CountryId = 1, ProvinceStateCode = "ON", Description = "Ontario", ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new () { ProvinceStateId = 10, CountryId = 1, ProvinceStateCode = "PE", Description = "Prince Edward Island", ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new () { ProvinceStateId = 11, CountryId = 1, ProvinceStateCode = "QC", Description = "Quebec", ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new () { ProvinceStateId = 12, CountryId = 1, ProvinceStateCode = "SK", Description = "Saskatchewan", ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+                new () { ProvinceStateId = 13, CountryId = 1, ProvinceStateCode = "YT", Description = "Yukon Territory", ConcurrencyControlNumber = 1, DbCreateUserid = "test", DbLastUpdateUserid = "test", DbLastUpdateTimestamp = System.DateTime.Now },
+
             };
         }
 

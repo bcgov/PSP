@@ -3,10 +3,10 @@ import { getMockContactOrganizationWithOnePerson } from '@/mocks/contacts.mock';
 import { getMockExpropriationFile } from '@/mocks/index.mock';
 import { act, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import ExpropriationForm5, { IExpropriationForm5Props } from './ExpropriationForm5';
-import { ExpropriationForm5Model } from '../models';
-import { createRef } from 'react';
 import { FormikProps } from 'formik';
+import { createRef } from 'react';
+import { ExpropriationForm5Model } from '../models';
+import ExpropriationForm5, { IExpropriationForm5Props } from './ExpropriationForm5';
 
 // mock auth library
 
@@ -69,7 +69,7 @@ describe('Expropriation Form 5', () => {
     await act(async () => formikRef.current.submitForm());
 
     expect(getByText('Expropriation authority is required')).toBeInTheDocument();
-    expect(getByText('At lease one impacted property is required')).toBeInTheDocument();
+    expect(getByText('At least one impacted property is required')).toBeInTheDocument();
   });
 
   it(`submits the form 5 when Generate button is clicked`, async () => {

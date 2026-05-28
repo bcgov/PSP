@@ -7,6 +7,7 @@ using Microsoft.Extensions.Configuration;
 using OpenQA.Selenium.Firefox;
 using DotNetEnv;
 using DotNetEnv.Configuration;
+using System.Drawing;
 
 namespace PIMS.Tests.Automation.Reports
 {
@@ -152,14 +153,18 @@ namespace PIMS.Tests.Automation.Reports
 
             if (runAutomationHeadless)
             {
-                options.AddArgument("window-size=1014,768");
+                options.AddArgument("--window-size=1920,1080");
                 options.AddArgument("--headless=new");
+                options.AddArgument("--disable-gpu");
             }
             else
                 options.AddArgument("start-maximized");
 
 
             var chromeDriver = new ChromeDriver(ChromeDriverService.CreateDefaultService(), options, TimeSpan.FromMinutes(2));
+            if (runAutomationHeadless)
+                chromeDriver.Manage().Window.Size = new Size(1920, 1080);
+ 
             chromeDriver.Url = Configuration.GetValue<string>("Base_url");
 
             return chromeDriver;

@@ -28,12 +28,12 @@ namespace PIMS.Tests.Automation.PageObjects
         private By userManagerHeaderOrderByFirstNameBttn = By.CssSelector("div[data-testid='sort-column-firstName']");
         private By userManagerHeaderLastNameColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Last name')]");
         private By userManagerHeaderOrderByLastNameBttn = By.CssSelector("div[data-testid='sort-column-surname']");
-        private By userManagerHeaderEmailColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Email')]");
+        private By userManagerHeaderEmailColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'E-mail')]");
         private By userManagerHeaderOrderByEmailBttn = By.CssSelector("div[data-testid='sort-column-email']");
         private By userManagerHeaderPositionColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Position')]");
         private By userManagerHeaderOrderByPositionBttn = By.CssSelector("div[data-testid='sort-column-position']");
         private By userManagerHeaderRolesColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Roles')]");
-        private By userManagerHeaderRegionColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTT region(s)')]");
+        private By userManagerHeaderRegionColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'MOTT region')]");
         private By userManagerHeaderLastLoginColumn = By.XPath("//div[@data-testid='usersTable']/div[@class='thead thead-light']/div/div/div[contains(text(),'Last login')]");
 
         //Table 1st Result by Column Elements
@@ -58,8 +58,6 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateAdminTools()
         {
-            Wait(3000);
-
             WaitUntilClickable(mainMenuAdminToolLink);
             FocusAndClick(mainMenuAdminToolLink);
         }
@@ -90,49 +88,49 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void OrderByUserLastName()
         {
-            WaitUntilClickable(userManagerHeaderOrderByLastNameBttn);
+            Wait();
             webDriver.FindElement(userManagerHeaderOrderByLastNameBttn).Click();
         }
 
         public void OrderByUserMail()
         {
-            WaitUntilClickable(userManagerHeaderOrderByEmailBttn);
+            Wait();
             webDriver.FindElement(userManagerHeaderOrderByEmailBttn).Click();
         }
 
         public void OrderByUserPosition()
         {
-            WaitUntilClickable(userManagerHeaderOrderByPositionBttn);
+            Wait();
             webDriver.FindElement(userManagerHeaderOrderByPositionBttn).Click();
         }
 
         public string FirstUserIDIR()
         {
-            WaitUntilTableSpinnerDisappear();
+            Wait();
             return webDriver.FindElement(userManager1stIDIRContent).Text;
         }
 
         public string FirstUserFirstName()
         {
-            WaitUntilTableSpinnerDisappear();
+            Wait();
             return webDriver.FindElement(userManager1stFirstNameContent).Text;
         }
 
         public string FirstUserLastName()
         {
-            WaitUntilTableSpinnerDisappear();
+            Wait();
             return webDriver.FindElement(userManager1stLastNameContent).Text;
         }
 
         public string FirstUserEmail()
         {
-            WaitUntilTableSpinnerDisappear();
+            Wait();
             return webDriver.FindElement(userManager1stEmailContent).Text;
         }
 
         public string FirstUserPosition()
         {
-            WaitUntilTableSpinnerDisappear();
+            Wait();
             return webDriver.FindElement(userManager1stPositionContent).Text;
         }
 
@@ -150,7 +148,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (region != "")
             {
                 WaitUntilClickable(userManagementRegionSelect);
-                ChooseSpecificSelectOption(userManagementRegionSelect, region);
+                ChooseSelectOption(userManagementRegionSelect, region);
             }
             
             webDriver.FindElement(userManagementSearchButton).Click();
@@ -187,7 +185,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int TotalUsersResult()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElements(userManagerTableResults).Count();
         }
     }

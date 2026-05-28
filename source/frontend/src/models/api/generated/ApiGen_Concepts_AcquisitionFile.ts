@@ -13,14 +13,16 @@ import { ApiGen_Concepts_AcquisitionFileTeam } from './ApiGen_Concepts_Acquisiti
 import { ApiGen_Concepts_CompensationRequisition } from './ApiGen_Concepts_CompensationRequisition';
 import { ApiGen_Concepts_FileWithChecklist } from './ApiGen_Concepts_FileWithChecklist';
 import { ApiGen_Concepts_InterestHolder } from './ApiGen_Concepts_InterestHolder';
+import { ApiGen_Concepts_NoticeOfClaim } from './ApiGen_Concepts_NoticeOfClaim';
 import { ApiGen_Concepts_Product } from './ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from './ApiGen_Concepts_Project';
 
 // LINK: @backend/apimodels/Models/Concepts/AcquisitionFile/AcquisitionFileModel.cs
 export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_FileWithChecklist {
   parentAcquisitionFileId: number | null;
-  fileNo: number;
-  fileNumberSuffix: number;
+  fileNo: number | null;
+  overrideFileNumberSequence: boolean;
+  fileNumberSuffix: number | null;
   legacyFileNumber: string | null;
   assignedDate: UtcIsoDate | null;
   deliveryDate: UtcIsoDate | null;
@@ -49,4 +51,5 @@ export interface ApiGen_Concepts_AcquisitionFile extends ApiGen_Concepts_FileWit
   acquisitionFileOwners: ApiGen_Concepts_AcquisitionFileOwner[] | null;
   acquisitionFileInterestHolders: ApiGen_Concepts_InterestHolder[] | null;
   compensationRequisitions: ApiGen_Concepts_CompensationRequisition[] | null;
+  noticeOfClaim: ApiGen_Concepts_NoticeOfClaim[] | null;
 }

@@ -1,32 +1,43 @@
 import { Formik, FormikHelpers } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
+import styled from 'styled-components';
 
 import { ResetButton } from '@/components/common/buttons';
 import { SearchButton } from '@/components/common/buttons/SearchButton';
-import { Input, Select, SelectOption, TypeaheadSelect } from '@/components/common/form';
+import {
+  Check,
+  Input,
+  Multiselect,
+  Select,
+  SelectOption,
+  TypeaheadSelect,
+} from '@/components/common/form';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { ColButtons, FilterBoxForm } from '@/components/common/styles';
-import { ApiGen_Concepts_ManagementFileTeam } from '@/models/api/generated/ApiGen_Concepts_ManagementFileTeam';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { Api_ManagementFilter } from '@/models/api/ManagementFilter';
-import { formatApiPersonNames } from '@/utils/personUtils';
 
 import { ManagementFilterModel } from '../models';
 
 export interface IManagementFilterProps {
-  filter?: Api_ManagementFilter;
-  setFilter: (filter: Api_ManagementFilter) => void;
-  managementTeam: ApiGen_Concepts_ManagementFileTeam[];
+  initialValues: ManagementFilterModel;
   fileStatusOptions: SelectOption[];
   managementPurposeOptions: SelectOption[];
+  pimsRegionsOptions: MultiSelectOption[];
+  managementTeamOptions: SelectOption[];
+  setFilter: (filter: Api_ManagementFilter) => void;
+  onResetFilter: () => void;
 }
 
 export const ManagementFilter: React.FC<IManagementFilterProps> = ({
-  filter,
-  setFilter,
-  managementTeam,
+  initialValues,
   fileStatusOptions,
   managementPurposeOptions,
+  pimsRegionsOptions,
+  managementTeamOptions,
+  setFilter,
+  onResetFilter,
 }) => {
   const onSearchSubmit = async (
     values: ManagementFilterModel,
@@ -36,26 +47,10 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
     formikHelpers.setSubmitting(false);
   };
 
-  const resetFilter = () => {
-    setFilter(new ManagementFilterModel().toApi());
-  };
-
-  const managementTeamOptions = React.useMemo<SelectOption[]>(() => {
-    const arr = managementTeam ?? [];
-    return arr.map<SelectOption>(t => ({
-      value: t.personId ? `P-${t.personId}` : `O-${t.organizationId}`,
-      label: t.personId && t.person ? formatApiPersonNames(t.person) : t.organization?.name ?? '',
-    }));
-  }, [managementTeam]);
-
   return (
     <Formik<ManagementFilterModel>
       enableReinitialize
-      initialValues={
-        filter
-          ? ManagementFilterModel.fromApi(filter, managementTeamOptions ?? [])
-          : new ManagementFilterModel()
-      }
+      initialValues={initialValues}
       onSubmit={onSearchSubmit}
     >
       {formikProps => (
@@ -109,6 +104,16 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
                   />
                 </Col>
               </Row>
+              <Row>
+                <Col xs={12}>
+                  <Multiselect
+                    field="regions"
+                    options={pimsRegionsOptions}
+                    displayValue="text"
+                    placeholder="Select Region(s)"
+                  />
+                </Col>
+              </Row>
             </Col>
             <Col xl="5">
               <Row>
@@ -134,6 +139,15 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
                   />
                 </Col>
               </Row>
+              <Row>
+                <Col xs={6} style={{ textAlign: 'left' }}>
+                  <StyledCheckBox
+                    field="hasNoticeOfClaim"
+                    postLabel="File has NOC"
+                    onChange={formikProps.handleChange}
+                  ></StyledCheckBox>
+                </Col>
+              </Row>
             </Col>
             <ColButtons xl="1">
               <Row>
@@ -145,7 +159,7 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
                     disabled={formikProps.isSubmitting}
                     onClick={() => {
                       formikProps.resetForm();
-                      resetFilter();
+                      onResetFilter();
                     }}
                   />
                 </Col>
@@ -159,3 +173,11 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
 };
 
 export default ManagementFilter;
+
+const StyledCheckBox = styled(Check)`
+  font-size: 1.6rem;
+  font-weight: normal;
+  label {
+    margin-bottom: 0;
+  }
+`;

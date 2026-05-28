@@ -50,6 +50,9 @@ export const SideNavBar = styled.div`
 export const ZIndexWrapper = styled.div`
   z-index: 1000;
   position: relative;
+  grid-area: iconbar;
+  height: 100%;
+  min-height: 0;
 `;
 
 export const SideTrayPage = styled.div`

@@ -8,6 +8,12 @@ Scenario: 01._Property_Information_Tab
 	When I update a Property details
 	Then A Property Information is saved successfully
 
+Scenario: 02._Property_Improvements_Tab
+	Given I review a Property's Information from row number 3
+	When I create Property Improvements
+	Then I update Property Improvements from row number 6
+	Then A Property Information is saved successfully
+
 Scenario: 02._Property_PIMS_Files_Tab
 	Given I search for a property in the inventory by PID from row number 24
 	When I verify the PIMS Files Tab
@@ -44,7 +50,7 @@ Scenario: 07._Verify_Digital_Documents_on_Related_Documents
 	When I create Digital Documents for a "Property" from row number 16
 	And  I create a Management File from row number 5 to check common data
 	And I add Properties to the Management File
-	Then The related documents appeared as expected
+	Then Property Management Tab has been updated successfully
 
 Scenario: 08._Properties_List
 	Given I search for a Property in the Properties List by different filters from row number 29
@@ -78,6 +84,23 @@ Scenario Outline: 12._Property_Management_Lease_Active_Indicator
 	| No                | 15        |
 	| No				| 16        |
 	| Yes               | 17        |
+
+Scenario: 13._Strata_Properties_Tabs
+	Given I search for a property by Plan Number from row number 39
+	When I verify the MultiProperty Tabs
+	Then Multiproperty property rendered successfully
+
+Scenario: 14._Property_Hwy_and_Other_Tabs
+	Given I search for a property by Plan Number from row number 40
+	When I verify the Highway Tab
+	And I verify the Other Tab
+	Then Property Tabs rendered successfully
+
+Scenario: 15._Property_PMBC_and_Crown_Tabs
+	Given I search for a property by PID from row number 41
+	When I verify the PMBC Tab
+	And I verify the Crown Tab
+	Then Property Tabs rendered successfully
 
 
 

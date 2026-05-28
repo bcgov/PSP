@@ -118,7 +118,7 @@ exports[`Research Search Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -164,7 +164,7 @@ exports[`Research Search Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -176,7 +176,7 @@ exports[`Research Search Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -222,7 +222,7 @@ exports[`Research Search Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -268,7 +268,7 @@ exports[`Research Search Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -314,7 +314,7 @@ exports[`Research Search Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -360,7 +360,7 @@ exports[`Research Search Results Table > matches snapshot 1`] = `
           class="th"
           colspan="1"
           role="columnheader"
-          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+          style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
         >
           <div
             class="sortable-column"
@@ -446,13 +446,13 @@ exports[`Research Search Results Table > matches snapshot 1`] = `
           <div
             class="td clickable"
             role="cell"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           />
           <div
             class="td clickable"
             role="cell"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             South Coast Region
@@ -460,7 +460,7 @@ exports[`Research Search Results Table > matches snapshot 1`] = `
           <div
             class="td clickable"
             role="cell"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             admin
@@ -468,7 +468,7 @@ exports[`Research Search Results Table > matches snapshot 1`] = `
           <div
             class="td clickable"
             role="cell"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             Sep 2, 2022
@@ -476,7 +476,7 @@ exports[`Research Search Results Table > matches snapshot 1`] = `
           <div
             class="td clickable"
             role="cell"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             admin
@@ -484,7 +484,7 @@ exports[`Research Search Results Table > matches snapshot 1`] = `
           <div
             class="td clickable"
             role="cell"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           >
             Sep 2, 2022
@@ -492,7 +492,7 @@ exports[`Research Search Results Table > matches snapshot 1`] = `
           <div
             class="td clickable"
             role="cell"
-            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: right; text-align: right; flex-wrap: wrap; align-items: center; display: flex;"
+            style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
             title=""
           />
         </div>

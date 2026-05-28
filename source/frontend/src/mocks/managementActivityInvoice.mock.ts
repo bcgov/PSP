@@ -11,6 +11,8 @@ export const getMockManagementActivityInvoice = (
   invoiceDateTime: '2024-10-09',
   invoiceNum: 'INV-0001',
   description: 'Extra description goes here',
+  isPaymentApproved: false,
+  isPaymentForwarded: false,
   pretaxAmount: 0.0,
   gstAmount: 0.0,
   pstAmount: 0.0,

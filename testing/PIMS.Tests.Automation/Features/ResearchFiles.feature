@@ -27,8 +27,8 @@ Scenario: 04._Research_File_Notes
 	And I edit a Note on the Notes Tab from row number 2
 	Then A new Research File is created successfully
 
-Scenario: 05._Research_File_from_Pin
-	Given I create a Research File from a pin on map and from row number 6
+Scenario: 05._Research_File_from_Search
+	Given I create a Research File from a search on map and from row number 6
 	Then A new Research File is created successfully
 
 Scenario: 06._Research_File_List_View

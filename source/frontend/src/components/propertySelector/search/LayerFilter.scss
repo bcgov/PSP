@@ -1,6 +1,6 @@
 @import '@/assets/scss/styles.scss';
 
-.suggestionList {
+.addressSuggestionList {
   background-color: white;
   border-style: solid;
   border-color: lightslategray;
@@ -18,7 +18,7 @@
   left: 0rem;
 }
 
-.suggestionList li {
+.addressSuggestionList li {
   padding: 1rem 0.5rem;
   word-wrap: break-word;
   width: 25rem;

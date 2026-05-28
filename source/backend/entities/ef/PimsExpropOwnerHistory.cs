@@ -166,4 +166,7 @@ public partial class PimsExpropOwnerHistory
     [ForeignKey("InterestHolderId")]
     [InverseProperty("PimsExpropOwnerHistories")]
     public virtual PimsInterestHolder InterestHolder { get; set; }
+
+    [InverseProperty("ExpropOwnerHistory")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
 }

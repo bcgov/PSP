@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { FormikProps } from 'formik';
+import { useEffect, useRef } from 'react';
 import { Alert } from 'react-bootstrap';
 
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
@@ -6,6 +7,7 @@ import { AccessRequestStatus } from '@/constants/accessStatus';
 import { EmailContactMethods } from '@/constants/contactMethodType';
 import { useAccessRequests } from '@/hooks/pims-api/useAccessRequests';
 import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
+import { getCancelModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_Concepts_AccessRequest } from '@/models/api/generated/ApiGen_Concepts_AccessRequest';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { firstOrNull, isValidId } from '@/utils';
@@ -42,6 +44,8 @@ export const AccessRequestContainer: React.FunctionComponent<
   } = useAccessRequests();
   const keycloak = useKeycloakWrapper();
   const userInfo = keycloak?.obj?.userInfo as IUserInfo;
+  const formikRef = useRef<FormikProps<FormAccessRequest>>(null);
+  const { setModalContent, setDisplayModal } = useModalContext();
 
   useEffect(() => {
     if (!isValidId(accessRequestId)) {
@@ -77,6 +81,29 @@ export const AccessRequestContainer: React.FunctionComponent<
       keycloak.businessIdentifierValue ?? userInfo.idir_username ?? '';
     initialValues.keycloakUserGuid = userInfo.subject;
   }
+
+  const handleCancelConfirm = () => {
+    formikRef.current?.resetForm();
+  };
+
+  const handleCancelClick = (onCancelConfirm?: () => void) => {
+    if (formikRef.current?.dirty) {
+      setModalContent({
+        ...getCancelModalProps(),
+        handleOk: () => {
+          handleCancelConfirm();
+          setDisplayModal(false);
+          onCancelConfirm && onCancelConfirm();
+        },
+        handleCancel: () => setDisplayModal(false),
+      });
+      setDisplayModal(true);
+    } else {
+      handleCancelConfirm();
+      onCancelConfirm && onCancelConfirm();
+    }
+  };
+
   return (
     <>
       <LoadingBackdrop parentScreen show={loading || addLoading || byIdLoading} />
@@ -84,13 +111,18 @@ export const AccessRequestContainer: React.FunctionComponent<
         <Alert variant="success">Your access request has been submitted</Alert>
       )}
       <AccessRequestFormComponent
+        formikRef={formikRef}
         initialValues={initialValues}
         addAccessRequest={async (accessRequest: ApiGen_Concepts_AccessRequest) => {
           const response = await addAccessRequest(accessRequest);
-          onSave && onSave();
           return response;
         }}
-        onCancel={onSave}
+        onCancel={() =>
+          handleCancelClick(() => {
+            onSave && onSave();
+          })
+        }
+        onSuccess={onSave}
       />
     </>
   );

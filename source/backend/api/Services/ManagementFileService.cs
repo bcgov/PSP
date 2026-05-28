@@ -21,6 +21,7 @@ namespace Pims.Api.Services
     {
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
+        private readonly IUserRepository _userRepository;
         private readonly IManagementFileRepository _managementFileRepository;
         private readonly IManagementFilePropertyRepository _managementFilePropertyRepository;
         private readonly IPropertyRepository _propertyRepository;
@@ -30,6 +31,7 @@ namespace Pims.Api.Services
         private readonly IManagementFileStatusSolver _managementStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly IManagementActivityRepository _managementActivityRepository;
+        private readonly IFilePropertyLocationUpdateSolver _propertyLocationSolver;
 
         public ManagementFileService(
             ClaimsPrincipal user,
@@ -42,7 +44,9 @@ namespace Pims.Api.Services
             INoteRelationshipRepository<PimsManagementFileNote> entityNoteRepository,
             IManagementFileStatusSolver managementStatusSolver,
             IPropertyOperationService propertyOperationService,
-            IManagementActivityRepository managementActivityRepository)
+            IManagementActivityRepository managementActivityRepository,
+            IFilePropertyLocationUpdateSolver propertyLocationSolver,
+            IUserRepository userRepository)
         {
             _user = user;
             _logger = logger;
@@ -55,6 +59,8 @@ namespace Pims.Api.Services
             _managementStatusSolver = managementStatusSolver;
             _propertyOperationService = propertyOperationService;
             _managementActivityRepository = managementActivityRepository;
+            _propertyLocationSolver = propertyLocationSolver;
+            _userRepository = userRepository;
         }
 
         public PimsManagementFile Add(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> userOverrides)
@@ -63,11 +69,19 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ManagementAdd);
             ArgumentNullException.ThrowIfNull(managementFile);
 
+            // validate the new file region
+            var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+            if (managementFile.RegionCode == cannotDetermineRegion.RegionCode)
+            {
+                throw new BadRequestException("Cannot set an management file's region to 'cannot determine'");
+            }
+
             ValidateName(managementFile);
             managementFile.ManagementFileStatusTypeCode ??= ManagementFileStatusTypes.ACTIVE.ToString();
             ValidateStaff(managementFile);
 
-            MatchProperties(managementFile, userOverrides);
+            // No existing properties when adding a new file
+            MatchProperties(managementFile, userOverrides, new HashSet<long>());
 
             // Update marker locations in the context of this file
             foreach (var incomingManagementProperty in managementFile.PimsManagementFileProperties)
@@ -115,6 +129,12 @@ namespace Pims.Api.Services
             // validate management file state before proceeding with any database updates
             var currentManagementFile = _managementFileRepository.GetById(id);
             ValidateFileBeforeUpdate(managementFile, currentManagementFile);
+
+            var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+            if (managementFile.RegionCode == cannotDetermineRegion.RegionCode)
+            {
+                throw new BadRequestException("Cannot set an management file's region to 'cannot determine'");
+            }
 
             _managementFileRepository.Update(id, managementFile);
             AddNoteIfStatusChanged(managementFile);
@@ -173,10 +193,10 @@ namespace Pims.Api.Services
 
             ValidateVersion(managementFile.Internal_Id, managementFile.ConcurrencyControlNumber);
 
-            MatchProperties(managementFile, userOverrides);
-
             // Get the current properties in the management file
             var currentFileProperties = _managementFilePropertyRepository.GetPropertiesByManagementFileId(managementFile.Internal_Id);
+            var existingPropertyIds = currentFileProperties.Select(p => p.PropertyId).ToHashSet();
+            MatchProperties(managementFile, userOverrides, existingPropertyIds);
 
             // Check if the property is new or if it is being updated
             foreach (var incomingManagementProperty in managementFile.PimsManagementFileProperties)
@@ -210,11 +230,15 @@ namespace Pims.Api.Services
                         needsUpdate = true;
                     }
 
-                    var incomingGeom = incomingManagementProperty.Location;
-                    var existingGeom = existingProperty.Location;
-                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    if (_propertyLocationSolver.CanEditFilePropertyLocation(incomingManagementProperty, existingProperty))
                     {
                         _propertyService.UpdateFilePropertyLocation(incomingManagementProperty, existingProperty);
+                        needsUpdate = true;
+                    }
+
+                    if (_propertyLocationSolver.CanEditFilePropertyBoundary(incomingManagementProperty, existingProperty))
+                    {
+                        _propertyService.UpdateFilePropertyBoundary(incomingManagementProperty, existingProperty);
                         needsUpdate = true;
                     }
 
@@ -267,7 +291,10 @@ namespace Pims.Api.Services
             _logger.LogDebug("Management file search with filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.ManagementView);
 
-            return _managementFileRepository.GetPageDeep(filter);
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            return _managementFileRepository.GetPageDeep(filter, contractorPersonId);
         }
 
         public IEnumerable<PimsManagementFileContact> GetContacts(long id)
@@ -426,7 +453,7 @@ namespace Pims.Api.Services
             _entityNoteRepository.AddNoteRelationship(fileNoteInstance);
         }
 
-        private void MatchProperties(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> overrideCodes)
+        private void MatchProperties(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> overrideCodes, HashSet<long> existingPropertyIds)
         {
             foreach (var managementProperty in managementFile.PimsManagementFileProperties)
             {
@@ -436,9 +463,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         managementProperty.PropertyId = foundProperty.Internal_Id;
@@ -454,7 +483,7 @@ namespace Pims.Api.Services
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.ManagingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.ManagingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to a management file. Do you want to proceed?");
                         }
                     }
                 }
@@ -464,9 +493,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !existingPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         managementProperty.PropertyId = foundProperty.Internal_Id;
@@ -482,7 +513,7 @@ namespace Pims.Api.Services
                         }
                         else
                         {
-                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?");
+                            throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to a management file. Do you want to proceed?");
                         }
                     }
                 }
@@ -495,7 +526,7 @@ namespace Pims.Api.Services
                     }
                     else
                     {
-                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to an acquisition file. Do you want to proceed?");
+                        throw new UserOverrideException(UserOverrideCode.DisposingPropertyNotInventoried, "You have added one or more properties to the management file that are not in the MOTT Inventory. To acquire these properties, add them to a management file. Do you want to proceed?");
                     }
                 }
             }

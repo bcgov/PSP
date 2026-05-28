@@ -194,15 +194,15 @@ namespace PIMS.Tests.Automation.PageObjects
         //Navigate to Insurance section
         public void NavigateToInsuranceSection()
         {
-            Wait();
-            webDriver.FindElement(licenseInsuranceLink).Click();
+            WaitUntilClickable(licenseInsuranceLink);
+            SafeClick(licenseInsuranceLink);
         }
 
         //Edit Insurance section
         public void EditInsuranceButton()
         {
-            Wait();
-            webDriver.FindElement(insuranceEditIcon).Click();
+            WaitUntilClickable(insuranceEditIcon);
+            SafeClick(insuranceEditIcon);
         }
 
         //Add Accidental Coverage
@@ -223,7 +223,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Fill out form
             if (lease.AccidentalInsuranceInPlace != "")
-                ChooseSpecificSelectOption(insuranceAccidentalInPlaceSelect, lease.AccidentalInsuranceInPlace);
+                ChooseSelectOption(insuranceAccidentalInPlaceSelect, lease.AccidentalInsuranceInPlace);
 
             if (lease.AccidentalLimit != "")
                 webDriver.FindElement(insuranceAccidentalLimitInput).SendKeys(lease.AccidentalLimit);
@@ -259,7 +259,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
             //Fill out form
             if(lease.AircraftInsuranceInPlace != "")
-                ChooseSpecificSelectOption(insuranceAircraftInPlaceSelect, lease.AircraftInsuranceInPlace);
+                ChooseSelectOption(insuranceAircraftInPlaceSelect, lease.AircraftInsuranceInPlace);
 
             if (lease.AircraftLimit != "")
                 webDriver.FindElement(insuranceAircraftLimitInput).SendKeys(lease.AircraftLimit);
@@ -295,11 +295,10 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(insuranceCGLDescriptionTextarea);
 
             //Fill out form
-            Wait();
             if (lease.CGLInsuranceInPlace != "")
             {
                 WaitUntilClickable(insuranceCGLInPlaceSelect);
-                ChooseSpecificSelectOption(insuranceCGLInPlaceSelect, lease.CGLInsuranceInPlace);
+                ChooseSelectOption(insuranceCGLInPlaceSelect, lease.CGLInsuranceInPlace);
             }
             if (lease.CGLLimit != "")
             {
@@ -342,7 +341,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.MarineInsuranceInPlace != "")
             {
                 WaitUntilClickable(insuranceMarineInPlaceSelect);
-                ChooseSpecificSelectOption(insuranceMarineInPlaceSelect, lease.MarineInsuranceInPlace);
+                ChooseSelectOption(insuranceMarineInPlaceSelect, lease.MarineInsuranceInPlace);
             }
                 
             if (lease.MarineLimit != "")
@@ -389,7 +388,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.UnmannedAirVehicleInsuranceInPlace != "")
             {
                 WaitUntilClickable(insuranceUnmannedAirVehicleInPlaceSelect);
-                ChooseSpecificSelectOption(insuranceUnmannedAirVehicleInPlaceSelect, lease.UnmannedAirVehicleInsuranceInPlace);
+                ChooseSelectOption(insuranceUnmannedAirVehicleInPlaceSelect, lease.UnmannedAirVehicleInsuranceInPlace);
             }
 
             if (lease.UnmannedAirVehicleLimit != "")
@@ -433,7 +432,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.VehicleInsuranceInPlace != "")
             {
                 WaitUntilClickable(insuranceVehicleInPlaceSelect);
-                ChooseSpecificSelectOption(insuranceVehicleInPlaceSelect, lease.VehicleInsuranceInPlace);
+                ChooseSelectOption(insuranceVehicleInPlaceSelect, lease.VehicleInsuranceInPlace);
             }
                 
             if (lease.VehicleLimit != "")
@@ -485,7 +484,7 @@ namespace PIMS.Tests.Automation.PageObjects
             if (lease.OtherInsuranceInPlace != "")
             {
                 WaitUntilVisible(insuranceOtherInPlaceSelect);
-                ChooseSpecificSelectOption(insuranceOtherInPlaceSelect, lease.OtherInsuranceInPlace);
+                ChooseSelectOption(insuranceOtherInPlaceSelect, lease.OtherInsuranceInPlace);
             }
                 
             if (lease.OtherLimit != "")
@@ -736,7 +735,7 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public int TotalInsuranceCount()
         {
-            Wait();
+            WaitUntilVisible(insuranceViewTotal);
             return webDriver.FindElements(insuranceViewTotal).Count;
         }
             

@@ -19,6 +19,12 @@ namespace Pims.Api.Helpers.Healthchecks
         {
             try
             {
+                const int maxJitterMilliseconds = 10000;
+                var jitter = Random.Shared.Next(0, maxJitterMilliseconds + 1);
+                if (jitter > 0)
+                {
+                    await Task.Delay(TimeSpan.FromMilliseconds(jitter), cancellationToken);
+                }
 
                 var health = await _generationRepository.TryGetHealthAsync();
                 if (health.StatusCode != System.Net.HttpStatusCode.OK)

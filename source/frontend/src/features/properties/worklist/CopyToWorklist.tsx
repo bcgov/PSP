@@ -1,6 +1,6 @@
 import React from 'react';
-import { LiaFileExportSolid } from 'react-icons/lia';
 
+import AddAllWorkListIcon from '@/assets/images/add-all-wl-icon.svg?react';
 import { LinkButton } from '@/components/common/buttons';
 import { ApiGen_Concepts_FileProperty } from '@/models/api/generated/ApiGen_Concepts_FileProperty';
 
@@ -28,7 +28,7 @@ export const CopyToWorklist: React.FC<ICopyToWorklistProps> = ({ fileProperties,
       onClick={handleCopy}
       disabled={fileProperties.length === 0}
     >
-      <LiaFileExportSolid size={iconSize ?? 24} />
+      <AddAllWorkListIcon width={iconSize ?? 24} height={iconSize ?? 24} />
     </LinkButton>
   );
 };

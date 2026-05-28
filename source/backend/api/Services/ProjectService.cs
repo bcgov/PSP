@@ -64,11 +64,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Searching for projects that match {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
 
-            // Limit search results to user's assigned region(s), but always include "Cannot determine" region
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-
-            return _projectRepository.SearchProjects(filter, userRegions, maxResult);
+            return _projectRepository.SearchProjects(filter, maxResult);
         }
 
         public IList<PimsProject> GetAll()
@@ -76,11 +72,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Retrieving all PIMS projects");
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
 
-            // Limit search results to user's assigned region(s), but always include "Cannot determine" region
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-
-            return _projectRepository.SearchProjects(string.Empty, userRegions, int.MaxValue);
+            return _projectRepository.SearchProjects(string.Empty, int.MaxValue);
         }
 
         public Task<Paged<PimsProject>> GetPage(ProjectFilter filter)
@@ -90,9 +82,8 @@ namespace Pims.Api.Services
             _logger.LogInformation("Searching for projects ...");
             _logger.LogDebug("Project search with filter", filter);
 
-            // Limit search results to user's assigned region(s), but always include "Cannot determine" region
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
             filter.ThrowIfNull(nameof(filter));
             if (!filter.IsValid())
@@ -100,7 +91,7 @@ namespace Pims.Api.Services
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            return GetPageAsync(filter, userRegions);
+            return GetPageAsync(filter, contractorPersonId);
         }
 
         public PimsProject GetById(long projectId)
@@ -258,9 +249,9 @@ namespace Pims.Api.Services
             return externalProducts;
         }
 
-        private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, IEnumerable<short> userRegions)
+        private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, long? contractorPersonId = null)
         {
-            return await _projectRepository.GetPageAsync(filter, userRegions);
+            return await _projectRepository.GetPageAsync(filter, contractorPersonId);
         }
 
         private void AddNoteIfStatusChanged(PimsProject updatedProject)

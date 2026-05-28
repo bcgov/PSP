@@ -1,9 +1,10 @@
 import { AxiosError } from 'axios';
 import orderBy from 'lodash/orderBy';
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
 import { useCallback } from 'react';
 import { useHistory, useRouteMatch } from 'react-router-dom';
 
+import { SideBarContext } from '@/features/mapSideBar/context/sidebarContext';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
@@ -30,6 +31,7 @@ const TakesDetailContainer: React.FunctionComponent<ITakesDetailContainerProps> 
 }) => {
   const history = useHistory();
   const { url } = useRouteMatch();
+  const { setStaleLastUpdatedBy } = useContext(SideBarContext);
   const fileId = fileProperty.fileId;
   const propertyId = fileProperty.property?.id;
 
@@ -74,6 +76,7 @@ const TakesDetailContainer: React.FunctionComponent<ITakesDetailContainerProps> 
           (userOverrideCodes: UserOverrideCode[]) =>
             executeTakeDelete(fileProperty.id, takeId, userOverrideCodes).then(response => {
               refresh();
+              setStaleLastUpdatedBy(true);
               return response;
             }),
           [],

@@ -27,10 +27,6 @@ namespace Pims.Api.Services
 
         IEnumerable<PimsInsurance> UpdateInsuranceByLeaseId(long leaseId, IEnumerable<PimsInsurance> pimsInsurances);
 
-        IEnumerable<PimsPropertyImprovement> GetImprovementsByLeaseId(long leaseId);
-
-        IEnumerable<PimsPropertyImprovement> UpdateImprovementsByLeaseId(long leaseId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements);
-
         IEnumerable<PimsLeaseStakeholder> GetStakeholdersByLeaseId(long leaseId);
 
         IEnumerable<PimsLeaseStakeholder> UpdateStakeholdersByLeaseId(long leaseId, IEnumerable<PimsLeaseStakeholder> pimsLeaseStakeholders);

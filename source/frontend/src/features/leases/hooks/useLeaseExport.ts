@@ -5,7 +5,6 @@ import { useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { hideLoading, showLoading } from 'react-redux-loading-bar';
 
-import * as actionTypes from '@/constants/actionTypes';
 import { catchAxiosError } from '@/customAxios';
 import { IPaginateLeases, useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { logRequest, logSuccess } from '@/store/slices/network/networkSlice';
@@ -26,7 +25,7 @@ export const useLeaseExport = () => {
       filter: IPaginateLeases,
       outputFormat: 'csv' | 'excel' = 'excel',
       fileName = `pims-leases.${outputFormat === 'csv' ? 'csv' : 'xlsx'}`,
-      requestId = 'properties-report',
+      requestId = 'leases-report',
     ) => {
       dispatch(logRequest(requestId));
       dispatch(showLoading());
@@ -38,7 +37,7 @@ export const useLeaseExport = () => {
         fileDownload(data, fileName);
       } catch (axiosError) {
         if (axios.isAxiosError(axiosError)) {
-          catchAxiosError(axiosError, dispatch, actionTypes.DELETE_PARCEL);
+          catchAxiosError(axiosError, dispatch, requestId);
         }
       }
     },
@@ -57,7 +56,7 @@ export const useLeaseExport = () => {
         fileDownload(data, `pims-aggregated-leases-${fiscalYearStart}-${fiscalYearStart + 1}.xlsx`);
       } catch (axiosError) {
         if (axios.isAxiosError(axiosError)) {
-          catchAxiosError(axiosError, dispatch, actionTypes.DELETE_PARCEL);
+          catchAxiosError(axiosError, dispatch, requestId);
         }
       }
     },
@@ -81,7 +80,7 @@ export const useLeaseExport = () => {
         );
       } catch (axiosError) {
         if (axios.isAxiosError(axiosError)) {
-          catchAxiosError(axiosError, dispatch, actionTypes.DELETE_PARCEL);
+          catchAxiosError(axiosError, dispatch, requestId);
         }
       }
     },

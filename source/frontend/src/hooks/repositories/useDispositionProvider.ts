@@ -26,6 +26,7 @@ export const useDispositionProvider = () => {
   const {
     postDispositionFileApi,
     getDispositionFile,
+    getDispositionFileDeep,
     putDispositionFileApi,
     putDispositionFileProperties,
     getDispositionFileProperties,
@@ -65,7 +66,7 @@ export const useDispositionProvider = () => {
   });
 
   const getDispositionFileApi = useApiRequestWrapper<
-    (dispositionFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFile, any>>
+    (dispositionFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFile>>
   >({
     requestFunction: useCallback(
       async (dispositionFileId: number) => await getDispositionFile(dispositionFileId),
@@ -73,6 +74,17 @@ export const useDispositionProvider = () => {
     ),
     requestName: 'RetrieveDispositionFile',
     onError: useAxiosErrorHandlerWithAuthorization('Failed to load Disposition File'),
+  });
+
+  const getDispositionFileDeepApi = useApiRequestWrapper<
+    (dispositionFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_DispositionFile, any>>
+  >({
+    requestFunction: useCallback(
+      async (dispositionFileId: number) => await getDispositionFileDeep(dispositionFileId),
+      [getDispositionFileDeep],
+    ),
+    requestName: 'RetrieveDispositionFileDeep',
+    onError: useAxiosErrorHandlerWithAuthorization('Failed to load Disposition File Deep'),
   });
 
   const updateDispositionFileApi = useApiRequestWrapper<
@@ -344,6 +356,7 @@ export const useDispositionProvider = () => {
     () => ({
       addDispositionFileApi: addDispositionFileApi,
       getDispositionFile: getDispositionFileApi,
+      getDispositionFileDeep: getDispositionFileDeepApi,
       putDispositionFile: updateDispositionFileApi,
       getLastUpdatedBy,
       updateDispositionProperties: updateDispositionPropertiesApi,
@@ -366,6 +379,7 @@ export const useDispositionProvider = () => {
     [
       addDispositionFileApi,
       getDispositionFileApi,
+      getDispositionFileDeepApi,
       updateDispositionFileApi,
       getLastUpdatedBy,
       getDispositionPropertiesApi,

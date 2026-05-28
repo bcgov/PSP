@@ -3,16 +3,17 @@ export interface ILeaseFilter {
   pin: string;
   lFileNo: string;
   searchBy: string;
+  historical: string;
   leaseStatusTypes: string[];
   tenantName: string;
   programs: string[];
   expiryStartDate: string;
   expiryEndDate: string;
-  regionType: string;
   details: string;
   leaseTeamPersonId: number | null;
   leaseTeamOrganizationId: number | null;
   isReceivable: string | null;
+  regions: string[];
 }
 
 export interface ILeaseSearchBy {

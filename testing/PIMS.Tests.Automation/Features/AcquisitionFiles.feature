@@ -12,6 +12,7 @@ Scenario: 01._Acquisition_File_Details
 Scenario: 02._Acquisition_File_Properties
 	Given I create a new Acquisition File from row number 3
 	When I add Properties to the Acquisition File
+	And I verify the Acquisition File Improvements Tab
 	And I update an Acquisition File's Properties from row number 4
 	And I update a Property details from a file from row number 4
 	Then A new Acquisition file is created successfully

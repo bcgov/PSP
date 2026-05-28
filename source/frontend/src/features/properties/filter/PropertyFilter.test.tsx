@@ -1,10 +1,12 @@
 import axios from 'axios';
 import { createMemoryHistory } from 'history';
+import { vi } from 'vitest';
 
 import { Claims } from '@/constants';
 import { IGeocoderResponse } from '@/hooks/pims-api/interfaces/IGeocoder';
 import { useGeocoderRepository } from '@/hooks/useGeocoderRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { mapMachineBaseMock } from '@/mocks/mapFSM.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
@@ -15,9 +17,9 @@ import {
   RenderOptions,
   screen,
   userEvent,
-  waitFor,
   waitForEffects,
 } from '@/utils/test-utils';
+import { initialEnabledLayers } from '@/components/maps/leaflet/Control/LayersControl/LayersMenuLayout';
 
 import { PropertyFilter } from '.';
 import { Dms, DmsCoordinates } from './CoordinateSearch/models';
@@ -107,6 +109,8 @@ describe('MapFilterBar', () => {
 
   beforeEach(() => {
     import.meta.env.VITE_TENANT = 'MOTI';
+    vi.mocked(mapMachineBaseMock.setMapLayers).mockClear();
+    mapMachineBaseMock.activeLayers = new Set(initialEnabledLayers);
   });
 
   afterEach(() => {
@@ -201,6 +205,75 @@ describe('MapFilterBar', () => {
     });
 
     expect(screen.getByPlaceholderText('Enter a historical file#', { exact: false })).toBeVisible();
+  });
+
+  it('shows search by Legal Description option', async () => {
+    setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'legalDescription' },
+      },
+    });
+
+    const textarea = screen.getByPlaceholderText(/Enter a legal description/i);
+    expect(textarea).toBeVisible();
+    expect(textarea.tagName).toBe('TEXTAREA');
+  });
+
+  it('disables the search button if there is no legal description', async () => {
+    const { searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'legalDescription' },
+      },
+    });
+
+    expect(searchButton).toBeDisabled();
+  });
+
+  it('searches by Legal Description', async () => {
+    const { container, searchButton } = setup({
+      props: {
+        propertyFilter: { ...defaultPropertyFilter, searchBy: 'legalDescription' },
+      },
+    });
+
+    // Enter values on the form field
+    const legalDescInput = container.querySelector(
+      'textarea[name="legalDescription"]',
+    ) as HTMLTextAreaElement;
+
+    await act(async () => {
+      legalDescInput.focus();
+      userEvent.type(legalDescInput, 'Lot 1, Block 2, Plan 12345');
+    });
+
+    // Now click search
+    await act(async () => {
+      userEvent.click(searchButton);
+    });
+
+    expect(onFilterChange).toHaveBeenCalledWith<[IPropertyFilter]>({
+      pid: '',
+      pin: '',
+      planNumber: '',
+      address: '',
+      searchBy: 'legalDescription',
+      page: undefined,
+      quantity: undefined,
+      latitude: '',
+      longitude: '',
+      historical: '',
+      coordinates: null,
+      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
+      name: '',
+      district: null,
+      range: null,
+      section: null,
+      township: null,
+      districtLot: null,
+      project: null,
+      tenureCleanup: '',
+      legalDescription: 'Lot 1, Block 2, Plan 12345',
+    });
   });
 
   it('clears the form when changing the search by option', async () => {
@@ -385,6 +458,7 @@ describe('MapFilterBar', () => {
       project: null,
       districtLot: null,
       tenureCleanup: '',
+      legalDescription: null,
     } as IPropertyFilter);
   });
 
@@ -424,7 +498,8 @@ describe('MapFilterBar', () => {
       districtLot: null,
       project: null,
       tenureCleanup: '',
-    } as IPropertyFilter);
+      legalDescription: null,
+    });
   });
 
   it('searches by PIN', async () => {
@@ -463,7 +538,8 @@ describe('MapFilterBar', () => {
       districtLot: null,
       project: null,
       tenureCleanup: '',
-    } as IPropertyFilter);
+      legalDescription: null,
+    });
   });
 
   it('searches by Lat/Long coordinates', async () => {
@@ -517,11 +593,12 @@ describe('MapFilterBar', () => {
       district: null,
       range: null,
       section: null,
+      legalDescription: null,
       township: null,
       districtLot: null,
       project: null,
       tenureCleanup: '',
-    } as IPropertyFilter);
+    });
   });
 
   it('searches by "District" section/township/range coordinates', async () => {
@@ -581,11 +658,12 @@ describe('MapFilterBar', () => {
       districtLot: null,
       project: null,
       tenureCleanup: '',
-    } as IPropertyFilter);
+      legalDescription: null,
+    });
   });
 
-  it('searches by "District Lot"', async () => {
-    const { searchButton, searchByDropdown, getDistrictLotRadio, getDistrictLotTextbox } = setup({
+  it('activates the crown survey parcel layer when Survey Parcel is selected', async () => {
+    const { searchByDropdown } = setup({
       props: {
         propertyFilter: {
           ...defaultPropertyFilter,
@@ -599,42 +677,35 @@ describe('MapFilterBar', () => {
     });
     await waitForEffects();
 
-    await waitFor(async () => {
-      await act(async () => userEvent.click(getDistrictLotRadio()));
+    expect(mapMachineBaseMock.setMapLayers).toHaveBeenCalledWith(
+      new Set([...initialEnabledLayers, 'crownSurveyParcels']),
+    );
+  });
+
+  it('deactivates the crown survey parcel layer when switching away from Survey Parcel', async () => {
+    const { searchByDropdown } = setup({
+      props: {
+        propertyFilter: {
+          ...defaultPropertyFilter,
+        },
+      },
     });
     await waitForEffects();
 
-    // Enter values on the form fields, then click the Search button
     await act(async () => {
-      userEvent.paste(getDistrictLotTextbox(), '50');
+      userEvent.selectOptions(searchByDropdown, 'surveyParcel');
     });
+    await waitForEffects();
+
+    mapMachineBaseMock.activeLayers = new Set([...initialEnabledLayers, 'crownSurveyParcels']);
+    vi.mocked(mapMachineBaseMock.setMapLayers).mockClear();
 
     await act(async () => {
-      userEvent.click(searchButton);
+      userEvent.selectOptions(searchByDropdown, 'pid');
     });
+    await waitForEffects();
 
-    expect(onFilterChange).toHaveBeenCalledWith<[IPropertyFilter]>({
-      pid: null,
-      pin: null,
-      planNumber: null,
-      address: '',
-      searchBy: 'surveyParcel',
-      page: undefined,
-      quantity: undefined,
-      latitude: null,
-      longitude: null,
-      historical: null,
-      coordinates: null,
-      ownership: 'isCoreInventory,isPropertyOfInterest,isOtherInterest',
-      name: null,
-      section: null,
-      township: null,
-      range: null,
-      district: 'ALL',
-      districtLot: '50',
-      project: null,
-      tenureCleanup: '',
-    } as IPropertyFilter);
+    expect(mapMachineBaseMock.setMapLayers).toHaveBeenCalledWith(new Set(initialEnabledLayers));
   });
 
   it('submits the form if there is lat/lng for geographic names', async () => {
@@ -704,7 +775,8 @@ describe('MapFilterBar', () => {
       districtLot: null,
       project: null,
       tenureCleanup: '',
-    } as IPropertyFilter);
+      legalDescription: null,
+    });
   });
 
   it.skip.each([

@@ -17,5 +17,7 @@ namespace Pims.Api.Models.Config
         public int ImageRetries { get; set; }
 
         public int PreviewPages { get; set; }
+
+        public int MaxContentResults { get; set; }
     }
 }

@@ -56,6 +56,9 @@
         public string SPPAmount { get; set; } = null!;
         public string NetProceedsAfterSPP { get; set; } = null!;
         public string RemediationCost { get; set; } = null!;
+        public int DispositionAgreementStartRow { get; set; } = 0;
+        public int DispositionAgreementCount { get; set; } = 0;
+        public List<Agreement> DispositionAgreements { get; set; } = new List<Agreement>() { };
 
     }
     public class DispositionFileChecklist
@@ -87,6 +90,9 @@
         public string DirectSaleRoadClosureSelect7 { get; set; } = null!;
         public string DirectSaleRoadClosureSelect8 { get; set; } = null!;
         public string DirectSaleRoadClosureSelect9 { get; set; } = null!;
+        public string DirectSaleRoadClosureSelect10 { get; set; } = null!;
+        public string DirectSaleRoadClosureSelect11 { get; set; } = null!;
+        public string DirectSaleRoadClosureSelect12 { get; set; } = null!;
 
         public string SaleInformationSelect1 { get; set; } = null!;
         public string SaleInformationSelect2 { get; set; } = null!;

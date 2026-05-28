@@ -74,7 +74,7 @@ describe('ShapeUploadForm', () => {
     });
 
     expect(
-      screen.getByText(/You have attached a shapefile for property: property-456/i),
+      screen.getByText(/You have attached a boundary file for property: property-456/i),
     ).toBeInTheDocument();
   });
 
@@ -88,7 +88,7 @@ describe('ShapeUploadForm', () => {
     });
 
     expect(
-      screen.getByText(/You have attached a shapefile. Do you want to proceed and save/i),
+      screen.getByText(/You have attached a boundary file. Do you want to proceed and save/i),
     ).toBeInTheDocument();
   });
 

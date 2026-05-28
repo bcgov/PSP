@@ -14,25 +14,37 @@ export const layersMenuTree: LayerMenuEntry = {
           layerDefinitionId: 'pims_research_files',
           key: 'research',
           label: 'Research',
-          color: '#3388ff',
+          color: '#1389ed',
         },
         {
           layerDefinitionId: 'pims_acquisition_files',
           key: 'acquisition',
           label: 'Acquisition',
-          color: '#42814A',
+          color: '#FF00D4',
         },
         {
           layerDefinitionId: 'pims_management_files',
           key: 'management',
           label: 'Management',
-          color: '#FC802D',
+          color: '#cc4c02',
         },
         {
-          layerDefinitionId: 'pims_disposed_files',
-          key: 'disposition',
+          key: 'DispositionLayers',
           label: 'Disposition',
-          color: '#555555',
+          nodes: [
+            {
+              layerDefinitionId: 'pims_disposed_files',
+              key: 'disposition',
+              label: 'Disposition (Active)',
+              color: '#FF0000',
+            },
+            {
+              layerDefinitionId: 'pims_disposed_files_complete',
+              key: 'disposition_complete',
+              label: 'Disposition (Complete)',
+              color: '#FFA6A6',
+            },
+          ],
         },
         {
           key: 'LeaseLayers',
@@ -178,7 +190,12 @@ export const layersMenuTree: LayerMenuEntry = {
             {
               layerDefinitionId: 'plans',
               key: 'plans',
-              label: 'Plans',
+              label: 'Greyscale Plans',
+            },
+            {
+              layerDefinitionId: 'hwyPlans',
+              key: 'hwyPlans',
+              label: 'Coloured Plans',
             },
           ],
         },
@@ -271,7 +288,7 @@ export const layersMenuTree: LayerMenuEntry = {
               layerDefinitionId: 'bctfa_property',
               key: 'PMBC_BCTFA_PARCEL_POLYGON_FABRIC_KEY',
               label: 'BCTFA Ownership',
-              color: '#42814A',
+              color: '#551A8B',
             },
             {
               layerDefinitionId: 'pmbc_parcel_by_class',

@@ -13,9 +13,11 @@ import { withNameSpace } from '@/utils/formUtils';
 
 export interface IPropertySelectorModalProps {
   isOpened: boolean;
-  availiableProperties: ApiGen_Concepts_FileProperty[];
+  availableProperties: ApiGen_Concepts_FileProperty[];
   onSelectOk: (selectedProperties: ApiGen_Concepts_FileProperty[]) => void;
   onCancelClick: () => void;
+  isSingleSelect?: boolean;
+  title?: string;
 }
 
 interface PropertySelectorForm {
@@ -25,7 +27,7 @@ interface PropertySelectorForm {
 const PropertySelectorModal: React.FunctionComponent<
   React.PropsWithChildren<IPropertySelectorModalProps>
 > = props => {
-  const { isOpened, onCancelClick, availiableProperties, onSelectOk } = props;
+  const { isOpened, onCancelClick, availableProperties, onSelectOk, isSingleSelect } = props;
 
   const formikRef = useRef<FormikProps<PropertySelectorForm>>(null);
 
@@ -38,12 +40,14 @@ const PropertySelectorModal: React.FunctionComponent<
     formikHelpers: FormikHelpers<PropertySelectorForm>,
   ) => {
     const ids = values.propertyIds;
-    const selectedProperties = availiableProperties.filter(x => ids.includes(x.id.toString()));
+    const selectedProperties = availableProperties.filter(x => ids.includes(x.id.toString()));
 
     onSelectOk(selectedProperties);
     formikHelpers.resetForm();
     formikHelpers.setSubmitting(false);
   };
+
+  const selectType = isSingleSelect ? 'radio' : 'checkbox';
 
   return (
     <Formik<PropertySelectorForm>
@@ -56,10 +60,10 @@ const PropertySelectorModal: React.FunctionComponent<
         <StyledModal
           variant="info"
           display={isOpened}
-          title="Generate Form 12"
+          title={props.title ?? 'Generate Form 12'}
           message={
             <>
-              <p>Select the properties that should be included in this Form 12 notice</p>
+              <p>Select the properties that should be included in this form.</p>
               <p>
                 <strong>Available properties in this file:</strong>
               </p>
@@ -69,17 +73,17 @@ const PropertySelectorModal: React.FunctionComponent<
                   name={withNameSpace('propertyIds')}
                   render={() => (
                     <Form.Group>
-                      {availiableProperties.map(
+                      {availableProperties.map(
                         (propertyFile: ApiGen_Concepts_FileProperty, index: number) => (
                           <Form.Check
                             id={`propertyFile-${index}`}
-                            type="checkbox"
+                            type={selectType}
                             name="propertyIds"
                             key={propertyFile.id}
                           >
                             <Form.Check.Input
                               id={`propertyFile-${index}`}
-                              type="checkbox"
+                              type={selectType}
                               name="propertyIds"
                               value={propertyFile.id}
                               onChange={formikProps.handleChange}
@@ -93,8 +97,8 @@ const PropertySelectorModal: React.FunctionComponent<
                     </Form.Group>
                   )}
                 />
-                {isEmpty(availiableProperties) && (
-                  <StyledNoData className="m-4">No Properties availiable</StyledNoData>
+                {isEmpty(availableProperties) && (
+                  <StyledNoData className="m-4">No Properties available</StyledNoData>
                 )}
               </StyledDiv>
             </>

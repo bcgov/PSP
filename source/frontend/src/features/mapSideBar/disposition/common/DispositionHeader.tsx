@@ -35,6 +35,13 @@ export const DispositionHeader: React.FunctionComponent<
           <HeaderField label="File:" labelWidth={{ xs: leftColumnLabel }} contentWidth={{ xs: 9 }}>
             D-{dispositionFile?.fileNumber}
           </HeaderField>
+          <HeaderField
+            label="File name:"
+            labelWidth={{ xs: leftColumnLabel }}
+            contentWidth={{ xs: 9 }}
+          >
+            {dispositionFile?.fileName}
+          </HeaderField>
           <HistoricalNumbersContainer
             propertyIds={propertyIds}
             View={HistoricalNumberSectionView}

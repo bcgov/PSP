@@ -7,11 +7,15 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
     {
         public long AgreementId { get; set; }
 
-        public long AcquisitionFileId { get; set; }
+        public long FileId { get; set; }
 
         public CodeTypeModel<string> AgreementType { get; set; }
 
         public CodeTypeModel<string> AgreementStatusType { get; set; }
+
+        public DateOnly? AdvancePaymentDate { get; set; }
+
+        public DateOnly? AgreementSignedDate { get; set; }
 
         public DateOnly? AgreementDate { get; set; }
 

@@ -10,6 +10,7 @@ import { vi } from 'vitest';
 import css from '@/assets/scss/_variables.module.scss';
 import ModalContainer from '@/components/common/ModalContainer';
 import { ModalContextProvider } from '@/contexts/modalContext';
+import { NavigationIntentProvider } from '@/contexts/NavigationIntentContext';
 import { ParcelDataset } from '@/features/properties/parcelList/models';
 import { WorklistContextProvider } from '@/features/properties/worklist/context/WorklistContext';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
@@ -58,18 +59,20 @@ const TestCommonWrapper: React.FunctionComponent<
             <TestRouterWrapper history={history}>
               <ThemeProvider theme={{ tenant, css, bcTokens }}>
                 <ModalContextProvider>
-                  <WorklistContextProvider parcels={worklistParcels ?? []}>
-                    <ToastContainer
-                      autoClose={5000}
-                      hideProgressBar
-                      newestOnTop={false}
-                      closeOnClick={false}
-                      rtl={false}
-                      pauseOnFocusLoss={false}
-                    />
-                    <ModalContainer />
-                    {children}
-                  </WorklistContextProvider>
+                  <NavigationIntentProvider>
+                    <WorklistContextProvider parcels={worklistParcels ?? []}>
+                      <ToastContainer
+                        autoClose={5000}
+                        hideProgressBar
+                        newestOnTop={false}
+                        closeOnClick={false}
+                        rtl={false}
+                        pauseOnFocusLoss={false}
+                      />
+                      <ModalContainer />
+                      {children}
+                    </WorklistContextProvider>
+                  </NavigationIntentProvider>
                 </ModalContextProvider>
               </ThemeProvider>
             </TestRouterWrapper>

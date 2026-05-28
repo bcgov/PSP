@@ -4,6 +4,7 @@ import { FaTrash } from 'react-icons/fa';
 import { MdClose } from 'react-icons/md';
 import styled, { css } from 'styled-components';
 
+import TooltipWrapper from '../TooltipWrapper';
 import { StyledIconButton } from './IconButton';
 import { LinkButton } from './LinkButton';
 
@@ -21,13 +22,15 @@ export const RemoveButton: React.FunctionComponent<
   React.PropsWithChildren<IRemoveButtonProps>
 > = props => {
   return (
-    <StyledRemoveLinkButton
-      $fontSize={props.fontSize}
-      onClick={props.onRemove}
-      data-testid={props['data-testId'] ?? 'remove-button'}
-    >
-      <MdClose size="2rem" title="remove" /> <span className="text">{props.label ?? 'Remove'}</span>
-    </StyledRemoveLinkButton>
+    <TooltipWrapper tooltip="Remove" tooltipId={'remove-' + props['data-testId']}>
+      <StyledRemoveLinkButton
+        $fontSize={props.fontSize}
+        onClick={props.onRemove}
+        data-testid={props['data-testId'] ?? 'remove-button'}
+      >
+        <MdClose size="2rem" title="remove" />
+      </StyledRemoveLinkButton>
+    </TooltipWrapper>
   );
 };
 
@@ -58,9 +61,6 @@ export const StyledRemoveLinkButton = styled(LinkButton)<{ $fontSize?: string }>
     color: #aaaaaa;
     text-decoration: none;
     line-height: unset;
-    .text {
-      display: none;
-    }
     &:hover,
     &:active,
     &:focus {
@@ -69,10 +69,6 @@ export const StyledRemoveLinkButton = styled(LinkButton)<{ $fontSize?: string }>
       opacity: unset;
       display: flex;
       flex-direction: row;
-      .text {
-        display: inline;
-        line-height: 2rem;
-      }
     }
   }
 `;

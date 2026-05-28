@@ -157,6 +157,8 @@ export const getEmptyProperty = (): ApiGen_Concepts_Property => ({
   surplusDeclarationDate: EpochIsoDateTime,
   historicalFileNumbers: null,
   tenureCleanups: null,
+  netBookAmount: null,
+  netBookNote: null,
   ...getEmptyBaseAudit(),
 });
 
@@ -231,8 +233,10 @@ export const getEmptyAcquisitionFile = (): ApiGen_Concepts_AcquisitionFile => {
     parentAcquisitionFileId: null,
     fileName: null,
     fileNumber: null,
+    overrideFileNumberSequence: false,
     fileNumberSuffix: 0,
     fileStatusTypeCode: null,
     physicalFileDetails: null,
+    noticeOfClaim: null,
   };
 };

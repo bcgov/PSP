@@ -248,19 +248,19 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
   font-size: 3.2rem;
 }
 
-.c3 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
 .c2 {
   margin: 1.6rem;
   padding: 1.6rem;
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c3 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c5.required::before {
@@ -798,6 +798,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="c5 text-left col"
             >
               00048
+              <div
+                class="invalid-feedback"
+              />
             </div>
           </div>
           <div
@@ -816,6 +819,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="c5 text-left col"
             >
               FERRIES
+              <div
+                class="invalid-feedback"
+              />
             </div>
           </div>
           <div
@@ -834,6 +840,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="c5 text-left col"
             >
               SURVEY
+              <div
+                class="invalid-feedback"
+              />
             </div>
           </div>
           <div
@@ -852,6 +861,9 @@ exports[`Compensation Requisition UpdateForm component > renders as expected 1`]
               class="c5 text-left col"
             >
               HWY PLAN
+              <div
+                class="invalid-feedback"
+              />
             </div>
           </div>
           <div

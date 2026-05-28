@@ -13,11 +13,12 @@ namespace PIMS.Tests.Automation.StepDefinitions
         private readonly SearchAcquisitionFiles searchAcquisitionFiles;
         private readonly SharedTeamMembers sharedTeamMembers;
         private readonly SharedFileProperties sharedFileProperties;
+        private readonly SharedImprovementsTab sharedImprovementsTab;
         private readonly SharedPagination sharedPagination;
         private readonly SearchProperties searchProperties;
         private readonly AcquisitionTakes acquisitionTakes;
         private readonly AcquisitionChecklist checklist;
-        private readonly AcquisitionAgreements agreements;
+        private readonly SharedAgreements agreements;
         private readonly AcquisitionStakeholders stakeholders;
         private readonly SharedCompensations h120;
         private readonly AcquisitionExpropriation expropriation;
@@ -37,12 +38,13 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFilesDetails = new AcquisitionDetails(driver);
             searchAcquisitionFiles = new SearchAcquisitionFiles(driver);
             sharedFileProperties = new SharedFileProperties(driver);
+            sharedImprovementsTab = new SharedImprovementsTab(driver);
             sharedTeamMembers = new SharedTeamMembers(driver);
             sharedPagination = new SharedPagination(driver);
             searchProperties = new SearchProperties(driver);
             acquisitionTakes = new AcquisitionTakes(driver);
             checklist = new AcquisitionChecklist(driver);
-            agreements = new AcquisitionAgreements(driver);
+            agreements = new SharedAgreements(driver);
             stakeholders = new AcquisitionStakeholders(driver);
             h120 = new SharedCompensations(driver);
             expropriation = new AcquisitionExpropriation(driver);
@@ -219,6 +221,19 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
             //Verify properties order
             sharedFileProperties.VerifyInsertedPropsOrder(acquisitionFile.AcquisitionSearchProperties.DisplayingList);
+        }
+
+        [StepDefinition(@"I verify the Acquisition File Improvements Tab")]
+        public void VerifyAcquisitionPropertyImprovement()
+        {
+            //Navigate to Improvements Tab
+            sharedImprovementsTab.NavigateImprovementTab();
+
+            //Verify Properties' count on Improvement Tabs
+            Assert.Equal(sharedImprovementsTab.CountProperties(), acquisitionFile.AcquisitionSearchProperties.DisplayingList.Count);
+
+            //Verify Improvements Tab
+            sharedImprovementsTab.VerifyImprovementsTab(acquisitionFile.AcquisitionSearchProperties.DisplayingList);
         }
 
         [StepDefinition(@"I update an Acquisition File's Properties from row number (.*)")]
@@ -430,7 +445,7 @@ namespace PIMS.Tests.Automation.StepDefinitions
             agreements.SaveAcquisitionFileAgreement();
 
             //Verify Edit Agreement form
-            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[1], 0);
+            agreements.VerifyViewAgreementForm(acquisitionFile.AcquisitionAgreements[1], 1);
 
             var agreementsBeforeDelete = agreements.TotalAgreementsCount();
 
@@ -1151,6 +1166,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             acquisitionFile.OwnerRepresentative = ExcelDataContext.ReadData(rowNumber, "OwnerRepresentative");
             acquisitionFile.OwnerComment = ExcelDataContext.ReadData(rowNumber, "OwnerComment");
 
+            //Notice of Claims
+            acquisitionFile.AcquisitionNOCReceivedDate = ExcelDataContext.ReadData(rowNumber, "AcquisitionNOCReceivedDate");
+            acquisitionFile.AcquisitionNOCComments = ExcelDataContext.ReadData(rowNumber, "AcquisitionNOCComments");
+
             //Properties Search
             acquisitionFile.AcquisitionSearchPropertiesIndex = int.Parse(ExcelDataContext.ReadData(rowNumber, "AcqSearchPropertiesIndex"));
             if (acquisitionFile.AcquisitionSearchPropertiesIndex > 0)
@@ -1377,19 +1396,18 @@ namespace PIMS.Tests.Automation.StepDefinitions
 
         private void PopulateAgreementsCollection(int startRow, int rowsCount)
         {
-            System.Data.DataTable agreementSheet = ExcelDataContext.GetInstance().Sheets["AcquisitionAgreement"]!;
+            System.Data.DataTable agreementSheet = ExcelDataContext.GetInstance().Sheets["Agreements"]!;
             ExcelDataContext.PopulateInCollection(agreementSheet);
 
             for (int i = startRow; i < startRow + rowsCount; i++)
             {
-                AcquisitionAgreement agreement = new();
+                Agreement agreement = new();
 
                 agreement.AgreementStatus = ExcelDataContext.ReadData(i, "AgreementStatus");
                 agreement.AgreementCancellationReason = ExcelDataContext.ReadData(i, "AgreementCancellationReason");
                 agreement.AgreementLegalSurveyPlan = ExcelDataContext.ReadData(i, "AgreementLegalSurveyPlan");
                 agreement.AgreementType = ExcelDataContext.ReadData(i, "AgreementType");
                 agreement.AgreementDate = ExcelDataContext.ReadData(i, "AgreementDate");
-                agreement.AgreementCommencementDate = ExcelDataContext.ReadData(i, "AgreementCommencementDate");
                 agreement.AgreementCompletionDate = ExcelDataContext.ReadData(i, "AgreementCompletionDate");
                 agreement.AgreementTerminationDate = ExcelDataContext.ReadData(i, "AgreementTerminationDate");
                 agreement.AgreementPossessionDate = ExcelDataContext.ReadData(i, "AgreementPossessionDate");

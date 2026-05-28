@@ -201,5 +201,43 @@ describe('Create acquisition model tests', () => {
         } as ApiGen_Concepts_AcquisitionFileTeam),
       );
     });
+
+    it('omits notice of claim when date and comment are empty strings', () => {
+      const model = new AcquisitionForm();
+      model.noticeOfClaim = {
+        id: null,
+        acquisitionFileId: null,
+        managementFileId: null,
+        comment: '',
+        receivedDate: '',
+        rowVersion: null,
+      };
+
+      const apiAcquisitionFile = model.toApi();
+
+      expect(apiAcquisitionFile.noticeOfClaim).toEqual([]);
+    });
+
+    it('normalizes notice of claim values before sending to api', () => {
+      const model = new AcquisitionForm();
+      model.noticeOfClaim = {
+        id: null,
+        acquisitionFileId: null,
+        managementFileId: null,
+        comment: '  Test comment  ',
+        receivedDate: '',
+        rowVersion: null,
+      };
+
+      const apiAcquisitionFile = model.toApi();
+
+      expect(apiAcquisitionFile.noticeOfClaim).toHaveLength(1);
+      expect(apiAcquisitionFile.noticeOfClaim?.[0]).toEqual(
+        expect.objectContaining({
+          comment: 'Test comment',
+          receivedDate: null,
+        }),
+      );
+    });
   });
 });

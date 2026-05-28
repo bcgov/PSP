@@ -81,7 +81,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            L-File Number
+            L-File number
             <div
               class="c0"
               data-testid="sort-column-lFileNo"
@@ -127,7 +127,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Expiry Date
+            Expiry date
             <div
               class="c0"
               data-testid="sort-column-expiryDate"
@@ -173,7 +173,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Program Name
+            Program name
             <div
               class="c0"
               data-testid="sort-column-programName"
@@ -219,7 +219,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Tenant Names
+            Tenant names
           </div>
         </div>
         <div
@@ -231,41 +231,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Account Type
-            <div
-              class="c0"
-              data-testid="sort-column-paymentReceivableType"
-            >
-              <svg
-                class="c1"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                style="margin-bottom: -8px;"
-                viewBox="0 0 512 512"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M128 320l128-128 128 128z"
-                />
-              </svg>
-              <svg
-                class="c2"
-                fill="currentColor"
-                height="1em"
-                stroke="currentColor"
-                stroke-width="0"
-                viewBox="0 0 512 512"
-                width="1em"
-                xmlns="http://www.w3.org/2000/svg"
-              >
-                <path
-                  d="M128 192l128 128 128-128z"
-                />
-              </svg>
-            </div>
+            Account type
           </div>
         </div>
         <div
@@ -277,7 +243,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Properties
+            Civic address / PID / PIN
           </div>
         </div>
         <div
@@ -289,7 +255,7 @@ exports[`Lease Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Historical File #
+            Historical file #
           </div>
         </div>
         <div

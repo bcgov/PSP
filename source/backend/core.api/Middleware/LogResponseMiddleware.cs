@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics.CodeAnalysis;
 using System.IO;
 using System.Threading.Tasks;
@@ -63,10 +64,10 @@ namespace Pims.Core.Api.Middleware
             await _next(context);
 
             string body = null;
-            if (context.Response.ContentLength < maxStreamLength)
+            if (context.Response.ContentLength.HasValue && context.Response.ContentLength.Value < maxStreamLength)
             {
                 context.Response.Body.Seek(0, SeekOrigin.Begin);
-                using var reader = new StreamReader(context.Response.Body);
+                using var reader = new StreamReader(context.Response.Body, leaveOpen: true);
 
                 body = await reader.ReadToEndAsync();
             }
@@ -79,7 +80,7 @@ namespace Pims.Core.Api.Middleware
                     _logger.LogInformation($"HTTP Response {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}{System.Environment.NewLine}");
                 }
                 _logger.LogDebug($"HTTP Response {context.Request.Method} user:{context.User.GetDisplayName()} {context.Request.Scheme}://{context.Request.Host}{context.Request.Path}{context.Request.QueryString}");
-                _logger.LogTrace("Body: {body}", body);
+                _logger.LogTrace("Body: {body}", body?.Replace(Environment.NewLine, string.Empty));
             }
 
             await responseBody.CopyToAsync(originalBodyStream);

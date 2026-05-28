@@ -19,6 +19,7 @@ namespace Pims.Api.Models.Concepts.ManagementFile
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.IsActive, src => src.IsActive)
                 .Map(dest => dest.Location, src => src.Location)
+                .Map(dest => dest.Boundary, src => src.Boundary)
                 .Inherits<Entity.IBaseEntity, BaseConcurrentModel>();
 
             // Map from Model to Entity
@@ -32,6 +33,7 @@ namespace Pims.Api.Models.Concepts.ManagementFile
                 .Map(dest => dest.Property, src => src.Property)
                 .Map(dest => dest.IsActive, src => src.IsActive)
                 .Map(dest => dest.Location, src => src.Location)
+                .Map(dest => dest.Boundary, src => src.Boundary)
                 .Inherits<BaseConcurrentModel, Entity.IBaseEntity>();
         }
     }

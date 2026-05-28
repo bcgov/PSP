@@ -2,15 +2,21 @@ import { Formik, FormikProps } from 'formik';
 import React from 'react';
 
 import { Multiselect, TextArea } from '@/components/common/form';
+import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
+import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
+import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { YesNoSelect } from '@/components/common/form/YesNoSelect';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
+import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from '@/constants/API';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
+import { isOrganizationSummary } from '@/interfaces/IContactSearchResult';
 import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
+import { exists } from '@/utils/utils';
 
 import { ManagementPurposeModel, PropertyManagementFormModel } from './models';
 import { PropertyManagementYupSchema } from './validation';
@@ -66,6 +72,30 @@ export const PropertyManagementUpdateForm = React.forwardRef<
               <SectionField label="Taxes payable">
                 <YesNoSelect field="isTaxesPayable" />
               </SectionField>
+
+              <SectionField label="Responsible payer">
+                <ContactInputContainer
+                  field="responsiblePayer"
+                  View={ContactInputView}
+                  restrictContactType={RestrictContactType.ALL}
+                  displayErrorAsTooltip={false}
+                  required={false}
+                />
+                {exists(formikProps.values.responsiblePayer) &&
+                  isOrganizationSummary(formikProps.values.responsiblePayer) && (
+                    <SectionField
+                      label="Primary contact"
+                      labelWidth={{ xs: 4 }}
+                      contentWidth={{ xs: 6 }}
+                    >
+                      <PrimaryContactSelector
+                        field={`responsiblePayerPrimaryContactId`}
+                        contactInfo={formikProps.values.responsiblePayer}
+                      />
+                    </SectionField>
+                  )}
+              </SectionField>
+
               <SectionField
                 label="Additional details"
                 contentWidth={{ xs: 12 }}

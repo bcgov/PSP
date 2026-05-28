@@ -13,6 +13,12 @@ export const getMockApiPropertyManagement = (id = 123459): ApiGen_Concepts_Prope
   hasActiveLease: null,
   activeLeaseHasExpiryDate: null,
   ...getEmptyBaseAudit(1),
+  responsiblePayerPersonId: null,
+  responsiblePayerPerson: null,
+  responsiblePayerOrganizationId: null,
+  responsiblePayerOrganization: null,
+  responsiblePayerPrimaryContactId: null,
+  responsiblePayerPrimaryContact: null,
 });
 
 export const getMockApiPropertyManagementPurpose = (

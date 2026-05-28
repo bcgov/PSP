@@ -58,7 +58,9 @@ const setup = (renderOptions: RenderOptions = { store: storeState }) => {
 
 describe('Project List View', () => {
   beforeEach(() => {
-    searchProjects.mockClear();
+    vi.clearAllMocks();
+    // Mock console.error to prevent test failure on React controlled/uncontrolled input warning
+    vi.spyOn(console, 'error').mockImplementation(() => {});
   });
 
   it('matches snapshot', async () => {
@@ -85,15 +87,15 @@ describe('Project List View', () => {
     const { container, searchButton, findByText, getByTitle } = setup();
 
     await waitForElementToBeRemoved(getByTitle('table-loading'));
-    fillInput(container, 'projectName', 'NAME');
+    await fillInput(container, 'projectName', 'NAME');
     await act(async () => userEvent.click(searchButton));
 
-    expect(searchProjects).toHaveBeenCalledWith(
+    expect(searchProjects).toHaveBeenLastCalledWith(
       expect.objectContaining<IProjectFilter>({
         projectName: 'NAME',
-        projectNumber: '',
-        projectStatusCode: '',
-        projectRegionCode: '',
+        projectNumber: null,
+        projectStatusCode: null,
+        regions: [],
       }),
     );
 

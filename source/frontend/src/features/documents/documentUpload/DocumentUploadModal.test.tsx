@@ -1,7 +1,5 @@
-import {
-  mockDocumentBatchUploadResponse,
-  mockDocumentTypesAcquisition,
-} from '@/mocks/documents.mock';
+import { mockDocumentBatchUploadResponse } from '@/mocks/documents.mock';
+import { mockDocumentTypesAcquisition } from '@/mocks/documentTypes.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';

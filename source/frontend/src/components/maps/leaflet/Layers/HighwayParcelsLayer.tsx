@@ -16,7 +16,6 @@ export const HighwayParcelsLayer: React.FunctionComponent = () => {
     () => (mapFeatureData?.highwayPlanFeatures?.features ?? []).filter(p => exists(p?.geometry)),
     [mapFeatureData?.highwayPlanFeatures?.features],
   );
-
   return (
     <React.Fragment>
       {validParcels.map(vp => (

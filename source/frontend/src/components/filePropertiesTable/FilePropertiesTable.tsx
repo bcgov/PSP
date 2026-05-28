@@ -34,20 +34,18 @@ const FilePropertiesTable: React.FunctionComponent<IFilePropertiesTableProps> = 
   disabledSelection,
 }) => {
   return (
-    <>
-      <Table<ApiGen_Concepts_FileProperty>
-        name="selectableFileProperties"
-        hideHeaders
-        hideToolbar
-        manualPagination
-        showSelectedRowCount
-        columns={columns}
-        data={fileProperties}
-        setSelectedRows={setSelectedFileProperties}
-        selectedRows={selectedFileProperties}
-        disableSelection={disabledSelection}
-      />
-    </>
+    <Table<ApiGen_Concepts_FileProperty>
+      name="selectableFileProperties"
+      hideHeaders
+      hideToolbar
+      manualPagination
+      showSelectedRowCount
+      columns={columns}
+      data={fileProperties}
+      setSelectedRows={setSelectedFileProperties}
+      selectedRows={selectedFileProperties}
+      disableSelection={disabledSelection}
+    />
   );
 };
 

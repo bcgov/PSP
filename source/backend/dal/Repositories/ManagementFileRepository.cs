@@ -49,10 +49,16 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.Project)
                 .Include(d => d.Product)
+                .Include(d => d.RegionCodeNavigation)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
                 .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsManagementFileProperties)
+                .Include(d => d.ResponsiblePayerPerson)
+                    .ThenInclude(x => x.PimsPersonOrganizations)
+                        .ThenInclude(y => y.Organization)
+                .Include(d => d.ResponsiblePayerOrganization)
+                .Include(d => d.ResponsiblePayerPrimaryContact)
                 .Include(d => d.PimsManagementFileTeams)
                     .ThenInclude(d => d.Organization)
                 .Include(d => d.PimsManagementFileTeams)
@@ -61,6 +67,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(d => d.PrimaryContact)
                 .Include(d => d.PimsManagementFileTeams)
                     .ThenInclude(d => d.ManagementFileProfileTypeCodeNavigation)
+                .Include(r => r.PimsNoticeOfClaims)
                 .FirstOrDefault(d => d.ManagementFileId == id) ?? throw new KeyNotFoundException();
         }
 
@@ -77,6 +84,7 @@ namespace Pims.Dal.Repositories
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.Project)
                 .Include(d => d.Product)
+                .Include(d => d.RegionCodeNavigation)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
                 .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
@@ -89,6 +97,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(d => d.PrimaryContact)
                 .Include(d => d.PimsManagementFileTeams)
                     .ThenInclude(d => d.ManagementFileProfileTypeCodeNavigation)
+                .Include(r => r.PimsNoticeOfClaims)
                 .FirstOrDefault(d => d.FileName == name);
         }
 
@@ -170,8 +179,8 @@ namespace Pims.Dal.Repositories
               .Select(dph => new LastUpdatedByModel()
               {
                   ParentId = id,
-                  AppLastUpdateUserid = dph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                  AppLastUpdateUserGuid = dph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                  AppLastUpdateUserid = dph.AppLastUpdateUserid,
+                  AppLastUpdateUserGuid = dph.AppLastUpdateUserGuid,
                   AppLastUpdateTimestamp = dph.EndDateHist ?? DateTime.UnixEpoch,
               })
               .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -205,8 +214,8 @@ namespace Pims.Dal.Repositories
             .Select(dph => new LastUpdatedByModel()
             {
                 ParentId = id,
-                AppLastUpdateUserid = dph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = dph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = dph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = dph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = dph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -235,8 +244,8 @@ namespace Pims.Dal.Repositories
             .Select(dph => new LastUpdatedByModel()
             {
                 ParentId = id,
-                AppLastUpdateUserid = dph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = dph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = dph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = dph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = dph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -265,8 +274,8 @@ namespace Pims.Dal.Repositories
             .Select(dph => new LastUpdatedByModel()
             {
                 ParentId = id,
-                AppLastUpdateUserid = dph.AppLastUpdateUserid, // TODO: Update this once the DB tracks the user
-                AppLastUpdateUserGuid = dph.AppLastUpdateUserGuid, // TODO: Update this once the DB tracks the user
+                AppLastUpdateUserid = dph.AppLastUpdateUserid,
+                AppLastUpdateUserGuid = dph.AppLastUpdateUserGuid,
                 AppLastUpdateTimestamp = dph.EndDateHist ?? DateTime.UnixEpoch,
             })
             .OrderByDescending(lu => lu.AppLastUpdateTimestamp)
@@ -287,6 +296,7 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingFile).CurrentValues.SetValues(managementFile);
             Context.UpdateChild<PimsManagementFile, long, PimsManagementFileTeam, long>(x => x.PimsManagementFileTeams, managementFile.Internal_Id, managementFile.PimsManagementFileTeams.ToArray());
+            Context.UpdateChild<PimsManagementFile, long, PimsNoticeOfClaim, long>(x => x.PimsNoticeOfClaims, managementFile.Internal_Id, managementFile.PimsNoticeOfClaims.ToArray());
 
             return existingFile;
         }
@@ -378,7 +388,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter"></param>
         /// <returns></returns>
-        public Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter)
+        public Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter, long? contractorPersonId = null)
         {
             using var scope = Logger.QueryScope();
 
@@ -388,7 +398,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            var query = GetCommonManagementFileQueryDeep(filter);
+            var query = GetCommonManagementFileQueryDeep(filter, contractorPersonId);
 
             var skip = (filter.Page - 1) * filter.Quantity;
             var pageItems = query.Skip(skip).Take(filter.Quantity).ToList();
@@ -401,7 +411,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="filter">The filter to apply.</param>
         /// <returns></returns>
-        private IQueryable<PimsManagementFile> GetCommonManagementFileQueryDeep(ManagementFilter filter)
+        private IQueryable<PimsManagementFile> GetCommonManagementFileQueryDeep(ManagementFilter filter, long? contractorPersonId = null)
         {
             filter.FileNameOrNumberOrReference = Regex.Replace(filter.FileNameOrNumberOrReference ?? string.Empty, @"^[m,M]-", string.Empty);
             var predicate = PredicateBuilder.New<PimsManagementFile>(disp => true);
@@ -415,6 +425,11 @@ namespace Pims.Dal.Repositories
             {
                 var pinValue = filter.Pin.Replace("-", string.Empty).Trim().TrimStart('0');
                 predicate = predicate.And(acq => acq.PimsManagementFileProperties.Any(pd => pd != null && EF.Functions.Like(pd.Property.Pin.ToString(), $"%{pinValue}%")));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.RegionCode))
+            {
+                predicate = predicate.And(acq => acq.RegionCode.ToString() == filter.RegionCode);
             }
 
             if (!string.IsNullOrWhiteSpace(filter.Address))
@@ -460,14 +475,31 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(disp => disp.PimsManagementFileTeams.Any(x => x.OrganizationId == filter.TeamMemberOrganizationId.Value));
             }
 
+            if(filter.HasNoticeOfClaim)
+            {
+                predicate = predicate.And(x => x.PimsNoticeOfClaims.Any(y => y.ReceivedDt != null || y.Comment != null));
+            }
+
+            if (filter.Regions.Any())
+            {
+                predicate = predicate.And(x => x.RegionCode != null && filter.Regions.Any(r => r == x.RegionCode));
+            }
+
+            if (contractorPersonId is not null)
+            {
+                predicate = predicate.And(mgmt => mgmt.PimsManagementFileTeams.Any(x => x.PersonId == contractorPersonId) || (mgmt.Project != null && mgmt.Project.PimsProjectPeople.Any(x => x.PersonId == contractorPersonId)));
+            }
+
             var query = this.Context.PimsManagementFiles.AsNoTracking()
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.Project)
                 .Include(d => d.Product)
+                .Include(d => d.RegionCodeNavigation)
                 .Include(d => d.AcquisitionFundingTypeCodeNavigation)
                 .Include(d => d.ManagementFilePurposeTypeCodeNavigation)
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.PimsManagementFileProperties)
+                .Include(d => d.PimsNoticeOfClaims)
                 .Include(d => d.PimsManagementFileTeams)
                     .ThenInclude(d => d.Organization)
                 .Include(d => d.PimsManagementFileTeams)

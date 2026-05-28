@@ -16,7 +16,6 @@ using Pims.Api.Models.Report.Lease;
 using Pims.Api.Services;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Policies;
-using Pims.Core.Extensions;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
@@ -40,7 +39,6 @@ namespace Pims.Api.Areas.Reports.Controllers
         private readonly ILookupRepository _lookupRepository;
         private readonly ILeaseService _leaseService;
         private readonly ILeaseReportsService _leaseReportService;
-        private readonly ILeasePaymentService _leasePaymentService;
         private readonly IMapper _mapper;
         private readonly IWebHostEnvironment _webHostEnvironment;
         #endregion
@@ -53,15 +51,13 @@ namespace Pims.Api.Areas.Reports.Controllers
         /// <param name="lookupRepository"></param>
         /// <param name="leaseService"></param>
         /// <param name="leaseReportService"></param>
-        /// <param name="leasePaymentService"></param>
         /// <param name="webHostEnvironment"></param>
         /// <param name="mapper"></param>
-        public LeaseController(ILookupRepository lookupRepository, ILeaseService leaseService, ILeaseReportsService leaseReportService, ILeasePaymentService leasePaymentService, IWebHostEnvironment webHostEnvironment, IMapper mapper)
+        public LeaseController(ILookupRepository lookupRepository, ILeaseService leaseService, ILeaseReportsService leaseReportService, IWebHostEnvironment webHostEnvironment, IMapper mapper)
         {
             _lookupRepository = lookupRepository;
             _leaseService = leaseService;
             _leaseReportService = leaseReportService;
-            _leasePaymentService = leasePaymentService;
             _mapper = mapper;
             _webHostEnvironment = webHostEnvironment;
         }
@@ -174,28 +170,20 @@ namespace Pims.Api.Areas.Reports.Controllers
         [SwaggerOperation(Tags = new[] { "lease", "payments", "report" })]
         public IActionResult ExportLeasePayments(int fiscalYearStart)
         {
-            var acceptHeader = (string)this.Request.Headers["Accept"];
+            var acceptHeader = (string)Request.Headers["Accept"];
 
             if (acceptHeader != ContentTypes.CONTENTTYPEEXCEL && acceptHeader != ContentTypes.CONTENTTYPEEXCELX)
             {
                 throw new BadRequestException($"Invalid HTTP request header 'Accept:{acceptHeader}'.");
             }
 
-            DateTime startDate = fiscalYearStart.ToFiscalYearDate();
-            var allPayments = _leasePaymentService.GetAllByDateRange(startDate, startDate.AddYears(1).AddDays(-1)); // Add years will give you the equivalent month, except for 29th/ 28th of leap years which is not the case here.
-            var leaseIds = allPayments.Select(payment => payment.LeasePeriod.LeaseId);
-            var paymentLeases = _leaseService.GetAllByIds(leaseIds);
-
-            // Required to display the latest payment on the lease, which may not be part of the current date range filter of payments. This ensures that all payments for a lease associated to one of the payments in the date range are included.
-            allPayments.ForEach(payment =>
-            {
-                payment.LeasePeriod.Lease = paymentLeases.FirstOrDefault(lease => lease.LeaseId == payment.LeasePeriod.LeaseId);
-            });
-            var paymentItems = _mapper.Map<IEnumerable<LeasePaymentReportModel>>(allPayments.OrderBy(p => p?.LeasePeriod?.Lease?.RegionCode).ThenBy(p => p?.LeasePeriod?.Lease?.LFileNo).ThenByDescending(p => p.PaymentReceivedDate));
+            IEnumerable<PimsLeasePayment> paymentsForFiscal = _leaseReportService.GetLeasePaymentsReport(fiscalYearStart);
+            var sortedPayments = paymentsForFiscal.OrderBy(p => p?.LeasePeriod?.Lease?.RegionCode).ThenBy(p => p?.LeasePeriod?.Lease?.LFileNo).ThenByDescending(p => p.PaymentReceivedDate).ToList();
+            var paymentItems = sortedPayments.Select(p => LeasePaymentReportModel.MapFrom(p)).ToList();
 
             return acceptHeader.ToString() switch
             {
-                ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv<LeasePaymentReportModel>(paymentItems),
+                ContentTypes.CONTENTTYPECSV => ReportHelper.GenerateCsv(paymentItems),
                 _ => ReportHelper.GenerateExcel(paymentItems, $"LeaseLicense_Payments")
             };
         }

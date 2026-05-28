@@ -16,7 +16,81 @@ export const useAgreementProvider = () => {
     postAcquisitionAgreementApi,
     putAcquisitionAgreementApi,
     deleteAcquisitionAgreementApi,
+    getDispositionAgreementsApi,
+    getDispositionAgreementByIdApi,
+    postDispositionAgreementApi,
+    putDispositionAgreementApi,
+    deleteDispositionAgreementApi,
   } = useApiAgreements();
+  // Disposition agreement operations
+  const getDispositionFileAgreements = useApiRequestWrapper<
+    (dspFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_Agreement[], any>>
+  >({
+    requestFunction: useCallback(
+      async (dspFileId: number) => await getDispositionAgreementsApi(dspFileId),
+      [getDispositionAgreementsApi],
+    ),
+    requestName: 'getDispositionFileAgreements',
+    onError: useAxiosErrorHandler('Failed to load Disposition File Agreements'),
+  });
+
+  const getDispositionAgreementById = useApiRequestWrapper<
+    (
+      dspFileId: number,
+      agreementId: number,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Agreement, any>>
+  >({
+    requestFunction: useCallback(
+      async (dspFileId: number, agreementId: number) =>
+        await getDispositionAgreementByIdApi(dspFileId, agreementId),
+      [getDispositionAgreementByIdApi],
+    ),
+    requestName: 'getDispositionAgreementById',
+    onError: useAxiosErrorHandler('Failed to load Disposition File Agreement'),
+  });
+
+  const addDispositionAgreement = useApiRequestWrapper<
+    (
+      dspFileId: number,
+      agreement: ApiGen_Concepts_Agreement,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Agreement, any>>
+  >({
+    requestFunction: useCallback(
+      async (dspFileId: number, agreement: ApiGen_Concepts_Agreement) =>
+        await postDispositionAgreementApi(dspFileId, agreement),
+      [postDispositionAgreementApi],
+    ),
+    requestName: 'addDispositionAgreement',
+    onError: useAxiosErrorHandler('Failed to create Disposition File Agreement'),
+  });
+
+  const updateDispositionAgreement = useApiRequestWrapper<
+    (
+      dspFileId: number,
+      agreementId: number,
+      agreement: ApiGen_Concepts_Agreement,
+    ) => Promise<AxiosResponse<ApiGen_Concepts_Agreement, any>>
+  >({
+    requestFunction: useCallback(
+      async (dspFileId: number, agreementId: number, agreement: ApiGen_Concepts_Agreement) =>
+        await putDispositionAgreementApi(dspFileId, agreementId, agreement),
+      [putDispositionAgreementApi],
+    ),
+    requestName: 'updateDispositionAgreement',
+    onError: useAxiosErrorHandler('Failed to update Disposition File Agreement'),
+  });
+
+  const deleteDispositionAgreement = useApiRequestWrapper<
+    (dspFileId: number, agreementId: number) => Promise<AxiosResponse<boolean, any>>
+  >({
+    requestFunction: useCallback(
+      async (dspFileId: number, agreementId: number) =>
+        await deleteDispositionAgreementApi(dspFileId, agreementId),
+      [deleteDispositionAgreementApi],
+    ),
+    requestName: 'DeleteDispositionAgreement',
+    onError: useAxiosErrorHandler('Failed to Delete Disposition File Agreement'),
+  });
 
   const getAcquisitionAgreements = useApiRequestWrapper<
     (acqFileId: number) => Promise<AxiosResponse<ApiGen_Concepts_Agreement[], any>>
@@ -89,11 +163,18 @@ export const useAgreementProvider = () => {
 
   return useMemo(
     () => ({
+      // Acquisition
       getAcquisitionAgreements,
       getAcquisitionAgreementById,
       addAcquisitionAgreement,
       updateAcquisitionAgreement,
       deleteAcquisitionAgreement,
+      // Disposition
+      getDispositionFileAgreements,
+      getDispositionAgreementById,
+      addDispositionAgreement,
+      updateDispositionAgreement,
+      deleteDispositionAgreement,
     }),
     [
       getAcquisitionAgreements,
@@ -101,6 +182,11 @@ export const useAgreementProvider = () => {
       addAcquisitionAgreement,
       updateAcquisitionAgreement,
       deleteAcquisitionAgreement,
+      getDispositionFileAgreements,
+      getDispositionAgreementById,
+      addDispositionAgreement,
+      updateDispositionAgreement,
+      deleteDispositionAgreement,
     ],
   );
 };

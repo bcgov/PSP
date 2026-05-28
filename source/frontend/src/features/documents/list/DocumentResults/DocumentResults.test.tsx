@@ -1,11 +1,10 @@
 import { Claims } from '@/constants/claims';
-import { mockDocumentResponse, mockDocumentsResponse } from '@/mocks/documents.mock';
+import { getMockApiDocumentRelationship, mockDocumentsResponse } from '@/mocks/documents.mock';
 import { cleanup, mockKeycloak, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
-import { DocumentResults, IDocumentResultProps } from './DocumentResults';
-import { get } from 'lodash';
 import { ApiGen_CodeTypes_DocumentRelationType } from '@/models/api/generated/ApiGen_CodeTypes_DocumentRelationType';
 import { DocumentRow } from '../../models/DocumentRow';
+import { DocumentResults, IDocumentResultProps } from './DocumentResults';
 
 const setSort = vi.fn();
 
@@ -177,7 +176,10 @@ describe('Document Results Table', () => {
 
   it('displays default number of entries of 10', async () => {
     const largeDataset = Array.from({ length: 15 }, (id: number) =>
-      DocumentRow.fromApi(mockDocumentResponse(id), ApiGen_CodeTypes_DocumentRelationType.Leases),
+      DocumentRow.fromApi(
+        getMockApiDocumentRelationship(id, ApiGen_CodeTypes_DocumentRelationType.Leases),
+        ApiGen_CodeTypes_DocumentRelationType.Leases,
+      ),
     );
     const { findByText } = setup({ results: largeDataset, claims: [Claims.DOCUMENT_VIEW] });
     expect(await findByText('1 - 10 of 15')).toBeVisible();

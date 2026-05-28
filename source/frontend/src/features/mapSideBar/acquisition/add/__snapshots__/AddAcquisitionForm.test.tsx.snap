@@ -234,14 +234,14 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   border-color: #d8292f !important;
 }
 
-.c19 {
+.c20 {
   color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c20 {
+.c21 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -255,15 +255,8 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   cursor: pointer;
 }
 
-.c20.is-invalid {
+.c21.is-invalid {
   border: #CE3E39 solid 0.1rem;
-}
-
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
 }
 
 .c1 {
@@ -272,6 +265,13 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c4.required::before {
@@ -382,6 +382,15 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
 
 .c0 [name='region'] {
   max-width: 25rem;
+}
+
+.c19 {
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+
+.c19 label {
+  margin-bottom: 0;
 }
 
 <div
@@ -1344,7 +1353,15 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 <div
                   class="align-content-end col"
                 >
-                  Selected Properties
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-11"
+                    >
+                      Selected Properties
+                    </div>
+                  </div>
                 </div>
               </div>
             </h2>
@@ -1406,7 +1423,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 <div
                   class="c13 collapse show"
                 >
-                  <ol>
+                  <ul>
                     <li
                       class="c14"
                     >
@@ -1416,7 +1433,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                       <div
                         class="c15"
                       >
-                        Navigate to an area of the map OR use 
+                        Locate an area on the map OR use 
                         <button
                           class="c16 Button d-inline-block btn btn-link"
                           type="button"
@@ -1433,19 +1450,19 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                       class="c14"
                     >
                       <div>
-                        Select a property
+                        Select a Property
                       </div>
                       <div
                         class="c15"
                       >
-                        Click on the map and the selection will be highlighed
+                        Click on the map to highlight the selection
                       </div>
                     </li>
                     <li
                       class="c14"
                     >
                       <div>
-                        Add it to this file
+                        Add it to this File
                       </div>
                       <div
                         class="c15"
@@ -1453,7 +1470,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                         Click "Add selected" property button when it appears below
                       </div>
                     </li>
-                  </ol>
+                  </ul>
                 </div>
               </div>
               <div
@@ -1543,6 +1560,64 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 title=""
                 value=""
               />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Legacy File:
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c19 form-group"
+            >
+              <div
+                class="check-field"
+              >
+                <div
+                  class="form-check"
+                >
+                  <input
+                    class="form-check-input position-static"
+                    id="input-overrideFileNumberSequence"
+                    name="overrideFileNumberSequence"
+                    type="checkbox"
+                    value="false"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -1988,7 +2063,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
         class="collapse show"
       >
         <p
-          class="c19"
+          class="c20"
         >
           Each property in this sub-file should be impacted by the sub-interest(s) in this section
         </p>
@@ -2029,7 +2104,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                   class="col"
                 >
                   <div
-                    class="c20"
+                    class="c21"
                   >
                     Select from contacts
                   </div>
@@ -2103,7 +2178,7 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                   class="col"
                 >
                   <div
-                    class="c20"
+                    class="c21"
                   >
                     Select from contacts
                   </div>
@@ -2175,6 +2250,101 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
                 id="input-ownerRepresentative.comment"
                 name="ownerRepresentative.comment"
                 placeholder="Remarks or additional representative(s)"
+                style="word-break: break-all;"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+          >
+            Notice of Claim
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Received date:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c5 form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c6 form-control date-picker"
+                    id="datepicker-noticeOfClaim.receivedDate"
+                    name="noticeOfClaim.receivedDate"
+                    placeholder="MMM DD, YYYY"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Comment:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-noticeOfClaim.comment"
+                name="noticeOfClaim.comment"
                 style="word-break: break-all;"
               />
             </div>
@@ -2425,14 +2595,14 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   border-color: #d8292f !important;
 }
 
-.c20 {
+.c21 {
   color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c21 {
+.c22 {
   position: relative;
   border-radius: 0.4rem;
   padding-top: 0.8rem;
@@ -2446,15 +2616,8 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   cursor: pointer;
 }
 
-.c21.is-invalid {
+.c22.is-invalid {
   border: #CE3E39 solid 0.1rem;
-}
-
-.c2 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
 }
 
 .c1 {
@@ -2463,6 +2626,13 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   background-color: white;
   text-align: left;
   border-radius: 0.5rem;
+}
+
+.c2 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
 }
 
 .c4.required::before {
@@ -2573,6 +2743,15 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
 
 .c0 [name='region'] {
   max-width: 25rem;
+}
+
+.c20 {
+  font-size: 1.6rem;
+  font-weight: normal;
+}
+
+.c20 label {
+  margin-bottom: 0;
 }
 
 <div
@@ -3527,7 +3706,15 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                 <div
                   class="align-content-end col"
                 >
-                  Selected Properties
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-11"
+                    >
+                      Selected Properties
+                    </div>
+                  </div>
                 </div>
               </div>
             </h2>
@@ -3589,7 +3776,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                 <div
                   class="c14 collapse show"
                 >
-                  <ol>
+                  <ul>
                     <li
                       class="c15"
                     >
@@ -3599,7 +3786,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                       <div
                         class="c16"
                       >
-                        Navigate to an area of the map OR use 
+                        Locate an area on the map OR use 
                         <button
                           class="c17 Button d-inline-block btn btn-link"
                           type="button"
@@ -3616,19 +3803,19 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                       class="c15"
                     >
                       <div>
-                        Select a property
+                        Select a Property
                       </div>
                       <div
                         class="c16"
                       >
-                        Click on the map and the selection will be highlighed
+                        Click on the map to highlight the selection
                       </div>
                     </li>
                     <li
                       class="c15"
                     >
                       <div>
-                        Add it to this file
+                        Add it to this File
                       </div>
                       <div
                         class="c16"
@@ -3636,7 +3823,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                         Click "Add selected" property button when it appears below
                       </div>
                     </li>
-                  </ol>
+                  </ul>
                 </div>
               </div>
               <div
@@ -3726,6 +3913,64 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                 title=""
                 value=""
               />
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Legacy File:
+              <span>
+                <span
+                  class="tooltip-icon"
+                  data-testid="tooltip-icon-section-field-tooltip"
+                  id="section-field-tooltip"
+                >
+                  <svg
+                    class="tooltip-icon"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M256 8C119.043 8 8 119.083 8 256c0 136.997 111.043 248 248 248s248-111.003 248-248C504 119.083 392.957 8 256 8zm0 110c23.196 0 42 18.804 42 42s-18.804 42-42 42-42-18.804-42-42 18.804-42 42-42zm56 254c0 6.627-5.373 12-12 12h-88c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h12v-64h-12c-6.627 0-12-5.373-12-12v-24c0-6.627 5.373-12 12-12h64c6.627 0 12 5.373 12 12v100h12c6.627 0 12 5.373 12 12v24z"
+                    />
+                  </svg>
+                </span>
+              </span>
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c20 form-group"
+            >
+              <div
+                class="check-field"
+              >
+                <div
+                  class="form-check"
+                >
+                  <input
+                    class="form-check-input position-static"
+                    id="input-overrideFileNumberSequence"
+                    name="overrideFileNumberSequence"
+                    type="checkbox"
+                    value="false"
+                  />
+                </div>
+              </div>
             </div>
           </div>
         </div>
@@ -4053,7 +4298,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
         class="collapse show"
       >
         <p
-          class="c20"
+          class="c21"
         >
           Each property in this file should be owned by the owner(s) in this section
         </p>
@@ -4094,7 +4339,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c21"
+                    class="c22"
                   >
                     Select from contacts
                   </div>
@@ -4168,7 +4413,7 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                   class="col"
                 >
                   <div
-                    class="c21"
+                    class="c22"
                   >
                     Select from contacts
                   </div>
@@ -4240,6 +4485,101 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
                 id="input-ownerRepresentative.comment"
                 name="ownerRepresentative.comment"
                 placeholder="Remarks or additional representative(s)"
+                style="word-break: break-all;"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div
+      class="c1 form-section"
+    >
+      <h2
+        class="c2"
+      >
+        <div
+          class="no-gutters row"
+        >
+          <div
+            class="align-content-end col"
+          >
+            Notice of Claim
+          </div>
+        </div>
+      </h2>
+      <div
+        class="collapse show"
+      >
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Received date:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="c6 form-group"
+            >
+              <div
+                class="react-datepicker-wrapper d-block"
+              >
+                <div
+                  class="react-datepicker__input-container react-datepicker__view-calendar-icon"
+                >
+                  <svg
+                    class="react-datepicker__calendar-icon"
+                    viewBox="0 0 448 512"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M96 32V64H48C21.5 64 0 85.5 0 112v48H448V112c0-26.5-21.5-48-48-48H352V32c0-17.7-14.3-32-32-32s-32 14.3-32 32V64H160V32c0-17.7-14.3-32-32-32S96 14.3 96 32zM448 192H0V464c0 26.5 21.5 48 48 48H400c26.5 0 48-21.5 48-48V192z"
+                    />
+                  </svg>
+                  <input
+                    autocomplete="off"
+                    class="c7 form-control date-picker"
+                    id="datepicker-noticeOfClaim.receivedDate"
+                    name="noticeOfClaim.receivedDate"
+                    placeholder="MMM DD, YYYY"
+                    type="text"
+                    value=""
+                  />
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div
+          class="pb-2 row"
+        >
+          <div
+            class="pr-0 text-left col-4"
+          >
+            <label
+              class="c3"
+            >
+              Comment:
+            </label>
+          </div>
+          <div
+            class="c4 text-left col"
+          >
+            <div
+              class="textarea input form-group"
+            >
+              <textarea
+                class="form-control"
+                id="input-noticeOfClaim.comment"
+                name="noticeOfClaim.comment"
                 style="word-break: break-all;"
               />
             </div>

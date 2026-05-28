@@ -72,7 +72,7 @@ const MapSideBarLayout: React.FunctionComponent<
               </StyledExpandedHeader>
             </Col>
 
-            <StyledButtonBar xs="auto" className="d-flex">
+            <StyledButtonBar xs="auto" className="d-flex" data-testid="leaflet-buttons-section">
               <TooltipWrapper
                 tooltipId="expand-sidebar-tooltip-collapse"
                 tooltip={'Collapse Screen'}
@@ -87,7 +87,11 @@ const MapSideBarLayout: React.FunctionComponent<
               <Styled.VerticalLine />
               {showCloseButton && (
                 <TooltipWrapper tooltipId="close-sidebar-tooltip" tooltip="Close Form">
-                  <Styled.CloseIcon title="close" onClick={close} />
+                  <Styled.CloseIcon
+                    title="close"
+                    onClick={close}
+                    data-testid="close-leaflet-button"
+                  />
                 </TooltipWrapper>
               )}
             </StyledButtonBar>

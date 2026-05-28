@@ -18,7 +18,8 @@ export interface IShapeUploadContainerProps {
 }
 
 /**
- * Component that provides functionality to upload shapefiles. Can be embedded as a widget.
+ * Component that provides functionality to upload boundary files (Shapefile, KML, KMZ).
+ * Can be embedded as a widget.
  */
 export const ShapeUploadContainer: React.FunctionComponent<IShapeUploadContainerProps> = ({
   formikRef,
@@ -38,6 +39,9 @@ export const ShapeUploadContainer: React.FunctionComponent<IShapeUploadContainer
       const shapeFeatures = await request.toGeoJson();
       response.isSuccess = true;
       response.boundary = firstOrNull(shapeFeatures.features)?.geometry as Polygon | MultiPolygon;
+      if (exists(response.boundary)) {
+        response.boundary.bbox = undefined; // remove bbox as this can cause issues with polygon json parsing on the backend.
+      }
     } catch (error) {
       response.isSuccess = false;
       response.errorMessage = (error as Error).message;

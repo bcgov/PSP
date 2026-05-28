@@ -3,12 +3,20 @@ import { createMemoryHistory } from 'history';
 import React from 'react';
 
 import { SelectOption } from '@/components/common/form';
-import { mockDocumentTypesResponse } from '@/mocks/documents.mock';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_Mayan_DocumentTypeMetadataType } from '@/models/api/generated/ApiGen_Mayan_DocumentTypeMetadataType';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, fireEvent, render, RenderOptions, screen } from '@/utils/test-utils';
+import {
+  act,
+  fireEvent,
+  render,
+  RenderOptions,
+  screen,
+  userEvent,
+  waitForEffects,
+} from '@/utils/test-utils';
 
+import { mockDocumentTypesResponse } from '@/mocks/documentTypes.mock';
 import { BatchUploadFormModel, DocumentUploadFormData } from '../models';
 import DocumentUploadForm from './DocumentUploadForm';
 
@@ -138,6 +146,32 @@ describe('DocumentUploadView component', () => {
     await act(async () => formikRef.current.submitForm());
 
     expect(onUploadDocument).toHaveBeenCalled();
+  });
+
+  it('should enable/disable document replace when replace button clicked', async () => {
+    const { getByTestId, queryByTestId, formikRef } = setup({ initialValues });
+
+    expect(formikRef.current).not.toBeNull();
+
+    // get the upload button
+    const uploader = getByTestId('upload-input');
+
+    // simulate upload event and wait until finish
+    await act(async () => {
+      fireEvent.change(uploader, {
+        target: { files: [file] },
+      });
+    });
+
+    const enableReplaceBtn = getByTestId('enable-replace-btn-0');
+    await act(async () => userEvent.click(enableReplaceBtn));
+    await waitForEffects();
+    expect(getByTestId(`doc-replacement[0]`)).toBeInTheDocument();
+
+    const disableReplaceBtn = getByTestId('cancel-replace-btn-0');
+    await act(async () => userEvent.click(disableReplaceBtn));
+    await waitForEffects();
+    expect(queryByTestId(`doc-replacement[0]`)).not.toBeInTheDocument();
   });
 
   it('should display the number of attached files', async () => {

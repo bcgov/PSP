@@ -52,4 +52,7 @@ export const UpdatePropertyDetailsYupSchema = Yup.object().shape({
       }),
     }),
   ),
+  surplusDeclarationType: Yup.string().nullable(),
+  surplusDeclarationDate: Yup.string().nullable(),
+  suplusDelarationComment: Yup.string().max(2000, 'Comments must be at most ${max} characters'),
 });

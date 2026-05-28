@@ -1170,7 +1170,7 @@ namespace Pims.Api.Test.Services
             };
 
             // Act
-            service.UpdateFilePropertyLocation(incoming, toUpdate);
+            service.UpdateFilePropertyBoundary(incoming, toUpdate);
 
             // Assert
             coordService.Verify(

@@ -7,6 +7,9 @@ namespace Pims.Api.Models.CodeTypes
 
     public enum DispositionStatusTypes
     {
+        [EnumMember(Value = "ACTIVE")]
+        ACTIVE,
+
         [EnumMember(Value = "LISTED")]
         LISTED,
 

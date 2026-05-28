@@ -27,6 +27,11 @@
     background-color: var(--theme-blue-80);
     color: #ffffff;
   }
+  @media (min-width: 1024px) {
+    .tooltip-inner {
+      max-width: 25rem;
+    }
+  }
   &.bs-tooltip-top .arrow::before {
     border-top-color: var(--theme-blue-80);
   }

@@ -13,9 +13,11 @@ import { Scrollable } from '@/components/common/Scrollable/Scrollable';
 import { Section } from '@/components/common/Section/Section';
 import { Claims } from '@/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { isStrataPlanCommonPropertyFromSelectedFeatureSet, planFromFeatureSet } from '@/utils';
 
 import { ParcelDataset } from '../parcelList/models';
-import ParcelItem from '../parcelList/ParcelItem';
+import { WorklistItemModel } from './worklistItem/models/WorklistItem.model';
+import WorklistItemContainer from './worklistItem/WorklistItemContainer';
 
 export interface IWorklistViewProps {
   parcels: ParcelDataset[];
@@ -61,6 +63,7 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
         icon: <ResearchIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
       });
     }
+
     if (keycloak.hasClaim(Claims.ACQUISITION_ADD)) {
       options.push({
         label: 'Create Acquisition File',
@@ -68,6 +71,7 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
         icon: <AcquisitionIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
       });
     }
+
     if (keycloak.hasClaim(Claims.MANAGEMENT_ADD)) {
       options.push({
         label: 'Create Management File',
@@ -75,6 +79,7 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
         icon: <ManagementIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
       });
     }
+
     if (keycloak.hasClaim(Claims.LEASE_ADD)) {
       options.push({
         label: 'Create Lease File',
@@ -82,6 +87,7 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
         icon: <LeaseIcon width="1.5rem" height="1.5rem" fill="currentColor" />,
       });
     }
+
     if (keycloak.hasClaim(Claims.DISPOSITION_ADD)) {
       options.push({
         label: 'Create Disposition File',
@@ -113,41 +119,87 @@ export const WorklistView: React.FC<IWorklistViewProps> = ({
     parcels.length,
   ]);
 
-  if (parcels.length === 0) {
-    return <StyledSection>CTRL + Click to add a property</StyledSection>;
+  let worklistItems: WorklistItemModel[] = [];
+  for (let index = 0; index < parcels.length; index++) {
+    const parcel = parcels[index];
+    const featureDataSet = parcel.toSelectedFeatureDataset();
+    const planNumber = planFromFeatureSet(featureDataSet);
+
+    // Check if its common property
+    if (isStrataPlanCommonPropertyFromSelectedFeatureSet(featureDataSet)) {
+      const newCommonProp = new WorklistItemModel(parcel);
+      // Check for children already there
+      let foundAtIndex = null;
+      for (let i = 0; i < worklistItems.length; i++) {
+        const existingItem = worklistItems[i];
+        if (!existingItem.IsStrataPlanCommonProperty && existingItem.PlanNumber === planNumber) {
+          foundAtIndex = foundAtIndex ?? i;
+          newCommonProp.addParcelToGroup(existingItem.Parcel);
+        }
+      }
+
+      if (foundAtIndex === null) {
+        worklistItems.push(newCommonProp);
+      } else {
+        worklistItems[foundAtIndex] = newCommonProp;
+        const aux = worklistItems.filter(
+          x =>
+            x.PlanNumber !== newCommonProp.PlanNumber ||
+            (x.PlanNumber === newCommonProp.PlanNumber && x.IsStrataPlanCommonProperty),
+        );
+
+        worklistItems = [...aux];
+      }
+    } else {
+      // Not a Common Property but Property
+      const parentIndex = worklistItems.findIndex(
+        obj => obj.PlanNumber === planNumber && obj.IsStrataPlanCommonProperty,
+      );
+      if (parentIndex !== -1) {
+        const parent = worklistItems[parentIndex];
+        parent.addParcelToGroup(parcel);
+        worklistItems[parentIndex] = parent;
+      } else {
+        worklistItems.push(new WorklistItemModel(parcel));
+      }
+    }
   }
 
-  return (
-    <StyledContainer className="p-3">
-      <StyledHeader>
-        <StyledSpan>
-          {parcels.length}
-          {parcels.length > 1 ? ' properties' : ' property'}
-        </StyledSpan>
-        <MoreOptionsMenu options={menuOptions} ariaLabel="worklist more options" />
-      </StyledHeader>
-      <ScrollArea>
-        {parcels.map((p, index) => (
-          <ParcelItem
-            key={p.id}
-            parcel={p}
-            onRemove={onRemove}
-            canAddToWorklist={false}
-            parcelIndex={index}
-          />
-        ))}
-      </ScrollArea>
-    </StyledContainer>
-  );
+  if (parcels.length > 0) {
+    return (
+      <StyledContainerDiv className="p-3">
+        <StyledHeaderDiv>
+          <StyledSpan>
+            {parcels.length}
+            {parcels.length > 1 ? ' properties' : ' property'}
+          </StyledSpan>
+          <MoreOptionsMenu options={menuOptions} ariaLabel="worklist more options" />
+        </StyledHeaderDiv>
+        <ScrollArea data-testid="worklist-scroll-area">
+          {worklistItems.map((p, index) => (
+            <WorklistItemContainer
+              key={p.Parcel.id}
+              worklistItem={p}
+              parcelIndex={index}
+              isCollapsedDefault={false}
+              onRemove={onRemove}
+            ></WorklistItemContainer>
+          ))}
+        </ScrollArea>
+      </StyledContainerDiv>
+    );
+  } else {
+    return <StyledSection>CTRL + Click to add a property</StyledSection>;
+  }
 };
 
-const StyledContainer = styled.div`
+const StyledContainerDiv = styled.div`
   display: flex;
   flex-direction: column;
-  height: 100%; /* make the flex‑children measure against full height */
+  height: 100%;
 `;
 
-const StyledHeader = styled.div`
+const StyledHeaderDiv = styled.div`
   display: flex;
   align-items: center;
   justify-content: space-between;
@@ -155,14 +207,14 @@ const StyledHeader = styled.div`
   padding-bottom: 1rem;
 
   position: sticky;
-  top: 0; /* pin to the top of the scrolling container   */
-  z-index: 1; /* sit above the rows                           */
+  top: 0;
+  z-index: 1;
   background: '#fff';
 `;
 
 const ScrollArea = styled(Scrollable)`
-  flex: 1 1 auto; /* consume remaining height in the column       */
-  overflow-y: auto; /* provide the scrolling behaviour              */
+  flex: 1 1 auto;
+  overflow-y: auto;
 `;
 
 const StyledSpan = styled.span`

@@ -271,6 +271,10 @@ namespace PIMS.Tests.Automation.StepDefinitions
             //Cancel changes
             financialCodes.CancelFinancialCode();
 
+            //Navigate to Financial Code List View
+            manageUsers.NavigateAdminTools();
+            financialCodes.NavigateAdminFinancialCodes();
+
             //Filter for non-existent Financial Code
             financialCodes.FilterFinancialCode("Non-existent");
 

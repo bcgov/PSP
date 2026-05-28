@@ -6,6 +6,7 @@ namespace PIMS.Tests.Automation.PageObjects
     public class SharedActivities : PageObjectBase
     {
         //Create Activity Elements
+        private readonly By propertyActCloseTrayBttn = By.XPath("//h1[text()='Property Activity']/following-sibling::div");
         private readonly By managementActCloseTrayBttn = By.XPath("//h1[text()='File Activity']/following-sibling::div");
         private readonly By managementPropActEditButton = By.CssSelector("button[title='Edit Property Activity']");
         private readonly By managementFileActEditButton = By.CssSelector("button[title='Edit File Property Activity']");
@@ -24,13 +25,11 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementActSubTypeSelect = By.Id("multiselect-activitySubtypeCodes");
         private readonly By managementActSubTypeSelectOptions = By.CssSelector("div[id='multiselect-activitySubtypeCodes'] div[class='optionListContainer displayBlock']");
         private readonly By managementActSubTypeDeleteBttns = By.CssSelector("div[id='multiselect-activitySubtypeCodes'] i[class='custom-close']");
-        private readonly By managementActSubTypeContents = By.CssSelector("div[id='multiselectContainerReact'] div[class='search-wrapper searchWrapper ']");
+        private readonly By managementActSubTypeContents = By.XPath("//label[text()='Sub-type(s)']/parent::div/following-sibling::div/div/div/div[@class='search-wrapper searchWrapper ']");
         private readonly By managementActStatusLabel = By.XPath("//label[contains(text(),'Activity status')]");
         private readonly By managementActStatusInput = By.Id("input-activityStatusCode");
         private readonly By managementActStatusContent = By.XPath("//label[contains(text(),'Activity status')]/parent::div/following-sibling::div");
-        private readonly By managementActRequestAddedDateLabel = By.XPath("//label[contains(text(),'Requested added date')]");
         private readonly By managementActRequestAddedCommenceDateInput = By.Id("datepicker-requestedDate");
-        private readonly By managementActRequestAddedDateContent = By.XPath("//label[contains(text(),'Requested added date')]/parent::div/following-sibling::div");
         private readonly By managementActCommencementLabel = By.XPath("//label[contains(text(),'Commencement')]");
         private readonly By managementActCommencementContent = By.XPath("//label[contains(text(),'Commencement')]/parent::div/following-sibling::div");
         private readonly By managementActCompletionDateLabel = By.XPath("//label[contains(text(),'Completion')]");
@@ -59,8 +58,8 @@ namespace PIMS.Tests.Automation.PageObjects
         private readonly By managementActDetailsActivityExternalContactsAddBttn = By.XPath("//label[contains(text(),'External contacts')]/parent::div/following-sibling::div/div/div/div/div/div/button");
         private readonly By managementActDetailsActivityExternalContactsCount = By.XPath("//label[contains(text(),'External contacts')]/parent::div/following-sibling::div/a");
         private readonly By managementActServiceProviderLabel = By.XPath("//label[contains(text(),'Service provider')]");
-        private readonly By managementActServiceProviderInput = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/div/div/div/div/div/div[contains(text(),'Select from contacts')]");
-        private readonly By managementActServiceProviderBttn = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/div/div/div/div/div/button");
+        private readonly By managementActServiceProviderInput = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/div/div/div/div[contains(text(),'Select from contacts')]");
+        private readonly By managementActServiceProviderBttn = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/div/div/div/button");
         private readonly By managementActServiceProviderContent = By.XPath("//label[contains(text(),'Service provider')]/parent::div/following-sibling::div/a/span");
 
         //Activity Invoices Elements
@@ -121,10 +120,9 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void InsertNewPropertyActivity(PropertyActivity activity)
         {
-            Wait();
 
             //Choosing Activity type, Sub-type, status
-            ChooseSpecificSelectOption(managementActTypeInput, activity.PropertyActivityType);
+            ChooseSelectOption(managementActTypeInput, activity.PropertyActivityType);
 
             Wait();
             if (webDriver.FindElements(managementActSubTypeDeleteBttns).Count > 0)
@@ -137,14 +135,11 @@ namespace PIMS.Tests.Automation.PageObjects
             {
                 foreach (string subtype in activity.PropertyActivitySubTypeList)
                 {
-                    webDriver.FindElement(managementActSubTypeSelect).Click();
-
-                    WaitUntilVisible(managementActSubTypeSelectOptions);
-                    ChooseMultiSelectSpecificOption(managementActSubTypeSelectOptions, subtype);
+                    ChooseMultiSelectOption(managementActSubTypeSelect, managementActSubTypeSelectOptions, managementActSubTypeLabel, subtype);
                 }
             }
 
-            ChooseSpecificSelectOption(managementActStatusInput, activity.PropertyActivityStatus);
+            ChooseSelectOption(managementActStatusInput, activity.PropertyActivityStatus);
 
             //Inserting Requested Added Date
             ClearInput(managementActRequestAddedCommenceDateInput);
@@ -227,7 +222,6 @@ namespace PIMS.Tests.Automation.PageObjects
                 {
                     webDriver.FindElements(managementActInvoicesDeleteBttns)[0].Click();
 
-                    Wait();
                     Assert.Equal("Remove Invoice", sharedModals.ModalHeader());
                     Assert.Contains("You have selected to delete an invoice. Are you sure you want to proceed?", sharedModals.ModalContent());
                     sharedModals.ModalClickOKBttn();
@@ -241,7 +235,6 @@ namespace PIMS.Tests.Automation.PageObjects
         {
             ButtonElement("Cancel");
 
-            Wait();
             Assert.Equal("Confirm Changes", sharedModals.ModalHeader());
             Assert.Contains("If you choose to cancel now, your changes will not be saved.", sharedModals.ModalContent());
             Assert.Contains("Do you want to proceed?", sharedModals.ModalContent());
@@ -249,15 +242,24 @@ namespace PIMS.Tests.Automation.PageObjects
             sharedModals.ModalClickOKBttn();
         }
 
-        public void CloseActivityTray()
+        public void CloseActivityTray(string type)
         {
-            WaitUntilClickable(managementActCloseTrayBttn);
-            webDriver.FindElement(managementActCloseTrayBttn).Click();
+            if (type == "Management")
+            {
+                WaitUntilClickable(managementActCloseTrayBttn);
+                webDriver.FindElement(managementActCloseTrayBttn).Click();
+            }
+            else
+            {
+                WaitUntilClickable(propertyActCloseTrayBttn);
+                webDriver.FindElement(propertyActCloseTrayBttn).Click();
+            }
+            
         }
 
         public void VerifyInsertedActivity(PropertyActivity activity, string activityType)
         {
-            Wait(2000);
+            Wait();
 
             //Activity Details section
             AssertTrueIsDisplayed(managementActivityDetailsTitle);
@@ -279,16 +281,8 @@ namespace PIMS.Tests.Automation.PageObjects
             AssertTrueIsDisplayed(managementActStatusLabel);
             AssertTrueContentEquals(managementActStatusContent, activity.PropertyActivityStatus);
 
-            if (activityType == "Management File")
-            {
-                AssertTrueIsDisplayed(managementActCommencementLabel);
-                AssertTrueContentEquals(managementActCommencementContent, TransformDateFormat(activity.PropertyActivityCommenceDate));
-            }
-            else
-            {
-                AssertTrueIsDisplayed(managementActRequestAddedDateLabel);
-                AssertTrueContentEquals(managementActRequestAddedDateContent, TransformDateFormat(activity.PropertyActivityCommenceDate));
-            }
+            AssertTrueIsDisplayed(managementActCommencementLabel);
+            AssertTrueContentEquals(managementActCommencementContent, TransformDateFormat(activity.PropertyActivityCommenceDate));
 
             if (activity.PropertyActivityCompletionDate != "")
             {
@@ -391,10 +385,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private void AddInvoice(ManagementPropertyActivityInvoice invoice, int index)
         {
-            Wait();
+            WaitUntilClickable(managementAddInvoiceBttn);
             webDriver.FindElement(managementAddInvoiceBttn).Click();
 
-            Wait();
+            WaitUntilClickable(By.Id("input-invoices."+ index +".invoiceNum"));
             webDriver.FindElement(By.Id("input-invoices."+ index +".invoiceNum")).SendKeys(invoice.PropertyActivityInvoiceNumber);
 
             webDriver.FindElement(By.Id("datepicker-invoices."+ index +".invoiceDateTime")).SendKeys(invoice.PropertyActivityInvoiceDate);
@@ -405,7 +399,7 @@ namespace PIMS.Tests.Automation.PageObjects
             CleanUpCurrencyInput(By.Id("input-invoices."+ index +".pretaxAmount"));
             SendKeysToCurrencyInput(By.Id("input-invoices."+ index +".pretaxAmount"), invoice.PropertyActivityInvoicePretaxAmount);
 
-            ChooseSpecificSelectOption(By.Id("input-invoices."+ index +".isPstRequired"), invoice.PropertyActivityInvoicePSTApplicable);
+            ChooseSelectOption(By.Id("input-invoices."+ index +".isPstRequired"), invoice.PropertyActivityInvoicePSTApplicable);
 
             AssertTrueElementValueEquals(By.Id("input-invoices."+ index +".gstAmount"), TransformCurrencyFormat(invoice.PropertyActivityInvoiceGSTAmount));
 

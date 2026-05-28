@@ -26,6 +26,8 @@ export interface IMoreOptionsMenuProps {
   /** List of menu options */
   options: MenuOption[];
   dataTestid?: string;
+  /** Called when the menu is opened */
+  onMenuOpen?: () => void;
 }
 
 /**
@@ -43,9 +45,15 @@ const MoreOptionsMenu: React.FC<IMoreOptionsMenuProps> = ({
   alignRight = true,
   variant = 'light',
   dataTestid,
+  onMenuOpen,
 }) => {
   return (
-    <Dropdown alignRight={alignRight}>
+    <Dropdown
+      alignRight={alignRight}
+      onToggle={isOpen => {
+        if (isOpen) onMenuOpen?.();
+      }}
+    >
       <TooltipWrapper tooltipId="more-options-tooltip" tooltip="More options...">
         <StyledToggleButton
           id="dropdown-ellipsis"

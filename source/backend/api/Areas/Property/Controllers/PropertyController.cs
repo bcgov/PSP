@@ -150,6 +150,25 @@ namespace Pims.Api.Areas.Property.Controllers
 
             return new JsonResult(_mapper.Map<PropertyModel>(updatedProperty));
         }
+
+        /// <summary>
+        /// Update the specified property net book value.
+        /// NOTE: Only users with disposition edit permissions are allowed to edit the net book fields.
+        /// </summary>
+        /// <returns></returns>
+        [HttpPut("{id}/netbook")]
+        [HasPermission(Permissions.DispositionEdit)]
+        [Produces("application/json")]
+        [ProducesResponseType(typeof(PropertyModel), 200)]
+        [SwaggerOperation(Tags = new[] { "property" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult UpdatePropertyNetBook([FromBody] PropertyModel propertyModel)
+        {
+            var propertyEntity = _mapper.Map<Dal.Entities.PimsProperty>(propertyModel);
+            var updatedProperty = _propertyService.UpdateNetBook(propertyEntity);
+
+            return new JsonResult(_mapper.Map<PropertyModel>(updatedProperty));
+        }
         #endregion
     }
 }

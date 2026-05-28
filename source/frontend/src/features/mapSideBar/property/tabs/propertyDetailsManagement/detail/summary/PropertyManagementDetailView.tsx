@@ -2,6 +2,7 @@ import { Col, Row } from 'react-bootstrap';
 import { useHistory } from 'react-router-dom';
 
 import { EditButton } from '@/components/common/buttons/EditButton';
+import ContactFieldContainer from '@/components/common/ContactFieldContainer';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { MultiselectTextList } from '@/components/common/MultiselectTextList';
 import { Section } from '@/components/common/Section/Section';
@@ -58,7 +59,7 @@ export const PropertyManagementDetailView: React.FC<IPropertyManagementDetailVie
           }
         />
       </SectionField>
-      <SectionField label="Active Lease/License" valueTestId="active-lease-information">
+      <SectionField label="Active Lease/Licence" valueTestId="active-lease-information">
         {formatApiPropertyManagementLease(propertyManagement)}
       </SectionField>
       <SectionField label="Utilities payable">
@@ -67,6 +68,13 @@ export const PropertyManagementDetailView: React.FC<IPropertyManagementDetailVie
       <SectionField label="Taxes payable">
         {booleanToYesNoUnknownString(propertyManagement?.isTaxesPayable)}
       </SectionField>
+      <ContactFieldContainer
+        label="Responsible payer"
+        personId={propertyManagement?.responsiblePayerPersonId}
+        organizationId={propertyManagement?.responsiblePayerOrganizationId}
+        primaryContact={propertyManagement?.responsiblePayerPrimaryContactId}
+      />
+
       <SectionField
         label="Additional details"
         contentWidth={{ xs: 12 }}

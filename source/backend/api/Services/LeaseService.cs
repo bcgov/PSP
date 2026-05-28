@@ -17,7 +17,6 @@ using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-
 using static Pims.Dal.Entities.PimsLeaseStatusType;
 
 namespace Pims.Api.Services
@@ -27,7 +26,6 @@ namespace Pims.Api.Services
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly ILeaseRepository _leaseRepository;
-        private readonly IPropertyImprovementRepository _propertyImprovementRepository;
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
         private readonly INoteRelationshipRepository<PimsLeaseNote> _entityNoteRepository;
@@ -42,6 +40,8 @@ namespace Pims.Api.Services
         private readonly ICompReqFinancialService _compReqFinancialService;
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly ILeaseStatusSolver _leaseStatusSolver;
+        private readonly IFilePropertyLocationUpdateSolver _propertyLocationSolver;
+        private readonly IProjectRepository _projectRepository;
 
         public LeaseService(
             ClaimsPrincipal user,
@@ -49,7 +49,6 @@ namespace Pims.Api.Services
             ILeaseRepository leaseRepository,
             IPropertyRepository propertyRepository,
             IPropertyLeaseRepository propertyLeaseRepository,
-            IPropertyImprovementRepository propertyImprovementRepository,
             INoteRelationshipRepository<PimsLeaseNote> entityNoteRepository,
             IInsuranceRepository insuranceRepository,
             ILeaseStakeholderRepository stakeholderRepository,
@@ -61,7 +60,9 @@ namespace Pims.Api.Services
             ILookupRepository lookupRepository,
             ICompReqFinancialService compReqFinancialService,
             IPropertyOperationService propertyOperationService,
-            ILeaseStatusSolver leaseStatusSolver)
+            ILeaseStatusSolver leaseStatusSolver,
+            IFilePropertyLocationUpdateSolver propertyLocationSolver,
+            IProjectRepository projectRepository)
             : base(user, logger)
         {
             _logger = logger;
@@ -70,7 +71,6 @@ namespace Pims.Api.Services
             _propertyRepository = propertyRepository;
             _propertyLeaseRepository = propertyLeaseRepository;
             _entityNoteRepository = entityNoteRepository;
-            _propertyImprovementRepository = propertyImprovementRepository;
             _insuranceRepository = insuranceRepository;
             _stakeholderRepository = stakeholderRepository;
             _compensationRequisitionRepository = compensationRequisitionRepository;
@@ -82,14 +82,15 @@ namespace Pims.Api.Services
             _compReqFinancialService = compReqFinancialService;
             _propertyOperationService = propertyOperationService;
             _leaseStatusSolver = leaseStatusSolver;
+            _propertyLocationSolver = propertyLocationSolver;
+            _projectRepository = projectRepository;
         }
 
         public PimsLease GetById(long leaseId)
         {
             _logger.LogInformation("Getting lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, leaseId);
 
             var lease = _leaseRepository.Get(leaseId);
             return lease;
@@ -99,12 +100,18 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting all leases with ids {leaseIds}", leaseIds);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            var leases = _leaseRepository.GetAllByIds(leaseIds).ToList();
-            leaseIds.ForEach(leaseId =>
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            var leases = _leaseRepository.GetAllByIds(leaseIds, contractorPersonId).ToList();
+
+            // Ensure we return property information with lat/long coordinates for any properties associated to the returned leases.
+            foreach (var lease in leases)
             {
-                pimsUser.ThrowInvalidAccessToLeaseFile(leases.FirstOrDefault(lease => lease.LeaseId == leaseId).RegionCode);
-            });
+                var propertyLeases = lease.PimsPropertyLeases ?? new List<PimsPropertyLease>();
+                lease.PimsPropertyLeases = _propertyService.TransformAllPropertiesToLatLong(propertyLeases.ToList());
+            }
+
             return leases;
         }
 
@@ -116,24 +123,32 @@ namespace Pims.Api.Services
             return _leaseRepository.GetLastUpdateBy(leaseId);
         }
 
+        /// <summary>
+        /// Get a paged list of leases that satisfy the filter parameters.
+        /// The 'filter' will control the 'page' and 'quantity'.
+        /// </summary>
+        /// <param name="filter">The filter to apply to the lease search.</param>
+        /// <param name="all">True to return all leases, false to return only the current page.</param>
+        /// <returns></returns>
         public Paged<PimsLease> GetPage(LeaseFilter filter, bool? all = false)
         {
             _logger.LogInformation("Getting lease page {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+
             filter.Page = all.HasValue && all.Value ? 1 : filter.Page;
             filter.Quantity = all.HasValue && all.Value ? _leaseRepository.Count() : filter.Quantity;
-            var user = _userRepository.GetByKeycloakUserId(this.User.GetUserKey());
 
-            var leases = _leaseRepository.GetPage(filter, user.PimsRegionUsers.Select(u => u.RegionCode).ToHashSet());
-            return leases;
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            return _leaseRepository.GetPage(filter, contractorPersonId);
         }
 
         public IEnumerable<PimsInsurance> GetInsuranceByLeaseId(long leaseId)
         {
             _logger.LogInformation("Getting insurance on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, leaseId);
 
             return _insuranceRepository.GetByLeaseId(leaseId);
         }
@@ -142,10 +157,9 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating insurance on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            var currentLease = _leaseRepository.GetNoTracking(leaseId);
-            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode);
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, leaseId);
 
+            var currentLease = _leaseRepository.GetNoTracking(leaseId);
             var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditInsurance(currentLeaseStatus))
             {
@@ -158,42 +172,11 @@ namespace Pims.Api.Services
             return _insuranceRepository.GetByLeaseId(leaseId);
         }
 
-        public IEnumerable<PimsPropertyImprovement> GetImprovementsByLeaseId(long leaseId)
-        {
-            _logger.LogInformation("Getting property improvements on lease {leaseId}", leaseId);
-            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
-
-            return _propertyImprovementRepository.GetByPropertyId(leaseId);
-        }
-
-        public IEnumerable<PimsPropertyImprovement> UpdateImprovementsByLeaseId(long leaseId, IEnumerable<PimsPropertyImprovement> pimsPropertyImprovements)
-        {
-            _logger.LogInformation("Updating property improvements on lease {leaseId}", leaseId);
-            _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            var currentLease = _leaseRepository.GetNoTracking(leaseId);
-            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease?.RegionCode);
-
-            var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
-            if (!_leaseStatusSolver.CanEditImprovements(currentLeaseStatus))
-            {
-                throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
-            }
-
-            _propertyImprovementRepository.Update(leaseId, pimsPropertyImprovements);
-            _propertyImprovementRepository.CommitTransaction();
-
-            return _propertyImprovementRepository.GetByPropertyId(leaseId);
-        }
-
         public IEnumerable<PimsLeaseStakeholder> GetStakeholdersByLeaseId(long leaseId)
         {
             _logger.LogInformation("Getting stakeholders on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, leaseId);
 
             return _stakeholderRepository.GetByLeaseId(leaseId);
         }
@@ -202,10 +185,9 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating stakeholders on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            var currentLease = _leaseRepository.GetNoTracking(leaseId);
-            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease?.RegionCode);
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, leaseId);
 
+            var currentLease = _leaseRepository.GetNoTracking(leaseId);
             var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditStakeholders(currentLeaseStatus))
             {
@@ -223,8 +205,10 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Adding lease");
             _user.ThrowIfNotAuthorized(Permissions.LeaseAdd);
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
+
+            // Restrict Contractor lease access to lease team/project team
+            _user.ThrowInvalidRegion(lease, _userRepository);
+            _user.ThrowMissingContractorInTeam(lease, _userRepository, _projectRepository);
 
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
 
@@ -243,8 +227,8 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting properties on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, leaseId);
 
             var propertyLeases = _propertyLeaseRepository.GetAllByLeaseId(leaseId);
             return _propertyService.TransformAllPropertiesToLatLong(propertyLeases.ToList());
@@ -255,7 +239,6 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating lease {leaseId}", lease.LeaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
 
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
             if (currentLease == null)
             {
@@ -268,8 +251,15 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
-            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode); // need to check that the user is able to access the current lease as well as has the region for the updated lease.
-            pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
+            // Need to check that the user is able to access the current lease as well as has the region for the updated lease.
+            _user.ThrowInvalidRegion(currentLease, _userRepository);
+            _user.ThrowInvalidRegion(lease, _userRepository);
+            _user.ThrowContractorRemovedFromTeam(lease, _userRepository, _projectRepository);
+
+            if (lease.LeasePayRvblTypeCode != currentLease.LeasePayRvblTypeCode)
+            {
+                ValidateLeaseAccountTypeChange(currentLease, lease);
+            }
 
             if (currentLease.LeaseStatusTypeCode != lease.LeaseStatusTypeCode)
             {
@@ -279,13 +269,10 @@ namespace Pims.Api.Services
             }
 
             ValidateRenewalDates(lease, currentLease, userOverrides);
-
             ValidateNewTotalAllowableCompensation(lease.LeaseId, lease.TotalAllowableCompensation);
 
             _leaseRepository.Update(lease, false);
-
             _leaseRepository.UpdateLeaseRenewals(lease.Internal_Id, lease.ConcurrencyControlNumber, lease.PimsLeaseRenewals);
-
             _leaseRepository.CommitTransaction();
 
             return _leaseRepository.GetNoTracking(lease.LeaseId);
@@ -296,12 +283,15 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating lease properties with lease id {id}", lease.LeaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit, Permissions.PropertyView, Permissions.PropertyAdd);
 
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             var currentLease = _leaseRepository.GetNoTracking(lease.LeaseId);
             var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
 
-            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease.RegionCode); // need to check that the user is able to access the current lease as well as has the region for the updated lease.
-            pimsUser.ThrowInvalidAccessToLeaseFile(lease.RegionCode);
+            // Need to check that the user is able to access the current lease as well as has the region for the updated lease.
+            _user.ThrowInvalidRegion(currentLease, _userRepository);
+            _user.ThrowInvalidRegion(lease, _userRepository);
+
+            // Restrict Contractor lease access to lease team/project team
+            _user.ThrowContractorRemovedFromTeam(lease, _userRepository, _projectRepository);
 
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
 
@@ -321,12 +311,16 @@ namespace Pims.Api.Services
                 {
                     var existingFileProperty = currentFileProperties.FirstOrDefault(x => x.Internal_Id == incomingLeaseProperty.Internal_Id);
 
-                    var incomingGeom = incomingLeaseProperty?.Location;
-                    var existingGeom = existingFileProperty?.Location;
-                    if (existingGeom is null || (incomingGeom is not null && !existingGeom.EqualsExact(incomingGeom)))
+                    if (_propertyLocationSolver.CanEditFilePropertyLocation(incomingLeaseProperty, existingFileProperty))
                     {
                         _propertyService.UpdateFilePropertyLocation(incomingLeaseProperty, existingFileProperty);
                         incomingLeaseProperty.Location = existingFileProperty?.Location;
+                    }
+
+                    if (_propertyLocationSolver.CanEditFilePropertyBoundary(incomingLeaseProperty, existingFileProperty))
+                    {
+                        _propertyService.UpdateFilePropertyBoundary(incomingLeaseProperty, existingFileProperty);
+                        incomingLeaseProperty.Boundary = existingFileProperty?.Boundary;
                     }
                 }
                 else
@@ -373,8 +367,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting renewals on lease {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(leaseId).RegionCode);
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, leaseId);
 
             return _renewalRepository.GetByLeaseId(leaseId);
         }
@@ -383,9 +376,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting Lease checklist with Id: {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
-
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            pimsUser.ThrowInvalidAccessToLeaseFile(_leaseRepository.GetNoTracking(id).RegionCode);
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, id);
 
             var checklistItems = _leaseRepository.GetAllChecklistItemsByLeaseId(id);
 
@@ -401,11 +392,9 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Updating Lease checklist with id: {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, leaseId);
 
-            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
             var currentLease = _leaseRepository.GetNoTracking(leaseId);
-            pimsUser.ThrowInvalidAccessToLeaseFile(currentLease?.RegionCode);
-
             var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditChecklists(currentLeaseStatus))
             {
@@ -447,6 +436,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting lease consultations with Lease id: {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, leaseId);
 
             return _consultationRepository.GetConsultationsByLease(leaseId);
         }
@@ -456,7 +446,10 @@ namespace Pims.Api.Services
             _logger.LogInformation("Getting consultation with id: {consultationId}", consultationId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
 
-            return _consultationRepository.GetConsultationById(consultationId);
+            var currentConsultation = _consultationRepository.GetConsultationById(consultationId);
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, currentConsultation.LeaseId);
+
+            return currentConsultation;
         }
 
         public PimsLeaseConsultation AddConsultation(PimsLeaseConsultation consultation)
@@ -469,6 +462,8 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
+
+            _user.ThrowInvalidAccessToLeaseFile(currentLease, _userRepository, _projectRepository);
 
             var newConsultation = _consultationRepository.AddConsultation(consultation);
             _consultationRepository.CommitTransaction();
@@ -487,6 +482,8 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
+            _user.ThrowInvalidAccessToLeaseFile(currentLease, _userRepository, _projectRepository);
+
             var updatedConsultation = _consultationRepository.UpdateConsultation(consultation);
             _consultationRepository.CommitTransaction();
 
@@ -504,6 +501,8 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
+
+            _user.ThrowInvalidAccessToLeaseFile(currentLease, _userRepository, _projectRepository);
 
             bool deleteResult = _consultationRepository.TryDeleteConsultation(consultationId);
             _consultationRepository.CommitTransaction();
@@ -532,9 +531,33 @@ namespace Pims.Api.Services
             return teamFilterOptions;
         }
 
+        /// <summary>
+        /// Validate that changing the Lease Account type is valid.
+        /// If current status is Payable there shouldn't be any Payees or Compensation Requisitions to make the swith.
+        /// When is Receivable there shouldn't be any Tenants assigned.
+        /// </summary>
+        /// <param name="currentLease"></param>
+        /// <param name="updatedLease"></param>
+        /// <exception cref="BusinessRuleViolationException"></exception>
+        private static void ValidateLeaseAccountTypeChange(PimsLease currentLease, PimsLease updatedLease)
+        {
+            if ((currentLease.LeasePayRvblTypeCode == LeasePaymentReceivableTypes.PYBLBCTFA.ToString() || currentLease.LeasePayRvblTypeCode.ToString() == LeasePaymentReceivableTypes.PYBLMOTI.ToString())
+                && updatedLease.LeasePayRvblTypeCode == LeasePaymentReceivableTypes.RCVBL.ToString())
+            {
+                if (currentLease.PimsCompensationRequisitions.Count > 0 || currentLease.PimsLeaseStakeholders.Count > 0)
+                {
+                    throw new BusinessRuleViolationException("This file has active Payees or Compensation Requisitions which should be removed prior to switching to a 'Receivable' Lease.");
+                }
+            }
+            else if (currentLease.LeasePayRvblTypeCode == LeasePaymentReceivableTypes.RCVBL.ToString() && currentLease.PimsLeaseStakeholders.Count > 0)
+            {
+                throw new BusinessRuleViolationException("This file has active Tenants which should be removed prior to switching to a 'Payable' Lease.");
+            }
+        }
+
         private static void ValidateRenewalDates(PimsLease lease, PimsLease currentLease, IEnumerable<UserOverrideCode> userOverrides)
         {
-            if (lease.LeaseStatusTypeCode != PimsLeaseStatusTypes.ACTIVE)
+            if (lease.LeaseStatusTypeCode != LeaseStatusTypes.ACTIVE.ToString())
             {
                 return;
             }
@@ -550,13 +573,13 @@ namespace Pims.Api.Services
 
                 if (renewal.IsExercised == true)
                 {
-                    if (renewal.CommencementDt.HasValue && renewal.ExpiryDt.HasValue)
+                    if (!renewal.CommencementDt.HasValue)
+                    {
+                        throw new BusinessRuleViolationException("Exercised renewals must have a commencement date");
+                    }
+                    else if (renewal.ExpiryDt.HasValue)
                     {
                         renewalDates.Add(new Tuple<long, DateTime, DateTime>(renewal.LeaseRenewalId, renewal.CommencementDt.Value, renewal.ExpiryDt.Value));
-                    }
-                    else
-                    {
-                        throw new BusinessRuleViolationException("Exercised renewals must have a commencement date and expiry date");
                     }
                 }
             }
@@ -666,7 +689,11 @@ namespace Pims.Api.Services
         /// <returns></returns>
         private PimsLease AssociatePropertyLeases(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
         {
-            MatchProperties(lease, userOverrides);
+
+            // Get the set of already-attached property IDs for this lease
+            var attachedPropertyIds = lease.LeaseId != 0 ? _propertyLeaseRepository.GetAllByLeaseId(lease.LeaseId).Select(x => x.PropertyId).ToHashSet() : new HashSet<long>();
+
+            MatchProperties(lease, userOverrides, attachedPropertyIds);
 
             foreach (var propertyLease in lease.PimsPropertyLeases)
             {
@@ -711,7 +738,7 @@ namespace Pims.Api.Services
             return lease;
         }
 
-        private void MatchProperties(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides)
+        private void MatchProperties(PimsLease lease, IEnumerable<UserOverrideCode> userOverrides, HashSet<long> alreadyAttachedPropertyIds)
         {
             foreach (var leaseProperty in lease.PimsPropertyLeases)
             {
@@ -721,9 +748,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPid(pid, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !alreadyAttachedPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         leaseProperty.PropertyId = foundProperty.Internal_Id;
@@ -742,9 +771,11 @@ namespace Pims.Api.Services
                     try
                     {
                         var foundProperty = _propertyRepository.GetByPin(pin, true);
-                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value)
+
+                        // Only block if this is a new retired property
+                        if (foundProperty.IsRetired.HasValue && foundProperty.IsRetired.Value && !alreadyAttachedPropertyIds.Contains(foundProperty.Internal_Id))
                         {
-                            throw new BusinessRuleViolationException("Retired property can not be selected.");
+                            throw new BusinessRuleViolationException("New retired property can not be added.");
                         }
 
                         leaseProperty.PropertyId = foundProperty.Internal_Id;

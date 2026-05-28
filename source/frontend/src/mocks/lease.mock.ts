@@ -1784,6 +1784,8 @@ export const getMockLeaseProperties = (leaseId = 1): ApiGen_Concepts_PropertyLea
       surplusDeclarationType: null,
       surplusDeclarationComment: null,
       surplusDeclarationDate: '0001-01-01',
+      netBookAmount: null,
+      netBookNote: null,
       rowVersion: 1,
     },
     propertyId: 442,

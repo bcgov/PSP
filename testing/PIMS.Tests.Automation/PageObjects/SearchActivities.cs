@@ -31,22 +31,24 @@ namespace PIMS.Tests.Automation.PageObjects
 
         private readonly By managementListColumnDescription = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(1)");
         private readonly By managementListDescriptionSort = By.CssSelector("div[data-testid='sort-column-description']");
-        private readonly By managementListColumnFileName = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(2)");
+        private readonly By managementListMgmtFileName = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(2)");
+        private readonly By managementListColumnFileName = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(3)");
         private readonly By managementListFileNameSort = By.CssSelector("div[data-testid='sort-column-fileName']");
-        private readonly By managementListColumnHistoricalFile = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(3)");
+        private readonly By managementListColumnMOTTRegion = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(4)");
+        private readonly By managementListColumnHistoricalFile = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(5)");
         private readonly By managementListHistoricalFileSort = By.CssSelector("div[data-testid='sort-column-legacyFileNum']");
-        private readonly By managementListColumnAddress = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(4)");
-        private readonly By managementListColumnType = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(5)");
+        private readonly By managementListColumnAddress = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(6)");
+        private readonly By managementListColumnType = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(7)");
         private readonly By managementListTypeSort = By.CssSelector("div[data-testid='sort-column-activityType']");
-        private readonly By managementListColumnSubtype = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(6)");
-        private readonly By managementListColumnStatus= By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(7)");
+        private readonly By managementListColumnSubtype = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(8)");
+        private readonly By managementListColumnStatus= By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='thead thead-light'] div[role='columnheader']:nth-child(9)");
         private readonly By managementListStatusSort = By.CssSelector("div[data-testid='sort-column-activityStatus']");
 
         private readonly By managementListViewDescription1stRecord = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(1)");
-        private readonly By managementListViewName1stRecord = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(2)");
-        private readonly By managementListViewHistoricalFile1stRecord = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(3)");
-        private readonly By managementListViewType1stRecord = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(5)");
-        private readonly By managementListViewStatus1stRecord = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(7)");
+        private readonly By managementListViewName1stRecord = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(3)");
+        private readonly By managementListViewHistoricalFile1stRecord = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(5)");
+        private readonly By managementListViewType1stRecord = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(7)");
+        private readonly By managementListViewStatus1stRecord = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child div[role='cell']:nth-child(8)");
 
         private readonly By managementListViewViewMgmtFile1stRecord = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']:first-child");
         private readonly By managementFilesResultsTable = By.CssSelector("div[data-testid='managementActivitiesTable'] div[class='tbody'] div[class='tr-wrapper']");
@@ -61,10 +63,10 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public void NavigateToSearchActivities()
         {
-            Wait();
+            WaitUntilClickable(managementMainMenu);
             FocusAndClick(managementMainMenu);
 
-            Wait();
+            WaitUntilClickable(managementMainMenuActivitiesListViewLink);
             FocusAndClick(managementMainMenuActivitiesListViewLink);
         }
 
@@ -100,58 +102,58 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public string FirstActDescription()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(managementListViewDescription1stRecord).Text;
         }
 
         public string FirstActName()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(managementListViewName1stRecord).Text;
         }
 
         public string FirstActHistoricalFile()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(managementListViewHistoricalFile1stRecord).Text;
         }
 
         public string FirstActType()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(managementListViewType1stRecord).Text;
         }
 
         public string FirstActMgmtStatus()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElement(managementListViewStatus1stRecord).Text;
         }
 
         public void FilterManagementActivities(string pid = "", string pin = "", string address = "", string actName = "", string actStatus = "",
             string mgmtStatus = "", string actType = "", string mgmtPurpose = "", string project = "")
         {
-            Wait();
+            WaitUntilClickable(managementListResetButton);
             webDriver.FindElement(managementListResetButton).Click();
 
             if (pid != "")
             {
                 WaitUntilClickable(managementListSearchBySelect);
-                ChooseSpecificSelectOption(managementListSearchBySelect, "PID");
+                ChooseSelectOption(managementListSearchBySelect, "PID");
                 webDriver.FindElement(managementListSearchByPIDInput).SendKeys(pid);
             }
 
             if (pin != "")
             {
                 WaitUntilClickable(managementListSearchBySelect);
-                ChooseSpecificSelectOption(managementListSearchBySelect, "PIN");
+                ChooseSelectOption(managementListSearchBySelect, "PIN");
                 webDriver.FindElement(managementListSearchByPINInput).SendKeys(pin);
             }
 
             if (address != "")
             {
                 WaitUntilClickable(managementListSearchBySelect);
-                ChooseSpecificSelectOption(managementListSearchBySelect, "Address");
+                ChooseSelectOption(managementListSearchBySelect, "Address");
                 webDriver.FindElement(managementListSearchByAddressInput).SendKeys(address);
             }
 
@@ -164,19 +166,19 @@ namespace PIMS.Tests.Automation.PageObjects
             if (actStatus != "")
             {
                 WaitUntilClickable(managementListSearchByActivityStatusSelect);
-                ChooseSpecificSelectOption(managementListSearchByActivityStatusSelect, actStatus);
+                ChooseSelectOption(managementListSearchByActivityStatusSelect, actStatus);
             }
 
             if (mgmtStatus != "")
             {
                 WaitUntilClickable(managementListSearchByFileStatusSelect);
-                ChooseSpecificSelectOption(managementListSearchByFileStatusSelect, mgmtStatus);
+                ChooseSelectOption(managementListSearchByFileStatusSelect, mgmtStatus);
             }
 
             if (actType != "")
             {
                 WaitUntilClickable(managementListSearchByActivityTypeSelect);
-                ChooseSpecificSelectOption(managementListSearchByActivityTypeSelect, actType);
+                ChooseSelectOption(managementListSearchByActivityTypeSelect, actType);
             }
             if (mgmtPurpose != "")
             {
@@ -195,13 +197,13 @@ namespace PIMS.Tests.Automation.PageObjects
 
         public Boolean SearchFoundResults()
         {
-            Wait(2000);
+            WaitUntilVisible(managementListViewViewMgmtFile1stRecord);
             return webDriver.FindElements(managementListViewViewMgmtFile1stRecord).Count > 0;
         }
 
         public int MgmtActsTableResultNumber()
         {
-            WaitUntilTableSpinnerDisappear();
+            WaitForTableToLoad();
             return webDriver.FindElements(managementFilesResultsTable).Count;
         }
 
@@ -231,8 +233,10 @@ namespace PIMS.Tests.Automation.PageObjects
             //Search Management Activities Column Headers
             AssertTrueIsDisplayed(managementListColumnDescription);
             AssertTrueIsDisplayed(managementListDescriptionSort);
+            AssertTrueIsDisplayed(managementListMgmtFileName);
             AssertTrueIsDisplayed(managementListColumnFileName);
             AssertTrueIsDisplayed(managementListFileNameSort);
+            AssertTrueIsDisplayed(managementListColumnMOTTRegion);
             AssertTrueIsDisplayed(managementListColumnHistoricalFile);
             AssertTrueIsDisplayed(managementListHistoricalFileSort);
             AssertTrueIsDisplayed(managementListColumnAddress);

@@ -1,9 +1,11 @@
 const { expect } = require("@playwright/test");
-const { clickAndWaitFor } = require("../../support/common.js");
+const { clickAndWaitFor, clickSaveButton } = require("../../support/common.js");
+const SharedModal = require("./SharedModal.js");
 
 class DispositionFiles {
   constructor(page) {
     this.page = page;
+    this.sharedModal = new SharedModal(page);
   }
 
   async navigateCreateDisposition() {
@@ -18,10 +20,61 @@ class DispositionFiles {
   async navigateDispositionListView() {
     clickAndWaitFor(
       this.page,
-      "div[data-testid='nav-tooltip-disposition'] a",
+      "div[data-testid='nav-tooltip-leases&licences'] a",
       "div[data-testid='side-tray']"
     );
+
+    clickAndWaitFor(
+      this.page,
+      "div[data-testid='nav-tooltip-disposition'] a",
+      "//a[text()='Manage Disposition Files']"
+    );
     await this.page.locator("//a[text()='Manage Disposition Files']").click();
+  }
+
+  async createMinimumDispositionFile(dispositionFile) {
+    const dispositionFileDetailsNameInput = await this.page.locator(
+      "#input-fileName"
+    );
+    expect(dispositionFileDetailsNameInput).toBeVisible();
+    await this.page(dispositionFileDetailsNameInput).fill(
+      dispositionFile.DispositionFileName
+    );
+
+    const dispositionFileDetailsStatusSelect = await this.page.locator(
+      "#input-dispositionStatusTypeCode"
+    );
+    expect(dispositionFileDetailsStatusSelect).toBeVisible();
+    await this.page(dispositionFileDetailsStatusSelect).selectOption({
+      label: dispositionFile.DispositionStatus,
+    });
+
+    const dispositionFileDetailsTypeSelect = await this.page.locator(
+      "#input-dispositionTypeCode"
+    );
+    expect(dispositionFileDetailsTypeSelect).toBeVisible();
+    await this.page(dispositionFileDetailsTypeSelect).selectOption({
+      label: dispositionFile.DispositionType,
+    });
+
+    if (dispositionFile.DispositionType === "Other Transfer") {
+      const dispositionFileDetailsOtherTransferTypeInput =
+        await this.page.locator("#input-dispositionTypeOther");
+      expect(dispositionFileDetailsOtherTransferTypeInput).toBeVisible();
+      await this.page(dispositionFileDetailsOtherTransferTypeInput).fill(
+        dispositionFile.DispositionOtherTransferType
+      );
+    }
+
+    const dispositionFileDetailsMOTIRegionSelect = await this.page.locator(
+      "#input-regionCode"
+    );
+    expect(dispositionFileDetailsMOTIRegionSelect).toBeVisible();
+    await this.page(dispositionFileDetailsMOTIRegionSelect).selectOption({
+      label: dispositionFile.DispositionMOTIRegion,
+    });
+
+    await this.page.getByTestId("save-button").click();
   }
 
   async verifyCreateDispositionForm() {

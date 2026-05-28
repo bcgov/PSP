@@ -7,7 +7,9 @@ import { useApiProperties } from '@/hooks/pims-api/useApiProperties';
 import { useHistoricalNumberRepository } from '@/hooks/repositories/useHistoricalNumberRepository';
 import { useNoteRepository } from '@/hooks/repositories/useNoteRepository';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
+import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
 import { useLtsa } from '@/hooks/useLtsa';
+import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
 import {
   mockDispositionFilePropertyResponse,
   mockDispositionFileResponse,
@@ -17,16 +19,14 @@ import { server } from '@/mocks/msw/server';
 import { getUserMock } from '@/mocks/user.mock';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts_Property';
+import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { prettyFormatUTCDate } from '@/utils';
 import { act, cleanup, render, RenderOptions, userEvent } from '@/utils/test-utils';
+import { AxiosResponse } from 'axios';
 import { http, HttpResponse } from 'msw';
 import { createRef } from 'react';
 import DispositionView, { IDispositionViewProps } from './DispositionView';
-import { usePropertyOperationRepository } from '@/hooks/repositories/usePropertyOperationRepository';
-import { AxiosResponse } from 'axios';
-import { ApiGen_Concepts_PropertyOperation } from '@/models/api/generated/ApiGen_Concepts_PropertyOperation';
-import { IResponseWrapper } from '@/hooks/util/useApiRequestWrapper';
 
 // mock auth library
 
@@ -66,7 +66,7 @@ vi.mock('@/hooks/repositories/useComposedProperties', () => {
 });
 
 vi.mock('@/hooks/pims-api/useApiProperties');
-vi.mocked(useApiProperties).mockReturnValue({
+vi.mocked(useApiProperties, { partial: true }).mockReturnValue({
   getPropertiesViewPagedApi: vi
     .fn()
     .mockResolvedValue({ data: {} as ApiGen_Base_Page<ApiGen_Concepts_Property> }),

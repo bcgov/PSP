@@ -2,6 +2,7 @@ import { ContactMethodTypes } from '@/constants/contactMethodType';
 import { getApiPersonOrOrgMailingAddress } from '@/utils/contactUtils';
 import { phoneFormatter } from '@/utils/formUtils';
 import { formatNames } from '@/utils/personUtils';
+import { exists } from '@/utils/utils';
 
 import { ApiGen_Concepts_Person } from '../api/generated/ApiGen_Concepts_Person';
 import { Api_GenerateAddress } from './GenerateAddress';
@@ -51,7 +52,10 @@ export class Api_GeneratePerson implements Api_GenerateContact {
         ? personalPhone.map(p => phoneFormatter(p.value)).join(', ')
         : '';
     this.organizations =
-      person?.personOrganizations?.map(o => o.organization?.name).join(', ') ?? '';
+      person?.personOrganizations
+        ?.filter(p => exists(p))
+        ?.map(o => o.organization?.name)
+        .join(', ') ?? '';
     this.address = person
       ? new Api_GenerateAddress(getApiPersonOrOrgMailingAddress(person) ?? null)
       : null;

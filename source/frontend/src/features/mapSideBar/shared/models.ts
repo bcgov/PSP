@@ -13,10 +13,7 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { EpochIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { getEmptyBaseAudit } from '@/models/defaultInitializers';
 import { IBcAssessmentSummary } from '@/models/layers/bcAssesment';
-import {
-  emptyPropertyLocation,
-  PIMS_Property_Location_View,
-} from '@/models/layers/pimsPropertyLocationView';
+import { emptyProperty, PIMS_Property_View } from '@/models/layers/pimsPropertyView';
 import {
   applyDisplayOrder,
   enumFromValue,
@@ -25,6 +22,7 @@ import {
   formatBcaAddress,
   getLatLng,
   isValidId,
+  isValidIsoDateTime,
   latLngToApiLocation,
   pidFromFeatureSet,
   pidParser,
@@ -96,6 +94,9 @@ export class PropertyForm {
   public isRetired?: boolean;
   public isDisposed?: boolean;
   public isActive?: string;
+  public surplusDeclarationType: string | null = null;
+  public surplusDeclarationDate: string | null = null;
+  public suplusDelarationComment: string | null = null;
 
   public constructor(baseModel?: Partial<PropertyForm>) {
     Object.assign(this, baseModel);
@@ -131,6 +132,9 @@ export class PropertyForm {
         : DistrictCodes.Unknown,
       districtName: model?.districtFeature?.properties?.DISTRICT_NAME ?? 'Cannot determine',
       formattedAddress: 'unknown',
+      address: exists(pimsFeature?.properties?.STREET_ADDRESS_1)
+        ? AddressForm.fromPimsView(pimsFeature?.properties)
+        : undefined,
       landArea: pimsFeature?.properties?.LAND_AREA
         ? +pimsFeature?.properties?.LAND_AREA
         : parcelFeature?.properties?.FEATURE_AREA_SQM ?? 0,
@@ -157,7 +161,7 @@ export class PropertyForm {
       selectingComponentId: null,
       pimsFeature: {
         properties: {
-          ...emptyPropertyLocation,
+          ...emptyProperty,
           PROPERTY_ID: this.apiId,
           PID: this.pid ? +this.pid.replaceAll(/-/g, '') : null,
           PID_PADDED: this?.pid?.padStart(9, '0'),
@@ -331,11 +335,15 @@ export class PropertyForm {
       volumetricType: null,
       municipalZoning: null,
       generalLocation: null,
-      surplusDeclarationType: null,
-      surplusDeclarationComment: null,
+      surplusDeclarationType: toTypeCodeNullable(this.surplusDeclarationType),
+      surplusDeclarationComment: this.suplusDelarationComment,
+      surplusDeclarationDate: isValidIsoDateTime(this.surplusDeclarationDate)
+        ? this.surplusDeclarationDate
+        : null,
       historicalFileNumbers: null,
       tenureCleanups: null,
-      surplusDeclarationDate: EpochIsoDateTime,
+      netBookAmount: null,
+      netBookNote: null,
     };
   }
 }
@@ -361,7 +369,7 @@ export class AddressForm {
     return newForm;
   }
 
-  public static fromPimsView(model: PIMS_Property_Location_View): AddressForm {
+  public static fromPimsView(model: PIMS_Property_View): AddressForm {
     const newForm = new AddressForm();
     newForm.id = model.ADDRESS_ID ?? undefined;
     newForm.streetAddress1 = model.STREET_ADDRESS_1 ?? undefined;

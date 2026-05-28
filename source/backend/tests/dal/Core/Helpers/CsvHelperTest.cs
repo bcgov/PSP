@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Data;
 using System.Diagnostics.CodeAnalysis;
+using System.Runtime.Serialization;
 using Pims.Core.Helpers;
 using Pims.Core.Security;
 using Xunit;
@@ -125,6 +126,46 @@ namespace Pims.Api.Test.Helpers
             Assert.True(result.Columns[0].AllowDBNull);
             Assert.True(result.Columns[1].AllowDBNull);
         }
+
+        [Fact]
+        public void ConvertToDataTable_IgnoreDataMemberAttribute_ExcludesProperty()
+        {
+            // Arrange
+
+            // Use an entity type that has [IgnoreDataMember] on one or more properties,
+            var typedItems = new[] { new IgnoreDataMemberTestModel { Id = 1, Name = "visible", Secret = "hidden" } };
+
+            // Act
+            var result = typedItems.ConvertToDataTable("test");
+
+            // Assert
+            Assert.NotNull(result);
+            Assert.IsType<DataTable>(result);
+
+            // Only Id and Name should appear; Secret is decorated with [IgnoreDataMember] and must be excluded.
+            Assert.Equal(2, result.Columns.Count);
+            Assert.True(result.Columns.Contains("Id"));
+            Assert.True(result.Columns.Contains("Name"));
+            Assert.False(result.Columns.Contains("Secret"));
+
+            // Data row values for the included columns should still be correct.
+            Assert.Equal(1, result.Rows.Count);
+            Assert.Equal(1, result.Rows[0]["Id"]);
+            Assert.Equal("visible", result.Rows[0]["Name"]);
+        }
         #endregion
+
+        /// <summary>
+        /// Local test model that marks one property with [IgnoreDataMember]
+        /// so ConvertToDataTable must exclude it from the exported DataTable.
+        /// </summary>
+        private sealed class IgnoreDataMemberTestModel
+        {
+            public int Id { get; set; }
+            public string Name { get; set; }
+
+            [IgnoreDataMember]
+            public string Secret { get; set; }
+        }
     }
 }

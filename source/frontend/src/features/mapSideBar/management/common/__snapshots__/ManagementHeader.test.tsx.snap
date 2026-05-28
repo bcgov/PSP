@@ -81,9 +81,7 @@ exports[`ManagementHeader component > renders as expected when no data is provid
         >
           <div
             data-testid="mgmt-fileId"
-          >
-            M-
-          </div>
+          />
         </div>
       </div>
       <div

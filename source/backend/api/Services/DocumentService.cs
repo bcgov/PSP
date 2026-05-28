@@ -17,6 +17,7 @@ using Pims.Api.Models.Concepts.Document;
 using Pims.Api.Models.Config;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
+using Pims.Api.Models.Models.Mayan.Document;
 using Pims.Api.Models.Requests.Document.UpdateMetadata;
 using Pims.Api.Models.Requests.Document.Upload;
 using Pims.Api.Models.Requests.Http;
@@ -41,6 +42,7 @@ namespace Pims.Api.Services
     public class DocumentService : BaseService, IDocumentService
     {
         protected const string MayanGenericErrorMessage = "Error response received from Mayan Document Service";
+        protected const int ContentSearchLimit = 2000;
         private static readonly string[] ValidExtensions =
         {
                 "txt",
@@ -69,33 +71,39 @@ namespace Pims.Api.Services
         private readonly MayanConfig _config;
 
         private readonly IDocumentRepository documentRepository;
+        private readonly IUserRepository userRepository;
         private readonly IEdmsDocumentRepository documentStorageRepository;
         private readonly IDocumentTypeRepository documentTypeRepository;
         private readonly IAvService avService;
         private readonly IMapper mapper;
         private readonly IOptionsMonitor<AuthClientOptions> keycloakOptions;
+        private readonly IOptionsMonitor<MayanConfig> mayanOptions;
 
         public DocumentService(
             ClaimsPrincipal user,
             IConfiguration configuration,
             ILogger<DocumentService> logger,
             IDocumentRepository documentRepository,
+            IUserRepository userRepository,
             IEdmsDocumentRepository documentStorageRepository,
             IDocumentTypeRepository documentTypeRepository,
             IAvService avService,
             IMapper mapper,
             IOptionsMonitor<AuthClientOptions> options,
-            IDocumentQueueRepository queueRepository)
+            IOptionsMonitor<MayanConfig> mayanOptions)
             : base(user, logger)
         {
             this.documentRepository = documentRepository;
+            this.userRepository = userRepository;
             this.documentStorageRepository = documentStorageRepository;
             this.documentTypeRepository = documentTypeRepository;
             this.avService = avService;
             this.mapper = mapper;
             this.keycloakOptions = options;
-            _config = new MayanConfig();
-            configuration.Bind(MayanConfigSectionKey, _config);
+            this.mayanOptions = mayanOptions;
+            var config = new MayanConfig();
+            configuration?.Bind(MayanConfigSectionKey, config);
+            _config = config;
         }
 
         public static bool IsValidDocumentExtension(string fileName)
@@ -152,7 +160,56 @@ namespace Pims.Api.Services
 
             User.ThrowIfNotAuthorized(Permissions.DocumentView);
 
-            return documentRepository.GetPageDeep(filter);
+            ArgumentNullException.ThrowIfNull(filter);
+
+            if (!string.IsNullOrWhiteSpace(filter.Content))
+            {
+                var contentSearchResponse = SearchDocumentContent(filter.Content)
+                    .ConfigureAwait(false)
+                    .GetAwaiter()
+                    .GetResult();
+
+                if (contentSearchResponse.Status != ExternalResponseStatus.Success)
+                {
+                    throw GetMayanResponseError(contentSearchResponse.Message);
+                }
+
+                var mayanIds = contentSearchResponse.Payload?.Results?
+                    .Where(r => r?.Id != null)
+                    .Select(r => (long)r.Id.Value)
+                    .Distinct()
+                    .ToArray() ?? Array.Empty<long>();
+
+                var maxContentResults = mayanOptions.CurrentValue?.MaxContentResults ?? ContentSearchLimit;
+                if (mayanIds.Length > maxContentResults)
+                {
+                    throw new BadRequestException(
+                        $"Document content search returned more than {maxContentResults:N0} matches. Please refine your search criteria.");
+                }
+
+                filter.MayanDocumentIds = mayanIds;
+
+                if (mayanIds.Length == 0)
+                {
+                    return new Paged<PimsDocument>(Array.Empty<PimsDocument>(), filter.Page, filter.Quantity, 0);
+                }
+            }
+            var pimsUser = userRepository.GetUserInfoByKeycloakUserId(User.GetUserKey());
+            var accessContext = new DocumentAccessContext
+            {
+                UserRegions = pimsUser?.PimsRegionUsers?.Select(r => r.RegionCode)?.ToHashSet() ?? new HashSet<short>(),
+                PersonId = pimsUser?.PersonId,
+                ContractorPersonId = pimsUser?.IsContractor == true ? pimsUser.PersonId : null,
+                CanViewAcquisitionFiles = User.HasPermission(Permissions.AcquisitionFileView),
+                CanViewDispositionFiles = User.HasPermission(Permissions.DispositionView),
+                CanViewLeases = User.HasPermission(Permissions.LeaseView),
+                CanViewManagementFiles = User.HasPermission(Permissions.ManagementView),
+                CanViewResearchFiles = User.HasPermission(Permissions.ResearchFileView),
+                CanViewProjects = User.HasPermission(Permissions.ProjectView),
+                CanViewProperties = User.HasPermission(Permissions.PropertyView),
+            };
+
+            return documentRepository.GetPageDeep(filter, accessContext);
         }
 
         public async Task<DocumentUploadResponse> UploadDocumentSync(DocumentUploadRequest uploadRequest)
@@ -651,6 +708,16 @@ namespace Pims.Api.Services
             {
                 throw GetMayanResponseError(await result.Content.ReadAsStringAsync());
             }
+            return result;
+        }
+
+        public async Task<ExternalResponse<QueryResponse<DocumentSearchResult>>> SearchDocumentContent(string contentToSearch)
+        {
+            this.Logger.LogInformation("Searching for document file content: {ContentToSearch}", contentToSearch);
+            this.User.ThrowIfNotAuthorized(Permissions.DocumentView);
+
+            var result = await documentStorageRepository.TrySearchByDocumentContent(contentToSearch);
+
             return result;
         }
 

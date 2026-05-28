@@ -12,14 +12,16 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="id"> Internal Id.</param>
         /// <param name="acquisitionFileId"> Parent Acquisition File Id.</param>
+        /// <param name="leaseId"> Parent Lease Id.</param>
         /// <param name="fiscalYear"> Fiscal Year.</param>
         /// <returns>New Compensation Requisition Instance.</returns>
-        public static PimsCompensationRequisition CreateCompensationRequisition(long id = 1, long acquisitionFileId = 1, string fiscalYear = "2022/2023")
+        public static PimsCompensationRequisition CreateCompensationRequisition(long id = 1, long? acquisitionFileId = 1, long? leaseId = null, string fiscalYear = "2022/2023")
         {
             return new PimsCompensationRequisition()
             {
                 Internal_Id = id,
                 AcquisitionFileId = acquisitionFileId,
+                LeaseId = leaseId,
                 FiscalYear = fiscalYear,
             };
         }

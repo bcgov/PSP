@@ -1,4 +1,4 @@
-import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, PIMS_PROPERTY_BOUNDARY_KEY } from '@/constants/strings';
+import { MAP_MAX_NATIVE_ZOOM, MAP_MAX_ZOOM, PIMS_PROPERTY_VW_KEY } from '@/constants/strings';
 
 import { LayerDefinition } from './types';
 
@@ -54,6 +54,21 @@ export const layerDefinitions: LayerDefinition[] = [
     maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
     maxZoom: MAP_MAX_ZOOM,
     authenticated: true,
+    cql_filter: "DISPOSITION_FILE_STATUS_TYPE_CODE = 'ACTIVE'",
+  },
+  {
+    layerIdentifier: 'pims_disposed_files_complete',
+    layers: 'psp:PIMS_PROPERTY_BOUNDARY_DISPOSITION_VW',
+    url: '/ogs-internal/ows?',
+    styles: 'disposition_complete_style',
+    transparent: true,
+    format: 'image/png',
+    zIndex: 5000,
+    zIndexAbsolute: true,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
+    authenticated: true,
+    cql_filter: "DISPOSITION_FILE_STATUS_TYPE_CODE = 'COMPLETE'",
   },
   {
     layerIdentifier: 'pims_lease_receivable',
@@ -218,8 +233,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.8,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
   {
     layerIdentifier: 'firstNationsReserves',
@@ -453,8 +468,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.9,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
   {
     layerIdentifier: 'closedHighway',
@@ -463,8 +478,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.9,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
   {
     layerIdentifier: 'parentParcelAcquisition',
@@ -473,8 +488,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.8,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
   {
     layerIdentifier: 'section107Plan',
@@ -483,8 +498,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.8,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
   {
     layerIdentifier: 'motiPlan',
@@ -493,8 +508,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.8,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
   {
     layerIdentifier: 'motiPlanFootprint',
@@ -503,8 +518,8 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.8,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
   {
     layerIdentifier: 'plans',
@@ -513,11 +528,21 @@ export const layerDefinitions: LayerDefinition[] = [
     opacity: 0.8,
     format: 'image/png',
     authenticated: true,
-    maxNativeZoom: 17,
-    maxZoom: 20,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
+  },
+  {
+    layerIdentifier: 'hwyPlans',
+    url: 'ogs-internal/ows?',
+    transparent: true,
+    opacity: 0.8,
+    format: 'image/png',
+    authenticated: true,
+    maxNativeZoom: MAP_MAX_NATIVE_ZOOM,
+    maxZoom: MAP_MAX_ZOOM,
   },
 ];
 
 export const pimsBoundaryLayers = new Set(
-  layerDefinitions.filter(x => x.layers?.includes(PIMS_PROPERTY_BOUNDARY_KEY)),
+  layerDefinitions.filter(x => x.layers?.includes(PIMS_PROPERTY_VW_KEY)),
 );

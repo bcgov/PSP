@@ -18,8 +18,18 @@ namespace Pims.Dal.Entities
         long PropertyId { get; set; }
 
         /// <summary>
+        /// Descriptive reference for the property associated with the file.
+        /// </summary>
+        public string PropertyName { get; set; }
+
+        /// <summary>
         /// Geo-spatial location (pin) of property.
         /// </summary>
         public Geometry Location { get; set; }
+
+        /// <summary>
+        /// Spatial boundary of property. Supports upload of custom shape file by user.
+        /// </summary>
+        public Geometry Boundary { get; set; }
     }
 }

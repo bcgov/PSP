@@ -4,6 +4,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Areas.Property.Controllers;
 using Pims.Api.Models.Concepts.Lease;
 using Pims.Api.Services;
 using Pims.Core.Api.Policies;
@@ -41,7 +42,7 @@ namespace Pims.Api.Areas.Lease.Controllers
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
         ///
-        public LeasePeriodController(ILeasePeriodService LeasePeriodService, IMapper mapper, ILogger<PropertyImprovementController> logger)
+        public LeasePeriodController(ILeasePeriodService LeasePeriodService, IMapper mapper, ILogger<LeasePeriodController> logger)
         {
             _LeasePeriodService = LeasePeriodService;
             _mapper = mapper;

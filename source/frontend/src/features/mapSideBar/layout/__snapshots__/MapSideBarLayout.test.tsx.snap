@@ -356,6 +356,7 @@ exports[`MapSideBarLayout component > matches snapshot 1`] = `
       </div>
       <div
         class="c3 d-flex col-auto"
+        data-testid="leaflet-buttons-section"
       >
         <span>
           <button

@@ -27,6 +27,7 @@ import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalManagement } from '@/hooks/useModalManagement';
 import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
+import { ApiGen_Concepts_PropertyManagement } from '@/models/api/generated/ApiGen_Concepts_PropertyManagement';
 import { ILookupCode } from '@/store/slices/lookupCodes';
 import { exists, isValidId } from '@/utils';
 import { mapLookupCode } from '@/utils/mapLookupCode';
@@ -44,6 +45,7 @@ export interface IPropertyActivityEditFormProps {
   pstConstant: number;
   loading: boolean;
   show: boolean;
+  propertyManagement: ApiGen_Concepts_PropertyManagement;
   onCancel: () => void;
   onClose: () => void;
   setShow: (show: boolean) => void;
@@ -236,6 +238,10 @@ export const PropertyActivityEditForm: React.FunctionComponent<
                         formikProps={formikProps}
                         gstConstant={props.gstConstant}
                         pstConstant={props.pstConstant}
+                        isResponsiblePayerSet={
+                          isValidId(props.propertyManagement?.responsiblePayerPersonId) ||
+                          isValidId(props.propertyManagement?.responsiblePayerOrganizationId)
+                        }
                       />
                       <SaveCancelButtons
                         onCancel={() => {

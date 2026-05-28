@@ -9,8 +9,14 @@ class Projects {
   async navigateCreateProject() {
     clickAndWaitFor(
       this.page,
-      "div[data-testid='nav-tooltip-project'] a",
+      "div[data-testid='nav-tooltip-research'] a",
       "div[data-testid='side-tray']"
+    );
+
+    clickAndWaitFor(
+      this.page,
+      "div[data-testid='nav-tooltip-project'] a",
+      "//a[text()='Create Project']"
     );
     await this.page.locator("//a[text()='Create Project']").click();
   }

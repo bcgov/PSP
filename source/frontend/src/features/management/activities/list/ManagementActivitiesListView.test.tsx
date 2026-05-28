@@ -1,11 +1,14 @@
 import { AxiosResponse } from 'axios';
 import fileDownload from 'js-file-download';
+import { http, HttpResponse } from 'msw';
 import { MockedFunction } from 'vitest';
 
 import { useApiManagementActivities } from '@/hooks/pims-api/useApiManagementActivities';
 import { useModalContext } from '@/hooks/useModalContext';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { getMockManagementActivity } from '@/mocks/managementActivity.mock';
+import { server } from '@/mocks/msw/server';
+import { getUserMock } from '@/mocks/user.mock';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { Api_ManagementActivityFilter } from '@/models/api/ManagementActivityFilter';
@@ -94,6 +97,9 @@ describe('ManagementActivitiesListView', () => {
   };
 
   beforeEach(() => {
+    server.use(
+      http.get('/api/users/info/*', () => HttpResponse.json(getUserMock(), { status: 200 })),
+    );
     vi.clearAllMocks();
   });
 

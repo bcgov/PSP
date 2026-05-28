@@ -15,6 +15,7 @@ export class Api_GenerateH120Property {
   district: string;
   interest_holders_string: string;
   electoral_dist = '';
+  plan_number?: string;
 
   constructor(
     property: ApiGen_Concepts_Property | null,
@@ -29,5 +30,6 @@ export class Api_GenerateH120Property {
     this.district = property?.district?.description ?? '';
     this.interest_holders_string =
       interestHolders?.map(ih => ih.interestHolderString).join(', ') ?? '';
+    this.plan_number = property?.planNumber;
   }
 }

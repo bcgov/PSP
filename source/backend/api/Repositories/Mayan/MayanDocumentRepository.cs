@@ -9,6 +9,7 @@ using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Mayan;
 using Pims.Api.Models.Mayan.Document;
 using Pims.Api.Models.Mayan.Metadata;
+using Pims.Api.Models.Models.Mayan.Document;
 using Pims.Api.Models.Requests.Http;
 using Polly.Registry;
 using System;
@@ -426,6 +427,26 @@ namespace Pims.Api.Repositories.Mayan
             var response = await GetRawAsync(endpoint, authenticationToken);
 
             _logger.LogDebug("Finished retrieving mayan file page");
+            return response;
+        }
+
+        public async Task<ExternalResponse<QueryResponse<DocumentSearchResult>>> TrySearchByDocumentContent(string contentToSearch)
+        {
+            _logger.LogDebug("Retrieving all mayan documents that contain string {ContentToSearch}", contentToSearch);
+            string authenticationToken = await _authRepository.GetTokenAsync();
+
+            string endpointString = $"{_config.BaseUri}/search/advanced/documents.documentsearchresult/";
+            var queryParams = new System.Collections.Generic.Dictionary<string, string>
+            {
+                { "_match_all", "false" },
+                { "files__file_pages__content__content", $"\"{contentToSearch}\"" },
+            }; // multi-word searches need to be wrapped in quotes, as mayan will search each word separately otherwise - which has unacceptable performance.
+
+            Uri endpoint = new(QueryHelpers.AddQueryString(endpointString, queryParams));
+
+            var response = await GetAsync<QueryResponse<DocumentSearchResult>>(endpoint, authenticationToken);
+
+            _logger.LogDebug("Finished retrieving mayan search results for string {ContentToSearch}", contentToSearch);
             return response;
         }
 

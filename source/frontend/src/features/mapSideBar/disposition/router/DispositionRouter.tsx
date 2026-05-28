@@ -5,10 +5,14 @@ import { Redirect, Route, Switch, useRouteMatch } from 'react-router-dom';
 import Claims from '@/constants/claims';
 import { InventoryTabNames } from '@/features/mapSideBar/property/InventoryTabs';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
+import { useAgreementProvider } from '@/hooks/repositories/useAgreementProvider';
 import { ApiGen_Concepts_DispositionFile } from '@/models/api/generated/ApiGen_Concepts_DispositionFile';
 import { exists, stripTrailingSlash } from '@/utils';
 import AppRoute from '@/utils/AppRoute';
 
+import AddAgreementContainer from '../../shared/agreement/add/AddAgreementContainer';
+import UpdateAgreementForm from '../../shared/agreement/common/UpdateAgreementForm';
+import UpdateAgreementContainer from '../../shared/agreement/update/UpdateAgreementContainer';
 import { UpdateChecklistForm } from '../../shared/tabs/checklist/update/UpdateChecklistForm';
 import { UpdateDispositionChecklistContainer } from '../tabs/checklist/update/UpdateDispositionChecklistContainer';
 import DispositionFileTabs from '../tabs/DispositionFileTabs';
@@ -34,12 +38,15 @@ export interface IDispositionRouterProps {
 
 export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
   const { path, url } = useRouteMatch();
+  const agreementProvider = useAgreementProvider();
+
+  const { execute: postDispositionAgreement, loading: loadingDispositionAgreement } =
+    agreementProvider.addDispositionAgreement;
 
   if (!exists(props.dispositionFile)) {
     return null;
   }
 
-  // render edit forms
   if (props.isEditing) {
     return (
       <Switch>
@@ -77,6 +84,47 @@ export const DispositionRouter: React.FC<IDispositionRouterProps> = props => {
         <Route path={`${stripTrailingSlash(path)}/property`}>
           <></>
         </Route>
+        <AppRoute
+          exact
+          path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/add`}
+          customRender={() =>
+            props.dispositionFile?.id ? (
+              <AddAgreementContainer
+                fileId={props.dispositionFile?.id}
+                View={UpdateAgreementForm}
+                onSuccess={props.onSuccess}
+                fileType="disposition"
+                isNew={true}
+                onCreateAgreement={postDispositionAgreement}
+                isCreatingAgreement={loadingDispositionAgreement}
+              />
+            ) : null
+          }
+          claim={Claims.DISPOSITION_EDIT}
+          key={'agreement'}
+          title={'Add Agreement'}
+        />
+        <AppRoute
+          path={`${stripTrailingSlash(path)}/${FileTabType.AGREEMENTS}/:agreementId/update`}
+          customRender={({ match }) =>
+            props.dispositionFile?.id ? (
+              <UpdateAgreementContainer
+                fileId={props.dispositionFile?.id}
+                agreementId={match.params.agreementId}
+                fileType="disposition"
+                View={UpdateAgreementForm}
+                onSuccess={props.onSuccess}
+                updateAgreement={agreementProvider.updateDispositionAgreement.execute}
+                updatingAgreement={agreementProvider.updateDispositionAgreement.loading}
+                getAgreement={agreementProvider.getDispositionAgreementById.execute}
+                fetchingAgreement={agreementProvider.getDispositionAgreementById.loading}
+              />
+            ) : null
+          }
+          claim={Claims.ACQUISITION_EDIT}
+          key={'updateAgreement'}
+          title={'Update Agreement'}
+        />
         <AppRoute
           exact
           path={`${stripTrailingSlash(path)}/${FileTabType.OFFERS_AND_SALE}/appraisal/update`}

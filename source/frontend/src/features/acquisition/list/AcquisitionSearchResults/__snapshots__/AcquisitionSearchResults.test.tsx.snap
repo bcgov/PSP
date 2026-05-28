@@ -231,7 +231,7 @@ exports[`Acquisition Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Owner
+            Owners
           </div>
         </div>
         <div
@@ -243,7 +243,7 @@ exports[`Acquisition Search Results Table > matches snapshot 1`] = `
           <div
             class="sortable-column"
           >
-            Civic Address / PID / PIN
+            Civic address / PID / PIN
           </div>
         </div>
         <div

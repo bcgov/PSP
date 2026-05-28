@@ -5,13 +5,14 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
+import { useAddFileConfirmation } from '@/hooks/useAddFileConfirmation';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, isValidId } from '@/utils';
+import { exists, firstOrNull, isValidId } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ManagementFormModel } from '../models/ManagementFormModel';
@@ -32,7 +33,6 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
   const formikRef = useRef<FormikProps<ManagementFormModel>>(null);
   const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
-  const [needsUserConfirmation, setNeedsUserConfirmation] = useState<boolean>(true);
 
   const {
     addManagementFileApi: { execute: addManagementFileApi, loading },
@@ -61,69 +61,47 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
     'fileProperties',
   );
 
+  useEffect(() => {
+    if (featuresWithAddresses?.length > 0 && !formikRef?.current?.values?.regionCode) {
+      const firstPropertyFeature = firstOrNull(featuresWithAddresses)?.feature;
+
+      if (exists(firstPropertyFeature)) {
+        const firstProperty = PropertyForm.fromFeatureDataset(firstPropertyFeature);
+        formikRef?.current?.setFieldValue(
+          'regionCode',
+          firstProperty.regionName !== 'Cannot determine' ? firstProperty.region : undefined,
+        );
+      }
+    }
+  }, [featuresWithAddresses]);
+
   const initialForm = useMemo(() => {
     const managementForm = new ManagementFormModel();
     return managementForm;
   }, []);
 
-  // Require user confirmation before adding a property to file
-  // This is the flow for Map Marker -> right-click -> create Management File
-  useEffect(() => {
-    const runAsync = async () => {
-      const incomingProperties =
-        featuresWithAddresses?.map(f => PropertyForm.fromFeatureDataset(f.feature)) ?? [];
-      if (exists(incomingProperties) && exists(formikRef.current) && needsUserConfirmation) {
-        if (incomingProperties.length > 0) {
-          // Check all properties for confirmation
-          const needsConfirmation = await Promise.all(
-            incomingProperties.map(formProperty => confirmBeforeAdd(formProperty)),
-          );
-          if (needsConfirmation.some(confirm => confirm)) {
-            setModalContent({
-              variant: 'warning',
-              title: 'User Override Required',
-              message: (
-                <>
-                  <p>
-                    One or more properties have already been added to one or more management files.
-                  </p>
-                  <p>Do you want to acknowledge and proceed?</p>
-                </>
-              ),
-              okButtonText: 'Yes',
-              cancelButtonText: 'No',
-              handleOk: () => {
-                // allow the property to be added to the file being created
-                formikRef.current.resetForm();
-                formikRef.current.setFieldValue('properties', incomingProperties);
-                setDisplayModal(false);
-                // show the user confirmation modal only once when creating a file
-                setNeedsUserConfirmation(false);
-              },
-              handleCancel: () => {
-                // clear out the properties array as the user did not agree to the popup
-                incomingProperties.splice(0, incomingProperties.length);
-                formikRef.current.resetForm();
-                formikRef.current.setFieldValue('properties', incomingProperties);
-                setDisplayModal(false);
-                // show the user confirmation modal only once when creating a file
-                setNeedsUserConfirmation(false);
-              },
-            });
-            setDisplayModal(true);
-          }
-        }
-      }
-    };
+  const incomingProperties = useMemo(
+    () => featuresWithAddresses?.map(f => PropertyForm.fromFeatureDataset(f.feature)) ?? [],
+    [featuresWithAddresses],
+  );
 
-    runAsync();
-  }, [
+  const confirmationMessage = useMemo(
+    () => (
+      <>
+        <p>One or more properties have already been added to one or more management files.</p>
+        <p>Do you want to acknowledge and proceed?</p>
+      </>
+    ),
+    [],
+  );
+
+  useAddFileConfirmation({
+    formikRef,
     confirmBeforeAdd,
-    featuresWithAddresses,
-    needsUserConfirmation,
-    setDisplayModal,
-    setModalContent,
-  ]);
+    fieldName: 'fileProperties',
+    properties: incomingProperties,
+    message: confirmationMessage,
+  });
 
   const handleCancel = useCallback(() => onClose(), [onClose]);
 

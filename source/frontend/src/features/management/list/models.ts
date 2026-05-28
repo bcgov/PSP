@@ -1,6 +1,7 @@
 import isNumber from 'lodash/isNumber';
 
 import { SelectOption } from '@/components/common/form';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_ManagementFileProperty } from '@/models/api/generated/ApiGen_Concepts_ManagementFileProperty';
 import { ApiGen_Concepts_ManagementFileTeam } from '@/models/api/generated/ApiGen_Concepts_ManagementFileTeam';
@@ -17,6 +18,13 @@ export class ManagementFilterModel {
   fileNameOrNumberOrReference = '';
   managementFilePurposeCode = '';
   projectNameOrNumber = '';
+  hasNoticeOfClaim = false;
+  regions: MultiSelectOption[] = [];
+
+  constructor(initialRegions: MultiSelectOption[] = []) {
+    this.regions = initialRegions;
+    this.searchBy = 'address';
+  }
 
   toApi(): Api_ManagementFilter {
     const personMemberId =
@@ -37,6 +45,8 @@ export class ManagementFilterModel {
       managementFileStatusCode: this.managementFileStatusCode,
       managementFilePurposeCode: this.managementFilePurposeCode,
       projectNameOrNumber: this.projectNameOrNumber,
+      hasNoticeOfClaim: this.hasNoticeOfClaim,
+      regions: this.regions?.map(x => x.id) ?? [],
       // management team members
       teamMemberPersonId:
         personMemberId && isNumber(+personMemberId) ? Number(personMemberId) : null,
@@ -47,6 +57,7 @@ export class ManagementFilterModel {
   static fromApi(
     base: Api_ManagementFilter,
     teamMemberOptions: SelectOption[] = [],
+    userRegions: MultiSelectOption[],
   ): ManagementFilterModel {
     const newModel = new ManagementFilterModel();
     newModel.searchBy = base.searchBy ?? 'address';
@@ -57,6 +68,9 @@ export class ManagementFilterModel {
     newModel.managementFileStatusCode = base.managementFileStatusCode ?? '';
     newModel.managementFilePurposeCode = base.managementFilePurposeCode ?? '';
     newModel.projectNameOrNumber = base.projectNameOrNumber ?? '';
+    newModel.hasNoticeOfClaim = base.hasNoticeOfClaim;
+    newModel.regions = userRegions ?? [];
+
     // management team members
     if (base.teamMemberPersonId) {
       newModel.managementTeamMember =
@@ -83,6 +97,7 @@ export class ManagementSearchResultModel {
   managementFilePurposeTypeCode = '';
   managementTeam: ApiGen_Concepts_ManagementFileTeam[] = [];
   fileProperties?: ApiGen_Concepts_ManagementFileProperty[] = [];
+  regionCode = '';
 
   static fromApi(base: ApiGen_Concepts_ManagementFile): ManagementSearchResultModel {
     const newModel = new ManagementSearchResultModel();
@@ -96,6 +111,7 @@ export class ManagementSearchResultModel {
     newModel.managementFilePurposeTypeCode = base.purposeTypeCode?.description ?? '';
     newModel.managementTeam = base.managementTeam || [];
     newModel.fileProperties = base.fileProperties || [];
+    newModel.regionCode = base.regionCode?.description || '';
 
     return newModel;
   }

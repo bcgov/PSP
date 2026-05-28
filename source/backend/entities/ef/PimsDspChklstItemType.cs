@@ -63,7 +63,7 @@ public partial class PimsDspChklstItemType
     public DateOnly EffectiveDate { get; set; }
 
     /// <summary>
-    /// Date the disposition checklist item is removed from the input form.
+    /// Date the disposition checklist section is removed from the input form.
     /// </summary>
     [Column("EXPIRY_DATE")]
     public DateOnly? ExpiryDate { get; set; }

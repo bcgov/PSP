@@ -31,13 +31,26 @@ public partial class PimsPropertyImprovementHist
     [StringLength(20)]
     public string PropertyImprovementTypeCode { get; set; }
 
-    [Column("STRUCTURE_SIZE")]
-    [StringLength(2000)]
-    public string StructureSize { get; set; }
+    [Required]
+    [Column("PROP_IMPRVMNT_STATUS_TYPE_CODE")]
+    [StringLength(20)]
+    public string PropImprvmntStatusTypeCode { get; set; }
+
+    [Required]
+    [Column("IMPROVEMENT_NAME")]
+    [StringLength(500)]
+    public string ImprovementName { get; set; }
 
     [Column("IMPROVEMENT_DESCRIPTION")]
     [StringLength(2000)]
     public string ImprovementDescription { get; set; }
+
+    [Column("IMPROVEMENT_DATE", TypeName = "datetime")]
+    public DateTime? ImprovementDate { get; set; }
+
+    [Column("STRUCTURE_SIZE")]
+    [StringLength(2000)]
+    public string StructureSize { get; set; }
 
     [Column("ADDRESS")]
     [StringLength(2000)]
