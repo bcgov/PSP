@@ -25,6 +25,8 @@ import { PropertyForm } from '../../shared/models';
 import { ManagementFormModel } from '../models/ManagementFormModel';
 import AddManagementContainer, { IAddManagementContainerProps } from './AddManagementContainer';
 import { IAddManagementContainerViewProps } from './AddManagementContainerView';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 
 const history = createMemoryHistory();
 
@@ -42,6 +44,28 @@ const mockCreateManagementFile = getMockRepositoryObj();
 vi.mock('@/hooks/repositories/useManagementFileRepository');
 vi.mocked(useManagementFileRepository, { partial: true }).mockReturnValue({
   addManagementFileApi: mockCreateManagementFile,
+});
+
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository).mockReturnValue({
+  retrieveUserInfo: vi.fn(),
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: {
+    userRegions: [
+      {
+        id: 1,
+        userId: 5,
+        regionCode: 1,
+        region: { id: 1 },
+      },
+      {
+        id: 2,
+        userId: 5,
+        regionCode: 2,
+        region: { id: 2 },
+      },
+    ],
+  } as ApiGen_Concepts_User,
 });
 
 describe('Add Management Container component', () => {
