@@ -73,7 +73,7 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
     total: 0,
   }),
   retrieveUserLookupLoading: false,
-  retrieveUserLookupResponse: {items: [], page: 1, quantity: 0, total: 0},
+  retrieveUserLookupResponse: { items: [], page: 1, quantity: 0, total: 0 },
 });
 
 describe('Add Disposition Container component', () => {
