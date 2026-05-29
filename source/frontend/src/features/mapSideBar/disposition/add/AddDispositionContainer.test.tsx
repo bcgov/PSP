@@ -65,6 +65,15 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
       },
     ],
   } as ApiGen_Concepts_User,
+
+  retrieveUserLookup: vi.fn().mockResolvedValue({
+    items: [],
+    page: 1,
+    quantity: 0,
+    total: 0,
+  }),
+  retrieveUserLookupLoading: false,
+  retrieveUserLookupResponse: {items: [], page: 1, quantity: 0, total: 0},
 });
 
 describe('Add Disposition Container component', () => {
