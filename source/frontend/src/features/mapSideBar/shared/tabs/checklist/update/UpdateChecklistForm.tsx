@@ -61,10 +61,10 @@ export const UpdateChecklistForm: React.FC<IUpdateChecklistFormProps> = ({
         : undefined;
 
     if (section && formikRefObject.current) {
-      const updatedItems = section.items.map(item => ({
-        ...item,
-        statusType: setStatusApply,
-      }));
+      const updatedItems = section.items.slice();
+      updatedItems.forEach(item => {
+        item.statusType = setStatusApply;
+      });
 
       formikRefObject.current.setFieldValue(
         `checklistSections[${sectionIndex}].items`,

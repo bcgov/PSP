@@ -21,6 +21,7 @@ import {
   RenderOptions,
   screen,
   userEvent,
+  waitForEffects,
 } from '@/utils/test-utils';
 
 import { AcquisitionOwnerFormModel, OwnerAddressFormModel } from '../common/models';
@@ -64,13 +65,13 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
         id: 1,
         userId: 5,
         regionCode: 1,
-        region: { id: 1 },
+        region: { id: 1, description: 'South Coast Region' },
       },
       {
         id: 2,
         userId: 5,
         regionCode: 2,
-        region: { id: 2 },
+        region: { id: 2, description: 'Southern Interior Region' },
       },
     ],
   } as ApiGen_Concepts_User,
@@ -288,11 +289,10 @@ describe('AddAcquisitionContainer component', () => {
       ],
     };
 
-    await act(async () => {
-      setup(undefined, { mockMapMachine: testMockMachine });
-    });
-    const text = await screen.findByDisplayValue(/South Coast Region/i);
-    expect(text).toBeVisible();
+    const { getRegionDropdown } = await setup(undefined, { mockMapMachine: testMockMachine });
+    await waitForEffects();
+
+    expect(getRegionDropdown()).toHaveValue('1');
   });
 
   it('should not pre-populate the region if a property is selected and the region cannot be determined', async () => {

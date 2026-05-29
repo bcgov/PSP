@@ -24,6 +24,8 @@ import { PropertyForm } from '../../shared/models';
 import { DispositionFormModel } from '../models/DispositionFormModel';
 import AddDispositionContainer, { IAddDispositionContainerProps } from './AddDispositionContainer';
 import { IAddDispositionContainerViewProps } from './AddDispositionContainerView';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 
 const history = createMemoryHistory();
 
@@ -41,6 +43,28 @@ const mockCreateDispositionFile = getMockRepositoryObj();
 vi.mock('@/hooks/repositories/useDispositionProvider');
 vi.mocked(useDispositionProvider, { partial: true }).mockReturnValue({
   addDispositionFileApi: mockCreateDispositionFile,
+});
+
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository).mockReturnValue({
+  retrieveUserInfo: vi.fn(),
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: {
+    userRegions: [
+      {
+        id: 1,
+        userId: 5,
+        regionCode: 1,
+        region: { id: 1, description: 'South Coast Region' },
+      },
+      {
+        id: 2,
+        userId: 5,
+        regionCode: 2,
+        region: { id: 2, description: 'Southern Interior Region' },
+      },
+    ],
+  } as ApiGen_Concepts_User,
 });
 
 describe('Add Disposition Container component', () => {
