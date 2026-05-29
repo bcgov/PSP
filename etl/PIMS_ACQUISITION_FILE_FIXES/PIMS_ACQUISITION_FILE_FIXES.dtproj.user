@@ -9,7 +9,7 @@
         <WinAuthUserName />
         <WinAuthDomain />
         <ServerName>ssistst.th.gov.bc.ca</ServerName>
-        <PathOnServer>/SSISDB/PIMS_DEV/PIMS_PROPERTY_MERGE</PathOnServer>
+        <PathOnServer>/SSISDB/PIMS_DEV/PIMS_ACQUISITION_FILE_FIXES</PathOnServer>
         <UserIDs />
         <UserPasswords />
         <OfflineMode>false</OfflineMode>
@@ -18,7 +18,7 @@
           <ConfigurationSetting>
             <Id>LastModifiedTime</Id>
             <Name>LastModifiedTime</Name>
-            <Value xsi:type="xsd:dateTime">2024-02-06T06:50:27.5573469Z</Value>
+            <Value xsi:type="xsd:dateTime">2026-04-30T04:31:44.3417624Z</Value>
           </ConfigurationSetting>
         </ParameterConfigurationSensitiveValues>
       </Options>

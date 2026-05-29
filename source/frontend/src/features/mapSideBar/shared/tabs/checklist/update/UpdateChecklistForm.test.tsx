@@ -7,7 +7,7 @@ import { mockDispositionFileResponse } from '@/mocks/dispositionFiles.mock';
 import { mockFileChecklistResponse, mockLookups } from '@/mocks/index.mock';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ILookupCode, lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, createAxiosError, render, RenderOptions } from '@/utils/test-utils';
+import { act, createAxiosError, render, RenderOptions, selectOptions } from '@/utils/test-utils';
 
 import { ChecklistFormModel } from './models';
 import { IUpdateChecklistFormProps, UpdateChecklistForm } from './UpdateChecklistForm';
@@ -88,6 +88,35 @@ describe('UpdateChecklist form', () => {
   it('renders last updated by and last updated on for the overall checklist', () => {
     const { getByText } = setup();
     expect(getByText(/This checklist was last updated Mar 17, 2023 by/i)).toBeVisible();
+  });
+
+  it('updates all checklist item statuses in the section when apply is clicked', async () => {
+    const { formikRef, getByTestId } = setup();
+    const section = formikRef.current?.values.checklistSections[0];
+    expect(section).toBeDefined();
+    expect(section?.items.length).toBeGreaterThan(0);
+
+    const sectionName = section?.name ?? '';
+    const sectionSelectName = `section-${sectionName}`;
+    const selectElement = document.querySelector(
+      `select[name="${sectionSelectName}"]`,
+    ) as HTMLSelectElement | null;
+    expect(selectElement).not.toBeNull();
+
+    const optionValue = selectElement?.options[1]?.value;
+    expect(optionValue).toBeTruthy();
+
+    await act(async () => {
+      await selectOptions(sectionSelectName, optionValue as string);
+      getByTestId(`apply-to-${sectionName}-btn`).click();
+    });
+
+    const updatedSection = formikRef.current?.values.checklistSections.find(
+      checklistSection => checklistSection.id === section?.id,
+    );
+
+    expect(updatedSection).toBeDefined();
+    expect(updatedSection?.items.every(item => item.statusType === optionValue)).toBe(true);
   });
 
   it('saves the form with minimal data', async () => {
