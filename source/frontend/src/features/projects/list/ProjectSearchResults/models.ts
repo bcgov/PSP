@@ -7,6 +7,7 @@ export class ProjectSearchResultModel {
   description: string | '' = '';
   region: string | '' = '';
   status: string | '' = '';
+  createdBy: string | '' = '';
   lastUpdatedBy: string | '' = '';
   lastUpdatedDate: string | '' = '';
 
@@ -18,6 +19,7 @@ export class ProjectSearchResultModel {
     newModel.description = base.description ?? '';
     newModel.region = base.regionCode?.description ?? '';
     newModel.status = base.projectStatusTypeCode?.description ?? '';
+    newModel.createdBy = base.appCreateUserid ?? null;
     newModel.lastUpdatedBy = base.appLastUpdateUserid ?? '';
     newModel.lastUpdatedDate = isValidIsoDateTime(base.appLastUpdateTimestamp)
       ? base.appLastUpdateTimestamp

@@ -631,58 +631,80 @@ exports[`Research Filter > matches snapshot 1`] = `
           class="row"
         >
           <div
-            class="col-lg-8"
+            class="col-lg-9"
           >
             <div
-              class="idir-input-group flex-nowrap input-group row no-gutters"
+              class="gx-1 align-items-start row"
             >
               <div
-                class="c2 col-auto"
+                class="ps-0 col-lg-4"
               >
                 <div
-                  class="input-group-prepend"
+                  class="form-group"
                 >
-                  <div
-                    class="form-group"
+                  <select
+                    class="form-select form-control"
+                    id="input-createOrUpdateBy"
+                    name="createOrUpdateBy"
                   >
-                    <select
-                      class="form-select form-control"
-                      id="input-createOrUpdateBy"
-                      name="createOrUpdateBy"
+                    <option
+                      class="option"
+                      data-testid="select-option-appCreateUserid"
+                      value="appCreateUserid"
                     >
-                      <option
-                        class="option"
-                        data-testid="select-option-appCreateUserid"
-                        value="appCreateUserid"
-                      >
-                        Created by
-                      </option>
-                      <option
-                        class="option"
-                        data-testid="select-option-appLastUpdateUserid"
-                        value="appLastUpdateUserid"
-                      >
-                        Updated by
-                      </option>
-                    </select>
-                  </div>
+                      Created by
+                    </option>
+                    <option
+                      class="option"
+                      data-testid="select-option-appLastUpdateUserid"
+                      value="appLastUpdateUserid"
+                    >
+                      Last updated by
+                    </option>
+                  </select>
                 </div>
               </div>
               <div
-                class="c3 col"
+                class="pl-0 ps-0 col-lg-6"
               >
                 <div
-                  class="input form-group"
+                  class="form-group"
                 >
-                  <input
-                    class="form-control"
-                    id="input-appLastUpdateUserid"
-                    name="appLastUpdateUserid"
-                    placeholder="User's IDIR"
-                    style="word-break: break-all;"
-                    title=""
-                    value=""
-                  />
+                  <div>
+                    <div
+                      class="multiselect-container multiSelectContainer  "
+                      id="multiselect-selectedUser"
+                      style="width: auto; color: black;"
+                    >
+                      <div
+                        class="search-wrapper searchWrapper "
+                        style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                      >
+                        <input
+                          autocomplete="off"
+                          class="searchBox "
+                          id="multiselect-selectedUser_input"
+                          name="search_name_input"
+                          placeholder="Search user"
+                          type="text"
+                          value=""
+                        />
+                      </div>
+                      <div
+                        class="optionListContainer displayNone"
+                      >
+                        <ul
+                          class="optionContainer"
+                        >
+                          <span
+                            class="notFound"
+                          >
+                            No Options Available
+                          </span>
+                        </ul>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

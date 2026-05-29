@@ -1,4 +1,4 @@
-import React, { useCallback, useEffect } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaPlus } from 'react-icons/fa';
 import { useHistory } from 'react-router';
@@ -10,8 +10,10 @@ import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
 import Claims from '@/constants/claims';
 import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { useSearch } from '@/hooks/useSearch';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
 
 import { IResearchFilter } from '../interfaces';
@@ -26,6 +28,8 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
   const history = useHistory();
   const { getResearchFiles } = useApiResearchFile();
   const { hasClaim } = useKeycloakWrapper();
+  const { retrieveUserLookup } = useUserInfoRepository();
+  const [createdByOptions, setCreatedByOptions] = useState<MultiSelectOption[]>([]);
   const {
     results,
     filter,
@@ -60,6 +64,25 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
     }
   }, [error]);
 
+  useEffect(() => {
+    retrieveUserLookup({
+      page: 1,
+      quantity: 1000,
+      activeOnly: false,
+    }).then(response => {
+      setCreatedByOptions(
+        response?.items
+          ?.filter(user => !!user.businessIdentifierValue)
+          .map(user => ({
+            id: user.businessIdentifierValue!,
+            text: `${user.person?.firstName ?? ''} ${user.person?.surname ?? ''} (${
+              user.businessIdentifierValue
+            })`,
+          })) ?? [],
+      );
+    });
+  }, [retrieveUserLookup]);
+
   return (
     <CommonStyled.ListPage>
       <CommonStyled.PaddedScrollable>
@@ -80,7 +103,11 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
         <CommonStyled.PageToolbar>
           <Row>
             <Col>
-              <ResearchFilter filter={filter} setFilter={changeFilter} />
+              <ResearchFilter
+                filter={filter}
+                setFilter={changeFilter}
+                createdByOptions={createdByOptions}
+              />
             </Col>
           </Row>
         </CommonStyled.PageToolbar>
