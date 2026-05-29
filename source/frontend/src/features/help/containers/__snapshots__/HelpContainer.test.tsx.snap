@@ -38,6 +38,7 @@ exports[`HelpContainer component > renders correctly 1`] = `
   >
     <div
       class="c0"
+      data-testid="help-desk-container-btn"
     >
       <svg
         class="c1"
