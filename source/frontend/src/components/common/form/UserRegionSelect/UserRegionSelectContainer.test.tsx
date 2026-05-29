@@ -14,8 +14,6 @@ import {
 } from './UserRegionSelectContainer';
 import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
-import { IPaginateParams } from '@/constants/API';
-import { IUsersFilter } from '@/interfaces';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 
 // mock auth library
