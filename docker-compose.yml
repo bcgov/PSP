@@ -1,5 +1,3 @@
-version: "3.5"
-
 include:
   - tools/mayan-edms/docker-compose.yml
 
