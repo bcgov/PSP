@@ -9,7 +9,7 @@ receivers:
       # Since this collector needs to receive data from the web, enable cors for all origins.
       # `allowed_origins` can be refined for your deployment domain
       http:
-        endpoint: ${env:OTEL_COLLECTOR_HOST:-0.0.0.0}:4318
+        endpoint: ${env:OTEL_COLLECTOR_HOST}:4318
         cors:
           allowed_origins:
             - "http://*"
@@ -31,15 +31,12 @@ exporters:
   # application metrics (i.e. PIMS frontend) are exported here [0.0.0.0:9464]
   # Prometheus server needs to be configured to scrape the metrics from this endpoint.
   prometheus:
-    endpoint: ${env:OTEL_COLLECTOR_HOST:-0.0.0.0}:9464
+    endpoint: ${env:OTEL_COLLECTOR_HOST}:9464
   # forward traces/spans to JAEGER for further processing and visualization
   otlp/jaeger:
-    endpoint: ${env:JAEGER_HOST:-jaeger}:4317
+    endpoint: ${env:JAEGER_HOST}:4317
     tls:
       insecure: true
-  # the debug exporter prints logs to stdout
-  debug:
-    verbosity: detailed
 
 # Enable the spanmetrics connector to bridge the traces pipeline into the metrics pipeline.
 connectors:
@@ -51,24 +48,26 @@ extensions:
   # Without the `health_check` extension the collector will fail the readiness and liveliness probes in kubernetes/openshift.
   # The health_check extension can be modified, but should never be removed.
   health_check:
-    endpoint: ${env:OTEL_COLLECTOR_HOST:-0.0.0.0}:13133
-  zpages:
-    endpoint: ${env:OTEL_COLLECTOR_HOST:-0.0.0.0}:55679
+    endpoint: ${env:OTEL_COLLECTOR_HOST}:13133
 
 # service.pipelines pull the configured receivers, processors, and exporters together into
 # pipelines that process data.
 #
 # receivers, processors, and exporters that are not used in pipelines are silently ignored.
 service:
-  extensions: [health_check, zpages]
+  telemetry:
+    # enables a prometheus endpoint to expose the collector's internal metrics [0.0.0.0:8888]
+    metrics:
+      address: ${env:OTEL_COLLECTOR_HOST}:8888
+  extensions: [health_check]
   pipelines:
     logs:
       receivers: [otlp]
       processors: [memory_limiter, batch]
-      exporters: [debug, otlp/jaeger]
+      exporters: [otlp/jaeger]
     traces:
       receivers: [otlp]
-      exporters: [debug, otlp/jaeger, spanmetrics]
+      exporters: [otlp/jaeger, spanmetrics]
     metrics/spanmetrics:
       receivers: [spanmetrics]
-      exporters: [debug, prometheus]
+      exporters: [prometheus]
