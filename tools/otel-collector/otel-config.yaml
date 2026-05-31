@@ -56,6 +56,8 @@ extensions:
 # receivers, processors, and exporters that are not used in pipelines are silently ignored.
 service:
   telemetry:
+    logs:
+      level: "error"
     # enables a prometheus endpoint to expose the collector's internal metrics [0.0.0.0:8888]
     metrics:
       address: ${env:OTEL_COLLECTOR_HOST}:8888
