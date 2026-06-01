@@ -242,12 +242,12 @@ services:
       - ./tools/otel-collector/otel-config.yaml:/etc/otel-config.yaml
     ports:
       - 4318:4318 # http receiver
-      - 55679:55679 # zPages UI
       - 9464:9464 # prometheus metrics endpoint
       - 13133:13133 # health check
     environment:
       - OTEL_COLLECTOR_HOST=0.0.0.0
       - JAEGER_HOST=jaeger
+      - LOG_LEVEL=info
     healthcheck:
       test: curl --fail -s http://localhost:13133/ || exit 1
       interval: 1m30s
@@ -273,8 +273,8 @@ services:
       - 8889:8889 # prometheus metrics endpoint
       - 8888:8888 # internal container metrics
     environment:
-      - LOG_LEVEL=debug
-      - JAEGER_LISTEN_HOST=0.0.0.0
+      - LOG_LEVEL=info
+      - JAEGER_HOST=0.0.0.0
       - PROMETHEUS_HOST=prometheus
       - PROMETHEUS_PORT=9090
     healthcheck:
