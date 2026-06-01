@@ -16,6 +16,8 @@ namespace Pims.Dal.Entities.Models
 
         public long? TeamMemberPersonId { get; set; }
 
+        public string ProjectCreatedBy { get; set; }
+
         /// <summary>
         /// get/set - The region types.
         /// </summary>
