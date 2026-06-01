@@ -12,15 +12,17 @@ import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineCo
 import MapSideBarLayout from '@/features/mapSideBar/layout/MapSideBarLayout';
 import { PropertyForm } from '@/features/mapSideBar/shared/models';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useEditPropertiesMode } from '@/hooks/useEditPropertiesMode';
 import { useEnrichWithPimsFeatures } from '@/hooks/useEnrichWithPimsFeatures';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
+import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { arePropertyFormsEqual, exists, firstOrNull, isValidId } from '@/utils';
+import { arePropertyFormsEqual, exists, firstOrNull, formatGuid, isValidId } from '@/utils';
 
 import { useAddLease } from '../hooks/useAddLease';
 import { FormLeaseProperty, getDefaultFormLease, LeaseFormModel } from '../models';
@@ -36,11 +38,25 @@ export const AddLeaseContainer: React.FunctionComponent<
   React.PropsWithChildren<IAddLeaseContainerProps>
 > = props => {
   const { onClose, onSuccess, View } = props;
-  const history = useHistory();
-  const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
-  const { setModalContent, setDisplayModal } = useModalContext();
 
+  const history = useHistory();
+  const { obj } = useKeycloakWrapper();
+  const { sub } = obj.userInfo as IUserInfo;
+  const formattedGuid = formatGuid(sub);
+
+  const mapMachine = useMapStateMachine();
+  const selectedFeatureDatasets = mapMachine.selectedFeatures;
+  // Support creating a new lease file from the worklist/quick-info
+  const prevSelectedRef = useRef<typeof mapMachine.selectedFeatures>();
+  const processCreation = mapMachine.processCreation;
+  useEditPropertiesMode();
+
+  const formikRef = useRef<FormikProps<LeaseFormModel>>(null);
+  const [isValid, setIsValid] = useState<boolean>(true);
   const withUserOverride = useApiUserOverride('Failed to save Lease File');
+
+  const { setModalContent, setDisplayModal } = useModalContext();
+  const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
   const {
     addLease: { execute: addLease, loading: addLeaseLoading },
   } = useAddLease();
@@ -50,34 +66,18 @@ export const AddLeaseContainer: React.FunctionComponent<
     enrichWithPimsFeatures,
   } = useEnrichWithPimsFeatures();
 
-  const [isValid, setIsValid] = useState<boolean>(true);
-
-  // Support creating a new lease file from the worklist/quick-info
-  const mapMachine = useMapStateMachine();
-  const selectedFeatureDatasets = mapMachine.selectedFeatures;
-  const prevSelectedRef = useRef<typeof mapMachine.selectedFeatures>();
-  const processCreation = mapMachine.processCreation;
-
-  useEditPropertiesMode();
-
   // track whether we've already shown the confirmation modal for this session
   const hasWarnedRef = useRef(false);
 
-  // Enrich selected features with PIMS features
-  // This will add pimsFeature to each SelectedFeatureDataset if it exists
-  useEffect(() => {
-    if (
-      selectedFeatureDatasets?.length > 0 &&
-      !dequal(prevSelectedRef.current, selectedFeatureDatasets)
-    ) {
-      hasWarnedRef.current = false; // reset the warning for new selection
-      prevSelectedRef.current = selectedFeatureDatasets;
-      enrichWithPimsFeatures(selectedFeatureDatasets);
-    }
-  }, [selectedFeatureDatasets, enrichWithPimsFeatures]);
-
   // Get PropertyForms with addresses for all selected features
   const { featuresWithAddresses, bcaLoading } = useFeatureDatasetsWithAddresses(datasets ?? []);
+
+  const userRegionCodes = useMemo(
+    () =>
+      retrieveUserInfoResponse?.userRegions?.map(ur => ur.regionCode?.toString()).filter(exists) ??
+      [],
+    [retrieveUserInfoResponse?.userRegions],
+  );
 
   // Convert SelectedFeatureDataset to PropertyForm
   const propertyForms = useMemo(
@@ -92,40 +92,6 @@ export const AddLeaseContainer: React.FunctionComponent<
     [featuresWithAddresses],
   );
 
-  // This effect is used to update the file properties when "add to open file" is clicked in the worklist.
-  useEffect(() => {
-    if (exists(formikRef.current) && propertyForms.length > 0) {
-      const existingProperties =
-        formikRef.current?.values?.properties?.map(lp => lp?.property) ?? [];
-      const uniqueProperties = propertyForms.filter(newProperty => {
-        return !existingProperties.some(existingProperty =>
-          arePropertyFormsEqual(existingProperty, newProperty),
-        );
-      });
-
-      const duplicatesSkipped = propertyForms.length - uniqueProperties.length;
-
-      // If there are unique properties, add them to the formik values
-      if (uniqueProperties.length > 0) {
-        const allProperties = [...existingProperties, ...uniqueProperties].map(obj => {
-          const leaseProperty = FormLeaseProperty.fromPropertyForm(obj);
-          if (exists(obj.address) && exists(leaseProperty.property)) {
-            leaseProperty.property.address = obj.address;
-          }
-          return leaseProperty;
-        });
-        formikRef.current?.setFieldValue('properties', allProperties);
-        formikRef.current?.setFieldTouched('properties', true);
-        toast.success(`Added ${uniqueProperties.length} new property(s) to the file.`);
-      }
-
-      if (duplicatesSkipped > 0) {
-        toast.warn(`Skipped ${duplicatesSkipped} duplicate property(s).`);
-      }
-      processCreation();
-    }
-  }, [processCreation, propertyForms]);
-
   const initialForm = useMemo<LeaseFormModel>(() => {
     const leaseForm = getDefaultFormLease();
 
@@ -136,47 +102,15 @@ export const AddLeaseContainer: React.FunctionComponent<
       );
       if (exists(firstProperty)) {
         leaseForm.regionId =
-          firstProperty?.regionName !== 'Cannot determine'
+          firstProperty?.regionName !== 'Cannot determine' &&
+          userRegionCodes.includes(firstProperty.region?.toString())
             ? firstProperty?.region?.toString()
-            : undefined;
+            : '';
       }
     }
 
     return leaseForm;
-  }, [featuresWithAddresses]);
-
-  // Require user confirmation before adding non-inventory properties to a lease.
-  useEffect(() => {
-    if (exists(initialForm.properties) && exists(formikRef.current) && !hasWarnedRef.current) {
-      const needsWarning = initialForm.properties.some(
-        formProperty => exists(formProperty.property) && !isValidId(formProperty.property.apiId),
-      );
-      if (needsWarning) {
-        hasWarnedRef.current = true; // mark as shown
-
-        setModalContent({
-          variant: 'info',
-          title: 'Not inventory property',
-          message:
-            'You have selected a property not previously in the inventory. Do you want to add this property to the lease?',
-          okButtonText: 'Add',
-          cancelButtonText: 'Cancel',
-          handleOk: () => {
-            // allow the PIMS properties to be added to the lease being created
-            setDisplayModal(false);
-            formikRef.current?.setFieldValue('properties', initialForm.properties);
-          },
-          handleCancel: () => {
-            // clear out the properties array as the user did not agree to the popup
-            initialForm.properties.splice(0, initialForm.properties.length);
-            formikRef.current?.setFieldValue('properties', []);
-            setDisplayModal(false);
-          },
-        });
-        setDisplayModal(true);
-      }
-    }
-  }, [initialForm.properties, setDisplayModal, setModalContent]);
+  }, [featuresWithAddresses, userRegionCodes]);
 
   const saveLeaseFile = async (
     leaseFormModel: LeaseFormModel,
@@ -230,6 +164,90 @@ export const AddLeaseContainer: React.FunctionComponent<
   }, [formikRef]);
 
   const loading = addLeaseLoading || bcaLoading || pimsFeatureLoading;
+
+  // This effect is used to update the file properties when "add to open file" is clicked in the worklist.
+  useEffect(() => {
+    if (exists(formikRef.current) && propertyForms.length > 0) {
+      const existingProperties =
+        formikRef.current?.values?.properties?.map(lp => lp?.property) ?? [];
+      const uniqueProperties = propertyForms.filter(newProperty => {
+        return !existingProperties.some(existingProperty =>
+          arePropertyFormsEqual(existingProperty, newProperty),
+        );
+      });
+
+      const duplicatesSkipped = propertyForms.length - uniqueProperties.length;
+
+      // If there are unique properties, add them to the formik values
+      if (uniqueProperties.length > 0) {
+        const allProperties = [...existingProperties, ...uniqueProperties].map(obj => {
+          const leaseProperty = FormLeaseProperty.fromPropertyForm(obj);
+          if (exists(obj.address) && exists(leaseProperty.property)) {
+            leaseProperty.property.address = obj.address;
+          }
+          return leaseProperty;
+        });
+        formikRef.current?.setFieldValue('properties', allProperties);
+        formikRef.current?.setFieldTouched('properties', true);
+        toast.success(`Added ${uniqueProperties.length} new property(s) to the file.`);
+      }
+
+      if (duplicatesSkipped > 0) {
+        toast.warn(`Skipped ${duplicatesSkipped} duplicate property(s).`);
+      }
+      processCreation();
+    }
+  }, [processCreation, propertyForms]);
+
+  // Require user confirmation before adding non-inventory properties to a lease.
+  useEffect(() => {
+    if (exists(initialForm.properties) && exists(formikRef.current) && !hasWarnedRef.current) {
+      const needsWarning = initialForm.properties.some(
+        formProperty => exists(formProperty.property) && !isValidId(formProperty.property.apiId),
+      );
+      if (needsWarning) {
+        hasWarnedRef.current = true; // mark as shown
+
+        setModalContent({
+          variant: 'info',
+          title: 'Not inventory property',
+          message:
+            'You have selected a property not previously in the inventory. Do you want to add this property to the lease?',
+          okButtonText: 'Add',
+          cancelButtonText: 'Cancel',
+          handleOk: () => {
+            // allow the PIMS properties to be added to the lease being created
+            setDisplayModal(false);
+            formikRef.current?.setFieldValue('properties', initialForm.properties);
+          },
+          handleCancel: () => {
+            // clear out the properties array as the user did not agree to the popup
+            initialForm.properties.splice(0, initialForm.properties.length);
+            formikRef.current?.setFieldValue('properties', []);
+            setDisplayModal(false);
+          },
+        });
+        setDisplayModal(true);
+      }
+    }
+  }, [initialForm.properties, setDisplayModal, setModalContent]);
+
+  // Enrich selected features with PIMS features
+  // This will add pimsFeature to each SelectedFeatureDataset if it exists
+  useEffect(() => {
+    if (
+      selectedFeatureDatasets?.length > 0 &&
+      !dequal(prevSelectedRef.current, selectedFeatureDatasets)
+    ) {
+      hasWarnedRef.current = false; // reset the warning for new selection
+      prevSelectedRef.current = selectedFeatureDatasets;
+      enrichWithPimsFeatures(selectedFeatureDatasets);
+    }
+  }, [selectedFeatureDatasets, enrichWithPimsFeatures]);
+
+  useEffect(() => {
+    formattedGuid && retrieveUserInfo(formattedGuid);
+  }, [formattedGuid, retrieveUserInfo]);
 
   return (
     <MapSideBarLayout

@@ -265,37 +265,93 @@ exports[`Project Filter > matches snapshot 1`] = `
               class="row"
             >
               <div
-                class="col-xl-4"
+                class="d-flex flex-column gap-2 col"
               >
                 <div
-                  class="input form-group"
+                  class="row"
                 >
-                  <input
-                    class="form-control"
-                    id="input-projectNumber"
-                    name="projectNumber"
-                    placeholder="Project number"
-                    style="word-break: break-all;"
-                    title=""
-                    value=""
-                  />
+                  <div
+                    class="col-xl-4"
+                  >
+                    <div
+                      class="input form-group"
+                    >
+                      <input
+                        class="form-control"
+                        id="input-projectNumber"
+                        name="projectNumber"
+                        placeholder="Project number"
+                        style="word-break: break-all;"
+                        title=""
+                        value=""
+                      />
+                    </div>
+                  </div>
+                  <div
+                    class="col-xl-8"
+                  >
+                     
+                    <div
+                      class="input form-group"
+                    >
+                      <input
+                        class="form-control"
+                        id="input-projectName"
+                        name="projectName"
+                        placeholder="Project name"
+                        style="word-break: break-all;"
+                        title=""
+                        value=""
+                      />
+                    </div>
+                  </div>
                 </div>
-              </div>
-              <div
-                class="col-xl-8"
-              >
                 <div
-                  class="input form-group"
+                  class="row"
                 >
-                  <input
-                    class="form-control"
-                    id="input-projectName"
-                    name="projectName"
-                    placeholder="Project name"
-                    style="word-break: break-all;"
-                    title=""
-                    value=""
-                  />
+                  <div
+                    class="col-xl-4"
+                  >
+                    <div
+                      class="form-group"
+                    >
+                      <div>
+                        <div
+                          class="multiselect-container multiSelectContainer  "
+                          id="multiselect-projectCreatedBy"
+                          style="width: auto; color: black;"
+                        >
+                          <div
+                            class="search-wrapper searchWrapper "
+                            style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                          >
+                            <input
+                              autocomplete="off"
+                              class="searchBox "
+                              id="multiselect-projectCreatedBy_input"
+                              name="search_name_input"
+                              placeholder="Project created by"
+                              type="text"
+                              value=""
+                            />
+                          </div>
+                          <div
+                            class="optionListContainer displayNone"
+                          >
+                            <ul
+                              class="optionContainer"
+                            >
+                              <span
+                                class="notFound"
+                              >
+                                No Options Available
+                              </span>
+                            </ul>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                  </div>
                 </div>
               </div>
             </div>

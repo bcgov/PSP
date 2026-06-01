@@ -22,6 +22,9 @@ namespace Pims.Api.Areas.Projects.Models
         /// </summary>
         public IList<short> Regions { get; set; } = new List<short>();
 
+        public string ProjectCreatedBy { get; set; }
+
+
         public static explicit operator ProjectFilter(ProjectFilterModel model)
         {
             var filter = new ProjectFilter()
@@ -34,7 +37,7 @@ namespace Pims.Api.Areas.Projects.Models
                 ProjectStatusCode = model.ProjectStatusCode,
                 TeamMemberPersonId = model.TeamMemberPersonId,
                 Regions = model.Regions,
-
+                ProjectCreatedBy = model.ProjectCreatedBy?.Trim(),
                 Sort = model.Sort,
             };
 

@@ -25,6 +25,7 @@ import {
 import DispositionListView from './DispositionListView';
 import { DispositionFilterModel } from './models';
 import { getUserMock } from '@/mocks/user.mock';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 
 vi.mock('@/hooks/pims-api/useApiDispositionFile');
 const getDispositionFilesPagedApiFn = vi.fn();
@@ -41,6 +42,14 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
   retrieveUserInfo: vi.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: getUserMock(),
+  retrieveUserLookup: vi.fn(),
+  retrieveUserLookupLoading: false,
+  retrieveUserLookupResponse: {
+    items: [],
+    page: 0,
+    quantity: 0,
+    total: 0,
+  } as ApiGen_Base_Page<ApiGen_Concepts_User>,
 });
 
 const mockPagedResults = (

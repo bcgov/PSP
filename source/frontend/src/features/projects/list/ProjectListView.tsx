@@ -35,12 +35,14 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   const { hasClaim, obj } = useKeycloakWrapper();
   const { sub } = obj.userInfo as IUserInfo;
   const formattedGuid = formatGuid(sub);
+  const [createdByOptions, setCreatedByOptions] = useState<MultiSelectOption[]>([]);
   const [userRegionsOptions, setUserRegionsOptions] = useState<MultiSelectOption[]>(null);
 
   const history = useHistory();
 
   const lookupCodes = useLookupCodeHelpers();
   const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
+  const { retrieveUserLookup } = useUserInfoRepository();
   const {
     getAllProjectsTeamMembersApi: { response: team, execute: loadTeamMembers },
   } = useProjectProvider();
@@ -112,6 +114,25 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
   }, [pimsRegionsTypes, retrieveUserInfoResponse, setFilter, userRegionsOptions]);
 
   useEffect(() => {
+    retrieveUserLookup({
+      page: 1,
+      quantity: 1000,
+      activeOnly: false,
+    }).then(response => {
+      setCreatedByOptions(
+        response?.items
+          ?.filter(user => !!user.businessIdentifierValue)
+          .map(user => ({
+            id: user.businessIdentifierValue!,
+            text: `${user.person?.firstName ?? ''} ${user.person?.surname ?? ''} (${
+              user.businessIdentifierValue
+            })`,
+          })) ?? [],
+      );
+    });
+  }, [retrieveUserLookup]);
+
+  useEffect(() => {
     loadTeamMembers();
   }, [loadTeamMembers]);
 
@@ -137,11 +158,17 @@ export const ProjectListView: React.FunctionComponent<React.PropsWithChildren<un
           <Row>
             <Col>
               <ProjectFilter
-                initialValues={ProjectFilterModel.fromApi(filter, team || [], userRegionsOptions)}
+                initialValues={ProjectFilterModel.fromApi(
+                  filter,
+                  team || [],
+                  userRegionsOptions,
+                  createdByOptions,
+                )}
                 pimsRegionsOptions={pimsRegionOptions}
                 projectTeamMembersOptions={projectTeamMembersOptions}
                 setFilter={changeFilter}
                 onResetFilter={handleResetFilter}
+                createdByOptions={createdByOptions}
               />
             </Col>
           </Row>

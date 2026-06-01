@@ -7,6 +7,7 @@ export class ProjectFilterModel {
   projectName = '';
   projectNumber = '';
   projectStatusCode = '';
+  projectCreatedBy: MultiSelectOption[] = [];
   projectTeamMembers: MultiSelectOption[] = [];
   regions: MultiSelectOption[] = [];
 
@@ -21,6 +22,7 @@ export class ProjectFilterModel {
       projectStatusCode: this.projectStatusCode?.trim() ? this.projectStatusCode : null,
       projectName: this.projectName?.trim() ? this.projectName : null,
       projectNumber: this.projectNumber?.trim() ? this.projectNumber : null,
+      projectCreatedBy: this.projectCreatedBy?.[0]?.id ?? null,
       teamMemberPersonId: projectTeamPersonId,
       regions: this.regions?.map(x => x.id) ?? [],
     };
@@ -30,11 +32,15 @@ export class ProjectFilterModel {
     model: IProjectFilter,
     teamMembers: ApiGen_Concepts_ProjectPerson[],
     userRegions: MultiSelectOption[],
+    createdByOptions: MultiSelectOption[],
   ): ProjectFilterModel {
     const newModel = new ProjectFilterModel();
     newModel.projectName = model.projectName;
     newModel.projectNumber = model.projectNumber;
     newModel.projectStatusCode = model.projectStatusCode;
+    newModel.projectCreatedBy = model.projectCreatedBy
+      ? createdByOptions.filter(x => x.id === model.projectCreatedBy)
+      : [];
     newModel.regions = userRegions ?? [];
 
     if (model.teamMemberPersonId) {

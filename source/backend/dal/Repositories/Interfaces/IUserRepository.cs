@@ -47,5 +47,7 @@ namespace Pims.Dal.Repositories
         void Delete(PimsUser delete);
 
         PimsUser GetUserInfoByKeycloakUserId(Guid keycloakUserId);
+
+        Paged<PimsUser> GetUserLookup(UserFilter filter);
     }
 }

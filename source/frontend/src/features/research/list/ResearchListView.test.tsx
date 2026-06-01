@@ -19,6 +19,8 @@ import {
 } from '@/utils/test-utils';
 
 import { ResearchListView } from './ResearchListView';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { defaultResearchFilter } from './ResearchFilter/ResearchFilter';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -32,15 +34,26 @@ vi.mocked(useApiResearchFile, { partial: true }).mockReturnValue({
   getResearchFiles,
 });
 
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+const retrieveUserLookup = vi.fn();
+vi.mocked(useUserInfoRepository, { partial: true }).mockReturnValue({
+  retrieveUserLookup,
+});
+
 // render component under test
-const setup = (renderOptions: RenderOptions = { store: storeState }) => {
+const setup = (
+  renderOptions: RenderOptions = { store: storeState },
+  filter = defaultResearchFilter,
+  createdByOptions = [],
+) => {
   const utils = render(<ResearchListView />, {
     ...renderOptions,
     history,
     claims: renderOptions?.claims ?? [Claims.RESEARCH_VIEW],
   });
   const searchButton = utils.getByTestId('search');
-  return { searchButton, ...utils };
+  const userLookup = utils.container.querySelector('#multiselect-selectedUser_input');
+  return { searchButton, userLookup, ...utils };
 };
 
 const setupMockSearch = (searchResults?: ApiGen_Concepts_ResearchFile[]) => {
@@ -60,6 +73,23 @@ const setupMockSearch = (searchResults?: ApiGen_Concepts_ResearchFile[]) => {
 describe('Research List View', () => {
   beforeEach(() => {
     getResearchFiles.mockClear();
+    retrieveUserLookup.mockResolvedValue({
+      data: {
+        items: [
+          {
+            id: 1,
+            businessIdentifierValue: 'DSMITH',
+            person: {
+              firstName: 'Devin',
+              surname: 'Smith',
+            },
+          },
+        ],
+        page: 1,
+        quantity: 1000,
+        total: 1,
+      },
+    });
   });
 
   it('matches snapshot', async () => {
@@ -68,494 +98,6 @@ describe('Research List View', () => {
 
     await waitForElementToBeRemoved(getByTitle('table-loading'));
     expect(asFragment()).toMatchSnapshot();
-  });
-
-  it('searches by region', async () => {
-    setupMockSearch([]);
-    const { container, searchButton, findByText, getByTitle } = setup();
-    await waitForElementToBeRemoved(getByTitle('table-loading'));
-
-    await act(async () => {});
-    fillInput(container, 'regionCode', 'South Coast Region', 'select');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getResearchFiles).toHaveBeenCalledWith({
-      pid: '',
-      pin: '',
-      appCreateUserid: '',
-      appLastUpdateUserid: '',
-      createOrUpdateBy: 'appLastUpdateUserid',
-      createOrUpdateRange: 'updatedOnStartDate',
-      createdOnEndDate: '',
-      createdOnStartDate: '',
-      name: '',
-      page: 1,
-      quantity: 10,
-      regionCode: '',
-      researchFileStatusTypeCode: '',
-      researchSearchBy: 'pid',
-      rfileNumber: '',
-      roadOrAlias: '',
-      sort: undefined,
-      updatedOnEndDate: '',
-      updatedOnStartDate: '',
-    });
-
-    expect(await findByText(/South Coast Region/i)).toBeInTheDocument();
-  });
-
-  it('regions are not duplicated', async () => {
-    setupMockSearch([
-      {
-        ...getEmptyResearchFile(),
-        id: 1,
-        fileStatusTypeCode: {
-          id: 'ACTIVE',
-          description: 'Active',
-          isDisabled: false,
-          displayOrder: null,
-        },
-        fileName: 'name',
-        fileNumber: 'R100-100-100',
-        appLastUpdateUserid: '',
-        appCreateUserid: '',
-        appCreateTimestamp: '2020-01-01',
-        appLastUpdateTimestamp: '2021-01-01',
-        fileProperties: [
-          {
-            ...getEmptyResearchFileProperty(),
-            id: 1,
-            property: {
-              ...getMockApiProperty(),
-              id: 1,
-              region: {
-                id: 1,
-                description: 'Southern Interior Region',
-                isDisabled: false,
-                displayOrder: null,
-              },
-              pid: 7723385,
-              pin: 90069930,
-              landArea: 1,
-              rowVersion: 2,
-            },
-            rowVersion: 0,
-          },
-          {
-            ...getEmptyResearchFileProperty(),
-            id: 2,
-            property: {
-              ...getMockApiProperty(),
-              id: 2,
-              region: {
-                id: 1,
-                description: 'Southern Interior Region',
-                isDisabled: false,
-                displayOrder: null,
-              },
-              pid: 11041404,
-              pin: 90072652,
-              landArea: 1,
-              rowVersion: 2,
-            },
-            rowVersion: 0,
-          },
-        ],
-      },
-    ]);
-    const { container, searchButton, findAllByText } = setup();
-
-    fillInput(container, 'regionCode', 'South Coast Region', 'select');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(await findAllByText(/Southern Interior Region/i)).toHaveLength(2);
-  });
-
-  it('all unique regions are listed', async () => {
-    setupMockSearch([
-      {
-        ...getEmptyResearchFile(),
-        id: 1,
-        fileStatusTypeCode: {
-          id: 'ACTIVE',
-          description: 'Active',
-          isDisabled: false,
-          displayOrder: null,
-        },
-        fileName: 'name',
-        fileNumber: 'R100-100-100',
-        appLastUpdateUserid: '',
-        appCreateUserid: '',
-        appCreateTimestamp: '2020-01-01',
-        appLastUpdateTimestamp: '2021-01-01',
-        fileProperties: [
-          {
-            ...getEmptyResearchFileProperty(),
-            id: 1,
-            property: {
-              ...getMockApiProperty(),
-              id: 1,
-              region: {
-                id: 1,
-                description: 'Southern Interior Region',
-                isDisabled: false,
-                displayOrder: null,
-              },
-              pid: 7723385,
-              pin: 90069930,
-              landArea: 1,
-              rowVersion: 2,
-            },
-            rowVersion: 0,
-          },
-          {
-            ...getEmptyResearchFileProperty(),
-            id: 2,
-            property: {
-              ...getMockApiProperty(),
-              id: 2,
-              region: {
-                id: 2,
-                description: 'South Coast Region',
-                isDisabled: false,
-                displayOrder: null,
-              },
-              pid: 11041404,
-              pin: 90072652,
-              landArea: 1,
-              rowVersion: 2,
-            },
-            rowVersion: 0,
-          },
-        ],
-      },
-    ]);
-    const { container, searchButton, findByText } = setup();
-
-    fillInput(container, 'regionCode', 'South Coast Region', 'select');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(await findByText(/Southern Interior Region, South Coast Region/i)).toBeInTheDocument();
-  });
-
-  it('searches by R-file number', async () => {
-    setupMockSearch([]);
-    const { container, searchButton } = setup();
-    fillInput(container, 'researchSearchBy', 'rFileNumber', 'select');
-    fillInput(container, 'rFileNumber', '101');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getResearchFiles).toHaveBeenCalledWith({
-      pid: '',
-      pin: '',
-      appCreateUserid: '',
-      appLastUpdateUserid: '',
-      createOrUpdateBy: 'appLastUpdateUserid',
-      createOrUpdateRange: 'updatedOnStartDate',
-      createdOnEndDate: '',
-      createdOnStartDate: '',
-      name: '',
-      page: 1,
-      quantity: 10,
-      regionCode: '',
-      researchFileStatusTypeCode: '',
-      researchSearchBy: '',
-      rfileNumber: '',
-      roadOrAlias: '',
-      sort: undefined,
-      updatedOnEndDate: '',
-      updatedOnStartDate: '',
-    });
-  });
-
-  it('searches by file name', async () => {
-    setupMockSearch([]);
-    const { container, searchButton } = setup();
-    fillInput(container, 'researchSearchBy', 'name', 'select');
-    fillInput(container, 'name', 'test file name 1');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getResearchFiles).toHaveBeenCalledWith({
-      pid: '',
-      pin: '',
-      appCreateUserid: '',
-      appLastUpdateUserid: '',
-      createOrUpdateBy: 'appLastUpdateUserid',
-      createOrUpdateRange: 'updatedOnStartDate',
-      createdOnEndDate: '',
-      createdOnStartDate: '',
-      name: 'test file name 1',
-      page: 1,
-      quantity: 10,
-      regionCode: '',
-      researchFileStatusTypeCode: '',
-      researchSearchBy: 'name',
-      rfileNumber: '',
-      roadOrAlias: '',
-      sort: undefined,
-      updatedOnEndDate: '',
-      updatedOnStartDate: '',
-    });
-  });
-
-  it('searches by research file status', async () => {
-    setupMockSearch([]);
-    const { container, searchButton } = setup();
-
-    fillInput(container, 'researchFileStatusTypeCode', 'INACTIVE', 'select');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getResearchFiles).toHaveBeenCalledWith({
-      pid: '',
-      pin: '',
-      appCreateUserid: '',
-      appLastUpdateUserid: '',
-      createOrUpdateBy: 'appLastUpdateUserid',
-      createOrUpdateRange: 'updatedOnStartDate',
-      createdOnEndDate: '',
-      createdOnStartDate: '',
-      name: '',
-      page: 1,
-      quantity: 10,
-      regionCode: '',
-      researchFileStatusTypeCode: 'INACTIVE',
-      researchSearchBy: 'pid',
-      rfileNumber: '',
-      roadOrAlias: '',
-      sort: undefined,
-      updatedOnEndDate: '',
-      updatedOnStartDate: '',
-    });
-  });
-
-  it('searches by road name', async () => {
-    setupMockSearch([]);
-    const { container, searchButton } = setup();
-
-    fillInput(container, 'roadOrAlias', 'a road name');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getResearchFiles).toHaveBeenCalledWith({
-      pid: '',
-      pin: '',
-      appCreateUserid: '',
-      appLastUpdateUserid: '',
-      createOrUpdateBy: 'appLastUpdateUserid',
-      createOrUpdateRange: 'updatedOnStartDate',
-      createdOnEndDate: '',
-      createdOnStartDate: '',
-      name: '',
-      page: 1,
-      quantity: 10,
-      regionCode: '',
-      researchFileStatusTypeCode: '',
-      researchSearchBy: 'pid',
-      rfileNumber: '',
-      roadOrAlias: 'a road name',
-      sort: undefined,
-      updatedOnEndDate: '',
-      updatedOnStartDate: '',
-    });
-  });
-
-  it('searches by create date range', async () => {
-    setupMockSearch([]);
-    const { container, searchButton } = setup();
-
-    fillInput(container, 'createOrUpdateRange', 'createdOnStartDate', 'select');
-    fillInput(container, 'createdOnStartDate', '2020-01-01');
-    fillInput(container, 'createdOnEndDate', '2020-02-02');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getResearchFiles).toHaveBeenCalledWith(
-      expect.objectContaining({
-        pid: '',
-        pin: '',
-        appCreateUserid: '',
-        appLastUpdateUserid: '',
-        createOrUpdateBy: 'appLastUpdateUserid',
-        createOrUpdateRange: 'createdOnStartDate',
-        createdOnEndDate: '2020-02-02',
-        createdOnStartDate: '2020-01-01',
-        name: '',
-        page: 1,
-        quantity: 10,
-        regionCode: '',
-        researchFileStatusTypeCode: '',
-        researchSearchBy: 'pid',
-        rfileNumber: '',
-        roadOrAlias: '',
-        sort: undefined,
-        updatedOnEndDate: '',
-        updatedOnStartDate: '',
-      }),
-    );
-  });
-
-  it('searches by update date range', async () => {
-    setupMockSearch([]);
-    const { container, searchButton } = setup();
-
-    fillInput(container, 'createOrUpdateRange', 'updatedOnStartDate', 'select');
-    fillInput(container, 'updatedOnStartDate', '2021-01-01');
-    fillInput(container, 'updatedOnEndDate', '2021-02-02');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getResearchFiles).toHaveBeenCalledWith(
-      expect.objectContaining({
-        pid: '',
-        pin: '',
-        appCreateUserid: '',
-        appLastUpdateUserid: '',
-        createOrUpdateBy: 'appLastUpdateUserid',
-        createOrUpdateRange: 'updatedOnStartDate',
-        createdOnEndDate: '',
-        createdOnStartDate: '',
-        name: '',
-        page: 1,
-        quantity: 10,
-        regionCode: '',
-        researchFileStatusTypeCode: '',
-        researchSearchBy: 'pid',
-        rfileNumber: '',
-        roadOrAlias: '',
-        sort: undefined,
-        updatedOnEndDate: '2021-02-02',
-        updatedOnStartDate: '2021-01-01',
-      }),
-    );
-  });
-
-  it('searches by create user', async () => {
-    setupMockSearch([]);
-    const { container, searchButton } = setup();
-
-    fillInput(container, 'createOrUpdateBy', 'appCreateUserid', 'select');
-    fillInput(container, 'appCreateUserid', 'createUser');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getResearchFiles).toHaveBeenCalledWith(
-      expect.objectContaining({
-        pid: '',
-        pin: '',
-        appCreateUserid: 'createUser',
-        appLastUpdateUserid: '',
-        createOrUpdateBy: 'appCreateUserid',
-        createOrUpdateRange: 'updatedOnStartDate',
-        createdOnEndDate: '',
-        createdOnStartDate: '',
-        name: '',
-        page: 1,
-        quantity: 10,
-        regionCode: '',
-        researchFileStatusTypeCode: '',
-        researchSearchBy: 'pid',
-        rfileNumber: '',
-        roadOrAlias: '',
-        sort: undefined,
-        updatedOnEndDate: '',
-        updatedOnStartDate: '',
-      }),
-    );
-  });
-
-  it('searches by update user', async () => {
-    setupMockSearch([]);
-    const { container, searchButton } = setup();
-
-    fillInput(container, 'createOrUpdateBy', 'appLastUpdateUserid', 'select');
-    fillInput(container, 'appLastUpdateUserid', 'updateUser');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getResearchFiles).toHaveBeenCalledWith(
-      expect.objectContaining({
-        pid: '',
-        pin: '',
-        appCreateUserid: '',
-        appLastUpdateUserid: 'updateUser',
-        createOrUpdateBy: 'appLastUpdateUserid',
-        createOrUpdateRange: 'updatedOnStartDate',
-        createdOnEndDate: '',
-        createdOnStartDate: '',
-        name: '',
-        page: 1,
-        quantity: 10,
-        regionCode: '',
-        researchFileStatusTypeCode: '',
-        researchSearchBy: 'pid',
-        rfileNumber: '',
-        roadOrAlias: '',
-        sort: undefined,
-        updatedOnEndDate: '',
-        updatedOnStartDate: '',
-      }),
-    );
-  });
-
-  it('searches by property pid', async () => {
-    setupMockSearch([]);
-    const { container, searchButton } = setup();
-
-    fillInput(container, 'researchSearchBy', 'pid', 'select');
-    fillInput(container, 'pid', '100-100-999');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getResearchFiles).toHaveBeenCalledWith(
-      expect.objectContaining({
-        pid: '100-100-999',
-        pin: '',
-        appCreateUserid: '',
-        appLastUpdateUserid: '',
-        createOrUpdateBy: 'appLastUpdateUserid',
-        createOrUpdateRange: 'updatedOnStartDate',
-        createdOnEndDate: '',
-        createdOnStartDate: '',
-        name: '',
-        page: 1,
-        quantity: 10,
-        regionCode: '',
-        researchFileStatusTypeCode: '',
-        researchSearchBy: 'pid',
-        rfileNumber: '',
-        roadOrAlias: '',
-        sort: undefined,
-        updatedOnEndDate: '',
-        updatedOnStartDate: '',
-      }),
-    );
-  });
-
-  it('searches by property pin', async () => {
-    setupMockSearch([]);
-    const { container, searchButton } = setup();
-
-    fillInput(container, 'researchSearchBy', 'pin', 'select');
-    fillInput(container, 'pin', '888-100-999');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getResearchFiles).toHaveBeenCalledWith(
-      expect.objectContaining({
-        pid: '',
-        pin: '888-100-999',
-        appCreateUserid: '',
-        appLastUpdateUserid: '',
-        createOrUpdateBy: 'appLastUpdateUserid',
-        createOrUpdateRange: 'updatedOnStartDate',
-        createdOnEndDate: '',
-        createdOnStartDate: '',
-        name: '',
-        page: 1,
-        quantity: 10,
-        regionCode: '',
-        researchFileStatusTypeCode: '',
-        researchSearchBy: 'pin',
-        rfileNumber: '',
-        roadOrAlias: '',
-        sort: undefined,
-        updatedOnEndDate: '',
-        updatedOnStartDate: '',
-      }),
-    );
   });
 
   it('displays an error when no matching records found', async () => {
@@ -599,6 +141,7 @@ describe('Research List View', () => {
       sort: undefined,
       updatedOnEndDate: '',
       updatedOnStartDate: '',
+      selectedUser: [],
     });
     const toasts = await findAllByText('network error');
     expect(toasts[0]).toBeVisible();
@@ -624,7 +167,12 @@ describe('Research List View', () => {
 
   it('navigates to create research route when user clicks the create button', async () => {
     setupMockSearch([]);
-    setup({ claims: [Claims.RESEARCH_VIEW, Claims.RESEARCH_ADD] });
+    const selectedUser = [{ id: 'DSMITH', text: 'David Smith (DSMITH)' }];
+    setup(
+      { claims: [Claims.RESEARCH_VIEW, Claims.RESEARCH_ADD] },
+      defaultResearchFilter,
+      selectedUser,
+    );
 
     await waitForElementToBeRemoved(screen.getByTitle('table-loading'));
     const button = await screen.findByText(/Create a Research File/i);

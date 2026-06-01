@@ -25,6 +25,9 @@ import { PropertyForm } from '../../shared/models';
 import { ManagementFormModel } from '../models/ManagementFormModel';
 import AddManagementContainer, { IAddManagementContainerProps } from './AddManagementContainer';
 import { IAddManagementContainerViewProps } from './AddManagementContainerView';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 
 const history = createMemoryHistory();
 
@@ -42,6 +45,36 @@ const mockCreateManagementFile = getMockRepositoryObj();
 vi.mock('@/hooks/repositories/useManagementFileRepository');
 vi.mocked(useManagementFileRepository, { partial: true }).mockReturnValue({
   addManagementFileApi: mockCreateManagementFile,
+});
+
+vi.mock('@/hooks/repositories/useUserInfoRepository');
+vi.mocked(useUserInfoRepository).mockReturnValue({
+  retrieveUserInfo: vi.fn(),
+  retrieveUserInfoLoading: true,
+  retrieveUserInfoResponse: {
+    userRegions: [
+      {
+        id: 1,
+        userId: 5,
+        regionCode: 1,
+        region: { id: 1, description: 'South Coast Region' },
+      },
+      {
+        id: 2,
+        userId: 5,
+        regionCode: 2,
+        region: { id: 2, description: 'Southern Interior Region' },
+      },
+    ],
+  } as ApiGen_Concepts_User,
+  retrieveUserLookup: vi.fn(),
+  retrieveUserLookupLoading: false,
+  retrieveUserLookupResponse: {
+    items: [],
+    page: 0,
+    quantity: 0,
+    total: 0,
+  } as ApiGen_Base_Page<ApiGen_Concepts_User>,
 });
 
 describe('Add Management Container component', () => {

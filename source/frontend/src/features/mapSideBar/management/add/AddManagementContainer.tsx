@@ -5,14 +5,16 @@ import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { useMapStateMachine } from '@/components/common/mapFSM/MapStateMachineContext';
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { usePropertyAssociations } from '@/hooks/repositories/usePropertyAssociations';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import { useAddFileConfirmation } from '@/hooks/useAddFileConfirmation';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
+import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, firstOrNull, isValidId } from '@/utils';
+import { exists, firstOrNull, formatGuid, isValidId } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
 import { ManagementFormModel } from '../models/ManagementFormModel';
@@ -31,8 +33,13 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
 }) => {
   const [isFormValid, setIsFormValid] = useState<boolean>(true);
   const formikRef = useRef<FormikProps<ManagementFormModel>>(null);
+  const { obj } = useKeycloakWrapper();
+  const { sub } = obj.userInfo as IUserInfo;
+  const formattedGuid = formatGuid(sub);
+
   const { setModalContent, setDisplayModal } = useModalContext();
   const { execute: getPropertyAssociations } = usePropertyAssociations();
+  const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
 
   const {
     addManagementFileApi: { execute: addManagementFileApi, loading },
@@ -61,6 +68,13 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
     'fileProperties',
   );
 
+  const userRegionCodes = useMemo(
+    () =>
+      retrieveUserInfoResponse?.userRegions?.map(ur => ur.regionCode?.toString()).filter(exists) ??
+      [],
+    [retrieveUserInfoResponse?.userRegions],
+  );
+
   useEffect(() => {
     if (featuresWithAddresses?.length > 0 && !formikRef?.current?.values?.regionCode) {
       const firstPropertyFeature = firstOrNull(featuresWithAddresses)?.feature;
@@ -69,11 +83,14 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
         const firstProperty = PropertyForm.fromFeatureDataset(firstPropertyFeature);
         formikRef?.current?.setFieldValue(
           'regionCode',
-          firstProperty.regionName !== 'Cannot determine' ? firstProperty.region : undefined,
+          firstProperty.regionName !== 'Cannot determine' &&
+            userRegionCodes.includes(firstProperty.region?.toString())
+            ? firstProperty.region
+            : '',
         );
       }
     }
-  }, [featuresWithAddresses]);
+  }, [featuresWithAddresses, userRegionCodes]);
 
   const initialForm = useMemo(() => {
     const managementForm = new ManagementFormModel();
@@ -145,6 +162,10 @@ const AddManagementContainer: React.FC<IAddManagementContainerProps> = ({
       formikHelpers?.setSubmitting(false);
     }
   };
+
+  useEffect(() => {
+    formattedGuid && retrieveUserInfo(formattedGuid);
+  }, [formattedGuid, retrieveUserInfo]);
 
   return (
     <View

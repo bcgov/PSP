@@ -7,6 +7,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, waitFor } from '@/utils/test-utils';
 
 import ResearchFilter, { defaultResearchFilter } from './ResearchFilter';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -14,11 +15,18 @@ const storeState = {
 
 const setFilter = vi.fn();
 // render component under test
-const setup = (renderOptions: RenderOptions = { store: storeState }) => {
-  const utils = render(<ResearchFilter setFilter={setFilter} />, {
-    ...renderOptions,
-    claims: [Claims.RESEARCH_VIEW],
-  });
+const setup = (
+  filter = defaultResearchFilter,
+  createdByOptions: MultiSelectOption[] = [],
+  renderOptions: RenderOptions = { store: storeState },
+) => {
+  const utils = render(
+    <ResearchFilter filter={filter} setFilter={setFilter} createdByOptions={createdByOptions} />,
+    {
+      ...renderOptions,
+      claims: [Claims.RESEARCH_VIEW],
+    },
+  );
   const searchButton = utils.getByTestId('search');
   const resetButton = utils.getByTestId('reset-button');
   return { searchButton, setFilter, resetButton, ...utils };
@@ -66,6 +74,7 @@ describe('Research Filter', () => {
       roadOrAlias: '',
       updatedOnEndDate: '',
       updatedOnStartDate: '',
+      selectedUser: [],
     });
   });
 
@@ -91,6 +100,7 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
+        selectedUser: [],
       }),
     );
   });
@@ -117,6 +127,7 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
+        selectedUser: [],
       }),
     );
   });
@@ -145,6 +156,7 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
+        selectedUser: [],
       }),
     );
   });
@@ -173,6 +185,7 @@ describe('Research Filter', () => {
         roadOrAlias: 'a road name',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
+        selectedUser: [],
       }),
     );
   });
@@ -203,6 +216,7 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
+        selectedUser: [],
       }),
     );
   });
@@ -233,22 +247,25 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '2021-02-02',
         updatedOnStartDate: '2021-01-01',
+        selectedUser: [],
       }),
     );
   });
 
   it('searches by create user', async () => {
-    const { container, searchButton } = setup();
+    const selectedUser = [{ id: 'DSMITH', text: 'Devin Smith (DSMITH)' }];
+    const { searchButton } = setup(
+      { ...defaultResearchFilter, createOrUpdateBy: 'appCreateUserid', selectedUser },
+      selectedUser,
+    );
 
-    fillInput(container, 'createOrUpdateBy', 'appCreateUserid', 'select');
-    fillInput(container, 'appCreateUserid', 'createUser');
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
         pid: '',
         pin: '',
-        appCreateUserid: 'createUser',
+        appCreateUserid: 'DSMITH',
         appLastUpdateUserid: '',
         createOrUpdateBy: 'appCreateUserid',
         createOrUpdateRange: 'updatedOnStartDate',
@@ -262,15 +279,23 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
+        selectedUser: [
+          {
+            id: 'DSMITH',
+            text: 'Devin Smith (DSMITH)',
+          },
+        ],
       }),
     );
   });
 
   it('searches by update user', async () => {
-    const { container, searchButton, setFilter } = setup();
+    const selectedUser = [{ id: 'DSMITH', text: 'Devin Smith (DSMITH)' }];
+    const { searchButton } = setup(
+      { ...defaultResearchFilter, createOrUpdateBy: 'appLastUpdateUserid', selectedUser },
+      selectedUser,
+    );
 
-    fillInput(container, 'createOrUpdateBy', 'appLastUpdateUserid', 'select');
-    fillInput(container, 'appLastUpdateUserid', 'updateUser');
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
@@ -278,7 +303,7 @@ describe('Research Filter', () => {
         pid: '',
         pin: '',
         appCreateUserid: '',
-        appLastUpdateUserid: 'updateUser',
+        appLastUpdateUserid: 'DSMITH',
         createOrUpdateBy: 'appLastUpdateUserid',
         createOrUpdateRange: 'updatedOnStartDate',
         createdOnEndDate: '',
@@ -291,6 +316,12 @@ describe('Research Filter', () => {
         roadOrAlias: '',
         updatedOnEndDate: '',
         updatedOnStartDate: '',
+        selectedUser: [
+          {
+            id: 'DSMITH',
+            text: 'Devin Smith (DSMITH)',
+          },
+        ],
       }),
     );
   });

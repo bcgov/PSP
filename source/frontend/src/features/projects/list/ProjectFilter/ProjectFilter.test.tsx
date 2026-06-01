@@ -5,15 +5,16 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { IProjectFilterProps, ProjectFilter } from './ProjectFilter';
-import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
-import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { FormikProps } from 'formik';
 import { ProjectFilterModel } from './models/ProjectFilterModel';
 import { createRef } from 'react';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
+import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
 
 const setFilter = vi.fn();
 const onResetFilter = vi.fn();
+const retrieveUserLookup = vi.fn();
 
 const mockFilterModel = new ProjectFilterModel();
 
@@ -36,6 +37,9 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
       } as ApiGen_Concepts_RegionUser,
     ],
   } as ApiGen_Concepts_User,
+  retrieveUserLookup: retrieveUserLookup,
+  retrieveUserLookupLoading: false,
+  retrieveUserLookupResponse: undefined
 });
 
 const mockTeamMemberOptions: MultiSelectOption[] = [
@@ -57,6 +61,7 @@ describe('Project Filter', () => {
         projectTeamMembersOptions={mockTeamMemberOptions}
         setFilter={setFilter}
         onResetFilter={onResetFilter}
+        createdByOptions={renderOptions.props?.createdByOptions ?? []}
       />,
       {
         ...renderOptions,
@@ -169,6 +174,32 @@ describe('Project Filter', () => {
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
         teamMemberPersonId: '1001',
+      }),
+    );
+  });
+
+  it('searches by created by', async () => {
+    const selectedUser = [{ id: 'DSMITH', text: 'Devin Smith (DSMITH)' }];
+
+    const initialValues = new ProjectFilterModel();
+    initialValues.projectCreatedBy = selectedUser;
+
+    const { getSearchButton } = await setup({
+      props: {
+        initialValues,
+        createdByOptions: selectedUser,
+      },
+    });
+
+    await act(async () => userEvent.click(getSearchButton()));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({
+        projectCreatedBy: 'DSMITH',
+        projectNumber: null,
+        projectName: null,
+        projectStatusCode: null,
+        regions: [],
       }),
     );
   });

@@ -9,7 +9,7 @@
         <WinAuthUserName />
         <WinAuthDomain />
         <ServerName>ssistst.th.gov.bc.ca</ServerName>
-        <PathOnServer>/SSISDB/PIMS_TST/PIMS_PROPERTY_MERGE</PathOnServer>
+        <PathOnServer>/SSISDB/PIMS_DEV/PIMS_PROPERTY_MERGE</PathOnServer>
         <UserIDs />
         <UserPasswords />
         <OfflineMode>false</OfflineMode>

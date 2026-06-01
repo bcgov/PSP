@@ -31,6 +31,15 @@ export const columns: ColumnWithProps<ProjectSearchResultModel>[] = [
     ),
   },
   {
+    Header: 'Last updated by',
+    accessor: 'lastUpdatedBy',
+    align: 'left',
+    clickable: false,
+    sortable: true,
+    width: 10,
+    maxWidth: 20,
+  },
+  {
     Header: 'MOTT region',
     accessor: 'region',
     align: 'left',
@@ -49,8 +58,8 @@ export const columns: ColumnWithProps<ProjectSearchResultModel>[] = [
     maxWidth: 20,
   },
   {
-    Header: 'Last updated by',
-    accessor: 'lastUpdatedBy',
+    Header: 'Created by',
+    accessor: 'createdBy',
     align: 'left',
     clickable: false,
     sortable: true,
