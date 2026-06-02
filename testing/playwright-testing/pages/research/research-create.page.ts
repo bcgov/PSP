@@ -31,8 +31,10 @@ export class ResearchCreatePage extends LayoutPage {
 
     this.page = page;
 
-    this.reseachMainMenuOption = page.getByTestId('nav-tooltip-research');
-    this.researchCreateNewOption = page.getByRole('link', { name: 'Create a Research File' })
+    this.reseachMainMenuOption = page.getByTestId("nav-tooltip-research");
+    this.researchCreateNewOption = page.getByRole("link", {
+      name: "Create a Research File",
+    });
 
     this.researchTitle = page.locator("div", {
       hasText: "Create Research File",
@@ -72,19 +74,15 @@ export class ResearchCreatePage extends LayoutPage {
       "//span[@id='property-selector-tooltip']"
     );
 
-    this.cancelButton = page.locator(
-      "button[data-testid='cancel-button']"
-    );
-    this.confirmButton = page.locator(
-      "button[data-testid='save-button']"
-    );
+    this.cancelButton = page.locator("button[data-testid='cancel-button']");
+    this.confirmButton = page.locator("button[data-testid='save-button']");
   }
 
   async goto() {
     await this.page.goto("/mapview");
   }
 
-   async navigateToResearchCreate() {
+  async navigateToResearchCreate() {
     await this.reseachMainMenuOption.click();
     await this.researchCreateNewOption.click();
   }

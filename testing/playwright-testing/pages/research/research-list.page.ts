@@ -57,8 +57,10 @@ export class ResearchListPage extends LayoutPage {
 
     this.page = page;
 
-    this.reseachMainMenuOption = page.getByTestId('nav-tooltip-research');
-    this.researchListViewOption = page.getByRole('link', { name: 'Manage Research Files' });
+    this.reseachMainMenuOption = page.getByTestId("nav-tooltip-research");
+    this.researchListViewOption = page.getByRole("link", {
+      name: "Manage Research Files",
+    });
 
     this.researchListTitle = page.getByText("Research Files", { exact: true });
     this.researchNewButton = page.getByRole("button", {
@@ -94,15 +96,21 @@ export class ResearchListPage extends LayoutPage {
     this.researchTableMotiRegionHeader = page.locator(
       ':text-is("MOTT region")'
     );
-    this.researchTableCreatedByHeader = page.getByTestId('researchFilesTable').getByText('Created by')
+    this.researchTableCreatedByHeader = page
+      .getByTestId("researchFilesTable")
+      .getByText("Created by");
     this.researchTableOrderByCreatedBy = page.getByTestId(
       "sort-column-appCreateUserid"
     );
-    this.researchTableCreatedDateHeader = page.getByTestId('researchFilesTable').getByText('Created date')
+    this.researchTableCreatedDateHeader = page
+      .getByTestId("researchFilesTable")
+      .getByText("Created date");
     this.researchTableOrderCreatedDate = page.getByTestId(
       "sort-column-appCreateTimestamp"
     );
-    this.researchTableLastUpdatedByHeader = page.getByTestId('researchFilesTable').getByText('Last updated by')
+    this.researchTableLastUpdatedByHeader = page
+      .getByTestId("researchFilesTable")
+      .getByText("Last updated by");
     this.researchTableOrderLastUpdated = page.getByTestId(
       "sort-column-appLastUpdateUserid"
     );
@@ -157,7 +165,7 @@ export class ResearchListPage extends LayoutPage {
 
   async changeToNewTab(): Promise<Page> {
     const pagePromise = this.page.context().waitForEvent("page");
-     const newPage = await pagePromise;
+    const newPage = await pagePromise;
     await newPage.waitForLoadState();
     return newPage;
   }

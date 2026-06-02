@@ -21,7 +21,6 @@ test.describe("Research Files feature", () => {
   });
 
   test("verify initial Research File Create Form", async () => {
-
     await researchCreatePage.navigateToResearchCreate();
 
     //await expect(researchCreatePage.researchTitle).toBeVisible();
@@ -53,7 +52,6 @@ test.describe("Research Files feature", () => {
   });
 
   test("verify Research File Manage List View", async () => {
-
     //Verify elements from the Research File List View
     await researchListPage.navigateToResearchListView();
     await expect(researchListPage.researchListTitle).toBeVisible();
