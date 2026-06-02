@@ -7,9 +7,6 @@ let page: Page;
 let researchCreatePage: ResearchCreatePage;
 let researchListPage: ResearchListPage;
 
-const userFullName = process.env.USER_TRANPSP1_FULLNAME;
-const userEmail = process.env.USER_TRANPSP1_EMAIL;
-
 test.describe.serial("Research File modal", () => {
   test.beforeAll(async ({ browser }) => {
     context = await browser.newContext();
@@ -19,7 +16,6 @@ test.describe.serial("Research File modal", () => {
   });
 
   test.afterAll(async () => {
-    await researchCreatePage.cancelButtonClick();
     await context.close();
   });
 
@@ -50,6 +46,8 @@ test.describe.serial("Research File modal", () => {
 
     await expect(researchCreatePage.cancelButton).toBeVisible();
     await expect(researchCreatePage.confirmButton).toBeVisible();
+
+    await researchCreatePage.cancelButtonClick();
   });
 
   test("verify Research File Manage List View", async () => {
