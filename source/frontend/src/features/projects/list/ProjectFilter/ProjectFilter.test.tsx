@@ -5,37 +5,13 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-utils';
 
 import { IProjectFilterProps, ProjectFilter } from './ProjectFilter';
-import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
-import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { FormikProps } from 'formik';
 import { ProjectFilterModel } from './models/ProjectFilterModel';
 import { createRef } from 'react';
-
 const setFilter = vi.fn();
 const onResetFilter = vi.fn();
 
 const mockFilterModel = new ProjectFilterModel();
-
-const retrieveUserInfo = vi.fn();
-vi.mock('@/hooks/repositories/useUserInfoRepository');
-vi.mocked(useUserInfoRepository).mockReturnValue({
-  retrieveUserInfo,
-  retrieveUserInfoLoading: true,
-  retrieveUserInfoResponse: {
-    userRegions: [
-      {
-        id: 1,
-        userId: 5,
-        regionCode: 1,
-      } as ApiGen_Concepts_RegionUser,
-      {
-        id: 2,
-        userId: 5,
-        regionCode: 2,
-      } as ApiGen_Concepts_RegionUser,
-    ],
-  } as ApiGen_Concepts_User,
-});
 
 describe('Project Filter', () => {
   const setup = async (renderOptions: RenderOptions & { props?: Partial<IProjectFilterProps> }) => {
@@ -48,6 +24,7 @@ describe('Project Filter', () => {
         pimsRegionsOptions={renderOptions.props?.pimsRegionsOptions ?? []}
         setFilter={setFilter}
         onResetFilter={onResetFilter}
+        createdByOptions={renderOptions.props?.createdByOptions ?? []}
       />,
       {
         ...renderOptions,
@@ -129,6 +106,32 @@ describe('Project Filter', () => {
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
         projectStatusCode: 'PL',
+        regions: [],
+      }),
+    );
+  });
+
+  it('searches by created by', async () => {
+    const selectedUser = [{ id: 'DSMITH', text: 'Devin Smith (DSMITH)' }];
+
+    const initialValues = new ProjectFilterModel();
+    initialValues.projectCreatedBy = selectedUser;
+
+    const { getSearchButton } = await setup({
+      props: {
+        initialValues,
+        createdByOptions: selectedUser,
+      },
+    });
+
+    await act(async () => userEvent.click(getSearchButton()));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({
+        projectCreatedBy: 'DSMITH',
+        projectNumber: null,
+        projectName: null,
+        projectStatusCode: null,
         regions: [],
       }),
     );

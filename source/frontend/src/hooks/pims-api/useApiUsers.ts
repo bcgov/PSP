@@ -4,6 +4,7 @@ import React from 'react';
 import { IPaginateParams } from '@/constants/API';
 import * as pimsToasts from '@/constants/toasts';
 import { LifecycleToasts } from '@/customAxios';
+import { IUsersFilter } from '@/interfaces/IUsersFilter';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { ApiGen_Requests_ActivateResponse } from '@/models/api/generated/ApiGen_Requests_ActivateResponse';
@@ -47,6 +48,8 @@ export const useApiUsers = () => {
             },
           },
         ),
+      getUserLookup: (filter: IUsersFilter & IPaginateParams) =>
+        api.post<ApiGen_Base_Page<ApiGen_Concepts_User>>('/users/search/filter', filter),
     }),
     [api, apiWithToasts],
   );

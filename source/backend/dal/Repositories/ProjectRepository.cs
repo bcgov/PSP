@@ -233,6 +233,11 @@ namespace Pims.Dal.Repositories
                 query = query.Where(x => filter.Regions.Any(r => r == x.RegionCode));
             }
 
+            if (!string.IsNullOrWhiteSpace(filter.ProjectCreatedBy))
+            {
+                query = query.Where(x => x.AppCreateUserid == filter.ProjectCreatedBy);
+            }
+
             if (filter.Sort?.Any() == true)
             {
                 var direction = filter.Sort[0].Split(" ").LastOrDefault();

@@ -16,6 +16,9 @@ import { act, fakeText, fillInput, render, RenderOptions, userEvent } from '@/ut
 import { ProjectForm, ProjectTeamForm } from '../models';
 import { AddProjectYupSchema } from './AddProjectFileYupSchema';
 import AddProjectForm, { IAddProjectFormProps } from './AddProjectForm';
+import { IUsersFilter } from '@/interfaces';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 
 const history = createMemoryHistory();
 const validationSchema = vi.fn().mockReturnValue(AddProjectYupSchema);
@@ -48,6 +51,13 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
       },
     ],
   },
+  retrieveUserLookup: function (
+    filter: IUsersFilter & API.IPaginateParams,
+  ): Promise<ApiGen_Base_Page<ApiGen_Concepts_User>> {
+    throw new Error('Function not implemented.');
+  },
+  retrieveUserLookupLoading: false,
+  retrieveUserLookupResponse: undefined,
 });
 
 const mockStatusOptions: SelectOption[] = getMockLookUpsByType(API.PROJECT_STATUS_TYPES);
