@@ -4,6 +4,9 @@ import { LayoutPage } from "../layout/layout.page";
 export class ResearchCreatePage extends LayoutPage {
   readonly page: Page;
 
+  readonly reseachMainMenuOption: Locator;
+  readonly researchCreateNewOption: Locator;
+
   readonly researchTitle: Locator;
   readonly researchLabelName: Locator;
   readonly researchNameInput: Locator;
@@ -27,6 +30,9 @@ export class ResearchCreatePage extends LayoutPage {
     super(page);
 
     this.page = page;
+
+    this.reseachMainMenuOption = page.getByTestId('nav-tooltip-research');
+    this.researchCreateNewOption = page.getByRole('link', { name: 'Create a Research File' })
 
     this.researchTitle = page.locator("div", {
       hasText: "Create Research File",
@@ -67,15 +73,20 @@ export class ResearchCreatePage extends LayoutPage {
     );
 
     this.cancelButton = page.locator(
-      "button[data-testid='cancel-modal-button']"
+      "button[data-testid='cancel-button']"
     );
     this.confirmButton = page.locator(
-      "div[class='modal-footer'] a[data-testid='ok-modal-button']"
+      "button[data-testid='save-button']"
     );
   }
 
   async goto() {
-    await this.page.goto("/mapview/sidebar/research/new");
+    await this.page.goto("/mapview");
+  }
+
+   async navigateToResearchCreate() {
+    await this.reseachMainMenuOption.click();
+    await this.researchCreateNewOption.click();
   }
 
   async cancelButtonClick() {

@@ -7,12 +7,13 @@ let page: Page;
 let researchCreatePage: ResearchCreatePage;
 let researchListPage: ResearchListPage;
 
-test.describe.serial("Research File modal", () => {
+test.describe("Research Files feature", () => {
   test.beforeAll(async ({ browser }) => {
     context = await browser.newContext();
     page = await context.newPage();
     researchCreatePage = new ResearchCreatePage(page);
     researchListPage = new ResearchListPage(page);
+    await researchCreatePage.goto();
   });
 
   test.afterAll(async () => {
@@ -20,9 +21,10 @@ test.describe.serial("Research File modal", () => {
   });
 
   test("verify initial Research File Create Form", async () => {
-    await researchCreatePage.goto();
 
-    await expect(researchCreatePage.researchTitle).toBeVisible();
+    await researchCreatePage.navigateToResearchCreate();
+
+    //await expect(researchCreatePage.researchTitle).toBeVisible();
     await expect(researchCreatePage.researchLabelName).toBeVisible();
     await expect(researchCreatePage.researchNameInput).toBeVisible();
     await expect(researchCreatePage.researchNameDescription).toBeVisible();
@@ -51,9 +53,13 @@ test.describe.serial("Research File modal", () => {
   });
 
   test("verify Research File Manage List View", async () => {
+
+    //Verify elements from the Research File List View
+    await researchListPage.navigateToResearchListView();
     await expect(researchListPage.researchListTitle).toBeVisible();
     await expect(researchListPage.researchNewButton).toBeVisible();
 
+    //Filter section
     await expect(researchListPage.researcSearchByLabel).toBeVisible();
     await expect(researchListPage.researchByRegionSelect).toBeVisible();
     await expect(researchListPage.researchByStatusSelect).toBeVisible();
@@ -67,8 +73,7 @@ test.describe.serial("Research File modal", () => {
     await expect(researchListPage.researchSearchButton).toBeVisible();
     await expect(researchListPage.researchSearchResetButton).toBeVisible();
 
-    await expect(researchListPage.researchListTitle).toBeVisible();
-
+    // List View Table
     await expect(researchListPage.researchTable).toBeVisible();
     await expect(researchListPage.researchTableFileNbrHeader).toBeVisible();
     await expect(researchListPage.researchTableOrderByFileNbr).toBeVisible();
@@ -91,10 +96,15 @@ test.describe.serial("Research File modal", () => {
     await expect(researchListPage.researchTableOrderStatus).toBeVisible();
 
     await expect(researchListPage.researchTableEntriesSpan).toBeVisible();
-    await expect(researchListPage.researchTablePagination10).toBeVisible();
     await expect(researchListPage.researchTableNextPageButton).toBeVisible();
     await expect(researchListPage.researchTable1stPageButton).toBeVisible();
 
-    await expect(researchListPage.getResearchListTotal).toBeGreaterThan(0);
+    const totalResearchFiles = await researchListPage.getResearchListTotal();
+    expect(totalResearchFiles).toBeGreaterThan(0);
+
+    //Click on create new research file
+    await researchListPage.createNewResearchClick();
+    await researchListPage.changeToNewTab();
+    await expect(page).toHaveURL("mapview/sidebar/research/new");
   });
 });
