@@ -533,6 +533,42 @@ namespace Pims.Dal.Repositories
                 .AsNoTracking()
                 .SingleOrDefault(u => u.GuidIdentifierValue == keycloakUserId) ?? throw new KeyNotFoundException();
         }
+
+        /// <summary>
+        /// Get a page of users from the datasource.
+        /// The filter will allow queries to search for the following property values; DisplayName, FirstName, LastName.
+        /// </summary>
+        /// <param name="filter"></param>
+        /// <returns></returns>
+        public Paged<PimsUser> GetUserLookup(UserFilter filter)
+        {
+            User.ThrowIfNotAuthorized(Permissions.ProjectView, Permissions.ResearchFileView);
+
+            var query = Context.PimsUsers
+                .Include(u => u.Person)
+                .AsNoTracking();
+
+            if (!string.IsNullOrWhiteSpace(filter.BusinessIdentifierValue))
+            {
+                query = query.Where(u =>
+                    EF.Functions.Like(u.BusinessIdentifierValue, $"%{filter.BusinessIdentifierValue}%") ||
+                    EF.Functions.Like(u.Person.FirstName, $"%{filter.BusinessIdentifierValue}%") ||
+                    EF.Functions.Like(u.Person.Surname, $"%{filter.BusinessIdentifierValue}%"));
+            }
+
+            if (filter.ActiveOnly == true)
+            {
+                query = query.Where(u => u.IsDisabled == false);
+            }
+
+            var users = query
+                .OrderBy(u => u.Person.Surname)
+                .ThenBy(u => u.Person.FirstName)
+                .Skip((filter.Page - 1) * filter.Quantity)
+                .Take(filter.Quantity);
+
+            return new Paged<PimsUser>(users.ToArray(), filter.Page, filter.Quantity, query.Count());
+        }
         #endregion
     }
 }

@@ -28,6 +28,7 @@ import { AcquisitionOwnerFormModel, OwnerAddressFormModel } from '../common/mode
 import { AddAcquisitionContainer, IAddAcquisitionContainerProps } from './AddAcquisitionContainer';
 import AddAcquisitionForm from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 
 const history = createMemoryHistory();
 
@@ -72,6 +73,14 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
       },
     ],
   } as ApiGen_Concepts_User,
+  retrieveUserLookup: vi.fn(),
+  retrieveUserLookupLoading: false,
+  retrieveUserLookupResponse: {
+    items: [],
+    page: 0,
+    quantity: 0,
+    total: 0,
+  } as ApiGen_Base_Page<ApiGen_Concepts_User>,
 });
 
 // Mock API service calls

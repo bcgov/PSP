@@ -19,5 +19,7 @@ namespace Pims.Dal.Entities.Models
         /// </summary>
         public IList<short> Regions { get; set; } = new List<short>();
 
+        public string ProjectCreatedBy { get; set; }
+
     }
 }
