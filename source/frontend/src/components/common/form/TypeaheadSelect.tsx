@@ -64,7 +64,7 @@ export const TypeaheadSelect = React.forwardRef<Typeahead<SelectOption>, ITypeah
 
     const onSelectChange = React.useCallback(
       (selectedArray: SelectOption[]) => {
-        const selected = selectedArray.length > 0 ? selectedArray[0] : undefined;
+        const selected = selectedArray.length > 0 ? selectedArray[0] : null;
         setFieldValue(field, selected);
         if (typeof onChange === 'function') {
           onChange(selected);
@@ -103,7 +103,7 @@ export const TypeaheadSelect = React.forwardRef<Typeahead<SelectOption>, ITypeah
             clearButton
             highlightOnlyResult
             multiple={false}
-            isInvalid={touch && error}
+            isInvalid={!!(touch && error)}
             placeholder={placeholder ?? 'Type to search...'}
             options={options}
             labelKey="label"

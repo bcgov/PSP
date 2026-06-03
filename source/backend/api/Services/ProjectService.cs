@@ -170,6 +170,22 @@ namespace Pims.Api.Services
             return updatedProject;
         }
 
+        public IEnumerable<PimsProjectPerson> GetTeamMembers()
+        {
+            _user.ThrowIfNotAuthorized(Permissions.ProjectView);
+
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+
+            var teamMembers = _projectRepository.GetTeamMembers(contractorPersonId);
+            var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
+
+            List<PimsProjectPerson> teamFilterOptions = new();
+            teamFilterOptions.AddRange(persons);
+
+            return teamFilterOptions;
+        }
+
         private static void ValidateTeamMembers(PimsProject project)
         {
             bool duplicate = project.PimsProjectPeople.GroupBy(p => p.PersonId).Any(g => g.Count() > 1);

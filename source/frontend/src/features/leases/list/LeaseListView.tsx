@@ -73,6 +73,8 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
   );
 
   const pimsRegionsTypes = lookupCodes.getOptionsByType(API.REGION_TYPES);
+  const teamProfileTypes = lookupCodes.getOptionsByType(API.LEASE_TEAM_PROFILE_TYPES);
+
   const pimsRegionOptions: MultiSelectOption[] = pimsRegionsTypes.map<MultiSelectOption>(x => {
     return { id: x.code as string, text: x.label };
   });
@@ -202,6 +204,7 @@ export const LeaseListView: React.FunctionComponent<React.PropsWithChildren<unkn
                 leaseStatusOptions={leaseStatusOptions}
                 leaseTeamOptions={leaseTeamOptions}
                 leaseProgramOptions={leaseProgramOptions}
+                teamProfileOptions={teamProfileTypes}
                 setFilter={changeFilter}
                 onResetFilter={handleResetFilter}
               />

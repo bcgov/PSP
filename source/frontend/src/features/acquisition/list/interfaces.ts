@@ -7,6 +7,7 @@ export interface ApiGen_Concepts_AcquisitionFilter {
   acquisitionFileNameOrNumber: string;
   acquisitionTeamMemberPersonId: string;
   acquisitionTeamMemberOrganizationId: string;
+  acquisitionTeamMemberProfileTypeCode: string;
   projectNameOrNumber: string;
   ownerName: string;
   searchBy: string;
@@ -21,6 +22,7 @@ export class AcquisitionFilterModel {
   acquisitionFileStatusTypeCode = '';
   acquisitionFileNameOrNumber = '';
   acquisitionTeamMembers: MultiSelectOption[] = [];
+  acquisitionTeamMemberProfileTypeCode = '';
   projectNameOrNumber = '';
   hasNoticeOfClaim = false;
   ownerName = '';
@@ -48,6 +50,7 @@ export class AcquisitionFilterModel {
       acquisitionTeamMemberOrganizationId: acquistionTeamOrganizationId
         ? acquistionTeamOrganizationId
         : null,
+      acquisitionTeamMemberProfileTypeCode: this.acquisitionTeamMemberProfileTypeCode,
       projectNameOrNumber: this.projectNameOrNumber,
       ownerName: this.ownerName,
       searchBy: this.searchBy,
@@ -75,6 +78,7 @@ export class AcquisitionFilterModel {
     newModel.hasNoticeOfClaim = model.hasNoticeOfClaim;
     newModel.address = model.address;
     newModel.regions = userRegions ?? [];
+    newModel.acquisitionTeamMemberProfileTypeCode = model.acquisitionTeamMemberProfileTypeCode;
 
     if (model.acquisitionTeamMemberPersonId) {
       const memberPerson = teamMembers.find(

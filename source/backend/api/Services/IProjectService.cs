@@ -23,5 +23,7 @@ namespace Pims.Api.Services
         PimsProject Add(PimsProject project, IEnumerable<UserOverrideCode> userOverrides);
 
         PimsProject Update(PimsProject project, IEnumerable<UserOverrideCode> userOverrides);
+
+        IEnumerable<PimsProjectPerson> GetTeamMembers();
     }
 }

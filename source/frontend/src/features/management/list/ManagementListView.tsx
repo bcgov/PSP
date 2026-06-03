@@ -49,6 +49,8 @@ export const ManagementListView: React.FC<unknown> = () => {
   const lookupCodes = useLookupCodeHelpers();
 
   const pimsRegionsTypes = lookupCodes.getOptionsByType(API.REGION_TYPES);
+  const teamProfileTypes = lookupCodes.getOptionsByType(API.MANAGEMENT_TEAM_PROFILE_TYPES);
+
   const pimsRegionOptions: MultiSelectOption[] = pimsRegionsTypes.map<MultiSelectOption>(x => {
     return { id: x.code as string, text: x.label };
   });
@@ -161,6 +163,7 @@ export const ManagementListView: React.FC<unknown> = () => {
                 managementPurposeOptions={managementPurposeOptions}
                 pimsRegionsOptions={pimsRegionOptions}
                 managementTeamOptions={managementTeamOptions}
+                teamProfileOptions={teamProfileTypes}
                 setFilter={changeFilter}
                 onResetFilter={handleResetFilter}
               />

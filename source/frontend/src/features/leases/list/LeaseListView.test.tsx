@@ -162,6 +162,7 @@ describe('Lease and License List View', () => {
         quantity: 10,
         sort: undefined,
         page: 1,
+        leaseTeamMemberProfileTypeCode: ''
       }),
     );
 
@@ -230,6 +231,7 @@ describe('Lease and License List View', () => {
         page: 1,
         quantity: 10,
         sort: undefined,
+        leaseTeamMemberProfileTypeCode: ''
       }),
     );
 
@@ -501,6 +503,7 @@ describe('Lease and License List View', () => {
         page: 1,
         quantity: 10,
         sort: undefined,
+        leaseTeamMemberProfileTypeCode: ''
       }),
     );
 

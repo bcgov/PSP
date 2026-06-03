@@ -100,6 +100,7 @@ describe('Project List View', () => {
         projectNumber: null,
         projectStatusCode: null,
         regions: [],
+        teamMemberPersonId: ''
       }),
     );
 

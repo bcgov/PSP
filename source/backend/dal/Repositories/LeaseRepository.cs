@@ -1184,12 +1184,22 @@ namespace Pims.Dal.Repositories
                 predicateBuilder = predicateBuilder.And(l => filter.LeaseStatusTypes.Any(p => p == l.LeaseStatusTypeCode));
             }
 
-            if (filter.LeaseTeamPersonId.HasValue)
+            if(!string.IsNullOrWhiteSpace(filter.LeaseTeamMemberProfileTypeCode) && filter.LeaseTeamPersonId.HasValue)
+            {
+                predicateBuilder = predicateBuilder.And(l => l.PimsLeaseLicenseTeams.Any(lt => lt.PersonId == filter.LeaseTeamPersonId.Value
+                                                                        && lt.LlTeamProfileTypeCode == filter.LeaseTeamMemberProfileTypeCode));
+            }
+            else if (filter.LeaseTeamPersonId.HasValue)
             {
                 predicateBuilder = predicateBuilder.And(l => l.PimsLeaseLicenseTeams.Any(lt => lt.PersonId == filter.LeaseTeamPersonId.Value));
             }
 
-            if (filter.LeaseTeamOrganizationId.HasValue)
+            if(!string.IsNullOrWhiteSpace(filter.LeaseTeamMemberProfileTypeCode) && filter.LeaseTeamOrganizationId.HasValue)
+            {
+                predicateBuilder = predicateBuilder.And(l => l.PimsLeaseLicenseTeams.Any(lt => lt.OrganizationId == filter.LeaseTeamOrganizationId.Value
+                                                                        && lt.LlTeamProfileTypeCode == filter.LeaseTeamMemberProfileTypeCode));
+            }
+            else if (filter.LeaseTeamOrganizationId.HasValue)
             {
                 predicateBuilder = predicateBuilder.And(l => l.PimsLeaseLicenseTeams.Any(lt => lt.OrganizationId == filter.LeaseTeamOrganizationId.Value));
             }
