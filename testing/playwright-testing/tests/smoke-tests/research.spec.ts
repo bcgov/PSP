@@ -102,7 +102,6 @@ test.describe("Research Files feature", () => {
 
     //Click on create new research file
     await researchListPage.createNewResearchClick();
-    await researchListPage.changeToNewTab();
     await expect(page).toHaveURL("mapview/sidebar/research/new");
   });
 });

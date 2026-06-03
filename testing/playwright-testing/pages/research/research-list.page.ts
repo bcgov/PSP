@@ -1,9 +1,10 @@
-import { Locator, Page } from "@playwright/test";
+import { expect, Locator, Page } from "@playwright/test";
 import { LayoutPage } from "../layout/layout.page";
 
 export class ResearchListPage extends LayoutPage {
   readonly page: Page;
 
+  readonly projectMainOptionMenu: Locator;
   readonly reseachMainMenuOption: Locator;
   readonly researchListViewOption: Locator;
 
@@ -57,6 +58,7 @@ export class ResearchListPage extends LayoutPage {
 
     this.page = page;
 
+    this.projectMainOptionMenu = page.getByTestId('nav-tooltip-project')
     this.reseachMainMenuOption = page.getByTestId("nav-tooltip-research");
     this.researchListViewOption = page.getByRole("link", {
       name: "Manage Research Files",
@@ -151,22 +153,18 @@ export class ResearchListPage extends LayoutPage {
   }
 
   async navigateToResearchListView() {
-    await this.reseachMainMenuOption.click();
-    await this.researchListViewOption.click();
+    if (!(await this.researchListViewOption.isVisible())) {
+      await this.reseachMainMenuOption.click();
+      await this.researchListViewOption.click();
+    }
   }
 
   async getResearchListTotal(): Promise<number> {
+    await expect(this.researchTableContent.first()).toBeVisible();
     return await this.researchTableContent.count();
   }
 
   async createNewResearchClick() {
     await this.researchNewButton.click();
-  }
-
-  async changeToNewTab(): Promise<Page> {
-    const pagePromise = this.page.context().waitForEvent("page");
-    const newPage = await pagePromise;
-    await newPage.waitForLoadState();
-    return newPage;
   }
 }

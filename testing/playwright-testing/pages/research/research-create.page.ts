@@ -4,6 +4,7 @@ import { LayoutPage } from "../layout/layout.page";
 export class ResearchCreatePage extends LayoutPage {
   readonly page: Page;
 
+  readonly projectMainOptionMenu: Locator;
   readonly reseachMainMenuOption: Locator;
   readonly researchCreateNewOption: Locator;
 
@@ -31,6 +32,7 @@ export class ResearchCreatePage extends LayoutPage {
 
     this.page = page;
 
+    this.projectMainOptionMenu = page.getByTestId('nav-tooltip-project')
     this.reseachMainMenuOption = page.getByTestId("nav-tooltip-research");
     this.researchCreateNewOption = page.getByRole("link", {
       name: "Create a Research File",
@@ -83,8 +85,10 @@ export class ResearchCreatePage extends LayoutPage {
   }
 
   async navigateToResearchCreate() {
-    await this.reseachMainMenuOption.click();
-    await this.researchCreateNewOption.click();
+    if (!(await this.researchCreateNewOption.isVisible())) {
+      await this.reseachMainMenuOption.click();
+      await this.researchCreateNewOption.click();
+    }
   }
 
   async cancelButtonClick() {
