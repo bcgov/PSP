@@ -10,6 +10,7 @@ export class LeaseFilterModel {
   searchBy = '';
   historical = '';
   leaseTeamMembers: MultiSelectOption[] = [];
+  leaseTeamMemberProfileTypeCode = '';
   programs: MultiSelectOption[] = [];
   expiryStartDate = '';
   leaseStatusTypes: MultiSelectOption[] = [];
@@ -41,6 +42,7 @@ export class LeaseFilterModel {
       expiryStartDate: this.expiryStartDate,
       expiryEndDate: this.expiryEndDate,
       details: this.details,
+      leaseTeamMemberProfileTypeCode: this.leaseTeamMemberProfileTypeCode,
       leaseTeamPersonId: leaseTeamPersonId ? +leaseTeamPersonId : null,
       leaseTeamOrganizationId: leaseTeamOrganizationId ? +leaseTeamOrganizationId : null,
       isReceivable: this.isReceivable ?? null,
@@ -64,7 +66,7 @@ export class LeaseFilterModel {
 
     newModel.regions = userRegions ?? [];
     newModel.leaseStatusTypes = initialStatuses ?? [];
-
+    newModel.leaseTeamMemberProfileTypeCode = base.leaseTeamMemberProfileTypeCode;
     if (base.leaseTeamPersonId) {
       const memberPerson = teamMembers.find(p => p.personId === Number(base.leaseTeamPersonId));
 

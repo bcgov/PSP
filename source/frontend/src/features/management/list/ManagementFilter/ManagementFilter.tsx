@@ -19,6 +19,7 @@ import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { Api_ManagementFilter } from '@/models/api/ManagementFilter';
 
 import { ManagementFilterModel } from '../models';
+import { ManagementFilterYupSchema } from './models/ManagementFilterYupSchema';
 
 export interface IManagementFilterProps {
   initialValues: ManagementFilterModel;
@@ -26,6 +27,7 @@ export interface IManagementFilterProps {
   managementPurposeOptions: SelectOption[];
   pimsRegionsOptions: MultiSelectOption[];
   managementTeamOptions: SelectOption[];
+  teamProfileOptions: SelectOption[];
   setFilter: (filter: Api_ManagementFilter) => void;
   onResetFilter: () => void;
 }
@@ -36,6 +38,7 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
   managementPurposeOptions,
   pimsRegionsOptions,
   managementTeamOptions,
+  teamProfileOptions,
   setFilter,
   onResetFilter,
 }) => {
@@ -51,6 +54,7 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
     <Formik<ManagementFilterModel>
       enableReinitialize
       initialValues={initialValues}
+      validationSchema={ManagementFilterYupSchema}
       onSubmit={onSearchSubmit}
     >
       {formikProps => (
@@ -89,18 +93,18 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
                 </Col>
               </Row>
               <Row>
-                <Col xl="6">
+                <Col xl="5">
+                  <Select
+                    options={teamProfileOptions}
+                    field="managementTeamMemberProfileTypeCode"
+                    placeholder="Team member role"
+                  />
+                </Col>
+                <Col xl="7">
                   <TypeaheadSelect
                     field="managementTeamMember"
                     options={managementTeamOptions}
                     placeholder="Team Member"
-                  />
-                </Col>
-                <Col xl="6">
-                  <Select
-                    options={fileStatusOptions}
-                    field="managementFileStatusCode"
-                    placeholder="All Status"
                   />
                 </Col>
               </Row>
@@ -140,6 +144,13 @@ export const ManagementFilter: React.FC<IManagementFilterProps> = ({
                 </Col>
               </Row>
               <Row>
+                <Col xl="6">
+                  <Select
+                    options={fileStatusOptions}
+                    field="managementFileStatusCode"
+                    placeholder="All Status"
+                  />
+                </Col>
                 <Col xs={6} style={{ textAlign: 'left' }}>
                   <StyledCheckBox
                     field="hasNoticeOfClaim"

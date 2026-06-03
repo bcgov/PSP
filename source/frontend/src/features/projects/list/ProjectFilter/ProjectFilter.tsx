@@ -17,6 +17,7 @@ export interface IProjectFilterProps {
   initialValues: ProjectFilterModel;
   pimsRegionsOptions: MultiSelectOption[];
   createdByOptions: MultiSelectOption[];
+  projectTeamMembersOptions: MultiSelectOption[];
   setFilter: (filter: IProjectFilter) => void;
   onResetFilter: () => void;
 }
@@ -27,7 +28,14 @@ export interface IProjectFilterProps {
  */
 export const ProjectFilter: React.FunctionComponent<
   React.PropsWithChildren<IProjectFilterProps>
-> = ({ initialValues, pimsRegionsOptions, createdByOptions, setFilter, onResetFilter }) => {
+> = ({
+  initialValues,
+  pimsRegionsOptions,
+  projectTeamMembersOptions,
+  createdByOptions,
+  setFilter,
+  onResetFilter,
+}) => {
   const onSearchSubmit = (
     values: ProjectFilterModel,
     formikHelpers: FormikHelpers<ProjectFilterModel>,
@@ -50,11 +58,11 @@ export const ProjectFilter: React.FunctionComponent<
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col xl="7">
+            <Col xl="1">
+              <strong>Search by:</strong>
+            </Col>
+            <Col xl="6">
               <Row>
-                <Col xl="auto">
-                  <strong>Search by:</strong>
-                </Col>
                 <Col>
                   <Row>
                     <Col className="d-flex flex-column gap-2">
@@ -81,6 +89,18 @@ export const ProjectFilter: React.FunctionComponent<
                       </Row>
                     </Col>
                   </Row>
+                </Col>
+              </Row>
+              <Row>
+                <Col lg="8">
+                  <Multiselect
+                    field="projectTeamMembers"
+                    displayValue="text"
+                    placeholder="Team member"
+                    hidePlaceholder
+                    options={projectTeamMembersOptions}
+                    selectionLimit={1}
+                  />
                 </Col>
               </Row>
             </Col>

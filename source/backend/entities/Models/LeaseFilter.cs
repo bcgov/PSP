@@ -91,23 +91,14 @@ namespace Pims.Dal.Entities.Models
         public int? LeaseTeamOrganizationId { get; set; }
 
         /// <summary>
+        /// get/set - The MOTI person profile type to search by for lease team members.
+        /// </summary>
+        public string LeaseTeamMemberProfileTypeCode { get; set; }
+
+        /// <summary>
         /// get/set - The region types.
         /// </summary>
         public IList<short> Regions { get; set; } = new List<short>();
-
-        public LeaseFilter(string lFileNo, string tenantName, string pid, string pin, string historical, int? leaseTeamPersonId, int? leaseTeamOrganizationId, short[] regions, string[] sort)
-        {
-            LFileNo = lFileNo;
-            TenantName = tenantName;
-            Pid = pid;
-            Pin = pin;
-            Historical = historical;
-            LeaseTeamPersonId = leaseTeamPersonId;
-            LeaseTeamOrganizationId = leaseTeamOrganizationId;
-            Regions = regions;
-
-            Sort = sort;
-        }
 
         /// <summary>
         /// get/set - Filter for additional lease details.

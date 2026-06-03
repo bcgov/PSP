@@ -74,12 +74,19 @@ vi.mocked(useApiLeases).mockReturnValue({
 });
 
 const leaseStatusTypes = getMockLookUpsByType(API.LEASE_STATUS_TYPES);
+const teamProfileTypes = getMockLookUpsByType(API.LEASE_TEAM_PROFILE_TYPES);
+
 const leaseStatusOptions: MultiSelectOption[] = leaseStatusTypes.map<MultiSelectOption>(x => {
   return { id: x.value as string, text: x.label };
 });
 const initialStatusOptions = leaseStatusOptions.filter(x => initialLeaseStatusTypes.includes(x.id));
 
 const mockFilterModel = new LeaseFilterModel([], initialStatusOptions);
+
+const mockTeamMemberOptions: MultiSelectOption[] = [{
+  id: 'P-1001',
+  text: 'John Doe',
+}];
 
 describe('Lease Filter', () => {
   const setup = async (renderOptions: RenderOptions & { props?: Partial<ILeaseFilterProps> }) => {
@@ -89,9 +96,10 @@ describe('Lease Filter', () => {
         {...renderOptions.props}
         initialValues={renderOptions.props?.initialValues ?? mockFilterModel}
         pimsRegionsOptions={renderOptions.props?.pimsRegionsOptions ?? []}
-        leaseTeamOptions={renderOptions.props?.leaseTeamOptions ?? []}
+        leaseTeamOptions={renderOptions.props?.leaseTeamOptions ?? mockTeamMemberOptions}
         leaseStatusOptions={renderOptions.props?.leaseStatusOptions ?? leaseStatusOptions}
         leaseProgramOptions={renderOptions.props?.leaseProgramOptions ?? []}
+        teamProfileOptions={teamProfileTypes}
         setFilter={setFilter}
         onResetFilter={onResetFilter}
       />,
@@ -106,6 +114,7 @@ describe('Lease Filter', () => {
     return {
       ...utils,
       formikRef,
+      getTeamMemberInput: () => utils.container.querySelector(`#multiselect-leaseTeamMembers_input`) as HTMLElement,
       getSearchButton: () => utils.getByTestId('search'),
       getResetButton: () => utils.getByTestId('reset-button'),
     };
@@ -183,6 +192,7 @@ describe('Lease Filter', () => {
         leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
+        leaseTeamMemberProfileTypeCode: ''
       }),
     );
   });
@@ -220,6 +230,7 @@ describe('Lease Filter', () => {
         leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
+        leaseTeamMemberProfileTypeCode: ''
       }),
     );
   });
@@ -257,6 +268,7 @@ describe('Lease Filter', () => {
         leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
+        leaseTeamMemberProfileTypeCode: ''
       }),
     );
   });
@@ -270,6 +282,39 @@ describe('Lease Filter', () => {
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<Partial<ILeaseFilter>>({
         isReceivable: 'true',
+      }),
+    );
+  });
+
+  it('searches by team member role and team member', async () => {
+    const { container, getSearchButton, getTeamMemberInput, getByText, queryByText } = await setup({});
+
+    fillInput(container, 'leaseTeamMemberProfileTypeCode', 'LANDOPSMGR', 'select');
+    await act(async () => userEvent.click(getSearchButton()));
+
+    expect(getByText('Team member is required')).toBeInTheDocument();
+
+    await act(async () => {
+      userEvent.click(getTeamMemberInput());
+    });
+
+    await act(async () => {
+      userEvent.type(getTeamMemberInput(), 'John Doe');
+    });
+
+    await act(async () => {
+      const firstOption = container.querySelector(`div.optionListContainer ul li`) as HTMLElement;
+      userEvent.click(firstOption);
+    });
+
+    expect(queryByText('Team member is required')).toBeNull();
+
+    await act(async () => userEvent.click(getSearchButton()));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({
+        leaseTeamMemberProfileTypeCode: 'LANDOPSMGR',
+        leaseTeamPersonId: 1001
       }),
     );
   });

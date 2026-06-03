@@ -1,23 +1,36 @@
 import userEvent from '@testing-library/user-event';
 import { http, HttpResponse } from 'msw';
 
-import { MANAGEMENT_FILE_STATUS_TYPES, MANAGEMENT_FILE_PURPOSE_TYPES } from '@/constants/API';
+import {
+  MANAGEMENT_FILE_STATUS_TYPES,
+  MANAGEMENT_FILE_PURPOSE_TYPES,
+  MANAGEMENT_TEAM_PROFILE_TYPES,
+} from '@/constants/API';
 import { Claims } from '@/constants/index';
 import { getMockLookUpsByType, mockLookups } from '@/mocks/lookups.mock';
 import { server } from '@/mocks/msw/server';
 import { getUserMock } from '@/mocks/user.mock';
 import { Api_ManagementFilter } from '@/models/api/ManagementFilter';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { act, getByName, render, RenderOptions, screen } from '@/utils/test-utils';
+import { act, fillInput, getByName, render, RenderOptions, screen } from '@/utils/test-utils';
 
 import { ManagementFilterModel } from '../models';
 import ManagementFilter, { IManagementFilterProps } from './ManagementFilter';
+import { SelectOption } from '@/components/common/form';
 
 const setFilter = vi.fn();
 const onResetFilter = vi.fn();
 
 const fileStatusOptions = getMockLookUpsByType(MANAGEMENT_FILE_STATUS_TYPES);
 const managementFilePurposeOptions = getMockLookUpsByType(MANAGEMENT_FILE_PURPOSE_TYPES);
+const teamProfileTypes = getMockLookUpsByType(MANAGEMENT_TEAM_PROFILE_TYPES);
+
+const mockTeamMemberOptions: SelectOption[] = [
+  {
+    value: 'P-1001',
+    label: 'John Doe',
+  },
+];
 
 const mockFilterModel = new ManagementFilterModel();
 
@@ -29,12 +42,13 @@ describe('Management filter', () => {
       <ManagementFilter
         {...renderOptions.props}
         initialValues={renderOptions.props?.initialValues ?? mockFilterModel}
-        managementTeamOptions={renderOptions.props?.managementTeamOptions ?? []}
+        managementTeamOptions={renderOptions.props?.managementTeamOptions ?? mockTeamMemberOptions}
         fileStatusOptions={renderOptions.props?.fileStatusOptions ?? fileStatusOptions}
         managementPurposeOptions={
           renderOptions.props?.managementPurposeOptions ?? managementFilePurposeOptions
         }
         pimsRegionsOptions={renderOptions.props?.pimsRegionsOptions ?? []}
+        teamProfileOptions={teamProfileTypes}
         setFilter={setFilter}
         onResetFilter={onResetFilter}
       />,
@@ -52,6 +66,8 @@ describe('Management filter', () => {
 
     return {
       ...utils,
+      getTeamMemberInput: () =>
+        utils.container.querySelector(`#typeahead-select-managementTeamMember`) as HTMLElement,
       getSearchButton: () => screen.getByTestId('search'),
       getResetButton: () => screen.getByTestId('reset-button'),
       getHasNOCCheckbox: () =>
@@ -137,6 +153,43 @@ describe('Management filter', () => {
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining<Partial<Api_ManagementFilter>>({
         fileNameOrNumberOrReference: 'test management',
+      }),
+    );
+  });
+
+  it('searches by team member role and team member', async () => {
+    const { container, getSearchButton, getTeamMemberInput, getByText, queryByText } = await setup(
+      {},
+    );
+
+    fillInput(container, 'managementTeamMemberProfileTypeCode', 'MINSTAFF', 'select');
+    await act(async () => userEvent.click(getSearchButton()));
+
+    expect(getByText('Team member is required')).toBeInTheDocument();
+
+    await act(async () => {
+      userEvent.click(getTeamMemberInput());
+    });
+
+    await act(async () => {
+      userEvent.type(getTeamMemberInput(), 'John Doe');
+    });
+
+    await act(async () => {
+      const firstOption = container.querySelector(
+        `div#typeahead-select-managementTeamMember a`,
+      ) as HTMLElement;
+      userEvent.click(firstOption);
+    });
+
+    expect(queryByText('Team member is required')).toBeNull();
+
+    await act(async () => userEvent.click(getSearchButton()));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({
+        teamMemberProfileTypeCode: 'MINSTAFF',
+        teamMemberPersonId: 1001,
       }),
     );
   });

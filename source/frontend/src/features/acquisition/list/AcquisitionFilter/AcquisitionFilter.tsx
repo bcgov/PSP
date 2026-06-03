@@ -10,12 +10,14 @@ import { ColButtons } from '@/components/common/styles';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 
 import { AcquisitionFilterModel, ApiGen_Concepts_AcquisitionFilter } from '../interfaces';
+import { AcquisitionFilterYupSchema } from './models/AcquisitionFilterYupSchema';
 
 export interface IAcquisitionFilterProps {
   initialValues: AcquisitionFilterModel;
   pimsRegionsOptions: MultiSelectOption[];
   acquisitionTeamOptions: MultiSelectOption[];
   acquisitionStatusOptions: SelectOption[];
+  teamProfileOptions: SelectOption[];
   setFilter: (filter: ApiGen_Concepts_AcquisitionFilter) => void;
   onResetFilter: () => void;
 }
@@ -29,6 +31,7 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
   pimsRegionsOptions,
   acquisitionTeamOptions,
   acquisitionStatusOptions,
+  teamProfileOptions,
   setFilter,
   onResetFilter,
 }) => {
@@ -44,6 +47,7 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
     <Formik<AcquisitionFilterModel>
       enableReinitialize
       initialValues={initialValues}
+      validationSchema={AcquisitionFilterYupSchema}
       onSubmit={onSearchSubmit}
     >
       {formikProps => (
@@ -83,7 +87,14 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                 </Col>
               </Row>
               <Row>
-                <Col lg="5">
+                <Col lg="4">
+                  <Select
+                    options={teamProfileOptions}
+                    field="acquisitionTeamMemberProfileTypeCode"
+                    placeholder="Team member role"
+                  />
+                </Col>
+                <Col lg="8">
                   <Multiselect
                     field="acquisitionTeamMembers"
                     displayValue="text"
@@ -93,15 +104,17 @@ export const AcquisitionFilter: React.FC<React.PropsWithChildren<IAcquisitionFil
                     selectionLimit={1}
                   />
                 </Col>
+              </Row>
+              <Row>
                 <Col lg="4">
-                  <Input field="ownerName" placeholder="Owner" />
-                </Col>
-                <Col lg="3">
                   <Select
                     options={acquisitionStatusOptions}
                     field="acquisitionFileStatusTypeCode"
                     placeholder="All Status"
                   />
+                </Col>
+                <Col lg="8">
+                  <Input field="ownerName" placeholder="Owner" />
                 </Col>
               </Row>
             </Col>

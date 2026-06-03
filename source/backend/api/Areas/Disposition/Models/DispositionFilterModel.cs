@@ -55,6 +55,11 @@ namespace Pims.Api.Areas.Disposition.Models.Search
         public long? TeamMemberOrganizationId { get; set; }
 
         /// <summary>
+        /// get/set - The MOTI person profile type to search by for disposition team members.
+        /// </summary>
+        public string TeamMemberProfileTypeCode { get; set; }
+
+        /// <summary>
         /// get/set - The region types.
         /// </summary>
         public IList<int> Regions { get; set; } = new List<int>();
@@ -89,6 +94,7 @@ namespace Pims.Api.Areas.Disposition.Models.Search
             DispositionTypeCode = filter.GetStringValue(nameof(this.DispositionTypeCode));
             TeamMemberPersonId = filter.GetLongNullValue(nameof(this.TeamMemberPersonId));
             TeamMemberOrganizationId = filter.GetLongNullValue(nameof(this.TeamMemberOrganizationId));
+            TeamMemberProfileTypeCode = filter.GetStringValue(nameof(this.TeamMemberProfileTypeCode));
             Regions = filter.GetIntArrayValue(nameof(Regions));
 
             this.Sort = filter.GetStringArrayValue(nameof(this.Sort));
@@ -117,6 +123,7 @@ namespace Pims.Api.Areas.Disposition.Models.Search
                 DispositionTypeCode = model.DispositionTypeCode,
                 TeamMemberPersonId = model.TeamMemberPersonId,
                 TeamMemberOrganizationId = model.TeamMemberOrganizationId,
+                TeamMemberProfileTypeCode = model.TeamMemberProfileTypeCode,
                 Regions = model.Regions,
 
                 Sort = model.Sort,

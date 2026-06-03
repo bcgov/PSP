@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 
 namespace Pims.Dal.Entities.Models
@@ -56,6 +55,11 @@ namespace Pims.Dal.Entities.Models
         /// get/set - The MOTI Organization id to search by for management team members.
         /// </summary>
         public long? TeamMemberOrganizationId { get; set; }
+
+        /// <summary>
+        /// get/set - The MOTI person profile type to search by for management team members.
+        /// </summary>
+        public string TeamMemberProfileTypeCode { get; set; }
 
         /// <summary>
         /// get/set - Get the Management File that has NOC.
