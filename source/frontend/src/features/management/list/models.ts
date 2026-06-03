@@ -14,6 +14,7 @@ export class ManagementFilterModel {
   pid = '';
   address = '';
   managementTeamMember: SelectOption | null = null;
+  managementTeamMemberProfileTypeCode: string;
   managementFileStatusCode = '';
   fileNameOrNumberOrReference = '';
   managementFilePurposeCode = '';
@@ -48,6 +49,7 @@ export class ManagementFilterModel {
       hasNoticeOfClaim: this.hasNoticeOfClaim,
       regions: this.regions?.map(x => x.id) ?? [],
       // management team members
+      teamMemberProfileTypeCode: this.managementTeamMemberProfileTypeCode,
       teamMemberPersonId:
         personMemberId && isNumber(+personMemberId) ? Number(personMemberId) : null,
       teamMemberOrganizationId: orgMemberId && isNumber(+orgMemberId) ? Number(orgMemberId) : null,
@@ -72,6 +74,7 @@ export class ManagementFilterModel {
     newModel.regions = userRegions ?? [];
 
     // management team members
+    newModel.managementTeamMemberProfileTypeCode = base.teamMemberProfileTypeCode;
     if (base.teamMemberPersonId) {
       newModel.managementTeamMember =
         teamMemberOptions.find(c => c.value === `P-${base.teamMemberPersonId}`) ?? null;

@@ -8,6 +8,7 @@ import { useApiRequestWrapper } from '@/hooks/util/useApiRequestWrapper';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { ApiGen_Concepts_ProjectPerson } from '@/models/api/generated/ApiGen_Concepts_ProjectPerson';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
@@ -22,6 +23,7 @@ export const useProjectProvider = () => {
     getAllProjects,
     putProject,
     getProjectAtTime,
+    getAllProjectTeamMembers,
   } = useApiProjects();
   const { project, setProject } = useContext(ProjectStateContext);
 
@@ -116,6 +118,17 @@ export const useProjectProvider = () => {
     onError: useAxiosErrorHandler('Failed to load historical project'),
   });
 
+  const getAllProjectsTeamMembersApi = useApiRequestWrapper<
+    () => Promise<AxiosResponse<ApiGen_Concepts_ProjectPerson[], any>>
+  >({
+    requestFunction: useCallback(
+      async () => await getAllProjectTeamMembers(),
+      [getAllProjectTeamMembers],
+    ),
+    requestName: 'RetrieveAllProjectTeamMembers',
+    onError: useAxiosErrorHandler('Failed to load Projects Team members'),
+  });
+
   return useMemo(
     () => ({
       project,
@@ -127,6 +140,7 @@ export const useProjectProvider = () => {
       updateProject: updateProject,
       getAllProjects: getAllProjectsApi,
       getProjectAtTime: getProjectAtTimeApi,
+      getAllProjectsTeamMembersApi,
     }),
     [
       project,
@@ -138,6 +152,7 @@ export const useProjectProvider = () => {
       updateProject,
       getAllProjectsApi,
       getProjectAtTimeApi,
+      getAllProjectsTeamMembersApi,
     ],
   );
 };

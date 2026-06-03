@@ -75,6 +75,11 @@ namespace Pims.Api.Areas.Lease.Models.Search
         public int? LeaseTeamOrganizationId { get; set; }
 
         /// <summary>
+        /// get/set - The MOTI person profile type to search by for lease team members.
+        /// </summary>
+        public string LeaseTeamMemberProfileTypeCode { get; set; }
+
+        /// <summary>
         /// get/set - Filter to return only receivable leases.
         /// </summary>
         public bool? IsReceivable { get; set; }
@@ -118,6 +123,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
             Details = filter.GetStringValue(nameof(this.Details));
             LeaseTeamPersonId = filter.GetIntNullValue(nameof(this.LeaseTeamPersonId));
             LeaseTeamOrganizationId = filter.GetIntNullValue(nameof(this.LeaseTeamOrganizationId));
+            LeaseTeamMemberProfileTypeCode = filter.GetStringValue(nameof(this.LeaseTeamMemberProfileTypeCode));
             IsReceivable = filter.GetValue<bool?>(nameof(this.IsReceivable));
             Regions = filter.GetShortArrayValue(nameof(Regions));
 
@@ -151,6 +157,7 @@ namespace Pims.Api.Areas.Lease.Models.Search
                 Details = model.Details?.Trim(),
                 LeaseTeamOrganizationId = model.LeaseTeamOrganizationId,
                 LeaseTeamPersonId = model.LeaseTeamPersonId,
+                LeaseTeamMemberProfileTypeCode = model.LeaseTeamMemberProfileTypeCode,
                 IsReceivable = model.IsReceivable,
                 Regions = model.Regions,
 

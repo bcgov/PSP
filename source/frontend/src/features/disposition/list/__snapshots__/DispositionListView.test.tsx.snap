@@ -592,7 +592,75 @@ exports[`Disposition List View > matches snapshot 1`] = `
                     class="row"
                   >
                     <div
-                      class="col-xl-7"
+                      class="col-xl-4"
+                    >
+                      <div
+                        class="form-group"
+                      >
+                        <select
+                          class="form-select form-control"
+                          id="input-dispositionTeamMemberProfileTypeCode"
+                          name="dispositionTeamMemberProfileTypeCode"
+                        >
+                          <option
+                            value=""
+                          >
+                            Team member role
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-LISTAGENT"
+                            value="LISTAGENT"
+                          >
+                            Listing Agent
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-MOTILAWYER"
+                            value="MOTILAWYER"
+                          >
+                            MoTI Solicitor
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-MOTILEAD"
+                            value="MOTILEAD"
+                          >
+                            MoTI Lead
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-NEGOTAGENT"
+                            value="NEGOTAGENT"
+                          >
+                            Negotiation agent
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-PROPAGENT"
+                            value="PROPAGENT"
+                          >
+                            Property agent
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-PROPANLYS"
+                            value="PROPANLYS"
+                          >
+                            Property analyst
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-PROPCOORD"
+                            value="PROPCOORD"
+                          >
+                            Property coordinator
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                    <div
+                      class="col-xl-8"
                     >
                       <div
                         class="c9 form-group"
@@ -629,60 +697,6 @@ exports[`Disposition List View > matches snapshot 1`] = `
                             />
                           </div>
                         </div>
-                      </div>
-                    </div>
-                    <div
-                      class="col-xl-5"
-                    >
-                      <div
-                        class="form-group"
-                      >
-                        <select
-                          class="form-select form-control"
-                          id="input-dispositionFileStatusCode"
-                          name="dispositionFileStatusCode"
-                        >
-                          <option
-                            value=""
-                          >
-                            All Status
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-ACTIVE"
-                            value="ACTIVE"
-                          >
-                            Active
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-COMPLETE"
-                            value="COMPLETE"
-                          >
-                            Complete
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-HOLD"
-                            value="HOLD"
-                          >
-                            Hold
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-CANCELLED"
-                            value="CANCELLED"
-                          >
-                            Cancelled
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-ARCHIVED"
-                            value="ARCHIVED"
-                          >
-                            Archived
-                          </option>
-                        </select>
                       </div>
                     </div>
                   </div>
@@ -899,6 +913,64 @@ exports[`Disposition List View > matches snapshot 1`] = `
                             value="OTHER"
                           >
                             Other Transfer
+                          </option>
+                        </select>
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-xl-5"
+                    >
+                      <div
+                        class="form-group"
+                      >
+                        <select
+                          class="form-select form-control"
+                          id="input-dispositionFileStatusCode"
+                          name="dispositionFileStatusCode"
+                        >
+                          <option
+                            value=""
+                          >
+                            All Status
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-ACTIVE"
+                            value="ACTIVE"
+                          >
+                            Active
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-COMPLETE"
+                            value="COMPLETE"
+                          >
+                            Complete
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-HOLD"
+                            value="HOLD"
+                          >
+                            Hold
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-CANCELLED"
+                            value="CANCELLED"
+                          >
+                            Cancelled
+                          </option>
+                          <option
+                            class="option"
+                            data-testid="select-option-ARCHIVED"
+                            value="ARCHIVED"
+                          >
+                            Archived
                           </option>
                         </select>
                       </div>

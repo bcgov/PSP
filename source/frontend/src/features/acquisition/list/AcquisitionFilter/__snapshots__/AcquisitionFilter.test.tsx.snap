@@ -347,7 +347,68 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
           class="row"
         >
           <div
-            class="col-lg-5"
+            class="col-lg-4"
+          >
+            <div
+              class="form-group"
+            >
+              <select
+                class="form-select form-control"
+                id="input-acquisitionTeamMemberProfileTypeCode"
+                name="acquisitionTeamMemberProfileTypeCode"
+              >
+                <option
+                  value=""
+                >
+                  Team member role
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-EXPRAGENT"
+                  value="EXPRAGENT"
+                >
+                  Expropriation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-MOTILAWYER"
+                  value="MOTILAWYER"
+                >
+                  MoTI Solicitor
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-NEGOTAGENT"
+                  value="NEGOTAGENT"
+                >
+                  Negotiation agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPAGENT"
+                  value="PROPAGENT"
+                >
+                  Property agent
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPANLYS"
+                  value="PROPANLYS"
+                >
+                  Property analyst
+                </option>
+                <option
+                  class="option"
+                  data-testid="select-option-PROPCOORD"
+                  value="PROPCOORD"
+                >
+                  Property coordinator
+                </option>
+              </select>
+            </div>
+          </div>
+          <div
+            class="col-lg-8"
           >
             <div
               class="form-group"
@@ -378,36 +439,23 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
                     <ul
                       class="optionContainer"
                     >
-                      <span
-                        class="notFound"
+                      <li
+                        class="option  highlightOption highlight  "
                       >
-                        No Options Available
-                      </span>
+                        John Doe
+                      </li>
                     </ul>
                   </div>
                 </div>
               </div>
             </div>
           </div>
+        </div>
+        <div
+          class="row"
+        >
           <div
             class="col-lg-4"
-          >
-            <div
-              class="input form-group"
-            >
-              <input
-                class="form-control"
-                id="input-ownerName"
-                name="ownerName"
-                placeholder="Owner"
-                style="word-break: break-all;"
-                title=""
-                value=""
-              />
-            </div>
-          </div>
-          <div
-            class="col-lg-3"
           >
             <div
               class="form-group"
@@ -472,6 +520,23 @@ exports[`Acquisition Filter > matches snapshot 1`] = `
                   Closed
                 </option>
               </select>
+            </div>
+          </div>
+          <div
+            class="col-lg-8"
+          >
+            <div
+              class="input form-group"
+            >
+              <input
+                class="form-control"
+                id="input-ownerName"
+                name="ownerName"
+                placeholder="Owner"
+                style="word-break: break-all;"
+                title=""
+                value=""
+              />
             </div>
           </div>
         </div>

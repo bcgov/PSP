@@ -834,129 +834,73 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                         class="row"
                       >
                         <div
-                          class="col-xl-7"
+                          class="col-xl-5"
                         >
                           <div
                             class="form-group"
                           >
-                            <div>
-                              <div
-                                class="multiselect-container multiSelectContainer  "
-                                id="multiselect-programs"
-                                style="width: auto; color: black;"
+                            <select
+                              class="form-select form-control"
+                              id="input-leaseTeamMemberProfileTypeCode"
+                              name="leaseTeamMemberProfileTypeCode"
+                            >
+                              <option
+                                value=""
                               >
-                                <div
-                                  class="search-wrapper searchWrapper "
-                                  style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
-                                >
-                                  <input
-                                    autocomplete="off"
-                                    class="searchBox "
-                                    id="multiselect-programs_input"
-                                    name="search_name_input"
-                                    placeholder="Select Program(s)"
-                                    type="text"
-                                    value=""
-                                  />
-                                </div>
-                                <div
-                                  class="optionListContainer displayNone"
-                                >
-                                  <ul
-                                    class="optionContainer"
-                                  >
-                                    <li
-                                      class="option  highlightOption highlight  "
-                                    >
-                                      Agricultural
-                                    </li>
-                                    <li
-                                      class="option    "
-                                    >
-                                      Commercial Buildings
-                                    </li>
-                                    <li
-                                      class="option    "
-                                    >
-                                      Engineering
-                                    </li>
-                                    <li
-                                      class="option    "
-                                    >
-                                      Government
-                                    </li>
-                                    <li
-                                      class="option    "
-                                    >
-                                      MoTI Use
-                                    </li>
-                                    <li
-                                      class="option    "
-                                    >
-                                      Oil/Gas
-                                    </li>
-                                    <li
-                                      class="option    "
-                                    >
-                                      Other
-                                    </li>
-                                    <li
-                                      class="option    "
-                                    >
-                                      Parking and/or Storage
-                                    </li>
-                                    <li
-                                      class="option    "
-                                    >
-                                      Public Transportation
-                                    </li>
-                                    <li
-                                      class="option    "
-                                    >
-                                      Rail
-                                    </li>
-                                    <li
-                                      class="option    "
-                                    >
-                                      Rail Trails
-                                    </li>
-                                    <li
-                                      class="option    "
-                                    >
-                                      Residential Rentals
-                                    </li>
-                                    <li
-                                      class="option    "
-                                    >
-                                      Utilities
-                                    </li>
-                                  </ul>
-                                </div>
-                              </div>
-                            </div>
+                                Team member role
+                              </option>
+                              <option
+                                class="option"
+                                data-testid="select-option-MOTTCONTACT"
+                                value="MOTTCONTACT"
+                              >
+                                MoTT contact
+                              </option>
+                              <option
+                                class="option"
+                                data-testid="select-option-MOTTLAWYER"
+                                value="MOTTLAWYER"
+                              >
+                                MoTT Solicitor
+                              </option>
+                              <option
+                                class="option"
+                                data-testid="select-option-PROPANALYST"
+                                value="PROPANALYST"
+                              >
+                                Property analyst
+                              </option>
+                              <option
+                                class="option"
+                                data-testid="select-option-PROPCOORD"
+                                value="PROPCOORD"
+                              >
+                                Property coordinator
+                              </option>
+                              <option
+                                class="option"
+                                data-testid="select-option-PROPADMIN"
+                                value="PROPADMIN"
+                              >
+                                Property administrator
+                              </option>
+                              <option
+                                class="option"
+                                data-testid="select-option-LANDPRJMGR"
+                                value="LANDPRJMGR"
+                              >
+                                Land project manager
+                              </option>
+                              <option
+                                class="option"
+                                data-testid="select-option-LANDOPSMGR"
+                                value="LANDOPSMGR"
+                              >
+                                Land operations manager
+                              </option>
+                            </select>
                           </div>
                         </div>
-                        <div
-                          class="col-xl-5"
-                        >
-                          <div
-                            class="input form-group"
-                          >
-                            <input
-                              class="form-control"
-                              id="input-tenantName"
-                              name="tenantName"
-                              placeholder="Tenant Name"
-                              style="word-break: break-all;"
-                              title=""
-                              value=""
-                            />
-                          </div>
-                        </div>
-                      </div>
-                      <div
-                        class="row"
-                      >
                         <div
                           class="col-xl-7"
                         >
@@ -998,6 +942,27 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                                 </div>
                               </div>
                             </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="row"
+                      >
+                        <div
+                          class="col-xl-5"
+                        >
+                          <div
+                            class="input form-group"
+                          >
+                            <input
+                              class="form-control"
+                              id="input-tenantName"
+                              name="tenantName"
+                              placeholder="Tenant Name"
+                              style="word-break: break-all;"
+                              title=""
+                              value=""
+                            />
                           </div>
                         </div>
                       </div>
@@ -1277,6 +1242,113 @@ exports[`Lease and License List View > matches snapshot 1`] = `
                                       class="option    "
                                     >
                                       Cannot determine
+                                    </li>
+                                  </ul>
+                                </div>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                      <div
+                        class="row"
+                      >
+                        <div
+                          class="col"
+                        >
+                          <div
+                            class="form-group"
+                          >
+                            <div>
+                              <div
+                                class="multiselect-container multiSelectContainer  "
+                                id="multiselect-programs"
+                                style="width: auto; color: black;"
+                              >
+                                <div
+                                  class="search-wrapper searchWrapper "
+                                  style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                                >
+                                  <input
+                                    autocomplete="off"
+                                    class="searchBox "
+                                    id="multiselect-programs_input"
+                                    name="search_name_input"
+                                    placeholder="Select Program(s)"
+                                    type="text"
+                                    value=""
+                                  />
+                                </div>
+                                <div
+                                  class="optionListContainer displayNone"
+                                >
+                                  <ul
+                                    class="optionContainer"
+                                  >
+                                    <li
+                                      class="option  highlightOption highlight  "
+                                    >
+                                      Agricultural
+                                    </li>
+                                    <li
+                                      class="option    "
+                                    >
+                                      Commercial Buildings
+                                    </li>
+                                    <li
+                                      class="option    "
+                                    >
+                                      Engineering
+                                    </li>
+                                    <li
+                                      class="option    "
+                                    >
+                                      Government
+                                    </li>
+                                    <li
+                                      class="option    "
+                                    >
+                                      MoTI Use
+                                    </li>
+                                    <li
+                                      class="option    "
+                                    >
+                                      Oil/Gas
+                                    </li>
+                                    <li
+                                      class="option    "
+                                    >
+                                      Other
+                                    </li>
+                                    <li
+                                      class="option    "
+                                    >
+                                      Parking and/or Storage
+                                    </li>
+                                    <li
+                                      class="option    "
+                                    >
+                                      Public Transportation
+                                    </li>
+                                    <li
+                                      class="option    "
+                                    >
+                                      Rail
+                                    </li>
+                                    <li
+                                      class="option    "
+                                    >
+                                      Rail Trails
+                                    </li>
+                                    <li
+                                      class="option    "
+                                    >
+                                      Residential Rentals
+                                    </li>
+                                    <li
+                                      class="option    "
+                                    >
+                                      Utilities
                                     </li>
                                   </ul>
                                 </div>

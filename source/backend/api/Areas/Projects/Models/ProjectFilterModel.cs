@@ -15,10 +15,15 @@ namespace Pims.Api.Areas.Projects.Models
 
         public string ProjectStatusCode { get; set; }
 
+        public long? TeamMemberPersonId { get; set; }
+
         /// <summary>
         /// get/set - The region types.
         /// </summary>
         public IList<short> Regions { get; set; } = new List<short>();
+
+        public string ProjectCreatedBy { get; set; }
+
 
         public static explicit operator ProjectFilter(ProjectFilterModel model)
         {
@@ -30,8 +35,9 @@ namespace Pims.Api.Areas.Projects.Models
                 ProjectNumber = model.ProjectNumber?.Trim(),
                 ProjectName = model.ProjectName?.Trim(),
                 ProjectStatusCode = model.ProjectStatusCode,
+                TeamMemberPersonId = model.TeamMemberPersonId,
                 Regions = model.Regions,
-
+                ProjectCreatedBy = model.ProjectCreatedBy?.Trim(),
                 Sort = model.Sort,
             };
 

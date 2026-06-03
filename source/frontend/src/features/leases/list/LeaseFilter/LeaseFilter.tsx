@@ -4,7 +4,14 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { FastDatePicker, Form, Input, Multiselect, Select } from '@/components/common/form';
+import {
+  FastDatePicker,
+  Form,
+  Input,
+  Multiselect,
+  Select,
+  SelectOption,
+} from '@/components/common/form';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { ColButtons } from '@/components/common/styles';
@@ -12,8 +19,8 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 
 import { ILeaseFilter, ILeaseSearchBy } from '../../interfaces';
-import { LeaseFilterSchema } from './LeaseFilterYupSchema';
 import { LeaseFilterModel } from './models/LeaseFilterModel';
+import { LeaseFilterYupSchema } from './models/LeaseFilterYupSchema';
 
 export interface ILeaseFilterProps {
   initialValues: LeaseFilterModel;
@@ -21,6 +28,7 @@ export interface ILeaseFilterProps {
   leaseTeamOptions: MultiSelectOption[];
   leaseStatusOptions: MultiSelectOption[];
   leaseProgramOptions: MultiSelectOption[];
+  teamProfileOptions: SelectOption[];
   setFilter: (filter: ILeaseFilter) => void;
   onResetFilter: () => void;
 }
@@ -35,6 +43,7 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
   leaseTeamOptions,
   leaseStatusOptions,
   leaseProgramOptions,
+  teamProfileOptions,
   setFilter,
   onResetFilter,
 }) => {
@@ -51,7 +60,7 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
       enableReinitialize
       initialValues={initialValues}
       onSubmit={onSearchSubmit}
-      validationSchema={LeaseFilterSchema}
+      validationSchema={LeaseFilterYupSchema}
     >
       {formikProps => (
         <FilterBoxForm className="p-3">
@@ -97,19 +106,13 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                     </Col>
                   </Row>
                   <Row>
-                    <Col xl="7">
-                      <Multiselect
-                        field="programs"
-                        options={leaseProgramOptions}
-                        displayValue="text"
-                        placeholder="Select Program(s)"
+                    <Col xl={5}>
+                      <Select
+                        options={teamProfileOptions}
+                        field="leaseTeamMemberProfileTypeCode"
+                        placeholder="Team member role"
                       />
                     </Col>
-                    <Col xl="5">
-                      <Input field="tenantName" placeholder="Tenant Name" />
-                    </Col>
-                  </Row>
-                  <Row>
                     <Col xl={7}>
                       <StyledMultiselect
                         field="leaseTeamMembers"
@@ -119,6 +122,11 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                         options={leaseTeamOptions}
                         selectionLimit={1}
                       />
+                    </Col>
+                  </Row>
+                  <Row>
+                    <Col xl="5">
+                      <Input field="tenantName" placeholder="Tenant Name" />
                     </Col>
                   </Row>
                 </Col>
@@ -178,6 +186,16 @@ export const LeaseFilter: React.FunctionComponent<React.PropsWithChildren<ILease
                       options={pimsRegionsOptions}
                       displayValue="text"
                       placeholder="Select Region(s)"
+                    />
+                  </Col>
+                </Row>
+                <Row>
+                  <Col>
+                    <Multiselect
+                      field="programs"
+                      options={leaseProgramOptions}
+                      displayValue="text"
+                      placeholder="Select Program(s)"
                     />
                   </Col>
                 </Row>

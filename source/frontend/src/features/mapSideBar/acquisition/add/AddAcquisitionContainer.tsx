@@ -49,6 +49,12 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const { execute: getPropertyAssociations } = usePropertyAssociations();
   const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
   const userType = retrieveUserInfoResponse?.userTypeCode?.id ?? null;
+  const userRegionCodes = useMemo(
+    () =>
+      retrieveUserInfoResponse?.userRegions?.map(ur => ur.regionCode?.toString()).filter(exists) ??
+      [],
+    [retrieveUserInfoResponse?.userRegions],
+  );
 
   const {
     getAcquisitionFile: { execute: getAcquisitionFile, response: parentAcquisitionFile },
@@ -82,13 +88,14 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         const firstProperty = PropertyForm.fromFeatureDataset(firstPropertyFeature);
         formikRef?.current?.setFieldValue(
           'region',
-          firstProperty.regionName !== 'Cannot determine'
+          firstProperty.regionName !== 'Cannot determine' &&
+            userRegionCodes.includes(firstProperty.region?.toString())
             ? firstProperty.region?.toString()
-            : undefined,
+            : '',
         );
       }
     }
-  }, [featuresWithAddresses, isSubFile]);
+  }, [featuresWithAddresses, isSubFile, userRegionCodes]);
 
   useEffect(() => {
     formattedGuid && retrieveUserInfo(formattedGuid);
@@ -204,6 +211,10 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   };
 
   const loading = addAcquisitionFileLoading || bcaLoading;
+
+  useEffect(() => {
+    formattedGuid && retrieveUserInfo(formattedGuid);
+  }, [formattedGuid, retrieveUserInfo]);
 
   return (
     <MapSideBarLayout

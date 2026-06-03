@@ -5,6 +5,7 @@ import { IProjectFilter } from '@/features/projects';
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_Product';
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
+import { ApiGen_Concepts_ProjectPerson } from '@/models/api/generated/ApiGen_Concepts_ProjectPerson';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
 
 import { IPaginateRequest } from './interfaces/IPaginateRequest';
@@ -42,6 +43,8 @@ export const useApiProjects = () => {
         api.get<ApiGen_Concepts_Product[]>(`/projects/${id}/products`),
       getProjectAtTime: (projectId: number, time: string) =>
         api.get<ApiGen_Concepts_Project>(`/projects/${projectId}/historical?time=${time}`),
+      getAllProjectTeamMembers: () =>
+        api.get<ApiGen_Concepts_ProjectPerson[]>(`/projects/team-members`),
     }),
     [api],
   );

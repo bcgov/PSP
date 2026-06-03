@@ -25,6 +25,10 @@ import {
 
 import { LeaseListView } from './LeaseListView';
 import { mockLookups } from '@/mocks/lookups.mock';
+import { IPaginateParams } from '@/constants/API';
+import { IUsersFilter } from '@/interfaces';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 
 const storeState = {
   [lookupCodesSlice.name]: { lookupCodes: mockLookups },
@@ -46,6 +50,14 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
   retrieveUserInfo: vi.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: getUserMock(),
+  retrieveUserLookup: vi.fn(),
+  retrieveUserLookupLoading: false,
+  retrieveUserLookupResponse: {
+    items: [],
+    page: 0,
+    quantity: 0,
+    total: 0,
+  } as ApiGen_Base_Page<ApiGen_Concepts_User>,
 });
 
 // render component under test
@@ -150,6 +162,7 @@ describe('Lease and License List View', () => {
         quantity: 10,
         sort: undefined,
         page: 1,
+        leaseTeamMemberProfileTypeCode: ''
       }),
     );
 
@@ -218,6 +231,7 @@ describe('Lease and License List View', () => {
         page: 1,
         quantity: 10,
         sort: undefined,
+        leaseTeamMemberProfileTypeCode: ''
       }),
     );
 
@@ -489,6 +503,7 @@ describe('Lease and License List View', () => {
         page: 1,
         quantity: 10,
         sort: undefined,
+        leaseTeamMemberProfileTypeCode: ''
       }),
     );
 

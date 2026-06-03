@@ -832,12 +832,22 @@ namespace Pims.Dal.Repositories
             }
 
             // filter by team members
-            if (filter.TeamMemberPersonId.HasValue)
+            if (!string.IsNullOrWhiteSpace(filter.TeamMemberProfileTypeCode) && filter.TeamMemberPersonId.HasValue)
+            {
+                predicate = predicate.And(disp => disp.PimsDispositionFileTeams.Any(x => x.PersonId == filter.TeamMemberPersonId.Value
+                                                                                && x.DspFlTeamProfileTypeCode == filter.TeamMemberProfileTypeCode));
+            }
+            else if (filter.TeamMemberPersonId.HasValue)
             {
                 predicate = predicate.And(disp => disp.PimsDispositionFileTeams.Any(x => x.PersonId == filter.TeamMemberPersonId.Value));
             }
 
-            if (filter.TeamMemberOrganizationId.HasValue)
+            if(!string.IsNullOrWhiteSpace(filter.TeamMemberProfileTypeCode) && filter.TeamMemberOrganizationId.HasValue)
+            {
+                predicate = predicate.And(disp => disp.PimsDispositionFileTeams.Any(x => x.OrganizationId == filter.TeamMemberOrganizationId.Value
+                                                                                && x.DspFlTeamProfileTypeCode == filter.TeamMemberProfileTypeCode));
+            }
+            else if (filter.TeamMemberOrganizationId.HasValue)
             {
                 predicate = predicate.And(disp => disp.PimsDispositionFileTeams.Any(x => x.OrganizationId == filter.TeamMemberOrganizationId.Value));
             }

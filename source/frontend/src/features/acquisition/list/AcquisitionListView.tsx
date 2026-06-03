@@ -54,6 +54,7 @@ export const AcquisitionListView: React.FunctionComponent<
   } = useAcquisitionProvider();
 
   const pimsRegionsTypes = lookupCodes.getOptionsByType(API.REGION_TYPES);
+  const teamProfileTypes = lookupCodes.getOptionsByType(API.ACQUISITION_FILE_TEAM_PROFILE_TYPES);
   const pimsRegionOptions: MultiSelectOption[] = pimsRegionsTypes.map<MultiSelectOption>(x => {
     return { id: x.code as string, text: x.label };
   });
@@ -178,6 +179,7 @@ export const AcquisitionListView: React.FunctionComponent<
                   userRegionsOptions,
                 )}
                 acquisitionTeamOptions={acquisitionTeamOptions || []}
+                teamProfileOptions={teamProfileTypes}
                 pimsRegionsOptions={pimsRegionOptions}
                 acquisitionStatusOptions={acquisitionStatusOptions}
                 setFilter={changeFilter}
