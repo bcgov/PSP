@@ -32,7 +32,7 @@ export class ResearchCreatePage extends LayoutPage {
 
     this.page = page;
 
-    this.projectMainOptionMenu = page.getByTestId('nav-tooltip-project')
+    this.projectMainOptionMenu = page.getByTestId("nav-tooltip-project");
     this.reseachMainMenuOption = page.getByTestId("nav-tooltip-research");
     this.researchCreateNewOption = page.getByRole("link", {
       name: "Create a Research File",

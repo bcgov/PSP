@@ -58,7 +58,7 @@ export class ResearchListPage extends LayoutPage {
 
     this.page = page;
 
-    this.projectMainOptionMenu = page.getByTestId('nav-tooltip-project')
+    this.projectMainOptionMenu = page.getByTestId("nav-tooltip-project");
     this.reseachMainMenuOption = page.getByTestId("nav-tooltip-research");
     this.researchListViewOption = page.getByRole("link", {
       name: "Manage Research Files",
