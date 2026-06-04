@@ -83,10 +83,12 @@ const initialStatusOptions = leaseStatusOptions.filter(x => initialLeaseStatusTy
 
 const mockFilterModel = new LeaseFilterModel([], initialStatusOptions);
 
-const mockTeamMemberOptions: MultiSelectOption[] = [{
-  id: 'P-1001',
-  text: 'John Doe',
-}];
+const mockTeamMemberOptions: MultiSelectOption[] = [
+  {
+    id: 'P-1001',
+    text: 'John Doe',
+  },
+];
 
 describe('Lease Filter', () => {
   const setup = async (renderOptions: RenderOptions & { props?: Partial<ILeaseFilterProps> }) => {
@@ -114,7 +116,8 @@ describe('Lease Filter', () => {
     return {
       ...utils,
       formikRef,
-      getTeamMemberInput: () => utils.container.querySelector(`#multiselect-leaseTeamMembers_input`) as HTMLElement,
+      getTeamMemberInput: () =>
+        utils.container.querySelector(`#multiselect-leaseTeamMembers_input`) as HTMLElement,
       getSearchButton: () => utils.getByTestId('search'),
       getResetButton: () => utils.getByTestId('reset-button'),
     };
@@ -192,7 +195,7 @@ describe('Lease Filter', () => {
         leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
-        leaseTeamMemberProfileTypeCode: ''
+        leaseTeamMemberProfileTypeCode: '',
       }),
     );
   });
@@ -230,7 +233,7 @@ describe('Lease Filter', () => {
         leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
-        leaseTeamMemberProfileTypeCode: ''
+        leaseTeamMemberProfileTypeCode: '',
       }),
     );
   });
@@ -268,7 +271,7 @@ describe('Lease Filter', () => {
         leaseTeamOrganizationId: null,
         leaseTeamPersonId: null,
         isReceivable: null,
-        leaseTeamMemberProfileTypeCode: ''
+        leaseTeamMemberProfileTypeCode: '',
       }),
     );
   });
@@ -287,7 +290,9 @@ describe('Lease Filter', () => {
   });
 
   it('searches by team member role and team member', async () => {
-    const { container, getSearchButton, getTeamMemberInput, getByText, queryByText } = await setup({});
+    const { container, getSearchButton, getTeamMemberInput, getByText, queryByText } = await setup(
+      {},
+    );
 
     fillInput(container, 'leaseTeamMemberProfileTypeCode', 'LANDOPSMGR', 'select');
     await act(async () => userEvent.click(getSearchButton()));
@@ -314,7 +319,7 @@ describe('Lease Filter', () => {
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
         leaseTeamMemberProfileTypeCode: 'LANDOPSMGR',
-        leaseTeamPersonId: 1001
+        leaseTeamPersonId: 1001,
       }),
     );
   });
