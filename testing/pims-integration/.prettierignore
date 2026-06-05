@@ -1,0 +1,8 @@
+node_modules
+dist
+.auth
+test-results
+playwright-report
+.git
+coverage
+*.md
