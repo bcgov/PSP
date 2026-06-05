@@ -1,4 +1,4 @@
-import { Page, Locator } from "@playwright/test";
+import { Page, Locator } from '@playwright/test';
 
 export class LayoutPage {
   readonly page: Page;
@@ -6,7 +6,7 @@ export class LayoutPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.helpDeskButton = page.getByTestId("help-desk-container-btn");
+    this.helpDeskButton = page.getByTestId('help-desk-container-btn');
   }
 
   async openHelpDeskForm() {

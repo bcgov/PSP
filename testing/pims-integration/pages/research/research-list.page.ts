@@ -1,5 +1,5 @@
-import { expect, Locator, Page } from "@playwright/test";
-import { LayoutPage } from "../layout/layout.page";
+import { expect, Locator, Page } from '@playwright/test';
+import { LayoutPage } from '../layout/layout.page';
 
 export class ResearchListPage extends LayoutPage {
   readonly page: Page;
@@ -58,102 +58,72 @@ export class ResearchListPage extends LayoutPage {
 
     this.page = page;
 
-    this.projectMainOptionMenu = page.getByTestId("nav-tooltip-project");
-    this.reseachMainMenuOption = page.getByTestId("nav-tooltip-research");
-    this.researchListViewOption = page.getByRole("link", {
-      name: "Manage Research Files",
+    this.projectMainOptionMenu = page.getByTestId('nav-tooltip-project');
+    this.reseachMainMenuOption = page.getByTestId('nav-tooltip-research');
+    this.researchListViewOption = page.getByRole('link', {
+      name: 'Manage Research Files',
     });
 
-    this.researchListTitle = page.getByText("Research Files", { exact: true });
-    this.researchNewButton = page.getByRole("button", {
+    this.researchListTitle = page.getByText('Research Files', { exact: true });
+    this.researchNewButton = page.getByRole('button', {
       name: /Create a Research File/i,
     });
 
-    this.researcSearchByLabel = page.getByText("Search by:", { exact: true });
-    this.researchByRegionSelect = page.locator("#input-regionCode");
-    this.researchByStatusSelect = page.locator(
-      "#input-researchFileStatusTypeCode"
-    );
-    this.researchSearchBySelect = page.locator("#input-researchSearchBy");
-    this.researchSearchPidInput = page.locator("#input-pid");
-    this.researchSearchRoadInput = page.locator("#input-roadOrAlias");
-    this.researchSearchDateSelect = page.locator("#input-createOrUpdateRange");
-    this.researchSearchDateToInput = page.locator(
-      "#datepicker-updatedOnStartDate"
-    );
-    this.researchSearchDateFromInput = page.locator(
-      "#datepicker-updatedOnEndDate"
-    );
+    this.researcSearchByLabel = page.getByText('Search by:', { exact: true });
+    this.researchByRegionSelect = page.locator('#input-regionCode');
+    this.researchByStatusSelect = page.locator('#input-researchFileStatusTypeCode');
+    this.researchSearchBySelect = page.locator('#input-researchSearchBy');
+    this.researchSearchPidInput = page.locator('#input-pid');
+    this.researchSearchRoadInput = page.locator('#input-roadOrAlias');
+    this.researchSearchDateSelect = page.locator('#input-createOrUpdateRange');
+    this.researchSearchDateToInput = page.locator('#datepicker-updatedOnStartDate');
+    this.researchSearchDateFromInput = page.locator('#datepicker-updatedOnEndDate');
 
-    this.researchSearchButton = page.locator("#search-button");
-    this.researchSearchResetButton = page.getByTestId("reset-button");
+    this.researchSearchButton = page.locator('#search-button');
+    this.researchSearchResetButton = page.getByTestId('reset-button');
 
-    this.researchTable = page.getByTestId("researchFilesTable");
+    this.researchTable = page.getByTestId('researchFilesTable');
     this.researchTableFileNbrHeader = page.locator(':text-is("File #")');
-    this.researchTableOrderByFileNbr = page.getByTestId(
-      "sort-column-rfileNumber"
-    );
+    this.researchTableOrderByFileNbr = page.getByTestId('sort-column-rfileNumber');
     this.researchTableFileNameHeader = page.locator(':text-is("File name")');
-    this.researchTableOrderByName = page.getByTestId("sort-column-name");
-    this.researchTableMotiRegionHeader = page.locator(
-      ':text-is("MOTT region")'
-    );
+    this.researchTableOrderByName = page.getByTestId('sort-column-name');
+    this.researchTableMotiRegionHeader = page.locator(':text-is("MOTT region")');
     this.researchTableCreatedByHeader = page
-      .getByTestId("researchFilesTable")
-      .getByText("Created by");
-    this.researchTableOrderByCreatedBy = page.getByTestId(
-      "sort-column-appCreateUserid"
-    );
+      .getByTestId('researchFilesTable')
+      .getByText('Created by');
+    this.researchTableOrderByCreatedBy = page.getByTestId('sort-column-appCreateUserid');
     this.researchTableCreatedDateHeader = page
-      .getByTestId("researchFilesTable")
-      .getByText("Created date");
-    this.researchTableOrderCreatedDate = page.getByTestId(
-      "sort-column-appCreateTimestamp"
-    );
+      .getByTestId('researchFilesTable')
+      .getByText('Created date');
+    this.researchTableOrderCreatedDate = page.getByTestId('sort-column-appCreateTimestamp');
     this.researchTableLastUpdatedByHeader = page
-      .getByTestId("researchFilesTable")
-      .getByText("Last updated by");
-    this.researchTableOrderLastUpdated = page.getByTestId(
-      "sort-column-appLastUpdateUserid"
-    );
-    this.researchTableLastUpdatedDateHeader = page.locator(
-      ':text-is("Last updated date")'
-    );
-    this.researchTableOrderUpdatedDate = page.getByTestId(
-      "sort-column-appLastUpdateTimestamp"
-    );
+      .getByTestId('researchFilesTable')
+      .getByText('Last updated by');
+    this.researchTableOrderLastUpdated = page.getByTestId('sort-column-appLastUpdateUserid');
+    this.researchTableLastUpdatedDateHeader = page.locator(':text-is("Last updated date")');
+    this.researchTableOrderUpdatedDate = page.getByTestId('sort-column-appLastUpdateTimestamp');
     this.researchTableStatusHeader = page.locator(':text-is("Status")');
-    this.researchTableOrderStatus = page.getByTestId(
-      "sort-column-researchFileStatusTypeCode"
-    );
+    this.researchTableOrderStatus = page.getByTestId('sort-column-researchFileStatusTypeCode');
 
     this.researchTableContent = page.locator(
       "div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
     );
 
-    this.researchTableEntriesSpan = page.locator(
-      "input[data-testid='input-page-size']"
-    );
+    this.researchTableEntriesSpan = page.locator("input[data-testid='input-page-size']");
     this.researchTablePagination5 = page.locator(
       "div[class='Menu-options scrollable list-group'] div[title='menu-item-5']"
     );
     this.researchTablePagination10 = page.locator("div[title='menu-item-10']");
     this.researchTablePagination20 = page.locator("div[title='menu-item-20']");
     this.researchTablePagination50 = page.locator("div[title='menu-item-50']");
-    this.researchTablePagination100 = page.locator(
-      "div[title='menu-item-100']"
-    );
+    this.researchTablePagination100 = page.locator("div[title='menu-item-100']");
 
-    this.researchTableNextPageButton = page.locator(
-      "ul[class='pagination'] li:last-child"
-    );
-    this.researchTable1stPageButton = page.locator(
-      "ul[class='pagination'] li:nth-child(2)"
-    );
+    this.researchTableNextPageButton = page.locator("ul[class='pagination'] li:last-child");
+    this.researchTable1stPageButton = page.locator("ul[class='pagination'] li:nth-child(2)");
   }
 
   async goto() {
-    await this.page.goto("/research/list");
+    await this.page.goto('/research/list');
   }
 
   async getResearchListTotal(): Promise<number> {

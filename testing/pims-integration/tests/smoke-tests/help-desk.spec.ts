@@ -1,5 +1,5 @@
-import { expect, test, type BrowserContext, type Page } from "@playwright/test";
-import { HelpDeskPage } from "../../pages/help-desk.page";
+import { expect, test, type BrowserContext, type Page } from '@playwright/test';
+import { HelpDeskPage } from '../../pages/help-desk.page';
 
 let context: BrowserContext;
 let page: Page;
@@ -8,7 +8,7 @@ let helpDeskPage: HelpDeskPage;
 const userFullName = process.env.USER_TRANPSP1_FULLNAME;
 const userEmail = process.env.USER_TRANPSP1_EMAIL;
 
-test.describe.serial("Help desk modal", () => {
+test.describe.serial('Help desk modal', () => {
   test.beforeAll(async ({ browser }) => {
     context = await browser.newContext();
     page = await context.newPage();
@@ -22,37 +22,33 @@ test.describe.serial("Help desk modal", () => {
     await context.close();
   });
 
-  test("displays the title properly", async () => {
+  test('displays the title properly', async () => {
     await expect(helpDeskPage.helpDeskTitle).toBeVisible();
-    expect(await helpDeskPage.getTitleText()).toEqual("Help Desk");
+    expect(await helpDeskPage.getTitleText()).toEqual('Help Desk');
   });
 
-  test("displays the sub-title properly", async () => {
+  test('displays the sub-title properly', async () => {
     await expect(helpDeskPage.helpDeskSubTitle).toBeVisible();
-    expect(await helpDeskPage.getSubTitleText()).toEqual(
-      "Get started with PIMS"
-    );
+    expect(await helpDeskPage.getSubTitleText()).toEqual('Get started with PIMS');
   });
 
-  test("displays the instructions properly", async () => {
+  test('displays the instructions properly', async () => {
     await expect(helpDeskPage.helpDeskInstructions).toBeVisible();
     expect(await helpDeskPage.getInstructionsText()).toEqual(
-      "This overview has useful tools that will support you to start using the application. You can also watch the video demos."
+      'This overview has useful tools that will support you to start using the application. You can also watch the video demos.'
     );
   });
 
-  test("displays the resources link", async () => {
+  test('displays the resources link', async () => {
     await expect(helpDeskPage.helpDeskPIMSResourcesLink).toBeVisible();
   });
 
-  test("displays the contact us sub-title", async () => {
+  test('displays the contact us sub-title', async () => {
     await expect(helpDeskPage.helpDeskContactUsSubtitle).toBeVisible();
-    expect(await helpDeskPage.getContactUsSubtitleText()).toEqual(
-      "Contact us:"
-    );
+    expect(await helpDeskPage.getContactUsSubtitleText()).toEqual('Contact us:');
   });
 
-  test("displays the user fullname and email in the form", async () => {
+  test('displays the user fullname and email in the form', async () => {
     await expect(helpDeskPage.helpDeskUserLabel).toBeVisible();
     await expect(helpDeskPage.helpDeskUserInput).toBeVisible();
 

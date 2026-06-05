@@ -36,28 +36,28 @@ export default defineConfig({
   projects: [
     // 1. Define the Setup Project
     {
-      name: "setup",
+      name: 'setup',
       testMatch: /.*\.setup\.ts/,
     },
     {
-      name: "smoke-test",
+      name: 'smoke-test',
       testMatch: /smoke-tests\/.*\.spec\.ts/,
       use: {
-        ...devices["Desktop Chrome"],
+        ...devices['Desktop Chrome'],
         viewport: { width: 1920, height: 1080 },
-        storageState: ".auth/user.json",
+        storageState: '.auth/user.json',
       },
-      dependencies: ["setup"], // Forces setup to run first!
+      dependencies: ['setup'], // Forces setup to run first!
     },
     {
-      name: "pims-e2e",
+      name: 'pims-e2e',
       testMatch: /e2e\/.*\.spec\.ts/,
       use: {
-        ...devices["Desktop Chrome"],
+        ...devices['Desktop Chrome'],
         viewport: { width: 1920, height: 1080 },
-        storageState: ".auth/user.json",
+        storageState: '.auth/user.json',
       },
-      dependencies: ["setup"], // Forces setup to run first!
+      dependencies: ['setup'], // Forces setup to run first!
     },
 
     /* Test against mobile viewports. */

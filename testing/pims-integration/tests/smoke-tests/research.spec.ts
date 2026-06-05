@@ -1,13 +1,13 @@
-import test, { BrowserContext, expect, Page } from "@playwright/test";
-import { ResearchCreatePage } from "../../pages/research/research-create.page";
-import { ResearchListPage } from "../../pages/research/research-list.page";
+import test, { BrowserContext, expect, Page } from '@playwright/test';
+import { ResearchCreatePage } from '../../pages/research/research-create.page';
+import { ResearchListPage } from '../../pages/research/research-list.page';
 
 let context: BrowserContext;
 let page: Page;
 let researchCreatePage: ResearchCreatePage;
 let researchListPage: ResearchListPage;
 
-test.describe("Research Files feature", () => {
+test.describe('Research Files feature', () => {
   test.beforeAll(async ({ browser }) => {
     context = await browser.newContext();
     page = await context.newPage();
@@ -20,7 +20,7 @@ test.describe("Research Files feature", () => {
     await context.close();
   });
 
-  test("verify initial Research File Create Form", async () => {
+  test('verify initial Research File Create Form', async () => {
     await researchCreatePage.goto();
 
     await expect(researchCreatePage.researchTitle).toBeVisible();
@@ -33,16 +33,10 @@ test.describe("Research Files feature", () => {
     await expect(researchCreatePage.researchProjectAddLink).toBeVisible();
 
     await expect(researchCreatePage.researchPropertiesSubtitle).toBeVisible();
-    await expect(
-      researchCreatePage.researchPropertiesWorkflowLink
-    ).toBeVisible();
-    await expect(
-      researchCreatePage.researchSelectedPropertiesSubtitle
-    ).toBeVisible();
+    await expect(researchCreatePage.researchPropertiesWorkflowLink).toBeVisible();
+    await expect(researchCreatePage.researchSelectedPropertiesSubtitle).toBeVisible();
     await expect(researchCreatePage.researchPropertiesIdentifier).toBeVisible();
-    await expect(
-      researchCreatePage.researchPropertiesDescriptiveName
-    ).toBeVisible();
+    await expect(researchCreatePage.researchPropertiesDescriptiveName).toBeVisible();
     await expect(researchCreatePage.researchPropertiesTooltip).toBeVisible();
 
     await expect(researchCreatePage.cancelButton).toBeVisible();
@@ -51,7 +45,7 @@ test.describe("Research Files feature", () => {
     await researchCreatePage.cancelButtonClick();
   });
 
-  test("verify Research File Manage List View", async () => {
+  test('verify Research File Manage List View', async () => {
     //Verify elements from the Research File List View
     await researchListPage.goto();
 
@@ -83,13 +77,9 @@ test.describe("Research Files feature", () => {
     await expect(researchListPage.researchTableOrderByCreatedBy).toBeVisible();
     await expect(researchListPage.researchTableCreatedDateHeader).toBeVisible();
     await expect(researchListPage.researchTableOrderCreatedDate).toBeVisible();
-    await expect(
-      researchListPage.researchTableLastUpdatedByHeader
-    ).toBeVisible();
+    await expect(researchListPage.researchTableLastUpdatedByHeader).toBeVisible();
     await expect(researchListPage.researchTableOrderLastUpdated).toBeVisible();
-    await expect(
-      researchListPage.researchTableLastUpdatedDateHeader
-    ).toBeVisible();
+    await expect(researchListPage.researchTableLastUpdatedDateHeader).toBeVisible();
     await expect(researchListPage.researchTableOrderUpdatedDate).toBeVisible();
     await expect(researchListPage.researchTableStatusHeader).toBeVisible();
     await expect(researchListPage.researchTableOrderStatus).toBeVisible();
@@ -103,6 +93,6 @@ test.describe("Research Files feature", () => {
 
     //Click on create new research file
     await researchListPage.createNewResearchClick();
-    await expect(page).toHaveURL("mapview/sidebar/research/new");
+    await expect(page).toHaveURL('mapview/sidebar/research/new');
   });
 });

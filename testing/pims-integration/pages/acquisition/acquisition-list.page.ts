@@ -1,5 +1,5 @@
-import { Page } from "@playwright/test";
-import { LayoutPage } from "../layout/layout.page";
+import { Page } from '@playwright/test';
+import { LayoutPage } from '../layout/layout.page';
 
 export class AcquisitionListPage extends LayoutPage {
   readonly page: Page;
@@ -10,6 +10,6 @@ export class AcquisitionListPage extends LayoutPage {
   }
 
   async goto() {
-    await this.page.goto("/acquisition/list");
+    await this.page.goto('/acquisition/list');
   }
 }

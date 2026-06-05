@@ -1,5 +1,5 @@
-import { Locator, Page } from "@playwright/test";
-import { LayoutPage } from "./layout/layout.page";
+import { Locator, Page } from '@playwright/test';
+import { LayoutPage } from './layout/layout.page';
 
 export class MapViewPage extends LayoutPage {
   readonly page: Page;
@@ -10,12 +10,12 @@ export class MapViewPage extends LayoutPage {
     super(page);
 
     this.page = page;
-    this.searchPropertiesButton = page.locator("#searchControlButton");
-    this.searchPropertiesPanel = page.locator("#search-sidebar");
+    this.searchPropertiesButton = page.locator('#searchControlButton');
+    this.searchPropertiesPanel = page.locator('#search-sidebar');
   }
 
   async goto() {
-    await this.page.goto("/mapview");
+    await this.page.goto('/mapview');
   }
 
   async searchPropertiesPanelToggle() {

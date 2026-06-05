@@ -1,4 +1,4 @@
-import { Locator, Page } from "@playwright/test";
+import { Locator, Page } from '@playwright/test';
 
 export class LoginPage {
   readonly page: Page;
@@ -7,14 +7,14 @@ export class LoginPage {
 
   constructor(page: Page) {
     this.page = page;
-    this.loginButton = page.locator("button", { hasText: "Sign In" });
-    this.loginHeader = page.locator("h1", {
-      hasText: "MOTT Property Information Management System (PIMS)",
+    this.loginButton = page.locator('button', { hasText: 'Sign In' });
+    this.loginHeader = page.locator('h1', {
+      hasText: 'MOTT Property Information Management System (PIMS)',
     });
   }
 
   async goto() {
-    await this.page.goto("/login");
+    await this.page.goto('/login');
   }
 
   async getStarted() {
