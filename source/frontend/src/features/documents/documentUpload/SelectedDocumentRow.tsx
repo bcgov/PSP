@@ -1,6 +1,12 @@
+import clsx from 'classnames';
 import { FormikErrors, FormikProps, getIn } from 'formik';
+import { truncate } from 'lodash';
 import { ChangeEvent, useCallback, useState } from 'react';
+import { Col, Row } from 'react-bootstrap';
+import { FaTimes, FaTrash } from 'react-icons/fa';
+import { useTheme } from 'styled-components';
 
+import { StyledRemoveIconButton } from '@/components/common/buttons/RemoveButton';
 import { SelectOption } from '@/components/common/form';
 import { Section } from '@/components/common/Section/Section';
 import { ApiGen_Concepts_DocumentType } from '@/models/api/generated/ApiGen_Concepts_DocumentType';
@@ -36,6 +42,7 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
   getDocumentMetadata,
   onRemove,
 }) => {
+  const theme = useTheme();
   const { setFieldValue } = formikProps;
   const [replacingFile, setReplacingFile] = useState<boolean>(false);
 
@@ -73,6 +80,49 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
     document.setFile(file);
     setReplacingFile(!replacingFile);
   };
+
+  const documentErrors = errors;
+  const fileError =
+    typeof documentErrors !== 'string' && exists(documentErrors?.file)
+      ? documentErrors.file
+      : undefined;
+
+  if (exists(fileError) && typeof fileError === 'string') {
+    return (
+      <Section
+        header={
+          <div style={{ fontSize: '1.6rem' }}>
+            <Row className={clsx('no-gutters')}>
+              <Col>
+                <span>File {index + 1}:</span>
+                <span className="ml-4" style={{ color: 'red' }}>
+                  {truncate(document.file.name, { length: 50 })}
+                </span>
+                <FaTimes className="ml-2" size="1.6rem" color={theme.css.pimsRed80} />
+              </Col>
+              <Col xs="auto" className="p-0 m-0">
+                <StyledRemoveIconButton
+                  id={withNameSpace(namespace, 'document-delete')}
+                  data-testid={withNameSpace(namespace, 'document-delete')}
+                  onClick={() => onRemove(index)}
+                  title="Delete document"
+                >
+                  <FaTrash size="1.6rem" />
+                </StyledRemoveIconButton>
+              </Col>
+            </Row>
+
+            <div className={clsx('ml-0 pb-1')} style={{ color: 'red' }}>
+              {fileError}
+            </div>
+          </div>
+        }
+        isCollapsable={false}
+        isStyledHeader
+        noPadding
+      ></Section>
+    );
+  }
 
   return (
     <Section

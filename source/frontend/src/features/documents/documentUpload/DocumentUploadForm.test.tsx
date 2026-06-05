@@ -9,6 +9,7 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   fireEvent,
+  getByName,
   render,
   RenderOptions,
   screen,
@@ -84,7 +85,6 @@ describe('DocumentUploadView component', () => {
         isLoading={false}
         getDocumentMetadata={getDocumentMetadata}
         maxDocumentCount={renderOptions.maxDocumentCount ?? 10}
-        onDocumentsSelected={onDocumentSelected}
         onUploadDocument={onUploadDocument}
         initialDocumentType={'AMMEND'}
         formikRef={formikRef}
@@ -189,8 +189,12 @@ describe('DocumentUploadView component', () => {
       });
     });
 
+    await act(async () => {
+      userEvent.selectOptions(getByName('documents.0.documentTypeId'), '1');
+    });
+
     expect(
-      await screen.findByText(/You have attached 1 files. Do you want to proceed/i),
+      await screen.findByText(/You have attached 1 files. Do you want to continue/i),
     ).toBeVisible();
   });
 
