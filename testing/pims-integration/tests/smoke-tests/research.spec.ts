@@ -13,7 +13,6 @@ test.describe('Research Files feature', () => {
     page = await context.newPage();
     researchCreatePage = new ResearchCreatePage(page);
     researchListPage = new ResearchListPage(page);
-    // await researchCreatePage.goto();
   });
 
   test.afterAll(async () => {

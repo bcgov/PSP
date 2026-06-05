@@ -1,4 +1,4 @@
-import { expect, Locator, Page } from '@playwright/test';
+import { Locator, Page } from '@playwright/test';
 import { LayoutPage } from '../layout/layout.page';
 
 export class ResearchListPage extends LayoutPage {
@@ -127,7 +127,7 @@ export class ResearchListPage extends LayoutPage {
   }
 
   async getResearchListTotal(): Promise<number> {
-    await expect(this.researchTableContent.first()).toBeVisible();
+    await this.researchTableContent.first().waitFor({ state: 'visible' });
     return await this.researchTableContent.count();
   }
 
