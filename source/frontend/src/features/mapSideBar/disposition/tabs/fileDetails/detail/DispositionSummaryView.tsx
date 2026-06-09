@@ -1,11 +1,10 @@
 import { Fragment } from 'react';
-import { FaExternalLinkAlt } from 'react-icons/fa';
 
 import EditButton from '@/components/common/buttons/EditButton';
+import { PrimaryContactSelectorView } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelectorView';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
-import { StyledLink } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
@@ -137,43 +136,22 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
       <Section header="Disposition Team">
         {dispositionFile?.dispositionTeam?.map((teamMember, index) => (
           <Fragment key={`disp-team-${index}`}>
-            <SectionField
+            <PrimaryContactSelectorView
               label={teamMember?.teamProfileType?.description || ''}
-              labelWidth={{ xs: '5' }}
-            >
-              <StyledLink
-                target="_blank"
-                rel="noopener noreferrer"
-                to={
-                  teamMember?.personId
-                    ? `/contact/P${teamMember?.personId}`
-                    : `/contact/O${teamMember?.organizationId}`
-                }
-              >
-                <span>
-                  {teamMember?.personId
-                    ? formatApiPersonNames(teamMember?.person)
-                    : teamMember?.organization?.name ?? ''}
-                </span>
-                <FaExternalLinkAlt className="ml-2" size="1rem" />
-              </StyledLink>
-            </SectionField>
-            {teamMember?.organizationId && (
-              <SectionField label="Primary contact" labelWidth={{ xs: '5' }}>
-                {teamMember?.primaryContactId ? (
-                  <StyledLink
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    to={`/contact/P${teamMember?.primaryContactId}`}
-                  >
-                    <span>{formatApiPersonNames(teamMember?.primaryContact)}</span>
-                    <FaExternalLinkAlt className="m1-2" size="1rem" />
-                  </StyledLink>
-                ) : (
-                  'No contacts available'
-                )}
-              </SectionField>
-            )}
+              teamMemberName={
+                teamMember?.personId
+                  ? formatApiPersonNames(teamMember?.person)
+                  : teamMember?.organization?.name ?? ''
+              }
+              teamMemberUrl={
+                teamMember?.personId
+                  ? `/contact/P${teamMember?.personId}`
+                  : `/contact/O${teamMember?.organizationId}`
+              }
+              primaryContactName={formatApiPersonNames(teamMember?.primaryContact)}
+              primaryContactUrl={`/contact/P${teamMember?.primaryContactId}`}
+              showPrimaryContact={!!teamMember?.organizationId}
+            ></PrimaryContactSelectorView>
           </Fragment>
         ))}
       </Section>

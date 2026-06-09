@@ -338,6 +338,11 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   cursor: pointer;
 }
 
+.c42 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
 .c5.btn.btn-light.Button {
   padding: 0;
   border: 0.1rem solid #9F9D9C;
@@ -672,7 +677,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
   white-space: pre-line;
 }
 
-.c42 {
+.c45 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -1879,6 +1884,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c41 text-left col"
+                              data-testid="teamMember[0]"
                             >
                               <a
                                 class="c42"
@@ -1920,6 +1926,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c41 text-left col"
+                              data-testid="teamMember[0]"
                             >
                               <a
                                 class="c42"
@@ -2295,6 +2302,7 @@ Canada
                             </div>
                             <div
                               class="c41 text-left col"
+                              data-testid="teamMember[0]"
                             >
                               <a
                                 class="c42"
@@ -2323,7 +2331,7 @@ Canada
                             </div>
                           </div>
                           <div
-                            class="pb-2 row"
+                            class="pl-4 mb-3 row"
                           >
                             <div
                               class="pr-0 text-left col-4"
@@ -2336,29 +2344,9 @@ Canada
                             </div>
                             <div
                               class="c41 text-left col"
+                              data-testid="primaryContact[0]"
                             >
-                              <a
-                                class="c42"
-                                href="/contact/P1"
-                                rel="noopener noreferrer"
-                                target="_blank"
-                              >
-                                <span />
-                                <svg
-                                  class="m1-2"
-                                  fill="currentColor"
-                                  height="1rem"
-                                  stroke="currentColor"
-                                  stroke-width="0"
-                                  viewBox="0 0 512 512"
-                                  width="1rem"
-                                  xmlns="http://www.w3.org/2000/svg"
-                                >
-                                  <path
-                                    d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                                  />
-                                </svg>
-                              </a>
+                              No contacts available
                             </div>
                           </div>
                           <div
@@ -2377,7 +2365,7 @@ Canada
                               class="c41 text-left col"
                             >
                               <a
-                                class="c42"
+                                class="c45"
                                 href="/contact/P2"
                                 rel="noopener noreferrer"
                                 target="_blank"

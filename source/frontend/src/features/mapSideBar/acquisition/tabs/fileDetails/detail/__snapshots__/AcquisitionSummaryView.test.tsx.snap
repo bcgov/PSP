@@ -13,6 +13,22 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
   text-decoration: none;
 }
 
+.c6 {
+  padding: 0 0.4rem;
+  display: block;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
 .c0 {
   background-color: #f2f2f2;
   padding-top: 1rem;
@@ -38,22 +54,11 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c5.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c4 {
-  font-weight: bold;
-}
-
 .c8 {
   white-space: pre-line;
 }
 
-.c6 {
+.c9 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -665,6 +670,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c5 text-left col"
+            data-testid="teamMember[0]"
           >
             <a
               class="c6"
@@ -706,6 +712,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c5 text-left col"
+            data-testid="teamMember[0]"
           >
             <a
               class="c6"
@@ -1081,6 +1088,7 @@ Canada
           </div>
           <div
             class="c5 text-left col"
+            data-testid="teamMember[0]"
           >
             <a
               class="c6"
@@ -1109,7 +1117,7 @@ Canada
           </div>
         </div>
         <div
-          class="pb-2 row"
+          class="pl-4 mb-3 row"
         >
           <div
             class="pr-0 text-left col-4"
@@ -1122,6 +1130,7 @@ Canada
           </div>
           <div
             class="c5 text-left col"
+            data-testid="primaryContact[0]"
           >
             <a
               class="c6"
@@ -1133,7 +1142,7 @@ Canada
                 Foo Bar Baz
               </span>
               <svg
-                class="m1-2"
+                class="ml-2"
                 fill="currentColor"
                 height="1rem"
                 stroke="currentColor"
@@ -1165,7 +1174,7 @@ Canada
             class="c5 text-left col"
           >
             <a
-              class="c6"
+              class="c9"
               href="/contact/P2"
               rel="noopener noreferrer"
               target="_blank"
