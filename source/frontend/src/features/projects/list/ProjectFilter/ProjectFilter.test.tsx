@@ -39,7 +39,7 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
   } as ApiGen_Concepts_User,
   retrieveUserLookup: retrieveUserLookup,
   retrieveUserLookupLoading: false,
-  retrieveUserLookupResponse: undefined
+  retrieveUserLookupResponse: undefined,
 });
 
 const mockTeamMemberOptions: MultiSelectOption[] = [
@@ -152,9 +152,7 @@ describe('Project Filter', () => {
   });
 
   it('searches by team member', async () => {
-    const { container, getSearchButton, getTeamMemberInput } = await setup(
-      {},
-    );
+    const { container, getSearchButton, getTeamMemberInput } = await setup({});
 
     await act(async () => {
       userEvent.click(getTeamMemberInput());

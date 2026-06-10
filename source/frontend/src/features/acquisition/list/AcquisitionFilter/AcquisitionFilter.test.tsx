@@ -18,10 +18,12 @@ const mockFilterModel = new AcquisitionFilterModel();
 const acquisitionStatusTypes = getMockLookUpsByType(API.ACQUISITION_FILE_STATUS_TYPES);
 const teamProfileTypes = getMockLookUpsByType(API.ACQUISITION_FILE_TEAM_PROFILE_TYPES);
 
-const mockTeamMemberOptions: MultiSelectOption[] = [{
-  id: 'P-1001',
-  text: 'John Doe',
-}];
+const mockTeamMemberOptions: MultiSelectOption[] = [
+  {
+    id: 'P-1001',
+    text: 'John Doe',
+  },
+];
 
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {
@@ -44,7 +46,9 @@ const setup = (renderOptions: RenderOptions = {}) => {
     },
   );
 
-  const teamMemberInput = utils.container.querySelector(`#multiselect-acquisitionTeamMembers`) as HTMLElement;
+  const teamMemberInput = utils.container.querySelector(
+    `#multiselect-acquisitionTeamMembers`,
+  ) as HTMLElement;
   const searchButton = utils.getByTestId('search');
   const resetButton = utils.getByTestId('reset-button');
   const hasNOCCheckbox = utils.container.querySelector(
@@ -173,7 +177,7 @@ describe('Acquisition Filter', () => {
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({
         acquisitionTeamMemberProfileTypeCode: 'EXPRAGENT',
-        acquisitionTeamMemberPersonId: "1001"
+        acquisitionTeamMemberPersonId: '1001',
       }),
     );
   });
