@@ -70,6 +70,8 @@ namespace Pims.Api
                 {
                     config.AddJsonFile("appsettings.json", optional: false, reloadOnChange: true);
                     config.AddJsonFile($"appsettings.{env}.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile("logging.json", optional: true, reloadOnChange: true);
+                    config.AddJsonFile($"logging.{env}.json", optional: true, reloadOnChange: true);
                     config.AddJsonFile("connectionstrings.json", optional: true, reloadOnChange: true);
                     config.AddJsonFile($"connectionstrings.{env}.json", optional: true, reloadOnChange: true);
                     config.AddJsonFile("geocoder.json", optional: false, reloadOnChange: true);

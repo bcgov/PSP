@@ -3,7 +3,6 @@ using System.Diagnostics.CodeAnalysis;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
-using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
 
 namespace Pims.Dal
@@ -121,17 +120,17 @@ namespace Pims.Dal
 
             repositories.AddDbContext<PimsContext>(options =>
             {
-                var sql = options.UseSqlServer(connectionString, options =>
+                options.UseSqlServer(connectionString, sqlOptions =>
                 {
-                    options.CommandTimeout((int)TimeSpan.FromMinutes(5).TotalSeconds);
-                    options.UseNetTopologySuite();
+                    sqlOptions.CommandTimeout((int)TimeSpan.FromMinutes(5).TotalSeconds);
+                    sqlOptions.UseNetTopologySuite();
                 });
-                if (!env.IsProduction())
+
+                // Enable sensitive data logging in local environment only.
+                // This should never be enabled in non-local environments as it may log personally identifiable information (PII) or other sensitive data.
+                if (env.IsEnvironment("Local"))
                 {
-                    var debugLoggerFactory = LoggerFactory.Create(builder => { builder.AddDebug(); }); // NOSONAR
-                    sql.UseLoggerFactory(debugLoggerFactory);
                     options.EnableSensitiveDataLogging();
-                    options.LogTo(Console.WriteLine);
                 }
             });
 
