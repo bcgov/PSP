@@ -3,7 +3,7 @@ import * as React from 'react';
 
 import ContactLink from '@/components/common/ContactLink';
 import { readOnlyMultiSelectStyle } from '@/components/common/form';
-import { PrimaryContactSelectorView } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelectorView';
+import { PrimaryContactSelectorDetails } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelectorView';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
@@ -75,52 +75,7 @@ const PropertyActivityDetailsSubView: React.FunctionComponent<
           <>{contact.person !== null && <ContactLink person={contact.person} />}</>
         ))}
       </SectionField>
-      {/* <SectionField
-      label="Requestor"
-      contentWidth={{ xs: 7 }}
-      tooltip="Document the source of the request by entering the name of the person, organization or other entity from which the request has been received"
-    > */}
-      {/* <>
-      {exists(props.activity.requestorPerson) && (
-        <ContactLink person={props.activity.requestorPerson} />
-      )}
-      {exists(props.activity.requestorOrganization) && (
-        <ContactLink organization={props.activity.requestorOrganization} />
-      )}
-    </>
-  </SectionField>
-  {exists(props.activity.requestorPrimaryContactId) && (
-    <SectionField
-      label="Primary contact"
-      valueTestId="requestorPrimaryContact"
-      contentWidth={{ xs: 7 }}
-    >
-      {props.activity?.requestorPrimaryContactId ? (
-        <StyledLink
-          target="_blank"
-          rel="noopener noreferrer"
-          to={`/contact/P${props.activity?.requestorPrimaryContactId}`}
-        >
-          <span>
-            {props.activity?.requestorPrimaryContactId
-              ? formatApiPersonNames(props.activity?.requestorPrimaryContact)
-              : ''}
-          </span>
-          <FaExternalLinkAlt className="ml-2" size="1rem" />
-        </StyledLink>
-      ) : (
-        'No contacts available'
-      )}
-    </SectionField>
-  )}
-  <SectionField label="External contacts" contentWidth={{ xs: 8 }}>
-    {props.activity.involvedParties?.map(contact => (
-      <>
-        {contact.person !== null && <ContactLink person={contact.person} />}
-        {contact.organization !== null && <ContactLink organization={contact.organization} />}
-      </>
-    ))} */}
-      <PrimaryContactSelectorView
+      <PrimaryContactSelectorDetails
         label="Requestor"
         teamMemberName={getRequestorName()}
         teamMemberUrl={getRequestorContactLink()}
@@ -132,7 +87,7 @@ const PropertyActivityDetailsSubView: React.FunctionComponent<
         primaryContactUrl={`/contact/P${props.activity?.requestorPrimaryContactId}`}
         showPrimaryContact={!!props.activity?.requestorPrimaryContactId}
         tooltip="Document the source of the request by entering the name of the person, organization or other entity from which the request has been received"
-      ></PrimaryContactSelectorView>
+      ></PrimaryContactSelectorDetails>
       <SectionField label="Service provider" contentWidth={{ xs: 7 }}>
         <>
           {props.activity.serviceProviderPerson !== null && (

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { PrimaryContactSelectorView } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelectorView';
+import { PrimaryContactSelectorDetails } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelectorView';
 import { Section } from '@/components/common/Section/Section';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
 import { formatApiPersonNames } from '@/utils/personUtils';
@@ -15,7 +15,7 @@ export const LeaseTeamView: React.FunctionComponent<React.PropsWithChildren<ILea
     <Section header="Lease & Licence Team">
       {lease.leaseTeam.map((teamMember, index) => (
         <React.Fragment key={`lease-team-${teamMember?.id ?? index}`}>
-          <PrimaryContactSelectorView
+          <PrimaryContactSelectorDetails
             label={teamMember?.teamProfileType.description || ''}
             teamMemberName={
               teamMember?.person

@@ -7,7 +7,7 @@ import styled from 'styled-components';
 
 import EditButton from '@/components/common/buttons/EditButton';
 import { readOnlyMultiSelectStyle } from '@/components/common/form';
-import { PrimaryContactSelectorView } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelectorView';
+import { PrimaryContactSelectorDetails } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelectorView';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
@@ -213,7 +213,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
       <Section header="Acquisition Team">
         {detail.acquisitionTeam.map((teamMember, index) => (
           <React.Fragment key={`acq-team-${index}`}>
-            <PrimaryContactSelectorView
+            <PrimaryContactSelectorDetails
               label={teamMember?.teamProfileTypeCodeDescription || ''}
               teamMemberName={teamMember?.teamName}
               teamMemberUrl={
@@ -224,7 +224,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
               primaryContactName={teamMember?.primaryContactName}
               primaryContactUrl={`/contact/P${teamMember?.primaryContactId}`}
               showPrimaryContact={!!teamMember?.organizationId}
-            ></PrimaryContactSelectorView>
+            ></PrimaryContactSelectorDetails>
           </React.Fragment>
         ))}
       </Section>
@@ -247,7 +247,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         {!!ownerSolicitors?.length &&
           ownerSolicitors.map(ownerSolicitor => (
             <React.Fragment key={`owner-solicitor-${ownerSolicitor.interestHolderId}`}>
-              <PrimaryContactSelectorView
+              <PrimaryContactSelectorDetails
                 label={detail.isSubFile ? 'Sub-interest solicitor' : 'Owner solicitor'}
                 teamMemberName={
                   ownerSolicitor?.personId
@@ -262,7 +262,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
                 primaryContactName={formatApiPersonNames(ownerSolicitor.primaryContact)}
                 primaryContactUrl={`/contact/P${ownerSolicitor?.primaryContactId}`}
                 showPrimaryContact={!!ownerSolicitor?.organization}
-              ></PrimaryContactSelectorView>
+              ></PrimaryContactSelectorDetails>
             </React.Fragment>
           ))}
         {!!ownerRepresentatives?.length &&

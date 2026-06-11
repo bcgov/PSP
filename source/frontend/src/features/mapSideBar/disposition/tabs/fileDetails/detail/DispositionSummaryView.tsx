@@ -1,7 +1,7 @@
 import { Fragment } from 'react';
 
 import EditButton from '@/components/common/buttons/EditButton';
-import { PrimaryContactSelectorView } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelectorView';
+import { PrimaryContactSelectorDetails } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelectorView';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
@@ -136,7 +136,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
       <Section header="Disposition Team">
         {dispositionFile?.dispositionTeam?.map((teamMember, index) => (
           <Fragment key={`disp-team-${index}`}>
-            <PrimaryContactSelectorView
+            <PrimaryContactSelectorDetails
               label={teamMember?.teamProfileType?.description || ''}
               teamMemberName={
                 teamMember?.personId
@@ -151,7 +151,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
               primaryContactName={formatApiPersonNames(teamMember?.primaryContact)}
               primaryContactUrl={`/contact/P${teamMember?.primaryContactId}`}
               showPrimaryContact={!!teamMember?.organizationId}
-            ></PrimaryContactSelectorView>
+            ></PrimaryContactSelectorDetails>
           </Fragment>
         ))}
       </Section>
