@@ -1,4 +1,4 @@
-import { FC, MouseEvent, useMemo } from 'react';
+import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 
 import variables from '@/assets/scss/_variables.module.scss';
@@ -17,38 +17,38 @@ export interface INotificationRowProps {
   notification: ApiGen_Concepts_NotificationOutput;
   onSelect: (notification: ApiGen_Concepts_NotificationOutput) => void;
   onToggleRead: (notification: ApiGen_Concepts_NotificationOutput) => void;
+  onDelete: (notification: ApiGen_Concepts_NotificationOutput) => void;
 }
 
 export const NotificationRow: FC<INotificationRowProps> = ({
   notification,
   onSelect,
   onToggleRead,
+  onDelete,
 }) => {
-  const handleDotClick = (event: MouseEvent<HTMLButtonElement>) => {
-    event.stopPropagation();
-    onToggleRead(notification);
-  };
-
   const fileLabel = getNotificationFileLabel(notification) ?? '—';
   const typeLabel = getNotificationTypeLabel(notification);
   const triggerDate = getParentNotification(notification)?.notificationTriggerDate ?? null;
   const unread = isUnread(notification);
 
-  const menuOptions: MenuOption[] = useMemo(() => {
-    const options: MenuOption[] = [];
-    if (unread) {
-      options.push({
-        label: 'Mark as read',
+  const menuOptions: MenuOption[] = useMemo(
+    () => [
+      {
+        label: 'Open file',
+        onClick: () => onSelect(notification),
+      },
+      {
+        label: unread ? 'Mark as read' : 'Mark as unread',
         onClick: () => onToggleRead(notification),
-      });
-    } else {
-      options.push({
-        label: 'Mark as unread',
-        onClick: () => onToggleRead(notification),
-      });
-    }
-    return options;
-  }, [notification, onToggleRead, unread]);
+      },
+      {
+        label: 'Delete',
+        separator: true,
+        onClick: () => onDelete(notification),
+      },
+    ],
+    [notification, onDelete, onSelect, onToggleRead, unread],
+  );
 
   return (
     <Row
@@ -102,16 +102,6 @@ const UnreadDot = styled.div`
   border-radius: 50%;
   background-color: ${variables.pimsRed100};
   border: none;
-  padding: 0;
-  cursor: pointer;
-`;
-
-const ReadDot = styled.button`
-  width: 1rem;
-  height: 1rem;
-  border-radius: 50%;
-  background-color: transparent;
-  border: 1px solid ${variables.pimsGrey80 ?? '#999'};
   padding: 0;
   cursor: pointer;
 `;

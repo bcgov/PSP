@@ -2,26 +2,28 @@ import { FC } from 'react';
 import styled from 'styled-components';
 
 import variables from '@/assets/scss/_variables.module.scss';
-import { ApiGen_Concepts_NotificationUserOutput } from '@/models/api/generated/ApiGen_Concepts_NotificationUserOutput';
+import { ApiGen_Concepts_NotificationOutput } from '@/models/api/generated/ApiGen_Concepts_NotificationOutput';
 
 import NotificationRow from './NotificationRow';
 
-export interface INotificationsListViewProps {
-  items: ApiGen_Concepts_NotificationUserOutput[];
+export interface INotificationInboxViewProps {
+  items: ApiGen_Concepts_NotificationOutput[];
   hasMore: boolean;
   isLoading: boolean;
   onLoadMore: () => void;
-  onSelect: (notification: ApiGen_Concepts_NotificationUserOutput) => void;
-  onToggleRead: (notification: ApiGen_Concepts_NotificationUserOutput) => void;
+  onSelect: (notification: ApiGen_Concepts_NotificationOutput) => void;
+  onToggleRead: (notification: ApiGen_Concepts_NotificationOutput) => void;
+  onDelete: (notification: ApiGen_Concepts_NotificationOutput) => void;
 }
 
-export const NotificationsListView: FC<INotificationsListViewProps> = ({
+export const NotificationInboxView: FC<INotificationInboxViewProps> = ({
   items,
   hasMore,
   isLoading,
   onLoadMore,
   onSelect,
   onToggleRead,
+  onDelete,
 }) => {
   if (!isLoading && items.length === 0) {
     return <EmptyState>You have no notifications.</EmptyState>;
@@ -32,10 +34,11 @@ export const NotificationsListView: FC<INotificationsListViewProps> = ({
       <List>
         {items.map(item => (
           <NotificationRow
-            key={item.notificationUserOutputId}
+            key={item.id}
             notification={item}
             onSelect={onSelect}
             onToggleRead={onToggleRead}
+            onDelete={onDelete}
           />
         ))}
         {isLoading && items.length === 0 && <EmptyState>Loading…</EmptyState>}
@@ -97,4 +100,4 @@ const LoadMoreButton = styled.button`
   }
 `;
 
-export default NotificationsListView;
+export default NotificationInboxView;

@@ -23,14 +23,15 @@ export const useApiNotificationInbox = () => {
       getNotificationOutputApi: (outputId: number) =>
         api.get<ApiGen_Concepts_NotificationOutput>(`/notifications/inbox/${outputId}`),
 
-      getUnreadCountApi: () => api.get<number>(`/notifications/inbox/unread-count`),
+      getUnreadCountApi: () =>
+        api.get<{ unreadCount: number }>(`/notifications/inbox/unread-count`),
 
       updateReadStatusApi: (outputId: number, isRead: boolean) =>
-        api.patch<unknown>(`/notifications/inbox/${outputId}/read`, {
-          isRead,
+        api.patch<void>(`/notifications/inbox/${outputId}/read`, isRead, {
+          headers: { 'Content-Type': 'application/json' },
         }),
 
-      markAllAsReadApi: () => api.patch<unknown>('/notifications/inbox/read-all'),
+      markAllAsReadApi: () => api.patch<void>('/notifications/inbox/read-all'),
 
       deleteNotificationOutputApi: (outputId: number) =>
         api.delete<boolean>(`/notifications/inbox/${outputId}`),

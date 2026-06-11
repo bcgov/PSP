@@ -5,15 +5,35 @@ import { useNotificationInboxRepository } from '@/hooks/repositories/useNotifica
 import { ApiGen_Concepts_NotificationOutput } from '@/models/api/generated/ApiGen_Concepts_NotificationOutput';
 import { exists } from '@/utils';
 
-import { isUnread } from './notificationLinks';
+import { INotificationInboxViewProps } from './NotificationInboxView';
+import { getNotificationDeepLink, isUnread } from './notificationLinks';
 
 export interface INotificationInboxContainerProps {
-  show?: boolean;
+  /** The presentational component responsible for rendering the inbox list. */
+  View: FC<INotificationInboxViewProps>;
+
+  /** Called when the inbox wants the surrounding popover to close (e.g. after navigation). */
+  onRequestClose?: () => void;
+
+  /**
+   * Called after any change that affects the unread count (mark read/unread, delete) so the
+   * owner (the bell container) can refresh the badge.
+   */
+  onInboxChanged?: () => void;
 }
 
 const PAGE_SIZE = 10;
 
-export const NotificationInboxContainer: FC<INotificationInboxContainerProps> = ({ show }) => {
+/**
+ * Container for the notifications inbox. Owns all data fetching and mutations for the popover
+ * body, and delegates rendering to the supplied `View`. Because the popover only mounts this
+ * container while open, the first page is fetched on mount — every open shows a fresh list.
+ */
+export const NotificationInboxContainer: FC<INotificationInboxContainerProps> = ({
+  View,
+  onRequestClose,
+  onInboxChanged,
+}) => {
   const history = useHistory();
   const [items, setItems] = useState<ApiGen_Concepts_NotificationOutput[]>([]);
   const [page, setPage] = useState(0);
@@ -21,12 +41,12 @@ export const NotificationInboxContainer: FC<INotificationInboxContainerProps> = 
 
   const {
     getUserInbox: { execute: getUserInbox, loading },
-    getUnreadCount: { execute: getUnreadCount, response: unreadCount },
     updateReadStatus: { execute: updateReadStatus },
+    deleteNotificationOutput: { execute: deleteNotificationOutput },
   } = useNotificationInboxRepository();
 
   // Loads the next page from the server and appends it to the existing list.
-  // Passing `reset` clears the list first: used when the popover opens to give a fresh view.
+  // Passing `reset` clears the list first: used on mount to give a fresh view.
   const fetchPage = useCallback(
     async (nextPage: number, reset: boolean) => {
       const result = await getUserInbox(nextPage, PAGE_SIZE);
@@ -42,11 +62,8 @@ export const NotificationInboxContainer: FC<INotificationInboxContainerProps> = 
   );
 
   useEffect(() => {
-    if (show) {
-      fetchPage(1, true);
-      getUnreadCount();
-    }
-  }, [show, fetchPage, getUnreadCount]);
+    fetchPage(1, true);
+  }, [fetchPage]);
 
   const handleLoadMore = useCallback(() => {
     fetchPage(page + 1, false);
@@ -54,37 +71,59 @@ export const NotificationInboxContainer: FC<INotificationInboxContainerProps> = 
 
   const handleSelect = useCallback(
     async (notification: ApiGen_Concepts_NotificationOutput) => {
-      setShow(false);
+      onRequestClose?.();
       if (isUnread(notification)) {
         await updateReadStatus(notification.id, true);
+        onInboxChanged?.();
       }
       const target = getNotificationDeepLink(notification);
       if (target !== null) {
         history.push(target);
       }
     },
-    [history, updateReadStatus],
+    [history, onInboxChanged, onRequestClose, updateReadStatus],
   );
 
   const handleToggleRead = useCallback(
     async (notification: ApiGen_Concepts_NotificationOutput) => {
       const nextIsRead = isUnread(notification);
-      const updated = await updateReadStatus(notification.id, nextIsRead);
-      if (exists(updated)) {
-        setItems(prev =>
-          prev.map(item =>
-            item.id === notification.id
-              ? { ...item, notificationReadDt: updated.notificationReadDt }
-              : item,
-          ),
-        );
-        await getUnreadCount();
-      }
+      await updateReadStatus(notification.id, nextIsRead);
+      // The endpoint returns 204, so reflect the new state optimistically.
+      setItems(prev =>
+        prev.map(item =>
+          item.id === notification.id
+            ? { ...item, notificationReadDt: nextIsRead ? new Date().toISOString() : null }
+            : item,
+        ),
+      );
+      onInboxChanged?.();
     },
-    [getUnreadCount, updateReadStatus],
+    [onInboxChanged, updateReadStatus],
+  );
+
+  const handleDelete = useCallback(
+    async (notification: ApiGen_Concepts_NotificationOutput) => {
+      await deleteNotificationOutput(notification.id);
+      setItems(prev => prev.filter(item => item.id !== notification.id));
+      setTotal(prev => Math.max(prev - 1, 0));
+      onInboxChanged?.();
+    },
+    [deleteNotificationOutput, onInboxChanged],
   );
 
   const hasMore = items.length < total;
 
-  return <div>Notification Inbox</div>;
+  return (
+    <View
+      items={items}
+      hasMore={hasMore}
+      isLoading={loading}
+      onLoadMore={handleLoadMore}
+      onSelect={handleSelect}
+      onToggleRead={handleToggleRead}
+      onDelete={handleDelete}
+    />
+  );
 };
+
+export default NotificationInboxContainer;

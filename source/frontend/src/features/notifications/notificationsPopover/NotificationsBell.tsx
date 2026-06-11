@@ -1,37 +1,38 @@
-import { FC, useState } from 'react';
+import { FC, ReactNode, useCallback, useState } from 'react';
 import OverlayTrigger from 'react-bootstrap/OverlayTrigger';
 import Popover from 'react-bootstrap/Popover';
 import { FaBell } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import variables from '@/assets/scss/_variables.module.scss';
-import { exists } from '@/utils/utils';
 
 export interface INotificationsBellProps {
   unreadCount?: number;
-  popoverContent?: React.ReactNode;
-  onToggle?: (nextShow: boolean) => void;
+  /**
+   * Content rendered inside the popover. May be a node, or a render function that
+   * receives a `closePopover` handle so the content can dismiss the popover itself
+   * (e.g. when navigating away after selecting a notification).
+   */
+  popoverContent?: ReactNode | ((closePopover: () => void) => ReactNode);
 }
 
+/**
+ * Standalone notifications bell. Renders the bell icon with an unread-count badge and a
+ * popover whose body is supplied by the caller via `popoverContent`. Owns only the
+ * open/closed UI state — no effects or API access.
+ */
 export const NotificationsBell: FC<INotificationsBellProps> = ({
   unreadCount = 0,
   popoverContent,
-  onToggle,
 }) => {
   const [show, setShow] = useState(false);
+
+  const closePopover = useCallback(() => setShow(false), []);
 
   const popover = (
     <StyledPopover id="notifications-popover">
       <Popover.Content>
-        {popoverContent}
-        {/* <NotificationsListView
-          items={items}
-          hasMore={hasMore}
-          isLoading={loading}
-          onLoadMore={handleLoadMore}
-          onSelect={handleSelect}
-          onToggleRead={handleToggleRead}
-        /> */}
+        {typeof popoverContent === 'function' ? popoverContent(closePopover) : popoverContent}
       </Popover.Content>
     </StyledPopover>
   );
@@ -42,12 +43,7 @@ export const NotificationsBell: FC<INotificationsBellProps> = ({
       placement="bottom-end"
       overlay={popover}
       show={show}
-      onToggle={(next: boolean) => {
-        setShow(next);
-        if (exists(onToggle)) {
-          onToggle(next);
-        }
-      }}
+      onToggle={(next: boolean) => setShow(next)}
       rootClose
       rootCloseEvent="mousedown"
     >
