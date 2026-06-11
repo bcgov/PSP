@@ -13,6 +13,8 @@ import { act, fillInput, render, RenderOptions, userEvent } from '@/utils/test-u
 
 import { getDefaultFormLease, LeaseFormModel } from '../models';
 import AdministrationSubForm from './AdministrationSubForm';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
+import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -25,6 +27,14 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
   retrieveUserInfo: vi.fn(),
   retrieveUserInfoLoading: true,
   retrieveUserInfoResponse: getUserMock(),
+  retrieveUserLookup: vi.fn(),
+  retrieveUserLookupLoading: false,
+  retrieveUserLookupResponse: {
+    items: [],
+    page: 0,
+    quantity: 0,
+    total: 0,
+  } as ApiGen_Base_Page<ApiGen_Concepts_User>,
 });
 
 describe('AdministrationSubForm component', () => {

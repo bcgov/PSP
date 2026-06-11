@@ -15,6 +15,7 @@ import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepositor
 import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 
 const mockAxios = new MockAdapter(axios);
 
@@ -53,6 +54,14 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
       } as ApiGen_Concepts_RegionUser,
     ],
   } as ApiGen_Concepts_User,
+  retrieveUserLookup: vi.fn(),
+  retrieveUserLookupLoading: false,
+  retrieveUserLookupResponse: {
+    items: [],
+    page: 0,
+    quantity: 0,
+    total: 0,
+  } as ApiGen_Base_Page<ApiGen_Concepts_User>,
 });
 
 vi.mock('@/hooks/repositories/useProjectProvider');

@@ -8,6 +8,7 @@ import * as API from '@/constants/API';
 
 import { AcquisitionFilterModel } from '../interfaces';
 import { AcquisitionFilter } from './AcquisitionFilter';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 
 const setFilter = vi.fn();
 const onResetFilter = vi.fn();
@@ -15,6 +16,14 @@ const onResetFilter = vi.fn();
 const mockFilterModel = new AcquisitionFilterModel();
 
 const acquisitionStatusTypes = getMockLookUpsByType(API.ACQUISITION_FILE_STATUS_TYPES);
+const teamProfileTypes = getMockLookUpsByType(API.ACQUISITION_FILE_TEAM_PROFILE_TYPES);
+
+const mockTeamMemberOptions: MultiSelectOption[] = [
+  {
+    id: 'P-1001',
+    text: 'John Doe',
+  },
+];
 
 // render component under test
 const setup = (renderOptions: RenderOptions = {}) => {
@@ -23,8 +32,9 @@ const setup = (renderOptions: RenderOptions = {}) => {
       setFilter={setFilter}
       initialValues={mockFilterModel}
       pimsRegionsOptions={[]}
-      acquisitionTeamOptions={[]}
+      acquisitionTeamOptions={mockTeamMemberOptions}
       acquisitionStatusOptions={acquisitionStatusTypes}
+      teamProfileOptions={teamProfileTypes}
       onResetFilter={onResetFilter}
     />,
     {
@@ -35,12 +45,16 @@ const setup = (renderOptions: RenderOptions = {}) => {
       ...renderOptions,
     },
   );
+
+  const teamMemberInput = utils.container.querySelector(
+    `#multiselect-acquisitionTeamMembers`,
+  ) as HTMLElement;
   const searchButton = utils.getByTestId('search');
   const resetButton = utils.getByTestId('reset-button');
   const hasNOCCheckbox = utils.container.querySelector(
     `input[name="hasNoticeOfClaim"]`,
   ) as HTMLInputElement;
-  return { searchButton, hasNOCCheckbox, setFilter, resetButton, ...utils };
+  return { searchButton, hasNOCCheckbox, setFilter, resetButton, teamMemberInput, ...utils };
 };
 
 describe('Acquisition Filter', () => {
@@ -135,8 +149,41 @@ describe('Acquisition Filter', () => {
     );
   });
 
+  it('searches by team member role and team member', async () => {
+    const { container, searchButton, teamMemberInput, getByText, queryByText } = setup();
+
+    fillInput(container, 'acquisitionTeamMemberProfileTypeCode', 'EXPRAGENT', 'select');
+    await act(async () => userEvent.click(searchButton));
+
+    expect(getByText('Team member is required')).toBeInTheDocument();
+
+    await act(async () => {
+      userEvent.click(teamMemberInput);
+    });
+
+    await act(async () => {
+      userEvent.type(teamMemberInput, 'John Doe');
+    });
+
+    await act(async () => {
+      const firstOption = container.querySelector(`div.optionListContainer ul li`) as HTMLElement;
+      userEvent.click(firstOption);
+    });
+
+    expect(queryByText('Team member is required')).toBeNull();
+
+    await act(async () => userEvent.click(searchButton));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({
+        acquisitionTeamMemberProfileTypeCode: 'EXPRAGENT',
+        acquisitionTeamMemberPersonId: '1001',
+      }),
+    );
+  });
+
   it('resets the filter when reset button is clicked', async () => {
-    const { container, resetButton, setFilter } = setup();
+    const { container, resetButton } = setup();
 
     fillInput(container, 'acquisitionFileNameOrNumber', 'breaking');
     await act(async () => userEvent.click(resetButton));

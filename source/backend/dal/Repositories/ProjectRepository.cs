@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using LinqKit;
 using MapsterMapper;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
@@ -204,6 +205,22 @@ namespace Pims.Dal.Repositories
             return project;
         }
 
+        public IEnumerable<PimsProjectPerson> GetTeamMembers(long? contractorPersonId = null)
+        {
+            var predicate = PredicateBuilder.New<PimsProjectPerson>(pp => true);
+
+            if (contractorPersonId != null)
+            {
+                predicate.And(x => x.Project.PimsProjectPeople.Any(p => p.PersonId == contractorPersonId));
+            }
+
+            return Context.PimsProjectPeople
+                .AsNoTracking()
+                .Include(x => x.Person)
+                .Where(predicate)
+                .ToArray();
+        }
+
         private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter, long? contractorPersonId = null)
         {
             var query = Context.PimsProjects.AsNoTracking();
@@ -228,9 +245,19 @@ namespace Pims.Dal.Repositories
                 query = query.Where(x => x.PimsProjectPeople.Any(x => x.PersonId == contractorPersonId));
             }
 
+            if(filter.TeamMemberPersonId.HasValue)
+            {
+                query = query.Where(x => x.PimsProjectPeople.Any(x => x.PersonId == filter.TeamMemberPersonId.Value));
+            }
+
             if (filter.Regions.Any())
             {
                 query = query.Where(x => filter.Regions.Any(r => r == x.RegionCode));
+            }
+
+            if (!string.IsNullOrWhiteSpace(filter.ProjectCreatedBy))
+            {
+                query = query.Where(x => x.AppCreateUserid == filter.ProjectCreatedBy);
             }
 
             if (filter.Sort?.Any() == true)

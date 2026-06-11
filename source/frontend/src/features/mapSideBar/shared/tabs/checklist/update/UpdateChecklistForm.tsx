@@ -13,6 +13,7 @@ import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen
 import { exists, isValidId, prettyFormatUTCDate } from '@/utils';
 
 import { StyledSectionCentered } from '../detail/styles';
+import ChecklistSectionStatusApply from './ChecklistSectionStatusApply/ChecklistSectionStatusApply';
 import { ChecklistFormModel } from './models';
 
 export interface IUpdateChecklistFormProps {
@@ -43,6 +44,34 @@ export const UpdateChecklistForm: React.FC<IUpdateChecklistFormProps> = ({
   const statusTypes = getOptionsByType(statusTypeName);
 
   const lastUpdated = initialValues.lastModifiedBy();
+
+  const onSectionStatusApply = (sectionId: string, setStatusApply: string) => {
+    if (setStatusApply === '') {
+      return;
+    }
+
+    const formikRefObject =
+      formikRef as React.MutableRefObject<FormikProps<ChecklistFormModel> | null>;
+    const sectionIndex = formikRefObject?.current?.values?.checklistSections.findIndex(
+      checklistSection => checklistSection.id === sectionId,
+    );
+    const section =
+      sectionIndex != null && sectionIndex >= 0
+        ? formikRefObject.current?.values.checklistSections[sectionIndex]
+        : undefined;
+
+    if (section && formikRefObject.current) {
+      const updatedItems = section.items.slice();
+      updatedItems.forEach(item => {
+        item.statusType = setStatusApply;
+      });
+
+      formikRefObject.current.setFieldValue(
+        `checklistSections[${sectionIndex}].items`,
+        updatedItems,
+      );
+    }
+  };
 
   return (
     <Formik<ChecklistFormModel>
@@ -87,7 +116,14 @@ export const UpdateChecklistForm: React.FC<IUpdateChecklistFormProps> = ({
           {formikProps.values.checklistSections.map((section, i) => (
             <Section
               key={section.id ?? `${prefix}-checklist-section-${i}`}
-              header={section.name}
+              header={
+                <ChecklistSectionStatusApply
+                  sectionId={section.id}
+                  sectionName={section.name}
+                  checklistItemOptions={statusTypes}
+                  onSectionStatusApply={onSectionStatusApply}
+                ></ChecklistSectionStatusApply>
+              }
               data-testid={section.name}
             >
               {section.items.map((checklistItem, j) => (
@@ -110,3 +146,5 @@ export const UpdateChecklistForm: React.FC<IUpdateChecklistFormProps> = ({
     </Formik>
   );
 };
+
+export default UpdateChecklistForm;

@@ -963,12 +963,22 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == contractorPersonId) || (acq.Project != null && acq.Project.PimsProjectPeople.Any(x => x.PersonId == contractorPersonId)));
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.AcquisitionTeamMemberPersonId))
+            if (!string.IsNullOrWhiteSpace(filter.AcquisitionTeamMemberProfileTypeCode) && !string.IsNullOrWhiteSpace(filter.AcquisitionTeamMemberPersonId))
+            {
+                predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == long.Parse(filter.AcquisitionTeamMemberPersonId)
+                                                                                    && x.AcqFlTeamProfileTypeCode == filter.AcquisitionTeamMemberProfileTypeCode));
+            }
+            else if(!string.IsNullOrWhiteSpace(filter.AcquisitionTeamMemberPersonId))
             {
                 predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == long.Parse(filter.AcquisitionTeamMemberPersonId)));
             }
 
-            if (!string.IsNullOrWhiteSpace(filter.AcquisitionTeamMemberOrganizationId))
+            if (!string.IsNullOrWhiteSpace(filter.AcquisitionTeamMemberProfileTypeCode) && !string.IsNullOrWhiteSpace(filter.AcquisitionTeamMemberOrganizationId))
+            {
+                predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.OrganizationId == long.Parse(filter.AcquisitionTeamMemberOrganizationId)
+                                                                                     && x.AcqFlTeamProfileTypeCode == filter.AcquisitionTeamMemberProfileTypeCode));
+            }
+            else if (!string.IsNullOrWhiteSpace(filter.AcquisitionTeamMemberOrganizationId))
             {
                 predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.OrganizationId == long.Parse(filter.AcquisitionTeamMemberOrganizationId)));
             }

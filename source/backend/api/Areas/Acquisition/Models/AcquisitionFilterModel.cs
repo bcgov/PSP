@@ -50,6 +50,11 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
         public string AcquisitionTeamMemberPersonId { get; set; }
 
         /// <summary>
+        /// get/set - The MOTI person profile type to search by for acquisition team members.
+        /// </summary>
+        public string AcquisitionTeamMemberProfileTypeCode { get; set; }
+
+        /// <summary>
         /// get/set - The MOTI Organization id to search by for acquisition team members.
         /// </summary>
         public string AcquisitionTeamMemberOrganizationId { get; set; }
@@ -94,6 +99,7 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
             OwnerName = filter.GetStringValue(nameof(OwnerName));
             AcquisitionTeamMemberPersonId = filter.GetStringValue(nameof(AcquisitionTeamMemberPersonId));
             AcquisitionTeamMemberOrganizationId = filter.GetStringValue(nameof(AcquisitionTeamMemberOrganizationId));
+            AcquisitionTeamMemberProfileTypeCode = filter.GetStringValue(nameof(AcquisitionTeamMemberProfileTypeCode));
             HasNoticeOfClaim = filter.GetBoolValue(nameof(HasNoticeOfClaim));
             Regions = filter.GetIntArrayValue(nameof(Regions));
 
@@ -123,6 +129,7 @@ namespace Pims.Api.Areas.Acquisition.Models.Search
                 OwnerName = model.OwnerName?.Trim(),
                 AcquisitionTeamMemberPersonId = model.AcquisitionTeamMemberPersonId,
                 AcquisitionTeamMemberOrganizationId = model.AcquisitionTeamMemberOrganizationId,
+                AcquisitionTeamMemberProfileTypeCode = model.AcquisitionTeamMemberProfileTypeCode,
                 HasNoticeOfClaim = model.HasNoticeOfClaim,
                 Regions = model.Regions,
 

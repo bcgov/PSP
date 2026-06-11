@@ -14,6 +14,7 @@ import {
 } from './UserRegionSelectContainer';
 import { ApiGen_Concepts_RegionUser } from '@/models/api/generated/ApiGen_Concepts_RegionUser';
 import { ApiGen_Concepts_User } from '@/models/api/generated/ApiGen_Concepts_User';
+import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 
 // mock auth library
 
@@ -40,6 +41,14 @@ vi.mocked(useUserInfoRepository).mockReturnValue({
       } as ApiGen_Concepts_RegionUser,
     ],
   } as ApiGen_Concepts_User,
+  retrieveUserLookup: vi.fn(),
+  retrieveUserLookupLoading: false,
+  retrieveUserLookupResponse: {
+    items: [],
+    page: 0,
+    quantity: 0,
+    total: 0,
+  } as ApiGen_Base_Page<ApiGen_Concepts_User>,
 });
 
 describe('User Region Select', () => {
@@ -106,6 +115,14 @@ describe('User Region Select', () => {
       retrieveUserInfoResponse: {
         userRegions: [],
       } as ApiGen_Concepts_User,
+      retrieveUserLookup: vi.fn(),
+      retrieveUserLookupLoading: false,
+      retrieveUserLookupResponse: {
+        items: [],
+        page: 0,
+        quantity: 0,
+        total: 0,
+      } as unknown as ApiGen_Base_Page<ApiGen_Concepts_User>,
     });
     const { findByTestId } = await setup();
 

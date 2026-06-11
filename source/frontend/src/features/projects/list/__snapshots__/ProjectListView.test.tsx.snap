@@ -390,18 +390,18 @@ exports[`Project List View > matches snapshot 1`] = `
                 class="row"
               >
                 <div
-                  class="col-xl-7"
+                  class="col-xl-1"
+                >
+                  <strong>
+                    Search by:
+                  </strong>
+                </div>
+                <div
+                  class="col-xl-6"
                 >
                   <div
                     class="row"
                   >
-                    <div
-                      class="col-xl-auto"
-                    >
-                      <strong>
-                        Search by:
-                      </strong>
-                    </div>
                     <div
                       class="col"
                     >
@@ -409,35 +409,138 @@ exports[`Project List View > matches snapshot 1`] = `
                         class="row"
                       >
                         <div
-                          class="col-xl-4"
+                          class="d-flex flex-column gap-2 col"
                         >
                           <div
-                            class="input form-group"
+                            class="row"
                           >
-                            <input
-                              class="form-control"
-                              id="input-projectNumber"
-                              name="projectNumber"
-                              placeholder="Project number"
-                              style="word-break: break-all;"
-                              value=""
-                            />
+                            <div
+                              class="col-xl-4"
+                            >
+                              <div
+                                class="input form-group"
+                              >
+                                <input
+                                  class="form-control"
+                                  id="input-projectNumber"
+                                  name="projectNumber"
+                                  placeholder="Project number"
+                                  style="word-break: break-all;"
+                                  value=""
+                                />
+                              </div>
+                            </div>
+                            <div
+                              class="col-xl-8"
+                            >
+                               
+                              <div
+                                class="input form-group"
+                              >
+                                <input
+                                  class="form-control"
+                                  id="input-projectName"
+                                  name="projectName"
+                                  placeholder="Project name"
+                                  style="word-break: break-all;"
+                                  value=""
+                                />
+                              </div>
+                            </div>
+                          </div>
+                          <div
+                            class="row"
+                          >
+                            <div
+                              class="col-xl-4"
+                            >
+                              <div
+                                class="form-group"
+                              >
+                                <div>
+                                  <div
+                                    class="multiselect-container multiSelectContainer  "
+                                    id="multiselect-projectCreatedBy"
+                                    style="width: auto; color: black;"
+                                  >
+                                    <div
+                                      class="search-wrapper searchWrapper "
+                                      style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                                    >
+                                      <input
+                                        autocomplete="off"
+                                        class="searchBox "
+                                        id="multiselect-projectCreatedBy_input"
+                                        name="search_name_input"
+                                        placeholder="Project created by"
+                                        type="text"
+                                        value=""
+                                      />
+                                    </div>
+                                    <div
+                                      class="optionListContainer displayNone"
+                                    >
+                                      <ul
+                                        class="optionContainer"
+                                      >
+                                        <span
+                                          class="notFound"
+                                        >
+                                          No Options Available
+                                        </span>
+                                      </ul>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
                           </div>
                         </div>
-                        <div
-                          class="col-xl-8"
-                        >
+                      </div>
+                    </div>
+                  </div>
+                  <div
+                    class="row"
+                  >
+                    <div
+                      class="col-lg-8"
+                    >
+                      <div
+                        class="form-group"
+                      >
+                        <div>
                           <div
-                            class="input form-group"
+                            class="multiselect-container multiSelectContainer  "
+                            id="multiselect-projectTeamMembers"
+                            style="width: auto; color: black;"
                           >
-                            <input
-                              class="form-control"
-                              id="input-projectName"
-                              name="projectName"
-                              placeholder="Project name"
-                              style="word-break: break-all;"
-                              value=""
-                            />
+                            <div
+                              class="search-wrapper searchWrapper "
+                              style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                            >
+                              <input
+                                autocomplete="off"
+                                class="searchBox "
+                                id="multiselect-projectTeamMembers_input"
+                                name="search_name_input"
+                                placeholder="Team member"
+                                type="text"
+                                value=""
+                              />
+                            </div>
+                            <div
+                              class="optionListContainer displayNone"
+                            >
+                              <ul
+                                class="optionContainer"
+                              >
+                                <span
+                                  class="notFound"
+                                >
+                                  No Options Available
+                                </span>
+                              </ul>
+                            </div>
                           </div>
                         </div>
                       </div>
@@ -596,7 +699,7 @@ exports[`Project List View > matches snapshot 1`] = `
           <div
             class="tr"
             role="row"
-            style="display: flex; flex: 1 0 auto; min-width: 180px;"
+            style="display: flex; flex: 1 0 auto; min-width: 210px;"
           >
             <div
               class="th"
@@ -699,6 +802,52 @@ exports[`Project List View > matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
+                Last updated by
+                <div
+                  class="c9"
+                  data-testid="sort-column-lastUpdatedBy"
+                >
+                  <svg
+                    class="c10"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    style="margin-bottom: -8px;"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 320l128-128 128 128z"
+                    />
+                  </svg>
+                  <svg
+                    class="c11"
+                    fill="currentColor"
+                    height="1em"
+                    stroke="currentColor"
+                    stroke-width="0"
+                    viewBox="0 0 512 512"
+                    width="1em"
+                    xmlns="http://www.w3.org/2000/svg"
+                  >
+                    <path
+                      d="M128 192l128 128 128-128z"
+                    />
+                  </svg>
+                </div>
+              </div>
+            </div>
+            <div
+              class="th"
+              colspan="1"
+              role="columnheader"
+              style="box-sizing: border-box; flex: 20 0 auto; min-width: 30px; width: 20px; justify-content: left; text-align: left; flex-wrap: wrap; align-items: center; display: flex;"
+            >
+              <div
+                class="sortable-column"
+              >
                 MOTT region
               </div>
             </div>
@@ -723,10 +872,10 @@ exports[`Project List View > matches snapshot 1`] = `
               <div
                 class="sortable-column"
               >
-                Last updated by
+                Created by
                 <div
                   class="c9"
-                  data-testid="sort-column-lastUpdatedBy"
+                  data-testid="sort-column-createdBy"
                 >
                   <svg
                     class="c10"

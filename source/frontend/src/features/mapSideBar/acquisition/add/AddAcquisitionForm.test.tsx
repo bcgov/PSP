@@ -41,6 +41,7 @@ vi.mocked(useApiUsers).mockReturnValue({
   getUsersPaged: vi.fn().mockResolvedValue({ data: getMockPagedUsers() }),
   putUser: vi.fn(),
   exportUsers: vi.fn(),
+  getUserLookup: vi.fn(),
 });
 
 describe('AddAcquisitionForm component', () => {

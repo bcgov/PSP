@@ -17,6 +17,7 @@ import { Api_DispositionFilter } from '@/models/api/DispositionFilter';
 import { ApiGen_Concepts_DispositionFileTeam } from '@/models/api/generated/ApiGen_Concepts_DispositionFileTeam';
 
 import { DispositionFilterModel } from '../models';
+import { DispositionFilterYupSchema } from './models/DispositionFilterYupSchema';
 
 export interface IDispositionFilterProps {
   initialValues: DispositionFilterModel;
@@ -26,6 +27,7 @@ export interface IDispositionFilterProps {
   dispositionTypeOptions: SelectOption[];
   pimsRegionsOptions: MultiSelectOption[];
   dispositionTeamOptions: SelectOption[];
+  teamProfileOptions: SelectOption[];
   onResetFilter: () => void;
   setFilter: (filter: Api_DispositionFilter) => void;
 }
@@ -37,6 +39,7 @@ export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
   dispositionTypeOptions,
   pimsRegionsOptions,
   dispositionTeamOptions,
+  teamProfileOptions,
   setFilter,
   onResetFilter,
 }) => {
@@ -52,6 +55,7 @@ export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
     <Formik<DispositionFilterModel>
       enableReinitialize
       initialValues={initialValues}
+      validationSchema={DispositionFilterYupSchema}
       onSubmit={onSearchSubmit}
     >
       {formikProps => (
@@ -90,18 +94,18 @@ export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
                 </Col>
               </Row>
               <Row>
-                <Col xl="7">
+                <Col xl="4">
+                  <Select
+                    options={teamProfileOptions}
+                    field="dispositionTeamMemberProfileTypeCode"
+                    placeholder="Team member role"
+                  />
+                </Col>
+                <Col xl="8">
                   <TypeaheadSelect
                     field="dispositionTeamMember"
                     options={dispositionTeamOptions}
                     placeholder="Team Member"
-                  />
-                </Col>
-                <Col xl="5">
-                  <Select
-                    options={fileStatusOptions}
-                    field="dispositionFileStatusCode"
-                    placeholder="All Status"
                   />
                 </Col>
               </Row>
@@ -138,6 +142,15 @@ export const DispositionFilter: React.FC<IDispositionFilterProps> = ({
                     options={dispositionTypeOptions}
                     field="dispositionTypeCode"
                     placeholder="Select disposition type..."
+                  />
+                </Col>
+              </Row>
+              <Row>
+                <Col xl="5">
+                  <Select
+                    options={fileStatusOptions}
+                    field="dispositionFileStatusCode"
+                    placeholder="All Status"
                   />
                 </Col>
               </Row>

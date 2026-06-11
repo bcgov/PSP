@@ -16,6 +16,8 @@ import { ProjectFilterModel } from './models/ProjectFilterModel';
 export interface IProjectFilterProps {
   initialValues: ProjectFilterModel;
   pimsRegionsOptions: MultiSelectOption[];
+  createdByOptions: MultiSelectOption[];
+  projectTeamMembersOptions: MultiSelectOption[];
   setFilter: (filter: IProjectFilter) => void;
   onResetFilter: () => void;
 }
@@ -26,7 +28,14 @@ export interface IProjectFilterProps {
  */
 export const ProjectFilter: React.FunctionComponent<
   React.PropsWithChildren<IProjectFilterProps>
-> = ({ initialValues, pimsRegionsOptions, setFilter, onResetFilter }) => {
+> = ({
+  initialValues,
+  pimsRegionsOptions,
+  projectTeamMembersOptions,
+  createdByOptions,
+  setFilter,
+  onResetFilter,
+}) => {
   const onSearchSubmit = (
     values: ProjectFilterModel,
     formikHelpers: FormikHelpers<ProjectFilterModel>,
@@ -49,20 +58,49 @@ export const ProjectFilter: React.FunctionComponent<
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
-            <Col xl="7">
+            <Col xl="1">
+              <strong>Search by:</strong>
+            </Col>
+            <Col xl="6">
               <Row>
-                <Col xl="auto">
-                  <strong>Search by:</strong>
-                </Col>
                 <Col>
                   <Row>
-                    <Col xl="4">
-                      <Input field="projectNumber" placeholder="Project number" />
-                    </Col>
-                    <Col xl="8">
-                      <Input field="projectName" placeholder="Project name" />
+                    <Col className="d-flex flex-column gap-2">
+                      <Row>
+                        <Col xl="4">
+                          <Input field="projectNumber" placeholder="Project number" />
+                        </Col>
+                        <Col xl="8">
+                          {' '}
+                          <Input field="projectName" placeholder="Project name" />
+                        </Col>
+                      </Row>
+                      <Row>
+                        <Col xl="4">
+                          <Multiselect
+                            field="projectCreatedBy"
+                            displayValue="text"
+                            placeholder="Project created by"
+                            hidePlaceholder
+                            options={createdByOptions}
+                            selectionLimit={1}
+                          />
+                        </Col>
+                      </Row>
                     </Col>
                   </Row>
+                </Col>
+              </Row>
+              <Row>
+                <Col lg="8">
+                  <Multiselect
+                    field="projectTeamMembers"
+                    displayValue="text"
+                    placeholder="Team member"
+                    hidePlaceholder
+                    options={projectTeamMembersOptions}
+                    selectionLimit={1}
+                  />
                 </Col>
               </Row>
             </Col>
