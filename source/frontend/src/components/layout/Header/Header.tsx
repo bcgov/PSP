@@ -8,7 +8,6 @@ import HelpContainer from '@/features/help/containers/HelpContainer';
 import NotificationBellContainer from '@/features/notifications/notificationsPopover/NotificationBellContainer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { Logo, useTenant } from '@/tenants';
-import { exists } from '@/utils';
 
 import { HeaderStyled } from './HeaderStyled';
 import { UserProfile } from './UserProfile';
@@ -20,7 +19,7 @@ import { UserProfile } from './UserProfile';
 export const Header = () => {
   const keycloak = useKeycloakWrapper();
   const tenant = useTenant();
-  const isAuthenticated = exists(keycloak.obj?.authenticated);
+  const isAuthenticated = !!keycloak.obj?.authenticated;
 
   return (
     <HeaderStyled expand className="App-header">
