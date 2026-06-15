@@ -40,7 +40,7 @@ export const NotificationsBell: FC<INotificationsBellProps> = ({
   return (
     <OverlayTrigger
       trigger="click"
-      placement="bottom-end"
+      placement="bottom-start"
       overlay={popover}
       show={show}
       onToggle={(next: boolean) => setShow(next)}
@@ -83,8 +83,8 @@ const StyledBellButton = styled.button`
 
 const BadgeDot = styled.span`
   position: absolute;
-  top: -0.3rem;
-  right: -0.3rem;
+  top: -0.1rem;
+  left: -0.3rem;
   min-width: 1.6rem;
   height: 1.6rem;
   padding: 0 0.4rem;
@@ -103,13 +103,15 @@ const StyledPopover = styled(Popover)`
   min-width: 56rem;
   max-width: 56rem;
   box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.18);
-  border: 1px solid ${variables.borderOutlineColor ?? '#c8d6e0'};
+  border: none;
   border-radius: 1rem;
   font-family: inherit;
   font-size: inherit;
   font-weight: normal;
 
   .popover-body {
-    padding: 0;
+    min-height: 28rem;
+    max-height: 28rem;
+    padding: 2rem 0.75rem;
   }
 `;

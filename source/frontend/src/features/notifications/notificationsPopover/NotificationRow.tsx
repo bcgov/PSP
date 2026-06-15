@@ -28,7 +28,7 @@ export const NotificationRow: FC<INotificationRowProps> = ({
 }) => {
   const fileLabel = getNotificationFileLabel(notification) ?? '—';
   const typeLabel = getNotificationTypeLabel(notification);
-  const triggerDate = getParentNotification(notification)?.notificationTriggerDate ?? null;
+  const targetDate = getParentNotification(notification)?.notificationTriggerDate ?? null;
   const unread = isUnread(notification);
 
   const menuOptions: MenuOption[] = useMemo(
@@ -66,7 +66,7 @@ export const NotificationRow: FC<INotificationRowProps> = ({
       <DotCell>{unread && <UnreadDot aria-label="Unread notification" />}</DotCell>
       <FileCell>{fileLabel}</FileCell>
       <TypeCell>{typeLabel}</TypeCell>
-      <DateCell>{triggerDate !== null ? prettyFormatDate(triggerDate) : ''}</DateCell>
+      <DateCell>{targetDate !== null ? prettyFormatDate(targetDate) : ''}</DateCell>
       <ActionsCell>
         <MoreOptionsMenu options={menuOptions} />
       </ActionsCell>
@@ -81,7 +81,6 @@ const Row = styled.div`
   gap: 0.8rem;
   padding: 0.8rem 1.2rem;
   cursor: pointer;
-  border-bottom: 1px solid ${variables.borderOutlineColor ?? '#e0e0e0'};
 
   &:hover,
   &:focus {
