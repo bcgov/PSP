@@ -1,12 +1,11 @@
 import Multiselect from 'multiselect-react-dropdown';
 import * as React from 'react';
-import { FaExternalLinkAlt } from 'react-icons/fa';
 
 import ContactLink from '@/components/common/ContactLink';
 import { readOnlyMultiSelectStyle } from '@/components/common/form';
+import { PrimaryContactSelectorDetails } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelectorView';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { StyledLink } from '@/components/common/styles';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
 import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { exists, prettyFormatDate } from '@/utils';
@@ -22,6 +21,24 @@ const PropertyActivityDetailsSubView: React.FunctionComponent<
   const selectedSubTypes: ApiGen_Base_CodeType<string>[] =
     props.activity?.activitySubTypeCodes.map(x => x.managementActivitySubtypeCode).filter(exists) ??
     [];
+
+  const getRequestorName = () => {
+    if (props.activity?.requestorPerson) {
+      return formatApiPersonNames(props.activity.requestorPerson);
+    } else if (props.activity?.requestorOrganization) {
+      return props.activity.requestorOrganization?.name;
+    }
+    return null;
+  };
+
+  const getRequestorContactLink = () => {
+    if (props.activity?.requestorPerson) {
+      return `/contact/P${props.activity.requestorPerson?.id}`;
+    } else if (props.activity?.requestorOrganization) {
+      return `/contact/O${props.activity.requestorOrganization?.id}`;
+    }
+    return null;
+  };
 
   return (
     <Section header="Activity Details">
@@ -58,52 +75,19 @@ const PropertyActivityDetailsSubView: React.FunctionComponent<
           <>{contact.person !== null && <ContactLink person={contact.person} />}</>
         ))}
       </SectionField>
-      <SectionField
+      <PrimaryContactSelectorDetails
         label="Requestor"
-        contentWidth={{ xs: 7 }}
+        teamMemberName={getRequestorName()}
+        teamMemberUrl={getRequestorContactLink()}
+        primaryContactName={
+          props.activity?.requestorPrimaryContactId
+            ? formatApiPersonNames(props.activity?.requestorPrimaryContact)
+            : ''
+        }
+        primaryContactUrl={`/contact/P${props.activity?.requestorPrimaryContactId}`}
+        showPrimaryContact={!!props.activity?.requestorPrimaryContactId}
         tooltip="Document the source of the request by entering the name of the person, organization or other entity from which the request has been received"
-      >
-        <>
-          {exists(props.activity.requestorPerson) && (
-            <ContactLink person={props.activity.requestorPerson} />
-          )}
-          {exists(props.activity.requestorOrganization) && (
-            <ContactLink organization={props.activity.requestorOrganization} />
-          )}
-        </>
-      </SectionField>
-      {exists(props.activity.requestorPrimaryContactId) && (
-        <SectionField
-          label="Primary contact"
-          valueTestId="requestorPrimaryContact"
-          contentWidth={{ xs: 7 }}
-        >
-          {props.activity?.requestorPrimaryContactId ? (
-            <StyledLink
-              target="_blank"
-              rel="noopener noreferrer"
-              to={`/contact/P${props.activity?.requestorPrimaryContactId}`}
-            >
-              <span>
-                {props.activity?.requestorPrimaryContactId
-                  ? formatApiPersonNames(props.activity?.requestorPrimaryContact)
-                  : ''}
-              </span>
-              <FaExternalLinkAlt className="ml-2" size="1rem" />
-            </StyledLink>
-          ) : (
-            'No contacts available'
-          )}
-        </SectionField>
-      )}
-      <SectionField label="External contacts" contentWidth={{ xs: 8 }}>
-        {props.activity.involvedParties?.map(contact => (
-          <>
-            {contact.person !== null && <ContactLink person={contact.person} />}
-            {contact.organization !== null && <ContactLink organization={contact.organization} />}
-          </>
-        ))}
-      </SectionField>
+      ></PrimaryContactSelectorDetails>
       <SectionField label="Service provider" contentWidth={{ xs: 7 }}>
         <>
           {props.activity.serviceProviderPerson !== null && (
