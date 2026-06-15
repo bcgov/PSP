@@ -3,8 +3,8 @@ import { FormikErrors, FormikProps, getIn } from 'formik';
 import { truncate } from 'lodash';
 import { ChangeEvent, useCallback, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaTimes, FaTrash } from 'react-icons/fa';
-import { useTheme } from 'styled-components';
+import { FaTimesCircle, FaTrash } from 'react-icons/fa';
+import styled from 'styled-components';
 
 import { StyledRemoveIconButton } from '@/components/common/buttons/RemoveButton';
 import { SelectOption } from '@/components/common/form';
@@ -42,7 +42,6 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
   getDocumentMetadata,
   onRemove,
 }) => {
-  const theme = useTheme();
   const { setFieldValue } = formikProps;
   const [replacingFile, setReplacingFile] = useState<boolean>(false);
 
@@ -95,10 +94,10 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
             <Row className={clsx('no-gutters')}>
               <Col>
                 <span>File {index + 1}:</span>
-                <span className="ml-4" style={{ color: 'red' }}>
-                  {truncate(document.file.name, { length: 50 })}
-                </span>
-                <FaTimes className="ml-2" size="1.6rem" color={theme.css.pimsRed80} />
+                <StyledErrorDiv>
+                  <span className="ml-2">{truncate(document.file.name, { length: 50 })}</span>
+                  <FaTimesCircle className="ml-2" size="1.6rem" />
+                </StyledErrorDiv>
               </Col>
               <Col xs="auto" className="p-0 m-0">
                 <StyledRemoveIconButton
@@ -112,9 +111,7 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
               </Col>
             </Row>
 
-            <div className={clsx('ml-0 pb-1')} style={{ color: 'red' }}>
-              {fileError}
-            </div>
+            <StyledErrorDiv className={clsx('ml-0 pb-1')}>{fileError}</StyledErrorDiv>
           </div>
         }
         isCollapsable={false}
@@ -159,3 +156,8 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
 };
 
 export default SelectedDocumentRow;
+
+const StyledErrorDiv = styled.div`
+  display: inline-block;
+  color: ${props => props.theme.bcTokens.iconsColorDanger};
+`;
