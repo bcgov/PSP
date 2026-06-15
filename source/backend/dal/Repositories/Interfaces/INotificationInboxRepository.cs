@@ -20,7 +20,7 @@ namespace Pims.Dal.Repositories
         /// Returns a single in-app user notification by id, scoped to the given user.
         /// Only includes rows where NotificationSentDt IS NOT NULL and NotificationOutputTypeCode == PIMS.
         /// </summary>
-        PimsNotificationUserOutput GetDeliveredUserNotification(long outputId, long userId);
+        PimsNotificationUserOutput GetNotificationOutputById(long outputId, long userId);
 
         /// <summary>
         /// Updates the read status of a user notification.
@@ -36,6 +36,6 @@ namespace Pims.Dal.Repositories
         /// Removes a user notification. It will no longer appear in the user's inbox.
         /// Returns false if the notification delivery was not found or does not belong to the user.
         /// </summary>
-        bool DeleteUserNotification(long outputId, long userId);
+        bool DeleteNotificationOutput(long outputId, long userId);
     }
 }

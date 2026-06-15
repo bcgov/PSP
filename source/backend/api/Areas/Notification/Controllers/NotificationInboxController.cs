@@ -58,7 +58,7 @@ namespace Pims.Api.Areas.Notification.Controllers
         [HttpGet]
         [HasPermission(Permissions.NotificationView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(PageModel<NotificationOutputModel>), 200)]
+        [ProducesResponseType(typeof(PageModel<NotificationInboxItemModel>), 200)]
         [SwaggerOperation(Tags = new[] { "notifications-inbox" })]
         public IActionResult GetInbox(
             [FromQuery] int page = 1,
@@ -76,7 +76,7 @@ namespace Pims.Api.Areas.Notification.Controllers
             var username = User.GetUsername();
             var inbox = _notificationInboxService.GetUserInbox(username, page, quantity);
 
-            return Ok(_mapper.Map<PageModel<NotificationOutputModel>>(inbox));
+            return Ok(_mapper.Map<PageModel<NotificationInboxItemModel>>(inbox));
         }
 
         /// <summary>
@@ -163,35 +163,35 @@ namespace Pims.Api.Areas.Notification.Controllers
         }
 
         /// <summary>
-        /// Delete a single in-app delivery for the current user.
+        /// Gets a single in-app delivery for the current user.
         /// The service layer verifies the delivery belongs to the calling user.
         /// </summary>
         /// <param name="outputId">Delivery identifier.</param>
         [HttpGet("{outputId:long}")]
         [HasPermission(Permissions.NotificationView)]
         [Produces("application/json")]
-        [ProducesResponseType(typeof(NotificationOutputModel), 200)]
+        [ProducesResponseType(typeof(NotificationInboxItemModel), 200)]
         [ProducesResponseType(404)]
         [SwaggerOperation(Tags = new[] { "notifications-inbox" })]
-        public IActionResult GetDeliveredUserNotification(long outputId)
+        public IActionResult GetNotificationOutput(long outputId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
                 nameof(NotificationInboxController),
-                nameof(GetDeliveredUserNotification),
+                nameof(GetNotificationOutput),
                 User.GetUsername(),
                 DateTime.Now);
 
             _logger.LogInformation("Dispatching to service: {Service}", _notificationInboxService.GetType());
 
             var username = User.GetUsername();
-            var output = _notificationInboxService.GetDeliveredUserNotification(outputId, username);
+            var output = _notificationInboxService.GetNotificationOutputById(outputId, username);
             if (output == null)
             {
                 return NotFound();
             }
 
-            return Ok(_mapper.Map<NotificationOutputModel>(output));
+            return Ok(_mapper.Map<NotificationInboxItemModel>(output));
         }
 
         /// <summary>
@@ -205,19 +205,19 @@ namespace Pims.Api.Areas.Notification.Controllers
         [ProducesResponseType(204)]
         [ProducesResponseType(404)]
         [SwaggerOperation(Tags = new[] { "notifications-inbox" })]
-        public IActionResult DeleteUserNotification(long outputId)
+        public IActionResult DeleteNotificationOutput(long outputId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
                 nameof(NotificationInboxController),
-                nameof(DeleteUserNotification),
+                nameof(DeleteNotificationOutput),
                 User.GetUsername(),
                 DateTime.Now);
 
             _logger.LogInformation("Dispatching to service: {Service}", _notificationInboxService.GetType());
 
             var username = User.GetUsername();
-            var deleted = _notificationInboxService.DeleteUserNotification(outputId, username);
+            var deleted = _notificationInboxService.DeleteNotificationOutput(outputId, username);
 
             return new JsonResult(deleted);
         }

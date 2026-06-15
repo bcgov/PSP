@@ -20,7 +20,7 @@ namespace Pims.Api.Services
         /// Returns a single in-app user notification by id, scoped to the given user.
         /// Only includes rows where NotificationSentDt IS NOT NULL and NotificationOutputTypeCode == PIMS.
         /// </summary>
-        PimsNotificationUserOutput GetDeliveredUserNotification(long outputId, string username);
+        PimsNotificationUserOutput GetNotificationOutputById(long outputId, string username);
 
         /// <summary>
         /// Updates the read status of a user notification.
@@ -36,6 +36,6 @@ namespace Pims.Api.Services
         /// Deletes a single in-app delivery for the given user.
         /// Returns false if the delivery was not found or does not belong to the user.
         /// </summary>
-        bool DeleteUserNotification(long outputId, string username);
+        bool DeleteNotificationOutput(long outputId, string username);
     }
 }

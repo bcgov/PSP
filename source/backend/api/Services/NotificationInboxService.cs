@@ -49,13 +49,13 @@ namespace Pims.Api.Services
         }
 
         /// <inheritdoc />
-        public PimsNotificationUserOutput GetDeliveredUserNotification(long outputId, string username)
+        public PimsNotificationUserOutput GetNotificationOutputById(long outputId, string username)
         {
             _logger.LogInformation("Getting notification delivery {OutputId} for user {Username}", outputId, username);
             _user.ThrowIfNotAllAuthorized(Permissions.NotificationView);
 
             var user = GetUserByUsername(username);
-            return _notificationInboxRepository.GetDeliveredUserNotification(outputId, user.UserId);
+            return _notificationInboxRepository.GetNotificationOutputById(outputId, user.UserId);
         }
 
         /// <inheritdoc />
@@ -89,14 +89,14 @@ namespace Pims.Api.Services
         }
 
         /// <inheritdoc />
-        public bool DeleteUserNotification(long outputId, string username)
+        public bool DeleteNotificationOutput(long outputId, string username)
         {
             _logger.LogInformation("Deleting delivery {OutputId} for user {Username}", outputId, username);
             _user.ThrowIfNotAllAuthorized(Permissions.NotificationDelete);
 
             var user = GetUserByUsername(username);
 
-            bool result = _notificationInboxRepository.DeleteUserNotification(outputId, user.UserId);
+            bool result = _notificationInboxRepository.DeleteNotificationOutput(outputId, user.UserId);
             if (result)
             {
                 _notificationInboxRepository.CommitTransaction();

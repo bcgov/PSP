@@ -29,7 +29,7 @@ namespace Pims.Dal.Repositories
         {
             using var scope = Logger.QueryScope();
 
-            var baseQuery = BuildUserNotificationsQuery(userId);
+            var baseQuery = BuildUserNotificationsQuery(userId, deep: true);
             var total = baseQuery.Count();
 
             page = page < 1 ? 1 : page;
@@ -50,24 +50,26 @@ namespace Pims.Dal.Repositories
         public int GetUnreadCount(long userId)
         {
             using var scope = Logger.QueryScope();
-            return BuildUnreadNotificationsQuery(userId).Count();
+            return BuildUnreadNotificationsQuery(userId, deep: false).Count();
         }
 
         /// <inheritdoc />
-        public PimsNotificationUserOutput GetDeliveredUserNotification(long outputId, long userId)
+        public PimsNotificationUserOutput GetNotificationOutputById(long outputId, long userId)
         {
             using var scope = Logger.QueryScope();
 
-            var query = BuildUserNotificationsQuery(userId);
+            var query = BuildUserNotificationsQuery(userId, deep: true);
             return query.FirstOrDefault(o => o.NotificationUserOutputId == outputId) ?? throw new KeyNotFoundException();
         }
 
         /// <inheritdoc />
         public PimsNotificationUserOutput UpdateReadStatus(long outputId, long userId, bool isRead)
         {
-            var existing = GetDeliveredUserNotification(outputId, userId);
+            var existing = GetNotificationOutputById(outputId, userId);
             existing.NotificationReadDt = isRead ? DateTime.UtcNow : (DateTime?)null;
+            Context.Update(existing);
             Context.SaveChanges();
+
             return existing;
         }
 
@@ -76,30 +78,33 @@ namespace Pims.Dal.Repositories
         {
             using var scope = Logger.QueryScope();
 
-            var unread = BuildUnreadNotificationsQuery(userId).ToList();
+            var unread = BuildUnreadNotificationsQuery(userId, deep: false).ToList();
 
             foreach (var notificationOutput in unread)
             {
                 notificationOutput.NotificationReadDt = DateTime.UtcNow;
+                Context.Update(notificationOutput);
             }
 
             Context.SaveChanges();
         }
 
         /// <inheritdoc />
-        public bool DeleteUserNotification(long outputId, long userId)
+        public bool DeleteNotificationOutput(long outputId, long userId)
         {
-            var existing = GetDeliveredUserNotification(outputId, userId);
+            var existing = GetNotificationOutputById(outputId, userId);
 
             if (existing is null)
             {
                 return false;
             }
 
-            Context.PimsNotificationUserOutputs.Remove(new PimsNotificationUserOutput
-            {
-                NotificationUserOutputId = outputId,
-            });
+            Context.PimsNotificationUserOutputs.Remove(
+                new PimsNotificationUserOutput
+                {
+                    NotificationUserOutputId = outputId,
+                });
+
             Context.SaveChanges();
             return true;
         }
@@ -110,21 +115,65 @@ namespace Pims.Dal.Repositories
         /// - in-app channel only (PIMS output type)
         /// - sent only (NotificationSentDt IS NOT NULL).
         /// </summary>
-        private IQueryable<PimsNotificationUserOutput> BuildUserNotificationsQuery(long userId)
+        private IQueryable<PimsNotificationUserOutput> BuildUserNotificationsQuery(long userId, bool deep = false)
         {
-            return Context.PimsNotificationUserOutputs
+            IQueryable<PimsNotificationUserOutput> query = Context.PimsNotificationUserOutputs
                 .AsNoTracking()
                 .Include(o => o.NotificationUser)
                     .ThenInclude(nu => nu.Notification)
-                .Where(o =>
+                    .ThenInclude(n => n.NotificationTypeCodeNavigation);
+
+            if (deep)
+            {
+                query = query.AsSplitQuery()
+                    .Include(o => o.NotificationUser)
+                        .ThenInclude(nu => nu.Notification)
+                            .ThenInclude(n => n.AcquisitionFile)
+                    .Include(o => o.NotificationUser)
+                        .ThenInclude(nu => nu.Notification)
+                            .ThenInclude(n => n.DispositionFile)
+                    .Include(o => o.NotificationUser)
+                        .ThenInclude(nu => nu.Notification)
+                            .ThenInclude(n => n.ResearchFile)
+                    .Include(o => o.NotificationUser)
+                        .ThenInclude(nu => nu.Notification)
+                            .ThenInclude(n => n.ManagementFile)
+                    .Include(o => o.NotificationUser)
+                        .ThenInclude(nu => nu.Notification)
+                            .ThenInclude(n => n.Lease)
+                    .Include(o => o.NotificationUser)
+                        .ThenInclude(nu => nu.Notification)
+                            .ThenInclude(n => n.Take)
+                    .Include(o => o.NotificationUser)
+                        .ThenInclude(nu => nu.Notification)
+                            .ThenInclude(n => n.Insurance)
+                    .Include(o => o.NotificationUser)
+                        .ThenInclude(nu => nu.Notification)
+                            .ThenInclude(n => n.LeaseConsultation)
+                    .Include(o => o.NotificationUser)
+                        .ThenInclude(nu => nu.Notification)
+                            .ThenInclude(n => n.NoticeOfClaim)
+                    .Include(o => o.NotificationUser)
+                        .ThenInclude(nu => nu.Notification)
+                            .ThenInclude(n => n.LeaseRenewal)
+                    .Include(o => o.NotificationUser)
+                        .ThenInclude(nu => nu.Notification)
+                            .ThenInclude(n => n.ExpropOwnerHistory)
+                    .Include(o => o.NotificationUser)
+                        .ThenInclude(nu => nu.Notification)
+                            .ThenInclude(n => n.Agreement);
+            }
+
+            query = query.Where(o =>
                     o.NotificationUser.UserId == userId &&
                     o.NotificationOutputTypeCode == NotificationOutputTypeCode.PIMS.ToString() &&
                     o.NotificationSentDt != null);
+            return query;
         }
 
-        private IQueryable<PimsNotificationUserOutput> BuildUnreadNotificationsQuery(long userId)
+        private IQueryable<PimsNotificationUserOutput> BuildUnreadNotificationsQuery(long userId, bool deep = false)
         {
-            return BuildUserNotificationsQuery(userId)
+            return BuildUserNotificationsQuery(userId, deep)
                 .Where(o => o.NotificationReadDt == null);
         }
     }
