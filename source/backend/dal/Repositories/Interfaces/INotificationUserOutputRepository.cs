@@ -4,7 +4,7 @@ using Pims.Dal.Entities;
 
 namespace Pims.Dal.Repositories
 {
-    public interface INotificationUserRepository : IRepository
+    public interface INotificationUserOutputRepository : IRepository
     {
         public IEnumerable<PimsNotificationUserOutput> GetAllByFilter(NotificationUserSearchFilterModel filter);
 

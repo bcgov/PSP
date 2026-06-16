@@ -12,9 +12,9 @@ using Pims.Dal.Helpers.Extensions;
 
 namespace Pims.Dal.Repositories
 {
-    public class NotificationUserRepository : BaseRepository<PimsNotificationUserOutput>, INotificationUserRepository
+    public class NotificationUserOutputRepository : BaseRepository<PimsNotificationUserOutput>, INotificationUserOutputRepository
     {
-        public NotificationUserRepository(
+        public NotificationUserOutputRepository(
             PimsContext dbContext,
             ClaimsPrincipal user,
             ILogger<DocumentRepository> logger)

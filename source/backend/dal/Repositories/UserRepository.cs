@@ -1,7 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
+using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-using Pims.Api.Models.CodeTypes;
 using Pims.Core.Extensions;
 using Pims.Core.Http.Configuration;
 using Pims.Core.Security;
@@ -10,10 +13,6 @@ using Pims.Dal.Entities.Comparers;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Helpers.Extensions;
-using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Security.Claims;
 
 namespace Pims.Dal.Repositories
 {
@@ -98,7 +97,7 @@ namespace Pims.Dal.Repositories
                 this.Context.PimsUsers.Add(user);
                 this.Context.CommitTransaction();
 
-                var contactMethod = new PimsContactMethod() { Person = person, Organization = organization, ContactMethodTypeCode = CotactMethodTypes.WORKEMAIL.ToString(), ContactMethodValue = email };
+                var contactMethod = new PimsContactMethod() { Person = person, Organization = organization, ContactMethodTypeCode = Api.Models.CodeTypes.ContactMethodTypes.WORKEMAIL.ToString(), ContactMethodValue = email };
                 person.PimsContactMethods.Add(contactMethod);
                 this.Context.CommitTransaction();
             }

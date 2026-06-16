@@ -42,7 +42,7 @@ namespace Pims.Scheduler.Repositories
             _logger.LogDebug("Getting filtered list of  {filter}", filter);
 
             string authenticationToken = await _authRepository.RequestAccessToken();
-            Uri endpoint = new($"{_configuration.CurrentValue.Uri}/user-notifications/search");
+            Uri endpoint = new($"{_configuration.CurrentValue.Uri}/admin/user-notifications/search");
             string serializedFilter = JsonSerializer.Serialize(filter, SerializerOptions);
             using var content = new StringContent(serializedFilter, Encoding.UTF8, "application/json");
 
@@ -57,7 +57,7 @@ namespace Pims.Scheduler.Repositories
             _logger.LogDebug("Pushing notification {userNotification}", userNotification);
 
             string authenticationToken = await _authRepository.RequestAccessToken();
-            Uri endpoint = new($"{_configuration.CurrentValue.Uri}/user-notifications/{userNotification.NotificationUserOutputId}/push");
+            Uri endpoint = new($"{_configuration.CurrentValue.Uri}/admin/user-notifications/{userNotification.NotificationUserOutputId}/push");
 
             var response = await PutAsync<NotificationUserOutputModel>(endpoint, null, authenticationToken);
             _logger.LogDebug("Received response for pushing notification with Id: {NotificationUserOutputId} with code: {HttpStatusCode} ", userNotification.NotificationUserOutputId, response.HttpStatusCode);

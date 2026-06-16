@@ -5,6 +5,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Areas.Notification.Controllers;
 using Pims.Api.Models.Concepts.Notification;
 using Pims.Api.Models.Models.Concepts.Notification;
 using Pims.Api.Services;
@@ -14,17 +15,16 @@ using Pims.Core.Json;
 using Pims.Core.Security;
 using Swashbuckle.AspNetCore.Annotations;
 
-namespace Pims.Api.Areas.Notification.Controllers
+namespace Pims.Api.Areas.Admin.Controllers
 {
     [Authorize]
+    [HasPermission(Permissions.SystemAdmin)]
     [ApiController]
     [ApiVersion("1.0")]
-    [Area("user-notifications")]
-    [Route("v{version:apiVersion}/[area]")]
-    [Route("[area]")]
+    [Area("admin")]
+    [Route("v{version:apiVersion}/[area]/user-notifications")]
     public class NotificationUserController : ControllerBase
     {
-
         private readonly INotificationUserService _notificationUserService;
         private readonly IMapper _mapper;
         private readonly ILogger<NotificationController> _logger;
@@ -37,7 +37,6 @@ namespace Pims.Api.Areas.Notification.Controllers
         }
 
         [HttpPost("search")]
-        [HasPermission(Permissions.SystemAdmin)]
         [Produces("application/json")]
         [SwaggerOperation(Tags = new[] { "user-notifications" })]
         [ProducesResponseType(typeof(List<NotificationUserOutputModel>), 200)]
@@ -58,7 +57,6 @@ namespace Pims.Api.Areas.Notification.Controllers
         }
 
         [HttpPut("{notificationUserId:long}/push")]
-        [HasPermission(Permissions.SystemAdmin)]
         [Produces("application/json")]
         [SwaggerOperation(Tags = new[] { "user-notifications" })]
         [ProducesResponseType(typeof(List<NotificationUserOutputModel>), 200)]

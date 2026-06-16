@@ -23,16 +23,16 @@ namespace Pims.Api.Services
     {
         private readonly ILogger _logger;
         private readonly ClaimsPrincipal _user;
-        private readonly INotificationUserRepository _notificationUserRepository;
+        private readonly INotificationUserOutputRepository _notificationUserOutputRepository;
         private readonly IEmailRepository _chesRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public NotificationUserService(ClaimsPrincipal user, ILogger<DocumentQueueService> logger, INotificationUserRepository userRepository, IEmailRepository chesRepository, IAcquisitionFileRepository acqFileRepository, IDispositionFileRepository dispFileRepository, IWebHostEnvironment webHostEnvironment)
+        public NotificationUserService(ClaimsPrincipal user, ILogger<DocumentQueueService> logger, INotificationUserOutputRepository userOutputRepository, IEmailRepository chesRepository, IAcquisitionFileRepository acqFileRepository, IDispositionFileRepository dispFileRepository, IWebHostEnvironment webHostEnvironment)
             : base(null, logger)
         {
             _user = user;
             _logger = logger;
-            _notificationUserRepository = userRepository;
+            _notificationUserOutputRepository = userOutputRepository;
             _chesRepository = chesRepository;
             _webHostEnvironment = webHostEnvironment;
         }
@@ -42,7 +42,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Searching all agreements matching the filter: {filter} ", filter);
             _user.ThrowIfNotAuthorized(Permissions.SystemAdmin);
 
-            return _notificationUserRepository.GetAllByFilter(filter);
+            return _notificationUserOutputRepository.GetAllByFilter(filter);
         }
 
         public async Task PushNotificationUser(long notificationUserId)
@@ -50,15 +50,15 @@ namespace Pims.Api.Services
             _logger.LogInformation("Pushing notification with Id: {notificationUserId} ", notificationUserId);
             _user.ThrowIfNotAuthorized(Permissions.SystemAdmin);
 
-            var userNotification = _notificationUserRepository.GetById(notificationUserId);
+            var userNotification = _notificationUserOutputRepository.GetById(notificationUserId);
             if (userNotification.NotificationSentDt is not null)
             {
                 return;
             }
 
             userNotification.NotificationRetryCnt = userNotification.NotificationRetryCnt.HasValue ? ++userNotification.NotificationRetryCnt : 1;
-            var updatedNotification = _notificationUserRepository.Update(userNotification);
-            _notificationUserRepository.CommitTransaction();
+            var updatedNotification = _notificationUserOutputRepository.Update(userNotification);
+            _notificationUserOutputRepository.CommitTransaction();
 
             if (userNotification.NotificationOutputTypeCode == NotificationOutputTypes.EMAIL.ToString())
             {
@@ -94,8 +94,8 @@ namespace Pims.Api.Services
                 updatedNotification.NotificationSentDt = DateTime.UtcNow;
             }
 
-            _notificationUserRepository.Update(updatedNotification);
-            _notificationUserRepository.CommitTransaction();
+            _notificationUserOutputRepository.Update(updatedNotification);
+            _notificationUserOutputRepository.CommitTransaction();
 
             return;
         }
