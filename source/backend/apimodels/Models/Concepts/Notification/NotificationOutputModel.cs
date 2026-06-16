@@ -7,7 +7,7 @@ namespace Pims.Api.Models.Concepts.Notification
     {
         public long Id { get; set; }
 
-        public long NotificationRecipientId { get; set; }
+        public long NotificationUserId { get; set; }
 
         public string NotificationOutputTypeCode { get; set; }
 
@@ -20,7 +20,5 @@ namespace Pims.Api.Models.Concepts.Notification
         public string NotificationErrorReason { get; set; }
 
         public DateOnly? NotificationErrorDt { get; set; }
-
-        public NotificationRecipientModel NotificationRecipient { get; set; }
     }
 }

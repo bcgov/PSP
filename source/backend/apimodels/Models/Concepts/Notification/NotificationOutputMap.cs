@@ -10,19 +10,18 @@ namespace Pims.Api.Models.Concepts.Notification
         {
             config.NewConfig<Entity.PimsNotificationUserOutput, NotificationOutputModel>()
                 .Map(dest => dest.Id, src => src.NotificationUserOutputId)
-                .Map(dest => dest.NotificationRecipientId, src => src.NotificationUserId)
+                .Map(dest => dest.NotificationUserId, src => src.NotificationUserId)
                 .Map(dest => dest.NotificationOutputTypeCode, src => src.NotificationOutputTypeCode)
                 .Map(dest => dest.NotificationSentDt, src => src.NotificationSentDt)
                 .Map(dest => dest.NotificationReadDt, src => src.NotificationReadDt)
                 .Map(dest => dest.NotificationRetryCnt, src => src.NotificationRetryCnt)
                 .Map(dest => dest.NotificationErrorReason, src => src.NotificationErrorReason)
                 .Map(dest => dest.NotificationErrorDt, src => src.NotificationErrorDt)
-                .Map(dest => dest.NotificationRecipient, src => src.NotificationUser)
                 .Inherits<Entity.IBaseAppEntity, BaseConcurrentModel>();
 
             config.NewConfig<NotificationOutputModel, Entity.PimsNotificationUserOutput>()
                 .Map(dest => dest.NotificationUserOutputId, src => src.Id)
-                .Map(dest => dest.NotificationUserId, src => src.NotificationRecipientId)
+                .Map(dest => dest.NotificationUserId, src => src.NotificationUserId)
                 .Map(dest => dest.NotificationOutputTypeCode, src => src.NotificationOutputTypeCode)
                 .Map(dest => dest.NotificationSentDt, src => src.NotificationSentDt)
                 .Map(dest => dest.NotificationReadDt, src => src.NotificationReadDt)
