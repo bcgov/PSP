@@ -43,7 +43,7 @@ namespace Pims.Scheduler.Services
                 QueueProcessingOrder = QueueProcessingOrder.OldestFirst,
                 ReplenishmentPeriod = TimeSpan.FromMinutes(1), // How often to add tokens
                 TokensPerPeriod = 30,           // How many tokens to add each period
-                AutoReplenishment = true // The limiter handles the timer internally
+                AutoReplenishment = true, // The limiter handles the timer internally
             };
 
             NotificationUserSearchFilterModel filter = new()
@@ -58,11 +58,11 @@ namespace Pims.Scheduler.Services
             var searchResponse = await SearchEmailUserNotifications(filter);
             if (searchResponse?.ScheduledTaskResponseModel != null)
             {
-                return searchResponse?.ScheduledTaskResponseModel;
+                return searchResponse.ScheduledTaskResponseModel;
             }
 
             // Request to PUSH notifications
-            _logger.LogInformation($"Processing {searchResponse?.SearchResults?.Payload?.Count ?? 0} Emails notifications.");
+            _logger.LogInformation("Processing {count} Emails notifications.", searchResponse?.SearchResults?.Payload?.Count ?? 0);
 
             // 2. Process your notifications
             using RateLimiter limiter = new TokenBucketRateLimiter(limiterOptions);
@@ -76,7 +76,6 @@ namespace Pims.Scheduler.Services
                 {
                     _logger.LogInformation("Token acquired. Processing {id}", userNotification.NotificationUserOutputId);
 
-                    // Your existing logic
                     var response = await _notificationUserRepository.PushUserNotificationsAsync(userNotification);
                     PushNotificationResponseModel responseModel = HandlePushNotificationRequestResponse("PushUserNotificationsAsync", userNotification, response);
                     responses.Add(responseModel);
@@ -109,13 +108,13 @@ namespace Pims.Scheduler.Services
             }
 
             // Request to PUSH notifications
-            _logger.LogInformation($"Processing {searchResponse?.SearchResults?.Payload?.Count ?? 0} PIMS notifications.");
+            _logger.LogInformation("Processing {count} PIMS notifications.", searchResponse?.SearchResults?.Payload?.Count ?? 0);
 
-            IEnumerable<Task<PushNotificationResponseModel>> responses = searchResponse?.SearchResults?.Payload?.Select(not =>
+            IEnumerable<Task<PushNotificationResponseModel>> responses = searchResponse?.SearchResults?.Payload?.Select(notification =>
             {
-                _logger.LogInformation("Pushing notificatin with id {NotificationUserOutputId}", not.NotificationUserOutputId);
+                _logger.LogInformation("Pushing notificatin with id {NotificationUserOutputId}", notification.NotificationUserOutputId);
 
-                return _notificationUserRepository.PushUserNotificationsAsync(not).ContinueWith(response => HandlePushNotificationRequestTaskResponse("PushPimsUserNotifications", not, response));
+                return _notificationUserRepository.PushUserNotificationsAsync(notification).ContinueWith(response => HandlePushNotificationRequestTaskResponse("PushPimsUserNotifications", notification, response));
             });
 
             var results = await Task.WhenAll(responses);
@@ -168,7 +167,7 @@ namespace Pims.Scheduler.Services
             var responseObject = response?.Result;
             if (responseObject?.Status == ExternalResponseStatus.Success)
             {
-                return new PushNotificationResponseModel() { ResponseStatus = responseObject?.Status ?? ExternalResponseStatus.Error, Message = responseObject?.Message ?? "Unknown error" };
+                return new PushNotificationResponseModel() { ResponseStatus = responseObject.Status, Message = "Ok" };
             }
             else
             {
