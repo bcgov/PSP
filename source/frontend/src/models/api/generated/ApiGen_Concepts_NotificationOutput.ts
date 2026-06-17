@@ -6,17 +6,15 @@ import { UtcIsoDateTime } from '@/models/api/UtcIsoDateTime';
 import { UtcIsoDate } from '@/models/api/UtcIsoDateTime';
 
 import { ApiGen_Base_BaseConcurrent } from './ApiGen_Base_BaseConcurrent';
-import { ApiGen_Concepts_NotificationRecipient } from './ApiGen_Concepts_NotificationRecipient';
 
 // LINK: @backend/apimodels/Models/Concepts/Notification/NotificationOutputModel.cs
 export interface ApiGen_Concepts_NotificationOutput extends ApiGen_Base_BaseConcurrent {
   id: number;
-  notificationRecipientId: number;
+  notificationUserId: number;
   notificationOutputTypeCode: string | null;
   notificationSentDt: UtcIsoDateTime | null;
   notificationReadDt: UtcIsoDateTime | null;
   notificationRetryCnt: number | null;
   notificationErrorReason: string | null;
   notificationErrorDt: UtcIsoDate | null;
-  notificationRecipient: ApiGen_Concepts_NotificationRecipient | null;
 }

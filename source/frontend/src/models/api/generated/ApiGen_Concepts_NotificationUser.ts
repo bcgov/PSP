@@ -5,8 +5,8 @@
 import { ApiGen_Base_BaseConcurrent } from './ApiGen_Base_BaseConcurrent';
 import { ApiGen_Concepts_Notification } from './ApiGen_Concepts_Notification';
 
-// LINK: @backend/apimodels/Models/Concepts/Notification/NotificationRecipientModel.cs
-export interface ApiGen_Concepts_NotificationRecipient extends ApiGen_Base_BaseConcurrent {
+// LINK: @backend/apimodels/Models/Concepts/Notification/NotificationUserModel.cs
+export interface ApiGen_Concepts_NotificationUser extends ApiGen_Base_BaseConcurrent {
   id: number;
   notificationId: number;
   userId: number;
