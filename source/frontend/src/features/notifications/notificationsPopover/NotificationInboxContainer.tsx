@@ -2,11 +2,11 @@ import { FC, useCallback, useEffect, useState } from 'react';
 import { useHistory } from 'react-router-dom';
 
 import { useNotificationInboxRepository } from '@/hooks/repositories/useNotificationInboxRepository';
-import { ApiGen_Concepts_NotificationOutput } from '@/models/api/generated/ApiGen_Concepts_NotificationOutput';
+import { ApiGen_Concepts_NotificationInboxItem } from '@/models/api/generated/ApiGen_Concepts_NotificationInboxItem';
 import { exists } from '@/utils';
 
 import { INotificationInboxViewProps } from './NotificationInboxView';
-import { getNotificationDeepLink, isUnread } from './notificationLinks';
+import { getNotificationDeepLink } from './notificationLinks';
 
 export interface INotificationInboxContainerProps {
   /** The presentational component responsible for rendering the inbox list. */
@@ -35,7 +35,7 @@ export const NotificationInboxContainer: FC<INotificationInboxContainerProps> = 
   onInboxChanged,
 }) => {
   const history = useHistory();
-  const [items, setItems] = useState<ApiGen_Concepts_NotificationOutput[]>([]);
+  const [items, setItems] = useState<ApiGen_Concepts_NotificationInboxItem[]>([]);
   const [page, setPage] = useState(0);
   const [total, setTotal] = useState(0);
 
@@ -70,43 +70,46 @@ export const NotificationInboxContainer: FC<INotificationInboxContainerProps> = 
   }, [fetchPage, page]);
 
   const handleSelect = useCallback(
-    async (notification: ApiGen_Concepts_NotificationOutput) => {
+    async (notification: ApiGen_Concepts_NotificationInboxItem) => {
       onRequestClose?.();
-      if (isUnread(notification)) {
-        await updateReadStatus(notification.id, true);
-        onInboxChanged?.();
-      }
       const target = getNotificationDeepLink(notification);
       if (target !== null) {
         history.push(target);
       }
     },
-    [history, onInboxChanged, onRequestClose, updateReadStatus],
+    [history, onRequestClose],
   );
 
   const handleToggleRead = useCallback(
-    async (notification: ApiGen_Concepts_NotificationOutput) => {
-      const nextIsRead = isUnread(notification);
-      await updateReadStatus(notification.id, nextIsRead);
-      // The endpoint returns 204, so reflect the new state optimistically.
-      setItems(prev =>
-        prev.map(item =>
-          item.id === notification.id
-            ? { ...item, notificationReadDt: nextIsRead ? new Date().toISOString() : null }
-            : item,
-        ),
-      );
-      onInboxChanged?.();
+    async (notification: ApiGen_Concepts_NotificationInboxItem) => {
+      try {
+        const nextReadStatus = !notification.isRead;
+        await updateReadStatus(notification.id, nextReadStatus);
+        // The endpoint returns 204, so reflect the new state optimistically.
+        setItems(prev =>
+          prev.map(item => {
+            if (item.id === notification.id) {
+              item.isRead = nextReadStatus;
+            }
+            return item;
+          }),
+        );
+      } finally {
+        onInboxChanged?.();
+      }
     },
     [onInboxChanged, updateReadStatus],
   );
 
   const handleDelete = useCallback(
-    async (notification: ApiGen_Concepts_NotificationOutput) => {
-      await deleteNotificationOutput(notification.id);
-      setItems(prev => prev.filter(item => item.id !== notification.id));
-      setTotal(prev => Math.max(prev - 1, 0));
-      onInboxChanged?.();
+    async (notification: ApiGen_Concepts_NotificationInboxItem) => {
+      try {
+        await deleteNotificationOutput(notification.id);
+        setItems(prev => prev.filter(item => item.id !== notification.id));
+        setTotal(prev => Math.max(prev - 1, 0));
+      } finally {
+        onInboxChanged?.();
+      }
     },
     [deleteNotificationOutput, onInboxChanged],
   );

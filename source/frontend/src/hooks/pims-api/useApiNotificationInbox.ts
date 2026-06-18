@@ -2,7 +2,7 @@ import queryString from 'query-string';
 import React from 'react';
 
 import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
-import { ApiGen_Concepts_NotificationOutput } from '@/models/api/generated/ApiGen_Concepts_NotificationOutput';
+import { ApiGen_Concepts_NotificationInboxItem } from '@/models/api/generated/ApiGen_Concepts_NotificationInboxItem';
 
 import useAxiosApi from './useApi';
 
@@ -16,12 +16,12 @@ export const useApiNotificationInbox = () => {
   return React.useMemo(
     () => ({
       getUserInboxApi: (page = 1, quantity = 10) =>
-        api.get<ApiGen_Base_Page<ApiGen_Concepts_NotificationOutput>>(
+        api.get<ApiGen_Base_Page<ApiGen_Concepts_NotificationInboxItem>>(
           `/notifications/inbox?${queryString.stringify({ page, quantity })}`,
         ),
 
       getNotificationOutputApi: (outputId: number) =>
-        api.get<ApiGen_Concepts_NotificationOutput>(`/notifications/inbox/${outputId}`),
+        api.get<ApiGen_Concepts_NotificationInboxItem>(`/notifications/inbox/${outputId}`),
 
       getUnreadCountApi: () =>
         api.get<{ unreadCount: number }>(`/notifications/inbox/unread-count`),

@@ -3,21 +3,14 @@ import styled from 'styled-components';
 
 import variables from '@/assets/scss/_variables.module.scss';
 import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
-import { ApiGen_Concepts_NotificationOutput } from '@/models/api/generated/ApiGen_Concepts_NotificationOutput';
+import { ApiGen_Concepts_NotificationInboxItem } from '@/models/api/generated/ApiGen_Concepts_NotificationInboxItem';
 import { prettyFormatDate } from '@/utils';
 
-import {
-  getNotificationFileLabel,
-  getNotificationTypeLabel,
-  getParentNotification,
-  isUnread,
-} from './notificationLinks';
-
 export interface INotificationRowProps {
-  notification: ApiGen_Concepts_NotificationOutput;
-  onSelect: (notification: ApiGen_Concepts_NotificationOutput) => void;
-  onToggleRead: (notification: ApiGen_Concepts_NotificationOutput) => void;
-  onDelete: (notification: ApiGen_Concepts_NotificationOutput) => void;
+  notification: ApiGen_Concepts_NotificationInboxItem;
+  onSelect: (notification: ApiGen_Concepts_NotificationInboxItem) => void;
+  onToggleRead: (notification: ApiGen_Concepts_NotificationInboxItem) => void;
+  onDelete: (notification: ApiGen_Concepts_NotificationInboxItem) => void;
 }
 
 export const NotificationRow: FC<INotificationRowProps> = ({
@@ -26,10 +19,10 @@ export const NotificationRow: FC<INotificationRowProps> = ({
   onToggleRead,
   onDelete,
 }) => {
-  const fileLabel = getNotificationFileLabel(notification) ?? '—';
-  const typeLabel = getNotificationTypeLabel(notification);
-  const targetDate = getParentNotification(notification)?.notificationTriggerDate ?? null;
-  const unread = isUnread(notification);
+  const fileLabel = notification?.subject ?? '';
+  const typeLabel = notification?.notificationType?.description ?? '';
+  const trackedDate = notification?.trackedDate ?? null;
+  const unread = !notification.isRead;
 
   const menuOptions: MenuOption[] = useMemo(
     () => [
@@ -66,7 +59,7 @@ export const NotificationRow: FC<INotificationRowProps> = ({
       <DotCell>{unread && <UnreadDot aria-label="Unread notification" />}</DotCell>
       <FileCell>{fileLabel}</FileCell>
       <TypeCell>{typeLabel}</TypeCell>
-      <DateCell>{targetDate !== null ? prettyFormatDate(targetDate) : ''}</DateCell>
+      <DateCell>{trackedDate !== null ? prettyFormatDate(trackedDate) : ''}</DateCell>
       <ActionsCell>
         <MoreOptionsMenu options={menuOptions} />
       </ActionsCell>

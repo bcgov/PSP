@@ -2,18 +2,18 @@ import { FC } from 'react';
 import styled from 'styled-components';
 
 import variables from '@/assets/scss/_variables.module.scss';
-import { ApiGen_Concepts_NotificationOutput } from '@/models/api/generated/ApiGen_Concepts_NotificationOutput';
+import { ApiGen_Concepts_NotificationInboxItem } from '@/models/api/generated/ApiGen_Concepts_NotificationInboxItem';
 
 import NotificationRow from './NotificationRow';
 
 export interface INotificationInboxViewProps {
-  items: ApiGen_Concepts_NotificationOutput[];
+  items: ApiGen_Concepts_NotificationInboxItem[];
   hasMore: boolean;
   isLoading: boolean;
   onLoadMore: () => void;
-  onSelect: (notification: ApiGen_Concepts_NotificationOutput) => void;
-  onToggleRead: (notification: ApiGen_Concepts_NotificationOutput) => void;
-  onDelete: (notification: ApiGen_Concepts_NotificationOutput) => void;
+  onSelect: (notification: ApiGen_Concepts_NotificationInboxItem) => void;
+  onToggleRead: (notification: ApiGen_Concepts_NotificationInboxItem) => void;
+  onDelete: (notification: ApiGen_Concepts_NotificationInboxItem) => void;
 }
 
 export const NotificationInboxView: FC<INotificationInboxViewProps> = ({
