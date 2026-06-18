@@ -26,7 +26,7 @@ export interface IDocumentUploadContainerProps {
   relationshipType: ApiGen_CodeTypes_DocumentRelationType;
   onUploadSuccess: (results: BatchUploadResponseModel[]) => void;
   onCancel: () => void;
-  setCanUpload: (canUpload: boolean) => void;
+  onValidityChange?: (isValid: boolean) => void;
   maxDocumentCount: number;
   View: React.FunctionComponent<IDocumentUploadFormProps>;
 }
@@ -34,6 +34,7 @@ export interface IDocumentUploadContainerProps {
 export interface IDocumentUploadContainerRef {
   isDirty: () => boolean;
   uploadDocument: () => void;
+  isValid: () => boolean;
 }
 
 export const DocumentUploadContainer = forwardRef<
@@ -87,6 +88,35 @@ export const DocumentUploadContainer = forwardRef<
     [documentTypeMetadataTypes, retrieveDocumentTypeMetadata],
   );
 
+  const onUploadDocument = async (batchRequest: BatchUploadFormModel) => {
+    const uploadDocumentTasks = batchRequest.documents.map(d => {
+      return uploadDocument(props.relationshipType, props.parentId, d.toRequestApi(documentTypes));
+    });
+    setIsUploading(true);
+    const tasksResult: (IApiError | ApiGen_Requests_DocumentUploadRelationshipResponse)[] =
+      await Promise.all(uploadDocumentTasks);
+    setIsUploading(false);
+    if (tasksResult !== undefined) {
+      const batchResults = tasksResult.map<BatchUploadResponseModel>((r, index) => {
+        const fileName = batchRequest.documents[index].file.name;
+        return new BatchUploadResponseModel(fileName, r);
+      });
+      props.onUploadSuccess(batchResults);
+    }
+  };
+
+  useImperativeHandle(ref, () => ({
+    isDirty() {
+      return formikRef.current?.dirty ?? false;
+    },
+    uploadDocument() {
+      formikRef.current?.submitForm();
+    },
+    isValid() {
+      return formikRef.current?.isValid;
+    },
+  }));
+
   useEffect(() => {
     const retrievedDocumentStatusTypes = getOptionsByType(API.DOCUMENT_STATUS_TYPES);
     const fetch = async () => {
@@ -116,40 +146,6 @@ export const DocumentUploadContainer = forwardRef<
     getOptionsByType,
   ]);
 
-  const onUploadDocument = async (batchRequest: BatchUploadFormModel) => {
-    const uploadDocumentTasks = batchRequest.documents.map(d => {
-      return uploadDocument(props.relationshipType, props.parentId, d.toRequestApi(documentTypes));
-    });
-    setIsUploading(true);
-    const tasksResult: (IApiError | ApiGen_Requests_DocumentUploadRelationshipResponse)[] =
-      await Promise.all(uploadDocumentTasks);
-    setIsUploading(false);
-    if (tasksResult !== undefined) {
-      const batchResults = tasksResult.map<BatchUploadResponseModel>((r, index) => {
-        const fileName = batchRequest.documents[index].file.name;
-        return new BatchUploadResponseModel(fileName, r);
-      });
-      props.onUploadSuccess(batchResults);
-    }
-  };
-
-  useImperativeHandle(ref, () => ({
-    isDirty() {
-      return formikRef.current?.dirty ?? false;
-    },
-    uploadDocument() {
-      formikRef.current?.submitForm();
-    },
-  }));
-
-  const onDocumentsSelected = (documentCount: number) => {
-    if (documentCount > 0 && documentCount <= props.maxDocumentCount) {
-      props.setCanUpload(true);
-    } else {
-      props.setCanUpload(false);
-    }
-  };
-
   return (
     <View
       formikRef={formikRef}
@@ -159,8 +155,8 @@ export const DocumentUploadContainer = forwardRef<
       maxDocumentCount={props.maxDocumentCount}
       documentStatusOptions={documentStatusOptions}
       getDocumentMetadata={getDocumentMetadata}
-      onDocumentsSelected={onDocumentsSelected}
       onUploadDocument={onUploadDocument}
+      onValidityChange={props.onValidityChange}
     />
   );
 });
