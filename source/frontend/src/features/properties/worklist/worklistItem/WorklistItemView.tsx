@@ -1,7 +1,8 @@
 import { Collapse } from 'react-bootstrap';
+import { MdArrowRight } from 'react-icons/md';
 import styled from 'styled-components';
 
-import { ArrowDropDownIcon, ArrowDropUpIcon } from '@/components/common/Section/SectionStyles';
+import { ArrowDropDownIcon } from '@/components/common/Section/SectionStyles';
 
 import ParcelItem from '../../parcelList/ParcelItem';
 import { WorklistItemModel } from './models/WorklistItem.model';
@@ -33,8 +34,8 @@ export const WorklistItemView: React.FC<CommonPropertyItemViewProps> = ({
             }}
             data-testid={`worklist-item[${parcelIndex}].collapse-btn`}
           >
-            {isCollapsed && <ArrowDropDownIcon />}
-            {!isCollapsed && <ArrowDropUpIcon />}
+            {isCollapsed && <MdArrowRight size={30} fill="#1a5a96" />}
+            {!isCollapsed && <ArrowDropDownIcon fill="#1a5a96" />}
           </StyledArrowCollapseDiv>
           <StyledHeaderParcelDiv data-testid={`worklist-item[${parcelIndex}].parcel`}>
             <ParcelItem
