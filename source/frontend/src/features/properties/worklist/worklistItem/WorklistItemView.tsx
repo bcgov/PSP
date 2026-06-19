@@ -34,8 +34,8 @@ export const WorklistItemView: React.FC<CommonPropertyItemViewProps> = ({
             }}
             data-testid={`worklist-item[${parcelIndex}].collapse-btn`}
           >
-            {isCollapsed && <MdArrowRight size={30} fill="#1a5a96" />}
-            {!isCollapsed && <ArrowDropDownIcon fill="#1a5a96" />}
+            {isCollapsed && <StyledClosedIcon />}
+            {!isCollapsed && <StyledOpenIcon />}
           </StyledArrowCollapseDiv>
           <StyledHeaderParcelDiv data-testid={`worklist-item[${parcelIndex}].parcel`}>
             <ParcelItem
@@ -142,6 +142,16 @@ const StyledHeaderParcelDiv = styled.div`
 
 const StyledSectionGroupDiv = styled.div`
   padding-left: 3rem;
+`;
+
+const StyledOpenIcon = styled(ArrowDropDownIcon)`
+  font-size: 2.4rem;
+  color: ${props => props.theme.css.pimsBlue200};
+`;
+
+const StyledClosedIcon = styled(MdArrowRight)`
+  font-size: 2.4rem;
+  color: ${props => props.theme.css.pimsBlue200};
 `;
 
 export default WorklistItemView;
