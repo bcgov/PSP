@@ -50,7 +50,9 @@ const MoreOptionsMenu: React.FC<IMoreOptionsMenuProps> = ({
   return (
     <Dropdown
       alignRight={alignRight}
-      onToggle={isOpen => {
+      onToggle={(isOpen, event) => {
+        event.preventDefault();
+        event.stopPropagation();
         if (isOpen) onMenuOpen?.();
       }}
     >

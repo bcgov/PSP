@@ -1,7 +1,6 @@
 import { FC, useMemo } from 'react';
 import styled from 'styled-components';
 
-import variables from '@/assets/scss/_variables.module.scss';
 import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
 import { ApiGen_Concepts_NotificationInboxItem } from '@/models/api/generated/ApiGen_Concepts_NotificationInboxItem';
 import { prettyFormatDate } from '@/utils';
@@ -47,10 +46,15 @@ export const NotificationRow: FC<INotificationRowProps> = ({
     <Row
       role="button"
       tabIndex={0}
-      onClick={() => onSelect(notification)}
+      onClick={event => {
+        event.preventDefault();
+        event.stopPropagation();
+        onSelect(notification);
+      }}
       onKeyDown={event => {
         if (event.key === 'Enter' || event.key === ' ') {
           event.preventDefault();
+          event.stopPropagation();
           onSelect(notification);
         }
       }}
@@ -77,7 +81,7 @@ const Row = styled.div`
 
   &:hover,
   &:focus {
-    background-color: ${variables.pimsBlue10};
+    background-color: ${props => props.theme.css.pimsBlue10 + '38'};
     outline: none;
   }
 `;
@@ -92,7 +96,7 @@ const UnreadDot = styled.div`
   width: 1rem;
   height: 1rem;
   border-radius: 50%;
-  background-color: ${variables.pimsRed100};
+  background-color: ${props => props.theme.css.pimsRed100};
   border: none;
   padding: 0;
   cursor: pointer;
@@ -106,7 +110,7 @@ const FileCell = styled.div`
 `;
 
 const TypeCell = styled.div`
-  color: ${variables.pimsGrey80 ?? '#555'};
+  color: ${props => props.theme.css.pimsGrey80 ?? '#555'};
   overflow: hidden;
   text-overflow: ellipsis;
   white-space: nowrap;
@@ -114,7 +118,7 @@ const TypeCell = styled.div`
 
 const DateCell = styled.div`
   text-align: right;
-  color: ${variables.pimsGrey80 ?? '#555'};
+  color: ${props => props.theme.css.pimsGrey80 ?? '#555'};
   font-variant-numeric: tabular-nums;
 `;
 

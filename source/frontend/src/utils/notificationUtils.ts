@@ -1,6 +1,9 @@
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 import { ApiGen_Concepts_Notification } from '@/models/api/generated/ApiGen_Concepts_Notification';
 import { ApiGen_Concepts_NotificationInboxItem } from '@/models/api/generated/ApiGen_Concepts_NotificationInboxItem';
 import { exists, isValidId } from '@/utils';
+
+import { DeepLinkGenerator } from './DeepLinkGenerator';
 
 /**
  * Returns the parent notification from a notification_user_output row, or null when the
@@ -25,20 +28,15 @@ export const getNotificationDeepLink = (
     return null;
   }
 
-  if (isValidId(notification.acquisitionFileId)) {
-    return `/mapview/sidebar/acquisition/${notification.acquisitionFileId}`;
+  const notificationType = notification.notificationTypeCode ?? '';
+
+  // TODO: Add more deep-links as more notification types are implemented.
+  switch (notificationType) {
+    case ApiGen_CodeTypes_NotificationTypes.L_RENEWAL:
+      return isValidId(notification.leaseId)
+        ? DeepLinkGenerator.showFile('lease', notification.leaseId)
+        : null;
+    default:
+      return null;
   }
-  if (isValidId(notification.dispositionFileId)) {
-    return `/mapview/sidebar/disposition/${notification.dispositionFileId}`;
-  }
-  if (isValidId(notification.leaseId)) {
-    return `/mapview/sidebar/lease/${notification.leaseId}`;
-  }
-  if (isValidId(notification.researchFileId)) {
-    return `/mapview/sidebar/research/${notification.researchFileId}`;
-  }
-  if (isValidId(notification.managementFileId)) {
-    return `/mapview/sidebar/management/${notification.managementFileId}`;
-  }
-  return null;
 };

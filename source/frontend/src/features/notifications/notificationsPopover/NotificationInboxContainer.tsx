@@ -4,9 +4,9 @@ import { useHistory } from 'react-router-dom';
 import { useNotificationInboxRepository } from '@/hooks/repositories/useNotificationInboxRepository';
 import { ApiGen_Concepts_NotificationInboxItem } from '@/models/api/generated/ApiGen_Concepts_NotificationInboxItem';
 import { exists } from '@/utils';
+import { getNotificationDeepLink } from '@/utils/notificationUtils';
 
 import { INotificationInboxViewProps } from './NotificationInboxView';
-import { getNotificationDeepLink } from './notificationLinks';
 
 export interface INotificationInboxContainerProps {
   /** The presentational component responsible for rendering the inbox list. */

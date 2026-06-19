@@ -1,7 +1,6 @@
 import { FC } from 'react';
 import styled from 'styled-components';
 
-import variables from '@/assets/scss/_variables.module.scss';
 import { ApiGen_Concepts_NotificationInboxItem } from '@/models/api/generated/ApiGen_Concepts_NotificationInboxItem';
 
 import NotificationRow from './NotificationRow';
@@ -63,6 +62,7 @@ const Container = styled.div`
 const List = styled.div`
   display: flex;
   flex-direction: column;
+  min-height: 40rem;
   max-height: 40rem;
   overflow-y: auto;
 `;
@@ -70,20 +70,20 @@ const List = styled.div`
 const EmptyState = styled.div`
   padding: 2rem;
   text-align: center;
-  color: ${variables.pimsGrey80 ?? '#555'};
+  color: ${props => props.theme.css.pimsGrey80 ?? '#555'};
 `;
 
 const Footer = styled.div`
   display: flex;
   justify-content: center;
   padding: 0.8rem 0;
-  border-top: 1px solid ${variables.borderOutlineColor ?? '#e0e0e0'};
+  border-top: 1px solid ${props => props.theme.css.borderOutlineColor ?? '#e0e0e0'};
 `;
 
 const LoadMoreButton = styled.button`
   background: transparent;
   border: none;
-  color: ${variables.linkColor ?? '#1a5a96'};
+  color: ${props => props.theme.css.linkColor ?? '#1a5a96'};
   font-weight: 600;
   cursor: pointer;
   padding: 0.4rem 1.2rem;
@@ -95,7 +95,7 @@ const LoadMoreButton = styled.button`
   }
 
   &:disabled {
-    color: ${variables.pimsGrey80 ?? '#777'};
+    color: ${props => props.theme.css.pimsGrey80 ?? '#777'};
     cursor: default;
   }
 `;
