@@ -1,5 +1,7 @@
 import { FieldArray, Formik, FormikProps } from 'formik';
+import { useEffect } from 'react';
 import { Form } from 'react-bootstrap';
+import styled from 'styled-components';
 
 import { DisplayError, SelectOption } from '@/components/common/form';
 import FileDragAndDrop from '@/components/common/form/FileDragAndDrop';
@@ -24,8 +26,8 @@ export interface IDocumentUploadFormProps {
   getDocumentMetadata: (
     documentType?: ApiGen_Concepts_DocumentType,
   ) => Promise<ApiGen_Mayan_DocumentTypeMetadataType[]>;
-  onDocumentsSelected: (documentCount: number) => void;
   onUploadDocument: (batchRequest: BatchUploadFormModel) => void;
+  onValidityChange?: (isValid: boolean) => void;
 }
 
 /**
@@ -39,8 +41,8 @@ export const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProp
   documentTypes,
   documentStatusOptions,
   getDocumentMetadata,
-  onDocumentsSelected,
   onUploadDocument,
+  onValidityChange,
 }) => {
   const onSelectFiles = (files: File[], push: (obj: any) => void) => {
     for (const file of files) {
@@ -57,7 +59,10 @@ export const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProp
     // forces formik to flag the change as dirty
     formikRef.current?.setFieldValue('isSelectedFile', true);
     formikRef.current?.setFieldTouched('documents', true, true);
-    onDocumentsSelected(formikRef.current.values.documents.length + files.length);
+  };
+
+  const getValidExtensionsString = (): string => {
+    return `Supported file types include ${ValidDocumentExtensions.join(', ')}.`;
   };
 
   return (
@@ -68,6 +73,7 @@ export const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProp
         enableReinitialize
         initialValues={new BatchUploadFormModel()}
         validateOnMount={true}
+        validateOnChange={true}
         validationSchema={getDocumentMetadataYupSchema(maxDocumentCount)}
         onSubmit={async (values: BatchUploadFormModel) => {
           onUploadDocument(values);
@@ -75,6 +81,10 @@ export const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProp
       >
         {formikProps => (
           <>
+            <DocumentUploadValidityWatcher
+              formikProps={formikProps}
+              onValidityChange={onValidityChange}
+            />
             <FieldArray name="documents">
               {({ push, remove }) => (
                 <>
@@ -107,7 +117,6 @@ export const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProp
                           documentStatusOptions={documentStatusOptions}
                           getDocumentMetadata={getDocumentMetadata}
                           onRemove={(index: number) => {
-                            onDocumentsSelected(formikProps.values.documents.length - 1);
                             remove(index);
                           }}
                         />
@@ -117,16 +126,19 @@ export const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProp
                 </>
               )}
             </FieldArray>
-            <div className="pt-4"></div>
+            <StyledValidExtensionsDiv className="pt-4">
+              {getValidExtensionsString()}
+            </StyledValidExtensionsDiv>
             <DisplayError field="documents" />
             {formikProps.values.documents.length > maxDocumentCount && (
               <Form.Control.Feedback type="invalid" className="pt-0">
                 {`You have a limit of ${maxDocumentCount} files per time. Some of your files have not been uploaded at this time.`}
               </Form.Control.Feedback>
             )}
-            {formikProps.values.documents.length > 0 && (
-              <div className="pt-1">
-                {`You have attached ${formikProps.values.documents.length} files. Do you want to proceed and save?`}
+
+            {formikProps.values.documents.length > 0 && formikProps.isValid && (
+              <div className="pt-3">
+                {`You have attached ${formikProps.values.documents.length} files. Do you want to continue and save?`}
               </div>
             )}
           </>
@@ -136,4 +148,25 @@ export const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProp
   );
 };
 
+interface IDocumentUploadValidityWatcherProps {
+  formikProps: FormikProps<BatchUploadFormModel>;
+  onValidityChange?: (isValid: boolean) => void;
+}
+
+const DocumentUploadValidityWatcher: React.FunctionComponent<
+  IDocumentUploadValidityWatcherProps
+> = ({ formikProps, onValidityChange }) => {
+  useEffect(() => {
+    onValidityChange?.(formikProps.isValid);
+  }, [formikProps.isValid, onValidityChange]);
+
+  return null;
+};
+
 export default DocumentUploadForm;
+
+const StyledValidExtensionsDiv = styled.div`
+  color: black;
+  font-style: italic;
+  font-size: small;
+`;

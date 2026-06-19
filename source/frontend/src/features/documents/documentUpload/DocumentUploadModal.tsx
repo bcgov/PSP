@@ -1,4 +1,4 @@
-import { createRef, useState } from 'react';
+import { useRef, useState } from 'react';
 import { FaCheck, FaTimesCircle, FaUpload } from 'react-icons/fa';
 import styled, { useTheme } from 'styled-components';
 
@@ -22,18 +22,17 @@ export interface IDocumentUploadModalProps {
 
 export const DocumentUploadModal: React.FunctionComponent<IDocumentUploadModalProps> = props => {
   const [uploadResult, setUploadResult] = useState<BatchUploadResponseModel[]>(null);
-
-  const [canUpload, setCanUpload] = useState(false);
   const [displayConfirmation, setDisplayConfirmation] = useState(false);
+  const [isFormValid, setIsFormValid] = useState(false);
 
-  const uploadContainerRef = createRef<IDocumentUploadContainerRef>();
+  const uploadContainerRef = useRef<IDocumentUploadContainerRef>(null);
 
   const onSaveClick = () => {
     uploadContainerRef.current?.uploadDocument();
   };
+
   const onSuccess = (results: BatchUploadResponseModel[]) => {
     setDisplayConfirmation(false);
-    setCanUpload(false);
     setUploadResult(results);
   };
 
@@ -44,8 +43,8 @@ export const DocumentUploadModal: React.FunctionComponent<IDocumentUploadModalPr
       setDisplayConfirmation(true);
     } else {
       setDisplayConfirmation(false);
-      setCanUpload(false);
       setUploadResult(null);
+      setIsFormValid(false);
       props.onClose();
     }
   };
@@ -67,25 +66,25 @@ export const DocumentUploadModal: React.FunctionComponent<IDocumentUploadModalPr
             relationshipType={props.relationshipType}
             onUploadSuccess={onSuccess}
             onCancel={props.onClose}
-            setCanUpload={setCanUpload}
             maxDocumentCount={props.maxDocumentCount}
             View={DocumentUploadForm}
+            onValidityChange={setIsFormValid}
           />
         )
       }
       errorMessage={
         displayConfirmation ? (
           <StyledUnsavedChanges>
-            Unsaved updates will be lost. Click &quot;<strong>No</strong>&quot; again to proceed
-            without saving, or &quot;<strong>Yes</strong>&quot; to save the changes.
+            Unsaved updates will be lost. Click &quot;<strong>Cancel</strong>&quot; again to proceed
+            without saving, or &quot;<strong>Continue</strong>&quot; to save the changes.
           </StyledUnsavedChanges>
         ) : undefined
       }
       modalSize={ModalSize.LARGE}
-      okButtonText={exists(uploadResult) ? 'Close' : 'Yes'}
+      okButtonText={exists(uploadResult) ? 'Close' : 'Continue'}
       handleOk={() => (exists(uploadResult) ? onClose() : onSaveClick())}
-      handleOkDisabled={exists(uploadResult) ? false : !canUpload}
-      cancelButtonText={exists(uploadResult) ? undefined : 'No'}
+      handleOkDisabled={!exists(uploadResult) && !isFormValid}
+      cancelButtonText={exists(uploadResult) ? undefined : 'Cancel'}
       handleCancel={() => {
         onClose();
       }}
@@ -110,6 +109,7 @@ const UploadResultView: React.FunctionComponent<IUploadResultViewProps> = props 
       failureResults.push(result);
     }
   });
+
   return (
     <>
       {successResults.length > 0 && (

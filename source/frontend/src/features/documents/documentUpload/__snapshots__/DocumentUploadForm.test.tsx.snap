@@ -57,6 +57,12 @@ exports[`DocumentUploadView component > renders as expected 1`] = `
   max-height: 50rem;
 }
 
+.c8 {
+  color: black;
+  font-style: italic;
+  font-size: small;
+}
+
 <body>
   <div>
     <div
@@ -114,8 +120,10 @@ exports[`DocumentUploadView component > renders as expected 1`] = `
       class="c6 c7"
     />
     <div
-      class="pt-4"
-    />
+      class="c8 pt-4"
+    >
+      Supported file types include txt, pdf, docx, doc, xlsx, xls, html, odt, png, jpg, bmp, tif, tiff, jpeg, gif, shp, gml, kml, kmz, msg.
+    </div>
   </div>
 </body>
 `;
