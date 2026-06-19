@@ -33,19 +33,19 @@ namespace Pims.Api.Models.Concepts.Notification
 
             if (notification.AcquisitionFileId.HasValue && notification.AcquisitionFile != null)
             {
-                return $"Acquisition File #: {notification.AcquisitionFile.FileNumberFormatted}";
+                return $"Acquisition File #: {GetFileNameOrNumber(notification.AcquisitionFile)}";
             }
             if (notification.DispositionFileId.HasValue && notification.DispositionFile != null)
             {
-                return $"Disposition File #: D-{notification.DispositionFile.FileNumber}";
+                return $"Disposition File #: {GetFileNameOrNumber(notification.DispositionFile)}";
             }
             if (notification.ResearchFileId.HasValue && notification.ResearchFile != null)
             {
-                return $"Research File #: {notification.ResearchFile.RfileNumber}";
+                return $"Research File #: {GetFileNameOrNumber(notification.ResearchFile)}";
             }
             if (notification.ManagementFileId.HasValue && notification.ManagementFile != null)
             {
-                return $"Management File #: M-{notification.ManagementFile.ManagementFileId}";
+                return $"Management File #: {GetFileNameOrNumber(notification.ManagementFile)}";
             }
             if (notification.LeaseId.HasValue && notification.Lease != null)
             {
@@ -83,5 +83,102 @@ namespace Pims.Api.Models.Concepts.Notification
                 _ => null,
             };
         }
+
+        // Display file name if available/non-empty, otherwise display file number in same format as list view screen.
+        private static string GetFileNameOrNumber(PimsAcquisitionFile file)
+        {
+            if (file == null)
+            {
+                return string.Empty;
+            }
+
+            if (!string.IsNullOrWhiteSpace(file.FileName))
+            {
+                return file.FileName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(file.LegacyFileNumber))
+            {
+                return file.LegacyFileNumber;
+            }
+
+            if (!string.IsNullOrWhiteSpace(file.FileNumberFormatted))
+            {
+                return file.FileNumberFormatted;
+            }
+
+            return string.Empty;
+        }
+
+        private static string GetFileNameOrNumber(PimsDispositionFile file)
+        {
+            if (file == null)
+            {
+                return string.Empty;
+            }
+
+            if (!string.IsNullOrWhiteSpace(file.FileName))
+            {
+                return file.FileName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(file.FileReference))
+            {
+                return file.FileReference;
+            }
+
+            if (!string.IsNullOrWhiteSpace(file.FileNumber))
+            {
+                return $"D-{file.FileNumber}";
+            }
+
+            return string.Empty;
+        }
+
+        private static string GetFileNameOrNumber(PimsResearchFile file)
+        {
+            if (file == null)
+            {
+                return string.Empty;
+            }
+
+            if (!string.IsNullOrWhiteSpace(file.Name))
+            {
+                return file.Name;
+            }
+
+            if (!string.IsNullOrWhiteSpace(file.RfileNumber))
+            {
+                return file.RfileNumber;
+            }
+
+            return string.Empty;
+        }
+
+        private static string GetFileNameOrNumber(PimsManagementFile file)
+        {
+            if (file == null)
+            {
+                return string.Empty;
+            }
+
+            if (!string.IsNullOrWhiteSpace(file.FileName))
+            {
+                return file.FileName;
+            }
+
+            if (!string.IsNullOrWhiteSpace(file.LegacyFileNum))
+            {
+                return file.LegacyFileNum;
+            }
+
+            if (file.ManagementFileId > 0)
+            {
+                return $"M-{file.ManagementFileId}";
+            }
+
+            return string.Empty;
+        }
+
     }
 }
