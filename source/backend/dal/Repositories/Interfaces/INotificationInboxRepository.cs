@@ -9,7 +9,7 @@ namespace Pims.Dal.Repositories
         /// Returns a paged list of sent in-app notification deliveries for the given user.
         /// Only rows where NotificationSentDt IS NOT NULL and NotificationOutputTypeCode == PIMS are included.
         /// </summary>
-        Paged<PimsNotificationUserOutput> GetUserInbox(long userId, int page, int quantity);
+        Paged<PimsNotificationUserOutput> GetUserInboxDeep(long userId, int page, int quantity);
 
         /// <summary>
         /// Returns the count of unread in-app notifications for the given user.
@@ -21,6 +21,13 @@ namespace Pims.Dal.Repositories
         /// Only includes rows where NotificationSentDt IS NOT NULL and NotificationOutputTypeCode == PIMS.
         /// </summary>
         PimsNotificationUserOutput GetNotificationOutputById(long outputId, long userId);
+
+        /// <summary>
+        /// Returns a single in-app user notification by id, scoped to the given user.
+        /// Only includes rows where NotificationSentDt IS NOT NULL and NotificationOutputTypeCode == PIMS.
+        /// Includes the full notification graph (NotificationUser, Notification, related Lease etc.) for rich client display.
+        /// </summary>
+        PimsNotificationUserOutput GetNotificationOutputByIdDeep(long outputId, long userId);
 
         /// <summary>
         /// Updates the read status of a user notification.

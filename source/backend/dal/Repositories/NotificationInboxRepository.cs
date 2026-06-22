@@ -25,7 +25,7 @@ namespace Pims.Dal.Repositories
         }
 
         /// <inheritdoc />
-        public Paged<PimsNotificationUserOutput> GetUserInbox(long userId, int page, int quantity)
+        public Paged<PimsNotificationUserOutput> GetUserInboxDeep(long userId, int page, int quantity)
         {
             using var scope = Logger.QueryScope();
 
@@ -58,6 +58,15 @@ namespace Pims.Dal.Repositories
         {
             using var scope = Logger.QueryScope();
 
+            var query = BuildUserNotificationsQuery(userId, deep: false);
+            return query.FirstOrDefault(o => o.NotificationUserOutputId == outputId) ?? throw new KeyNotFoundException();
+        }
+
+        /// <inheritdoc />
+        public PimsNotificationUserOutput GetNotificationOutputByIdDeep(long outputId, long userId)
+        {
+            using var scope = Logger.QueryScope();
+
             var query = BuildUserNotificationsQuery(userId, deep: true);
             return query.FirstOrDefault(o => o.NotificationUserOutputId == outputId) ?? throw new KeyNotFoundException();
         }
@@ -67,7 +76,9 @@ namespace Pims.Dal.Repositories
         {
             var existing = GetNotificationOutputById(outputId, userId);
             existing.NotificationReadDt = isRead ? DateTime.UtcNow : (DateTime?)null;
-            Context.Update(existing);
+
+            // This attaches the entity and marks ONLY the main row as modified, leaving the rest of the graph untouched.
+            Context.Entry(existing).State = EntityState.Modified;
             Context.SaveChanges();
 
             return existing;
@@ -83,7 +94,7 @@ namespace Pims.Dal.Repositories
             foreach (var notificationOutput in unread)
             {
                 notificationOutput.NotificationReadDt = DateTime.UtcNow;
-                Context.Update(notificationOutput);
+                Context.Entry(notificationOutput).State = EntityState.Modified;
             }
 
             Context.SaveChanges();

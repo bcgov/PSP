@@ -173,12 +173,12 @@ namespace Pims.Api.Areas.Notification.Controllers
         [ProducesResponseType(typeof(NotificationInboxItemModel), 200)]
         [ProducesResponseType(404)]
         [SwaggerOperation(Tags = new[] { "notifications-inbox" })]
-        public IActionResult GetNotificationOutput(long outputId)
+        public IActionResult GetNotificationInboxItem(long outputId)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
                 nameof(NotificationInboxController),
-                nameof(GetNotificationOutput),
+                nameof(GetNotificationInboxItem),
                 User.GetUsername(),
                 DateTime.Now);
 

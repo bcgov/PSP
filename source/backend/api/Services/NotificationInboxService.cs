@@ -35,7 +35,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAllAuthorized(Permissions.NotificationView);
 
             var user = GetUserByUsername(username);
-            return _notificationInboxRepository.GetUserInbox(user.UserId, page, quantity);
+            return _notificationInboxRepository.GetUserInboxDeep(user.UserId, page, quantity);
         }
 
         /// <inheritdoc />
@@ -55,7 +55,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAllAuthorized(Permissions.NotificationView);
 
             var user = GetUserByUsername(username);
-            return _notificationInboxRepository.GetNotificationOutputById(outputId, user.UserId);
+            return _notificationInboxRepository.GetNotificationOutputByIdDeep(outputId, user.UserId);
         }
 
         /// <inheritdoc />
