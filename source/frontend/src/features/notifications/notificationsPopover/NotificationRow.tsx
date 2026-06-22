@@ -1,4 +1,5 @@
 import { FC, useMemo } from 'react';
+import { FaCircle, FaExternalLinkAlt, FaMinus, FaRegCheckCircle } from 'react-icons/fa';
 import styled from 'styled-components';
 
 import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu';
@@ -27,14 +28,21 @@ export const NotificationRow: FC<INotificationRowProps> = ({
     () => [
       {
         label: 'Open file',
+        icon: <FaExternalLinkAlt aria-hidden="true" size={12} className="mr-1" />,
         onClick: () => onSelect(notification),
       },
       {
         label: unread ? 'Mark as read' : 'Mark as unread',
+        icon: unread ? (
+          <FaRegCheckCircle aria-hidden="true" size={12} className="mr-1" />
+        ) : (
+          <FaCircle aria-hidden="true" size={12} className="mr-1" />
+        ),
         onClick: () => onToggleRead(notification),
       },
       {
-        label: 'Delete',
+        label: 'Dismiss',
+        icon: <FaMinus aria-hidden="true" size={12} className="mr-1" />,
         separator: true,
         onClick: () => onDelete(notification),
       },
@@ -64,7 +72,10 @@ export const NotificationRow: FC<INotificationRowProps> = ({
       <FileCell>{fileLabel}</FileCell>
       <TypeCell>{typeLabel}</TypeCell>
       <DateCell>{trackedDate !== null ? prettyFormatDate(trackedDate) : ''}</DateCell>
-      <ActionsCell>
+      <ActionsCell
+        onClick={event => event.stopPropagation()}
+        onKeyDown={event => event.stopPropagation()}
+      >
         <MoreOptionsMenu options={menuOptions} />
       </ActionsCell>
     </Row>
@@ -73,10 +84,11 @@ export const NotificationRow: FC<INotificationRowProps> = ({
 
 const Row = styled.div`
   display: grid;
-  grid-template-columns: 2.4rem 1fr 1fr 10rem 3rem;
+  grid-template-columns: 2.4rem 1fr 1fr 12rem 3rem;
   align-items: center;
-  gap: 0.8rem;
-  padding: 0.8rem 1.2rem;
+  gap: 0.4rem;
+  padding: 0.6rem 0.8rem;
+  min-height: 4rem;
   cursor: pointer;
 
   &:hover,
@@ -120,12 +132,20 @@ const DateCell = styled.div`
   text-align: right;
   color: ${props => props.theme.css.pimsGrey80 ?? '#555'};
   font-variant-numeric: tabular-nums;
+  margin-right: 1rem;
 `;
 
 const ActionsCell = styled.div`
   display: flex;
-  justify-content: flex-end;
-  gap: 0.4rem;
+  justify-content: flex-center;
+  align-items: center;
+  padding: 0.5rem;
+  width: 3rem;
+  height: 3rem;
+
+  &:hover {
+    background-color: ${props => props.theme.css.pimsBlue10 + '95'};
+  }
 `;
 
 export default NotificationRow;

@@ -100,18 +100,25 @@ const BadgeDot = styled.span`
 `;
 
 const StyledPopover = styled(Popover)`
-  min-width: 56rem;
-  max-width: 56rem;
+  display: flex;
+  min-width: 58rem;
+  max-width: 58rem;
+  min-height: 50.5rem;
+  max-height: 50.5rem;
   box-shadow: 0 0.4rem 1.6rem rgba(0, 0, 0, 0.18);
   border: none;
   border-radius: 1rem;
   font-family: inherit;
   font-size: inherit;
   font-weight: normal;
+  padding: 1.6rem 0;
 
   .popover-body {
-    min-height: 28rem;
-    max-height: 28rem;
-    padding: 2rem 0.75rem;
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    padding: 0;
+    flex-grow: 1;
+    overflow-y: auto;
   }
 `;

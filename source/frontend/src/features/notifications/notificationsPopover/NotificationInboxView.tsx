@@ -45,6 +45,9 @@ export const NotificationInboxView: FC<INotificationInboxViewProps> = ({
 
       {hasMore && (
         <Footer>
+          <Divider>
+            <hr />
+          </Divider>
           <LoadMoreButton type="button" onClick={onLoadMore} disabled={isLoading}>
             {isLoading ? 'Loading…' : 'Load more'}
           </LoadMoreButton>
@@ -57,14 +60,16 @@ export const NotificationInboxView: FC<INotificationInboxViewProps> = ({
 const Container = styled.div`
   display: flex;
   flex-direction: column;
+  width: 100%;
+  flex-grow: 1;
+  padding: 0;
+  margin: 0;
 `;
 
 const List = styled.div`
   display: flex;
   flex-direction: column;
-  min-height: 40rem;
-  max-height: 40rem;
-  overflow-y: auto;
+  width: 100%;
 `;
 
 const EmptyState = styled.div`
@@ -75,9 +80,15 @@ const EmptyState = styled.div`
 
 const Footer = styled.div`
   display: flex;
+  flex-direction: column;
   justify-content: center;
-  padding: 0.8rem 0;
-  border-top: 1px solid ${props => props.theme.css.borderOutlineColor ?? '#e0e0e0'};
+  width: 100%;
+  padding: 0;
+`;
+
+const Divider = styled.div`
+  width: 100%;
+  padding: 0 1.6rem;
 `;
 
 const LoadMoreButton = styled.button`
@@ -86,7 +97,7 @@ const LoadMoreButton = styled.button`
   color: ${props => props.theme.css.linkColor ?? '#1a5a96'};
   font-weight: 600;
   cursor: pointer;
-  padding: 0.4rem 1.2rem;
+  padding: 0.2rem 1.2rem;
 
   &:hover:not(:disabled),
   &:focus:not(:disabled) {
