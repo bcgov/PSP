@@ -4,6 +4,8 @@ import { LayoutPage } from '../layout/layout.page';
 export class ResearchViewFileDetails extends LayoutPage {
   readonly page: Page;
 
+  readonly researchDocumentTab: Locator;
+
   readonly researchEditButton: Locator;
 
   readonly researchProjectSubtitle: Locator;
@@ -39,6 +41,8 @@ export class ResearchViewFileDetails extends LayoutPage {
   constructor(page: Page) {
     super(page);
     this.page = page;
+
+    this.researchDocumentTab = page.getByRole('tab', { name: 'Documents' });
 
     this.researchEditButton = page.getByTitle('Edit research file', { exact: true });
 
@@ -87,5 +91,9 @@ export class ResearchViewFileDetails extends LayoutPage {
     this.researchExpropiationTitle = page.getByText('Expropriation', { exact: true });
     this.researchExpropriationBool = page.locator('label:has-text("Expropriation?:")');
     this.researchExpropriationComments = page.locator('label:has-text("Expropriation comments:")');
+  }
+
+  async navigateDocumentsTab() {
+    await this.researchDocumentTab.click();
   }
 }
