@@ -90,28 +90,27 @@ exports[`ShapeUploadForm > matches snapshot 1`] = `
       >
         Accepted formats: Shapefile (.zip), KML (.kml), or KMZ (.kmz)
       </div>
-      <div>
+      <div
+        class="c2"
+        data-testid="document-upload-drop-zone"
+      >
         <div
-          class="c2"
+          class="c3"
         >
-          <div
-            class="c3"
+          Drag files here to attach or 
+          <label
+            class="c4"
           >
-            Drag files here to attach or 
-            <label
-              class="c4"
-            >
-              Browse
-              <input
-                accept=".zip,.kml,.kmz"
-                class="c5"
-                data-testid="upload-input"
-                id="uploadInput"
-                name="documentFile"
-                type="file"
-              />
-            </label>
-          </div>
+            Browse
+            <input
+              accept=".zip,.kml,.kmz"
+              class="c5"
+              data-testid="upload-input"
+              id="uploadInput"
+              name="documentFile"
+              type="file"
+            />
+          </label>
         </div>
       </div>
     </div>

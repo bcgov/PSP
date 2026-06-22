@@ -514,29 +514,28 @@ exports[`ShapeUploadModal component > renders correctly 1`] = `
               >
                 Accepted formats: Shapefile (.zip), KML (.kml), or KMZ (.kmz)
               </div>
-              <div>
+              <div
+                class="c4"
+                data-testid="document-upload-drop-zone"
+              >
                 <div
-                  class="c4"
+                  class="c5"
                 >
-                  <div
-                    class="c5"
+                  Drag files here to attach or
+                   
+                  <label
+                    class="c6"
                   >
-                    Drag files here to attach or
-                     
-                    <label
-                      class="c6"
-                    >
-                      Browse
-                      <input
-                        accept=".zip,.kml,.kmz"
-                        class="c7"
-                        data-testid="upload-input"
-                        id="uploadInput"
-                        name="documentFile"
-                        type="file"
-                      />
-                    </label>
-                  </div>
+                    Browse
+                    <input
+                      accept=".zip,.kml,.kmz"
+                      class="c7"
+                      data-testid="upload-input"
+                      id="uploadInput"
+                      name="documentFile"
+                      type="file"
+                    />
+                  </label>
                 </div>
               </div>
             </div>

@@ -1,6 +1,7 @@
 import styled from 'styled-components';
 
 import EditButton from '@/components/common/buttons/EditButton';
+import ExpandableTextCard from '@/components/common/ExpandableTextArea';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper } from '@/components/common/Section/SectionStyles';
@@ -81,7 +82,7 @@ export const PropertyResearchTabView: React.FunctionComponent<
       </Section>
       <Section header="Research Summary">
         <SectionField label="Summary comments" />
-        {detail.summaryNotes}
+        <ExpandableTextCard text={detail.summaryNotes ?? ''} />
       </Section>
     </StyledSummarySection>
   );

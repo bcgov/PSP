@@ -104,7 +104,7 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
   return (
     <div style={{ fontSize: '1.6rem' }}>
       <Row className={clsx('no-gutters', 'pb-3', className)}>
-        <Col>
+        <Col data-testid={`document[${index}]-header`}>
           <span>File {index + 1}:</span>
           <span className="ml-4">{truncate(document.file.name, { length: 50 })}</span>
           <FaCheck className="ml-2" size="1.6rem" color={theme.css.uploadFileCheckColor} />
@@ -152,7 +152,7 @@ export const SelectedDocumentHeader: React.FunctionComponent<ISelectedDocumentHe
         ></DocumentUploadReplaceContainer>
       )}
 
-      <StyledRow className={clsx('ml-0', className)}>
+      <StyledRow className={clsx('ml-0', className)} data-testid={`document[${index}]-metadata`}>
         <Col md="5">
           <SectionField label={null} contentWidth={{ xs: 12 }} required>
             <Select

@@ -1,7 +1,8 @@
 import { Collapse } from 'react-bootstrap';
+import { MdArrowRight } from 'react-icons/md';
 import styled from 'styled-components';
 
-import { ArrowDropDownIcon, ArrowDropUpIcon } from '@/components/common/Section/SectionStyles';
+import { ArrowDropDownIcon } from '@/components/common/Section/SectionStyles';
 
 import ParcelItem from '../../parcelList/ParcelItem';
 import { WorklistItemModel } from './models/WorklistItem.model';
@@ -33,8 +34,8 @@ export const WorklistItemView: React.FC<CommonPropertyItemViewProps> = ({
             }}
             data-testid={`worklist-item[${parcelIndex}].collapse-btn`}
           >
-            {isCollapsed && <ArrowDropDownIcon />}
-            {!isCollapsed && <ArrowDropUpIcon />}
+            {isCollapsed && <StyledClosedIcon />}
+            {!isCollapsed && <StyledOpenIcon />}
           </StyledArrowCollapseDiv>
           <StyledHeaderParcelDiv data-testid={`worklist-item[${parcelIndex}].parcel`}>
             <ParcelItem
@@ -141,6 +142,16 @@ const StyledHeaderParcelDiv = styled.div`
 
 const StyledSectionGroupDiv = styled.div`
   padding-left: 3rem;
+`;
+
+const StyledOpenIcon = styled(ArrowDropDownIcon)`
+  font-size: 2.4rem;
+  color: ${props => props.theme.css.pimsBlue200};
+`;
+
+const StyledClosedIcon = styled(MdArrowRight)`
+  font-size: 2.4rem;
+  color: ${props => props.theme.css.pimsBlue200};
 `;
 
 export default WorklistItemView;

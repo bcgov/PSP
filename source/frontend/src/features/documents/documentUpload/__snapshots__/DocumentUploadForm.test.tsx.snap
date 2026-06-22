@@ -88,30 +88,29 @@ exports[`DocumentUploadView component > renders as expected 1`] = `
         <div
           class="pt-2"
         />
-        <div>
+        <div
+          class="c2"
+          data-testid="document-upload-drop-zone"
+        >
           <div
-            class="c2"
+            class="c3"
           >
-            <div
-              class="c3"
+            Drag files here to attach or
+             
+            <label
+              class="c4"
             >
-              Drag files here to attach or
-               
-              <label
-                class="c4"
-              >
-                Browse
-                <input
-                  accept=".txt,.pdf,.docx,.doc,.xlsx,.xls,.html,.odt,.png,.jpg,.bmp,.tif,.tiff,.jpeg,.gif,.shp,.gml,.kml,.kmz,.msg"
-                  class="c5"
-                  data-testid="upload-input"
-                  id="uploadInput"
-                  multiple=""
-                  name="documentFile"
-                  type="file"
-                />
-              </label>
-            </div>
+              Browse
+              <input
+                accept=".txt,.pdf,.docx,.doc,.xlsx,.xls,.html,.odt,.png,.jpg,.bmp,.tif,.tiff,.jpeg,.gif,.shp,.gml,.kml,.kmz,.msg"
+                class="c5"
+                data-testid="upload-input"
+                id="uploadInput"
+                multiple=""
+                name="documentFile"
+                type="file"
+              />
+            </label>
           </div>
         </div>
       </div>
@@ -121,6 +120,7 @@ exports[`DocumentUploadView component > renders as expected 1`] = `
     />
     <div
       class="c8 pt-4"
+      data-testid="supported-file-extensions"
     >
       Supported file types include txt, pdf, docx, doc, xlsx, xls, html, odt, png, jpg, bmp, tif, tiff, jpeg, gif, shp, gml, kml, kmz, msg.
     </div>
