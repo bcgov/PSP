@@ -36,7 +36,7 @@ jobs:
       NODEJS20_BASE_TAG: ${{ secrets.NODEJS20_BASE_TAG }}
       NGINX_BASE_TAG: ${{ secrets.NGINX_BASE_TAG }}
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Authenticate OpenShift
         uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
         with:
