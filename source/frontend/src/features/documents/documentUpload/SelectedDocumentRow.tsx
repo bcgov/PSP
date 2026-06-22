@@ -92,7 +92,7 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
         header={
           <div style={{ fontSize: '1.6rem' }}>
             <Row className={clsx('no-gutters')}>
-              <Col>
+              <Col data-testid={`document[${index}]-error`}>
                 <span>File {index + 1}:</span>
                 <StyledErrorDiv>
                   <span className="ml-2">{truncate(document.file.name, { length: 50 })}</span>
