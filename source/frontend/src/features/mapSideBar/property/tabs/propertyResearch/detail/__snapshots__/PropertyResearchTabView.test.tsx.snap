@@ -259,6 +259,21 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
   color: var(--surface-color-primary-button-hover);
 }
 
+.c8 {
+  border: none;
+}
+
+.c8 .card-body {
+  padding: 0;
+}
+
+.c9 {
+  overflow: hidden;
+  white-space: break-spaces;
+  word-break: break-word;
+  text-align: justify;
+}
+
 .c1 {
   text-align: right;
   overflow: hidden;
@@ -472,7 +487,31 @@ exports[`PropertyResearchTabView component > renders as expected when provided v
             class="c7 text-left col"
           />
         </div>
-        Research summary notes
+        <div
+          class="c8 card"
+          style="padding: 0px;"
+        >
+          <div
+            class="card-body"
+          >
+            <div
+              class="card-body"
+              style="padding: 0px;"
+            >
+              <p
+                class="card-text"
+                style="padding: 0px; word-break: break-all;"
+              >
+                <label
+                  class="c9"
+                  style="max-height: fit-content;"
+                >
+                  Research summary notes
+                </label>
+              </p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
   </div>
