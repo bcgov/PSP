@@ -126,7 +126,7 @@ export const DocumentUploadForm: React.FunctionComponent<IDocumentUploadFormProp
                 </>
               )}
             </FieldArray>
-            <StyledValidExtensionsDiv className="pt-4">
+            <StyledValidExtensionsDiv className="pt-4" data-testid="supported-file-extensions">
               {getValidExtensionsString()}
             </StyledValidExtensionsDiv>
             <DisplayError field="documents" />
