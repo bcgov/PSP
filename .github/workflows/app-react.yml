@@ -20,8 +20,8 @@ jobs:
     outputs:
       frontend: ${{ steps.filter.outputs.frontend }}
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
-      - uses: dorny/paths-filter@7267a8516b6f92bdb098633497bad573efdbf271 # v2.12.0
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
+      - uses: dorny/paths-filter@fbd0ab8f3e69293af611ebaee6363fc25e6d187d # v4.0.1
         id: filter
         with:
           filters: |
@@ -38,7 +38,7 @@ jobs:
       GIT_BRANCH: "${{github.ref}}"
 
     steps:
-      - uses: actions/checkout@34e114876b0b11c390a56381ad16ebd13914f8d5 # v4.3.1
+      - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
 
       - name: Extract Branch Name
         shell: bash
@@ -46,7 +46,7 @@ jobs:
         id: extract_branch
 
       - name: Use Node.js
-        uses: actions/setup-node@3235b876344d2a9aa001b8d1453c930bba69e610 # v3
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
         with:
           node-version: "20.11.1"
       - run: npm ci
@@ -69,7 +69,7 @@ jobs:
           echo ${{ github.event.pull_request.number }} > ./pr/NR
           cp ${{env.working-directory}}/coverage/coverage-final.json ./pr
 
-      - uses: actions/upload-artifact@330a01c490aca151604b8cf639adc76d48f6c5d4 # v5.0.0
+      - uses: actions/upload-artifact@043fb46d1a93c77aae656e7c1c64a875d1fc6a0a # v7.0.1
         with:
           name: pr-codecov
           path: pr/
