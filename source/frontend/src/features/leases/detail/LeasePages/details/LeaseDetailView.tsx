@@ -26,7 +26,6 @@ export const LeaseDetailView: React.FunctionComponent<
   const projectName = exists(lease?.project)
     ? formatMinistryProject(lease?.project?.code, lease?.project?.description)
     : '';
-
   const productName = exists(lease?.product)
     ? lease?.product?.code + ' ' + lease?.product?.description
     : '';

@@ -32,7 +32,7 @@ namespace Pims.Api.Models.Ches
         /// All email addresses can be plain 'sender@server.com' or formatted '"Sender Name" sender@server.com'.
         /// </summary>
         [JsonPropertyName("from")]
-        public string From { get; set; }
+        public string From { get; set; } = "pims@gov.bc.ca";
 
         /// <summary>
         /// The email subject.
