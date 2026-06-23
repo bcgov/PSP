@@ -8,8 +8,8 @@ namespace Pims.Scheduler.Repositories
 {
     public interface IPimsNotificationUserRepository
     {
-        Task<ExternalResponse<List<NotificationUserOutputModel>>> SearchUserNotificationsAsync(NotificationUserSearchFilterModel filter);
+        Task<ExternalResponse<List<NotificationOutputModel>>> SearchUserNotificationsAsync(NotificationUserSearchFilterModel filter);
 
-        Task<ExternalResponse<NotificationUserOutputModel>> PushUserNotificationsAsync(NotificationUserOutputModel userNotification);
+        Task<ExternalResponse<NotificationOutputModel>> PushUserNotificationsAsync(NotificationOutputModel userNotification);
     }
 }

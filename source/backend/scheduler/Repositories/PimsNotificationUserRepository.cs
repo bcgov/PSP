@@ -37,7 +37,7 @@ namespace Pims.Scheduler.Repositories
             _configuration = configuration;
         }
 
-        public async Task<ExternalResponse<List<NotificationUserOutputModel>>> SearchUserNotificationsAsync(NotificationUserSearchFilterModel filter)
+        public async Task<ExternalResponse<List<NotificationOutputModel>>> SearchUserNotificationsAsync(NotificationUserSearchFilterModel filter)
         {
             _logger.LogDebug("Getting filtered list of  {filter}", filter);
 
@@ -46,21 +46,21 @@ namespace Pims.Scheduler.Repositories
             string serializedFilter = JsonSerializer.Serialize(filter, SerializerOptions);
             using var content = new StringContent(serializedFilter, Encoding.UTF8, "application/json");
 
-            var response = await PostAsync<List<NotificationUserOutputModel>>(endpoint, content, authenticationToken);
+            var response = await PostAsync<List<NotificationOutputModel>>(endpoint, content, authenticationToken);
             _logger.LogDebug("Retrieved list of user notifications based on {filter}, {response} ", filter.Serialize(), response.Serialize());
 
             return response;
         }
 
-        public async Task<ExternalResponse<NotificationUserOutputModel>> PushUserNotificationsAsync(NotificationUserOutputModel userNotification)
+        public async Task<ExternalResponse<NotificationOutputModel>> PushUserNotificationsAsync(NotificationOutputModel userNotification)
         {
             _logger.LogDebug("Pushing notification {userNotification}", userNotification);
 
             string authenticationToken = await _authRepository.RequestAccessToken();
-            Uri endpoint = new($"{_configuration.CurrentValue.Uri}/admin/user-notifications/{userNotification.NotificationUserOutputId}/push");
+            Uri endpoint = new($"{_configuration.CurrentValue.Uri}/admin/user-notifications/{userNotification.Id}/push");
 
-            var response = await PutAsync<NotificationUserOutputModel>(endpoint, null, authenticationToken);
-            _logger.LogDebug("Received response for pushing notification with Id: {NotificationUserOutputId} with code: {HttpStatusCode} ", userNotification.NotificationUserOutputId, response.HttpStatusCode);
+            var response = await PutAsync<NotificationOutputModel>(endpoint, null, authenticationToken);
+            _logger.LogDebug("Received response for pushing notification with Id: {Id} with code: {HttpStatusCode} ", userNotification.Id, response.HttpStatusCode);
 
             return response;
         }
