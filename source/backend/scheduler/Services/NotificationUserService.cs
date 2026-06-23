@@ -139,14 +139,14 @@ namespace Pims.Scheduler.Services
         private async Task<SearchNotificationsResponseModel> SearchUserNotifications(NotificationUserSearchFilterModel filter)
         {
             BaseTaskResponseModel scheduledTaskResponseModel = null;
-            var pendingEmailNotifications = await _notificationUserRepository.SearchUserNotificationsAsync(filter);
-            if (pendingEmailNotifications?.Payload?.Count == 0)
+            var pendingNotifications = await _notificationUserRepository.SearchUserNotificationsAsync(filter);
+            if (pendingNotifications?.Payload?.Count == 0)
             {
-                _logger.LogInformation("No User Email notifications to process, skipping execution.");
-                scheduledTaskResponseModel = new BaseTaskResponseModel() { Status = TaskResponseStatusTypes.SKIPPED, Message = "No emails to process, skipping execution." };
+                _logger.LogInformation("No User notifications to process, skipping execution.");
+                scheduledTaskResponseModel = new BaseTaskResponseModel() { Status = TaskResponseStatusTypes.SKIPPED, Message = "No notifications to process, skipping execution." };
             }
 
-            return new SearchNotificationsResponseModel() { ScheduledTaskResponseModel = scheduledTaskResponseModel, SearchResults = pendingEmailNotifications };
+            return new SearchNotificationsResponseModel() { ScheduledTaskResponseModel = scheduledTaskResponseModel, SearchResults = pendingNotifications };
         }
 
         private PushNotificationResponseModel HandlePushNotificationRequestResponse(string httpMethodName, NotificationOutputModel notification, ExternalResponse<NotificationOutputModel> response)
