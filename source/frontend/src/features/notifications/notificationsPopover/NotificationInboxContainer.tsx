@@ -72,12 +72,13 @@ export const NotificationInboxContainer: FC<INotificationInboxContainerProps> = 
   const handleSelect = useCallback(
     async (notification: ApiGen_Concepts_NotificationInboxItem) => {
       onRequestClose?.();
+      await updateReadStatus(notification.id, false);
       const target = getNotificationDeepLink(notification);
       if (target !== null) {
         history.push(target);
       }
     },
-    [history, onRequestClose],
+    [history, onRequestClose, updateReadStatus],
   );
 
   const handleToggleRead = useCallback(
