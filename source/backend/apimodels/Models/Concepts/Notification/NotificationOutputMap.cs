@@ -4,12 +4,12 @@ using Entity = Pims.Dal.Entities;
 
 namespace Pims.Api.Models.Concepts.Notification
 {
-    public class NotificationUserOutputMap : IRegister
+    public class NotificationOutputMap : IRegister
     {
         public void Register(TypeAdapterConfig config)
         {
-            config.NewConfig<Entity.PimsNotificationUserOutput, NotificationUserOutputModel>()
-                .Map(dest => dest.NotificationUserOutputId, src => src.NotificationUserOutputId)
+            config.NewConfig<Entity.PimsNotificationUserOutput, NotificationOutputModel>()
+                .Map(dest => dest.Id, src => src.NotificationUserOutputId)
                 .Map(dest => dest.NotificationUserId, src => src.NotificationUserId)
                 .Map(dest => dest.NotificationOutputTypeCode, src => src.NotificationOutputTypeCode)
                 .Map(dest => dest.NotificationSentDt, src => src.NotificationSentDt)
@@ -19,8 +19,8 @@ namespace Pims.Api.Models.Concepts.Notification
                 .Map(dest => dest.NotificationErrorDt, src => src.NotificationErrorDt)
                 .Inherits<Entity.IBaseAppEntity, BaseConcurrentModel>();
 
-            config.NewConfig<NotificationUserOutputModel, Entity.PimsNotificationUserOutput>()
-                .Map(dest => dest.NotificationUserOutputId, src => src.NotificationUserOutputId)
+            config.NewConfig<NotificationOutputModel, Entity.PimsNotificationUserOutput>()
+                .Map(dest => dest.NotificationUserOutputId, src => src.Id)
                 .Map(dest => dest.NotificationUserId, src => src.NotificationUserId)
                 .Map(dest => dest.NotificationOutputTypeCode, src => src.NotificationOutputTypeCode)
                 .Map(dest => dest.NotificationSentDt, src => src.NotificationSentDt)

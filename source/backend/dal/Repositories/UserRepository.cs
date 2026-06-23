@@ -279,7 +279,6 @@ namespace Pims.Dal.Repositories
             return new Paged<PimsUser>(users.ToArray(), filter.Page, filter.Quantity, query.Count());
         }
 
-
         /// <summary>
         /// Get the user with the specified 'username'.
         /// </summary>

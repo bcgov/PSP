@@ -602,6 +602,7 @@ namespace Pims.Api
             services.AddScoped<INotificationService, NotificationService>();
             services.AddScoped<INotificationUserService, NotificationUserService>();
             services.AddScoped<INotificationValidatorFactory, NotificationValidatorFactory>();
+            services.AddScoped<INotificationInboxService, NotificationInboxService>();
             services.AddScoped<ExpropOwnerHistoryValidator>();
             services.AddScoped<AgreementValidator>();
             services.AddScoped<InsuranceValidator>();

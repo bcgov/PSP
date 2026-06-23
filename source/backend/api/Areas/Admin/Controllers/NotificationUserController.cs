@@ -39,9 +39,9 @@ namespace Pims.Api.Areas.Admin.Controllers
         [HttpPost("search")]
         [Produces("application/json")]
         [SwaggerOperation(Tags = new[] { "user-notifications" })]
-        [ProducesResponseType(typeof(List<NotificationUserOutputModel>), 200)]
+        [ProducesResponseType(typeof(List<NotificationOutputModel>), 200)]
         [TypeFilter(typeof(NullJsonResultFilter))]
-        public IActionResult SearchUserNotifications([FromBody]NotificationUserSearchFilterModel filter)
+        public IActionResult SearchUserNotifications([FromBody] NotificationUserSearchFilterModel filter)
         {
             _logger.LogInformation(
                 "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
@@ -53,13 +53,12 @@ namespace Pims.Api.Areas.Admin.Controllers
             _logger.LogInformation("Dispatching to service: {Service}", _notificationUserService.GetType());
             var notifications = _notificationUserService.SearchNotificationUser(filter);
 
-            return Ok(_mapper.Map<IEnumerable<NotificationUserOutputModel>>(notifications));
+            return Ok(_mapper.Map<IEnumerable<NotificationOutputModel>>(notifications));
         }
 
         [HttpPut("{notificationUserId:long}/push")]
         [Produces("application/json")]
         [SwaggerOperation(Tags = new[] { "user-notifications" })]
-        [ProducesResponseType(typeof(List<NotificationUserOutputModel>), 200)]
         [TypeFilter(typeof(NullJsonResultFilter))]
         public async Task<IActionResult> PushUserNotificationsAsync([FromRoute] long notificationUserId)
         {

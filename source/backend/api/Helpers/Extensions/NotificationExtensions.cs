@@ -71,5 +71,12 @@ namespace Pims.Api.Helpers.Extensions
 
             return notification.PimsNotificationUsers.Any(u => u.UserId == userId);
         }
+
+        public static bool IsOwnedByUser(this PimsNotificationUserOutput notificationOutput, long userId)
+        {
+            ArgumentNullException.ThrowIfNull(notificationOutput);
+
+            return notificationOutput.NotificationUser?.UserId == userId;
+        }
     }
 }

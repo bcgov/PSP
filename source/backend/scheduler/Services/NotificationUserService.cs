@@ -67,14 +67,14 @@ namespace Pims.Scheduler.Services
             // 2. Process your notifications
             using RateLimiter limiter = new TokenBucketRateLimiter(limiterOptions);
             List<PushNotificationResponseModel> responses = new();
-            foreach (var userNotification in searchResponse?.SearchResults?.Payload ?? Enumerable.Empty<NotificationUserOutputModel>())
+            foreach (var userNotification in searchResponse?.SearchResults?.Payload ?? Enumerable.Empty<NotificationOutputModel>())
             {
                 // 3. Acquire a token before making the call
                 using RateLimitLease lease = await limiter.AcquireAsync(permitCount: 1);
 
                 if (lease.IsAcquired)
                 {
-                    _logger.LogInformation("Token acquired. Processing {id}", userNotification.NotificationUserOutputId);
+                    _logger.LogInformation("Token acquired. Processing {id}", userNotification.Id);
 
                     var response = await _notificationUserRepository.PushUserNotificationsAsync(userNotification);
                     PushNotificationResponseModel responseModel = HandlePushNotificationRequestResponse("PushUserNotificationsAsync", userNotification, response);
@@ -82,7 +82,7 @@ namespace Pims.Scheduler.Services
                 }
                 else
                 {
-                    _logger.LogWarning("Rate limit exceeded and queue is full for {id}", userNotification.NotificationUserOutputId);
+                    _logger.LogWarning("Rate limit exceeded and queue is full for {id}", userNotification.Id);
                 }
             }
 
@@ -112,7 +112,7 @@ namespace Pims.Scheduler.Services
 
             IEnumerable<Task<PushNotificationResponseModel>> responses = searchResponse?.SearchResults?.Payload?.Select(notification =>
             {
-                _logger.LogInformation("Pushing notificatin with id {NotificationUserOutputId}", notification.NotificationUserOutputId);
+                _logger.LogInformation("Pushing notification with id {Id}", notification.Id);
 
                 return _notificationUserRepository.PushUserNotificationsAsync(notification).ContinueWith(response => HandlePushNotificationRequestTaskResponse("PushPimsUserNotifications", notification, response));
             });
@@ -149,20 +149,20 @@ namespace Pims.Scheduler.Services
             return new SearchNotificationsResponseModel() { ScheduledTaskResponseModel = scheduledTaskResponseModel, SearchResults = pendingEmailNotifications };
         }
 
-        private PushNotificationResponseModel HandlePushNotificationRequestResponse(string httpMethodName, NotificationUserOutputModel notification, ExternalResponse<NotificationUserOutputModel> response)
+        private PushNotificationResponseModel HandlePushNotificationRequestResponse(string httpMethodName, NotificationOutputModel notification, ExternalResponse<NotificationOutputModel> response)
         {
-            if(response?.Status == ExternalResponseStatus.Success)
+            if (response?.Status == ExternalResponseStatus.Success)
             {
                 return new PushNotificationResponseModel() { ResponseStatus = response.Status, Message = response.Message };
             }
             else
             {
-                _logger.LogError("Received error response from {httpMethodName} for push notification {notificationId} status {Status} message: {Message}", httpMethodName, notification?.NotificationUserOutputId, response?.Status, response?.Message);
+                _logger.LogError("Received error response from {httpMethodName} for push notification {NotificationId} status {Status} message: {Message}", httpMethodName, notification?.Id, response?.Status, response?.Message);
                 return new PushNotificationResponseModel() { ResponseStatus = response?.Status ?? ExternalResponseStatus.Error, Message = response?.Message ?? "Unknown error" };
             }
         }
 
-        private PushNotificationResponseModel HandlePushNotificationRequestTaskResponse(string httpMethodName, NotificationUserOutputModel notification, Task<ExternalResponse<NotificationUserOutputModel>> response)
+        private PushNotificationResponseModel HandlePushNotificationRequestTaskResponse(string httpMethodName, NotificationOutputModel notification, Task<ExternalResponse<NotificationOutputModel>> response)
         {
             var responseObject = response?.Result;
             if (responseObject?.Status == ExternalResponseStatus.Success)
@@ -171,7 +171,7 @@ namespace Pims.Scheduler.Services
             }
             else
             {
-                _logger.LogError("Received error response from {httpMethodName} for push notification {notificationId} status {Status} message: {Message}", httpMethodName, notification?.NotificationUserOutputId, response?.Result?.Status, response?.Result?.Message);
+                _logger.LogError("Received error response from {httpMethodName} for push notification {NotificationId} status {Status} message: {Message}", httpMethodName, notification?.Id, response?.Result?.Status, response?.Result?.Message);
                 return new PushNotificationResponseModel() { ResponseStatus = responseObject?.Status ?? ExternalResponseStatus.Error, Message = responseObject?.Message ?? "Unknown error" };
             }
         }

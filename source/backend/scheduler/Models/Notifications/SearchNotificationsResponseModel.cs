@@ -7,7 +7,7 @@ namespace Pims.Scheduler.Models
 {
     public class SearchNotificationsResponseModel
     {
-        public ExternalResponse<List<NotificationUserOutputModel>> SearchResults { get; set; }
+        public ExternalResponse<List<NotificationOutputModel>> SearchResults { get; set; }
 
         public BaseTaskResponseModel ScheduledTaskResponseModel { get; set; }
     }

@@ -3,9 +3,9 @@ using Pims.Api.Models.Base;
 
 namespace Pims.Api.Models.Concepts.Notification
 {
-    public class NotificationUserOutputModel : BaseConcurrentModel
+    public class NotificationOutputModel : BaseConcurrentModel
     {
-        public long NotificationUserOutputId { get; set; }
+        public long Id { get; set; }
 
         public long NotificationUserId { get; set; }
 
@@ -17,7 +17,7 @@ namespace Pims.Api.Models.Concepts.Notification
 
         public short? NotificationRetryCnt { get; set; }
 
-        public string? NotificationErrorReason { get; set; }
+        public string NotificationErrorReason { get; set; }
 
         public DateOnly? NotificationErrorDt { get; set; }
     }
