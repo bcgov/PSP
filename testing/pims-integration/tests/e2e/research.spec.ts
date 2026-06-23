@@ -29,7 +29,7 @@ test.describe('Research Files feature', () => {
   test('verify documents invalid types', async () => {
     //Navigate to new research file and create a minimum viable research
     await researchCreatePage.goto();
-    await researchCreatePage.fillMinimumResearchForm();
+    await researchCreatePage.setResearchNameValue('researchFile');
     await researchCreatePage.confirmButtonClick();
     await expect(researchViewDetails.researchDocumentTab).toBeVisible();
 
@@ -47,7 +47,7 @@ test.describe('Research Files feature', () => {
 
     //Verify warning message appears
     const errorLabel = await documentUploadModalPage.getDocumentErrorLabel();
-    expect(errorLabel).toContain('File');
+    expect(errorLabel).toBe('File type not supported!');
 
     const fileName = await documentUploadModalPage.getDocumentErrorFilename();
     expect(fileName).toBe('react-icon.svg');

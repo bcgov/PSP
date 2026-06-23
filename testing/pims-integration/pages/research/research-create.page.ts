@@ -71,7 +71,7 @@ export class ResearchCreatePage extends LayoutPage {
     await this.page.goto('/mapview/sidebar/research/new', { waitUntil: 'domcontentloaded' });
   }
 
-  async fillMinimumResearchForm() {
+  async setResearchNameValue(researchName: string) {
     const now = new Date();
 
     const timestamp =
@@ -82,7 +82,7 @@ export class ResearchCreatePage extends LayoutPage {
       String(now.getMinutes()).padStart(2, '0') +
       String(now.getSeconds()).padStart(2, '0');
 
-    const fileName = `auto-research-${timestamp}`;
+    const fileName = `${researchName}-${timestamp}`;
 
     await this.researchNameInput.fill(fileName);
   }
