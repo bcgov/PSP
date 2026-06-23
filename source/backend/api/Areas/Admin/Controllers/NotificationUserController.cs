@@ -23,6 +23,7 @@ namespace Pims.Api.Areas.Admin.Controllers
     [ApiVersion("1.0")]
     [Area("admin")]
     [Route("v{version:apiVersion}/[area]/user-notifications")]
+    [Route("[area]/user-notifications")]
     public class NotificationUserController : ControllerBase
     {
         private readonly INotificationUserService _notificationUserService;
