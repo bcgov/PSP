@@ -55,7 +55,7 @@ namespace Pims.Scheduler.Services
                 NotificationTriggerDate = DateOnly.FromDateTime(DateTime.UtcNow),
             };
 
-            var searchResponse = await SearchEmailUserNotifications(filter);
+            var searchResponse = await SearchUserNotifications(filter);
             if (searchResponse?.ScheduledTaskResponseModel != null)
             {
                 return searchResponse.ScheduledTaskResponseModel;
@@ -95,13 +95,13 @@ namespace Pims.Scheduler.Services
             NotificationUserSearchFilterModel filter = new()
             {
                 Quantity = _pushNotificationsJobOptions?.CurrentValue.PimsNotificationsBatchSize ?? 50,
-                NotificationOutputTypeCode = NotificationOutputTypes.EMAIL.ToString(),
+                NotificationOutputTypeCode = NotificationOutputTypes.PIMS.ToString(),
                 MaxRetries = _pushNotificationsJobOptions?.CurrentValue.PimsNotificationsMaxRetriesAllowed ?? 3,
                 NotificationSentDateTime = null,
                 NotificationTriggerDate = DateOnly.FromDateTime(DateTime.UtcNow),
             };
 
-            var searchResponse = await SearchEmailUserNotifications(filter);
+            var searchResponse = await SearchUserNotifications(filter);
             if (searchResponse?.ScheduledTaskResponseModel != null)
             {
                 return searchResponse?.ScheduledTaskResponseModel;
@@ -136,17 +136,17 @@ namespace Pims.Scheduler.Services
             return TaskResponseStatusTypes.PARTIAL;
         }
 
-        private async Task<SearchNotificationsResponseModel> SearchEmailUserNotifications(NotificationUserSearchFilterModel filter)
+        private async Task<SearchNotificationsResponseModel> SearchUserNotifications(NotificationUserSearchFilterModel filter)
         {
             BaseTaskResponseModel scheduledTaskResponseModel = null;
-            var pendingEmailNotifications = await _notificationUserRepository.SearchUserNotificationsAsync(filter);
-            if (pendingEmailNotifications?.Payload?.Count == 0)
+            var pendingNotifications = await _notificationUserRepository.SearchUserNotificationsAsync(filter);
+            if (pendingNotifications?.Payload?.Count == 0)
             {
-                _logger.LogInformation("No User Email notifications to process, skipping execution.");
-                scheduledTaskResponseModel = new BaseTaskResponseModel() { Status = TaskResponseStatusTypes.SKIPPED, Message = "No emails to process, skipping execution." };
+                _logger.LogInformation("No User notifications to process, skipping execution.");
+                scheduledTaskResponseModel = new BaseTaskResponseModel() { Status = TaskResponseStatusTypes.SKIPPED, Message = "No notifications to process, skipping execution." };
             }
 
-            return new SearchNotificationsResponseModel() { ScheduledTaskResponseModel = scheduledTaskResponseModel, SearchResults = pendingEmailNotifications };
+            return new SearchNotificationsResponseModel() { ScheduledTaskResponseModel = scheduledTaskResponseModel, SearchResults = pendingNotifications };
         }
 
         private PushNotificationResponseModel HandlePushNotificationRequestResponse(string httpMethodName, NotificationOutputModel notification, ExternalResponse<NotificationOutputModel> response)
