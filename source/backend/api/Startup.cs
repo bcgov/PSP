@@ -113,8 +113,8 @@ namespace Pims.Api
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddSerilogging(this.Configuration);
-            var jsonSerializerOptions = this.Configuration.GenerateJsonSerializerOptions();
-            var pimsOptions = this.Configuration.GeneratePimsOptions();
+            var jsonSerializerOptions = Configuration.GenerateJsonSerializerOptions();
+            var pimsOptions = Configuration.GeneratePimsOptions();
 
             services.AddMapster(jsonSerializerOptions, pimsOptions, options =>
             {
@@ -139,12 +139,12 @@ namespace Pims.Api
                 options.Converters.Add(new Int32ToStringJsonConverter());
                 options.Converters.Add(new NetTopologySuite.IO.Converters.GeoJsonConverterFactory());
             });
-            services.Configure<Core.Http.Configuration.AuthClientOptions>(this.Configuration.GetSection("Keycloak"));
-            services.Configure<Core.Http.Configuration.OpenIdConnectOptions>(this.Configuration.GetSection("OpenIdConnect"));
-            services.Configure<Keycloak.Configuration.KeycloakOptions>(this.Configuration.GetSection("Keycloak"));
-            services.Configure<Pims.Dal.PimsOptions>(this.Configuration.GetSection("Pims"));
-            services.Configure<MayanConfig>(this.Configuration.GetSection("Mayan"));
-            services.Configure<AllHealthCheckOptions>(this.Configuration.GetSection("HealthChecks"));
+            services.Configure<Core.Http.Configuration.AuthClientOptions>(Configuration.GetSection("Keycloak"));
+            services.Configure<Core.Http.Configuration.OpenIdConnectOptions>(Configuration.GetSection("OpenIdConnect"));
+            services.Configure<Keycloak.Configuration.KeycloakOptions>(Configuration.GetSection("Keycloak"));
+            services.Configure<Pims.Dal.PimsOptions>(Configuration.GetSection("Pims"));
+            services.Configure<MayanConfig>(Configuration.GetSection("Mayan"));
+            services.Configure<AllHealthCheckOptions>(Configuration.GetSection("HealthChecks"));
             services.AddOptions();
 
             services.AddControllers()
@@ -222,7 +222,7 @@ namespace Pims.Api
                 });
 
             // Generate the database connection string.
-            var csBuilder = new SqlConnectionStringBuilder(this.Configuration.GetConnectionString("PIMS"));
+            var csBuilder = new SqlConnectionStringBuilder(Configuration.GetConnectionString("PIMS"));
             var pwd = this.Configuration["DB_PASSWORD"];
             if (!string.IsNullOrEmpty(pwd))
             {
@@ -238,9 +238,9 @@ namespace Pims.Api
             AddPimsApiRepositories(services);
             AddPimsApiServices(services);
             services.AddPimsKeycloakService();
-            services.AddGeocoderService(this.Configuration.GetSection("Geocoder"));
-            services.AddLtsaService(this.Configuration.GetSection("Ltsa"));
-            services.AddClamAvService(this.Configuration.GetSection("Av"));
+            services.AddGeocoderService(Configuration.GetSection("Geocoder"));
+            services.AddLtsaService(Configuration.GetSection("Ltsa"));
+            services.AddClamAvService(Configuration.GetSection("Av"));
             services.AddHttpContextAccessor();
 
             services.AddTransient<ClaimsPrincipal>(s => s.GetService<IHttpContextAccessor>()?.HttpContext?.User);
@@ -248,7 +248,7 @@ namespace Pims.Api
             services.AddScoped<IOpenIdConnectRequestClient, OpenIdConnectRequestClient>();
             services.AddResponseCaching();
             services.AddMemoryCache();
-            int maxFileSize = int.Parse(this.Configuration.GetSection("Av")?["MaxFileSize"], CultureInfo.InvariantCulture);
+            int maxFileSize = int.Parse(Configuration.GetSection("Av")?["MaxFileSize"], CultureInfo.InvariantCulture);
             services.Configure<FormOptions>(x =>
             {
                 x.ValueLengthLimit = maxFileSize;
@@ -256,7 +256,7 @@ namespace Pims.Api
             });
 
             PollyOptions pollyOptions = new();
-            this.Configuration.GetSection("Polly").Bind(pollyOptions);
+            Configuration.GetSection("Polly").Bind(pollyOptions);
 
             services.AddResiliencePipeline<string, HttpResponseMessage>(HttpRequestClient.NetworkPolicyName, (builder) =>
             {
@@ -320,7 +320,7 @@ namespace Pims.Api
             {
                 services.AddHealthChecks().Add(new HealthCheckRegistration(
                     "PmbcExternalApi",
-                    sp => new PimsExternalApiHealthcheck(this.Configuration.GetSection("HealthChecks:PmbcExternalApi")),
+                    sp => new PimsExternalApiHealthcheck(Configuration.GetSection("HealthChecks:PmbcExternalApi")),
                     null,
                     new string[] { SERVICES, EXTERNAL, SYSTEMCHECK })
                 { Period = TimeSpan.FromMinutes(allHealthCheckOptions.PmbcExternalApi.Period) });
@@ -445,7 +445,7 @@ namespace Pims.Api
             services.Configure<ForwardedHeadersOptions>(options =>
             {
                 options.ForwardedHeaders = ForwardedHeaders.All;
-                options.AllowedHosts = this.Configuration.GetValue<string>("AllowedHosts")?.Split(';').ToList<string>();
+                options.AllowedHosts = Configuration.GetValue<string>("AllowedHosts")?.Split(';').ToList<string>();
             });
             services.AddDatabaseDeveloperPageExceptionFilter();
         }
@@ -466,21 +466,21 @@ namespace Pims.Api
                 app.UseDeveloperExceptionPage();
             }
 
-            var baseUrl = this.Configuration.GetValue<string>("BaseUrl");
+            var baseUrl = Configuration.GetValue<string>("BaseUrl");
             app.UsePathBase(baseUrl);
             app.UseForwardedHeaders();
 
             app.UseSwagger(options =>
             {
-                options.RouteTemplate = this.Configuration.GetValue<string>("Swagger:RouteTemplate");
+                options.RouteTemplate = Configuration.GetValue<string>("Swagger:RouteTemplate");
             }).ConfigureSwaggerUI(provider);
             app.UseSwaggerUI(options =>
             {
                 foreach (var description in provider.ApiVersionDescriptions)
                 {
-                    options.SwaggerEndpoint(string.Format(CultureInfo.InvariantCulture, this.Configuration.GetValue<string>("Swagger:EndpointPath"), description.GroupName), description.GroupName);
+                    options.SwaggerEndpoint(string.Format(CultureInfo.InvariantCulture, Configuration.GetValue<string>("Swagger:EndpointPath"), description.GroupName), description.GroupName);
                 }
-                options.RoutePrefix = this.Configuration.GetValue<string>("Swagger:RoutePrefix");
+                options.RoutePrefix = Configuration.GetValue<string>("Swagger:RoutePrefix");
             });
 
             app.UseMiddleware<ResponseTimeMiddleware>();
@@ -503,13 +503,13 @@ namespace Pims.Api
             app.UseAuthentication();
             app.UseAuthorization();
 
-            var healthPort = this.Configuration.GetValue<int>("HealthChecks:Port");
-            app.UseHealthChecks(this.Configuration.GetValue<string>("HealthChecks:LivePath"), healthPort, new HealthCheckOptions
+            var healthPort = Configuration.GetValue<int>("HealthChecks:Port");
+            app.UseHealthChecks(Configuration.GetValue<string>("HealthChecks:LivePath"), healthPort, new HealthCheckOptions
             {
                 Predicate = r => r.Name.Contains("SqlServer"),
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
             });
-            app.UseHealthChecks(this.Configuration.GetValue<string>("HealthChecks:ReadyPath"), healthPort, new HealthCheckOptions
+            app.UseHealthChecks(Configuration.GetValue<string>("HealthChecks:ReadyPath"), healthPort, new HealthCheckOptions
             {
                 Predicate = r => r.Tags.Contains(SERVICES) && !r.Tags.Contains(EXTERNAL),
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
@@ -590,6 +590,7 @@ namespace Pims.Api
             services.AddScoped<IManagementActivityService, ManagementActivityService>();
             services.AddScoped<IManagementFileStatusSolver, ManagementFileStatusSolver>();
             services.AddScoped<IFilePropertyLocationUpdateSolver, FilePropertyLocationUpdateSolver>();
+
             services.AddSingleton(sp =>
             {
                 var config = sp.GetRequiredService<IConfiguration>();
@@ -599,6 +600,7 @@ namespace Pims.Api
             });
             services.AddScoped<IEmailService, ChesService>();
             services.AddScoped<INotificationService, NotificationService>();
+            services.AddScoped<INotificationUserService, NotificationUserService>();
             services.AddScoped<INotificationValidatorFactory, NotificationValidatorFactory>();
             services.AddScoped<ExpropOwnerHistoryValidator>();
             services.AddScoped<AgreementValidator>();

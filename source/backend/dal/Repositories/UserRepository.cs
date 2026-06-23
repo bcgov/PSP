@@ -97,7 +97,7 @@ namespace Pims.Dal.Repositories
                 this.Context.PimsUsers.Add(user);
                 this.Context.CommitTransaction();
 
-                var contactMethod = new PimsContactMethod() { Person = person, Organization = organization, ContactMethodTypeCode = ContactMethodTypes.WorkEmail, ContactMethodValue = email };
+                var contactMethod = new PimsContactMethod() { Person = person, Organization = organization, ContactMethodTypeCode = Api.Models.CodeTypes.ContactMethodTypes.WORKEMAIL.ToString(), ContactMethodValue = email };
                 person.PimsContactMethods.Add(contactMethod);
                 this.Context.CommitTransaction();
             }
