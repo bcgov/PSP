@@ -1,3 +1,5 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/dash0hq/otelbin/refs/heads/main/packages/otelbin/src/components/monaco-editor/schema.json
+
 # Enable the spanmetrics connector to bridge
 # the traces pipeline into the metrics pipeline.
 service:
@@ -19,26 +21,21 @@ service:
         - pull:
             exporter:
               prometheus:
-                host: ${env:JAEGER_LISTEN_HOST:-0.0.0.0}
+                host: ${env:JAEGER_HOST}
                 port: 8888
     logs:
-      level: debug
+      level: ${env:LOG_LEVEL:-error}
 
 extensions:
   healthcheckv2:
     use_v2: true
     http:
-      endpoint: ${env:JAEGER_LISTEN_HOST:-0.0.0.0}:13133
-
-  # pprof:
-  #   endpoint: 0.0.0.0:1777
-  # zpages:
-  #   endpoint: 0.0.0.0:55679
+      endpoint: ${env:JAEGER_HOST}:13133
 
   jaeger_query:
     storage:
-      traces: some_storage
-      metrics: some_metrics_storage
+      traces: traces_memory_storage
+      metrics: metrics_storage
     ui:
       # config_file: ./cmd/jaeger/config-ui.json
     # The maximum duration that is considered for clock skew adjustments.
@@ -47,11 +44,11 @@ extensions:
 
   jaeger_storage:
     backends:
-      some_storage:
+      traces_memory_storage:
         memory:
           max_traces: 100000
     metric_backends:
-      some_metrics_storage:
+      metrics_storage:
         prometheus:
           endpoint: http://${env:PROMETHEUS_HOST:-prometheus}:${env:PROMETHEUS_PORT:-9090}
           normalize_calls: true
@@ -65,18 +62,18 @@ receivers:
   otlp:
     protocols:
       grpc:
-        endpoint: ${env:JAEGER_LISTEN_HOST:-0.0.0.0}:4317
+        endpoint: ${env:JAEGER_HOST}:4317
       http:
-        endpoint: ${env:JAEGER_LISTEN_HOST:-0.0.0.0}:4318
+        endpoint: ${env:JAEGER_HOST}:4318
 
 processors:
   batch:
 
 exporters:
   jaeger_storage_exporter:
-    trace_storage: some_storage
+    trace_storage: traces_memory_storage
   # Declare an exporter for metrics produced by the connector.
   # For example, a Prometheus server may be configured to scrape
   # the metrics from this endpoint.
   prometheus:
-    endpoint: ${env:JAEGER_LISTEN_HOST:-0.0.0.0}:8889
+    endpoint: ${env:JAEGER_HOST}:8889

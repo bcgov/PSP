@@ -151,6 +151,19 @@ describe('DocumentUploadModal component', () => {
     expect(onClose).toHaveBeenCalled();
   });
 
+  it('shows validation error for unsupported file types and disables the Yes button', async () => {
+    mockDocumentApi.getDocumentRelationshipTypes.mockResolvedValue(mockDocumentTypesAcquisition());
+    setup();
+    await act(async () => {});
+
+    const uploader = screen.getByTestId('upload-input');
+    const files = [new File(['hello'], 'hello.svg', { type: 'image/svg+xml' })];
+    await act(async () => userEvent.upload(uploader, files));
+
+    expect(await screen.findByText(/File type not supported!/i)).toBeVisible();
+    expect(screen.getByTitle('ok-modal')).toBeDisabled();
+  });
+
   it('shows file upload results after successfully uploading files to mayan', async () => {
     mockDocumentApi.getDocumentRelationshipTypes.mockResolvedValue(mockDocumentTypesAcquisition());
     mockDocumentRelationshipApi.uploadDocument.mockResolvedValue(

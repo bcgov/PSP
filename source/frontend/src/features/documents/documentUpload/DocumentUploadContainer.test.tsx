@@ -95,7 +95,6 @@ describe('DocumentUploadContainer component', () => {
         }
         onUploadSuccess={renderOptions?.props?.onUploadSuccess ?? onUploadSuccess}
         onCancel={renderOptions?.props?.onCancel ?? onCancel}
-        setCanUpload={renderOptions?.props?.setCanUpload ?? setCanUpload}
         maxDocumentCount={renderOptions?.props?.maxDocumentCount ?? 1}
         View={View}
       />,
@@ -144,21 +143,6 @@ describe('DocumentUploadContainer component', () => {
     expect(viewProps?.documentTypes?.length).toBeGreaterThan(0);
     expect(viewProps?.documentStatusOptions?.length).toBeGreaterThan(0);
   });
-
-  it.each([
-    ['document count <= max documents', 1, 10, true],
-    ['document count > max documents', 12, 10, false],
-  ])(
-    'should setCanUpload when documents are selected for upload - %s',
-    async (_: string, documentCount: number, maxDocuments: number, expectedValue: boolean) => {
-      setup({ props: { maxDocumentCount: maxDocuments } });
-
-      await act(async () => {
-        viewProps?.onDocumentsSelected(documentCount);
-      });
-      expect(setCanUpload).toHaveBeenCalledWith(expectedValue);
-    },
-  );
 
   it('should call uploadDocument API and report the result of file upload operation', async () => {
     mockDocumentRelationshipApi.uploadDocument.mockResolvedValue(mockDocumentBatchUploadResponse());

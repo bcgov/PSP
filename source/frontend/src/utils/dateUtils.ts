@@ -79,3 +79,12 @@ export const formatUTCDateTime = (
     return '';
   }
 };
+
+/**
+ * Returns the difference in whole days between two ISO date strings (a − b).
+ */
+export function differenceInDays(a: string | Date | Moment, b: string | Date | Moment): number {
+  const aDate = moment(a);
+  const bDate = moment(b);
+  return aDate.diff(bDate, 'days');
+}

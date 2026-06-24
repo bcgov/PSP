@@ -21,3 +21,4 @@ etl/**/obj
 *._*
 tools/geoserver/geoserver_data/psp/mssql/*
 testing/playwright-testing/.auth/*
+.claude/

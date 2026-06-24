@@ -219,6 +219,7 @@ export const DocumentListView: React.FunctionComponent<IDocumentListViewProps> =
             {hasClaim([Claims.DOCUMENT_ADD]) && canEditDocuments && !disableAdd && (
               <StyledSectionAddButton
                 onClick={() => setIsUploadVisible && setIsUploadVisible(true)}
+                data-testid="add-document-btn"
               >
                 <FaPlus size={'2rem'} />
                 &nbsp;{'Add Document'}

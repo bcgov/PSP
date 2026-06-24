@@ -54,12 +54,16 @@ export class DocumentUploadFormData {
   ) {
     this.documentStatusCode = initialStatus;
     this.documentTypeId = documentType;
-    this.setFile(file);
+    this._file = file;
     this.setMayanMetadata(metadata);
   }
 
-  get file(): File {
+  public get file(): File {
     return this._file;
+  }
+
+  public get filename(): string | null {
+    return this._file?.name ?? null;
   }
 
   setFile(file: File): void {

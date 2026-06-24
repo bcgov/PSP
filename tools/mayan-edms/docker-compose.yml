@@ -1,5 +1,3 @@
-version: "3.9"
-
 x-mayan-container: &mayan-container
   env_file: .mayan-env
   environment:
@@ -208,7 +206,7 @@ services:
     command:
       - /bin/sh
       - -c
-      - "MAYAN_QUEUE_LIST=${MAYAN_WORKER_CUSTOM_QUEUE_LIST} /usr/local/bin/run_worker.sh --prefetch-multiplier=1"
+      - "MAYAN_QUEUE_LIST=${MAYAN_WORKER_CUSTOM_QUEUE_LIST:-} /usr/local/bin/run_worker.sh --prefetch-multiplier=1"
     profiles:
       - extra_worker_custom
       - all

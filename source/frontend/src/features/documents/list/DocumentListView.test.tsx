@@ -15,6 +15,7 @@ import {
   RenderOptions,
   screen,
   userEvent,
+  waitForEffects,
 } from '@/utils/test-utils';
 
 import { DocumentRow } from '../models/DocumentRow';
@@ -213,16 +214,17 @@ describe('Document List View', () => {
     await act(async () => {
       userEvent.upload(uploader, [file]);
     });
-
-    expect(
-      await screen.findByText(/You have attached 1 files. Do you want to proceed/i),
-    ).toBeVisible();
+    await waitForEffects();
 
     await act(async () => {
       userEvent.selectOptions(getByName('documents.0.documentTypeId'), '1');
     });
 
-    const continueButton = await screen.findByText('Yes');
+    expect(
+      await screen.findByText(/You have attached 1 files. Do you want to continue/i),
+    ).toBeVisible();
+
+    const continueButton = screen.getByTitle('ok-modal');
     expect(continueButton).toBeVisible();
     await act(async () => userEvent.click(continueButton));
 
