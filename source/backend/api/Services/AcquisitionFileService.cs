@@ -94,9 +94,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
-
-            return _acqFileRepository.GetPageDeep(filter, contractorPersonId);
+            return _acqFileRepository.GetPageDeep(filter, UserContextModel.FromPimsUser(pimsUser));
         }
 
         public List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter)
@@ -105,9 +103,8 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
 
-            var acqFiles = _acqFileRepository.GetAcquisitionFileExportDeep(filter, contractorPersonId);
+            var acqFiles = _acqFileRepository.GetAcquisitionFileExportDeep(filter, UserContextModel.FromPimsUser(pimsUser));
 
             return acqFiles.SelectMany(file => file.PimsPropertyAcquisitionFiles.Where(fp => fp.AcquisitionFileId.Equals(file.AcquisitionFileId)).DefaultIfEmpty(), (file, fp) => (file, fp))
                 .Select(fileProperty => new AcquisitionFileExportModel
@@ -179,10 +176,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
-
-            var teamMembers = _acqFileRepository.GetTeamMembers(userRegions, contractorPersonId);
+            var teamMembers = _acqFileRepository.GetTeamMembers(UserContextModel.FromPimsUser(pimsUser));
 
             var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
             var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First()).ToList();
@@ -667,9 +661,7 @@ namespace Pims.Api.Services
             }
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
-
-            return _acqFileRepository.GetAcquisitionSubFiles(id, contractorPersonId);
+            return _acqFileRepository.GetAcquisitionSubFiles(id, UserContextModel.FromPimsUser(pimsUser));
         }
 
         private void CheckFileNumberDuplicate(PimsAcquisitionFile acquisitionFile)
