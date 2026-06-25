@@ -36,9 +36,7 @@ export class DocumentUploadModalPage {
   }
 
   async getDocumentErrorLabel(index: number = 0): Promise<string> {
-    const documentErrorLabel = this.page.getByTestId(
-      `document[${index}]-error-message`
-    );
+    const documentErrorLabel = this.page.getByTestId(`document[${index}]-error-message`);
     return await documentErrorLabel.innerText();
   }
 

@@ -139,10 +139,10 @@ export class ResearchListPage extends LayoutPage {
 
   async openResearchFileInNewTab(index: number): Promise<Page> {
     const selectedFile = this.page
-  .getByTestId('researchFilesTable')
-  .locator('.tbody .tr-wrapper')
-  .nth(index - 1)
-  .locator('a');
+      .getByTestId('researchFilesTable')
+      .locator('.tbody .tr-wrapper')
+      .nth(index - 1)
+      .locator('a');
     const [newPage] = await Promise.all([
       this.page.context().waitForEvent('page'),
       selectedFile.click(),
@@ -169,7 +169,7 @@ export class ResearchListPage extends LayoutPage {
     const link = this.page
       .getByTestId('researchFilesTable')
       .locator('.tbody .tr-wrapper')
-      .nth(index-1)
+      .nth(index - 1)
       .locator('a');
 
     await link.click();

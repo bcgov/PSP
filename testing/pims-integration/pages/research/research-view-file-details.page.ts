@@ -79,35 +79,21 @@ export class ResearchViewFileDetails extends LayoutPage {
 
   async getFieldValueByLabel(label: string): Promise<string> {
     return await this.page
-      .locator(`//label[contains(normalize-space(), '${label}')]/parent::div/following-sibling::div`)
+      .locator(
+        `//label[contains(normalize-space(), '${label}')]/parent::div/following-sibling::div`
+      )
       .innerText();
   }
 
   async getResearchDescription(): Promise<string> {
-    return (
-      await this.page
-        .getByTestId('request-description')
-        .locator('label')
-        .innerText()
-    ).trim();
+    return (await this.page.getByTestId('request-description').locator('label').innerText()).trim();
   }
 
   async getResearchResult(): Promise<string> {
-    return (
-      await this.page
-        .getByTestId('research-result')
-        .locator('label')
-        .innerText()
-    ).trim();
+    return (await this.page.getByTestId('research-result').locator('label').innerText()).trim();
   }
 
   async getResearchExpropriationNotes(): Promise<string> {
-    return (
-      await this.page
-        .getByTestId('expropriation-notes')
-        .locator('label')
-        .innerText()
-    ).trim();
+    return (await this.page.getByTestId('expropriation-notes').locator('label').innerText()).trim();
   }
-
 }

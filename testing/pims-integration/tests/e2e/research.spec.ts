@@ -37,7 +37,7 @@ test.describe('Research Files feature', () => {
     await expect(researchViewDetails.researchDocumentTab).toBeVisible();
   });
 
-  test('verify research view form', async() => {
+  test('verify research view form', async () => {
     //Navigate to Research list view
     await researchListPage.goto();
 
@@ -49,9 +49,9 @@ test.describe('Research Files feature', () => {
       researchListPage.clickResearchFileResult(1),
     ]);
 
-    const responsePromise = newPage.waitForResponse((response: { url: () => string | string[]; status: () => number; }) =>
-      response.url().includes('/api/researchFiles/') &&
-      response.status() === 200
+    const responsePromise = newPage.waitForResponse(
+      (response: { url: () => string | string[]; status: () => number }) =>
+        response.url().includes('/api/researchFiles/') && response.status() === 200
     );
 
     await newPage.waitForLoadState('domcontentloaded');
@@ -69,25 +69,30 @@ test.describe('Research Files feature', () => {
 
     await expect(researchViewDetails.researchDocumentTab).toBeVisible();
     const fieldsToCompare = [
-      {label: 'Ministry project', apiValue: apiResearchFile.researchFileProjects[0]},
-      {label: 'Road name', apiValue: apiResearchFile.roadName},
-      {label: 'Road alias', apiValue: apiResearchFile.roadAlias },
-      {label: 'Research purpose', apiValue: apiResearchFile.researchFilePurposes[0].researchPurposeTypeCode.description},
-      {label: 'Source of request', apiValue: apiResearchFile.requestSourceType.description },
-      {label: 'Requester', apiValue: apiResearchFile.requestorPerson },
+      { label: 'Ministry project', apiValue: apiResearchFile.researchFileProjects[0] },
+      { label: 'Road name', apiValue: apiResearchFile.roadName },
+      { label: 'Road alias', apiValue: apiResearchFile.roadAlias },
+      {
+        label: 'Research purpose',
+        apiValue: apiResearchFile.researchFilePurposes[0].researchPurposeTypeCode.description,
+      },
+      { label: 'Source of request', apiValue: apiResearchFile.requestSourceType.description },
+      { label: 'Requester', apiValue: apiResearchFile.requestorPerson },
     ];
 
     const datesToCompare = [
-      {label: 'Request date', apiValue: apiResearchFile.requestDate},
-      {label: 'Research completed on', apiValue: apiResearchFile.researchCompletionDate },
-    ]
+      { label: 'Request date', apiValue: apiResearchFile.requestDate },
+      { label: 'Research completed on', apiValue: apiResearchFile.researchCompletionDate },
+    ];
 
     for (const field of fieldsToCompare) {
       const uiValue = await researchViewDetails.getFieldValueByLabel(field.label);
-      expect(researchViewDetails.normalize(uiValue)).toBe(researchViewDetails.normalize(field.apiValue));
+      expect(researchViewDetails.normalize(uiValue)).toBe(
+        researchViewDetails.normalize(field.apiValue)
+      );
     }
 
-    for(const date of datesToCompare) {
+    for (const date of datesToCompare) {
       const uiValue = await researchViewDetails.getFieldValueByLabel(date.label);
       const changedFormat = researchViewDetails.formatApiDate(date.apiValue);
       expect(researchViewDetails.normalize(uiValue)).toBe(changedFormat);
