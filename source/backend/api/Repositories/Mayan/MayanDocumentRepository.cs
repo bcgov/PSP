@@ -1,4 +1,13 @@
-using DocumentFormat.OpenXml.Wordprocessing;
+using System;
+using System.Globalization;
+using System.IO;
+using System.Net.Http;
+using System.Net.Http.Headers;
+using System.Net.Mime;
+using System.Text;
+using System.Text.Json;
+using System.Text.Json.Serialization;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.WebUtilities;
 using Microsoft.Extensions.Configuration;
@@ -12,16 +21,6 @@ using Pims.Api.Models.Mayan.Metadata;
 using Pims.Api.Models.Models.Mayan.Document;
 using Pims.Api.Models.Requests.Http;
 using Polly.Registry;
-using System;
-using System.Globalization;
-using System.IO;
-using System.Net.Http;
-using System.Net.Http.Headers;
-using System.Net.Mime;
-using System.Text;
-using System.Text.Json;
-using System.Text.Json.Serialization;
-using System.Threading.Tasks;
 
 namespace Pims.Api.Repositories.Mayan
 {

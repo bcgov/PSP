@@ -171,6 +171,8 @@ describe('Compensation Requisition UpdateForm component', () => {
   });
 
   beforeEach(() => {
+    vi.useFakeTimers({ toFake: ['Date'] });
+    vi.setSystemTime(new Date('2025-06-15T12:00:00Z'));
     mockUseProjectTypeahead.mockReturnValue({
       handleTypeaheadSearch,
       isTypeaheadLoading: false,
@@ -188,6 +190,7 @@ describe('Compensation Requisition UpdateForm component', () => {
   });
 
   afterEach(() => {
+    vi.useRealTimers();
     vi.clearAllMocks();
   });
 
