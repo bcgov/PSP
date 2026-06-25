@@ -13,6 +13,7 @@ export class ResearchListPage extends LayoutPage {
 
   readonly researcSearchByLabel: Locator;
   readonly researchByRegionSelect: Locator;
+  readonly researchSearchNameInput: Locator;
   readonly researchByStatusSelect: Locator;
   readonly researchSearchBySelect: Locator;
   readonly researchSearchPidInput: Locator;
@@ -74,6 +75,7 @@ export class ResearchListPage extends LayoutPage {
     this.researchByStatusSelect = page.locator('#input-researchFileStatusTypeCode');
     this.researchSearchBySelect = page.locator('#input-researchSearchBy');
     this.researchSearchPidInput = page.locator('#input-pid');
+    this.researchSearchNameInput = page.locator('#input-name');
     this.researchSearchRoadInput = page.locator('#input-roadOrAlias');
     this.researchSearchDateSelect = page.locator('#input-createOrUpdateRange');
     this.researchSearchDateToInput = page.locator('#datepicker-updatedOnStartDate');
@@ -133,5 +135,43 @@ export class ResearchListPage extends LayoutPage {
 
   async createNewResearchClick() {
     await this.researchNewButton.click();
+  }
+
+  async openResearchFileInNewTab(index: number): Promise<Page> {
+    const selectedFile = this.page
+  .getByTestId('researchFilesTable')
+  .locator('.tbody .tr-wrapper')
+  .nth(index - 1)
+  .locator('a');
+    const [newPage] = await Promise.all([
+      this.page.context().waitForEvent('page'),
+      selectedFile.click(),
+    ]);
+
+    await newPage.waitForLoadState('domcontentloaded');
+    await newPage.waitForURL(/\/mapview\/sidebar\/research\/\d+/, {
+      timeout: 30000,
+    });
+    // eslint-disable-next-line playwright/no-networkidle
+    await newPage.waitForLoadState('networkidle');
+    await newPage.bringToFront();
+
+    return newPage;
+  }
+
+  async searchByName(name: string) {
+    await this.researchSearchBySelect.selectOption('Research file name');
+    await this.researchSearchNameInput.fill(name);
+    await this.researchSearchButton.click();
+  }
+
+  async clickResearchFileResult(index: number): Promise<void> {
+    const link = this.page
+      .getByTestId('researchFilesTable')
+      .locator('.tbody .tr-wrapper')
+      .nth(index-1)
+      .locator('a');
+
+    await link.click();
   }
 }
