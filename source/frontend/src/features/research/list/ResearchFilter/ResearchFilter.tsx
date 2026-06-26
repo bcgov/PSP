@@ -67,6 +67,7 @@ export const ResearchFilter: React.FunctionComponent<
   const lookupCodes = useLookupCodeHelpers();
 
   const regionOptions = lookupCodes.getByType(REGION_TYPES).map(c => mapLookupCode(c));
+  console.log(regionOptions);
 
   const researchStatusOptions = lookupCodes
     .getByType(RESEARCH_FILE_STATUS_TYPES)
@@ -89,11 +90,7 @@ export const ResearchFilter: React.FunctionComponent<
                 <Col lg="12">
                   <Row>
                     <Col lg="4">
-                      <Select
-                        options={regionOptions}
-                        field="regionCode"
-                        placeholder="All Regions"
-                      />
+                      <Input field="roadOrAlias" placeholder="Road name or alias" />
                     </Col>
                     <StyledSelectInputCol lg="8">
                       <ResearchFileSelect />
@@ -112,7 +109,13 @@ export const ResearchFilter: React.FunctionComponent<
                       />
                     </Col>
                     <Col lg="8">
-                      <Input field="roadOrAlias" placeholder="Road name or alias" />
+                      <Multiselect
+                        options={regionOptions}
+                        field="regionCode"
+                        displayValue="label"
+                        placeholder="Select Region(s)"
+                      />
+
                     </Col>
                   </Row>
                 </Col>
