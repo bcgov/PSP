@@ -111,7 +111,7 @@ export const ResearchFilter: React.FunctionComponent<
                     <Col lg="8">
                       <Multiselect
                         options={regionOptions}
-                        field="regionCode"
+                        field="regionCodes"
                         displayValue="label"
                         placeholder="Select Region(s)"
                       />
