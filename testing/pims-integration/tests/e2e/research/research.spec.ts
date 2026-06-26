@@ -62,7 +62,6 @@ test.describe('Research Files feature', () => {
     });
 
     await test.step('Validate details', async () => {
-
       const fieldsToCompare = [
         { label: 'Ministry project', apiValue: apiFeatureFileJson.researchFileProjects[0] },
         { label: 'Road name', apiValue: apiFeatureFileJson.roadName },
