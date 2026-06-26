@@ -1,3 +1,7 @@
+PSP_PIMS | Development Sprint: S122.00 | Design Sprint: 124 | Date: 2026-Jun-30
+- Altered views:
+  - PIMS_CONTACT_MGR_VW
+
 PSP_PIMS | Development Sprint: S121.00 | Design Sprint: 120 | Date: 2026-Apr-30
 - Altered tables:
   - PIMS_DISPOSITION_AGREEMENT
@@ -129,7 +133,7 @@ PSP_PIMS | Development Sprint: S117.00 | Design Sprint: 116 | Date: 2026-Feb-05
   - PIM_DELETION_HISTORY
 - Altered user-defined functions:
   - PIM_GET_COLUMN_LIST
-  - PIM_GET_PK_COLUMN 
+  - PIM_GET_PK_COLUMN
 - Added seed scripts:
   - 172_DML_PIMS_PROP_IMPRVMNT_STATUS_TYPE.sql
   - 173_DML_PIMS_DISPOSITION_AGREEMENT_TYPE.sql
@@ -159,7 +163,7 @@ PSP_PIMS | Development Sprint: S116.00 | Design Sprint: 115 | Date: 2026-Jan-08
   - 124_DML_PIMS_AGREEMENT_TYPE.sql
 - Added test scripts:
   - 999_Reset_PROPERTY_ID.sql
-  
+
 PSP_PIMS | Development Sprint: S115.00 | Design Sprint: 114 | Date: 2026-Jan-05
 - Altered tables:
   - PIMS_PROPERTY
@@ -1174,7 +1178,7 @@ PSP_PIMS | Development Sprint: S84.00 | Design Sprint: 83 | Date: 2024-JuL-03
   - PIMS_DSP_CHKLST_ITEM_STATUS_TYPE
   - PIMS_LEASE_CHKLST_ITEM_STATUS_TYPE
 - Added seed scripts:
-  - 155_DML_PIMS_CHKLST_ITEM_STATUS_TYPE.sql 
+  - 155_DML_PIMS_CHKLST_ITEM_STATUS_TYPE.sql
 - Dropped seed scripts:
   - 119_DML_PIMS_ACQ_CHKLST_ITEM_STATUS_TYPE.sql
   - 146_DML_PIMS_DSP_CHKLST_ITEM_STATUS_TYPE.sql
@@ -1215,7 +1219,7 @@ PSP_PIMS | Development Sprint: S83.00 | Design Sprint: 82 | Date: 2024-Jun-14
   - PIMS_DSP_CHKLST_ITEM_STATUS_TYPE
   - PIMS_LEASE_CHKLST_ITEM_STATUS_TYPE
 - Added seed scripts:
-  - 155_DML_PIMS_CHKLST_ITEM_STATUS_TYPE.sql 
+  - 155_DML_PIMS_CHKLST_ITEM_STATUS_TYPE.sql
 - Dropped seed scripts:
   - 119_DML_PIMS_ACQ_CHKLST_ITEM_STATUS_TYPE.sql
   - 146_DML_PIMS_DSP_CHKLST_ITEM_STATUS_TYPE.sql
@@ -1598,7 +1602,7 @@ PSP_PIMS S65.00 Sprint 64 2023-Oct-12
   - 135_DML_PIMS_PROP_MGMT_ACTIVITY_TYPE.sql
   - 136_DML_PIMS_PROP_MGMT_ACTIVITY_SUBTYPE.sql
 - Dropped seed scripts:
-  - 093_DML_PIMS_ACQ_FL_PERSON_PROFILE_TYPE.sql 
+  - 093_DML_PIMS_ACQ_FL_PERSON_PROFILE_TYPE.sql
 - Added test scripts:
   - 056_PIMS_PROP_ACT_MIN_CONTACT.sql
   - 051_PIMS_PROPERTY_ACTIVITY.sql
@@ -1617,7 +1621,7 @@ PSP_PIMS S64.00 Sprint 63 2023-Sep-27
   - 054_DML_PIMS_LEASE_LICENSE_TYPE.sql
   - 123_DML_PIMS_FORM_TYPE.sql
 - Added seed scripts:
-  - 133_DML_PIMS_PROPERTY_PURPOSE_TYPE.sql 
+  - 133_DML_PIMS_PROPERTY_PURPOSE_TYPE.sql
 - Added test scripts:
   - 050_PIMS_PROPERTY_CONTACT.sql
 - Requires additional metadata to meet standards
@@ -1751,7 +1755,7 @@ PSP_PIMS S59.00 Sprint 59 2023-Jul-28
 PSP_PIMS S58.00 Sprint 57 2023-Jul-07
 - Added tables:
   - PIMS_FORM_8
-  - PIMS_FORM_8_HIST	
+  - PIMS_FORM_8_HIST
   - PIMS_INTEREST_HOLDER_TYPE
   - PIMS_PAYMENT_ITEM_TYPE
 - Altered tables:
@@ -1941,7 +1945,7 @@ PSP_PIMS S50.00 Sprint 49 2023-Mar-17
   - PIMS_PROJECT_PERSON_HIST
 - Altered tables:
   - PIMS_ACQUISITION_OWNER_HIST
-  - PIMS_TAKE_HIST	
+  - PIMS_TAKE_HIST
   - PIMS_PRODUCT
   - PIMS_PRODUCT_HIST
   - PIMS_TAKE
@@ -2158,7 +2162,7 @@ PSP_PIMS S44.00 Sprint 43 2022-DEC-20
   - Changed FILE​_NUMBER_​SUFFIX from VARCHAR(2) to NVARCHAR(2)
     - PIMS_PROPERTY
     - PIMS_PROPERTY_HIST
-  - Changed FILE​_NUMBER_​SUFFIX from NVARCHAR(2) to VARCHAR(2) 
+  - Changed FILE​_NUMBER_​SUFFIX from NVARCHAR(2) to VARCHAR(2)
     - PIMS_PROPERTY
     - PIMS_PROPERTY_HIST
     - 002_PSP_PIMS_Build.sql in the following builds:
@@ -2507,7 +2511,7 @@ PSP_PIMS S31.00 Sprint 30 2022-Jun-21
 PSP_PIMS S30.00 Sprint 29 2022-Jun-06
 - Altered tables:
   - PIMS_PROPERTY
-    - Added column PPH_STATUS_UPDATE_USER_GUID 
+    - Added column PPH_STATUS_UPDATE_USER_GUID
 - Added script:
   - 00_PSP_PIMS_PMBC_Build.sql added to Alter Up and Build
   - PMBC schema and table was added to support ParcelMapBC property data integration into PIMS.

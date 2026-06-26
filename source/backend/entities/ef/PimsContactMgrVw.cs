@@ -40,6 +40,16 @@ public partial class PimsContactMgrVw
     [StringLength(200)]
     public string MiddleNames { get; set; }
 
+    [Column("USER_ID")]
+    public long? UserId { get; set; }
+
+    [Column("BUSINESS_IDENTIFIER_VALUE")]
+    [StringLength(30)]
+    public string BusinessIdentifierValue { get; set; }
+
+    [Column("USER_DISABLED")]
+    public bool? UserDisabled { get; set; }
+
     [Column("ORGANIZATION_NAME")]
     [StringLength(200)]
     public string OrganizationName { get; set; }
