@@ -34368,6 +34368,7 @@ WITH
         WHERE  CONTACT_METHOD_TYPE_CODE = 'WORKEMAIL'
            AND ORGANIZATION_ID          IS NOT NULL)
 
+
   SELECT CONCAT('P', per.PERSON_ID)                                                                              AS ID
        , per.PERSON_ID
        , org.ORGANIZATION_ID                                                                                     AS ORGANIZATION_ID
@@ -34377,6 +34378,7 @@ WITH
        , per.FIRST_NAME
        , per.MIDDLE_NAMES
        , usr.USER_ID
+       , usr.USER_TYPE_CODE
        , usr.BUSINESS_IDENTIFIER_VALUE
        , usr.IS_DISABLED                                                                                         AS USER_DISABLED
        , org.ORGANIZATION_NAME                                                                                   AS ORGANIZATION_NAME
@@ -34403,6 +34405,7 @@ WITH
        , org.ORGANIZATION_ID
        , org.IS_DISABLED
        , org.ORGANIZATION_NAME
+       , NULL
        , NULL
        , NULL
        , NULL

@@ -72,6 +72,7 @@ WITH
        , per.FIRST_NAME
        , per.MIDDLE_NAMES
        , usr.USER_ID
+       , usr.USER_TYPE_CODE
        , usr.BUSINESS_IDENTIFIER_VALUE
        , usr.IS_DISABLED                                                                                         AS USER_DISABLED
        , org.ORGANIZATION_NAME                                                                                   AS ORGANIZATION_NAME
@@ -98,6 +99,7 @@ WITH
        , org.ORGANIZATION_ID
        , org.IS_DISABLED
        , org.ORGANIZATION_NAME
+       , NULL
        , NULL
        , NULL
        , NULL
