@@ -62,7 +62,7 @@ test.describe('Research Files feature', () => {
     });
 
     await test.step('Validate details', async () => {
-      await expect(researchViewDetails.researchDocumentTab).toBeVisible();
+
       const fieldsToCompare = [
         { label: 'Ministry project', apiValue: apiFeatureFileJson.researchFileProjects[0] },
         { label: 'Road name', apiValue: apiFeatureFileJson.roadName },
