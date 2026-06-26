@@ -115,7 +115,6 @@ export const ResearchFilter: React.FunctionComponent<
                         displayValue="label"
                         placeholder="Select Region(s)"
                       />
-
                     </Col>
                   </Row>
                 </Col>
