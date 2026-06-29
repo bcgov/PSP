@@ -123,7 +123,7 @@ namespace Pims.Dal.Repositories
 
             if(filter.NotificationTriggerDate is not null)
             {
-                predicateBuilder.And(x => x.NotificationUser.Notification.NotificationTriggerDate == filter.NotificationTriggerDate);
+                predicateBuilder.And(x => x.NotificationUser.Notification.NotificationTriggerDate <= filter.NotificationTriggerDate);
             }
 
             var query = Context.PimsNotificationUserOutputs
