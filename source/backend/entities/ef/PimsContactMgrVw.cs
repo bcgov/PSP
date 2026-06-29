@@ -43,6 +43,10 @@ public partial class PimsContactMgrVw
     [Column("USER_ID")]
     public long? UserId { get; set; }
 
+    [Column("USER_TYPE_CODE")]
+    [StringLength(20)]
+    public string UserTypeCode { get; set; }
+
     [Column("BUSINESS_IDENTIFIER_VALUE")]
     [StringLength(30)]
     public string BusinessIdentifierValue { get; set; }
