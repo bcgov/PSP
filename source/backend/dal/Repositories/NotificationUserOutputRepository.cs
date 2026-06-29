@@ -1,8 +1,9 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
+using System.Threading.Tasks;
 using LinqKit;
+using Medallion.Threading;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.Models.Concepts.Notification;
@@ -14,12 +15,16 @@ namespace Pims.Dal.Repositories
 {
     public class NotificationUserOutputRepository : BaseRepository<PimsNotificationUserOutput>, INotificationUserOutputRepository
     {
+        private readonly IDistributedLockProvider _synchronizationProvider;
+
         public NotificationUserOutputRepository(
             PimsContext dbContext,
             ClaimsPrincipal user,
-            ILogger<DocumentRepository> logger)
+            IDistributedLockProvider synchronizationProvider,
+            ILogger<NotificationUserOutputRepository> logger)
             : base(dbContext, user, logger)
         {
+            _synchronizationProvider = synchronizationProvider;
         }
 
         public PimsNotificationUserOutput GetById(long notificationUserOutputId)
@@ -75,24 +80,20 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(x => x.NotificationUserOutputId == notificationUserOutputId) ?? throw new KeyNotFoundException();
         }
 
-        public PimsNotificationUserOutput Update(PimsNotificationUserOutput userNotification)
+        public async Task<PimsNotificationUserOutput> Update(PimsNotificationUserOutput userNotification)
         {
-            try
+            var @lock = _synchronizationProvider.CreateLock("NotificationUserOutputLock");
+            await using (await @lock.AcquireAsync())
             {
-                using var scope = Logger.QueryScope();
                 userNotification.ThrowIfNull(nameof(userNotification));
 
                 var existingUserNotification = Context.PimsNotificationUserOutputs
                     .FirstOrDefault(x => x.NotificationUserOutputId == userNotification.NotificationUserOutputId);
 
                 Context.Entry(existingUserNotification).CurrentValues.SetValues(userNotification);
+                Context.Update(existingUserNotification);
 
                 return existingUserNotification;
-            }
-            catch(Exception ex)
-            {
-                Logger.LogError(ex.Message);
-                return null;
             }
         }
 
