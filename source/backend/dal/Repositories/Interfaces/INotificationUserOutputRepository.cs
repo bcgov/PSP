@@ -1,4 +1,5 @@
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Pims.Api.Models.Models.Concepts.Notification;
 using Pims.Dal.Entities;
 
@@ -10,6 +11,6 @@ namespace Pims.Dal.Repositories
 
         public PimsNotificationUserOutput GetById(long notificationUserOutputId);
 
-        public PimsNotificationUserOutput Update(PimsNotificationUserOutput userNotification);
+        public Task<PimsNotificationUserOutput> Update(PimsNotificationUserOutput userNotification);
     }
 }
