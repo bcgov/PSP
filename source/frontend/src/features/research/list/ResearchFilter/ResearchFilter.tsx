@@ -25,7 +25,7 @@ export interface IResearchFilterProps {
 export const defaultResearchFilter: IResearchFilter = {
   pid: '',
   pin: '',
-  regionCode: '',
+  regionCodes: [],
   researchFileStatusTypeCode: '',
   name: '',
   roadOrAlias: '',
@@ -51,6 +51,7 @@ export const ResearchFilter: React.FunctionComponent<
 > = ({ filter, createdByOptions, setFilter }) => {
   const onSearchSubmit = (values: IResearchFilter, { setSubmitting }: any) => {
     const selectedUser = values.selectedUser?.[0]?.id as string | undefined;
+
     const nextValues = {
       ...values,
       appCreateUserid: values.createOrUpdateBy === 'appCreateUserid' ? selectedUser ?? '' : '',
@@ -60,25 +61,29 @@ export const ResearchFilter: React.FunctionComponent<
     setFilter(nextValues);
     setSubmitting(false);
   };
-  const resetFilter = () => {
-    setFilter(defaultResearchFilter);
-  };
 
   const lookupCodes = useLookupCodeHelpers();
+  const regionOptions = lookupCodes.getOptionsByType(REGION_TYPES).map(c => ({
+    id: c.code,
+    text: c.label,
+  }));
+  const initialFilterValues: IResearchFilter = {
+    ...defaultResearchFilter,
+    ...filter,
+  };
 
-  const regionOptions = lookupCodes.getByType(REGION_TYPES).map(c => mapLookupCode(c));
-  console.log(regionOptions);
+  const resetFilter = () => {
+    setFilter({
+      ...defaultResearchFilter,
+    });
+  };
 
   const researchStatusOptions = lookupCodes
     .getByType(RESEARCH_FILE_STATUS_TYPES)
     .map(c => mapLookupCode(c));
 
   return (
-    <Formik
-      enableReinitialize
-      initialValues={filter ?? defaultResearchFilter}
-      onSubmit={onSearchSubmit}
-    >
+    <Formik enableReinitialize initialValues={initialFilterValues} onSubmit={onSearchSubmit}>
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
@@ -112,7 +117,7 @@ export const ResearchFilter: React.FunctionComponent<
                       <Multiselect
                         options={regionOptions}
                         field="regionCodes"
-                        displayValue="label"
+                        displayValue="text"
                         placeholder="Select Region(s)"
                       />
                     </Col>

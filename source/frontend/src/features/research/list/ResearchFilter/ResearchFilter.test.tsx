@@ -52,9 +52,11 @@ describe('Research Filter', () => {
   });
 
   it('searches by region', async () => {
-    const { container, searchButton } = setup();
+    const { container, getByText, searchButton } = setup();
 
-    fillInput(container, 'regionCode', 1, 'select');
+    const regionsInput = container.querySelector('#multiselect-regionCodes_input');
+    await act(async () => userEvent.click(regionsInput));
+    await act(async () => userEvent.click(getByText('South Coast Region')));
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith({
@@ -67,7 +69,7 @@ describe('Research Filter', () => {
       createdOnEndDate: '',
       createdOnStartDate: '',
       name: '',
-      regionCode: '1',
+      regionCodes: [{id:'1', text:'South Coast Region'}],
       researchFileStatusTypeCode: '',
       researchSearchBy: 'pid',
       rfileNumber: '',
@@ -93,7 +95,7 @@ describe('Research Filter', () => {
         createdOnEndDate: '',
         createdOnStartDate: '',
         name: '',
-        regionCode: '',
+        regionCodes: [],
         researchFileStatusTypeCode: '',
         researchSearchBy: 'rfileNumber',
         rfileNumber: '101',
@@ -120,7 +122,7 @@ describe('Research Filter', () => {
         createdOnEndDate: '',
         createdOnStartDate: '',
         name: 'test file name 1',
-        regionCode: '',
+        regionCodes: [],
         researchFileStatusTypeCode: '',
         researchSearchBy: 'name',
         rfileNumber: '',
@@ -149,7 +151,7 @@ describe('Research Filter', () => {
         createdOnEndDate: '',
         createdOnStartDate: '',
         name: '',
-        regionCode: '',
+        regionCodes: [],
         researchFileStatusTypeCode: 'INACTIVE',
         researchSearchBy: 'pid',
         rfileNumber: '',
@@ -178,7 +180,7 @@ describe('Research Filter', () => {
         createdOnEndDate: '',
         createdOnStartDate: '',
         name: '',
-        regionCode: '',
+        regionCodes: [],
         researchFileStatusTypeCode: '',
         researchSearchBy: 'pid',
         rfileNumber: '',
@@ -209,7 +211,7 @@ describe('Research Filter', () => {
         createdOnEndDate: '2020-02-02',
         createdOnStartDate: '2020-01-01',
         name: '',
-        regionCode: '',
+        regionCodes: [],
         researchFileStatusTypeCode: '',
         researchSearchBy: 'pid',
         rfileNumber: '',
@@ -240,7 +242,7 @@ describe('Research Filter', () => {
         createdOnEndDate: '',
         createdOnStartDate: '',
         name: '',
-        regionCode: '',
+        regionCodes: [],
         researchFileStatusTypeCode: '',
         researchSearchBy: 'pid',
         rfileNumber: '',
@@ -272,7 +274,7 @@ describe('Research Filter', () => {
         createdOnEndDate: '',
         createdOnStartDate: '',
         name: '',
-        regionCode: '',
+        regionCodes: [],
         researchFileStatusTypeCode: '',
         researchSearchBy: 'pid',
         rfileNumber: '',
@@ -309,7 +311,7 @@ describe('Research Filter', () => {
         createdOnEndDate: '',
         createdOnStartDate: '',
         name: '',
-        regionCode: '',
+        regionCodes: [],
         researchFileStatusTypeCode: '',
         researchSearchBy: 'pid',
         rfileNumber: '',

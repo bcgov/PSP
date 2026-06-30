@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 
 namespace Pims.Dal.Entities.Models
 {
@@ -19,7 +20,7 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The moti region that any of the properties on the research file belong to.
         /// </summary>
-        public short? RegionCode { get; set; }
+        public IList<short> RegionCodes { get; set; } = new List<short>();
 
         /// <summary>
         /// get/set - The status of the research file.
