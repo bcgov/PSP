@@ -57,8 +57,6 @@ namespace Pims.Api.Services
             }
 
             userNotification.NotificationRetryCnt = userNotification.NotificationRetryCnt.HasValue ? ++userNotification.NotificationRetryCnt : 1;
-            var updatedNotification = _notificationUserOutputRepository.Update(userNotification);
-            _notificationUserOutputRepository.CommitTransaction();
 
             if (userNotification.NotificationOutputTypeCode == NotificationOutputTypes.EMAIL.ToString())
             {
@@ -77,24 +75,24 @@ namespace Pims.Api.Services
                 {
                     case ExternalResponseStatus.Success:
                         {
-                            updatedNotification.NotificationSentDt = DateTime.UtcNow;
+                            userNotification.NotificationSentDt = DateTime.UtcNow;
                         }
                         break;
                     case ExternalResponseStatus.Error:
                     case ExternalResponseStatus.NotExecuted:
                         {
-                            updatedNotification.NotificationErrorDt = DateOnly.FromDateTime(DateTime.UtcNow);
-                            updatedNotification.NotificationErrorReason = chesResponse.Message;
+                            userNotification.NotificationErrorDt = DateOnly.FromDateTime(DateTime.UtcNow);
+                            userNotification.NotificationErrorReason = chesResponse.Message;
                         }
                         break;
                 }
             }
             else
             {
-                updatedNotification.NotificationSentDt = DateTime.UtcNow;
+                userNotification.NotificationSentDt = DateTime.UtcNow;
             }
 
-            _notificationUserOutputRepository.Update(updatedNotification);
+            _ = await _notificationUserOutputRepository.Update(userNotification);
             _notificationUserOutputRepository.CommitTransaction();
 
             return;
