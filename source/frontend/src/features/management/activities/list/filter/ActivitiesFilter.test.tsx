@@ -32,9 +32,7 @@ vi.mock('@/components/common/form', async () => {
 const setFilter = vi.fn();
 
 const setup = (props: Partial<IActivitiesFilterProps> = {}) => {
-    const initialValues = new ManagementActivityFilterModel();
-
-
+  const initialValues = new ManagementActivityFilterModel();
   return render(
     <ActivitiesFilter
       initialValues={initialValues}
@@ -66,30 +64,30 @@ describe('Management Activities Filter', () => {
 });
 
 it('searches by PID', async () => {
-    await setup();
+  await setup();
 
-    const searchBy = getByName('searchBy');
-    await act(async () => userEvent.selectOptions(searchBy, 'pid'));
+  const searchBy = getByName('searchBy');
+  await act(async () => userEvent.selectOptions(searchBy, 'pid'));
 
-    const input = screen.getByPlaceholderText(/Enter a PID/i);
-    await act(async () => userEvent.type(input, '123456'));
+  const input = screen.getByPlaceholderText(/Enter a PID/i);
+  await act(async () => userEvent.type(input, '123456'));
 
-    const searchButton = screen.getByTestId('search');
-    await act(async () => userEvent.click(searchButton));
+  const searchButton = screen.getByTestId('search');
+  await act(async () => userEvent.click(searchButton));
 
-    expect(setFilter).toHaveBeenCalledWith(
+  expect(setFilter).toHaveBeenCalledWith(
     expect.objectContaining({
       projectNameOrNumber: '',
-            searchBy: 'pid',
-            pin: '',
-            pid: '123456',
-            regionCodes: [],
-            address: '',
-            fileNameOrNumberOrReference: '',
-            activityStatusCode: '',
-            activityTypeCode: '',
-            managementFileStatusCode: '',
-            managementFilePurposeCode: '',
+      searchBy: 'pid',
+      pin: '',
+      pid: '123456',
+      regionCodes: [],
+      address: '',
+      fileNameOrNumberOrReference: '',
+      activityStatusCode: '',
+      activityTypeCode: '',
+      managementFileStatusCode: '',
+      managementFilePurposeCode: '',
     }),
   );
 });
@@ -110,123 +108,121 @@ it('searches by PIN', async () => {
   expect(setFilter).toHaveBeenCalledWith(
     expect.objectContaining({
       projectNameOrNumber: '',
-            searchBy: 'pin',
-            pin: '7890',
-            pid: '',
-            regionCodes: [],
-            address: '',
-            fileNameOrNumberOrReference: '',
-            activityStatusCode: '',
-            activityTypeCode: '',
-            managementFileStatusCode: '',
-            managementFilePurposeCode: '',
+      searchBy: 'pin',
+      pin: '7890',
+      pid: '',
+      regionCodes: [],
+      address: '',
+      fileNameOrNumberOrReference: '',
+      activityStatusCode: '',
+      activityTypeCode: '',
+      managementFileStatusCode: '',
+      managementFilePurposeCode: '',
     }),
   );
 });
 
 it('searches by file name or reference', async () => {
-    await setup();
+  await setup();
 
-    const input = screen.getByPlaceholderText(/Management file number or name/i);
-    await act(async () => userEvent.type(input, 'Activity File 123'));
+  const input = screen.getByPlaceholderText(/Management file number or name/i);
+  await act(async () => userEvent.type(input, 'Activity File 123'));
 
-    const searchButton = screen.getByTestId('search');
-    await act(async () => userEvent.click(searchButton));
+  const searchButton = screen.getByTestId('search');
+  await act(async () => userEvent.click(searchButton));
 
-    expect(setFilter).toHaveBeenCalledWith(
-          expect.objectContaining({
-            projectNameOrNumber: '',
-            searchBy: 'address',
-            pin: '',
-            pid: '',
-            regionCodes: [],
-            address: '',
-            fileNameOrNumberOrReference: 'Activity File 123',
-            activityStatusCode: '',
-            activityTypeCode: '',
-            managementFileStatusCode: '',
-            managementFilePurposeCode: '',
-          }),
-        );
+  expect(setFilter).toHaveBeenCalledWith(
+    expect.objectContaining({
+      projectNameOrNumber: '',
+      searchBy: 'address',
+      pin: '',
+      pid: '',
+      regionCodes: [],
+      address: '',
+      fileNameOrNumberOrReference: 'Activity File 123',
+      activityStatusCode: '',
+      activityTypeCode: '',
+      managementFileStatusCode: '',
+      managementFilePurposeCode: '',
+    }),
+  );
 });
 
 it('searches by project name', async () => {
+  await setup();
 
-    await setup();
+  const input = screen.getByPlaceholderText(/Enter a project name/i);
+  await act(async () => userEvent.type(input, 'Project X'));
 
-    const input = screen.getByPlaceholderText(/Enter a project name/i);
-    await act(async () => userEvent.type(input, 'Project X'));
+  const searchButton = screen.getByTestId('search');
+  await act(async () => userEvent.click(searchButton));
 
-    const searchButton = screen.getByTestId('search');
-    await act(async () => userEvent.click(searchButton));
-
-   expect(setFilter).toHaveBeenCalledWith(
-          expect.objectContaining({
-            projectNameOrNumber: 'Project X',
-            searchBy: 'address',
-            pin: '',
-            pid: '',
-            regionCodes: [],
-            address: '',
-            fileNameOrNumberOrReference: '',
-            activityStatusCode: '',
-            activityTypeCode: '',
-            managementFileStatusCode: '',
-            managementFilePurposeCode: '',
-          }),
-        );
+  expect(setFilter).toHaveBeenCalledWith(
+    expect.objectContaining({
+      projectNameOrNumber: 'Project X',
+      searchBy: 'address',
+      pin: '',
+      pid: '',
+      regionCodes: [],
+      address: '',
+      fileNameOrNumberOrReference: '',
+      activityStatusCode: '',
+      activityTypeCode: '',
+      managementFileStatusCode: '',
+      managementFilePurposeCode: '',
+    }),
+  );
 });
 
 it('searches by region codes', async () => {
+  await setup();
 
-    await setup();
+  const regionsInput = screen.getByTestId('multiselect-regionCodes');
+  await act(async () => userEvent.click(regionsInput));
+  //await act(async () => userEvent.click(screen.getByText('South Coast Region')));
 
-    const regionsInput = screen.getByTestId('multiselect-regionCodes');
-    await act(async () => userEvent.click(regionsInput));
-    //await act(async () => userEvent.click(screen.getByText('South Coast Region')));
+  const searchButton = screen.getByTestId('search');
+  await act(async () => userEvent.click(searchButton));
 
-    const searchButton = screen.getByTestId('search');
-    await act(async () => userEvent.click(searchButton));
-
-   expect(setFilter).toHaveBeenCalledWith(
-          expect.objectContaining({
-            projectNameOrNumber: '',
-            searchBy: 'address',
-            pin: '',
-            pid: '',
-            regionCodes: ["1"],
-            address: '',
-            fileNameOrNumberOrReference: '',
-            activityStatusCode: '',
-            activityTypeCode: '',
-            managementFileStatusCode: '',
-            managementFilePurposeCode: '',
-          }),
-        );
+  expect(setFilter).toHaveBeenCalledWith(
+    expect.objectContaining({
+      projectNameOrNumber: '',
+      searchBy: 'address',
+      pin: '',
+      pid: '',
+      regionCodes: ['1'],
+      address: '',
+      fileNameOrNumberOrReference: '',
+      activityStatusCode: '',
+      activityTypeCode: '',
+      managementFileStatusCode: '',
+      managementFilePurposeCode: '',
+    }),
+  );
 });
 
 it('resets filter when reset button clicked', async () => {
-    await setup();
+  await setup();
 
-    const input = screen.getByPlaceholderText(/Enter a project name/i);
-    await act(async () => userEvent.type(input, 'Project Y'));
+  const input = screen.getByPlaceholderText(/Enter a project name/i);
+  await act(async () => userEvent.type(input, 'Project Y'));
 
-    const resetButton = screen.getByTitle(/reset-button/i);
-    await act(async () => userEvent.click(resetButton));
+  const resetButton = screen.getByTitle(/reset-button/i);
+  await act(async () => userEvent.click(resetButton));
 
-   expect(setFilter).toHaveBeenCalledWith(
-          expect.objectContaining({
-            projectNameOrNumber: '',
-            searchBy: 'address',
-            pin: '',
-            pid: '',
-            regionCodes: [],
-            address: '',
-            fileNameOrNumberOrReference: '',
-            activityStatusCode: '',
-            activityTypeCode: '',
-            managementFileStatusCode: '',
-            managementFilePurposeCode: '',
-          }),
-        );
+  expect(setFilter).toHaveBeenCalledWith(
+    expect.objectContaining({
+      projectNameOrNumber: '',
+      searchBy: 'address',
+      pin: '',
+      pid: '',
+      regionCodes: [],
+      address: '',
+      fileNameOrNumberOrReference: '',
+      activityStatusCode: '',
+      activityTypeCode: '',
+      managementFileStatusCode: '',
+      managementFilePurposeCode: '',
+    }),
+  );
 });

@@ -69,7 +69,7 @@ describe('Research Filter', () => {
       createdOnEndDate: '',
       createdOnStartDate: '',
       name: '',
-      regionCodes: [{id:'1', text:'South Coast Region'}],
+      regionCodes: [{ id: '1', text: 'South Coast Region' }],
       researchFileStatusTypeCode: '',
       researchSearchBy: 'pid',
       rfileNumber: '',
