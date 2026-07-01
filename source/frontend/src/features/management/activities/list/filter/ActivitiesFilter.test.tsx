@@ -1,11 +1,8 @@
-import { screen, render, waitFor, act, getByName, getByText } from '@/utils/test-utils';
+import { screen, render, waitFor, act, getByName } from '@/utils/test-utils';
 import userEvent from '@testing-library/user-event';
 
 import { ActivitiesFilter, IActivitiesFilterProps } from './ActivitiesFilter';
 import { ManagementActivityFilterModel } from '../../models/ManagementActivityFilterModel';
-import { Api_ManagementActivityFilter } from '@/models/api/ManagementActivityFilter';
-import { lookupCodesSlice } from '@/store/slices/lookupCodes';
-import { mockLookups } from '@/mocks/lookups.mock';
 
 vi.mock('@/components/common/form', async () => {
   const actual = await vi.importActual<any>('@/components/common/form');
@@ -179,7 +176,6 @@ it('searches by region codes', async () => {
 
   const regionsInput = screen.getByTestId('multiselect-regionCodes');
   await act(async () => userEvent.click(regionsInput));
-  //await act(async () => userEvent.click(screen.getByText('South Coast Region')));
 
   const searchButton = screen.getByTestId('search');
   await act(async () => userEvent.click(searchButton));
