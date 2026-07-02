@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 
 namespace Pims.Dal.Repositories
 {
@@ -12,6 +13,6 @@ namespace Pims.Dal.Repositories
 
         PimsLeasePayment Add(PimsLeasePayment pimsLeasePayment);
 
-        IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate, long? contractorPersonId = null);
+        IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate, UserContextModel userContext);
     }
 }

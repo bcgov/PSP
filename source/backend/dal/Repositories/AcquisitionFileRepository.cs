@@ -963,9 +963,12 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(ownerBuilder);
             }
 
+            // PSP-11664 Contractor access is limited by region and team membership.
             if (userContext is not null && userContext.IsContractor)
             {
-                predicate = predicate.And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == userContext.PersonId) || (acq.Project != null && acq.Project.PimsProjectPeople.Any(x => x.PersonId == userContext.PersonId)));
+                predicate = predicate
+                    .And(acq => userContext.Regions.Contains(acq.RegionCode))
+                    .And(acq => acq.PimsAcquisitionFileTeams.Any(x => x.PersonId == userContext.PersonId) || (acq.Project != null && acq.Project.PimsProjectPeople.Any(x => x.PersonId == userContext.PersonId)));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.AcquisitionTeamMemberProfileTypeCode) && !string.IsNullOrWhiteSpace(filter.AcquisitionTeamMemberPersonId))
