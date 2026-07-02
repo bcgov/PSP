@@ -80,6 +80,10 @@ namespace Pims.Dal.Repositories
             {
                 predicate = predicate.And(x => (x.ManagementFile != null && x.ManagementFile.RegionCode.ToString() == filter.RegionCode) || x.PimsManagementActivityProperties.Any(map => map.Property.RegionCode.ToString() == filter.RegionCode));
             }
+            if (filter.RegionCodes.Any())
+            {
+                predicate = predicate.And(x => (x.ManagementFile != null && filter.RegionCodes.Contains((short)x.ManagementFile.RegionCode)) || x.PimsManagementActivityProperties.Any(map => filter.RegionCodes.Contains(map.Property.RegionCode)));
+            }
 
             if (!string.IsNullOrWhiteSpace(filter.Address))
             {
@@ -130,10 +134,10 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(x => x.ManagementFile.ManagementFilePurposeTypeCode == filter.ManagementFilePurposeCode);
             }
 
-            if (filter.ManagementFileRegionCode.HasValue)
+            if (filter.RegionCodes.Any())
             {
-                predicate = predicate.And(x => (x.ManagementFile != null && x.ManagementFile.RegionCode == filter.ManagementFileRegionCode) ||
-                    (x.ManagementFile == null && x.PimsManagementActivityProperties.All(ap => ap.Property != null && ap.Property.RegionCode == filter.ManagementFileRegionCode)));
+                predicate = predicate.And(x => (x.ManagementFile != null && filter.RegionCodes.Contains((short)x.ManagementFile.RegionCode)) ||
+                    (x.ManagementFile == null && x.PimsManagementActivityProperties.All(ap => ap.Property != null && filter.RegionCodes.Contains(ap.Property.RegionCode))));
             }
 
             return predicate;

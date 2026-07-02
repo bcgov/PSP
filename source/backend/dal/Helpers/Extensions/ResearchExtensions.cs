@@ -36,9 +36,9 @@ namespace Pims.Dal.Helpers.Extensions
                 predicate = predicate.And(acq => acq.PimsPropertyResearchFiles.Any(pr => pr != null && EF.Functions.Like(pr.Property.Pin.ToString(), $"%{pinValue}%")));
             }
 
-            if (filter.RegionCode > 0)
+            if (filter.RegionCodes.Any())
             {
-                predicate.And(r => r.PimsPropertyResearchFiles.Any(pr => pr.Property != null && pr.Property.RegionCode == filter.RegionCode));
+                predicate.And(r => r.PimsPropertyResearchFiles.Any(pr => pr.Property != null &&  filter.RegionCodes.Contains(pr.Property.RegionCode)));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ResearchFileStatusTypeCode))

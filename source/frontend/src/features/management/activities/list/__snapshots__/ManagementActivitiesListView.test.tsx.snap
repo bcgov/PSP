@@ -885,7 +885,7 @@ exports[`ManagementActivitiesListView > matches snapshot 1`] = `
                     class="row"
                   >
                     <div
-                      class="col-xl-12"
+                      class="col-xl-7"
                     >
                       <div
                         class="input form-group"
@@ -906,7 +906,7 @@ exports[`ManagementActivitiesListView > matches snapshot 1`] = `
                     class="row"
                   >
                     <div
-                      class="col-xl-6"
+                      class="col-xl-7"
                     >
                       <div
                         class="input form-group"
@@ -927,29 +927,61 @@ exports[`ManagementActivitiesListView > matches snapshot 1`] = `
                     class="row"
                   >
                     <div
-                      class="col-xl-6"
+                      class="col-xl-7"
                     >
                       <div
-                        class="d-flex form-group"
+                        class="form-group"
                       >
-                        <select
-                          class="form-select form-control"
-                          id="input-regionCode"
-                          name="regionCode"
-                        >
-                          <option
-                            value=""
+                        <div>
+                          <div
+                            class="multiselect-container multiSelectContainer  "
+                            id="multiselect-regionCodes"
+                            style="width: auto; color: black;"
                           >
-                            All Regions
-                          </option>
-                          <option
-                            class="option"
-                            data-testid="select-option-1"
-                            value="1"
-                          >
-                            South Coast Region
-                          </option>
-                        </select>
+                            <div
+                              class="search-wrapper searchWrapper "
+                              style="background: white; border: 1px solid #606060; padding-top: 0.8rem; padding-bottom: 0.8rem; padding-left: 1.2rem;"
+                            >
+                              <input
+                                autocomplete="off"
+                                class="searchBox "
+                                id="multiselect-regionCodes_input"
+                                name="search_name_input"
+                                placeholder="Select Region(s)"
+                                type="text"
+                                value=""
+                              />
+                            </div>
+                            <div
+                              class="optionListContainer displayNone"
+                            >
+                              <ul
+                                class="optionContainer"
+                              >
+                                <li
+                                  class="option  highlightOption highlight  "
+                                >
+                                  South Coast Region
+                                </li>
+                                <li
+                                  class="option    "
+                                >
+                                  Southern Interior Region
+                                </li>
+                                <li
+                                  class="option    "
+                                >
+                                  Northern Region
+                                </li>
+                                <li
+                                  class="option    "
+                                >
+                                  Cannot determine
+                                </li>
+                              </ul>
+                            </div>
+                          </div>
+                        </div>
                       </div>
                     </div>
                   </div>
