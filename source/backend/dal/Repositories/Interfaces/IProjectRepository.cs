@@ -11,9 +11,9 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public interface IProjectRepository : IRepository<PimsProject>
     {
-        Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, long? contractorPersonId = null);
+        Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, UserContextModel userContext);
 
-        IList<PimsProject> SearchProjects(string filter, int maxResults);
+        IList<PimsProject> SearchProjects(string filter, int maxResults, UserContextModel userContext);
 
         PimsProject Add(PimsProject project);
 
@@ -25,6 +25,6 @@ namespace Pims.Dal.Repositories
 
         PimsProject GetProjectAtTime(long projectId, DateTime time);
 
-        IEnumerable<PimsProjectPerson> GetTeamMembers(long? contractorPersonId = null);
+        IEnumerable<PimsProjectPerson> GetTeamMembers(UserContextModel userContext);
     }
 }
