@@ -91,7 +91,7 @@ namespace Pims.Dal.Repositories
                     .FirstOrDefault(x => x.NotificationUserOutputId == userNotification.NotificationUserOutputId);
 
                 Context.Entry(existingUserNotification).CurrentValues.SetValues(userNotification);
-                Context.SaveChanges();
+                await Context.SaveChangesAsync();
 
                 return existingUserNotification;
             }
