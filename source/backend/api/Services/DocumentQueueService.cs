@@ -101,7 +101,7 @@ namespace Pims.Api.Services
 
             this.User.ThrowIfNotAuthorizedOrServiceAccount(Permissions.SystemAdmin, this._keycloakOptions);
 
-            await _documentQueueRepository.Update(documentQueue);
+            await _documentQueueRepository.UpdateAsync(documentQueue);
 
             return documentQueue;
         }
@@ -349,7 +349,7 @@ namespace Pims.Api.Services
                 }
             }
 
-            await _documentQueueRepository.Update(documentQueue, removeDocument);
+            await _documentQueueRepository.UpdateAsync(documentQueue, removeDocument);
         }
 
         private bool ValidateQueuedDocument(PimsDocumentQueue databaseDocumentQueue, PimsDocumentQueue externalDocument)
