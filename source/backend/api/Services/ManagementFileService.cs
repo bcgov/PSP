@@ -167,7 +167,8 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ManagementView);
             _user.ThrowIfNotAuthorized(Permissions.ContactView);
 
-            var teamMembers = _managementFileRepository.GetTeamMembers();
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var teamMembers = _managementFileRepository.GetTeamMembers(UserContextModel.FromPimsUser(pimsUser));
 
             var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First());
             var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First());
@@ -292,9 +293,9 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ManagementView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
 
-            return _managementFileRepository.GetPageDeep(filter, contractorPersonId);
+            return _managementFileRepository.GetPageDeep(filter, userContext);
         }
 
         public IEnumerable<PimsManagementFileContact> GetContacts(long id)

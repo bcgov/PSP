@@ -94,7 +94,9 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            return _acqFileRepository.GetPageDeep(filter, UserContextModel.FromPimsUser(pimsUser));
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
+
+            return _acqFileRepository.GetPageDeep(filter, userContext);
         }
 
         public List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter)
@@ -103,8 +105,9 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
 
-            var acqFiles = _acqFileRepository.GetAcquisitionFileExportDeep(filter, UserContextModel.FromPimsUser(pimsUser));
+            var acqFiles = _acqFileRepository.GetAcquisitionFileExportDeep(filter, userContext);
 
             return acqFiles.SelectMany(file => file.PimsPropertyAcquisitionFiles.Where(fp => fp.AcquisitionFileId.Equals(file.AcquisitionFileId)).DefaultIfEmpty(), (file, fp) => (file, fp))
                 .Select(fileProperty => new AcquisitionFileExportModel
