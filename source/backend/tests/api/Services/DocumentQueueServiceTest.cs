@@ -135,7 +135,7 @@ namespace Pims.Api.Test.Services
             var documentQueue = new PimsDocumentQueue { DocumentQueueId = 1 };
             var documentQueueRepositoryMock = this._helper.GetService<Mock<IDocumentQueueRepository>>();
 
-            documentQueueRepositoryMock.Setup(m => m.Update(documentQueue, false));
+            documentQueueRepositoryMock.Setup(m => m.UpdateAsync(documentQueue, false));
             documentQueueRepositoryMock.Setup(m => m.CommitTransaction());
 
             // Act
@@ -143,7 +143,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().Be(documentQueue);
-            documentQueueRepositoryMock.Verify(m => m.Update(documentQueue, false), Times.Once);
+            documentQueueRepositoryMock.Verify(m => m.UpdateAsync(documentQueue, false), Times.Once);
         }
 
         [Fact]
@@ -216,7 +216,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             await act.Should().ThrowAsync<InvalidDataException>();
-            documentQueueRepositoryMock.Verify(m => m.Update(databaseDocumentQueue, false), Times.Once);
+            documentQueueRepositoryMock.Verify(m => m.UpdateAsync(databaseDocumentQueue, false), Times.Once);
         }
 
         [Fact]
@@ -241,7 +241,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().Be(databaseDocumentQueue);
-            documentQueueRepositoryMock.Verify(m => m.Update(databaseDocumentQueue, false), Times.Once);
+            documentQueueRepositoryMock.Verify(m => m.UpdateAsync(databaseDocumentQueue, false), Times.Once);
         }
 
         [Fact]
@@ -267,7 +267,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             result.Should().Be(databaseDocumentQueue);
-            documentQueueRepositoryMock.Verify(m => m.Update(databaseDocumentQueue, false), Times.Never);
+            documentQueueRepositoryMock.Verify(m => m.UpdateAsync(databaseDocumentQueue, false), Times.Never);
             documentQueueRepositoryMock.Verify(m => m.CommitTransaction(), Times.Never);
         }
 
@@ -295,7 +295,7 @@ namespace Pims.Api.Test.Services
             // Assert
             result.Should().Be(databaseDocumentQueue);
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.SUCCESS.ToString());
-            documentQueueRepositoryMock.Verify(m => m.Update(databaseDocumentQueue, true), Times.Once);
+            documentQueueRepositoryMock.Verify(m => m.UpdateAsync(databaseDocumentQueue, true), Times.Once);
         }
 
         [Fact]
@@ -359,7 +359,7 @@ namespace Pims.Api.Test.Services
             // Assert
             result.Should().NotBeNull();
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.SUCCESS.ToString());
-            documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
+            documentQueueRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
             documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Once);
         }
 
@@ -425,7 +425,7 @@ namespace Pims.Api.Test.Services
             result.Should().NotBeNull();
             result.DocProcessRetries.Should().Be(1);
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.SUCCESS.ToString());
-            documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
+            documentQueueRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
             documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Once);
         }
 
@@ -455,7 +455,7 @@ namespace Pims.Api.Test.Services
             // Assert
             result.Should().NotBeNull();
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.PIMS_ERROR.ToString());
-            documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
+            documentQueueRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
             documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Never);
         }
 
@@ -591,7 +591,7 @@ namespace Pims.Api.Test.Services
             // Assert
             result.Should().NotBeNull();
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.PROCESSING.ToString());
-            documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
+            documentQueueRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
             documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Once);
         }
 
@@ -684,7 +684,7 @@ namespace Pims.Api.Test.Services
             await act.Should().ThrowAsync<InvalidDataException>();
 
             // Assert
-            documentQueueRepositoryMock.Verify(x => x.Update(It.Is<PimsDocumentQueue>(p => p.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PIMS_ERROR.ToString()), It.IsAny<bool>()), Times.AtLeastOnce);
+            documentQueueRepositoryMock.Verify(x => x.UpdateAsync(It.Is<PimsDocumentQueue>(p => p.DocumentQueueStatusTypeCode == DocumentQueueStatusTypes.PIMS_ERROR.ToString()), It.IsAny<bool>()), Times.AtLeastOnce);
         }
 
         [Fact]
@@ -741,7 +741,7 @@ namespace Pims.Api.Test.Services
             // Assert
             result.Should().NotBeNull();
             result.DocumentQueueStatusTypeCode.Should().Be(DocumentQueueStatusTypes.MAYAN_ERROR.ToString());
-            documentQueueRepositoryMock.Verify(x => x.Update(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
+            documentQueueRepositoryMock.Verify(x => x.UpdateAsync(It.IsAny<PimsDocumentQueue>(), It.IsAny<bool>()), Times.AtLeastOnce);
             documentServiceMock.Verify(x => x.UploadDocumentAsync(It.IsAny<DocumentUploadRequest>(), true), Times.Once);
         }
 
