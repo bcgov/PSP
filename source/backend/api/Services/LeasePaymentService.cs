@@ -1,9 +1,12 @@
 using System;
 using System.Collections.Generic;
+using System.Security.Claims;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
+using Pims.Core.Extensions;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
 
@@ -16,14 +19,25 @@ namespace Pims.Api.Services
         private readonly ILeaseService _leaseService;
         private readonly ILeaseStatusSolver _leaseStatusSolver;
         private readonly ILogger _logger;
+        private readonly IUserRepository _userRepository;
+        private readonly ClaimsPrincipal _user;
 
-        public LeasePaymentService(ILeasePeriodRepository leasePeriodRepository, ILeasePaymentRepository leasePaymentRepository, ILeaseService leaseService, ILeaseStatusSolver leaseStatusSolver, ILogger<LeasePaymentService> logger)
+        public LeasePaymentService(
+            ILeasePeriodRepository leasePeriodRepository,
+            ILeasePaymentRepository leasePaymentRepository,
+            ILeaseService leaseService,
+            ILeaseStatusSolver leaseStatusSolver,
+            ILogger<LeasePaymentService> logger,
+            IUserRepository userRepository,
+            ClaimsPrincipal user)
         {
             _leasePeriodRepository = leasePeriodRepository;
             _leasePaymentRepository = leasePaymentRepository;
             _leaseService = leaseService;
             _leaseStatusSolver = leaseStatusSolver;
             _logger = logger;
+            _userRepository = userRepository;
+            _user = user;
         }
 
         public static string GetPaymentStatus(PimsLeasePayment payment, PimsLeasePeriod parent)
@@ -71,7 +85,10 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate)
         {
-            return _leasePaymentRepository.GetAllByDateRange(startDate, endDate);
+            var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
+
+            return _leasePaymentRepository.GetAllByDateRange(startDate, endDate, userContext);
         }
 
         public bool DeletePayment(long leaseId, PimsLeasePayment payment)
