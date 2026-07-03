@@ -1,4 +1,4 @@
-import test, { BrowserContext, Page } from '@playwright/test';
+import test, { BrowserContext, expect, Page } from '@playwright/test';
 import { ResearchListPage } from '../../../pages/research/research-list.page';
 
 let context: BrowserContext;
@@ -19,5 +19,6 @@ test.describe('Research Files feature', () => {
   test('verify research list view', async () => {
     //Navigate to research list view and pick an existing research file
     await researchListPage.goto();
+    await expect(researchListPage.researchListTitle).toBeVisible();
   });
 });

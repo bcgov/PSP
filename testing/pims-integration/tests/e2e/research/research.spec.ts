@@ -4,7 +4,7 @@ import { DocumentsListPage } from '../../../pages/documents/documents-list.page'
 
 import { ResearchViewFileDetails } from '../../../pages/research/research-view-file-details.page';
 import { DocumentUploadModalPage } from '../../../pages/documents/document-upload-modal.page';
-import { normalize, formatApiDate, formatApiBoolean } from '../../../utils/utils';
+import { generateFileName, normalize, formatApiDate, formatApiBoolean } from '../../../utils/utils';
 import path from 'path';
 
 let context: BrowserContext;
@@ -52,7 +52,7 @@ test.describe('Research Files feature', () => {
     await test.step('Create file', async () => {
       //Navigate to new research file and create a minimum viable research
       await researchCreatePage.goto();
-      await researchCreatePage.setResearchNameValue('researchFile');
+      generateFileName('researchFile');
       await researchCreatePage.confirmButtonClick();
 
       const response = await responsePromise;
