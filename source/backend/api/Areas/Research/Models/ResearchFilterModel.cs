@@ -22,7 +22,7 @@ namespace Pims.Api.Areas.Research.Models.Search
         /// <summary>
         /// get/set - The moti region that any of the properties on the research file belong to.
         /// </summary>
-        public short? RegionCode { get; set; }
+        public IList<short> RegionCodes { get; set; } = new List<short>();
 
         /// <summary>
         /// get/set - The status of the research file,.
@@ -96,7 +96,7 @@ namespace Pims.Api.Areas.Research.Models.Search
 
             Pid = filter.GetStringValue(nameof(Pid));
             Pin = filter.GetStringValue(nameof(Pin));
-            RegionCode = filter.GetShortNullValue(nameof(RegionCode));
+            RegionCodes = filter.GetShortArrayValue(nameof(RegionCodes));
             ResearchFileStatusTypeCode = filter.GetStringValue(nameof(ResearchFileStatusTypeCode));
             Name = filter.GetStringValue(nameof(Name));
             RoadOrAlias = filter.GetStringValue(nameof(RoadOrAlias));
@@ -125,7 +125,7 @@ namespace Pims.Api.Areas.Research.Models.Search
                 Pin = model.Pin?.Trim(),
                 Page = model.Page,
                 Quantity = model.Quantity,
-                RegionCode = model.RegionCode,
+                RegionCodes = model.RegionCodes,
                 RFileNumber = model.RFileNumber?.Trim(),
                 ResearchFileStatusTypeCode = model.ResearchFileStatusTypeCode,
                 Name = model.Name?.Trim(),

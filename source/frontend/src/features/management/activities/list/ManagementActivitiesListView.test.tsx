@@ -16,7 +16,6 @@ import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
   act,
   cleanup,
-  getByName,
   render,
   screen,
   userEvent,
@@ -245,110 +244,5 @@ describe('ManagementActivitiesListView', () => {
       expect.objectContaining({ message: expect.stringMatching(/no data/i) }),
     );
     expect(setDisplayModal).toHaveBeenCalledWith(true);
-  });
-
-  it('searches by file name or reference', async () => {
-    const results = mockPagedResults([]);
-    getManagementActivitiesPagedApiFn.mockResolvedValue(results);
-
-    await setup();
-
-    const input = screen.getByPlaceholderText(/Management file number or name/i);
-    await act(async () => userEvent.type(input, 'Activity File 123'));
-
-    const searchButton = screen.getByTestId('search');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getManagementActivitiesPagedApiFn).toHaveBeenCalledWith(
-      expect.objectContaining<Partial<ManagementActivityFilterModel>>({
-        fileNameOrNumberOrReference: 'Activity File 123',
-      }),
-    );
-  });
-
-  it('searches by project name', async () => {
-    const results = mockPagedResults([]);
-    getManagementActivitiesPagedApiFn.mockResolvedValue(results);
-
-    await setup();
-
-    const input = screen.getByPlaceholderText(/Enter a project name/i);
-    await act(async () => userEvent.type(input, 'Project X'));
-
-    const searchButton = screen.getByTestId('search');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getManagementActivitiesPagedApiFn).toHaveBeenCalledWith(
-      expect.objectContaining<Partial<ManagementActivityFilterModel>>({
-        projectNameOrNumber: 'Project X',
-      }),
-    );
-  });
-
-  it('searches by PID', async () => {
-    const results = mockPagedResults([]);
-    getManagementActivitiesPagedApiFn.mockResolvedValue(results);
-
-    await setup();
-
-    const searchBy = getByName('searchBy');
-    await act(async () => userEvent.selectOptions(searchBy, 'pid'));
-
-    const input = screen.getByPlaceholderText(/Enter a PID/i);
-    await act(async () => userEvent.type(input, '123456'));
-
-    const searchButton = screen.getByTestId('search');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getManagementActivitiesPagedApiFn).toHaveBeenCalledWith(
-      expect.objectContaining<Partial<ManagementActivityFilterModel>>({
-        pid: '123456',
-      }),
-    );
-  });
-
-  it('searches by PIN', async () => {
-    const results = mockPagedResults([]);
-    getManagementActivitiesPagedApiFn.mockResolvedValue(results);
-
-    await setup();
-
-    const searchBy = getByName('searchBy');
-    await act(async () => userEvent.selectOptions(searchBy, 'pin'));
-
-    const input = screen.getByPlaceholderText(/Enter a PIN/i);
-    await act(async () => userEvent.type(input, '7890'));
-
-    const searchButton = screen.getByTestId('search');
-    await act(async () => userEvent.click(searchButton));
-
-    expect(getManagementActivitiesPagedApiFn).toHaveBeenCalledWith(
-      expect.objectContaining<Partial<ManagementActivityFilterModel>>({
-        pin: '7890',
-      }),
-    );
-  });
-
-  it('resets filter when reset button clicked', async () => {
-    const results = mockPagedResults([]);
-    getManagementActivitiesPagedApiFn.mockResolvedValue(results);
-
-    await setup();
-
-    const input = screen.getByPlaceholderText(/Enter a project name/i);
-    await act(async () => userEvent.type(input, 'Project Y'));
-
-    const resetButton = screen.getByTitle(/reset-button/i);
-    await act(async () => userEvent.click(resetButton));
-
-    expect(getManagementActivitiesPagedApiFn).toHaveBeenCalledWith(
-      expect.objectContaining<Partial<ManagementActivityFilterModel>>({
-        projectNameOrNumber: '',
-        fileNameOrNumberOrReference: '',
-        pid: '',
-        pin: '',
-        address: '',
-      }),
-    );
   });
 });

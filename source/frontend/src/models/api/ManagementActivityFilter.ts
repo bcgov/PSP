@@ -1,8 +1,10 @@
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
+
 export interface Api_ManagementActivityFilter {
   searchBy: string;
   pin: string;
   pid: string;
-  regionCode: string;
+  regionCodes: MultiSelectOption[];
   address: string;
   fileNameOrNumberOrReference: string;
   projectNameOrNumber: string;
