@@ -1,5 +1,5 @@
 import fileDownload from 'js-file-download';
-import { useCallback, useEffect } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { FaFileExcel } from 'react-icons/fa';
 import { toast } from 'react-toastify';
@@ -16,13 +16,18 @@ import {
   MGMT_ACTIVITY_STATUS_TYPES,
   MGMT_ACTIVITY_TYPES,
 } from '@/constants/API';
+import * as API from '@/constants/API';
 import { useApiManagementActivities } from '@/hooks/pims-api/useApiManagementActivities';
+import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
+import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useModalContext } from '@/hooks/useModalContext';
 import { useSearch } from '@/hooks/useSearch';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_ManagementActivity } from '@/models/api/generated/ApiGen_Concepts_ManagementActivity';
 import { Api_ManagementActivityFilter } from '@/models/api/ManagementActivityFilter';
-import { exists, mapLookupCode } from '@/utils';
+import { exists, formatGuid, mapLookupCode } from '@/utils';
+import { getUserRegionsOptions } from '@/utils/formUtils';
 
 import { useManagementActivityExport } from '../../hooks/useManagementActivityExport';
 import { ManagementActivityFilterModel } from '../models/ManagementActivityFilterModel';
@@ -36,9 +41,19 @@ import ManagementActivitySearchResults from './searchResults/ManagementActivitie
 export const ManagementActivitiesListView: React.FC<unknown> = () => {
   const { getManagementActivitiesPagedApi } = useApiManagementActivities();
   const { setModalContent, setDisplayModal } = useModalContext();
+  const { obj } = useKeycloakWrapper();
+  const { sub } = obj.userInfo as IUserInfo;
+  const formattedGuid = formatGuid(sub);
+  const [userRegionsOptions, setUserRegionsOptions] = useState<MultiSelectOption[]>(null);
 
   // lookup codes to filter management list
   const lookupCodes = useLookupCodeHelpers();
+  const pimsRegionsTypes = lookupCodes.getOptionsByType(API.REGION_TYPES);
+  const pimsRegionOptions: MultiSelectOption[] = pimsRegionsTypes.map<MultiSelectOption>(x => {
+    return { id: x.code as string, text: x.label };
+  });
+
+  const { retrieveUserInfo, retrieveUserInfoResponse } = useUserInfoRepository();
 
   const activityStatusOptions = lookupCodes
     .getByType(MGMT_ACTIVITY_STATUS_TYPES)
@@ -55,6 +70,10 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
   const managementPurposeOptions = lookupCodes
     .getByType(MANAGEMENT_FILE_PURPOSE_TYPES)
     .map(c => mapLookupCode(c));
+
+  useEffect(() => {
+    formattedGuid && retrieveUserInfo(formattedGuid);
+  }, [formattedGuid, retrieveUserInfo]);
 
   const {
     generateManagementActivitiesOverviewReport: { execute: getOverviewReport },
@@ -120,6 +139,21 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
   );
 
   useEffect(() => {
+    if (
+      userRegionsOptions === null &&
+      exists(retrieveUserInfoResponse) &&
+      exists(pimsRegionsTypes)
+    ) {
+      const userRegions = getUserRegionsOptions(
+        retrieveUserInfoResponse?.userRegions,
+        pimsRegionsTypes,
+      );
+      setUserRegionsOptions(userRegions);
+      setFilter(new ManagementActivityFilterModel(userRegionsOptions).toApi());
+    }
+  }, [pimsRegionsTypes, retrieveUserInfoResponse, setFilter, userRegionsOptions]);
+
+  useEffect(() => {
     if (error) {
       toast.error(error?.message);
     }
@@ -149,12 +183,13 @@ export const ManagementActivitiesListView: React.FC<unknown> = () => {
           <Row>
             <Col>
               <ActivitiesFilter
-                filter={filter}
+                initialValues={ManagementActivityFilterModel.fromApi(filter, userRegionsOptions)}
                 setFilter={changeFilter}
                 activityStatusOptions={activityStatusOptions}
                 activityTypesOptions={activityTypesOptions}
                 fileStatusOptions={managementFileStatusOptions}
                 managementPurposeOptions={managementPurposeOptions}
+                userRegionsOptions={pimsRegionOptions}
               />
             </Col>
             <Col md="auto" className="px-0">

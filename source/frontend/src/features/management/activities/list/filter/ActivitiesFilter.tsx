@@ -4,30 +4,32 @@ import { Col, Row } from 'react-bootstrap';
 
 import { ResetButton } from '@/components/common/buttons';
 import { SearchButton } from '@/components/common/buttons/SearchButton';
-import { Input, Select, SelectOption } from '@/components/common/form';
-import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSelect/UserRegionSelectContainer';
+import { Input, Multiselect, Select, SelectOption } from '@/components/common/form';
 import { SelectInput } from '@/components/common/List/SelectInput';
 import { ColButtons, FilterBoxForm } from '@/components/common/styles';
+import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { Api_ManagementActivityFilter } from '@/models/api/ManagementActivityFilter';
 
 import { ManagementActivityFilterModel } from '../../models/ManagementActivityFilterModel';
 
 export interface IActivitiesFilterProps {
-  filter?: Api_ManagementActivityFilter;
+  initialValues: ManagementActivityFilterModel;
   setFilter: (filter: Api_ManagementActivityFilter) => void;
   activityStatusOptions: SelectOption[];
   activityTypesOptions: SelectOption[];
   fileStatusOptions: SelectOption[];
   managementPurposeOptions: SelectOption[];
+  userRegionsOptions: MultiSelectOption[];
 }
 
 export const ActivitiesFilter: React.FC<IActivitiesFilterProps> = ({
-  filter,
+  initialValues,
   setFilter,
   activityStatusOptions,
   activityTypesOptions,
   fileStatusOptions,
   managementPurposeOptions,
+  userRegionsOptions,
 }) => {
   const onSearchSubmit = async (
     values: ManagementActivityFilterModel,
@@ -44,9 +46,7 @@ export const ActivitiesFilter: React.FC<IActivitiesFilterProps> = ({
   return (
     <Formik<ManagementActivityFilterModel>
       enableReinitialize
-      initialValues={
-        filter ? ManagementActivityFilterModel.fromApi(filter) : new ManagementActivityFilterModel()
-      }
+      initialValues={initialValues}
       onSubmit={onSearchSubmit}
     >
       {formikProps => (
@@ -119,7 +119,7 @@ export const ActivitiesFilter: React.FC<IActivitiesFilterProps> = ({
             </Col>
             <Col xl="5">
               <Row>
-                <Col xl="12">
+                <Col xl="7">
                   <Input
                     field="fileNameOrNumberOrReference"
                     placeholder="Management file number or name or reference number"
@@ -127,7 +127,7 @@ export const ActivitiesFilter: React.FC<IActivitiesFilterProps> = ({
                 </Col>
               </Row>
               <Row>
-                <Col xl="6">
+                <Col xl="7">
                   <Input
                     field="projectNameOrNumber"
                     placeholder="Enter a project name or number..."
@@ -135,8 +135,13 @@ export const ActivitiesFilter: React.FC<IActivitiesFilterProps> = ({
                 </Col>
               </Row>
               <Row>
-                <Col xl="6">
-                  <UserRegionSelectContainer field="regionCode" placeholder="All Regions" />
+                <Col xl="7">
+                  <Multiselect
+                    field="regionCodes"
+                    options={userRegionsOptions}
+                    displayValue="text"
+                    placeholder="Select Region(s)"
+                  />
                 </Col>
               </Row>
             </Col>

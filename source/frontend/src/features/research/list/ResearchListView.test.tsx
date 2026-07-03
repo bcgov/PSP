@@ -133,7 +133,7 @@ describe('Research List View', () => {
       name: '',
       page: 1,
       quantity: 10,
-      regionCode: '',
+      regionCodes: [],
       researchFileStatusTypeCode: '',
       researchSearchBy: 'pid',
       rfileNumber: '',

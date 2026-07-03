@@ -20,10 +20,20 @@ export const useApiResearchFile = () => {
 
   return React.useMemo(
     () => ({
-      getResearchFiles: (params: IPaginateResearch | null) =>
-        api.get<ApiGen_Base_Page<ApiGen_Concepts_ResearchFile>>(
-          `/researchFiles/search?${params ? queryString.stringify(params) : ''}`,
-        ),
+      getResearchFiles: (params: IPaginateResearch | null) => {
+        const queryParams = params
+          ? {
+              ...params,
+              regionCodes: params.regionCodes?.map(region => region.id),
+            }
+          : null;
+
+        return api.get<ApiGen_Base_Page<ApiGen_Concepts_ResearchFile>>(
+          `/researchFiles/search?${
+            queryParams ? queryString.stringify(queryParams, { arrayFormat: 'none' }) : ''
+          }`,
+        );
+      },
       getResearchFile: (researchFileId: number) =>
         api.get<ApiGen_Concepts_ResearchFile>(`/researchFiles/${researchFileId}`),
       postResearchFile: (

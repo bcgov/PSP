@@ -3,7 +3,7 @@ import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 export interface IResearchFilter {
   pid: string;
   pin: string;
-  regionCode: string;
+  regionCodes: MultiSelectOption[];
   researchFileStatusTypeCode: string;
   name: string;
   roadOrAlias: string;
