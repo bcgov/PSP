@@ -179,7 +179,9 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var teamMembers = _acqFileRepository.GetTeamMembers(UserContextModel.FromPimsUser(pimsUser));
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
+
+            var teamMembers = _acqFileRepository.GetTeamMembers(userContext);
 
             var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
             var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First()).ToList();
