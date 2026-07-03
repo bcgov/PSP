@@ -92,8 +92,7 @@ namespace Pims.Api.Services
                 userNotification.NotificationSentDt = DateTime.UtcNow;
             }
 
-            _ = await _notificationUserOutputRepository.Update(userNotification);
-            _notificationUserOutputRepository.CommitTransaction();
+            _ = await _notificationUserOutputRepository.UpdateAsync(userNotification);
 
             return;
         }
