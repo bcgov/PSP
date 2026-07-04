@@ -1,7 +1,7 @@
 ARG BUILD_CONFIGURATION=Release
 FROM mcr.microsoft.com/dotnet/aspnet:8.0.28 AS base
 WORKDIR /app
-EXPOSE 5002 5003
+EXPOSE 8080
 
 # Copy csproj and restore as distinct layers
 FROM mcr.microsoft.com/dotnet/sdk:8.0.422 AS build

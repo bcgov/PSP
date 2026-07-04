@@ -19,9 +19,9 @@
       "commandName": "Project",
       "launchBrowser": false,
       "useSSL": false,
-      "applicationUrl": "http://localhost:5002",
       "environmentVariables": {
-        "ASPNETCORE_ENVIRONMENT": "Local"
+        "ASPNETCORE_ENVIRONMENT": "Local",
+        "ASPNETCORE_HTTP_PORTS": "5002"
       }
     }
   }
