@@ -11,6 +11,6 @@ namespace Pims.Dal.Repositories
 
         public PimsNotificationUserOutput GetById(long notificationUserOutputId);
 
-        public Task<PimsNotificationUserOutput> Update(PimsNotificationUserOutput userNotification);
+        public Task<PimsNotificationUserOutput> UpdateAsync(PimsNotificationUserOutput userNotification);
     }
 }

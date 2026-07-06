@@ -80,7 +80,7 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault(x => x.NotificationUserOutputId == notificationUserOutputId) ?? throw new KeyNotFoundException();
         }
 
-        public async Task<PimsNotificationUserOutput> Update(PimsNotificationUserOutput userNotification)
+        public async Task<PimsNotificationUserOutput> UpdateAsync(PimsNotificationUserOutput userNotification)
         {
             var @lock = _synchronizationProvider.CreateLock("NotificationUserOutputLock");
             await using (await @lock.AcquireAsync())
@@ -91,7 +91,7 @@ namespace Pims.Dal.Repositories
                     .FirstOrDefault(x => x.NotificationUserOutputId == userNotification.NotificationUserOutputId);
 
                 Context.Entry(existingUserNotification).CurrentValues.SetValues(userNotification);
-                Context.Update(existingUserNotification);
+                await Context.SaveChangesAsync();
 
                 return existingUserNotification;
             }
