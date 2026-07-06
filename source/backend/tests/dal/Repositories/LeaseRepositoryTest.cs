@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
@@ -10,10 +14,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Xunit;
 using Entity = Pims.Dal.Entities;
 
@@ -117,7 +117,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(elease);
 
             // Act
-            var result = repository.GetAllByFilter(filter);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetAllByFilter(filter, userContext);
 
             // Assert
             Assert.NotNull(result);
@@ -135,8 +136,10 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
+            var act = () => service.GetAllByFilter(new LeaseFilter(), UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1)));
+
             // Assert
-            Assert.Throws<NotAuthorizedException>(() => service.GetAllByFilter(null));
+            act.Should().Throw<NotAuthorizedException>();
         }
 
         [Fact]
@@ -149,9 +152,10 @@ namespace Pims.Dal.Test.Repositories
             var service = helper.CreateRepository<LeaseRepository>(user);
 
             // Act
+            var act = () => service.GetAllByFilter(new LeaseFilter() { ExpiryStartDate = DateOnly.MaxValue, ExpiryEndDate = DateOnly.MinValue }, UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1)));
+
             // Assert
-            Assert.Throws<ArgumentException>(() =>
-                service.GetAllByFilter(new LeaseFilter() { ExpiryStartDate = DateOnly.MaxValue, ExpiryEndDate = DateOnly.MinValue }));
+            act.Should().Throw<ArgumentException>();
         }
 
         [Theory]
@@ -173,7 +177,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(elease);
 
             // Act
-            var result = repository.GetPage(filter);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPage(filter, userContext);
 
             // Assert
             Assert.NotNull(result);
@@ -215,7 +220,8 @@ namespace Pims.Dal.Test.Repositories
             LeaseFilter filter = new LeaseFilter() { Historical = "99999" };
 
             // Act
-            var result = repository.GetPage(filter);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPage(filter, userContext);
 
             // Assert
             Assert.NotNull(result);
@@ -255,7 +261,8 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             LeaseFilter filter = new LeaseFilter() { Historical = "88888" };
-            var result = repository.GetPage(filter);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPage(filter, userContext);
 
             // Assert
             Assert.NotNull(result);
@@ -296,7 +303,8 @@ namespace Pims.Dal.Test.Repositories
             LeaseFilter filter = new LeaseFilter() { Historical = "77777" };
 
             // Act
-            var result = repository.GetPage(filter);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPage(filter, userContext);
 
             // Assert
             Assert.NotNull(result);
@@ -337,7 +345,8 @@ namespace Pims.Dal.Test.Repositories
             LeaseFilter filter = new LeaseFilter() { Historical = "66666" };
 
             // Act
-            var result = repository.GetPage(filter);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPage(filter, userContext);
 
             // Assert
             Assert.NotNull(result);
@@ -365,7 +374,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(secondLease);
 
             // Act
-            var result = repository.GetPage(new LeaseFilter(), 1);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", id: 1, regionCode: 1, isContractor: true));
+            var result = repository.GetPage(new LeaseFilter(), userContext);
 
             // Assert
             result.Should().NotBeNull();
@@ -388,7 +398,8 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             var filter = new LeaseFilter() { LFileNo = "000123" }; // no prefix or dash
-            var result = repository.GetPage(filter);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPage(filter, userContext);
 
             // Assert
             result.Items.Should().HaveCount(1);
@@ -403,7 +414,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(elease);
 
             var filter = new LeaseFilter() { LFileNo = "L-000-123" };
-            var result = repository.GetPage(filter);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPage(filter, userContext);
 
             result.Items.Should().HaveCount(1);
         }
@@ -417,7 +429,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(elease);
 
             var filter = new LeaseFilter() { LFileNo = "123" }; // partial
-            var result = repository.GetPage(filter);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPage(filter, userContext);
 
             result.Items.Should().HaveCount(1);
         }
@@ -431,7 +444,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(elease);
 
             var filter = new LeaseFilter() { LFileNo = "  000 123  " }; // spaces
-            var result = repository.GetPage(filter);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPage(filter, userContext);
 
             result.Items.Should().HaveCount(1);
         }
@@ -446,7 +460,8 @@ namespace Pims.Dal.Test.Repositories
 
             var filter = new LeaseFilter() { LFileNo = "ABC123" }; // invalid
 
-            Action act = () => repository.GetPage(filter);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            Action act = () => repository.GetPage(filter, userContext);
 
             act.Should().Throw<ArgumentException>()
                .WithMessage("Invalid L-File number*");

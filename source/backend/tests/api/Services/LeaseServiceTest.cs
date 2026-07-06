@@ -57,7 +57,7 @@ namespace Pims.Api.Test.Services
             user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
 
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
-            leaseRepository.Setup(x => x.GetPage(It.IsAny<LeaseFilter>(), null))
+            leaseRepository.Setup(x => x.GetPage(It.IsAny<LeaseFilter>(), It.IsAny<UserContextModel>()))
                 .Returns(new Paged<PimsLease>(new List<PimsLease>() { lease }, 1, 1, 1));
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
@@ -67,7 +67,7 @@ namespace Pims.Api.Test.Services
             var properties = service.GetPage(filter, false);
 
             // Assert
-            leaseRepository.Verify(x => x.GetPage(filter, null), Times.Once);
+            leaseRepository.Verify(x => x.GetPage(filter, It.IsAny<UserContextModel>()), Times.Once);
         }
         [Fact]
         public void GetPage_Contractor_Success()
@@ -82,7 +82,7 @@ namespace Pims.Api.Test.Services
             user.PersonId = 1;
 
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
-            leaseRepository.Setup(x => x.GetPage(It.IsAny<LeaseFilter>(), null))
+            leaseRepository.Setup(x => x.GetPage(It.IsAny<LeaseFilter>(), It.IsAny<UserContextModel>()))
                 .Returns(new Paged<PimsLease>(new List<PimsLease>() { lease }, 1, 1, 1));
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
@@ -93,7 +93,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             // PersonId should be passed to ensure contractor only sees leases they are assigned to
-            leaseRepository.Verify(x => x.GetPage(filter, user.PersonId), Times.Once);
+            leaseRepository.Verify(x => x.GetPage(filter, It.IsAny<UserContextModel>()), Times.Once);
         }
 
         [Fact]

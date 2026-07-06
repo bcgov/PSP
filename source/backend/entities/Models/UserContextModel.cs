@@ -21,6 +21,10 @@ namespace Pims.Dal.Entities.Models
 
         public HashSet<short> Regions { get; } = new HashSet<short>();
 
+        public UserContextModel()
+        {
+        }
+
         public UserContextModel(PimsUser pimsUser)
         {
             IsContractor = pimsUser.IsContractor;

@@ -1,3 +1,7 @@
+using System;
+using System.Collections.Generic;
+using System.Diagnostics.CodeAnalysis;
+using System.Linq;
 using FluentAssertions;
 using k8s.KubeConfigModels;
 using Moq;
@@ -13,10 +17,6 @@ using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using System;
-using System.Collections.Generic;
-using System.Diagnostics.CodeAnalysis;
-using System.Linq;
 using Xunit;
 
 namespace Pims.Api.Test.Services
@@ -1472,13 +1472,13 @@ namespace Pims.Api.Test.Services
             };
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
-            repository.Setup(x => x.GetTeamMembers()).Returns(allTeamMembers);
+            repository.Setup(x => x.GetTeamMembers(It.IsAny<UserContextModel>())).Returns(allTeamMembers);
 
             // Act
             var result = service.GetTeamMembers();
 
             // Assert
-            repository.Verify(x => x.GetTeamMembers(), Times.Once);
+            repository.Verify(x => x.GetTeamMembers(It.IsAny<UserContextModel>()), Times.Once);
             result.Should().HaveCount(2);
         }
 
@@ -1547,12 +1547,12 @@ namespace Pims.Api.Test.Services
 
             var managementFile = EntityHelper.CreateManagementFile();
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
-            var contact = new PimsManagementFileContact() 
-            { 
+            var contact = new PimsManagementFileContact()
+            {
                 ManagementFileContactId = 1,
-                ManagementFileId = managementFile.Internal_Id, 
-                PersonId = person.Internal_Id, 
-                Person = person 
+                ManagementFileId = managementFile.Internal_Id,
+                PersonId = person.Internal_Id,
+                Person = person
             };
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
@@ -1589,12 +1589,12 @@ namespace Pims.Api.Test.Services
 
             var managementFile = EntityHelper.CreateManagementFile();
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
-            var contact = new PimsManagementFileContact() 
-            { 
+            var contact = new PimsManagementFileContact()
+            {
                 ManagementFileContactId = 1,
-                ManagementFileId = managementFile.Internal_Id, 
-                PersonId = person.Internal_Id, 
-                Person = person 
+                ManagementFileId = managementFile.Internal_Id,
+                PersonId = person.Internal_Id,
+                Person = person
             };
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
@@ -1632,11 +1632,11 @@ namespace Pims.Api.Test.Services
 
             var managementFile = EntityHelper.CreateManagementFile();
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
-            var contact = new PimsManagementFileContact() 
-            { 
-                ManagementFileId = managementFile.Internal_Id, 
-                PersonId = person.Internal_Id, 
-                Person = person 
+            var contact = new PimsManagementFileContact()
+            {
+                ManagementFileId = managementFile.Internal_Id,
+                PersonId = person.Internal_Id,
+                Person = person
             };
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
@@ -1677,12 +1677,12 @@ namespace Pims.Api.Test.Services
 
             var managementFile = EntityHelper.CreateManagementFile();
             var person = EntityHelper.CreatePerson(1, "tester", "chester");
-            var contact = new PimsManagementFileContact() 
-            { 
+            var contact = new PimsManagementFileContact()
+            {
                 ManagementFileContactId = 1,
-                ManagementFileId = managementFile.Internal_Id, 
-                PersonId = person.Internal_Id, 
-                Person = person 
+                ManagementFileId = managementFile.Internal_Id,
+                PersonId = person.Internal_Id,
+                Person = person
             };
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();

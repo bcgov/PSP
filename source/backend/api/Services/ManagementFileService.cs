@@ -168,7 +168,9 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ContactView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var teamMembers = _managementFileRepository.GetTeamMembers(UserContextModel.FromPimsUser(pimsUser));
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
+
+            var teamMembers = _managementFileRepository.GetTeamMembers(userContext);
 
             var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First());
             var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First());
@@ -554,6 +556,5 @@ namespace Pims.Api.Services
 
             return Core.Extensions.EnumExtensions.GetValueFromEnumMember<ManagementFileStatusTypes>(currentManagementFile.ManagementFileStatusTypeCode);
         }
-
     }
 }
