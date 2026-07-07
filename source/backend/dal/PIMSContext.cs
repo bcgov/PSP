@@ -2,6 +2,8 @@
 using System.Data.SqlClient;
 using System.Linq;
 using System.Text.Json;
+using System.Threading;
+using System.Threading.Tasks;
 using DocumentFormat.OpenXml.Spreadsheet;
 using Microsoft.AspNetCore.Http;
 using Microsoft.EntityFrameworkCore;
@@ -17,9 +19,9 @@ namespace Pims.Dal
     public class PimsContext : PimsBaseContext
     {
         #region Variables
+        private static readonly object DeletionHistoryLock = new();
         private readonly IHttpContextAccessor _httpContextAccessor;
         private readonly JsonSerializerOptions _serializerOptions;
-        private static readonly object DeletionHistoryLock = new();
         #endregion
 
         #region Constructors
@@ -89,6 +91,49 @@ namespace Pims.Dal
             }
 
             return base.SaveChanges();
+        }
+
+        /// <summary>
+        /// Save the entities with who created them or updated them.
+        /// </summary>
+        /// <returns></returns>
+        public override async Task<int> SaveChangesAsync(CancellationToken cancellationToken = default)
+        {
+            // get entries that are being Added or Updated
+            var modifiedEntries = ChangeTracker
+                .Entries()
+                .Where(x =>
+                    x.State.IsIn(EntityState.Added, EntityState.Modified, EntityState.Deleted)
+                );
+
+            // Default values are provided because depending on the claim source it may or may not have these values.
+            var username = _httpContextAccessor.HttpContext.User.GetUsername() ?? "service";
+            var key = _httpContextAccessor.HttpContext.User.GetUserKey();
+            var directory =
+                _httpContextAccessor.HttpContext.User.GetUserDirectory() ?? string.Empty;
+            foreach (var entry in modifiedEntries)
+            {
+                entry.UpdateAppAuditProperties(username, key, directory);
+
+                if (entry.State == EntityState.Deleted && Database.IsRelational())
+                {
+                    entry.State = EntityState.Detached;
+                    var user = username;
+                    var schema = GetSchemaName(entry.Entity);
+                    var primarykey = GetPrimaryKey(entry.Entity);
+                    var tableName = GetTableName(entry.Entity);
+
+                    lock (DeletionHistoryLock)
+                    {
+                        Database.ExecuteSql(
+                            $"EXECUTE dbo.PIM_DELETION_HISTORY @prmUserID={user}, @prmHstSchema={schema}, @prmBizSchema={schema}, @prmBizTblNm={tableName}, @prmPKValue={primarykey}, @modeDebug={0}");
+                    }
+                }
+
+                // For in-memory or non-relational providers, let EF handle the delete normally.
+            }
+
+            return await base.SaveChangesAsync(cancellationToken);
         }
 
         /// <summary>
