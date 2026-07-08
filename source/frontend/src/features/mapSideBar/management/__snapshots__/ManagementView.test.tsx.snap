@@ -1440,7 +1440,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                           </div>
                           <div
-                            class="pb-2 row"
+                            class="pb-1 row"
                           >
                             <div
                               class="pr-0 text-left col-5"
@@ -1453,6 +1453,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c40 text-left col"
+                              data-testid="teamMember[0]"
                             />
                           </div>
                           <div
@@ -1648,10 +1649,10 @@ exports[`ManagementView component > renders as expected 1`] = `
                           class="collapse show"
                         >
                           <div
-                            class="pb-2 row"
+                            class="pb-1 row"
                           >
                             <div
-                              class="pr-0 text-left col-5"
+                              class="pr-0 text-left col-4"
                             >
                               <label
                                 class="c39"
@@ -1661,7 +1662,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c40 text-left col"
-                              data-testid="management-team-member-0"
+                              data-testid="teamMember[undefined]"
                             >
                               <a
                                 class="c43"
@@ -1690,10 +1691,10 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                           </div>
                           <div
-                            class="pb-2 row"
+                            class="pb-1 row"
                           >
                             <div
-                              class="pr-0 text-left col-5"
+                              class="pr-0 text-left col-4"
                             >
                               <label
                                 class="c39"
@@ -1703,7 +1704,7 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c40 text-left col"
-                              data-testid="management-team-member-1"
+                              data-testid="teamMember[undefined]"
                             >
                               <a
                                 class="c43"
