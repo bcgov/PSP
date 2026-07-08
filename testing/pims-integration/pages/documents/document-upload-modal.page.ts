@@ -36,10 +36,8 @@ export class DocumentUploadModalPage {
   }
 
   async getDocumentErrorLabel(index: number = 0): Promise<string> {
-    const documentHeaderWrapper = this.page.locator(
-      `//div[@data-testid='document[${index}]-error']/parent::div/following-sibling::div`
-    );
-    return await documentHeaderWrapper.innerText();
+    const documentErrorLabel = this.page.getByTestId(`document[${index}]-error-message`);
+    return await documentErrorLabel.innerText();
   }
 
   async getDocumentErrorFilename(index: number = 0): Promise<string> {

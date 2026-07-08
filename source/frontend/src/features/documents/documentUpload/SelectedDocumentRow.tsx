@@ -111,7 +111,12 @@ export const SelectedDocumentRow: React.FunctionComponent<ISelectedDocumentRowPr
               </Col>
             </Row>
 
-            <StyledErrorDiv className={clsx('ml-0 pb-1')}>{fileError}</StyledErrorDiv>
+            <StyledErrorDiv
+              className={clsx('ml-0 pb-1')}
+              data-testid={`document[${index}]-error-message`}
+            >
+              {fileError}
+            </StyledErrorDiv>
           </div>
         }
         isCollapsable={false}
