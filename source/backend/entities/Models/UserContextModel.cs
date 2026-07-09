@@ -36,7 +36,7 @@ namespace Pims.Dal.Entities.Models
 
         public static UserContextModel FromPimsUser(PimsUser pimsUser)
         {
-            ArgumentNullException.ThrowIfNull(nameof(pimsUser));
+            ArgumentNullException.ThrowIfNull(pimsUser, nameof(pimsUser));
             return new UserContextModel(pimsUser);
         }
     }

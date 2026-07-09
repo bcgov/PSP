@@ -1474,12 +1474,20 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             repository.Setup(x => x.GetTeamMembers(It.IsAny<UserContextModel>())).Returns(allTeamMembers);
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var user = EntityHelper.CreateUser("Test");
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
             // Act
             var result = service.GetTeamMembers();
 
             // Assert
-            repository.Verify(x => x.GetTeamMembers(It.IsAny<UserContextModel>()), Times.Once);
             result.Should().HaveCount(2);
+            repository.Verify(
+                x => x.GetTeamMembers(It.Is<UserContextModel>(uc => uc.PersonId == user.PersonId)),
+                Times.Once,
+                "The GetTeamMembers method should pass the correct UserContextModel to the repository."
+            );
         }
 
         [Fact]
@@ -1509,7 +1517,7 @@ namespace Pims.Api.Test.Services
             var managementFile = EntityHelper.CreateManagementFile();
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
-            repository.Setup(x => x.GetPageDeep(It.IsAny<ManagementFilter>(), null)).Returns(new Paged<PimsManagementFile>(new[] { managementFile }));
+            repository.Setup(x => x.GetPageDeep(It.IsAny<ManagementFilter>(), It.IsAny<UserContextModel>())).Returns(new Paged<PimsManagementFile>(new[] { managementFile }));
 
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
             var user = EntityHelper.CreateUser("Test");
@@ -1519,7 +1527,7 @@ namespace Pims.Api.Test.Services
             var result = service.GetPage(new ManagementFilter());
 
             // Assert
-            repository.Verify(x => x.GetPageDeep(It.IsAny<ManagementFilter>(), null), Times.Once);
+            repository.Verify(x => x.GetPageDeep(It.IsAny<ManagementFilter>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         [Fact]

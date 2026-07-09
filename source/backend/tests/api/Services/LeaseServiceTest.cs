@@ -93,7 +93,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             // PersonId should be passed to ensure contractor only sees leases they are assigned to
-            leaseRepository.Verify(x => x.GetPage(filter, It.IsAny<UserContextModel>()), Times.Once);
+            leaseRepository.Verify(x => x.GetPage(filter, It.Is<UserContextModel>(uc => uc.PersonId == user.PersonId && uc.IsContractor == true)), Times.Once);
         }
 
         [Fact]
@@ -120,7 +120,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             // Pagination should be ignored and all results should be returned when "all" parameter is true
-            leaseRepository.Verify(x => x.GetPage(It.Is<LeaseFilter>(f => f.Page == 1 && f.Quantity == 55), null), Times.Once);
+            leaseRepository.Verify(x => x.GetPage(It.Is<LeaseFilter>(f => f.Page == 1 && f.Quantity == 55), It.IsAny<UserContextModel>()), Times.Once);
         }
         #endregion
 

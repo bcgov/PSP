@@ -184,7 +184,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.Project = new PimsProject() { Description = "Mock Project", Code = "PRJ" };
+            acqFile.Project = EntityHelper.CreateProject(1, "PRJ", "Mock Project");
             var filter = new AcquisitionFilter() { ProjectNameOrNumber = "Mock Project" };
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
@@ -991,7 +991,7 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
 
-            var inRegionFile = EntityHelper.CreateAcquisitionFile(region: EntityHelper.CreateRegion(1, "Northern Interior"));
+            var inRegionFile = EntityHelper.CreateAcquisitionFile(region: EntityHelper.CreateRegion(1, "Northern"));
             inRegionFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() {
                 new PimsAcquisitionFileTeam()
                 {

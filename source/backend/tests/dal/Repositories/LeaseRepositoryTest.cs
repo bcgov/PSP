@@ -355,17 +355,24 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
-        public void GetPage_Contractor_Success()
+        public void GetPage_Contractor_LeaseTeamMember_Success()
         {
             // Arrange
             var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
+            var context = _helper.GetService<PimsContext>();
 
-            var contractorLease = EntityHelper.CreateLease(456, 789, lFileNo: "123", stakeholderLastName: "tenant", addStakeholder: true, generateTypeIds: true);
-            contractorLease.Project = new PimsProject()
+            var contractorLease = EntityHelper.CreateLease(
+                456,
+                789,
+                lFileNo: "123",
+                stakeholderLastName: "tenant",
+                addStakeholder: true,
+                generateTypeIds: true,
+                region: context.PimsRegions.First()
+            );
+            contractorLease.PimsLeaseLicenseTeams = new List<PimsLeaseLicenseTeam>()
             {
-                Description = "",
-                ProjectStatusTypeCode = "",
-                PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1 } } // contractor Id
+                new() { LlTeamProfileTypeCode = "COORD", PersonId = 1 } // contractor Id
             };
 
             var secondLease = EntityHelper.CreateLease(100, generateTypeIds: true);
@@ -374,7 +381,44 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(secondLease);
 
             // Act
-            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", id: 1, regionCode: 1, isContractor: true));
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", id: 1, regionCode: context.PimsRegions.First().Code, isContractor: true));
+            var result = repository.GetPage(new LeaseFilter(), userContext);
+
+            // Assert
+            result.Should().NotBeNull();
+            result.Should().HaveCount(1);
+            result.Items.First().LeaseId.Should().Be(contractorLease.LeaseId);
+        }
+
+        [Fact]
+        public void GetPage_Contractor_ProjectTeamMember_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.LeaseView);
+            var context = _helper.GetService<PimsContext>();
+
+            var contractorLease = EntityHelper.CreateLease(
+                456,
+                789,
+                lFileNo: "123",
+                stakeholderLastName: "tenant",
+                addStakeholder: true,
+                generateTypeIds: true,
+                region: context.PimsRegions.First()
+            );
+            contractorLease.Project = EntityHelper.CreateProject(1, "PRJ", "Mock Project");
+            contractorLease.Project.PimsProjectPeople = new List<PimsProjectPerson>()
+            {
+                new () { ProjectPersonRoleTypeCode = "COORD", PersonId = 1 } // contractor Id
+            };
+
+            var secondLease = EntityHelper.CreateLease(100, generateTypeIds: true);
+
+            _helper.AddAndSaveChanges(contractorLease);
+            _helper.AddAndSaveChanges(secondLease);
+
+            // Act
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", id: 1, regionCode: context.PimsRegions.First().Code, isContractor: true));
             var result = repository.GetPage(new LeaseFilter(), userContext);
 
             // Assert
