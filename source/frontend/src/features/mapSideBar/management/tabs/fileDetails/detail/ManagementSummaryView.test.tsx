@@ -12,8 +12,6 @@ import {
   mockManagementFileResponse,
 } from '@/mocks/managementFiles.mock';
 import ManagementStatusUpdateSolver from './ManagementStatusUpdateSolver';
-import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
-import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
 
 const onEdit = vi.fn();
 const onAddContact = vi.fn();
@@ -40,16 +38,6 @@ const mockGetOrganizationApi = {
   status: 200,
 };
 
-vi.mock('@/features/contacts/repositories/useOrganizationRepository');
-vi.mocked(useOrganizationRepository).mockImplementation(() => ({
-  getOrganizationDetail: mockGetOrganizationApi,
-}));
-
-vi.mock('@/features/contacts/repositories/usePersonRepository');
-vi.mocked(usePersonRepository).mockImplementation(() => ({
-  getPersonDetail: mockGetPersonApi,
-}));
-
 describe('ManagementSummaryView component', () => {
   // render component under test
   const setup = async (
@@ -58,16 +46,13 @@ describe('ManagementSummaryView component', () => {
     const utils = render(
       <ManagementSummaryView
         managementFile={renderOptions?.props?.managementFile ?? mockManagementFileApi}
-        managementFileContacts={
-          renderOptions?.props?.managementFileContacts ?? mockManagementFileContacts
-        }
+        managementFileContacts={renderOptions?.props?.managementFileContacts ?? mockManagementFileContacts}
         fileStatusSolver={renderOptions?.props?.fileStatusSolver ?? mockFileStatusSolver}
         isLoading={false}
         onFileEdit={onEdit}
         onAddContact={onAddContact}
         onEditContact={onEditContact}
-        onDeleteContact={onDeleteContact}
-      />,
+        onDeleteContact={onDeleteContact} responsiblePayerPerson={renderOptions?.props?.responsiblePayerPerson} responsiblePayerOrganization={renderOptions?.props?.responsiblePayerOrganization} primaryContact={renderOptions?.props?.primaryContact}      />,
       {
         ...renderOptions,
         useMockAuthentication: true,
@@ -211,138 +196,59 @@ describe('ManagementSummaryView component', () => {
     expect(await findByText(/Bob Billy Smith/)).toBeVisible();
   });
 
-  it('renders reponsible payer person', async () => {
-    const apiMock = mockManagementFileResponse();
-    mockGetPersonApi.execute.mockResolvedValueOnce({
-      id: 100,
-      surname: 'Monga',
-      firstName: 'Aman',
-      middleNames: null,
-      nameSuffix: null,
-      preferredName: null,
-      birthDate: null,
-      comment: null,
-      addressComment: null,
-      useOrganizationAddress: false,
-      isDisabled: false,
-      managementActivityId: null,
-      contactMethods: [],
-      personAddresses: [],
-      personOrganizations: [],
-      rowVersion: 1,
-    });
+  it('renders responsible payer person', async () => {
+  const apiMock = mockManagementFileResponse();
 
-    const { findByText } = await setup({
-      props: {
-        managementFile: {
-          ...apiMock,
-          responsiblePayerPersonId: 100,
-        },
+  const { findByText } = await setup({
+    props: {
+      managementFile: {
+        ...apiMock,
+        responsiblePayerPersonId: 100,
       },
-      claims: [],
-    });
-    await waitForEffects();
-
-    expect(mockGetPersonApi.execute).toHaveBeenCalledTimes(1);
-    expect(await findByText(/Aman Monga/)).toBeVisible();
+      responsiblePayerPerson: {
+        ...getEmptyPerson(),
+        id: 100,
+        surname: 'Monga',
+        firstName: 'Aman',
+        middleNames: null,
+        personOrganizations: [],
+        personAddresses: [],
+        contactMethods: [],
+        rowVersion: 1,
+      },
+    },
+    claims: [],
   });
 
-  it('renders reponsible payer organization', async () => {
-    const apiMock = mockManagementFileResponse();
-    mockGetOrganizationApi.execute.mockResolvedValueOnce({
-      id: 1000,
-      parentOrganizationId: null,
-      regionCode: null,
-      districtCode: null,
-      organizationTypeCode: 'REALTOR',
-      identifierTypeCode: 'OTHINCORPNO',
-      organizationIdentifier: 'DQ4EVA',
-      name: 'TEST COMANY INC.',
-      alias: null,
-      incorporationNumber: null,
-      website: null,
-      comment: null,
-      isDisabled: false,
-      contactMethods: [
-        {
-          id: 7,
-          personId: null,
-          organizationId: 3,
-          contactMethodType: {
-            id: 'WORKPHONE',
-            description: 'Work phone',
-            isDisabled: false,
-            displayOrder: null,
-          },
-          value: '6049983251',
-          rowVersion: 1,
-        },
-      ],
-      organizationAddresses: [
-        {
-          id: 2,
-          organizationId: 3,
-          address: {
-            id: 2,
-            streetAddress1: 'PO Box 2',
-            streetAddress2: 'Stealth Camping',
-            streetAddress3: 'Walmart Parking Lot',
-            municipality: 'South Podunk',
-            provinceStateId: 1,
-            province: {
-              id: 1,
-              code: 'BC',
-              description: 'British Columbia',
-              displayOrder: 10,
-            },
-            countryId: 1,
-            country: {
-              id: 1,
-              code: 'CA',
-              description: 'Canada',
-              displayOrder: 1,
-            },
-            districtCode: null,
-            district: null,
-            region: null,
-            regionCode: null,
-            countryOther: null,
-            postal: 'H1I B0B',
-            latitude: null,
-            longitude: null,
-            comment: null,
-            rowVersion: 1,
-          },
-          addressUsageType: {
-            id: 'MAILADDR',
-            description: 'Mailing address',
-            isDisabled: true,
-            displayOrder: null,
-          },
-          rowVersion: 1,
-        },
-      ],
-      organizationPersons: [],
-      parentOrganization: null,
-      rowVersion: 1,
-    });
+  await waitForEffects();
 
-    const { findByText } = await setup({
-      props: {
-        managementFile: {
-          ...apiMock,
-          responsiblePayerPersonId: null,
-          responsiblePayerOrganizationId: 1000,
-          responsiblePayerPrimaryContactId: null,
-        },
+  expect(await findByText(/Aman Monga/)).toBeVisible();
+});
+
+  it('renders responsible payer organization', async () => {
+  const apiMock = mockManagementFileResponse();
+
+  const { findByText } = await setup({
+    props: {
+      managementFile: {
+        ...apiMock,
+        responsiblePayerPersonId: null,
+        responsiblePayerOrganizationId: 1000,
+        responsiblePayerPrimaryContactId: null,
       },
-      claims: [],
-    });
-    await waitForEffects();
-
-    expect(mockGetOrganizationApi.execute).toHaveBeenCalledTimes(1);
-    expect(await findByText(/TEST COMANY INC./)).toBeVisible();
+      responsiblePayerOrganization: {
+        ...getEmptyOrganization(),
+        id: 1000,
+        name: 'TEST COMPANY INC.',
+      },
+    },
+    claims: [],
   });
+
+  await waitForEffects();
+
+  expect(await findByText(/TEST COMPANY INC./)).toBeVisible();
+});
 
   it('renders management team member organization', async () => {
     const apiMock = mockManagementFileApi;

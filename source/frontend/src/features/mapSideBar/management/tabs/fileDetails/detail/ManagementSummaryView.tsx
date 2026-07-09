@@ -1,5 +1,5 @@
 import { first } from 'lodash';
-import { Fragment, useCallback, useEffect, useState } from 'react';
+import { Fragment } from 'react';
 import { FaUserPlus } from 'react-icons/fa';
 
 import EditButton from '@/components/common/buttons/EditButton';
@@ -11,15 +11,13 @@ import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Sec
 import { SectionListHeader } from '@/components/common/SectionListHeader';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants';
-import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
-import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_ManagementFileContact } from '@/models/api/generated/ApiGen_Concepts_ManagementFileContact';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
 import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
-import { exists, isValidId, prettyFormatDate } from '@/utils';
+import { exists, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import ManagementFileContactsList from './contacts/ManagementFileContactsList';
@@ -30,6 +28,9 @@ export interface IManagementSummaryViewProps {
   managementFileContacts: ApiGen_Concepts_ManagementFileContact[];
   fileStatusSolver: ManagementStatusUpdateSolver;
   isLoading: boolean;
+  responsiblePayerPerson: ApiGen_Concepts_Person | null;
+  responsiblePayerOrganization: ApiGen_Concepts_Organization | null;
+  primaryContact: ApiGen_Concepts_Person | null;
   onFileEdit: () => void;
   onAddContact: () => void;
   onEditContact: (contactId: number) => void;
@@ -41,15 +42,15 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
   managementFileContacts,
   fileStatusSolver,
   isLoading,
+  responsiblePayerPerson,
+  responsiblePayerOrganization,
+  primaryContact,
   onFileEdit,
   onAddContact,
   onEditContact,
   onDeleteContact,
 }) => {
   const keycloak = useKeycloakWrapper();
-  const [person, setPerson] = useState<ApiGen_Concepts_Person | null>(null);
-  const [organization, setOrganization] = useState<ApiGen_Concepts_Organization | null>(null);
-  const [primaryContact, setPrimaryContact] = useState<ApiGen_Concepts_Person | null>(null);
 
   const canEditDetails = () => {
     if (keycloak.hasRole(Roles.SYSTEM_ADMINISTRATOR) || !fileStatusSolver.isAdminProtected()) {
@@ -69,53 +70,6 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
   const noticeOfClaim = exists(managementFile?.noticeOfClaim)
     ? first(managementFile.noticeOfClaim)
     : null;
-
-  const {
-    getPersonDetail: { execute: getPerson, loading: getPersonLoading },
-  } = usePersonRepository();
-
-  const {
-    getOrganizationDetail: { execute: getOrganization, loading: getOrganizationLoading },
-  } = useOrganizationRepository();
-
-  const fetchData = useCallback(async () => {
-    if (isValidId(managementFile.responsiblePayerPersonId)) {
-      const returnedPerson = await getPerson(managementFile.responsiblePayerPersonId);
-      if (exists(returnedPerson)) {
-        setPerson(returnedPerson);
-      }
-    }
-    if (isValidId(managementFile.responsiblePayerOrganizationId)) {
-      const returnedOrganization = await getOrganization(
-        managementFile.responsiblePayerOrganizationId,
-      );
-      if (exists(returnedOrganization)) {
-        setOrganization(returnedOrganization);
-      }
-    }
-
-    if (isValidId(managementFile.responsiblePayerPrimaryContactId)) {
-      const returnedPrimaryContact = await getPerson(
-        managementFile.responsiblePayerPrimaryContactId,
-      );
-      if (exists(returnedPrimaryContact)) {
-        setPrimaryContact(returnedPrimaryContact);
-      }
-    }
-  }, [
-    getOrganization,
-    getPerson,
-    managementFile.responsiblePayerOrganizationId,
-    managementFile.responsiblePayerPersonId,
-    managementFile.responsiblePayerPrimaryContactId,
-  ]);
-
-  useEffect(() => {
-    fetchData();
-  }, [fetchData]);
-  if (getPersonLoading || getOrganizationLoading) {
-    return <></>;
-  }
 
   return (
     <StyledSummarySection>
@@ -179,10 +133,10 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
           label={'Responsible payer'}
           labelWidth={{ xs: '5' }}
           teamMemberName={
-            exists(organization)
-              ? organization.name
-              : exists(person)
-              ? formatApiPersonNames(person)
+            exists(responsiblePayerOrganization)
+              ? responsiblePayerOrganization.name
+              : exists(responsiblePayerPerson)
+              ? formatApiPersonNames(responsiblePayerPerson)
               : ''
           }
           teamMemberUrl={
