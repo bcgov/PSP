@@ -1379,6 +1379,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c41 card"
+                              data-testid="request-description"
                               style="padding: 0px;"
                             >
                               <div
@@ -1461,6 +1462,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c41 card"
+                              data-testid="research-result"
                               style="padding: 0px;"
                             >
                               <div
@@ -1543,6 +1545,7 @@ exports[`ResearchContainer component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c41 card"
+                              data-testid="expropriation-notes"
                               style="padding: 0px;"
                             >
                               <div

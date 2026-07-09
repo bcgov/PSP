@@ -126,7 +126,10 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
           </SectionField>
         )}
         <SectionField label="Description of request"></SectionField>
-        <ExpandableTextCard text={detail.requestDescription ?? ''} />
+        <ExpandableTextCard
+          dataTestid="request-description"
+          text={detail.requestDescription ?? ''}
+        />
       </Section>
       <Section header="Result">
         <SectionField label="Research completed on">
@@ -135,12 +138,15 @@ const ResearchSummaryView: React.FunctionComponent<IResearchSummaryViewProps> = 
             : 'not complete'}
         </SectionField>
         <SectionField label="Result of request" />
-        <ExpandableTextCard text={detail.researchResult ?? ''} />
+        <ExpandableTextCard dataTestid="research-result" text={detail.researchResult ?? ''} />
       </Section>
       <Section header="Expropriation">
         <SectionField label="Expropriation?">{detail.isExpropriation ? 'Yes' : 'No'}</SectionField>
         <SectionField label="Expropriation comments" />
-        <ExpandableTextCard text={detail.expropriationNotes ?? ''} />
+        <ExpandableTextCard
+          dataTestid="expropriation-notes"
+          text={detail.expropriationNotes ?? ''}
+        />
       </Section>
     </StyledSummarySection>
   );
