@@ -7,9 +7,7 @@ x-mayan-container: &mayan-container
     MAYAN_LOCK_MANAGER_BACKEND: mayan.apps.lock_manager.backends.redis_lock.RedisLock
     MAYAN_LOCK_MANAGER_BACKEND_ARGUMENTS: "{'redis_url':'redis://:${MAYAN_REDIS_PASSWORD:-mayanredispassword}@redis:6379/2'}"
 
-  build:
-    context: https://github.com/bcgov/mayan-openshift.git#dev
-    dockerfile: ./docker/Dockerfile
+  image: ${MAYAN_DOCKER_IMAGE:-image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/mayan-bcgov}:${MAYAN_DOCKER_TAG:-4.7.1}
   networks:
     - psp
   restart: unless-stopped
@@ -22,6 +20,7 @@ x-mayan-container: &mayan-container
 services:
   mayan-app:
     <<: *mayan-container
+    container_name: mayan-frontend
     profiles:
       - all_in_one
       - all
@@ -30,16 +29,33 @@ services:
       - "7080:8000"
     command:
       - run_frontend
+    environment:
+      - MAYAN_GUNICORN_WORKERS=3
+      - MAYAN_GUNICORN_MAX_REQUESTS=500
+      - MAYAN_GUNICORN_TIMEOUT=120
+      - MAYAN_GUNICORN_WORKER_CLASS=gevent
+    depends_on:
+      command_initialsetup_or_performupgrade:
+        condition: service_completed_successfully
+    # CPU/Memory resource constraints
+    deploy:
+      resources:
+        limits:
+          cpus: "1.5"
+          memory: 1500M
+        reservations:
+          memory: 400M
 
   elasticsearch:
+    container_name: mayan-elasticsearch
     environment:
-      - bootstrap.memory_lock=true
+      - bootstrap.memory_lock=false
       - discovery.type=single-node
       - http.max_content_length=400mb
-      - xpack.security.enabled=true
+      - xpack.security.enabled=false
       - "ES_JAVA_OPTS=-Xms512m -Xmx512m"
       - ELASTIC_PASSWORD=${MAYAN_ELASTICSEARCH_PASSWORD:-mayanespassword}
-    image: ${MAYAN_DOCKER_ELASTICSEARCH_IMAGE:-docker.elastic.co/elasticsearch/elasticsearch}:${MAYAN_DOCKER_ELASTICSEARCH_TAG:-7.16.0}
+    image: ${MAYAN_DOCKER_ELASTICSEARCH_IMAGE:-docker.elastic.co/elasticsearch/elasticsearch}:${MAYAN_DOCKER_ELASTICSEARCH_TAG:-7.17.26}
     networks:
       - psp
     # Enable to allow external access to the database.
@@ -56,8 +72,14 @@ services:
         hard: -1
     volumes:
       - ${MAYAN_ELASTICSEARCH_VOLUME:-elasticsearch}:/usr/share/elasticsearch/data
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0"
+          memory: 2000M
 
   postgresql:
+    container_name: mayan-postgres
     command:
       - "postgres"
       - "-c"
@@ -89,8 +111,13 @@ services:
     restart: unless-stopped
     volumes:
       - ${MAYAN_POSTGRES_VOLUME:-postgres}:/var/lib/postgresql/data
-
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1000M
   redis:
+    container_name: mayan-redis
     command:
       - redis-server
       - --appendonly
@@ -119,10 +146,179 @@ services:
     restart: unless-stopped
     volumes:
       - ${MAYAN_REDIS_VOLUME:-redis}:/data
+    deploy:
+      resources:
+        limits:
+          cpus: "0.5"
+          memory: 256M
+
+  rabbitmq:
+    container_name: mayan-rabbitmq
+    image: rabbitmq:${MAYAN_DOCKER_RABBITMQ_TAG:-3.9-management-alpine}
+    environment:
+      RABBITMQ_DEFAULT_USER: ${MAYAN_RABBITMQ_USER:-mayan}
+      RABBITMQ_DEFAULT_PASS: ${MAYAN_RABBITMQ_PASSWORD:-mayanrabbitpass}
+      RABBITMQ_DEFAULT_VHOST: ${MAYAN_RABBITMQ_VHOST:-mayan}
+    networks:
+      - psp
+    # Enable to allow access to the administration interface.
+    # ports:
+    #   - "15672:15672"
+    profiles:
+      - rabbitmq
+      - all
+      - mayan
+    restart: unless-stopped
+    volumes:
+      - ${MAYAN_RABBITMQ_VOLUME:-rabbitmq}:/var/lib/rabbitmq
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1000M
+
+  command_initialsetup_or_performupgrade:
+    <<: *mayan-container
+    container_name: mayan-db-migration
+    command:
+      - run_initial_setup_or_perform_upgrade
+    profiles:
+      - extra_command_initialsetup_or_performupgrade
+      - all
+      - mayan
+    restart: "no"
+
+  # Worker A handles fast UI responses, low latency tasks, AND periodic tasks (--beat)
+  worker_a:
+    <<: *mayan-container
+    container_name: mayan-worker-a
+    command:
+      - run_worker
+      - worker_a
+      - --autoscale=10,1 --max-tasks-per-child=1 --beat --pidfile=/tmp/celerybeat.pid -l INFO
+    profiles:
+      - extra_worker_a
+      - all
+      - mayan
+    deploy:
+      resources:
+        limits:
+          cpus: "1.0"
+          memory: 1000M
+    depends_on:
+      command_initialsetup_or_performupgrade:
+        condition: service_completed_successfully
+
+  # Worker B processes document uploads & metadata changes
+  worker_b:
+    <<: *mayan-container
+    container_name: mayan-worker-b
+    command:
+      - run_worker
+      - worker_b
+      - --autoscale=3,1 --max-tasks-per-child=1 --prefetch-multiplier=1
+    profiles:
+      - extra_worker_b
+      - all
+      - mayan
+    deploy:
+      resources:
+        limits:
+          cpus: "0.8"
+          memory: 800M
+    depends_on:
+      command_initialsetup_or_performupgrade:
+        condition: service_completed_successfully
+
+  # Worker C handles complex processing tasks (OCR, layout parsing)
+  worker_c:
+    <<: *mayan-container
+    container_name: mayan-worker-c
+    command:
+      - run_worker
+      - worker_c
+      - --autoscale=10,5 --max-tasks-per-child=1
+    profiles:
+      - extra_worker_c
+      - all
+      - mayan
+    deploy:
+      resources:
+        limits:
+          cpus: "2.0" # Higher allocation for heavy file conversions
+          memory: 2000M
+    depends_on:
+      command_initialsetup_or_performupgrade:
+        condition: service_completed_successfully
+
+  # Worker D processes long background maintenance scripts
+  worker_d:
+    <<: *mayan-container
+    container_name: mayan-worker-d
+    command:
+      - run_worker
+      - worker_d
+      - --autoscale=5,1 --max-tasks-per-child=1 --prefetch-multiplier=1
+    profiles:
+      - extra_worker_d
+      - all
+      - mayan
+    deploy:
+      resources:
+        limits:
+          cpus: "0.8"
+          memory: 800M
+    depends_on:
+      command_initialsetup_or_performupgrade:
+        condition: service_completed_successfully
+
+  # Worker E handles low-priority events or scheduled workflows
+  worker_e:
+    <<: *mayan-container
+    container_name: mayan-worker-e
+    command:
+      - run_worker
+      - worker_e
+      - --autoscale=5,1 --max-tasks-per-child=1 --prefetch-multiplier=1
+    profiles:
+      - extra_worker_e
+      - all
+      - mayan
+    deploy:
+      resources:
+        limits:
+          cpus: "0.8"
+          memory: 800M
+    depends_on:
+      command_initialsetup_or_performupgrade:
+        condition: service_completed_successfully
+
+  # worker_custom_queue:
+  #   <<: *mayan-container
+  #   command:
+  #     - /bin/sh
+  #     - -c
+  #     - "MAYAN_QUEUE_LIST=${MAYAN_WORKER_CUSTOM_QUEUE_LIST:-} /usr/local/bin/run_worker.sh --prefetch-multiplier=1"
+  #   profiles:
+  #     - extra_worker_custom
+  #     - all
+  #     - mayan
+
+  # Run a separate Celery beat container
+  # celery_beat:
+  #   <<: *mayan-container
+  #   command:
+  #     - run_celery
+  #     - beat -l INFO --pidfile=/tmp/celerybeat.pid
+  #   profiles:
+  #     - extra_celery_beat
+  #     - all
+  #     - mayan
 
   # Enable to run standalone workers
   mountindex:
     <<: *mayan-container
+    container_name: mayan-mountindex
     cap_add:
       - SYS_ADMIN
     devices:
@@ -142,113 +338,6 @@ services:
         bind:
           propagation: shared
 
-  # Run a separate class A worker
-  worker_a:
-    <<: *mayan-container
-    command:
-      - run_worker
-      - worker_a
-      - "--prefetch-multiplier=1 --concurrency=10 --max-memory-per-child=1000 -E"
-    profiles:
-      - extra_worker_a
-      - all
-      - mayan
-
-  # Run a separate class B worker
-  worker_b:
-    <<: *mayan-container
-    command:
-      - run_worker
-      - worker_b
-      - "--prefetch-multiplier=1 --concurrency=10 --max-memory-per-child=1000 -E"
-    profiles:
-      - extra_worker_b
-      - all
-      - mayan
-
-  # Run a separate class C worker
-  worker_c:
-    <<: *mayan-container
-    command:
-      - run_worker
-      - worker_c
-      - "--prefetch-multiplier=1 --concurrency=10 --max-memory-per-child=1000 -E"
-    profiles:
-      - extra_worker_c
-      - all
-      - mayan
-
-  # Run a separate class D worker
-  worker_d:
-    <<: *mayan-container
-    command:
-      - run_worker
-      - worker_d
-      - "--prefetch-multiplier=1 --concurrency=10 --max-memory-per-child=1000 -E"
-    profiles:
-      - extra_worker_d
-      - all
-      - mayan
-
-  worker_e:
-    <<: *mayan-container
-    command:
-      - run_worker
-      - worker_e
-      - "--prefetch-multiplier=1 --concurrency=10 --max-memory-per-child=1000 -E"
-    profiles:
-      - extra_worker_e
-      - all
-      - mayan
-
-  worker_custom_queue:
-    <<: *mayan-container
-    command:
-      - /bin/sh
-      - -c
-      - "MAYAN_QUEUE_LIST=${MAYAN_WORKER_CUSTOM_QUEUE_LIST:-} /usr/local/bin/run_worker.sh --prefetch-multiplier=1"
-    profiles:
-      - extra_worker_custom
-      - all
-      - mayan
-
-  # Run a separate Celery beat container
-  celery_beat:
-    <<: *mayan-container
-    command:
-      - run_celery
-      - "beat --pidfile= --loglevel=ERROR"
-    profiles:
-      - extra_celery_beat
-      - all
-      - mayan
-
-  command_initialsetup_or_performupgrade:
-    <<: *mayan-container
-    command:
-      - run_initial_setup_or_perform_upgrade
-    profiles:
-      - extra_command_initialsetup_or_performupgrade
-    restart: "no"
-
-  rabbitmq:
-    image: rabbitmq:${MAYAN_DOCKER_RABBITMQ_TAG:-3.9-management-alpine}
-    environment:
-      RABBITMQ_DEFAULT_USER: ${MAYAN_RABBITMQ_USER:-mayan}
-      RABBITMQ_DEFAULT_PASS: ${MAYAN_RABBITMQ_PASSWORD:-mayanrabbitpass}
-      RABBITMQ_DEFAULT_VHOST: ${MAYAN_RABBITMQ_VHOST:-mayan}
-    networks:
-      - psp
-    # Enable to allow access to the administration interface.
-    # ports:
-    #   - "15672:15672"
-    profiles:
-      - rabbitmq
-      - all
-      - mayan
-    restart: unless-stopped
-    volumes:
-      - ${MAYAN_RABBITMQ_VOLUME:-rabbitmq}:/var/lib/rabbitmq
 volumes:
   app:
   elasticsearch:
