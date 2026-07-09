@@ -151,6 +151,7 @@ export const DispositionSummaryView: React.FunctionComponent<IDispositionSummary
               primaryContactName={formatApiPersonNames(teamMember?.primaryContact)}
               primaryContactUrl={`/contact/P${teamMember?.primaryContactId}`}
               showPrimaryContact={!!teamMember?.organizationId}
+              index={index}
             ></PrimaryContactSelectorDetails>
           </Fragment>
         ))}

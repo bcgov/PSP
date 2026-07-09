@@ -742,7 +742,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
-            data-testid="teamMember[undefined]"
+            data-testid="teamMember[0]"
           >
             <a
               class="c7"
@@ -784,7 +784,7 @@ exports[`ManagementSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c4 text-left col"
-            data-testid="teamMember[undefined]"
+            data-testid="teamMember[0]"
           >
             <a
               class="c7"

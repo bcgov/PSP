@@ -670,7 +670,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c5 text-left col"
-            data-testid="teamMember[undefined]"
+            data-testid="teamMember[0]"
           >
             <a
               class="c6"
@@ -712,7 +712,7 @@ exports[`AcquisitionSummaryView component > matches snapshot 1`] = `
           </div>
           <div
             class="c5 text-left col"
-            data-testid="teamMember[undefined]"
+            data-testid="teamMember[0]"
           >
             <a
               class="c6"
@@ -1088,7 +1088,7 @@ Canada
           </div>
           <div
             class="c5 text-left col"
-            data-testid="teamMember[undefined]"
+            data-testid="teamMember[0]"
           >
             <a
               class="c6"
@@ -1130,7 +1130,7 @@ Canada
           </div>
           <div
             class="c5 text-left col"
-            data-testid="primaryContact[undefined]"
+            data-testid="primaryContact[0]"
           >
             <a
               class="c6"

@@ -612,7 +612,7 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
-                  data-testid="teamMember[undefined]"
+                  data-testid="teamMember[0]"
                 >
                   <a
                     class="c8"
@@ -654,7 +654,7 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
-                  data-testid="teamMember[undefined]"
+                  data-testid="teamMember[1]"
                 >
                   <a
                     class="c8"

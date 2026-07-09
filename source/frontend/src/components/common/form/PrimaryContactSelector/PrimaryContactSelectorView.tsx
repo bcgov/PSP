@@ -23,7 +23,7 @@ export const PrimaryContactSelectorDetails = ({
   primaryContactName,
   primaryContactUrl,
   showPrimaryContact,
-  index,
+  index = 0,
   tooltip,
   labelWidth,
 }: PrimaryContactSelectorDetailsProps) => (

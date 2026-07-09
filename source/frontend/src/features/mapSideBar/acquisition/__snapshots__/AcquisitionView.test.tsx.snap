@@ -1884,7 +1884,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c41 text-left col"
-                              data-testid="teamMember[undefined]"
+                              data-testid="teamMember[0]"
                             >
                               <a
                                 class="c42"
@@ -1926,7 +1926,7 @@ exports[`AcquisitionView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c41 text-left col"
-                              data-testid="teamMember[undefined]"
+                              data-testid="teamMember[0]"
                             >
                               <a
                                 class="c42"
@@ -2302,7 +2302,7 @@ Canada
                             </div>
                             <div
                               class="c41 text-left col"
-                              data-testid="teamMember[undefined]"
+                              data-testid="teamMember[0]"
                             >
                               <a
                                 class="c42"
@@ -2344,7 +2344,7 @@ Canada
                             </div>
                             <div
                               class="c41 text-left col"
-                              data-testid="primaryContact[undefined]"
+                              data-testid="primaryContact[0]"
                             >
                               No contacts available
                             </div>

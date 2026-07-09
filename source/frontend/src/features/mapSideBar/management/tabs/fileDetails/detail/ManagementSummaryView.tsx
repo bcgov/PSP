@@ -193,7 +193,6 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
           primaryContactName={exists(primaryContact) ? formatApiPersonNames(primaryContact) : ''}
           primaryContactUrl={`/contact/P${managementFile.responsiblePayerPrimaryContactId}`}
           showPrimaryContact={!!managementFile.responsiblePayerOrganizationId}
-          index={0}
         ></PrimaryContactSelectorDetails>
 
         <SectionField
@@ -247,6 +246,7 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
               primaryContactName={formatApiPersonNames(teamMember?.primaryContact)}
               primaryContactUrl={`/contact/P${teamMember?.primaryContactId}`}
               showPrimaryContact={!!teamMember?.organizationId}
+              index={index}
             ></PrimaryContactSelectorDetails>
           </Fragment>
         ))}

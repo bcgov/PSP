@@ -787,7 +787,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
-                  data-testid="teamMember[undefined]"
+                  data-testid="teamMember[0]"
                 >
                   <a
                     class="c8"
@@ -829,7 +829,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
-                  data-testid="teamMember[undefined]"
+                  data-testid="teamMember[0]"
                 >
                   <a
                     class="c8"
@@ -897,7 +897,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
-                  data-testid="teamMember[undefined]"
+                  data-testid="teamMember[0]"
                 >
                   <a
                     class="c8"
@@ -939,7 +939,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
-                  data-testid="primaryContact[undefined]"
+                  data-testid="primaryContact[0]"
                 >
                   No contacts available
                 </div>
