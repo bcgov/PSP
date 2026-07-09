@@ -110,24 +110,24 @@ describe('PropertyManagementDetailContainer component', () => {
   });
 
   it('fetches responsible payer person and organization details', async () => {
-  const apiManagement = {
-    ...getMockApiPropertyManagement(1),
-    responsiblePayerPersonId: 100,
-    responsiblePayerOrganizationId: 200,
-    responsiblePayerPrimaryContactId: 300,
-  };
+    const apiManagement = {
+      ...getMockApiPropertyManagement(1),
+      responsiblePayerPersonId: 100,
+      responsiblePayerOrganizationId: 200,
+      responsiblePayerPrimaryContactId: 300,
+    };
 
-  mockGetApi.response = apiManagement;
+    mockGetApi.response = apiManagement;
 
-  mockGetPersonApi.execute.mockResolvedValue({});
-  mockGetOrganizationApi.execute.mockResolvedValue({});
+    mockGetPersonApi.execute.mockResolvedValue({});
+    mockGetOrganizationApi.execute.mockResolvedValue({});
 
-  setup({ props: { propertyId: 1 } });
+    setup({ props: { propertyId: 1 } });
 
-  await waitFor(() => {
-    expect(mockGetPersonApi.execute).toHaveBeenCalledWith(100);
-    expect(mockGetOrganizationApi.execute).toHaveBeenCalledWith(200);
-    expect(mockGetPersonApi.execute).toHaveBeenCalledWith(300);
+    await waitFor(() => {
+      expect(mockGetPersonApi.execute).toHaveBeenCalledWith(100);
+      expect(mockGetOrganizationApi.execute).toHaveBeenCalledWith(200);
+      expect(mockGetPersonApi.execute).toHaveBeenCalledWith(300);
+    });
   });
-});
 });

@@ -43,7 +43,9 @@ describe('PropertyManagementDetailView component', () => {
         }
         isLoading={renderOptions.props?.isLoading ?? false}
         responsiblePayerPerson={renderOptions.props?.responsiblePayerPerson ?? undefined}
-        responsiblePayerOrganization={renderOptions.props?.responsiblePayerOrganization ?? undefined}
+        responsiblePayerOrganization={
+          renderOptions.props?.responsiblePayerOrganization ?? undefined
+        }
         primaryContact={renderOptions.props?.primaryContact ?? undefined}
       />,
       {
@@ -93,62 +95,62 @@ describe('PropertyManagementDetailView component', () => {
   });
 
   it('displays responsible payer person', async () => {
-  const apiManagement: ApiGen_Concepts_PropertyManagement = {
-    ...getMockApiPropertyManagement(),
-    responsiblePayerPersonId: 100,
-    managementPurposes: [getMockApiPropertyManagementPurpose()],
-  };
+    const apiManagement: ApiGen_Concepts_PropertyManagement = {
+      ...getMockApiPropertyManagement(),
+      responsiblePayerPersonId: 100,
+      managementPurposes: [getMockApiPropertyManagementPurpose()],
+    };
 
-  const { getByText } = await setup({
-    props: {
-      propertyManagement: apiManagement,
-      isLoading: false,
-      responsiblePayerPerson: {
-        id: 100,
-        surname: 'Monga',
-        firstName: 'Aman',
-        middleNames: null,
-        nameSuffix: null,
-        preferredName: null,
-        birthDate: null,
-        comment: null,
-        addressComment: null,
-        useOrganizationAddress: false,
-        isDisabled: false,
-        managementActivityId: null,
-        contactMethods: [],
-        personAddresses: [],
-        personOrganizations: [],
-        rowVersion: 1,
+    const { getByText } = await setup({
+      props: {
+        propertyManagement: apiManagement,
+        isLoading: false,
+        responsiblePayerPerson: {
+          id: 100,
+          surname: 'Monga',
+          firstName: 'Aman',
+          middleNames: null,
+          nameSuffix: null,
+          preferredName: null,
+          birthDate: null,
+          comment: null,
+          addressComment: null,
+          useOrganizationAddress: false,
+          isDisabled: false,
+          managementActivityId: null,
+          contactMethods: [],
+          personAddresses: [],
+          personOrganizations: [],
+          rowVersion: 1,
+        },
       },
-    },
-  });
+    });
 
-  expect(getByText(/Aman Monga/)).toBeVisible();
-});
+    expect(getByText(/Aman Monga/)).toBeVisible();
+  });
 
   it('displays responsible payer organization', async () => {
-  const apiManagement: ApiGen_Concepts_PropertyManagement = {
-    ...getMockApiPropertyManagement(),
-    responsiblePayerPersonId: null,
-    responsiblePayerOrganizationId: 1000,
-    managementPurposes: [getMockApiPropertyManagementPurpose()],
-  };
+    const apiManagement: ApiGen_Concepts_PropertyManagement = {
+      ...getMockApiPropertyManagement(),
+      responsiblePayerPersonId: null,
+      responsiblePayerOrganizationId: 1000,
+      managementPurposes: [getMockApiPropertyManagementPurpose()],
+    };
 
-  const { getByText } = await setup({
-    props: {
-      propertyManagement: apiManagement,
-      isLoading: false,
-      responsiblePayerOrganization: {
-        ...getMockOrganization(),
-        id: 1000,
-        name: 'TEST COMPANY INC.',
+    const { getByText } = await setup({
+      props: {
+        propertyManagement: apiManagement,
+        isLoading: false,
+        responsiblePayerOrganization: {
+          ...getMockOrganization(),
+          id: 1000,
+          name: 'TEST COMPANY INC.',
+        },
       },
-    },
-  });
+    });
 
-  expect(getByText(/TEST COMPANY INC./)).toBeVisible();
-});
+    expect(getByText(/TEST COMPANY INC./)).toBeVisible();
+  });
 
   it('does not throw an exception for an invalid data object', async () => {
     const { getByText } = await setup({

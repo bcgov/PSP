@@ -46,13 +46,19 @@ describe('ManagementSummaryView component', () => {
     const utils = render(
       <ManagementSummaryView
         managementFile={renderOptions?.props?.managementFile ?? mockManagementFileApi}
-        managementFileContacts={renderOptions?.props?.managementFileContacts ?? mockManagementFileContacts}
+        managementFileContacts={
+          renderOptions?.props?.managementFileContacts ?? mockManagementFileContacts
+        }
         fileStatusSolver={renderOptions?.props?.fileStatusSolver ?? mockFileStatusSolver}
         isLoading={false}
         onFileEdit={onEdit}
         onAddContact={onAddContact}
         onEditContact={onEditContact}
-        onDeleteContact={onDeleteContact} responsiblePayerPerson={renderOptions?.props?.responsiblePayerPerson} responsiblePayerOrganization={renderOptions?.props?.responsiblePayerOrganization} primaryContact={renderOptions?.props?.primaryContact}      />,
+        onDeleteContact={onDeleteContact}
+        responsiblePayerPerson={renderOptions?.props?.responsiblePayerPerson}
+        responsiblePayerOrganization={renderOptions?.props?.responsiblePayerOrganization}
+        primaryContact={renderOptions?.props?.primaryContact}
+      />,
       {
         ...renderOptions,
         useMockAuthentication: true,
@@ -197,58 +203,58 @@ describe('ManagementSummaryView component', () => {
   });
 
   it('renders responsible payer person', async () => {
-  const apiMock = mockManagementFileResponse();
+    const apiMock = mockManagementFileResponse();
 
-  const { findByText } = await setup({
-    props: {
-      managementFile: {
-        ...apiMock,
-        responsiblePayerPersonId: 100,
+    const { findByText } = await setup({
+      props: {
+        managementFile: {
+          ...apiMock,
+          responsiblePayerPersonId: 100,
+        },
+        responsiblePayerPerson: {
+          ...getEmptyPerson(),
+          id: 100,
+          surname: 'Monga',
+          firstName: 'Aman',
+          middleNames: null,
+          personOrganizations: [],
+          personAddresses: [],
+          contactMethods: [],
+          rowVersion: 1,
+        },
       },
-      responsiblePayerPerson: {
-        ...getEmptyPerson(),
-        id: 100,
-        surname: 'Monga',
-        firstName: 'Aman',
-        middleNames: null,
-        personOrganizations: [],
-        personAddresses: [],
-        contactMethods: [],
-        rowVersion: 1,
-      },
-    },
-    claims: [],
+      claims: [],
+    });
+
+    await waitForEffects();
+
+    expect(await findByText(/Aman Monga/)).toBeVisible();
   });
-
-  await waitForEffects();
-
-  expect(await findByText(/Aman Monga/)).toBeVisible();
-});
 
   it('renders responsible payer organization', async () => {
-  const apiMock = mockManagementFileResponse();
+    const apiMock = mockManagementFileResponse();
 
-  const { findByText } = await setup({
-    props: {
-      managementFile: {
-        ...apiMock,
-        responsiblePayerPersonId: null,
-        responsiblePayerOrganizationId: 1000,
-        responsiblePayerPrimaryContactId: null,
+    const { findByText } = await setup({
+      props: {
+        managementFile: {
+          ...apiMock,
+          responsiblePayerPersonId: null,
+          responsiblePayerOrganizationId: 1000,
+          responsiblePayerPrimaryContactId: null,
+        },
+        responsiblePayerOrganization: {
+          ...getEmptyOrganization(),
+          id: 1000,
+          name: 'TEST COMPANY INC.',
+        },
       },
-      responsiblePayerOrganization: {
-        ...getEmptyOrganization(),
-        id: 1000,
-        name: 'TEST COMPANY INC.',
-      },
-    },
-    claims: [],
+      claims: [],
+    });
+
+    await waitForEffects();
+
+    expect(await findByText(/TEST COMPANY INC./)).toBeVisible();
   });
-
-  await waitForEffects();
-
-  expect(await findByText(/TEST COMPANY INC./)).toBeVisible();
-});
 
   it('renders management team member organization', async () => {
     const apiMock = mockManagementFileApi;
