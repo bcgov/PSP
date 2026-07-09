@@ -1,0 +1,30 @@
+export interface ApiGen_Concepts_ResearchFile {
+  id: number;
+  fileName: string | null;
+  fileNumber: string | null;
+  totalAllowableCompensation: number | null;
+  //fileStatusTypeCode: ApiGen_Base_CodeType<string> | null;
+  //fileProperties: ApiGen_Concepts_FileProperty[] | null;
+  roadName: string | null;
+  roadAlias: string | null;
+  //fileProperties: ApiGen_Concepts_ResearchFileProperty[] | null;
+  //requestDate: UtcIsoDate | null;
+  requestDescription: string | null;
+  requestSourceDescription: string | null;
+  researchResult: string | null;
+  //researchCompletionDate: UtcIsoDate | null;
+  isExpropriation: boolean | null;
+  expropriationNotes: string | null;
+  //requestSourceType: ApiGen_Base_CodeType<string> | null;
+  //requestorPerson: ApiGen_Concepts_Person | null;
+  //requestorOrganization: ApiGen_Concepts_Organization | null;
+  //researchFilePurposes: ApiGen_Concepts_ResearchFilePurpose[] | null;
+  //researchFileProjects: ApiGen_Concepts_ResearchFileProject[] | null;
+  //appCreateTimestamp: UtcIsoDateTime;
+  //appLastUpdateTimestamp: UtcIsoDateTime;
+  appLastUpdateUserid: string | null;
+  appCreateUserid: string | null;
+  appLastUpdateUserGuid: string | null;
+  appCreateUserGuid: string | null;
+  rowVersion: number | null;
+}

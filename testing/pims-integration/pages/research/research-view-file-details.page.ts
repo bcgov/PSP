@@ -10,25 +10,20 @@ export class ResearchViewFileDetails extends LayoutPage {
 
   readonly researchProjectSubtitle: Locator;
   readonly researchProjectLabel: Locator;
-  readonly researchProjectContent: Locator;
 
   readonly reseachRoadTitle: Locator;
   readonly researchRoadNameLabel: Locator;
-  readonly researchRoadNameContent: Locator;
   readonly researchRoadAliasLabel: Locator;
-  readonly researchRoadAliasContent: Locator;
 
   readonly researchRequestTitle: Locator;
   readonly researchPurposeLabel: Locator;
-  readonly researchPurposeContent: Locator;
   readonly researchRequestDateLabel: Locator;
   readonly researchSourceRequestLabel: Locator;
-  readonly researchRequestDateContent: Locator;
+
   readonly researchRequesterLabel: Locator;
   readonly researchSourceRequestContent: Locator;
   readonly researchRequesterContent: Locator;
   readonly researchDescriptionLabel: Locator;
-  readonly researchDescriptionContent: Locator;
 
   readonly researchResultTitle: Locator;
   readonly researchCompletedOnLabel: Locator;
@@ -48,29 +43,17 @@ export class ResearchViewFileDetails extends LayoutPage {
 
     this.researchProjectSubtitle = page.locator('div').filter({ hasText: 'Project' }).first();
     this.researchProjectLabel = page.getByText('Ministry project:', { exact: true });
-    this.researchProjectContent = page.locator(
-      "//label[text()='Ministry project']/parent::div/following-sibling::div"
-    );
 
     this.reseachRoadTitle = page.getByText('Roads', { exact: true });
     this.researchRoadNameLabel = page.locator('label:has-text("Road name:")');
-    this.researchRoadNameContent = page.locator(
-      "//label[text()='Road name:']/parent::div/following-sibling::div"
-    );
+
     this.researchRoadAliasLabel = page.locator('label:has-text("Road alias:")');
-    this.researchRoadAliasContent = page.locator(
-      "//label[text()='Road alias:']/parent::div/following-sibling::div"
-    );
 
     this.researchRequestTitle = page.getByText('Research Request', { exact: true });
     this.researchPurposeLabel = page.getByText('Research purpose:', { exact: true });
-    this.researchPurposeContent = page.locator(
-      "//label[text()='Research purpose:']/parent::div/following-sibling::div"
-    );
+
     this.researchRequestDateLabel = page.getByText('Request date:', { exact: true });
-    this.researchRequestDateContent = page.locator(
-      "//label[text()='Request date:']/parent::div/following-sibling::div"
-    );
+
     this.researchSourceRequestLabel = page.getByText('Source of request:', { exact: true });
     this.researchSourceRequestContent = page.locator(
       "//label[text()='Source of request:']/parent::div/following-sibling::div"
@@ -80,9 +63,6 @@ export class ResearchViewFileDetails extends LayoutPage {
       "//label[text()='Source of request:']/parent::div/following-sibling::div"
     );
     this.researchDescriptionLabel = page.locator('label:has-text("Requester:")');
-    this.researchDescriptionContent = page.locator(
-      "//label[text()='Requester:']/parent::div/following-sibling::div"
-    );
 
     this.researchResultTitle = page.locator(':text-is("Result")');
     this.researchCompletedOnLabel = page.locator('label:has-text("Research completed on:")');
@@ -95,5 +75,25 @@ export class ResearchViewFileDetails extends LayoutPage {
 
   async navigateDocumentsTab() {
     await this.researchDocumentTab.click();
+  }
+
+  async getFieldValueByLabel(label: string): Promise<string> {
+    return await this.page
+      .locator(
+        `//label[contains(normalize-space(), '${label}')]/parent::div/following-sibling::div`
+      )
+      .innerText();
+  }
+
+  async getResearchDescription(): Promise<string> {
+    return (await this.page.getByTestId('request-description').locator('label').innerText()).trim();
+  }
+
+  async getResearchResult(): Promise<string> {
+    return (await this.page.getByTestId('research-result').locator('label').innerText()).trim();
+  }
+
+  async getResearchExpropriationNotes(): Promise<string> {
+    return (await this.page.getByTestId('expropriation-notes').locator('label').innerText()).trim();
   }
 }

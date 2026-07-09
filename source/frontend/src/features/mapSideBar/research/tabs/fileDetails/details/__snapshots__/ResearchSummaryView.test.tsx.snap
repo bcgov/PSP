@@ -278,6 +278,7 @@ exports[`ResearchSummaryView component > renders as expected 1`] = `
           </div>
           <div
             class="c6 card"
+            data-testid="request-description"
             style="padding: 0px;"
           >
             <div
@@ -360,6 +361,7 @@ exports[`ResearchSummaryView component > renders as expected 1`] = `
           </div>
           <div
             class="c6 card"
+            data-testid="research-result"
             style="padding: 0px;"
           >
             <div
@@ -442,6 +444,7 @@ exports[`ResearchSummaryView component > renders as expected 1`] = `
           </div>
           <div
             class="c6 card"
+            data-testid="expropriation-notes"
             style="padding: 0px;"
           >
             <div

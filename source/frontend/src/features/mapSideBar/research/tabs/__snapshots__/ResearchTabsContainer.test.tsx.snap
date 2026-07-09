@@ -362,6 +362,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
               </div>
               <div
                 class="c8 card"
+                data-testid="request-description"
                 style="padding: 0px;"
               >
                 <div
@@ -442,6 +443,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
               </div>
               <div
                 class="c8 card"
+                data-testid="research-result"
                 style="padding: 0px;"
               >
                 <div
@@ -522,6 +524,7 @@ exports[`ResearchFileTabs component > matches snapshot 1`] = `
               </div>
               <div
                 class="c8 card"
+                data-testid="expropriation-notes"
                 style="padding: 0px;"
               >
                 <div
