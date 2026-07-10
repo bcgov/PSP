@@ -116,6 +116,7 @@ services:
   ####################### Redis #######################
   scheduler-redis:
     image: redis:6.2-alpine
+    container_name: scheduler-redis
     profiles:
       - all
       - psp
@@ -157,6 +158,7 @@ services:
       - all
       - psp
     image: kartoza/geoserver:2.19.2
+    container_name: geoserver
     volumes:
       - ./tools/geoserver/geoserver_data:/opt/geoserver/data_dir/workspaces
     ports:
@@ -177,13 +179,13 @@ services:
     profiles:
       - all
     image: mkodockx/docker-clamav:alpine-idb-amd64
+    container_name: clamav
     environment:
       - CLAMD_CONF_MaxFileSize=500M
       - CLAMD_CONF_StreamMaxLength=500M
     ports:
       - 3310:3310
     restart: on-failure
-    container_name: psp-clamav
     healthcheck:
       test: ["CMD", "./check.sh"]
       interval: 60s
@@ -198,7 +200,7 @@ services:
       - all
       - monitoring
     image: quay.io/prometheus/prometheus:v3.2.0
-    container_name: psp-prometheus
+    container_name: prometheus
     ports:
       - 9000:9090
     environment:
@@ -218,7 +220,7 @@ services:
       - all
       - monitoring
     image: grafana/grafana-oss
-    container_name: psp-grafana
+    container_name: grafana
     restart: on-failure
     ports:
       - 4000:3000
