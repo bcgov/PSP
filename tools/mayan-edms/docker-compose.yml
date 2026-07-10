@@ -1,24 +1,29 @@
+####################### Common variables for all mayan containers #######################
 x-mayan-container: &mayan-container
   env_file: .mayan-env
   environment:
-    MAYAN_CELERY_BROKER_URL: amqp://${MAYAN_RABBITMQ_USER:-mayan}:${MAYAN_RABBITMQ_PASSWORD:-mayanrabbitpass}@rabbitmq:5672/${MAYAN_RABBITMQ_VHOST:-mayan}
-    MAYAN_CELERY_RESULT_BACKEND: redis://:${MAYAN_REDIS_PASSWORD:-mayanredispassword}@redis:6379/1
-    MAYAN_DATABASES: "{'default':{'ENGINE':'django.db.backends.postgresql','NAME':'${MAYAN_DATABASE_NAME:-mayan}','PASSWORD':'${MAYAN_DATABASE_PASSWORD:-mayandbpass}','USER':'${MAYAN_DATABASE_USER:-mayan}','HOST':'${MAYAN_DATABASE_HOST:-postgresql}'}}"
+    MAYAN_CELERY_BROKER_URL: amqp://${MAYAN_RABBITMQ_USER:-mayan}:${MAYAN_RABBITMQ_PASSWORD:-mayanrabbitpass}@mayan-rabbitmq:5672/${MAYAN_RABBITMQ_VHOST:-mayan}
+    MAYAN_CELERY_RESULT_BACKEND: redis://:${MAYAN_REDIS_PASSWORD:-mayanredispassword}@mayan-redis:6379/1
+    MAYAN_DATABASES: "{'default':{'ENGINE':'django.db.backends.postgresql','NAME':'${MAYAN_DATABASE_NAME:-mayan}','PASSWORD':'${MAYAN_DATABASE_PASSWORD:-mayandbpass}','USER':'${MAYAN_DATABASE_USER:-mayan}','HOST':'${MAYAN_DATABASE_HOST:-mayan-postgres}'}}"
     MAYAN_LOCK_MANAGER_BACKEND: mayan.apps.lock_manager.backends.redis_lock.RedisLock
-    MAYAN_LOCK_MANAGER_BACKEND_ARGUMENTS: "{'redis_url':'redis://:${MAYAN_REDIS_PASSWORD:-mayanredispassword}@redis:6379/2'}"
+    MAYAN_LOCK_MANAGER_BACKEND_ARGUMENTS: "{'redis_url':'redis://:${MAYAN_REDIS_PASSWORD:-mayanredispassword}@mayan-redis:6379/2'}"
 
   image: ${MAYAN_DOCKER_IMAGE:-image-registry.apps.silver.devops.gov.bc.ca/3cd915-tools/mayan-bcgov}:${MAYAN_DOCKER_TAG:-4.7.1}
   networks:
     - psp
   restart: unless-stopped
   volumes:
-    - ${MAYAN_APP_VOLUME:-app}:/var/lib/mayan
+    - ${MAYAN_APP_VOLUME:-mayan-app}:/var/lib/mayan
     # Optional volumes to access external data like staging or watch folders
     # - /opt/staging_folder:/staging_folder
     # - /opt/watch_folder:/watch_folder
+  depends_on:
+    setup-or-upgrade:
+      condition: service_completed_successfully
 
 services:
-  mayan-app:
+  ####################### Mayan Frontend (Web Server) #######################
+  mayan-frontend:
     <<: *mayan-container
     container_name: mayan-frontend
     profiles:
@@ -29,14 +34,6 @@ services:
       - "7080:8000"
     command:
       - run_frontend
-    environment:
-      - MAYAN_GUNICORN_WORKERS=3
-      - MAYAN_GUNICORN_MAX_REQUESTS=500
-      - MAYAN_GUNICORN_TIMEOUT=120
-      - MAYAN_GUNICORN_WORKER_CLASS=gevent
-    depends_on:
-      command_initialsetup_or_performupgrade:
-        condition: service_completed_successfully
     # CPU/Memory resource constraints
     deploy:
       resources:
@@ -45,11 +42,22 @@ services:
           memory: 1500M
         reservations:
           memory: 400M
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          '/opt/mayan-edms/bin/python -c "import sys,urllib.request; r=urllib.request.urlopen(''http://127.0.0.1:8000/'', timeout=5); sys.exit(0 if r.status<400 else 1)"',
+        ]
+      interval: 30s
+      timeout: 5s
+      retries: 5
+      start_period: 20s # Gives Gunicorn processes time to worker-fork on slow boots
 
-  elasticsearch:
+  ####################### Mayan Elasticsearch #######################
+  mayan-elasticsearch:
     container_name: mayan-elasticsearch
     environment:
-      - bootstrap.memory_lock=false
+      - bootstrap.memory_lock=true
       - discovery.type=single-node
       - http.max_content_length=400mb
       - xpack.security.enabled=false
@@ -71,14 +79,25 @@ services:
         soft: -1
         hard: -1
     volumes:
-      - ${MAYAN_ELASTICSEARCH_VOLUME:-elasticsearch}:/usr/share/elasticsearch/data
+      - ${MAYAN_ELASTICSEARCH_VOLUME:-mayan-elasticsearch}:/usr/share/elasticsearch/data
     deploy:
       resources:
         limits:
           cpus: "2.0"
           memory: 2000M
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          'curl --fail --silent --user elastic:${MAYAN_ELASTICSEARCH_PASSWORD:-mayanespassword} "http://localhost:9200/_cluster/health?wait_for_status=yellow&timeout=5s" >/dev/null',
+        ]
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 20s
 
-  postgresql:
+  ####################### Mayan PostgreSQL (holds configuration and data for mayan) #######################
+  mayan-postgres:
     container_name: mayan-postgres
     command:
       - "postgres"
@@ -98,7 +117,7 @@ services:
       POSTGRES_DB: ${MAYAN_DATABASE_NAME:-mayan}
       POSTGRES_PASSWORD: ${MAYAN_DATABASE_PASSWORD:-mayandbpass}
       POSTGRES_USER: ${MAYAN_DATABASE_USER:-mayan}
-    image: postgres:${MAYAN_DOCKER_POSTGRES_TAG:-12.9-alpine}
+    image: postgres:${MAYAN_DOCKER_POSTGRES_TAG:-14.12-alpine}
     networks:
       - psp
     # Enable to allow external access to the database.
@@ -110,13 +129,25 @@ services:
       - mayan
     restart: unless-stopped
     volumes:
-      - ${MAYAN_POSTGRES_VOLUME:-postgres}:/var/lib/postgresql/data
+      - ${MAYAN_POSTGRES_VOLUME:-mayan-postgres}:/var/lib/postgresql/data
     deploy:
       resources:
         limits:
           cpus: "1.0"
           memory: 1000M
-  redis:
+    healthcheck:
+      test:
+        [
+          "CMD-SHELL",
+          "pg_isready -U ${MAYAN_DATABASE_USER:-mayan} -d ${MAYAN_DATABASE_NAME:-mayan}",
+        ]
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+
+  ####################### Mayan Redis (holds caching data for mayan) #######################
+  mayan-redis:
     container_name: mayan-redis
     command:
       - redis-server
@@ -145,16 +176,30 @@ services:
       - mayan
     restart: unless-stopped
     volumes:
-      - ${MAYAN_REDIS_VOLUME:-redis}:/data
+      - ${MAYAN_REDIS_VOLUME:-mayan-redis}:/data
     deploy:
       resources:
         limits:
           cpus: "0.5"
           memory: 256M
+    healthcheck:
+      test:
+        [
+          "CMD",
+          "redis-cli",
+          "-a",
+          "${MAYAN_REDIS_PASSWORD:-mayanredispassword}",
+          "ping",
+        ]
+      interval: 10s
+      timeout: 3s
+      retries: 5
+      start_period: 10s
 
-  rabbitmq:
+  ####################### Mayan RabbitMQ (handles message queuing for mayan) #######################
+  mayan-rabbitmq:
     container_name: mayan-rabbitmq
-    image: rabbitmq:${MAYAN_DOCKER_RABBITMQ_TAG:-3.9-management-alpine}
+    image: rabbitmq:${MAYAN_DOCKER_RABBITMQ_TAG:-3.12.1-management-alpine}
     environment:
       RABBITMQ_DEFAULT_USER: ${MAYAN_RABBITMQ_USER:-mayan}
       RABBITMQ_DEFAULT_PASS: ${MAYAN_RABBITMQ_PASSWORD:-mayanrabbitpass}
@@ -170,26 +215,40 @@ services:
       - mayan
     restart: unless-stopped
     volumes:
-      - ${MAYAN_RABBITMQ_VOLUME:-rabbitmq}:/var/lib/rabbitmq
+      - ${MAYAN_RABBITMQ_VOLUME:-mayan-rabbitmq}:/var/lib/rabbitmq
     deploy:
       resources:
         limits:
           cpus: "1.0"
           memory: 1000M
+    healthcheck:
+      test: ["CMD", "rabbitmq-diagnostics", "-q", "ping"]
+      interval: 10s
+      timeout: 15s
+      retries: 10
+      start_period: 10s
 
-  command_initialsetup_or_performupgrade:
+  ####################### Setup or Upgrade (Initializes or upgrades the mayan database) #######################
+  setup-or-upgrade:
     <<: *mayan-container
     container_name: mayan-db-migration
     command:
       - run_initial_setup_or_perform_upgrade
     profiles:
-      - extra_command_initialsetup_or_performupgrade
+      - setup_or_upgrade
       - all
       - mayan
     restart: "no"
+    depends_on:
+      mayan-postgres:
+        condition: service_healthy
+      mayan-rabbitmq:
+        condition: service_healthy
+      mayan-redis:
+        condition: service_healthy
 
-  # Worker A handles fast UI responses, low latency tasks, AND periodic tasks (--beat)
-  worker_a:
+  ####################### Worker A handles fast UI responses, low latency tasks, AND periodic tasks (--beat) #######################
+  mayan-worker-a:
     <<: *mayan-container
     container_name: mayan-worker-a
     command:
@@ -205,12 +264,9 @@ services:
         limits:
           cpus: "1.0"
           memory: 1000M
-    depends_on:
-      command_initialsetup_or_performupgrade:
-        condition: service_completed_successfully
 
-  # Worker B processes document uploads & metadata changes
-  worker_b:
+  ####################### Worker B processes document uploads & metadata changes #######################
+  mayan-worker-b:
     <<: *mayan-container
     container_name: mayan-worker-b
     command:
@@ -226,12 +282,9 @@ services:
         limits:
           cpus: "0.8"
           memory: 800M
-    depends_on:
-      command_initialsetup_or_performupgrade:
-        condition: service_completed_successfully
 
-  # Worker C handles complex processing tasks (OCR, layout parsing)
-  worker_c:
+  ####################### Worker C handles complex processing tasks (OCR, layout parsing) #######################
+  mayan-worker-c:
     <<: *mayan-container
     container_name: mayan-worker-c
     command:
@@ -247,12 +300,9 @@ services:
         limits:
           cpus: "2.0" # Higher allocation for heavy file conversions
           memory: 2000M
-    depends_on:
-      command_initialsetup_or_performupgrade:
-        condition: service_completed_successfully
 
-  # Worker D processes long background maintenance scripts
-  worker_d:
+  ####################### Worker D processes long background maintenance scripts #######################
+  mayan-worker-d:
     <<: *mayan-container
     container_name: mayan-worker-d
     command:
@@ -268,12 +318,9 @@ services:
         limits:
           cpus: "0.8"
           memory: 800M
-    depends_on:
-      command_initialsetup_or_performupgrade:
-        condition: service_completed_successfully
 
-  # Worker E handles low-priority events or scheduled workflows
-  worker_e:
+  ####################### Worker E handles low-priority events or scheduled workflows #######################
+  mayan-worker-e:
     <<: *mayan-container
     container_name: mayan-worker-e
     command:
@@ -289,9 +336,6 @@ services:
         limits:
           cpus: "0.8"
           memory: 800M
-    depends_on:
-      command_initialsetup_or_performupgrade:
-        condition: service_completed_successfully
 
   # worker_custom_queue:
   #   <<: *mayan-container
@@ -316,7 +360,7 @@ services:
   #     - mayan
 
   # Enable to run standalone workers
-  mountindex:
+  mayan-mountindex:
     <<: *mayan-container
     container_name: mayan-mountindex
     cap_add:
@@ -339,10 +383,9 @@ services:
           propagation: shared
 
 volumes:
-  app:
-  elasticsearch:
-  pgadmin:
-  postgres:
-  mountindex:
-  rabbitmq:
-  redis:
+  mayan-app:
+  mayan-elasticsearch:
+  mayan-postgres:
+  mayan-rabbitmq:
+  mayan-redis:
+  mayan-mountindex:
