@@ -225,17 +225,17 @@ restart-mayan:
 
 mayan-up: ## Calls the docker compose up for the mayan images
 	@echo "$(P) Create or start mayan-edms system"
-	@docker-compose --profile mayan up -d
+	@docker compose --profile mayan up -d
 
 mayan-destroy: ## Destroys the mayan-edms containers and volumes
-	@echo "$(P) Destroying mayan-edms containers and volumes. Upload files will be lost!"
-	@docker-compose --profile mayan down --volumes
+	@echo "$(P) Destroying mayan-edms containers (container data will be preserved)"
+	@docker compose --profile mayan down
 
 mayan-logs: ## Shows real-time logs for main mayan container
-	@docker-compose --profile mayan logs -f mayan-frontend
+	@docker compose --profile mayan logs -f mayan-frontend
 
 worker-logs: ## Shows real-time logs for all mayan workers
-	@docker-compose --profile mayan logs -f mayan-frontend mayan-worker-a mayan-worker-b mayan-worker-c mayan-worker-d mayan-worker-e
+	@docker compose --profile mayan logs -f mayan-frontend mayan-worker-a mayan-worker-b mayan-worker-c mayan-worker-d mayan-worker-e
 
 mayan-stats: ## Monitors CPU, memory usage, and limit limits for all Mayan containers in real-time
 	@docker stats mayan-frontend mayan-elasticsearch mayan-postgres mayan-redis mayan-rabbitmq mayan-worker-a mayan-worker-b mayan-worker-c mayan-worker-d mayan-worker-e --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.MemPerc}}\t{{.NetIO}}"

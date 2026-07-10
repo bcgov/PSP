@@ -126,7 +126,7 @@ services:
       - psp
     command: redis-server --save 20 1 --loglevel warning
     volumes:
-      - redis:/data
+      - scheduler-redis:/data
 
   ####################### Frontend #######################
   frontend:
@@ -290,6 +290,9 @@ networks:
   psp:
     name: psp
     driver: bridge
+  mayan:
+    name: mayan
+    driver: bridge
 
 ####################### Volumes Definition #######################
 volumes:
@@ -299,5 +302,5 @@ volumes:
     name: psp-api-db-rhel-data
   frontend-node-cache:
     name: psp-frontend-node-cache
-  redis-scheduler:
+  scheduler-redis:
     driver: local
