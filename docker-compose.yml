@@ -116,7 +116,6 @@ services:
   ####################### Redis #######################
   scheduler-redis:
     image: redis:6.2-alpine
-    container_name: scheduler-redis
     profiles:
       - all
       - psp
@@ -127,7 +126,7 @@ services:
       - psp
     command: redis-server --save 20 1 --loglevel warning
     volumes:
-      - scheduler-redis-data:/data
+      - redis:/data
 
   ####################### Frontend #######################
   frontend:
@@ -162,7 +161,6 @@ services:
       - ./tools/geoserver/geoserver_data:/opt/geoserver/data_dir/workspaces
     ports:
       - 8600:8080
-    container_name: psp-geoserver
     restart: on-failure
     env_file: tools/geoserver/.env
     healthcheck:
@@ -301,6 +299,5 @@ volumes:
     name: psp-api-db-rhel-data
   frontend-node-cache:
     name: psp-frontend-node-cache
-  scheduler-redis-data:
-    name: scheduler-redis-data
+  redis-scheduler:
     driver: local
