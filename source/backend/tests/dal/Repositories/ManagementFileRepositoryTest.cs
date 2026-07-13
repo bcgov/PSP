@@ -5,11 +5,11 @@ using System.Linq;
 using FluentAssertions;
 using Moq;
 using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Dal.Test.Repositories
@@ -60,7 +60,7 @@ namespace Pims.Dal.Test.Repositories
             result.Should().NotBeNull();
             result.Should().BeAssignableTo<PimsManagementFile>();
             result.ManagementFileId.Should().Be(1);
-            
+
         }
 
         [Fact]
@@ -176,7 +176,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetTeamMembers();
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetTeamMembers(userContext);
 
             // Assert
             result.Should().NotBeNull();
@@ -247,7 +248,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter());
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new ManagementFilter(), userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -263,7 +265,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter() { FileNameOrNumberOrReference = "fileName" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new ManagementFilter() { FileNameOrNumberOrReference = "fileName" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -279,7 +282,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter() { FileNameOrNumberOrReference = "notFound" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new ManagementFilter() { FileNameOrNumberOrReference = "notFound" }, userContext);
 
             // Assert
             result.Should().HaveCount(0);
@@ -295,7 +299,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter() { FileNameOrNumberOrReference = "M-100" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new ManagementFilter() { FileNameOrNumberOrReference = "M-100" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -311,7 +316,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter() { FileNameOrNumberOrReference = "legacy" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new ManagementFilter() { FileNameOrNumberOrReference = "legacy" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -328,7 +334,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter() { TeamMemberPersonId = 1 });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new ManagementFilter() { TeamMemberPersonId = 1 }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -345,7 +352,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter() { TeamMemberOrganizationId = 1 });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new ManagementFilter() { TeamMemberOrganizationId = 1 }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -362,7 +370,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter() { TeamMemberPersonId = 2 });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new ManagementFilter() { TeamMemberPersonId = 2 }, userContext);
 
             // Assert
             result.Should().HaveCount(0);
@@ -378,7 +387,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter() { Pid = "1" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new ManagementFilter() { Pid = "1" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -394,7 +404,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter() { Pin = "2" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new ManagementFilter() { Pin = "2" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -410,7 +421,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter() { Address = "1234" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new ManagementFilter() { Address = "1234" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -425,7 +437,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter() { ManagementFileStatusCode = "ACTIVE" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new ManagementFilter() { ManagementFileStatusCode = "ACTIVE" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -441,7 +454,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter() { ProjectNameOrNumber = "TEST" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new ManagementFilter() { ProjectNameOrNumber = "TEST" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -457,7 +471,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(managementFile);
 
             // Act
-            var result = repository.GetPageDeep(new ManagementFilter() { ManagementFilePurposeCode = "Purpose" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new ManagementFilter() { ManagementFilePurposeCode = "Purpose" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);

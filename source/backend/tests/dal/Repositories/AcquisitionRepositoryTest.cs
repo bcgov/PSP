@@ -5,15 +5,15 @@ using System.Linq;
 using FluentAssertions;
 using Microsoft.EntityFrameworkCore;
 using Moq;
+using NetTopologySuite.Utilities;
+using Pims.Api.Models.CodeTypes;
 using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
-using Pims.Api.Models.CodeTypes;
-using NetTopologySuite.Utilities;
 
 namespace Pims.Dal.Test.Repositories
 {
@@ -184,15 +184,15 @@ namespace Pims.Dal.Test.Repositories
             var helper = new TestHelper();
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.Project = new PimsProject() { Description = "", ProjectStatusTypeCode = "", PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1 } } };
-            var filter = new AcquisitionFilter() { };
+            acqFile.Project = EntityHelper.CreateProject(1, "PRJ", "Mock Project");
+            var filter = new AcquisitionFilter() { ProjectNameOrNumber = "Mock Project" };
 
             helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
 
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetPageDeep(filter, contractorPersonId: 1);
+            var result = repository.GetPageDeep(filter, null);
 
             // Assert
             result.Should().HaveCount(1);
@@ -320,6 +320,36 @@ namespace Pims.Dal.Test.Repositories
             // Assert
             result.Should().HaveCount(1);
         }
+
+
+        [Fact]
+        public void GetPage_ContractorAccess_Project()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
+            var acqFile = EntityHelper.CreateAcquisitionFile();
+            acqFile.Project = new PimsProject()
+            {
+                Description = "Mock Project",
+                ProjectStatusTypeCode = "PRJ",
+                RegionCode = 1,
+                PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1 } }
+            };
+            var filter = new AcquisitionFilter() { };
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", isContractor: true, regionCode: 1));
+            var result = repository.GetPageDeep(filter, userContext);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
 
         #endregion
 
@@ -881,9 +911,11 @@ namespace Pims.Dal.Test.Repositories
             var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
 
             var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() { new PimsAcquisitionFileTeam()
+            acqFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() {
+                new PimsAcquisitionFileTeam()
                 {
                     AcqFlTeamProfileTypeCode = "EXPRAGENT",
+                    PersonId = 1,
                 }
             };
 
@@ -891,10 +923,92 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
-            var result = repository.GetTeamMembers(new HashSet<short>() { 1 });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: acqFile.RegionCode));
+            var result = repository.GetTeamMembers(userContext);
 
             // Assert
             result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetTeamMembers_Contractor_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+
+            var contractorFile = EntityHelper.CreateAcquisitionFile();
+            contractorFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() {
+                new PimsAcquisitionFileTeam()
+                {
+                    AcqFlTeamProfileTypeCode = "EXPRAGENT",
+                    PersonId = 1,
+                }
+            };
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(contractorFile);
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: contractorFile.RegionCode, isContractor: true));
+            var result = repository.GetTeamMembers(userContext);
+
+            // Assert
+            result.Should().HaveCount(1);
+        }
+
+        [Fact]
+        public void GetTeamMembers_Contractor_InTeam_But_OutOfRegion()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+
+            var outOfRegionFile = EntityHelper.CreateAcquisitionFile(region: EntityHelper.CreateRegion(2, "Southern Interior"));
+            outOfRegionFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() {
+                new PimsAcquisitionFileTeam()
+                {
+                    AcqFlTeamProfileTypeCode = "EXPRAGENT",
+                    PersonId = 1, // contractor is in the team, but not in the same region as the acquisition file
+                }
+            };
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(outOfRegionFile);
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", id: 1, regionCode: 1, isContractor: true));
+            var result = repository.GetTeamMembers(userContext);
+
+            // Assert
+            result.Should().BeEmpty("The contractor is in the team, but not in the same region as the acquisition file.");
+        }
+
+        [Fact]
+        public void GetTeamMembers_Contractor_Not_InTeam()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+
+            var inRegionFile = EntityHelper.CreateAcquisitionFile(region: EntityHelper.CreateRegion(1, "Northern"));
+            inRegionFile.PimsAcquisitionFileTeams = new List<PimsAcquisitionFileTeam>() {
+                new PimsAcquisitionFileTeam()
+                {
+                    AcqFlTeamProfileTypeCode = "EXPRAGENT",
+                    PersonId = 99, // contractor is NOT in the team
+                }
+            };
+
+            var context = helper.CreatePimsContext(user, true).AddAndSaveChanges(inRegionFile);
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", id: 1, regionCode: 1, isContractor: true));
+            var result = repository.GetTeamMembers(userContext);
+
+            // Assert
+            result.Should().BeEmpty("The contractor is not in the team, so no team members should be returned.");
         }
 
         #endregion
