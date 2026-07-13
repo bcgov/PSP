@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Linq;
 
@@ -27,17 +26,16 @@ namespace Pims.Dal.Entities.Models
 
         public UserContextModel(PimsUser pimsUser)
         {
-            IsContractor = pimsUser.IsContractor;
-            PersonId = pimsUser.PersonId;
-            FirstName = pimsUser.Person?.FirstName ?? string.Empty;
-            Surname = pimsUser.Person?.Surname ?? string.Empty;
-            Regions = pimsUser.PimsRegionUsers?.Select(ru => ru.RegionCode)?.ToHashSet() ?? new HashSet<short>();
+            IsContractor = pimsUser?.IsContractor ?? false;
+            PersonId = pimsUser?.PersonId ?? 0;
+            FirstName = pimsUser?.Person?.FirstName ?? string.Empty;
+            Surname = pimsUser?.Person?.Surname ?? string.Empty;
+            Regions = pimsUser?.PimsRegionUsers?.Select(ru => ru.RegionCode)?.ToHashSet() ?? new HashSet<short>();
         }
 
         public static UserContextModel FromPimsUser(PimsUser pimsUser)
         {
-            ArgumentNullException.ThrowIfNull(pimsUser, nameof(pimsUser));
-            return new UserContextModel(pimsUser);
+            return pimsUser is not null ? new UserContextModel(pimsUser) : null;
         }
     }
 }

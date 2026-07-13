@@ -13,6 +13,6 @@ namespace Pims.Dal.Repositories
 
         PimsLeasePayment Add(PimsLeasePayment pimsLeasePayment);
 
-        IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate, UserContextModel userContext);
+        IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate, UserContextModel userContext = null);
     }
 }

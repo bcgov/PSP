@@ -42,16 +42,15 @@ namespace Pims.Dal.Repositories
         /// <param name="maxResults"></param>
         /// <param name="userContext">The calling user context.</param>
         /// <returns></returns>
-        public IList<PimsProject> SearchProjects(string filter, int maxResults, UserContextModel userContext)
+        public IList<PimsProject> SearchProjects(string filter, int maxResults, UserContextModel userContext = null)
         {
             var predicate = PredicateBuilder.New<PimsProject>(p => EF.Functions.Like(p.Description, $"%{filter}%") || EF.Functions.Like(p.Code, $"%{filter}%") || EF.Functions.Like(p.Code + " " + p.Description, $"%{filter}%"));
 
-            // PSP-11664 Contractor access is limited by region and team membership.
+            // Contractor access is limited by region and team membership.
             if (userContext is not null && userContext.IsContractor)
             {
-                predicate
-                    .And(p => userContext.Regions.Contains(p.RegionCode))
-                    .And(p => p.PimsProjectPeople.Any(x => x.PersonId == userContext.PersonId));
+                predicate.And(p => userContext.Regions.Contains(p.RegionCode));
+                predicate.And(p => p.PimsProjectPeople.Any(x => x.PersonId == userContext.PersonId));
             }
 
             return Context.PimsProjects.AsNoTracking()
@@ -67,7 +66,7 @@ namespace Pims.Dal.Repositories
         /// <param name="filter"></param>
         /// <param name="userContext">The calling user context.</param>
         /// <returns></returns>
-        public Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, UserContextModel userContext)
+        public Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, UserContextModel userContext = null)
         {
             User.ThrowIfNotAuthorized(Permissions.ProjectView);
             filter.ThrowIfNull(nameof(filter));
@@ -216,15 +215,14 @@ namespace Pims.Dal.Repositories
             return project;
         }
 
-        public IEnumerable<PimsProjectPerson> GetTeamMembers(UserContextModel userContext)
+        public IEnumerable<PimsProjectPerson> GetTeamMembers(UserContextModel userContext = null)
         {
             var predicate = PredicateBuilder.New<PimsProjectPerson>(pp => true);
 
-            if (userContext.IsContractor)
+            if (userContext is not null && userContext.IsContractor)
             {
-                predicate
-                    .And(pp => userContext.Regions.Contains(pp.Project.RegionCode))
-                    .And(pp => pp.Project.PimsProjectPeople.Any(p => p.PersonId == userContext.PersonId));
+                predicate.And(pp => userContext.Regions.Contains(pp.Project.RegionCode));
+                predicate.And(pp => pp.Project.PimsProjectPeople.Any(p => p.PersonId == userContext.PersonId));
             }
 
             return Context.PimsProjectPeople
@@ -234,7 +232,7 @@ namespace Pims.Dal.Repositories
                 .ToArray();
         }
 
-        private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter, UserContextModel userContext)
+        private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter, UserContextModel userContext = null)
         {
             var query = Context.PimsProjects.AsNoTracking();
 
@@ -253,7 +251,7 @@ namespace Pims.Dal.Repositories
                 query = query.Where(x => x.ProjectStatusTypeCodeNavigation.ProjectStatusTypeCode == filter.ProjectStatusCode);
             }
 
-            // PSP-11664 Contractor access is limited by region and team membership.
+            // Contractor access is limited by region and team membership.
             if (userContext is not null && userContext.IsContractor)
             {
                 query = query.Where(x => userContext.Regions.Contains(x.RegionCode));

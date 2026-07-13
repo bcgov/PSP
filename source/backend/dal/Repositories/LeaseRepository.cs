@@ -63,7 +63,7 @@ namespace Pims.Dal.Repositories
         /// <param name="userContext"></param>
         /// <param name="loadPayments"></param>
         /// <returns></returns>
-        public IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, UserContextModel userContext, bool loadPayments = false)
+        public IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, UserContextModel userContext = null, bool loadPayments = false)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
@@ -135,7 +135,7 @@ namespace Pims.Dal.Repositories
             return lease;
         }
 
-        public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds, UserContextModel userContext)
+        public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds, UserContextModel userContext = null)
         {
             var query = Context.PimsLeases.AsSplitQuery().AsNoTracking()
                 .Include(l => l.PimsPropertyLeases)
@@ -171,7 +171,7 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.PimsLeaseLicenseTeams)
                 .Where(l => leaseIds.Any(leaseId => leaseId == l.LeaseId)) ?? throw new KeyNotFoundException();
 
-            // PSP-11664 Contractor access is limited by region and team membership.
+            // Contractor access is limited by region and team membership.
             if (userContext is not null && userContext.IsContractor)
             {
                 query = query.Where(l => l.RegionCode.HasValue && userContext.Regions.Contains(l.RegionCode.Value));
@@ -787,7 +787,7 @@ namespace Pims.Dal.Repositories
         /// <param name="filter"></param>
         /// <param name="userContext">The calling user context.</param>
         /// <returns></returns>
-        public Paged<PimsLease> GetPage(LeaseFilter filter, UserContextModel userContext)
+        public Paged<PimsLease> GetPage(LeaseFilter filter, UserContextModel userContext = null)
         {
             User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
@@ -909,7 +909,7 @@ namespace Pims.Dal.Repositories
         /// <param name="userContext">The calling user context.</param>
         /// <param name="loadPayments">Indicates whether to load payment information. False by default.</param>
         /// <returns></returns>
-        public IQueryable<PimsLease> GenerateLeaseQuery(LeaseFilter filter, UserContextModel userContext, bool loadPayments = false)
+        public IQueryable<PimsLease> GenerateLeaseQuery(LeaseFilter filter, UserContextModel userContext = null, bool loadPayments = false)
         {
             filter.ThrowIfNull(nameof(filter));
 
@@ -1054,14 +1054,13 @@ namespace Pims.Dal.Repositories
                     .ToList();
         }
 
-        public List<PimsLeaseLicenseTeam> GetTeamMembers(UserContextModel userContext)
+        public List<PimsLeaseLicenseTeam> GetTeamMembers(UserContextModel userContext = null)
         {
             var predicate = PredicateBuilder.New<PimsLeaseLicenseTeam>(acq => true);
 
-            predicate.And(x => x.Lease.RegionCode.HasValue && userContext.Regions.Contains(x.Lease.RegionCode.Value));
-
-            if (userContext.IsContractor)
+            if (userContext is not null && userContext.IsContractor)
             {
+                predicate.And(x => x.Lease.RegionCode.HasValue && userContext.Regions.Contains(x.Lease.RegionCode.Value));
                 predicate.And(x => x.Lease.PimsLeaseLicenseTeams.Any(p => p.PersonId == userContext.PersonId));
             }
 
@@ -1115,13 +1114,13 @@ namespace Pims.Dal.Repositories
         /// <param name="filter">The filter to apply to the lease search.</param>
         /// <param name="userContext">The calling user context.</param>
         /// <returns></returns>
-        private static ExpressionStarter<PimsLease> GenerateCommonLeaseQuery(LeaseFilter filter, UserContextModel userContext)
+        private static ExpressionStarter<PimsLease> GenerateCommonLeaseQuery(LeaseFilter filter, UserContextModel userContext = null)
         {
             filter.ThrowIfNull(nameof(filter));
 
             var predicateBuilder = PredicateBuilder.New<PimsLease>(l => true);
 
-            // PSP-11664 Contractor access is limited by region and team membership.
+            // Contractor access is limited by region and team membership.
             if (userContext is not null && userContext.IsContractor)
             {
                 predicateBuilder = predicateBuilder

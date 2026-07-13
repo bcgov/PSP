@@ -12,19 +12,19 @@ namespace Pims.Dal.Repositories
     {
         int Count();
 
-        IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, UserContextModel userContext, bool loadPayments = false);
+        IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, UserContextModel userContext = null, bool loadPayments = false);
 
         long GetRowVersion(long id);
 
         PimsLease Get(long id);
 
-        IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds, UserContextModel userContext);
+        IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds, UserContextModel userContext = null);
 
         PimsLease GetNoTracking(long id);
 
         LastUpdatedByModel GetLastUpdateBy(long leaseId);
 
-        Paged<PimsLease> GetPage(LeaseFilter filter, UserContextModel userContext);
+        Paged<PimsLease> GetPage(LeaseFilter filter, UserContextModel userContext = null);
 
         PimsLease Add(PimsLease lease);
 
@@ -42,7 +42,7 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<PimsLeaseStakeholderType> GetAllLeaseStakeholderTypes();
 
-        List<PimsLeaseLicenseTeam> GetTeamMembers(UserContextModel userContext);
+        List<PimsLeaseLicenseTeam> GetTeamMembers(UserContextModel userContext = null);
 
         PimsLease GetLeaseAtTime(long leaseId, DateTime time);
     }

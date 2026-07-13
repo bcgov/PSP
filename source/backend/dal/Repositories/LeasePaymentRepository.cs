@@ -43,7 +43,7 @@ namespace Pims.Dal.Repositories
             return updatedEntity.Entity;
         }
 
-        public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate, UserContextModel userContext)
+        public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate, UserContextModel userContext = null)
         {
             var query = Context.PimsLeasePayments.AsSplitQuery().AsNoTracking()
                 .Include(p => p.LeasePaymentCategoryTypeCodeNavigation)
@@ -61,7 +61,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(lp => lp.PimsProjectPeople)
                 .Where(p => p.PaymentReceivedDate <= endDate && p.PaymentReceivedDate >= startDate);
 
-            // PSP-11664 Contractor access is limited by region and team membership.
+            // Contractor access is limited by region and team membership.
             if (userContext is not null && userContext.IsContractor)
             {
                 query = query.Where(p => p.LeasePeriod.Lease.RegionCode.HasValue && userContext.Regions.Contains(p.LeasePeriod.Lease.RegionCode.Value));

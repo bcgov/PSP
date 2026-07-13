@@ -16,11 +16,11 @@ namespace Pims.Dal.Repositories
 
         LastUpdatedByModel GetLastUpdateBy(long id);
 
-        List<PimsManagementFileTeam> GetTeamMembers(UserContextModel userContext);
+        List<PimsManagementFileTeam> GetTeamMembers(UserContextModel userContext = null);
 
         long GetRowVersion(long id);
 
-        Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter, UserContextModel userContext);
+        Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter, UserContextModel userContext = null);
 
         List<PimsManagementFileContact> GetContacts(long managementFileId);
 

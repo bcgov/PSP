@@ -316,16 +316,15 @@ namespace Pims.Dal.Repositories
             return result.ConcurrencyControlNumber;
         }
 
-        public List<PimsManagementFileTeam> GetTeamMembers(UserContextModel userContext)
+        public List<PimsManagementFileTeam> GetTeamMembers(UserContextModel userContext = null)
         {
             var predicate = PredicateBuilder.New<PimsManagementFileTeam>(mt => true);
 
-            // PSP-11664 Contractor access is limited by region and team membership.
-            if (userContext.IsContractor)
+            // Contractor access is limited by region and team membership.
+            if (userContext is not null && userContext.IsContractor)
             {
-                predicate
-                    .And(mt => mt.ManagementFile.RegionCode.HasValue && userContext.Regions.Contains(mt.ManagementFile.RegionCode.Value))
-                    .And(mt => mt.ManagementFile.PimsManagementFileTeams.Any(p => p.PersonId == userContext.PersonId));
+                predicate.And(mt => mt.ManagementFile.RegionCode.HasValue && userContext.Regions.Contains(mt.ManagementFile.RegionCode.Value));
+                predicate.And(mt => mt.ManagementFile.PimsManagementFileTeams.Any(p => p.PersonId == userContext.PersonId));
             }
 
             return Context.PimsManagementFileTeams.AsNoTracking()
@@ -400,7 +399,7 @@ namespace Pims.Dal.Repositories
         /// <param name="filter"></param>
         /// <param name="userContext">The calling user context.</param>
         /// <returns></returns>
-        public Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter, UserContextModel userContext)
+        public Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter, UserContextModel userContext = null)
         {
             using var scope = Logger.QueryScope();
 
@@ -424,7 +423,7 @@ namespace Pims.Dal.Repositories
         /// <param name="filter">The filter to apply.</param>
         /// <param name="userContext">The calling user context.</param>
         /// <returns></returns>
-        private IQueryable<PimsManagementFile> GetCommonManagementFileQueryDeep(ManagementFilter filter, UserContextModel userContext)
+        private IQueryable<PimsManagementFile> GetCommonManagementFileQueryDeep(ManagementFilter filter, UserContextModel userContext = null)
         {
             filter.FileNameOrNumberOrReference = Regex.Replace(filter.FileNameOrNumberOrReference ?? string.Empty, @"^[m,M]-", string.Empty);
             var predicate = PredicateBuilder.New<PimsManagementFile>(disp => true);
@@ -506,7 +505,7 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(x => x.RegionCode != null && filter.Regions.Any(r => r == x.RegionCode));
             }
 
-            // PSP-11664 Contractor access is limited by region and team membership.
+            // Contractor access is limited by region and team membership.
             if (userContext is not null && userContext.IsContractor)
             {
                 predicate = predicate
