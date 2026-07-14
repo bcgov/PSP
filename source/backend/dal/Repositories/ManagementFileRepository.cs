@@ -323,8 +323,11 @@ namespace Pims.Dal.Repositories
             // Contractor access is limited by region and team membership.
             if (userContext is not null && userContext.IsContractor)
             {
+                var teamOrProjectPredicate = PredicateBuilder.New<PimsManagementFileTeam>(mt => mt.ManagementFile.PimsManagementFileTeams.Any(p => p.PersonId == userContext.PersonId))
+                    .Or(mt => mt.ManagementFile.Project != null && mt.ManagementFile.Project.PimsProjectPeople.Any(pp => pp.PersonId == userContext.PersonId));
+
                 predicate.And(mt => mt.ManagementFile.RegionCode.HasValue && userContext.Regions.Contains(mt.ManagementFile.RegionCode.Value));
-                predicate.And(mt => mt.ManagementFile.PimsManagementFileTeams.Any(p => p.PersonId == userContext.PersonId));
+                predicate.And(teamOrProjectPredicate);
             }
 
             return Context.PimsManagementFileTeams.AsNoTracking()

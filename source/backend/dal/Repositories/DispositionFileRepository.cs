@@ -544,8 +544,11 @@ namespace Pims.Dal.Repositories
 
             if (userContext is not null && userContext.IsContractor)
             {
+                var teamOrProjectPredicate = PredicateBuilder.New<PimsDispositionFileTeam>(dt => dt.DispositionFile.PimsDispositionFileTeams.Any(p => p.PersonId == userContext.PersonId))
+                    .Or(dt => dt.DispositionFile.Project != null && dt.DispositionFile.Project.PimsProjectPeople.Any(pp => pp.PersonId == userContext.PersonId));
+
                 predicate.And(dt => userContext.Regions.Contains(dt.DispositionFile.RegionCode));
-                predicate.And(dt => dt.DispositionFile.PimsDispositionFileTeams.Any(p => p.PersonId == userContext.PersonId));
+                predicate.And(teamOrProjectPredicate);
             }
 
             return Context.PimsDispositionFileTeams.AsNoTracking()
@@ -839,8 +842,11 @@ namespace Pims.Dal.Repositories
             // Contractor access is limited by region and team membership.
             if (userContext is not null && userContext.IsContractor)
             {
+                var teamOrProjectPredicate = PredicateBuilder.New<PimsDispositionFile>(disp => disp.PimsDispositionFileTeams.Any(dt => dt.PersonId == userContext.PersonId))
+                    .Or(disp => disp.Project != null && disp.Project.PimsProjectPeople.Any(pp => pp.PersonId == userContext.PersonId));
+
                 predicate = predicate.And(disp => userContext.Regions.Contains(disp.RegionCode));
-                predicate = predicate.And(disp => disp.PimsDispositionFileTeams.Any(x => x.PersonId == userContext.PersonId));
+                predicate = predicate.And(teamOrProjectPredicate);
             }
 
             // filter by team members
