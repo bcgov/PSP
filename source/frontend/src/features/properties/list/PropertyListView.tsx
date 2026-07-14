@@ -180,7 +180,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
 
   return (
     <Container fluid className="PropertyListView">
-      <div className="mt-5 mx-5">
+      <StyledSearchContainer>
         <StyledPageHeader>PIMS Property Search</StyledPageHeader>
         <Row className="pb-2">
           <Col xs="12">
@@ -253,7 +253,7 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
             </Container>
           </Col>
         </Row>
-      </div>
+      </StyledSearchContainer>
       <div className="ScrollContainer">
         <Table<ApiGen_Concepts_PropertyView>
           name="propertiesTable"
@@ -279,7 +279,15 @@ const PropertyListView: React.FC<React.PropsWithChildren<unknown>> = () => {
 
 export default PropertyListView;
 
-export const StyledPageHeader = styled.h3`
+const StyledSearchContainer = styled.div`
+  margin-top: 2rem;
+  margin-left: 2rem;
+  margin-right: 2rem;
+  position: relative;
+  z-index: 100;
+`;
+
+const StyledPageHeader = styled.h3`
   text-align: left;
 `;
 
@@ -316,7 +324,7 @@ const StyledFilterContainer = styled(Container)`
     margin-bottom: 0;
   }
 `;
-export const StyledFilterBox = styled.div`
+const StyledFilterBox = styled.div`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.5rem;
 `;
@@ -333,7 +341,6 @@ const defaultStyle = {
   multiselectContainer: {
     width: 'auto',
     color: 'black',
-    zIndex: 200,
   },
   searchBox: {
     background: 'white',
