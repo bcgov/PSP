@@ -478,6 +478,48 @@ namespace Pims.Dal.Test.Repositories
             result.Should().HaveCount(1);
         }
 
+        [Fact]
+        public void GetPageDeep_Contractor_ManagementTeamMember_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.ManagementView);
+            var contractorFile = EntityHelper.CreateManagementFile();
+            contractorFile.RegionCodeNavigation = EntityHelper.CreateRegion(1, "Northern");
+            contractorFile.RegionCode = 1;
+            contractorFile.PimsManagementFileTeams.Add(
+                new() { ManagementFileId = contractorFile.Internal_Id, ManagementFileProfileTypeCode = "COORD", PersonId = 1 } // contractor Id
+            );
+            _helper.AddAndSaveChanges(contractorFile);
+
+            // Act
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1, isContractor: true));
+            var result = repository.GetPageDeep(new ManagementFilter(), userContext);
+
+            // Assert
+            result.Should().HaveCount(1);
+            result.First().ManagementFileId.Should().Be(contractorFile.Internal_Id);
+        }
+
+        [Fact]
+        public void GetPageDeep_Contractor_ProjectTeamMember_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.ManagementView);
+            var contractorFile = EntityHelper.CreateManagementFile();
+            contractorFile.RegionCodeNavigation = EntityHelper.CreateRegion(1, "Northern");
+            contractorFile.RegionCode = 1;
+            contractorFile.Project = EntityHelper.CreateProject(1, "PRJ", "Mock Project");
+            contractorFile.Project.PimsProjectPeople.Add(new() { ProjectPersonRoleTypeCode = "COORD", PersonId = 1 }); // contractor Id
+            _helper.AddAndSaveChanges(contractorFile);
+
+            // Act
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1, isContractor: true));
+            var result = repository.GetPageDeep(new ManagementFilter(), userContext);
+
+            // Assert
+            result.Should().HaveCount(1);
+            result.First().ManagementFileId.Should().Be(contractorFile.Internal_Id);
+        }
         #endregion
 
         #endregion

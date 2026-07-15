@@ -653,8 +653,11 @@ namespace Pims.Dal.Repositories
 
             if (userContext is not null && userContext.IsContractor)
             {
+                var teamOrProjectPredicate = PredicateBuilder.New<PimsAcquisitionFileTeam>(x => x.AcquisitionFile.PimsAcquisitionFileTeams.Any(p => p.PersonId == userContext.PersonId))
+                    .Or(x => x.AcquisitionFile.Project != null && x.AcquisitionFile.Project.PimsProjectPeople.Any(pp => pp.PersonId == userContext.PersonId));
+
                 predicate.And(x => userContext.Regions.Contains(x.AcquisitionFile.RegionCode));
-                predicate.And(x => x.AcquisitionFile.PimsAcquisitionFileTeams.Any(p => p.PersonId == userContext.PersonId));
+                predicate.And(teamOrProjectPredicate);
             }
 
             return Context.PimsAcquisitionFileTeams.AsNoTracking()
@@ -962,7 +965,7 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(ownerBuilder);
             }
 
-            // PSP-11664 Contractor access is limited by region and team membership.
+            // Contractor access is limited by region and team membership.
             if (userContext is not null && userContext.IsContractor)
             {
                 predicate = predicate

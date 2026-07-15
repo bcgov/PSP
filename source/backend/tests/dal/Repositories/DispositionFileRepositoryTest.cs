@@ -1016,6 +1016,78 @@ namespace Pims.Dal.Test.Repositories
             result.Should().HaveCount(1);
         }
 
+        [Fact]
+        public void GetPageDeep_Contractor_DispositionTeamMember_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+
+            var contractorFile = EntityHelper.CreateDispositionFile(dispFileId: 1, name: "Contractor File");
+            contractorFile.PimsDispositionFileTeams.Add(
+                new() { DispositionFileId = contractorFile.Internal_Id, DspFlTeamProfileTypeCode = "COORD", PersonId = 1 } // contractor Id
+            );
+
+            var secondFile = EntityHelper.CreateDispositionFile(
+                dispFileId: 2,
+                name: "Second File",
+                statusType: contractorFile.DispositionFileStatusTypeCodeNavigation,
+                dispositionType: contractorFile.DispositionTypeCodeNavigation,
+                region: contractorFile.RegionCodeNavigation
+            );
+            secondFile.DspInitiatingBranchTypeCodeNavigation = contractorFile.DspInitiatingBranchTypeCodeNavigation;
+            secondFile.DspPhysFileStatusTypeCodeNavigation = contractorFile.DspPhysFileStatusTypeCodeNavigation;
+            secondFile.DispositionFundingTypeCodeNavigation = contractorFile.DispositionFundingTypeCodeNavigation;
+            secondFile.DispositionInitiatingDocTypeCodeNavigation = contractorFile.DispositionInitiatingDocTypeCodeNavigation;
+            secondFile.DispositionStatusTypeCodeNavigation = contractorFile.DispositionStatusTypeCodeNavigation;
+
+            _helper.AddAndSaveChanges(contractorFile);
+            _helper.AddAndSaveChanges(secondFile);
+
+            // Act
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1, isContractor: true));
+            var result = repository.GetPageDeep(new DispositionFilter(), userContext);
+
+            // Assert
+            result.Should().HaveCount(1);
+            result.First().DispositionFileId.Should().Be(contractorFile.DispositionFileId);
+            result.First().FileName.Should().Be(contractorFile.FileName);
+        }
+
+        [Fact]
+        public void GetPageDeep_Contractor_ProjectTeamMember_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+
+            var contractorFile = EntityHelper.CreateDispositionFile(dispFileId: 1, name: "Contractor File");
+            contractorFile.Project = EntityHelper.CreateProject(1, "PRJ", "Mock Project");
+            contractorFile.Project.PimsProjectPeople.Add(new() { ProjectPersonRoleTypeCode = "COORD", PersonId = 1 }); // contractor Id
+
+            var secondFile = EntityHelper.CreateDispositionFile(
+                dispFileId: 2,
+                name: "Second File",
+                statusType: contractorFile.DispositionFileStatusTypeCodeNavigation,
+                dispositionType: contractorFile.DispositionTypeCodeNavigation,
+                region: contractorFile.RegionCodeNavigation
+            );
+            secondFile.DspInitiatingBranchTypeCodeNavigation = contractorFile.DspInitiatingBranchTypeCodeNavigation;
+            secondFile.DspPhysFileStatusTypeCodeNavigation = contractorFile.DspPhysFileStatusTypeCodeNavigation;
+            secondFile.DispositionFundingTypeCodeNavigation = contractorFile.DispositionFundingTypeCodeNavigation;
+            secondFile.DispositionInitiatingDocTypeCodeNavigation = contractorFile.DispositionInitiatingDocTypeCodeNavigation;
+            secondFile.DispositionStatusTypeCodeNavigation = contractorFile.DispositionStatusTypeCodeNavigation;
+
+            _helper.AddAndSaveChanges(contractorFile);
+            _helper.AddAndSaveChanges(secondFile);
+
+            // Act
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1, isContractor: true));
+            var result = repository.GetPageDeep(new DispositionFilter(), userContext);
+
+            // Assert
+            result.Should().HaveCount(1);
+            result.First().DispositionFileId.Should().Be(contractorFile.DispositionFileId);
+            result.First().FileName.Should().Be(contractorFile.FileName);
+        }
         #endregion
 
         #region Export

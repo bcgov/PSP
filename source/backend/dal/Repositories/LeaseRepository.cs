@@ -1060,8 +1060,11 @@ namespace Pims.Dal.Repositories
 
             if (userContext is not null && userContext.IsContractor)
             {
+                var teamOrProjectPredicate = PredicateBuilder.New<PimsLeaseLicenseTeam>(x => x.Lease.PimsLeaseLicenseTeams.Any(p => p.PersonId == userContext.PersonId))
+                    .Or(x => x.Lease.Project != null && x.Lease.Project.PimsProjectPeople.Any(pp => pp.PersonId == userContext.PersonId));
+
                 predicate.And(x => x.Lease.RegionCode.HasValue && userContext.Regions.Contains(x.Lease.RegionCode.Value));
-                predicate.And(x => x.Lease.PimsLeaseLicenseTeams.Any(p => p.PersonId == userContext.PersonId));
+                predicate.And(teamOrProjectPredicate);
             }
 
             return Context.PimsLeaseLicenseTeams.AsNoTracking()
