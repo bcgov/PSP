@@ -321,35 +321,57 @@ namespace Pims.Dal.Test.Repositories
             result.Should().HaveCount(1);
         }
 
-
         [Fact]
-        public void GetPage_ContractorAccess_Project()
+        public void GetPage_Contractor_AcquisitionTeamMember_Success()
         {
             // Arrange
             var helper = new TestHelper();
-            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileAdd);
-            var acqFile = EntityHelper.CreateAcquisitionFile();
-            acqFile.Project = new PimsProject()
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+            var contractorFile = EntityHelper.CreateAcquisitionFile();
+            contractorFile.PimsAcquisitionFileTeams.Add(
+                new() { AcquisitionFileId = contractorFile.Internal_Id, AcqFlTeamProfileTypeCode = "COORD", PersonId = 1 } // contractor Id
+            );
+
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(contractorFile);
+
+            var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
+
+            // Act
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", isContractor: true, regionCode: 1));
+            var result = repository.GetPageDeep(new AcquisitionFilter(), userContext);
+
+            // Assert
+            result.Should().HaveCount(1);
+            result.First().AcquisitionFileId.Should().Be(contractorFile.Internal_Id);
+        }
+
+        [Fact]
+        public void GetPage_Contractor_ProjectTeamMember_Success()
+        {
+            // Arrange
+            var helper = new TestHelper();
+            var user = PrincipalHelper.CreateForPermission(Permissions.AcquisitionFileView);
+            var contractorFile = EntityHelper.CreateAcquisitionFile();
+            contractorFile.Project = new PimsProject()
             {
                 Description = "Mock Project",
                 ProjectStatusTypeCode = "PRJ",
                 RegionCode = 1,
                 PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1 } }
             };
-            var filter = new AcquisitionFilter() { };
 
-            helper.CreatePimsContext(user, true).AddAndSaveChanges(acqFile);
+            helper.CreatePimsContext(user, true).AddAndSaveChanges(contractorFile);
 
             var repository = helper.CreateRepository<AcquisitionFileRepository>(user);
 
             // Act
             var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", isContractor: true, regionCode: 1));
-            var result = repository.GetPageDeep(filter, userContext);
+            var result = repository.GetPageDeep(new AcquisitionFilter(), userContext);
 
             // Assert
             result.Should().HaveCount(1);
+            result.First().AcquisitionFileId.Should().Be(contractorFile.Internal_Id);
         }
-
 
         #endregion
 
