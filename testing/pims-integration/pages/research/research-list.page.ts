@@ -83,9 +83,9 @@ export class ResearchListPage extends LayoutPage {
     this.researchSearchDateSelect = page.locator('#input-createOrUpdateRange');
     this.researchSearchDateToInput = page.locator('#datepicker-updatedOnStartDate');
     this.researchSearchDateFromInput = page.locator('#datepicker-updatedOnEndDate');
-    this.researchSearchRegionsMultiSelect = page.locator("#multiselect-regionCodes");
-    this.researchSearchUserSelect = page.locator("#input-createOrUpdateBy")
-    this.researchSearchUserInput = page.locator("#multiselect-selectedUser");;
+    this.researchSearchRegionsMultiSelect = page.locator('#multiselect-regionCodes');
+    this.researchSearchUserSelect = page.locator('#input-createOrUpdateBy');
+    this.researchSearchUserInput = page.locator('#multiselect-selectedUser');
 
     this.researchSearchButton = page.locator('#search-button');
     this.researchSearchResetButton = page.getByTestId('reset-button');

@@ -72,9 +72,14 @@ test.describe('Research Files feature', () => {
         { label: 'Road alias', apiValue: apiFeatureFileJson.roadAlias },
         {
           label: 'Research purpose',
-          apiValue: apiFeatureFileJson.researchFilePurposes?.[0]?.researchPurposeTypeCode?.description ?? '',
+          apiValue:
+            apiFeatureFileJson.researchFilePurposes?.[0]?.researchPurposeTypeCode?.description ??
+            '',
         },
-        { label: 'Source of request', apiValue: apiFeatureFileJson.requestSourceType?.description ?? '' },
+        {
+          label: 'Source of request',
+          apiValue: apiFeatureFileJson.requestSourceType?.description ?? '',
+        },
         { label: 'Requester', apiValue: apiFeatureFileJson.requestorPerson },
       ];
 
@@ -108,7 +113,7 @@ test.describe('Research Files feature', () => {
       expect(exproNotes).toBe(apiFeatureFileJson.expropriationNotes ?? '');
     });
 
-    await test.step('Validate Improvements Tab', async() =>{
+    await test.step('Validate Improvements Tab', async () => {
       //Navigate to the research file improvements tab
       researchImprovements.improvementTabClick();
 
@@ -150,8 +155,6 @@ test.describe('Research Files feature', () => {
       expect(fileName).toBe('react-icon.svg');
     });
 
-    await test.step('Validate Notes tab', async () =>{
-
-    });
+    await test.step('Validate Notes tab', async () => {});
   });
 });

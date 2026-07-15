@@ -16,7 +16,6 @@ export const normalize = (value: string | null): string => {
 };
 
 export const formatApiDate = (apiDate: string | null | undefined): string => {
-
   if (!apiDate) {
     return '';
   }
