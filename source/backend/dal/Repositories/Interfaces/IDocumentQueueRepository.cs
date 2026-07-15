@@ -19,7 +19,7 @@ namespace Pims.Dal.Repositories
 
         IEnumerable<DocumentQueueSearchResult> GetAllByFilter(DocumentQueueFilter filter);
 
-        Task<PimsDocumentQueue> Update(PimsDocumentQueue queuedDocument, bool removeDocument = false);
+        Task<PimsDocumentQueue> UpdateAsync(PimsDocumentQueue queuedDocument, bool removeDocument = false);
 
         bool Delete(PimsDocumentQueue queuedDocument);
 

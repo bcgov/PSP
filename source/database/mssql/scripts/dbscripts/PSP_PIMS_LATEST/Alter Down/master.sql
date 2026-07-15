@@ -14,11 +14,11 @@ PRINT '     == DB TRANSACTION START ========'
 
    --Script section
 
-   PRINT '- Executing PSP_PIMS_S121_00/Alter Down/010_PSP_PIMS_Alter_Down.sql '
-   :setvar filepath "PSP_PIMS_S121_00/Alter Down/010_PSP_PIMS_Alter_Down.sql"
+   PRINT '- Executing PSP_PIMS_S122_00/Alter Down/010_PSP_PIMS_Alter_Down.sql '
+   :setvar filepath "PSP_PIMS_S122_00/Alter Down/010_PSP_PIMS_Alter_Down.sql"
    :r $(filepath)
-   PRINT '- Executing PSP_PIMS_S121_00/Alter Down/020_PIMS_STATIC_VARIABLE_VERSION_Alter_Down.sql '
-   :setvar filepath "PSP_PIMS_S121_00/Alter Down/020_PIMS_STATIC_VARIABLE_VERSION_Alter_Down.sql"
+   PRINT '- Executing PSP_PIMS_S122_00/Alter Down/020_PIMS_STATIC_VARIABLE_VERSION_Alter_Down.sql '
+   :setvar filepath "PSP_PIMS_S122_00/Alter Down/020_PIMS_STATIC_VARIABLE_VERSION_Alter_Down.sql"
    :r $(filepath)
 
    --End script section

@@ -39,14 +39,22 @@ namespace Pims.Dal.Repositories
         /// Retrieves the matching projects to the given filter.
         /// </summary>
         /// <param name="filter"></param>
-        /// <param name="regions"></param>
         /// <param name="maxResults"></param>
+        /// <param name="userContext">The calling user context.</param>
         /// <returns></returns>
-        public IList<PimsProject> SearchProjects(string filter, int maxResults)
+        public IList<PimsProject> SearchProjects(string filter, int maxResults, UserContextModel userContext = null)
         {
-            // business requirement - limit search results to user's assigned region(s)
-            return this.Context.PimsProjects.AsNoTracking()
-                .Where(p => EF.Functions.Like(p.Description, $"%{filter}%") || EF.Functions.Like(p.Code, $"%{filter}%") || EF.Functions.Like(p.Code + " " + p.Description, $"%{filter}%"))
+            var predicate = PredicateBuilder.New<PimsProject>(p => EF.Functions.Like(p.Description, $"%{filter}%") || EF.Functions.Like(p.Code, $"%{filter}%") || EF.Functions.Like(p.Code + " " + p.Description, $"%{filter}%"));
+
+            // Contractor access is limited by region and team membership.
+            if (userContext is not null && userContext.IsContractor)
+            {
+                predicate.And(p => userContext.Regions.Contains(p.RegionCode));
+                predicate.And(p => p.PimsProjectPeople.Any(x => x.PersonId == userContext.PersonId));
+            }
+
+            return Context.PimsProjects.AsNoTracking()
+                .Where(predicate)
                 .OrderBy(a => a.Code)
                 .Take(maxResults)
                 .ToArray();
@@ -55,8 +63,10 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Returns a Paged Result of Projects based on ProjectFilter params.
         /// </summary>
+        /// <param name="filter"></param>
+        /// <param name="userContext">The calling user context.</param>
         /// <returns></returns>
-        public Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, long? contractorPersonId = null)
+        public Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, UserContextModel userContext = null)
         {
             User.ThrowIfNotAuthorized(Permissions.ProjectView);
             filter.ThrowIfNull(nameof(filter));
@@ -65,7 +75,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            return GetPage(filter, contractorPersonId);
+            return GetPage(filter, userContext);
         }
 
         /// <summary>
@@ -205,13 +215,14 @@ namespace Pims.Dal.Repositories
             return project;
         }
 
-        public IEnumerable<PimsProjectPerson> GetTeamMembers(long? contractorPersonId = null)
+        public IEnumerable<PimsProjectPerson> GetTeamMembers(UserContextModel userContext = null)
         {
             var predicate = PredicateBuilder.New<PimsProjectPerson>(pp => true);
 
-            if (contractorPersonId != null)
+            if (userContext is not null && userContext.IsContractor)
             {
-                predicate.And(x => x.Project.PimsProjectPeople.Any(p => p.PersonId == contractorPersonId));
+                predicate.And(pp => userContext.Regions.Contains(pp.Project.RegionCode));
+                predicate.And(pp => pp.Project.PimsProjectPeople.Any(p => p.PersonId == userContext.PersonId));
             }
 
             return Context.PimsProjectPeople
@@ -221,7 +232,7 @@ namespace Pims.Dal.Repositories
                 .ToArray();
         }
 
-        private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter, long? contractorPersonId = null)
+        private async Task<Paged<PimsProject>> GetPage(ProjectFilter filter, UserContextModel userContext = null)
         {
             var query = Context.PimsProjects.AsNoTracking();
 
@@ -240,12 +251,14 @@ namespace Pims.Dal.Repositories
                 query = query.Where(x => x.ProjectStatusTypeCodeNavigation.ProjectStatusTypeCode == filter.ProjectStatusCode);
             }
 
-            if (contractorPersonId is not null)
+            // Contractor access is limited by region and team membership.
+            if (userContext is not null && userContext.IsContractor)
             {
-                query = query.Where(x => x.PimsProjectPeople.Any(x => x.PersonId == contractorPersonId));
+                query = query.Where(x => userContext.Regions.Contains(x.RegionCode));
+                query = query.Where(x => x.PimsProjectPeople.Any(x => x.PersonId == userContext.PersonId));
             }
 
-            if(filter.TeamMemberPersonId.HasValue)
+            if (filter.TeamMemberPersonId.HasValue)
             {
                 query = query.Where(x => x.PimsProjectPeople.Any(x => x.PersonId == filter.TeamMemberPersonId.Value));
             }
@@ -260,7 +273,7 @@ namespace Pims.Dal.Repositories
                 query = query.Where(x => x.AppCreateUserid == filter.ProjectCreatedBy);
             }
 
-            if (filter.Sort?.Any() == true)
+            if (filter.Sort?.Length > 0)
             {
                 var direction = filter.Sort[0].Split(" ").LastOrDefault();
                 if (filter.Sort[0].StartsWith("LastUpdatedBy"))

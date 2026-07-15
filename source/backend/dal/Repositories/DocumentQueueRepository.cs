@@ -87,7 +87,7 @@ namespace Pims.Dal.Repositories
         /// </summary>
         /// <param name="queuedDocument"></param>
         /// <returns></returns>
-        public async Task<PimsDocumentQueue> Update(PimsDocumentQueue queuedDocument, bool removeDocument = false)
+        public async Task<PimsDocumentQueue> UpdateAsync(PimsDocumentQueue queuedDocument, bool removeDocument = false)
         {
             // Use a distributed lock to ensure that only one process can update the document queue at a time (prevents deadlocks from history triggers).
             var @lock = this._synchronizationProvider.CreateLock("DocumentQueueLock");

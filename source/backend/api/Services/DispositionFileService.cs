@@ -169,9 +169,9 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = (pimsUser != null && pimsUser.IsContractor) ? pimsUser.PersonId : null;
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
 
-            return _dispositionFileRepository.GetPageDeep(filter, contractorPersonId);
+            return _dispositionFileRepository.GetPageDeep(filter, userContext);
         }
 
         public IEnumerable<PimsDispositionFileProperty> GetProperties(long id)
@@ -190,7 +190,10 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
             _user.ThrowIfNotAuthorized(Permissions.ContactView);
 
-            var teamMembers = _dispositionFileRepository.GetTeamMembers();
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
+
+            var teamMembers = _dispositionFileRepository.GetTeamMembers(userContext);
 
             var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First());
             var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First());
@@ -462,7 +465,10 @@ namespace Pims.Api.Services
             _logger.LogInformation("Searching all Disposition Files matching the filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
 
-            var dispositionFiles = _dispositionFileRepository.GetDispositionFileExportDeep(filter);
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
+
+            var dispositionFiles = _dispositionFileRepository.GetDispositionFileExportDeep(filter, userContext);
 
             return dispositionFiles
                 .Select(file => new DispositionFileExportModel

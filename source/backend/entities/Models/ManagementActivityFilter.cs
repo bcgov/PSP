@@ -1,3 +1,5 @@
+using System.Collections.Generic;
+
 namespace Pims.Dal.Entities.Models
 {
     public class ManagementActivityFilter : PageFilter
@@ -60,6 +62,6 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - The management file region.
         /// </summary>
-        public short? ManagementFileRegionCode { get; set; }
+        public IList<short> RegionCodes { get; set; } = new List<short>();
     }
 }

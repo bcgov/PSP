@@ -92,8 +92,7 @@ namespace Pims.Api.Services
                 userNotification.NotificationSentDt = DateTime.UtcNow;
             }
 
-            _ = await _notificationUserOutputRepository.Update(userNotification);
-            _notificationUserOutputRepository.CommitTransaction();
+            _ = await _notificationUserOutputRepository.UpdateAsync(userNotification);
 
             return;
         }
@@ -152,7 +151,7 @@ namespace Pims.Api.Services
                 }
                 else if(notification.LeaseId.HasValue)
                 {
-                    source = $"Lease #: L-{notification.Lease.LFileNo}";
+                    source = $"Lease File #: {notification.Lease.LFileNo}";
                 }
                 else
                 {

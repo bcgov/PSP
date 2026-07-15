@@ -82,14 +82,14 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
   margin-bottom: 2.4rem;
 }
 
-.c10 {
+.c9 {
   color: #474543;
   font-size: 1.6rem;
   -webkit-text-decoration: none;
   text-decoration: none;
 }
 
-.c9 {
+.c8 {
   padding: 0 0.4rem;
   display: block;
 }
@@ -105,11 +105,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
   font-weight: bold;
 }
 
-.c8 {
-  font-style: italic;
-}
-
-.c11 {
+.c10 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -778,95 +774,87 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               class="collapse show"
             >
               <div
-                class="c8"
+                class="pb-1 row"
               >
                 <div
-                  class="pb-2 row"
+                  class="pr-0 text-left col-4"
                 >
-                  <div
-                    class="pr-0 text-left col-4"
+                  <label
+                    class="c6"
                   >
-                    <label
-                      class="c6"
-                    >
-                      Negotiation agent:
-                    </label>
-                  </div>
-                  <div
-                    class="c7 text-left col"
-                    data-testid="teamMember[undefined]"
+                    Negotiation agent:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                  data-testid="teamMember[0]"
+                >
+                  <a
+                    class="c8"
+                    href="/contact/P1"
+                    rel="noopener noreferrer"
+                    target="_blank"
                   >
-                    <a
-                      class="c9"
-                      href="/contact/P1"
-                      rel="noopener noreferrer"
-                      target="_blank"
+                    <span>
+                      Bob Billy Smith
+                    </span>
+                    <svg
+                      class="ml-2"
+                      fill="currentColor"
+                      height="1rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1rem"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <span>
-                        Bob Billy Smith
-                      </span>
-                      <svg
-                        class="ml-2"
-                        fill="currentColor"
-                        height="1rem"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 512 512"
-                        width="1rem"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                        />
-                      </svg>
-                    </a>
-                  </div>
+                      <path
+                        d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                      />
+                    </svg>
+                  </a>
                 </div>
               </div>
               <div
-                class="c8"
+                class="pb-1 row"
               >
                 <div
-                  class="pb-2 row"
+                  class="pr-0 text-left col-4"
                 >
-                  <div
-                    class="pr-0 text-left col-4"
+                  <label
+                    class="c6"
                   >
-                    <label
-                      class="c6"
-                    >
-                      Negotiation agent:
-                    </label>
-                  </div>
-                  <div
-                    class="c7 text-left col"
-                    data-testid="teamMember[undefined]"
+                    Negotiation agent:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                  data-testid="teamMember[0]"
+                >
+                  <a
+                    class="c8"
+                    href="/contact/P3"
+                    rel="noopener noreferrer"
+                    target="_blank"
                   >
-                    <a
-                      class="c9"
-                      href="/contact/P3"
-                      rel="noopener noreferrer"
-                      target="_blank"
+                    <span>
+                      Stinky Cheese
+                    </span>
+                    <svg
+                      class="ml-2"
+                      fill="currentColor"
+                      height="1rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1rem"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <span>
-                        Stinky Cheese
-                      </span>
-                      <svg
-                        class="ml-2"
-                        fill="currentColor"
-                        height="1rem"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 512 512"
-                        width="1rem"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                        />
-                      </svg>
-                    </a>
-                  </div>
+                      <path
+                        d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                      />
+                    </svg>
+                  </a>
                 </div>
               </div>
             </div>
@@ -891,77 +879,69 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
               class="collapse show"
             >
               <p
-                class="c10"
+                class="c9"
               >
                 Each property in this file should be owned by the owner(s) in this section
               </p>
               <div
-                class="c8"
+                class="pb-1 row"
               >
                 <div
-                  class="pb-2 row"
+                  class="pr-0 text-left col-4"
                 >
-                  <div
-                    class="pr-0 text-left col-4"
+                  <label
+                    class="c6"
                   >
-                    <label
-                      class="c6"
-                    >
-                      Owner solicitor:
-                    </label>
-                  </div>
-                  <div
-                    class="c7 text-left col"
-                    data-testid="teamMember[undefined]"
+                    Owner solicitor:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                  data-testid="teamMember[0]"
+                >
+                  <a
+                    class="c8"
+                    href="/contact/O1"
+                    rel="noopener noreferrer"
+                    target="_blank"
                   >
-                    <a
-                      class="c9"
-                      href="/contact/O1"
-                      rel="noopener noreferrer"
-                      target="_blank"
+                    <span>
+                      Millennium Inc
+                    </span>
+                    <svg
+                      class="ml-2"
+                      fill="currentColor"
+                      height="1rem"
+                      stroke="currentColor"
+                      stroke-width="0"
+                      viewBox="0 0 512 512"
+                      width="1rem"
+                      xmlns="http://www.w3.org/2000/svg"
                     >
-                      <span>
-                        Millennium Inc
-                      </span>
-                      <svg
-                        class="ml-2"
-                        fill="currentColor"
-                        height="1rem"
-                        stroke="currentColor"
-                        stroke-width="0"
-                        viewBox="0 0 512 512"
-                        width="1rem"
-                        xmlns="http://www.w3.org/2000/svg"
-                      >
-                        <path
-                          d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
-                        />
-                      </svg>
-                    </a>
-                  </div>
+                      <path
+                        d="M432,320H400a16,16,0,0,0-16,16V448H64V128H208a16,16,0,0,0,16-16V80a16,16,0,0,0-16-16H48A48,48,0,0,0,0,112V464a48,48,0,0,0,48,48H400a48,48,0,0,0,48-48V336A16,16,0,0,0,432,320ZM488,0h-128c-21.37,0-32.05,25.91-17,41l35.73,35.73L135,320.37a24,24,0,0,0,0,34L157.67,377a24,24,0,0,0,34,0L435.28,133.32,471,169c15,15,41,4.5,41-17V24A24,24,0,0,0,488,0Z"
+                      />
+                    </svg>
+                  </a>
                 </div>
               </div>
               <div
-                class="c8"
+                class="mb-4 row"
               >
                 <div
-                  class="pl-4 mb-3 row"
+                  class="pr-0 pl-10 col-4"
                 >
-                  <div
-                    class="pr-0 text-left col-4"
+                  <label
+                    class="c6"
                   >
-                    <label
-                      class="c6"
-                    >
-                      Primary contact:
-                    </label>
-                  </div>
-                  <div
-                    class="c7 text-left col"
-                    data-testid="primaryContact[undefined]"
-                  >
-                    No contacts available
-                  </div>
+                    Primary contact:
+                  </label>
+                </div>
+                <div
+                  class="c7 text-left col"
+                  data-testid="primaryContact[0]"
+                >
+                  No contacts available
                 </div>
               </div>
               <div
@@ -980,7 +960,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                   class="c7 text-left col"
                 >
                   <a
-                    class="c11"
+                    class="c10"
                     href="/contact/P2"
                     rel="noopener noreferrer"
                     target="_blank"

@@ -71,22 +71,6 @@ export class ResearchCreatePage extends LayoutPage {
     await this.page.goto('/mapview/sidebar/research/new', { waitUntil: 'domcontentloaded' });
   }
 
-  async setResearchNameValue(researchName: string) {
-    const now = new Date();
-
-    const timestamp =
-      now.getFullYear().toString() +
-      String(now.getMonth() + 1).padStart(2, '0') +
-      String(now.getDate()).padStart(2, '0') +
-      String(now.getHours()).padStart(2, '0') +
-      String(now.getMinutes()).padStart(2, '0') +
-      String(now.getSeconds()).padStart(2, '0');
-
-    const fileName = `${researchName}-${timestamp}`;
-
-    await this.researchNameInput.fill(fileName);
-  }
-
   async cancelButtonClick() {
     await this.cancelButton.click();
   }

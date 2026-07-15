@@ -3246,7 +3246,7 @@ namespace Pims.Api.Test.Services
             var acqFile = EntityHelper.CreateAcquisitionFile();
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
-            repository.Setup(x => x.GetTeamMembers(It.IsAny<HashSet<short>>(), null)).Returns(new List<PimsAcquisitionFileTeam>());
+            repository.Setup(x => x.GetTeamMembers(It.IsAny<UserContextModel>())).Returns(new List<PimsAcquisitionFileTeam>());
 
             // Act
             Action act = () => service.GetOwners(1);
@@ -3265,7 +3265,7 @@ namespace Pims.Api.Test.Services
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            repository.Setup(x => x.GetTeamMembers(It.IsAny<HashSet<short>>(), It.IsAny<long>())).Returns(new List<PimsAcquisitionFileTeam>());
+            repository.Setup(x => x.GetTeamMembers(It.IsAny<UserContextModel>())).Returns(new List<PimsAcquisitionFileTeam>());
 
             var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
@@ -3274,7 +3274,7 @@ namespace Pims.Api.Test.Services
             var teamMembers = service.GetTeamMembers();
 
             // Assert
-            repository.Verify(x => x.GetTeamMembers(It.IsAny<HashSet<short>>(), contractorUser.PersonId), Times.Once);
+            repository.Verify(x => x.GetTeamMembers(It.IsAny<UserContextModel>()), Times.Once);
         }
 
         #endregion
@@ -3510,7 +3510,7 @@ namespace Pims.Api.Test.Services
 
             var filter = new AcquisitionFilter();
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
-            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<long?>()))
+            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<UserContextModel>()))
                         .Returns(new List<PimsAcquisitionFile>()
                         {
                             acquisitionFile,
@@ -3525,7 +3525,7 @@ namespace Pims.Api.Test.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(1, result.Count());
-            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<long?>()), Times.Once);
+            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         [Fact]
@@ -3564,7 +3564,7 @@ namespace Pims.Api.Test.Services
                 },
             };
 
-            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<long?>()))
+            acqFilerepository.Setup(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<UserContextModel>()))
                         .Returns(new List<PimsAcquisitionFile>()
                         {
                             acquisitionFile,
@@ -3583,7 +3583,7 @@ namespace Pims.Api.Test.Services
             Assert.Equal("01-2023-01", result[1].FileNumber);
             Assert.Equal("000-008-000", result[0].Pid);
             Assert.Equal("000-009-000", result[1].Pid);
-            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<long?>()), Times.Once);
+            acqFilerepository.Verify(x => x.GetAcquisitionFileExportDeep(It.IsAny<AcquisitionFilter>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         #endregion

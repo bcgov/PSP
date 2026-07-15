@@ -1,7 +1,7 @@
 /* -----------------------------------------------------------------------------
-Update the database version and insert the PST value in the PIMS_STATIC_VARIABLE 
+Update the database version and insert the PST value in the PIMS_STATIC_VARIABLE
 table.
-. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . 
+. . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
 Doug Filteau  2023-Sep-18  Initial version
@@ -18,10 +18,10 @@ GO
 
 -- Update the database version number.
 DECLARE @CurrVer NVARCHAR(100)
-SET @CurrVer = N'121.00'
+SET @CurrVer = N'122.00'
 
 UPDATE PIMS_STATIC_VARIABLE
-WITH   (UPDLOCK, SERIALIZABLE) 
+WITH   (UPDLOCK, SERIALIZABLE)
 SET    STATIC_VARIABLE_VALUE      = @CurrVer
      , CONCURRENCY_CONTROL_NUMBER = CONCURRENCY_CONTROL_NUMBER + 1
 WHERE  STATIC_VARIABLE_NAME       = N'DBVERSION';
