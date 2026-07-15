@@ -7,7 +7,7 @@ namespace Pims.Dal.Repositories
 {
     public interface IAcquisitionFileRepository : IRepository
     {
-        Paged<PimsAcquisitionFile> GetPageDeep(AcquisitionFilter filter, long? contractorPersonId = null);
+        Paged<PimsAcquisitionFile> GetPageDeep(AcquisitionFilter filter, UserContextModel userContext = null);
 
         PimsAcquisitionFile GetById(long id);
 
@@ -15,7 +15,7 @@ namespace Pims.Dal.Repositories
 
         List<PimsAcquisitionOwner> GetOwnersByAcquisitionFileId(long acquisitionFileId);
 
-        List<PimsAcquisitionFileTeam> GetTeamMembers(HashSet<short> regions, long? contractorPersonId = null);
+        List<PimsAcquisitionFileTeam> GetTeamMembers(UserContextModel userContext = null);
 
         PimsAcquisitionFile Add(PimsAcquisitionFile acquisitionFile);
 
@@ -35,9 +35,9 @@ namespace Pims.Dal.Repositories
 
         PimsProperty GetProperty(long acquisitionFilePropertyId);
 
-        List<PimsAcquisitionFile> GetAcquisitionFileExportDeep(AcquisitionFilter filter, long? contractorPersonId = null);
+        List<PimsAcquisitionFile> GetAcquisitionFileExportDeep(AcquisitionFilter filter, UserContextModel userContext = null);
 
-        List<PimsAcquisitionFile> GetAcquisitionSubFiles(long acquisitionFileId, long? contractorPersonId = null);
+        List<PimsAcquisitionFile> GetAcquisitionSubFiles(long acquisitionFileId, UserContextModel userContext = null);
 
         PimsAcquisitionFile GetAcquisitionAtTime(long acquisitionFileId, DateTime time);
     }

@@ -9,6 +9,7 @@ export interface ISectionFieldProps {
   /** It accepts either a string or a custom React tooltip component  */
   tooltip?: React.ReactNode;
   className?: string;
+  labelClassName?: string;
   valueClassName?: string;
   required?: boolean;
   noGutters?: boolean;
@@ -22,7 +23,10 @@ export const SectionField: React.FunctionComponent<
 > = props => {
   return (
     <Row className={props.className ?? cx('pb-2', { 'no-gutters': props.noGutters })}>
-      <Col {...(props.labelWidth ?? { xs: 4 })} className="pr-0 text-left">
+      <Col
+        {...(props.labelWidth ?? { xs: 4 })}
+        className={cx('pr-0', props.labelClassName ?? 'text-left')}
+      >
         {props.label && (
           <StyledFieldLabel>
             {props.label}:{props.tooltip && <span>{renderTooltip(props.tooltip)}</span>}

@@ -1,13 +1,13 @@
-using Pims.Api.Models.CodeTypes;
-using Pims.Core.Extensions;
-using Pims.Core.Security;
-using Pims.Dal.Entities;
-using Pims.Dal.Repositories;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
-using static Pims.Dal.Entities.PimsLeaseStatusType;
+using Pims.Api.Models.CodeTypes;
+using Pims.Core.Extensions;
+using Pims.Core.Security;
+using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
+using Pims.Dal.Repositories;
 
 namespace Pims.Api.Services
 {
@@ -33,19 +33,19 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
             DateTime fiscalYearStartDate = fiscalYearStart.ToFiscalYearDate();
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
 
             // fiscal defined as April 01 to March 31 of following year
             return _leaseRepository.GetAllByFilter(
-                new Dal.Entities.Models.LeaseFilter()
+                new LeaseFilter()
                 {
                     ExpiryAfterDate = fiscalYearStartDate,
                     StartBeforeDate = fiscalYearStartDate.AddYears(1).AddDays(-1),
                     NotInStatus = new List<string>() { LeaseStatusTypes.DRAFT.ToString(), LeaseStatusTypes.DISCARD.ToString(), LeaseStatusTypes.DUPLICATE.ToString() },
                     IsReceivable = true,
                 },
-                true,
-                contractorPersonId);
+                userContext,
+                true);
         }
 
         public IEnumerable<PimsLeasePayment> GetLeasePaymentsReport(int fiscalYearStart)
@@ -53,13 +53,13 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
 
             var pimsUser = _userRepository.GetByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
 
             // fiscal defined as April 01 to March 31 of following year
             DateTime fiscalYearStartDate = fiscalYearStart.ToFiscalYearDate();
             DateTime fiscalYearEndDate = fiscalYearStartDate.AddYears(1).AddDays(-1);
 
-            var allPayments = _leasePaymentRepository.GetAllByDateRange(fiscalYearStartDate, fiscalYearEndDate, contractorPersonId).ToList();
+            var allPayments = _leasePaymentRepository.GetAllByDateRange(fiscalYearStartDate, fiscalYearEndDate, userContext).ToList();
             var leaseIds = allPayments.Select(payment => payment.LeasePeriod.LeaseId);
             var activeLeases = _leaseService.GetAllByIds(leaseIds).Where(l => l.LeaseStatusTypeCode != LeaseStatusTypes.DUPLICATE.ToString() && l.LeaseStatusTypeCode != LeaseStatusTypes.DRAFT.ToString() && l.LeaseStatusTypeCode != LeaseStatusTypes.DISCARD.ToString()).ToList();
             var activePayments = allPayments.Where(payment => activeLeases.Any(lease => lease.LeaseId == payment.LeasePeriod.LeaseId)).ToList();

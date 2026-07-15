@@ -15,10 +15,12 @@ namespace Pims.Core.Test
         /// </summary>
         /// <param name="username"></param>
         /// <param name="isContractor"></param>
+        /// <param name="regionCode"></param>
+        /// <param name="id"
         /// <returns></returns>
-        public static Entity.PimsUser CreateUser(string username, bool isContractor = false)
+        public static Entity.PimsUser CreateUser(string username, bool isContractor = false, short? regionCode = null, long? id = 1)
         {
-            return CreateUser(1, Guid.NewGuid(), username, isContractor: isContractor);
+            return CreateUser(id ?? 1, Guid.NewGuid(), username, isContractor: isContractor, regionCode: regionCode);
         }
 
         /// <summary>
@@ -40,6 +42,7 @@ namespace Pims.Core.Test
             organization ??= EntityHelper.CreateOrganization(id, "Organization 1");
             role ??= EntityHelper.CreateRole("Real Estate Manager");
             var person = new Entity.PimsPerson(lastName, firstName, address);
+            person.PersonId = id;
             person.PimsContactMethods = new List<Entity.PimsContactMethod>();
             var user = new Entity.PimsUser(keycloakUserId, username, person)
             {

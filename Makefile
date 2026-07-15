@@ -184,31 +184,31 @@ infra: ## Starts infrastructure containers (e.g. database, geoserver). Useful fo
 
 monitoring-up: ## Calls the docker compose up for the monitoring/telemetry images
 	@echo "$(P) Create or start local monitoring containers..."
-	@docker-compose --profile monitoring up -d
+	@docker compose --profile monitoring up -d
 
 start: ## Starts the local containers (n=service name)
 	@echo "$(P) Starting client and server containers..."
-	@docker-compose --profile all start $(n)
+	@docker compose --profile all start $(n)
 
 up: ## Runs the local containers (n=service name)
 	@echo "$(P) Running client and server..."
-	@docker-compose --profile all up -d --no-recreate $(n)
+	@docker compose --profile all up -d --no-recreate $(n)
 
 destroy: ## Stops the local containers and removes them (n=service name)
 	@echo "$(P) Removing docker containers..."
-	@docker-compose rm -s -f $(n)
+	@docker compose rm -s -f $(n)
 
 down: ## Stops the local containers and removes them
 	@echo "$(P) Stopping client and server..."
-	@docker-compose --profile all down
+	@docker compose --profile all down
 
 stop: ## Stops the local containers (n=service name)
 	@echo "$(P) Stopping client and server..."
-	@docker-compose --profile all stop $(n)
+	@docker compose --profile all stop $(n)
 
 build: ## Builds the local containers (n=service name)
 	@echo "$(P) Building images..."
-	@docker-compose --profile all build --no-cache $(n)
+	@docker compose --profile all build --no-cache $(n)
 
 rebuild: ## Build the local contains (n=service name) and then start them after building
 	@"$(MAKE)" build n=$(n)
@@ -216,19 +216,32 @@ rebuild: ## Build the local contains (n=service name) and then start them after 
 
 clean: ## Removes all local containers, images, volumes, etc
 	@echo "$(P) Removing all containers, images, volumes for solution."
-	@docker-compose rm -f -v -s
+	@docker compose rm -f -v -s
 	@docker volume rm -f psp-frontend-node-cache
 	@docker volume rm -f psp-api-db-data
 
 restart-mayan:
-	@docker-compose --profile mayan up --build --force-recreate -d
+	@docker compose --profile mayan up --build --force-recreate -d
 
 mayan-up: ## Calls the docker compose up for the mayan images
 	@echo "$(P) Create or start mayan-edms system"
-	@docker-compose --profile mayan up -d
+	@docker compose --profile mayan up -d
+
+mayan-destroy: ## Destroys the mayan-edms containers and volumes
+	@echo "$(P) Destroying mayan-edms containers (container data will be preserved)"
+	@docker compose --profile mayan down
+
+mayan-logs: ## Shows real-time logs for main mayan container
+	@docker compose --profile mayan logs -f mayan-frontend
+
+worker-logs: ## Shows real-time logs for all mayan workers
+	@docker compose --profile mayan logs -f mayan-frontend mayan-worker-a mayan-worker-b mayan-worker-c mayan-worker-d mayan-worker-e
+
+mayan-stats: ## Monitors CPU, memory usage, and limit limits for all Mayan containers in real-time
+	@docker stats mayan-frontend mayan-elasticsearch mayan-postgres mayan-redis mayan-rabbitmq mayan-worker-a mayan-worker-b mayan-worker-c mayan-worker-d mayan-worker-e --format "table {{.Name}}\t{{.CPUPerc}}\t{{.MemUsage}}\t{{.MemPerc}}\t{{.NetIO}}"
 
 logs: ## Shows logs for running containers (n=service name)
-	@docker-compose logs -f $(n)
+	@docker compose logs -f $(n)
 
 setup: ## Setup local container environment, initialize keycloak and database
 	@"$(MAKE)" build; make up; make pause-30; make db-update; make db-seed; make keycloak-sync;
@@ -239,20 +252,20 @@ pause-30:
 
 client-test: ## Runs the client tests in a container
 	@echo "$(P) Running client unit tests..."
-	@docker-compose run frontend npm test
+	@docker compose run frontend npm test
 
 server-test: ## Runs the server tests in a container
 	@echo "$(P) Running server unit tests..."
-	@docker-compose run backend dotnet test
+	@docker compose run backend dotnet test
 
 server-run: ## Starts local server containers
 	@echo "$(P) Starting server containers..."
-	@docker-compose up -d backend
+	@docker compose up -d backend
 
 npm-clean: ## Removes local containers, images, volumes, for frontend application.
 	@echo "$(P) Removing frontend containers and volumes."
-	@docker-compose stop frontend
-	@docker-compose rm -f -v -s frontend
+	@docker compose stop frontend
+	@docker compose rm -f -v -s frontend
 	@docker volume rm -f psp-frontend-node-cache
 
 npm-refresh: ## Cleans and rebuilds the frontend.  This is useful when npm packages are changed.
@@ -262,11 +275,11 @@ db-refresh: | server-run pause-30 db-seed keycloak-sync ## Refresh the database 
 
 db-clean: ## create a new, clean database using the script file in the database. defaults to using the folder specified in database/mssql/.env, but can be overriden with n=PSP_PIMS_S15_00.
 	@echo "$(P) create a clean database with minimal required data for development"
-	TARGET_SPRINT=$(n) docker-compose up -d --build database
+	TARGET_SPRINT=$(n) docker compose up -d --build database
 
 db-seed: ## create a new, database seeded with test data using the script file in the database. defaults to using the folder specified in database/mssql/.env, but can be overriden with n=PSP_PIMS_S15_00.
 	@echo "$(P) Seed the database with test data. n=FOLDER_NAME (PSP_PIMS_S15_00)"
-	TARGET_SPRINT=$(n) SEED=TRUE docker-compose up -d --build --force-recreate database;
+	TARGET_SPRINT=$(n) SEED=TRUE docker compose up -d --build --force-recreate database;
 
 db-drop: ## Drop the database.
 	@echo "$(P) Drop the database."

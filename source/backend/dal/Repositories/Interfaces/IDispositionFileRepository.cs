@@ -6,7 +6,7 @@ namespace Pims.Dal.Repositories
 {
     public interface IDispositionFileRepository : IRepository
     {
-        Paged<PimsDispositionFile> GetPageDeep(DispositionFilter filter, long? contractorPersonId = null);
+        Paged<PimsDispositionFile> GetPageDeep(DispositionFilter filter, UserContextModel userContext = null);
 
         PimsDispositionFile GetById(long id);
 
@@ -18,7 +18,7 @@ namespace Pims.Dal.Repositories
 
         LastUpdatedByModel GetLastUpdateBy(long id);
 
-        List<PimsDispositionFileTeam> GetTeamMembers();
+        List<PimsDispositionFileTeam> GetTeamMembers(UserContextModel userContext = null);
 
         List<PimsDispositionOffer> GetDispositionOffers(long dispositionId);
 
@@ -46,7 +46,7 @@ namespace Pims.Dal.Repositories
 
         short GetRegion(long id);
 
-        List<PimsDispositionFile> GetDispositionFileExportDeep(DispositionFilter filter);
+        List<PimsDispositionFile> GetDispositionFileExportDeep(DispositionFilter filter, UserContextModel userContext = null);
 
         List<PimsDispositionAgreement> GetAgreementsByDispositionFile(long dispositionFileId);
 

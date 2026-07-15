@@ -17,7 +17,6 @@ using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
-using static Pims.Dal.Entities.PimsLeaseStatusType;
 
 namespace Pims.Api.Services
 {
@@ -101,9 +100,9 @@ namespace Pims.Api.Services
             _logger.LogInformation("Getting all leases with ids {leaseIds}", leaseIds);
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
 
-            var leases = _leaseRepository.GetAllByIds(leaseIds, contractorPersonId).ToList();
+            var leases = _leaseRepository.GetAllByIds(leaseIds, userContext).ToList();
 
             // Ensure we return property information with lat/long coordinates for any properties associated to the returned leases.
             foreach (var lease in leases)
@@ -139,9 +138,9 @@ namespace Pims.Api.Services
             filter.Quantity = all.HasValue && all.Value ? _leaseRepository.Count() : filter.Quantity;
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
 
-            return _leaseRepository.GetPage(filter, contractorPersonId);
+            return _leaseRepository.GetPage(filter, userContext);
         }
 
         public IEnumerable<PimsInsurance> GetInsuranceByLeaseId(long leaseId)
@@ -511,10 +510,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
-
-            var teamMembers = _leaseRepository.GetTeamMembers(userRegions, contractorPersonId);
+            var teamMembers = _leaseRepository.GetTeamMembers(UserContextModel.FromPimsUser(pimsUser));
 
             var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
             var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First()).ToList();
@@ -528,12 +524,12 @@ namespace Pims.Api.Services
 
         /// <summary>
         /// Validate that changing the Lease Account type is valid.
-        /// If current status is Payable there shouldn't be any Payees or Compensation Requisitions to make the swith.
+        /// If current status is Payable there shouldn't be any Payees or Compensation Requisitions to make the switch.
         /// When is Receivable there shouldn't be any Tenants assigned.
         /// </summary>
         /// <param name="currentLease"></param>
         /// <param name="updatedLease"></param>
-        /// <exception cref="BusinessRuleViolationException"></exception>
+        /// <exception cref="BusinessRuleViolationException">Thrown when the lease account type change is not valid.</exception>
         private static void ValidateLeaseAccountTypeChange(PimsLease currentLease, PimsLease updatedLease)
         {
             if ((currentLease.LeasePayRvblTypeCode == LeasePaymentReceivableTypes.PYBLBCTFA.ToString() || currentLease.LeasePayRvblTypeCode.ToString() == LeasePaymentReceivableTypes.PYBLMOTI.ToString())

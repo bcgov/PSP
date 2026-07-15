@@ -1,8 +1,10 @@
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
-using Pims.Api.Models.Concepts.AcquisitionFile;
 using Pims.Api.Models.Concepts.Product;
 using Pims.Api.Models.Concepts.Project;
 using Pims.Api.Services;
@@ -15,9 +17,6 @@ using Pims.Core.Security;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
-using System;
-using System.Collections.Generic;
-using System.Linq;
 
 namespace Pims.Api.Areas.Projects.Controllers
 {

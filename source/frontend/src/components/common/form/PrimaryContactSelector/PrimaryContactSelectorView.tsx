@@ -1,5 +1,5 @@
+import { ColProps } from 'react-bootstrap';
 import { FaExternalLinkAlt } from 'react-icons/fa';
-import styled from 'styled-components';
 
 import { SectionField } from '../../Section/SectionField';
 import { StyledLink } from '../../styles';
@@ -13,6 +13,7 @@ interface PrimaryContactSelectorDetailsProps {
   showPrimaryContact: boolean;
   index?: number;
   tooltip?: string;
+  labelWidth?: ColProps;
 }
 
 export const PrimaryContactSelectorDetails = ({
@@ -22,44 +23,45 @@ export const PrimaryContactSelectorDetails = ({
   primaryContactName,
   primaryContactUrl,
   showPrimaryContact,
-  index,
+  index = 0,
   tooltip,
+  labelWidth,
 }: PrimaryContactSelectorDetailsProps) => (
   <>
-    <StyledDiv>
-      <SectionField label={label} valueTestId={`teamMember[${index}]`} tooltip={tooltip}>
-        {teamMemberName && teamMemberUrl ? (
-          <StyledLink target="_blank" rel="noopener noreferrer" to={teamMemberUrl}>
-            <span>{teamMemberName}</span>
+    <SectionField
+      label={label}
+      className="pb-1"
+      valueTestId={`teamMember[${index}]`}
+      labelWidth={labelWidth}
+      tooltip={tooltip}
+    >
+      {teamMemberName && teamMemberUrl ? (
+        <StyledLink target="_blank" rel="noopener noreferrer" to={teamMemberUrl}>
+          <span>{teamMemberName}</span>
+          <FaExternalLinkAlt className="ml-2" size="1rem" />
+        </StyledLink>
+      ) : (
+        ''
+      )}
+    </SectionField>
+
+    {showPrimaryContact && (
+      <SectionField
+        label="Primary contact"
+        valueTestId={`primaryContact[${index}]`}
+        labelWidth={labelWidth}
+        className="mb-4"
+        labelClassName="pl-10"
+      >
+        {primaryContactName && primaryContactUrl ? (
+          <StyledLink target="_blank" rel="noopener noreferrer" to={primaryContactUrl}>
+            <span>{primaryContactName}</span>
             <FaExternalLinkAlt className="ml-2" size="1rem" />
           </StyledLink>
         ) : (
-          ''
+          'No contacts available'
         )}
       </SectionField>
-    </StyledDiv>
-
-    {showPrimaryContact && (
-      <StyledDiv>
-        <SectionField
-          label="Primary contact"
-          valueTestId={`primaryContact[${index}]`}
-          className="pl-4 mb-3"
-        >
-          {primaryContactName && primaryContactUrl ? (
-            <StyledLink target="_blank" rel="noopener noreferrer" to={primaryContactUrl}>
-              <span>{primaryContactName}</span>
-              <FaExternalLinkAlt className="ml-2" size="1rem" />
-            </StyledLink>
-          ) : (
-            'No contacts available'
-          )}
-        </SectionField>
-      </StyledDiv>
     )}
   </>
 );
-
-export const StyledDiv = styled.div`
-  font-style: italic;
-`;

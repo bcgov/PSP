@@ -1,11 +1,15 @@
 import { useCallback, useEffect, useState } from 'react';
 import { generatePath, useHistory, useRouteMatch } from 'react-router-dom';
 
+import { useOrganizationRepository } from '@/features/contacts/repositories/useOrganizationRepository';
+import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
 import { FileTabType } from '@/features/mapSideBar/shared/detail/FileTabs';
 import { useManagementFileRepository } from '@/hooks/repositories/useManagementFileRepository';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_ManagementFileContact } from '@/models/api/generated/ApiGen_Concepts_ManagementFileContact';
-import { exists } from '@/utils';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { exists, isValidId } from '@/utils';
 
 import ManagementStatusUpdateSolver from './ManagementStatusUpdateSolver';
 import { IManagementSummaryViewProps } from './ManagementSummaryView';
@@ -22,6 +26,9 @@ const ManagementSummaryContainer: React.FunctionComponent<IManagementSummaryCont
   onFileEdit,
 }) => {
   const history = useHistory();
+  const [person, setPerson] = useState<ApiGen_Concepts_Person | null>(null);
+  const [organization, setOrganization] = useState<ApiGen_Concepts_Organization | null>(null);
+  const [primaryContact, setPrimaryContact] = useState<ApiGen_Concepts_Person | null>(null);
   const statusSolver = new ManagementStatusUpdateSolver(managementFile);
   const [fileContacts, setFileContacts] = useState<ApiGen_Concepts_ManagementFileContact[]>([]);
 
@@ -42,6 +49,68 @@ const ManagementSummaryContainer: React.FunctionComponent<IManagementSummaryCont
     }
   }, [managementFile.id, retrieveManagementFileContacts]);
 
+  const handleDeleteContact = useCallback(
+    async (contactId: number) => {
+      const result = await deleteContact(managementFile.id, contactId);
+      if (result) {
+        fetchContacts();
+      }
+    },
+    [deleteContact, fetchContacts, managementFile.id],
+  );
+
+  const {
+    getPersonDetail: { execute: getPerson, loading: getPersonLoading },
+  } = usePersonRepository();
+
+  const {
+    getOrganizationDetail: { execute: getOrganization, loading: getOrganizationLoading },
+  } = useOrganizationRepository();
+
+  const fetchData = useCallback(async () => {
+    if (isValidId(managementFile.responsiblePayerPersonId)) {
+      const returnedPerson = await getPerson(managementFile.responsiblePayerPersonId);
+      if (exists(returnedPerson)) {
+        setPerson(returnedPerson);
+      }
+    }
+    if (isValidId(managementFile.responsiblePayerOrganizationId)) {
+      const returnedOrganization = await getOrganization(
+        managementFile.responsiblePayerOrganizationId,
+      );
+      if (exists(returnedOrganization)) {
+        setOrganization(returnedOrganization);
+      }
+    }
+
+    if (isValidId(managementFile.responsiblePayerPrimaryContactId)) {
+      const returnedPrimaryContact = await getPerson(
+        managementFile.responsiblePayerPrimaryContactId,
+      );
+      if (exists(returnedPrimaryContact)) {
+        setPrimaryContact(returnedPrimaryContact);
+      }
+    }
+  }, [
+    getOrganization,
+    getPerson,
+    managementFile.responsiblePayerOrganizationId,
+    managementFile.responsiblePayerPersonId,
+    managementFile.responsiblePayerPrimaryContactId,
+  ]);
+
+  useEffect(() => {
+    fetchData();
+  }, [fetchData]);
+
+  useEffect(() => {
+    fetchContacts();
+  }, [fetchContacts]);
+
+  if (getPersonLoading || getOrganizationLoading) {
+    return <></>;
+  }
+
   const handleAddContact = (): void => {
     const path = generatePath(matchFile.path, {
       id: matchFile.params.id,
@@ -60,20 +129,6 @@ const ManagementSummaryContainer: React.FunctionComponent<IManagementSummaryCont
     history.push(`${path}/UpdateContactContainer/${contactId}?edit=true`);
   };
 
-  const handleDeleteContact = useCallback(
-    async (contactId: number) => {
-      const result = await deleteContact(managementFile.id, contactId);
-      if (result) {
-        fetchContacts();
-      }
-    },
-    [deleteContact, fetchContacts, managementFile.id],
-  );
-
-  useEffect(() => {
-    fetchContacts();
-  }, [fetchContacts]);
-
   return managementFile ? (
     <View
       managementFile={managementFile}
@@ -84,6 +139,9 @@ const ManagementSummaryContainer: React.FunctionComponent<IManagementSummaryCont
       onAddContact={handleAddContact}
       onEditContact={handleEditContact}
       onDeleteContact={handleDeleteContact}
+      responsiblePayerPerson={person}
+      responsiblePayerOrganization={organization}
+      primaryContact={primaryContact}
     ></View>
   ) : null;
 };

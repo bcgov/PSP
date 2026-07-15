@@ -1,7 +1,9 @@
 <Project>
     <PropertyGroup>
-        <TargetFramework>net6.0</TargetFramework>
-        <LangVersion>9.0</LangVersion>
+        <TargetFramework>net8.0</TargetFramework>
+        <AnalysisLevel>none</AnalysisLevel>
+        <WarningLevel>0</WarningLevel>
+        <ReportAnalyzerDiagnostics>false</ReportAnalyzerDiagnostics>
     </PropertyGroup>
     <ItemGroup>
         <None Include="$(MSBuildThisFileDirectory)\..\..\.editorconfig" />

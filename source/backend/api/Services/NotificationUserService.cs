@@ -151,7 +151,7 @@ namespace Pims.Api.Services
                 }
                 else if(notification.LeaseId.HasValue)
                 {
-                    source = $"Lease #: L-{notification.Lease.LFileNo}";
+                    source = $"Lease File #: {notification.Lease.LFileNo}";
                 }
                 else
                 {

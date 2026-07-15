@@ -1,22 +1,23 @@
 import { first } from 'lodash';
 import { Fragment } from 'react';
-import { FaExternalLinkAlt, FaUserPlus } from 'react-icons/fa';
+import { FaUserPlus } from 'react-icons/fa';
 
 import EditButton from '@/components/common/buttons/EditButton';
-import ContactFieldContainer from '@/components/common/ContactFieldContainer';
+import { PrimaryContactSelectorDetails } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelectorView';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import { SectionListHeader } from '@/components/common/SectionListHeader';
-import { StyledLink } from '@/components/common/styles';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_ManagementFileContact } from '@/models/api/generated/ApiGen_Concepts_ManagementFileContact';
-import { exists, isValidId, prettyFormatDate } from '@/utils';
+import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
+import { ApiGen_Concepts_Person } from '@/models/api/generated/ApiGen_Concepts_Person';
+import { exists, prettyFormatDate } from '@/utils';
 import { formatApiPersonNames } from '@/utils/personUtils';
 
 import ManagementFileContactsList from './contacts/ManagementFileContactsList';
@@ -27,6 +28,9 @@ export interface IManagementSummaryViewProps {
   managementFileContacts: ApiGen_Concepts_ManagementFileContact[];
   fileStatusSolver: ManagementStatusUpdateSolver;
   isLoading: boolean;
+  responsiblePayerPerson: ApiGen_Concepts_Person | null;
+  responsiblePayerOrganization: ApiGen_Concepts_Organization | null;
+  primaryContact: ApiGen_Concepts_Person | null;
   onFileEdit: () => void;
   onAddContact: () => void;
   onEditContact: (contactId: number) => void;
@@ -38,6 +42,9 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
   managementFileContacts,
   fileStatusSolver,
   isLoading,
+  responsiblePayerPerson,
+  responsiblePayerOrganization,
+  primaryContact,
   onFileEdit,
   onAddContact,
   onEditContact,
@@ -122,13 +129,25 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
           {managementFile.purposeTypeCode?.description}
         </SectionField>
 
-        <ContactFieldContainer
+        <PrimaryContactSelectorDetails
+          label={'Responsible payer'}
           labelWidth={{ xs: '5' }}
-          label="Responsible payer"
-          personId={managementFile.responsiblePayerPersonId}
-          organizationId={managementFile.responsiblePayerOrganizationId}
-          primaryContact={managementFile.responsiblePayerPrimaryContactId}
-        />
+          teamMemberName={
+            exists(responsiblePayerOrganization)
+              ? responsiblePayerOrganization.name
+              : exists(responsiblePayerPerson)
+              ? formatApiPersonNames(responsiblePayerPerson)
+              : ''
+          }
+          teamMemberUrl={
+            exists(managementFile.responsiblePayerOrganizationId)
+              ? `/contact/O${managementFile.responsiblePayerOrganizationId}`
+              : `/contact/P${managementFile.responsiblePayerPersonId}`
+          }
+          primaryContactName={exists(primaryContact) ? formatApiPersonNames(primaryContact) : ''}
+          primaryContactUrl={`/contact/P${managementFile.responsiblePayerPrimaryContactId}`}
+          showPrimaryContact={!!managementFile.responsiblePayerOrganizationId}
+        ></PrimaryContactSelectorDetails>
 
         <SectionField
           label="Additional details"
@@ -166,44 +185,23 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
       <Section header="Management Team">
         {managementFile.managementTeam?.map((teamMember, index) => (
           <Fragment key={`management-team-${teamMember?.id ?? index}`}>
-            <SectionField
+            <PrimaryContactSelectorDetails
               label={teamMember?.teamProfileType?.description || ''}
-              labelWidth={{ xs: '5' }}
-              valueTestId={`management-team-member-${index}`}
-            >
-              <StyledLink
-                target="_blank"
-                rel="noopener noreferrer"
-                to={
-                  teamMember?.personId
-                    ? `/contact/P${teamMember?.personId}`
-                    : `/contact/O${teamMember?.organizationId}`
-                }
-              >
-                <span>
-                  {teamMember?.personId
-                    ? formatApiPersonNames(teamMember?.person)
-                    : teamMember?.organization?.name ?? ''}
-                </span>
-                <FaExternalLinkAlt className="ml-2" size="1rem" />
-              </StyledLink>
-            </SectionField>
-            {isValidId(teamMember?.organizationId) && (
-              <SectionField label="Primary contact" labelWidth={{ xs: '5' }}>
-                {teamMember?.primaryContactId ? (
-                  <StyledLink
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    to={`/contact/P${teamMember?.primaryContactId}`}
-                  >
-                    <span>{formatApiPersonNames(teamMember?.primaryContact)}</span>
-                    <FaExternalLinkAlt className="ml-2" size="1rem" />
-                  </StyledLink>
-                ) : (
-                  'No contacts available'
-                )}
-              </SectionField>
-            )}
+              teamMemberName={
+                teamMember?.personId
+                  ? formatApiPersonNames(teamMember?.person)
+                  : teamMember?.organization?.name ?? ''
+              }
+              teamMemberUrl={
+                teamMember?.personId
+                  ? `/contact/P${teamMember?.personId}`
+                  : `/contact/O${teamMember?.organizationId}`
+              }
+              primaryContactName={formatApiPersonNames(teamMember?.primaryContact)}
+              primaryContactUrl={`/contact/P${teamMember?.primaryContactId}`}
+              showPrimaryContact={!!teamMember?.organizationId}
+              index={index}
+            ></PrimaryContactSelectorDetails>
           </Fragment>
         ))}
       </Section>

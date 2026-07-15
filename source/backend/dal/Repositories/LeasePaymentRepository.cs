@@ -5,6 +5,7 @@ using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 
 namespace Pims.Dal.Repositories
 {
@@ -42,7 +43,7 @@ namespace Pims.Dal.Repositories
             return updatedEntity.Entity;
         }
 
-        public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate, long? contractorPersonId = null)
+        public IEnumerable<PimsLeasePayment> GetAllByDateRange(DateTime startDate, DateTime endDate, UserContextModel userContext = null)
         {
             var query = Context.PimsLeasePayments.AsSplitQuery().AsNoTracking()
                 .Include(p => p.LeasePaymentCategoryTypeCodeNavigation)
@@ -60,11 +61,12 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(lp => lp.PimsProjectPeople)
                 .Where(p => p.PaymentReceivedDate <= endDate && p.PaymentReceivedDate >= startDate);
 
-            // Enforce contractor access to only their leases
-            if (contractorPersonId is not null)
+            // Contractor access is limited by region and team membership.
+            if (userContext is not null && userContext.IsContractor)
             {
-                query = query.Where(p => p.LeasePeriod.Lease.PimsLeaseLicenseTeams.Any(lt => lt.PersonId == contractorPersonId) ||
-                    (p.LeasePeriod.Lease.Project != null && p.LeasePeriod.Lease.Project.PimsProjectPeople.Any(pp => pp.PersonId == contractorPersonId)));
+                query = query.Where(p => p.LeasePeriod.Lease.RegionCode.HasValue && userContext.Regions.Contains(p.LeasePeriod.Lease.RegionCode.Value));
+                query = query.Where(p => p.LeasePeriod.Lease.PimsLeaseLicenseTeams.Any(lt => lt.PersonId == userContext.PersonId) ||
+                    (p.LeasePeriod.Lease.Project != null && p.LeasePeriod.Lease.Project.PimsProjectPeople.Any(pp => pp.PersonId == userContext.PersonId)));
             }
 
             return query;

@@ -5,11 +5,11 @@ using System.Linq;
 using FluentAssertions;
 using Moq;
 using Pims.Core.Exceptions;
+using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Repositories;
-using Pims.Core.Security;
 using Xunit;
 
 namespace Pims.Dal.Test.Repositories
@@ -212,7 +212,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetTeamMembers();
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: dispFile.RegionCode));
+            var result = repository.GetTeamMembers(userContext);
 
             // Assert
             result.Should().NotBeNull();
@@ -473,7 +474,8 @@ namespace Pims.Dal.Test.Repositories
             };
             _helper.AddAndSaveChanges(dispFile);
 
-            var updatedSale = new PimsDispositionSale(){
+            var updatedSale = new PimsDispositionSale()
+            {
                 DispositionSaleId = 1,
                 SaleFinalAmt = 3000,
                 DspPurchAgentId = 10,
@@ -496,7 +498,7 @@ namespace Pims.Dal.Test.Repositories
             Assert.Equal(2000, updatedAgent.PersonId);
         }
 
-                [Fact]
+        [Fact]
         public void UpdateDisposition_Sale_PurchaserSolicitor_Removed()
         {
             // Arrange
@@ -591,7 +593,8 @@ namespace Pims.Dal.Test.Repositories
             };
             _helper.AddAndSaveChanges(dispFile);
 
-            var updatedSale = new PimsDispositionSale(){
+            var updatedSale = new PimsDispositionSale()
+            {
                 DispositionSaleId = 1,
                 SaleFinalAmt = 3000,
                 DspPurchSolicitorId = 10,
@@ -782,7 +785,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetPageDeep(new DispositionFilter());
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new DispositionFilter(), userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -798,7 +802,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetPageDeep(new DispositionFilter() { FileNameOrNumberOrReference = "fileName" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new DispositionFilter() { FileNameOrNumberOrReference = "fileName" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -814,7 +819,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetPageDeep(new DispositionFilter() { FileNameOrNumberOrReference = "notFound" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new DispositionFilter() { FileNameOrNumberOrReference = "notFound" }, userContext);
 
             // Assert
             result.Should().HaveCount(0);
@@ -830,7 +836,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetPageDeep(new DispositionFilter() { FileNameOrNumberOrReference = "fileNumber" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new DispositionFilter() { FileNameOrNumberOrReference = "fileNumber" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -846,7 +853,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetPageDeep(new DispositionFilter() { FileNameOrNumberOrReference = "legacy" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new DispositionFilter() { FileNameOrNumberOrReference = "legacy" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -863,7 +871,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetPageDeep(new DispositionFilter() { TeamMemberPersonId = 1 });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new DispositionFilter() { TeamMemberPersonId = 1 }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -880,7 +889,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetPageDeep(new DispositionFilter() { TeamMemberOrganizationId = 1 });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new DispositionFilter() { TeamMemberOrganizationId = 1 }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -897,7 +907,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetPageDeep(new DispositionFilter() { TeamMemberPersonId = 2 });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new DispositionFilter() { TeamMemberPersonId = 2 }, userContext);
 
             // Assert
             result.Should().HaveCount(0);
@@ -913,7 +924,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetPageDeep(new DispositionFilter() { Pid = "1" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new DispositionFilter() { Pid = "1" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -929,7 +941,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetPageDeep(new DispositionFilter() { Pin = "2" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new DispositionFilter() { Pin = "2" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -945,7 +958,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetPageDeep(new DispositionFilter() { Address = "1234" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new DispositionFilter() { Address = "1234" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -960,7 +974,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetPageDeep(new DispositionFilter() { DispositionFileStatusCode = "ACTIVE" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new DispositionFilter() { DispositionFileStatusCode = "ACTIVE" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -976,7 +991,8 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetPageDeep(new DispositionFilter() { DispositionStatusCode = "DRAFT" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new DispositionFilter() { DispositionStatusCode = "DRAFT" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -993,12 +1009,85 @@ namespace Pims.Dal.Test.Repositories
             _helper.AddAndSaveChanges(dispFile);
 
             // Act
-            var result = repository.GetPageDeep(new DispositionFilter() { DispositionTypeCode = "SECTN3" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetPageDeep(new DispositionFilter() { DispositionTypeCode = "SECTN3" }, userContext);
 
             // Assert
             result.Should().HaveCount(1);
         }
 
+        [Fact]
+        public void GetPageDeep_Contractor_DispositionTeamMember_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+
+            var contractorFile = EntityHelper.CreateDispositionFile(dispFileId: 1, name: "Contractor File");
+            contractorFile.PimsDispositionFileTeams.Add(
+                new() { DispositionFileId = contractorFile.Internal_Id, DspFlTeamProfileTypeCode = "COORD", PersonId = 1 } // contractor Id
+            );
+
+            var secondFile = EntityHelper.CreateDispositionFile(
+                dispFileId: 2,
+                name: "Second File",
+                statusType: contractorFile.DispositionFileStatusTypeCodeNavigation,
+                dispositionType: contractorFile.DispositionTypeCodeNavigation,
+                region: contractorFile.RegionCodeNavigation
+            );
+            secondFile.DspInitiatingBranchTypeCodeNavigation = contractorFile.DspInitiatingBranchTypeCodeNavigation;
+            secondFile.DspPhysFileStatusTypeCodeNavigation = contractorFile.DspPhysFileStatusTypeCodeNavigation;
+            secondFile.DispositionFundingTypeCodeNavigation = contractorFile.DispositionFundingTypeCodeNavigation;
+            secondFile.DispositionInitiatingDocTypeCodeNavigation = contractorFile.DispositionInitiatingDocTypeCodeNavigation;
+            secondFile.DispositionStatusTypeCodeNavigation = contractorFile.DispositionStatusTypeCodeNavigation;
+
+            _helper.AddAndSaveChanges(contractorFile);
+            _helper.AddAndSaveChanges(secondFile);
+
+            // Act
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1, isContractor: true));
+            var result = repository.GetPageDeep(new DispositionFilter(), userContext);
+
+            // Assert
+            result.Should().HaveCount(1);
+            result.First().DispositionFileId.Should().Be(contractorFile.DispositionFileId);
+            result.First().FileName.Should().Be(contractorFile.FileName);
+        }
+
+        [Fact]
+        public void GetPageDeep_Contractor_ProjectTeamMember_Success()
+        {
+            // Arrange
+            var repository = CreateRepositoryWithPermissions(Permissions.DispositionView);
+
+            var contractorFile = EntityHelper.CreateDispositionFile(dispFileId: 1, name: "Contractor File");
+            contractorFile.Project = EntityHelper.CreateProject(1, "PRJ", "Mock Project");
+            contractorFile.Project.PimsProjectPeople.Add(new() { ProjectPersonRoleTypeCode = "COORD", PersonId = 1 }); // contractor Id
+
+            var secondFile = EntityHelper.CreateDispositionFile(
+                dispFileId: 2,
+                name: "Second File",
+                statusType: contractorFile.DispositionFileStatusTypeCodeNavigation,
+                dispositionType: contractorFile.DispositionTypeCodeNavigation,
+                region: contractorFile.RegionCodeNavigation
+            );
+            secondFile.DspInitiatingBranchTypeCodeNavigation = contractorFile.DspInitiatingBranchTypeCodeNavigation;
+            secondFile.DspPhysFileStatusTypeCodeNavigation = contractorFile.DspPhysFileStatusTypeCodeNavigation;
+            secondFile.DispositionFundingTypeCodeNavigation = contractorFile.DispositionFundingTypeCodeNavigation;
+            secondFile.DispositionInitiatingDocTypeCodeNavigation = contractorFile.DispositionInitiatingDocTypeCodeNavigation;
+            secondFile.DispositionStatusTypeCodeNavigation = contractorFile.DispositionStatusTypeCodeNavigation;
+
+            _helper.AddAndSaveChanges(contractorFile);
+            _helper.AddAndSaveChanges(secondFile);
+
+            // Act
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1, isContractor: true));
+            var result = repository.GetPageDeep(new DispositionFilter(), userContext);
+
+            // Assert
+            result.Should().HaveCount(1);
+            result.First().DispositionFileId.Should().Be(contractorFile.DispositionFileId);
+            result.First().FileName.Should().Be(contractorFile.FileName);
+        }
         #endregion
 
         #region Export
@@ -1018,7 +1107,8 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<DispositionFileRepository>(user);
 
             // Act
-            var result = repository.GetDispositionFileExportDeep(filter);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetDispositionFileExportDeep(filter, userContext);
 
             // Assert
             result.Should().HaveCount(1);
@@ -1039,7 +1129,8 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<DispositionFileRepository>(user);
 
             // Act
-            var result = repository.GetDispositionFileExportDeep(filter);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.GetDispositionFileExportDeep(filter, userContext);
 
             // Assert
             result.Should().HaveCount(1);

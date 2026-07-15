@@ -316,12 +316,25 @@ namespace Pims.Dal.Repositories
             return result.ConcurrencyControlNumber;
         }
 
-        public List<PimsManagementFileTeam> GetTeamMembers()
+        public List<PimsManagementFileTeam> GetTeamMembers(UserContextModel userContext = null)
         {
+            var predicate = PredicateBuilder.New<PimsManagementFileTeam>(mt => true);
+
+            // Contractor access is limited by region and team membership.
+            if (userContext is not null && userContext.IsContractor)
+            {
+                var teamOrProjectPredicate = PredicateBuilder.New<PimsManagementFileTeam>(mt => mt.ManagementFile.PimsManagementFileTeams.Any(p => p.PersonId == userContext.PersonId))
+                    .Or(mt => mt.ManagementFile.Project != null && mt.ManagementFile.Project.PimsProjectPeople.Any(pp => pp.PersonId == userContext.PersonId));
+
+                predicate.And(mt => mt.ManagementFile.RegionCode.HasValue && userContext.Regions.Contains(mt.ManagementFile.RegionCode.Value));
+                predicate.And(teamOrProjectPredicate);
+            }
+
             return Context.PimsManagementFileTeams.AsNoTracking()
                 .Include(x => x.ManagementFile)
                 .Include(x => x.Person)
                 .Include(x => x.Organization)
+                .Where(predicate)
                 .ToList();
         }
 
@@ -387,8 +400,9 @@ namespace Pims.Dal.Repositories
         /// Note that the 'filter' will control the 'page' and 'quantity'.
         /// </summary>
         /// <param name="filter"></param>
+        /// <param name="userContext">The calling user context.</param>
         /// <returns></returns>
-        public Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter, long? contractorPersonId = null)
+        public Paged<PimsManagementFile> GetPageDeep(ManagementFilter filter, UserContextModel userContext = null)
         {
             using var scope = Logger.QueryScope();
 
@@ -398,7 +412,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            var query = GetCommonManagementFileQueryDeep(filter, contractorPersonId);
+            var query = GetCommonManagementFileQueryDeep(filter, userContext);
 
             var skip = (filter.Page - 1) * filter.Quantity;
             var pageItems = query.Skip(skip).Take(filter.Quantity).ToList();
@@ -410,8 +424,9 @@ namespace Pims.Dal.Repositories
         /// Generate a Common IQueryable for Management Files.
         /// </summary>
         /// <param name="filter">The filter to apply.</param>
+        /// <param name="userContext">The calling user context.</param>
         /// <returns></returns>
-        private IQueryable<PimsManagementFile> GetCommonManagementFileQueryDeep(ManagementFilter filter, long? contractorPersonId = null)
+        private IQueryable<PimsManagementFile> GetCommonManagementFileQueryDeep(ManagementFilter filter, UserContextModel userContext = null)
         {
             filter.FileNameOrNumberOrReference = Regex.Replace(filter.FileNameOrNumberOrReference ?? string.Empty, @"^[m,M]-", string.Empty);
             var predicate = PredicateBuilder.New<PimsManagementFile>(disp => true);
@@ -465,7 +480,7 @@ namespace Pims.Dal.Repositories
             }
 
             // filter by team members
-            if(!string.IsNullOrWhiteSpace(filter.TeamMemberProfileTypeCode) && filter.TeamMemberPersonId.HasValue)
+            if (!string.IsNullOrWhiteSpace(filter.TeamMemberProfileTypeCode) && filter.TeamMemberPersonId.HasValue)
             {
                 predicate = predicate.And(disp => disp.PimsManagementFileTeams.Any(x => x.PersonId == filter.TeamMemberPersonId.Value && x.ManagementFileProfileTypeCode == filter.TeamMemberProfileTypeCode));
             }
@@ -474,7 +489,7 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(disp => disp.PimsManagementFileTeams.Any(x => x.PersonId == filter.TeamMemberPersonId.Value));
             }
 
-            if(!string.IsNullOrWhiteSpace(filter.TeamMemberProfileTypeCode) && filter.TeamMemberOrganizationId.HasValue)
+            if (!string.IsNullOrWhiteSpace(filter.TeamMemberProfileTypeCode) && filter.TeamMemberOrganizationId.HasValue)
             {
                 predicate = predicate.And(disp => disp.PimsManagementFileTeams.Any(x => x.OrganizationId == filter.TeamMemberOrganizationId.Value && x.ManagementFileProfileTypeCode == filter.TeamMemberProfileTypeCode));
             }
@@ -483,7 +498,7 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(disp => disp.PimsManagementFileTeams.Any(x => x.OrganizationId == filter.TeamMemberOrganizationId.Value));
             }
 
-            if(filter.HasNoticeOfClaim)
+            if (filter.HasNoticeOfClaim)
             {
                 predicate = predicate.And(x => x.PimsNoticeOfClaims.Any(y => y.ReceivedDt != null || y.Comment != null));
             }
@@ -493,12 +508,15 @@ namespace Pims.Dal.Repositories
                 predicate = predicate.And(x => x.RegionCode != null && filter.Regions.Any(r => r == x.RegionCode));
             }
 
-            if (contractorPersonId is not null)
+            // Contractor access is limited by region and team membership.
+            if (userContext is not null && userContext.IsContractor)
             {
-                predicate = predicate.And(mgmt => mgmt.PimsManagementFileTeams.Any(x => x.PersonId == contractorPersonId) || (mgmt.Project != null && mgmt.Project.PimsProjectPeople.Any(x => x.PersonId == contractorPersonId)));
+                predicate = predicate
+                    .And(mgmt => mgmt.RegionCode.HasValue && userContext.Regions.Contains(mgmt.RegionCode.Value))
+                    .And(mgmt => mgmt.PimsManagementFileTeams.Any(x => x.PersonId == userContext.PersonId) || (mgmt.Project != null && mgmt.Project.PimsProjectPeople.Any(x => x.PersonId == userContext.PersonId)));
             }
 
-            var query = this.Context.PimsManagementFiles.AsNoTracking()
+            var query = Context.PimsManagementFiles.AsNoTracking()
                 .Include(d => d.ManagementFileStatusTypeCodeNavigation)
                 .Include(d => d.Project)
                 .Include(d => d.Product)
@@ -522,7 +540,7 @@ namespace Pims.Dal.Repositories
                 .Where(predicate);
 
             // As per Confluence - default sort to show chronological, newest first
-            query = (filter.Sort?.Any() == true) ? query.OrderByProperty(true, filter.Sort) : query.OrderByDescending(disp => disp.DbCreateTimestamp);
+            query = (filter.Sort?.Length > 0) ? query.OrderByProperty(true, filter.Sort) : query.OrderByDescending(disp => disp.DbCreateTimestamp);
 
             return query;
         }

@@ -8,6 +8,7 @@ using Pims.Core.Exceptions;
 using Pims.Core.Security;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
+using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
 using Xunit;
@@ -38,7 +39,8 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ProjectRepository>(user);
 
             // Act
-            var result = repository.SearchProjects("test project", 1);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.SearchProjects("test project", 1, userContext);
 
             // Assert
             result.Should().NotBeNull();
@@ -58,7 +60,8 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ProjectRepository>(user);
 
             // Act
-            var result = repository.SearchProjects("test project", 1);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = repository.SearchProjects("test project", 1, userContext);
 
             // Assert
             result.Should().NotBeNull();
@@ -88,7 +91,8 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ProjectRepository>(user);
 
             // Act
-            var result = await repository.GetPageAsync(new Dal.Entities.Models.ProjectFilter() { ProjectName = "test project", ProjectNumber = "551234", ProjectStatusCode = "ACTIVE", Sort = new string[] { "LastUpdatedBy" } });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            var result = await repository.GetPageAsync(new Dal.Entities.Models.ProjectFilter() { ProjectName = "test project", ProjectNumber = "551234", ProjectStatusCode = "ACTIVE", Sort = new string[] { "LastUpdatedBy" } }, userContext);
 
             // Assert
             result.Should().NotBeNull();
@@ -108,7 +112,8 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ProjectRepository>(user);
 
             // Act
-            Action act = () => repository.GetPageAsync(new Dal.Entities.Models.ProjectFilter() { ProjectName = "test project" });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            Action act = () => repository.GetPageAsync(new Dal.Entities.Models.ProjectFilter() { ProjectName = "test project" }, userContext);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>();
@@ -127,7 +132,8 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ProjectRepository>(user);
 
             // Act
-            Action act = () => repository.GetPageAsync(null);
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            Action act = () => repository.GetPageAsync(null, userContext);
 
             // Assert
             act.Should().Throw<ArgumentNullException>();
@@ -146,7 +152,8 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<ProjectRepository>(user);
 
             // Act
-            Action act = () => repository.GetPageAsync(new Dal.Entities.Models.ProjectFilter() { Page = -1 });
+            var userContext = UserContextModel.FromPimsUser(EntityHelper.CreateUser("Test", regionCode: 1));
+            Action act = () => repository.GetPageAsync(new Dal.Entities.Models.ProjectFilter() { Page = -1 }, userContext);
 
             // Assert
             act.Should().Throw<ArgumentException>();

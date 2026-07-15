@@ -3,7 +3,7 @@ using System;
 namespace Pims.Dal.Entities.Models
 {
     /// <summary>
-    /// LastUpdatedByModel class, provides a model that is used to retrievie last Updated by information.
+    /// LastUpdatedByModel class, provides a model that is used to retrieve last Updated by information.
     /// </summary>
     public class LastUpdatedByModel
     {
