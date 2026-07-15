@@ -16,6 +16,7 @@ export const normalize = (value: string | null): string => {
 };
 
 export const formatApiDate = (apiDate: string | null | undefined): string => {
+
   if (!apiDate) {
     return '';
   }
@@ -32,7 +33,7 @@ export const formatApiDate = (apiDate: string | null | undefined): string => {
 
 export const formatApiBoolean = (value: boolean | null | undefined): string => {
   if (value == null) {
-    return '';
+    return 'No';
   }
 
   return value ? 'Yes' : 'No';

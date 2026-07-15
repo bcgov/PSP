@@ -41,6 +41,9 @@ export class ResearchListPage extends LayoutPage {
   readonly researchTableOrderUpdatedDate: Locator;
   readonly researchTableStatusHeader: Locator;
   readonly researchTableOrderStatus: Locator;
+  readonly researchSearchRegionsMultiSelect: Locator;
+  readonly researchSearchUserSelect: Locator;
+  readonly researchSearchUserInput: Locator;
 
   readonly researchTableEntriesSpan: Locator;
   readonly researchTablePagination5: Locator;
@@ -80,6 +83,9 @@ export class ResearchListPage extends LayoutPage {
     this.researchSearchDateSelect = page.locator('#input-createOrUpdateRange');
     this.researchSearchDateToInput = page.locator('#datepicker-updatedOnStartDate');
     this.researchSearchDateFromInput = page.locator('#datepicker-updatedOnEndDate');
+    this.researchSearchRegionsMultiSelect = page.locator("#multiselect-regionCodes");
+    this.researchSearchUserSelect = page.locator("#input-createOrUpdateBy")
+    this.researchSearchUserInput = page.locator("#multiselect-selectedUser");;
 
     this.researchSearchButton = page.locator('#search-button');
     this.researchSearchResetButton = page.getByTestId('reset-button');

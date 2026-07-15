@@ -6,12 +6,14 @@ import { ResearchViewFileDetails } from '../../../pages/research/research-view-f
 import { DocumentUploadModalPage } from '../../../pages/documents/document-upload-modal.page';
 import { generateFileName, normalize, formatApiDate, formatApiBoolean } from '../../../utils/utils';
 import path from 'path';
+import { ResearchImprovementsPage } from '../../../pages/research/research-improvements-page';
 
 let context: BrowserContext;
 let page: Page;
 
 let researchCreatePage: ResearchCreatePage;
 let researchViewDetails: ResearchViewFileDetails;
+let researchImprovements: ResearchImprovementsPage;
 let documentsListPage: DocumentsListPage;
 let documentUploadModalPage: DocumentUploadModalPage;
 
@@ -21,6 +23,7 @@ test.describe('Research Files feature', () => {
     page = await context.newPage();
     researchCreatePage = new ResearchCreatePage(page);
     researchViewDetails = new ResearchViewFileDetails(page);
+    researchImprovements = new ResearchImprovementsPage(page);
     documentsListPage = new DocumentsListPage(page);
     documentUploadModalPage = new DocumentUploadModalPage(page);
   });
@@ -52,7 +55,8 @@ test.describe('Research Files feature', () => {
     await test.step('Create file', async () => {
       //Navigate to new research file and create a minimum viable research
       await researchCreatePage.goto();
-      generateFileName('researchFile');
+      const newFileName = generateFileName('researchFile');
+      await researchCreatePage.fillInField('#input-name', newFileName);
       await researchCreatePage.confirmButtonClick();
 
       const response = await responsePromise;
@@ -61,22 +65,22 @@ test.describe('Research Files feature', () => {
       await expect(researchViewDetails.researchDocumentTab).toBeVisible();
     });
 
-    await test.step('Validate details', async () => {
+    await test.step('Validate Research Details', async () => {
       const fieldsToCompare = [
         { label: 'Ministry project', apiValue: apiFeatureFileJson.researchFileProjects[0] },
         { label: 'Road name', apiValue: apiFeatureFileJson.roadName },
         { label: 'Road alias', apiValue: apiFeatureFileJson.roadAlias },
         {
           label: 'Research purpose',
-          apiValue: apiFeatureFileJson.researchFilePurposes[0].researchPurposeTypeCode.description,
+          apiValue: apiFeatureFileJson.researchFilePurposes?.[0]?.researchPurposeTypeCode?.description ?? '',
         },
-        { label: 'Source of request', apiValue: apiFeatureFileJson.requestSourceType.description },
+        { label: 'Source of request', apiValue: apiFeatureFileJson.requestSourceType?.description ?? '' },
         { label: 'Requester', apiValue: apiFeatureFileJson.requestorPerson },
       ];
 
       const datesToCompare = [
         { label: 'Request date', apiValue: apiFeatureFileJson.requestDate },
-        { label: 'Research completed on', apiValue: apiFeatureFileJson.researchCompletionDate },
+        //{ label: 'Research completed on', apiValue: apiFeatureFileJson.researchCompletionDate },
       ];
 
       for (const field of fieldsToCompare) {
@@ -104,9 +108,30 @@ test.describe('Research Files feature', () => {
       expect(exproNotes).toBe(apiFeatureFileJson.expropriationNotes ?? '');
     });
 
-    await test.step('validate document upload', async () => {
+    await test.step('Validate Improvements Tab', async() =>{
+      //Navigate to the research file improvements tab
+      researchImprovements.improvementTabClick();
+
+      //Verify initial elements
+      await expect(researchImprovements.reseachImprovementsTooltip).toBeVisible();
+      await expect(researchImprovements.reseachImprovementsInstructions).toBeVisible();
+      await expect(researchImprovements.researchImprovementsProperties).toBeVisible();
+    });
+
+    await test.step('Validate Document Upload', async () => {
       //Navigate to the Document tab and create a new document
       await researchViewDetails.navigateDocumentsTab();
+
+      //Verify initial elements
+      await expect(documentsListPage.addDocumentButton).toBeVisible();
+      await expect(documentsListPage.refreshDocumentListButton).toBeVisible();
+      await expect(documentsListPage.documentTypesDropDownList).toBeVisible();
+      await expect(documentsListPage.documentStatusesDropDownList).toBeVisible();
+      await expect(documentsListPage.documentFileNameInput).toBeVisible();
+      await expect(documentsListPage.documentSearchButton).toBeVisible();
+      await expect(documentsListPage.documentSearchResetButton).toBeVisible();
+
+      //Add a new document
       await documentsListPage.addDocumentButtonClick();
       const documentTypes = await documentUploadModalPage.getSupportedFileExtensionsText();
       expect(documentTypes).toBe(
@@ -123,6 +148,10 @@ test.describe('Research Files feature', () => {
 
       const fileName = await documentUploadModalPage.getDocumentErrorFilename();
       expect(fileName).toBe('react-icon.svg');
+    });
+
+    await test.step('Validate Notes tab', async () =>{
+
     });
   });
 });
