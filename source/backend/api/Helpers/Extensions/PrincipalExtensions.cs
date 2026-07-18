@@ -94,6 +94,29 @@ namespace Pims.Api.Helpers.Extensions
             }
         }
 
+        /// <summary>
+        /// Contractors must be assigned to the Management File's team (or associated Project's team) AND must be assigned to the file's region.
+        /// Team/project membership from a different region does not grant access.
+        /// </summary>
+        /// <param name="principal"></param>
+        /// <param name="userRepository"></param>
+        /// <param name="managementFileRepository"></param>
+        /// <param name="projectRepository"></param>
+        /// <param name="managementFileId"></param>
+        public static void ThrowInvalidAccessToManagementFile(this ClaimsPrincipal principal, IUserRepository userRepository, IManagementFileRepository managementFileRepository, IProjectRepository projectRepository, long managementFileId)
+        {
+            ArgumentNullException.ThrowIfNull(principal);
+
+            var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
+            PimsManagementFile managementFile = managementFileRepository.GetById(managementFileId);
+            PimsProject project = managementFile.ProjectId.HasValue ? projectRepository.TryGet(managementFile.ProjectId.Value) : null;
+
+            if (pimsUser?.IsContractor == true && !managementFile.HasAccessToFile(pimsUser, project))
+            {
+                throw new NotAuthorizedException("Contractor is not assigned to the Management File's team or the associated Project's team");
+            }
+        }
+
         public static HashSet<short> GetUserRegions(this ClaimsPrincipal principal, IUserRepository userRepository)
         {
             ArgumentNullException.ThrowIfNull(principal);
