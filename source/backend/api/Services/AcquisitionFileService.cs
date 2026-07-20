@@ -253,8 +253,8 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Updating acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
-
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFile.Internal_Id);
+
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
             AcquisitionStatusTypes? currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
@@ -620,10 +620,9 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Adding Expropiation Payment for acquisition file id: {acquisitionFileId}", acquisitionFileId);
 
+            expPayment.ThrowIfNull(nameof(expPayment));
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
             _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFileId);
-
-            expPayment.ThrowIfNull(nameof(expPayment));
 
             var acquisitionFileParent = _acqFileRepository.GetById(acquisitionFileId);
             if (acquisitionFileId != expPayment.AcquisitionFileId || acquisitionFileParent is null)
