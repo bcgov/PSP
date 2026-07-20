@@ -456,8 +456,8 @@ namespace Pims.Api.Services
 
         private PimsCompensationRequisition UpdateAcquisitionFileCompensation(PimsCompensationRequisition compensationRequisition)
         {
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, (long)compensationRequisition.AcquisitionFileId);
             _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.CompensationRequisitionId}");
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, (long)compensationRequisition.AcquisitionFileId);
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
 
@@ -483,8 +483,8 @@ namespace Pims.Api.Services
 
         private PimsCompensationRequisition UpdateLeaseFileCompensation(PimsCompensationRequisition compensationRequisition)
         {
-            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, (long)compensationRequisition.LeaseId);
             _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.CompensationRequisitionId}");
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, (long)compensationRequisition.LeaseId);
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
 
