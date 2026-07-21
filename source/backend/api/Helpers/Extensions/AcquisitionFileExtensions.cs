@@ -53,22 +53,6 @@ namespace Pims.Api.Helpers.Extensions
             }
         }
 
-        public static bool IsUserAssignedToAcquisitionFileRegion(this PimsAcquisitionFile acquisitionFile, PimsUser pimsUser)
-        {
-            if (pimsUser is null || acquisitionFile is null)
-            {
-                return false;
-            }
-
-            if (pimsUser.IsContractor)
-            {
-                return pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == acquisitionFile.RegionCode);
-            }
-
-            // Regular (non-contractor) users are not bound by region access here.
-            return true;
-        }
-
         public static bool HasAccessToFile(this PimsAcquisitionFile acquisitionFile, PimsUser pimsUser, PimsProject project)
         {
             if (acquisitionFile is null || pimsUser is null)
@@ -81,7 +65,7 @@ namespace Pims.Api.Helpers.Extensions
                 var onTeamOrProject = acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.PersonId == pimsUser.PersonId)
                     || (project != null && project.PimsProjectPeople.Any(x => x.PersonId == pimsUser.PersonId));
 
-                return onTeamOrProject && acquisitionFile.IsUserAssignedToAcquisitionFileRegion(pimsUser);
+                return onTeamOrProject && pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == acquisitionFile.RegionCode);
             }
 
             // Regular (non-contractor) users have access across regions

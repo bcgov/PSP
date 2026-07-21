@@ -38,22 +38,6 @@ namespace Pims.Api.Helpers.Extensions
             }
         }
 
-        public static bool IsUserAssignedToDispositionFileRegion(this PimsDispositionFile dispositionFile, PimsUser pimsUser)
-        {
-            if (pimsUser is null || dispositionFile is null)
-            {
-                return false;
-            }
-
-            if (pimsUser.IsContractor)
-            {
-                return pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == dispositionFile.RegionCode);
-            }
-
-            // Regular (non-contractor) users are not bound by region access here.
-            return true;
-        }
-
         public static bool HasAccessToFile(this PimsDispositionFile dispositionFile, PimsUser pimsUser, PimsProject project)
         {
             if (dispositionFile is null || pimsUser is null)
@@ -66,7 +50,7 @@ namespace Pims.Api.Helpers.Extensions
                 var onTeamOrProject = dispositionFile.PimsDispositionFileTeams.Any(x => x.PersonId == pimsUser.PersonId)
                     || (project != null && project.PimsProjectPeople.Any(x => x.PersonId == pimsUser.PersonId));
 
-                return onTeamOrProject && dispositionFile.IsUserAssignedToDispositionFileRegion(pimsUser);
+                return onTeamOrProject && pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == dispositionFile.RegionCode);
             }
 
             // Regular (non-contractor) users have access across regions
