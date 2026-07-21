@@ -117,6 +117,27 @@ namespace Pims.Api.Helpers.Extensions
             }
         }
 
+        /// <summary>
+        /// Contractors must be assigned to the Project's team AND must be assigned to the file's region.
+        /// Team membership from a different region does not grant access.
+        /// </summary>
+        /// <param name="principal"></param>
+        /// <param name="userRepository"></param>
+        /// <param name="projectRepository"></param>
+        /// <param name="projectId"></param>
+        public static void ThrowInvalidAccessToProject(this ClaimsPrincipal principal, IUserRepository userRepository, IProjectRepository projectRepository, long projectId)
+        {
+            ArgumentNullException.ThrowIfNull(principal);
+
+            var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
+            PimsProject project = projectRepository.TryGet(projectId);
+
+            if (pimsUser?.IsContractor == true && project != null && !project.HasAccessToFile(pimsUser))
+            {
+                throw new NotAuthorizedException("Contractor is not assigned to the Project's team");
+            }
+        }
+
         public static HashSet<short> GetUserRegions(this ClaimsPrincipal principal, IUserRepository userRepository)
         {
             ArgumentNullException.ThrowIfNull(principal);
