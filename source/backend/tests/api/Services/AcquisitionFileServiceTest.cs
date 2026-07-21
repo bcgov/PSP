@@ -137,6 +137,9 @@ namespace Pims.Api.Test.Services
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("testuser", regionCode: 1));
+
             // Act
             Action act = () => service.Add(acqFile, new List<UserOverrideCode>());
 
@@ -250,7 +253,7 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
             var newGuid = Guid.NewGuid();
-            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true);
+            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true, regionCode: 1);
             contractorUser.PersonId = 1;
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
@@ -282,7 +285,7 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
             var newGuid = Guid.NewGuid();
-            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true);
+            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true, regionCode: 1);
             contractorUser.PersonId = 1;
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
@@ -314,7 +317,7 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
             var newGuid = Guid.NewGuid();
-            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true);
+            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true, regionCode: 1);
             contractorUser.PersonId = 1;
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
@@ -344,7 +347,7 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
             var newGuid = Guid.NewGuid();
-            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true);
+            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true, regionCode: 1);
             contractorUser.PersonId = 1;
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
@@ -689,6 +692,7 @@ namespace Pims.Api.Test.Services
 
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(2);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
@@ -1105,7 +1109,7 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
-            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true, regionCode: 1);
             contractorUser.PersonId = 1;
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
@@ -1144,7 +1148,7 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
-            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true, regionCode: 1);
             contractorUser.PersonId = 1;
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
@@ -1423,6 +1427,9 @@ namespace Pims.Api.Test.Services
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("testuser", regionCode: 1));
+
             var agreementRepository = this._helper.GetService<Mock<IAgreementRepository>>();
             agreementRepository.Setup(x => x.GetAgreementsByAcquisitionFile(It.IsAny<long>())).Returns(new List<PimsAgreement>());
 
@@ -1465,6 +1472,9 @@ namespace Pims.Api.Test.Services
                         AcquisitionFileId = acqFile.Internal_Id,
                     },
                 });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("testuser", regionCode: 1));
 
             var compReqService = this._helper.GetService<Mock<ICompReqFinancialService>>();
             compReqService.Setup(c => c.GetAllByAcquisitionFileId(It.IsAny<long>(), true)).Returns(
@@ -2734,12 +2744,16 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView);
 
-            var repository = this._helper.GetService<Mock<IInterestHolderRepository>>();
-            repository.Setup(x => x.GetInterestHoldersByAcquisitionFile(It.IsAny<long>()))
-                .Returns(new List<PimsInterestHolder>()
-                {
+            var acqFile = EntityHelper.CreateAcquisitionFile(1);
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var interestHolderRepository = this._helper.GetService<Mock<IInterestHolderRepository>>();
+            interestHolderRepository.Setup(x => x.GetInterestHoldersByAcquisitionFile(It.IsAny<long>()))
+              .Returns(new List<PimsInterestHolder>()
+              {
                     new PimsInterestHolder(),
-                });
+              });
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
@@ -2748,7 +2762,7 @@ namespace Pims.Api.Test.Services
             var result = service.GetInterestHolders(1);
 
             // Assert
-            repository.Verify(x => x.GetInterestHoldersByAcquisitionFile(It.IsAny<long>()), Times.Once);
+            interestHolderRepository.Verify(x => x.GetInterestHoldersByAcquisitionFile(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -3345,8 +3359,12 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileView, Permissions.CompensationRequisitionView);
 
-            var repository = this._helper.GetService<Mock<IExpropriationPaymentRepository>>();
-            repository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
+            var acqFile = EntityHelper.CreateAcquisitionFile(1);
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var expPaymentsRepository = this._helper.GetService<Mock<IExpropriationPaymentRepository>>();
+            expPaymentsRepository.Setup(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()))
                 .Returns(new List<PimsExpropriationPayment>()
                 {
                     new PimsExpropriationPayment(),
@@ -3359,7 +3377,7 @@ namespace Pims.Api.Test.Services
             var result = service.GetAcquisitionExpropriationPayments(1);
 
             // Assert
-            repository.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()), Times.Once);
+            expPaymentsRepository.Verify(x => x.GetAllByAcquisitionFileId(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -3396,8 +3414,12 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateAcquisitionServiceWithPermissions(Permissions.AcquisitionFileEdit);
-            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
+            var acqFile = EntityHelper.CreateAcquisitionFile(1);
+            var repository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acqFile);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act

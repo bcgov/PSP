@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Extensions;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Services;
 using Pims.Core.Exceptions;
@@ -102,17 +103,19 @@ namespace Pims.Api.Services
 
         public PimsProject GetById(long projectId)
         {
+            _logger.LogInformation("Getting Project by Id: {Id}", projectId);
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
-            _logger.LogInformation("Getting Project by Id ...");
+            _user.ThrowInvalidAccessToProject(_userRepository, _projectRepository, projectId);
 
             return _projectRepository.TryGet(projectId);
         }
 
         public IList<PimsProduct> GetProducts(long projectId)
         {
+            _logger.LogInformation("Geting products for project Id: {Id}", projectId);
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
+            _user.ThrowInvalidAccessToProject(_userRepository, _projectRepository, projectId);
 
-            _logger.LogInformation("Geting products for project ...");
             return _productRepository.GetByProject(projectId);
         }
 
@@ -126,8 +129,10 @@ namespace Pims.Api.Services
 
         public PimsProject Add(PimsProject project, IEnumerable<UserOverrideCode> userOverrides)
         {
+            _logger.LogInformation("Adding new project {Project}", project);
             _user.ThrowIfNotAuthorized(Permissions.ProjectAdd);
-            _logger.LogInformation("Adding new project...");
+            project.ThrowMissingContractorInTeam(_user, _userRepository);
+
             if (project == null)
             {
                 throw new ArgumentNullException(nameof(project), "Project cannot be null.");
@@ -155,9 +160,10 @@ namespace Pims.Api.Services
 
         public PimsProject Update(PimsProject project, IEnumerable<UserOverrideCode> userOverrides)
         {
-            _user.ThrowIfNotAuthorized(Permissions.ProjectEdit);
             project.ThrowIfNull(nameof(project));
-            _logger.LogInformation($"Updating project with id ${project.Internal_Id}");
+            _logger.LogInformation("Updating project with Id {Id}", project.Internal_Id);
+            _user.ThrowIfNotAuthorized(Permissions.ProjectEdit);
+            project.ThrowContractorRemovedFromTeam(_user, _userRepository);
 
             ValidateTeamMembers(project);
 
@@ -178,6 +184,7 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsProjectPerson> GetTeamMembers()
         {
+            _logger.LogInformation("Getting project team members");
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
@@ -186,9 +193,7 @@ namespace Pims.Api.Services
             var teamMembers = _projectRepository.GetTeamMembers(userContext);
             var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
 
-            List<PimsProjectPerson> teamFilterOptions = new();
-            teamFilterOptions.AddRange(persons);
-
+            List<PimsProjectPerson> teamFilterOptions = new(persons);
             return teamFilterOptions;
         }
 
