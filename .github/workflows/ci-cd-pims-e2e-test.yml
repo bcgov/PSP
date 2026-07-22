@@ -47,7 +47,7 @@ jobs:
           working-directory: testing/pims-integration
 
         - name: Install browsers
-          run: npm run install
+          run: npm run install-browsers
           working-directory: testing/pims-integration
 
         - name: Run Playwright Smoke tests
