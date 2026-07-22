@@ -39,11 +39,13 @@ using Pims.Core.Http;
 using Pims.Core.Json;
 using Pims.Core.Security;
 using Pims.Keycloak.Configuration;
+using Pims.Scheduler.Configuration;
 using Pims.Scheduler.Http.Configuration;
 using Pims.Scheduler.Policies;
 using Pims.Scheduler.Repositories;
 using Pims.Scheduler.Rescheduler;
 using Pims.Scheduler.Services;
+using Pims.Scheduler.Services.Interfaces;
 using Polly;
 using Prometheus;
 using StackExchange.Redis;
@@ -92,13 +94,18 @@ namespace Pims.Scheduler
         public void ConfigureServices(IServiceCollection services)
         {
             services.AddScoped<IDocumentQueueService, DocumentQueueService>();
+            services.AddScoped<INotificationUserService, NotificationUserService>();
+
             services.AddScoped<IOpenIdConnectRequestClient, OpenIdConnectRequestClient>();
             services.AddSingleton<JwtSecurityTokenHandler>();
+
             services.AddScoped<IPimsDocumentQueueRepository, PimsDocumentQueueRepository>();
+            services.AddScoped<IPimsNotificationUserRepository, PimsNotificationUserRepository>();
+
             services.AddSingleton<IJobRescheduler, JobRescheduler>();
 
-            services.AddSerilogging(this.Configuration);
-            var jsonSerializerOptions = this.Configuration.GenerateJsonSerializerOptions();
+            services.AddSerilogging(Configuration);
+            var jsonSerializerOptions = Configuration.GenerateJsonSerializerOptions();
             services.Configure<JsonSerializerOptions>(options =>
             {
                 options.ReferenceHandler = ReferenceHandler.IgnoreCycles;
@@ -109,13 +116,16 @@ namespace Pims.Scheduler
                 options.Converters.Add(new JsonStringEnumMemberConverter());
                 options.Converters.Add(new Int32ToStringJsonConverter());
             });
-            services.Configure<Core.Http.Configuration.AuthClientOptions>(this.Configuration.GetSection("Keycloak"));
-            services.Configure<Core.Http.Configuration.OpenIdConnectOptions>(this.Configuration.GetSection("OpenIdConnect"));
-            services.Configure<Keycloak.Configuration.KeycloakOptions>(this.Configuration.GetSection("Keycloak"));
-            services.Configure<PimsOptions>(this.Configuration.GetSection("Pims:Environment"));
-            services.Configure<UploadQueuedDocumentsJobOptions>(this.Configuration.GetSection("UploadQueuedDocumentsOptions"));
-            services.Configure<RetryQueuedDocumentsJobOptions>(this.Configuration.GetSection("RetryQueuedDocumentsOptions"));
-            services.Configure<QueryProcessingDocumentsJobOptions>(this.Configuration.GetSection("QueryProcessingDocumentsOptions"));
+
+            services.Configure<Core.Http.Configuration.AuthClientOptions>(Configuration.GetSection("Keycloak"));
+            services.Configure<Core.Http.Configuration.OpenIdConnectOptions>(Configuration.GetSection("OpenIdConnect"));
+            services.Configure<KeycloakOptions>(Configuration.GetSection("Keycloak"));
+            services.Configure<PimsOptions>(Configuration.GetSection("Pims:Environment"));
+            services.Configure<UploadQueuedDocumentsJobOptions>(Configuration.GetSection("UploadQueuedDocumentsOptions"));
+            services.Configure<RetryQueuedDocumentsJobOptions>(Configuration.GetSection("RetryQueuedDocumentsOptions"));
+            services.Configure<QueryProcessingDocumentsJobOptions>(Configuration.GetSection("QueryProcessingDocumentsOptions"));
+            services.Configure<PushNotificationsJobOptions>(Configuration.GetSection("PushNotificationsJobOptions"));
+
             services.AddOptions();
             services.AddApiVersioning(options =>
             {
@@ -202,7 +212,7 @@ namespace Pims.Scheduler
             services.AddMemoryCache();
 
             PollyOptions pollyOptions = new();
-            this.Configuration.GetSection("Polly").Bind(pollyOptions);
+            Configuration.GetSection("Polly").Bind(pollyOptions);
 
             services.AddResiliencePipeline<string, HttpResponseMessage>(HttpRequestClient.NetworkPolicyName, (builder) =>
             {
@@ -274,7 +284,7 @@ namespace Pims.Scheduler
             services.Configure<ForwardedHeadersOptions>(options =>
             {
                 options.ForwardedHeaders = ForwardedHeaders.All;
-                options.AllowedHosts = this.Configuration.GetValue<string>("AllowedHosts")?.Split(';').ToList<string>();
+                options.AllowedHosts = Configuration.GetValue<string>("AllowedHosts")?.Split(';').ToList<string>();
             });
         }
 
@@ -293,7 +303,7 @@ namespace Pims.Scheduler
                 app.UseDeveloperExceptionPage();
             }
 
-            var baseUrl = this.Configuration.GetValue<string>("BaseUrl");
+            var baseUrl = Configuration.GetValue<string>("BaseUrl");
             app.UsePathBase(baseUrl);
             app.UseForwardedHeaders();
 
@@ -321,13 +331,13 @@ namespace Pims.Scheduler
                 Authorization = new[] { new HangfireDashboardAuthorizationFilter(app.ApplicationServices.GetRequiredService<IOptionsMonitor<KeycloakOptions>>(), Permissions.SystemAdmin) },
             });
 
-            var healthPort = this.Configuration.GetValue<int>("HealthChecks:Port");
-            app.UseHealthChecks(this.Configuration.GetValue<string>("HealthChecks:LivePath"), healthPort, new HealthCheckOptions
+            var healthPort = Configuration.GetValue<int>("HealthChecks:Port");
+            app.UseHealthChecks(Configuration.GetValue<string>("HealthChecks:LivePath"), healthPort, new HealthCheckOptions
             {
                 Predicate = r => r.Name.Contains("SqlServer"),
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
             });
-            app.UseHealthChecks(this.Configuration.GetValue<string>("HealthChecks:ReadyPath"), healthPort, new HealthCheckOptions
+            app.UseHealthChecks(Configuration.GetValue<string>("HealthChecks:ReadyPath"), healthPort, new HealthCheckOptions
             {
                 Predicate = r => r.Tags.Contains("services") && !r.Tags.Contains("external"),
                 ResponseWriter = UIResponseWriter.WriteHealthCheckUIResponse,
@@ -364,16 +374,18 @@ namespace Pims.Scheduler
 
         private void ScheduleHangfireJobs(IServiceProvider services)
         {
-            BackgroundJobServerOptions hangfireOptions = Hangfire.Extensions.Configuration.ConfigurationExtensions.GetHangfireBackgroundJobServerOptions(this.Configuration);
+            BackgroundJobServerOptions hangfireOptions = Hangfire.Extensions.Configuration.ConfigurationExtensions.GetHangfireBackgroundJobServerOptions(Configuration);
 
             // provide default definition of all jobs.
-
             RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.UploadQueuedDocuments), hangfireOptions.Queues.FirstOrDefault() ?? "default", x => x.UploadQueuedDocuments(), Cron.Minutely);
             RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.RetryQueuedDocuments), hangfireOptions.Queues.FirstOrDefault() ?? "default", x => x.RetryQueuedDocuments(), "0 0 * * *");
             RecurringJob.AddOrUpdate<IDocumentQueueService>(nameof(DocumentQueueService.QueryProcessingDocuments), hangfireOptions.Queues.FirstOrDefault() ?? "default", x => x.QueryProcessingDocuments(), Cron.Minutely);
 
+            RecurringJob.AddOrUpdate<INotificationUserService>(nameof(NotificationUserService.PushEmailUserNotifications), hangfireOptions.Queues.FirstOrDefault() ?? "default", x => x.PushEmailUserNotifications(), Cron.Daily);
+            RecurringJob.AddOrUpdate<INotificationUserService>(nameof(NotificationUserService.PushPimsUserNotifications), hangfireOptions.Queues.FirstOrDefault() ?? "default", x => x.PushPimsUserNotifications(), Cron.Daily);
+
             // override scheduled jobs with configuration.
-            JobScheduleOptions jobOptions = this.Configuration.GetSection("JobOptions").Get<JobScheduleOptions>();
+            JobScheduleOptions jobOptions = Configuration.GetSection("JobOptions").Get<JobScheduleOptions>();
             services.GetService<IJobRescheduler>().LoadSchedules(jobOptions);
         }
         #endregion

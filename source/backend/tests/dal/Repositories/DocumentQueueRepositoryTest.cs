@@ -66,7 +66,7 @@ namespace Pims.Dal.Test.Repositories
 
             // Act
             documentQueue.DocumentQueueStatusTypeCode = "Updated";
-            var result = repository.Update(documentQueue);
+            var result = repository.UpdateAsync(documentQueue);
             context.CommitTransaction();
 
             // Assert
@@ -90,7 +90,7 @@ namespace Pims.Dal.Test.Repositories
             // Act
             documentQueue.DocumentQueueStatusTypeCode = "Updated";
             documentQueue.Document = null;
-            var result = repository.Update(documentQueue, removeDocument: true);
+            var result = repository.UpdateAsync(documentQueue, removeDocument: true);
             context.CommitTransaction();
 
             // Assert
@@ -109,7 +109,7 @@ namespace Pims.Dal.Test.Repositories
             var repository = helper.CreateRepository<DocumentQueueRepository>(user);
 
             // Act
-            Func<Task> act = () => repository.Update(null);
+            Func<Task> act = () => repository.UpdateAsync(null);
 
             // Assert
             act.Should().ThrowAsync<ArgumentNullException>();

@@ -187,13 +187,16 @@ namespace Pims.Api.Test.Services
             var dispFile = EntityHelper.CreateDispositionFile();
 
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
-            repository.Setup(x => x.GetPageDeep(It.IsAny<DispositionFilter>(), null)).Returns(new Paged<PimsDispositionFile>(new[] { dispFile }));
+            repository.Setup(x => x.GetPageDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>())).Returns(new Paged<PimsDispositionFile>(new[] { dispFile }));
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             var result = service.GetPage(new DispositionFilter());
 
             // Assert
-            repository.Verify(x => x.GetPageDeep(It.IsAny<DispositionFilter>(), null), Times.Once);
+            repository.Verify(x => x.GetPageDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         [Fact]
@@ -311,7 +314,7 @@ namespace Pims.Api.Test.Services
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
 
             var newGuid = Guid.NewGuid();
-            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true);
+            var contractorUser = EntityHelper.CreateUser(1, newGuid, username: "Test", isContractor: true, regionCode: 1);
             contractorUser.PersonId = 1;
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
 
@@ -381,12 +384,16 @@ namespace Pims.Api.Test.Services
 
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsDispositionFile>())).Returns(dispositionFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispositionFile);
 
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(pimsProperty);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
@@ -426,6 +433,7 @@ namespace Pims.Api.Test.Services
             var dispFile = EntityHelper.CreateDispositionFile(1);
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
 
             // Act
             Action act = () => service.Update(2, dispFile, new List<UserOverrideCode>());
@@ -476,6 +484,9 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(2);
             repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispFile);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             Action act = () => service.Update(1, dispFile, new List<UserOverrideCode>());
@@ -632,6 +643,9 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispFile);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
+
             var dispositionFilePropertyRepository = this._helper.GetService<Mock<IDispositionFilePropertyRepository>>();
             dispositionFilePropertyRepository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>());
 
@@ -671,6 +685,9 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispFile);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
+
             var inventoryProperty = EntityHelper.CreateProperty(1);
             inventoryProperty.IsOwned = true;
             dispositionFilePropertyRepository.Setup(x => x.GetPropertiesByDispositionFileId(It.IsAny<long>())).Returns(new List<PimsDispositionFileProperty>() { new PimsDispositionFileProperty() { Property = inventoryProperty } });
@@ -708,6 +725,9 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispFile);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             var result = service.Update(1, dispFile, new List<UserOverrideCode>());
@@ -765,7 +785,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispositionFile);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true, regionCode: 1);
             contractorUser.PersonId = 20;
 
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
@@ -804,7 +824,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispositionFile);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true);
+            var contractorUser = EntityHelper.CreateUser(1, Guid.NewGuid(), username: "Test", isContractor: true, regionCode: 1);
             contractorUser.PersonId = 20;
 
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
@@ -835,6 +855,9 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispFile);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
+
             // Act
             var result = service.Update(1, dispFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
 
@@ -842,7 +865,6 @@ namespace Pims.Api.Test.Services
             Assert.NotNull(result);
             repository.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>()), Times.Once);
         }
-
 
         [Fact]
         public void Update_Success_FinalButAdmin()
@@ -858,6 +880,9 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetRegion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.Update(It.IsAny<long>(), It.IsAny<PimsDispositionFile>())).Returns(dispFile);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispFile);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var statusMock = this._helper.GetService<Mock<IDispositionStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<DispositionFileStatusTypes>())).Returns(false);
@@ -900,6 +925,9 @@ namespace Pims.Api.Test.Services
                 Id = dspFile.DispositionFileStatusTypeCodeNavigation.Id,
                 Description = dspFile.DispositionFileStatusTypeCodeNavigation.Description,
             },});
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             var result = service.Update(dspFile.Internal_Id, dspFile, new List<UserOverrideCode>() { UserOverrideCode.UpdateRegion });
@@ -1404,7 +1432,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.UpdateProperties(dspFile, new List<UserOverrideCode>());
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>().WithMessage("Contractor is not assigned to the Disposition File's team");
+            act.Should().Throw<NotAuthorizedException>().WithMessage("Contractor is not assigned to the Disposition File's team or the associated Project's team");
         }
 
         [Fact]
@@ -1654,14 +1682,22 @@ namespace Pims.Api.Test.Services
             };
 
             var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
-            repository.Setup(x => x.GetTeamMembers()).Returns(allTeamMembers);
+            repository.Setup(x => x.GetTeamMembers(It.IsAny<UserContextModel>())).Returns(allTeamMembers);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            var user = EntityHelper.CreateUser("Test");
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
 
             // Act
             var result = service.GetTeamMembers();
 
             // Assert
-            repository.Verify(x => x.GetTeamMembers(), Times.Once);
             result.Should().HaveCount(2);
+            repository.Verify(
+                x => x.GetTeamMembers(It.Is<UserContextModel>(uc => uc.PersonId == user.PersonId)),
+                Times.Once,
+                "The GetTeamMembers method should pass the correct UserContextModel to the repository."
+            );
         }
 
         [Fact]
@@ -2707,15 +2743,18 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
-            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
 
             var filter = new DispositionFilter();
             var dispositionFile = EntityHelper.CreateDispositionFile(1);
-            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+            repository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()))
                         .Returns(new List<PimsDispositionFile>()
                         {
                             dispositionFile,
                         });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             var result = service.GetDispositionFileExport(filter);
@@ -2723,7 +2762,7 @@ namespace Pims.Api.Test.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(1, result.Count());
-            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+            repository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         [Fact]
@@ -2731,16 +2770,19 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
-            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
 
             var filter = new DispositionFilter();
             var dispositionFile = EntityHelper.CreateDispositionFile(1);
             dispositionFile.Project = EntityHelper.CreateProject(2, "TEST", "Test");
-            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+            repository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()))
                         .Returns(new List<PimsDispositionFile>()
                         {
                             dispositionFile,
                         });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             var result = service.GetDispositionFileExport(filter);
@@ -2748,7 +2790,7 @@ namespace Pims.Api.Test.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(1, result.Count());
-            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+            repository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()), Times.Once);
             result.FirstOrDefault().Project.Should().Be("TEST Test");
         }
 
@@ -2757,7 +2799,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
-            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
 
             var filter = new DispositionFilter();
             var dispositionFile = EntityHelper.CreateDispositionFile(1);
@@ -2787,11 +2829,14 @@ namespace Pims.Api.Test.Services
                 },
             };
 
-            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+            repository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()))
                         .Returns(new List<PimsDispositionFile>()
                         {
                             dispositionFile,
                         });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             var result = service.GetDispositionFileExport(filter);
@@ -2802,7 +2847,7 @@ namespace Pims.Api.Test.Services
             Assert.Equal("1234 St BC desc V9V9V9", result[0].CivicAddress);
             Assert.Equal("D-10-25-2023", result[0].FileNumber);
             Assert.Equal("000-008-000|000-009-000", result[0].Pid);
-            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+            repository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         [Fact]
@@ -2810,7 +2855,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
-            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
 
             var filter = new DispositionFilter();
             var dispositionFile = EntityHelper.CreateDispositionFile(1);
@@ -2836,11 +2881,14 @@ namespace Pims.Api.Test.Services
                 }
             };
 
-            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+            repository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()))
                         .Returns(new List<PimsDispositionFile>()
                         {
                             dispositionFile,
                         });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             var result = service.GetDispositionFileExport(filter);
@@ -2848,7 +2896,7 @@ namespace Pims.Api.Test.Services
             // Assert
             Assert.NotNull(result);
             result.FirstOrDefault().TeamMembers.Should().Be("last first (person role)|org (Role: org role, Primary: N/A)|org2 (Role: primary role, Primary: contact primary)");
-            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+            repository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         [Fact]
@@ -2856,18 +2904,21 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
-            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
 
             var filter = new DispositionFilter();
             var dispositionFile = EntityHelper.CreateDispositionFile(1);
             dispositionFile.FileNumber = "10-25-2023";
             dispositionFile.PimsDispositionAppraisals = new List<PimsDispositionAppraisal>();
 
-            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+            repository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()))
                         .Returns(new List<PimsDispositionFile>()
                         {
                             dispositionFile,
                         });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             var result = service.GetDispositionFileExport(filter);
@@ -2875,7 +2926,7 @@ namespace Pims.Api.Test.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(1, result.Count());
-            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+            repository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         [Fact]
@@ -2883,7 +2934,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
-            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
 
             var filter = new DispositionFilter();
             var dispositionFile = EntityHelper.CreateDispositionFile(1);
@@ -2897,11 +2948,14 @@ namespace Pims.Api.Test.Services
                 AppraisalDt = new DateOnly(2000,1,1),
             } };
 
-            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+            repository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()))
                         .Returns(new List<PimsDispositionFile>()
                         {
                             dispositionFile,
                         });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             var result = service.GetDispositionFileExport(filter);
@@ -2916,7 +2970,7 @@ namespace Pims.Api.Test.Services
             row.AssessmentValue.Should().Be(4);
             row.AppraisalDate.Should().Be("01-Jan-2000");
 
-            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+            repository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         [Fact]
@@ -2924,18 +2978,21 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
-            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
 
             var filter = new DispositionFilter();
             var dispositionFile = EntityHelper.CreateDispositionFile(1);
             dispositionFile.FileNumber = "10-25-2023";
             dispositionFile.PimsDispositionSales = new List<PimsDispositionSale>();
 
-            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+            repository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()))
                         .Returns(new List<PimsDispositionFile>()
                         {
                             dispositionFile,
                         });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             var result = service.GetDispositionFileExport(filter);
@@ -2943,7 +3000,7 @@ namespace Pims.Api.Test.Services
             // Assert
             Assert.NotNull(result);
             Assert.Equal(1, result.Count());
-            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+            repository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         [Fact]
@@ -2951,7 +3008,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
-            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
 
             var filter = new DispositionFilter();
             var dispositionFile = EntityHelper.CreateDispositionFile(1);
@@ -2969,11 +3026,14 @@ namespace Pims.Api.Test.Services
                SaleFiscalYear = 2001,
             } };
 
-            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+            repository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()))
                         .Returns(new List<PimsDispositionFile>()
                         {
                             dispositionFile,
                         });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             var result = service.GetDispositionFileExport(filter);
@@ -2995,7 +3055,7 @@ namespace Pims.Api.Test.Services
             row.FiscalYearOfSale.Should().Be("2001");
             row.SaleCompletionDate.Should().Be("01-Jan-2000");
 
-            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+            repository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         [Fact]
@@ -3003,7 +3063,7 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateDispositionServiceWithPermissions(Permissions.DispositionView);
-            var dispFilerepository = this._helper.GetService<Mock<IDispositionFileRepository>>();
+            var repository = this._helper.GetService<Mock<IDispositionFileRepository>>();
 
             var filter = new DispositionFilter();
             var dispositionFile = EntityHelper.CreateDispositionFile(1);
@@ -3029,11 +3089,14 @@ namespace Pims.Api.Test.Services
                }
             } };
 
-            dispFilerepository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()))
+            repository.Setup(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()))
                         .Returns(new List<PimsDispositionFile>()
                         {
                             dispositionFile,
                         });
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             var result = service.GetDispositionFileExport(filter);
@@ -3044,7 +3107,7 @@ namespace Pims.Api.Test.Services
             var row = result[0];
             row.PurchaserNames.Should().Be("last first|org (Primary: N/A)|org2 (Primary: contact primary)");
 
-            dispFilerepository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>()), Times.Once);
+            repository.Verify(x => x.GetDispositionFileExportDeep(It.IsAny<DispositionFilter>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         #endregion

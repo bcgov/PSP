@@ -1,7 +1,7 @@
 // Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
 
 exports[`DocumentUploadModal component > renders correctly 1`] = `
-.c12.btn {
+.c13.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -30,17 +30,17 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
   cursor: pointer;
 }
 
-.c12.btn .Button__value {
+.c13.btn .Button__value {
   width: auto;
 }
 
-.c12.btn:hover {
+.c13.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c12.btn:focus {
+.c13.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -48,31 +48,31 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
   box-shadow: none;
 }
 
-.c12.btn.btn-primary {
+.c13.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c12.btn.btn-primary:hover,
-.c12.btn.btn-primary:active,
-.c12.btn.btn-primary:focus {
+.c13.btn.btn-primary:hover,
+.c13.btn.btn-primary:active,
+.c13.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c12.btn.btn-secondary {
+.c13.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c12.btn.btn-secondary:hover,
-.c12.btn.btn-secondary:active,
-.c12.btn.btn-secondary:focus {
+.c13.btn.btn-secondary:hover,
+.c13.btn.btn-secondary:active,
+.c13.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c12.btn.btn-info {
+.c13.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -80,66 +80,66 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
   padding-right: 0.6rem;
 }
 
-.c12.btn.btn-info:hover,
-.c12.btn.btn-info:active,
-.c12.btn.btn-info:focus {
+.c13.btn.btn-info:hover,
+.c13.btn.btn-info:active,
+.c13.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c12.btn.btn-light {
+.c13.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c12.btn.btn-light:hover,
-.c12.btn.btn-light:active,
-.c12.btn.btn-light:focus {
+.c13.btn.btn-light:hover,
+.c13.btn.btn-light:active,
+.c13.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c12.btn.btn-dark {
+.c13.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c12.btn.btn-dark:hover,
-.c12.btn.btn-dark:active,
-.c12.btn.btn-dark:focus {
+.c13.btn.btn-dark:hover,
+.c13.btn.btn-dark:active,
+.c13.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c12.btn.btn-danger {
+.c13.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c12.btn.btn-danger:hover,
-.c12.btn.btn-danger:active,
-.c12.btn.btn-danger:focus {
+.c13.btn.btn-danger:hover,
+.c13.btn.btn-danger:active,
+.c13.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c12.btn.btn-warning {
+.c13.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c12.btn.btn-warning:hover,
-.c12.btn.btn-warning:active,
-.c12.btn.btn-warning:focus {
+.c13.btn.btn-warning:hover,
+.c13.btn.btn-warning:active,
+.c13.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c12.btn.btn-link {
+.c13.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -163,9 +163,9 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
   text-decoration: underline;
 }
 
-.c12.btn.btn-link:hover,
-.c12.btn.btn-link:active,
-.c12.btn.btn-link:focus {
+.c13.btn.btn-link:hover,
+.c13.btn.btn-link:active,
+.c13.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -175,15 +175,15 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
   outline: none;
 }
 
-.c12.btn.btn-link:disabled,
-.c12.btn.btn-link.disabled {
+.c13.btn.btn-link:disabled,
+.c13.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c12.btn:disabled,
-.c12.btn:disabled:hover {
+.c13.btn:disabled,
+.c13.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -195,15 +195,15 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
   cursor: not-allowed;
 }
 
-.c12.Button .Button__icon {
+.c13.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c12.Button--icon-only:focus {
+.c13.Button--icon-only:focus {
   outline: none;
 }
 
-.c12.Button--icon-only .Button__icon {
+.c13.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
@@ -211,11 +211,11 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
   width: 0.8rem;
 }
 
-.c11 {
+.c12 {
   min-width: 2.4rem;
 }
 
-.c10 {
+.c11 {
   padding: 0px;
   margin: 0px;
   margin-left: 1.6rem;
@@ -405,6 +405,12 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
   max-height: 50rem;
 }
 
+.c10 {
+  color: black;
+  font-style: italic;
+  font-size: small;
+}
+
 <body
   class="modal-open"
   style="padding-right: 0px;"
@@ -504,30 +510,29 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
               <div
                 class="pt-2"
               />
-              <div>
+              <div
+                class="c4"
+                data-testid="document-upload-drop-zone"
+              >
                 <div
-                  class="c4"
+                  class="c5"
                 >
-                  <div
-                    class="c5"
+                  Drag files here to attach or
+                   
+                  <label
+                    class="c6"
                   >
-                    Drag files here to attach or
-                     
-                    <label
-                      class="c6"
-                    >
-                      Browse
-                      <input
-                        accept=".txt,.pdf,.docx,.doc,.xlsx,.xls,.html,.odt,.png,.jpg,.bmp,.tif,.tiff,.jpeg,.gif,.shp,.gml,.kml,.kmz,.msg"
-                        class="c7"
-                        data-testid="upload-input"
-                        id="uploadInput"
-                        multiple=""
-                        name="documentFile"
-                        type="file"
-                      />
-                    </label>
-                  </div>
+                    Browse
+                    <input
+                      accept=".txt,.pdf,.docx,.doc,.xlsx,.xls,.html,.odt,.png,.jpg,.bmp,.tif,.tiff,.jpeg,.gif,.shp,.gml,.kml,.kmz,.msg"
+                      class="c7"
+                      data-testid="upload-input"
+                      id="uploadInput"
+                      multiple=""
+                      name="documentFile"
+                      type="file"
+                    />
+                  </label>
                 </div>
               </div>
             </div>
@@ -536,11 +541,14 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
             class="c8 c9"
           />
           <div
-            class="pt-4"
-          />
+            class="c10 pt-4"
+            data-testid="supported-file-extensions"
+          >
+            Supported file types include txt, pdf, docx, doc, xlsx, xls, html, odt, png, jpg, bmp, tif, tiff, jpeg, gif, shp, gml, kml, kmz, msg.
+          </div>
         </div>
         <hr
-          class="c10"
+          class="c11"
         />
         <div
           class="modal-footer"
@@ -549,10 +557,10 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
             class="button-wrap"
           >
             <span
-              class="c11"
+              class="c12"
             />
             <button
-              class="c12 Button btn btn-secondary"
+              class="c13 Button btn btn-secondary"
               data-testid="cancel-modal-button"
               title="cancel-modal"
               type="button"
@@ -560,14 +568,14 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
               <div
                 class="Button__value"
               >
-                No
+                Cancel
               </div>
             </button>
             <span
-              class="c11"
+              class="c12"
             />
             <button
-              class="c12 Button Button--disabled btn btn-primary"
+              class="c13 Button Button--disabled btn btn-primary"
               data-testid="ok-modal-button"
               disabled=""
               title="ok-modal"
@@ -576,7 +584,7 @@ exports[`DocumentUploadModal component > renders correctly 1`] = `
               <div
                 class="Button__value"
               >
-                Yes
+                Continue
               </div>
             </button>
           </div>

@@ -1,7 +1,10 @@
 import { useCallback } from 'react';
-import { generatePath, useHistory } from 'react-router-dom';
+import { useHistory } from 'react-router-dom';
 
-export const sidebarBasePath = '/mapview/sidebar';
+import DeepLinkGenerator, { sidebarBasePath } from '@/utils/DeepLinkGenerator';
+
+// Re-exported for backwards compatibility with existing imports.
+export { sidebarBasePath };
 
 export interface IPathGeneratorMethods {
   newFile: (fileType: string) => void;
@@ -53,38 +56,21 @@ const usePathGenerator: IPathGenerator = () => {
 
   const newFile = useCallback(
     (fileType: string) => {
-      const a = `${sidebarBasePath}/:fileType/new`;
-      const path = generatePath(a, {
-        fileType,
-      });
-
-      history.push(path);
+      history.push(DeepLinkGenerator.newFile(fileType));
     },
     [history],
   );
 
   const showFile = useCallback(
     (fileType: string, fileId: number) => {
-      const a = `${sidebarBasePath}/:fileType/:fileId`;
-      const path = generatePath(a, {
-        fileType,
-        fileId,
-      });
-
-      history.push(path);
+      history.push(DeepLinkGenerator.showFile(fileType, fileId));
     },
     [history],
   );
 
   const showDetails = useCallback(
     (fileType: string, fileId: number, detailType: string, replace: boolean) => {
-      const a = `${sidebarBasePath}/:fileType/:fileId/:detailType`;
-      const path = generatePath(a, {
-        fileType,
-        fileId,
-        detailType,
-      });
-
+      const path = DeepLinkGenerator.showDetails(fileType, fileId, detailType);
       if (replace) {
         history.replace(path);
       } else {
@@ -96,14 +82,7 @@ const usePathGenerator: IPathGenerator = () => {
 
   const showDetail = useCallback(
     (fileType: string, fileId: number, detailType: string, detailId: number, replace: boolean) => {
-      const a = `${sidebarBasePath}/:fileType/:fileId/:detailType/:detailId`;
-      const path = generatePath(a, {
-        fileType,
-        fileId,
-        detailType,
-        detailId,
-      });
-
+      const path = DeepLinkGenerator.showDetail(fileType, fileId, detailType, detailId);
       if (replace) {
         history.replace(path);
       } else {
@@ -115,70 +94,35 @@ const usePathGenerator: IPathGenerator = () => {
 
   const editDetails = useCallback(
     (fileType: string, fileId: number, detailType: string) => {
-      const a = `${sidebarBasePath}/:fileType/:fileId/:detailType/edit`;
-      const path = generatePath(a, {
-        fileType,
-        fileId,
-        detailType,
-      });
-
-      history.push(path);
+      history.push(DeepLinkGenerator.editDetails(fileType, fileId, detailType));
     },
     [history],
   );
 
   const editDetail = useCallback(
     (fileType: string, fileId: number, detailType: string, detailId: number) => {
-      const a = `${sidebarBasePath}/:fileType/:fileId/:detailType/:detailId/edit`;
-      const path = generatePath(a, {
-        fileType,
-        fileId,
-        detailType,
-        detailId,
-      });
-
-      history.push(path);
+      history.push(DeepLinkGenerator.editDetail(fileType, fileId, detailType, detailId));
     },
     [history],
   );
 
   const addDetail = useCallback(
     (fileType: string, fileId: number, detailType: string) => {
-      const a = `${sidebarBasePath}/:fileType/:fileId/:detailType/new`;
-      const path = generatePath(a, {
-        fileType,
-        fileId,
-        detailType,
-      });
-
-      history.push(path);
+      history.push(DeepLinkGenerator.addDetail(fileType, fileId, detailType));
     },
     [history],
   );
 
   const editProperties = useCallback(
     (fileType: string, fileId: number) => {
-      const a = `${sidebarBasePath}/:fileType/:fileId/property/selector`;
-      const path = generatePath(a, {
-        fileType,
-        fileId,
-      });
-
-      history.push(path);
+      history.push(DeepLinkGenerator.editProperties(fileType, fileId));
     },
     [history],
   );
 
   const showFilePropertyId = useCallback(
     (fileType: string, fileId: number, menuIndex: number) => {
-      const a = `${sidebarBasePath}/:fileType/:fileId/property/:menuIndex`;
-      const path = generatePath(a, {
-        fileType,
-        fileId,
-        menuIndex,
-      });
-
-      history.push(path);
+      history.push(DeepLinkGenerator.showFilePropertyId(fileType, fileId, menuIndex));
     },
     [history],
   );
@@ -193,17 +137,14 @@ const usePathGenerator: IPathGenerator = () => {
       detailId?: number,
       replace?: boolean,
     ) => {
-      const a = `${sidebarBasePath}/:fileType/:fileId/property/:filePropertyId/:detailType${
-        detailSubType ? '/' + detailSubType : ''
-      }/:detailId?`;
-      const path = generatePath(a, {
+      const path = DeepLinkGenerator.showFilePropertyDetail(
         fileType,
         fileId,
         filePropertyId,
         detailType,
+        detailSubType,
         detailId,
-      });
-
+      );
       if (replace === true) {
         history.replace(path);
       } else {
@@ -222,17 +163,13 @@ const usePathGenerator: IPathGenerator = () => {
       detailSubType?: string,
       replace?: boolean,
     ) => {
-      const a = `${sidebarBasePath}/:fileType/:fileId/property/:filePropertyId/:detailType${
-        detailSubType ? '/' + detailSubType : ''
-      }/new`;
-
-      const path = generatePath(a, {
+      const path = DeepLinkGenerator.addFilePropertyDetail(
         fileType,
         fileId,
         filePropertyId,
         detailType,
-      });
-
+        detailSubType,
+      );
       if (replace === true) {
         history.replace(path);
       } else {
@@ -244,43 +181,23 @@ const usePathGenerator: IPathGenerator = () => {
 
   const showPropertyByPid = useCallback(
     (pid: string) => {
-      const a = `${sidebarBasePath}/non-inventory-property/pid/:pid`;
-      const path = generatePath(a, {
-        pid,
-      });
-
-      history.push(path);
+      history.push(DeepLinkGenerator.showPropertyByPid(pid));
     },
     [history],
   );
 
   const showPropertyDetail = useCallback(
     (propertyId: number, detailType: string, detailSubType?: string, detailId?: number) => {
-      const a = `${sidebarBasePath}/property/:propertyId/:detailType${
-        detailSubType ? '/' + detailSubType : ''
-      }/:detailId?`;
-      const path = generatePath(a, {
-        propertyId,
-        detailType,
-        detailId,
-      });
-
-      history.push(path);
+      history.push(
+        DeepLinkGenerator.showPropertyDetail(propertyId, detailType, detailSubType, detailId),
+      );
     },
     [history],
   );
 
   const addPropertyDetail = useCallback(
     (propertyId: number, detailType: string, detailSubType?: string) => {
-      const a = `${sidebarBasePath}/property/:propertyId/:detailType${
-        detailSubType ? '/' + detailSubType : ''
-      }/new`;
-      const path = generatePath(a, {
-        propertyId,
-        detailType,
-      });
-
-      history.push(path);
+      history.push(DeepLinkGenerator.addPropertyDetail(propertyId, detailType, detailSubType));
     },
     [history],
   );

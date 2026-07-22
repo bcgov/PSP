@@ -47,7 +47,7 @@ namespace Pims.Api.Test.Services
             var projectList = new List<PimsProject>() { project };
 
             var repository = this._helper.GetService<Mock<IProjectRepository>>();
-            repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>())).Returns(projectList);
+            repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<UserContextModel>())).Returns(projectList);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
@@ -56,7 +56,7 @@ namespace Pims.Api.Test.Services
             var result = service.SearchProjects("query string", 1);
 
             // Assert
-            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>()), Times.Once);
+            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         [Fact]
@@ -128,20 +128,20 @@ namespace Pims.Api.Test.Services
             var service = this.CreateProjectServiceWithPermissions(Permissions.ProjectView);
 
             var repository = this._helper.GetService<Mock<IProjectRepository>>();
-            repository.Setup(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), null))
+            repository.Setup(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), It.IsAny<UserContextModel>()))
                 .ReturnsAsync(new Paged<PimsProject>()
                 {
                     Page = 1,
                 });
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(new PimsUser());
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             var result = await service.GetPage(new ProjectFilter { ProjectName = "test" });
 
             // Assert
             result.Should().NotBeNull();
-            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), null), Times.Once);
+            repository.Verify(x => x.GetPageAsync(It.IsAny<ProjectFilter>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         [Fact]
@@ -155,7 +155,7 @@ namespace Pims.Api.Test.Services
             var projectList = new List<PimsProject>() { project };
 
             var repository = this._helper.GetService<Mock<IProjectRepository>>();
-            repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>())).Returns(projectList);
+            repository.Setup(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<UserContextModel>())).Returns(projectList);
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
@@ -164,7 +164,7 @@ namespace Pims.Api.Test.Services
             var result = service.GetAll();
 
             // Assert
-            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>()), Times.Once);
+            repository.Verify(x => x.SearchProjects(It.IsAny<string>(), It.IsAny<int>(), It.IsAny<UserContextModel>()), Times.Once);
         }
 
         [Fact]
@@ -223,6 +223,9 @@ namespace Pims.Api.Test.Services
             var projectRepo = _helper.GetService<Mock<IProjectRepository>>();
             projectRepo.Setup(x => x.GetAllByName(It.IsAny<string>())).Returns(new List<PimsProject>() { duplicateProject });
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
+
             // Act
             Action act = () => service.Add(new PimsProject() { Code = "1" }, new List<UserOverrideCode>());
 
@@ -250,8 +253,10 @@ namespace Pims.Api.Test.Services
             productRepo.Setup(x => x.GetProjectProductsByProject(It.IsAny<long>())).Returns(new List<PimsProjectProduct>());
             productRepo.Setup(x => x.GetProducts(It.IsAny<IEnumerable<PimsProduct>>())).Returns(new List<PimsProduct> { duplicateProduct });
 
-
             var projectRepo = _helper.GetService<Mock<IProjectRepository>>();
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             Action act = () => service.Add(new PimsProject() { PimsProjectProducts = existingProjectProducts }, new List<UserOverrideCode>());
@@ -269,6 +274,9 @@ namespace Pims.Api.Test.Services
 
             var repository = _helper.GetService<Mock<IProjectRepository>>();
             repository.Setup(x => x.GetAllByName(It.IsAny<string>())).Returns(new List<PimsProject>());
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var project = EntityHelper.CreateProject(1, "007", "Test Project");
             project.PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1 }, new PimsProjectPerson() { PersonId = 1 } };
@@ -290,6 +298,9 @@ namespace Pims.Api.Test.Services
             var repository = _helper.GetService<Mock<IProjectRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsProject>())).Returns(new PimsProject());
             repository.Setup(x => x.TryGet(It.IsAny<long>())).Returns(new PimsProject());
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             var result = service.Add(new PimsProject(), new List<UserOverrideCode>() { });
@@ -323,12 +334,15 @@ namespace Pims.Api.Test.Services
             var repository = _helper.GetService<Mock<IProjectRepository>>();
             repository.Setup(x => x.TryGet(It.IsAny<long>())).Returns(new PimsProject());
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
+
             // Act
             var result = service.GetById(1);
 
             // Assert
             result.Should().NotBeNull();
-            repository.Verify(x => x.TryGet(It.IsAny<long>()), Times.Once);
+            repository.Verify(x => x.TryGet(It.IsAny<long>()), Times.AtLeastOnce);
         }
 
         [Fact]
@@ -401,6 +415,9 @@ namespace Pims.Api.Test.Services
             var project = EntityHelper.CreateProject(1, "007", "Test Project");
             project.PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1 }, new PimsProjectPerson() { PersonId = 1 } };
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
+
             // Act
             Action result = () => service.Update(project, new List<UserOverrideCode>());
 
@@ -422,6 +439,9 @@ namespace Pims.Api.Test.Services
                 ProjectStatusTypeCodeNavigation = null,
             });
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
+
             // Act
             var result = service.Update(new PimsProject { Id = 1, ConcurrencyControlNumber = 100 }, new List<UserOverrideCode>() { });
 
@@ -436,24 +456,38 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateProjectServiceWithPermissions(Permissions.ProjectEdit);
 
+            var activeStatus = new PimsProjectStatusType()
+            {
+                ProjectStatusTypeCode = "ACTIVE",
+                Description = "Active"
+            };
+            var archivedStatus = new PimsProjectStatusType()
+            {
+                ProjectStatusTypeCode = "ARCHIVED",
+                Description = "Archived"
+            };
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllProjectStatusTypes()).Returns(new PimsProjectStatusType[] { activeStatus, archivedStatus });
+
             var project = EntityHelper.CreateProject(1, "9999", "TEST PROJECT");
             project.ConcurrencyControlNumber = 1;
             project.AppCreateUserid = "TESTER";
+            project.ProjectStatusTypeCodeNavigation = archivedStatus;
+            project.ProjectStatusTypeCode = archivedStatus.ProjectStatusTypeCode;
 
             var projectRepository = this._helper.GetService<Mock<IProjectRepository>>();
             var noteRepository = this._helper.GetService<Mock<INoteRelationshipRepository<PimsProjectNote>>>();
-            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
 
             projectRepository.Setup(x => x.Update(It.IsAny<PimsProject>())).Returns(project);
             projectRepository.Setup(x => x.TryGet(It.IsAny<long>())).Returns(new PimsProject()
             {
-                ProjectStatusTypeCode = "ACTIVE",
-                ProjectStatusTypeCodeNavigation = new PimsProjectStatusType() { Description = "Active" },
+                Internal_Id = 1,
+                ProjectStatusTypeCode = activeStatus.ProjectStatusTypeCode,
+                ProjectStatusTypeCodeNavigation = activeStatus,
             });
-            lookupRepository.Setup(x => x.GetAllProjectStatusTypes()).Returns(new PimsProjectStatusType[]{ new PimsProjectStatusType() {
-                Id = project.ProjectStatusTypeCodeNavigation.Id,
-                Description = project.ProjectStatusTypeCodeNavigation.Description,
-            },});
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             var result = service.Update(project, new List<UserOverrideCode>() { });
@@ -461,7 +495,7 @@ namespace Pims.Api.Test.Services
             // Assert
             projectRepository.Verify(x => x.Update(It.IsAny<PimsProject>()), Times.Once);
             noteRepository.Verify(x => x.AddNoteRelationship(It.Is<PimsProjectNote>(x => x.ProjectId == 1
-                    && x.Note.NoteTxt == "Project status changed from Active to 'No Status'")), Times.Once);
+                    && x.Note.NoteTxt == "Project status changed from Active to Archived")), Times.Once);
         }
     }
 }

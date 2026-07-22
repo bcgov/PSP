@@ -1,5 +1,3 @@
-version: "3.5"
-
 include:
   - tools/mayan-edms/docker-compose.yml
 
@@ -118,6 +116,7 @@ services:
   ####################### Redis #######################
   scheduler-redis:
     image: redis:6.2-alpine
+    container_name: scheduler-redis
     profiles:
       - all
       - psp
@@ -128,7 +127,7 @@ services:
       - psp
     command: redis-server --save 20 1 --loglevel warning
     volumes:
-      - redis:/data
+      - scheduler-redis:/data
 
   ####################### Frontend #######################
   frontend:
@@ -159,6 +158,7 @@ services:
       - all
       - psp
     image: kartoza/geoserver:2.19.2
+    container_name: geoserver
     volumes:
       - ./tools/geoserver/geoserver_data:/opt/geoserver/data_dir/workspaces
     ports:
@@ -179,13 +179,13 @@ services:
     profiles:
       - all
     image: mkodockx/docker-clamav:alpine-idb-amd64
+    container_name: clamav
     environment:
       - CLAMD_CONF_MaxFileSize=500M
       - CLAMD_CONF_StreamMaxLength=500M
     ports:
       - 3310:3310
     restart: on-failure
-    container_name: psp-clamav
     healthcheck:
       test: ["CMD", "./check.sh"]
       interval: 60s
@@ -200,7 +200,7 @@ services:
       - all
       - monitoring
     image: quay.io/prometheus/prometheus:v3.2.0
-    container_name: psp-prometheus
+    container_name: prometheus
     ports:
       - 9000:9090
     environment:
@@ -220,7 +220,7 @@ services:
       - all
       - monitoring
     image: grafana/grafana-oss
-    container_name: psp-grafana
+    container_name: grafana
     restart: on-failure
     ports:
       - 4000:3000
@@ -244,12 +244,12 @@ services:
       - ./tools/otel-collector/otel-config.yaml:/etc/otel-config.yaml
     ports:
       - 4318:4318 # http receiver
-      - 55679:55679 # zPages UI
       - 9464:9464 # prometheus metrics endpoint
       - 13133:13133 # health check
     environment:
       - OTEL_COLLECTOR_HOST=0.0.0.0
       - JAEGER_HOST=jaeger
+      - LOG_LEVEL=info
     healthcheck:
       test: curl --fail -s http://localhost:13133/ || exit 1
       interval: 1m30s
@@ -275,8 +275,8 @@ services:
       - 8889:8889 # prometheus metrics endpoint
       - 8888:8888 # internal container metrics
     environment:
-      - LOG_LEVEL=debug
-      - JAEGER_LISTEN_HOST=0.0.0.0
+      - LOG_LEVEL=info
+      - JAEGER_HOST=0.0.0.0
       - PROMETHEUS_HOST=prometheus
       - PROMETHEUS_PORT=9090
     healthcheck:
@@ -292,6 +292,9 @@ networks:
   psp:
     name: psp
     driver: bridge
+  mayan:
+    name: mayan
+    driver: bridge
 
 ####################### Volumes Definition #######################
 volumes:
@@ -301,5 +304,5 @@ volumes:
     name: psp-api-db-rhel-data
   frontend-node-cache:
     name: psp-frontend-node-cache
-  redis-scheduler:
+  scheduler-redis:
     driver: local

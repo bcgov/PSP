@@ -5,9 +5,9 @@ import styled from 'styled-components';
 import { BCGovLogo } from '@/components/common/BCGovLogo';
 import { VerticalBar } from '@/components/common/VerticalBar';
 import HelpContainer from '@/features/help/containers/HelpContainer';
+import NotificationBellContainer from '@/features/notifications/notificationsPopover/NotificationBellContainer';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { useTenant } from '@/tenants';
-import { Logo } from '@/tenants';
+import { Logo, useTenant } from '@/tenants';
 
 import { HeaderStyled } from './HeaderStyled';
 import { UserProfile } from './UserProfile';
@@ -19,6 +19,7 @@ import { UserProfile } from './UserProfile';
 export const Header = () => {
   const keycloak = useKeycloakWrapper();
   const tenant = useTenant();
+  const isAuthenticated = !!keycloak.obj?.authenticated;
 
   return (
     <HeaderStyled expand className="App-header">
@@ -48,7 +49,8 @@ export const Header = () => {
       <div>
         <VerticalBar />
       </div>
-      {keycloak.obj.authenticated && <UserProfile />}
+      {isAuthenticated && <NotificationBellContainer />}
+      {isAuthenticated && <UserProfile />}
       <div className="other"></div>
     </HeaderStyled>
   );

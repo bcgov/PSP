@@ -1,4 +1,4 @@
-import { Page } from '@playwright/test';
+import { Page } from "@playwright/test";
 
 export class AcquisitionCreatePage {
   readonly page: Page;
@@ -8,6 +8,6 @@ export class AcquisitionCreatePage {
   }
 
   async goto() {
-    await this.page.goto('/mapview/sidebar/acquisition/new');
+    await this.page.goto("/mapview/sidebar/acquisition/new");
   }
 }

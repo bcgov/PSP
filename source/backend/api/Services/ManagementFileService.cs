@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
@@ -32,6 +33,7 @@ namespace Pims.Api.Services
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly IManagementActivityRepository _managementActivityRepository;
         private readonly IFilePropertyLocationUpdateSolver _propertyLocationSolver;
+        private readonly IProjectRepository _projectRepository;
 
         public ManagementFileService(
             ClaimsPrincipal user,
@@ -46,7 +48,8 @@ namespace Pims.Api.Services
             IPropertyOperationService propertyOperationService,
             IManagementActivityRepository managementActivityRepository,
             IFilePropertyLocationUpdateSolver propertyLocationSolver,
-            IUserRepository userRepository)
+            IUserRepository userRepository,
+            IProjectRepository projectRepository)
         {
             _user = user;
             _logger = logger;
@@ -61,6 +64,7 @@ namespace Pims.Api.Services
             _managementActivityRepository = managementActivityRepository;
             _propertyLocationSolver = propertyLocationSolver;
             _userRepository = userRepository;
+            _projectRepository = projectRepository;
         }
 
         public PimsManagementFile Add(PimsManagementFile managementFile, IEnumerable<UserOverrideCode> userOverrides)
@@ -68,6 +72,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Creating management file {managementFile}", managementFile);
             _user.ThrowIfNotAuthorized(Permissions.ManagementAdd);
             ArgumentNullException.ThrowIfNull(managementFile);
+            managementFile.ThrowMissingContractorInTeam(_user, _userRepository, _projectRepository);
 
             // validate the new file region
             var cannotDetermineRegion = _lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
@@ -100,6 +105,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting management file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.ManagementView);
+            _user.ThrowInvalidAccessToManagementFile(_userRepository, _managementFileRepository, _projectRepository, id);
 
             var managementFile = _managementFileRepository.GetById(id);
 
@@ -112,6 +118,7 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Updating management file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.ManagementEdit);
+            _user.ThrowInvalidAccessToManagementFile(_userRepository, _managementFileRepository, _projectRepository, id);
 
             if (id != managementFile.ManagementFileId)
             {
@@ -156,6 +163,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Getting management file properties with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.ManagementView);
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+            _user.ThrowInvalidAccessToManagementFile(_userRepository, _managementFileRepository, _projectRepository, id);
 
             var properties = _managementFilePropertyRepository.GetPropertiesByManagementFileId(id);
             return _propertyService.TransformAllPropertiesToLatLong(properties);
@@ -167,7 +175,10 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ManagementView);
             _user.ThrowIfNotAuthorized(Permissions.ContactView);
 
-            var teamMembers = _managementFileRepository.GetTeamMembers();
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
+
+            var teamMembers = _managementFileRepository.GetTeamMembers(userContext);
 
             var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First());
             var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First());
@@ -183,6 +194,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating management file properties with ManagementFile id: {id}", managementFile.Internal_Id);
             _user.ThrowIfNotAllAuthorized(Permissions.ManagementEdit, Permissions.PropertyView, Permissions.PropertyAdd);
+            _user.ThrowInvalidAccessToManagementFile(_userRepository, _managementFileRepository, _projectRepository, managementFile.Internal_Id);
 
             var currentManagementFile = _managementFileRepository.GetById(managementFile.ManagementFileId);
             var currentManagementStatus = _managementStatusSolver.GetCurrentManagementStatus(currentManagementFile?.ManagementFileStatusTypeCode);
@@ -292,15 +304,16 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ManagementView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
 
-            return _managementFileRepository.GetPageDeep(filter, contractorPersonId);
+            return _managementFileRepository.GetPageDeep(filter, userContext);
         }
 
         public IEnumerable<PimsManagementFileContact> GetContacts(long id)
         {
             _logger.LogInformation("Getting management file contacts");
             _user.ThrowIfNotAuthorized(Permissions.ManagementView);
+            _user.ThrowInvalidAccessToManagementFile(_userRepository, _managementFileRepository, _projectRepository, id);
 
             return _managementFileRepository.GetContacts(id);
         }
@@ -309,6 +322,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting management file contact");
             _user.ThrowIfNotAuthorized(Permissions.ManagementView);
+            _user.ThrowInvalidAccessToManagementFile(_userRepository, _managementFileRepository, _projectRepository, managementFileId);
 
             return _managementFileRepository.GetContact(managementFileId, contactId);
         }
@@ -339,6 +353,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Deleting file contact...");
             _user.ThrowIfNotAuthorized(Permissions.ManagementEdit);
+            _user.ThrowInvalidAccessToManagementFile(_userRepository, _managementFileRepository, _projectRepository, managementFileId);
 
             _managementFileRepository.DeleteContact(managementFileId, contactId);
             _managementActivityRepository.CommitTransaction();
@@ -400,6 +415,8 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("You have one or more properties attached to this Management file that is NOT in the \"Core Inventory\" (i.e. owned by BCTFA and/or HMK). To complete this file you must either, remove these non \"Non-Core Inventory\" properties, OR make sure the property is added to the PIMS inventory first.");
             }
+
+            incomingManagementFile.ThrowContractorRemovedFromTeam(_user, _userRepository, _projectRepository);
 
             ValidateStaff(incomingManagementFile);
         }
@@ -553,6 +570,5 @@ namespace Pims.Api.Services
 
             return Core.Extensions.EnumExtensions.GetValueFromEnumMember<ManagementFileStatusTypes>(currentManagementFile.ManagementFileStatusTypeCode);
         }
-
     }
 }

@@ -599,10 +599,10 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
               class="collapse show"
             >
               <div
-                class="pb-2 row"
+                class="pb-1 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-4"
                 >
                   <label
                     class="c5"
@@ -612,6 +612,7 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
+                  data-testid="teamMember[0]"
                 >
                   <a
                     class="c8"
@@ -640,10 +641,10 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
                 </div>
               </div>
               <div
-                class="pb-2 row"
+                class="pb-1 row"
               >
                 <div
-                  class="pr-0 text-left col-5"
+                  class="pr-0 text-left col-4"
                 >
                   <label
                     class="c5"
@@ -653,6 +654,7 @@ exports[`DispositionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
+                  data-testid="teamMember[1]"
                 >
                   <a
                     class="c8"

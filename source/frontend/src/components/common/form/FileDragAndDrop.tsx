@@ -64,33 +64,32 @@ const FileDragAndDrop: FunctionComponent<React.PropsWithChildren<IFileDragAndDro
   };
 
   return (
-    <div>
-      <DragDropZone
-        onDrop={handleDrop}
-        onDragOver={handleDragOver}
-        onDragEnter={handleDragEnter}
-        onDragLeave={handleDragLeave}
-        isDragging={isDragging}
-      >
-        <StyledContent>
-          Drag files here to attach or{' '}
-          <StyledUploadLabel>
-            Browse
-            <StyledFileInput
-              data-testid="upload-input"
-              id="uploadInput"
-              type="file"
-              name="documentFile"
-              accept={validDocumentExtensions}
-              onChange={handleFileInput}
-              className=""
-              multiple={multiple}
-              key={keyName ?? ''}
-            />
-          </StyledUploadLabel>
-        </StyledContent>
-      </DragDropZone>
-    </div>
+    <DragDropZone
+      onDrop={handleDrop}
+      onDragOver={handleDragOver}
+      onDragEnter={handleDragEnter}
+      onDragLeave={handleDragLeave}
+      isDragging={isDragging}
+      data-testid="document-upload-drop-zone"
+    >
+      <StyledContent>
+        Drag files here to attach or{' '}
+        <StyledUploadLabel>
+          Browse
+          <StyledFileInput
+            data-testid="upload-input"
+            id="uploadInput"
+            type="file"
+            name="documentFile"
+            accept={validDocumentExtensions}
+            onChange={handleFileInput}
+            className=""
+            multiple={multiple}
+            key={keyName ?? ''}
+          />
+        </StyledUploadLabel>
+      </StyledContent>
+    </DragDropZone>
   );
 };
 

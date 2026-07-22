@@ -30,14 +30,14 @@ namespace Pims.Api.Test.Controllers.Research
         #region Variables
         public readonly static IEnumerable<object[]> ResearchFilters = new List<object[]>()
         {
-            new object [] { new SModel.ResearchFilterModel() { RegionCode = 1 } },
+            new object [] { new SModel.ResearchFilterModel() { RegionCodes = new List<short> { 1 } } },
             new object [] { new SModel.ResearchFilterModel() { RFileNumber = "1234" } },
             new object [] { new SModel.ResearchFilterModel() { Name = "rname" } },
         };
 
         public readonly static IEnumerable<object[]> ResearchQueryFilters = new List<object[]>()
         {
-            new object [] { new Uri("http://host/api/research/search?RegionCode=1") },
+            new object [] { new Uri("http://host/api/research/search?RegionCodes=1") },
             new object [] { new Uri("http://host/api/research/search?RFileNumber=100-000-000") },
             new object [] { new Uri("http://host/api/research/search?Name=rname") },
         };

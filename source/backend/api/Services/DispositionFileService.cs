@@ -36,6 +36,7 @@ namespace Pims.Api.Services
         private readonly IDispositionStatusSolver _dispositionStatusSolver;
         private readonly IPropertyOperationService _propertyOperationService;
         private readonly IFilePropertyLocationUpdateSolver _propertyLocationSolver;
+        private readonly IProjectRepository _projectRepository;
 
         public DispositionFileService(
             ClaimsPrincipal user,
@@ -50,7 +51,8 @@ namespace Pims.Api.Services
             IUserRepository userRepository,
             IDispositionStatusSolver dispositionStatusSolver,
             IPropertyOperationService propertyOperationService,
-            IFilePropertyLocationUpdateSolver propertyLocationSolver)
+            IFilePropertyLocationUpdateSolver propertyLocationSolver,
+            IProjectRepository projectRepository)
         {
             _user = user;
             _logger = logger;
@@ -65,13 +67,14 @@ namespace Pims.Api.Services
             _dispositionStatusSolver = dispositionStatusSolver;
             _propertyOperationService = propertyOperationService;
             _propertyLocationSolver = propertyLocationSolver;
+            _projectRepository = projectRepository;
         }
 
         public PimsDispositionFile Add(PimsDispositionFile dispositionFile, IEnumerable<UserOverrideCode> userOverrides)
         {
             _logger.LogInformation("Creating Disposition File {dispositionFile}", dispositionFile);
             _user.ThrowIfNotAuthorized(Permissions.DispositionAdd);
-            dispositionFile.ThrowMissingContractorInTeam(_user, _userRepository);
+            dispositionFile.ThrowMissingContractorInTeam(_user, _userRepository, _projectRepository);
 
             dispositionFile.DispositionStatusTypeCode ??= DispositionStatusTypes.UNKNOWN.ToString();
             dispositionFile.DispositionFileStatusTypeCode ??= DispositionFileStatusTypes.ACTIVE.ToString();
@@ -96,7 +99,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting disposition file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
-            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, id);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, _projectRepository, id);
 
             var dispositionFile = _dispositionFileRepository.GetById(id);
 
@@ -107,7 +110,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting disposition file deep with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
-            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, id);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, _projectRepository, id);
 
             var dispositionFile = _dispositionFileRepository.GetDeepById(id);
 
@@ -120,7 +123,7 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Updating disposition file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.DispositionEdit);
-            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, id);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, _projectRepository, id);
 
             if (id != dispositionFile.DispositionFileId)
             {
@@ -169,9 +172,9 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = (pimsUser != null && pimsUser.IsContractor) ? pimsUser.PersonId : null;
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
 
-            return _dispositionFileRepository.GetPageDeep(filter, contractorPersonId);
+            return _dispositionFileRepository.GetPageDeep(filter, userContext);
         }
 
         public IEnumerable<PimsDispositionFileProperty> GetProperties(long id)
@@ -190,7 +193,10 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
             _user.ThrowIfNotAuthorized(Permissions.ContactView);
 
-            var teamMembers = _dispositionFileRepository.GetTeamMembers();
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
+
+            var teamMembers = _dispositionFileRepository.GetTeamMembers(userContext);
 
             var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First());
             var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First());
@@ -462,7 +468,10 @@ namespace Pims.Api.Services
             _logger.LogInformation("Searching all Disposition Files matching the filter: {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.DispositionView);
 
-            var dispositionFiles = _dispositionFileRepository.GetDispositionFileExportDeep(filter);
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
+
+            var dispositionFiles = _dispositionFileRepository.GetDispositionFileExportDeep(filter, userContext);
 
             return dispositionFiles
                 .Select(file => new DispositionFileExportModel
@@ -510,7 +519,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating disposition file properties with DispositionFile id: {id}", dispositionFile.Internal_Id);
             _user.ThrowIfNotAllAuthorized(Permissions.DispositionEdit, Permissions.PropertyView, Permissions.PropertyAdd);
-            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFile.Internal_Id);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, _projectRepository, dispositionFile.Internal_Id);
 
             var currentDispositionFile = _dispositionFileRepository.GetById(dispositionFile.DispositionFileId);
             var currentDispositionStatus = _dispositionStatusSolver.GetCurrentDispositionStatus(currentDispositionFile?.DispositionFileStatusTypeCode);
@@ -605,14 +614,14 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting disposition file agreements with DispositionFile id: {id}", dispositionFileId);
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
-            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, _projectRepository, dispositionFileId);
             return _dispositionFileRepository.GetAgreementsByDispositionFile(dispositionFileId);
         }
 
         public PimsDispositionAgreement AddDispositionFileAgreement(long dispositionFileId, PimsDispositionAgreement dispositionAgreement)
         {
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
-            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, _projectRepository, dispositionFileId);
 
             ValidateDispositionFileStatusForAgreement(dispositionFileId);
 
@@ -626,7 +635,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting disposition file agreement with Agreement id: {agreementId}", agreementId);
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
-            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, _projectRepository, dispositionFileId);
 
             return _dispositionFileRepository.GetAgreementById(agreementId);
         }
@@ -634,7 +643,7 @@ namespace Pims.Api.Services
         public PimsDispositionAgreement UpdateDispositionFileAgreement(long dispositionFileId, PimsDispositionAgreement dispositionAgreement)
         {
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
-            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, _projectRepository, dispositionFileId);
 
             ValidateDispositionFileStatusForAgreement(dispositionFileId);
 
@@ -647,7 +656,7 @@ namespace Pims.Api.Services
         public bool DeleteDispositionFileAgreement(long dispositionFileId, long agreementId)
         {
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
-            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, dispositionFileId);
+            _user.ThrowInvalidAccessToDispositionFile(_userRepository, _dispositionFileRepository, _projectRepository, dispositionFileId);
 
             ValidateDispositionFileStatusForAgreement(dispositionFileId);
 
@@ -707,7 +716,7 @@ namespace Pims.Api.Services
                 }
             }
 
-            incomingDispositionFile.ThrowContractorRemovedFromTeam(_user, _userRepository);
+            incomingDispositionFile.ThrowContractorRemovedFromTeam(_user, _userRepository, _projectRepository);
 
             // From here on - these checks result in warnings that require user confirmation
             if (!userOverrides.Contains(UserOverrideCode.UpdateRegion))

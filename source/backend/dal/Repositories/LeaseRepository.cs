@@ -25,6 +25,8 @@ namespace Pims.Dal.Repositories
     {
         private readonly ISequenceRepository _sequenceRepository;
         private readonly IMapper _mapper;
+        private readonly INotificationRepository _notificationRepository;
+
         #region Constructors
 
         /// <summary>
@@ -33,11 +35,12 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger, ISequenceRepository sequenceRepository, IMapper mapper)
+        public LeaseRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<LeaseRepository> logger, ISequenceRepository sequenceRepository, IMapper mapper, INotificationRepository notificationRepository)
             : base(dbContext, user, logger)
         {
             _sequenceRepository = sequenceRepository;
             _mapper = mapper;
+            _notificationRepository = notificationRepository;
         }
         #endregion
 
@@ -57,11 +60,10 @@ namespace Pims.Dal.Repositories
         /// Note that the 'leaseFilter' will control the 'page' and 'quantity'.
         /// </summary>
         /// <param name="filter"></param>
-        /// <param name="regionCodes"></param>
+        /// <param name="userContext"></param>
         /// <param name="loadPayments"></param>
-        /// <param name="contractorPersonId"></param>
         /// <returns></returns>
-        public IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, bool loadPayments = false, long? contractorPersonId = null)
+        public IEnumerable<PimsLease> GetAllByFilter(LeaseFilter filter, UserContextModel userContext = null, bool loadPayments = false)
         {
             this.User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
@@ -70,7 +72,7 @@ namespace Pims.Dal.Repositories
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            var query = GenerateLeaseQuery(filter, loadPayments, contractorPersonId);
+            var query = GenerateLeaseQuery(filter, userContext, loadPayments);
 
             // Getting all by the filter will ignore the order by passed and instead use the lease id.
             var leases = query.OrderBy(l => l.LeaseId).ToArray();
@@ -133,7 +135,7 @@ namespace Pims.Dal.Repositories
             return lease;
         }
 
-        public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds, long? contractorPersonId = null)
+        public IEnumerable<PimsLease> GetAllByIds(IEnumerable<long> leaseIds, UserContextModel userContext = null)
         {
             var query = Context.PimsLeases.AsSplitQuery().AsNoTracking()
                 .Include(l => l.PimsPropertyLeases)
@@ -169,11 +171,12 @@ namespace Pims.Dal.Repositories
                 .Include(r => r.PimsLeaseLicenseTeams)
                 .Where(l => leaseIds.Any(leaseId => leaseId == l.LeaseId)) ?? throw new KeyNotFoundException();
 
-            // Enforce contractor access to only their leases
-            if (contractorPersonId is not null)
+            // Contractor access is limited by region and team membership.
+            if (userContext is not null && userContext.IsContractor)
             {
-                query = query.Where(l => l.PimsLeaseLicenseTeams.Any(lt => lt.PersonId == contractorPersonId) ||
-                    (l.Project != null && l.Project.PimsProjectPeople.Any(pp => pp.PersonId == contractorPersonId)));
+                query = query.Where(l => l.RegionCode.HasValue && userContext.Regions.Contains(l.RegionCode.Value));
+                query = query.Where(l => l.PimsLeaseLicenseTeams.Any(lt => lt.PersonId == userContext.PersonId) ||
+                    (l.Project != null && l.Project.PimsProjectPeople.Any(pp => pp.PersonId == userContext.PersonId)));
             }
 
             var leases = query.ToArray();
@@ -782,9 +785,9 @@ namespace Pims.Dal.Repositories
         /// Note that the 'leaseFilter' will control the 'page' and 'quantity'.
         /// </summary>
         /// <param name="filter"></param>
-        /// <param name="contractorPersonId">The contractor person id to filter by. Only applies if calling user is a Contractor.</param>
+        /// <param name="userContext">The calling user context.</param>
         /// <returns></returns>
-        public Paged<PimsLease> GetPage(LeaseFilter filter, long? contractorPersonId = null)
+        public Paged<PimsLease> GetPage(LeaseFilter filter, UserContextModel userContext = null)
         {
             User.ThrowIfNotAuthorized(Permissions.LeaseView);
             filter.ThrowIfNull(nameof(filter));
@@ -795,7 +798,7 @@ namespace Pims.Dal.Repositories
             }
 
             var skip = (filter.Page - 1) * filter.Quantity;
-            var query = GenerateLeaseQuery(filter, contractorPersonId: contractorPersonId);
+            var query = GenerateLeaseQuery(filter, userContext);
 
             var items = query
                 .Skip(skip)
@@ -868,14 +871,33 @@ namespace Pims.Dal.Repositories
         /// <returns></returns>
         public PimsLease UpdateLeaseRenewals(long leaseId, long? rowVersion, ICollection<PimsLeaseRenewal> renewals)
         {
-            var existingLease = this.Context.PimsLeases.Include(l => l.PimsLeaseRenewals).AsNoTracking().FirstOrDefault(l => l.LeaseId == leaseId)
-                 ?? throw new KeyNotFoundException();
+            var existingLease = Context.PimsLeases
+                .AsNoTracking()
+                .Include(l => l.PimsLeaseRenewals)
+                .FirstOrDefault(l => l.LeaseId == leaseId) ?? throw new KeyNotFoundException();
+
             if (existingLease.ConcurrencyControlNumber != rowVersion)
             {
                 throw new DbUpdateConcurrencyException("Unable to save. Please refresh your page and try again");
             }
 
-            this.Context.UpdateChild<PimsLease, long, PimsLeaseRenewal, long>(l => l.PimsLeaseRenewals, leaseId, renewals.ToArray());
+            var removedRenewals = existingLease.PimsLeaseRenewals.Where(o => !renewals.Any(u => u.LeaseRenewalId == o.LeaseRenewalId)).ToList();
+            if (removedRenewals.Count > 0)
+            {
+                foreach (var delRenewal in removedRenewals)
+                {
+                    var notificationsRemoved = Context.PimsNotifications.AsNoTracking()
+                                                .Where(n => n.LeaseId == leaseId && n.LeaseRenewalId == delRenewal.LeaseRenewalId)
+                                                .ToList();
+
+                    foreach (var notification in notificationsRemoved)
+                    {
+                        _notificationRepository.Delete(notification.NotificationId);
+                    }
+                }
+            }
+
+            Context.UpdateChild<PimsLease, long, PimsLeaseRenewal, long>(l => l.PimsLeaseRenewals, leaseId, renewals.ToArray());
 
             return GetNoTracking(existingLease.LeaseId);
         }
@@ -883,12 +905,11 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Generate a query for the specified 'filter'.
         /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="regionCodes"></param>
-        /// <param name="loadPayments"></param>
-        /// <param name="contractorPersonId">The contractor person id to filter by. Only applies if calling user is a Contractor.</param>
+        /// <param name="filter">The filter to apply to the lease search.</param>
+        /// <param name="userContext">The calling user context.</param>
+        /// <param name="loadPayments">Indicates whether to load payment information. False by default.</param>
         /// <returns></returns>
-        public IQueryable<PimsLease> GenerateLeaseQuery(LeaseFilter filter, bool loadPayments = false, long? contractorPersonId = null)
+        public IQueryable<PimsLease> GenerateLeaseQuery(LeaseFilter filter, UserContextModel userContext = null, bool loadPayments = false)
         {
             filter.ThrowIfNull(nameof(filter));
 
@@ -922,7 +943,7 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(l => l.PimsLeasePayments);
             }
 
-            var predicate = GenerateCommonLeaseQuery(filter, contractorPersonId);
+            var predicate = GenerateCommonLeaseQuery(filter, userContext);
             query = query.Where(predicate);
 
             if (filter.Sort?.Length > 0)
@@ -1033,15 +1054,17 @@ namespace Pims.Dal.Repositories
                     .ToList();
         }
 
-        public List<PimsLeaseLicenseTeam> GetTeamMembers(HashSet<short> regions, long? contractorPersonId = null)
+        public List<PimsLeaseLicenseTeam> GetTeamMembers(UserContextModel userContext = null)
         {
             var predicate = PredicateBuilder.New<PimsLeaseLicenseTeam>(acq => true);
 
-            predicate.And(x => x.Lease.RegionCode.HasValue && regions.Contains(x.Lease.RegionCode.Value));
-
-            if (contractorPersonId != null)
+            if (userContext is not null && userContext.IsContractor)
             {
-                predicate.And(x => x.Lease.PimsLeaseLicenseTeams.Any(p => p.PersonId == contractorPersonId));
+                var teamOrProjectPredicate = PredicateBuilder.New<PimsLeaseLicenseTeam>(x => x.Lease.PimsLeaseLicenseTeams.Any(p => p.PersonId == userContext.PersonId))
+                    .Or(x => x.Lease.Project != null && x.Lease.Project.PimsProjectPeople.Any(pp => pp.PersonId == userContext.PersonId));
+
+                predicate.And(x => x.Lease.RegionCode.HasValue && userContext.Regions.Contains(x.Lease.RegionCode.Value));
+                predicate.And(teamOrProjectPredicate);
             }
 
             return Context.PimsLeaseLicenseTeams.AsNoTracking()
@@ -1091,20 +1114,21 @@ namespace Pims.Dal.Repositories
         /// <summary>
         /// Generate an SQL statement for the specified 'region' and 'filter'.
         /// </summary>
-        /// <param name="filter"></param>
-        /// <param name="contractorPersonId">The contractor person id to filter by. Only applies if calling user is a Contractor.</param>
+        /// <param name="filter">The filter to apply to the lease search.</param>
+        /// <param name="userContext">The calling user context.</param>
         /// <returns></returns>
-        private static ExpressionStarter<PimsLease> GenerateCommonLeaseQuery(LeaseFilter filter, long? contractorPersonId = null)
+        private static ExpressionStarter<PimsLease> GenerateCommonLeaseQuery(LeaseFilter filter, UserContextModel userContext = null)
         {
             filter.ThrowIfNull(nameof(filter));
 
             var predicateBuilder = PredicateBuilder.New<PimsLease>(l => true);
 
-            // Enforce contractor access to only their leases
-            if (contractorPersonId is not null)
+            // Contractor access is limited by region and team membership.
+            if (userContext is not null && userContext.IsContractor)
             {
-                predicateBuilder = predicateBuilder.And(l => l.PimsLeaseLicenseTeams.Any(teamMember => teamMember.PersonId == contractorPersonId) ||
-                    (l.Project != null && l.Project.PimsProjectPeople.Any(projectTeam => projectTeam.PersonId == contractorPersonId)));
+                predicateBuilder = predicateBuilder
+                    .And(l => l.RegionCode.HasValue && userContext.Regions.Contains(l.RegionCode.Value))
+                    .And(l => l.PimsLeaseLicenseTeams.Any(teamMember => teamMember.PersonId == userContext.PersonId) || (l.Project != null && l.Project.PimsProjectPeople.Any(projectTeam => projectTeam.PersonId == userContext.PersonId)));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.TenantName))
@@ -1184,7 +1208,7 @@ namespace Pims.Dal.Repositories
                 predicateBuilder = predicateBuilder.And(l => filter.LeaseStatusTypes.Any(p => p == l.LeaseStatusTypeCode));
             }
 
-            if(!string.IsNullOrWhiteSpace(filter.LeaseTeamMemberProfileTypeCode) && filter.LeaseTeamPersonId.HasValue)
+            if (!string.IsNullOrWhiteSpace(filter.LeaseTeamMemberProfileTypeCode) && filter.LeaseTeamPersonId.HasValue)
             {
                 predicateBuilder = predicateBuilder.And(l => l.PimsLeaseLicenseTeams.Any(lt => lt.PersonId == filter.LeaseTeamPersonId.Value
                                                                         && lt.LlTeamProfileTypeCode == filter.LeaseTeamMemberProfileTypeCode));
@@ -1194,7 +1218,7 @@ namespace Pims.Dal.Repositories
                 predicateBuilder = predicateBuilder.And(l => l.PimsLeaseLicenseTeams.Any(lt => lt.PersonId == filter.LeaseTeamPersonId.Value));
             }
 
-            if(!string.IsNullOrWhiteSpace(filter.LeaseTeamMemberProfileTypeCode) && filter.LeaseTeamOrganizationId.HasValue)
+            if (!string.IsNullOrWhiteSpace(filter.LeaseTeamMemberProfileTypeCode) && filter.LeaseTeamOrganizationId.HasValue)
             {
                 predicateBuilder = predicateBuilder.And(l => l.PimsLeaseLicenseTeams.Any(lt => lt.OrganizationId == filter.LeaseTeamOrganizationId.Value
                                                                         && lt.LlTeamProfileTypeCode == filter.LeaseTeamMemberProfileTypeCode));

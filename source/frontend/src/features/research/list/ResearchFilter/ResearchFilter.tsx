@@ -25,7 +25,7 @@ export interface IResearchFilterProps {
 export const defaultResearchFilter: IResearchFilter = {
   pid: '',
   pin: '',
-  regionCode: '',
+  regionCodes: [],
   researchFileStatusTypeCode: '',
   name: '',
   roadOrAlias: '',
@@ -51,6 +51,7 @@ export const ResearchFilter: React.FunctionComponent<
 > = ({ filter, createdByOptions, setFilter }) => {
   const onSearchSubmit = (values: IResearchFilter, { setSubmitting }: any) => {
     const selectedUser = values.selectedUser?.[0]?.id as string | undefined;
+
     const nextValues = {
       ...values,
       appCreateUserid: values.createOrUpdateBy === 'appCreateUserid' ? selectedUser ?? '' : '',
@@ -60,24 +61,29 @@ export const ResearchFilter: React.FunctionComponent<
     setFilter(nextValues);
     setSubmitting(false);
   };
-  const resetFilter = () => {
-    setFilter(defaultResearchFilter);
-  };
 
   const lookupCodes = useLookupCodeHelpers();
+  const regionOptions = lookupCodes.getOptionsByType(REGION_TYPES).map(c => ({
+    id: c.code,
+    text: c.label,
+  }));
+  const initialFilterValues: IResearchFilter = {
+    ...defaultResearchFilter,
+    ...filter,
+  };
 
-  const regionOptions = lookupCodes.getByType(REGION_TYPES).map(c => mapLookupCode(c));
+  const resetFilter = () => {
+    setFilter({
+      ...defaultResearchFilter,
+    });
+  };
 
   const researchStatusOptions = lookupCodes
     .getByType(RESEARCH_FILE_STATUS_TYPES)
     .map(c => mapLookupCode(c));
 
   return (
-    <Formik
-      enableReinitialize
-      initialValues={filter ?? defaultResearchFilter}
-      onSubmit={onSearchSubmit}
-    >
+    <Formik enableReinitialize initialValues={initialFilterValues} onSubmit={onSearchSubmit}>
       {formikProps => (
         <FilterBoxForm className="p-3">
           <Row>
@@ -89,11 +95,7 @@ export const ResearchFilter: React.FunctionComponent<
                 <Col lg="12">
                   <Row>
                     <Col lg="4">
-                      <Select
-                        options={regionOptions}
-                        field="regionCode"
-                        placeholder="All Regions"
-                      />
+                      <Input field="roadOrAlias" placeholder="Road name or alias" />
                     </Col>
                     <StyledSelectInputCol lg="8">
                       <ResearchFileSelect />
@@ -112,7 +114,12 @@ export const ResearchFilter: React.FunctionComponent<
                       />
                     </Col>
                     <Col lg="8">
-                      <Input field="roadOrAlias" placeholder="Road name or alias" />
+                      <Multiselect
+                        options={regionOptions}
+                        field="regionCodes"
+                        displayValue="text"
+                        placeholder="Select Region(s)"
+                      />
                     </Col>
                   </Row>
                 </Col>

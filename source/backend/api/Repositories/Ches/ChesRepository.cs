@@ -2,7 +2,6 @@ using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Net.Mime;
-using System.Security.Authentication;
 using System.Text.Json;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
@@ -12,6 +11,7 @@ using Pims.Api.Models.Ches;
 using Pims.Api.Models.CodeTypes;
 using Pims.Api.Models.Config;
 using Pims.Api.Models.Requests.Http;
+using Pims.Core.Api.Exceptions;
 using Polly.Registry;
 
 namespace Pims.Api.Repositories.Ches
@@ -63,6 +63,8 @@ namespace Pims.Api.Repositories.Ches
                 Status = ExternalResponseStatus.Error,
             };
 
+            request.From ??= _config.FromEmail;
+
             try
             {
                 var token = await _authRepository.GetTokenAsync();
@@ -96,33 +98,49 @@ namespace Pims.Api.Repositories.Ches
                     _logger.LogError("CHES email send failed: {Status} {Reason} {Body}", response.StatusCode, response.ReasonPhrase, errorBody);
                     result.Message = $"CHES email send failed: {response.StatusCode} {response.ReasonPhrase}. Response body: {errorBody}";
                 }
+
+                return result;
             }
             catch (HttpRequestException ex)
             {
                 result.Status = ExternalResponseStatus.Error;
                 result.Message = $"HTTP error sending CHES email: {ex.Message}";
                 _logger.LogError(ex, "HTTP error sending CHES email.");
+
+                return result;
             }
             catch (TaskCanceledException ex)
             {
                 result.Status = ExternalResponseStatus.Error;
                 result.Message = $"Timeout sending CHES email: {ex.Message}";
                 _logger.LogError(ex, "Timeout sending CHES email.");
+
+                return result;
             }
             catch (JsonException ex)
             {
                 result.Status = ExternalResponseStatus.Error;
                 result.Message = $"Serialization error: {ex.Message}";
                 _logger.LogError(ex, "Serialization error sending CHES email.");
+
+                return result;
             }
             catch (AuthenticationException ex)
             {
-                result.Status = ExternalResponseStatus.Error;
+                result.Status = ExternalResponseStatus.NotExecuted;
                 result.Message = $"Authentication error: {ex.Message}";
                 _logger.LogError(ex, "Authentication error sending CHES email.");
+
+                return result;
             }
-            _logger.LogDebug($"Finished sending email");
-            return result;
+            catch (Exception ex)
+            {
+                result.Status = ExternalResponseStatus.Error;
+                result.Message = $"Unexpected error sending CHES email: {ex.Message}";
+                _logger.LogError(ex, "Unexpected error sending CHES email.");
+
+                return result;
+            }
         }
 
         public async Task<HttpResponseMessage> TryGetHealthAsync()

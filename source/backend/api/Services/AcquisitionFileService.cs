@@ -94,9 +94,9 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
 
-            return _acqFileRepository.GetPageDeep(filter, contractorPersonId);
+            return _acqFileRepository.GetPageDeep(filter, userContext);
         }
 
         public List<AcquisitionFileExportModel> GetAcquisitionFileExport(AcquisitionFilter filter)
@@ -105,9 +105,9 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
 
-            var acqFiles = _acqFileRepository.GetAcquisitionFileExportDeep(filter, contractorPersonId);
+            var acqFiles = _acqFileRepository.GetAcquisitionFileExportDeep(filter, userContext);
 
             return acqFiles.SelectMany(file => file.PimsPropertyAcquisitionFiles.Where(fp => fp.AcquisitionFileId.Equals(file.AcquisitionFileId)).DefaultIfEmpty(), (file, fp) => (file, fp))
                 .Select(fileProperty => new AcquisitionFileExportModel
@@ -138,7 +138,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting acquisition file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, id);
 
             var acqFile = _acqFileRepository.GetById(id);
 
@@ -158,7 +158,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Getting acquisition file with id {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
             _user.ThrowIfNotAuthorized(Permissions.PropertyView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, id);
 
             var properties = _acquisitionFilePropertyRepository.GetPropertiesByAcquisitionFileId(id);
             return _propertyService.TransformAllPropertiesToLatLong(properties);
@@ -168,7 +168,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting acquisition file owners with AcquisitionFile id: {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, id);
 
             return _acqFileRepository.GetOwnersByAcquisitionFileId(id);
         }
@@ -179,10 +179,9 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            var userRegions = pimsUser.PimsRegionUsers.Select(r => r.RegionCode).ToHashSet();
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
 
-            var teamMembers = _acqFileRepository.GetTeamMembers(userRegions, contractorPersonId);
+            var teamMembers = _acqFileRepository.GetTeamMembers(userContext);
 
             var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
             var organizations = teamMembers.Where(x => x.Organization != null).GroupBy(x => x.OrganizationId).Select(x => x.First()).ToList();
@@ -198,7 +197,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting acquisition file checklist with AcquisitionFile id: {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, id);
 
             var checklistItems = _checklistRepository.GetAllChecklistItemsByAcquisitionFileId(id);
             var acquisitionFile = _acqFileRepository.GetById(id);
@@ -254,8 +253,8 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Updating acquisition file with id {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFile.Internal_Id);
 
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
             AcquisitionStatusTypes? currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFile.Internal_Id);
@@ -309,7 +308,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating acquisition file properties with AcquisitionFile id: {id}", acquisitionFile.Internal_Id);
             _user.ThrowIfNotAllAuthorized(Permissions.AcquisitionFileEdit, Permissions.PropertyView, Permissions.PropertyAdd);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFile.Internal_Id);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFile.Internal_Id);
 
             ValidateVersion(acquisitionFile.Internal_Id, acquisitionFile.ConcurrencyControlNumber);
 
@@ -422,7 +421,7 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Updating acquisition file checklist with AcquisitionFile id: {id}", acquisitionFileId);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFileId);
 
             var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
             if (!_statusSolver.CanEditChecklists(currentAcquisitionStatus))
@@ -459,7 +458,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting acquisition file agreements with AcquisitionFile id: {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, id);
 
             return _agreementRepository.GetAgreementsByAcquisitionFile(id);
         }
@@ -467,7 +466,7 @@ namespace Pims.Api.Services
         public PimsAgreement AddAgreement(long acquisitionFileId, PimsAgreement agreement)
         {
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFileId);
 
             ValidateAcquisitionFileStatusForAgreement(acquisitionFileId);
 
@@ -481,7 +480,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting acquisition file agreement with Agreement id: {agreementId}", agreementId);
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFileId);
 
             return _agreementRepository.GetAgreementById(agreementId);
         }
@@ -503,7 +502,7 @@ namespace Pims.Api.Services
         public PimsAgreement UpdateAgreement(long acquisitionFileId, PimsAgreement agreement)
         {
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFileId);
 
             ValidateAcquisitionFileStatusForAgreement(acquisitionFileId);
 
@@ -516,7 +515,7 @@ namespace Pims.Api.Services
         public bool DeleteAgreement(long acquisitionFileId, long agreementId)
         {
             _user.ThrowIfNotAuthorized(Permissions.AgreementView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFileId);
 
             ValidateAcquisitionFileStatusForAgreement(acquisitionFileId);
 
@@ -530,7 +529,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting acquisition file InterestHolders with AcquisitionFile id: {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, id);
 
             return _interestHolderRepository.GetInterestHoldersByAcquisitionFile(id);
         }
@@ -539,7 +538,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Updating acquisition file InterestHolders with AcquisitionFile id: {acquisitionFileId}", acquisitionFileId);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFileId);
 
             var currentAcquisitionStatus = GetCurrentAcquisitionStatus(acquisitionFileId);
             if (!_statusSolver.CanEditStakeholders(currentAcquisitionStatus))
@@ -621,10 +620,9 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Adding Expropiation Payment for acquisition file id: {acquisitionFileId}", acquisitionFileId);
 
-            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
-
             expPayment.ThrowIfNull(nameof(expPayment));
+            _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileEdit);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFileId);
 
             var acquisitionFileParent = _acqFileRepository.GetById(acquisitionFileId);
             if (acquisitionFileId != expPayment.AcquisitionFileId || acquisitionFileParent is null)
@@ -649,7 +647,7 @@ namespace Pims.Api.Services
 
             _logger.LogInformation("Getting Expropriation Payments for acquisition file id: {acquisitionFileId}", acquisitionFileId);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, acquisitionFileId);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, acquisitionFileId);
 
             return _expropriationPaymentRepository.GetAllByAcquisitionFileId(acquisitionFileId);
         }
@@ -658,7 +656,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Fetch acquisition sub-files for file id: {id}", id);
             _user.ThrowIfNotAuthorized(Permissions.AcquisitionFileView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, id);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, id);
 
             var currentAcquisitionFile = GetById(id);
             if (currentAcquisitionFile.PrntAcquisitionFileId is not null)
@@ -667,9 +665,7 @@ namespace Pims.Api.Services
             }
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
-
-            return _acqFileRepository.GetAcquisitionSubFiles(id, contractorPersonId);
+            return _acqFileRepository.GetAcquisitionSubFiles(id, UserContextModel.FromPimsUser(pimsUser));
         }
 
         private void CheckFileNumberDuplicate(PimsAcquisitionFile acquisitionFile)

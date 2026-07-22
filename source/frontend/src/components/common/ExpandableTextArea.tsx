@@ -7,6 +7,7 @@ import { LinkButton } from './buttons';
 export interface IExpandableTextCardProps {
   text: string;
   maxHeight?: number;
+  dataTestid?: string;
 }
 
 export const ExpandableTextCard: React.FunctionComponent<
@@ -26,7 +27,7 @@ export const ExpandableTextCard: React.FunctionComponent<
   }, [max]);
 
   return (
-    <StyledCard body style={{ padding: 0 }}>
+    <StyledCard body style={{ padding: 0 }} data-testid={props.dataTestid}>
       <Card.Body style={{ padding: 0 }}>
         <Card.Text ref={ref} style={{ padding: 0, wordBreak: 'break-all' }}>
           <ContentCard style={{ maxHeight: expanded ? 'fit-content' : max }}>

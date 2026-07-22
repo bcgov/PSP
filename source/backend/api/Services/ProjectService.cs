@@ -4,6 +4,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Extensions;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Services;
 using Pims.Core.Exceptions;
@@ -64,7 +65,10 @@ namespace Pims.Api.Services
             _logger.LogInformation("Searching for projects that match {filter}", filter);
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
 
-            return _projectRepository.SearchProjects(filter, maxResult);
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
+
+            return _projectRepository.SearchProjects(filter, maxResult, userContext);
         }
 
         public IList<PimsProject> GetAll()
@@ -72,7 +76,10 @@ namespace Pims.Api.Services
             _logger.LogInformation("Retrieving all PIMS projects");
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
 
-            return _projectRepository.SearchProjects(string.Empty, int.MaxValue);
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
+
+            return _projectRepository.SearchProjects(string.Empty, int.MaxValue, userContext);
         }
 
         public Task<Paged<PimsProject>> GetPage(ProjectFilter filter)
@@ -80,10 +87,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
 
             _logger.LogInformation("Searching for projects ...");
-            _logger.LogDebug("Project search with filter", filter);
-
-            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            _logger.LogDebug("Project search with filter: {filter}", filter);
 
             filter.ThrowIfNull(nameof(filter));
             if (!filter.IsValid())
@@ -91,22 +95,27 @@ namespace Pims.Api.Services
                 throw new ArgumentException("Argument must have a valid filter", nameof(filter));
             }
 
-            return GetPageAsync(filter, contractorPersonId);
+            var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
+
+            return GetPageAsync(filter, userContext);
         }
 
         public PimsProject GetById(long projectId)
         {
+            _logger.LogInformation("Getting Project by Id: {Id}", projectId);
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
-            _logger.LogInformation("Getting Project by Id ...");
+            _user.ThrowInvalidAccessToProject(_userRepository, _projectRepository, projectId);
 
             return _projectRepository.TryGet(projectId);
         }
 
         public IList<PimsProduct> GetProducts(long projectId)
         {
+            _logger.LogInformation("Geting products for project Id: {Id}", projectId);
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
+            _user.ThrowInvalidAccessToProject(_userRepository, _projectRepository, projectId);
 
-            _logger.LogInformation("Geting products for project ...");
             return _productRepository.GetByProject(projectId);
         }
 
@@ -120,8 +129,10 @@ namespace Pims.Api.Services
 
         public PimsProject Add(PimsProject project, IEnumerable<UserOverrideCode> userOverrides)
         {
+            _logger.LogInformation("Adding new project {Project}", project);
             _user.ThrowIfNotAuthorized(Permissions.ProjectAdd);
-            _logger.LogInformation("Adding new project...");
+            project.ThrowMissingContractorInTeam(_user, _userRepository);
+
             if (project == null)
             {
                 throw new ArgumentNullException(nameof(project), "Project cannot be null.");
@@ -149,9 +160,10 @@ namespace Pims.Api.Services
 
         public PimsProject Update(PimsProject project, IEnumerable<UserOverrideCode> userOverrides)
         {
-            _user.ThrowIfNotAuthorized(Permissions.ProjectEdit);
             project.ThrowIfNull(nameof(project));
-            _logger.LogInformation($"Updating project with id ${project.Internal_Id}");
+            _logger.LogInformation("Updating project with Id {Id}", project.Internal_Id);
+            _user.ThrowIfNotAuthorized(Permissions.ProjectEdit);
+            project.ThrowContractorRemovedFromTeam(_user, _userRepository);
 
             ValidateTeamMembers(project);
 
@@ -172,17 +184,16 @@ namespace Pims.Api.Services
 
         public IEnumerable<PimsProjectPerson> GetTeamMembers()
         {
+            _logger.LogInformation("Getting project team members");
             _user.ThrowIfNotAuthorized(Permissions.ProjectView);
 
             var pimsUser = _userRepository.GetUserInfoByKeycloakUserId(_user.GetUserKey());
-            long? contractorPersonId = pimsUser.IsContractor ? pimsUser.PersonId : null;
+            var userContext = UserContextModel.FromPimsUser(pimsUser);
 
-            var teamMembers = _projectRepository.GetTeamMembers(contractorPersonId);
+            var teamMembers = _projectRepository.GetTeamMembers(userContext);
             var persons = teamMembers.Where(x => x.Person != null).GroupBy(x => x.PersonId).Select(x => x.First()).ToList();
 
-            List<PimsProjectPerson> teamFilterOptions = new();
-            teamFilterOptions.AddRange(persons);
-
+            List<PimsProjectPerson> teamFilterOptions = new(persons);
             return teamFilterOptions;
         }
 
@@ -265,9 +276,9 @@ namespace Pims.Api.Services
             return externalProducts;
         }
 
-        private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, long? contractorPersonId = null)
+        private async Task<Paged<PimsProject>> GetPageAsync(ProjectFilter filter, UserContextModel userContext)
         {
-            return await _projectRepository.GetPageAsync(filter, contractorPersonId);
+            return await _projectRepository.GetPageAsync(filter, userContext);
         }
 
         private void AddNoteIfStatusChanged(PimsProject updatedProject)

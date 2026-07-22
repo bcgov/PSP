@@ -7,6 +7,7 @@ import styled from 'styled-components';
 
 import EditButton from '@/components/common/buttons/EditButton';
 import { readOnlyMultiSelectStyle } from '@/components/common/form';
+import { PrimaryContactSelectorDetails } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelectorView';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledEditWrapper, StyledSummarySection } from '@/components/common/Section/SectionStyles';
@@ -212,36 +213,18 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
       <Section header="Acquisition Team">
         {detail.acquisitionTeam.map((teamMember, index) => (
           <React.Fragment key={`acq-team-${index}`}>
-            <SectionField label={teamMember?.teamProfileTypeCodeDescription || ''}>
-              <StyledLink
-                target="_blank"
-                rel="noopener noreferrer"
-                to={
-                  teamMember?.personId
-                    ? `/contact/P${teamMember?.personId}`
-                    : `/contact/O${teamMember?.organizationId}`
-                }
-              >
-                <span>{teamMember?.teamName}</span>
-                <FaExternalLinkAlt className="ml-2" size="1rem" />
-              </StyledLink>
-            </SectionField>
-            {teamMember?.organizationId && (
-              <SectionField label="Primary contact">
-                {teamMember?.primaryContactId ? (
-                  <StyledLink
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    to={`/contact/P${teamMember?.primaryContactId}`}
-                  >
-                    <span>{teamMember?.primaryContactName}</span>
-                    <FaExternalLinkAlt className="m1-2" size="1rem" />
-                  </StyledLink>
-                ) : (
-                  'No contacts available'
-                )}
-              </SectionField>
-            )}
+            <PrimaryContactSelectorDetails
+              label={teamMember?.teamProfileTypeCodeDescription || ''}
+              teamMemberName={teamMember?.teamName}
+              teamMemberUrl={
+                teamMember?.personId
+                  ? `/contact/P${teamMember?.personId}`
+                  : `/contact/O${teamMember?.organizationId}`
+              }
+              primaryContactName={teamMember?.primaryContactName}
+              primaryContactUrl={`/contact/P${teamMember?.primaryContactId}`}
+              showPrimaryContact={!!teamMember?.organizationId}
+            ></PrimaryContactSelectorDetails>
           </React.Fragment>
         ))}
       </Section>
@@ -264,41 +247,22 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         {!!ownerSolicitors?.length &&
           ownerSolicitors.map(ownerSolicitor => (
             <React.Fragment key={`owner-solicitor-${ownerSolicitor.interestHolderId}`}>
-              <SectionField label={detail.isSubFile ? 'Sub-interest solicitor' : 'Owner solicitor'}>
-                <StyledLink
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  to={
-                    ownerSolicitor?.personId
-                      ? `/contact/P${ownerSolicitor?.personId}`
-                      : `/contact/O${ownerSolicitor?.organizationId}`
-                  }
-                >
-                  <span>
-                    {ownerSolicitor?.personId
-                      ? formatApiPersonNames(ownerSolicitor?.person)
-                      : ownerSolicitor?.organization?.name ?? ''}
-                  </span>
-                  <FaExternalLinkAlt className="ml-2" size="1rem" />
-                </StyledLink>
-              </SectionField>
-
-              {ownerSolicitor?.organization && (
-                <SectionField label="Primary contact">
-                  {ownerSolicitor?.primaryContactId ? (
-                    <StyledLink
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      to={`/contact/P${ownerSolicitor?.primaryContactId}`}
-                    >
-                      <span>{formatApiPersonNames(ownerSolicitor.primaryContact)}</span>
-                      <FaExternalLinkAlt className="m1-2" size="1rem" />
-                    </StyledLink>
-                  ) : (
-                    'No contacts available'
-                  )}
-                </SectionField>
-              )}
+              <PrimaryContactSelectorDetails
+                label={detail.isSubFile ? 'Sub-interest solicitor' : 'Owner solicitor'}
+                teamMemberName={
+                  ownerSolicitor?.personId
+                    ? formatApiPersonNames(ownerSolicitor?.person)
+                    : ownerSolicitor?.organization?.name ?? ''
+                }
+                teamMemberUrl={
+                  ownerSolicitor?.personId
+                    ? `/contact/P${ownerSolicitor?.personId}`
+                    : `/contact/O${ownerSolicitor?.organizationId}`
+                }
+                primaryContactName={formatApiPersonNames(ownerSolicitor.primaryContact)}
+                primaryContactUrl={`/contact/P${ownerSolicitor?.primaryContactId}`}
+                showPrimaryContact={!!ownerSolicitor?.organization}
+              ></PrimaryContactSelectorDetails>
             </React.Fragment>
           ))}
         {!!ownerRepresentatives?.length &&

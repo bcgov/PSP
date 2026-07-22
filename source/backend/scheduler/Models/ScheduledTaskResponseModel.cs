@@ -1,13 +1,10 @@
 using System.Collections.Generic;
+using Pims.Scheduler.Models.Base;
 
 namespace Pims.Scheduler.Models
 {
-    public class ScheduledTaskResponseModel
+    public class ScheduledTaskResponseModel : BaseTaskResponseModel
     {
-        public TaskResponseStatusTypes Status { get; set; }
-
-        public string Message { get; set; }
-
         public IEnumerable<DocumentQueueResponseModel> DocumentQueueResponses { get; set; }
     }
 }

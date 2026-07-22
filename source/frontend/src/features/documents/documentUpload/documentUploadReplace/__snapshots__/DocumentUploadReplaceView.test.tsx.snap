@@ -252,28 +252,27 @@ exports[`Document upload replacement view > renders as expected 1`] = `
       <div
         class="col"
       >
-        <div>
+        <div
+          class="c0"
+          data-testid="document-upload-drop-zone"
+        >
           <div
-            class="c0"
+            class="c1"
           >
-            <div
-              class="c1"
+            Drag files here to attach or 
+            <label
+              class="c2"
             >
-              Drag files here to attach or 
-              <label
-                class="c2"
-              >
-                Browse
-                <input
-                  accept=".txt,.pdf,.docx,.doc,.xlsx,.xls,.html,.odt,.png,.jpg,.bmp,.tif,.tiff,.jpeg,.gif,.shp,.gml,.kml,.kmz,.msg"
-                  class="c3"
-                  data-testid="upload-input"
-                  id="uploadInput"
-                  name="documentFile"
-                  type="file"
-                />
-              </label>
-            </div>
+              Browse
+              <input
+                accept=".txt,.pdf,.docx,.doc,.xlsx,.xls,.html,.odt,.png,.jpg,.bmp,.tif,.tiff,.jpeg,.gif,.shp,.gml,.kml,.kmz,.msg"
+                class="c3"
+                data-testid="upload-input"
+                id="uploadInput"
+                name="documentFile"
+                type="file"
+              />
+            </label>
           </div>
         </div>
       </div>

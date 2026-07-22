@@ -23,8 +23,8 @@ namespace Pims.Dal.Test.Repositories
         public static IEnumerable<object[]> ResearchFilterData =>
             new List<object[]>
             {
-                new object[] { new ResearchFilter() { RegionCode = 1 }, 1 },
-                new object[] { new ResearchFilter() { RegionCode = 2 }, 0 },
+                new object[] { new ResearchFilter() { RegionCodes = new List<short> { 1 } }, 1 },
+                new object[] { new ResearchFilter() { RegionCodes = new List<short> { 2 } }, 0 },
                 new object[] { new ResearchFilter() { ResearchFileStatusTypeCode = "Active" }, 1 },
                 new object[] { new ResearchFilter() { ResearchFileStatusTypeCode = "Fake" }, 0 },
                 new object[] { new ResearchFilter() { Name = "research file name" }, 1 },
