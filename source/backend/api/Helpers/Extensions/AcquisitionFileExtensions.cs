@@ -15,18 +15,12 @@ namespace Pims.Api.Helpers.Extensions
         public static void ThrowMissingContractorInTeam(this PimsAcquisitionFile acquisitionFile, ClaimsPrincipal principal, IUserRepository userRepository, IProjectRepository projectRepository)
         {
             ArgumentNullException.ThrowIfNull(acquisitionFile);
-
             ArgumentNullException.ThrowIfNull(principal);
 
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
+            PimsProject project = acquisitionFile.ProjectId.HasValue ? projectRepository.TryGet(acquisitionFile.ProjectId.Value) : null;
 
-            PimsProject project = null;
-            if (acquisitionFile.ProjectId.HasValue)
-            {
-                project = projectRepository.TryGet(acquisitionFile.ProjectId.Value);
-            }
-
-            if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.PersonId == pimsUser.PersonId) && (project == null || !project.PimsProjectPeople.Any(x => x.PersonId == pimsUser.PersonId)))
+            if (!acquisitionFile.HasAccessToFile(pimsUser, project))
             {
                 throw new ContractorNotInTeamException("As a Contractor your user contact information should be assigned to the Acquisition File's team");
             }
@@ -37,14 +31,10 @@ namespace Pims.Api.Helpers.Extensions
             ArgumentNullException.ThrowIfNull(acquisitionFile);
             ArgumentNullException.ThrowIfNull(principal);
 
-            PimsProject project = null;
-            if (acquisitionFile.ProjectId.HasValue)
-            {
-                project = projectRepository.TryGet(acquisitionFile.ProjectId.Value);
-            }
-
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
-            if (pimsUser?.IsContractor == true && !acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.PersonId == pimsUser.PersonId) && (project == null || !project.PimsProjectPeople.Any(x => x.PersonId == pimsUser.PersonId)))
+            PimsProject project = acquisitionFile.ProjectId.HasValue ? projectRepository.TryGet(acquisitionFile.ProjectId.Value) : null;
+
+            if (!acquisitionFile.HasAccessToFile(pimsUser, project))
             {
                 throw new UserOverrideException(UserOverrideCode.ContractorSelfRemoved, "Contractors cannot remove themselves from a file. Please contact the admin at pims@gov.bc.ca");
             }
@@ -61,6 +51,25 @@ namespace Pims.Api.Helpers.Extensions
             {
                 throw new BadRequestException("Contractors cannot create Acquisition files with legacy numbers. Please contact the admin at pims@gov.bc.ca");
             }
+        }
+
+        public static bool HasAccessToFile(this PimsAcquisitionFile acquisitionFile, PimsUser pimsUser, PimsProject project)
+        {
+            if (acquisitionFile is null || pimsUser is null)
+            {
+                return false;
+            }
+
+            if (pimsUser.IsContractor)
+            {
+                var onTeamOrProject = acquisitionFile.PimsAcquisitionFileTeams.Any(x => x.PersonId == pimsUser.PersonId)
+                    || (project != null && project.PimsProjectPeople.Any(x => x.PersonId == pimsUser.PersonId));
+
+                return onTeamOrProject && pimsUser.PimsRegionUsers.Any(ur => ur.RegionCode == acquisitionFile.RegionCode);
+            }
+
+            // Regular (non-contractor) users have access across regions
+            return true;
         }
     }
 }
