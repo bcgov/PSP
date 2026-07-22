@@ -5,6 +5,8 @@
   "main": "index.js",
   "scripts": {
     "test": "playwright test",
+    "smoke-tests": "playwright test --project=smoke-test",
+    "e2e-tests": "playwright test --project=pims-e2e",
     "show-report": "playwright show-report",
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --ext .ts,.js --fix",

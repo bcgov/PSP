@@ -11,6 +11,7 @@ export const generateFileName = (fileType: string): string => {
 
   return `${fileType}-${timestamp}`;
 };
+
 export const normalize = (value: string | null): string => {
   return value == null ? '' : String(value).trim();
 };
@@ -30,10 +31,7 @@ export const formatApiDate = (apiDate: string | null | undefined): string => {
   });
 };
 
-export const formatApiBoolean = (value: boolean | null | undefined): string => {
-  if (value == null) {
-    return '';
-  }
-
-  return value ? 'Yes' : 'No';
-};
+export function nullableBooleanToYesNoString(value?: boolean | null): string {
+  if (value === true) return 'Yes';
+  return 'No';
+}

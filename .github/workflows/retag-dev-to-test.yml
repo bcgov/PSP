@@ -353,3 +353,19 @@ jobs:
           notification-summary: PIMS Release DEV to TEST COMPLETED with status ${{ steps.check.outputs.status }}
           notification-color: 17a2b8
           timezone: America/Los_Angeles
+
+  run-e2e-smoke-tests:
+    name: PIMS e2e smoke tests
+    needs: ci-cd-end-notification
+    uses: ./.github/workflows/ci-cd-pims-smoke-test.yml
+    with:
+      target_env: test
+    secrets: inherit
+
+  run-e2e-integration-tests:
+    name: PIMS e2e integration tests
+    needs: run-e2e-smoke-tests
+    uses: ./.github/workflows/ci-cd-pims-e2e-test.yml
+    with:
+      target_env: test
+    secrets: inherit
