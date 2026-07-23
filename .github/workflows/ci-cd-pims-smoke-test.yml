@@ -22,6 +22,7 @@ jobs:
       environment: ${{ inputs.target_env }}
 
       env:
+          CI: 'true'
           BASE_URL: ${{ vars.BASE_URL }}
           USER_TRANPSP1_ID: ${{ vars.USER_TRANPSP1_ID }}
           USER_TRANPSP1_PASSWORD: ${{ secrets.USER_TRANPSP1_PASSWORD }}
