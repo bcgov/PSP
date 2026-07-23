@@ -71,7 +71,7 @@ export class ResearchListPage extends LayoutPage {
     });
 
     this.researcSearchByLabel = page.getByText('Search by:', { exact: true });
-    this.researchByRegionSelect = page.locator('#input-regionCode');
+    this.researchByRegionSelect = page.locator('#multiselect-regionCodes_input');
     this.researchByStatusSelect = page.locator('#input-researchFileStatusTypeCode');
     this.researchSearchBySelect = page.locator('#input-researchSearchBy');
     this.researchSearchPidInput = page.locator('#input-pid');
