@@ -6,7 +6,10 @@ let page: Page;
 let helpDeskPage: HelpDeskPage;
 
 const userFullName = process.env.USER_TRANPSP1_FULLNAME;
-const userEmail = process.env.USER_TRANPSP1_EMAIL;
+// Github env variables does not accetp '' as values.
+// Whenver the test user email is updated, update the env variable on Github
+// then enable this so the test is updated.
+// const userEmail = process.env.USER_TRANPSP1_EMAIL;
 
 test.describe.serial('Help desk modal', () => {
   test.beforeAll(async ({ browser }) => {
@@ -56,6 +59,6 @@ test.describe.serial('Help desk modal', () => {
     await expect(helpDeskPage.helpDeskEmailInput).toBeVisible();
 
     expect(await helpDeskPage.getUserNameInputValue()).toEqual(userFullName);
-    expect(await helpDeskPage.getUserEmailInputValue()).toEqual(userEmail);
+    expect(await helpDeskPage.getUserEmailInputValue()).toEqual('');
   });
 });

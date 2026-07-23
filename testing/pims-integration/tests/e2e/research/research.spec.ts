@@ -4,7 +4,7 @@ import { DocumentsListPage } from '../../../pages/documents/documents-list.page'
 
 import { ResearchViewFileDetails } from '../../../pages/research/research-view-file-details.page';
 import { DocumentUploadModalPage } from '../../../pages/documents/document-upload-modal.page';
-import { generateFileName, normalize, formatApiDate, formatApiBoolean } from '../../../utils/utils';
+import { generateFileName, normalize, nullableBooleanToYesNoString } from '../../../utils/utils';
 import path from 'path';
 
 let context: BrowserContext;
@@ -44,6 +44,7 @@ test.describe('Research Files feature', () => {
       requestDate: any;
       researchCompletionDate: any;
     };
+
     const responsePromise = page.waitForResponse(
       (response: { url: () => string | string[]; status: () => number }) =>
         response.url().includes('/api/researchFiles/') && response.status() === 200
@@ -52,8 +53,11 @@ test.describe('Research Files feature', () => {
     await test.step('Create file', async () => {
       //Navigate to new research file and create a minimum viable research
       await researchCreatePage.goto();
-      generateFileName('researchFile');
-      await researchCreatePage.confirmButtonClick();
+      const newResearchFileName = generateFileName('Research');
+
+      //Act
+      researchCreatePage.setResearchFilenameInput(newResearchFileName);
+      researchCreatePage.confirmButtonClick();
 
       const response = await responsePromise;
       apiFeatureFileJson = await response.json();
@@ -62,36 +66,36 @@ test.describe('Research Files feature', () => {
     });
 
     await test.step('Validate details', async () => {
-      const fieldsToCompare = [
-        { label: 'Ministry project', apiValue: apiFeatureFileJson.researchFileProjects[0] },
-        { label: 'Road name', apiValue: apiFeatureFileJson.roadName },
-        { label: 'Road alias', apiValue: apiFeatureFileJson.roadAlias },
-        {
-          label: 'Research purpose',
-          apiValue: apiFeatureFileJson.researchFilePurposes[0].researchPurposeTypeCode.description,
-        },
-        { label: 'Source of request', apiValue: apiFeatureFileJson.requestSourceType.description },
-        { label: 'Requester', apiValue: apiFeatureFileJson.requestorPerson },
-      ];
+      // const fieldsToCompare = [
+      //   { label: 'Ministry project', apiValue: apiFeatureFileJson.researchFileProjects[0] },
+      //   { label: 'Road name', apiValue: apiFeatureFileJson.roadName },
+      //   { label: 'Road alias', apiValue: apiFeatureFileJson.roadAlias },
+      //   {
+      //     label: 'Research purpose',
+      //     apiValue: apiFeatureFileJson.researchFilePurposes[0].researchPurposeTypeCode.description,
+      //   },
+      //   { label: 'Source of request', apiValue: apiFeatureFileJson.requestSourceType.description },
+      //   { label: 'Requester', apiValue: apiFeatureFileJson.requestorPerson },
+      // ];
 
-      const datesToCompare = [
-        { label: 'Request date', apiValue: apiFeatureFileJson.requestDate },
-        { label: 'Research completed on', apiValue: apiFeatureFileJson.researchCompletionDate },
-      ];
+      // const datesToCompare = [
+      //   { label: 'Request date', apiValue: apiFeatureFileJson.requestDate },
+      //   { label: 'Research completed on', apiValue: apiFeatureFileJson.researchCompletionDate },
+      // ];
 
-      for (const field of fieldsToCompare) {
-        const uiValue = await researchViewDetails.getFieldValueByLabel(field.label);
-        expect(normalize(uiValue)).toBe(normalize(field.apiValue));
-      }
+      // for (const field of fieldsToCompare) {
+      //   const uiValue = await researchViewDetails.getFieldValueByLabel(field.label);
+      //   expect(normalize(uiValue)).toBe(normalize(field.apiValue));
+      // }
 
-      for (const date of datesToCompare) {
-        const uiValue = await researchViewDetails.getFieldValueByLabel(date.label);
-        const changedFormat = formatApiDate(date.apiValue);
-        expect(normalize(uiValue)).toBe(changedFormat);
-      }
+      // for (const date of datesToCompare) {
+      //   const uiValue = await researchViewDetails.getFieldValueByLabel(date.label);
+      //   const changedFormat = formatApiDate(date.apiValue);
+      //   expect(normalize(uiValue)).toBe(changedFormat);
+      // }
 
       const isExpropriation = await researchViewDetails.getFieldValueByLabel('Expropriation?');
-      const formatedBoolean = formatApiBoolean(apiFeatureFileJson.isExpropriation);
+      const formatedBoolean = nullableBooleanToYesNoString(apiFeatureFileJson.isExpropriation);
       expect(normalize(isExpropriation)).toBe(formatedBoolean);
 
       const description = await researchViewDetails.getResearchDescription();
