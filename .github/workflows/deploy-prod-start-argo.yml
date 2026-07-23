@@ -85,6 +85,10 @@ jobs:
           oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
           oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
 
+          oc tag pims-scheduler:$RELEASE_VERSION pims-scheduler:$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
+          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
+
           oc tag mayan-bcgov:$RELEASE_VERSION mayan-bcgov:master
 
   # the command:
