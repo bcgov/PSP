@@ -32,7 +32,7 @@ jobs:
       runs-on: ubuntu-22.04
       container:
         image: mcr.microsoft.com/playwright:v1.61.0-noble
-        options: --user 1001 --ipc=host
+        options: --user 1001
 
       steps:
         - name: Checkout Source Code
