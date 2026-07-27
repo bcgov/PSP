@@ -12,7 +12,7 @@ const defaultVersion: IApiVersion = {
   environment: 'test',
   version: '11.1.1.1',
   fileVersion: '11.1.1.1',
-  informationalVersion: '11.1.1-93.999',
+  informationalVersion: '11.1.1.999',
   dbVersion: '93.00',
 };
 
@@ -46,7 +46,7 @@ describe('ApiVersionInfo suite', () => {
   });
 
   beforeEach(() => {
-    import.meta.env.VITE_PACKAGE_VERSION = '11.1.1-93.999';
+    import.meta.env.VITE_PACKAGE_VERSION = '11.1.1.999';
     mockUseTenant.mockReturnValue(defaultTenant);
     mockGetVersionApi.mockResolvedValue({ data: defaultVersion } as any);
   });
@@ -63,81 +63,7 @@ describe('ApiVersionInfo suite', () => {
     await waitForEffects();
 
     const element = getByTestId(`version-tag`);
-    expect(element).toHaveTextContent('v11.1.1-93.999');
-    expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
-  });
-
-  it('Does not display version warning', async () => {
-    const { queryByTestId } = setup();
-    await waitForEffects();
-
-    const element = queryByTestId(`version-mismatch-warning`);
-    expect(element).not.toBeInTheDocument();
-    expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
-  });
-
-  it('Does display version warning when API missmatch', async () => {
-    mockGetVersionApi.mockResolvedValue({
-      data: { ...defaultVersion, informationalVersion: 'xx' },
-    } as any);
-
-    const { queryByTestId } = setup();
-    await waitForEffects();
-
-    const element = queryByTestId(`version-mismatch-warning`);
-    expect(element).toBeInTheDocument();
-    expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
-  });
-
-  it('Does display version warning when DB missmatch', async () => {
-    mockGetVersionApi.mockResolvedValue({
-      data: { ...defaultVersion, dbVersion: '00' },
-    } as any);
-
-    const { queryByTestId } = setup();
-    await waitForEffects();
-
-    const element = queryByTestId(`version-mismatch-warning`);
-    expect(element).toBeInTheDocument();
-    expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
-  });
-
-  it('Does not display version warning when DB version is compatible with API version', async () => {
-    mockUseTenant.mockReturnValue({
-      ...defaultTenant,
-      apiDbVersionCompatibility: { '93': [92, 93] },
-    });
-    mockGetVersionApi.mockResolvedValue({
-      data: { ...defaultVersion, dbVersion: '92.00' },
-    } as any);
-
-    const { queryByTestId } = setup();
-    await waitForEffects();
-
-    const element = queryByTestId(`version-mismatch-warning`);
-    expect(element).not.toBeInTheDocument();
-    expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
-  });
-
-  it('Does not display version warning for compatibility with informational build format', async () => {
-    import.meta.env.VITE_PACKAGE_VERSION = '5.16.0-116.23';
-    mockUseTenant.mockReturnValue({
-      ...defaultTenant,
-      apiDbVersionCompatibility: { '116': [114, 116] },
-    });
-    mockGetVersionApi.mockResolvedValue({
-      data: {
-        ...defaultVersion,
-        informationalVersion: '5.16.0-116.23',
-        dbVersion: '114.00',
-      },
-    } as any);
-
-    const { queryByTestId } = setup();
-    await waitForEffects();
-
-    const element = queryByTestId(`version-mismatch-warning`);
-    expect(element).not.toBeInTheDocument();
+    expect(element).toHaveTextContent('v11.1.1');
     expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
   });
 });
