@@ -1,0 +1,66 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="11/4/2025 10:38:11 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{9129C7F6-5AEC-40C0-8BE0-AD023C96A9EF}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="4"
+  DTS:VersionGUID="{A456031E-063B-4567-A132-9FDD180C93FD}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\drop and create etl schema table"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{ECFEDD9A-43A4-4547-90D9-D171A97FEB67}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="drop and create etl schema table"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B56D6EBF-312D-4E60-B6F8-EB511BC76194}"
+          SQLTask:SqlStatementSource="&#xA;/****** Object:  Table [etl].[SRC_PAIMS_LEASE]    Script Date: 11/4/2025 10:37:50 AM ******/&#xA;IF  EXISTS (SELECT * FROM sys.objects WHERE object_id = OBJECT_ID(N'[etl].[SRC_PAIMS_LEASE]') AND type in (N'U'))&#xA;DROP TABLE [etl].[SRC_PAIMS_LEASE]&#xA;GO&#xA;&#xA;/****** Object:  Table [etl].[SRC_PAIMS_LEASE]    Script Date: 11/4/2025 10:37:50 AM ******/&#xA;SET ANSI_NULLS ON&#xA;GO&#xA;&#xA;SET QUOTED_IDENTIFIER ON&#xA;GO&#xA;&#xA;CREATE TABLE [etl].[SRC_PAIMS_LEASE](&#xA;&#x9;[PID_NO] [numeric](9, 0) NULL,&#xA;&#x9;[Contract Purpose Type] [nvarchar](20) NULL,&#xA;&#x9;[Property Tenure Type] [nvarchar](2) NULL,&#xA;&#x9;[PROPERTY_FILE_NUMBER] [numeric](6, 0) NULL,&#xA;&#x9;[PROPERTY_FILE_NUMBER_SUFFIX] [nvarchar](2) NULL,&#xA;&#x9;[PIN] [numeric](9, 0) NULL,&#xA;&#x9;[PROPERTY_CONTRACT_ID] [numeric](10, 0) NULL,&#xA;&#x9;[PROPERTY_EMPLOYEE_ID] [numeric](10, 0) NULL,&#xA;&#x9;[DISTRICT_NUMBER] [numeric](2, 0) NULL,&#xA;&#x9;[REGION_NUMBER] [numeric](2, 0) NULL,&#xA;&#x9;[NAME] [nvarchar](50) NULL,&#xA;&#x9;[PROPERTY_CONTRACT_TYPE] [nvarchar](28) NULL,&#xA;&#x9;[STATUS_CODE] [nvarchar](10) NULL,&#xA;&#x9;[COMMENCEMENT_DATE] [datetime] NULL,&#xA;&#x9;[INITIAL_PAYMENT_DATE] [datetime] NULL,&#xA;&#x9;[EXPECTED_EXPIRATION_DATE] [datetime] NULL,&#xA;&#x9;[CONTACT_NAME] [nvarchar](50) NULL,&#xA;&#x9;[CONTACT_PHONE] [numeric](15, 0) NULL,&#xA;&#x9;[TERMINATION_DATE] [datetime] NULL,&#xA;&#x9;[LESSOR_FILE_NUMBER] [nvarchar](20) NULL,&#xA;&#x9;[RENT_PHONE_NO] [numeric](15, 0) NULL,&#xA;&#x9;[RENT_AMT] [numeric](12, 2) NULL,&#xA;&#x9;[RENT_NAME] [nvarchar](80) NULL,&#xA;&#x9;[TENANT_LIABILITY_INSURANCE_AMT] [numeric](12, 2) NULL,&#xA;&#x9;[CMPRHNSV_GNRL_LBLTY_INSRNC_AMT] [numeric](12, 2) NULL,&#xA;&#x9;[INSURANCE_EXPIRY_DATE] [datetime] NULL,&#xA;&#x9;[SECURITY_DEPOSIT_AMT] [numeric](12, 2) NULL,&#xA;&#x9;[SECURITY_DEPOSIT_DATE] [datetime] NULL,&#xA;&#x9;[SECURITY_DEPOSIT_RETURN_DATE] [datetime] NULL,&#xA;&#x9;[SECURITY_DEPOSIT_RETURN_AMT] [numeric](12, 2) NULL,&#xA;&#x9;[PAYMENT_FREQUENCY_UNIT] [nvarchar](8) NULL,&#xA;&#x9;[PROPERTY_CONTRACT_PURPOSE_CODE] [nvarchar](20) NULL,&#xA;&#x9;[MEMO_TEXT] [nvarchar](200) NULL,&#xA;&#x9;[PURPOSE_TEXT] [nvarchar](200) NULL,&#xA;&#x9;[LEASE_LICENSE_TYPE_CODE] [nvarchar](5) NULL,&#xA;&#x9;[LEASE_PROGRAM_TYPE_CODE] [nvarchar](5) NULL,&#xA;&#x9;[LEASE_INITIATOR_TYPE_CODE] [nvarchar](2) NULL,&#xA;&#x9;[PS_FILE_NO] [nvarchar](13) NULL,&#xA;&#x9;[LEASE_NOTES] [nvarchar](400) NULL,&#xA;&#x9;[ORIG_START_DATE] [datetime] NULL,&#xA;&#x9;[IS_EXPIRED] [bit] NULL,&#xA;&#x9;[LEASE_PURPOSE_TYPE_CODE] [nvarchar](9) NULL,&#xA;&#x9;[REGION_CODE] [smallint] NULL,&#xA;&#x9;[LEASE_STATUS_TYPE_CODE] [nvarchar](10) NULL,&#xA;&#x9;[LEASE_PAY_RVBL_TYPE_CODE] [nvarchar](9) NULL,&#xA;&#x9;[APP_CREATE_USER_DIRECTORY] [nvarchar](30) NULL,&#xA;&#x9;[APP_CREATE_USERID] [nvarchar](18) NULL,&#xA;&#x9;[APP_CREATE_TIMESTAMP] [datetime] NULL,&#xA;&#x9;[APP_LAST_UPDATE_USERID] [nvarchar](18) NULL,&#xA;&#x9;[APP_LAST_UPDATE_TIMESTAMP] [datetime] NULL&#xA;) ON [PRIMARY]&#xA;GO&#xA;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="4" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="234.666666666667,42.6666666666667"
+          Id="Package\drop and create etl schema table"
+          TopLeft="279.374995836988,208.684214454279" />
+        <AnnotationLayout
+          Text="[etl].[SRC_PAIMS_LEASE]"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="156,40"
+          Id="88183442-e359-40b6-bf88-c392cdbaadc8"
+          TopLeft="287.499995715916,137.526318378065" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

@@ -1,0 +1,377 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="3/20/2026 9:46:20 AM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{BDF41652-C768-4A20-9554-75F32599F7E4}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="11"
+  DTS:VersionGUID="{187B3142-C8BD-4C17-9AFB-9742B12DD7F1}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\mot_number NOT NULL Case"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{48C2EF1C-9638-4639-A6F1-99B479A82BDB}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="mot_number NOT NULL Case">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\mot_number NOT NULL Case\GWP_NOT_NULL"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{2871e012-352c-4633-bb2d-e4a790abdda4}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="GWP_NOT_NULL"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{B06732EE-E98B-45E4-9826-B822D8836FA1}"
+              SQLTask:SqlStatementSource="INSERT INTO dbo.PIMS_ACQUISITION_FILE_DOCUMENT (&#xA;    DOCUMENT_ID,&#xA;    ACQUISITION_FILE_ID,&#xA;    APP_CREATE_USERID,&#xA;    APP_CREATE_TIMESTAMP,&#xA;    APP_LAST_UPDATE_USERID,&#xA;    APP_LAST_UPDATE_TIMESTAMP&#xA;)&#xA;SELECT&#xA;    p.DOCUMENT_ID,&#xA;    p.ACQUISITION_FILE_ID,&#xA;    'GWP_ETL',&#xA;    GETUTCDATE(),&#xA;    'GWP_ETL',&#xA;    GETUTCDATE()&#xA;FROM (&#xA;    SELECT DISTINCT&#xA;        d.DOCUMENT_ID,&#xA;        d.LAND_PARCEL_ID,&#xA;        d.MOT_NUMBER,&#xA;        d.LEGACY_FILE_NUMBER,&#xA;        d.PID,&#xA;        af.ACQUISITION_FILE_ID&#xA;    FROM (&#xA;        SELECT src.*&#xA;        FROM (&#xA;            SELECT DISTINCT&#xA;                CONVERT(INT, A.LAND_PARCEL_ID) AS LAND_PARCEL_ID,&#xA;                TRY_CONVERT(BIGINT, A.MOT_NUMBER) AS MOT_NUMBER,&#xA;                CASE&#xA;                    WHEN A.MOT_NUMBER IS NULL THEN CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', 'NULL'))&#xA;                    WHEN TRY_CONVERT(BIGINT, A.MOT_NUMBER) IS NOT NULL THEN CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', TRY_CONVERT(BIGINT, A.MOT_NUMBER)))&#xA;                    ELSE CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', LTRIM(RTRIM(CONVERT(VARCHAR(50), A.MOT_NUMBER)))))&#xA;                END AS LEGACY_FILE_NUMBER,&#xA;                B.DOCUMENT_ID,&#xA;                slp.PID&#xA;            FROM etl.GWP_SOURCE_LAND_PARCEL A&#xA;            JOIN dbo.PIMS_DOCUMENT B&#xA;                ON A.MULTIMEDIA_OBJECT_ID = B.DOCUMENT_EXTERNAL_ID&#xA;            JOIN etl.SOURCE_LAND_PARCEL slp&#xA;                ON CONVERT(INT, slp.LAND_PARCEL_ID) = CONVERT(INT, A.LAND_PARCEL_ID)&#xA;               AND slp.SOURCE = 'GWP'&#xA;            WHERE B.DOCUMENT_ID NOT IN (&#xA;                SELECT DOCUMENT_ID&#xA;                FROM dbo.PIMS_ACQUISITION_FILE_DOCUMENT&#xA;                WHERE APP_CREATE_USERID LIKE '%GWP%'&#xA;            )&#xA;        ) src&#xA;        WHERE NOT EXISTS (&#xA;            SELECT 1&#xA;            FROM dbo.PIMS_ACQUISITION_FILE af_existing&#xA;            WHERE CONVERT(VARCHAR(50), af_existing.LEGACY_FILE_NUMBER) = src.LEGACY_FILE_NUMBER&#xA;              AND LEFT(af_existing.APP_CREATE_USERID, 3) = 'GWP'&#xA;        )&#xA;    ) d&#xA;    JOIN dbo.PIMS_PROPERTY pp&#xA;        ON pp.PID = TRY_CONVERT(INT, d.PID)&#xA;    JOIN dbo.PIMS_PROPERTY_ACQUISITION_FILE ppaf&#xA;        ON ppaf.PROPERTY_ID = pp.PROPERTY_ID&#xA;    JOIN dbo.PIMS_ACQUISITION_FILE af&#xA;        ON af.ACQUISITION_FILE_ID = ppaf.ACQUISITION_FILE_ID&#xA;    WHERE af.APP_CREATE_USERID LIKE '%PAIMS_PIMS_ACQUISITION%'&#xA;      AND NOT EXISTS (&#xA;          SELECT 1&#xA;          FROM dbo.PIMS_ACQUISITION_FILE_DOCUMENT afd&#xA;          WHERE afd.DOCUMENT_ID = d.DOCUMENT_ID&#xA;            AND afd.ACQUISITION_FILE_ID = af.ACQUISITION_FILE_ID&#xA;      )&#xA;) p;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\mot_number NOT NULL Case\PAT_NOT_NULL"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{baf3f1cd-0323-477e-8449-0611b4969f5d}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="PAT_NOT_NULL"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{B06732EE-E98B-45E4-9826-B822D8836FA1}"
+              SQLTask:SqlStatementSource="INSERT INTO dbo.PIMS_ACQUISITION_FILE_DOCUMENT (&#xA;    DOCUMENT_ID,&#xA;    ACQUISITION_FILE_ID,&#xA;    APP_CREATE_USERID,&#xA;    APP_CREATE_TIMESTAMP,&#xA;    APP_LAST_UPDATE_USERID,&#xA;    APP_LAST_UPDATE_TIMESTAMP&#xA;)&#xA;SELECT&#xA;    p.DOCUMENT_ID,&#xA;    p.ACQUISITION_FILE_ID,&#xA;    'PAT_ETL',&#xA;    GETUTCDATE(),&#xA;    'PAT_ETL',&#xA;    GETUTCDATE()&#xA;FROM (&#xA;    SELECT DISTINCT&#xA;        d.DOCUMENT_ID,&#xA;        d.LAND_PARCEL_ID,&#xA;        d.MOT_NUMBER,&#xA;        d.LEGACY_FILE_NUMBER,&#xA;        d.PID,&#xA;        af.ACQUISITION_FILE_ID&#xA;    FROM (&#xA;        SELECT src.*&#xA;        FROM (&#xA;            SELECT DISTINCT&#xA;                CONVERT(INT, A.LAND_PARCEL_ID) AS LAND_PARCEL_ID,&#xA;                TRY_CONVERT(BIGINT, A.MOT_NUMBER) AS MOT_NUMBER,&#xA;                CASE&#xA;                    WHEN A.MOT_NUMBER IS NULL THEN CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', 'NULL'))&#xA;                    WHEN TRY_CONVERT(BIGINT, A.MOT_NUMBER) IS NOT NULL THEN CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', TRY_CONVERT(BIGINT, A.MOT_NUMBER)))&#xA;                    ELSE CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', LTRIM(RTRIM(CONVERT(VARCHAR(50), A.MOT_NUMBER)))))&#xA;                END AS LEGACY_FILE_NUMBER,&#xA;                B.DOCUMENT_ID,&#xA;                slp.PID&#xA;            FROM etl.PAT_SOURCE_LAND_PARCEL A&#xA;            JOIN dbo.PIMS_DOCUMENT B&#xA;                ON A.MULTIMEDIA_OBJECT_ID = B.DOCUMENT_EXTERNAL_ID&#xA;            JOIN etl.SOURCE_LAND_PARCEL slp&#xA;                ON CONVERT(INT, slp.LAND_PARCEL_ID) = CONVERT(INT, A.LAND_PARCEL_ID)&#xA;               AND slp.SOURCE = 'PAT'&#xA;            WHERE B.DOCUMENT_ID NOT IN (&#xA;                SELECT DOCUMENT_ID&#xA;                FROM dbo.PIMS_ACQUISITION_FILE_DOCUMENT&#xA;                WHERE APP_CREATE_USERID LIKE '%PAT%'&#xA;            )&#xA;        ) src&#xA;        WHERE NOT EXISTS (&#xA;            SELECT 1&#xA;            FROM dbo.PIMS_ACQUISITION_FILE af_existing&#xA;            WHERE CONVERT(VARCHAR(50), af_existing.LEGACY_FILE_NUMBER) = src.LEGACY_FILE_NUMBER&#xA;              AND LEFT(af_existing.APP_CREATE_USERID, 3) = 'PAT'&#xA;        )&#xA;    ) d&#xA;    JOIN dbo.PIMS_PROPERTY pp&#xA;        ON pp.PID = TRY_CONVERT(INT, d.PID)&#xA;    JOIN dbo.PIMS_PROPERTY_ACQUISITION_FILE ppaf&#xA;        ON ppaf.PROPERTY_ID = pp.PROPERTY_ID&#xA;    JOIN dbo.PIMS_ACQUISITION_FILE af&#xA;        ON af.ACQUISITION_FILE_ID = ppaf.ACQUISITION_FILE_ID&#xA;    WHERE af.APP_CREATE_USERID LIKE '%PAIMS_PIMS_ACQUISITION%'&#xA;      AND NOT EXISTS (&#xA;          SELECT 1&#xA;          FROM dbo.PIMS_ACQUISITION_FILE_DOCUMENT afd&#xA;          WHERE afd.DOCUMENT_ID = d.DOCUMENT_ID&#xA;            AND afd.ACQUISITION_FILE_ID = af.ACQUISITION_FILE_ID&#xA;      )&#xA;) p;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\mot_number NOT NULL Case\TAP_NOT_NULL"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{297284f2-ecb7-4300-8492-6894305c705d}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="TAP_NOT_NULL"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{B06732EE-E98B-45E4-9826-B822D8836FA1}"
+              SQLTask:SqlStatementSource="INSERT INTO dbo.PIMS_ACQUISITION_FILE_DOCUMENT (&#xA;    DOCUMENT_ID,&#xA;    ACQUISITION_FILE_ID,&#xA;    APP_CREATE_USERID,&#xA;    APP_CREATE_TIMESTAMP,&#xA;    APP_LAST_UPDATE_USERID,&#xA;    APP_LAST_UPDATE_TIMESTAMP&#xA;)&#xA;SELECT&#xA;    p.DOCUMENT_ID,&#xA;    p.ACQUISITION_FILE_ID,&#xA;    'TAP_ETL',&#xA;    GETUTCDATE(),&#xA;    'TAP_ETL',&#xA;    GETUTCDATE()&#xA;FROM (&#xA;    SELECT DISTINCT&#xA;        d.DOCUMENT_ID,&#xA;        d.LAND_PARCEL_ID,&#xA;        d.MOT_NUMBER,&#xA;        d.LEGACY_FILE_NUMBER,&#xA;        d.PID,&#xA;        af.ACQUISITION_FILE_ID&#xA;    FROM (&#xA;        SELECT src.*&#xA;        FROM (&#xA;            SELECT DISTINCT&#xA;                CONVERT(INT, A.LAND_PARCEL_ID) AS LAND_PARCEL_ID,&#xA;                TRY_CONVERT(BIGINT, A.MOT_NUMBER) AS MOT_NUMBER,&#xA;                CASE&#xA;                    WHEN A.MOT_NUMBER IS NULL THEN CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', 'NULL'))&#xA;                    WHEN TRY_CONVERT(BIGINT, A.MOT_NUMBER) IS NOT NULL THEN CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', TRY_CONVERT(BIGINT, A.MOT_NUMBER)))&#xA;                    ELSE CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', LTRIM(RTRIM(CONVERT(VARCHAR(50), A.MOT_NUMBER)))))&#xA;                END AS LEGACY_FILE_NUMBER,&#xA;                B.DOCUMENT_ID,&#xA;                slp.PID&#xA;            FROM etl.TAP_SOURCE_LAND_PARCEL A&#xA;            JOIN dbo.PIMS_DOCUMENT B&#xA;                ON A.MULTIMEDIA_OBJECT_ID = B.DOCUMENT_EXTERNAL_ID&#xA;            JOIN etl.SOURCE_LAND_PARCEL slp&#xA;                ON CONVERT(INT, slp.LAND_PARCEL_ID) = CONVERT(INT, A.LAND_PARCEL_ID)&#xA;               AND slp.SOURCE = 'TAP'&#xA;            WHERE B.DOCUMENT_ID NOT IN (&#xA;                SELECT DOCUMENT_ID&#xA;                FROM dbo.PIMS_ACQUISITION_FILE_DOCUMENT&#xA;                WHERE APP_CREATE_USERID LIKE '%TAP%'&#xA;            )&#xA;        ) src&#xA;        WHERE NOT EXISTS (&#xA;            SELECT 1&#xA;            FROM dbo.PIMS_ACQUISITION_FILE af_existing&#xA;            WHERE CONVERT(VARCHAR(50), af_existing.LEGACY_FILE_NUMBER) = src.LEGACY_FILE_NUMBER&#xA;              AND LEFT(af_existing.APP_CREATE_USERID, 3) = 'TAP'&#xA;        )&#xA;    ) d&#xA;    JOIN dbo.PIMS_PROPERTY pp&#xA;        ON pp.PID = TRY_CONVERT(INT, d.PID)&#xA;    JOIN dbo.PIMS_PROPERTY_ACQUISITION_FILE ppaf&#xA;        ON ppaf.PROPERTY_ID = pp.PROPERTY_ID&#xA;    JOIN dbo.PIMS_ACQUISITION_FILE af&#xA;        ON af.ACQUISITION_FILE_ID = ppaf.ACQUISITION_FILE_ID&#xA;    WHERE af.APP_CREATE_USERID LIKE '%PAIMS_PIMS_ACQUISITION%'&#xA;      AND NOT EXISTS (&#xA;          SELECT 1&#xA;          FROM dbo.PIMS_ACQUISITION_FILE_DOCUMENT afd&#xA;          WHERE afd.DOCUMENT_ID = d.DOCUMENT_ID&#xA;            AND afd.ACQUISITION_FILE_ID = af.ACQUISITION_FILE_ID&#xA;      )&#xA;) p;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\mot_number NOT NULL Case.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{98C90249-C521-4EED-A19B-16216CEF70E1}"
+          DTS:From="Package\mot_number NOT NULL Case\TAP_NOT_NULL"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\mot_number NOT NULL Case\PAT_NOT_NULL" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\mot_number NOT NULL Case.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{9490C551-BF96-48C4-9585-B82C30DEDF61}"
+          DTS:From="Package\mot_number NOT NULL Case\PAT_NOT_NULL"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\mot_number NOT NULL Case\GWP_NOT_NULL" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\mot_number NULL Case"
+      DTS:CreationName="STOCK:SEQUENCE"
+      DTS:Description="Sequence Container"
+      DTS:DTSID="{B2B9728A-89FA-4F8B-A2D3-4CB7404C0E28}"
+      DTS:ExecutableType="STOCK:SEQUENCE"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="mot_number NULL Case">
+      <DTS:Variables />
+      <DTS:Executables>
+        <DTS:Executable
+          DTS:refId="Package\mot_number NULL Case\GWP"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{655840BB-1625-4F6C-82E6-C0E49CA21CB7}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="GWP"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{B06732EE-E98B-45E4-9826-B822D8836FA1}"
+              SQLTask:SqlStatementSource="-- PSP-11073 Fix: Problem 2 — PAIMS Fallback Document Linking for GWP&#xA;&#xA;WITH GWP_NullMot_Docs AS (&#xA;    SELECT&#xA;        CONVERT(INT, A.LAND_PARCEL_ID) AS LAND_PARCEL_ID,&#xA;        CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', 'NULL')) AS LEGACY_FILE_NUMBER,&#xA;        B.DOCUMENT_ID,&#xA;        slp.PID&#xA;    FROM etl.GWP_SOURCE_LAND_PARCEL A&#xA;    JOIN dbo.PIMS_DOCUMENT B&#xA;        ON A.MULTIMEDIA_OBJECT_ID = B.DOCUMENT_EXTERNAL_ID&#xA;    JOIN etl.SOURCE_LAND_PARCEL slp&#xA;        ON CONVERT(INT, slp.LAND_PARCEL_ID) = CONVERT(INT, A.LAND_PARCEL_ID)&#xA;        AND slp.SOURCE = 'GWP'&#xA;    WHERE A.MOT_NUMBER IS NULL&#xA;      -- Exclude documents already linked&#xA;      AND B.DOCUMENT_ID NOT IN (&#xA;          SELECT DOCUMENT_ID&#xA;          FROM dbo.PIMS_ACQUISITION_FILE_DOCUMENT&#xA;          WHERE APP_CREATE_USERID LIKE '%GWP%'&#xA;      )&#xA;      -- Exclude documents that already have a GWP ETL acquisition file&#xA;      AND NOT EXISTS (&#xA;          SELECT 1&#xA;          FROM dbo.PIMS_ACQUISITION_FILE af&#xA;          WHERE CONVERT(VARCHAR(50), af.LEGACY_FILE_NUMBER) = CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', 'NULL'))&#xA;            AND LEFT(af.APP_CREATE_USERID, 3) = 'GWP'&#xA;      )&#xA;),&#xA;PAIMS_Matches AS (&#xA;    SELECT&#xA;        g.DOCUMENT_ID,&#xA;        g.LAND_PARCEL_ID,&#xA;        af.ACQUISITION_FILE_ID&#xA;    FROM GWP_NullMot_Docs g&#xA;    JOIN dbo.PIMS_PROPERTY pp&#xA;        ON pp.PID = TRY_CONVERT(int, g.PID)&#xA;    JOIN dbo.PIMS_PROPERTY_ACQUISITION_FILE ppaf&#xA;        ON ppaf.PROPERTY_ID = pp.PROPERTY_ID&#xA;    JOIN dbo.PIMS_ACQUISITION_FILE af&#xA;        ON af.ACQUISITION_FILE_ID = ppaf.ACQUISITION_FILE_ID&#xA;    WHERE af.APP_CREATE_USERID LIKE '%PAIMS_PIMS_ACQUISITION%'&#xA;)&#xA;&#xA;-- Preview before inserting&#xA;--SELECT&#xA;--    pm.DOCUMENT_ID,&#xA;--    pm.ACQUISITION_FILE_ID,&#xA;--    pm.LAND_PARCEL_ID,&#xA;--    'GWP_ETL' AS APP_CREATE_USERID&#xA;--FROM PAIMS_Matches pm&#xA;--ORDER BY pm.LAND_PARCEL_ID, pm.DOCUMENT_ID&#xA;--;&#xA;&#xA;-- INSERT (run after validating preview above)&#xA;&#xA;INSERT INTO dbo.PIMS_ACQUISITION_FILE_DOCUMENT (&#xA;    DOCUMENT_ID,&#xA;    ACQUISITION_FILE_ID,&#xA;    APP_CREATE_USERID,&#xA;    APP_CREATE_TIMESTAMP,&#xA;    APP_LAST_UPDATE_USERID,&#xA;    APP_LAST_UPDATE_TIMESTAMP&#xA;)&#xA;SELECT&#xA;    pm.DOCUMENT_ID,&#xA;    pm.ACQUISITION_FILE_ID,&#xA;    'GWP_ETL',&#xA;    GETUTCDATE(),&#xA;    'GWP_ETL',&#xA;    GETUTCDATE()&#xA;FROM PAIMS_Matches pm&#xA;;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\mot_number NULL Case\PAT"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{7767d3e5-7895-4786-9893-173caa669e89}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="PAT"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{B06732EE-E98B-45E4-9826-B822D8836FA1}"
+              SQLTask:SqlStatementSource="-- PSP-11073 Fix: Problem 2 — PAIMS Fallback Document Linking for PAT&#xA;&#xA;WITH PAT_NullMot_Docs AS (&#xA;    SELECT&#xA;        CONVERT(INT, A.LAND_PARCEL_ID) AS LAND_PARCEL_ID,&#xA;        CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', 'NULL')) AS LEGACY_FILE_NUMBER,&#xA;        B.DOCUMENT_ID,&#xA;        slp.PID&#xA;    FROM etl.PAT_SOURCE_LAND_PARCEL A&#xA;    JOIN dbo.PIMS_DOCUMENT B&#xA;        ON A.MULTIMEDIA_OBJECT_ID = B.DOCUMENT_EXTERNAL_ID&#xA;    JOIN etl.SOURCE_LAND_PARCEL slp&#xA;        ON CONVERT(INT, slp.LAND_PARCEL_ID) = CONVERT(INT, A.LAND_PARCEL_ID)&#xA;        AND slp.SOURCE = 'PAT'&#xA;    WHERE A.MOT_NUMBER IS NULL&#xA;      -- Exclude documents already linked&#xA;      AND B.DOCUMENT_ID NOT IN (&#xA;          SELECT DOCUMENT_ID&#xA;          FROM dbo.PIMS_ACQUISITION_FILE_DOCUMENT&#xA;          WHERE APP_CREATE_USERID LIKE '%PAT%'&#xA;      )&#xA;      -- Exclude documents that already have a PAT ETL acquisition file&#xA;      AND NOT EXISTS (&#xA;          SELECT 1&#xA;          FROM dbo.PIMS_ACQUISITION_FILE af&#xA;          WHERE CONVERT(VARCHAR(50), af.LEGACY_FILE_NUMBER) = CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', 'NULL'))&#xA;            AND LEFT(af.APP_CREATE_USERID, 3) = 'PAT'&#xA;      )&#xA;),&#xA;PAIMS_Matches AS (&#xA;    SELECT&#xA;        g.DOCUMENT_ID,&#xA;        g.LAND_PARCEL_ID,&#xA;        af.ACQUISITION_FILE_ID&#xA;    FROM PAT_NullMot_Docs g&#xA;    JOIN dbo.PIMS_PROPERTY pp&#xA;        ON pp.PID = TRY_CONVERT(int, g.PID)&#xA;    JOIN dbo.PIMS_PROPERTY_ACQUISITION_FILE ppaf&#xA;        ON ppaf.PROPERTY_ID = pp.PROPERTY_ID&#xA;    JOIN dbo.PIMS_ACQUISITION_FILE af&#xA;        ON af.ACQUISITION_FILE_ID = ppaf.ACQUISITION_FILE_ID&#xA;    WHERE af.APP_CREATE_USERID LIKE '%PAIMS_PIMS_ACQUISITION%'&#xA;)&#xA;&#xA;-- Preview before inserting&#xA;&#xA;--SELECT&#xA;--    pm.DOCUMENT_ID,&#xA;--    pm.ACQUISITION_FILE_ID,&#xA;--    pm.LAND_PARCEL_ID,&#xA;--    'PAT_ETL' AS APP_CREATE_USERID&#xA;--FROM PAIMS_Matches pm&#xA;--ORDER BY pm.LAND_PARCEL_ID, pm.DOCUMENT_ID&#xA;--;&#xA;&#xA;-- INSERT (run after validating preview above)&#xA;&#xA;INSERT INTO dbo.PIMS_ACQUISITION_FILE_DOCUMENT (&#xA;    DOCUMENT_ID,&#xA;    ACQUISITION_FILE_ID,&#xA;    APP_CREATE_USERID,&#xA;    APP_CREATE_TIMESTAMP,&#xA;    APP_LAST_UPDATE_USERID,&#xA;    APP_LAST_UPDATE_TIMESTAMP&#xA;)&#xA;SELECT&#xA;    pm.DOCUMENT_ID,&#xA;    pm.ACQUISITION_FILE_ID,&#xA;    'PAT_ETL',&#xA;    GETUTCDATE(),&#xA;    'PAT_ETL',&#xA;    GETUTCDATE()&#xA;FROM PAIMS_Matches pm&#xA;;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+        <DTS:Executable
+          DTS:refId="Package\mot_number NULL Case\TAP"
+          DTS:CreationName="Microsoft.ExecuteSQLTask"
+          DTS:Description="Execute SQL Task"
+          DTS:DTSID="{49df6c74-6736-4970-911c-7b9b5706fa2e}"
+          DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+          DTS:LocaleID="-1"
+          DTS:ObjectName="TAP"
+          DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+          DTS:ThreadHint="0">
+          <DTS:Variables />
+          <DTS:ObjectData>
+            <SQLTask:SqlTaskData
+              SQLTask:Connection="{B06732EE-E98B-45E4-9826-B822D8836FA1}"
+              SQLTask:SqlStatementSource="-- PSP-11073 Fix: Problem 2 — PAIMS Fallback Document Linking for TAP&#xA;&#xA;WITH TAP_NullMot_Docs AS (&#xA;    SELECT&#xA;        CONVERT(INT, A.LAND_PARCEL_ID) AS LAND_PARCEL_ID,&#xA;        CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', 'NULL')) AS LEGACY_FILE_NUMBER,&#xA;        B.DOCUMENT_ID,&#xA;        slp.PID&#xA;    FROM etl.TAP_SOURCE_LAND_PARCEL A&#xA;    JOIN dbo.PIMS_DOCUMENT B&#xA;        ON A.MULTIMEDIA_OBJECT_ID = B.DOCUMENT_EXTERNAL_ID&#xA;    JOIN etl.SOURCE_LAND_PARCEL slp&#xA;        ON CONVERT(INT, slp.LAND_PARCEL_ID) = CONVERT(INT, A.LAND_PARCEL_ID)&#xA;        AND slp.SOURCE = 'TAP'&#xA;    WHERE A.MOT_NUMBER IS NULL&#xA;      -- Exclude documents already linked&#xA;      AND B.DOCUMENT_ID NOT IN (&#xA;          SELECT DOCUMENT_ID&#xA;          FROM dbo.PIMS_ACQUISITION_FILE_DOCUMENT&#xA;          WHERE APP_CREATE_USERID LIKE '%TAP%'&#xA;      )&#xA;      -- Exclude documents that already have a TAP ETL acquisition file&#xA;      AND NOT EXISTS (&#xA;          SELECT 1&#xA;          FROM dbo.PIMS_ACQUISITION_FILE af&#xA;          WHERE CONVERT(VARCHAR(50), af.LEGACY_FILE_NUMBER) = CONVERT(VARCHAR(50), CONCAT(CONVERT(INT, A.LAND_PARCEL_ID), '-', 'NULL'))&#xA;            AND LEFT(af.APP_CREATE_USERID, 3) = 'TAP'&#xA;      )&#xA;),&#xA;PAIMS_Matches AS (&#xA;    SELECT&#xA;        g.DOCUMENT_ID,&#xA;        g.LAND_PARCEL_ID,&#xA;        af.ACQUISITION_FILE_ID&#xA;    FROM TAP_NullMot_Docs g&#xA;    JOIN dbo.PIMS_PROPERTY pp&#xA;        ON pp.PID = TRY_CONVERT(int, g.PID)&#xA;    JOIN dbo.PIMS_PROPERTY_ACQUISITION_FILE ppaf&#xA;        ON ppaf.PROPERTY_ID = pp.PROPERTY_ID&#xA;    JOIN dbo.PIMS_ACQUISITION_FILE af&#xA;        ON af.ACQUISITION_FILE_ID = ppaf.ACQUISITION_FILE_ID&#xA;    WHERE af.APP_CREATE_USERID LIKE '%PAIMS_PIMS_ACQUISITION%'&#xA;)&#xA;&#xA;-- Preview before inserting&#xA;--SELECT&#xA;--    pm.DOCUMENT_ID,&#xA;--    pm.ACQUISITION_FILE_ID,&#xA;--    pm.LAND_PARCEL_ID,&#xA;--    'TAP_ETL' AS APP_CREATE_USERID&#xA;--FROM PAIMS_Matches pm&#xA;--ORDER BY pm.LAND_PARCEL_ID, pm.DOCUMENT_ID&#xA;--;&#xA;&#xA;-- INSERT (run after validating preview above)&#xA;&#xA;INSERT INTO dbo.PIMS_ACQUISITION_FILE_DOCUMENT (&#xA;    DOCUMENT_ID,&#xA;    ACQUISITION_FILE_ID,&#xA;    APP_CREATE_USERID,&#xA;    APP_CREATE_TIMESTAMP,&#xA;    APP_LAST_UPDATE_USERID,&#xA;    APP_LAST_UPDATE_TIMESTAMP&#xA;)&#xA;SELECT&#xA;    pm.DOCUMENT_ID,&#xA;    pm.ACQUISITION_FILE_ID,&#xA;    'TAP_ETL',&#xA;    GETUTCDATE(),&#xA;    'TAP_ETL',&#xA;    GETUTCDATE()&#xA;FROM PAIMS_Matches pm&#xA;;&#xA;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+          </DTS:ObjectData>
+        </DTS:Executable>
+      </DTS:Executables>
+      <DTS:PrecedenceConstraints>
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\mot_number NULL Case.PrecedenceConstraints[Constraint]"
+          DTS:CreationName=""
+          DTS:DTSID="{B3681185-E92C-46AF-A17A-6A3630E93BAB}"
+          DTS:From="Package\mot_number NULL Case\GWP"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint"
+          DTS:To="Package\mot_number NULL Case\PAT" />
+        <DTS:PrecedenceConstraint
+          DTS:refId="Package\mot_number NULL Case.PrecedenceConstraints[Constraint 1]"
+          DTS:CreationName=""
+          DTS:DTSID="{71DB33C0-349F-4C57-91C7-33D02A269B47}"
+          DTS:From="Package\mot_number NULL Case\PAT"
+          DTS:LogicalAnd="True"
+          DTS:ObjectName="Constraint 1"
+          DTS:To="Package\mot_number NULL Case\TAP" />
+      </DTS:PrecedenceConstraints>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{09FCE1F1-0155-4E40-934D-7A7605AB939B}"
+      DTS:From="Package\mot_number NULL Case"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\mot_number NOT NULL Case" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="166.666666666667,42.6666666666667"
+          Id="Package\mot_number NOT NULL Case\GWP_NOT_NULL"
+          TopLeft="17.0833235916994,47.5263100585117" />
+        <NodeLayout
+          Size="161.333333333334,42.6666666666667"
+          Id="Package\mot_number NOT NULL Case\PAT_NOT_NULL"
+          TopLeft="21.4583235265068,145.929820594805" />
+        <NodeLayout
+          Size="161.333333333334,42.6666666666667"
+          Id="Package\mot_number NOT NULL Case\TAP_NOT_NULL"
+          TopLeft="23.6666522870466,239.789477934137" />
+        <EdgeLayout
+          Id="Package\mot_number NOT NULL Case.PrecedenceConstraints[Constraint]"
+          TopLeft="103.229154573443,239.789477934137">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,-51.1929906726657"
+              Start="0,0"
+              End="0,-43.6929906726657">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-43.6929906726657" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\mot_number NOT NULL Case.PrecedenceConstraints[Constraint 1]"
+          TopLeft="101.270823559103,145.929820594805">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,-55.7368438696267"
+              Start="0,0"
+              End="0,-48.2368438696267">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-48.2368438696267" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="244.666666666667,390.666666666667"
+          Size="244.666666666667,433.333333333334"
+          Id="Package\mot_number NOT NULL Case"
+          TopLeft="524.374992186204,159.421055632285" />
+        <NodeLayout
+          Size="104.666666666667,42.6666666666667"
+          Id="Package\mot_number NULL Case\GWP"
+          TopLeft="48.708325743055,58.8771975414684" />
+        <NodeLayout
+          Size="100.666666666667,42.6666666666667"
+          Id="Package\mot_number NULL Case\PAT"
+          TopLeft="58.7083255940433,149.228074502637" />
+        <NodeLayout
+          Size="100.666666666667,42.6666666666667"
+          Id="Package\mot_number NULL Case\TAP"
+          TopLeft="43.083325826874,234.754391901931" />
+        <EdgeLayout
+          Id="Package\mot_number NULL Case.PrecedenceConstraints[Constraint]"
+          TopLeft="97.3194367796602,101.543864208135">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,47.684210294502"
+              Start="0,0"
+              End="0,40.184210294502">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,40.184210294502" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\mot_number NULL Case.PrecedenceConstraints[Constraint 1]"
+          TopLeft="109.041658927377,191.894741169304">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="-15.6249997671694,42.8596507326275"
+              Start="0,0"
+              End="-15.6249997671694,35.3596507326275">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,17.4298253663138" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,17.4298253663138"
+                    Point2="0,21.4298253663138"
+                    Point3="-4,21.4298253663138" />
+                  <mssgle:LineSegment
+                    End="-11.6249997671694,21.4298253663138" />
+                  <mssgle:CubicBezierSegment
+                    Point1="-11.6249997671694,21.4298253663138"
+                    Point2="-15.6249997671694,21.4298253663138"
+                    Point3="-15.6249997671694,25.4298253663138" />
+                  <mssgle:LineSegment
+                    End="-15.6249997671694,35.3596507326275" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <ContainerLayout
+          HeaderHeight="43"
+          IsExpanded="True"
+          PanelSize="219.333333333334,434.666666666667"
+          Size="219.333333333334,477.333333333334"
+          Id="Package\mot_number NULL Case"
+          TopLeft="156.249997671694,140.947371074037" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="375.583331005027,377.850880019828">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="148.791661181177,0"
+              Start="0,0"
+              End="141.291661181177,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="141.291661181177,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <AnnotationLayout
+          Text="FIX for missing PIMS_ACQUISITION_FILE_DOCUMENT"
+          ParentId="Package"
+          FontInfo="{assembly:Null}"
+          Size="310.666666666667,40"
+          Id="39347c7d-896f-4e93-b59b-1aa61040b19c"
+          TopLeft="340.624994924292,27.3684215677747" />
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>

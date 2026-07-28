@@ -1,0 +1,163 @@
+﻿<?xml version="1.0"?>
+<DTS:Executable xmlns:DTS="www.microsoft.com/SqlServer/Dts"
+  DTS:refId="Package"
+  DTS:CreationDate="6/26/2025 1:54:45 PM"
+  DTS:CreationName="Microsoft.Package"
+  DTS:CreatorComputerName="ARIMA-DELL"
+  DTS:CreatorName="ARIMA-DELL\smart"
+  DTS:DTSID="{B814BE9B-1719-4DD3-B953-476102D51EEF}"
+  DTS:ExecutableType="Microsoft.Package"
+  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LocaleID="1033"
+  DTS:ObjectName="Package1"
+  DTS:PackageType="5"
+  DTS:ProtectionLevel="0"
+  DTS:VersionBuild="12"
+  DTS:VersionGUID="{46A76CB2-BBC0-44CD-8CDB-6224EACD2CD6}">
+  <DTS:Property
+    DTS:Name="PackageFormatVersion">8</DTS:Property>
+  <DTS:Variables />
+  <DTS:Executables>
+    <DTS:Executable
+      DTS:refId="Package\ETL_SOURCE_LAND_PARCEL"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{FF1E8B3A-3DD8-41C8-A799-00639B491DB6}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="ETL_SOURCE_LAND_PARCEL"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B06732EE-E98B-45E4-9826-B822D8836FA1}"
+          SQLTask:SqlStatementSource="IF NOT EXISTS (&#xA;    SELECT 1 &#xA;    FROM INFORMATION_SCHEMA.TABLES &#xA;    WHERE TABLE_NAME = 'SOURCE_LAND_PARCEL' AND TABLE_SCHEMA = 'etl'&#xA;)&#xA;BEGIN&#xA;    CREATE TABLE etl.SOURCE_LAND_PARCEL (&#xA;    [LAND_PARCEL_ID] numeric(6,0),&#xA;    [PID] nvarchar(12),&#xA;    [OTHER_PID] nvarchar(50),&#xA;    [PARCEL_INDEX] nvarchar(50),&#xA;    [MOT_NUMBER] numeric(38,8),&#xA;    [OWNER_NAME] nvarchar(240),&#xA;    [PREVIOUS_OWNER_NAME] nvarchar(240),&#xA;    [OTHER_OWNER_NAME] nvarchar(240),&#xA;    [ALIAS_NAME] nvarchar(240),&#xA;    [ADDRESS] nvarchar(240),&#xA;    [ACQUISITION_STATUS_DESCRIPTION] nvarchar(50),&#xA;    [AGREEMENT_TYPE] nvarchar(50),&#xA;    [CONSTRUCTION_COMMITMENT_DESC] nvarchar(50),&#xA;    [ACTUAL_PAID] numeric(11,2),&#xA;    [REQUIRED_DATE] datetime,&#xA;    [TAKING_TYPE] nvarchar(50),&#xA;    [APPRAISAL_REQUIRED_DESC] nvarchar(10),&#xA;    [SECTION_6_RISK] nvarchar(9),&#xA;    [SURPLUS_DESCRIPTION] nvarchar(17),&#xA;    [LEGAL_SURVEY_STATUS_DESC] nvarchar(50),&#xA;    [ESTIMATED_DATE] datetime,&#xA;    [SURPLUS_VALUE] numeric(17,2),&#xA;    [POSSESSION_DATE] datetime,&#xA;    [NOTE] nvarchar(255),&#xA;    [AGENT_NAME] nvarchar(240),&#xA;    [CREATE_USERID] nvarchar(30),&#xA;    [CREATE_DATETIME] datetime,&#xA;    [LAST_UPDATE_USERID] nvarchar(30),&#xA;    [LAST_UPDATE_DATETIME] datetime,&#xA;    [LAST_UPDATE_APP_USERID] nvarchar(30),&#xA;    [INITIAL_ESTIMATE_AMOUNT] numeric(11,2),&#xA;    [ADVANCE_PAYMENT_DATE] datetime,&#xA;    [LAND_UNIT_RATE_PAID_AMOUNT] numeric(11,2),&#xA;    [OWNERSHIP_TYPE_DESCRIPTION] nvarchar(30),&#xA;    [ACQUISITION_PRIORITY_DESC] nvarchar(30),&#xA;    [STRATA_PLAN_NUMBER] nvarchar(8),&#xA;    [GEOMETRY_EXISTENCE_FLAG] nvarchar(1),&#xA;    [SOURCE] nvarchar(3)&#xA;);&#xA;END;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\etl_SOURCE_LAND_PARCEL_GEOMETRY"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{BE781B40-EB5F-4520-BC23-51662B07286E}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="etl_SOURCE_LAND_PARCEL_GEOMETRY"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B06732EE-E98B-45E4-9826-B822D8836FA1}"
+          SQLTask:SqlStatementSource="IF NOT EXISTS (&#xA;    SELECT 1 &#xA;    FROM INFORMATION_SCHEMA.TABLES &#xA;    WHERE TABLE_NAME = 'SOURCE_LAND_PARCEL_GEOMETRY' AND TABLE_SCHEMA = 'etl'&#xA;)&#xA;BEGIN&#xA;CREATE TABLE etl.SOURCE_LAND_PARCEL_GEOMETRY (&#xA;    [LAND_PARCEL_ID] numeric(6,0),&#xA;    [SHAPE_WKT] nvarchar(max),&#xA;    [SOURCE] nvarchar(3)&#xA;);&#xA;END;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\etl_SOURCE_SUB_INTEREST"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{194522B0-DF7A-4F1C-8CD7-63DD9FAFBB2D}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="etl_SOURCE_SUB_INTEREST"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{B06732EE-E98B-45E4-9826-B822D8836FA1}"
+          SQLTask:SqlStatementSource="IF NOT EXISTS (&#xA;    SELECT 1 &#xA;    FROM INFORMATION_SCHEMA.TABLES &#xA;    WHERE TABLE_NAME = 'SOURCE_SUB_INTEREST' AND TABLE_SCHEMA = 'etl'&#xA;)&#xA;BEGIN&#xA;CREATE TABLE etl.SOURCE_SUB_INTEREST (&#xA;    [SUB_INTEREST_ID] numeric(5,0),&#xA;    [TYPE_DESCRIPTION] nvarchar(240),&#xA;    [MOT_NUMBER] nvarchar(240),&#xA;    [NAME] nvarchar(255),&#xA;    [STATUS] nvarchar(240),&#xA;    [SECTION_6_RISK] nvarchar(240),&#xA;    [ESTIMATED_DATE] datetime,&#xA;    [AGREEMENT_TYPE] nvarchar(240),&#xA;    [ACTUAL_PAID] numeric(11,2),&#xA;    [REQUIRED_DATE] datetime,&#xA;    [TAKING_TYPE] nvarchar(240),&#xA;    [POSSESSION_DATE] datetime,&#xA;    [NOTE] nvarchar(255),&#xA;    [AGENT_NAME] nvarchar(240),&#xA;    [CREATE_USERID] nvarchar(30),&#xA;    [CREATE_DATETIME] datetime,&#xA;    [LAST_UPDATE_USERID] nvarchar(30),&#xA;    [LAST_UPDATE_DATETIME] datetime,&#xA;    [LAST_UPDATE_APP_USERID] nvarchar(30),&#xA;    [LAND_PARCEL_ID] numeric(6,0),&#xA;    [INITIAL_ESTIMATE_AMOUNT] numeric(11,2),&#xA;    [ADVANCE_PAYMENT_DATE] datetime,&#xA;    [ADDRESS] nvarchar(240),&#xA;    [PID] nvarchar(12),&#xA;    [SOURCE] nvarchar(3)&#xA;);&#xA;END;&#xA;" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
+  </DTS:Executables>
+  <DTS:PrecedenceConstraints>
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint]"
+      DTS:CreationName=""
+      DTS:DTSID="{D6E24589-E590-4A27-8EBA-6E306DDDAA0B}"
+      DTS:From="Package\ETL_SOURCE_LAND_PARCEL"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint"
+      DTS:To="Package\etl_SOURCE_LAND_PARCEL_GEOMETRY" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 1]"
+      DTS:CreationName=""
+      DTS:DTSID="{BCE8C22F-60F2-4948-A31B-0E2120BAE484}"
+      DTS:From="Package\etl_SOURCE_LAND_PARCEL_GEOMETRY"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 1"
+      DTS:To="Package\etl_SOURCE_SUB_INTEREST" />
+  </DTS:PrecedenceConstraints>
+  <DTS:DesignTimeProperties><![CDATA[<?xml version="1.0"?>
+<!--This CDATA section contains the layout information of the package. The section includes information such as (x,y) coordinates, width, and height.-->
+<!--If you manually edit this section and make a mistake, you can delete it. -->
+<!--The package will still be able to load normally but the previous layout information will be lost and the designer will automatically re-arrange the elements on the design surface.-->
+<Objects
+  Version="8">
+  <!--Each node below will contain properties that do not affect runtime behavior.-->
+  <Package
+    design-time-name="Package">
+    <LayoutInfo>
+      <GraphLayout
+        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        <NodeLayout
+          Size="233.333333333334,42.6666666666667"
+          Id="Package\ETL_SOURCE_LAND_PARCEL"
+          TopLeft="323.749995175749,218.263162002999" />
+        <NodeLayout
+          Size="292,42.6666666666667"
+          Id="Package\etl_SOURCE_LAND_PARCEL_GEOMETRY"
+          TopLeft="656.249990221113,214.157898767833" />
+        <NodeLayout
+          Size="229.333333333334,42.6666666666667"
+          Id="Package\etl_SOURCE_SUB_INTEREST"
+          TopLeft="1017.49998483807,217.578951463805" />
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint]"
+          TopLeft="557.083328509082,237.54386371875">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="99.1666617120306,0"
+              Start="0,0"
+              End="91.6666617120306,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="91.6666617120306,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 1]"
+          TopLeft="948.249990221113,237.201758449153">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="69.249994616956,0"
+              Start="0,0"
+              End="61.749994616956,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="61.749994616956,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+      </GraphLayout>
+    </LayoutInfo>
+  </Package>
+</Objects>]]></DTS:DesignTimeProperties>
+</DTS:Executable>
