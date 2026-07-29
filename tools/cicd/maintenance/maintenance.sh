@@ -32,8 +32,8 @@ GIT_REF=${GIT_REF:-dev}
 OUTPUT_IMAGE_TAG=${OUTPUT_IMAGE_TAG:-${GIT_REF}}
 
 #OC_S2I=${OC_BUILD:-../openshift/4.0/templates/maintenance/caddy.s2i.bc.yaml}
-OC_BUILD=${OC_BUILD:-../openshift/4.0/templates/maintenance/caddy.bc.yaml}
-OC_DEPLOY=${OC_DEPLOY:-../openshift/4.0/templates/maintenance/caddy.deployment.yaml}
+OC_BUILD=${OC_BUILD:-../openshift/4.0/templates/maintenance/caddy-v2.bc.yaml}
+OC_DEPLOY=${OC_DEPLOY:-../openshift/4.0/templates/maintenance/caddy.dc.yaml}
 #BUILD_PROJECT=${BUILD_PROJECT:-3cd915-tools}
 
 # support PROD route overrides
