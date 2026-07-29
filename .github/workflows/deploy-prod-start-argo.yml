@@ -29,7 +29,7 @@ on:
   workflow_dispatch:
     inputs:
       OVERRIDE_VERSION:
-        description: "Enter the version tag for this release in format v<major>.<minor>.<patch>-<IS>.<build> or enter nothing to use the most recently tagged version"
+        description: "Enter the version tag for this release in format v<major>.<minor>.<patch>.<build> or enter nothing to use the most recently tagged version"
         required: false
 
 jobs:
