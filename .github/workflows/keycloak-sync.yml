@@ -1,36 +1,132 @@
-name: Keycloak Sync
-env:
-  OPENSHIFT_TOOLS_NAMESPACE: "3cd915-tools"
-  MS_TEAMS_WEBHOOK_BUILD_CHANNEL: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
-  AUTH__KEYCLOAK__SECRET: ${{ secrets.KEYCLOAK_SECRET }}
-  AUTH__KEYCLOAK__SERVICEACCOUNT__SECRET: ${{ secrets.KEYCLOAK_SERVICEACCOUNT_SECRET }}
-  sync-directory: ./tools/keycloak/sync
-  ASPNETCORE_ENVIRONMENT: "Development"
+# Triggers the keycloak-sync Tekton pipeline and waits for it to finish.
+#
+# Two entry points:
+#   workflow_call     - called by ci-cd-pims-dev.yml and the uat workflows in place of
+#                       their own keycloak-sync job.
+#   workflow_dispatch - run manually from the Actions tab against any environment.
+#
+# The pipeline objects are managed by ArgoCD (tenant-gitops-3cd915,
+# infra/pipelines/keycloak-sync). Every environment-specific pipeline parameter except
+# BRANCH is baked into the Pipeline as a default by the kustomize overlay, so this
+# workflow only supplies the environment and the branch.
+name: Keycloak Sync (ArgoCD)
 
 on:
   workflow_dispatch:
+    inputs:
+      environment:
+        description: >-
+          Target environment. Selects the namespace, and the Pipeline and PVC, which are
+          both named keycloak-sync-<environment>.
+        required: true
+        type: choice
+        default: dev
+        options:
+          - dev
+          - test
+          - uat
+          - prod
+      branch:
+        description: Git branch that the pipeline should check out.
+        required: true
+        type: string
+        default: dev
+      pipeline-timeout:
+        description: Timeout passed to tkn. Defaults to 20 minutes.
+        required: false
+        type: string
+        default: 20m
+
+  workflow_call:
+    inputs:
+      environment:
+        description: >-
+          Target environment (dev, test, uat, prod). Selects the namespace, and the
+          Pipeline and PVC, which are both named keycloak-sync-<environment>.
+        required: true
+        type: string
+      branch:
+        description: Git branch that the pipeline should check out.
+        required: true
+        type: string
+      pipeline-timeout:
+        description: Timeout passed to tkn. Defaults to 20 minutes.
+        required: false
+        type: string
+        default: 20m
+      pod-template:
+        description: Path to the PipelineRun pod template.
+        required: false
+        type: string
+        default: ./openshift/4.0/templates/jobs/keycloak-sync-podtemplate.yaml
+      tkn-version:
+        description: >-
+          tkn CLI version. Pinned rather than 'latest' because the -E flag carries the
+          failure detection for this job.
+        required: false
+        type: string
+        default: "0.40.0"
+    secrets:
+      OPENSHIFT_SERVER:
+        required: true
+      OPENSHIFT_TOKEN:
+        required: true
 
 jobs:
-  sync-keycloak:
-    name: Sync Keycloak
+  keycloak-sync:
+    name: Run keycloak-sync pipeline in OpenShift
     runs-on: ubuntu-22.04
     steps:
+      # dev and test share 3cd915-dev; uat runs in 3cd915-test. Deriving the namespace
+      # here rather than taking it as an input removes the chance of a caller pairing an
+      # environment with the wrong namespace. An unrecognised value fails loudly instead
+      # of defaulting to something plausible.
+      - name: Resolve namespace
+        id: resolve
+        shell: bash
+        run: |
+          set -euo pipefail
+          case "${{ inputs.environment }}" in
+            dev)  namespace=3cd915-dev  ;;
+            test) namespace=3cd915-dev  ;;
+            uat)  namespace=3cd915-test ;;
+            prod) namespace=3cd915-prod ;;
+            *)
+              echo "::error::Unknown environment '${{ inputs.environment }}'. Expected one of: dev, test, uat, prod."
+              exit 1
+              ;;
+          esac
+          echo "namespace=${namespace}" >> "$GITHUB_OUTPUT"
+          echo "Environment '${{ inputs.environment }}' resolved to namespace '${namespace}'."
+
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
 
-      - name: Setup .NET 8
-        uses: actions/setup-dotnet@55ec9447dda3d1cf6bd587150f3262f30ee10815 # v3
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
-          dotnet-version: "8.0.x"
+          openshift_server_url: ${{ secrets.OPENSHIFT_SERVER }}
+          openshift_token: ${{ secrets.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ steps.resolve.outputs.namespace }}
 
-      - name: Install dependencies for keycloak sync
-        run: dotnet restore
-        working-directory: ${{env.sync-directory}}
+      - name: Install tkn CLI
+        uses: redhat-actions/openshift-tools-installer@ebd96c3fc72fc10a62663eac5e1421192152e6aa # v2.0
+        with:
+          source: mirror
+          tkn: ${{ inputs.tkn-version || '0.40.0' }}
 
-      - name: Build keycloak sync
-        run: dotnet build
-        working-directory: ${{env.sync-directory}}
-
-      - name: Start keycloak sync
-        run: dotnet run
-        working-directory: ${{env.sync-directory}}
+      - name: Start keycloak-sync pipeline
+        shell: bash
+        run: |
+          set -euo pipefail
+          tkn pipeline start keycloak-sync-${{ inputs.environment }} \
+            -n ${{ steps.resolve.outputs.namespace }} \
+            --use-param-defaults \
+            -p BRANCH="${{ inputs.branch }}" \
+            -w name=psp,claimName=keycloak-sync-${{ inputs.environment }} \
+            -s pipeline \
+            --pod-template ${{ inputs.pod-template || './openshift/4.0/templates/jobs/keycloak-sync-podtemplate.yaml' }} \
+            --pipeline-timeout ${{ inputs.pipeline-timeout }} \
+            --showlog \
+            -E
