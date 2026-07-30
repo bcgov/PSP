@@ -77,8 +77,7 @@ function isValidVersion(version) {
 }
 
 function parse(version) {
-  const [semVer, metadata] = version.split('-');
-  const [major, minor, patch, build] = semVer?.split('.');
+  const [major, minor, patch, build] = version?.split('.');
   return [major, minor, patch, build];
 }
 
