@@ -65,7 +65,7 @@ on:
           failure detection for this job.
         required: false
         type: string
-        default: "1.18.0"
+        default: "0.40.0"
     secrets:
       OPENSHIFT_SERVER:
         required: true
@@ -113,8 +113,11 @@ jobs:
       - name: Install tkn CLI
         uses: redhat-actions/openshift-tools-installer@ebd96c3fc72fc10a62663eac5e1421192152e6aa # v2.0
         with:
-          source: mirror
-          tkn: ${{ inputs.tkn-version || '1.18.0' }}
+          source: github
+          tkn: ${{ inputs.tkn-version || '0.40.0' }}
+
+      - name: Check tkn version
+        run: tkn version
 
       - name: Start keycloak-sync pipeline
         shell: bash
