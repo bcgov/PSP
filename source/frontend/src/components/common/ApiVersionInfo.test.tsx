@@ -5,8 +5,6 @@ import { useTenant } from '@/tenants/useTenant';
 import { render, RenderOptions, waitForEffects } from '@/utils/test-utils';
 
 import { ApiVersionInfo } from './ApiVersionInfo';
-import ISystemCheck from '@/hooks/pims-api/interfaces/ISystemCheck';
-import { AxiosResponse } from 'axios';
 
 const defaultVersion: IApiVersion = {
   environment: 'test',
@@ -63,7 +61,7 @@ describe('ApiVersionInfo suite', () => {
     await waitForEffects();
 
     const element = getByTestId(`version-tag`);
-    expect(element).toHaveTextContent('v11.1.1');
+    expect(element).toHaveTextContent('v11.1.1.999');
     expect(mockGetVersionApi).toHaveBeenCalledTimes(1);
   });
 });

@@ -29,16 +29,11 @@ export const ApiVersionInfo = () => {
   }, [getVersion]);
 
   const frontEndVersion = import.meta.env.VITE_PACKAGE_VERSION;
-  const frontEndVersionSegments = frontEndVersion?.split('.') ?? [];
-  const displayFrontEndVersion =
-    frontEndVersionSegments.length === 4
-      ? frontEndVersionSegments.slice(0, 3).join('.')
-      : frontEndVersion ?? '';
 
   return (
     <StyledContainer>
       <div className="version" data-testid="version-tag">
-        {`v${displayFrontEndVersion}`}
+        {`v${frontEndVersion}`}
       </div>
     </StyledContainer>
   );
