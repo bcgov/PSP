@@ -111,10 +111,21 @@ jobs:
           namespace: ${{ steps.resolve.outputs.namespace }}
 
       - name: Install tkn CLI
-        uses: redhat-actions/openshift-tools-installer@ebd96c3fc72fc10a62663eac5e1421192152e6aa # v2.0
-        with:
-          source: github
-          tkn: ${{ inputs.tkn-version || '0.40.0' }}
+        shell: bash
+        env:
+          TKN_VERSION: ${{ inputs.tkn-version || '0.40.0' }}
+        run: |
+          set -euo pipefail
+          url="https://github.com/tektoncd/cli/releases/download/v${TKN_VERSION}/tkn_${TKN_VERSION}_Linux_x86_64.tar.gz"
+          echo "Downloading ${url}"
+          curl --fail --silent --show-error --location --retry 3 --retry-delay 5 \
+            -o /tmp/tkn.tar.gz "${url}"
+
+          # Extract only the binary; the tarball also carries LICENSE and README.
+          sudo tar xvzf /tmp/tkn.tar.gz -C /usr/local/bin/ tkn
+
+          # Clean up downloaded file
+          rm -f /tmp/tkn.tar.gz /tmp/tkn
 
       - name: Check tkn version
         run: tkn version
