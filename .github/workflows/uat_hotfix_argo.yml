@@ -55,7 +55,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@f19c5f4f98c725396a5eeb265b1338333634828a # v2.0
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -74,7 +74,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@f19c5f4f98c725396a5eeb265b1338333634828a # v2.0
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -94,7 +94,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@f19c5f4f98c725396a5eeb265b1338333634828a # v2.0
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -137,7 +137,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@f19c5f4f98c725396a5eeb265b1338333634828a # v2.0
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -158,7 +158,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@f19c5f4f98c725396a5eeb265b1338333634828a # v2.0
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -180,7 +180,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@f19c5f4f98c725396a5eeb265b1338333634828a # v2.0
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -199,7 +199,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@f19c5f4f98c725396a5eeb265b1338333634828a # v2.0
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
