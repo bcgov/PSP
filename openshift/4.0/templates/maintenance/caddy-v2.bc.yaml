@@ -49,28 +49,28 @@ parameters:
     required: true
     value: "2.11.4"
 
-  - name: CPU_LIMIT
+  - name: CPU_REQUEST
     displayName: Resources CPU Limit
     description: The resources CPU limit (in cores) for this build.
     required: true
-    value: "1"
+    value: "250m"
 
-  - name: MEMORY_LIMIT
+  - name: MEMORY_REQUEST
     displayName: Memory Limit
     description: Maximum amount of memory the container can use.
     required: true
-    value: 6Gi
+    value: 512Mi
 
 objects:
   # How to build the image.
   - kind: BuildConfig
     apiVersion: build.openshift.io/v1
     metadata:
-      name: ${NAME}.${GIT_REF}
+      name: ${NAME}-v2-${GIT_REF}
       namespace: ${PROJECT_NAMESPACE}-${ENV_NAME}
       labels:
-        name: ${NAME}
-        app: ${NAME}
+        name: ${NAME}-v2
+        app: ${NAME}-v2
         role: ${ROLE_NAME}
         env: ${ENV_NAME}
     spec:
@@ -96,9 +96,9 @@ objects:
           name: "${NAME}:${OUTPUT_IMAGE_TAG}"
 
       resources:
-        limits:
-          cpu: ${CPU_LIMIT}
-          memory: ${MEMORY_LIMIT}
+        requests:
+          cpu: ${CPU_REQUEST}
+          memory: ${MEMORY_REQUEST}
 
       postCommit: {}
       nodeSelector:
