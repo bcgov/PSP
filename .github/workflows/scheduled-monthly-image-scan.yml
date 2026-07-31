@@ -10,13 +10,15 @@ jobs:
     name: Monthly Scan Start Notification
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Notify scan start
-        uses: dragos-cojocari/ms-teams-notification@bdee8c5584729d6a2dcaad8fc21ecfd40d1418ab # v1.0.2
+        uses: ./.github/actions/teams-notification
         with:
-          github-token: ${{ github.token }}
-          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
-          notification-summary: Monthly Container Image Security Scan STARTED
-          notification-color: 17a2b8
+          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
+          summary: Monthly Container Image Security Scan STARTED
+          title: Monthly Image Scan
+          color: 17a2b8
           timezone: America/Los_Angeles
 
   scan-deployed-and-bases:
@@ -38,7 +40,7 @@ jobs:
     steps:
       - uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Authenticate OpenShift
-        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -112,14 +114,16 @@ jobs:
     needs: scan-deployed-and-bases
     if: always()
     steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: check workflow status
         uses: martialonline/workflow-status@326830cacf79872efe767e15031f58d1ea0508c4 # v4.2
         id: check
       - name: End notification to Teams Channel
-        uses: dragos-cojocari/ms-teams-notification@bdee8c5584729d6a2dcaad8fc21ecfd40d1418ab # v1.0.2
+        uses: ./.github/actions/teams-notification
         with:
-          github-token: ${{ github.token }}
-          ms-teams-webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
-          notification-summary: Monthly Container Image Security Scan COMPLETED with status ${{ steps.check.outputs.status }}. Review scan reports in GitHub Actions artifacts.
-          notification-color: 17a2b8
+          webhook-uri: ${{ secrets.MS_TEAMS_WEBHOOK_URI_BUILD_CHANNEL }}
+          summary: Monthly Container Image Security Scan COMPLETED with status ${{ steps.check.outputs.status }}. Review scan reports in GitHub Actions artifacts.
+          title: Monthly Image Scan
+          color: 17a2b8
           timezone: America/Los_Angeles

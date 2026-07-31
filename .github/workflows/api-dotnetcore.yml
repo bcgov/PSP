@@ -154,15 +154,17 @@ jobs:
       GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
       GIT_BRANCH: "${{github.ref}}"
     steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       # Send notifications only if MS_TEAMS_NOTIFY_URL secret has been set
       - name: Failure notification to Teams Channel
         env:
           MS_TEAMS_NOTIFY_URL: ${{ secrets.MS_TEAMS_NOTIFY_URL }}
         if: env.MS_TEAMS_NOTIFY_URL != '' && failure()
-        uses: dragos-cojocari/ms-teams-notification@bdee8c5584729d6a2dcaad8fc21ecfd40d1418ab # v1.0.2
+        uses: ./.github/actions/teams-notification
         with:
-          github-token: ${{ github.token }}
-          ms-teams-webhook-uri: ${{ env.MS_TEAMS_NOTIFY_URL }}
-          notification-summary: PIMS API FAILED in ${{env.GIT_BRANCH}} environment
-          notification-color: ff0000
+          webhook-uri: ${{ env.MS_TEAMS_NOTIFY_URL }}
+          summary: PIMS API FAILED in ${{env.GIT_BRANCH}} environment
+          title: PIMS API Build
+          color: ff0000
           timezone: America/Los_Angeles
