@@ -32,7 +32,8 @@ env:
   DEPLOYMENT_NAMESPACE: "3cd915-dev"
   WORKFLOW_NAME: "${{ github.workflow }}"
 
-on: workflow_dispatch
+on:
+  workflow_dispatch
     inputs:
       enable-notifications:
         description: "Send Teams notifications"
