@@ -31,6 +31,11 @@ on:
       OVERRIDE_VERSION:
         description: "Enter the version tag for this release in format v<major>.<minor>.<patch>.<build> or enter nothing to use the most recently tagged version"
         required: false
+      enable-notifications:
+        description: "Send Teams notifications"
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   ci-cd-start-notification:
@@ -40,6 +45,8 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Start notification to Teams Channel
+        if: ${{ inputs.enable-notifications }}
+        continue-on-error: true
         uses: ./.github/actions/teams-notification
         with:
           webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
