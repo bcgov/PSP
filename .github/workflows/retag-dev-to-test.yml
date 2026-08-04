@@ -33,7 +33,7 @@ env:
   WORKFLOW_NAME: "${{ github.workflow }}"
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
     inputs:
       enable-notifications:
         description: "Send Teams notifications"

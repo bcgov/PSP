@@ -31,7 +31,7 @@ env:
   DEPLOYMENT_NAMESPACE: "3cd915-test"
 
 on:
-  workflow_dispatch
+  workflow_dispatch:
     inputs:
       enable-notifications:
         description: "Send Teams notifications"
