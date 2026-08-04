@@ -254,6 +254,27 @@ namespace Pims.Api.Areas.Lease.Controllers
             var pimsLease = _leaseRepository.GetLeaseAtTime(id, time);
             return new JsonResult(_mapper.Map<LeaseModel>(pimsLease));
         }
+
+        [HttpGet("{id:long}/associations")]
+        [Produces("application/json")]
+        [HasPermission(Permissions.LeaseView)]
+        [ProducesResponseType(typeof(LeaseAssociationModel), 200)]
+        [SwaggerOperation(Tags = new[] { "lease" })]
+        [TypeFilter(typeof(NullJsonResultFilter))]
+        public IActionResult GetLeaseAssociations([FromRoute] long id)
+        {
+            _logger.LogInformation(
+             "Request received by Controller: {Controller}, Action: {ControllerAction}, User: {User}, DateTime: {DateTime}",
+             nameof(LeaseController),
+             nameof(GetLeaseAtTime),
+             User.GetUsername(),
+             DateTime.Now);
+
+            var pimsLease = _leaseRepository.GetLeaseAssociations(id);
+
+            return new JsonResult(_mapper.Map<LeaseAssociationModel>(pimsLease));
+        }
+
         #endregion
     }
 }

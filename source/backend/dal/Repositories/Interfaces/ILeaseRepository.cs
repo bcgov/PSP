@@ -45,5 +45,7 @@ namespace Pims.Dal.Repositories
         List<PimsLeaseLicenseTeam> GetTeamMembers(UserContextModel userContext = null);
 
         PimsLease GetLeaseAtTime(long leaseId, DateTime time);
+
+        PimsLease GetLeaseAssociations(long leaseId);
     }
 }

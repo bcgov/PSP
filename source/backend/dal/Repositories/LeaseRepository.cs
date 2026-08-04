@@ -1089,6 +1089,24 @@ namespace Pims.Dal.Repositories
             return _mapper.Map<PimsLease>(leaseHist);
         }
 
+        public PimsLease GetLeaseAssociations(long leaseId)
+        {
+            PimsLease lease = Context.PimsLeases.AsSplitQuery().AsNoTracking()
+                .Include(l => l.PimsLeaseStakeholders)
+                    .ThenInclude(t => t.LeaseStakeholderTypeCodeNavigation)
+                .Include(l => l.PimsLeaseStakeholders)
+                    .ThenInclude(t => t.Person)
+                .Include(l => l.PimsLeaseStakeholders)
+                    .ThenInclude(t => t.Organization)
+                .Include(l => l.PimsLeaseStakeholders)
+                    .ThenInclude(t => t.LessorTypeCodeNavigation)
+                .Include(r => r.PimsLeaseRenewals)
+                .Include(s => s.LeaseStatusTypeCodeNavigation)
+                .FirstOrDefault(l => l.LeaseId == leaseId);
+
+            return lease;
+        }
+
         private static string NormalizeLFileNo(string input)
         {
             if (string.IsNullOrWhiteSpace(input))
@@ -1278,7 +1296,6 @@ namespace Pims.Dal.Repositories
                 sortDef[sortFieldIndex] = sortDef[sortFieldIndex].Replace(sourceField, targetField);
             }
         }
-
         #endregion
     }
 }
