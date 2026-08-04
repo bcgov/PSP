@@ -52,7 +52,7 @@ jobs:
         uses: ./.github/actions/teams-notification
         with:
           webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
-          summary: PIMS Release DEV to TST Started
+          summary: PIMS Release TEST to UAT Started
           title: PIMS Release TEST to UAT
           color: 17a2b8
           timezone: America/Los_Angeles
@@ -152,21 +152,11 @@ jobs:
   keycloak-sync:
     name: sync keycloak
     needs: database-upgrade
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
-      - name: Login to OpenShift
-        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
-        with:
-          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
-          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
-          insecure_skip_tls_verify: true
-          namespace: ${{ env.NAMESPACE_OVERRIDE }}
-      - name: call scripts to sync keycloak
-        shell: bash
-        run: |
-          oc process -f ./openshift/4.0/templates/jobs/keycloak-sync-pipeline-run.yaml -p ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT -p NAMESPACE=$NAMESPACE_OVERRIDE -p BRANCH=$GIT_BRANCH -p API_URL=http://pims-api-uat:8080/api -p KEYCLOAK_SECRET_NAME=pims-api-sso-uat -p KEYCLOAK_SERVICE_ACCOUNT_SECRET_NAME=pims-api-sso-uat  | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read PIPELINE_NAME; oc wait --for=condition=succeeded pipelineruns/$PIPELINE_NAME --timeout=500s)
+    uses: ./.github/workflows/keycloak-sync.yml
+    with:
+      environment: uat
+      branch: test
+    secrets: inherit
 
   tag-release-image:
     name: Release Tag
@@ -195,7 +185,7 @@ jobs:
   ci-cd-end-notification:
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-22.04
-    needs: [keycloak-sync, mayan-sync]
+    needs: [keycloak-sync, mayan-sync, tag-release-image]
     if: always()
     steps:
       - name: Checkout Source Code
