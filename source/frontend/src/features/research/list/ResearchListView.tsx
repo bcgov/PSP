@@ -8,10 +8,12 @@ import styled from 'styled-components';
 import ResearchFileIcon from '@/assets/images/research-icon.svg?react';
 import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
+import { REGION_TYPES } from '@/constants/API';
 import Claims from '@/constants/claims';
 import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
 import { useSearch } from '@/hooks/useSearch';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
@@ -83,6 +85,12 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
     });
   }, [retrieveUserLookup]);
 
+  const lookupCodes = useLookupCodeHelpers();
+  const regionOptions = lookupCodes.getOptionsByType(REGION_TYPES).map(c => ({
+    id: c.code,
+    text: c.label,
+  }));
+
   return (
     <CommonStyled.ListPage>
       <CommonStyled.PaddedScrollable>
@@ -107,6 +115,7 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
                 filter={filter}
                 setFilter={changeFilter}
                 createdByOptions={createdByOptions}
+                regionOptions={regionOptions}
               />
             </Col>
           </Row>

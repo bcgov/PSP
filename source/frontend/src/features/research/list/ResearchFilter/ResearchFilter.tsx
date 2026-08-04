@@ -6,7 +6,7 @@ import styled from 'styled-components';
 import { ResetButton, SearchButton } from '@/components/common/buttons';
 import { Form, Input, Multiselect, Select } from '@/components/common/form';
 import { ColButtons } from '@/components/common/styles';
-import { REGION_TYPES, RESEARCH_FILE_STATUS_TYPES } from '@/constants/API';
+import { RESEARCH_FILE_STATUS_TYPES } from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { mapLookupCode } from '@/utils';
@@ -18,6 +18,7 @@ import { ResearchFileSelect } from './ResearchFileSelect';
 export interface IResearchFilterProps {
   filter?: IResearchFilter;
   createdByOptions: MultiSelectOption[];
+  regionOptions: MultiSelectOption[];
   initialValues?: IResearchFilter;
   setFilter: (filter: IResearchFilter) => void;
 }
@@ -48,7 +49,7 @@ export const defaultResearchFilter: IResearchFilter = {
  */
 export const ResearchFilter: React.FunctionComponent<
   React.PropsWithChildren<IResearchFilterProps>
-> = ({ filter, createdByOptions, setFilter }) => {
+> = ({ filter, setFilter, createdByOptions, regionOptions }) => {
   const onSearchSubmit = (values: IResearchFilter, { setSubmitting }: any) => {
     const selectedUser = values.selectedUser?.[0]?.id as string | undefined;
 
@@ -63,13 +64,15 @@ export const ResearchFilter: React.FunctionComponent<
   };
 
   const lookupCodes = useLookupCodeHelpers();
-  const regionOptions = lookupCodes.getOptionsByType(REGION_TYPES).map(c => ({
-    id: c.code,
-    text: c.label,
-  }));
+  // const regionOptions = lookupCodes.getOptionsByType(REGION_TYPES).map(c => ({
+  //   id: c.code,
+  //   text: c.label,
+  // }));
   const initialFilterValues: IResearchFilter = {
     ...defaultResearchFilter,
     ...filter,
+    regionCodes: filter?.regionCodes?.length > 0 ? filter.regionCodes : regionOptions,
+    researchFileStatusTypeCode: filter?.researchFileStatusTypeCode ?? 'A',
   };
 
   const resetFilter = () => {
