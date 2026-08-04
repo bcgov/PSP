@@ -79,6 +79,7 @@ jobs:
         env:
           MS_TEAMS_NOTIFY_URL: ${{ secrets.MS_TEAMS_NOTIFY_URL }}
         if: env.MS_TEAMS_NOTIFY_URL != '' && failure()
+        continue-on-error: true
         uses: ./.github/actions/teams-notification
         with:
           webhook-uri: ${{ env.MS_TEAMS_NOTIFY_URL }}
