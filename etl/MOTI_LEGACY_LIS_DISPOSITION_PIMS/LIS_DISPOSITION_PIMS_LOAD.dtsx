@@ -7,13 +7,12 @@
   DTS:CreatorName="ARIMA-DELL\smart"
   DTS:DTSID="{D29EC497-76C8-4D06-8C25-C1D160E6B097}"
   DTS:ExecutableType="Microsoft.Package"
-  DTS:LastModifiedProductVersion="16.0.5270.0"
+  DTS:LastModifiedProductVersion="16.0.948.0"
   DTS:LocaleID="1033"
   DTS:ObjectName="Package"
   DTS:PackageType="5"
-  DTS:ProtectionLevel="0"
-  DTS:VersionBuild="94"
-  DTS:VersionGUID="{E6B1250B-4305-49A9-8E54-F3C508262F15}">
+  DTS:VersionBuild="107"
+  DTS:VersionGUID="{E748AF95-7CBC-48B1-A09B-F4E017DF2537}">
   <DTS:Property
     DTS:Name="PackageFormatVersion">8</DTS:Property>
   <DTS:ConnectionManagers>
@@ -26,7 +25,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=LIS_Dev;Provider=SQLOLEDB.1;Integrated Security=SSPI;Application Name=SSIS-Package-{EE8FB2DE-F7DA-4242-B96A-5C4F1BE070D9}sqldevtst.th.gov.bc.ca.LIS_Dev;Auto Translate=False;" />
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=LIS_Tst;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{EE8FB2DE-F7DA-4242-B96A-5C4F1BE070D9}sqldevtst.th.gov.bc.ca.LIS_Dev;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
     <DTS:ConnectionManager
@@ -38,11 +37,7 @@
         <DTS:ConnectionManager
           DTS:ConnectRetryCount="1"
           DTS:ConnectRetryInterval="5"
-          DTS:ConnectionString="Data Source=localhost,5433;User ID=admin;Initial Catalog=pims;Provider=SQLOLEDB.1;Persist Security Info=True;Application Name=SSIS-Package-{719B66AE-B16C-45F5-A5E7-08502974E082}localhost,5433.pims.admin;Auto Translate=False;">
-          <DTS:Password
-            DTS:Name="Password"
-            Sensitive="1"></DTS:Password>
-        </DTS:ConnectionManager>
+          DTS:ConnectionString="Data Source=sqldevtst.th.gov.bc.ca;Initial Catalog=PIMS_TST;Provider=SQLOLEDB.1;Integrated Security=SSPI;Auto Translate=False;Application Name=SSIS-Package-{719B66AE-B16C-45F5-A5E7-08502974E082}localhost,5433.pims.admin;" />
       </DTS:ObjectData>
     </DTS:ConnectionManager>
   </DTS:ConnectionManagers>
@@ -4830,7 +4825,7 @@ FROM
     t_fileSub  fs  join     t_fileSubLookup fsl on fsl.FileSubLookup_Id  = fs.FileSubLookup_Id
         join t_fileMain fm on fm.FileMain_SKey = fsl.FileMain_SKey
         left join t_marketing m on m.FileSubLookup_Id =fs.FileSubLookup_Id
-        inner JOIN t_saleExpenses se on se.FileSubLookup_Id =fs.FileSubLookup_Id
+        left JOIN t_saleExpenses se on se.FileSubLookup_Id =fs.FileSubLookup_Id
 )
 
 select  FILE_REFERENCE,FINAL_CONDITION_REMOVAL_DT,SALE_COMPLETION_DT,SALE_FISCAL_YEAR,SALE_FINAL_AMT, REALTOR_COMMISSION_AMT, IS_GST_REQUIRED,GST_COLLECTED_AMT,NET_BOOK_AMT, 
@@ -7764,7 +7759,7 @@ WHERE
                       dataType="wstr"
                       errorOrTruncationOperation="Computation"
                       errorRowDisposition="FailComponent"
-                      length="24"
+                      length="17"
                       lineageId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]"
                       name="APP_CREATE_USERID"
                       truncationRowDisposition="FailComponent">
@@ -7773,13 +7768,13 @@ WHERE
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">"LIS_PIMS_DISPOSITION_ETL"</property>
+                          name="Expression">"LIS_PIMS_DISP_ETL"</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">"LIS_PIMS_DISPOSITION_ETL"</property>
+                          name="FriendlyExpression">"LIS_PIMS_DISP_ETL"</property>
                       </properties>
                     </outputColumn>
                     <outputColumn
@@ -7787,7 +7782,7 @@ WHERE
                       dataType="wstr"
                       errorOrTruncationOperation="Computation"
                       errorRowDisposition="FailComponent"
-                      length="24"
+                      length="17"
                       lineageId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]"
                       name="APP_LAST_UPDATE_USERID"
                       truncationRowDisposition="FailComponent">
@@ -7796,13 +7791,13 @@ WHERE
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Expression"
-                          name="Expression">"LIS_PIMS_DISPOSITION_ETL"</property>
+                          name="Expression">"LIS_PIMS_DISP_ETL"</property>
                         <property
                           containsID="true"
                           dataType="System.String"
                           description="Derived Column Friendly Expression"
                           expressionType="Notify"
-                          name="FriendlyExpression">"LIS_PIMS_DISPOSITION_ETL"</property>
+                          name="FriendlyExpression">"LIS_PIMS_DISP_ETL"</property>
                       </properties>
                     </outputColumn>
                   </outputColumns>
@@ -8036,7 +8031,7 @@ WHERE
                       dataType="wstr"
                       errorOrTruncationOperation="Conversion"
                       errorRowDisposition="FailComponent"
-                      length="50"
+                      length="30"
                       lineageId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Data Conversion 2.Outputs[Data Conversion Output].Columns[FILE_REFERENCE]"
                       name="FILE_REFERENCE"
                       truncationRowDisposition="FailComponent">
@@ -8095,7 +8090,7 @@ WHERE
                     <inputColumn
                       refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Derived Column - for INSERT.Inputs[Derived Column Input].Columns[FILE_REFERENCE]"
                       cachedDataType="wstr"
-                      cachedLength="50"
+                      cachedLength="30"
                       cachedName="FILE_REFERENCE"
                       lineageId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Data Conversion 2.Outputs[Data Conversion Output].Columns[FILE_REFERENCE]" />
                   </inputColumns>
@@ -8448,7 +8443,7 @@ WHERE
                 <property
                   dataType="System.String"
                   description="Specifies the name of the database object used to open a rowset."
-                  name="OpenRowset">[dbo].[PIMS_DISPOSITION_FILE_PROPERTY]</property>
+                  name="OpenRowset">[TEMP_DISPOSITION_FILE_PROPERTY]</property>
                 <property
                   dataType="System.String"
                   description="Specifies the variable that contains the name of the database object used to open a rowset."
@@ -8519,24 +8514,27 @@ WHERE
                     <inputColumn
                       refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].Columns[APP_CREATE_USERID]"
                       cachedDataType="wstr"
-                      cachedLength="24"
+                      cachedLength="17"
                       cachedName="APP_CREATE_USERID"
                       externalMetadataColumnId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USERID]"
                       lineageId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]" />
                     <inputColumn
                       refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].Columns[APP_LAST_UPDATE_USERID]"
                       cachedDataType="wstr"
-                      cachedLength="24"
+                      cachedLength="17"
                       cachedName="APP_LAST_UPDATE_USERID"
                       externalMetadataColumnId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
                       lineageId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_LAST_UPDATE_USERID]" />
+                    <inputColumn
+                      refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].Columns[FILE_REFERENCE]"
+                      cachedDataType="wstr"
+                      cachedLength="30"
+                      cachedName="FILE_REFERENCE"
+                      externalMetadataColumnId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_DIRECTORY]"
+                      lineageId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Data Conversion 2.Outputs[Data Conversion Output].Columns[FILE_REFERENCE]" />
                   </inputColumns>
                   <externalMetadataColumns
                     isUsed="True">
-                    <externalMetadataColumn
-                      refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[DISPOSITION_FILE_PROPERTY_ID]"
-                      dataType="i8"
-                      name="DISPOSITION_FILE_PROPERTY_ID" />
                     <externalMetadataColumn
                       refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[DISPOSITION_FILE_ID]"
                       dataType="i8"
@@ -8546,63 +8544,20 @@ WHERE
                       dataType="i8"
                       name="PROPERTY_ID" />
                     <externalMetadataColumn
-                      refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[CONCURRENCY_CONTROL_NUMBER]"
-                      dataType="i8"
-                      name="CONCURRENCY_CONTROL_NUMBER" />
-                    <externalMetadataColumn
-                      refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_TIMESTAMP]"
-                      dataType="dbTimeStamp"
-                      name="APP_CREATE_TIMESTAMP" />
-                    <externalMetadataColumn
                       refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USERID]"
                       dataType="wstr"
-                      length="30"
+                      length="24"
                       name="APP_CREATE_USERID" />
-                    <externalMetadataColumn
-                      refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_GUID]"
-                      dataType="guid"
-                      name="APP_CREATE_USER_GUID" />
                     <externalMetadataColumn
                       refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[APP_CREATE_USER_DIRECTORY]"
                       dataType="wstr"
                       length="30"
                       name="APP_CREATE_USER_DIRECTORY" />
                     <externalMetadataColumn
-                      refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_TIMESTAMP]"
-                      dataType="dbTimeStamp"
-                      name="APP_LAST_UPDATE_TIMESTAMP" />
-                    <externalMetadataColumn
                       refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USERID]"
                       dataType="wstr"
-                      length="30"
+                      length="24"
                       name="APP_LAST_UPDATE_USERID" />
-                    <externalMetadataColumn
-                      refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_GUID]"
-                      dataType="guid"
-                      name="APP_LAST_UPDATE_USER_GUID" />
-                    <externalMetadataColumn
-                      refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[APP_LAST_UPDATE_USER_DIRECTORY]"
-                      dataType="wstr"
-                      length="30"
-                      name="APP_LAST_UPDATE_USER_DIRECTORY" />
-                    <externalMetadataColumn
-                      refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[DB_CREATE_TIMESTAMP]"
-                      dataType="dbTimeStamp"
-                      name="DB_CREATE_TIMESTAMP" />
-                    <externalMetadataColumn
-                      refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[DB_CREATE_USERID]"
-                      dataType="wstr"
-                      length="30"
-                      name="DB_CREATE_USERID" />
-                    <externalMetadataColumn
-                      refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[DB_LAST_UPDATE_TIMESTAMP]"
-                      dataType="dbTimeStamp"
-                      name="DB_LAST_UPDATE_TIMESTAMP" />
-                    <externalMetadataColumn
-                      refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT.Inputs[OLE DB Destination Input].ExternalColumns[DB_LAST_UPDATE_USERID]"
-                      dataType="wstr"
-                      length="30"
-                      name="DB_LAST_UPDATE_USERID" />
                   </externalMetadataColumns>
                 </input>
               </inputs>
@@ -8714,7 +8669,7 @@ where [refTable].[FILE_REFERENCE] = ?</property>
                     <inputColumn
                       refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Lookup PIMS_DISPOSITION_FILE.Inputs[Lookup Input].Columns[FILE_REFERENCE]"
                       cachedDataType="wstr"
-                      cachedLength="50"
+                      cachedLength="30"
                       cachedName="FILE_REFERENCE"
                       lineageId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Data Conversion 2.Outputs[Data Conversion Output].Columns[FILE_REFERENCE]">
                       <properties>
@@ -8905,7 +8860,7 @@ where [refTable].[PROPERTY_ID] = ? and [refTable].[DISPOSITION_FILE_ID] = ? and 
                     <inputColumn
                       refId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Lookup PIMS_DISPOSITION_FILE_PROPERTY.Inputs[Lookup Input].Columns[APP_CREATE_USERID]"
                       cachedDataType="wstr"
-                      cachedLength="24"
+                      cachedLength="17"
                       cachedName="APP_CREATE_USERID"
                       lineageId="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\AUDIT TRAIL.Outputs[Derived Column Output].Columns[APP_CREATE_USERID]">
                       <properties>
@@ -9329,6 +9284,23 @@ ORDER BY FILE_REFERENCE
         </pipeline>
       </DTS:ObjectData>
     </DTS:Executable>
+    <DTS:Executable
+      DTS:refId="Package\COPY_FROM_TEMP_DISPOSITION_FILE_PROPERTY"
+      DTS:CreationName="Microsoft.ExecuteSQLTask"
+      DTS:Description="Execute SQL Task"
+      DTS:DTSID="{AD046F65-2E2D-4961-BCC0-9B7B422133B3}"
+      DTS:ExecutableType="Microsoft.ExecuteSQLTask"
+      DTS:LocaleID="-1"
+      DTS:ObjectName="COPY_FROM_TEMP_DISPOSITION_FILE_PROPERTY"
+      DTS:TaskContact="Execute SQL Task; Microsoft Corporation; SQL Server 2022; © 2022 Microsoft Corporation; All Rights Reserved;http://www.microsoft.com/sql/support/default.asp;1"
+      DTS:ThreadHint="0">
+      <DTS:Variables />
+      <DTS:ObjectData>
+        <SQLTask:SqlTaskData
+          SQLTask:Connection="{719B66AE-B16C-45F5-A5E7-08502974E082}"
+          SQLTask:SqlStatementSource="USE [PIMS_TST];&#xA;GO&#xA;&#xA;INSERT INTO [dbo].[PIMS_DISPOSITION_FILE_PROPERTY]&#xA;(&#xA;    [DISPOSITION_FILE_ID],&#xA;    [PROPERTY_ID],&#xA;    [APP_CREATE_TIMESTAMP],&#xA;    [APP_CREATE_USERID],&#xA;    [APP_CREATE_USER_DIRECTORY],&#xA;    [APP_LAST_UPDATE_TIMESTAMP],&#xA;    [APP_LAST_UPDATE_USERID],&#xA;    [APP_LAST_UPDATE_USER_DIRECTORY]&#xA;)&#xA;SELECT&#xA;    s.[DISPOSITION_FILE_ID],&#xA;    s.[PROPERTY_ID],&#xA;    GETDATE() AS [APP_CREATE_TIMESTAMP],&#xA;    s.[APP_CREATE_USERID],&#xA;    s.[APP_CREATE_USER_DIRECTORY],&#xA;    GETDATE() AS [APP_LAST_UPDATE_TIMESTAMP],&#xA;    s.[APP_LAST_UPDATE_USERID],&#xA;    s.[APP_CREATE_USER_DIRECTORY] AS [APP_LAST_UPDATE_USER_DIRECTORY]&#xA;FROM&#xA;(&#xA;    SELECT&#xA;        [DISPOSITION_FILE_ID],&#xA;        [PROPERTY_ID],&#xA;        MAX([APP_CREATE_USERID]) AS [APP_CREATE_USERID],&#xA;        MAX([APP_CREATE_USER_DIRECTORY]) AS [APP_CREATE_USER_DIRECTORY],&#xA;        MAX([APP_LAST_UPDATE_USERID]) AS [APP_LAST_UPDATE_USERID]&#xA;    FROM [dbo].[TEMP_DISPOSITION_FILE_PROPERTY]&#xA;    GROUP BY&#xA;        [DISPOSITION_FILE_ID],&#xA;        [PROPERTY_ID]&#xA;) AS s&#xA;WHERE NOT EXISTS&#xA;(&#xA;    SELECT 1&#xA;    FROM [dbo].[PIMS_DISPOSITION_FILE_PROPERTY] AS d&#xA;    WHERE d.[PROPERTY_ID] = s.[PROPERTY_ID]&#xA;      AND d.[DISPOSITION_FILE_ID] = s.[DISPOSITION_FILE_ID]&#xA;);&#xA;GO" xmlns:SQLTask="www.microsoft.com/sqlserver/dts/tasks/sqltask" />
+      </DTS:ObjectData>
+    </DTS:Executable>
   </DTS:Executables>
   <DTS:PrecedenceConstraints>
     <DTS:PrecedenceConstraint
@@ -9347,6 +9319,14 @@ ORDER BY FILE_REFERENCE
       DTS:LogicalAnd="True"
       DTS:ObjectName="Constraint 1"
       DTS:To="Package\3_PIMS_DISPOSITION_APPRAISAL" />
+    <DTS:PrecedenceConstraint
+      DTS:refId="Package.PrecedenceConstraints[Constraint 2]"
+      DTS:CreationName=""
+      DTS:DTSID="{339BCD56-3328-401D-B056-CFBA3583198D}"
+      DTS:From="Package\4_PIMS_DISPOSITION_FILE_PROPERTY"
+      DTS:LogicalAnd="True"
+      DTS:ObjectName="Constraint 2"
+      DTS:To="Package\COPY_FROM_TEMP_DISPOSITION_FILE_PROPERTY" />
     <DTS:PrecedenceConstraint
       DTS:refId="Package.PrecedenceConstraints[Constraint 3]"
       DTS:CreationName=""
@@ -9367,23 +9347,27 @@ ORDER BY FILE_REFERENCE
     design-time-name="Package">
     <LayoutInfo>
       <GraphLayout
-        Capacity="8" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
+        Capacity="16" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml">
         <NodeLayout
-          Size="256,42.6666666666667"
+          Size="256,43"
           Id="Package\1_PIMS_DISPOSITION_FILE_LOAD"
           TopLeft="486.24999275431,221.000004159777" />
         <NodeLayout
-          Size="260,42.6666666666667"
+          Size="260,43"
           Id="Package\2_PIMS_DISPOSITION_SALE_LOAD"
           TopLeft="784.999988302589,225.105267394943" />
         <NodeLayout
-          Size="257.333333333334,42.6666666666667"
+          Size="257,43"
           Id="Package\3_PIMS_DISPOSITION_APPRAISAL"
           TopLeft="1104.37498354353,223.05263577736" />
         <NodeLayout
-          Size="285.333333333334,42.6666666666667"
+          Size="285,43"
           Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY"
           TopLeft="1463.74997818843,224.421056855749" />
+        <NodeLayout
+          Size="358,42"
+          Id="Package\COPY_FROM_TEMP_DISPOSITION_FILE_PROPERTY"
+          TopLeft="1432,357" />
         <EdgeLayout
           Id="Package.PrecedenceConstraints[Constraint]"
           TopLeft="742.24999275431,244.385969110693">
@@ -9420,6 +9404,28 @@ ORDER BY FILE_REFERENCE
                   Capacity="5">
                   <mssgle:LineSegment
                     End="51.8749952409412,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package.PrecedenceConstraints[Constraint 2]"
+          TopLeft="1608.62498909421,267.421056855749">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="0,89.578943144251"
+              Start="0,0"
+              End="0,82.078943144251">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,82.078943144251" />
                 </mssgle:SegmentCollection>
               </mssgle:Curve.Segments>
             </mssgle:Curve>
@@ -9517,7 +9523,9 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9659,7 +9667,9 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9681,7 +9691,9 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9703,7 +9715,9 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -9737,14 +9751,16 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <AnnotationLayout
           Text="FILE"
           ParentId="Package\1_PIMS_DISPOSITION_FILE_LOAD"
           FontInfo="{assembly:Null}"
-          Size="50,40"
+          Size="50,NaN"
           Id="857e6e48-1286-492c-a59b-2392e61de0a6"
           TopLeft="1008.74998496845,24.6315794109968" />
       </GraphLayout>
@@ -9813,51 +9829,51 @@ ORDER BY FILE_REFERENCE
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="224,42.6666666666667"
+          Size="224,43"
           Id="Package\2_PIMS_DISPOSITION_SALE_LOAD\Derived Column - for UPDATE"
           TopLeft="1872.14102564103,520.141025641026" />
         <NodeLayout
-          Size="246.666666666667,42.6666666666667"
+          Size="247,43"
           Id="Package\2_PIMS_DISPOSITION_SALE_LOAD\Lookup PIMS_DISPOSITION_FILE"
           TopLeft="1153.4358974359,193.435897435897" />
         <NodeLayout
-          Size="229.333333333334,42.6666666666667"
+          Size="229,43"
           Id="Package\2_PIMS_DISPOSITION_SALE_LOAD\ETL ERROR LOG - for INSERT"
           TopLeft="1542.88461538462,623.333333333333" />
         <NodeLayout
-          Size="122.666666666667,42.6666666666667"
+          Size="123,43"
           Id="Package\2_PIMS_DISPOSITION_SALE_LOAD\UPDATE"
           TopLeft="1919.87179487179,416.153846153846" />
         <NodeLayout
-          Size="213.333333333334,42.6666666666667"
+          Size="213,43"
           Id="Package\2_PIMS_DISPOSITION_SALE_LOAD\PIMS_DISPOSITION_SALE"
           TopLeft="1506.16666666667,200.5" />
         <NodeLayout
-          Size="165.333333333334,42.6666666666667"
+          Size="165,43"
           Id="Package\2_PIMS_DISPOSITION_SALE_LOAD\Data Conversion1"
           TopLeft="990.833333333333,418.666666666666" />
         <NodeLayout
-          Size="233.333333333334,42.6666666666667"
+          Size="233,43"
           Id="Package\2_PIMS_DISPOSITION_SALE_LOAD\ETL ERROR LOG - for UPDATE"
           TopLeft="1866.87179487179,615.871794871795" />
         <NodeLayout
-          Size="220,42.6666666666667"
+          Size="220,43"
           Id="Package\2_PIMS_DISPOSITION_SALE_LOAD\Derived Column - for INSERT"
           TopLeft="1541.15384615385,520.166666666667" />
         <NodeLayout
-          Size="165.333333333334,42.6666666666667"
+          Size="165,43"
           Id="Package\2_PIMS_DISPOSITION_SALE_LOAD\Data Conversion2"
           TopLeft="1320.76923076923,426.153846153846" />
         <NodeLayout
-          Size="118.666666666667,42.6666666666667"
+          Size="119,43"
           Id="Package\2_PIMS_DISPOSITION_SALE_LOAD\INSERT"
           TopLeft="1592.88461538462,417.179487179487" />
         <NodeLayout
-          Size="293.333333333334,42.6666666666667"
+          Size="293,43"
           Id="Package\2_PIMS_DISPOSITION_SALE_LOAD\SOURCE LIS DISPOSITION SALE DETAILS"
           TopLeft="341.166666666667,420.205128205129" />
         <NodeLayout
-          Size="145.333333333334,42.6666666666667"
+          Size="145,43"
           Id="Package\2_PIMS_DISPOSITION_SALE_LOAD\AUDIT TRAIL"
           TopLeft="711.333333333333,421.166666666667" />
         <EdgeLayout
@@ -10176,7 +10192,7 @@ ORDER BY FILE_REFERENCE
           Text="SALE"
           ParentId="Package\2_PIMS_DISPOSITION_SALE_LOAD"
           FontInfo="{assembly:Null}"
-          Size="54.6666666666667,40"
+          Size="55,40"
           Id="7836d124-b6c7-460b-8c8e-481fc6c9fb32"
           TopLeft="1310,75" />
       </GraphLayout>
@@ -10347,7 +10363,9 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -10537,7 +10555,9 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -10559,7 +10579,9 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -10581,7 +10603,9 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -10615,7 +10639,9 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -10649,14 +10675,16 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <EdgeLabelCollection />
+            <mssgm:EdgeLabel
+              BoundingBox="0,0,0,0"
+              RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <AnnotationLayout
           Text="APPRAISAL"
           ParentId="Package\3_PIMS_DISPOSITION_APPRAISAL"
           FontInfo="{assembly:Null}"
-          Size="88.6666666666667,40"
+          Size="88.6666666666667,NaN"
           Id="b2734133-51ff-46ab-a807-b250a10e7ef6"
           TopLeft="990,72.6666666666667" />
       </GraphLayout>
@@ -10748,109 +10776,49 @@ ORDER BY FILE_REFERENCE
       <GraphLayout
         Capacity="32" xmlns="clr-namespace:Microsoft.SqlServer.IntegrationServices.Designer.Model.Serialization;assembly=Microsoft.SqlServer.IntegrationServices.Graph" xmlns:mssgle="clr-namespace:Microsoft.SqlServer.Graph.LayoutEngine;assembly=Microsoft.SqlServer.Graph" xmlns:assembly="http://schemas.microsoft.com/winfx/2006/xaml" xmlns:mssgm="clr-namespace:Microsoft.SqlServer.Graph.Model;assembly=Microsoft.SqlServer.Graph">
         <NodeLayout
-          Size="165.333333333334,42.6666666666667"
-          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\SOURCE LIS PID"
-          TopLeft="92.4571428571428,264.542857142857" />
-        <NodeLayout
-          Size="157.333333333334,42.6666666666667"
-          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Conditional Split"
-          TopLeft="955.238095238096,312.857142857143" />
-        <NodeLayout
-          Size="145.333333333334,42.6666666666667"
-          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\AUDIT TRAIL"
-          TopLeft="1466.52380952381,246" />
-        <NodeLayout
-          Size="220,42.6666666666667"
-          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Derived Column - for INSERT"
-          TopLeft="1770.95238095238,360.714285714286" />
-        <NodeLayout
-          Size="118.666666666667,42.6666666666667"
-          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT"
-          TopLeft="1822.80952380952,240.285714285714" />
-        <NodeLayout
-          Size="168,42.6666666666667"
-          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Data Conversion 1"
-          TopLeft="378.809523809524,268.571428571429" />
-        <NodeLayout
-          Size="310.666666666667,42.6666666666667"
+          Size="311,43"
           Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Lookup PIMS_DISPOSITION_FILE_PROPERTY"
           TopLeft="1683.09523809524,86.4285714285715" />
         <NodeLayout
-          Size="208,42.6666666666667"
+          Size="157,43"
+          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Conditional Split"
+          TopLeft="955.238095238096,312.857142857143" />
+        <NodeLayout
+          Size="145,43"
+          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\AUDIT TRAIL"
+          TopLeft="1466.52380952381,246" />
+        <NodeLayout
+          Size="220,43"
+          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Derived Column - for INSERT"
+          TopLeft="1770.95238095238,360.714285714286" />
+        <NodeLayout
+          Size="119,43"
+          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT"
+          TopLeft="1822.80952380952,240.285714285714" />
+        <NodeLayout
+          Size="208,43"
           Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Lookup PIMS_PROPERTY"
           TopLeft="875.238095238095,204.285714285714" />
         <NodeLayout
-          Size="168,42.6666666666667"
-          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Data Conversion 2"
-          TopLeft="615.952380952381,270" />
+          Size="168,43"
+          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Data Conversion 1"
+          TopLeft="378.809523809524,268.571428571429" />
         <NodeLayout
-          Size="246.666666666667,42.6666666666667"
+          Size="247,43"
           Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Lookup PIMS_DISPOSITION_FILE"
           TopLeft="1356.66666666667,130.714285714286" />
         <NodeLayout
-          Size="229.333333333334,42.6666666666667"
+          Size="168,43"
+          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Data Conversion 2"
+          TopLeft="615.952380952381,270" />
+        <NodeLayout
+          Size="165,43"
+          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\SOURCE LIS PID"
+          TopLeft="92.4571428571428,264.542857142857" />
+        <NodeLayout
+          Size="229,43"
           Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\ETL ERROR LOG - for INSERT"
           TopLeft="1769.52380952381,463.571428571429" />
-        <EdgeLayout
-          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY.Paths[Data Conversion Output]"
-          TopLeft="546.809523809524,290.619047619048">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="69.1428571428569,0"
-              Start="0,0"
-              End="61.6428571428569,0">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="61.6428571428569,0" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
-        <EdgeLayout
-          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY.Paths[Conditional Split Default Output]"
-          TopLeft="1058.79365079365,312.857142857143">
-          <EdgeLayout.Curve>
-            <mssgle:Curve
-              StartConnector="{assembly:Null}"
-              EndConnector="381.428571428571,-139.476190476191"
-              Start="0,0"
-              End="381.428571428571,-131.976190476191">
-              <mssgle:Curve.Segments>
-                <mssgle:SegmentCollection
-                  Capacity="5">
-                  <mssgle:LineSegment
-                    End="0,-41.7668900762755" />
-                  <mssgle:CubicBezierSegment
-                    Point1="0,-41.7668900762755"
-                    Point2="0,-45.7668900762755"
-                    Point3="4,-45.7668900762755" />
-                  <mssgle:LineSegment
-                    End="377.428571428571,-45.7668900762755" />
-                  <mssgle:CubicBezierSegment
-                    Point1="377.428571428571,-45.7668900762755"
-                    Point2="381.428571428571,-45.7668900762755"
-                    Point3="381.428571428571,-49.7668900762755" />
-                  <mssgle:LineSegment
-                    End="381.428571428571,-131.976190476191" />
-                </mssgle:SegmentCollection>
-              </mssgle:Curve.Segments>
-            </mssgle:Curve>
-          </EdgeLayout.Curve>
-          <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="120.100379464285,-40.7668900762755,141.2278125,11.658203125"
-              RelativePosition="Any" />
-          </EdgeLayout.Labels>
-        </EdgeLayout>
         <EdgeLayout
           Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY.Paths[OLE DB Source Output]"
           TopLeft="257.790476190476,287.890476190476">
@@ -10870,9 +10838,7 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -10919,7 +10885,7 @@ ORDER BY FILE_REFERENCE
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-55.80638671875,46.0405505952379,111.6127734375,11.609375"
+              BoundingBox="-55.80638671875,46.040550595238,111.6127734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -10979,7 +10945,7 @@ ORDER BY FILE_REFERENCE
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="-48.19138671875,26.7548363095237,96.3827734375,11.609375"
+              BoundingBox="-48.19138671875,26.7548363095236,96.3827734375,11.609375"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
@@ -11002,9 +10968,7 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -11038,9 +11002,7 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
-            <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
-              RelativePosition="Any" />
+            <EdgeLabelCollection />
           </EdgeLayout.Labels>
         </EdgeLayout>
         <EdgeLayout
@@ -11074,35 +11036,70 @@ ORDER BY FILE_REFERENCE
             </mssgle:Curve>
           </EdgeLayout.Curve>
           <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY.Paths[Data Conversion Output]"
+          TopLeft="546.809523809524,290.619047619048">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="69.1428571428569,0"
+              Start="0,0"
+              End="61.6428571428569,0">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="61.6428571428569,0" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
+            <EdgeLabelCollection />
+          </EdgeLayout.Labels>
+        </EdgeLayout>
+        <EdgeLayout
+          Id="Package\4_PIMS_DISPOSITION_FILE_PROPERTY.Paths[Conditional Split Default Output]"
+          TopLeft="1058.79365079365,312.857142857143">
+          <EdgeLayout.Curve>
+            <mssgle:Curve
+              StartConnector="{assembly:Null}"
+              EndConnector="381.428571428571,-139.476190476191"
+              Start="0,0"
+              End="381.428571428571,-131.976190476191">
+              <mssgle:Curve.Segments>
+                <mssgle:SegmentCollection
+                  Capacity="5">
+                  <mssgle:LineSegment
+                    End="0,-41.7668900762755" />
+                  <mssgle:CubicBezierSegment
+                    Point1="0,-41.7668900762755"
+                    Point2="0,-45.7668900762755"
+                    Point3="4,-45.7668900762755" />
+                  <mssgle:LineSegment
+                    End="377.428571428571,-45.7668900762755" />
+                  <mssgle:CubicBezierSegment
+                    Point1="377.428571428571,-45.7668900762755"
+                    Point2="381.428571428571,-45.7668900762755"
+                    Point3="381.428571428571,-49.7668900762755" />
+                  <mssgle:LineSegment
+                    End="381.428571428571,-131.976190476191" />
+                </mssgle:SegmentCollection>
+              </mssgle:Curve.Segments>
+            </mssgle:Curve>
+          </EdgeLayout.Curve>
+          <EdgeLayout.Labels>
             <mssgm:EdgeLabel
-              BoundingBox="0,0,0,0"
+              BoundingBox="120.100379464285,-40.7668900762755,141.2278125,11.658203125"
               RelativePosition="Any" />
           </EdgeLayout.Labels>
         </EdgeLayout>
       </GraphLayout>
     </LayoutInfo>
   </TaskHost>
-  <PipelineComponentMetadata
-    design-time-name="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\SOURCE LIS PID">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
-  <PipelineComponentMetadata
-    design-time-name="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT">
-    <Properties>
-      <Property>
-        <Name>DataSourceViewID</Name>
-      </Property>
-      <Property>
-        <Name>TableInfoObjectType</Name>
-        <Value
-          type="q2:string">Table</Value>
-      </Property>
-    </Properties>
-  </PipelineComponentMetadata>
   <PipelineComponentMetadata
     design-time-name="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\Lookup PIMS_DISPOSITION_FILE_PROPERTY">
     <Properties>
@@ -11123,6 +11120,19 @@ ORDER BY FILE_REFERENCE
       </Property>
       <Property>
         <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\INSERT">
+    <Properties>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+      <Property>
+        <Name>TableInfoObjectType</Name>
+        <Value
+          type="q2:string">Table</Value>
       </Property>
     </Properties>
   </PipelineComponentMetadata>
@@ -11167,6 +11177,14 @@ ORDER BY FILE_REFERENCE
         <Value
           type="q4:string">0</Value>
       </Property>
+      <Property>
+        <Name>DataSourceViewID</Name>
+      </Property>
+    </Properties>
+  </PipelineComponentMetadata>
+  <PipelineComponentMetadata
+    design-time-name="Package\4_PIMS_DISPOSITION_FILE_PROPERTY\SOURCE LIS PID">
+    <Properties>
       <Property>
         <Name>DataSourceViewID</Name>
       </Property>
