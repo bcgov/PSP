@@ -4,7 +4,10 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "install-browsers": "playwright install",
     "test": "playwright test",
+    "smoke-tests": "playwright test --project=smoke-test",
+    "e2e-tests": "playwright test --project=pims-e2e",
     "show-report": "playwright show-report",
     "lint": "eslint . --ext .ts,.js",
     "lint:fix": "eslint . --ext .ts,.js --fix",
@@ -17,7 +20,7 @@
   "type": "commonjs",
   "devDependencies": {
     "@eslint/js": "9.39.4",
-    "@playwright/test": "1.60.0",
+    "@playwright/test": "1.61.1",
     "@types/eslint-config-prettier": "6.11.3",
     "@types/node": "25.9.1",
     "eslint": "9.39.4",

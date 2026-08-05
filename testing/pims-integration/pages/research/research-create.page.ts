@@ -71,6 +71,10 @@ export class ResearchCreatePage extends LayoutPage {
     await this.page.goto('/mapview/sidebar/research/new', { waitUntil: 'domcontentloaded' });
   }
 
+  async setResearchFilenameInput(fileName: string) {
+    await this.researchNameInput.fill(fileName);
+  }
+
   async cancelButtonClick() {
     await this.cancelButton.click();
   }

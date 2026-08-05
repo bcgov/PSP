@@ -1,0 +1,99 @@
+name: Send Microsoft Teams Notification
+description: Send a notification to a Microsoft Teams incoming webhook using curl.
+inputs:
+  webhook-uri:
+    description: Microsoft Teams incoming webhook URL.
+    required: true
+  summary:
+    description: Notification summary text.
+    required: true
+  title:
+    description: Card title.
+    required: false
+    default: GitHub Actions Notification
+  color:
+    description: Hex color (without #) for the Teams card theme.
+    required: false
+    default: 17a2b8
+  timezone:
+    description: Timezone for the timestamp.
+    required: false
+    default: UTC
+runs:
+  using: composite
+  steps:
+    - name: Post message to Teams webhook
+      shell: bash
+      env:
+        INPUT_WEBHOOK_URI: ${{ inputs.webhook-uri }}
+        INPUT_SUMMARY: ${{ inputs.summary }}
+        INPUT_TITLE: ${{ inputs.title }}
+        INPUT_COLOR: ${{ inputs.color }}
+        INPUT_TIMEZONE: ${{ inputs.timezone }}
+        GITHUB_SERVER_URL: ${{ github.server_url }}
+        GITHUB_REPOSITORY: ${{ github.repository }}
+        GITHUB_WORKFLOW: ${{ github.workflow }}
+        GITHUB_RUN_ID: ${{ github.run_id }}
+        GITHUB_RUN_NUMBER: ${{ github.run_number }}
+        GITHUB_REF_NAME: ${{ github.ref_name }}
+        GITHUB_ACTOR: ${{ github.actor }}
+      run: |
+        set -euo pipefail
+
+        if [ -z "${INPUT_WEBHOOK_URI}" ]; then
+          echo "Teams webhook URI is required"
+          exit 1
+        fi
+
+        if ! command -v jq >/dev/null 2>&1; then
+          echo "jq is required to build the Teams payload"
+          exit 1
+        fi
+
+        TIMESTAMP="$(TZ="${INPUT_TIMEZONE}" date '+%Y-%m-%d %H:%M:%S %Z' 2>/dev/null || date -u '+%Y-%m-%d %H:%M:%S UTC')"
+        WORKFLOW_URL="${GITHUB_SERVER_URL}/${GITHUB_REPOSITORY}/actions/runs/${GITHUB_RUN_ID}"
+
+        payload="$(jq -n \
+          --arg summary "${INPUT_SUMMARY}" \
+          --arg color "${INPUT_COLOR}" \
+          --arg title "${INPUT_TITLE}" \
+          --arg workflow "${GITHUB_WORKFLOW}" \
+          --arg branch "${GITHUB_REF_NAME}" \
+          --arg run "#${GITHUB_RUN_NUMBER}" \
+          --arg actor "${GITHUB_ACTOR}" \
+          --arg time "${TIMESTAMP}" \
+          --arg url "${WORKFLOW_URL}" \
+          '{
+            "@type": "MessageCard",
+            "@context": "https://schema.org/extensions",
+            "summary": $summary,
+            "themeColor": $color,
+            "title": $title,
+            "text": $summary,
+            "sections": [
+              {
+                "facts": [
+                  {"name": "Workflow", "value": $workflow},
+                  {"name": "Branch", "value": $branch},
+                  {"name": "Run", "value": $run},
+                  {"name": "Actor", "value": $actor},
+                  {"name": "Time", "value": $time}
+                ],
+                "markdown": true
+              }
+            ],
+            "potentialAction": [
+              {
+                "@type": "OpenUri",
+                "name": "Open Workflow Run",
+                "targets": [
+                  {"os": "default", "uri": $url}
+                ]
+              }
+            ]
+          }')"
+
+        curl --fail --silent --show-error \
+          -H "Content-Type: application/json" \
+          -d "${payload}" \
+          "${INPUT_WEBHOOK_URI}"

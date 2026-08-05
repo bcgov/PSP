@@ -1,17 +1,287 @@
 <!doctype html>
-<title>Site Maintenance</title>
-<style>
-  body { text-align: center; padding: 150px; }
-  h1 { font-size: 50px; }
-  body { font: 20px Helvetica, sans-serif; color: #333; }
-  article { display: block; text-align: left; width: 650px; margin: 0 auto; }
-  a { color: #dc8100; text-decoration: none; }
-  a:hover { color: #333; text-decoration: none; }
-</style>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex, nofollow" />
+    <title>PIMS is temporarily unavailable</title>
+    <style>
+      :root {
+        --bc-blue: #003366;
+        --bc-gold: #fcba19;
+        --ink: #313132;
+        --muted: #606060;
+        --line: #d9d9d9;
+        --surface: #ffffff;
+        --canvas: #f2f2f2;
+      }
 
-<article>
-    <h1>We&rsquo;ll be back soon!</h1>
-    <div>
-        <p>Sorry for the inconvenience.  We're performing maintenance and should be back shortly.</p>
-    </div>
-</article>
+      *,
+      *::before,
+      *::after {
+        box-sizing: border-box;
+      }
+
+      html {
+        -webkit-text-size-adjust: 100%;
+      }
+
+      body {
+        margin: 0;
+        background: var(--canvas);
+        color: var(--ink);
+        font-family: "BC Sans", "Noto Sans", Verdana, Arial, sans-serif;
+        font-size: 1rem;
+        line-height: 1.6;
+        display: flex;
+        flex-direction: column;
+        min-height: 100vh;
+      }
+
+      /* Header */
+      .masthead {
+        background: var(--bc-blue);
+        border-bottom: 3px solid var(--bc-gold);
+        color: #ffffff;
+        padding: 1.125rem 1.5rem;
+      }
+
+      .masthead__inner {
+        max-width: 46rem;
+        margin: 0 auto;
+        display: flex;
+        align-items: baseline;
+        gap: 0.75rem;
+        flex-wrap: wrap;
+      }
+
+      .masthead__mark {
+        font-size: 1.375rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        margin: 0;
+      }
+
+      .masthead__name {
+        font-size: 0.9375rem;
+        color: #d6e2ee;
+        margin: 0;
+      }
+
+      /* Main */
+      main {
+        flex: 1 0 auto;
+        width: 100%;
+        max-width: 46rem;
+        margin: 0 auto;
+        padding: 2.5rem 1.5rem 3rem;
+      }
+
+      .card {
+        background: var(--surface);
+        border: 1px solid var(--line);
+        border-radius: 4px;
+        padding: 2rem;
+      }
+
+      h1 {
+        font-size: 1.875rem;
+        line-height: 1.25;
+        font-weight: 700;
+        margin: 0 0 0.75rem;
+        color: var(--bc-blue);
+      }
+
+      .lead {
+        font-size: 1.0625rem;
+        margin: 0 0 1.75rem;
+      }
+
+      /* Status strip: the one piece of emphasis on the page */
+      .status {
+        display: flex;
+        align-items: center;
+        gap: 0.75rem;
+        background: #f6f9fc;
+        border-left: 4px solid var(--bc-gold);
+        padding: 0.875rem 1rem;
+        margin: 0 0 1.75rem;
+        font-size: 0.9375rem;
+      }
+
+      .status__dot {
+        flex: 0 0 auto;
+        width: 0.625rem;
+        height: 0.625rem;
+        border-radius: 50%;
+        background: var(--bc-gold);
+        animation: pulse 2.4s ease-in-out infinite;
+      }
+
+      .status__label {
+        font-weight: 700;
+        color: var(--bc-blue);
+      }
+
+      @keyframes pulse {
+        0%,
+        100% {
+          opacity: 1;
+        }
+        50% {
+          opacity: 0.35;
+        }
+      }
+
+      @media (prefers-reduced-motion: reduce) {
+        .status__dot {
+          animation: none;
+        }
+      }
+
+      h2 {
+        font-size: 1rem;
+        font-weight: 700;
+        margin: 1.75rem 0 0.5rem;
+        color: var(--bc-blue);
+      }
+
+      p {
+        margin: 0 0 0.75rem;
+      }
+
+      ul {
+        margin: 0 0 0.75rem;
+        padding-left: 1.25rem;
+      }
+
+      li {
+        margin-bottom: 0.375rem;
+      }
+
+      a {
+        color: #1a5a96;
+      }
+
+      a:hover {
+        color: var(--bc-blue);
+      }
+
+      a:focus-visible,
+      .button:focus-visible {
+        outline: 3px solid var(--bc-gold);
+        outline-offset: 2px;
+      }
+
+      .button {
+        display: inline-block;
+        margin-top: 0.75rem;
+        padding: 0.625rem 1.25rem;
+        background: var(--bc-blue);
+        color: #ffffff;
+        font-weight: 700;
+        text-decoration: none;
+        border-radius: 4px;
+      }
+
+      .button:hover {
+        background: #00294f;
+        color: #ffffff;
+      }
+
+      .divider {
+        border: 0;
+        border-top: 1px solid var(--line);
+        margin: 1.75rem 0 0;
+      }
+
+      /* Footer */
+      footer {
+        flex-shrink: 0;
+        background: var(--bc-blue);
+        border-top: 3px solid var(--bc-gold);
+        color: #d6e2ee;
+        font-size: 0.8125rem;
+        padding: 1.25rem 1.5rem;
+      }
+
+      footer div {
+        max-width: 46rem;
+        margin: 0 auto;
+      }
+
+      @media (max-width: 30rem) {
+        main {
+          padding: 1.5rem 1rem 2rem;
+        }
+        .card {
+          padding: 1.25rem;
+        }
+        h1 {
+          font-size: 1.5rem;
+        }
+      }
+    </style>
+  </head>
+
+  <body>
+    <header class="masthead">
+      <div class="masthead__inner">
+        <p class="masthead__mark">PIMS</p>
+        <p class="masthead__name">Property Information Management System</p>
+      </div>
+    </header>
+
+    <main>
+      <div class="card">
+        <h1>PIMS is temporarily unavailable</h1>
+        <p class="lead">
+          We are performing scheduled maintenance on the Property Information
+          Management System. The application will be back online shortly.
+        </p>
+
+        <p class="status">
+          <span class="status__dot" aria-hidden="true"></span>
+          <span
+            ><span class="status__label">Status:</span> Maintenance in
+            progress</span
+          >
+        </p>
+
+        <h2>What this means</h2>
+        <ul>
+          <li>PIMS is offline for everyone, not just for you.</li>
+          <li>
+            Anything you had open but did not save was not submitted. You will
+            need to re-enter it.
+          </li>
+          <li>You will be asked to sign in again once the system is back.</li>
+        </ul>
+
+        <h2>When to try again</h2>
+        <p>
+          The maintenance window is usually 4 hours. Please check back after
+          that. Use the button below to reload this page and see whether PIMS is
+          available.
+        </p>
+        <a class="button" href="/">Check again</a>
+
+        <hr class="divider" />
+
+        <h2>Need help?</h2>
+        <p>
+          If PIMS is still unavailable after the maintenance window, or you have
+          an urgent request, contact the PIMS support team at
+          <a href="mailto:pims@gov.bc.ca">pims@gov.bc.ca</a>.
+        </p>
+      </div>
+    </main>
+
+    <footer>
+      <div>
+        Ministry of Transportation and Transit &mdash; Province of British
+        Columbia
+      </div>
+    </footer>
+  </body>
+</html>
