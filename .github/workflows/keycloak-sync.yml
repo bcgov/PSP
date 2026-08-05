@@ -84,20 +84,22 @@ jobs:
       - name: Resolve namespace
         id: resolve
         shell: bash
+        env:
+          ENVIRONMENT: ${{ inputs.environment }}
         run: |
           set -euo pipefail
-          case "${{ inputs.environment }}" in
+          case "${ENVIRONMENT}" in
             dev)  namespace=3cd915-dev  ;;
             test) namespace=3cd915-dev  ;;
             uat)  namespace=3cd915-test ;;
             prod) namespace=3cd915-prod ;;
             *)
-              echo "::error::Unknown environment '${{ inputs.environment }}'. Expected one of: dev, test, uat, prod."
+              echo "::error::Unknown environment '${ENVIRONMENT}'. Expected one of: dev, test, uat, prod."
               exit 1
               ;;
           esac
           echo "namespace=${namespace}" >> "$GITHUB_OUTPUT"
-          echo "Environment '${{ inputs.environment }}' resolved to namespace '${namespace}'."
+          echo "Environment '${ENVIRONMENT}' resolved to namespace '${namespace}'."
 
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
@@ -132,15 +134,20 @@ jobs:
 
       - name: Start keycloak-sync pipeline
         shell: bash
+        env:
+          ENVIRONMENT: ${{ inputs.environment || 'dev' }}
+          BRANCH: ${{ inputs.branch || 'dev' }}
+          PIPELINE_TIMEOUT: ${{ inputs.pipeline-timeout || '20m' }}
+          POD_TEMPLATE: ${{ inputs.pod-template || './openshift/4.0/templates/jobs/keycloak-sync-podtemplate.yaml' }}
         run: |
           set -euo pipefail
-          tkn pipeline start keycloak-sync-${{ inputs.environment }} \
+          tkn pipeline start keycloak-sync-${ENVIRONMENT} \
             -n ${{ steps.resolve.outputs.namespace }} \
             --use-param-defaults \
-            -p BRANCH="${{ inputs.branch }}" \
-            -w name=psp,claimName=keycloak-sync-${{ inputs.environment }} \
+            -p BRANCH="${BRANCH}" \
+            -w name=psp,claimName=keycloak-sync-${ENVIRONMENT} \
             -s pipeline \
-            --pod-template ${{ inputs.pod-template || './openshift/4.0/templates/jobs/keycloak-sync-podtemplate.yaml' }} \
-            --pipeline-timeout ${{ inputs.pipeline-timeout }} \
+            --pod-template ${POD_TEMPLATE} \
+            --pipeline-timeout ${PIPELINE_TIMEOUT} \
             --showlog \
             -E
