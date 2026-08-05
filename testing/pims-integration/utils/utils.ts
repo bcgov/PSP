@@ -11,6 +11,7 @@ export const generateFileName = (fileType: string): string => {
 
   return `${fileType}-${timestamp}`;
 };
+
 export const normalize = (value: string | null): string => {
   return value == null ? '' : String(value).trim();
 };

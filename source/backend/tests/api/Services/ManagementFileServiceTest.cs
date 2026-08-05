@@ -56,7 +56,7 @@ namespace Pims.Api.Test.Services
             var result = service.GetById(1);
 
             // Assert
-            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Exactly(1));
+            repository.Verify(x => x.GetById(It.IsAny<long>()), Times.Exactly(2));
         }
 
         [Fact]
@@ -103,14 +103,17 @@ namespace Pims.Api.Test.Services
 
             var managementFile = EntityHelper.CreateManagementFile();
 
-            var repository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
-            repository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(new List<PimsManagementFileProperty>());
+            var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
+
+            var managementPropertyRepository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
+            managementPropertyRepository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(new List<PimsManagementFileProperty>());
 
             // Act
             var properties = service.GetProperties(1);
 
             // Assert
-            repository.Verify(x => x.GetPropertiesByManagementFileId(It.IsAny<long>()), Times.Once);
+            managementPropertyRepository.Verify(x => x.GetPropertiesByManagementFileId(It.IsAny<long>()), Times.Once);
         }
 
         [Fact]
@@ -121,8 +124,11 @@ namespace Pims.Api.Test.Services
 
             var managementFile = EntityHelper.CreateManagementFile();
 
-            var repository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
-            repository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>()))
+            var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
+
+            var managementPropertyRepository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
+            managementPropertyRepository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>()))
                 .Returns(new List<PimsManagementFileProperty>() { new PimsManagementFileProperty() { Property = new PimsProperty() { Location = new Point(1, 1) } } });
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
@@ -133,7 +139,7 @@ namespace Pims.Api.Test.Services
             var properties = service.GetProperties(1);
 
             // Assert
-            repository.Verify(x => x.GetPropertiesByManagementFileId(It.IsAny<long>()), Times.Once);
+            managementPropertyRepository.Verify(x => x.GetPropertiesByManagementFileId(It.IsAny<long>()), Times.Once);
             propertyService.Verify(x => x.TransformAllPropertiesToLatLong(It.IsAny<List<PimsManagementFileProperty>>()), Times.Once);
             properties.FirstOrDefault().Property.Location.Coordinates.Should().BeEquivalentTo(new Coordinate[] { new Coordinate(1, 1) });
         }
@@ -226,9 +232,13 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
             repository.Setup(x => x.Add(It.IsAny<PimsManagementFile>())).Returns(managementFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
 
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
@@ -250,9 +260,13 @@ namespace Pims.Api.Test.Services
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
 
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
@@ -279,12 +293,16 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             repository.Setup(x => x.Add(It.IsAny<PimsManagementFile>())).Returns(managementFile);
             repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(property);
 
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
@@ -317,12 +335,16 @@ namespace Pims.Api.Test.Services
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
             repository.Setup(x => x.Add(It.IsAny<PimsManagementFile>())).Returns(managementFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
 
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             var propertyRepository = this._helper.GetService<Mock<IPropertyRepository>>();
             propertyRepository.Setup(x => x.GetByPid(It.IsAny<int>(), true)).Returns(pimsProperty);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
@@ -362,6 +384,7 @@ namespace Pims.Api.Test.Services
             var managementFile = EntityHelper.CreateManagementFile(1);
 
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
 
             // Act
             Action act = () => service.Update(2, managementFile, new List<UserOverrideCode>());
@@ -388,12 +411,16 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.GetRowVersion(It.IsAny<long>())).Returns(1);
             repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
             repository.Setup(x => x.GetByName(It.IsAny<string>())).Returns(managementFile);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
 
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
 
             var managementFilePropertyRepository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
             managementFilePropertyRepository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(new List<PimsManagementFileProperty>());
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             var result = service.Update(1, managementFile, new List<UserOverrideCode>() { });
@@ -423,6 +450,9 @@ namespace Pims.Api.Test.Services
 
             var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
             lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>() { new PimsRegion() { Code = 4, RegionName = "Cannot determine" } });
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             Action act = () => service.Update(1, managementFile, new List<UserOverrideCode>());
@@ -460,6 +490,9 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
+
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
             // Act
@@ -494,6 +527,9 @@ namespace Pims.Api.Test.Services
 
             var managementFilePropertyRepository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
             managementFilePropertyRepository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(new List<PimsManagementFileProperty>());
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             var result = service.Update(1, managementFile, new List<UserOverrideCode>() { });
@@ -536,6 +572,9 @@ namespace Pims.Api.Test.Services
 
             var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
@@ -581,6 +620,9 @@ namespace Pims.Api.Test.Services
             var statusMock = this._helper.GetService<Mock<IManagementFileStatusSolver>>();
             statusMock.Setup(x => x.CanEditDetails(It.IsAny<ManagementFileStatusTypes>())).Returns(true);
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
+
             var propertyService = this._helper.GetService<Mock<IPropertyService>>();
 
             // Act
@@ -616,6 +658,9 @@ namespace Pims.Api.Test.Services
             var managementFilePropertyRepository = this._helper.GetService<Mock<IManagementFilePropertyRepository>>();
             managementFilePropertyRepository.Setup(x => x.GetPropertiesByManagementFileId(It.IsAny<long>())).Returns(new List<PimsManagementFileProperty>());
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
+
             // Act
             var result = service.Update(1, managementFile, new List<UserOverrideCode>() { });
 
@@ -647,6 +692,8 @@ namespace Pims.Api.Test.Services
                 Description = "COMPLETE",
             },});
 
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             PimsManagementFile updatedFile = new()
             {
@@ -694,6 +741,9 @@ namespace Pims.Api.Test.Services
                 Id = managementFile.ManagementFileStatusTypeCodeNavigation.Id,
                 Description = managementFile.ManagementFileStatusTypeCodeNavigation.Description,
             },});
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test", regionCode: 1));
 
             // Act
             var result = service.Update(managementFile.Internal_Id, managementFile, new List<UserOverrideCode>() { });
@@ -1565,6 +1615,7 @@ namespace Pims.Api.Test.Services
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             repository.Setup(x => x.GetContacts(It.IsAny<long>())).Returns(new List<PimsManagementFileContact> { contact });
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
 
             // Act
             var result = service.GetContacts(1);
@@ -1607,6 +1658,7 @@ namespace Pims.Api.Test.Services
 
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             repository.Setup(x => x.GetContact(It.IsAny<long>(), It.IsAny<long>())).Returns(contact);
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
 
             // Act
             var result = service.GetContact(1, 1);
@@ -1730,8 +1782,10 @@ namespace Pims.Api.Test.Services
             // Arrange
             var service = this.CreateManagementServiceWithPermissions(Permissions.ManagementEdit);
 
+            var managementFile = EntityHelper.CreateManagementFile();
             var repository = this._helper.GetService<Mock<IManagementFileRepository>>();
             repository.Setup(x => x.DeleteContact(It.IsAny<long>(), It.IsAny<long>()));
+            repository.Setup(x => x.GetById(It.IsAny<long>())).Returns(managementFile);
 
             var activityRepository = this._helper.GetService<Mock<IManagementActivityRepository>>();
 

@@ -12,7 +12,7 @@ const csprojLoc = './source/backend/api/Pims.Api.csproj';
  * To print the next version without releasing anything, add the '--release-version' flag.
  *
  * USAGE:
- * node ./build/bump-version.js [<new-version> | --major | --minor | --patch | --is | --build] [--apply] [--print-version]
+ * node ./build/bump-version.js [<new-version> | --major | --minor | --patch | --build] [--apply] [--print-version]
  *
  */
 
@@ -24,18 +24,12 @@ run(args);
 
 function run(args) {
   const IS_DRY_RUN = !args.includes('--apply'); // default to dry-run
-  const IS_PRINT_VERSION = args.includes('--print-next-version');
 
   const releaseType = args[0];
   const packageJson = JSON.parse(fs.readFileSync(packageJsonLoc, 'utf8'));
   const version = packageJson.version;
 
   let [newVersion, assemblyVersion] = bumpVersion(releaseType, version);
-
-  if (IS_PRINT_VERSION) {
-    console.info(newVersion);
-    process.exit(0);
-  }
 
   // bump version numbers
   if (!IS_DRY_RUN) {
@@ -73,31 +67,28 @@ function updateCsproj(csproj) {
   fs.writeFileSync(csprojLoc, csproj, 'utf8');
 }
 
-// version format: <major>.<minor>.<patch>-<IS_number>.<build>
-// e.g. 0.2.0-7.3
+// version format: <major>.<minor>.<patch>.<build>
+// e.g. 6.4.0.3
 function isValidVersion(version) {
   if (!version) {
     return false;
   }
-  return /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*)-(0|[1-9]\d*)\.(0|[1-9]\d*)$/.test(version);
+  return /^(0|[1-9]\d*)\.(0|[1-9]\d*)\.(0|[1-9]\d*).(0|[1-9]\d*)$/.test(version);
 }
 
 function parse(version) {
-  const [semVer, metadata] = version.split('-');
-  const [major, minor, patch] = semVer?.split('.');
-  const [isNumber, build] = metadata?.split('.');
-
-  return [major, minor, patch, isNumber, build];
+  const [major, minor, patch, build] = version?.split('.');
+  return [major, minor, patch, build];
 }
 
 function bumpVersion(releaseType, version) {
-  let major, minor, patch, isNumber, build;
+  let major, minor, patch, build;
 
   // Support setting version to a fixed value; e.g. "0.1.0-8.5"
   if (isValidVersion(releaseType)) {
-    [major, minor, patch, isNumber, build] = parse(releaseType);
+    [major, minor, patch, build] = parse(releaseType);
   } else if (version) {
-    [major, minor, patch, isNumber, build] = parse(version);
+    [major, minor, patch, build] = parse(version);
 
     switch (releaseType) {
       case '--major':
@@ -118,9 +109,8 @@ function bumpVersion(releaseType, version) {
         build = 0;
         break;
 
-      case '--is':
-        isNumber = parseInt(isNumber, 10) + 1;
-        build = 0;
+      case '--build':
+        build = parseInt(build, 10) + 1;
         break;
 
       default:
@@ -131,12 +121,11 @@ function bumpVersion(releaseType, version) {
     major = 0;
     minor = 1;
     patch = 0;
-    isNumber = 1;
     build = 0;
   }
 
-  let newVersion = `${major}.${minor}.${patch}-${isNumber}.${build}`;
-  let assemblyVersion = `${major}.${minor}.${patch}.${isNumber}`;
+  let newVersion = `${major}.${minor}.${patch}.${build}`;
+  let assemblyVersion = `${major}.${minor}.${patch}.${build}`;
 
   return [newVersion, assemblyVersion];
 }

@@ -34,19 +34,28 @@ on:
       HOTFIX_BRANCH:
         description: "Enter the name of the branch containing the hotfix"
         required: true
+      enable-notifications:
+        description: "Send Teams notifications"
+        required: false
+        type: boolean
+        default: true
 
 jobs:
   ci-cd-start-notification:
     name: CI-CD Start Notification to Teams Channel
     runs-on: ubuntu-22.04
     steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Start notification to Teams Channel
-        uses: dragos-cojocari/ms-teams-notification@bdee8c5584729d6a2dcaad8fc21ecfd40d1418ab # v1.0.2
+        if: ${{ inputs.enable-notifications }}
+        continue-on-error: true
+        uses: ./.github/actions/teams-notification
         with:
-          github-token: ${{ github.token }}
-          ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
-          notification-summary: PIMS UAT Pre-Release Hotfix started.
-          notification-color: 17a2b8
+          webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
+          summary: PIMS UAT Pre-Release Hotfix started.
+          title: PIMS UAT Pre-Release Hotfix
+          color: 17a2b8
           timezone: America/Los_Angeles
 
   create-builds:
@@ -57,7 +66,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -78,7 +87,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -98,7 +107,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -118,7 +127,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -165,7 +174,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -186,7 +195,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -203,21 +212,11 @@ jobs:
   keycloak-sync:
     name: sync keycloak
     needs: database-upgrade
-    runs-on: ubuntu-22.04
-    steps:
-      - name: Checkout Source Code
-        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
-      - name: Login to OpenShift
-        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
-        with:
-          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
-          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
-          insecure_skip_tls_verify: true
-          namespace: ${{ env.NAMESPACE_OVERRIDE }}
-      - name: call scripts to sync keycloak
-        shell: bash
-        run: |
-          oc process -f ./openshift/4.0/templates/jobs/keycloak-sync-pipeline-run.yaml -p ASPNETCORE_ENVIRONMENT=$ASPNETCORE_ENVIRONMENT -p NAMESPACE=$NAMESPACE_OVERRIDE -p BRANCH=$GIT_BRANCH -p API_URL=http://pims-api-uat:8080/api -p KEYCLOAK_SECRET_NAME=pims-api-sso-uat -p KEYCLOAK_SERVICE_ACCOUNT_SECRET_NAME=pims-api-sso-uat  | oc create -f - | grep -oP "(?<=\/)[^\s]*" | (read PIPELINE_NAME; oc wait --for=condition=succeeded pipelineruns/$PIPELINE_NAME --timeout=500s)
+    uses: ./.github/workflows/keycloak-sync.yml
+    with:
+      environment: uat
+      branch: ${{github.event.inputs.HOTFIX_BRANCH}}
+    secrets: inherit
 
   tag-release-image:
     name: Release Tag
@@ -227,7 +226,7 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
@@ -246,18 +245,22 @@ jobs:
     if: always()
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-22.04
-    needs: [mayan-sync, keycloak-sync]
+    needs: [mayan-sync, keycloak-sync, tag-release-image]
     steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: check workflow status
         uses: martialonline/workflow-status@326830cacf79872efe767e15031f58d1ea0508c4 # v4.2
         id: check
       - name: End notification to Teams Channel
-        uses: dragos-cojocari/ms-teams-notification@bdee8c5584729d6a2dcaad8fc21ecfd40d1418ab # v1.0.2
+        if: ${{ inputs.enable-notifications }}
+        continue-on-error: true
+        uses: ./.github/actions/teams-notification
         with:
-          github-token: ${{ github.token }}
-          ms-teams-webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
-          notification-summary: PIMS UAT Pre-Release Hotfix complete with status ${{ steps.check.outputs.status }}
-          notification-color: 17a2b8
+          webhook-uri: ${{ env.MS_TEAMS_WEBHOOK_BUILD_CHANNEL }}
+          summary: PIMS UAT Pre-Release Hotfix complete with status ${{ steps.check.outputs.status }}
+          title: PIMS UAT Pre-Release Hotfix
+          color: 17a2b8
           timezone: America/Los_Angeles
 
   cleanup-builds:
@@ -269,13 +272,13 @@ jobs:
       - name: Checkout Source Code
         uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
       - name: Login to OpenShift
-        uses: redhat-actions/oc-login@5eb45e848b168b6bf6b8fe7f1561003c12e3c99d # v1.3
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
         with:
           openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: 3cd915-tools
-      - name: create all PSP build configurations for branch
+      - name: Delete all PSP build configurations for branch
         shell: bash
         run: |
           oc delete bc --selector ci_cd=true

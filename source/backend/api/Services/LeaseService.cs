@@ -6,6 +6,7 @@ using System.Linq;
 using System.Security.Claims;
 using System.Text;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Services;
@@ -206,8 +207,8 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.LeaseAdd);
 
             // Restrict Contractor lease access to lease team/project team
-            _user.ThrowInvalidRegion(lease, _userRepository);
-            _user.ThrowMissingContractorInTeam(lease, _userRepository, _projectRepository);
+            lease.ThrowInvalidRegion(_user, _userRepository);
+            lease.ThrowMissingContractorInTeam(_user, _userRepository, _projectRepository);
 
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
 
@@ -246,9 +247,9 @@ namespace Pims.Api.Services
             }
 
             // Need to check that the user is able to access the current lease as well as has the region for the updated lease.
-            _user.ThrowInvalidRegion(currentLease, _userRepository);
-            _user.ThrowInvalidRegion(lease, _userRepository);
-            _user.ThrowContractorRemovedFromTeam(lease, _userRepository, _projectRepository);
+            currentLease.ThrowInvalidRegion(_user, _userRepository);
+            lease.ThrowInvalidRegion(_user, _userRepository);
+            lease.ThrowContractorRemovedFromTeam(_user, _userRepository, _projectRepository);
 
             if (lease.LeasePayRvblTypeCode != currentLease.LeasePayRvblTypeCode)
             {
@@ -281,11 +282,11 @@ namespace Pims.Api.Services
             var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
 
             // Need to check that the user is able to access the current lease as well as has the region for the updated lease.
-            _user.ThrowInvalidRegion(currentLease, _userRepository);
-            _user.ThrowInvalidRegion(lease, _userRepository);
+            currentLease.ThrowInvalidRegion(_user, _userRepository);
+            lease.ThrowInvalidRegion(_user, _userRepository);
 
             // Restrict Contractor lease access to lease team/project team
-            _user.ThrowContractorRemovedFromTeam(lease, _userRepository, _projectRepository);
+            lease.ThrowContractorRemovedFromTeam(_user, _userRepository, _projectRepository);
 
             var leaseWithProperties = AssociatePropertyLeases(lease, userOverrides);
 

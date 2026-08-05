@@ -6,6 +6,7 @@ using DocumentFormat.OpenXml.Office2010.ExcelAc;
 using FluentAssertions;
 using k8s.KubeConfigModels;
 using Moq;
+using Pims.Api.Helpers.Extensions;
 using Pims.Api.Services;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
@@ -41,14 +42,13 @@ namespace Pims.Api.Test.Helpers
             var principal = new ClaimsPrincipal();
             var lease = EntityHelper.CreateLease(1);
             lease.RegionCode = 1;
-            var user = EntityHelper.CreateUser("Test");
-            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+            var pimsUser = EntityHelper.CreateUser("testuser", regionCode: 1);
 
             var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
 
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
 
             var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
 
@@ -68,14 +68,13 @@ namespace Pims.Api.Test.Helpers
             var principal = new ClaimsPrincipal();
             var lease = EntityHelper.CreateLease(1);
             lease.RegionCode = 1;
-            var user = EntityHelper.CreateUser("Test", isContractor: true);
-            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
+            var pimsUser = EntityHelper.CreateUser("testuser", regionCode: 1, isContractor: true);
 
             var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
 
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
 
             var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
 
@@ -96,15 +95,14 @@ namespace Pims.Api.Test.Helpers
             var lease = EntityHelper.CreateLease(1);
             lease.RegionCode = 1;
             lease.PimsLeaseLicenseTeams.Add(new() { PersonId = 1 });
-            var user = EntityHelper.CreateUser("Test", isContractor: true);
-            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
-            user.PersonId = 1;
+            var pimsUser = EntityHelper.CreateUser("testuser", regionCode: 1, isContractor: true);
+            pimsUser.PersonId = 1;
 
             var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
 
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
 
             var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
 
@@ -124,17 +122,18 @@ namespace Pims.Api.Test.Helpers
             var principal = new ClaimsPrincipal();
             var lease = EntityHelper.CreateLease(1);
             lease.RegionCode = 1;
-            lease.PimsLeaseLicenseTeams.Add(new() { PersonId = 1 });
-            lease.Project = new PimsProject() { PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1 } } };
-            var user = EntityHelper.CreateUser("Test", isContractor: true);
-            user.PimsRegionUsers.Add(new PimsRegionUser() { RegionCode = lease.RegionCode.Value });
-            user.PersonId = 1;
+            lease.Project = EntityHelper.CreateProject(1, "TESTPROJ", "Test Project");
+            lease.Project.PimsProjectPeople.Add(new PimsProjectPerson() { PersonId = 1 });
+            lease.ProjectId = lease.Project.Internal_Id;
+
+            var pimsUser = EntityHelper.CreateUser("testuser", regionCode: 1, isContractor: true);
+            pimsUser.PersonId = 1;
 
             var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
 
             var userRepository = _helper.GetService<Mock<IUserRepository>>();
-            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
 
             var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
             projectRepository.Setup(x => x.TryGet(It.IsAny<long>())).Returns(lease.Project);
@@ -147,7 +146,71 @@ namespace Pims.Api.Test.Helpers
         }
 
         [Fact]
-        public void ThrowInvalidAccessToAcquisitionFile_ContractorNotAssigned_ThrowsNotAuthorizedException()
+        public void ThrowInvalidAccessToLeaseFile_ContractorInTeam_DifferentRegion_Error()
+        {
+            // Arrange
+            this._helper.Create<LeaseService>();
+
+            var principal = new ClaimsPrincipal();
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            lease.PimsLeaseLicenseTeams.Add(new() { PersonId = 1 });
+
+            // Contractor is on the lease team (PersonId 1) but their assigned region (2) differs from the lease's region (1).
+            var pimsUser = EntityHelper.CreateUser("testuser", regionCode: 2, isContractor: true);
+            pimsUser.PersonId = 1;
+
+            var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
+
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+
+            // Act
+            Action act = () => principal.ThrowInvalidAccessToLeaseFile(userRepository.Object, leaseRepository.Object, projectRepository.Object, 1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage("Contractor is not assigned to the Lease File's team or the associated Project's team");
+        }
+
+        [Fact]
+        public void ThrowInvalidAccessToLeaseFile_ContractorInProject_DifferentRegion_Error()
+        {
+            // Arrange
+            this._helper.Create<LeaseService>();
+
+            var principal = new ClaimsPrincipal();
+            var lease = EntityHelper.CreateLease(1);
+            lease.RegionCode = 1;
+            lease.Project = EntityHelper.CreateProject(1, "TESTPROJ", "Test Project");
+            lease.Project.PimsProjectPeople.Add(new PimsProjectPerson() { PersonId = 1 });
+            lease.ProjectId = lease.Project.Internal_Id;
+
+            // Contractor is on the associated project's team (PersonId 1) but their assigned region (2)
+            // differs from the lease's region (1).
+            var pimsUser = EntityHelper.CreateUser("testuser", regionCode: 2, isContractor: true);
+            pimsUser.PersonId = 1;
+
+            var leaseRepository = _helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
+
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+            projectRepository.Setup(x => x.TryGet(It.IsAny<long>())).Returns(lease.Project);
+
+            // Act
+            Action act = () => principal.ThrowInvalidAccessToLeaseFile(userRepository.Object, leaseRepository.Object, projectRepository.Object, 1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage("Contractor is not assigned to the Lease File's team or the associated Project's team");
+        }
+
+        [Fact]
+        public void ThrowInvalidAccessToAcquisitionFile_ContractorNotAssigned_Error()
         {
             // Arrange
             this._helper.Create<AcquisitionFileService>();
@@ -161,15 +224,17 @@ namespace Pims.Api.Test.Helpers
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
             acquisitionFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
 
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+
             // Act
-            Action act = () => principal.ThrowInvalidAccessToAcquisitionFile(userRepository.Object, acquisitionFileRepository.Object, 1);
+            Action act = () => principal.ThrowInvalidAccessToAcquisitionFile(userRepository.Object, acquisitionFileRepository.Object, projectRepository.Object, 1);
 
             // Assert
             act.Should().Throw<NotAuthorizedException>().WithMessage("Contractor is not assigned to the Acquisition File's team or the associated Project's team");
         }
 
         [Fact]
-        public void ThrowInvalidAccessToAcquisitionFile_ContractorAssigned_DoesNotThrow()
+        public void ThrowInvalidAccessToAcquisitionFile_ContractorInTeam_Success()
         {
             // Arrange
             this._helper.Create<AcquisitionFileService>();
@@ -179,20 +244,22 @@ namespace Pims.Api.Test.Helpers
             var acquisitionFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
             var pimsUser = EntityHelper.CreateUser(1, Guid.NewGuid(), "testuser", regionCode: 1, isContractor: true);
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
-            acquisitionFile.PimsAcquisitionFileTeams.Add(new PimsAcquisitionFileTeam { PersonId = pimsUser.PersonId });
+            acquisitionFile.PimsAcquisitionFileTeams.Add(new PimsAcquisitionFileTeam { PersonId = 1 });
 
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
             acquisitionFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
 
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+
             // Act
-            Action act = () => principal.ThrowInvalidAccessToAcquisitionFile(userRepository.Object, acquisitionFileRepository.Object, 1);
+            Action act = () => principal.ThrowInvalidAccessToAcquisitionFile(userRepository.Object, acquisitionFileRepository.Object, projectRepository.Object, 1);
 
             // Assert
             act.Should().NotThrow<NotAuthorizedException>();
         }
 
         [Fact]
-        public void ThrowInvalidAccessToAcquisitionFile_ContractorProject_DoesNotThrow()
+        public void ThrowInvalidAccessToAcquisitionFile_ContractorInProject_Success()
         {
             // Arrange
             this._helper.Create<AcquisitionFileService>();
@@ -203,20 +270,87 @@ namespace Pims.Api.Test.Helpers
             var pimsUser = EntityHelper.CreateUser(1, Guid.NewGuid(), "testuser", regionCode: 1, isContractor: true);
             pimsUser.PersonId = 1;
             var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
-            acquisitionFile.Project = new PimsProject() { PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1 } } };
+            acquisitionFile.Project = EntityHelper.CreateProject(1, "TESTPROJ", "Test Project");
+            acquisitionFile.Project.PimsProjectPeople.Add(new PimsProjectPerson() { PersonId = 1 });
+            acquisitionFile.ProjectId = acquisitionFile.Project.Internal_Id;
 
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
             acquisitionFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
 
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+            projectRepository.Setup(x => x.TryGet(It.IsAny<long>())).Returns(acquisitionFile.Project);
+
             // Act
-            Action act = () => principal.ThrowInvalidAccessToAcquisitionFile(userRepository.Object, acquisitionFileRepository.Object, 1);
+            Action act = () => principal.ThrowInvalidAccessToAcquisitionFile(userRepository.Object, acquisitionFileRepository.Object, projectRepository.Object, 1);
 
             // Assert
             act.Should().NotThrow<NotAuthorizedException>();
         }
 
         [Fact]
-        public void ThrowInvalidAccessToDispositionFile_ContractorNotAssigned_ThrowsNotAuthorizedException()
+        public void ThrowInvalidAccessToAcquisitionFile_ContractorInTeam_DifferentRegion_Error()
+        {
+            // Arrange
+            this._helper.Create<AcquisitionFileService>();
+
+            var principal = new ClaimsPrincipal();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var acquisitionFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            // Contractor is on the acquisition file's team (matching PersonId) but their assigned region (2)
+            // differs from the acquisition file's region (1).
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+            acquisitionFile.PimsAcquisitionFileTeams.Add(new PimsAcquisitionFileTeam { PersonId = 1 });
+
+            var pimsUser = EntityHelper.CreateUser(1, Guid.NewGuid(), "testuser", regionCode: 2, isContractor: true);
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
+            acquisitionFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+
+            // Act
+            Action act = () => principal.ThrowInvalidAccessToAcquisitionFile(userRepository.Object, acquisitionFileRepository.Object, projectRepository.Object, 1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage("Contractor is not assigned to the Acquisition File's team or the associated Project's team");
+        }
+
+        [Fact]
+        public void ThrowInvalidAccessToAcquisitionFile_ContractorInProject_DifferentRegion_Error()
+        {
+            // Arrange
+            this._helper.Create<AcquisitionFileService>();
+
+            var principal = new ClaimsPrincipal();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var acquisitionFileRepository = _helper.GetService<Mock<IAcquisitionFileRepository>>();
+
+            // Contractor is on the associated project's team (matching PersonId) but their assigned region (2)
+            // differs from the acquisition file's region (1).
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+            acquisitionFile.Project = EntityHelper.CreateProject(1, "TESTPROJ", "Test Project");
+            acquisitionFile.Project.PimsProjectPeople.Add(new PimsProjectPerson() { PersonId = 1 });
+            acquisitionFile.ProjectId = acquisitionFile.Project.Internal_Id;
+
+            var pimsUser = EntityHelper.CreateUser(1, Guid.NewGuid(), "testuser", regionCode: 2, isContractor: true);
+            pimsUser.PersonId = 1;
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
+            acquisitionFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+            projectRepository.Setup(x => x.TryGet(It.IsAny<long>())).Returns(acquisitionFile.Project);
+
+            // Act
+            Action act = () => principal.ThrowInvalidAccessToAcquisitionFile(userRepository.Object, acquisitionFileRepository.Object, projectRepository.Object, 1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage("Contractor is not assigned to the Acquisition File's team or the associated Project's team");
+        }
+
+        [Fact]
+        public void ThrowInvalidAccessToDispositionFile_ContractorNotAssigned_Error()
         {
             // Arrange
             this._helper.Create<DispositionFileService>();
@@ -230,15 +364,17 @@ namespace Pims.Api.Test.Helpers
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
             dispositionFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispositionFile);
 
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+
             // Act
-            Action act = () => principal.ThrowInvalidAccessToDispositionFile(userRepository.Object, dispositionFileRepository.Object, 1);
+            Action act = () => principal.ThrowInvalidAccessToDispositionFile(userRepository.Object, dispositionFileRepository.Object, projectRepository.Object, 1);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>().WithMessage("Contractor is not assigned to the Disposition File's team");
+            act.Should().Throw<NotAuthorizedException>().WithMessage("Contractor is not assigned to the Disposition File's team or the associated Project's team");
         }
 
         [Fact]
-        public void ThrowInvalidAccessToDispositionFile_ContractorAssigned_DoesNotThrow()
+        public void ThrowInvalidAccessToDispositionFile_ContractorInTeam_Success()
         {
             // Arrange
             this._helper.Create<DispositionFileService>();
@@ -248,20 +384,22 @@ namespace Pims.Api.Test.Helpers
             var dispositionFileRepository = _helper.GetService<Mock<IDispositionFileRepository>>();
             var pimsUser = EntityHelper.CreateUser(1, Guid.NewGuid(), "testuser", regionCode: 1, isContractor: true);
             var dispositionFile = EntityHelper.CreateDispositionFile(1);
-            dispositionFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam { PersonId = pimsUser.PersonId });
+            dispositionFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam { PersonId = 1 });
 
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
             dispositionFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispositionFile);
 
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+
             // Act
-            Action act = () => principal.ThrowInvalidAccessToDispositionFile(userRepository.Object, dispositionFileRepository.Object, 1);
+            Action act = () => principal.ThrowInvalidAccessToDispositionFile(userRepository.Object, dispositionFileRepository.Object, projectRepository.Object, 1);
 
             // Assert
             act.Should().NotThrow<NotAuthorizedException>();
         }
 
         [Fact]
-        public void ThrowInvalidAccessToDispositionFile_ContractorProject_DoesThrow()
+        public void ThrowInvalidAccessToDispositionFile_ContractorInProject_Success()
         {
             // Arrange
             this._helper.Create<DispositionFileService>();
@@ -272,16 +410,81 @@ namespace Pims.Api.Test.Helpers
             var dispositionFile = EntityHelper.CreateDispositionFile(1);
             var pimsUser = EntityHelper.CreateUser(1, Guid.NewGuid(), "testuser", regionCode: 1, isContractor: true);
             pimsUser.PersonId = 1;
-            dispositionFile.Project = new PimsProject() { PimsProjectPeople = new List<PimsProjectPerson>() { new PimsProjectPerson() { PersonId = 1 } } };
+            dispositionFile.Project = EntityHelper.CreateProject(1, "TESTPROJ", "Test Project");
+            dispositionFile.Project.PimsProjectPeople.Add(new PimsProjectPerson() { PersonId = 1 });
+            dispositionFile.ProjectId = dispositionFile.Project.Internal_Id;
 
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
             dispositionFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispositionFile);
 
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+            projectRepository.Setup(x => x.TryGet(It.IsAny<long>())).Returns(dispositionFile.Project);
+
             // Act
-            Action act = () => principal.ThrowInvalidAccessToDispositionFile(userRepository.Object, dispositionFileRepository.Object, 1);
+            Action act = () => principal.ThrowInvalidAccessToDispositionFile(userRepository.Object, dispositionFileRepository.Object, projectRepository.Object, 1);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>();
+            act.Should().NotThrow<NotAuthorizedException>();
+        }
+
+        [Fact]
+        public void ThrowInvalidAccessToDispositionFile_ContractorInTeam_DifferentRegion_Error()
+        {
+            // Arrange
+            this._helper.Create<DispositionFileService>();
+
+            var principal = new ClaimsPrincipal();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var dispositionFileRepository = _helper.GetService<Mock<IDispositionFileRepository>>();
+
+            // Contractor is on the disposition file's team (matching PersonId) but their assigned region (2)
+            // differs from the disposition file's region (1).
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+            dispositionFile.PimsDispositionFileTeams.Add(new PimsDispositionFileTeam { PersonId = 1 });
+
+            var pimsUser = EntityHelper.CreateUser(1, Guid.NewGuid(), "testuser", regionCode: 2, isContractor: true);
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
+            dispositionFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispositionFile);
+
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+
+            // Act
+            Action act = () => principal.ThrowInvalidAccessToDispositionFile(userRepository.Object, dispositionFileRepository.Object, projectRepository.Object, 1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage("Contractor is not assigned to the Disposition File's team or the associated Project's team");
+        }
+
+        [Fact]
+        public void ThrowInvalidAccessToDispositionFile_ContractorInProject_DifferentRegion_Error()
+        {
+            // Arrange
+            this._helper.Create<DispositionFileService>();
+
+            var principal = new ClaimsPrincipal();
+            var userRepository = _helper.GetService<Mock<IUserRepository>>();
+            var dispositionFileRepository = _helper.GetService<Mock<IDispositionFileRepository>>();
+            var dispositionFile = EntityHelper.CreateDispositionFile(1);
+
+            dispositionFile.Project = EntityHelper.CreateProject(1, "TESTPROJ", "Test Project");
+            dispositionFile.Project.PimsProjectPeople.Add(new PimsProjectPerson() { PersonId = 1 });
+            dispositionFile.ProjectId = dispositionFile.Project.Internal_Id;
+
+            var pimsUser = EntityHelper.CreateUser(1, Guid.NewGuid(), "testuser", regionCode: 2, isContractor: true);
+            pimsUser.PersonId = 1;
+
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(pimsUser);
+            dispositionFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(dispositionFile);
+
+            var projectRepository = _helper.GetService<Mock<IProjectRepository>>();
+            projectRepository.Setup(x => x.TryGet(It.IsAny<long>())).Returns(dispositionFile.Project);
+
+            // Act
+            Action act = () => principal.ThrowInvalidAccessToDispositionFile(userRepository.Object, dispositionFileRepository.Object, projectRepository.Object, 1);
+
+            // Assert
+            act.Should().Throw<NotAuthorizedException>().WithMessage("Contractor is not assigned to the Disposition File's team or the associated Project's team");
         }
         #endregion
     }
