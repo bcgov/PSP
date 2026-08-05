@@ -249,6 +249,10 @@ namespace Pims.Api.Test.Services
                     new PimsCompensationRequisition(),
                 });
 
+            var acquisitionFile = EntityHelper.CreateAcquisitionFile(1);
+            var acqFileRepository = this._helper.GetService<Mock<IAcquisitionFileRepository>>();
+            acqFileRepository.Setup(x => x.GetById(It.IsAny<long>())).Returns(acquisitionFile);
+
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
@@ -1015,6 +1019,12 @@ namespace Pims.Api.Test.Services
                 LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString()
             });
 
+            // GetNoTracking is called during contractor access check to leases
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
+
             // Act
             Action act = () => service.Update(FileTypes.Lease, new PimsCompensationRequisition()
             {
@@ -1055,6 +1065,12 @@ namespace Pims.Api.Test.Services
                     PimsCompReqFinancials = new List<PimsCompReqFinancial>() { new PimsCompReqFinancial() { TotalAmt = 100 } } }, },
                 LeaseStatusTypeCode = LeaseStatusTypes.ACTIVE.ToString()
             });
+
+            // GetNoTracking is called during contractor access check to leases
+            leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(EntityHelper.CreateUser("Test"));
 
             // Act
             Action act = () => service.Update(FileTypes.Lease, new PimsCompensationRequisition()

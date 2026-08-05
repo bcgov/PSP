@@ -4,7 +4,7 @@ import { DocumentsListPage } from '../../../pages/documents/documents-list.page'
 
 import { ResearchViewFileDetails } from '../../../pages/research/research-view-file-details.page';
 import { DocumentUploadModalPage } from '../../../pages/documents/document-upload-modal.page';
-import { generateFileName, normalize, formatApiDate, formatApiBoolean } from '../../../utils/utils';
+import { generateFileName, normalize, nullableBooleanToYesNoString } from '../../../utils/utils';
 import path from 'path';
 import { ResearchImprovementsPage } from '../../../pages/research/research-improvements-page';
 
@@ -47,6 +47,7 @@ test.describe('Research Files feature', () => {
       requestDate: any;
       researchCompletionDate: any;
     };
+
     const responsePromise = page.waitForResponse(
       (response: { url: () => string | string[]; status: () => number }) =>
         response.url().includes('/api/researchFiles/') && response.status() === 200
@@ -100,7 +101,7 @@ test.describe('Research Files feature', () => {
       }
 
       const isExpropriation = await researchViewDetails.getFieldValueByLabel('Expropriation?');
-      const formatedBoolean = formatApiBoolean(apiFeatureFileJson.isExpropriation);
+      const formatedBoolean = nullableBooleanToYesNoString(apiFeatureFileJson.isExpropriation);
       expect(normalize(isExpropriation)).toBe(formatedBoolean);
 
       const description = await researchViewDetails.getResearchDescription();

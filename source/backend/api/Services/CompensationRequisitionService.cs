@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Exceptions;
@@ -389,7 +390,7 @@ namespace Pims.Api.Services
             compensationRequisition.ThrowInvalidParentId();
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionAdd);
 
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, (long)compensationRequisition.AcquisitionFileId);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, (long)compensationRequisition.AcquisitionFileId);
 
             var currentAcquisitionFile = _acqFileRepository.GetById((long)compensationRequisition.AcquisitionFileId);
             var currentAcquisitionStatus = Enum.Parse<AcquisitionStatusTypes>(currentAcquisitionFile.AcquisitionFileStatusTypeCode);
@@ -439,7 +440,7 @@ namespace Pims.Api.Services
         {
             _logger.LogInformation("Getting compensations for acquisition file id: {acquisitionFileId}", fileId);
             _user.ThrowIfNotAuthorized(Permissions.CompensationRequisitionView, Permissions.AcquisitionFileView);
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, fileId);
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, fileId);
 
             return _compensationRequisitionRepository.GetAllByAcquisitionFileId(fileId).ToList();
         }
@@ -455,8 +456,8 @@ namespace Pims.Api.Services
 
         private PimsCompensationRequisition UpdateAcquisitionFileCompensation(PimsCompensationRequisition compensationRequisition)
         {
-            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, (long)compensationRequisition.AcquisitionFileId);
             _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.CompensationRequisitionId}");
+            _user.ThrowInvalidAccessToAcquisitionFile(_userRepository, _acqFileRepository, _projectRepository, (long)compensationRequisition.AcquisitionFileId);
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
 
@@ -483,6 +484,7 @@ namespace Pims.Api.Services
         private PimsCompensationRequisition UpdateLeaseFileCompensation(PimsCompensationRequisition compensationRequisition)
         {
             _logger.LogInformation($"Updating Compensation Requisition with id ${compensationRequisition.CompensationRequisitionId}");
+            _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, (long)compensationRequisition.LeaseId);
 
             var currentCompensation = _compensationRequisitionRepository.GetById(compensationRequisition.CompensationRequisitionId);
 

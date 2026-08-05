@@ -1,0 +1,5 @@
+# NOTE: 65532 is the UID hardcoded in the git-clone task that runs first. The keycloak-sync task must match it to write to the cloned repo.
+# Do not add fsGroup: it is outside the namespace's allowed range and OpenShift will reject the pod.
+securityContext:
+  runAsNonRoot: true
+  runAsUser: 65532

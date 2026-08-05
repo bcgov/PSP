@@ -9,7 +9,9 @@ IFS=$'\n\t'
 
 # Parameters and mode variables
 #
-PROJECT=3cd915-${1:-}
+#PROJECT=3cd915-${1:-}
+PROJECT_NAMESPACE=${PROJECT_NAMESPACE:-3cd915}
+PROJECT=${PROJECT_NAMESPACE}-${1:-}
 COMMAND=${2:-}
 VERBOSE=${VERBOSE:-}
 
@@ -24,13 +26,15 @@ STATIC_PAGE_NAME=${STATIC_PAGE_NAME:-proxy-caddy}
 STATIC_PAGE_PORT=${STATIC_PAGE_PORT:-2015-tcp}
 STATIC_PAGE_HOSTNAME=${STATIC_PAGE_HOSTNAME:-proxy-caddy-pims-${ENVIRONMENT_NAME}${INSTANCE_ID}.apps.silver.devops.gov.bc.ca}
 #
-IMG_SRC=${IMG_SRC:-s2i-caddy}
+#IMG_SRC=${IMG_SRC:-s2i-caddy}
 GIT_REPO=${GIT_REPO:-https://github.com/bcgov/psp.git}
 GIT_REF=${GIT_REF:-dev}
-OC_S2I=${OC_BUILD:-../openshift/4.0/templates/maintenance/caddy.s2i.bc.yaml}
-OC_BUILD=${OC_BUILD:-../openshift/4.0/templates/maintenance/caddy.bc.yaml}
+OUTPUT_IMAGE_TAG=${OUTPUT_IMAGE_TAG:-${GIT_REF}}
+
+#OC_S2I=${OC_BUILD:-../openshift/4.0/templates/maintenance/caddy.s2i.bc.yaml}
+OC_BUILD=${OC_BUILD:-../openshift/4.0/templates/maintenance/caddy-v2.bc.yaml}
 OC_DEPLOY=${OC_DEPLOY:-../openshift/4.0/templates/maintenance/caddy.dc.yaml}
-BUILD_PROJECT=${BUILD_PROJECT:-3cd915-tools}
+#BUILD_PROJECT=${BUILD_PROJECT:-3cd915-tools}
 
 # support PROD route overrides
 APPLICATION_ROUTE=${APPLICATION_ROUTE:-${APPLICATION_NAME}${INSTANCE_ID}}
@@ -65,34 +69,52 @@ then
   oc patch route "${APPLICATION_ROUTE}" -n ${PROJECT} -p \
     '{ "spec": { "to": { "name": "'$( echo ${STATIC_PAGE_NAME} )'" },
     "port": { "targetPort": "'$( echo ${STATIC_PAGE_PORT} )'" }}}'
+
   oc patch route ${STATIC_PAGE_NAME} -n ${PROJECT} -p \
     '{ "spec": { "to": { "name": "'$( echo "${APPLICATION_SERVICE}" )'" },
     "port": { "targetPort": "'$( echo ${APPLICATION_PORT} )'" }}}'
+
 elif [ "${COMMAND}" == "off" ]
 then
   oc patch route "${APPLICATION_ROUTE}" -n ${PROJECT} -p \
     '{ "spec": { "to": { "name": "'$( echo "${APPLICATION_SERVICE}" )'" },
     "port": { "targetPort": "'$( echo ${APPLICATION_PORT} )'" }}}'
+
   oc patch route ${STATIC_PAGE_NAME} -n ${PROJECT} -p \
     '{ "spec": { "to": { "name": "'$( echo ${STATIC_PAGE_NAME} )'" },
     "port": { "targetPort": "'$( echo ${STATIC_PAGE_PORT} )'" }}}'
-elif [ "${COMMAND}" == "s2i" ]
-then
-  oc process -f ${OC_S2I} \
-    -p NAME=${IMG_SRC} GIT_REPO="https://github.com/BCDevOps/s2i-caddy.git" GIT_REF="master" OUTPUT_IMAGE_TAG="latest" \
-    | oc apply -f -
+
+# elif [ "${COMMAND}" == "s2i" ]
+# then
+#   oc process -f ${OC_S2I} \
+#     -p NAME=${IMG_SRC} GIT_REPO="https://github.com/BCDevOps/s2i-caddy.git" GIT_REF="master" OUTPUT_IMAGE_TAG="latest" \
+#     | oc apply -f -
+
 elif [ "${COMMAND}" == "build" ]
 then
-  oc process -f ${OC_BUILD} \
-    -p GIT_REPO=${GIT_REPO} GIT_REF=${GIT_REF} IMG_SRC=${IMG_SRC} IMG_SRC_NAMESPACE=${BUILD_PROJECT} \
-    | oc apply -f -
+  oc process -f "${OC_BUILD}" \
+  -p GIT_REPO="${GIT_REPO}" \
+     GIT_REF="${GIT_REF}" \
+     OUTPUT_IMAGE_TAG="${OUTPUT_IMAGE_TAG}" \
+  | oc apply -f -
+
 elif [ "${COMMAND}" == "deploy" ]
 then
-  oc process -f ${OC_DEPLOY} -n ${PROJECT} -p NAME=${STATIC_PAGE_NAME} APP_DOMAIN=${STATIC_PAGE_HOSTNAME} \
+  oc process -f "${OC_DEPLOY}" \
+    -p APP_NAME="${STATIC_PAGE_NAME}" \
+       PROJECT_NAMESPACE="${PROJECT_NAMESPACE}" \
+       ENV_NAME="${ENVIRONMENT_NAME}" \
+       APP_DOMAIN="${STATIC_PAGE_HOSTNAME}" \
+       IMAGE_TAG="${OUTPUT_IMAGE_TAG}" \
     | oc apply -f -
-  oc get route ${STATIC_PAGE_NAME} || \
-    oc expose svc ${STATIC_PAGE_NAME}
-  oc get dc ${STATIC_PAGE_NAME} -o json | grep '"image":' | awk '{ print $2 }' | tr -d ',"' \
+
+  oc get route "${STATIC_PAGE_NAME}" -n "${PROJECT}" || \
+    oc expose svc "${STATIC_PAGE_NAME}" -n "${PROJECT}"
+
+  oc get deployment "${STATIC_PAGE_NAME}" -n "${PROJECT}" -o json \
+    | grep '"image":' \
+    | awk '{ print $2 }' \
+    | tr -d ',"' \
     | tee -a ./container_img.log
 else
   echo
