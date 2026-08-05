@@ -99,6 +99,7 @@ exports[`File properties improvements list view > renders as expected 1`] = `
       >
         <div
           class="c3"
+          data-testid="property-improvement-0"
         >
           <div
             class="c1 form-section"
