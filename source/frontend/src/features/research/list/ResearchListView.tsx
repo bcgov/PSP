@@ -8,15 +8,16 @@ import styled from 'styled-components';
 import ResearchFileIcon from '@/assets/images/research-icon.svg?react';
 import * as CommonStyled from '@/components/common/styles';
 import { StyledAddButton } from '@/components/common/styles';
-import { REGION_TYPES } from '@/constants/API';
+import { REGION_TYPES, RESEARCH_FILE_STATUS_TYPES } from '@/constants/API';
 import Claims from '@/constants/claims';
 import { useApiResearchFile } from '@/hooks/pims-api/useApiResearchFile';
 import { useUserInfoRepository } from '@/hooks/repositories/useUserInfoRepository';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
-import { useLookupCodeHelpers } from '@/hooks/useLookupCodeHelpers';
+import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { useSearch } from '@/hooks/useSearch';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
 import { ApiGen_Concepts_ResearchFile } from '@/models/api/generated/ApiGen_Concepts_ResearchFile';
+import { mapLookupCode } from '@/utils';
 
 import { IResearchFilter } from '../interfaces';
 import { ResearchSearchResultModel } from './models';
@@ -86,10 +87,14 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
   }, [retrieveUserLookup]);
 
   const lookupCodes = useLookupCodeHelpers();
-  const regionOptions = lookupCodes.getOptionsByType(REGION_TYPES).map(c => ({
+  const researchRegionOptions = lookupCodes.getOptionsByType(REGION_TYPES).map(c => ({
     id: c.code,
     text: c.label,
   }));
+
+  const researchStatusOptions = lookupCodes
+    .getByType(RESEARCH_FILE_STATUS_TYPES)
+    .map(c => mapLookupCode(c));
 
   return (
     <CommonStyled.ListPage>
@@ -115,7 +120,8 @@ export const ResearchListView: React.FunctionComponent<React.PropsWithChildren<u
                 filter={filter}
                 setFilter={changeFilter}
                 createdByOptions={createdByOptions}
-                regionOptions={regionOptions}
+                regionOptions={researchRegionOptions}
+                statusOptions={researchStatusOptions}
               />
             </Col>
           </Row>

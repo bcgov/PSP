@@ -4,12 +4,9 @@ import { Col, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import { Form, Input, Multiselect, Select } from '@/components/common/form';
+import { Form, Input, Multiselect, Select, SelectOption } from '@/components/common/form';
 import { ColButtons } from '@/components/common/styles';
-import { RESEARCH_FILE_STATUS_TYPES } from '@/constants/API';
-import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { MultiSelectOption } from '@/interfaces/MultiSelectOption';
-import { mapLookupCode } from '@/utils';
 
 import { IResearchFilter } from '../../interfaces';
 import { AppCreateUpdateRangeSelect } from './AppCreateUpdateRangeSelect';
@@ -19,6 +16,7 @@ export interface IResearchFilterProps {
   filter?: IResearchFilter;
   createdByOptions: MultiSelectOption[];
   regionOptions: MultiSelectOption[];
+  statusOptions: SelectOption[];
   initialValues?: IResearchFilter;
   setFilter: (filter: IResearchFilter) => void;
 }
@@ -49,7 +47,7 @@ export const defaultResearchFilter: IResearchFilter = {
  */
 export const ResearchFilter: React.FunctionComponent<
   React.PropsWithChildren<IResearchFilterProps>
-> = ({ filter, setFilter, createdByOptions, regionOptions }) => {
+> = ({ filter, setFilter, createdByOptions, regionOptions, statusOptions }) => {
   const onSearchSubmit = (values: IResearchFilter, { setSubmitting }: any) => {
     const selectedUser = values.selectedUser?.[0]?.id as string | undefined;
 
@@ -63,16 +61,10 @@ export const ResearchFilter: React.FunctionComponent<
     setSubmitting(false);
   };
 
-  const lookupCodes = useLookupCodeHelpers();
-  // const regionOptions = lookupCodes.getOptionsByType(REGION_TYPES).map(c => ({
-  //   id: c.code,
-  //   text: c.label,
-  // }));
   const initialFilterValues: IResearchFilter = {
     ...defaultResearchFilter,
     ...filter,
     regionCodes: filter?.regionCodes?.length > 0 ? filter.regionCodes : regionOptions,
-    researchFileStatusTypeCode: filter?.researchFileStatusTypeCode ?? 'A',
   };
 
   const resetFilter = () => {
@@ -80,10 +72,6 @@ export const ResearchFilter: React.FunctionComponent<
       ...defaultResearchFilter,
     });
   };
-
-  const researchStatusOptions = lookupCodes
-    .getByType(RESEARCH_FILE_STATUS_TYPES)
-    .map(c => mapLookupCode(c));
 
   return (
     <Formik enableReinitialize initialValues={initialFilterValues} onSubmit={onSearchSubmit}>
@@ -112,7 +100,7 @@ export const ResearchFilter: React.FunctionComponent<
                     <Col lg="4">
                       <Select
                         placeholder="All Status"
-                        options={researchStatusOptions}
+                        options={statusOptions}
                         field="researchFileStatusTypeCode"
                       />
                     </Col>
