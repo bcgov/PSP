@@ -17,15 +17,17 @@ import { useAddFileConfirmation } from '@/hooks/useAddFileConfirmation';
 import useApiUserOverride from '@/hooks/useApiUserOverride';
 import { useEditPropertiesNotifier } from '@/hooks/useEditPropertiesNotifier';
 import useKeycloakWrapper, { IUserInfo } from '@/hooks/useKeycloakWrapper';
+import { useLtsa } from '@/hooks/useLtsa';
 import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, firstOrNull, formatGuid, isValidId } from '@/utils';
+import { exists, firstOrNull, formatGuid, isValidId, isValidString } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
 import { StyledFormWrapper } from '../../shared/styles';
+import { AcquisitionOwnerFormModel } from '../common/models';
 import { AddAcquisitionFileYupSchema } from './AddAcquisitionFileYupSchema';
 import { IAddAcquisitionFormProps } from './AddAcquisitionForm';
 import { AcquisitionForm } from './models';
@@ -77,8 +79,16 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   }, [getAcquisitionFile, parentAcquisitionFile, parentId]);
 
   const mapMachine = useMapStateMachine();
+  const pid =
+    firstOrNull(mapMachine.selectedFeatures)?.parcelFeature?.properties?.PID ??
+    firstOrNull(mapMachine.mapLocationFeatureDataset?.parcelFeatures)?.properties?.PID ??
+    null;
+  console.log('[debug] pid', pid);
 
   const { featuresWithAddresses, bcaLoading } = useEditPropertiesNotifier(formikRef, 'properties');
+  const { ltsaRequestWrapper } = useLtsa();
+  const [ltsaOwners, setLtsaOwners] = useState<AcquisitionOwnerFormModel[]>([]);
+  const executeLtsa = ltsaRequestWrapper.execute;
 
   useEffect(() => {
     if (featuresWithAddresses?.length > 0 && !isSubFile && !formikRef?.current?.values?.region) {
@@ -101,11 +111,61 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     formattedGuid && retrieveUserInfo(formattedGuid);
   }, [formattedGuid, retrieveUserInfo]);
 
+  useEffect(() => {
+    if (!isValidString(pid)) {
+      // Avoid state-update loops when PID is absent.
+      setLtsaOwners(previous => (previous.length === 0 ? previous : []));
+      return;
+    }
+
+    let isCancelled = false;
+
+    executeLtsa(pid).then(ltsaOrders => {
+      if (isCancelled) {
+        return;
+      }
+
+      const titleOwners =
+        ltsaOrders?.titleOrders
+          ?.flatMap(x => x?.orderedProduct?.fieldedData?.ownershipGroups)
+          ?.flatMap(x => x?.titleOwners)
+          ?.filter(exists) ?? [];
+
+      const owners = titleOwners.map((ownerData, index) => {
+        const owner = new AcquisitionOwnerFormModel();
+        owner.isPrimaryContact = index === 0 ? 'true' : 'false';
+        owner.isOrganization = isValidString(ownerData.givenName) ? 'false' : 'true';
+        owner.givenName = ownerData.givenName ?? '';
+        owner.lastNameAndCorpName = ownerData.lastNameOrCorpName1 ?? '';
+        owner.incorporationNumber = ownerData.incorporationNumber ?? '';
+        owner.isFromLtsa = true;
+        owner.ltsaPid = pid;
+        owner.ltsaSourcedDate = new Date().toISOString();
+        return owner;
+      });
+
+      setLtsaOwners(owners);
+    });
+
+    return () => {
+      isCancelled = true;
+    };
+  }, [executeLtsa, pid]);
+
   const initialForm = useMemo(() => {
-    return exists(parentAcquisitionFile)
+    const form = exists(parentAcquisitionFile)
       ? AcquisitionForm.fromParentFileApi(parentAcquisitionFile)
       : new AcquisitionForm();
-  }, [parentAcquisitionFile]);
+    if (!exists(parentAcquisitionFile) && ltsaOwners.length > 0) {
+      form.owners = ltsaOwners.map(owner => {
+        const formOwner = new AcquisitionOwnerFormModel();
+        Object.assign(formOwner, owner);
+        return formOwner;
+      });
+    }
+
+    return form;
+  }, [ltsaOwners, parentAcquisitionFile]);
 
   const handleSave = async () => {
     // Sets the formik field `isValid` to false at start

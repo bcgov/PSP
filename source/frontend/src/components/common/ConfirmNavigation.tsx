@@ -17,13 +17,22 @@ const ConfirmNavigation = ({ when, navigate, shouldBlockNavigation }: Props) => 
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
   const { intent, clearIntent } = useNavigationIntent();
 
-  const handleConfirmNavigationClick = () => {
-    setDisplayModal(false);
+  const executePendingIntent = () => {
     if (intent && typeof intent.action === 'function') {
       intent.action();
       clearIntent();
     }
+  };
+
+  const handleConfirmNavigationClick = () => {
+    setDisplayModal(false);
+    executePendingIntent();
     setConfirmedNavigation(true);
+  };
+
+  const handleCancelNavigationClick = () => {
+    clearIntent();
+    setDisplayModal(false);
   };
 
   const handleBlockedNavigation = (nextLocation: Location): boolean => {
@@ -32,11 +41,14 @@ const ConfirmNavigation = ({ when, navigate, shouldBlockNavigation }: Props) => 
       setModalContent({
         ...getCancelModalProps(),
         handleOk: () => handleConfirmNavigationClick(),
+        handleCancel: () => handleCancelNavigationClick(),
       });
       setDisplayModal(true);
       setLastLocation(nextLocation);
       return false;
     }
+
+    executePendingIntent();
     return true;
   };
 

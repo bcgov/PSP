@@ -1,5 +1,6 @@
 import { FieldArray, useFormikContext } from 'formik';
-import { useState } from 'react';
+import moment from 'moment';
+import { useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -7,6 +8,7 @@ import { LinkButton, RemoveButton } from '@/components/common/buttons';
 import { Input } from '@/components/common/form';
 import { RadioGroup } from '@/components/common/form/RadioGroup';
 import { SectionField } from '@/components/common/Section/SectionField';
+import { InlineMessage } from '@/components/common/Section/SectionStyles';
 import { H3 } from '@/components/common/styles';
 import Address from '@/features/contacts/contact/create/components/address/Address';
 
@@ -20,9 +22,28 @@ import {
 const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
   isSubFile = false,
 }) => {
-  const { values, setFieldValue, handleChange } = useFormikContext<WithAcquisitionOwners>();
+  const { values, initialValues, setFieldValue, handleChange } =
+    useFormikContext<WithAcquisitionOwners>();
   const [removeIndex, setRemoveIndex] = useState<number>(-1);
   const [showRemoveModal, setShowRemoveModal] = useState<boolean>(false);
+
+  const hasOwnerChangedFromInitial = (
+    owner: AcquisitionOwnerFormModel,
+    initialOwner: AcquisitionOwnerFormModel,
+  ) =>
+    owner.givenName !== initialOwner.givenName ||
+    owner.lastNameAndCorpName !== initialOwner.lastNameAndCorpName;
+
+  const showOwnerLtsaMessage = (owner: AcquisitionOwnerFormModel, index: number) => {
+    const initialOwner = initialValues.owners[index];
+
+    return (
+      owner.isFromLtsa === true &&
+      !!owner.ltsaSourcedDate &&
+      !!initialOwner &&
+      !hasOwnerChangedFromInitial(owner, initialOwner)
+    );
+  };
 
   const updatePrimaryContacts = (newPrimaryIndex: number) => {
     if (values.owners.length > 1) {
@@ -54,6 +75,20 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
     }
   };
 
+  useEffect(() => {
+    values.owners.forEach((owner, index) => {
+      const initialOwner = initialValues.owners[index];
+
+      if (
+        owner.isFromLtsa === true &&
+        !!initialOwner &&
+        hasOwnerChangedFromInitial(owner, initialOwner)
+      ) {
+        setFieldValue(`owners[${index}].isFromLtsa`, false, false);
+      }
+    });
+  }, [initialValues.owners, setFieldValue, values.owners]);
+
   return (
     <FieldArray
       name="owners"
@@ -62,6 +97,13 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
           {values.owners.map((owner, index) => (
             <Row key={`owner-parent-${index}`} className="py-3">
               <Container>
+                {showOwnerLtsaMessage(owner, index) && (
+                  <StyledLtsaMessage>
+                    This data was retrieved from LTSA on{' '}
+                    {moment(owner.ltsaSourcedDate).format('DD-MMM-YYYY h:mm A')}
+                  </StyledLtsaMessage>
+                )}
+
                 <ButtonDiv>
                   <RemoveButton
                     label={isSubFile ? 'Remove Sub-interest' : 'Remove Owner'}
@@ -240,4 +282,11 @@ export const ButtonDiv = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: end;
+`;
+
+export const StyledLtsaMessage = styled(InlineMessage)`
+  margin-bottom: 0;
+  padding: 0.6rem 1rem;
+  border-radius: 0.3rem;
+  background-color: ${props => props.theme.css.fileStatusGreyBackgroundColor};
 `;
