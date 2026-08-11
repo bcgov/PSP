@@ -83,7 +83,6 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     firstOrNull(mapMachine.selectedFeatures)?.parcelFeature?.properties?.PID ??
     firstOrNull(mapMachine.mapLocationFeatureDataset?.parcelFeatures)?.properties?.PID ??
     null;
-  console.log('[debug] pid', pid);
 
   const { featuresWithAddresses, bcaLoading } = useEditPropertiesNotifier(formikRef, 'properties');
   const { ltsaRequestWrapper } = useLtsa();
@@ -131,6 +130,24 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
       return;
     }
 
+    const normalizePid = (value?: string | null): string => {
+      if (!isValidString(value)) {
+        return '';
+      }
+
+      return value.replace(/\D/g, '').padStart(9, '0');
+    };
+
+    const formProperties = formikRef.current?.values?.properties ?? [];
+    const selectedPid = normalizePid(pid);
+    const hasSelectedPidInForm = formProperties.some(
+      property => normalizePid(property.pid) === selectedPid,
+    );
+
+    if (!hasSelectedPidInForm) {
+      return;
+    }
+
     let isCancelled = false;
 
     executeLtsa(pid).then(ltsaOrders => {
@@ -172,6 +189,10 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
 
     const formik = formikRef.current;
     if (!formik) {
+      return;
+    }
+
+    if ((formik.values.properties?.length ?? 0) === 0) {
       return;
     }
 

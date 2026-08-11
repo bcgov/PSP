@@ -1,6 +1,6 @@
 import { FieldArray, useFormikContext } from 'formik';
 import moment from 'moment';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import styled from 'styled-components';
 
@@ -27,22 +27,30 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
   const [removeIndex, setRemoveIndex] = useState<number>(-1);
   const [showRemoveModal, setShowRemoveModal] = useState<boolean>(false);
 
-  const hasOwnerChangedFromInitial = (
-    owner: AcquisitionOwnerFormModel,
-    initialOwner: AcquisitionOwnerFormModel,
-  ) =>
-    owner.givenName !== initialOwner.givenName ||
-    owner.lastNameAndCorpName !== initialOwner.lastNameAndCorpName;
+  const showOwnerLtsaMessage = (owner: AcquisitionOwnerFormModel) => {
+    return owner.isFromLtsa === true && !!owner.ltsaSourcedDate;
+  };
 
-  const showOwnerLtsaMessage = (owner: AcquisitionOwnerFormModel, index: number) => {
-    const initialOwner = initialValues.owners[index];
+  const clearLtsaMetadata = useCallback(
+    (index: number) => {
+      const owner = values.owners[index];
+      if (!owner) {
+        return;
+      }
 
-    return (
-      owner.isFromLtsa === true &&
-      !!owner.ltsaSourcedDate &&
-      !!initialOwner &&
-      !hasOwnerChangedFromInitial(owner, initialOwner)
-    );
+      if (owner.isFromLtsa === true || !!owner.ltsaSourcedDate) {
+        setFieldValue(`owners[${index}].isFromLtsa`, false, false);
+        setFieldValue(`owners[${index}].ltsaSourcedDate`, null, false);
+      }
+    },
+    [setFieldValue, values.owners],
+  );
+
+  const onLtsaOwnerFieldUpdated = (index: number) => {
+    return (e: React.ChangeEvent<any>) => {
+      handleChange(e);
+      clearLtsaMetadata(index);
+    };
   };
 
   const updatePrimaryContacts = (newPrimaryIndex: number) => {
@@ -78,16 +86,21 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
   useEffect(() => {
     values.owners.forEach((owner, index) => {
       const initialOwner = initialValues.owners[index];
+      if (!initialOwner || owner.isFromLtsa !== true) {
+        return;
+      }
 
-      if (
-        owner.isFromLtsa === true &&
-        !!initialOwner &&
-        hasOwnerChangedFromInitial(owner, initialOwner)
-      ) {
-        setFieldValue(`owners[${index}].isFromLtsa`, false, false);
+      const hasLtsaFieldChanged =
+        owner.isOrganization !== initialOwner.isOrganization ||
+        owner.givenName !== initialOwner.givenName ||
+        owner.lastNameAndCorpName !== initialOwner.lastNameAndCorpName ||
+        owner.incorporationNumber !== initialOwner.incorporationNumber;
+
+      if (hasLtsaFieldChanged) {
+        clearLtsaMetadata(index);
       }
     });
-  }, [initialValues.owners, setFieldValue, values.owners]);
+  }, [clearLtsaMetadata, initialValues.owners, values.owners]);
 
   return (
     <FieldArray
@@ -97,7 +110,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
           {values.owners.map((owner, index) => (
             <Row key={`owner-parent-${index}`} className="py-3">
               <Container>
-                {showOwnerLtsaMessage(owner, index) && (
+                {showOwnerLtsaMessage(owner) && (
                   <StyledLtsaMessage>
                     This data was retrieved from LTSA on{' '}
                     {moment(owner.ltsaSourcedDate).format('DD-MMM-YYYY h:mm A')}
@@ -164,6 +177,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
                     <Input
                       field={`owners[${index}].givenName`}
                       placeholder="First name Middle name (individuals only)"
+                      onChange={onLtsaOwnerFieldUpdated(index)}
                     />
                   </SectionField>
                 )}
@@ -177,6 +191,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
                         ? "Business' legal name"
                         : "Individual's last name"
                     }
+                    onChange={onLtsaOwnerFieldUpdated(index)}
                   />
                 </SectionField>
                 <SectionField
@@ -194,6 +209,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
                     <Input
                       field={`owners[${index}].incorporationNumber`}
                       placeholder="Incorporation #"
+                      onChange={onLtsaOwnerFieldUpdated(index)}
                     />
                   </SectionField>
                 )}
