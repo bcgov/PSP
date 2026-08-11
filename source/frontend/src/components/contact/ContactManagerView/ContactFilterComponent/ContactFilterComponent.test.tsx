@@ -63,7 +63,10 @@ describe('ContactFilterComponent', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultFilter, searchBy: ['pimsusers','persons','organizations'] }),
+      expect.objectContaining({
+        ...defaultFilter,
+        searchBy: ['pimsusers', 'persons', 'organizations'],
+      }),
     );
   });
 
@@ -151,7 +154,10 @@ describe('ContactFilterComponent', () => {
     await act(async () => userEvent.click(resetButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultFilter, searchBy: ['pimsusers','persons','organizations'] }),
+      expect.objectContaining({
+        ...defaultFilter,
+        searchBy: ['pimsusers', 'persons', 'organizations'],
+      }),
     );
   });
 });

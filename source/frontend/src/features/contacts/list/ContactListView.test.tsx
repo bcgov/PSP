@@ -122,7 +122,10 @@ describe('Contact List View', () => {
     await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultPagedFilter, searchBy: ['pimsusers','persons','organizations'] }),
+      expect.objectContaining({
+        ...defaultPagedFilter,
+        searchBy: ['pimsusers', 'persons', 'organizations'],
+      }),
     );
   });
 
@@ -162,7 +165,7 @@ describe('Contact List View', () => {
     expect(individualsButton).toBeChecked();
   });
 
-   it('searches pims users only if other options are de-selected', async () => {
+  it('searches pims users only if other options are de-selected', async () => {
     setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
     const personButton = container.querySelector(`#input-searchBy-persons`);

@@ -130,9 +130,7 @@ describe('ContactManagerView', () => {
     const { container, searchButton } = setup({});
     await act(async () => userEvent.click(searchButton));
 
-    expect(getContacts).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultPagedFilter }),
-    );
+    expect(getContacts).toHaveBeenCalledWith(expect.objectContaining({ ...defaultPagedFilter }));
   });
 
   it('searches organizations only if other options are de-selected', async () => {
