@@ -19,7 +19,7 @@ const setup = (renderOptions: RenderOptions & IContactFilterComponentProps = { s
       ...rest,
     },
   );
-  const searchButton = utils.getByTestId('search');
+  const searchButton = utils.getByTestId('contact-filter-search');
   const resetButton = utils.getByTestId('reset-button');
   return { searchButton, resetButton, setFilter: setFilterFn, ...utils };
 };

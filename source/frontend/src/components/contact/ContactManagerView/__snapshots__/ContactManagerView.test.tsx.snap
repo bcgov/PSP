@@ -501,7 +501,7 @@ exports[`ContactManagerView > matches snapshot 1`] = `
                 >
                   <button
                     class="c6 Button primary btn btn-primary"
-                    data-testid="search"
+                    data-testid="contact-filter-search"
                     id="search-button"
                     title="search"
                     type="submit"

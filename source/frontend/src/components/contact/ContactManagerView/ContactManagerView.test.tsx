@@ -42,7 +42,7 @@ const setup = (renderOptions: RenderOptions = {}) => {
       ...renderOptions,
     },
   );
-  const searchButton = utils.getByTestId('search');
+  const searchButton = utils.getByTestId('contact-filter-search');
   return { searchButton, ...utils };
 };
 

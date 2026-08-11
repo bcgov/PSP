@@ -30,7 +30,7 @@ const setup = (renderOptions: RenderOptions = {}) => {
   const utils = render(<ContactListPage />, {
     ...renderOptions,
   });
-  const searchButton = utils.getByTestId('search');
+  const searchButton = utils.getByTestId('contact-filter-search');
   return { searchButton, ...utils };
 };
 

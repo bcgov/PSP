@@ -133,6 +133,7 @@ export const ContactFilterComponent: React.FunctionComponent<
               <Row className="pb-10 pt-10">
                 <Col lg="auto" className="pr-0">
                   <SearchButton
+                    data-testid="contact-filter-search"
                     disabled={isSubmitting}
                     onClick={() => {
                       submitForm();
