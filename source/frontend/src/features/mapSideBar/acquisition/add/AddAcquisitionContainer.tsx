@@ -90,6 +90,19 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
   const [ltsaOwners, setLtsaOwners] = useState<AcquisitionOwnerFormModel[]>([]);
   const executeLtsa = ltsaRequestWrapper.execute;
 
+  const selectedPropertyPidKey = useMemo(
+    () =>
+      (featuresWithAddresses ?? [])
+        .map(
+          featureWithAddress =>
+            PropertyForm.fromFeatureDataset(featureWithAddress.feature).pid ?? '',
+        )
+        .filter(isValidString)
+        .sort()
+        .join('|'),
+    [featuresWithAddresses],
+  );
+
   useEffect(() => {
     if (featuresWithAddresses?.length > 0 && !isSubFile && !formikRef?.current?.values?.region) {
       const firstPropertyFeature = firstOrNull(featuresWithAddresses)?.feature;
@@ -150,22 +163,54 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
     return () => {
       isCancelled = true;
     };
-  }, [executeLtsa, pid]);
+  }, [executeLtsa, pid, selectedPropertyPidKey]);
 
-  const initialForm = useMemo(() => {
-    const form = exists(parentAcquisitionFile)
-      ? AcquisitionForm.fromParentFileApi(parentAcquisitionFile)
-      : new AcquisitionForm();
-    if (!exists(parentAcquisitionFile) && ltsaOwners.length > 0) {
-      form.owners = ltsaOwners.map(owner => {
-        const formOwner = new AcquisitionOwnerFormModel();
-        Object.assign(formOwner, owner);
-        return formOwner;
-      });
+  useEffect(() => {
+    if (ltsaOwners.length === 0) {
+      return;
     }
 
-    return form;
-  }, [ltsaOwners, parentAcquisitionFile]);
+    const formik = formikRef.current;
+    if (!formik) {
+      return;
+    }
+
+    const existingOwners = formik.values.owners ?? [];
+
+    const ownerKey = (owner: AcquisitionOwnerFormModel) =>
+      [
+        owner.isOrganization,
+        owner.givenName.trim(),
+        owner.lastNameAndCorpName.trim(),
+        owner.incorporationNumber.trim(),
+      ].join('|');
+
+    const existingKeys = new Set(existingOwners.map(ownerKey));
+    const hasPrimaryContact = existingOwners.some(owner => owner.isPrimaryContact === 'true');
+
+    const ownersToAdd = ltsaOwners
+      .filter(owner => !existingKeys.has(ownerKey(owner)))
+      .map(owner => {
+        const formOwner = new AcquisitionOwnerFormModel();
+        Object.assign(formOwner, owner);
+
+        if (hasPrimaryContact) {
+          formOwner.isPrimaryContact = 'false';
+        }
+
+        return formOwner;
+      });
+
+    if (ownersToAdd.length > 0) {
+      formik.setFieldValue('owners', [...existingOwners, ...ownersToAdd], false);
+    }
+  }, [ltsaOwners]);
+
+  const initialForm = useMemo(() => {
+    return exists(parentAcquisitionFile)
+      ? AcquisitionForm.fromParentFileApi(parentAcquisitionFile)
+      : new AcquisitionForm();
+  }, [parentAcquisitionFile]);
 
   const handleSave = async () => {
     // Sets the formik field `isValid` to false at start
