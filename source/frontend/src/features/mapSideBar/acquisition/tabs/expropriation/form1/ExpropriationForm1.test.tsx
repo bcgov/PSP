@@ -82,7 +82,7 @@ describe('Expropriation Form 1', () => {
 
     // pick an organization from contact manager
     await act(async () => userEvent.click(getByTitle('Select Contact')));
-    await act(async () => userEvent.click(getByTestId('selectrow-O3')));
+    await act(async () => userEvent.click(getByTestId('selectrow-2')));
     await act(async () => userEvent.click(getByText('Select')));
 
     // fill other form fields

@@ -12,13 +12,13 @@ import { PropertyActivityFormModel } from './models';
 
 export interface IContactListForm {
   field: string;
-  contactType: RestrictContactType;
+  contactType?: RestrictContactType;
   formikProps: FormikProps<PropertyActivityFormModel>;
 }
 
 export const ContactListForm: React.FunctionComponent<
   React.PropsWithChildren<IContactListForm>
-> = ({ field, contactType = RestrictContactType.ALL, formikProps }) => {
+> = ({ field, contactType, formikProps }) => {
   // clear out existing values instead of removing last item from array
   const onRemove = (array: Array<any>, index: number, arrayHelpers: ArrayHelpers) => {
     if (array.length > 1) {

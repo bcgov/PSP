@@ -234,11 +234,7 @@ export const ManagementActivityEditForm: React.FunctionComponent<
                         >
                           <Row className="no-gutters pr-4 mr-2">
                             <Col className="col-11">
-                              <ContactInputContainer
-                                field="requestor"
-                                View={ContactInputView}
-                                restrictContactType={RestrictContactType.ALL}
-                              />
+                              <ContactInputContainer field="requestor" View={ContactInputView} />
                             </Col>
                           </Row>
                         </SectionField>
@@ -260,7 +256,6 @@ export const ManagementActivityEditForm: React.FunctionComponent<
                           <ContactListForm
                             field="involvedParties"
                             formikProps={formikProps}
-                            contactType={RestrictContactType.ALL}
                             dataTestId="external-contacts-add-link"
                           />
                         </SectionField>
@@ -270,7 +265,6 @@ export const ManagementActivityEditForm: React.FunctionComponent<
                               <ContactInputContainer
                                 field="serviceProvider"
                                 View={ContactInputView}
-                                restrictContactType={RestrictContactType.ALL}
                               />
                             </Col>
                           </Row>

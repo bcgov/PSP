@@ -118,44 +118,67 @@ describe('Contact List View', () => {
 
   it('searches all by default', async () => {
     setupMockSearch([defaultPersonSearchResult]);
-    const { container, searchButton } = setup({});
-    const allButton = container.querySelector(`#input-all`);
-    allButton && (await act(async () => userEvent.click(allButton)));
+    const { searchButton } = setup({});
     await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultPagedFilter, searchBy: 'all' }),
+      expect.objectContaining({ ...defaultPagedFilter, searchBy: ['pimsusers','persons','organizations'] }),
     );
-
-    expect(allButton).toBeChecked();
   });
 
-  it('searches organizations if radio option selected', async () => {
+  it('searches organizations only if other options are de-selected', async () => {
     setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
-    const organizationsButton = container.querySelector(`#input-organizations`);
-    organizationsButton && (await act(async () => userEvent.click(organizationsButton)));
+    const individualsButton = container.querySelector(`#input-searchBy-persons`);
+    const pimsUsersButton = container.querySelector(`#input-searchBy-pimsusers`);
+    const organizationsButton = container.querySelector(`#input-searchBy-organizations`);
+
+    individualsButton && (await act(async () => userEvent.click(individualsButton)));
+    pimsUsersButton && (await act(async () => userEvent.click(pimsUsersButton)));
     await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultPagedFilter, searchBy: 'organizations' }),
+      expect.objectContaining({ ...defaultPagedFilter, searchBy: ['organizations'] }),
     );
 
     expect(organizationsButton).toBeChecked();
   });
 
-  it('searches persons if radio option selected', async () => {
+  it('searches persons only if other options are de-selected', async () => {
     setupMockSearch([defaultPersonSearchResult]);
     const { container, searchButton } = setup({});
-    const personButton = container.querySelector(`#input-persons`);
-    personButton && (await act(async () => userEvent.click(personButton)));
+    const individualsButton = container.querySelector(`#input-searchBy-persons`);
+    const pimsUsersButton = container.querySelector(`#input-searchBy-pimsusers`);
+    const organizationsButton = container.querySelector(`#input-searchBy-organizations`);
+
+    pimsUsersButton && (await act(async () => userEvent.click(pimsUsersButton)));
+    organizationsButton && (await act(async () => userEvent.click(organizationsButton)));
     await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultPagedFilter, searchBy: 'persons' }),
+      expect.objectContaining({ ...defaultPagedFilter, searchBy: ['persons'] }),
     );
 
-    expect(personButton).toBeChecked();
+    expect(individualsButton).toBeChecked();
+  });
+
+   it('searches pims users only if other options are de-selected', async () => {
+    setupMockSearch([defaultPersonSearchResult]);
+    const { container, searchButton } = setup({});
+    const personButton = container.querySelector(`#input-searchBy-persons`);
+    const pimsUsersButton = container.querySelector(`#input-searchBy-pimsusers`);
+    const organizationsButton = container.querySelector(`#input-searchBy-organizations`);
+    await act(async () => {
+      personButton && userEvent.click(personButton);
+      organizationsButton && userEvent.click(organizationsButton);
+    });
+    await act(async () => userEvent.click(searchButton));
+
+    expect(getContacts).toHaveBeenCalledWith(
+      expect.objectContaining({ ...defaultPagedFilter, searchBy: ['pimsusers'] }),
+    );
+
+    expect(pimsUsersButton).toBeChecked();
   });
 
   it('searches for active contacts by default', async () => {
@@ -171,10 +194,11 @@ describe('Contact List View', () => {
 
   it('searches for inactive contacts if checkbox unchecked', async () => {
     setupMockSearch([defaultPersonSearchResult]);
-    const { container } = setup({});
+    const { container, searchButton } = setup({});
     const activeCheck = container.querySelector(`#input-activeContactsOnly`);
     expect(activeCheck).not.toBeNull();
     await act(async () => userEvent.click(activeCheck as Element));
+    await act(async () => userEvent.click(searchButton));
 
     expect(getContacts).toHaveBeenCalledWith(
       expect.objectContaining({ ...defaultPagedFilter, activeContactsOnly: false }),

@@ -11,7 +11,6 @@ import { InlineFastDatePicker } from '@/components/common/form/styles';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from '@/constants/API';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { IContactSearchResult, isPersonSummary } from '@/interfaces';
@@ -148,7 +147,6 @@ const UpdateSummaryForm: React.FunctionComponent<IUpdateSummaryFormProps> = prop
           <ContactInputContainer
             field="requestor"
             View={ContactInputView}
-            restrictContactType={RestrictContactType.ALL}
             displayErrorAsTooltip={false}
             required={false}
           />

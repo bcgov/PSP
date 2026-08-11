@@ -1,9 +1,9 @@
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
+import { PiSealCheckFill } from 'react-icons/pi';
 import { CellProps } from 'react-table';
 
 import { ColumnWithProps } from '@/components/Table';
-import { IContactSearchResult, isPersonSummary } from '@/interfaces';
-import { isValidId } from '@/utils';
+import { IContactSearchResult, isPersonSummary, isPIMSUserSummary } from '@/interfaces';
 
 const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
   {
@@ -13,7 +13,9 @@ const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
     width: 20,
     maxWidth: 20,
     Cell: (props: CellProps<IContactSearchResult>) =>
-      isValidId(props.row.original.personId) ? (
+      isPIMSUserSummary(props.row.original) ? (
+        <PiSealCheckFill size={20} />
+      ) : isPersonSummary(props.row.original) ? (
         <FaRegUser size={20} />
       ) : (
         <FaRegBuilding size={20} />

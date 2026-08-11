@@ -12,15 +12,15 @@ import { ManagementActivityFormModel } from './models';
 
 export interface IContactListForm {
   field: string;
-  contactType: RestrictContactType;
+  contactType?: RestrictContactType;
   formikProps: FormikProps<ManagementActivityFormModel>;
   dataTestId?: string;
 }
 
 export const ContactListForm: React.FunctionComponent<IContactListForm> = ({
   field,
-  contactType = RestrictContactType.ALL,
   formikProps,
+  contactType,
   dataTestId,
 }) => {
   // clear out existing values instead of removing last item from array

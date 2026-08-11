@@ -1,4 +1,5 @@
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
+import { PiSealCheckFill } from 'react-icons/pi';
 import { Link, useHistory } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
@@ -10,7 +11,7 @@ import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { IContactSearchResult, isPersonSummary } from '@/interfaces';
+import { IContactSearchResult, isPersonSummary, isPIMSUserSummary } from '@/interfaces';
 import { stringToFragment } from '@/utils';
 
 const columns: ColumnWithProps<IContactSearchResult>[] = [
@@ -32,7 +33,11 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     width: 20,
     maxWidth: 20,
     Cell: (props: CellProps<IContactSearchResult>) =>
-      isPersonSummary(props.row.original) ? (
+      isPIMSUserSummary(props.row.original) ? (
+        <StatusIndicators className={props.row.original.isDisabled ? 'inactive' : 'active'}>
+          <PiSealCheckFill size={20} />
+        </StatusIndicators>
+      ) : isPersonSummary(props.row.original) ? (
         <StatusIndicators className={props.row.original.isDisabled ? 'inactive' : 'active'}>
           <FaRegUser size={20} />
         </StatusIndicators>

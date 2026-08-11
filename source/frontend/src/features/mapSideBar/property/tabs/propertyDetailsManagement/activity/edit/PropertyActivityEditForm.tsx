@@ -196,11 +196,7 @@ export const PropertyActivityEditForm: React.FunctionComponent<
                         >
                           <Row className="no-gutters pr-4 mr-2">
                             <Col className="col-11">
-                              <ContactInputContainer
-                                field="requestor"
-                                View={ContactInputView}
-                                restrictContactType={RestrictContactType.ALL}
-                              />
+                              <ContactInputContainer field="requestor" View={ContactInputView} />
                             </Col>
                           </Row>
                         </SectionField>
@@ -219,18 +215,10 @@ export const PropertyActivityEditForm: React.FunctionComponent<
                             </SectionField>
                           )}
                         <SectionField label="External contacts" contentWidth={{ xs: 8 }}>
-                          <ContactListForm
-                            field="involvedParties"
-                            formikProps={formikProps}
-                            contactType={RestrictContactType.ALL}
-                          />
+                          <ContactListForm field="involvedParties" formikProps={formikProps} />
                         </SectionField>
                         <SectionField label="Service provider" contentWidth={{ xs: 7 }}>
-                          <ContactInputContainer
-                            field="serviceProvider"
-                            View={ContactInputView}
-                            restrictContactType={RestrictContactType.ALL}
-                          />
+                          <ContactInputContainer field="serviceProvider" View={ContactInputView} />
                         </SectionField>
                       </Section>
                       <InvoiceListForm

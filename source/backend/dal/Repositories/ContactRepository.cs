@@ -111,42 +111,44 @@ namespace Pims.Dal.Repositories
                 query = query.Where(c => c.MunicipalityName.Contains(filter.Municipality));
             }
 
-            var summary = filter.Summary?.Trim() ?? string.Empty;
+            var searchPersons = filter.SearchBy.Contains("persons");
+            var searchOrganizations = filter.SearchBy.Contains("organizations");
+            var searchPimsUsers = filter.SearchBy.Contains("pimsusers");
 
-            if (filter.SearchBy == "persons")
-            {
-                query = query.Where(c => c.PersonId != null && c.Id.StartsWith("P"));
-                string[] nameParts = summary.Split(' ');
-                if (!string.IsNullOrWhiteSpace(summary))
-                {
-                    foreach (string namePart in nameParts)
-                    {
-                        query = query.Where(c => (c.FirstName != null && c.FirstName.Contains(namePart)) ||
-                        (c.Surname != null && c.Surname.Contains(namePart)) ||
-                        (c.MiddleNames != null && c.MiddleNames.Contains(namePart)));
-                    }
-                }
-            }
-            else if (filter.SearchBy == "organizations")
-            {
-                query = query.Where(c => c.OrganizationId != null && c.Id.StartsWith("O"));
-                if (!string.IsNullOrWhiteSpace(summary))
-                {
-                    query = query.Where(c => c.Summary != null && c.Summary.Contains(summary));
-                }
-            }
-            else
+            query = query.Where(c =>
+                (searchPersons &&
+                    c.PersonId != null &&
+                    c.Id.StartsWith("P")) ||
+
+                (searchOrganizations &&
+                    c.OrganizationId != null &&
+                    c.Id.StartsWith("O")) ||
+
+                (searchPimsUsers &&
+                    c.UserId != null &&
+                    c.Id.StartsWith("P") &&
+                    c.BusinessIdentifierValue != null &&
+                    c.UserTypeCode == "MINSTAFF"));
+
+            var summary = filter.Summary?.Trim() ?? string.Empty;
+            if (!string.IsNullOrWhiteSpace(summary))
             {
                 string[] nameParts = summary.Split(' ');
-                if (!string.IsNullOrWhiteSpace(summary))
+
+                foreach (string namePart in nameParts)
                 {
-                    foreach (string namePart in nameParts)
-                    {
-                        query = query.Where(c => (c.FirstName != null && c.FirstName.Contains(namePart)) ||
-                        (c.Surname != null && c.Surname.Contains(namePart)) ||
-                        (c.MiddleNames != null && c.MiddleNames.Contains(namePart)) ||
-                        (c.OrganizationName != null && c.OrganizationName.Contains(summary)));
-                    }
+                    query = query.Where(c =>
+                        (
+                            (searchPersons || searchPimsUsers) &&
+                            (
+                                (c.FirstName != null && c.FirstName.Contains(namePart)) ||
+                                (c.Surname != null && c.Surname.Contains(namePart)) ||
+                                (c.MiddleNames != null && c.MiddleNames.Contains(namePart))))
+                        ||
+                        (
+                            searchOrganizations &&
+                            c.OrganizationName != null &&
+                            c.OrganizationName.Contains(summary)));
                 }
             }
 

@@ -60,40 +60,55 @@ describe('ContactFilterComponent', () => {
 
   it('searches all by default', async () => {
     const { container, searchButton } = setup();
-    const allButton = container.querySelector(`#input-all`);
-    await act(async () => {
-      allButton && userEvent.click(allButton);
-    });
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultFilter, searchBy: 'all' }),
+      expect.objectContaining({ ...defaultFilter, searchBy: ['pimsusers','persons','organizations'] }),
     );
   });
 
-  it('searches organizations if radio option selected', async () => {
+  it('searches organizations if other options are de-selected', async () => {
     const { container, searchButton } = setup();
-    const organizationsButton = container.querySelector(`#input-organizations`);
+    const individualsButton = container.querySelector(`#input-searchBy-persons`);
+    const pimsUsersButton = container.querySelector(`#input-searchBy-pimsusers`);
     await act(async () => {
-      organizationsButton && userEvent.click(organizationsButton);
+      individualsButton && userEvent.click(individualsButton);
+      pimsUsersButton && userEvent.click(pimsUsersButton);
     });
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultFilter, searchBy: 'organizations' }),
+      expect.objectContaining({ ...defaultFilter, searchBy: ['organizations'] }),
     );
   });
 
-  it('searches persons if radio option selected', async () => {
+  it('searches persons only if other options are de-selected', async () => {
     const { container, searchButton } = setup();
-    const personButton = container.querySelector(`#input-persons`);
+    const prganizationButton = container.querySelector(`#input-searchBy-organizations`);
+    const pimsUsersButton = container.querySelector(`#input-searchBy-pimsusers`);
     await act(async () => {
-      personButton && userEvent.click(personButton);
+      prganizationButton && userEvent.click(prganizationButton);
+      pimsUsersButton && userEvent.click(pimsUsersButton);
     });
     await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultFilter, searchBy: 'persons' }),
+      expect.objectContaining({ ...defaultFilter, searchBy: ['persons'] }),
+    );
+  });
+
+  it('searches pims users only if other options are de-selected', async () => {
+    const { container, searchButton } = setup();
+    const prganizationButton = container.querySelector(`#input-searchBy-organizations`);
+    const pimsPersonsButton = container.querySelector(`#input-searchBy-persons`);
+    await act(async () => {
+      prganizationButton && userEvent.click(prganizationButton);
+      pimsPersonsButton && userEvent.click(pimsPersonsButton);
+    });
+    await act(async () => userEvent.click(searchButton));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({ ...defaultFilter, searchBy: ['pimsusers'] }),
     );
   });
 
@@ -105,10 +120,12 @@ describe('ContactFilterComponent', () => {
   });
 
   it('searches for inactive contacts if checkbox unchecked', async () => {
-    const { container } = setup();
+    const { container, searchButton } = setup();
+
     const activeCheck = container.querySelector(`#input-activeContactsOnly`);
     expect(activeCheck).not.toBeNull();
     await act(async () => userEvent.click(activeCheck as Element));
+    await act(async () => userEvent.click(searchButton));
 
     expect(setFilter).toHaveBeenCalledWith(
       expect.objectContaining({ ...defaultFilter, activeContactsOnly: false }),
@@ -134,7 +151,7 @@ describe('ContactFilterComponent', () => {
     await act(async () => userEvent.click(resetButton));
 
     expect(setFilter).toHaveBeenCalledWith(
-      expect.objectContaining({ ...defaultFilter, searchBy: 'persons' }),
+      expect.objectContaining({ ...defaultFilter, searchBy: ['pimsusers','persons','organizations'] }),
     );
   });
 });
