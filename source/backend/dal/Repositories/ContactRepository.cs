@@ -103,6 +103,10 @@ namespace Pims.Dal.Repositories
         private IEnumerable<PimsContactMgrVw> GetFilteredContacts(ContactFilter filter, out int totalItems)
         {
             filter.ThrowIfNull(nameof(filter));
+            if (filter.SearchBy == null || filter.SearchBy.Length == 0)
+            {
+                filter.SearchBy = new string[] { "persons", "organizations", "pimsusers" };
+            }
 
             var query = Context.PimsContactMgrVws.AsNoTracking();
 
