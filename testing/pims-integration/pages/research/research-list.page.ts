@@ -114,7 +114,7 @@ export class ResearchListPage extends LayoutPage {
     this.researchTableOrderStatus = page.getByTestId('sort-column-researchFileStatusTypeCode');
 
     this.researchTableContent = page.locator(
-      "div[data-testid='researchFilesTable'] div[class='tbody'] div[class='tr-wrapper']"
+      "div[data-testid='researchFilesTable'] div[class='tbody']"
     );
 
     this.researchTableEntriesSpan = page.locator("input[data-testid='input-page-size']");

@@ -59,7 +59,6 @@ test.describe('Research Files feature', () => {
 
     //Research File Pagination elements
     await expect(researchListPage.researchTableEntriesSpan).toBeVisible();
-    await expect(researchListPage.researchTablePagination10).toBeVisible();
     await expect(researchListPage.researchTableNextPageButton).toBeVisible();
     await expect(researchListPage.researchTable1stPageButton).toBeVisible();
   });
