@@ -14,11 +14,14 @@ PRINT '     == DB TRANSACTION START ========'
 
    --Script section
 
-   PRINT '- Executing PSP_PIMS_S122_00/Alter Up/010_PSP_PIMS_Alter_Up.sql '
-   :setvar filepath "PSP_PIMS_S122_00/Alter Up/010_PSP_PIMS_Alter_Up.sql"
+   PRINT '- Executing PSP_PIMS_S123_00/Alter Up/010_PSP_PIMS_Alter_Up.sql '
+   :setvar filepath "PSP_PIMS_S123_00/Alter Up/010_PSP_PIMS_Alter_Up.sql"
    :r $(filepath)
-   PRINT '- Executing PSP_PIMS_S122_00/Alter Up/020_PIMS_STATIC_VARIABLE_VERSION_Alter_Up.sql '
-   :setvar filepath "PSP_PIMS_S122_00/Alter Up/020_PIMS_STATIC_VARIABLE_VERSION_Alter_Up.sql"
+   PRINT '- Executing PSP_PIMS_S123_00/Alter Up/020_PIMS_STATIC_VARIABLE_VERSION_Alter_Up.sql '
+   :setvar filepath "PSP_PIMS_S123_00/Alter Up/020_PIMS_STATIC_VARIABLE_VERSION_Alter_Up.sql"
+   :r $(filepath)
+   PRINT '- Executing PSP_PIMS_S123_00/Alter Up/090_UPDATE_ACQFL_OwnerRepComment_Alter_Up.sql'
+   :setvar filepath "PSP_PIMS_S123_00/Alter Up/090_UPDATE_ACQFL_OwnerRepComment_Alter_Up.sql"
    :r $(filepath)
 
    --End script section
