@@ -11,7 +11,7 @@ const defaultVersion: IApiVersion = {
   environment: 'test',
   version: '11.1.1.1',
   fileVersion: '11.1.1.1',
-  informationalVersion: '11.1.1-1.999',
+  informationalVersion: '11.1.1.999',
   dbVersion: '93.00',
 };
 
@@ -44,7 +44,7 @@ describe('Footer', () => {
   });
 
   beforeEach(() => {
-    import.meta.env.VITE_PACKAGE_VERSION = '11.1.1-93.999';
+    import.meta.env.VITE_PACKAGE_VERSION = '11.1.1.999';
     mockGetVersion.mockResolvedValue({ data: defaultVersion } as any);
   });
 
