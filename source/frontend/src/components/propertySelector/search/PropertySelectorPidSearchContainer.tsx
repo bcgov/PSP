@@ -19,28 +19,36 @@ export interface PropertySelectorPidSearchContainerProps {
 export const PropertySelectorPidSearchContainer: React.FunctionComponent<
   React.PropsWithChildren<PropertySelectorPidSearchContainerProps>
 > = ({ setSelectProperty, PropertySelectorPidSearchView }) => {
-  const { getPropertyByPidWrapper } = usePimsPropertyRepository();
+  const { getPropertyByPidLookupWrapper } = usePimsPropertyRepository();
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const searchFunc = useCallback(
     async (layerSearch: ILayerSearchCriteria) => {
       if (layerSearch?.pid) {
         try {
-          const result = await getPropertyByPidWrapper.execute(layerSearch?.pid);
-          if (result) {
-            if (!result.isOwned || result.isRetired) {
-              setModalContent({
-                variant: 'error',
-                okButtonText: 'Close',
-                title: 'Error',
-                message:
-                  'Only properties that are part of the Core Inventory (owned) can be subdivided/consolidated. This property is not in core inventory within PIMS.',
-                handleOk: () => setDisplayModal(false),
-              });
-              setDisplayModal(true);
-            } else {
-              setSelectProperty(result);
-            }
+          const result = await getPropertyByPidLookupWrapper.execute(layerSearch?.pid);
+          if (result?.foundInPims && result?.property?.isRetired) {
+            setModalContent({
+              variant: 'error',
+              okButtonText: 'Close',
+              title: 'Error',
+              message:
+                'Only properties that are not retired in the Core Inventory can be subdivided/consolidated.',
+              handleOk: () => setDisplayModal(false),
+            });
+            setDisplayModal(true);
+          } else if (result?.property) {
+            console.log('PropertySelectorPidSearchContainer: Found property', result.property);
+            setSelectProperty(result.property);
+          } else {
+            setModalContent({
+              variant: 'error',
+              okButtonText: 'Close',
+              title: 'Error',
+              message: 'No property was found in Core Inventory or PMBC.',
+              handleOk: () => setDisplayModal(false),
+            });
+            setDisplayModal(true);
           }
         } catch (e) {
           const axiosError = e as AxiosError<IApiError>;
@@ -49,8 +57,7 @@ export const PropertySelectorPidSearchContainer: React.FunctionComponent<
               variant: 'error',
               okButtonText: 'Close',
               title: 'Error',
-              message:
-                'Only properties that are part of the Core Inventory (owned) can be subdivided/consolidated. This property is not in core inventory within PIMS.',
+              message: 'No property was found in Core Inventory or PMBC.',
               handleOk: () => setDisplayModal(false),
             });
             setDisplayModal(true);
@@ -58,13 +65,13 @@ export const PropertySelectorPidSearchContainer: React.FunctionComponent<
         }
       }
     },
-    [getPropertyByPidWrapper, setDisplayModal, setModalContent, setSelectProperty],
+    [getPropertyByPidLookupWrapper, setDisplayModal, setModalContent, setSelectProperty],
   );
 
   return (
     <PropertySelectorPidSearchView
       onSearch={searchFunc}
-      loading={getPropertyByPidWrapper.loading}
+      loading={getPropertyByPidLookupWrapper.loading}
     />
   );
 };

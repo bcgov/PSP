@@ -9,6 +9,8 @@ import { ApiGen_Concepts_Property } from '@/models/api/generated/ApiGen_Concepts
 import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
 import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
 
+import { IPropertyPidLookupResult } from '../pims-api/interfaces/IPropertyPidLookupResult';
+
 /**
  * hook that retrieves a property from the inventory.
  */
@@ -18,6 +20,7 @@ export const usePimsPropertyRepository = () => {
     putPropertyConceptApi,
     getMatchingPropertiesApi,
     getPropertyConceptWithPidApi,
+    getPropertyByPidLookupApi,
     getPropertyConceptWithPinApi,
     getPropertiesApi,
     putPropertyNetBookApi,
@@ -51,6 +54,17 @@ export const usePimsPropertyRepository = () => {
       [getPropertyConceptWithPinApi],
     ),
     requestName: 'getPropertyConceptWithPinApi',
+    throwError: true,
+  });
+
+  const getPropertyByPidLookupWrapper = useApiRequestWrapper<
+    (...args: any[]) => Promise<AxiosResponse<IPropertyPidLookupResult, any>>
+  >({
+    requestFunction: useCallback(
+      async (pid: string) => await getPropertyByPidLookupApi(pid),
+      [getPropertyByPidLookupApi],
+    ),
+    requestName: 'getPropertyByPidLookupApi',
     throwError: true,
   });
 
@@ -112,6 +126,7 @@ export const usePimsPropertyRepository = () => {
       getMatchingProperties,
       getPropertyByPidWrapper,
       getPropertyByPinWrapper,
+      getPropertyByPidLookupWrapper,
       getAllPropertiesById,
       updatePropertyNetBookWrapper,
     }),
@@ -122,6 +137,7 @@ export const usePimsPropertyRepository = () => {
       getPropertyByPidWrapper,
       getPropertyByPinWrapper,
       getAllPropertiesById,
+      getPropertyByPidLookupWrapper,
       updatePropertyNetBookWrapper,
     ],
   );
