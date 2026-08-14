@@ -6,6 +6,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
+using Pims.Dal.Constants;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 
@@ -103,9 +104,13 @@ namespace Pims.Dal.Repositories
         private IEnumerable<PimsContactMgrVw> GetFilteredContacts(ContactFilter filter, out int totalItems)
         {
             filter.ThrowIfNull(nameof(filter));
-            if (filter.SearchBy == null || filter.SearchBy.Length == 0)
+
+            var searchByTypes = filter.SearchBy?
+            .Select(value => Enum.Parse<SearchContactTypes>(value, true)).ToArray() ?? Array.Empty<SearchContactTypes>();
+
+            if (searchByTypes.Length == 0)
             {
-                filter.SearchBy = new string[] { "persons", "organizations", "pimsusers" };
+                searchByTypes = Enum.GetValues<SearchContactTypes>();
             }
 
             var query = Context.PimsContactMgrVws.AsNoTracking();
@@ -115,9 +120,9 @@ namespace Pims.Dal.Repositories
                 query = query.Where(c => c.MunicipalityName.Contains(filter.Municipality));
             }
 
-            var searchPersons = filter.SearchBy.Contains("persons");
-            var searchOrganizations = filter.SearchBy.Contains("organizations");
-            var searchPimsUsers = filter.SearchBy.Contains("pimsusers");
+            var searchPersons = searchByTypes.Contains(SearchContactTypes.PERSONS);
+            var searchOrganizations = searchByTypes.Contains(SearchContactTypes.ORGANIZATIONS);
+            var searchPimsUsers = searchByTypes.Contains(SearchContactTypes.PIMSUSERS);
 
             query = query.Where(c =>
                 (searchPersons &&
@@ -132,7 +137,7 @@ namespace Pims.Dal.Repositories
                     c.UserId != null &&
                     c.Id.StartsWith("P") &&
                     c.BusinessIdentifierValue != null &&
-                    c.UserTypeCode == "MINSTAFF"));
+                    c.UserTypeCode != null));
 
             var summary = filter.Summary?.Trim() ?? string.Empty;
             if (!string.IsNullOrWhiteSpace(summary))

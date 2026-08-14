@@ -1,4 +1,3 @@
-import { UserTypes } from '@/constants';
 import { ApiGen_Concepts_Contact } from '@/models/api/generated/ApiGen_Concepts_Contact';
 import { ApiGen_Concepts_ContactSummary } from '@/models/api/generated/ApiGen_Concepts_ContactSummary';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
@@ -59,7 +58,7 @@ export function isPIMSUserSummary(
     'businessIdentifierValue' in contactResult &&
     exists(contactResult.personId) &&
     contactResult.id.startsWith('P') &&
-    contactResult.userTypeCode === UserTypes.MinistryStaff &&
+    exists(contactResult.userTypeCode) &&
     exists(contactResult.businessIdentifierValue)
   );
 }
@@ -110,10 +109,7 @@ export function fromContactSummary(
       middleNames: baseModel.middleNames,
     };
 
-    if (
-      baseModel.userTypeCode === UserTypes.MinistryStaff &&
-      exists(baseModel.businessIdentifierValue)
-    ) {
+    if (exists(baseModel.userTypeCode) && exists(baseModel.businessIdentifierValue)) {
       return {
         ...person,
         userTypeCode: baseModel.userTypeCode,
