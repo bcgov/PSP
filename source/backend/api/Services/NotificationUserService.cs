@@ -151,7 +151,14 @@ namespace Pims.Api.Services
                 }
                 else if(notification.LeaseId.HasValue)
                 {
-                    source = $"Lease File #: {notification.Lease.LFileNo}";
+                    if(notification.InsuranceId.HasValue)
+                    {
+                        source = $"Lease File #: {notification.Lease.LFileNo} and Insurance for: {notification.Insurance.InsuranceTypeCodeNavigation.Description}";
+                    }
+                    else
+                    {
+                        source = $"Lease File #: {notification.Lease.LFileNo}";
+                    }
                 }
                 else
                 {
