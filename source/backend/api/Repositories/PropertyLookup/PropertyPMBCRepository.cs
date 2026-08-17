@@ -1,4 +1,3 @@
-using System;
 using System.Collections.Generic;
 using System.Net.Http;
 using System.Text.Json;
@@ -118,9 +117,19 @@ namespace Pims.Api.Repositories.PropertyLookup
                     ? featureCollection.Features[0]
                     : null;
             }
-            catch (Exception ex)
+            catch (HttpRequestException ex)
             {
-                _logger.LogWarning(ex, "PMBC lookup failed unexpectedly for value {LookupValue}", lookupValue);
+                _logger.LogWarning(ex, "PMBC lookup HTTP request failed for value {LookupValue}", lookupValue);
+                return null;
+            }
+            catch (TaskCanceledException ex)
+            {
+                _logger.LogWarning(ex, "PMBC lookup timed out or was canceled for value {LookupValue}", lookupValue);
+                return null;
+            }
+            catch (JsonException ex)
+            {
+                _logger.LogWarning(ex, "PMBC lookup returned invalid JSON for value {LookupValue}", lookupValue);
                 return null;
             }
         }

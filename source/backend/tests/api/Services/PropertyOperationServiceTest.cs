@@ -261,7 +261,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>())).Returns(operations);
 
             // Act
-            var response = service.SubdivideProperty(operations);
+            service.SubdivideProperty(operations);
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
@@ -293,7 +293,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>())).Returns(operations);
 
             // Act
-            var response = service.SubdivideProperty(operations);
+            service.SubdivideProperty(operations);
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
@@ -380,7 +380,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>())).Returns(operations);
 
             // Act
-            var response = service.SubdivideProperty(operations);
+            service.SubdivideProperty(operations);
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
@@ -675,7 +675,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>())).Returns(operations);
 
             // Act
-            var response = service.ConsolidateProperty(operations);
+            service.ConsolidateProperty(operations);
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);
@@ -714,7 +714,7 @@ namespace Pims.Api.Test.Services
             repository.Setup(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>())).Returns(operations);
 
             // Act
-            var response = service.ConsolidateProperty(operations);
+            service.ConsolidateProperty(operations);
 
             // Assert
             repository.Verify(x => x.AddRange(It.IsAny<List<PimsPropertyOperation>>()), Times.Once);

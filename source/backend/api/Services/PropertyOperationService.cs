@@ -38,7 +38,7 @@ namespace Pims.Api.Services
            _logger.LogInformation("Getting operations for property with id {PropertyId}", propertyId);
            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
-           return _repository.GetByPropertyId(propertyId);
+            return _repository.GetByPropertyId(propertyId);
         }
 
         public IEnumerable<PimsPropertyOperation> SubdivideProperty(IEnumerable<PimsPropertyOperation> operations)
@@ -47,11 +47,53 @@ namespace Pims.Api.Services
             _logger.LogInformation("Subdividing property with id {id}", propertyOperations.FirstOrDefault()?.SourcePropertyId);
             _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
 
+            ValidateInput(propertyOperations);
+            ValidateSourcePropertySubdivision(propertyOperations);
+
+            var dbSourceProperty = ResolveOrCreateSourceProperty(propertyOperations.First(), "subdivision");
+            NormalizeSubdivideSource(propertyOperations, dbSourceProperty);
+            ValidateSubdivideState(propertyOperations, dbSourceProperty);
+            ValidateChildren(propertyOperations, dbSourceProperty);
+            RetireResolvedSourceProperty(dbSourceProperty);
+            PrepareSubdivideDestinations(propertyOperations);
+
+            var completedOperations = _repository.AddRange(propertyOperations);
+            _repository.CommitTransaction();
+
+            return completedOperations;
+        }
+
+        public IEnumerable<PimsPropertyOperation> ConsolidateProperty(IEnumerable<PimsPropertyOperation> operations)
+        {
+            var propertyOperations = operations?.ToList() ?? new List<PimsPropertyOperation>();
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            ValidateConsolidateInput(propertyOperations);
+
+            var destinationProperty = propertyOperations.First().DestinationProperty;
+            var dbSourceProperties = ResolveAndNormalizeConsolidateSources(propertyOperations);
+
+            ValidateConsolidateState(propertyOperations, destinationProperty, dbSourceProperties);
+            ValidateConsolidateDestinationInventory(destinationProperty, dbSourceProperties);
+            RetireConsolidateSources(dbSourceProperties);
+            PrepareConsolidateDestination(propertyOperations, destinationProperty);
+
+            var completedOperations = _repository.AddRange(propertyOperations);
+            _repository.CommitTransaction();
+
+            return completedOperations;
+        }
+
+        private static void ValidateInput(List<PimsPropertyOperation> propertyOperations)
+        {
             if (propertyOperations.Count == 0)
             {
                 throw new BadRequestException("No property operations were sent.");
             }
+        }
 
+        private static void ValidateSourcePropertySubdivision(List<PimsPropertyOperation> propertyOperations)
+        {
             if (propertyOperations.Any(op => op.SourcePropertyId <= 0 && op.SourceProperty?.Pid == null))
             {
                 throw new BadRequestException("A valid source property with PID is required.");
@@ -68,10 +110,10 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("All property operations must have the same PIMS parent property.");
             }
+        }
 
-            var firstOperation = propertyOperations.First();
-            var dbSourceProperty = ResolveOrCreateSourceProperty(firstOperation, "subdivision");
-
+        private static void NormalizeSubdivideSource(List<PimsPropertyOperation> propertyOperations, PimsProperty dbSourceProperty)
+        {
             propertyOperations.ForEach(op =>
             {
                 if (dbSourceProperty.PropertyId > 0)
@@ -80,156 +122,6 @@ namespace Pims.Api.Services
                 }
                 op.SourceProperty = dbSourceProperty;
             });
-
-            CommonPropertyOperationValidation(propertyOperations, new List<PimsProperty>() { dbSourceProperty });
-            if (dbSourceProperty.IsRetired == true)
-            {
-                throw new BusinessRuleViolationException("Retired properties cannot be subdivided.");
-            }
-
-            if (propertyOperations.Any(op => op.SourcePropertyId != propertyOperations.FirstOrDefault().SourcePropertyId))
-            {
-                throw new BusinessRuleViolationException("All property operations must have the same PIMS parent property.");
-            }
-
-            if (propertyOperations.Select(o => o.DestinationProperty).Count() < 2)
-            {
-                throw new BusinessRuleViolationException("Subdivisions must contain at least two child properties.");
-            }
-
-            foreach (var operation in propertyOperations)
-            {
-                if (dbSourceProperty.Pid == operation.DestinationProperty.Pid)
-                {
-                    continue; // the user is allowed to add a child property that exists in pims if it has the same pid as the destination property.
-                }
-                try
-                {
-                    _propertyService.GetByPid(operation.DestinationProperty.Pid.ToString());
-                    throw new BusinessRuleViolationException("Subdivision children may not already be in the PIMS inventory.");
-                }
-                catch (KeyNotFoundException)
-                {
-                    // ignore exception, the pid should not exist.
-                }
-            }
-
-            // retire the source property
-            RetireResolvedSourceProperty(dbSourceProperty);
-
-            foreach (var operation in propertyOperations)
-            {
-                operation.DestinationProperty.PropertyId = 0; // in the case this property already exists, this will force it to be recreated.
-                ValidateRegionDistrict(operation.DestinationProperty, "Destination property");
-                var newProperty = _propertyService.PopulateNewProperty(operation.DestinationProperty, isOwned: true, isPropertyOfInterest: false);
-                operation.DestinationProperty = newProperty;
-                operation.DestinationPropertyId = newProperty.PropertyId;
-
-                // Keep the source navigation for newly-created source properties so EF can resolve SOURCE_PROPERTY_ID.
-                if (operation.SourcePropertyId > 0)
-                {
-                    operation.SourceProperty = null; // existing source should not be modified in this add range operation.
-                }
-            }
-            var completedOperations = _repository.AddRange(propertyOperations);
-            _repository.CommitTransaction();
-
-            return completedOperations;
-        }
-
-        public IEnumerable<PimsPropertyOperation> ConsolidateProperty(IEnumerable<PimsPropertyOperation> operations)
-        {
-            var propertyOperations = operations?.ToList() ?? new List<PimsPropertyOperation>();
-            var destinationProperty = propertyOperations.FirstOrDefault()?.DestinationProperty;
-            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
-
-            if (propertyOperations.Count == 0)
-            {
-                throw new BadRequestException("No property operations were sent.");
-            }
-
-            // resolve source properties in PIMS first (create when payload sourcePropertyId is 0)
-            var dbSourceProperties = propertyOperations
-                .Select(op => ResolveOrCreateSourceProperty(op, "consolidation"))
-                .ToList();
-
-            for (var i = 0; i < propertyOperations.Count; i++)
-            {
-                if (dbSourceProperties[i].PropertyId > 0)
-                {
-                    propertyOperations[i].SourcePropertyId = dbSourceProperties[i].PropertyId;
-                }
-                propertyOperations[i].SourceProperty = dbSourceProperties[i];
-            }
-
-            CommonPropertyOperationValidation(propertyOperations, dbSourceProperties);
-            if (destinationProperty?.Pid == null)
-            {
-                throw new BusinessRuleViolationException("Consolidation child must have a property with a valid PID.");
-            }
-
-            if (dbSourceProperties.Any(sp => sp.IsRetired == true))
-            {
-                throw new BusinessRuleViolationException("Retired properties cannot be consolidated.");
-            }
-
-            if (propertyOperations.Any(op => op.DestinationProperty.Pid != destinationProperty?.Pid))
-            {
-                throw new BusinessRuleViolationException("All property operations must have the same child property with the same PID.");
-            }
-
-            var distinctSourceCount = propertyOperations
-                .Select(op => op.SourceProperty)
-                .Where(sp => sp != null)
-                .Select(sp => sp.PropertyId > 0 ? $"id:{sp.PropertyId}" : $"pid:{sp.Pid}")
-                .Distinct()
-                .Count();
-
-            if (distinctSourceCount < 2)
-            {
-                throw new BusinessRuleViolationException("Consolidations must contain at least two different parent properties.");
-            }
-
-            try
-            {
-                var dbDestinationProperty = _propertyService.GetByPid(destinationProperty?.Pid?.ToString());
-
-                // if the property exists in pims, it must also be present in the source properties list.
-                if (!dbSourceProperties.Any(sp => sp.PropertyId == dbDestinationProperty?.PropertyId))
-                {
-                    throw new BusinessRuleViolationException("Consolidated child property may not be in the PIMS inventory unless also in the parent property list.");
-                }
-            }
-            catch (KeyNotFoundException)
-            {
-                // ignore exception, the pid should not exist.
-            }
-
-            // retire the source properties
-            foreach (var sp in dbSourceProperties)
-            {
-                RetireResolvedSourceProperty(sp);
-            }
-
-            destinationProperty.PropertyId = 0; // in the case this property already exists, this will force it to be recreated.
-            ValidateRegionDistrict(destinationProperty, "Destination property");
-            var newProperty = _propertyService.PopulateNewProperty(destinationProperty, isOwned: true, isPropertyOfInterest: false);
-            propertyOperations.ForEach(op =>
-            {
-                op.DestinationProperty = newProperty;
-                op.DestinationPropertyId = newProperty.PropertyId;
-
-                // Keep the source navigation for newly-created source properties so EF can resolve SOURCE_PROPERTY_ID.
-                if (op.SourcePropertyId > 0)
-                {
-                    op.SourceProperty = null; // existing source should not be modified in this add range operation.
-                }
-            });
-
-            var completedOperations = _repository.AddRange(propertyOperations);
-            _repository.CommitTransaction();
-
-            return completedOperations;
         }
 
         private static void CommonPropertyOperationValidation(IEnumerable<PimsPropertyOperation> operations, IEnumerable<PimsProperty> dbSourceProperties)
@@ -257,6 +149,170 @@ namespace Pims.Api.Services
             {
                 throw new BusinessRuleViolationException("All property operations must have matching type codes.");
             }
+        }
+
+        private static void ValidateSubdivideState(List<PimsPropertyOperation> propertyOperations, PimsProperty dbSourceProperty)
+        {
+            CommonPropertyOperationValidation(propertyOperations, new List<PimsProperty>() { dbSourceProperty });
+
+            if (dbSourceProperty.IsRetired == true)
+            {
+                throw new BusinessRuleViolationException("Retired properties cannot be subdivided.");
+            }
+
+            if (propertyOperations.Any(op => op.SourcePropertyId != propertyOperations.FirstOrDefault().SourcePropertyId))
+            {
+                throw new BusinessRuleViolationException("All property operations must have the same PIMS parent property.");
+            }
+
+            if (propertyOperations.Select(o => o.DestinationProperty).Count() < 2)
+            {
+                throw new BusinessRuleViolationException("Subdivisions must contain at least two child properties.");
+            }
+        }
+
+        private static void ValidateConsolidateInput(List<PimsPropertyOperation> propertyOperations)
+        {
+            if (propertyOperations.Count == 0)
+            {
+                throw new BadRequestException("No property operations were sent.");
+            }
+        }
+
+        private static void ValidateConsolidateState(List<PimsPropertyOperation> propertyOperations, PimsProperty destinationProperty, List<PimsProperty> dbSourceProperties)
+        {
+            CommonPropertyOperationValidation(propertyOperations, dbSourceProperties);
+
+            if (destinationProperty?.Pid == null)
+            {
+                throw new BusinessRuleViolationException("Consolidation child must have a property with a valid PID.");
+            }
+
+            if (dbSourceProperties.Any(sp => sp.IsRetired == true))
+            {
+                throw new BusinessRuleViolationException("Retired properties cannot be consolidated.");
+            }
+
+            if (propertyOperations.Any(op => op.DestinationProperty.Pid != destinationProperty.Pid))
+            {
+                throw new BusinessRuleViolationException("All property operations must have the same child property with the same PID.");
+            }
+
+            var distinctSourceCount = propertyOperations
+                .Select(op => op.SourceProperty)
+                .Where(sp => sp != null)
+                .Select(sp => sp.PropertyId > 0 ? $"id:{sp.PropertyId}" : $"pid:{sp.Pid}")
+                .Distinct()
+                .Count();
+
+            if (distinctSourceCount < 2)
+            {
+                throw new BusinessRuleViolationException("Consolidations must contain at least two different parent properties.");
+            }
+        }
+
+        private void ValidateChildren(List<PimsPropertyOperation> propertyOperations, PimsProperty dbSourceProperty)
+        {
+            foreach (var operation in propertyOperations)
+            {
+                if (dbSourceProperty.Pid == operation.DestinationProperty.Pid)
+                {
+                    continue; // the user is allowed to add a child property that exists in pims if it has the same pid as the destination property.
+                }
+                try
+                {
+                    _propertyService.GetByPid(operation.DestinationProperty.Pid.ToString());
+                    throw new BusinessRuleViolationException("Subdivision children may not already be in the PIMS inventory.");
+                }
+                catch (KeyNotFoundException)
+                {
+                    // ignore exception, the pid should not exist.
+                }
+            }
+        }
+
+        private void PrepareSubdivideDestinations(List<PimsPropertyOperation> propertyOperations)
+        {
+            foreach (var operation in propertyOperations)
+            {
+                var newProperty = PrepareDestinationProperty(operation.DestinationProperty);
+                operation.DestinationProperty = newProperty;
+                operation.DestinationPropertyId = newProperty.PropertyId;
+
+                // Keep the source navigation for newly-created source properties so EF can resolve SOURCE_PROPERTY_ID.
+                if (operation.SourcePropertyId > 0)
+                {
+                    operation.SourceProperty = null; // Use FK-only for existing source properties so they are not modified in add-range.
+                }
+            }
+        }
+
+        private List<PimsProperty> ResolveAndNormalizeConsolidateSources(List<PimsPropertyOperation> propertyOperations)
+        {
+            var dbSourceProperties = propertyOperations
+                .Select(op => ResolveOrCreateSourceProperty(op, "consolidation"))
+                .ToList();
+
+            for (var i = 0; i < propertyOperations.Count; i++)
+            {
+                if (dbSourceProperties[i].PropertyId > 0)
+                {
+                    propertyOperations[i].SourcePropertyId = dbSourceProperties[i].PropertyId;
+                }
+                propertyOperations[i].SourceProperty = dbSourceProperties[i];
+            }
+
+            return dbSourceProperties;
+        }
+
+        private void ValidateConsolidateDestinationInventory(PimsProperty destinationProperty, List<PimsProperty> dbSourceProperties)
+        {
+            try
+            {
+                var dbDestinationProperty = _propertyService.GetByPid(destinationProperty?.Pid?.ToString());
+
+                // if the property exists in pims, it must also be present in the source properties list.
+                if (!dbSourceProperties.Any(sp => sp.PropertyId == dbDestinationProperty?.PropertyId))
+                {
+                    throw new BusinessRuleViolationException("Consolidated child property may not be in the PIMS inventory unless also in the parent property list.");
+                }
+            }
+            catch (KeyNotFoundException)
+            {
+                // ignore exception, the pid should not exist.
+            }
+        }
+
+        private void RetireConsolidateSources(List<PimsProperty> dbSourceProperties)
+        {
+            foreach (var sp in dbSourceProperties)
+            {
+                RetireResolvedSourceProperty(sp);
+            }
+        }
+
+        private void PrepareConsolidateDestination(List<PimsPropertyOperation> propertyOperations, PimsProperty destinationProperty)
+        {
+            var newProperty = PrepareDestinationProperty(destinationProperty);
+
+            propertyOperations.ForEach(op =>
+            {
+                op.DestinationProperty = newProperty;
+                op.DestinationPropertyId = newProperty.PropertyId;
+
+                // Keep the source navigation for newly-created source properties so EF can resolve SOURCE_PROPERTY_ID.
+                if (op.SourcePropertyId > 0)
+                {
+                    op.SourceProperty = null; // Use FK-only for existing source properties so they are not modified in add-range.
+                }
+            });
+        }
+
+        private PimsProperty PrepareDestinationProperty(PimsProperty destinationProperty)
+        {
+            destinationProperty.PropertyId = 0; // in the case this property already exists, this will force it to be recreated.
+            ValidateRegionDistrict(destinationProperty, "Destination property");
+            return _propertyService.PopulateNewProperty(destinationProperty, isOwned: true, isPropertyOfInterest: false);
         }
 
         private void RetireResolvedSourceProperty(PimsProperty sourceProperty)
