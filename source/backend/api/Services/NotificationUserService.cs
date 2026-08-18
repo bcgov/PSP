@@ -155,6 +155,10 @@ namespace Pims.Api.Services
                     {
                         source = $"Lease File #: {notification.Lease.LFileNo} and Insurance for: {notification.Insurance.InsuranceTypeCodeNavigation.Description}";
                     }
+                    else if (notification.LeaseConsultationId.HasValue)
+                    {
+                        source = $"Lease File #: {notification.Lease.LFileNo} and First Nation Consultation with status: {notification.LeaseConsultation.ConsultationStatusTypeCodeNavigation.Description}";
+                    }
                     else
                     {
                         source = $"Lease File #: {notification.Lease.LFileNo}";

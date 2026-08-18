@@ -16,10 +16,14 @@ import TooltipWrapper from '@/components/common/TooltipWrapper';
 import * as API from '@/constants/API';
 import Claims from '@/constants/claims';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
+import ReminderContainer from '@/features/notifications/ReminderContainer';
+import ReminderView from '@/features/notifications/ReminderView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_ConsultationOutcomeTypes } from '@/models/api/generated/ApiGen_CodeTypes_ConsultationOutcomeTypes';
+import { ApiGen_CodeTypes_ConsultationTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_ConsultationTypeTypes';
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 import { ApiGen_Concepts_ConsultationLease } from '@/models/api/generated/ApiGen_Concepts_ConsultationLease';
 import { prettyFormatDate } from '@/utils';
 import { booleanToYesNoString } from '@/utils/formUtils';
@@ -160,7 +164,8 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                   }
                   data-testid={`consultation-${group.consultationTypeDescription}-items`}
                 >
-                  {consultation?.consultationTypeCode?.id === 'OTHER' && (
+                  {consultation?.consultationTypeCode?.id ===
+                    ApiGen_CodeTypes_ConsultationTypeTypes.OTHER && (
                     <SectionField
                       labelWidth={{ xs: 4 }}
                       contentWidth={{ xs: 6 }}
@@ -175,18 +180,53 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                       {consultation?.otherDescription}
                     </SectionField>
                   )}
-                  <SectionField
-                    labelWidth={{ xs: 4 }}
-                    label="Requested on"
-                    tooltip={
-                      <TooltipIcon
-                        toolTipId={`lease-consultation-${consultation.id}-requestedon-tooltip`}
-                        toolTip="When the approval / consultation request was sent"
-                      />
-                    }
-                  >
-                    {prettyFormatDate(consultation.requestedOn)}
-                  </SectionField>
+
+                  {consultation.consultationTypeCode.id !==
+                    ApiGen_CodeTypes_ConsultationTypeTypes.FIRSTNATION && (
+                    <SectionField
+                      labelWidth={{ xs: 4 }}
+                      label="Requested on"
+                      tooltip={
+                        <TooltipIcon
+                          toolTipId={`lease-consultation-${consultation.id}-requestedon-tooltip`}
+                          toolTip="When the approval / consultation request was sent"
+                        />
+                      }
+                    >
+                      {prettyFormatDate(consultation.requestedOn)}
+                    </SectionField>
+                  )}
+
+                  {consultation.consultationTypeCode.id ===
+                    ApiGen_CodeTypes_ConsultationTypeTypes.FIRSTNATION && (
+                    <SectionField
+                      labelWidth={{ xs: 4 }}
+                      label="Requested on"
+                      tooltip={
+                        <TooltipIcon
+                          toolTipId={`lease-consultation-${consultation.id}-requestedon-tooltip`}
+                          toolTip="When the approval / consultation request was sent"
+                        />
+                      }
+                    >
+                      <StyledReminderContent>
+                        {prettyFormatDate(consultation.requestedOn)}
+                        {consultation.requestedOn && (
+                          <ReminderContainer
+                            keyDate={consultation.requestedOn}
+                            keyDateLabel="Lease Policy Expiry"
+                            notificationType={ApiGen_CodeTypes_NotificationTypes.L_CONSULTFN}
+                            notificationSource={{
+                              leaseId: consultation.leaseId,
+                              leaseConsultationId: consultation.id,
+                            }}
+                            View={ReminderView}
+                          />
+                        )}
+                      </StyledReminderContent>
+                    </SectionField>
+                  )}
+
                   <ContactFieldContainer
                     labelWidth={{ xs: 4 }}
                     label="Contact"
@@ -311,3 +351,10 @@ const getOutcomeIcon = (consultations: ApiGen_Concepts_ConsultationLease[]) => {
     );
   }
 };
+
+const StyledReminderContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  gap: 1.2rem;
+`;
