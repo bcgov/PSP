@@ -66,7 +66,11 @@ namespace Pims.Dal.Test.Repositories
             eResearch.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = EntityHelper.CreateProperty(1) } };
 
             var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(eResearch);
+
+            if (expectedCount > 0)
+            {
+                context.AddAndSaveChanges(eResearch);
+            }
 
             var repository = helper.CreateRepository<ResearchFileRepository>(user);
 
