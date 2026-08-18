@@ -485,26 +485,11 @@ exports[`Research Filter > matches snapshot 1`] = `
                         <ul
                           class="optionContainer"
                         >
-                          <li
-                            class="option  highlightOption highlight  "
+                          <span
+                            class="notFound"
                           >
-                            South Coast Region
-                          </li>
-                          <li
-                            class="option    "
-                          >
-                            Southern Interior Region
-                          </li>
-                          <li
-                            class="option    "
-                          >
-                            Northern Region
-                          </li>
-                          <li
-                            class="option    "
-                          >
-                            Cannot determine
-                          </li>
+                            No Options Available
+                          </span>
                         </ul>
                       </div>
                     </div>
