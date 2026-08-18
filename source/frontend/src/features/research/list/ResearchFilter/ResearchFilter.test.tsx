@@ -16,10 +16,12 @@ const storeState = {
 
 const setFilter = vi.fn();
 const researchStatusTypes = getMockLookUpsByType(API.RESEARCH_FILE_STATUS_TYPES);
-const researchRegionTypes = [{
-    id: "1",
-    text: "South Coast Region"
-  }];
+const researchRegionTypes = [
+  {
+    id: '1',
+    text: 'South Coast Region',
+  },
+];
 const setup = (
   filter = defaultResearchFilter,
   createdByOptions: MultiSelectOption[] = [],
@@ -27,7 +29,13 @@ const setup = (
   regionOptions: MultiSelectOption[],
 ) => {
   const utils = render(
-    <ResearchFilter filter={filter} setFilter={setFilter} createdByOptions={createdByOptions} regionOptions={regionOptions} statusOptions={researchStatusTypes} />,
+    <ResearchFilter
+      filter={filter}
+      setFilter={setFilter}
+      createdByOptions={createdByOptions}
+      regionOptions={regionOptions}
+      statusOptions={researchStatusTypes}
+    />,
     {
       ...renderOptions,
       claims: [Claims.RESEARCH_VIEW],
@@ -44,59 +52,52 @@ describe('Research Filter', () => {
   });
 
   it('matches snapshot', async () => {
-    const { asFragment } = setup(  defaultResearchFilter,
-    [],
-    { store: storeState },
-    [],);
+    const { asFragment } = setup(defaultResearchFilter, [], { store: storeState }, []);
 
     const fragment = await waitFor(() => asFragment());
     expect(fragment).toMatchSnapshot();
   });
 
   it('searches for active research files by default', async () => {
-    const { resetButton } = setup(  defaultResearchFilter,
-    [],
-    { store: storeState },
-    [],);
+    const { resetButton } = setup(defaultResearchFilter, [], { store: storeState }, []);
     await act(async () => userEvent.click(resetButton));
 
     expect(setFilter).toHaveBeenCalledWith(defaultResearchFilter);
   });
 
   it('searches by region', async () => {
-    const { container, searchButton } = setup(  defaultResearchFilter,
-    [],
-    { store: storeState },
-    researchRegionTypes,);
+    const { container, searchButton } = setup(
+      defaultResearchFilter,
+      [],
+      { store: storeState },
+      researchRegionTypes,
+    );
 
-  await act(async () => userEvent.click(searchButton));
+    await act(async () => userEvent.click(searchButton));
 
-  expect(setFilter).toHaveBeenCalledWith({
-    pid: '',
-    pin: '',
-    appCreateUserid: '',
-    appLastUpdateUserid: '',
-    createOrUpdateBy: 'appLastUpdateUserid',
-    createOrUpdateRange: 'updatedOnStartDate',
-    createdOnEndDate: '',
-    createdOnStartDate: '',
-    name: '',
-    regionCodes: [{ id: '1', text: 'South Coast Region' }],
-    researchFileStatusTypeCode: '',
-    researchSearchBy: 'pid',
-    rfileNumber: '',
-    roadOrAlias: '',
-    updatedOnEndDate: '',
-    updatedOnStartDate: '',
-    selectedUser: [],
-  });
+    expect(setFilter).toHaveBeenCalledWith({
+      pid: '',
+      pin: '',
+      appCreateUserid: '',
+      appLastUpdateUserid: '',
+      createOrUpdateBy: 'appLastUpdateUserid',
+      createOrUpdateRange: 'updatedOnStartDate',
+      createdOnEndDate: '',
+      createdOnStartDate: '',
+      name: '',
+      regionCodes: [{ id: '1', text: 'South Coast Region' }],
+      researchFileStatusTypeCode: '',
+      researchSearchBy: 'pid',
+      rfileNumber: '',
+      roadOrAlias: '',
+      updatedOnEndDate: '',
+      updatedOnStartDate: '',
+      selectedUser: [],
+    });
   });
 
   it('searches by R-file number', async () => {
-    const { container, searchButton } = setup(  defaultResearchFilter,
-    [],
-    { store: storeState },
-    []);
+    const { container, searchButton } = setup(defaultResearchFilter, [], { store: storeState }, []);
     fillInput(container, 'researchSearchBy', 'rfileNumber', 'select');
     fillInput(container, 'rfileNumber', '101');
     await act(async () => userEvent.click(searchButton));
@@ -123,10 +124,7 @@ describe('Research Filter', () => {
   });
 
   it('searches by file name', async () => {
-    const { container, searchButton } = setup(  defaultResearchFilter,
-    [],
-    { store: storeState },
-    [],);
+    const { container, searchButton } = setup(defaultResearchFilter, [], { store: storeState }, []);
     fillInput(container, 'researchSearchBy', 'name', 'select');
     fillInput(container, 'name', 'test file name 1');
     await act(async () => userEvent.click(searchButton));
@@ -153,10 +151,7 @@ describe('Research Filter', () => {
   });
 
   it('searches by research file status', async () => {
-    const { container, searchButton } = setup(  defaultResearchFilter,
-    [],
-    { store: storeState },
-    []);
+    const { container, searchButton } = setup(defaultResearchFilter, [], { store: storeState }, []);
 
     fillInput(container, 'researchFileStatusTypeCode', 'INACTIVE', 'select');
     await act(async () => userEvent.click(searchButton));
@@ -185,11 +180,7 @@ describe('Research Filter', () => {
   });
 
   it('searches by road name', async () => {
-    const { container, searchButton } = setup(  defaultResearchFilter,
-    [],
-    { store: storeState },
-    [],
-);
+    const { container, searchButton } = setup(defaultResearchFilter, [], { store: storeState }, []);
 
     fillInput(container, 'roadOrAlias', 'a road name');
     await act(async () => userEvent.click(searchButton));
@@ -218,10 +209,7 @@ describe('Research Filter', () => {
   });
 
   it('searches by create date range', async () => {
-    const { container, searchButton } = setup(  defaultResearchFilter,
-    [],
-    { store: storeState },
-    []);
+    const { container, searchButton } = setup(defaultResearchFilter, [], { store: storeState }, []);
 
     fillInput(container, 'createOrUpdateRange', 'createdOnStartDate', 'select');
     fillInput(container, 'createdOnStartDate', '2020-01-01');
@@ -252,10 +240,7 @@ describe('Research Filter', () => {
   });
 
   it('searches by update date range', async () => {
-    const { container, searchButton } = setup(  defaultResearchFilter,
-    [],
-    { store: storeState },
-    []);
+    const { container, searchButton } = setup(defaultResearchFilter, [], { store: storeState }, []);
 
     fillInput(container, 'createOrUpdateRange', 'updatedOnStartDate', 'select');
     fillInput(container, 'updatedOnStartDate', '2021-01-01');
@@ -288,10 +273,10 @@ describe('Research Filter', () => {
   it('searches by create user', async () => {
     const selectedUser = [{ id: 'DSMITH', text: 'Devin Smith (DSMITH)' }];
     const { searchButton } = setup(
-     { ...defaultResearchFilter, createOrUpdateBy: 'appCreateUserid', selectedUser },
+      { ...defaultResearchFilter, createOrUpdateBy: 'appCreateUserid', selectedUser },
       [],
-    { store: storeState },
-    []
+      { store: storeState },
+      [],
     );
 
     await act(async () => userEvent.click(searchButton));
@@ -329,8 +314,8 @@ describe('Research Filter', () => {
     const { searchButton } = setup(
       { ...defaultResearchFilter, createOrUpdateBy: 'appLastUpdateUserid', selectedUser },
       [],
-    { store: storeState },
-    []
+      { store: storeState },
+      [],
     );
 
     await act(async () => userEvent.click(searchButton));
@@ -364,10 +349,12 @@ describe('Research Filter', () => {
   });
 
   it('resets the filter when reset button is clicked', async () => {
-    const { container, resetButton, setFilter } = setup(defaultResearchFilter,
-    [],
-    { store: storeState },
-    []);
+    const { container, resetButton, setFilter } = setup(
+      defaultResearchFilter,
+      [],
+      { store: storeState },
+      [],
+    );
 
     fillInput(container, 'createOrUpdateBy', 'appLastUpdateUserid', 'select');
     fillInput(container, 'appLastUpdateUserid', 'breaking');
