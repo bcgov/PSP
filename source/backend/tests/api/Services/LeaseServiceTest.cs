@@ -2059,12 +2059,10 @@ namespace Pims.Api.Test.Services
             var service = this.CreateLeaseService(Permissions.LeaseEdit);
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(lease);
+            leaseRepository.Setup(x => x.UpdateLeaseInsurances(It.IsAny<long>(), It.IsAny<IEnumerable<PimsInsurance>>())).Returns(new List<PimsInsurance>());
 
             var userRepository = this._helper.GetService<Mock<IUserRepository>>();
             userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(contractorUser);
-
-            var insuranceRepository = this._helper.GetService<Mock<IInsuranceRepository>>();
-            insuranceRepository.Setup(x => x.UpdateLeaseInsurance(It.IsAny<long>(), It.IsAny<IEnumerable<PimsInsurance>>())).Returns(new List<PimsInsurance>());
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.CanEditInsurance(It.IsAny<LeaseStatusTypes?>())).Returns(true);
@@ -2074,7 +2072,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
-            insuranceRepository.Verify(x => x.UpdateLeaseInsurance(It.IsAny<long>(), It.IsAny<IEnumerable<PimsInsurance>>()), Times.Never);
+            leaseRepository.Verify(x => x.UpdateLeaseInsurances(It.IsAny<long>(), It.IsAny<IEnumerable<PimsInsurance>>()), Times.Never);
         }
 
         [Fact]
@@ -2082,7 +2080,6 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateLeaseService(Permissions.LeaseEdit);
-            var insuranceRepository = this._helper.GetService<Mock<IInsuranceRepository>>();
             var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
 
             var user = EntityHelper.CreateUser("Test");
@@ -2092,7 +2089,7 @@ namespace Pims.Api.Test.Services
 
             leaseRepository.Setup(x => x.GetNoTracking(It.IsAny<long>())).Returns(EntityHelper.CreateLease(1));
 
-            insuranceRepository.Setup(x => x.UpdateLeaseInsurance(It.IsAny<long>(), It.IsAny<IEnumerable<PimsInsurance>>())).Returns(new List<PimsInsurance>());
+            leaseRepository.Setup(x => x.UpdateLeaseInsurances(It.IsAny<long>(), It.IsAny<IEnumerable<PimsInsurance>>())).Returns(new List<PimsInsurance>());
 
             // Act
             Action act = () => service.UpdateInsuranceByLeaseId(1, new List<PimsInsurance>());
