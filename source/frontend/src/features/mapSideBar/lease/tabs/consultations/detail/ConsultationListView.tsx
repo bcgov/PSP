@@ -106,7 +106,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
             noPadding
             isCollapsable={true}
             initiallyExpanded={false}
-            data-testid={`consultation-group-section-${group.consultationTypeDescription}`}
+            data-testid={`consultation-group-section-${group.consultationTypeCode}`}
           >
             {group.consultations.map((consultation, index) => (
               <StyledBorder key={`consultation-section-${index}`}>
@@ -162,7 +162,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                       </Row>
                     </div>
                   }
-                  data-testid={`consultation-${group.consultationTypeDescription}-items`}
+                  data-testid={`consultation-${consultation.id}`}
                 >
                   {consultation?.consultationTypeCode?.id ===
                     ApiGen_CodeTypes_ConsultationTypeTypes.OTHER && (
@@ -202,6 +202,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                     <SectionField
                       labelWidth={{ xs: 4 }}
                       label="Requested on"
+                      valueTestId={`consultation-${consultation.id}.requested-on-value`}
                       tooltip={
                         <TooltipIcon
                           toolTipId={`lease-consultation-${consultation.id}-requestedon-tooltip`}
