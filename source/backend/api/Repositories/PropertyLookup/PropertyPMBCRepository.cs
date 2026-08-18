@@ -15,14 +15,7 @@ namespace Pims.Api.Repositories.PropertyLookup
     {
         private readonly IHttpClientFactory _httpClientFactory;
         private readonly ILogger<PropertyPmbcRepository> _logger;
-        private readonly string _pmbcBaseUrl;
-        private readonly string _pmbcService;
-        private readonly string _pmbcRequest;
-        private readonly string _pmbcVersion;
-        private readonly string _pmbcOutputFormat;
-        private readonly string _pmbcTypeNames;
-        private readonly string _pmbcSrsName;
-        private readonly string _pmbcCount;
+        private readonly string _pmbcExternalApiUrl;
 
         private static string BuildGeneralLocation(string municipality, string regionalDistrict)
         {
@@ -60,14 +53,7 @@ namespace Pims.Api.Repositories.PropertyLookup
         {
             _httpClientFactory = httpClientFactory;
             _logger = logger;
-            _pmbcBaseUrl = configuration.GetValue<string>("PmbcLookup:BaseUrl");
-            _pmbcService = configuration.GetValue<string>("PmbcLookup:Service");
-            _pmbcRequest = configuration.GetValue<string>("PmbcLookup:Request");
-            _pmbcVersion = configuration.GetValue<string>("PmbcLookup:Version");
-            _pmbcOutputFormat = configuration.GetValue<string>("PmbcLookup:OutputFormat");
-            _pmbcTypeNames = configuration.GetValue<string>("PmbcLookup:TypeNames");
-            _pmbcSrsName = configuration.GetValue<string>("PmbcLookup:SrsName");
-            _pmbcCount = configuration.GetValue<string>("PmbcLookup:Count");
+            _pmbcExternalApiUrl = configuration.GetValue<string>("HealthChecks:PmbcExternalApi:Url");
         }
 
         public async Task<PropertyModel> GetByPidAsync(string pid)
@@ -85,10 +71,12 @@ namespace Pims.Api.Repositories.PropertyLookup
 
         private async Task<PmbcFeature> QuerySingleFeatureAsync(string cqlFilter, string lookupValue)
         {
-            var query = BuildBaseQuery();
-            query["cql_filter"] = cqlFilter;
-
-            var url = QueryHelpers.AddQueryString(_pmbcBaseUrl, query);
+            var url = BuildLookupUrl(cqlFilter);
+            if (string.IsNullOrWhiteSpace(url))
+            {
+                _logger.LogWarning("PMBC lookup URL is not configured. Set HealthChecks:PmbcExternalApi:Url.");
+                return null;
+            }
 
             try
             {
@@ -134,18 +122,20 @@ namespace Pims.Api.Repositories.PropertyLookup
             }
         }
 
-        private Dictionary<string, string> BuildBaseQuery()
+        private string BuildLookupUrl(string cqlFilter)
         {
-            return new Dictionary<string, string>
+            if (string.IsNullOrWhiteSpace(_pmbcExternalApiUrl))
             {
-                ["service"] = _pmbcService,
-                ["request"] = _pmbcRequest,
-                ["version"] = _pmbcVersion,
-                ["outputFormat"] = _pmbcOutputFormat,
-                ["typeNames"] = _pmbcTypeNames,
-                ["srsName"] = _pmbcSrsName,
-                ["count"] = _pmbcCount,
-            };
+                return null;
+            }
+
+            return QueryHelpers.AddQueryString(
+                _pmbcExternalApiUrl,
+                new Dictionary<string, string>
+                {
+                    ["cql_filter"] = cqlFilter,
+                    ["count"] = "1",
+                });
         }
 
         private sealed class PmbcFeatureCollection
