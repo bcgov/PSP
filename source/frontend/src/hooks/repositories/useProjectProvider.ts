@@ -10,7 +10,11 @@ import { ApiGen_Concepts_Product } from '@/models/api/generated/ApiGen_Concepts_
 import { ApiGen_Concepts_Project } from '@/models/api/generated/ApiGen_Concepts_Project';
 import { ApiGen_Concepts_ProjectPerson } from '@/models/api/generated/ApiGen_Concepts_ProjectPerson';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { useAxiosErrorHandler, useAxiosSuccessHandler } from '@/utils';
+import {
+  useAxiosErrorHandler,
+  useAxiosErrorHandlerWithAuthorization,
+  useAxiosSuccessHandler,
+} from '@/utils';
 
 /**
  * hook that retrieves Project information.
@@ -81,7 +85,7 @@ export const useProjectProvider = () => {
       [getProject],
     ),
     requestName: 'RetrieveProject',
-    onError: useAxiosErrorHandler('Failed to load Project'),
+    onError: useAxiosErrorHandlerWithAuthorization('Failed to load Project'),
   });
 
   const getAllProjectsApi = useApiRequestWrapper<
