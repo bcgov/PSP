@@ -66,7 +66,7 @@ describe('Research Filter', () => {
   });
 
   it('searches by region', async () => {
-    const { container, searchButton } = setup(
+    const { searchButton } = setup(
       defaultResearchFilter,
       [],
       { store: storeState },
