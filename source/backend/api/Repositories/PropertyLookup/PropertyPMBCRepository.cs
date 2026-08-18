@@ -148,19 +148,19 @@ namespace Pims.Api.Repositories.PropertyLookup
             };
         }
 
-        private class PmbcFeatureCollection
+        private sealed class PmbcFeatureCollection
         {
             [JsonPropertyName("features")]
             public List<PmbcFeature> Features { get; set; }
         }
 
-        private class PmbcFeature
+        private sealed class PmbcFeature
         {
             [JsonPropertyName("properties")]
             public PmbcProperties Properties { get; set; }
         }
 
-        private class PmbcProperties
+        private sealed class PmbcProperties
         {
             [JsonPropertyName("PID")]
             public string Pid { get; set; }

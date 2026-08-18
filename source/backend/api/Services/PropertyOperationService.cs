@@ -35,8 +35,8 @@ namespace Pims.Api.Services
 
         public IList<PimsPropertyOperation> GetOperationsForProperty(long propertyId)
         {
-           _logger.LogInformation("Getting operations for property with id {PropertyId}", propertyId);
-           _user.ThrowIfNotAuthorized(Permissions.PropertyView);
+            _logger.LogInformation("Getting operations for property with id {PropertyId}", propertyId);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyView);
 
             return _repository.GetByPropertyId(propertyId);
         }
@@ -126,10 +126,17 @@ namespace Pims.Api.Services
 
         private static void CommonPropertyOperationValidation(IEnumerable<PimsPropertyOperation> operations, IEnumerable<PimsProperty> dbSourceProperties)
         {
+            var operationList = operations?.ToList() ?? new List<PimsPropertyOperation>();
+            if (operationList.Count == 0)
+            {
+                throw new BadRequestException("No property operations were sent.");
+            }
+
+            var firstOperation = operationList.First();
 
             foreach (var sourceProperty in dbSourceProperties)
             {
-                var operation = operations.FirstOrDefault(p => p.SourcePropertyId == sourceProperty.PropertyId);
+                var operation = operationList.FirstOrDefault(p => p.SourcePropertyId == sourceProperty.PropertyId);
                 if (operation == null)
                 {
                     throw new BadRequestException("All source properties must exist in the system.");
@@ -140,12 +147,12 @@ namespace Pims.Api.Services
                 }
             }
 
-            if (operations.Any(op => op.PropertyOperationNo != operations.FirstOrDefault().PropertyOperationNo))
+            if (operationList.Any(op => op.PropertyOperationNo != firstOperation.PropertyOperationNo))
             {
                 throw new BusinessRuleViolationException("All property operations must have matching operation numbers.");
             }
 
-            if (operations.Any(op => op.PropertyOperationTypeCode != operations.FirstOrDefault().PropertyOperationTypeCode))
+            if (operationList.Any(op => op.PropertyOperationTypeCode != firstOperation.PropertyOperationTypeCode))
             {
                 throw new BusinessRuleViolationException("All property operations must have matching type codes.");
             }
@@ -153,14 +160,16 @@ namespace Pims.Api.Services
 
         private static void ValidateSubdivideState(List<PimsPropertyOperation> propertyOperations, PimsProperty dbSourceProperty)
         {
+            ValidateInput(propertyOperations);
             CommonPropertyOperationValidation(propertyOperations, new List<PimsProperty>() { dbSourceProperty });
+            var firstSourcePropertyId = propertyOperations.First().SourcePropertyId;
 
             if (dbSourceProperty.IsRetired == true)
             {
                 throw new BusinessRuleViolationException("Retired properties cannot be subdivided.");
             }
 
-            if (propertyOperations.Any(op => op.SourcePropertyId != propertyOperations.FirstOrDefault().SourcePropertyId))
+            if (propertyOperations.Any(op => op.SourcePropertyId != firstSourcePropertyId))
             {
                 throw new BusinessRuleViolationException("All property operations must have the same PIMS parent property.");
             }
