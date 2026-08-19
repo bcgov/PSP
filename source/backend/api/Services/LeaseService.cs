@@ -1,13 +1,7 @@
-using System;
-using System.Collections.Generic;
-using System.Globalization;
-using System.IO;
-using System.Linq;
-using System.Security.Claims;
-using System.Text;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.CodeTypes;
+using Pims.Api.Models.Concepts.Lease;
 using Pims.Core.Api.Exceptions;
 using Pims.Core.Api.Services;
 using Pims.Core.Exceptions;
@@ -18,6 +12,13 @@ using Pims.Dal.Entities.Extensions;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
 using Pims.Dal.Repositories;
+using System;
+using System.Collections.Generic;
+using System.Globalization;
+using System.IO;
+using System.Linq;
+using System.Security.Claims;
+using System.Text;
 
 namespace Pims.Api.Services
 {
@@ -517,6 +518,16 @@ namespace Pims.Api.Services
             teamFilterOptions.AddRange(organizations);
 
             return teamFilterOptions;
+        }
+
+        public PimsLease GetLeaseAssociations(long leaseId)
+        {
+            _logger.LogInformation("Getting lease associations");
+            _user.ThrowIfNotAuthorized(Permissions.LeaseView);
+
+            PimsLease pimsLease = _leaseRepository.GetLeaseAssociations(leaseId);
+
+            return pimsLease;
         }
 
         /// <summary>

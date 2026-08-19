@@ -46,6 +46,8 @@ namespace Pims.Dal.Repositories
 
         PimsLease GetLeaseAtTime(long leaseId, DateTime time);
 
+        PimsLease GetLeaseAssociations(long leaseId);
+
         IEnumerable<PimsInsurance> GetLeaseInsurances(long leaseId);
 
         IEnumerable<PimsInsurance> UpdateLeaseInsurances(long leaseId, IEnumerable<PimsInsurance> insurances);
