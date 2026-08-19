@@ -11,6 +11,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { InlineMessage } from '@/components/common/Section/SectionStyles';
 import { H3 } from '@/components/common/styles';
 import Address from '@/features/contacts/contact/create/components/address/Address';
+import { exists } from '@/utils';
 
 import { TeamMemberFormModal } from '../../modals/AcquisitionFormModal';
 import {
@@ -34,7 +35,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
   const clearLtsaMetadata = useCallback(
     (index: number) => {
       const owner = values.owners[index];
-      if (!owner) {
+      if (!exists(owner)) {
         return;
       }
 
