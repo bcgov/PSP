@@ -2,8 +2,8 @@ import { createMemoryHistory } from 'history';
 import { noop } from 'lodash';
 
 import { Claims } from '@/constants';
-import { useApiLeases } from '@/hooks/pims-api/useApiLeases';
 import { useApiPropertyOperation } from '@/hooks/pims-api/useApiPropertyOperation';
+import { useLeaseRepository } from '@/hooks/repositories/useLeaseRepository';
 import { useLeaseStakeholderRepository } from '@/hooks/repositories/useLeaseStakeholderRepository';
 import { mockLookups } from '@/mocks/lookups.mock';
 import { ApiGen_CodeTypes_LeaseStatusTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseStatusTypes';
@@ -13,16 +13,16 @@ import { cleanup, render, RenderOptions, waitForEffects } from '@/utils/test-uti
 import PropertyContainer, { IPropertyContainerProps } from './PropertyContainer';
 
 // mock keycloak auth library
-const getApiLeaseFn = vi.fn();
 
-vi.mock('@/hooks/pims-api/useApiLeases');
-vi.mocked(useApiLeases).mockImplementation(
+const getLeaseAssociationsFn = vi.fn();
+vi.mock('@/hooks/repositories/useLeaseRepository');
+vi.mocked(useLeaseRepository).mockImplementation(
   () =>
     ({
-      getApiLease: getApiLeaseFn,
-      getLastUpdatedByApi: vi.fn(),
-    } as unknown as ReturnType<typeof useApiLeases>),
+      getLeaseAssociations: { execute: getLeaseAssociationsFn },
+    } as unknown as ReturnType<typeof useLeaseRepository>),
 );
+
 vi.mock('@/hooks/pims-api/useApiPropertyOperation');
 const getPropertyOperationsFn = vi.fn();
 vi.mocked(useApiPropertyOperation).mockImplementation(
@@ -117,7 +117,7 @@ describe('PropertyContainer component', () => {
     });
     await waitForEffects();
 
-    expect(getApiLeaseFn).not.toHaveBeenCalled();
+    expect(getLeaseAssociationsFn).not.toHaveBeenCalled();
   });
 
   it('requests lease information if user is authorized', async () => {
@@ -150,6 +150,6 @@ describe('PropertyContainer component', () => {
     });
     await waitForEffects();
 
-    expect(getApiLeaseFn).toHaveBeenCalled();
+    expect(getLeaseAssociationsFn).toHaveBeenCalled();
   });
 });
