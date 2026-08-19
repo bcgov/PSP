@@ -33,6 +33,7 @@ namespace Pims.Dal.Repositories
 
             return Context.PimsNotificationUserOutputs
                 .AsNoTracking()
+                .AsSplitQuery()
                 .Include(x => x.NotificationUser)
                     .ThenInclude(y => y.Notification)
                         .ThenInclude(z => z.AcquisitionFile)
@@ -55,6 +56,7 @@ namespace Pims.Dal.Repositories
                 .Include(x => x.NotificationUser)
                     .ThenInclude(y => y.Notification)
                         .ThenInclude(z => z.Insurance)
+                            .ThenInclude(z1 => z1.InsuranceTypeCodeNavigation)
                 .Include(x => x.NotificationUser)
                     .ThenInclude(y => y.Notification)
                         .ThenInclude(z => z.LeaseConsultation)
@@ -77,6 +79,10 @@ namespace Pims.Dal.Repositories
                     .ThenInclude(y => y.User)
                         .ThenInclude(z => z.Person)
                             .ThenInclude(z1 => z1.PimsContactMethods)
+                 .Include(x => x.NotificationUser)
+                    .ThenInclude(y => y.Notification)
+                        .ThenInclude(z => z.LeaseConsultation)
+                            .ThenInclude(z1 => z1.ConsultationStatusTypeCodeNavigation)
                 .FirstOrDefault(x => x.NotificationUserOutputId == notificationUserOutputId) ?? throw new KeyNotFoundException();
         }
 
