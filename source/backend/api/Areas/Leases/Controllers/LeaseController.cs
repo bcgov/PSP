@@ -270,7 +270,7 @@ namespace Pims.Api.Areas.Lease.Controllers
              User.GetUsername(),
              DateTime.Now);
 
-            var pimsLease = _leaseRepository.GetLeaseAssociations(id);
+            var pimsLease = _leaseService.GetLeaseAssociations(id);
 
             return new JsonResult(_mapper.Map<LeaseAssociationModel>(pimsLease));
         }

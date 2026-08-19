@@ -52,7 +52,6 @@ const getFormattedTenants = (stakeholders: ApiGen_Concepts_LeaseStakeholder[]) =
   );
   const stakeholderTypeCode = sortedStakeholders[0]?.stakeholderTypeCode?.id;
 
-  console.log(sortedStakeholders);
   return sortedStakeholders
     .filter(t => t.stakeholderTypeCode?.id === stakeholderTypeCode)
     .map(t => (t.lessorType?.id === 'PER' ? formatApiPersonNames(t.person) : t.organization?.name))
