@@ -38,3 +38,5 @@ export const formatApiBoolean = (value: boolean | null | undefined): string => {
 
   return value ? 'Yes' : 'No';
 };
+
+// export const nullableBooleanToYesNoString = ()

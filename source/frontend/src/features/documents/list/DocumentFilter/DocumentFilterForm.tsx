@@ -86,6 +86,7 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
                     onClick={() => formikProps.handleSubmit()}
                     type="button"
                     disabled={formikProps.isSubmitting}
+                    data-testid="document-file-search-button"
                   />
                 </Col>
                 <Col>
@@ -95,6 +96,7 @@ export const DocumentFilterForm = (props: IDocumentFilterFormProps) => {
                       formikProps.resetForm();
                       props.onSetFilter(defaultDocumentFilter);
                     }}
+                    data-testid="document-file-search-reset-button"
                   />
                 </Col>
               </Row>

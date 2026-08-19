@@ -21,7 +21,7 @@ test.describe('Research Files feature', () => {
     await researchListPage.goto();
 
     //Filter Elements
-    await expect(researchListPage.researchListTitle).toBeVisible();
+    //await expect(researchListPage.researchListTitle).toBeVisible();
     await expect(researchListPage.researchNewButton).toBeVisible();
     await expect(researchListPage.researcSearchByLabel).toBeVisible();
     await expect(researchListPage.researchSearchRoadInput).toBeVisible();

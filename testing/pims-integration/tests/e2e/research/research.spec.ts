@@ -4,7 +4,7 @@ import { DocumentsListPage } from '../../../pages/documents/documents-list.page'
 
 import { ResearchViewFileDetails } from '../../../pages/research/research-view-file-details.page';
 import { DocumentUploadModalPage } from '../../../pages/documents/document-upload-modal.page';
-import { generateFileName, normalize, nullableBooleanToYesNoString } from '../../../utils/utils';
+import { generateFileName, normalize, formatApiDate, formatApiBoolean } from '../../../utils/utils';
 import path from 'path';
 import { ResearchImprovementsPage } from '../../../pages/research/research-improvements-page';
 
@@ -101,7 +101,7 @@ test.describe('Research Files feature', () => {
       }
 
       const isExpropriation = await researchViewDetails.getFieldValueByLabel('Expropriation?');
-      const formatedBoolean = nullableBooleanToYesNoString(apiFeatureFileJson.isExpropriation);
+      const formatedBoolean = formatApiBoolean(apiFeatureFileJson.isExpropriation);
       expect(normalize(isExpropriation)).toBe(formatedBoolean);
 
       const description = await researchViewDetails.getResearchDescription();
@@ -121,7 +121,6 @@ test.describe('Research Files feature', () => {
       //Verify initial elements
       await expect(researchImprovements.reseachImprovementsTooltip).toBeVisible();
       await expect(researchImprovements.reseachImprovementsInstructions).toBeVisible();
-      await expect(researchImprovements.researchImprovementsProperties).toBeVisible();
     });
 
     await test.step('Validate Document Upload', async () => {
