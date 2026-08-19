@@ -457,7 +457,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
       >
         <div
           class="c6 form-section"
-          data-testid="consultation-group-section-District"
+          data-testid="consultation-group-section-DISTRICT"
         >
           <h2
             class="c2"
@@ -532,7 +532,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
             >
               <div
                 class="c1 form-section"
-                data-testid="consultation-District-items"
+                data-testid="consultation-1"
               >
                 <h2
                   class="c2"
@@ -782,7 +782,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
             >
               <div
                 class="c1 form-section"
-                data-testid="consultation-District-items"
+                data-testid="consultation-2"
               >
                 <h2
                   class="c2"
@@ -1031,7 +1031,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
         </div>
         <div
           class="c6 form-section"
-          data-testid="consultation-group-section-Engineering"
+          data-testid="consultation-group-section-ENGINEERG"
         >
           <h2
             class="c2"
@@ -1095,7 +1095,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
         </div>
         <div
           class="c6 form-section"
-          data-testid="consultation-group-section-First Nation"
+          data-testid="consultation-group-section-1STNATION"
         >
           <h2
             class="c2"
@@ -1159,7 +1159,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
         </div>
         <div
           class="c6 form-section"
-          data-testid="consultation-group-section-Headquarter (HQ)"
+          data-testid="consultation-group-section-HQ"
         >
           <h2
             class="c2"
@@ -1223,7 +1223,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
         </div>
         <div
           class="c6 form-section"
-          data-testid="consultation-group-section-Regional Planning"
+          data-testid="consultation-group-section-REGPLANG"
         >
           <h2
             class="c2"
@@ -1287,7 +1287,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
         </div>
         <div
           class="c6 form-section"
-          data-testid="consultation-group-section-Regional Property Services"
+          data-testid="consultation-group-section-REGPRPSVC"
         >
           <h2
             class="c2"
@@ -1351,7 +1351,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
         </div>
         <div
           class="c6 form-section"
-          data-testid="consultation-group-section-Strategic Real Estate (SRE)"
+          data-testid="consultation-group-section-STRATRE"
         >
           <h2
             class="c2"
@@ -1415,7 +1415,7 @@ exports[`ConsultationListView component > renders as expected 1`] = `
         </div>
         <div
           class="c6 form-section"
-          data-testid="consultation-group-section-Other"
+          data-testid="consultation-group-section-OTHER"
         >
           <h2
             class="c2"
