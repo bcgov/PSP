@@ -83,6 +83,25 @@ describe('Lease Insurance', () => {
     expect(result.getByText('alternate insurance type')).toBeInTheDocument();
   });
 
+  it('displays the reminder button when the policy expiry date is valid', () => {
+    const result = setup({
+      insuranceList: [getMockInsurance()],
+      insuranceTypes: [],
+    });
+
+    expect(result.getByRole('button', { name: 'Reminder for Lease Policy Expiry' })).toBeVisible();
+  });
+
+  it('does not display the reminder button when the policy expiry date is invalid', () => {
+    const insurance = { ...getMockInsurance(), expiryDate: null };
+    const result = setup({
+      insuranceList: [insurance],
+      insuranceTypes: [],
+    });
+
+    expect(result.queryByRole('button', { name: 'Reminder for Lease Policy Expiry' })).toBeNull();
+  });
+
   it('displays default message when no lease insurances were found', () => {
     const result = setup({
       insuranceList: [],
