@@ -30,7 +30,6 @@ namespace Pims.Api.Services
         private readonly IPropertyRepository _propertyRepository;
         private readonly IPropertyLeaseRepository _propertyLeaseRepository;
         private readonly INoteRelationshipRepository<PimsLeaseNote> _entityNoteRepository;
-        private readonly IInsuranceRepository _insuranceRepository;
         private readonly ILeaseStakeholderRepository _stakeholderRepository;
         private readonly ICompensationRequisitionRepository _compensationRequisitionRepository;
         private readonly ILeaseRenewalRepository _renewalRepository;
@@ -51,7 +50,6 @@ namespace Pims.Api.Services
             IPropertyRepository propertyRepository,
             IPropertyLeaseRepository propertyLeaseRepository,
             INoteRelationshipRepository<PimsLeaseNote> entityNoteRepository,
-            IInsuranceRepository insuranceRepository,
             ILeaseStakeholderRepository stakeholderRepository,
             ICompensationRequisitionRepository compensationRequisitionRepository,
             ILeaseRenewalRepository renewalRepository,
@@ -72,7 +70,6 @@ namespace Pims.Api.Services
             _propertyRepository = propertyRepository;
             _propertyLeaseRepository = propertyLeaseRepository;
             _entityNoteRepository = entityNoteRepository;
-            _insuranceRepository = insuranceRepository;
             _stakeholderRepository = stakeholderRepository;
             _compensationRequisitionRepository = compensationRequisitionRepository;
             _renewalRepository = renewalRepository;
@@ -151,7 +148,7 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.LeaseView);
             _user.ThrowInvalidAccessToLeaseFile(_userRepository, _leaseRepository, _projectRepository, leaseId);
 
-            return _insuranceRepository.GetByLeaseId(leaseId);
+            return _leaseRepository.GetLeaseInsurances(leaseId);
         }
 
         public IEnumerable<PimsInsurance> UpdateInsuranceByLeaseId(long leaseId, IEnumerable<PimsInsurance> pimsInsurances)
@@ -167,10 +164,9 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
-            _insuranceRepository.UpdateLeaseInsurance(leaseId, pimsInsurances);
-            _insuranceRepository.CommitTransaction();
+            var updatedInsurances = _leaseRepository.UpdateLeaseInsurances(leaseId, pimsInsurances);
 
-            return _insuranceRepository.GetByLeaseId(leaseId);
+            return updatedInsurances;
         }
 
         public IEnumerable<PimsLeaseStakeholder> GetStakeholdersByLeaseId(long leaseId)
