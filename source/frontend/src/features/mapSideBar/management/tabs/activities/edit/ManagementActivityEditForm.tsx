@@ -16,13 +16,13 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import * as Styled from '@/components/common/styles';
 import { TrayHeaderContent } from '@/components/common/styles';
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import FilePropertiesTable from '@/components/filePropertiesTable/FilePropertiesTable';
 import {
   MGMT_ACTIVITY_STATUS_TYPES,
   MGMT_ACTIVITY_SUBTYPES_TYPES,
   MGMT_ACTIVITY_TYPES,
 } from '@/constants/API';
+import { RestrictContactType } from '@/constants/contacts';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
 import { ManagementActivitySubTypeModel } from '@/features/mapSideBar/property/tabs/propertyDetailsManagement/activity/models/ManagementActivitySubType';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';

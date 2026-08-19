@@ -5,7 +5,7 @@ import { Col, Row } from 'react-bootstrap';
 import { LinkButton } from '@/components/common/buttons';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
+import { RestrictContactType } from '@/constants/contacts';
 import { IContactSearchResult } from '@/interfaces';
 
 import { PropertyActivityFormModel } from './models';

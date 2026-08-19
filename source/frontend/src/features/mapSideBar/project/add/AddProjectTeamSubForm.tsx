@@ -6,7 +6,7 @@ import { LinkButton, RemoveButton } from '@/components/common/buttons';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { ModalSize } from '@/components/common/GenericModal';
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
+import { RestrictContactType } from '@/constants/contacts';
 import { useModalContext } from '@/hooks/useModalContext';
 
 import { ProjectForm, ProjectTeamForm } from '../models';

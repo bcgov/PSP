@@ -9,18 +9,7 @@ import { CheckGroup, CheckGroupOption } from '@/components/common/form/CheckGrou
 import { InlineInput } from '@/components/common/form/styles';
 import { ColButtons } from '@/components/common/styles';
 import { IContactFilter } from '@/components/contact/ContactManagerView/IContactFilter';
-
-export enum RestrictContactType {
-  ONLY_INDIVIDUALS = 'persons',
-  ONLY_ORGANIZATIONS = 'organizations',
-  ONLY_PIMSUSERS = 'pimsusers',
-}
-
-const allContactTypes = [
-  RestrictContactType.ONLY_PIMSUSERS,
-  RestrictContactType.ONLY_INDIVIDUALS,
-  RestrictContactType.ONLY_ORGANIZATIONS,
-];
+import { allContactTypes, RestrictContactType } from '@/constants/contacts';
 
 export const defaultFilter: IContactFilter = {
   summary: '',
@@ -134,7 +123,7 @@ export const ContactFilterComponent: React.FunctionComponent<
                 <Col lg="auto" className="pr-0">
                   <SearchButton
                     data-testid="contact-filter-search"
-                    disabled={isSubmitting}
+                    disabled={isSubmitting || values.searchBy.length === 0}
                     onClick={() => {
                       submitForm();
                     }}

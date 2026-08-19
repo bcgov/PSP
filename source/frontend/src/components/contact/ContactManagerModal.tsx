@@ -1,9 +1,9 @@
 import { FaUser } from 'react-icons/fa';
 
 import GenericModal, { ModalSize } from '@/components/common/GenericModal';
+import { RestrictContactType } from '@/constants/contacts';
 import { IContactSearchResult } from '@/interfaces';
 
-import { RestrictContactType } from './ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import ContactManagerView from './ContactManagerView/ContactManagerView';
 
 export interface IContactManagerModalProps {

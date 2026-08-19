@@ -1,4 +1,4 @@
-import { RestrictContactType } from './ContactFilterComponent/ContactFilterComponent';
+import { RestrictContactType } from '@/constants/contacts';
 
 export interface IContactFilter {
   summary: string;
