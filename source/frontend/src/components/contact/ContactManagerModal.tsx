@@ -30,22 +30,16 @@ export const ContactManagerModal: React.FunctionComponent<
       setDisplay={props.setDisplay}
       title="Select Contact"
       message={
-        <>
-          <p>
-            Individuals and contacts must already be in the Contact Manager and be an active contact
-            to be found in this search.
-          </p>
-          <ContactManagerView
-            setSelectedRows={props.setSelectedRows}
-            selectedRows={props.selectedRows}
-            showActiveSelector={props.showActiveSelector}
-            noInitialSearch={props.selectedRows.length === 0}
-            isSingleSelect={props.isSingleSelect}
-            restrictContactType={props.restrictContactType}
-            isSummary={props.isSummary ?? true}
-            showSelectedRowCount
-          />
-        </>
+        <ContactManagerView
+          setSelectedRows={props.setSelectedRows}
+          selectedRows={props.selectedRows}
+          showActiveSelector={props.showActiveSelector}
+          noInitialSearch={props.selectedRows.length === 0}
+          isSingleSelect={props.isSingleSelect}
+          restrictContactType={props.restrictContactType}
+          isSummary={props.isSummary ?? true}
+          showSelectedRowCount
+        />
       }
       okButtonText="Select"
       cancelButtonText="Cancel"

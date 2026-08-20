@@ -8,6 +8,7 @@ import ActiveIndicator from '@/components/common/ActiveIndicator';
 import EditButton from '@/components/common/buttons/EditButton';
 import ViewButton from '@/components/common/buttons/ViewButton';
 import { InlineFlexDiv } from '@/components/common/styles';
+import { TooltipWrapper } from '@/components/common/TooltipWrapper';
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
@@ -35,15 +36,24 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     Cell: (props: CellProps<IContactSearchResult>) =>
       isPIMSUserSummary(props.row.original) ? (
         <StatusIndicators className={props.row.original.isDisabled ? 'inactive' : 'active'}>
-          <PiSealCheckFill size={20} />
+          <TooltipWrapper tooltipId={`pims-user-${props.row.original.id}`} tooltip="PIMS User">
+            <PiSealCheckFill size={20} />
+          </TooltipWrapper>
         </StatusIndicators>
       ) : isPersonSummary(props.row.original) ? (
         <StatusIndicators className={props.row.original.isDisabled ? 'inactive' : 'active'}>
-          <FaRegUser size={20} />
+          <TooltipWrapper tooltipId={`person-${props.row.original.id}`} tooltip="Individual">
+            <FaRegUser size={20} />
+          </TooltipWrapper>
         </StatusIndicators>
       ) : (
         <StatusIndicators className={props.row.original.isDisabled ? 'inactive' : 'active'}>
-          <FaRegBuilding size={20} />
+          <TooltipWrapper
+            tooltipId={`organization-${props.row.original.id}`}
+            tooltip="Organization"
+          >
+            <FaRegBuilding size={20} />
+          </TooltipWrapper>
         </StatusIndicators>
       ),
   },
