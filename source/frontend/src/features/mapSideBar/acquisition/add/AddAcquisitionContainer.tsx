@@ -22,7 +22,7 @@ import { useModalContext } from '@/hooks/useModalContext';
 import { IApiError } from '@/interfaces/IApiError';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
-import { exists, firstOrNull, formatGuid, isValidId, isValidString } from '@/utils';
+import { exists, firstOrNull, formatGuid, isValidId, isValidString, normalizePid } from '@/utils';
 
 import { PropertyForm } from '../../shared/models';
 import SidebarFooter from '../../shared/SidebarFooter';
@@ -130,14 +130,6 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
       return;
     }
 
-    const normalizePid = (value?: string | null): string => {
-      if (!isValidString(value)) {
-        return '';
-      }
-
-      return value.replace(/\D/g, '').padStart(9, '0');
-    };
-
     const formProperties = formikRef.current?.values?.properties ?? [];
     const selectedPid = normalizePid(pid);
     const hasSelectedPidInForm = formProperties.some(
@@ -170,7 +162,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         owner.incorporationNumber = ownerData.incorporationNumber ?? '';
         owner.isFromLtsa = true;
         owner.ltsaPid = pid;
-        owner.ltsaSourcedDate = new Date().toISOString();
+        owner.ltsaSourcedDate = new Date().toUTCString();
         return owner;
       });
 

@@ -1,5 +1,4 @@
 import { FieldArray, useFormikContext } from 'formik';
-import moment from 'moment';
 import { useCallback, useEffect, useState } from 'react';
 import { Container, Row } from 'react-bootstrap';
 import styled from 'styled-components';
@@ -12,6 +11,7 @@ import { InlineMessage } from '@/components/common/Section/SectionStyles';
 import { H3 } from '@/components/common/styles';
 import Address from '@/features/contacts/contact/create/components/address/Address';
 import { exists } from '@/utils';
+import { prettyFormatDateTime } from '@/utils/dateUtils';
 
 import { TeamMemberFormModal } from '../../modals/AcquisitionFormModal';
 import {
@@ -29,7 +29,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
   const [showRemoveModal, setShowRemoveModal] = useState<boolean>(false);
 
   const showOwnerLtsaMessage = (owner: AcquisitionOwnerFormModel) => {
-    return owner.isFromLtsa === true && !!owner.ltsaSourcedDate;
+    return owner.isFromLtsa === true && exists(owner.ltsaSourcedDate);
   };
 
   const clearLtsaMetadata = useCallback(
@@ -39,7 +39,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
         return;
       }
 
-      if (owner.isFromLtsa === true || !!owner.ltsaSourcedDate) {
+      if (owner.isFromLtsa === true || exists(owner.ltsaSourcedDate)) {
         setFieldValue(`owners[${index}].isFromLtsa`, false, false);
         setFieldValue(`owners[${index}].ltsaSourcedDate`, null, false);
       }
@@ -114,7 +114,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
                 {showOwnerLtsaMessage(owner) && (
                   <StyledLtsaMessage>
                     This data was retrieved from LTSA on{' '}
-                    {moment(owner.ltsaSourcedDate).format('DD-MMM-YYYY h:mm A')}
+                    {prettyFormatDateTime(owner.ltsaSourcedDate)}
                   </StyledLtsaMessage>
                 )}
 
