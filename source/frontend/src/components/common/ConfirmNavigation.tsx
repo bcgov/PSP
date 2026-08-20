@@ -1,5 +1,5 @@
 import { Location } from 'history';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useRef, useState } from 'react';
 import { Prompt } from 'react-router-dom';
 
 import { useNavigationIntent } from '@/contexts/NavigationIntentContext';
@@ -16,14 +16,29 @@ const ConfirmNavigation = ({ when, navigate, shouldBlockNavigation }: Props) => 
   const [lastLocation, setLastLocation] = useState<Location | null>(null);
   const [confirmedNavigation, setConfirmedNavigation] = useState(false);
   const { intent, clearIntent } = useNavigationIntent();
+  const hasExecutedIntent = useRef(false);
+
+  const executePendingIntent = useCallback(() => {
+    if (!hasExecutedIntent.current && intent && typeof intent.action === 'function') {
+      intent.action();
+      clearIntent();
+      hasExecutedIntent.current = true;
+    }
+  }, [clearIntent, intent]);
+
+  useEffect(() => {
+    executePendingIntent();
+  }, [executePendingIntent]);
 
   const handleConfirmNavigationClick = () => {
     setDisplayModal(false);
-    if (intent && typeof intent.action === 'function') {
-      intent.action();
-      clearIntent();
-    }
+    executePendingIntent();
     setConfirmedNavigation(true);
+  };
+
+  const handleCancelNavigationClick = () => {
+    clearIntent();
+    setDisplayModal(false);
   };
 
   const handleBlockedNavigation = (nextLocation: Location): boolean => {
@@ -32,11 +47,14 @@ const ConfirmNavigation = ({ when, navigate, shouldBlockNavigation }: Props) => 
       setModalContent({
         ...getCancelModalProps(),
         handleOk: () => handleConfirmNavigationClick(),
+        handleCancel: () => handleCancelNavigationClick(),
       });
       setDisplayModal(true);
       setLastLocation(nextLocation);
       return false;
     }
+
+    executePendingIntent();
     return true;
   };
 
