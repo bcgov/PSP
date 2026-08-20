@@ -6,7 +6,7 @@ import { ContactInputContainer } from '@/components/common/form/ContactInput/Con
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
+import { RestrictContactType } from '@/constants/contacts';
 import { PayeeOption } from '@/features/mapSideBar/acquisition/models/PayeeOptionModel';
 import SidebarFooter from '@/features/mapSideBar/shared/SidebarFooter';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';

@@ -1,9 +1,10 @@
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
+import { PiSealCheckFill } from 'react-icons/pi';
 import { CellProps } from 'react-table';
 
+import { TooltipWrapper } from '@/components/common/TooltipWrapper';
 import { ColumnWithProps } from '@/components/Table';
-import { IContactSearchResult, isPersonSummary } from '@/interfaces';
-import { isValidId } from '@/utils';
+import { IContactSearchResult, isPersonSummary, isPIMSUserSummary } from '@/interfaces';
 
 const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
   {
@@ -13,10 +14,27 @@ const summaryColumns: ColumnWithProps<IContactSearchResult>[] = [
     width: 20,
     maxWidth: 20,
     Cell: (props: CellProps<IContactSearchResult>) =>
-      isValidId(props.row.original.personId) ? (
-        <FaRegUser size={20} />
+      isPIMSUserSummary(props.row.original) ? (
+        <>
+          <TooltipWrapper tooltipId={`pims-user-${props.row.original.id}`} tooltip="PIMS User">
+            <PiSealCheckFill size={20} />
+          </TooltipWrapper>
+        </>
+      ) : isPersonSummary(props.row.original) ? (
+        <>
+          <TooltipWrapper tooltipId={`person-${props.row.original.id}`} tooltip="Individual">
+            <FaRegUser size={20} />
+          </TooltipWrapper>
+        </>
       ) : (
-        <FaRegBuilding size={20} />
+        <>
+          <TooltipWrapper
+            tooltipId={`organization-${props.row.original.id}`}
+            tooltip="Organization"
+          >
+            <FaRegBuilding size={20} />
+          </TooltipWrapper>
+        </>
       ),
   },
   {

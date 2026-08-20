@@ -15,7 +15,7 @@ import { UploadResponseModel } from '@/features/properties/shapeUpload/models';
 import useDraftMarkerSynchronizer from '@/hooks/useDraftMarkerSynchronizer';
 import { useFeatureDatasetsWithAddresses } from '@/hooks/useFeatureDatasetsWithAddresses';
 import { useModalContext } from '@/hooks/useModalContext';
-import { exists, featuresetToLocationBoundaryDataset, firstOrNull } from '@/utils';
+import { exists, featuresetToLocationBoundaryDataset, firstOrNull, isValidString } from '@/utils';
 import {
   addPropertiesToCurrentFile,
   addShapeToProperty,
@@ -91,6 +91,47 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
     prepareForCreation([selectedFeatureDataset]);
   }, [prepareForCreation, selectedFeatureDataset]);
 
+  const normalizePid = (pid?: string | null): string => {
+    if (!isValidString(pid)) {
+      return '';
+    }
+
+    return pid.replace(/\D/g, '').padStart(9, '0');
+  };
+
+  const handleRemoveProperty = (index: number, remove: (index: number) => void) => {
+    const remainingProperties = formikProps.values.properties.filter((_, i) => i !== index);
+    const remainingPidKeys = new Set(
+      remainingProperties.map(property => normalizePid(property.pid)).filter(isValidString),
+    );
+
+    remove(index);
+
+    const currentOwners = formikProps.values.owners ?? [];
+    const filteredOwners = currentOwners.filter(owner => {
+      if (owner.isFromLtsa !== true) {
+        return true;
+      }
+
+      const ownerPid = normalizePid(owner.ltsaPid);
+      if (!isValidString(ownerPid)) {
+        return true;
+      }
+
+      return remainingPidKeys.has(ownerPid);
+    });
+
+    if (filteredOwners.length !== currentOwners.length) {
+      const ownersToSet = filteredOwners.map(owner => ({ ...owner }));
+
+      if (ownersToSet.length > 0 && ownersToSet.every(owner => owner.isPrimaryContact !== 'true')) {
+        ownersToSet[0].isPrimaryContact = 'true';
+      }
+
+      formikProps.setFieldValue('owners', ownersToSet, false);
+    }
+  };
+
   useEffect(() => {
     if (exists(localRef.current) && propertyForms.length > 0) {
       addPropertiesToCurrentFile(localRef, 'properties', propertyForms, noop);
@@ -135,7 +176,7 @@ export const AcquisitionPropertiesSubForm: React.FunctionComponent<IAcquisitionP
             {formikProps.values.properties.map((property, index) => (
               <SelectedPropertyRow
                 key={`property.${property.latitude}-${property.longitude}-${property.pid}-${property.apiId}`}
-                onRemove={() => remove(index)}
+                onRemove={() => handleRemoveProperty(index, remove)}
                 nameSpace={`properties.${index}`}
                 index={index}
                 property={property}

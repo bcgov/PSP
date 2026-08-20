@@ -17,6 +17,8 @@ namespace Pims.Api.Models.Concepts.Contact
                 .Map(dest => dest.Surname, src => src.Surname)
                 .Map(dest => dest.FirstName, src => src.FirstName)
                 .Map(dest => dest.MiddleNames, src => src.MiddleNames)
+                .Map(dest => dest.BusinessIdentifierValue, src => src.BusinessIdentifierValue)
+                .Map(dest => dest.UserTypeCode, src => src.UserTypeCode)
                 .Map(dest => dest.OrganizationName, src => src.OrganizationName)
                 .Map(dest => dest.Email, src => src.EmailAddress)
                 .Map(dest => dest.MailingAddress, src => src.MailingAddress)

@@ -5,22 +5,22 @@ import { Col, Row } from 'react-bootstrap';
 import { LinkButton } from '@/components/common/buttons';
 import { ContactInputContainer } from '@/components/common/form/ContactInput/ContactInputContainer';
 import ContactInputView from '@/components/common/form/ContactInput/ContactInputView';
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
+import { RestrictContactType } from '@/constants/contacts';
 import { IContactSearchResult } from '@/interfaces';
 
 import { ManagementActivityFormModel } from './models';
 
 export interface IContactListForm {
   field: string;
-  contactType: RestrictContactType;
+  contactType?: RestrictContactType;
   formikProps: FormikProps<ManagementActivityFormModel>;
   dataTestId?: string;
 }
 
 export const ContactListForm: React.FunctionComponent<IContactListForm> = ({
   field,
-  contactType = RestrictContactType.ALL,
   formikProps,
+  contactType,
   dataTestId,
 }) => {
   // clear out existing values instead of removing last item from array

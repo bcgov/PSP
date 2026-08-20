@@ -288,6 +288,8 @@ export const getEmptyContactSummary = (): ApiGen_Concepts_ContactSummary => {
     surname: null,
     firstName: null,
     middleNames: null,
+    businessIdentifierValue: null,
+    userTypeCode: null,
     organizationName: null,
     email: null,
     mailingAddress: null,
