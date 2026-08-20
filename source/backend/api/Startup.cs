@@ -537,7 +537,6 @@ namespace Pims.Api
             services.AddScoped<IEdmsMetadataRepository, MayanMetadataRepository>();
             services.AddScoped<IDocumentGenerationRepository, CdogsRepository>();
             services.AddScoped<IEmailRepository, ChesRepository>();
-            services.AddScoped<INotificationRepository, NotificationRepository>();
             services.AddScoped<IPropertyPmbcRepository, PropertyPmbcRepository>();
             services.AddSingleton<IEmailAuthRepository, ChesAuthRepository>();
             services.AddSingleton<IDocumentGenerationAuthRepository, CdogsAuthRepository>();
