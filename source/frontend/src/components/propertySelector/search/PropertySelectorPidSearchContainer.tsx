@@ -38,7 +38,6 @@ export const PropertySelectorPidSearchContainer: React.FunctionComponent<
             });
             setDisplayModal(true);
           } else if (result?.property) {
-            console.log('PropertySelectorPidSearchContainer: Found property', result.property);
             setSelectProperty(result.property);
           } else {
             setModalContent({
