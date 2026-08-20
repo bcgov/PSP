@@ -2,11 +2,19 @@
 
 exports[`ContactFilterComponent > matches snapshot 1`] = `
 <DocumentFragment>
-  <div
+  @media (max-width:576px) {
+
+}
+
+<div
     class="Toastify"
   />
-  <div />
-  .c9.btn {
+  @media (max-width:576px) {
+
+}
+
+<div />
+  .c6.btn {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -35,17 +43,17 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   cursor: pointer;
 }
 
-.c9.btn .Button__value {
+.c6.btn .Button__value {
   width: auto;
 }
 
-.c9.btn:hover {
+.c6.btn:hover {
   -webkit-text-decoration: underline;
   text-decoration: underline;
   opacity: 0.8;
 }
 
-.c9.btn:focus {
+.c6.btn:focus {
   outline-width: 2px;
   outline-style: solid;
   outline-color: #2E5DD7;
@@ -53,31 +61,31 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   box-shadow: none;
 }
 
-.c9.btn.btn-primary {
+.c6.btn.btn-primary {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c9.btn.btn-primary:hover,
-.c9.btn.btn-primary:active,
-.c9.btn.btn-primary:focus {
+.c6.btn.btn-primary:hover,
+.c6.btn.btn-primary:active,
+.c6.btn.btn-primary:focus {
   background-color: #1E5189;
 }
 
-.c9.btn.btn-secondary {
+.c6.btn.btn-secondary {
   color: #013366;
   background: none;
   border-color: #013366;
 }
 
-.c9.btn.btn-secondary:hover,
-.c9.btn.btn-secondary:active,
-.c9.btn.btn-secondary:focus {
+.c6.btn.btn-secondary:hover,
+.c6.btn.btn-secondary:active,
+.c6.btn.btn-secondary:focus {
   color: #FFFFFF;
   background-color: #013366;
 }
 
-.c9.btn.btn-info {
+.c6.btn.btn-info {
   color: #9F9D9C;
   border: none;
   background: none;
@@ -85,66 +93,66 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   padding-right: 0.6rem;
 }
 
-.c9.btn.btn-info:hover,
-.c9.btn.btn-info:active,
-.c9.btn.btn-info:focus {
+.c6.btn.btn-info:hover,
+.c6.btn.btn-info:active,
+.c6.btn.btn-info:focus {
   color: var(--surface-color-primary-button-hover);
   background: none;
 }
 
-.c9.btn.btn-light {
+.c6.btn.btn-light {
   color: #FFFFFF;
   background-color: #606060;
   border: none;
 }
 
-.c9.btn.btn-light:hover,
-.c9.btn.btn-light:active,
-.c9.btn.btn-light:focus {
+.c6.btn.btn-light:hover,
+.c6.btn.btn-light:active,
+.c6.btn.btn-light:focus {
   color: #FFFFFF;
   background-color: #606060;
 }
 
-.c9.btn.btn-dark {
+.c6.btn.btn-dark {
   color: #FFFFFF;
   background-color: #474543;
   border: none;
 }
 
-.c9.btn.btn-dark:hover,
-.c9.btn.btn-dark:active,
-.c9.btn.btn-dark:focus {
+.c6.btn.btn-dark:hover,
+.c6.btn.btn-dark:active,
+.c6.btn.btn-dark:focus {
   color: #FFFFFF;
   background-color: #474543;
 }
 
-.c9.btn.btn-danger {
+.c6.btn.btn-danger {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c9.btn.btn-danger:hover,
-.c9.btn.btn-danger:active,
-.c9.btn.btn-danger:focus {
+.c6.btn.btn-danger:hover,
+.c6.btn.btn-danger:active,
+.c6.btn.btn-danger:focus {
   color: #FFFFFF;
   background-color: #CE3E39;
 }
 
-.c9.btn.btn-warning {
+.c6.btn.btn-warning {
   color: #FFFFFF;
   background-color: #FCBA19;
   border-color: #FCBA19;
 }
 
-.c9.btn.btn-warning:hover,
-.c9.btn.btn-warning:active,
-.c9.btn.btn-warning:focus {
+.c6.btn.btn-warning:hover,
+.c6.btn.btn-warning:active,
+.c6.btn.btn-warning:focus {
   color: #FFFFFF;
   border-color: #FCBA19;
   background-color: #FCBA19;
 }
 
-.c9.btn.btn-link {
+.c6.btn.btn-link {
   font-size: 1.6rem;
   font-weight: 400;
   color: var(--surface-color-primary-button-default);
@@ -168,9 +176,9 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   text-decoration: underline;
 }
 
-.c9.btn.btn-link:hover,
-.c9.btn.btn-link:active,
-.c9.btn.btn-link:focus {
+.c6.btn.btn-link:hover,
+.c6.btn.btn-link:active,
+.c6.btn.btn-link:focus {
   color: var(--surface-color-primary-button-hover);
   -webkit-text-decoration: underline;
   text-decoration: underline;
@@ -180,15 +188,15 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   outline: none;
 }
 
-.c9.btn.btn-link:disabled,
-.c9.btn.btn-link.disabled {
+.c6.btn.btn-link:disabled,
+.c6.btn.btn-link.disabled {
   color: #9F9D9C;
   background: none;
   pointer-events: none;
 }
 
-.c9.btn:disabled,
-.c9.btn:disabled:hover {
+.c6.btn:disabled,
+.c6.btn:disabled:hover {
   color: #9F9D9C;
   background-color: #EDEBE9;
   box-shadow: none;
@@ -200,32 +208,19 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   cursor: not-allowed;
 }
 
-.c9.Button .Button__icon {
+.c6.Button .Button__icon {
   margin-right: 1.6rem;
 }
 
-.c9.Button--icon-only:focus {
+.c6.Button--icon-only:focus {
   outline: none;
 }
 
-.c9.Button--icon-only .Button__icon {
+.c6.Button--icon-only .Button__icon {
   margin-right: 0;
 }
 
-.c7 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  padding-right: 0.6rem;
-  color: #42814A;
-}
-
-.c3 {
+.c1 {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
@@ -237,99 +232,68 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
   gap: 0.8rem;
 }
 
-.c3 .form-label {
+.c1 .form-label {
   -webkit-flex-shrink: 0;
   -ms-flex-negative: 0;
   flex-shrink: 0;
 }
 
-.c2 {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-flex-wrap: nowrap;
-  -ms-flex-wrap: nowrap;
-  flex-wrap: nowrap;
-}
-
-.c6 {
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  gap: 0;
-}
-
-.c8 {
+.c5 {
   border-left: 0.2rem solid white;
   min-width: 2.5rem;
 }
 
-.c1.form-group {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
+.c4.form-group {
   margin-bottom: 0;
+  text-align: left;
 }
 
-.c1.form-group .radio-group {
+.c4 .check-group {
+  display: grid;
+  grid-template-columns: repeat(2,minmax(0,1fr));
+  gap: 0.4rem 1rem;
+}
+
+.c4 .form-check {
   display: -webkit-box;
   display: -webkit-flex;
   display: -ms-flexbox;
   display: flex;
-  -webkit-flex-direction: row;
-  -ms-flex-direction: row;
-  flex-direction: row;
-  row-gap: unset;
-  -webkit-column-gap: 0.4rem;
-  column-gap: 0.4rem;
+  padding: 0;
 }
 
-.c1.form-group .radio-group .form-check {
-  display: -webkit-box;
-  display: -webkit-flex;
-  display: -ms-flexbox;
-  display: flex;
-  -webkit-align-items: center;
-  -webkit-box-align: center;
-  -ms-flex-align: center;
-  align-items: center;
-  -webkit-box-pack: center;
-  -webkit-justify-content: center;
-  -ms-flex-pack: center;
-  justify-content: center;
-}
-
-.c1.form-group .radio-group .form-check .form-check-input {
+.c4 .form-check-input {
   margin-left: 0;
 }
 
-.c1.form-group .radio-group .form-check-label {
-  margin-left: 1rem;
+.c4 .form-check-label {
+  margin-left: 2rem;
 }
 
-.c1 .form-label {
-  margin-bottom: unset;
+.c4 .form-label {
+  margin-bottom: 0;
 }
 
 .c0 {
   background-color: #d9eaf7;
   border-radius: 0.4rem;
-  padding: 1rem;
+  margin: 1rem;
+  padding-right: 3rem;
   max-width: 95%;
 }
 
-.c4 {
+.c2 {
   max-width: 30em;
 }
 
-.c5 {
+.c3 {
   max-width: 25rem;
+}
+
+@media (max-width:576px) {
+  .c4 .check-group {
+    grid-template-columns: 1fr;
+  }
 }
 
 <form
@@ -340,154 +304,8 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
       class="row"
     >
       <div
-        class="pr-0 col-lg-10"
+        class="pr-0 pt-5 col-lg-10"
       >
-        <div
-          class="p-5 row"
-        >
-          <div
-            class="c1 form-group"
-          >
-            <label
-              class="form-label"
-              for="searchBy"
-            >
-              <b>
-                Search by:
-              </b>
-            </label>
-            <div
-              class="radio-group"
-            >
-              <div
-                class="c2 pb-3"
-              >
-                <div
-                  class="form-check"
-                >
-                  <input
-                    class="form-check-input position-static"
-                    data-testid="radio-searchby-[object object]"
-                    id="input-organizations"
-                    name="searchBy"
-                    type="radio"
-                    value="organizations"
-                  />
-                </div>
-                <label
-                  class="form-check-label form-label"
-                  for="searchBy"
-                >
-                  <svg
-                    fill="#1a5496"
-                    height="20"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 448 512"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M436 480h-20V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v456H12c-6.627 0-12 5.373-12 12v20h448v-20c0-6.627-5.373-12-12-12zM128 76c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12V76zm0 96c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12v-40zm52 148h-40c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12zm76 160h-64v-84c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v84zm64-172c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40zm0-96c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40zm0-96c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12V76c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40z"
-                    />
-                  </svg>
-                  <span>
-                     Organizations
-                  </span>
-                </label>
-              </div>
-              <div
-                class="c2 pb-3"
-              >
-                <div
-                  class="form-check"
-                >
-                  <input
-                    class="form-check-input position-static"
-                    data-testid="radio-searchby-[object object]"
-                    id="input-persons"
-                    name="searchBy"
-                    type="radio"
-                    value="persons"
-                  />
-                </div>
-                <label
-                  class="form-check-label form-label"
-                  for="searchBy"
-                >
-                  <svg
-                    fill="#1a5496"
-                    height="20"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 448 512"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
-                    />
-                  </svg>
-                  <span>
-                     Individuals
-                  </span>
-                </label>
-              </div>
-              <div
-                class="c2 pb-3"
-              >
-                <div
-                  class="form-check"
-                >
-                  <input
-                    checked=""
-                    class="form-check-input position-static"
-                    data-testid="radio-searchby-[object object]"
-                    id="input-all"
-                    name="searchBy"
-                    type="radio"
-                    value="all"
-                  />
-                </div>
-                <label
-                  class="form-check-label form-label"
-                  for="searchBy"
-                >
-                  <svg
-                    fill="#1a5496"
-                    height="20"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 448 512"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M436 480h-20V24c0-13.255-10.745-24-24-24H56C42.745 0 32 10.745 32 24v456H12c-6.627 0-12 5.373-12 12v20h448v-20c0-6.627-5.373-12-12-12zM128 76c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12V76zm0 96c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12v-40zm52 148h-40c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40c0 6.627-5.373 12-12 12zm76 160h-64v-84c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v84zm64-172c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40zm0-96c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12v-40c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40zm0-96c0 6.627-5.373 12-12 12h-40c-6.627 0-12-5.373-12-12V76c0-6.627 5.373-12 12-12h40c6.627 0 12 5.373 12 12v40z"
-                    />
-                  </svg>
-                  +
-                  <svg
-                    fill="#1a5496"
-                    height="20"
-                    stroke="currentColor"
-                    stroke-width="0"
-                    viewBox="0 0 448 512"
-                    width="20"
-                    xmlns="http://www.w3.org/2000/svg"
-                  >
-                    <path
-                      d="M224 256c70.7 0 128-57.3 128-128S294.7 0 224 0 96 57.3 96 128s57.3 128 128 128zm89.6 32h-16.7c-22.2 10.2-46.9 16-72.9 16s-50.6-5.8-72.9-16h-16.7C60.2 288 0 348.2 0 422.4V464c0 26.5 21.5 48 48 48h352c26.5 0 48-21.5 48-48v-41.6c0-74.2-60.2-134.4-134.4-134.4z"
-                    />
-                  </svg>
-                  <span>
-                     All
-                  </span>
-                </label>
-              </div>
-            </div>
-          </div>
-        </div>
         <div
           class="row"
         >
@@ -498,7 +316,7 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
             class="pr-0 col-lg-auto"
           >
             <div
-              class="c3 c4 input form-group"
+              class="c1 c2 input form-group"
             >
               <input
                 class="form-control"
@@ -515,19 +333,13 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
             class="pr-0 col-lg-auto"
           >
             <div
-              class="c3 c5 input form-group"
+              class="c1 c3 input form-group"
             >
-              <label
-                class="form-label"
-                for="input-municipality"
-              >
-                City 
-              </label>
               <input
                 class="form-control"
                 id="input-municipality"
                 name="municipality"
-                placeholder="City of contact's address"
+                placeholder="City"
                 style="word-break: break-all;"
                 title=""
                 value=""
@@ -538,60 +350,107 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
             class="pr-0 col-lg-auto"
           >
             <div
-              class="c2 c6"
+              class="pl-5 small row"
             >
               <div
-                class="d-inline-block m-0 form-group"
+                class="c4 form-group"
               >
+                <label
+                  class="form-label"
+                >
+                  <b>
+                    Show results by:
+                  </b>
+                </label>
                 <div
-                  class="check-field"
+                  class="check-group"
                 >
                   <div
                     class="form-check"
                   >
                     <input
                       checked=""
-                      class="form-check-input position-static"
+                      class="form-check-input"
+                      data-testid="checkbox-searchBy-organizations"
+                      id="input-searchBy-organizations"
+                      name="searchBy"
+                      type="checkbox"
+                      value="organizations"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="input-searchBy-organizations"
+                      title=""
+                    >
+                      Organizations
+                    </label>
+                  </div>
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      checked=""
+                      class="form-check-input"
+                      data-testid="checkbox-searchBy-persons"
+                      id="input-searchBy-persons"
+                      name="searchBy"
+                      type="checkbox"
+                      value="persons"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="input-searchBy-persons"
+                      title=""
+                    >
+                      Individuals
+                    </label>
+                  </div>
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      checked=""
+                      class="form-check-input"
+                      data-testid="checkbox-searchBy-pimsusers"
+                      id="input-searchBy-pimsusers"
+                      name="searchBy"
+                      type="checkbox"
+                      value="pimsusers"
+                    />
+                    <label
+                      class="form-check-label"
+                      for="input-searchBy-pimsusers"
+                      title=""
+                    >
+                      PIMS users
+                    </label>
+                  </div>
+                  <div
+                    class="form-check"
+                  >
+                    <input
+                      checked=""
+                      class="form-check-input"
                       id="input-activeContactsOnly"
                       name="activeContactsOnly"
                       type="checkbox"
-                      value="true"
                     />
+                    <label
+                      class="form-check-label"
+                      for="input-activeContactsOnly"
+                      title=""
+                    >
+                      Active
+                    </label>
                   </div>
                 </div>
               </div>
-              <div
-                class="c7"
-                data-testid="active-indicator"
-              >
-                <svg
-                  fill="currentColor"
-                  height="16"
-                  stroke="currentColor"
-                  stroke-width="0"
-                  viewBox="0 0 512 512"
-                  width="16"
-                  xmlns="http://www.w3.org/2000/svg"
-                >
-                  <title>
-                    Active
-                  </title>
-                  <path
-                    d="M256 8C119 8 8 119 8 256s111 248 248 248 248-111 248-248S393 8 256 8z"
-                  />
-                </svg>
-              </div>
-              <span
-                class="ml-1"
-              >
-                Show active only
-              </span>
             </div>
           </div>
         </div>
       </div>
       <div
-        class="c8 col"
+        class="c5 col"
       >
         <div
           class="pb-10 pt-10 row"
@@ -600,8 +459,8 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
             class="pr-0 col-lg-auto"
           >
             <button
-              class="c9 Button Button--icon-only primary btn btn-primary"
-              data-testid="search"
+              class="c6 Button primary btn btn-primary"
+              data-testid="contact-filter-search"
               id="search-button"
               title="search"
               type="submit"
@@ -623,13 +482,20 @@ exports[`ContactFilterComponent > matches snapshot 1`] = `
                   />
                 </svg>
               </div>
+              <div
+                class="Button__value"
+              >
+                <span>
+                  Search
+                </span>
+              </div>
             </button>
           </div>
           <div
             class="col-lg-auto"
           >
             <button
-              class="c9 Button Button--icon-only btn btn-info"
+              class="c6 Button Button--icon-only btn btn-info"
               data-testid="reset-button"
               id="reset-button"
               title="reset-button"

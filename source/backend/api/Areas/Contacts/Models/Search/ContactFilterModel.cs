@@ -12,7 +12,7 @@ namespace Pims.Api.Areas.Contact.Models.Search
         /// <summary>
         /// get/set - a string represented the type of filter to search for.
         /// </summary>
-        public string SearchBy { get; set; }
+        public string[] SearchBy { get; set; }
 
         /// <summary>
         /// get/set - Either the person or organization name.
@@ -49,7 +49,7 @@ namespace Pims.Api.Areas.Contact.Models.Search
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
-            this.SearchBy = filter.GetStringValue(nameof(this.SearchBy));
+            this.SearchBy = filter.GetStringArrayValue(nameof(this.SearchBy));
             this.Summary = filter.GetStringValue(nameof(this.Summary));
             this.Municipality = filter.GetStringValue(nameof(this.Municipality));
             this.ActiveContactsOnly = filter.GetBoolValue(nameof(this.ActiveContactsOnly));
@@ -88,7 +88,7 @@ namespace Pims.Api.Areas.Contact.Models.Search
         public override bool IsValid()
         {
             return base.IsValid()
-                || !string.IsNullOrWhiteSpace(this.SearchBy)
+                || this.SearchBy.Length > 0
                 || !string.IsNullOrWhiteSpace(this.Summary)
                 || !string.IsNullOrWhiteSpace(this.Municipality);
         }

@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Col, Row } from 'react-bootstrap';
 import { toast } from 'react-toastify';
 
+import { RestrictContactType } from '@/constants/contacts';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
 import { useSearch } from '@/hooks/useSearch';
 import { fromContactSummary, IContactSearchResult } from '@/interfaces';
@@ -10,7 +11,6 @@ import { ApiGen_Concepts_ContactSummary } from '@/models/api/generated/ApiGen_Co
 import {
   ContactFilterComponent,
   defaultFilter,
-  RestrictContactType,
 } from './ContactFilterComponent/ContactFilterComponent';
 import { ContactResultComponent } from './ContactResultComponent/ContactResultComponent';
 import { IContactFilter } from './IContactFilter';
