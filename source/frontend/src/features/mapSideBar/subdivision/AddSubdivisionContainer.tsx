@@ -136,7 +136,7 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
       const response = await addPropertyOperation(propertyOperations, userOverrideCodes);
 
       if (response?.length) {
-        handleSuccess(propertyOperations);
+        handleSuccess(response);
       }
     } finally {
       mapMachine.processCreation();
@@ -146,10 +146,13 @@ const AddSubdivisionContainer: React.FC<IAddSubdivisionContainerProps> = ({
 
   const handleSuccess = async (subdivisions: ApiGen_Concepts_PropertyOperation[]) => {
     mapMachine.refreshMapProperties();
-    if (subdivisions.length === 0 || !subdivisions[0].sourceProperty) {
+    const sourcePropertyId =
+      subdivisions?.[0]?.sourcePropertyId ?? subdivisions?.[0]?.sourceProperty?.id ?? undefined;
+
+    if (!sourcePropertyId) {
       onSuccess(undefined);
     } else {
-      onSuccess(subdivisions[0].sourceProperty?.id ?? undefined);
+      onSuccess(sourcePropertyId);
     }
   };
 

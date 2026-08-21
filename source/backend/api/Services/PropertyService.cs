@@ -109,6 +109,21 @@ namespace Pims.Api.Services
             return TransformPropertyToLatLong(property);
         }
 
+        public PimsProperty Add(PimsProperty property, bool commitTransaction = true)
+        {
+            _logger.LogInformation("Adding property with pid {pid}", property?.Pid);
+            _user.ThrowIfNotAuthorized(Permissions.PropertyEdit);
+
+            var newProperty = _propertyRepository.Add(property);
+            if (commitTransaction)
+            {
+                _propertyRepository.CommitTransaction();
+                return GetById(newProperty.Internal_Id);
+            }
+
+            return newProperty;
+        }
+
         public PimsProperty Update(PimsProperty property, bool commitTransaction = true)
         {
             _logger.LogInformation("Updating property with id {id}", property.Internal_Id);

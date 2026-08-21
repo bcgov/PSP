@@ -46,6 +46,7 @@ using Pims.Api.Repositories.Cdogs;
 using Pims.Api.Repositories.Ches;
 using Pims.Api.Repositories.Ches.Auth;
 using Pims.Api.Repositories.Mayan;
+using Pims.Api.Repositories.PropertyLookup;
 using Pims.Api.Services;
 using Pims.Api.Services.Interfaces;
 using Pims.Av;
@@ -536,6 +537,7 @@ namespace Pims.Api
             services.AddScoped<IEdmsMetadataRepository, MayanMetadataRepository>();
             services.AddScoped<IDocumentGenerationRepository, CdogsRepository>();
             services.AddScoped<IEmailRepository, ChesRepository>();
+            services.AddScoped<IPropertyPmbcRepository, PropertyPmbcRepository>();
             services.AddSingleton<IEmailAuthRepository, ChesAuthRepository>();
             services.AddSingleton<IDocumentGenerationAuthRepository, CdogsAuthRepository>();
         }
@@ -560,6 +562,7 @@ namespace Pims.Api
             services.AddScoped<IOrganizationService, OrganizationService>();
             services.AddScoped<IResearchFileService, ResearchFileService>();
             services.AddScoped<IPropertyService, PropertyService>();
+            services.AddScoped<IPropertyLookupService, PropertyLookupService>();
             services.AddScoped<ICoordinateTransformService, CoordinateTransformService>();
             services.AddScoped<IDocumentGenerationService, DocumentGenerationService>();
             services.AddScoped<IProjectService, ProjectService>();

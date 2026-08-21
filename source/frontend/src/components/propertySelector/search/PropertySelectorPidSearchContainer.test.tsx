@@ -34,7 +34,7 @@ const setSelectProperty = vi.fn();
 vi.mock('@/hooks/repositories/usePimsPropertyRepository', () => ({
   usePimsPropertyRepository: () => {
     return {
-      getPropertyByPidWrapper: mockGetByPidWrapper,
+      getPropertyByPidLookupWrapper: mockGetByPidWrapper,
     };
   },
 }));
@@ -76,10 +76,11 @@ describe('PropertySearchPidSelector component', () => {
   });
 
   it('calls setSelectedProperty when onSearch', async () => {
+    mockGetByPidWrapper.execute.mockResolvedValue({ property: { id: 1 } });
+
     await setup();
 
-    viewProps?.onSearch({ pid: '111-111-111' });
-    mockGetByPidWrapper.execute.mockResolvedValue({ id: 1 });
+    await viewProps?.onSearch({ pid: '111-111-111' });
 
     expect(mockGetByPidWrapper.execute).toHaveBeenCalledWith('111-111-111');
   });
