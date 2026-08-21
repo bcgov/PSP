@@ -11,7 +11,7 @@ import { InlineMessage } from '@/components/common/Section/SectionStyles';
 import { H3 } from '@/components/common/styles';
 import Address from '@/features/contacts/contact/create/components/address/Address';
 import { exists } from '@/utils';
-import { prettyFormatDateTime } from '@/utils/dateUtils';
+import { prettyFormatDate } from '@/utils/dateUtils';
 
 import { TeamMemberFormModal } from '../../modals/AcquisitionFormModal';
 import {
@@ -113,8 +113,7 @@ const UpdateAcquisitionOwnersSubForm: React.FC<{ isSubFile?: boolean }> = ({
               <Container>
                 {showOwnerLtsaMessage(owner) && (
                   <StyledLtsaMessage>
-                    This data was retrieved from LTSA on{' '}
-                    {prettyFormatDateTime(owner.ltsaSourcedDate)}
+                    This data was retrieved from LTSA on {prettyFormatDate(owner.ltsaSourcedDate)}
                   </StyledLtsaMessage>
                 )}
 
