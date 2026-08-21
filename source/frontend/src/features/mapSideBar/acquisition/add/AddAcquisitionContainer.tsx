@@ -162,7 +162,7 @@ export const AddAcquisitionContainer: React.FC<IAddAcquisitionContainerProps> = 
         owner.incorporationNumber = ownerData.incorporationNumber ?? '';
         owner.isFromLtsa = true;
         owner.ltsaPid = pid;
-        owner.ltsaSourcedDate = new Date().toUTCString();
+        owner.ltsaSourcedDate = new Date().toISOString().slice(0, 10);
         return owner;
       });
 
