@@ -108,7 +108,7 @@ namespace Pims.Api.Services
 
             if (incomingSourceKeys.Count != 1)
             {
-                throw new BusinessRuleViolationException("All property operations must have the same PIMS parent property.");
+                throw new BusinessRuleViolationException("All property operations must have the same PIMS source parcel.");
             }
         }
 
@@ -171,7 +171,7 @@ namespace Pims.Api.Services
 
             if (propertyOperations.Any(op => op.SourcePropertyId != firstSourcePropertyId))
             {
-                throw new BusinessRuleViolationException("All property operations must have the same PIMS parent property.");
+                throw new BusinessRuleViolationException("All property operations must have the same PIMS source parcel.");
             }
 
             if (propertyOperations.Select(o => o.DestinationProperty).Count() < 2)
@@ -204,7 +204,7 @@ namespace Pims.Api.Services
 
             if (propertyOperations.Any(op => op.DestinationProperty.Pid != destinationProperty.Pid))
             {
-                throw new BusinessRuleViolationException("All property operations must have the same child property with the same PID.");
+                throw new BusinessRuleViolationException("All property operations must have the same consolidated parcel with the same PID.");
             }
 
             var distinctSourceCount = propertyOperations
@@ -216,7 +216,7 @@ namespace Pims.Api.Services
 
             if (distinctSourceCount < 2)
             {
-                throw new BusinessRuleViolationException("Consolidations must contain at least two different parent properties.");
+                throw new BusinessRuleViolationException("Consolidations must contain at least two source parcels.");
             }
         }
 
@@ -283,7 +283,7 @@ namespace Pims.Api.Services
                 // if the property exists in pims, it must also be present in the source properties list.
                 if (!dbSourceProperties.Any(sp => sp.PropertyId == dbDestinationProperty?.PropertyId))
                 {
-                    throw new BusinessRuleViolationException("Consolidated child property may not be in the PIMS inventory unless also in the parent property list.");
+                    throw new BusinessRuleViolationException("Consolidated parcel may not be in the PIMS inventory unless also in the source parcel list.");
                 }
             }
             catch (KeyNotFoundException)

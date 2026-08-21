@@ -2,7 +2,6 @@ import { FieldArray, Formik, FormikHelpers, FormikProps } from 'formik';
 import noop from 'lodash/noop';
 import { useCallback } from 'react';
 import { Tab } from 'react-bootstrap';
-import { FaInfoCircle } from 'react-icons/fa';
 import { useHistory } from 'react-router-dom';
 import { toast } from 'react-toastify';
 import styled from 'styled-components';
@@ -14,7 +13,6 @@ import { Form } from '@/components/common/form';
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { H2 } from '@/components/common/styles';
-import TooltipWrapper from '@/components/common/TooltipWrapper';
 import { IMapSelectorContainerProps } from '@/components/propertySelector/MapSelectorContainer';
 import { StyledTabView } from '@/components/propertySelector/PropertySelectorTabsView';
 import { PropertySelectorPidSearchContainerProps } from '@/components/propertySelector/search/PropertySelectorPidSearchContainer';
@@ -36,10 +34,10 @@ export const AddConsolidationYupSchema = Yup.object().shape({
     .nullable()
     .matches(/^\d{0,3}-\d{3}-\d{3}$|^\d{0,9}$/, 'Invalid PID'),
   sourceProperties: Yup.array().test({
-    message: 'You must select at least two parent properties',
+    message: 'You must select at least two source parcels',
     test: arr => !!arr?.length && arr.length >= 2,
   }),
-  destinationProperty: Yup.object().nullable().required('You must select a child property'),
+  destinationProperty: Yup.object().nullable().required('You must select a consolidated parcel'),
 });
 
 export interface IAddConsolidationViewProps {
@@ -109,22 +107,14 @@ const AddConsolidationView: React.FunctionComponent<
           {({ values, setFieldValue, errors }) => (
             <Form>
               <Section>
-                <H2>
-                  Properties in Consolidation
-                  <TooltipWrapper
-                    tooltipId="pims-only-consolidation-tooltip"
-                    tooltip="Only properties that are in the PIMS inventory can be consolidated"
-                  >
-                    <FaInfoCircle className="tooltip-icon h-20" size="1rem" />
-                  </TooltipWrapper>
-                </H2>
+                <H2>Properties in Consolidation</H2>
                 <AddConsolidationMarkerSynchronizer values={values} />
-                <p>Select two or more parent properties that were consolidated:</p>
+                <p>Select two or more source parcels that were consolidated:</p>
                 <FieldArray name="sourceProperties">
                   {({ remove, push }) => (
                     <>
                       <StyledTabView activeKey="parent-property">
-                        <Tab eventKey="parent-property" title="Parent Property Search">
+                        <Tab eventKey="parent-property" title="Source Parcel Search">
                           <PropertySelectorPidSearchComponent
                             setSelectProperty={selectedProperty => push(selectedProperty)}
                             PropertySelectorPidSearchView={PropertySearchSelectorPidFormView}
@@ -153,7 +143,7 @@ const AddConsolidationView: React.FunctionComponent<
                 </FieldArray>
               </Section>
               <Section>
-                <p>Select the child property to which parent properties were consolidated:</p>
+                <p>Select the subdivided parcel to which source parcels were consolidated:</p>
                 <MapSelectorComponent
                   addSelectedProperties={async properties => {
                     const allProperties: ApiGen_Concepts_Property[] = [];
