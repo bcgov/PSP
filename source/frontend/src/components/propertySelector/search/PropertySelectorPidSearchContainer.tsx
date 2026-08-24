@@ -37,8 +37,21 @@ export const PropertySelectorPidSearchContainer: React.FunctionComponent<
               handleOk: () => setDisplayModal(false),
             });
             setDisplayModal(true);
-          } else if (result?.property) {
-            setSelectProperty(result.property);
+          } else if (result?.foundInPims === false && result?.property) {
+            setModalContent({
+              variant: 'info',
+              cancelButtonText: 'No',
+              okButtonText: 'Yes',
+              title: 'Property not in PIMS',
+              message:
+                'This property is not currently in PIMS. In order to subdivide/consolidate this property, it will need to be added to PIMS as an owned property. Proceed?',
+              handleOk: () => {
+                setSelectProperty(result.property);
+                setDisplayModal(false);
+              },
+              handleCancel: () => setDisplayModal(false),
+            });
+            setDisplayModal(true);
           } else {
             setModalContent({
               variant: 'error',
