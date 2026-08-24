@@ -62,6 +62,8 @@ jobs:
   detect-dependency-changes:
     runs-on: ubuntu-22.04
     needs: ci-cd-start-notification
+    # Notification is informational only, do not let it gate the pipeline
+    if: ${{ !cancelled() }}
     outputs:
       deps_changed: ${{ steps.detect.outputs.deps_changed }}
     steps:
@@ -225,7 +227,8 @@ jobs:
 
   deploy:
     name: Retag/Deploy to OpenShift
-    needs: [ci-cd-start-notification, scan-images]
+    # Ordering after the start notification is already enforced via scan-images
+    needs: [scan-images]
     if: |
       always() &&
       (needs.scan-images.result == 'success' || needs.scan-images.result == 'skipped')
@@ -337,10 +340,39 @@ jobs:
       branch: dev
     secrets: inherit
 
+  run-e2e-smoke-tests:
+    name: PIMS e2e smoke tests
+    # Gated on the sync jobs, not on the Teams notification
+    needs: [mayan-sync, keycloak-sync]
+    if: |
+      always() &&
+      needs.mayan-sync.result == 'success' &&
+      needs.keycloak-sync.result == 'success'
+    uses: ./.github/workflows/ci-cd-pims-smoke-test.yml
+    with:
+      target_env: test
+    secrets: inherit
+
+  run-e2e-integration-tests:
+    name: PIMS e2e integration tests
+    needs: run-e2e-smoke-tests
+    uses: ./.github/workflows/ci-cd-pims-e2e-test.yml
+    with:
+      target_env: test
+    secrets: inherit
+
+  ## Terminal job. Nothing depends on this, so a notification failure cannot
+  ## block deployment or test execution.
   ci-cd-end-notification:
     name: CI-CD End Notification to Teams Channel
     runs-on: ubuntu-22.04
-    needs: keycloak-sync
+    needs:
+      - deploy
+      - database-upgrade
+      - mayan-sync
+      - keycloak-sync
+      - run-e2e-smoke-tests
+      - run-e2e-integration-tests
     if: always()
     steps:
       - name: Checkout Source Code
@@ -358,19 +390,3 @@ jobs:
           title: PIMS Release DEV to TEST
           color: 17a2b8
           timezone: America/Los_Angeles
-
-  run-e2e-smoke-tests:
-    name: PIMS e2e smoke tests
-    needs: ci-cd-end-notification
-    uses: ./.github/workflows/ci-cd-pims-smoke-test.yml
-    with:
-      target_env: test
-    secrets: inherit
-
-  run-e2e-integration-tests:
-    name: PIMS e2e integration tests
-    needs: run-e2e-smoke-tests
-    uses: ./.github/workflows/ci-cd-pims-e2e-test.yml
-    with:
-      target_env: test
-    secrets: inherit
