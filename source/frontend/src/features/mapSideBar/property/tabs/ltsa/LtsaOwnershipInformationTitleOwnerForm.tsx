@@ -7,6 +7,7 @@ import { Input } from '@/components/common/form';
 import { SectionField, StyledFieldLabel } from '@/components/common/Section/SectionField';
 import { LtsaOrders, TitleOwner } from '@/interfaces/ltsaModels';
 import { withNameSpace } from '@/utils/formUtils';
+import { formatNames } from '@/utils/personUtils';
 
 export interface ILtsaOwnershipInformationTitleOwnerFormProps {
   nameSpace?: string;
@@ -17,6 +18,16 @@ export const LtsaOwnershipInformationTitleOwnerForm: React.FunctionComponent<
 > = ({ nameSpace }) => {
   const { values } = useFormikContext<LtsaOrders>();
   const titleOwners = getIn(values, withNameSpace(nameSpace, 'titleOwners')) ?? [];
+  const allOwnerNames = titleOwners
+    .map((titleOwner: TitleOwner) =>
+      formatNames([
+        titleOwner.givenName,
+        titleOwner.lastNameOrCorpName1,
+        titleOwner.lastNameOrCorpName2,
+      ]),
+    )
+    .filter(name => name.length > 0)
+    .join(', ');
 
   const getJoinedFieldValues = (input1?: string, input2?: string): string => {
     const retVal: string[] = [];
@@ -35,17 +46,14 @@ export const LtsaOwnershipInformationTitleOwnerForm: React.FunctionComponent<
           <Fragment key={`title-owner-info-row-${nameSpace}`}>
             {titleOwners.map((titleOwner: TitleOwner, index: number) => {
               const innerNameSpace = withNameSpace(nameSpace, `titleOwners.${index}`);
-              const ownerName = [
-                titleOwner.givenName ?? '',
-                titleOwner.lastNameOrCorpName1 ?? '',
-                titleOwner.lastNameOrCorpName2 ?? '',
-              ];
               return (
                 <Fragment key={`title-owner-info-sub-row-${innerNameSpace}`}>
                   <OwnershipTitleInfo>
-                    <SectionField label="Owner name">
-                      <p>{ownerName.join(' ')}</p>
-                    </SectionField>
+                    {index === 0 && (
+                      <SectionField label="Owner name">
+                        <p>{allOwnerNames}</p>
+                      </SectionField>
+                    )}
                     <SectionField label="Incorporation number">
                       <Input field={`${withNameSpace(innerNameSpace, 'incorporationNumber')}`} />
                     </SectionField>
