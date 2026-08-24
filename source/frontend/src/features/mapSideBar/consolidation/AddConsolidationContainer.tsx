@@ -111,7 +111,7 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
             </p>
             <p>
               If you proceed, you will be redirected to the new consolidated parcel record, where
-              view changes and make updates. Do you want to proceed?
+              you can view changes and make updates. Do you want to proceed?
             </p>
           </>
         ),

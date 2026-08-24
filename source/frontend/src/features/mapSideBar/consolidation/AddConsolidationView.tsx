@@ -37,7 +37,9 @@ export const AddConsolidationYupSchema = Yup.object().shape({
     message: 'You must select at least two source parcels',
     test: arr => !!arr?.length && arr.length >= 2,
   }),
-  destinationProperty: Yup.object().nullable().required('You must select a consolidated parcel'),
+  destinationProperty: Yup.object()
+    .nullable()
+    .required('You must select a property that will be the new consolidated parcel'),
 });
 
 export interface IAddConsolidationViewProps {

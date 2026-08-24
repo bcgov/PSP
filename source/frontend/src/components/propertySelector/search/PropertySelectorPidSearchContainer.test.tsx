@@ -2,7 +2,7 @@ import { FormikProps } from 'formik';
 import { createMemoryHistory } from 'history';
 import { createRef } from 'react';
 
-import { createAxiosError, renderAsync, RenderOptions, screen } from '@/utils/test-utils';
+import { act, createAxiosError, renderAsync, RenderOptions, screen } from '@/utils/test-utils';
 import PropertySelectorPidSearchContainer, {
   PropertySelectorPidSearchContainerProps,
 } from './PropertySelectorPidSearchContainer';
@@ -80,7 +80,9 @@ describe('PropertySearchPidSelector component', () => {
 
     await setup();
 
-    await viewProps?.onSearch({ pid: '111-111-111' });
+    await act(async () => {
+      await viewProps?.onSearch({ pid: '111-111-111' });
+    });
 
     expect(mockGetByPidWrapper.execute).toHaveBeenCalledWith('111-111-111');
   });
