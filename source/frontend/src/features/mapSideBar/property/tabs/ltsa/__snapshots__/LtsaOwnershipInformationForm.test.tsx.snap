@@ -127,7 +127,7 @@ exports[`LtsaOwnershipInformationForm component > renders ownership information 
           <label
             class="c3"
           >
-            Owner name:
+            Owner name(s):
           </label>
         </div>
         <div
