@@ -50,7 +50,7 @@ export const LtsaOwnershipInformationTitleOwnerForm: React.FunctionComponent<
                 <Fragment key={`title-owner-info-sub-row-${innerNameSpace}`}>
                   <OwnershipTitleInfo>
                     {index === 0 && (
-                      <SectionField label="Owner name">
+                      <SectionField label="Owner name(s)">
                         <p>{allOwnerNames}</p>
                       </SectionField>
                     )}
