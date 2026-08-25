@@ -175,7 +175,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("All property operations must have the same PIMS parent property.");
+            exception.WithMessage("All property operations must have the same PIMS source parcel.");
         }
 
         [Fact]
@@ -426,7 +426,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("Consolidations must contain at least two different parent properties.");
+            exception.WithMessage("Consolidations must contain at least two source parcels.");
         }
 
         [Fact]
@@ -535,7 +535,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("All property operations must have the same child property with the same PID.");
+            exception.WithMessage("All property operations must have the same consolidated parcel with the same PID.");
         }
 
         [Fact]
@@ -598,7 +598,7 @@ namespace Pims.Api.Test.Services
 
             // Assert
             var exception = act.Should().Throw<BusinessRuleViolationException>();
-            exception.WithMessage("Consolidated child property may not be in the PIMS inventory unless also in the parent property list.");
+            exception.WithMessage("Consolidated parcel may not be in the PIMS inventory unless also in the source parcel list.");
         }
 
         [Fact]
