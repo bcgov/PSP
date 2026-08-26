@@ -106,12 +106,12 @@ const AddConsolidationContainer: React.FC<IAddConsolidationContainerProps> = ({
         message: (
           <>
             <p>
-              You are consolidating two or more properties into one. The old parent properties
-              records will be retired, and a new child property will be created.
+              You are consolidating two or more properties into one. The old source parcel records
+              will be retired, and a new consolidated parcel will be created.
             </p>
             <p>
-              If you proceed, you will be redirected to the new child property record, where you can
-              view changes and make updates. Do you want to proceed?
+              If you proceed, you will be redirected to the new consolidated parcel record, where
+              you can view changes and make updates. Do you want to proceed?
             </p>
           </>
         ),

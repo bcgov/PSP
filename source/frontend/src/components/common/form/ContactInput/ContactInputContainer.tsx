@@ -1,7 +1,7 @@
 import { useFormikContext } from 'formik';
 import { useState } from 'react';
 
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
+import { RestrictContactType } from '@/constants/contacts';
 import { IContactSearchResult } from '@/interfaces/IContactSearchResult';
 
 import { IContactInputViewProps } from './ContactInputView';

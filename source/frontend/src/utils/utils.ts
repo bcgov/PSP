@@ -186,6 +186,18 @@ export function isValidString(value: string | null | undefined): value is string
   return exists(value) && value.length > 0;
 }
 
+/**
+ * Normalizes a PID value to digits-only, left-padded to 9 characters.
+ * Returns an empty string when the input is null, undefined, or empty.
+ */
+export function normalizePid(value?: string | null): string {
+  if (!isValidString(value)) {
+    return '';
+  }
+
+  return value.replace(/\D/g, '').padStart(9, '0');
+}
+
 export function isValidIsoDateTime(value: string | null | undefined): value is string {
   return isValidString(value) && value !== EpochIsoDateTime;
 }

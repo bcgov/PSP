@@ -7,6 +7,7 @@ import { ApiGen_Base_Page } from '@/models/api/generated/ApiGen_Base_Page';
 import { ApiGen_Concepts_FileChecklistItem } from '@/models/api/generated/ApiGen_Concepts_FileChecklistItem';
 import { ApiGen_Concepts_FileWithChecklist } from '@/models/api/generated/ApiGen_Concepts_FileWithChecklist';
 import { ApiGen_Concepts_Lease } from '@/models/api/generated/ApiGen_Concepts_Lease';
+import { ApiGen_Concepts_LeaseAssociation } from '@/models/api/generated/ApiGen_Concepts_LeaseAssociation';
 import { ApiGen_Concepts_LeaseRenewal } from '@/models/api/generated/ApiGen_Concepts_LeaseRenewal';
 import { ApiGen_Concepts_LeaseStakeholderType } from '@/models/api/generated/ApiGen_Concepts_LeaseStakeholderType';
 import { UserOverrideCode } from '@/models/api/UserOverrideCode';
@@ -86,6 +87,8 @@ export const useApiLeases = () => {
         api.get<ApiGen_Concepts_LeaseFileTeam[]>(`/leases/team-members`),
       getLeaseAtTime: (leaseId: number, time: string) =>
         api.get<ApiGen_Concepts_Lease>(`/leases/${leaseId}/historical?time=${time}`),
+      getLeaseAssociations: (leaseId: number) =>
+        api.get<ApiGen_Concepts_LeaseAssociation>(`/leases/${leaseId}/associations`),
     }),
     [api],
   );

@@ -1,29 +1,37 @@
 import { Form, Formik } from 'formik';
 import React from 'react';
 import { Col, Row } from 'react-bootstrap';
-import { FaBuilding, FaUser } from 'react-icons/fa';
+import BootstrapForm from 'react-bootstrap/Form';
 import styled from 'styled-components';
 
-import ActiveIndicator from '@/components/common/ActiveIndicator';
 import { ResetButton, SearchButton } from '@/components/common/buttons';
-import ActiveFilterCheck from '@/components/common/form/ActiveFilterCheck';
-import { RadioGroup } from '@/components/common/form/RadioGroup';
+import { CheckGroup, CheckGroupOption } from '@/components/common/form/CheckGroup';
 import { InlineInput } from '@/components/common/form/styles';
-import { ColButtons, FlexRowNoGap } from '@/components/common/styles';
+import { ColButtons } from '@/components/common/styles';
 import { IContactFilter } from '@/components/contact/ContactManagerView/IContactFilter';
+import { allContactTypes, RestrictContactType } from '@/constants/contacts';
 
 export const defaultFilter: IContactFilter = {
   summary: '',
   municipality: '',
-  searchBy: 'all',
+  searchBy: allContactTypes,
   activeContactsOnly: true,
 };
 
-export enum RestrictContactType {
-  ONLY_INDIVIDUALS = 'persons',
-  ONLY_ORGANIZATIONS = 'organizations',
-  ALL = 'all',
-}
+const contactTypeOptions: CheckGroupOption[] = [
+  {
+    label: 'Organizations',
+    value: RestrictContactType.ONLY_ORGANIZATIONS,
+  },
+  {
+    label: 'Individuals',
+    value: RestrictContactType.ONLY_INDIVIDUALS,
+  },
+  {
+    label: 'PIMS users',
+    value: RestrictContactType.ONLY_PIMSUSERS,
+  },
+];
 
 export interface IContactFilterComponentProps {
   filter?: IContactFilter;
@@ -45,16 +53,16 @@ export const ContactFilterComponent: React.FunctionComponent<
   restrictContactType,
 }: IContactFilterComponentProps) => {
   const resetFilter = (values: IContactFilter) => {
-    setFilter({ ...defaultFilter, searchBy: values.searchBy });
+    setFilter({ ...defaultFilter, searchBy: [...values.searchBy] });
   };
 
   return (
-    <Formik
+    <Formik<IContactFilter>
       enableReinitialize
       initialValues={
         filter ?? {
           ...defaultFilter,
-          searchBy: restrictContactType?.toString() ?? RestrictContactType.ALL,
+          searchBy: restrictContactType ? [restrictContactType] : allContactTypes,
         }
       }
       onSubmit={(values, { setSubmitting }) => {
@@ -63,7 +71,7 @@ export const ContactFilterComponent: React.FunctionComponent<
       }}
       validateOnChange={true}
     >
-      {({ resetForm, isSubmitting, values, submitForm }) => (
+      {({ resetForm, isSubmitting, submitForm, values, setFieldValue, setFieldTouched }) => (
         <StyledFilterBoxForm
           onKeyUp={(e: any) => {
             if (e.keyCode === 13) {
@@ -72,40 +80,41 @@ export const ContactFilterComponent: React.FunctionComponent<
           }}
         >
           <Row>
-            <Col lg="10" className="pr-0">
-              <Row className="p-5">
-                <RadioGroup
-                  label="Search by:"
-                  isLabelBold={true}
-                  field="searchBy"
-                  radioGroupClassName="pb-3"
-                  flexDirection="row"
-                  radioValues={getRestrictedRadioValues(restrictContactType)}
-                />
-              </Row>
+            <Col lg="10" className="pr-0 pt-5">
               <Row>
                 <Col sm="auto"></Col>
                 <Col lg="auto" className="pr-0">
                   <StyledNameInput field="summary" placeholder="Name" />
                 </Col>
                 <Col lg="auto" className="pr-0">
-                  <StyledCityInput
-                    field="municipality"
-                    label="City"
-                    placeholder="City of contact's address"
-                  />
+                  <StyledCityInput field="municipality" placeholder="City" />
                 </Col>
                 <Col lg="auto" className="pr-0">
-                  {showActiveSelector && (
-                    <FlexRowNoGap>
-                      <ActiveFilterCheck<IContactFilter>
-                        fieldName="activeContactsOnly"
-                        setFilter={setFilter}
-                      />
-                      <ActiveIndicator active size={16} />
-                      <span className="ml-1">Show active only</span>
-                    </FlexRowNoGap>
-                  )}
+                  <Row className="pl-5 small">
+                    <CheckGroup
+                      label="Show results by:"
+                      isLabelBold={true}
+                      field="searchBy"
+                      flexDirection="row"
+                      checkValues={getRestrictedCheckValues(restrictContactType)}
+                    >
+                      {showActiveSelector && (
+                        <BootstrapForm.Check
+                          id="input-activeContactsOnly"
+                          name="activeContactsOnly"
+                          label="Active"
+                          type="checkbox"
+                          checked={values.activeContactsOnly}
+                          onChange={e => {
+                            setFieldValue('activeContactsOnly', e.target.checked);
+                          }}
+                          onBlur={() => {
+                            setFieldTouched('activeContactsOnly', true);
+                          }}
+                        />
+                      )}
+                    </CheckGroup>
+                  </Row>
                 </Col>
               </Row>
             </Col>
@@ -113,18 +122,27 @@ export const ContactFilterComponent: React.FunctionComponent<
               <Row className="pb-10 pt-10">
                 <Col lg="auto" className="pr-0">
                   <SearchButton
-                    disabled={isSubmitting}
+                    data-testid="contact-filter-search"
+                    disabled={isSubmitting || values.searchBy.length === 0}
                     onClick={() => {
                       submitForm();
                     }}
-                  />
+                  >
+                    <span>Search</span>
+                  </SearchButton>
                 </Col>
                 <Col lg="auto">
                   <ResetButton
                     disabled={isSubmitting}
                     onClick={() => {
-                      resetForm({ values: { ...defaultFilter, searchBy: values.searchBy } });
-                      resetFilter(values);
+                      const resetValues = {
+                        ...defaultFilter,
+                        searchBy: restrictContactType
+                          ? [restrictContactType]
+                          : [...defaultFilter.searchBy],
+                      };
+                      resetForm({ values: resetValues });
+                      resetFilter(resetValues);
                     }}
                   />
                 </Col>
@@ -137,68 +155,29 @@ export const ContactFilterComponent: React.FunctionComponent<
   );
 };
 
-const getRestrictedRadioValues = (restrictContactType?: RestrictContactType) => {
-  if (restrictContactType === RestrictContactType.ONLY_INDIVIDUALS) {
-    return [
-      {
-        radioLabel: (
-          <>
-            <FaUser size={20} fill="#1a5496" />
-            <span> Individuals</span>
-          </>
-        ),
-        radioValue: 'persons',
-      },
-    ];
-  } else if (restrictContactType === RestrictContactType.ONLY_ORGANIZATIONS) {
-    return [
-      {
-        radioLabel: (
-          <>
-            <FaUser size={20} fill="#1a5496" />
-            <span> Organizations</span>
-          </>
-        ),
-        radioValue: 'organizations',
-      },
-    ];
-  } else {
-    return [
-      {
-        radioLabel: (
-          <>
-            <FaBuilding size={20} fill="#1a5496" />
-            <span> Organizations</span>
-          </>
-        ),
-        radioValue: 'organizations',
-      },
-      {
-        radioLabel: (
-          <>
-            <FaUser size={20} fill="#1a5496" />
-            <span> Individuals</span>
-          </>
-        ),
-        radioValue: 'persons',
-      },
-      {
-        radioLabel: (
-          <>
-            <FaBuilding size={20} fill="#1a5496" />+<FaUser size={20} fill="#1a5496" />
-            <span> All</span>
-          </>
-        ),
-        radioValue: 'all',
-      },
-    ];
+const getRestrictedCheckValues = (
+  restrictContactType?: RestrictContactType,
+): CheckGroupOption[] => {
+  switch (restrictContactType) {
+    case RestrictContactType.ONLY_INDIVIDUALS:
+      return [{ label: 'Individuals', value: 'persons' }];
+
+    case RestrictContactType.ONLY_ORGANIZATIONS:
+      return [{ label: 'Organizations', value: 'organizations' }];
+
+    case RestrictContactType.ONLY_PIMSUSERS:
+      return [{ label: 'Pims users', value: 'pimsusers' }];
+
+    default:
+      return contactTypeOptions;
   }
 };
 
 const StyledFilterBoxForm = styled(Form)`
   background-color: ${({ theme }) => theme.css.filterBoxColor};
   border-radius: 0.4rem;
-  padding: 1rem;
+  margin: 1rem;
+  padding-right: 3rem;
   max-width: 95%;
 `;
 

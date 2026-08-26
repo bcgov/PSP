@@ -36,9 +36,13 @@ namespace Pims.Dal.Helpers.Extensions
                 predicate = predicate.And(acq => acq.PimsPropertyResearchFiles.Any(pr => pr != null && EF.Functions.Like(pr.Property.Pin.ToString(), $"%{pinValue}%")));
             }
 
-            if (filter.RegionCodes.Any())
+            int allRegions = context.PimsRegions.Where(r => !r.IsDisabled).Count();
+            bool allRegionsSelected = filter.RegionCodes.Count == allRegions;
+            if (filter.RegionCodes.Any() && !allRegionsSelected)
             {
-                predicate.And(r => r.PimsPropertyResearchFiles.Any(pr => pr.Property != null &&  filter.RegionCodes.Contains(pr.Property.RegionCode)));
+                predicate.And(r => r.PimsPropertyResearchFiles.Any(pr =>
+                    pr.Property != null &&
+                    filter.RegionCodes.Contains(pr.Property.RegionCode)));
             }
 
             if (!string.IsNullOrWhiteSpace(filter.ResearchFileStatusTypeCode))

@@ -14,7 +14,7 @@ namespace Pims.Dal.Entities.Models
         /// <summary>
         /// get/set - Top level search criteria. Filters all results by person or organization or all.
         /// </summary>
-        public string SearchBy { get; set; }
+        public string[] SearchBy { get; set; }
 
         /// <summary>
         /// get/set - Either the person or organization name.
@@ -51,7 +51,7 @@ namespace Pims.Dal.Entities.Models
         /// <param name="activeContactsOnly"></param>
         /// <param name="sort"></param>
         /// <returns></returns>
-        public ContactFilter(string searchBy, string summary, string municipality, bool activeContactsOnly, string[] sort)
+        public ContactFilter(string[] searchBy, string summary, string municipality, bool activeContactsOnly, string[] sort)
         {
             this.SearchBy = searchBy;
             this.Summary = summary;
@@ -71,7 +71,7 @@ namespace Pims.Dal.Entities.Models
             // We want case-insensitive query parameter properties.
             var filter = new Dictionary<string, Microsoft.Extensions.Primitives.StringValues>(query, StringComparer.OrdinalIgnoreCase);
 
-            this.SearchBy = filter.GetStringValue(nameof(this.SearchBy));
+            this.SearchBy = filter.GetStringArrayValue(nameof(this.SearchBy));
             this.Summary = filter.GetStringValue(nameof(this.Summary));
             this.Municipality = filter.GetStringValue(nameof(this.Municipality));
             this.ActiveContactsOnly = filter.GetBoolValue(nameof(this.ActiveContactsOnly));
@@ -87,7 +87,7 @@ namespace Pims.Dal.Entities.Models
         public override bool IsValid()
         {
             return base.IsValid()
-                && (!string.IsNullOrWhiteSpace(this.SearchBy)
+                && ((this.SearchBy != null && this.SearchBy.Length > 0)
                 || !string.IsNullOrWhiteSpace(this.Summary)
                 || !string.IsNullOrWhiteSpace(this.Municipality));
         }

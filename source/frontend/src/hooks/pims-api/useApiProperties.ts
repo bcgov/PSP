@@ -9,6 +9,7 @@ import { ApiGen_Concepts_PropertyAssociations } from '@/models/api/generated/Api
 import { ApiGen_Concepts_PropertyView } from '@/models/api/generated/ApiGen_Concepts_PropertyView';
 import { Api_PropertyFilterCriteria } from '@/models/api/ProjectFilterCriteria';
 
+import { IPropertyPidLookupResult } from './interfaces/IPropertyPidLookupResult';
 import useAxiosApi from './useApi';
 
 /**
@@ -44,6 +45,8 @@ export const useApiProperties = () => {
         api.get<ApiGen_Concepts_Property>(`/properties/${id}`),
       getPropertyConceptWithPidApi: (pid: string) =>
         api.get<ApiGen_Concepts_Property>(`/properties/pid/${pid}`),
+      getPropertyByPidLookupApi: (pid: string) =>
+        api.get<IPropertyPidLookupResult>(`/properties/lookup/pid/${pid}`),
       getPropertyConceptWithPinApi: (pin: number) =>
         api.get<ApiGen_Concepts_Property>(`/properties/pin/${pin}`),
       putPropertyConceptApi: (property: ApiGen_Concepts_Property) =>

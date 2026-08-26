@@ -17,7 +17,6 @@ import { UserRegionSelectContainer } from '@/components/common/form/UserRegionSe
 import LoadingBackdrop from '@/components/common/LoadingBackdrop';
 import { Section } from '@/components/common/Section/Section';
 import { SectionField } from '@/components/common/Section/SectionField';
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import * as API from '@/constants/API';
 import { useProjectProvider } from '@/hooks/repositories/useProjectProvider';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
@@ -161,7 +160,6 @@ const UpdateManagementForm: React.FC<IUpdateManagementFormProps> = ({
                   <ContactInputContainer
                     field="responsiblePayer"
                     View={ContactInputView}
-                    restrictContactType={RestrictContactType.ALL}
                     displayErrorAsTooltip={false}
                     required={false}
                   />
