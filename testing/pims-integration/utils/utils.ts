@@ -50,6 +50,6 @@ export const formatSqToMts = (area: string): string => {
     minimumFractionDigits: 0,
     maximumFractionDigits: 4,
   })} m\r\n2`;
-}
+};
 
 // export const nullableBooleanToYesNoString = ()

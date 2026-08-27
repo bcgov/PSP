@@ -68,82 +68,98 @@ export class SubdivisionConsolidation {
 
     this.consolidationParentsInstructionsParagraph = page.getByText(
       'Select two or more parent properties that were consolidated:',
-      { exact: false },
+      { exact: false }
     );
 
-    this.consolidationSelectedParentsSubtitle = page.getByText(
-      'Selected Parents',
-      { exact: true },
-    );
+    this.consolidationSelectedParentsSubtitle = page.getByText('Selected Parents', { exact: true });
 
-    this.consolidationParentPIDInput = page.locator("#input-pid");
-    this.subconSearchParentResetButton = page.locator("#search-button");
-    this.subconSearchParentButton = page.locator("#reset-button");
-
+    this.consolidationParentPIDInput = page.locator('#input-pid');
+    this.subconSearchParentResetButton = page.locator('#search-button');
+    this.subconSearchParentButton = page.locator('#reset-button');
 
     this.consolidationParentsResultIdentifierColumn = page.locator(
-      "xpath=//p[contains(text(),'Select two or more parent properties that were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Identifier')]",
+      "xpath=//p[contains(text(),'Select two or more parent properties that were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Identifier')]"
     );
 
     this.consolidationParentsResultPlanColumn = page.locator(
-      "xpath=//p[contains(text(),'Select two or more parent properties that were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Plan')]",
+      "xpath=//p[contains(text(),'Select two or more parent properties that were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Plan')]"
     );
 
     this.consolidationParentsResultAreaColumn = page.locator(
-      "xpath=//p[contains(text(),'Select two or more parent properties that were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Area m')]",
+      "xpath=//p[contains(text(),'Select two or more parent properties that were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Area m')]"
     );
 
     this.consolidationParentsResultAddressColumn = page.locator(
-      "xpath=//p[contains(text(),'Select two or more parent properties that were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Address')]",
+      "xpath=//p[contains(text(),'Select two or more parent properties that were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Address')]"
     );
 
     this.consolidationChildInstructionsParagraph = page.getByText(
       'Select the child property to which parent properties were consolidated:',
-      { exact: false },
+      { exact: false }
     );
 
-    this.consolidationSelectedChildSubtitle = page.getByText('Selected Child', {exact: true,});
-    this.subconChildrenSearchTab = page.locator("xpath=//a[contains(text(),'Locate on Map')]/following-sibling::a");
-    this.subconChildrenSearchByPIDInput = page.locator("xpath=//h3[contains(text(),'Search for a property')]/following-sibling::form/div/div/div/div/div/input");
-    this.subconChildrenSearchButton = page.locator("xpath=//h3[contains(text(),'Search for a property')]/following-sibling::form/div/div/div/div/button[@data-testid='search']");
-    this.subconChildrenResetButton = page.locator("xpath=//h3[contains(text(),'Search for a property')]/following-sibling::form/div/div/div/div/button[@data-testid='reset-button']");
-    this.subconChildren1stResultCheckbox = page.locator("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td']:first-child input");
-    this.subconChildernAddToSelectionBttn = page.locator("xpath=//div[contains(text(),'Add to selection')]/parent::button");
+    this.consolidationSelectedChildSubtitle = page.getByText('Selected Child', { exact: true });
+    this.subconChildrenSearchTab = page.locator(
+      "xpath=//a[contains(text(),'Locate on Map')]/following-sibling::a"
+    );
+    this.subconChildrenSearchByPIDInput = page.locator(
+      "xpath=//h3[contains(text(),'Search for a property')]/following-sibling::form/div/div/div/div/div/input"
+    );
+    this.subconChildrenSearchButton = page.locator(
+      "xpath=//h3[contains(text(),'Search for a property')]/following-sibling::form/div/div/div/div/button[@data-testid='search']"
+    );
+    this.subconChildrenResetButton = page.locator(
+      "xpath=//h3[contains(text(),'Search for a property')]/following-sibling::form/div/div/div/div/button[@data-testid='reset-button']"
+    );
+    this.subconChildren1stResultCheckbox = page.locator(
+      "div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td']:first-child input"
+    );
+    this.subconChildernAddToSelectionBttn = page.locator(
+      "xpath=//div[contains(text(),'Add to selection')]/parent::button"
+    );
     this.consolidationChildResultIdentifierColumn = page.locator(
-      "xpath=//p[contains(text(),'Select the child property to which parent properties were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Identifier')]",
+      "xpath=//p[contains(text(),'Select the child property to which parent properties were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Identifier')]"
     );
 
     this.consolidationChildResultPlanColumn = page.locator(
-      "xpath=//p[contains(text(),'Select the child property to which parent properties were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Plan')]",
+      "xpath=//p[contains(text(),'Select the child property to which parent properties were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Plan')]"
     );
 
     this.consolidationChildResultAreaColumn = page.locator(
-      "xpath=//p[contains(text(),'Select the child property to which parent properties were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Area m')]",
+      "xpath=//p[contains(text(),'Select the child property to which parent properties were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Area m')]"
     );
 
     this.consolidationChildResultAddressColumn = page.locator(
-      "xpath=//p[contains(text(),'Select the child property to which parent properties were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Address')]",
+      "xpath=//p[contains(text(),'Select the child property to which parent properties were consolidated:')]/following-sibling::div[2]//div[@class='collapse show']/div/div[contains(text(),'Address')]"
     );
 
     this.consolidationPropertiesCreateButton = page.getByRole('button', {
       name: /Create Consolidation/i,
     });
 
-    this.subconChildrenFirstResultCheckbox = page.locator("div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td']:first-child input");
-    this.subconChildrenAddToSelectionButton = page.locator("xpath=//div[contains(text(),'Add to selection')]/parent::button");
+    this.subconChildrenFirstResultCheckbox = page.locator(
+      "div[data-testid='map-properties'] div[class='tbody'] div[class='tr-wrapper']:first-child div[class='td']:first-child input"
+    );
+    this.subconChildrenAddToSelectionButton = page.locator(
+      "xpath=//div[contains(text(),'Add to selection')]/parent::button"
+    );
 
     this.consolidationChooseParentsErrorMsg = page.getByText(
-      'You must select at least two parent properties',
+      'You must select at least two parent properties'
     );
 
     this.subdivisionChooseChildrenErrorMsg = page.getByText(
-      'You must select at least two child properties',
+      'You must select at least two child properties'
     );
 
     this.subconModalWindow = page.locator("div[class='modal-content']");
     this.generalModalHeader = page.locator("div[class='modal-header'] div[class='modal-title h4']");
-    this.subconErrorHeader = page.locator("xpath=//div[@class='modal-header']/div[contains(text(),'Error')]");
-    this.subconWarningHeader = page.locator("xpath=//div[@class='modal-header']/div[contains(text(),'Are you sure?')]");
+    this.subconErrorHeader = page.locator(
+      "xpath=//div[@class='modal-header']/div[contains(text(),'Error')]"
+    );
+    this.subconWarningHeader = page.locator(
+      "xpath=//div[@class='modal-header']/div[contains(text(),'Are you sure?')]"
+    );
     this.subconGeneralModalContent = page.locator("div[class='modal-body']");
     this.subconModalSaveWarningP1 = page.locator("div[class='modal-body'] p:first-child");
     this.subconModalSaveWarningP2 = page.locator("div[class='modal-body'] p:nth-child(2)");
@@ -165,18 +181,18 @@ export class SubdivisionConsolidation {
 
     await expect(this.subconModalSaveWarningP1).toHaveText(
       'You are consolidating two or more properties into one. ' +
-        'The old parent properties records will be retired, and a new child property will be created.',
+        'The old parent properties records will be retired, and a new child property will be created.'
     );
 
     await expect(this.subconModalSaveWarningP2).toHaveText(
       'If you proceed, you will be redirected to the new child property record, ' +
-        'where you can view changes and make updates. Do you want to proceed?',
+        'where you can view changes and make updates. Do you want to proceed?'
     );
 
     await this.subconModalOkBttn.click();
   }
 
-  async cancelSubdivisionConsolidation(){
+  async cancelSubdivisionConsolidation() {
     await this.subconModalCancelBttn.click();
     await this.subconModalCancelBttn.click();
   }
@@ -201,7 +217,7 @@ export class SubdivisionConsolidation {
     await expect(this.subconErrorHeader).toBeVisible();
 
     await expect(this.subconGeneralModalContent).toHaveText(
-      'Consolidated child property may not be in the PIMS inventory unless also in the parent property list.',
+      'Consolidated child property may not be in the PIMS inventory unless also in the parent property list.'
     );
 
     await this.subconModalOkBttn.click();
@@ -210,7 +226,7 @@ export class SubdivisionConsolidation {
   async verifyInvalidConsolidationRepeatedParentMessage() {
     await expect(this.subconErrorHeader).toBeVisible();
     await expect(this.subconGeneralModalContent).toHaveText(
-      'Consolidations must contain at least two different parent properties.',
+      'Consolidations must contain at least two different parent properties.'
     );
 
     await this.subconModalOkBttn.click();
@@ -218,18 +234,18 @@ export class SubdivisionConsolidation {
 
   async verifyInvalidSubdivisionChildMessage() {
     await expect(this.generalToastBody).toHaveText(
-      'A property that the user is trying to select has already been added to the selected properties list',
+      'A property that the user is trying to select has already been added to the selected properties list'
     );
   }
 
-  async verifyMissingParentMessageModal(){
+  async verifyMissingParentMessageModal() {
     await expect(this.subconModalWindow).toBeVisible();
 
     await expect(this.generalModalHeader).toHaveText('Error');
 
     await expect(this.subconGeneralModalContent).toHaveText(
       'Only properties that are part of the Core Inventory (owned) can be subdivided/consolidated. ' +
-        'This property is not in core inventory within PIMS.',
+        'This property is not in core inventory within PIMS.'
     );
   }
 

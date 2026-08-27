@@ -169,10 +169,10 @@ test.describe('Research Files feature', () => {
 
       //Verify Notes Table:
       await expect(notesListPage.noteListTable).toBeVisible();
-      await expect(notesListPage.noteListColumn).toHaveText("Note");
+      await expect(notesListPage.noteListColumn).toHaveText('Note');
       await expect(notesListPage.noteListCreateDateColumn).toBeVisible();
       await expect(notesListPage.noteListUpdatedColumn).toBeVisible();
-      await expect(notesListPage.noteListActionsColumn).toHaveText("Actions");
+      await expect(notesListPage.noteListActionsColumn).toHaveText('Actions');
     });
   });
 });

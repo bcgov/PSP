@@ -25,7 +25,7 @@ export default defineConfig({
   reporter: process.env.CI ? [['dot'], ['html']] : [['list'], ['html']],
   /* Shared settings for all the projects below. See https://playwright.dev/docs/api/class-testoptions. */
   timeout: 60_000,
-   expect: {
+  expect: {
     timeout: 15_000,
   },
   use: {
