@@ -39,4 +39,17 @@ export const formatApiBoolean = (value: boolean | null | undefined): string => {
   return value ? 'Yes' : 'No';
 };
 
+export const formatSqToMts = (area: string): string => {
+  if (area === '') {
+    return '';
+  }
+
+  const value = Number(area);
+
+  return `${value.toLocaleString('en-CA', {
+    minimumFractionDigits: 0,
+    maximumFractionDigits: 4,
+  })} m\r\n2`;
+}
+
 // export const nullableBooleanToYesNoString = ()

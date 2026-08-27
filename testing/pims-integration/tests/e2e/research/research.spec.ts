@@ -7,6 +7,7 @@ import { DocumentUploadModalPage } from '../../../pages/documents/document-uploa
 import { generateFileName, normalize, formatApiDate, formatApiBoolean } from '../../../utils/utils';
 import path from 'path';
 import { ResearchImprovementsPage } from '../../../pages/research/research-improvements-page';
+import { NotesListPage } from '../../../pages/notes/notes-list.page';
 
 let context: BrowserContext;
 let page: Page;
@@ -16,6 +17,7 @@ let researchViewDetails: ResearchViewFileDetails;
 let researchImprovements: ResearchImprovementsPage;
 let documentsListPage: DocumentsListPage;
 let documentUploadModalPage: DocumentUploadModalPage;
+let notesListPage: NotesListPage;
 
 test.describe('Research Files feature', () => {
   test.beforeAll(async ({ browser }) => {
@@ -26,6 +28,7 @@ test.describe('Research Files feature', () => {
     researchImprovements = new ResearchImprovementsPage(page);
     documentsListPage = new DocumentsListPage(page);
     documentUploadModalPage = new DocumentUploadModalPage(page);
+    notesListPage = new NotesListPage(page);
   });
 
   test.afterAll(async () => {
@@ -153,8 +156,23 @@ test.describe('Research Files feature', () => {
 
       const fileName = await documentUploadModalPage.getDocumentErrorFilename();
       expect(fileName).toBe('react-icon.svg');
+
+      //Close Documents Modal
+      await documentUploadModalPage.documentCloseModalButtonClick();
+      await documentUploadModalPage.documentCloseModalButtonClick();
+      await documentUploadModalPage.documentCancelModalButtonClick();
     });
 
-    await test.step('Validate Notes tab', async () => {});
+    await test.step('Validate Notes tab', async () => {
+      //Navigate to Notes Tab
+      await notesListPage.navigateNotesTab();
+
+      //Verify Notes Table:
+      await expect(notesListPage.noteListTable).toBeVisible();
+      await expect(notesListPage.noteListColumn).toHaveText("Note");
+      await expect(notesListPage.noteListCreateDateColumn).toBeVisible();
+      await expect(notesListPage.noteListUpdatedColumn).toBeVisible();
+      await expect(notesListPage.noteListActionsColumn).toHaveText("Actions");
+    });
   });
 });
