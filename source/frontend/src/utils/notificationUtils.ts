@@ -38,6 +38,18 @@ export const getNotificationDeepLink = (
       return isValidId(notification.leaseId)
         ? DeepLinkGenerator.showFile('lease', notification.leaseId)
         : null;
+    case ApiGen_CodeTypes_NotificationTypes.NOC:
+      // NOC applies to Acquisition or Management files; Acquisition takes precedence when both are set.
+      if (isValidId(notification.acquisitionFileId)) {
+        return DeepLinkGenerator.showDetails(
+          'acquisition',
+          notification.acquisitionFileId,
+          'fileDetails',
+        );
+      }
+      return isValidId(notification.managementFileId)
+        ? DeepLinkGenerator.showDetails('management', notification.managementFileId, 'fileDetails')
+        : null;
     default:
       return null;
   }
