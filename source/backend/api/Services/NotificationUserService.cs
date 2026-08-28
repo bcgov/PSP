@@ -149,6 +149,21 @@ namespace Pims.Api.Services
                 {
                     source = $"Management File #: M-{notification.ManagementFile.ManagementFileId}";
                 }
+                else if(notification.LeaseId.HasValue && notification.Lease.LeaseLicenseTypeCode == "RCVBL" && notification.Lease.PimsLeaseStakeholders.Count > 0)
+                {
+                    if(notification.InsuranceId.HasValue)
+                    {
+                        source = $"Lease File #: {notification.Lease.LFileNo} with {notification.Lease.PimsLeaseStakeholders} as Tenants and Insurance for: {notification.Insurance.InsuranceTypeCodeNavigation.Description}";
+                    }
+                    else if (notification.LeaseConsultationId.HasValue)
+                    {
+                        source = $"Lease File #: {notification.Lease.LFileNo} with {notification.Lease.PimsLeaseStakeholders} as Tenants and First Nation Consultation with status: {notification.LeaseConsultation.ConsultationStatusTypeCodeNavigation.Description}";
+                    }
+                    else
+                    {
+                        source = $"Lease File #: {notification.Lease.LFileNo}";
+                    }
+                }
                 else if(notification.LeaseId.HasValue)
                 {
                     if(notification.InsuranceId.HasValue)
