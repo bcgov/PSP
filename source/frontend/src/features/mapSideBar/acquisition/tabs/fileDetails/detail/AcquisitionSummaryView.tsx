@@ -291,7 +291,7 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
         <SectionField label="Received date">
           <StyledReminderContent>
             {prettyFormatDate(noticeOfClaim?.receivedDate)}
-            {noticeOfClaim.receivedDate && (
+            {noticeOfClaim?.receivedDate && (
               <ReminderContainer
                 keyDate={noticeOfClaim.receivedDate}
                 keyDateLabel="Received date"
