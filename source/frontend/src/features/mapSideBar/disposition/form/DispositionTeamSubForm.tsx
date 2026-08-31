@@ -9,6 +9,8 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
+import { RestrictContactType } from '@/constants/contacts';
+import { TeamProfileTypeCode } from '@/constants/teamProfileTypeCode';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 
@@ -18,72 +20,96 @@ import {
 } from '../models/DispositionTeamSubFormModel';
 
 const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
-  const { values, setFieldTouched, errors } = useFormikContext<WithDispositionTeam>();
+  const { values, setFieldTouched, setFieldValue, errors } =
+    useFormikContext<WithDispositionTeam>();
   const { getOptionsByType } = useLookupCodeHelpers();
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const teamProfileTypes = getOptionsByType(API.DISPOSITION_TEAM_PROFILE_TYPES);
+
+  const leadContact = values.team.find(
+    member => member.teamProfileTypeCode === TeamProfileTypeCode.MOTT_LEAD,
+  )?.contact;
+
+  const solicitorContact = values.team.find(
+    member => member.teamProfileTypeCode === TeamProfileTypeCode.MOTT_SOLICITOR,
+  )?.contact;
+
+  const autoKeyContact = leadContact ?? solicitorContact ?? null;
 
   return (
     <FieldArray
       name="team"
       render={arrayHelpers => (
         <>
-          {values.team.map((teamMember, index) => (
-            <React.Fragment key={`disp-team-${index}`}>
-              <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>
-                <Col xs="auto" xl="5">
-                  <Select
-                    data-testid="select-profile"
-                    placeholder="Select profile..."
-                    field={`team.${index}.teamProfileTypeCode`}
-                    options={teamProfileTypes}
-                    value={teamMember.teamProfileTypeCode}
-                    onChange={() => {
-                      setFieldTouched(`team.${index}.contact`);
-                    }}
-                  />
-                </Col>
-                <Col xs="auto" xl="5" className="pl-0" data-testid="contact-input">
-                  <ContactInputContainer
-                    field={`team.${index}.contact`}
-                    View={ContactInputView}
-                    displayErrorAsTooltip={false}
-                  ></ContactInputContainer>
-                </Col>
-                <Col xs="auto" xl="2" className="pl-0 mt-2">
-                  <RemoveButton
-                    data-testId={`team.${index}.remove-button`}
-                    onRemove={() => {
-                      setModalContent({
-                        ...getDeleteModalProps(),
-                        title: 'Remove Team Member',
-                        message: 'Do you wish to remove this team member?',
-                        okButtonText: 'Yes',
-                        cancelButtonText: 'No',
-                        handleOk: async () => {
-                          arrayHelpers.remove(index);
-                          setDisplayModal(false);
-                        },
-                        handleCancel: () => {
-                          setDisplayModal(false);
-                        },
-                      });
-                      setDisplayModal(true);
-                    }}
-                  />
-                </Col>
-              </Row>
-              {teamMember.contact?.organizationId && !teamMember.contact?.personId && (
-                <SectionField label="Primary contact" labelWidth={{ xs: 6 }} noGutters>
-                  <PrimaryContactSelector
-                    field={`team.${index}.primaryContactId`}
-                    contactInfo={teamMember?.contact}
-                  ></PrimaryContactSelector>
-                </SectionField>
-              )}
-            </React.Fragment>
-          ))}
+          {values.team.map((teamMember, index) => {
+            const isKeyContact = teamMember.teamProfileTypeCode === TeamProfileTypeCode.KEY_CONTACT;
+            console.log('teamMember: ', teamMember);
+            return (
+              <React.Fragment key={`disp-team-${index}`}>
+                <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>
+                  <Col xs="auto" xl="5">
+                    <Select
+                      data-testid="select-profile"
+                      placeholder="Select profile..."
+                      field={`team.${index}.teamProfileTypeCode`}
+                      options={teamProfileTypes}
+                      value={teamMember.teamProfileTypeCode}
+                      onChange={event => {
+                        setFieldTouched(`team.${index}.contact`);
+                        setFieldValue(
+                          `team.${index}.contact`,
+                          event.target.value === TeamProfileTypeCode.KEY_CONTACT
+                            ? autoKeyContact
+                            : null,
+                        );
+                      }}
+                    />
+                  </Col>
+                  <Col xs="auto" xl="5" className="pl-0" data-testid="contact-input">
+                    <ContactInputContainer
+                      field={`team.${index}.contact`}
+                      View={ContactInputView}
+                      displayErrorAsTooltip={false}
+                      restrictContactType={
+                        isKeyContact ? RestrictContactType.ONLY_PIMSUSERS : undefined
+                      }
+                    />
+                  </Col>
+                  <Col xs="auto" xl="2" className="pl-0 mt-2">
+                    <RemoveButton
+                      data-testId={`team.${index}.remove-button`}
+                      onRemove={() => {
+                        setModalContent({
+                          ...getDeleteModalProps(),
+                          title: 'Remove Team Member',
+                          message: 'Do you wish to remove this team member?',
+                          okButtonText: 'Yes',
+                          cancelButtonText: 'No',
+                          handleOk: async () => {
+                            arrayHelpers.remove(index);
+                            setDisplayModal(false);
+                          },
+                          handleCancel: () => {
+                            setDisplayModal(false);
+                          },
+                        });
+                        setDisplayModal(true);
+                      }}
+                    />
+                  </Col>
+                </Row>
+                {teamMember.contact?.organizationId && !teamMember.contact?.personId && (
+                  <SectionField label="Primary contact" labelWidth={{ xs: 6 }} noGutters>
+                    <PrimaryContactSelector
+                      field={`team.${index}.primaryContactId`}
+                      contactInfo={teamMember?.contact}
+                    ></PrimaryContactSelector>
+                  </SectionField>
+                )}
+              </React.Fragment>
+            );
+          })}
 
           {errors?.team && typeof errors?.team === 'string' && (
             <div className="invalid-feedback" data-testid="team-profile-dup-error">
