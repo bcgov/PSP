@@ -28,7 +28,7 @@ const AddProjectTeamSubForm: React.FunctionComponent = () => {
                     field={`projectTeam.${index}.contact`}
                     View={ContactInputView}
                     displayErrorAsTooltip={false}
-                    restrictContactType={RestrictContactType.ONLY_INDIVIDUALS}
+                    restrictContactType={RestrictContactType.ONLY_PIMSUSERS}
                     placeholder="Select from Management Team..."
                   ></ContactInputContainer>
                 </Col>
