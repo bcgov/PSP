@@ -10,6 +10,7 @@ import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactS
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import { RestrictContactType } from '@/constants/contacts';
+import { TeamProfileTypeCode } from '@/constants/teamProfileTypeCode';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_DispositionTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionTeamProfileTypes';
@@ -20,27 +21,22 @@ import {
 } from '../models/DispositionTeamSubFormModel';
 
 const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
-  const { values, setFieldTouched, errors } = useFormikContext<WithDispositionTeam>();
+  const { values, setFieldTouched, setFieldValue, errors } =
+    useFormikContext<WithDispositionTeam>();
   const { getOptionsByType } = useLookupCodeHelpers();
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const teamProfileTypes = getOptionsByType(API.DISPOSITION_TEAM_PROFILE_TYPES);
 
-  const getContactTypeRestriction = (contactTypeCode?: string) => {
-    switch (contactTypeCode) {
-      case ApiGen_CodeTypes_DispositionTeamProfileTypes.MOTILEAD:
-      case ApiGen_CodeTypes_DispositionTeamProfileTypes.MOTILAWYER:
-      case ApiGen_CodeTypes_DispositionTeamProfileTypes.KEYCNTCT:
-        return [RestrictContactType.ONLY_PIMSUSERS];
+  const leadContact = values.team.find(
+    member => member.teamProfileTypeCode === TeamProfileTypeCode.MOTT_LEAD,
+  )?.contact;
 
-      default:
-        return [
-          RestrictContactType.ONLY_PIMSUSERS,
-          RestrictContactType.ONLY_INDIVIDUALS,
-          RestrictContactType.ONLY_ORGANIZATIONS,
-        ];
-    }
-  };
+  const solicitorContact = values.team.find(
+    member => member.teamProfileTypeCode === TeamProfileTypeCode.MOTT_SOLICITOR,
+  )?.contact;
+
+  const autoKeyContact = leadContact ?? solicitorContact ?? null;
 
   return (
     <FieldArray
@@ -59,8 +55,14 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
                       field={`team.${index}.teamProfileTypeCode`}
                       options={teamProfileTypes}
                       value={teamMember.teamProfileTypeCode}
-                      onChange={() => {
+                      onChange={event => {
                         setFieldTouched(`team.${index}.contact`);
+                        setFieldValue(
+                          `team.${index}.contact`,
+                          event.target.value === TeamProfileTypeCode.KEY_CONTACT
+                            ? autoKeyContact
+                            : null,
+                        );
                       }}
                     />
                   </Col>
