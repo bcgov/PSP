@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -149,22 +150,45 @@ namespace Pims.Api.Services
                 {
                     source = $"Management File #: M-{notification.ManagementFile.ManagementFileId}";
                 }
-                else if(notification.LeaseId.HasValue && notification.Lease.LeaseLicenseTypeCode == "RCVBL" && notification.Lease.PimsLeaseStakeholders.Count > 0)
+                else if (
+                    notification.LeaseId.HasValue &&
+                    notification.Lease.PimsLeaseStakeholders.Count > 0)
                 {
-                    if(notification.InsuranceId.HasValue)
+                    var stakeholders = notification.Lease.PimsLeaseStakeholders;
+
+                    var tenants = string.Join(
+                        ", ",
+                        stakeholders.Select(stakeholder =>
+                            stakeholder.PersonId.HasValue
+                                ? $"{stakeholder.Person.FirstName} {stakeholder.Person.Surname}"
+                                : stakeholder.Organization?.Name
+                        )
+                        .Where(name => !string.IsNullOrWhiteSpace(name))
+                    );
+
+                    var tenantCount = stakeholders.Count;
+
+                    if (notification.InsuranceId.HasValue && notification.Lease.LeasePayRvblTypeCode == "RCVBL")
                     {
-                        source = $"Lease File #: {notification.Lease.LFileNo} with {notification.Lease.PimsLeaseStakeholders} as Tenants and Insurance for: {notification.Insurance.InsuranceTypeCodeNavigation.Description}";
+                        source =
+                            $"Lease File #: {notification.Lease.LFileNo} " +
+                            $"with {tenants} as Tenants. " +
+                            $"Insurance for: {notification.Insurance.InsuranceTypeCodeNavigation.Description} ";
                     }
                     else if (notification.LeaseConsultationId.HasValue)
                     {
-                        source = $"Lease File #: {notification.Lease.LFileNo} with {notification.Lease.PimsLeaseStakeholders} as Tenants and First Nation Consultation with status: {notification.LeaseConsultation.ConsultationStatusTypeCodeNavigation.Description}";
+                        source =
+                            $"Lease File #: {notification.Lease.LFileNo} " +
+                            $"with {tenants} as Tenants and " +
+                            $"First Nation Consultation with status: " +
+                            $"{notification.LeaseConsultation.ConsultationOutcomeTypeCodeNavigation.Description}";
                     }
                     else
                     {
-                        source = $"Lease File #: {notification.Lease.LFileNo}";
+                        source = $"Lease File #: {notification.Lease.LFileNo} with {tenants} as Tenants";
                     }
                 }
-                else if(notification.LeaseId.HasValue)
+                else if(notification.LeaseId.HasValue && notification.Lease.PimsLeaseStakeholders.Count == 0)
                 {
                     if(notification.InsuranceId.HasValue)
                     {

@@ -89,7 +89,7 @@ namespace Pims.Dal.Repositories
                  .Include(x => x.NotificationUser)
                     .ThenInclude(y => y.Notification)
                         .ThenInclude(z => z.LeaseConsultation)
-                            .ThenInclude(z1 => z1.ConsultationStatusTypeCodeNavigation)
+                            .ThenInclude(z1 => z1.ConsultationOutcomeTypeCodeNavigation)
                 .FirstOrDefault(x => x.NotificationUserOutputId == notificationUserOutputId) ?? throw new KeyNotFoundException();
         }
 
