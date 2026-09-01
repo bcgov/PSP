@@ -7,6 +7,7 @@ import { exists, isValidString } from '@/utils';
 import {
   formatAcquisitionOwnerName,
   formatInterestHolderName,
+  fromTypeCode,
   fromTypeCodeNullable,
   stringToNull,
   toTypeCodeNullable,
@@ -85,6 +86,7 @@ export class ExpropriationEventRow {
   readonly acquisitionFileId: number;
   eventDescription: string | null = null;
   eventDate: string | null = null;
+  eventType: string | null = null;
   ownerOrInterestHolder: string | null = null;
 
   constructor(acquisitionFileId: number) {
@@ -96,6 +98,7 @@ export class ExpropriationEventRow {
     newForm.id = apiModel.id;
     newForm.eventDescription = apiModel.eventType?.description;
     newForm.eventDate = apiModel.eventDate || '';
+    newForm.eventType = fromTypeCode(apiModel.eventType);
 
     if (exists(apiModel.acquisitionOwner)) {
       newForm.ownerOrInterestHolder = formatAcquisitionOwnerName(apiModel.acquisitionOwner) ?? '';

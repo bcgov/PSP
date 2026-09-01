@@ -1,3 +1,4 @@
+import { ApiGen_CodeTypes_FileTypes } from '@/models/api/generated/ApiGen_CodeTypes_FileTypes';
 import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 import { ApiGen_Concepts_Notification } from '@/models/api/generated/ApiGen_Concepts_Notification';
 import { ApiGen_Concepts_NotificationInboxItem } from '@/models/api/generated/ApiGen_Concepts_NotificationInboxItem';
@@ -36,7 +37,15 @@ export const getNotificationDeepLink = (
     case ApiGen_CodeTypes_NotificationTypes.L_INSURANCE:
     case ApiGen_CodeTypes_NotificationTypes.L_CONSULTFN:
       return isValidId(notification.leaseId)
-        ? DeepLinkGenerator.showFile('lease', notification.leaseId)
+        ? DeepLinkGenerator.showFile(ApiGen_CodeTypes_FileTypes.Lease, notification.leaseId)
+        : null;
+    case ApiGen_CodeTypes_NotificationTypes.EXPROPH_APPEFFDT:
+      return isValidId(notification.acquisitionFileId)
+        ? DeepLinkGenerator.showDetails(
+            ApiGen_CodeTypes_FileTypes.Acquisition,
+            notification.acquisitionFileId,
+            'expropriation',
+          )
         : null;
     default:
       return null;
