@@ -1,23 +1,16 @@
-import test, { expect } from '@playwright/test';
-import { AcquisitionCreatePage } from '../../../pages/acquisition/acquisition-create.page';
-import { AcquisitionSummaryPage } from '../../../pages/acquisition/acquisition-summary.page';
-import { createAcquisitionWithNoticeOfClaim } from '../../../utils/acquisition.workflows';
+import { test, expect } from '../../../fixtures/acquisition.fixtures';
 
 test.describe('Acquisition file creation', () => {
-  test('creates a new acquisition file with a Notice of Claim', async ({ page }) => {
-    const acquisitionCreatePage = new AcquisitionCreatePage(page);
-    const acquisitionSummaryPage = new AcquisitionSummaryPage(page);
+  test('creates a new acquisition file with a Notice of Claim', async ({
+    acquisitionSummaryPage,
+    acquisitionWithNoticeOfClaim,
+  }) => {
+    await expect(acquisitionSummaryPage.fileDetailsTab).toBeVisible();
 
-    await createAcquisitionWithNoticeOfClaim(
-    page,
-    acquisitionCreatePage,
-    acquisitionSummaryPage
-  );
+    await expect(
+      acquisitionSummaryPage.noticeOfClaimReceivedDateLabel
+    ).toBeVisible();
 
-  await expect(acquisitionSummaryPage.fileDetailsTab).toBeVisible();
-
-  await expect(
-    acquisitionSummaryPage.noticeOfClaimReceivedDateLabel
-  ).toBeVisible();
+    expect(acquisitionWithNoticeOfClaim.fileName).toBeTruthy();
   });
 });
