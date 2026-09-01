@@ -23,6 +23,18 @@ PRINT '     == DB TRANSACTION START ========'
    PRINT '- Executing PSP_PIMS_S123_00/Alter Up/090_UPDATE_ACQFL_OwnerRepComment_Alter_Up.sql'
    :setvar filepath "PSP_PIMS_S123_00/Alter Up/090_UPDATE_ACQFL_OwnerRepComment_Alter_Up.sql"
    :r $(filepath)
+   PRINT '- Executing PSP_PIMS_S123_00/Alter Up/093_DML_PIMS_ACQ_FL_TEAM_PROFILE_TYPE_Alter_Up.sql'
+   :setvar filepath "PSP_PIMS_S123_00/Alter Up/093_DML_PIMS_ACQ_FL_TEAM_PROFILE_TYPE_Alter_Up.sql"
+   :r $(filepath)
+   PRINT '- Executing PSP_PIMS_S123_00/Alter Up/144_DML_PIMS_DSP_FL_TEAM_PROFILE_TYPE_Alter_Up.sql'
+   :setvar filepath "PSP_PIMS_S123_00/Alter Up/144_DML_PIMS_DSP_FL_TEAM_PROFILE_TYPE_Alter_Up.sql"
+   :r $(filepath)
+   PRINT '- Executing PSP_PIMS_S123_00/Alter Up/164_DML_PIMS_LL_TEAM_PROFILE_TYPE_Alter_DUp.sql'
+   :setvar filepath "PSP_PIMS_S123_00/Alter Up/164_DML_PIMS_LL_TEAM_PROFILE_TYPE_Alter_DUp.sql"
+   :r $(filepath)
+   PRINT '- Executing PSP_PIMS_S123_00/Alter Up/167_DML_PIMS_MANAGEMENT_FILE_PROFILE_TYPE_Alter_Up.sql'
+   :setvar filepath "PSP_PIMS_S123_00/Alter Up/167_DML_PIMS_MANAGEMENT_FILE_PROFILE_TYPE_Alter_Up.sql"
+   :r $(filepath)
 
    --End script section
 

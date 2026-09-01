@@ -13,7 +13,7 @@ GO
 
 INSERT INTO PIMS_DSP_FL_TEAM_PROFILE_TYPE (DSP_FL_TEAM_PROFILE_TYPE_CODE, DESCRIPTION, DISPLAY_ORDER, IS_DISABLED)
 VALUES
-  (N'KEYCNTCT',   N'PIMS key contact',     0, 1),
+  (N'KEYCNTCT',   N'PIMS key contact',     0, 0),
   (N'LISTAGENT',  N'Listing agent',        1, 0),
   (N'MOTILEAD',   N'MoTT lead',            2, 0),
   (N'MOTILAWYER', N'MoTT solicitor',       3, 0),
