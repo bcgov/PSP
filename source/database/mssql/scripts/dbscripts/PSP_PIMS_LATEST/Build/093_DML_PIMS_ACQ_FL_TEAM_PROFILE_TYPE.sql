@@ -13,7 +13,7 @@ GO
 
 INSERT INTO PIMS_ACQ_FL_TEAM_PROFILE_TYPE (ACQ_FL_TEAM_PROFILE_TYPE_CODE, DESCRIPTION, DISPLAY_ORDER, IS_DISABLED)
 VALUES
-  (N'KEYCNTCT',   N'PIMS key contact',     0, 1),
+  (N'KEYCNTCT',   N'PIMS key contact',     0, 0),
   (N'EXPRAGENT',  N'Expropriation agent',  1, 0),
   (N'MOTILAWYER', N'MoTT Solicitor',       2, 0),
   (N'NEGOTAGENT', N'Negotiation agent',    3, 0),
