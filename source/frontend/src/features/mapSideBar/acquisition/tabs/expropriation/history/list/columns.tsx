@@ -86,18 +86,20 @@ export const getExpropriationEventColumns = (
           event.eventType === ApiGen_CodeTypes_ExpropiationOwnerHistoryType.APPEFFCTVDT &&
           event.eventDate
         ) {
-          <ExpropriationActionsDiv>
-            <ReminderContainer
-              keyDate={event.eventDate}
-              keyDateLabel="Appraisal effective date"
-              notificationType={ApiGen_CodeTypes_NotificationTypes.EXPROPH_APPEFFDT}
-              notificationSource={{
-                acquisitionFileId: event.acquisitionFileId,
-                expropOwnerHistoryId: event.id,
-              }}
-              View={ReminderView}
-            />
-          </ExpropriationActionsDiv>;
+          return (
+            <ExpropriationActionsDiv>
+              <ReminderContainer
+                keyDate={event.eventDate}
+                keyDateLabel="Appraisal effective date"
+                notificationType={ApiGen_CodeTypes_NotificationTypes.EXPROPH_APPEFFDT}
+                notificationSource={{
+                  acquisitionFileId: event.acquisitionFileId,
+                  expropOwnerHistoryId: event.id,
+                }}
+                View={ReminderView}
+              />
+            </ExpropriationActionsDiv>
+          );
         } else {
           return null;
         }
