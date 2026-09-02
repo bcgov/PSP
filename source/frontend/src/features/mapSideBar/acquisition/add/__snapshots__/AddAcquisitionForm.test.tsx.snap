@@ -2247,10 +2247,11 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
             >
               <textarea
                 class="form-control"
-                id="input-ownerRepresentative.comment"
-                name="ownerRepresentative.comment"
+                id="input-ownerRepComment"
+                name="ownerRepComment"
                 placeholder="Remarks or additional representative(s)"
                 style="word-break: break-all;"
+                title=""
               />
             </div>
           </div>
@@ -4482,10 +4483,11 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
             >
               <textarea
                 class="form-control"
-                id="input-ownerRepresentative.comment"
-                name="ownerRepresentative.comment"
+                id="input-ownerRepComment"
+                name="ownerRepComment"
                 placeholder="Remarks or additional representative(s)"
                 style="word-break: break-all;"
+                title=""
               />
             </div>
           </div>
