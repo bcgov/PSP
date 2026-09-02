@@ -105,6 +105,7 @@ export const mockAcquisitionFileResponse = (
   deliveryDate: '2022-07-29T00:00:00',
   estimatedCompletionDate: '2024-07-10T00:00:00',
   possessionDate: '2025-07-10T00:00:00',
+  ownerRepComment: null,
   fileStatusTypeCode: {
     id: 'ACTIVE',
     description: 'Active',
@@ -1512,6 +1513,7 @@ export const mockAcquisitionFileSubFilesResponse = (): ApiGen_Concepts_Acquisiti
     deliveryDate: null,
     estimatedCompletionDate: null,
     possessionDate: null,
+    ownerRepComment: null,
     acquisitionPhysFileStatusTypeCode: null,
     acquisitionTypeCode: null,
     productId: 2,
@@ -1570,6 +1572,7 @@ export const mockAcquisitionFileSubFilesResponse = (): ApiGen_Concepts_Acquisiti
     deliveryDate: null,
     estimatedCompletionDate: null,
     possessionDate: null,
+    ownerRepComment: null,
     acquisitionPhysFileStatusTypeCode: null,
     acquisitionTypeCode: null,
     productId: 2,
