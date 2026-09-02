@@ -1488,6 +1488,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.OtherSubfileInterestType).HasComment("If the user selects ?Other? then they will need to provide a subfile type description, which will be displayed as 'Other - <description>");
             entity.Property(e => e.PaimsAcquisitionFileId).HasComment("Legacy Acquisition File ID from the PAIMS system.");
             entity.Property(e => e.PhysicalFileDetails).HasComment("Comments to provide details about the physical acquisition file.");
+            entity.Property(e => e.OwnerRepComment).HasComment("Comments for the owner representative.");
             entity.Property(e => e.PossessionDt).HasComment("Date of possession following acquisition completion.");
             entity.Property(e => e.PrntAcquisitionFileId).HasComment("Link to the parent acquisition file.");
             entity.Property(e => e.ProductId).HasComment("Foreign key to the PIMS_PRODUCT table.");
@@ -1676,6 +1677,7 @@ public partial class PimsBaseContext : DbContext
 
             entity.Property(e => e.AcquisitionFileHistId).HasDefaultValueSql("(NEXT VALUE FOR [PIMS_ACQUISITION_FILE_H_ID_SEQ])");
             entity.Property(e => e.EffectiveDateHist).HasDefaultValueSql("(getutcdate())");
+            entity.Property(e => e.OwnerRepComment).HasComment("Comments for the owner representative.");
         });
 
         modelBuilder.Entity<PimsAcquisitionFileNote>(entity =>

@@ -42,6 +42,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.FileStatusTypeCode, src => src.AcquisitionFileStatusTypeCodeNavigation)
                 .Map(dest => dest.AcquisitionPhysFileStatusTypeCode, src => src.AcqPhysFileStatusTypeCodeNavigation)
                 .Map(dest => dest.PhysicalFileDetails, src => src.PhysicalFileDetails)
+                .Map(dest => dest.OwnerRepComment, src => src.OwnerRepComment)
                 .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCodeNavigation)
                 .Map(dest => dest.RegionCode, src => src.RegionCodeNavigation)
                 .Map(dest => dest.SubfileInterestTypeCode, src => src.SubfileInterestTypeCodeNavigation)
@@ -83,6 +84,7 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.AcquisitionFileStatusTypeCode, src => src.FileStatusTypeCode.Id)
                 .Map(dest => dest.AcqPhysFileStatusTypeCode, src => src.AcquisitionPhysFileStatusTypeCode.Id)
                 .Map(dest => dest.PhysicalFileDetails, src => src.PhysicalFileDetails)
+                .Map(dest => dest.OwnerRepComment, src => src.OwnerRepComment)
                 .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCode.Id)
                 .Map(dest => dest.RegionCode, src => src.RegionCode.Id)
                 .Map(dest => dest.SubfileInterestTypeCode, src => src.SubfileInterestTypeCode.Id)
@@ -120,7 +122,8 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
                 .Map(dest => dest.AcquisitionTypeCode, src => src.AcquisitionTypeCode)
                 .Map(dest => dest.RegionCode, src => src.RegionCode)
                 .Map(dest => dest.SubfileInterestTypeCode, src => src.SubfileInterestTypeCode)
-                .Map(dest => dest.OtherSubfileInterestType, src => src.OtherSubfileInterestType);
+                .Map(dest => dest.OtherSubfileInterestType, src => src.OtherSubfileInterestType)
+                .Map(dest => dest.OwnerRepComment, src => src.OwnerRepComment);
         }
     }
 }
