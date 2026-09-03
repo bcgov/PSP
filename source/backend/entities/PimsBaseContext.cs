@@ -1486,6 +1486,7 @@ public partial class PimsBaseContext : DbContext
             entity.Property(e => e.LegacyFileNumber).HasComment("Legacy formatted file number assigned to the acquisition file.  Format follows YY-XXXXXX-ZZ where YY = MoTT region number, XXXXXX = generated integer sequence number,  and ZZ = file suffix number (defaulting to '01').   Required due to some files having t");
             entity.Property(e => e.LegacyStakeholder).HasComment("Legacy stakeholders imported from PAIMS.");
             entity.Property(e => e.OtherSubfileInterestType).HasComment("If the user selects ?Other? then they will need to provide a subfile type description, which will be displayed as 'Other - <description>");
+            entity.Property(e => e.OwnerRepComment).HasComment("User Story: As a PIMS user, I need to record comments regarding the Owner Representative");
             entity.Property(e => e.PaimsAcquisitionFileId).HasComment("Legacy Acquisition File ID from the PAIMS system.");
             entity.Property(e => e.PhysicalFileDetails).HasComment("Comments to provide details about the physical acquisition file.");
             entity.Property(e => e.OwnerRepComment).HasComment("Comments for the owner representative.");

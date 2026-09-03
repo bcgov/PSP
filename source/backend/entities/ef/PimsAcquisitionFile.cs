@@ -303,6 +303,13 @@ public partial class PimsAcquisitionFile
     [StringLength(30)]
     public string DbLastUpdateUserid { get; set; }
 
+    /// <summary>
+    /// User Story: As a PIMS user, I need to record comments regarding the Owner Representative
+    /// </summary>
+    [Column("OWNER_REP_COMMENT")]
+    [StringLength(2000)]
+    public string OwnerRepComment { get; set; }
+
     [ForeignKey("AcqFileExpropRiskTypeCode")]
     [InverseProperty("PimsAcquisitionFiles")]
     public virtual PimsAcqFileExpropRiskType AcqFileExpropRiskTypeCodeNavigation { get; set; }
