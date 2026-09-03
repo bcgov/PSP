@@ -12,7 +12,7 @@ GO
 
 INSERT INTO PIMS_LL_TEAM_PROFILE_TYPE (LL_TEAM_PROFILE_TYPE_CODE, DESCRIPTION, DISPLAY_ORDER, IS_DISABLED)
 VALUES
-  (N'KEYCNTCT',    N'PIMS key contact',        0, 1),
+  (N'KEYCNTCT',    N'PIMS key contact',        0, 0),
   (N'MOTTCONTACT', N'MoTT contact',            1, 0),
   (N'MOTTLAWYER',  N'MoTT solicitor',          2, 0),
   (N'PROPANALYST', N'Property analyst',        3, 0),
