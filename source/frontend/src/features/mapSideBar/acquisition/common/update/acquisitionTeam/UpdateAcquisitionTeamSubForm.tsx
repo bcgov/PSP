@@ -10,8 +10,8 @@ import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactS
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import { RestrictContactType } from '@/constants/contacts';
-import { TeamProfileTypeCode } from '@/constants/teamProfileTypeCode';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { ApiGen_CodeTypes_TeamProfileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_TeamProfileTypeTypes';
 
 import { TeamMemberFormModal } from '../../modals/AcquisitionFormModal';
 import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../models';
@@ -34,7 +34,8 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
       render={arrayHelpers => (
         <>
           {values.team.map((teamMember, index) => {
-            const isKeyContact = teamMember.contactTypeCode === TeamProfileTypeCode.KEY_CONTACT;
+            const isKeyContact =
+              teamMember.contactTypeCode === ApiGen_CodeTypes_TeamProfileTypeTypes.KEY_CONTACT;
             return (
               <React.Fragment key={`acq-team-${index}`}>
                 <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>

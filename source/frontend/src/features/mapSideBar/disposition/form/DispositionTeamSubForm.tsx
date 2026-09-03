@@ -10,9 +10,9 @@ import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactS
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import { RestrictContactType } from '@/constants/contacts';
-import { TeamProfileTypeCode } from '@/constants/teamProfileTypeCode';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
+import { ApiGen_CodeTypes_TeamProfileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_TeamProfileTypeTypes';
 
 import {
   DispositionTeamSubFormModel,
@@ -28,11 +28,11 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
   const teamProfileTypes = getOptionsByType(API.DISPOSITION_TEAM_PROFILE_TYPES);
 
   const leadContact = values.team.find(
-    member => member.teamProfileTypeCode === TeamProfileTypeCode.MOTT_LEAD,
+    member => member.teamProfileTypeCode === ApiGen_CodeTypes_TeamProfileTypeTypes.MOTT_LEAD,
   )?.contact;
 
   const solicitorContact = values.team.find(
-    member => member.teamProfileTypeCode === TeamProfileTypeCode.MOTT_SOLICITOR,
+    member => member.teamProfileTypeCode === ApiGen_CodeTypes_TeamProfileTypeTypes.MOTT_SOLICITOR,
   )?.contact;
 
   const autoKeyContact = leadContact ?? solicitorContact ?? null;
@@ -43,7 +43,8 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
       render={arrayHelpers => (
         <>
           {values.team.map((teamMember, index) => {
-            const isKeyContact = teamMember.teamProfileTypeCode === TeamProfileTypeCode.KEY_CONTACT;
+            const isKeyContact =
+              teamMember.teamProfileTypeCode === ApiGen_CodeTypes_TeamProfileTypeTypes.KEY_CONTACT;
             return (
               <React.Fragment key={`disp-team-${index}`}>
                 <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>
@@ -58,7 +59,7 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
                         setFieldTouched(`team.${index}.contact`);
                         setFieldValue(
                           `team.${index}.contact`,
-                          event.target.value === TeamProfileTypeCode.KEY_CONTACT
+                          event.target.value === ApiGen_CodeTypes_TeamProfileTypeTypes.KEY_CONTACT
                             ? autoKeyContact
                             : null,
                         );

@@ -10,9 +10,9 @@ import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactS
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import { RestrictContactType } from '@/constants/contacts';
-import { TeamProfileTypeCode } from '@/constants/teamProfileTypeCode';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
+import { ApiGen_CodeTypes_TeamProfileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_TeamProfileTypeTypes';
 import { isValidId } from '@/utils/utils';
 
 import {
@@ -39,7 +39,8 @@ const ManagementTeamSubForm: React.FunctionComponent<IManagementTeamSubFormProps
       render={arrayHelpers => (
         <>
           {values.team.map((teamMember, index) => {
-            const isKeyContact = teamMember.teamProfileTypeCode === TeamProfileTypeCode.KEY_CONTACT;
+            const isKeyContact =
+              teamMember.teamProfileTypeCode === ApiGen_CodeTypes_TeamProfileTypeTypes.KEY_CONTACT;
             return (
               <React.Fragment key={`management-team-${teamMember?.id ?? index}`}>
                 <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>

@@ -1,7 +1,7 @@
 import { Formik, FormikProps, getIn } from 'formik';
 import { createRef } from 'react';
 
-import { TeamProfileTypeCode } from '@/constants/teamProfileTypeCode';
+import { ApiGen_CodeTypes_TeamProfileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_TeamProfileTypeTypes';
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -123,7 +123,12 @@ describe('AcquisitionTeamSubForm component', () => {
   it('restricts key contact selection to PIMS users', async () => {
     const { getByTestId, getByTitle } = setup({ initialForm: testForm });
     await act(async () => userEvent.click(getByTestId('add-team-member')));
-    await act(async () => selectOptions('team.0.contactTypeCode', TeamProfileTypeCode.KEY_CONTACT));
+    await act(async () =>
+      selectOptions(
+        'team.0.contactTypeCode',
+        ApiGen_CodeTypes_TeamProfileTypeTypes.KEY_CONTACT,
+      ),
+    );
     await act(async () => userEvent.click(getByTitle('Select Contact')));
 
     expect(document.querySelector('#input-searchBy-pimsusers')).toBeInTheDocument();
