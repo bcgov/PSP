@@ -13,6 +13,8 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class ConsultationRepository : BaseRepository<PimsLeaseConsultation>, IConsultationRepository
     {
+        private readonly INotificationRepository _notificationRepository;
+
         #region Constructors
 
         /// <summary>
@@ -21,9 +23,10 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public ConsultationRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ConsultationRepository> logger)
+        public ConsultationRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ConsultationRepository> logger, INotificationRepository notificationRepository)
             : base(dbContext, user, logger)
         {
+            _notificationRepository = notificationRepository;
         }
 
         #endregion
@@ -70,6 +73,18 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingConsultation).CurrentValues.SetValues(consultation);
 
+            if(!consultation.RequestedOn.HasValue)
+            {
+                var existingNotification = Context.PimsNotifications.AsNoTracking()
+                    .Where(n => n.LeaseId == consultation.LeaseId && n.LeaseConsultationId == consultation.LeaseConsultationId)
+                    .FirstOrDefault();
+
+                if (existingNotification is not null)
+                {
+                    _notificationRepository.Delete(existingNotification.NotificationId);
+                }
+            }
+
             return existingConsultation;
         }
 
@@ -80,6 +95,15 @@ namespace Pims.Dal.Repositories
             var deletedEntity = Context.PimsLeaseConsultations.Where(x => x.LeaseConsultationId == consultationId).FirstOrDefault();
             if (deletedEntity is not null)
             {
+                var existingNotification = Context.PimsNotifications.AsNoTracking()
+                    .Where(n => n.LeaseId == deletedEntity.LeaseId && n.LeaseConsultationId == deletedEntity.LeaseConsultationId)
+                    .FirstOrDefault();
+
+                if (existingNotification is not null)
+                {
+                    _notificationRepository.Delete(existingNotification.NotificationId);
+                }
+
                 Context.PimsLeaseConsultations.Remove(deletedEntity);
 
                 return true;

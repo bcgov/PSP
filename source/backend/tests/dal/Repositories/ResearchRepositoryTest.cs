@@ -23,6 +23,7 @@ namespace Pims.Dal.Test.Repositories
         public static IEnumerable<object[]> ResearchFilterData =>
             new List<object[]>
             {
+                new object[] { new ResearchFilter(), 1 },
                 new object[] { new ResearchFilter() { RegionCodes = new List<short> { 1 } }, 1 },
                 new object[] { new ResearchFilter() { RegionCodes = new List<short> { 2 } }, 0 },
                 new object[] { new ResearchFilter() { ResearchFileStatusTypeCode = "Active" }, 1 },
@@ -65,7 +66,11 @@ namespace Pims.Dal.Test.Repositories
             eResearch.PimsPropertyResearchFiles = new List<PimsPropertyResearchFile>() { new PimsPropertyResearchFile() { Property = EntityHelper.CreateProperty(1) } };
 
             var context = helper.CreatePimsContext(user, true);
-            context.AddAndSaveChanges(eResearch);
+
+            if (expectedCount > 0)
+            {
+                context.AddAndSaveChanges(eResearch);
+            }
 
             var repository = helper.CreateRepository<ResearchFileRepository>(user);
 

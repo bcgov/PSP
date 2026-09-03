@@ -1,4 +1,5 @@
 import { FaRegBuilding, FaRegUser } from 'react-icons/fa';
+import { PiSealCheckFill } from 'react-icons/pi';
 import { Link, useHistory } from 'react-router-dom';
 import { CellProps } from 'react-table';
 import styled from 'styled-components';
@@ -7,10 +8,11 @@ import ActiveIndicator from '@/components/common/ActiveIndicator';
 import EditButton from '@/components/common/buttons/EditButton';
 import ViewButton from '@/components/common/buttons/ViewButton';
 import { InlineFlexDiv } from '@/components/common/styles';
+import { TooltipWrapper } from '@/components/common/TooltipWrapper';
 import { ColumnWithProps } from '@/components/Table';
 import { Claims } from '@/constants/claims';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
-import { IContactSearchResult, isPersonSummary } from '@/interfaces';
+import { IContactSearchResult, isPersonSummary, isPIMSUserSummary } from '@/interfaces';
 import { stringToFragment } from '@/utils';
 
 const columns: ColumnWithProps<IContactSearchResult>[] = [
@@ -32,13 +34,26 @@ const columns: ColumnWithProps<IContactSearchResult>[] = [
     width: 20,
     maxWidth: 20,
     Cell: (props: CellProps<IContactSearchResult>) =>
-      isPersonSummary(props.row.original) ? (
+      isPIMSUserSummary(props.row.original) ? (
         <StatusIndicators className={props.row.original.isDisabled ? 'inactive' : 'active'}>
-          <FaRegUser size={20} />
+          <TooltipWrapper tooltipId={`pims-user-${props.row.original.id}`} tooltip="PIMS User">
+            <PiSealCheckFill size={20} />
+          </TooltipWrapper>
+        </StatusIndicators>
+      ) : isPersonSummary(props.row.original) ? (
+        <StatusIndicators className={props.row.original.isDisabled ? 'inactive' : 'active'}>
+          <TooltipWrapper tooltipId={`person-${props.row.original.id}`} tooltip="Individual">
+            <FaRegUser size={20} />
+          </TooltipWrapper>
         </StatusIndicators>
       ) : (
         <StatusIndicators className={props.row.original.isDisabled ? 'inactive' : 'active'}>
-          <FaRegBuilding size={20} />
+          <TooltipWrapper
+            tooltipId={`organization-${props.row.original.id}`}
+            tooltip="Organization"
+          >
+            <FaRegBuilding size={20} />
+          </TooltipWrapper>
         </StatusIndicators>
       ),
   },

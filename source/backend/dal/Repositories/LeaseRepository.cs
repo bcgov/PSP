@@ -903,6 +903,70 @@ namespace Pims.Dal.Repositories
         }
 
         /// <summary>
+        /// Get all Insurances for the Lease by Id.
+        /// </summary>
+        /// <param name="leaseId"></param>
+        /// <returns></returns>
+        public IEnumerable<PimsInsurance> GetLeaseInsurances(long leaseId)
+        {
+            using var scope = Logger.QueryScope();
+
+            return Context.PimsInsurances.AsNoTracking()
+                        .Include(i => i.InsuranceTypeCodeNavigation)
+                        .Where(l => l.LeaseId == leaseId);
+        }
+
+        /// <summary>
+        /// Update collection of insurances for the Lease.
+        /// </summary>
+        /// <param name="leaseId"></param>
+        /// <param name="insurances"></param>
+        /// <returns>Collection of PimsInsurance.</returns>
+        public IEnumerable<PimsInsurance> UpdateLeaseInsurances(long leaseId, IEnumerable<PimsInsurance> insurances)
+        {
+            using var scope = Logger.QueryScope();
+
+            var existingInsurances = GetLeaseInsurances(leaseId).ToList();
+            var removedInsurances = existingInsurances.Where(o => !insurances.Any(u => u.InsuranceId == o.InsuranceId)).ToList();
+            if (removedInsurances.Count != 0)
+            {
+                // remove the notifications when an insurance is removed.
+                foreach (var delInsurance in removedInsurances)
+                {
+                    var existingNotification = Context.PimsNotifications.AsNoTracking()
+                                                .Where(n => n.LeaseId == leaseId && n.InsuranceId == delInsurance.InsuranceId)
+                                                .FirstOrDefault();
+
+                    if(existingNotification is not null)
+                    {
+                        _notificationRepository.Delete(existingNotification.NotificationId);
+                    }
+                }
+            }
+
+            // Check for dates removed on the remaining insurances.
+            foreach(var insurance in insurances)
+            {
+                if(!insurance.ExpiryDate.HasValue)
+                {
+                    var existingNotification = Context.PimsNotifications.AsNoTracking()
+                                                .Where(n => n.LeaseId == leaseId && n.InsuranceId == insurance.InsuranceId)
+                                                .FirstOrDefault();
+
+                    if (existingNotification is not null)
+                    {
+                        _notificationRepository.Delete(existingNotification.NotificationId);
+                    }
+                }
+            }
+
+            Context.UpdateChild<PimsLease, long, PimsInsurance, long>(l => l.PimsInsurances, leaseId, insurances.ToArray());
+            Context.SaveChanges();
+
+            return GetLeaseInsurances(leaseId);
+        }
+
+        /// <summary>
         /// Generate a query for the specified 'filter'.
         /// </summary>
         /// <param name="filter">The filter to apply to the lease search.</param>
@@ -1087,6 +1151,24 @@ namespace Pims.Dal.Repositories
                 .FirstOrDefault();
 
             return _mapper.Map<PimsLease>(leaseHist);
+        }
+
+        public PimsLease GetLeaseAssociations(long leaseId)
+        {
+            PimsLease lease = Context.PimsLeases.AsSplitQuery().AsNoTracking()
+                .Include(l => l.PimsLeaseStakeholders)
+                    .ThenInclude(t => t.LeaseStakeholderTypeCodeNavigation)
+                .Include(l => l.PimsLeaseStakeholders)
+                    .ThenInclude(t => t.Person)
+                .Include(l => l.PimsLeaseStakeholders)
+                    .ThenInclude(t => t.Organization)
+                .Include(l => l.PimsLeaseStakeholders)
+                    .ThenInclude(t => t.LessorTypeCodeNavigation)
+                .Include(r => r.PimsLeaseRenewals)
+                .Include(s => s.LeaseStatusTypeCodeNavigation)
+                .FirstOrDefault(l => l.LeaseId == leaseId);
+
+            return lease;
         }
 
         private static string NormalizeLFileNo(string input)
@@ -1278,7 +1360,6 @@ namespace Pims.Dal.Repositories
                 sortDef[sortFieldIndex] = sortDef[sortFieldIndex].Replace(sourceField, targetField);
             }
         }
-
         #endregion
     }
 }

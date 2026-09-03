@@ -16,12 +16,12 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import { StyledSummarySection } from '@/components/common/Section/SectionStyles';
 import * as Styled from '@/components/common/styles';
 import { TrayHeaderContent } from '@/components/common/styles';
-import { RestrictContactType } from '@/components/contact/ContactManagerView/ContactFilterComponent/ContactFilterComponent';
 import {
   MGMT_ACTIVITY_STATUS_TYPES,
   MGMT_ACTIVITY_SUBTYPES_TYPES,
   MGMT_ACTIVITY_TYPES,
 } from '@/constants/API';
+import { RestrictContactType } from '@/constants/contacts';
 import SaveCancelButtons from '@/features/leases/SaveCancelButtons';
 import { StyledFormWrapper } from '@/features/mapSideBar/shared/styles';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
@@ -196,11 +196,7 @@ export const PropertyActivityEditForm: React.FunctionComponent<
                         >
                           <Row className="no-gutters pr-4 mr-2">
                             <Col className="col-11">
-                              <ContactInputContainer
-                                field="requestor"
-                                View={ContactInputView}
-                                restrictContactType={RestrictContactType.ALL}
-                              />
+                              <ContactInputContainer field="requestor" View={ContactInputView} />
                             </Col>
                           </Row>
                         </SectionField>
@@ -219,18 +215,10 @@ export const PropertyActivityEditForm: React.FunctionComponent<
                             </SectionField>
                           )}
                         <SectionField label="External contacts" contentWidth={{ xs: 8 }}>
-                          <ContactListForm
-                            field="involvedParties"
-                            formikProps={formikProps}
-                            contactType={RestrictContactType.ALL}
-                          />
+                          <ContactListForm field="involvedParties" formikProps={formikProps} />
                         </SectionField>
                         <SectionField label="Service provider" contentWidth={{ xs: 7 }}>
-                          <ContactInputContainer
-                            field="serviceProvider"
-                            View={ContactInputView}
-                            restrictContactType={RestrictContactType.ALL}
-                          />
+                          <ContactInputContainer field="serviceProvider" View={ContactInputView} />
                         </SectionField>
                       </Section>
                       <InvoiceListForm
