@@ -207,13 +207,6 @@ public partial class PimsAcquisitionFile
     public string PhysicalFileDetails { get; set; }
 
     /// <summary>
-    /// Comments for the owner representative.
-    /// </summary>
-    [Column("OWNER_REP_COMMENT")]
-    [StringLength(2000)]
-    public string OwnerRepComment { get; set; }
-
-    /// <summary>
     /// Application code is responsible for retrieving the row and then incrementing the value of the CONCURRENCY_CONTROL_NUMBER column by one prior to issuing an update. If this is done then the update will succeed, provided that the row was not updated by any o
     /// </summary>
     [Column("CONCURRENCY_CONTROL_NUMBER")]
