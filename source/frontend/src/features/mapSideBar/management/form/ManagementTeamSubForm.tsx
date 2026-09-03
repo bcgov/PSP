@@ -12,6 +12,7 @@ import * as API from '@/constants/API';
 import { RestrictContactType } from '@/constants/contacts';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
+import { ApiGen_CodeTypes_TeamProfileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_TeamProfileTypeTypes';
 import { isValidId } from '@/utils/utils';
 
 import {
