@@ -16,9 +16,12 @@ import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants';
 import { InterestHolderType } from '@/constants/interestHolderTypes';
 import { usePersonRepository } from '@/features/contacts/repositories/usePersonRepository';
+import ReminderContainer from '@/features/notifications/ReminderContainer';
+import ReminderView from '@/features/notifications/ReminderView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 import useDeepCompareEffect from '@/hooks/util/useDeepCompareEffect';
 import { ApiGen_Base_CodeType } from '@/models/api/generated/ApiGen_Base_CodeType';
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 import { ApiGen_Concepts_AcquisitionFile } from '@/models/api/generated/ApiGen_Concepts_AcquisitionFile';
 import { exists, prettyFormatDate } from '@/utils';
 import { formatMinistryProject } from '@/utils/formUtils';
@@ -286,7 +289,21 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
       </Section>
       <Section header="Notice of Claim">
         <SectionField label="Received date">
-          {prettyFormatDate(noticeOfClaim?.receivedDate)}
+          <StyledReminderContent>
+            {prettyFormatDate(noticeOfClaim?.receivedDate)}
+            {noticeOfClaim?.receivedDate && (
+              <ReminderContainer
+                keyDate={noticeOfClaim.receivedDate}
+                keyDateLabel="Received date"
+                notificationType={ApiGen_CodeTypes_NotificationTypes.NOC}
+                notificationSource={{
+                  acquisitionFileId: noticeOfClaim?.acquisitionFileId,
+                  noticeOfClaimId: noticeOfClaim?.id,
+                }}
+                View={ReminderView}
+              />
+            )}
+          </StyledReminderContent>
         </SectionField>
         <SectionField label="Comment">{noticeOfClaim?.comment}</SectionField>
       </Section>
@@ -299,4 +316,11 @@ export default AcquisitionSummaryView;
 const StyledLink = styled(Link)`
   display: flex;
   align-items: center;
+`;
+
+const StyledReminderContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  gap: 1.2rem;
 `;
