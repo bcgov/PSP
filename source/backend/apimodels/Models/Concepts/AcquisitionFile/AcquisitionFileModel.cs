@@ -60,6 +60,11 @@ namespace Pims.Api.Models.Concepts.AcquisitionFile
         public DateOnly? PossessionDate { get; set; }
 
         /// <summary>
+        /// get/set - The comments for the owner representative.
+        /// </summary>
+        public string OwnerRepComment { get; set; }
+
+        /// <summary>
         /// get/set - The list of progress statuses for this file.
         /// </summary>
         public IList<AcquisitionFileProgressStatusesModel> AcquisitionFileProgressStatuses { get; set; }

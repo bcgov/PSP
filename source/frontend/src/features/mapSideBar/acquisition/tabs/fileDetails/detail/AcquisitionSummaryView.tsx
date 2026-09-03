@@ -283,9 +283,9 @@ const AcquisitionSummaryView: React.FC<IAcquisitionSummaryViewProps> = ({
                   <FaExternalLinkAlt className="ml-2" size="1rem" />
                 </StyledLink>
               </SectionField>
-              <SectionField label="Comment">{ownerRepresentative?.comment}</SectionField>
             </React.Fragment>
           ))}
+        <SectionField label="Comment">{acquisitionFile?.ownerRepComment}</SectionField>
       </Section>
       <Section header="Notice of Claim">
         <SectionField label="Received date">

@@ -1014,9 +1014,7 @@ exports[`AcquisitionFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c7 text-left col"
-                >
-                  test representative comment
-                </div>
+                />
               </div>
             </div>
           </div>
