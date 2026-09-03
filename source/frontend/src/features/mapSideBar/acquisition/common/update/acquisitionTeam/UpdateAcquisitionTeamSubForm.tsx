@@ -36,9 +36,12 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
   React.PropsWithChildren<unknown>
 > = () => {
   const { values, setFieldTouched } = useFormikContext<WithAcquisitionTeam>();
+
   const [showRemoveMemberModal, setShowRemoveMemberModal] = useState<boolean>(false);
   const [removeIndex, setRemoveIndex] = useState<number>(-1);
+
   const { getOptionsByType } = useLookupCodeHelpers();
+
   const teamProfileTypes = getOptionsByType(API.ACQUISITION_FILE_TEAM_PROFILE_TYPES);
 
   return (
@@ -117,7 +120,7 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
               setShowRemoveMemberModal(false);
               setRemoveIndex(-1);
             }}
-          ></TeamMemberFormModal>
+          />
         </>
       )}
     />

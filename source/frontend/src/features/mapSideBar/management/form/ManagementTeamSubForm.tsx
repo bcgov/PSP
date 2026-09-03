@@ -85,23 +85,61 @@ const ManagementTeamSubForm: React.FunctionComponent<IManagementTeamSubFormProps
                         });
                         setDisplayModal(true);
                       }}
+                      disabled={!canEditDetails}
                     />
-                  )}
-                </Col>
-              </Row>
+                  </Col>
 
-              {isValidId(teamMember.contact?.organizationId) &&
-                !isValidId(teamMember.contact?.personId) && (
-                  <SectionField label="Primary contact" labelWidth={{ xs: 6 }} noGutters>
-                    <PrimaryContactSelector
-                      field={`team.${index}.primaryContactId`}
-                      contactInfo={teamMember?.contact}
+                  <Col xs="auto" xl="5" className="pl-0" data-testid="contact-input">
+                    <ContactInputContainer
+                      field={`team.${index}.contact`}
+                      View={ContactInputView}
+                      displayErrorAsTooltip={false}
                       canEditDetails={canEditDetails}
-                    ></PrimaryContactSelector>
-                  </SectionField>
-                )}
-            </React.Fragment>
-          ))}
+                      restrictContactType={
+                        isKeyContact ? RestrictContactType.ONLY_PIMSUSERS : undefined
+                      }
+                    ></ContactInputContainer>
+                  </Col>
+
+                  <Col xs="auto" xl="2" className="pl-0 mt-2">
+                    {canEditDetails && (
+                      <RemoveButton
+                        data-testId={`team.${index}.remove-button`}
+                        onRemove={() => {
+                          setModalContent({
+                            ...getDeleteModalProps(),
+                            title: 'Remove Team Member',
+                            message: 'Do you wish to remove this team member?',
+                            okButtonText: 'Yes',
+                            cancelButtonText: 'No',
+                            handleOk: () => {
+                              arrayHelpers.remove(index);
+                              setDisplayModal(false);
+                            },
+                            handleCancel: () => {
+                              setDisplayModal(false);
+                            },
+                          });
+                          setDisplayModal(true);
+                        }}
+                      />
+                    )}
+                  </Col>
+                </Row>
+
+                {isValidId(teamMember.contact?.organizationId) &&
+                  !isValidId(teamMember.contact?.personId) && (
+                    <SectionField label="Primary contact" labelWidth={{ xs: 6 }} noGutters>
+                      <PrimaryContactSelector
+                        field={`team.${index}.primaryContactId`}
+                        contactInfo={teamMember?.contact}
+                        canEditDetails={canEditDetails}
+                      ></PrimaryContactSelector>
+                    </SectionField>
+                  )}
+              </React.Fragment>
+            );
+          })}
 
           {errors?.team && typeof errors?.team === 'string' && (
             <div className="invalid-feedback" data-testid="team-profile-dup-error">
