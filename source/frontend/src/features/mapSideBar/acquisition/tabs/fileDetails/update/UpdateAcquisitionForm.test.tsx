@@ -173,11 +173,13 @@ describe('UpdateAcquisitionForm component', () => {
   });
 
   it('displays owner solicitor and owner representative', async () => {
-    const { getByText } = await setup({ initialValues });
+    initialValues.ownerRepComment = 'test owner representative comment';
+
+    const { getByText, getByDisplayValue } = await setup({ initialValues });
 
     expect(getByText('Millennium Inc')).toBeVisible();
     expect(getByText('Han Solo')).toBeVisible();
-    expect(getByText('test representative comment')).toBeVisible();
+    expect(getByDisplayValue('test owner representative comment')).toBeVisible();
   });
 
   it('displays estimated completion, assigned and possession dates', async () => {
