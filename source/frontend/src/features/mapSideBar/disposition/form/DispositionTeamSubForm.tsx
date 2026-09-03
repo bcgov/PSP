@@ -44,7 +44,6 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
         <>
           {values.team.map((teamMember, index) => {
             const isKeyContact = teamMember.teamProfileTypeCode === TeamProfileTypeCode.KEY_CONTACT;
-            console.log('teamMember: ', teamMember);
             return (
               <React.Fragment key={`disp-team-${index}`}>
                 <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>

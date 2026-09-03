@@ -2383,6 +2383,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-KEYCNTCT"
+                          value="KEYCNTCT"
+                        >
+                          Key Contact
+                        </option>
+                        <option
+                          class="option"
                           data-testid="select-option-EXPRAGENT"
                           value="EXPRAGENT"
                         >
@@ -2571,6 +2578,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           value=""
                         >
                           Select profile...
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-KEYCNTCT"
+                          value="KEYCNTCT"
+                        >
+                          Key Contact
                         </option>
                         <option
                           class="option"
