@@ -1,6 +1,7 @@
 import { Formik, FormikProps, getIn } from 'formik';
 import { createRef } from 'react';
 
+import { TeamProfileTypeCode } from '@/constants/teamProfileTypeCode';
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -118,5 +119,18 @@ describe('ManagementTeamSubForm component', () => {
     await act(async () => userEvent.click(addRow));
     await act(async () => selectOptions('team.0.teamProfileTypeCode', 'MINSTAFF'));
     expect(getIn(getFormikRef().current?.touched, 'team.0.contact')).toBe(true);
+  });
+
+  it('restricts key contact selection to PIMS users', async () => {
+    const { getByTestId, getByTitle } = setup({ initialForm: testForm });
+    await act(async () => userEvent.click(getByTestId('add-team-member')));
+    await act(async () =>
+      selectOptions('team.0.teamProfileTypeCode', TeamProfileTypeCode.KEY_CONTACT),
+    );
+    await act(async () => userEvent.click(getByTitle('Select Contact')));
+
+    expect(document.querySelector('#input-searchBy-pimsusers')).toBeInTheDocument();
+    expect(document.querySelector('#input-searchBy-persons')).toBeNull();
+    expect(document.querySelector('#input-searchBy-organizations')).toBeNull();
   });
 });
