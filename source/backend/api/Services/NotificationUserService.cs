@@ -160,13 +160,11 @@ namespace Pims.Api.Services
                         ", ",
                         stakeholders.Select(stakeholder =>
                             stakeholder.PersonId.HasValue
-                                ? $"{stakeholder.Person.FirstName} {stakeholder.Person.Surname}"
+                                ? stakeholder.Person.GetFullName()
                                 : stakeholder.Organization?.Name
                         )
                         .Where(name => !string.IsNullOrWhiteSpace(name))
                     );
-
-                    var tenantCount = stakeholders.Count;
 
                     if (notification.InsuranceId.HasValue && notification.Lease.LeasePayRvblTypeCode == "RCVBL")
                     {
