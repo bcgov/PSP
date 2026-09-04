@@ -4,8 +4,7 @@ table.
 . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . . .
 Author        Date         Comment
 ------------  -----------  -----------------------------------------------------
-Doug Filteau  2023-Sep-18  Initial version
-Eduardo H.    2026-Jun-25  Initial version
+Eduardo H.    2026-Aug-09  Initial version
 ----------------------------------------------------------------------------- */
 
 SET XACT_ABORT ON
@@ -19,7 +18,7 @@ GO
 
 -- Update the database version number.
 DECLARE @CurrVer NVARCHAR(100)
-SET @CurrVer = N'121.00'
+SET @CurrVer = N'122.00'
 
 UPDATE PIMS_STATIC_VARIABLE
 WITH   (UPDLOCK, SERIALIZABLE)
