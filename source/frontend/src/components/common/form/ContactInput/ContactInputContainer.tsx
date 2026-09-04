@@ -9,7 +9,7 @@ import { IContactInputViewProps } from './ContactInputView';
 export type IContactInputContainerProps = {
   field: string;
   label?: string;
-  restrictContactType?: RestrictContactType;
+  restrictContactType?: RestrictContactType[];
   displayErrorAsTooltip?: boolean;
   onContactSelected?: (contact: IContactSearchResult) => void;
   placeholder?: string;
@@ -73,7 +73,11 @@ export const ContactInputContainer: React.FC<
           setSelectedContacts([]);
         },
         showActiveSelector: true,
-        restrictContactType: restrictContactType,
+        restrictContactType: restrictContactType || [
+          RestrictContactType.ONLY_PIMSUSERS,
+          RestrictContactType.ONLY_INDIVIDUALS,
+          RestrictContactType.ONLY_ORGANIZATIONS,
+        ],
       }}
       placeholder={placeholder}
       canEditDetails={editEnabled}

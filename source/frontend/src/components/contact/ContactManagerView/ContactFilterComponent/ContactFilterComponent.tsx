@@ -37,7 +37,7 @@ export interface IContactFilterComponentProps {
   filter?: IContactFilter;
   setFilter: (filter: IContactFilter) => void;
   showActiveSelector?: boolean;
-  restrictContactType?: RestrictContactType;
+  restrictContactType?: RestrictContactType[];
 }
 
 /**
@@ -62,7 +62,7 @@ export const ContactFilterComponent: React.FunctionComponent<
       initialValues={
         filter ?? {
           ...defaultFilter,
-          searchBy: restrictContactType ? [restrictContactType] : allContactTypes,
+          searchBy: restrictContactType ? [...restrictContactType] : allContactTypes,
         }
       }
       onSubmit={(values, { setSubmitting }) => {
@@ -138,7 +138,7 @@ export const ContactFilterComponent: React.FunctionComponent<
                       const resetValues = {
                         ...defaultFilter,
                         searchBy: restrictContactType
-                          ? [restrictContactType]
+                          ? [...restrictContactType]
                           : [...defaultFilter.searchBy],
                       };
                       resetForm({ values: resetValues });
@@ -156,21 +156,27 @@ export const ContactFilterComponent: React.FunctionComponent<
 };
 
 const getRestrictedCheckValues = (
-  restrictContactType?: RestrictContactType,
+  restrictContactTypes?: RestrictContactType[],
 ): CheckGroupOption[] => {
-  switch (restrictContactType) {
-    case RestrictContactType.ONLY_INDIVIDUALS:
-      return [{ label: 'Individuals', value: 'persons' }];
-
-    case RestrictContactType.ONLY_ORGANIZATIONS:
-      return [{ label: 'Organizations', value: 'organizations' }];
-
-    case RestrictContactType.ONLY_PIMSUSERS:
-      return [{ label: 'Pims users', value: 'pimsusers' }];
-
-    default:
-      return contactTypeOptions;
+  if (!restrictContactTypes?.length) {
+    return contactTypeOptions;
   }
+
+  const options: CheckGroupOption[] = [];
+
+  if (restrictContactTypes.includes(RestrictContactType.ONLY_INDIVIDUALS)) {
+    options.push({ label: 'Individuals', value: 'persons' });
+  }
+
+  if (restrictContactTypes.includes(RestrictContactType.ONLY_ORGANIZATIONS)) {
+    options.push({ label: 'Organizations', value: 'organizations' });
+  }
+
+  if (restrictContactTypes.includes(RestrictContactType.ONLY_PIMSUSERS)) {
+    options.push({ label: 'Pims users', value: 'pimsusers' });
+  }
+
+  return options;
 };
 
 const StyledFilterBoxForm = styled(Form)`

@@ -9,6 +9,7 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
+import { RestrictContactType } from '@/constants/contacts';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { isValidId } from '@/utils/utils';
@@ -59,6 +60,7 @@ const ManagementTeamSubForm: React.FunctionComponent<IManagementTeamSubFormProps
                     View={ContactInputView}
                     displayErrorAsTooltip={false}
                     canEditDetails={canEditDetails}
+                    restrictContactType={[RestrictContactType.ONLY_PIMSUSERS]}
                   ></ContactInputContainer>
                 </Col>
 

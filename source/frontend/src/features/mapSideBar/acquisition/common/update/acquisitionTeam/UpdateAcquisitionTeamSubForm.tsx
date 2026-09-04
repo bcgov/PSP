@@ -9,7 +9,9 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
+import { RestrictContactType } from '@/constants/contacts';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { ApiGen_CodeTypes_AcquisitionTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTeamProfileTypes';
 
 import { TeamMemberFormModal } from '../../modals/AcquisitionFormModal';
 import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../models';
@@ -23,53 +25,75 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
   const { getOptionsByType } = useLookupCodeHelpers();
   const teamProfileTypes = getOptionsByType(API.ACQUISITION_FILE_TEAM_PROFILE_TYPES);
 
+  const getContactTypeRestriction = (contactTypeCode?: string) => {
+    switch (contactTypeCode) {
+      case ApiGen_CodeTypes_AcquisitionTeamProfileTypes.PROPCOORD:
+      case ApiGen_CodeTypes_AcquisitionTeamProfileTypes.PROPANLYS:
+      case ApiGen_CodeTypes_AcquisitionTeamProfileTypes.KEYCNTCT:
+        return [RestrictContactType.ONLY_PIMSUSERS];
+
+      default:
+        return [
+          RestrictContactType.ONLY_PIMSUSERS,
+          RestrictContactType.ONLY_INDIVIDUALS,
+          RestrictContactType.ONLY_ORGANIZATIONS,
+        ];
+    }
+  };
+
   return (
     <FieldArray
       name="team"
       render={arrayHelpers => (
         <>
-          {values.team.map((teamMember, index) => (
-            <React.Fragment key={`acq-team-${index}`}>
-              <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>
-                <Col xs="auto" xl="5">
-                  <Select
-                    data-testid="select-profile"
-                    placeholder="Select profile..."
-                    field={`team.${index}.contactTypeCode`}
-                    options={teamProfileTypes}
-                    value={teamMember.contactTypeCode}
-                    onChange={() => {
-                      setFieldTouched(`team.${index}.contact`);
-                    }}
-                  />
-                </Col>
-                <Col xs="auto" xl="5" className="pl-0" data-testid="contact-input">
-                  <ContactInputContainer
-                    field={`team.${index}.contact`}
-                    View={ContactInputView}
-                    displayErrorAsTooltip={false}
-                  ></ContactInputContainer>
-                </Col>
-                <Col xs="auto" xl="2" className="pl-0 mt-2">
-                  <RemoveButton
-                    data-testId={`team.${index}.remove-button`}
-                    onRemove={() => {
-                      setRemoveIndex(index);
-                      setShowRemoveMemberModal(true);
-                    }}
-                  />
-                </Col>
-              </Row>
-              {teamMember.contact?.organizationId && !teamMember.contact?.personId && (
-                <SectionField label="Primary contact" labelWidth={{ xs: 5 }} noGutters>
-                  <PrimaryContactSelector
-                    field={`team.${index}.primaryContactId`}
-                    contactInfo={teamMember?.contact}
-                  ></PrimaryContactSelector>
-                </SectionField>
-              )}
-            </React.Fragment>
-          ))}
+          {values.team.map((teamMember, index) => {
+            const restrictedType = getContactTypeRestriction(teamMember.contactTypeCode);
+
+            return (
+              <React.Fragment key={`acq-team-${index}`}>
+                <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>
+                  <Col xs="auto" xl="5">
+                    <Select
+                      data-testid="select-profile"
+                      placeholder="Select profile..."
+                      field={`team.${index}.contactTypeCode`}
+                      options={teamProfileTypes}
+                      value={teamMember.contactTypeCode}
+                      onChange={() => {
+                        setFieldTouched(`team.${index}.contact`);
+                      }}
+                    />
+                  </Col>
+                  <Col xs="auto" xl="5" className="pl-0" data-testid="contact-input">
+                    <ContactInputContainer
+                      field={`team.${index}.contact`}
+                      View={ContactInputView}
+                      displayErrorAsTooltip={false}
+                      canEditDetails={teamMember.contactTypeCode !== ''}
+                      restrictContactType={restrictedType}
+                    ></ContactInputContainer>
+                  </Col>
+                  <Col xs="auto" xl="2" className="pl-0 mt-2">
+                    <RemoveButton
+                      data-testId={`team.${index}.remove-button`}
+                      onRemove={() => {
+                        setRemoveIndex(index);
+                        setShowRemoveMemberModal(true);
+                      }}
+                    />
+                  </Col>
+                </Row>
+                {teamMember.contact?.organizationId && !teamMember.contact?.personId && (
+                  <SectionField label="Primary contact" labelWidth={{ xs: 5 }} noGutters>
+                    <PrimaryContactSelector
+                      field={`team.${index}.primaryContactId`}
+                      contactInfo={teamMember?.contact}
+                    ></PrimaryContactSelector>
+                  </SectionField>
+                )}
+              </React.Fragment>
+            );
+          })}
           <LinkButton
             data-testid="add-team-member"
             onClick={() => {
