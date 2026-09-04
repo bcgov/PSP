@@ -53,5 +53,7 @@ namespace Pims.Api.Services
         IEnumerable<PimsLeaseLicenseTeam> GetTeamMembers();
 
         PimsLease GetLeaseAssociations(long leaseId);
+
+        bool CanEdit(PimsLease lease);
     }
 }

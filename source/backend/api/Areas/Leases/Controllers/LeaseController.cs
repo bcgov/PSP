@@ -5,6 +5,7 @@ using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.Concepts.File;
 using Pims.Api.Models.Concepts.Lease;
 using Pims.Api.Services;
@@ -78,6 +79,7 @@ namespace Pims.Api.Areas.Lease.Controllers
 
             var lease = _leaseService.GetById(id);
             var mapped = _mapper.Map<LeaseModel>(lease);
+            mapped.CanEdit = _leaseService.CanEdit(lease);
             return new JsonResult(mapped);
         }
 
