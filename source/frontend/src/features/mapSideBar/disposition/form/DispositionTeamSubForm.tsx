@@ -12,6 +12,7 @@ import * as API from '@/constants/API';
 import { RestrictContactType } from '@/constants/contacts';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
+import { ApiGen_CodeTypes_DispositionTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionTeamProfileTypes';
 
 import {
   DispositionTeamSubFormModel,
@@ -27,9 +28,9 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
 
   const getContactTypeRestriction = (contactTypeCode?: string) => {
     switch (contactTypeCode) {
-      case 'MOTILEAD':
-      case 'MOTILAWYER':
-      case 'KEYCNTCT':
+      case ApiGen_CodeTypes_DispositionTeamProfileTypes.MOTILEAD:
+      case ApiGen_CodeTypes_DispositionTeamProfileTypes.MOTILAWYER:
+      case ApiGen_CodeTypes_DispositionTeamProfileTypes.KEYCNTCT:
         return RestrictContactType.ONLY_PIMSUSERS;
 
       default:

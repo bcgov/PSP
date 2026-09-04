@@ -11,6 +11,7 @@ import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
 import { RestrictContactType } from '@/constants/contacts';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { ApiGen_CodeTypes_AcquisitionTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTeamProfileTypes';
 
 import { TeamMemberFormModal } from '../../modals/AcquisitionFormModal';
 import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../models';
@@ -26,9 +27,9 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
 
   const getContactTypeRestriction = (contactTypeCode?: string) => {
     switch (contactTypeCode) {
-      case 'PROPCOORD':
-      case 'PROPANLYS':
-      case 'KEYCNTCT':
+      case ApiGen_CodeTypes_AcquisitionTeamProfileTypes.PROPCOORD:
+      case ApiGen_CodeTypes_AcquisitionTeamProfileTypes.PROPANLYS:
+      case ApiGen_CodeTypes_AcquisitionTeamProfileTypes.KEYCNTCT:
         return RestrictContactType.ONLY_PIMSUSERS;
 
       default:

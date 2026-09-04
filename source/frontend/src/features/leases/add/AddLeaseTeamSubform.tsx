@@ -12,6 +12,7 @@ import * as API from '@/constants/API';
 import { RestrictContactType } from '@/constants/contacts';
 import { TeamMemberFormModal } from '@/features/mapSideBar/acquisition/common/modals/AcquisitionFormModal';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { ApiGen_CodeTypes_LeaseTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseTeamProfileTypes';
 import { isValidId } from '@/utils';
 
 import { LeaseTeamFormModel, WithLeaseTeam } from '../models';
@@ -27,13 +28,13 @@ export const AddLeaseTeamSubForm: React.FunctionComponent<
 
   const getContactTypeRestriction = (contactTypeCode?: string) => {
     switch (contactTypeCode) {
-      case 'PROPANALYST':
-      case 'PROPCOORD':
-      case 'MOTTCONTACT':
-      case 'PROPADMIN':
-      case 'LANDPRJMGR':
-      case 'LANDOPSMGR':
-      case 'KEYCNTCT':
+      case ApiGen_CodeTypes_LeaseTeamProfileTypes.PROPANALYST:
+      case ApiGen_CodeTypes_LeaseTeamProfileTypes.PROPCOORD:
+      case ApiGen_CodeTypes_LeaseTeamProfileTypes.MOTTCONTACT:
+      case ApiGen_CodeTypes_LeaseTeamProfileTypes.PROPADMIN:
+      case ApiGen_CodeTypes_LeaseTeamProfileTypes.LANDPRJMGR:
+      case ApiGen_CodeTypes_LeaseTeamProfileTypes.LANDOPSMGR:
+      case ApiGen_CodeTypes_LeaseTeamProfileTypes.KEYCNTCT:
         return RestrictContactType.ONLY_PIMSUSERS;
 
       default:
