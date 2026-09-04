@@ -9,8 +9,10 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
+import { RestrictContactType } from '@/constants/contacts';
 import { TeamMemberFormModal } from '@/features/mapSideBar/acquisition/common/modals/AcquisitionFormModal';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
+import { ApiGen_CodeTypes_TeamProfileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_TeamProfileTypeTypes';
 import { isValidId } from '@/utils';
 
 import { LeaseTeamFormModel, WithLeaseTeam } from '../models';
@@ -29,49 +31,56 @@ export const AddLeaseTeamSubForm: React.FunctionComponent<
       name="team"
       render={arrayHelpers => (
         <>
-          {values.team.map((teamMember, index) => (
-            <React.Fragment key={`lease-team-${teamMember?.id ?? index}`}>
-              <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>
-                <Col xs="auto" xl="5">
-                  <Select
-                    data-testid="select-profile"
-                    placeholder="Select profile..."
-                    field={`team.${index}.contactTypeCode`}
-                    options={teamProfileTypes}
-                    value={teamMember.contactTypeCode}
-                    onChange={() => {
-                      setFieldTouched(`team.${index}.contact`);
-                    }}
-                  />
-                </Col>
-                <Col xs="auto" xl="5" className="pl-0" data-testid="contact-input">
-                  <ContactInputContainer
-                    field={`team.${index}.contact`}
-                    View={ContactInputView}
-                    displayErrorAsTooltip={false}
-                  ></ContactInputContainer>
-                </Col>
-                <Col xs="auto" xl="2" className="pl-0 mt-2">
-                  <RemoveButton
-                    data-testId={`team.${index}.remove-button`}
-                    onRemove={() => {
-                      setRemoveIndex(index);
-                      setShowRemoveMemberModal(true);
-                    }}
-                  />
-                </Col>
-              </Row>
-              {isValidId(teamMember.contact?.organizationId) &&
-                !isValidId(teamMember.contact?.personId) && (
-                  <SectionField label="Primary contact" labelWidth={{ xl: 5 }} noGutters>
-                    <PrimaryContactSelector
-                      field={`team.${index}.primaryContactId`}
-                      contactInfo={teamMember?.contact}
-                    ></PrimaryContactSelector>
-                  </SectionField>
-                )}
-            </React.Fragment>
-          ))}
+          {values.team.map((teamMember, index) => {
+            const isKeyContact =
+              teamMember.contactTypeCode === ApiGen_CodeTypes_TeamProfileTypeTypes.KEY_CONTACT;
+            return (
+              <React.Fragment key={`lease-team-${teamMember?.id ?? index}`}>
+                <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>
+                  <Col xs="auto" xl="5">
+                    <Select
+                      data-testid="select-profile"
+                      placeholder="Select profile..."
+                      field={`team.${index}.contactTypeCode`}
+                      options={teamProfileTypes}
+                      value={teamMember.contactTypeCode}
+                      onChange={() => {
+                        setFieldTouched(`team.${index}.contact`);
+                      }}
+                    />
+                  </Col>
+                  <Col xs="auto" xl="5" className="pl-0" data-testid="contact-input">
+                    <ContactInputContainer
+                      field={`team.${index}.contact`}
+                      View={ContactInputView}
+                      displayErrorAsTooltip={false}
+                      restrictContactType={
+                        isKeyContact ? RestrictContactType.ONLY_PIMSUSERS : undefined
+                      }
+                    ></ContactInputContainer>
+                  </Col>
+                  <Col xs="auto" xl="2" className="pl-0 mt-2">
+                    <RemoveButton
+                      data-testId={`team.${index}.remove-button`}
+                      onRemove={() => {
+                        setRemoveIndex(index);
+                        setShowRemoveMemberModal(true);
+                      }}
+                    />
+                  </Col>
+                </Row>
+                {isValidId(teamMember.contact?.organizationId) &&
+                  !isValidId(teamMember.contact?.personId) && (
+                    <SectionField label="Primary contact" labelWidth={{ xl: 5 }} noGutters>
+                      <PrimaryContactSelector
+                        field={`team.${index}.primaryContactId`}
+                        contactInfo={teamMember?.contact}
+                      ></PrimaryContactSelector>
+                    </SectionField>
+                  )}
+              </React.Fragment>
+            );
+          })}
           <LinkButton
             data-testid="add-team-member"
             onClick={() => {

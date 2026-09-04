@@ -38,13 +38,16 @@ export const ContactInputContainer: React.FC<
   const [selectedContacts, setSelectedContacts] = useState<IContactSearchResult[]>([]);
   const { setFieldValue, setFieldTouched } = useFormikContext<any>();
 
-  const handleContactManagerOk = () => {
-    setFieldValue(field, selectedContacts[0]);
+  const handleContactManagerOk = async () => {
+    const selectedContact = selectedContacts[0];
+
+    await setFieldValue(field, selectedContact, false);
+    await setFieldTouched(field, true, true);
+
     setShowContactManager(false);
     setSelectedContacts([]);
-    if (onContactSelected !== undefined) {
-      onContactSelected(selectedContacts[0]);
-    }
+
+    onContactSelected?.(selectedContact);
   };
 
   const editEnabled = canEditDetails ?? true;

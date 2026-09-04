@@ -3295,6 +3295,13 @@ export const mockLookups: ILookupCode[] = [
     type: 'PimsAcquisitionType',
   },
   {
+    id: 'KEYCNTCT',
+    name: 'Key Contact',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsAcqFlTeamProfileType',
+  },
+  {
     id: 'EXPRAGENT',
     name: 'Expropriation agent',
     isDisabled: false,
@@ -5872,6 +5879,13 @@ export const mockLookups: ILookupCode[] = [
     type: 'PimsAcqFileExpropRiskType',
   },
   {
+    id: 'KEYCNTCT',
+    name: 'Key Contact',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsLlTeamProfileType',
+  },
+  {
     id: 'LANDOPSMGR',
     name: 'Land operations manager',
     isDisabled: false,
@@ -5996,6 +6010,13 @@ export const mockLookups: ILookupCode[] = [
     isDisabled: false,
     displayOrder: 7,
     type: 'PimsManagementFileStatusType',
+  },
+  {
+    id: 'KEYCNTCT',
+    name: 'Key Contact',
+    isDisabled: false,
+    displayOrder: 0,
+    type: 'PimsManagementFileProfileType',
   },
   {
     id: 'CONTRACT',

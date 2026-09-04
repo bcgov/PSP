@@ -1,5 +1,7 @@
 import { Formik, FormikProps, getIn } from 'formik';
+import { createRef } from 'react';
 
+import { ApiGen_CodeTypes_TeamProfileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_TeamProfileTypeTypes';
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -13,7 +15,6 @@ import {
 
 import { WithAcquisitionTeam } from '../../models';
 import { UpdateAcquisitionTeamSubForm } from './UpdateAcquisitionTeamSubForm';
-import { createRef } from 'react';
 
 describe('AcquisitionTeamSubForm component', () => {
   // render component under test
@@ -117,5 +118,21 @@ describe('AcquisitionTeamSubForm component', () => {
     await act(async () => userEvent.click(addRow));
     await act(async () => selectOptions('team.0.contactTypeCode', 'MOTILAWYER'));
     expect(getIn(getFormikRef().current?.touched, 'team.0.contact')).toBe(true);
+  });
+
+  it('restricts key contact selection to PIMS users', async () => {
+    const { getByTestId, getByTitle } = setup({ initialForm: testForm });
+    await act(async () => userEvent.click(getByTestId('add-team-member')));
+    await act(async () =>
+      selectOptions(
+        'team.0.contactTypeCode',
+        ApiGen_CodeTypes_TeamProfileTypeTypes.KEY_CONTACT,
+      ),
+    );
+    await act(async () => userEvent.click(getByTitle('Select Contact')));
+
+    expect(document.querySelector('#input-searchBy-pimsusers')).toBeInTheDocument();
+    expect(document.querySelector('#input-searchBy-persons')).toBeNull();
+    expect(document.querySelector('#input-searchBy-organizations')).toBeNull();
   });
 });
