@@ -134,28 +134,28 @@ namespace Pims.Api.Services
 
         private static string GetNotificationSource(PimsNotification notification)
         {
-                return notification.NotificationTypeCode switch
-                {
-                    nameof(NotificationTypes.TAKE_SRW)
-                    or nameof(NotificationTypes.TAKE_LAT)
-                    or nameof(NotificationTypes.TAKE_LTC)
-                    or nameof(NotificationTypes.TAKE_LPYBLE)
-                    or nameof(NotificationTypes.NOC)
-                    or nameof(NotificationTypes.EXPROPH_APPEFFDT)
-                    or nameof(NotificationTypes.AGMT_SIGND)
-                        => $"Acquisition File #: {notification.AcquisitionFile.FileNumberFormatted}",
+            return notification.NotificationTypeCode switch
+            {
+                nameof(NotificationTypes.TAKE_SRW)
+                or nameof(NotificationTypes.TAKE_LAT)
+                or nameof(NotificationTypes.TAKE_LTC)
+                or nameof(NotificationTypes.TAKE_LPYBLE)
+                or nameof(NotificationTypes.NOC)
+                or nameof(NotificationTypes.EXPROPH_APPEFFDT)
+                or nameof(NotificationTypes.AGMT_SIGND)
+                    => $"Acquisition File #: {notification.AcquisitionFile.FileNumberFormatted}",
 
-                    nameof(NotificationTypes.L_RENEWAL)
-                        => $"Lease File #: {notification.Lease.LFileNo} ",
+                nameof(NotificationTypes.L_RENEWAL)
+                    => $"Lease File #: {notification.Lease.LFileNo} ",
 
-                    nameof(NotificationTypes.L_INSURANCE)
-                        => GetInsuranceSource(notification),
+                nameof(NotificationTypes.L_INSURANCE)
+                    => GetInsuranceSource(notification),
 
-                    nameof(NotificationTypes.L_CONSULTFN)
-                        => GetConsultationSource(notification),
+                nameof(NotificationTypes.L_CONSULTFN)
+                    => GetConsultationSource(notification),
 
-                    _ => string.Empty,
-                };
+                _ => string.Empty,
+            };
         }
 
         private static string GetInsuranceSource(PimsNotification notification)
