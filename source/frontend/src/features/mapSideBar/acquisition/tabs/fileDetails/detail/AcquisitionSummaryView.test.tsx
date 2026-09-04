@@ -375,10 +375,33 @@ describe('AcquisitionSummaryView component', () => {
   });
 
   it('renders owner representative information', async () => {
-    const { getByText } = setup({ acquisitionFile: mockAcquisitionFileResponse() }, { claims: [] });
+    const { getByText } = setup(
+      {
+        acquisitionFile: {
+          ...mockAcquisitionFileResponse(),
+          ownerRepComment: 'test owner representative comment',
+        },
+      },
+      { claims: [] },
+    );
     await waitForEffects();
     expect(getByText('Han Solo')).toBeVisible();
-    expect(getByText('test representative comment')).toBeVisible();
+    expect(getByText('test owner representative comment')).toBeVisible();
+  });
+
+  it('renders owner representative comment when no owner representative exists', async () => {
+    const { getByText } = setup(
+      {
+        acquisitionFile: {
+          ...mockAcquisitionFileResponse(),
+          ownerRepComment: 'comment without owner representative',
+          acquisitionFileInterestHolders: [],
+        },
+      },
+      { claims: [] },
+    );
+    await waitForEffects();
+    expect(getByText('comment without owner representative')).toBeVisible();
   });
 
   it('renders acquisition team member person', async () => {
