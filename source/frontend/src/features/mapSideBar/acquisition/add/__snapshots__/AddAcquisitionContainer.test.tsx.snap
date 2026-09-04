@@ -2960,10 +2960,11 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                     >
                       <textarea
                         class="form-control"
-                        id="input-ownerRepresentative.comment"
-                        name="ownerRepresentative.comment"
+                        id="input-ownerRepComment"
+                        name="ownerRepComment"
                         placeholder="Remarks or additional representative(s)"
                         style="word-break: break-all;"
+                        title=""
                       />
                     </div>
                   </div>
@@ -5503,10 +5504,11 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
                     >
                       <textarea
                         class="form-control"
-                        id="input-ownerRepresentative.comment"
-                        name="ownerRepresentative.comment"
+                        id="input-ownerRepComment"
+                        name="ownerRepComment"
                         placeholder="Remarks or additional representative(s)"
                         style="word-break: break-all;"
+                        title=""
                       />
                     </div>
                   </div>

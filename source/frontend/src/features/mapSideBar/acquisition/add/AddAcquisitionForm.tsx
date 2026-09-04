@@ -494,7 +494,7 @@ const AddAcquisitionDetailSubForm: React.FC<{
           </SectionField>
           <SectionField label="Comment">
             <TextArea
-              field="ownerRepresentative.comment"
+              field="ownerRepComment"
               placeholder="Remarks or additional representative(s)"
             ></TextArea>
           </SectionField>
