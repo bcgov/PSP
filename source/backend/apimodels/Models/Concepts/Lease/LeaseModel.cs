@@ -239,6 +239,11 @@ namespace Pims.Api.Models.Concepts.Lease
         /// get/set - A collection of the renewals for this lease.
         /// </summary>
         public IEnumerable<LeaseFileTeamModel> LeaseTeam { get; set; }
+
+        /// <summary>
+        /// get/set - Wether the lease editable for the current user.
+        /// </summary>
+        public bool CanEdit { get; set; }
         #endregion
     }
 }

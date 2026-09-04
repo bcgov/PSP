@@ -56,6 +56,19 @@ namespace Pims.Api.Helpers.Extensions
             }
         }
 
+        public static void ThrowIfCannotEditLeaseFile(this PimsLease leaseFile, ClaimsPrincipal principal, IUserRepository userRepository, IProjectRepository projectRepository, ILookupRepository lookupRepository)
+        {
+            if (!leaseFile.CanEditLeaseFile(
+                principal,
+                userRepository,
+                projectRepository,
+                lookupRepository))
+            {
+                throw new NotAuthorizedException(
+                    "User does not have edit access to this Lease File");
+            }
+        }
+
         public static bool IsAssignedToLeaseFileRegion(this PimsLease leaseFile, ClaimsPrincipal principal, IUserRepository userRepository)
         {
             ArgumentNullException.ThrowIfNull(principal);
@@ -63,6 +76,18 @@ namespace Pims.Api.Helpers.Extensions
 
             var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
             return leaseFile.IsUserAssignedToLeaseRegion(pimsUser);
+        }
+
+        public static bool CanEditLeaseFile(this PimsLease leaseFile, ClaimsPrincipal principal, IUserRepository userRepository, IProjectRepository projectRepository, ILookupRepository lookupRepository)
+        {
+            ArgumentNullException.ThrowIfNull(principal);
+            ArgumentNullException.ThrowIfNull(leaseFile);
+
+            var pimsUser = userRepository.GetUserInfoByKeycloakUserId(principal.GetUserKey());
+            var project = leaseFile.ProjectId.HasValue ? projectRepository.TryGet(leaseFile.ProjectId.Value) : null;
+            var cannotDetermineRegion = lookupRepository.GetAllRegions().FirstOrDefault(x => x.RegionName == "Cannot determine");
+
+            return leaseFile.CanEditLeaseFile(pimsUser, project, cannotDetermineRegion?.RegionCode);
         }
 
         private static bool IsUserAssignedToLeaseRegion(this PimsLease leaseFile, PimsUser pimsUser)
@@ -105,8 +130,39 @@ namespace Pims.Api.Helpers.Extensions
             else
             {
                 // Regular (non-contractor) users only need access to the lease region
-                return leaseFile.IsUserAssignedToLeaseRegion(pimsUser);
+                //return leaseFile.IsUserAssignedToLeaseRegion(pimsUser);
+                return true;
             }
+        }
+
+        private static bool CanEditLeaseFile(this PimsLease leaseFile, PimsUser pimsUser, PimsProject project, short? cannotDetermineRegionCode)
+        {
+            if (leaseFile is null || pimsUser is null)
+            {
+                return false;
+            }
+
+            var isOnLeaseTeam =
+                leaseFile.PimsLeaseLicenseTeams.Any(
+                    x => x.PersonId == pimsUser.PersonId);
+
+            var isOnProjectTeam =
+                project != null &&
+                project.PimsProjectPeople.Any(
+                    x => x.PersonId == pimsUser.PersonId);
+
+            if (pimsUser.IsContractor)
+            {
+                return (isOnLeaseTeam || isOnProjectTeam)
+                    && leaseFile.IsUserAssignedToLeaseRegion(pimsUser);
+            }
+
+            var isCannotDetermineRegion = cannotDetermineRegionCode != null && leaseFile.RegionCode == cannotDetermineRegionCode;
+
+            return isCannotDetermineRegion
+                || leaseFile.IsUserAssignedToLeaseRegion(pimsUser)
+                || isOnLeaseTeam
+                || isOnProjectTeam;
         }
     }
 }
