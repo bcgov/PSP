@@ -30,10 +30,14 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
       case ApiGen_CodeTypes_AcquisitionTeamProfileTypes.PROPCOORD:
       case ApiGen_CodeTypes_AcquisitionTeamProfileTypes.PROPANLYS:
       case ApiGen_CodeTypes_AcquisitionTeamProfileTypes.KEYCNTCT:
-        return RestrictContactType.ONLY_PIMSUSERS;
+        return [RestrictContactType.ONLY_PIMSUSERS];
 
       default:
-        return null;
+        return [
+          RestrictContactType.ONLY_PIMSUSERS,
+          RestrictContactType.ONLY_INDIVIDUALS,
+          RestrictContactType.ONLY_ORGANIZATIONS,
+        ];
     }
   };
 

@@ -31,10 +31,14 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
       case ApiGen_CodeTypes_DispositionTeamProfileTypes.MOTILEAD:
       case ApiGen_CodeTypes_DispositionTeamProfileTypes.MOTILAWYER:
       case ApiGen_CodeTypes_DispositionTeamProfileTypes.KEYCNTCT:
-        return RestrictContactType.ONLY_PIMSUSERS;
+        return [RestrictContactType.ONLY_PIMSUSERS];
 
       default:
-        return null;
+        return [
+          RestrictContactType.ONLY_PIMSUSERS,
+          RestrictContactType.ONLY_INDIVIDUALS,
+          RestrictContactType.ONLY_ORGANIZATIONS,
+        ];
     }
   };
 

@@ -60,7 +60,7 @@ const ManagementTeamSubForm: React.FunctionComponent<IManagementTeamSubFormProps
                     View={ContactInputView}
                     displayErrorAsTooltip={false}
                     canEditDetails={canEditDetails}
-                    restrictContactType={RestrictContactType.ONLY_PIMSUSERS}
+                    restrictContactType={[RestrictContactType.ONLY_PIMSUSERS]}
                   ></ContactInputContainer>
                 </Col>
 

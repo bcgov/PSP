@@ -35,10 +35,14 @@ export const AddLeaseTeamSubForm: React.FunctionComponent<
       case ApiGen_CodeTypes_LeaseTeamProfileTypes.LANDPRJMGR:
       case ApiGen_CodeTypes_LeaseTeamProfileTypes.LANDOPSMGR:
       case ApiGen_CodeTypes_LeaseTeamProfileTypes.KEYCNTCT:
-        return RestrictContactType.ONLY_PIMSUSERS;
+        return [RestrictContactType.ONLY_PIMSUSERS];
 
       default:
-        return null;
+        return [
+          RestrictContactType.ONLY_PIMSUSERS,
+          RestrictContactType.ONLY_ORGANIZATIONS,
+          RestrictContactType.ONLY_INDIVIDUALS,
+        ];
     }
   };
 

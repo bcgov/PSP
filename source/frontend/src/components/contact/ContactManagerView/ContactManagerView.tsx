@@ -24,7 +24,7 @@ interface IContactManagerViewProps {
   className?: string;
   showActiveSelector?: boolean;
   isSingleSelect?: boolean;
-  restrictContactType?: RestrictContactType;
+  restrictContactType?: RestrictContactType[];
 }
 
 /**
@@ -84,7 +84,7 @@ const ContactManagerView = ({
             filter={filter}
             setFilter={setFilter}
             showActiveSelector={showActiveSelector}
-            restrictContactType={restrictContactType}
+            restrictContactType={restrictContactType || []}
           />
         </Col>
       </Row>
