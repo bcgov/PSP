@@ -215,7 +215,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                         {consultation.requestedOn && (
                           <ReminderContainer
                             keyDate={consultation.requestedOn}
-                            keyDateLabel="Lease Policy Expiry"
+                            keyDateLabel="Lease First Nation Consultation"
                             notificationType={ApiGen_CodeTypes_NotificationTypes.L_CONSULTFN}
                             notificationSource={{
                               leaseId: consultation.leaseId,
