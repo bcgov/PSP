@@ -261,6 +261,32 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
   overflow-y: auto;
 }
 
+.c2 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c3 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
 .c7 {
   position: relative;
   border-radius: 0.4rem;
@@ -311,32 +337,6 @@ exports[`Update Disposition Sale View > renders as expected 1`] = `
 
 .c11.c11.form-control.is-invalid {
   border-color: #d8292f !important;
-}
-
-.c2 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c3 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c5.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c4 {
-  font-weight: bold;
 }
 
 .c1 {

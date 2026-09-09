@@ -54,7 +54,6 @@ export const ContactCreateForm: React.FC<IContactCreateFormProps> = ({ onSaved, 
   };
 
   const saveOrganization = async (values: IEditableOrganizationForm) => {
-    console.log('[Debug] Saving organization: ', values);
     const response = await addOrganization(
       values.formOrganizationToApiOrganization(),
       () => undefined,

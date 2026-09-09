@@ -287,6 +287,17 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
   border-color: #d8292f !important;
 }
 
+.c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
 .c7 {
   position: relative;
   border-radius: 0.4rem;
@@ -303,17 +314,6 @@ exports[`ReturnDepositForm component > renders as expected 1`] = `
 
 .c7.is-invalid {
   border: #CE3E39 solid 0.1rem;
-}
-
-.c1.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c0 {
-  font-weight: bold;
 }
 
 .c5 {
@@ -968,6 +968,17 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
   border-color: #d8292f !important;
 }
 
+.c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
 .c7 {
   position: relative;
   border-radius: 0.4rem;
@@ -984,17 +995,6 @@ exports[`ReturnDepositForm component > renders with data as expected 1`] = `
 
 .c7.is-invalid {
   border: #CE3E39 solid 0.1rem;
-}
-
-.c1.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c0 {
-  font-weight: bold;
 }
 
 .c5 {
