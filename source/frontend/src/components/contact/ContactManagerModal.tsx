@@ -1,10 +1,14 @@
+import { useState } from 'react';
 import { FaUser } from 'react-icons/fa';
 
+import { PlusButton } from '@/components/common/buttons';
 import GenericModal, { ModalSize } from '@/components/common/GenericModal';
 import { RestrictContactType } from '@/constants/contacts';
 import { IContactSearchResult } from '@/interfaces';
 
+import ContactCreateForm from './ContactManagerView/ContactCreateForm';
 import ContactManagerView from './ContactManagerView/ContactManagerView';
+import { IContactFilter } from './ContactManagerView/IContactFilter';
 
 export interface IContactManagerModalProps {
   display?: boolean;
@@ -22,30 +26,87 @@ export interface IContactManagerModalProps {
 export const ContactManagerModal: React.FunctionComponent<
   React.PropsWithChildren<IContactManagerModalProps>
 > = props => {
+  // Handles to show or not the Create New Contact button
+  const [isCreatingContact, setIsCreatingContact] = useState(false);
+  // Contains the contact created to be added to the results
+  const [newContact, setNewContact] = useState<IContactSearchResult>();
+  // Preserve the last search filter while ContactManagerView is unmounted.
+  const [searchFilter, setSearchFilter] = useState<IContactFilter>();
+
+  const onlyPimsUsersSelected =
+    searchFilter?.searchBy.length === 1 &&
+    searchFilter.searchBy.includes(RestrictContactType.ONLY_PIMSUSERS);
+
+  const showCreateContactButton =
+    !isCreatingContact && searchFilter !== undefined && !onlyPimsUsersSelected;
+
+  const resetModalState = () => {
+    setSearchFilter(undefined);
+    setNewContact(undefined);
+    setIsCreatingContact(false);
+  };
+
+  const handleModalOk = () => {
+    resetModalState();
+    props.handleModalOk?.();
+  };
+
+  const handleModalCancel = () => {
+    resetModalState();
+    props.handleModalCancel?.();
+  };
+
   return (
     <GenericModal
       variant="info"
       display={props.display}
       headerIcon={<FaUser size={20} />}
       setDisplay={props.setDisplay}
-      title="Select Contact"
+      title={isCreatingContact ? 'Add contact' : 'Select Contact'}
       message={
-        <ContactManagerView
-          setSelectedRows={props.setSelectedRows}
-          selectedRows={props.selectedRows}
-          showActiveSelector={props.showActiveSelector}
-          noInitialSearch={props.selectedRows.length === 0}
-          isSingleSelect={props.isSingleSelect}
-          restrictContactType={props.restrictContactType}
-          isSummary={props.isSummary ?? true}
-          showSelectedRowCount
-        />
+        isCreatingContact ? (
+          <ContactCreateForm
+            onSaved={contact => {
+              props.setSelectedRows([contact]);
+              setNewContact(contact);
+              setIsCreatingContact(false);
+            }}
+            onCancel={() => setIsCreatingContact(false)}
+          />
+        ) : (
+          <ContactManagerView
+            setSelectedRows={props.setSelectedRows}
+            selectedRows={props.selectedRows}
+            showActiveSelector={props.showActiveSelector}
+            noInitialSearch={props.selectedRows.length === 0}
+            isSingleSelect={props.isSingleSelect}
+            restrictContactType={props.restrictContactType}
+            isSummary={props.isSummary ?? true}
+            showSelectedRowCount
+            createdContact={newContact}
+            initialSearchFilter={searchFilter}
+            onFilterChanged={setSearchFilter}
+          />
+        )
       }
-      okButtonText="Select"
+      okButtonText={isCreatingContact ? undefined : 'Select'}
       cancelButtonText="Cancel"
-      handleOk={props.handleModalOk}
-      handleCancel={props.handleModalCancel}
+      handleOk={handleModalOk}
+      handleCancel={isCreatingContact ? () => setIsCreatingContact(false) : handleModalCancel}
+      hideFooter={isCreatingContact}
+      footerContent={
+        showCreateContactButton && (
+          <PlusButton
+            variant="secondary"
+            data-testid="create-new-contact"
+            toolId="create-new-contact-tooltip"
+            onClick={() => setIsCreatingContact(true)}
+          >
+            <span>Create New Contact</span>
+          </PlusButton>
+        )
+      }
       modalSize={ModalSize.XLARGE}
-    ></GenericModal>
+    />
   );
 };

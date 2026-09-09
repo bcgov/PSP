@@ -96,6 +96,8 @@ export interface ModalContent {
   draggable?: boolean;
   /** Optional error message to display in the footer - no default. */
   errorMessage?: string | React.ReactNode;
+  /** Optional content rendered in the modal footer before the cancel button. */
+  footerContent?: React.ReactNode;
 }
 
 export type ModalProps = ModalVisibleState & ModalContent;
@@ -125,6 +127,7 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
     headerIcon,
     draggable,
     errorMessage,
+    footerContent,
     ...rest
   } = props;
   const [show, setShow] = useState(true);
@@ -232,7 +235,9 @@ export const GenericModal = (props: Omit<BsModalProps, 'onHide'> & ModalProps) =
       {!hideFooter && (
         <Modal.Footer>
           <div className="button-wrap">
-            {exists(errorMessage) && <>{errorMessage}</>}
+            <div className="footer-content">
+              {exists(errorMessage) ? errorMessage : footerContent}
+            </div>
             {cancelButtonText && (
               <>
                 <Spacing24 />
@@ -366,14 +371,18 @@ const StyledModal = styled(Modal)<{ $draggable?: boolean }>`
     padding-right: 3.6rem;
 
     .button-wrap {
+      width: 100%;
       margin: 0px;
       padding: 0px;
-      display: inline-flex;
+      display: flex;
       justify-content: flex-end;
       align-items: center;
       .Button {
         min-width: 9.5rem;
         height: 3.9rem;
+      }
+      .footer-content {
+        margin-right: auto;
       }
     }
   }
