@@ -9,7 +9,7 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
-import { RestrictContactType } from '@/constants/contacts';
+import { getTeamContactTypeRestriction } from '@/constants/contacts';
 import { TeamMemberFormModal } from '@/features/mapSideBar/acquisition/common/modals/AcquisitionFormModal';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_CodeTypes_LeaseTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseTeamProfileTypes';

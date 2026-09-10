@@ -1,7 +1,7 @@
 import { Formik, FormikProps, getIn } from 'formik';
 import { createRef } from 'react';
 
-import { ApiGen_CodeTypes_TeamProfileTypeTypes } from '@/models/api/generated/ApiGen_CodeTypes_TeamProfileTypeTypes';
+import { ApiGen_CodeTypes_ManagementTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_ManagementTeamProfileTypes';
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -127,7 +127,7 @@ describe('ManagementTeamSubForm component', () => {
     await act(async () =>
       selectOptions(
         'team.0.teamProfileTypeCode',
-        ApiGen_CodeTypes_TeamProfileTypeTypes.KEY_CONTACT,
+        ApiGen_CodeTypes_ManagementTeamProfileTypes.KEYCNTCT,
       ),
     );
     await act(async () => userEvent.click(getByTitle('Select Contact')));
