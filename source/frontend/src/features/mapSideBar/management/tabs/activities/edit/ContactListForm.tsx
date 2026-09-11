@@ -20,7 +20,6 @@ export interface IContactListForm {
 export const ContactListForm: React.FunctionComponent<IContactListForm> = ({
   field,
   formikProps,
-  contactType,
   dataTestId,
 }) => {
   // clear out existing values instead of removing last item from array
@@ -43,7 +42,11 @@ export const ContactListForm: React.FunctionComponent<IContactListForm> = ({
                 <ContactInputContainer
                   field={`${field}[${index}]`}
                   View={ContactInputView}
-                  restrictContactType={contactType}
+                  restrictContactType={[
+                    RestrictContactType.ONLY_ORGANIZATIONS,
+                    RestrictContactType.ONLY_INDIVIDUALS,
+                    RestrictContactType.ONLY_PIMSUSERS,
+                  ]}
                 />
               </Col>
               {contacts.length > 1 && (

@@ -7,6 +7,7 @@ import { act, render, RenderOptions } from '@/utils/test-utils';
 
 import { ContactInputContainer, IContactInputContainerProps } from './ContactInputContainer';
 import { IContactInputViewProps } from './ContactInputView';
+import { RestrictContactType } from '@/constants/contacts';
 
 let viewProps = {} as IContactInputViewProps;
 let testFormikProps = {} as FormikProps<any>;
@@ -84,5 +85,33 @@ describe('ContactInputContainer component', () => {
     setup({ field: 'test' });
     await act(async () => viewProps.onClear());
     expect(testFormikProps.values.test).toBe(null);
+  });
+
+  it('sets all contact types when restrictContactType is empty', () => {
+    setup({
+      field: 'test',
+      restrictContactType: [],
+    });
+
+    expect(viewProps.contactManagerProps.restrictContactType).toEqual([
+      RestrictContactType.ONLY_PIMSUSERS,
+      RestrictContactType.ONLY_INDIVIDUALS,
+      RestrictContactType.ONLY_ORGANIZATIONS,
+    ]);
+  });
+
+  it('passes restricted contact types to the contact manager', () => {
+    setup({
+      field: 'test',
+      restrictContactType: [
+        RestrictContactType.ONLY_INDIVIDUALS,
+        RestrictContactType.ONLY_PIMSUSERS,
+      ],
+    });
+
+    expect(viewProps.contactManagerProps.restrictContactType).toEqual([
+      RestrictContactType.ONLY_INDIVIDUALS,
+      RestrictContactType.ONLY_PIMSUSERS,
+    ]);
   });
 });

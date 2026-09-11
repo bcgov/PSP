@@ -3,7 +3,7 @@ import noop from 'lodash/noop';
 
 import { Claims } from '@/constants/claims';
 import { useApiContacts } from '@/hooks/pims-api/useApiContacts';
-import { IContactSearchResult } from '@/interfaces';
+import { RestrictContactType } from '@/constants/contacts';
 import {
   act,
   fillInput,
@@ -16,8 +16,6 @@ import {
 
 import { defaultFilter } from './ContactFilterComponent/ContactFilterComponent';
 import ContactManagerView from './ContactManagerView';
-import { MockedFunction } from 'vitest';
-import { MaybeMocked } from '@vitest/spy';
 import { ApiGen_Concepts_ContactSummary } from '@/models/api/generated/ApiGen_Concepts_ContactSummary';
 import { getEmptyContactSummary } from '@/mocks/contacts.mock';
 
@@ -30,19 +28,25 @@ vi.mocked(useApiContacts).mockReturnValue({
 } as unknown as ReturnType<typeof useApiContacts>);
 
 // render component under test
-const setup = (renderOptions: RenderOptions = {}) => {
+const setup = (
+  props: Partial<React.ComponentProps<typeof ContactManagerView>> = {},
+  renderOptions: RenderOptions = {},
+) => {
   const utils = render(
     <ContactManagerView
       selectedRows={[]}
       setSelectedRows={noop}
       showActiveSelector
       showSelectedRowCount
+      {...props}
     />,
     {
       ...renderOptions,
     },
   );
+
   const searchButton = utils.getByTestId('contact-filter-search');
+
   return { searchButton, ...utils };
 };
 
@@ -247,5 +251,19 @@ describe('ContactManagerView', () => {
     );
     const toasts = await findAllByText('network error');
     expect(toasts[0]).toBeVisible();
+  });
+
+  it('displays only the restricted contact types', async () => {
+    const { container } = await setup({
+      noInitialSearch: true,
+      restrictContactType: [
+        RestrictContactType.ONLY_INDIVIDUALS,
+        RestrictContactType.ONLY_PIMSUSERS,
+      ],
+    });
+
+    expect(container.querySelector('#input-searchBy-persons')).not.toBeNull();
+    expect(container.querySelector('#input-searchBy-pimsusers')).not.toBeNull();
+    expect(container.querySelector('#input-searchBy-organizations')).toBeNull();
   });
 });
