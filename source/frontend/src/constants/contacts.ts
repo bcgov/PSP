@@ -14,7 +14,7 @@ export const allContactTypes: RestrictContactType[] = [
 export const getTeamContactTypeRestriction = (
   teamProfileTypeCode: string | undefined,
   pimsUserOnlyProfileCodes: string[],
-): RestrictContactType | undefined =>
+): RestrictContactType[] =>
   pimsUserOnlyProfileCodes.includes(teamProfileTypeCode ?? '')
-    ? RestrictContactType.ONLY_PIMSUSERS
-    : undefined;
+    ? [RestrictContactType.ONLY_PIMSUSERS]
+    : allContactTypes;

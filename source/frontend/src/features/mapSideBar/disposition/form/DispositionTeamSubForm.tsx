@@ -19,7 +19,11 @@ import {
   WithDispositionTeam,
 } from '../models/DispositionTeamSubFormModel';
 
-const PIMS_USER_ONLY_PROFILES: string[] = [ApiGen_CodeTypes_DispositionTeamProfileTypes.KEYCNTCT];
+const PIMS_USER_ONLY_PROFILES: string[] = [
+  ApiGen_CodeTypes_DispositionTeamProfileTypes.MOTILEAD,
+  ApiGen_CodeTypes_DispositionTeamProfileTypes.MOTILAWYER,
+  ApiGen_CodeTypes_DispositionTeamProfileTypes.KEYCNTCT,
+];
 
 const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
   const { values, setFieldTouched, setFieldValue, errors } =
