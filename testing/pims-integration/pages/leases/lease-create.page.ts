@@ -19,7 +19,7 @@ export class LeaseCreatePage extends LayoutPage {
 
     this.page = page;
 
-    this.leaseCreatePageTitle = page.getByTestId('form-title')
+    this.leaseCreatePageTitle = page.getByTestId('form-title');
     this.leaseStatusDropDown = page.locator('#input-statusTypeCode');
     this.leaseAccountTypeDropDown = page.locator('#input-paymentReceivableTypeCode');
     this.leaseRegionTypeDropDown = page.locator('#input-regionId');
