@@ -1,6 +1,5 @@
 import { Formik, FormikProps, getIn } from 'formik';
-import { createRef } from 'react';
-
+import { RestrictContactType } from '@/constants/contacts';
 import { ApiGen_CodeTypes_LeaseTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseTeamProfileTypes';
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
@@ -12,11 +11,9 @@ import {
   selectOptions,
   userEvent,
 } from '@/utils/test-utils';
-
+import { createRef } from 'react';
 import { WithLeaseTeam } from '../models';
 import { AddLeaseTeamSubForm } from './AddLeaseTeamSubform';
-import { ApiGen_CodeTypes_LeaseTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseTeamProfileTypes';
-import { RestrictContactType } from '@/constants/contacts';
 
 const contactInputMock = vi.fn();
 
@@ -161,24 +158,24 @@ describe('AddLeaseTeamSubForm component', () => {
       expect.objectContaining({
         restrictContactType: [
           RestrictContactType.ONLY_PIMSUSERS,
-          RestrictContactType.ONLY_ORGANIZATIONS,
           RestrictContactType.ONLY_INDIVIDUALS,
+          RestrictContactType.ONLY_ORGANIZATIONS,
         ],
       }),
     );
+  });
+
   it('restricts key contact selection to PIMS users', async () => {
-    const { getByTestId, getByTitle } = setup({ initialForm: testForm });
+    const { getByTestId } = setup({ initialForm: testForm });
     await act(async () => userEvent.click(getByTestId('add-team-member')));
     await act(async () =>
-      selectOptions(
-        'team.0.contactTypeCode',
-        ApiGen_CodeTypes_LeaseTeamProfileTypes.KEYCNTCT,
-      ),
+      selectOptions('team.0.contactTypeCode', ApiGen_CodeTypes_LeaseTeamProfileTypes.KEYCNTCT),
     );
-    await act(async () => userEvent.click(getByTitle('Select Contact')));
 
-    expect(document.querySelector('#input-searchBy-pimsusers')).toBeInTheDocument();
-    expect(document.querySelector('#input-searchBy-persons')).toBeNull();
-    expect(document.querySelector('#input-searchBy-organizations')).toBeNull();
+    expect(contactInputMock).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        restrictContactType: [RestrictContactType.ONLY_PIMSUSERS],
+      }),
+    );
   });
 });
