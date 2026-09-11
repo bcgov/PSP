@@ -18,7 +18,7 @@ export interface IContactListForm {
 
 export const ContactListForm: React.FunctionComponent<
   React.PropsWithChildren<IContactListForm>
-> = ({ field, contactType, formikProps }) => {
+> = ({ field, formikProps }) => {
   // clear out existing values instead of removing last item from array
   const onRemove = (array: Array<any>, index: number, arrayHelpers: ArrayHelpers) => {
     if (array.length > 1) {
@@ -40,7 +40,11 @@ export const ContactListForm: React.FunctionComponent<
                 <ContactInputContainer
                   field={`${field}[${index}]`}
                   View={ContactInputView}
-                  restrictContactType={contactType}
+                  restrictContactType={[
+                    RestrictContactType.ONLY_ORGANIZATIONS,
+                    RestrictContactType.ONLY_INDIVIDUALS,
+                    RestrictContactType.ONLY_PIMSUSERS,
+                  ]}
                 />
               </Col>
               {contacts.length > 1 && (

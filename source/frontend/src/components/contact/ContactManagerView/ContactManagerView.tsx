@@ -24,7 +24,7 @@ interface IContactManagerViewProps {
   className?: string;
   showActiveSelector?: boolean;
   isSingleSelect?: boolean;
-  restrictContactType?: RestrictContactType;
+  restrictContactType?: RestrictContactType[];
 }
 
 /**

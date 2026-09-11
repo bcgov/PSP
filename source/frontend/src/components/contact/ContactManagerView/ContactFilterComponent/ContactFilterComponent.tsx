@@ -37,7 +37,7 @@ export interface IContactFilterComponentProps {
   filter?: IContactFilter;
   setFilter: (filter: IContactFilter) => void;
   showActiveSelector?: boolean;
-  restrictContactType?: RestrictContactType;
+  restrictContactType?: RestrictContactType[];
 }
 
 /**
@@ -56,13 +56,15 @@ export const ContactFilterComponent: React.FunctionComponent<
     setFilter({ ...defaultFilter, searchBy: [...values.searchBy] });
   };
 
+  const effectiveContactTypes = restrictContactType?.length ? restrictContactType : allContactTypes;
+
   return (
     <Formik<IContactFilter>
       enableReinitialize
       initialValues={
         filter ?? {
           ...defaultFilter,
-          searchBy: restrictContactType ? [restrictContactType] : allContactTypes,
+          searchBy: [...effectiveContactTypes],
         }
       }
       onSubmit={(values, { setSubmitting }) => {
@@ -96,7 +98,7 @@ export const ContactFilterComponent: React.FunctionComponent<
                       isLabelBold={true}
                       field="searchBy"
                       flexDirection="row"
-                      checkValues={getRestrictedCheckValues(restrictContactType)}
+                      checkValues={getRestrictedCheckValues(effectiveContactTypes)}
                     >
                       {showActiveSelector && (
                         <BootstrapForm.Check
@@ -137,9 +139,7 @@ export const ContactFilterComponent: React.FunctionComponent<
                     onClick={() => {
                       const resetValues = {
                         ...defaultFilter,
-                        searchBy: restrictContactType
-                          ? [restrictContactType]
-                          : [...defaultFilter.searchBy],
+                        searchBy: [...effectiveContactTypes],
                       };
                       resetForm({ values: resetValues });
                       resetFilter(resetValues);
@@ -156,21 +156,15 @@ export const ContactFilterComponent: React.FunctionComponent<
 };
 
 const getRestrictedCheckValues = (
-  restrictContactType?: RestrictContactType,
+  restrictContactTypes?: RestrictContactType[],
 ): CheckGroupOption[] => {
-  switch (restrictContactType) {
-    case RestrictContactType.ONLY_INDIVIDUALS:
-      return [{ label: 'Individuals', value: 'persons' }];
-
-    case RestrictContactType.ONLY_ORGANIZATIONS:
-      return [{ label: 'Organizations', value: 'organizations' }];
-
-    case RestrictContactType.ONLY_PIMSUSERS:
-      return [{ label: 'Pims users', value: 'pimsusers' }];
-
-    default:
-      return contactTypeOptions;
+  if (!restrictContactTypes?.length) {
+    return contactTypeOptions;
   }
+
+  return contactTypeOptions.filter(option =>
+    restrictContactTypes.includes(option.value as RestrictContactType),
+  );
 };
 
 const StyledFilterBoxForm = styled(Form)`

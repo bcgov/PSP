@@ -15,7 +15,7 @@ export interface IContactManagerModalProps {
   handleModalOk?: () => void;
   handleModalCancel?: () => void;
   isSingleSelect?: boolean;
-  restrictContactType?: RestrictContactType;
+  restrictContactType?: RestrictContactType[];
   isSummary?: boolean;
 }
 
