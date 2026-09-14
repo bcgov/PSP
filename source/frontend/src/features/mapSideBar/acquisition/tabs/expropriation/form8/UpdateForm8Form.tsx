@@ -90,7 +90,7 @@ export const UpdateForm8Form: React.FC<IForm8FormProps> = ({
                       <ContactInputContainer
                         field="expropriationAuthority.contact"
                         View={ContactInputView}
-                        restrictContactType={RestrictContactType.ONLY_ORGANIZATIONS}
+                        restrictContactType={[RestrictContactType.ONLY_ORGANIZATIONS]}
                         displayErrorAsTooltip={false}
                       ></ContactInputContainer>
                     </SectionField>

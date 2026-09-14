@@ -75,13 +75,10 @@ namespace Pims.Dal.Repositories
 
             if(!consultation.RequestedOn.HasValue)
             {
-                var existingNotification = Context.PimsNotifications.AsNoTracking()
-                    .Where(n => n.LeaseId == consultation.LeaseId && n.LeaseConsultationId == consultation.LeaseConsultationId)
-                    .FirstOrDefault();
-
-                if (existingNotification is not null)
+                var existingNotifications = Context.PimsNotifications.AsNoTracking().Where(n => n.LeaseId == consultation.LeaseId && n.LeaseConsultationId == consultation.LeaseConsultationId).ToList();
+                foreach (var notification in existingNotifications)
                 {
-                    _notificationRepository.Delete(existingNotification.NotificationId);
+                    _notificationRepository.Delete(notification.NotificationId);
                 }
             }
 
@@ -95,13 +92,10 @@ namespace Pims.Dal.Repositories
             var deletedEntity = Context.PimsLeaseConsultations.Where(x => x.LeaseConsultationId == consultationId).FirstOrDefault();
             if (deletedEntity is not null)
             {
-                var existingNotification = Context.PimsNotifications.AsNoTracking()
-                    .Where(n => n.LeaseId == deletedEntity.LeaseId && n.LeaseConsultationId == deletedEntity.LeaseConsultationId)
-                    .FirstOrDefault();
-
-                if (existingNotification is not null)
+                var existingNotifications = Context.PimsNotifications.AsNoTracking().Where(n => n.LeaseId == deletedEntity.LeaseId && n.LeaseConsultationId == deletedEntity.LeaseConsultationId).ToList();
+                foreach(var notification in existingNotifications)
                 {
-                    _notificationRepository.Delete(existingNotification.NotificationId);
+                    _notificationRepository.Delete(notification.NotificationId);
                 }
 
                 Context.PimsLeaseConsultations.Remove(deletedEntity);
