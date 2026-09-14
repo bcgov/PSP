@@ -62,7 +62,7 @@ export const ExpropriationForm9: React.FC<IExpropriationForm9Props> = ({
               <ContactInputContainer
                 field="expropriationAuthority.contact"
                 View={ContactInputView}
-                restrictContactType={RestrictContactType.ONLY_ORGANIZATIONS}
+                restrictContactType={[RestrictContactType.ONLY_ORGANIZATIONS]}
                 displayErrorAsTooltip={false}
               ></ContactInputContainer>
             </SectionField>

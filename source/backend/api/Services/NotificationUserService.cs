@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Hosting;
@@ -129,48 +130,82 @@ namespace Pims.Api.Services
             newEmail.To.Add(emailToContactAddress);
 
             return newEmail;
+        }
 
-            static string GetNotificationSource(PimsNotification notification)
+        private static string GetNotificationSource(PimsNotification notification)
+        {
+            return notification.NotificationTypeCode switch
             {
-                string source;
-                if(notification.AcquisitionFileId.HasValue)
-                {
-                    source = $"Acquisition File #: {notification.AcquisitionFile.FileNumberFormatted}";
-                }
-                else if(notification.DispositionFileId.HasValue)
-                {
-                    source = $"Disposition File #: D-{notification.DispositionFile.FileNumber}";
-                }
-                else if(notification.ResearchFileId.HasValue)
-                {
-                    source = $"Research File #: R-{notification.ResearchFile.RfileNumber}";
-                }
-                else if(notification.ManagementFileId.HasValue)
-                {
-                    source = $"Management File #: M-{notification.ManagementFile.ManagementFileId}";
-                }
-                else if(notification.LeaseId.HasValue)
-                {
-                    if(notification.InsuranceId.HasValue)
-                    {
-                        source = $"Lease File #: {notification.Lease.LFileNo} and Insurance for: {notification.Insurance.InsuranceTypeCodeNavigation.Description}";
-                    }
-                    else if (notification.LeaseConsultationId.HasValue)
-                    {
-                        source = $"Lease File #: {notification.Lease.LFileNo} and First Nation Consultation with status: {notification.LeaseConsultation.ConsultationStatusTypeCodeNavigation.Description}";
-                    }
-                    else
-                    {
-                        source = $"Lease File #: {notification.Lease.LFileNo}";
-                    }
-                }
-                else
-                {
-                    source = string.Empty;
-                }
+                nameof(NotificationTypes.TAKE_SRW)
+                or nameof(NotificationTypes.TAKE_LAT)
+                or nameof(NotificationTypes.TAKE_LTC)
+                or nameof(NotificationTypes.TAKE_LPYBLE)
+                or nameof(NotificationTypes.NOC)
+                or nameof(NotificationTypes.EXPROPH_APPEFFDT)
+                or nameof(NotificationTypes.AGMT_SIGND)
+                    => $"Acquisition File #: {notification.AcquisitionFile.FileNumberFormatted}",
 
-                return source;
+                nameof(NotificationTypes.L_RENEWAL)
+                    => $"Lease File #: {notification.Lease.LFileNo} ",
+
+                nameof(NotificationTypes.L_INSURANCE)
+                    => GetInsuranceSource(notification),
+
+                nameof(NotificationTypes.L_CONSULTFN)
+                    => GetConsultationSource(notification),
+
+                _ => string.Empty,
+            };
+        }
+
+        private static string GetInsuranceSource(PimsNotification notification)
+        {
+            var lease = notification.Lease;
+
+            if (lease.PimsLeaseStakeholders.Count > 0 &&
+                lease.LeasePayRvblTypeCode == "RCVBL")
+            {
+                var tenants = GetTenants(lease);
+
+                return $"Lease File #: {lease.LFileNo} " +
+                    $"with {tenants} as Tenants. " +
+                    $"Insurance for: {notification.Insurance.InsuranceTypeCodeNavigation.Description}";
             }
+
+            return $"Lease File #: {lease.LFileNo} " +
+                $"and Insurance for: {notification.Insurance.InsuranceTypeCodeNavigation.Description}";
+        }
+
+        private static string GetConsultationSource(PimsNotification notification)
+        {
+            var lease = notification.Lease;
+
+            if (lease.PimsLeaseStakeholders.Count > 0)
+            {
+                var tenants = GetTenants(lease);
+
+                return $"Lease File #: {lease.LFileNo} " +
+                    $"with {tenants} as Tenants and " +
+                    $"First Nation Consultation with status: " +
+                    $"{notification.LeaseConsultation.ConsultationOutcomeTypeCodeNavigation.Description}";
+            }
+
+            return $"Lease File #: {lease.LFileNo} " +
+                $"and First Nation Consultation with status: " +
+                $"{notification.LeaseConsultation.ConsultationStatusTypeCodeNavigation.Description}";
+        }
+
+        private static string GetTenants(PimsLease lease)
+        {
+            return string.Join(
+                ", ",
+                lease.PimsLeaseStakeholders
+                    .Select(stakeholder =>
+                        stakeholder.PersonId.HasValue
+                            ? stakeholder.Person.GetFullName()
+                            : stakeholder.Organization?.Name)
+                    .Where(name => !string.IsNullOrWhiteSpace(name))
+            );
         }
     }
 }

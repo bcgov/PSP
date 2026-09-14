@@ -768,7 +768,7 @@ exports[`UpdateLeaseForm component > renders as expected 1`] = `
       >
         <button
           class="c8 Button btn btn-link"
-          data-testid="add-file-owner"
+          data-testid="add-lease-renewal"
           type="button"
         >
           <div

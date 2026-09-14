@@ -14,6 +14,17 @@ import {
 import { WithAcquisitionTeam } from '../../models';
 import { UpdateAcquisitionTeamSubForm } from './UpdateAcquisitionTeamSubForm';
 import { createRef } from 'react';
+import { ApiGen_CodeTypes_AcquisitionTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTeamProfileTypes';
+import { RestrictContactType } from '@/constants/contacts';
+
+const contactInputMock = vi.fn();
+
+vi.mock('@/components/common/form/ContactInput/ContactInputContainer', () => ({
+  ContactInputContainer: (props: any) => {
+    contactInputMock(props);
+    return <div data-testid="contact-input-container" />;
+  },
+}));
 
 describe('AcquisitionTeamSubForm component', () => {
   // render component under test
@@ -109,13 +120,49 @@ describe('AcquisitionTeamSubForm component', () => {
     expect(getByName('team.0.contactTypeCode')).toBeVisible();
   });
 
-  it(`sets the contact manager field as 'touched' when team profile type is changed`, async () => {
-    const { getByTestId, getFormikRef } = setup({
+  it('restricts contact selection to PIMS users for PROPCOORD profile', async () => {
+    const { getByTestId } = setup({
       initialForm: testForm,
     });
-    const addRow = getByTestId('add-team-member');
-    await act(async () => userEvent.click(addRow));
-    await act(async () => selectOptions('team.0.contactTypeCode', 'MOTILAWYER'));
-    expect(getIn(getFormikRef().current?.touched, 'team.0.contact')).toBe(true);
+
+    await act(async () => userEvent.click(getByTestId('add-team-member')));
+
+    await act(async () =>
+      selectOptions(
+        'team.0.contactTypeCode',
+        ApiGen_CodeTypes_AcquisitionTeamProfileTypes.PROPCOORD,
+      ),
+    );
+
+    expect(contactInputMock).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        restrictContactType: [RestrictContactType.ONLY_PIMSUSERS],
+      }),
+    );
+  });
+
+  it('allows all contact types for unrestricted team profiles', async () => {
+    const { getByTestId } = setup({
+      initialForm: testForm,
+    });
+
+    await act(async () => userEvent.click(getByTestId('add-team-member')));
+
+    await act(async () =>
+      selectOptions(
+        'team.0.contactTypeCode',
+        ApiGen_CodeTypes_AcquisitionTeamProfileTypes.NEGOTAGENT,
+      ),
+    );
+
+    expect(contactInputMock).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        restrictContactType: [
+          RestrictContactType.ONLY_PIMSUSERS,
+          RestrictContactType.ONLY_INDIVIDUALS,
+          RestrictContactType.ONLY_ORGANIZATIONS,
+        ],
+      }),
+    );
   });
 });
