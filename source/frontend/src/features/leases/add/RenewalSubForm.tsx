@@ -31,7 +31,11 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
             {values.renewals.map((renewal, index) => (
               <Row key={index}>
                 <Col>
-                  <Section header={`Renewal ${index + 1}`} noPadding>
+                  <Section
+                    header={`Renewal ${index + 1}`}
+                    data-testid={`${fieldName}.${index}.header`}
+                    noPadding
+                  >
                     <SectionField
                       label="Exercised?"
                       labelWidth={{ xs: 4 }}
@@ -104,7 +108,7 @@ export const RenewalSubForm: React.FunctionComponent<IRenewalSubFormProps> = ({ 
               </Row>
             ))}
             <LinkButton
-              data-testid="add-file-owner"
+              data-testid="add-lease-renewal"
               onClick={() => {
                 const renewal = new FormLeaseRenewal();
                 arrayHelpers.push(renewal);
