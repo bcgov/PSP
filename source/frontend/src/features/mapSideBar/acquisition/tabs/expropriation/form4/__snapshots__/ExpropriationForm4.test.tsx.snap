@@ -220,6 +220,17 @@ exports[`Expropriation Form 4 > matches snapshot 1`] = `
   border: #CE3E39 solid 0.1rem;
 }
 
+.c2.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c1 {
+  font-weight: bold;
+}
+
 .c3 {
   position: relative;
   border-radius: 0.4rem;
@@ -236,17 +247,6 @@ exports[`Expropriation Form 4 > matches snapshot 1`] = `
 
 .c3.is-invalid {
   border: #CE3E39 solid 0.1rem;
-}
-
-.c2.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c1 {
-  font-weight: bold;
 }
 
 .c6 {

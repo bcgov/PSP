@@ -274,12 +274,13 @@ exports[`UpdateNoteFormModal component > renders as expected 1`] = `
 }
 
 .c0 .modal-footer .button-wrap {
+  width: 100%;
   margin: 0px;
   padding: 0px;
-  display: -webkit-inline-box;
-  display: -webkit-inline-flex;
-  display: -ms-inline-flexbox;
-  display: inline-flex;
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
   -webkit-box-pack: end;
   -webkit-justify-content: flex-end;
   -ms-flex-pack: end;
@@ -293,6 +294,10 @@ exports[`UpdateNoteFormModal component > renders as expected 1`] = `
 .c0 .modal-footer .button-wrap .Button {
   min-width: 9.5rem;
   height: 3.9rem;
+}
+
+.c0 .modal-footer .button-wrap .footer-content {
+  margin-right: auto;
 }
 
 .c0 .close {
@@ -532,6 +537,9 @@ exports[`UpdateNoteFormModal component > renders as expected 1`] = `
           <div
             class="button-wrap"
           >
+            <div
+              class="footer-content"
+            />
             <span
               class="c3"
             />

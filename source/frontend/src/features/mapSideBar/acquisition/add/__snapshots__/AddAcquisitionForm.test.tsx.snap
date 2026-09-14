@@ -241,24 +241,6 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
   text-decoration: none;
 }
 
-.c21 {
-  position: relative;
-  border-radius: 0.4rem;
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-  padding-left: 1.2rem;
-  padding-right: 2.8rem;
-  word-break: break-all;
-  background-image: none;
-  color: #9F9D9C;
-  border: #606060 solid 0.1rem;
-  cursor: pointer;
-}
-
-.c21.is-invalid {
-  border: #CE3E39 solid 0.1rem;
-}
-
 .c1 {
   margin: 1.6rem;
   padding: 1.6rem;
@@ -283,6 +265,24 @@ exports[`AddAcquisitionForm component > Sub-interest files > renders as expected
 
 .c3 {
   font-weight: bold;
+}
+
+.c21 {
+  position: relative;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+  word-break: break-all;
+  background-image: none;
+  color: #9F9D9C;
+  border: #606060 solid 0.1rem;
+  cursor: pointer;
+}
+
+.c21.is-invalid {
+  border: #CE3E39 solid 0.1rem;
 }
 
 .c17 {
@@ -2603,24 +2603,6 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
   text-decoration: none;
 }
 
-.c22 {
-  position: relative;
-  border-radius: 0.4rem;
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-  padding-left: 1.2rem;
-  padding-right: 2.8rem;
-  word-break: break-all;
-  background-image: none;
-  color: #9F9D9C;
-  border: #606060 solid 0.1rem;
-  cursor: pointer;
-}
-
-.c22.is-invalid {
-  border: #CE3E39 solid 0.1rem;
-}
-
 .c1 {
   margin: 1.6rem;
   padding: 1.6rem;
@@ -2645,6 +2627,24 @@ exports[`AddAcquisitionForm component > renders as expected 1`] = `
 
 .c3 {
   font-weight: bold;
+}
+
+.c22 {
+  position: relative;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+  word-break: break-all;
+  background-image: none;
+  color: #9F9D9C;
+  border: #606060 solid 0.1rem;
+  cursor: pointer;
+}
+
+.c22.is-invalid {
+  border: #CE3E39 solid 0.1rem;
 }
 
 .c18 {
