@@ -29,7 +29,7 @@ on:
   workflow_dispatch:
     inputs:
       OVERRIDE_VERSION:
-        description: "Enter the version tag for this release in format v<major>.<minor>.<patch>.<build> or enter nothing to use the most recently tagged version"
+        description: "Enter the version for this release in format <major>.<minor>.<hotfix>.<build> (a leading v is accepted), or enter nothing to use the most recently tagged version"
         required: false
       enable-notifications:
         description: "Send Teams notifications"
@@ -75,30 +75,74 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+      ## The source is now the immutable <version>-uat tag created by
+      ## retag-test-to-uat-argo.yml, replacing the previous v<version>-master.
+      ## Git tags carry a leading "v" that is not part of the image tag.
+      - name: Resolve release version
+        id: release
+        shell: bash
+        run: |
+          if [ -z "${{ github.event.inputs.OVERRIDE_VERSION }}" ]; then
+            RAW_VERSION="${{ steps.previoustag.outputs.tag }}"
+          else
+            RAW_VERSION="${{ github.event.inputs.OVERRIDE_VERSION }}"
+          fi
+
+          RELEASE_VERSION="${RAW_VERSION#v}"
+
+          if [ -z "$RELEASE_VERSION" ]; then
+            echo "ERROR: could not resolve a release version" >&2
+            exit 1
+          fi
+
+          IMAGE_VERSION=$(oc -n "$OPENSHIFT_TOOLS_NAMESPACE" get istag "pims-api:${RELEASE_VERSION}-uat" \
+            -o jsonpath='{.image.dockerImageMetadata.Config.Env}' 2>/dev/null \
+            | jq -r '.[] | select(startswith("PIMS_VERSION=")) | ltrimstr("PIMS_VERSION=")' \
+            | tail -1)
+
+          if [ -z "$IMAGE_VERSION" ]; then
+            echo "::error::pims-api:${RELEASE_VERSION}-uat not found, or carries no PIMS_VERSION."
+            echo "::error::Confirm the release was promoted to UAT before deploying to PROD."
+            exit 1
+          fi
+
+          if [ "$IMAGE_VERSION" != "$RELEASE_VERSION" ]; then
+            echo "::error::pims-api:${RELEASE_VERSION}-uat was built as ${IMAGE_VERSION}."
+            echo "::error::The tag does not match the image content. Refusing to promote."
+            exit 1
+          fi
+
+          echo "Promoting release version: ${RELEASE_VERSION}"
+          echo "version=${RELEASE_VERSION}" >> "$GITHUB_OUTPUT"
       - name: Display the maintenance page instead of the app
         run: |
           APPLICATION_NAME=pims-app-prod ./tools/cicd/maintenance/maintenance.sh prod on
-      - name: call scripts to deploy api and frontend
+      - name: Deploy PIMS services
+        shell: bash
         run: |
-          [[ -z ${{github.event.inputs.OVERRIDE_VERSION}} ]] && RELEASE_VERSION=${{steps.previoustag.outputs.tag}}-master || RELEASE_VERSION=${{github.event.inputs.OVERRIDE_VERSION}}-master
-
-          oc tag pims-app:$RELEASE_VERSION pims-app:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-app-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-app-$DESTINATION
-
-          oc tag pims-api:$RELEASE_VERSION pims-api:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-api-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-api-$DESTINATION
-
-          oc tag pims-proxy:$RELEASE_VERSION pims-proxy:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
-
-          oc tag pims-scheduler:$RELEASE_VERSION pims-scheduler:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
-
-          oc tag mayan-bcgov:$RELEASE_VERSION mayan-bcgov:master
+          ./tools/cicd/build/deploy-image.sh \
+            --from "${{ steps.release.outputs.version }}-uat" \
+            --env prod \
+            pims-app pims-api pims-proxy pims-scheduler
+      ## mayan-bcgov previously went to a tag named "master" here while the
+      ## other four went to "prod". It now uses "prod" like the rest.
+      - name: Deploy mayan
+        shell: bash
+        run: |
+          ./tools/cicd/build/deploy-image.sh \
+            --from "${{ steps.release.outputs.version }}-uat" \
+            --env prod \
+            --no-rollout \
+            mayan-bcgov
+      ## The clean, environment-suffix-free release tag. PROD only.
+      - name: Tag production release
+        shell: bash
+        run: |
+          ./tools/cicd/build/tag-version.sh \
+            --env prod \
+            --version "${{ steps.release.outputs.version }}" \
+            --clean \
+            pims-app pims-api pims-proxy pims-scheduler mayan-bcgov
 
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.

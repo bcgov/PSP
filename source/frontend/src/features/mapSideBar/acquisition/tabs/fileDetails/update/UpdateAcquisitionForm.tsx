@@ -429,7 +429,7 @@ const AcquisitionDetailSubForm: React.FC<{
           <ContactInputContainer
             field="ownerRepresentatives.0.contact"
             View={ContactInputView}
-            restrictContactType={RestrictContactType.ONLY_INDIVIDUALS}
+            restrictContactType={[RestrictContactType.ONLY_INDIVIDUALS]}
           ></ContactInputContainer>
         </SectionField>
         <SectionField label="Comment">

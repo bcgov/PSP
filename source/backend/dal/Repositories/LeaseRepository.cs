@@ -933,13 +933,10 @@ namespace Pims.Dal.Repositories
                 // remove the notifications when an insurance is removed.
                 foreach (var delInsurance in removedInsurances)
                 {
-                    var existingNotification = Context.PimsNotifications.AsNoTracking()
-                                                .Where(n => n.LeaseId == leaseId && n.InsuranceId == delInsurance.InsuranceId)
-                                                .FirstOrDefault();
-
-                    if(existingNotification is not null)
+                    var existingNotifications = Context.PimsNotifications.AsNoTracking().Where(n => n.LeaseId == leaseId && n.InsuranceId == delInsurance.InsuranceId).ToList();
+                    foreach(var notification in existingNotifications)
                     {
-                        _notificationRepository.Delete(existingNotification.NotificationId);
+                        _notificationRepository.Delete(notification.NotificationId);
                     }
                 }
             }
@@ -949,13 +946,10 @@ namespace Pims.Dal.Repositories
             {
                 if(!insurance.ExpiryDate.HasValue)
                 {
-                    var existingNotification = Context.PimsNotifications.AsNoTracking()
-                                                .Where(n => n.LeaseId == leaseId && n.InsuranceId == insurance.InsuranceId)
-                                                .FirstOrDefault();
-
-                    if (existingNotification is not null)
+                    var existingNotifications = Context.PimsNotifications.AsNoTracking().Where(n => n.LeaseId == leaseId && n.InsuranceId == insurance.InsuranceId).ToList();
+                    foreach (var notification in existingNotifications)
                     {
-                        _notificationRepository.Delete(existingNotification.NotificationId);
+                        _notificationRepository.Delete(notification.NotificationId);
                     }
                 }
             }

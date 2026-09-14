@@ -2,6 +2,7 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using FluentAssertions;
+using Moq;
 using Pims.Core.Test;
 using Pims.Dal.Entities;
 using Pims.Dal.Repositories;
@@ -104,6 +105,49 @@ namespace Pims.Dal.Test.Repositories
         }
 
         [Fact]
+        public void UpdateConsultation_RequestedOnNull_DeletesMatchingNotifications()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
+            _helper.CreatePimsContext(user, true);
+
+            var notificationRepository = new Mock<INotificationRepository>();
+            _helper.AddSingleton(notificationRepository.Object);
+
+            var repository = _helper.CreateRepository<ConsultationRepository>(user);
+            var consultation = EntityHelper.CreateLeaseConsultationItem();
+            _helper.AddAndSaveChanges(consultation);
+
+            var matchingNotification = new PimsNotification
+            {
+                NotificationId = 1,
+                NotificationTypeCode = "TEST",
+                LeaseId = consultation.LeaseId,
+                LeaseConsultationId = consultation.LeaseConsultationId,
+            };
+            var unrelatedNotification = new PimsNotification
+            {
+                NotificationId = 2,
+                NotificationTypeCode = "TEST",
+                LeaseId = consultation.LeaseId + 1,
+                LeaseConsultationId = consultation.LeaseConsultationId,
+            };
+            _helper.AddAndSaveChanges(matchingNotification, unrelatedNotification);
+
+            var updatedConsultation = EntityHelper.CreateLeaseConsultationItem(
+                leaseConsultationId: consultation.LeaseConsultationId,
+                leaseId: consultation.LeaseId);
+            updatedConsultation.RequestedOn = null;
+
+            // Act
+            repository.UpdateConsultation(updatedConsultation);
+
+            // Assert
+            notificationRepository.Verify(x => x.Delete(matchingNotification.NotificationId), Times.Once);
+            notificationRepository.Verify(x => x.Delete(unrelatedNotification.NotificationId), Times.Never);
+        }
+
+        [Fact]
         public void UpdateConsultation_KeyNotFoundException()
         {
             // Arrange
@@ -133,6 +177,45 @@ namespace Pims.Dal.Test.Repositories
 
             // Assert
             result.Should().BeTrue();
+        }
+
+        [Fact]
+        public void TryDeleteConsultation_DeletesMatchingNotifications()
+        {
+            // Arrange
+            var user = PrincipalHelper.CreateForPermission(Permissions.LeaseEdit);
+            _helper.CreatePimsContext(user, true);
+
+            var notificationRepository = new Mock<INotificationRepository>();
+            _helper.AddSingleton(notificationRepository.Object);
+
+            var repository = _helper.CreateRepository<ConsultationRepository>(user);
+            var consultation = EntityHelper.CreateLeaseConsultationItem();
+            _helper.AddAndSaveChanges(consultation);
+
+            var matchingNotification = new PimsNotification
+            {
+                NotificationId = 1,
+                NotificationTypeCode = "TEST",
+                LeaseId = consultation.LeaseId,
+                LeaseConsultationId = consultation.LeaseConsultationId,
+            };
+            var unrelatedNotification = new PimsNotification
+            {
+                NotificationId = 2,
+                NotificationTypeCode = "TEST",
+                LeaseId = consultation.LeaseId + 1,
+                LeaseConsultationId = consultation.LeaseConsultationId,
+            };
+            _helper.AddAndSaveChanges(matchingNotification, unrelatedNotification);
+
+            // Act
+            var result = repository.TryDeleteConsultation(consultation.LeaseConsultationId);
+
+            // Assert
+            result.Should().BeTrue();
+            notificationRepository.Verify(x => x.Delete(matchingNotification.NotificationId), Times.Once);
+            notificationRepository.Verify(x => x.Delete(unrelatedNotification.NotificationId), Times.Never);
         }
 
         [Fact]

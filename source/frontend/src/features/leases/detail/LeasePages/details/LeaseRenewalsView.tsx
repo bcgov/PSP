@@ -18,24 +18,43 @@ export const LeaseRenewalsView: React.FunctionComponent<ILeaseRenewalsViewProps>
   renewals,
 }) => {
   if (renewals.length === 0)
-    return <Section header="Renewal Options">No Renewal Information</Section>;
+    return (
+      <Section header="Renewal Options">
+        <div data-testid="empty-renewals">No Renewal Information</div>
+      </Section>
+    );
   return (
     <Section header="Renewal Options">
       {renewals.map((renewal, index) => (
-        <Section key={`lease-renewal-${index}`} header={`Renewal ${index + 1}`} noPadding>
-          <SectionField label="Exercised?" labelWidth={{ xs: 3 }}>
+        <Section
+          key={`lease-renewal-${index}`}
+          header={`Renewal ${index + 1}`}
+          noPadding
+          data-testid={`renewal[${index}].header`}
+        >
+          <SectionField
+            label="Exercised?"
+            labelWidth={{ xs: 3 }}
+            valueTestId={`renewal[${index}].exercised`}
+          >
             {booleanToYesNoUnknownString(renewal.isExercised)}
           </SectionField>
           <Row>
             <Col>
-              <SectionField label="Commencement" labelWidth={{ xs: 6 }}>
+              <SectionField
+                label="Commencement"
+                labelWidth={{ xs: 6 }}
+                valueTestId={`renewal[${index}].commencementDt`}
+              >
                 {prettyFormatDate(renewal.commencementDt)}
               </SectionField>
             </Col>
             <Col>
               <SectionField label="Expiry">
                 <StyledReminderContent>
-                  {prettyFormatDate(renewal.expiryDt)}
+                  <div data-testid={`renewal[${index}].expiryDt`}>
+                    {prettyFormatDate(renewal.expiryDt)}
+                  </div>
                   <ReminderContainer
                     keyDate={renewal.expiryDt}
                     keyDateLabel="Lease RenewalExpiry"
@@ -47,7 +66,11 @@ export const LeaseRenewalsView: React.FunctionComponent<ILeaseRenewalsViewProps>
               </SectionField>
             </Col>
           </Row>
-          <SectionField label="Comments" labelWidth={{ xs: 3 }}>
+          <SectionField
+            label="Comments"
+            labelWidth={{ xs: 3 }}
+            valueTestId={`renewal[${index}].renewalNote`}
+          >
             {renewal.renewalNote}
           </SectionField>
         </Section>
