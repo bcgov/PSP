@@ -143,10 +143,8 @@ namespace Pims.Api.Helpers.Extensions
 
                 return onTeamOrProject && leaseFile.IsUserAssignedToLeaseRegion(pimsUser);
             }
-            else
-            {
-                return true;
-            }
+
+            return true;
         }
 
         private static bool CanEditLeaseFile(this PimsLease leaseFile, PimsUser pimsUser, PimsProject project, short? cannotDetermineRegionCode)

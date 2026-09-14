@@ -35,10 +35,6 @@ namespace Pims.Api.Areas.Notes.Controllers
         private readonly INoteService _noteService;
         private readonly IMapper _mapper;
         private readonly ILogger _logger;
-        private readonly IUserRepository _userRepository;
-        private readonly ILookupRepository _lookupRepository;
-        private readonly IProjectRepository _projectRepository;
-        private readonly ILeaseRepository _leaseRepository;
         #endregion
 
         #region Constructors
@@ -49,19 +45,11 @@ namespace Pims.Api.Areas.Notes.Controllers
         /// <param name="noteService"></param>
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
-        /// <param name="userRepository"></param>
-        /// <param name="lookupRepository"></param>
-        /// <param name="projectRepository"></param>
-        /// <param name="leaseRepository"></param>
-        public NoteController(INoteService noteService, IMapper mapper, ILogger<NoteController> logger, IUserRepository userRepository, ILookupRepository lookupRepository, IProjectRepository projectRepository, ILeaseRepository leaseRepository)
+        public NoteController(INoteService noteService, IMapper mapper, ILogger<NoteController> logger)
         {
             _noteService = noteService;
             _mapper = mapper;
             _logger = logger;
-            _userRepository = userRepository;
-            _lookupRepository = lookupRepository;
-            _projectRepository = projectRepository;
-            _leaseRepository = leaseRepository;
         }
         #endregion
 
