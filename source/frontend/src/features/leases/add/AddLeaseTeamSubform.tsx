@@ -9,7 +9,7 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
-import { RestrictContactType } from '@/constants/contacts';
+import { getTeamContactTypeRestriction } from '@/constants/contacts';
 import { TeamMemberFormModal } from '@/features/mapSideBar/acquisition/common/modals/AcquisitionFormModal';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_CodeTypes_LeaseTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_LeaseTeamProfileTypes';
@@ -17,25 +17,15 @@ import { isValidId } from '@/utils';
 
 import { LeaseTeamFormModel, WithLeaseTeam } from '../models';
 
-const getContactTypeRestriction = (contactTypeCode?: string) => {
-  switch (contactTypeCode) {
-    case ApiGen_CodeTypes_LeaseTeamProfileTypes.PROPANALYST:
-    case ApiGen_CodeTypes_LeaseTeamProfileTypes.PROPCOORD:
-    case ApiGen_CodeTypes_LeaseTeamProfileTypes.MOTTCONTACT:
-    case ApiGen_CodeTypes_LeaseTeamProfileTypes.PROPADMIN:
-    case ApiGen_CodeTypes_LeaseTeamProfileTypes.LANDPRJMGR:
-    case ApiGen_CodeTypes_LeaseTeamProfileTypes.LANDOPSMGR:
-    case ApiGen_CodeTypes_LeaseTeamProfileTypes.KEYCNTCT:
-      return [RestrictContactType.ONLY_PIMSUSERS];
-
-    default:
-      return [
-        RestrictContactType.ONLY_PIMSUSERS,
-        RestrictContactType.ONLY_ORGANIZATIONS,
-        RestrictContactType.ONLY_INDIVIDUALS,
-      ];
-  }
-};
+const PIMS_USER_ONLY_PROFILES: string[] = [
+  ApiGen_CodeTypes_LeaseTeamProfileTypes.PROPANALYST,
+  ApiGen_CodeTypes_LeaseTeamProfileTypes.PROPCOORD,
+  ApiGen_CodeTypes_LeaseTeamProfileTypes.MOTTCONTACT,
+  ApiGen_CodeTypes_LeaseTeamProfileTypes.PROPADMIN,
+  ApiGen_CodeTypes_LeaseTeamProfileTypes.LANDPRJMGR,
+  ApiGen_CodeTypes_LeaseTeamProfileTypes.LANDOPSMGR,
+  ApiGen_CodeTypes_LeaseTeamProfileTypes.KEYCNTCT,
+];
 
 export const AddLeaseTeamSubForm: React.FunctionComponent<
   React.PropsWithChildren<unknown>
@@ -52,7 +42,10 @@ export const AddLeaseTeamSubForm: React.FunctionComponent<
       render={arrayHelpers => (
         <>
           {values.team.map((teamMember, index) => {
-            const restrictedType = getContactTypeRestriction(teamMember.contactTypeCode);
+            const restrictedType = getTeamContactTypeRestriction(
+              teamMember.contactTypeCode,
+              PIMS_USER_ONLY_PROFILES,
+            );
             return (
               <React.Fragment key={`lease-team-${teamMember?.id ?? index}`}>
                 <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>

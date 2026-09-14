@@ -9,36 +9,29 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
-import { RestrictContactType } from '@/constants/contacts';
+import { getTeamContactTypeRestriction } from '@/constants/contacts';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { ApiGen_CodeTypes_AcquisitionTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTeamProfileTypes';
 
 import { TeamMemberFormModal } from '../../modals/AcquisitionFormModal';
 import { AcquisitionTeamFormModel, WithAcquisitionTeam } from '../../models';
 
-export const getContactTypeRestriction = (contactTypeCode?: string) => {
-  switch (contactTypeCode) {
-    case ApiGen_CodeTypes_AcquisitionTeamProfileTypes.PROPCOORD:
-    case ApiGen_CodeTypes_AcquisitionTeamProfileTypes.PROPANLYS:
-    case ApiGen_CodeTypes_AcquisitionTeamProfileTypes.KEYCNTCT:
-      return [RestrictContactType.ONLY_PIMSUSERS];
-
-    default:
-      return [
-        RestrictContactType.ONLY_PIMSUSERS,
-        RestrictContactType.ONLY_INDIVIDUALS,
-        RestrictContactType.ONLY_ORGANIZATIONS,
-      ];
-  }
-};
+const PIMS_USER_ONLY_PROFILES: string[] = [
+  ApiGen_CodeTypes_AcquisitionTeamProfileTypes.KEYCNTCT,
+  ApiGen_CodeTypes_AcquisitionTeamProfileTypes.PROPCOORD,
+  ApiGen_CodeTypes_AcquisitionTeamProfileTypes.PROPANLYS,
+];
 
 export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
   React.PropsWithChildren<unknown>
 > = () => {
   const { values, setFieldTouched } = useFormikContext<WithAcquisitionTeam>();
+
   const [showRemoveMemberModal, setShowRemoveMemberModal] = useState<boolean>(false);
   const [removeIndex, setRemoveIndex] = useState<number>(-1);
+
   const { getOptionsByType } = useLookupCodeHelpers();
+
   const teamProfileTypes = getOptionsByType(API.ACQUISITION_FILE_TEAM_PROFILE_TYPES);
 
   return (
@@ -47,8 +40,10 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
       render={arrayHelpers => (
         <>
           {values.team.map((teamMember, index) => {
-            const restrictedType = getContactTypeRestriction(teamMember.contactTypeCode);
-
+            const restrictedType = getTeamContactTypeRestriction(
+              teamMember.contactTypeCode,
+              PIMS_USER_ONLY_PROFILES,
+            );
             return (
               <React.Fragment key={`acq-team-${index}`}>
                 <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>
@@ -117,7 +112,7 @@ export const UpdateAcquisitionTeamSubForm: React.FunctionComponent<
               setShowRemoveMemberModal(false);
               setRemoveIndex(-1);
             }}
-          ></TeamMemberFormModal>
+          />
         </>
       )}
     />

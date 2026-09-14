@@ -9,7 +9,7 @@ import ContactInputView from '@/components/common/form/ContactInput/ContactInput
 import { PrimaryContactSelector } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelector';
 import { SectionField } from '@/components/common/Section/SectionField';
 import * as API from '@/constants/API';
-import { RestrictContactType } from '@/constants/contacts';
+import { getTeamContactTypeRestriction } from '@/constants/contacts';
 import useLookupCodeHelpers from '@/hooks/useLookupCodeHelpers';
 import { getDeleteModalProps, useModalContext } from '@/hooks/useModalContext';
 import { ApiGen_CodeTypes_DispositionTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionTeamProfileTypes';
@@ -19,28 +19,30 @@ import {
   WithDispositionTeam,
 } from '../models/DispositionTeamSubFormModel';
 
+const PIMS_USER_ONLY_PROFILES: string[] = [
+  ApiGen_CodeTypes_DispositionTeamProfileTypes.MOTILEAD,
+  ApiGen_CodeTypes_DispositionTeamProfileTypes.MOTILAWYER,
+  ApiGen_CodeTypes_DispositionTeamProfileTypes.KEYCNTCT,
+];
+
 const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<unknown>> = () => {
-  const { values, setFieldTouched, errors } = useFormikContext<WithDispositionTeam>();
+  const { values, setFieldTouched, setFieldValue, errors } =
+    useFormikContext<WithDispositionTeam>();
   const { getOptionsByType } = useLookupCodeHelpers();
   const { setModalContent, setDisplayModal } = useModalContext();
 
   const teamProfileTypes = getOptionsByType(API.DISPOSITION_TEAM_PROFILE_TYPES);
 
-  const getContactTypeRestriction = (contactTypeCode?: string) => {
-    switch (contactTypeCode) {
-      case ApiGen_CodeTypes_DispositionTeamProfileTypes.MOTILEAD:
-      case ApiGen_CodeTypes_DispositionTeamProfileTypes.MOTILAWYER:
-      case ApiGen_CodeTypes_DispositionTeamProfileTypes.KEYCNTCT:
-        return [RestrictContactType.ONLY_PIMSUSERS];
+  const leadContact = values.team.find(
+    member => member.teamProfileTypeCode === ApiGen_CodeTypes_DispositionTeamProfileTypes.MOTILEAD,
+  )?.contact;
 
-      default:
-        return [
-          RestrictContactType.ONLY_PIMSUSERS,
-          RestrictContactType.ONLY_INDIVIDUALS,
-          RestrictContactType.ONLY_ORGANIZATIONS,
-        ];
-    }
-  };
+  const solicitorContact = values.team.find(
+    member =>
+      member.teamProfileTypeCode === ApiGen_CodeTypes_DispositionTeamProfileTypes.MOTILAWYER,
+  )?.contact;
+
+  const autoKeyContact = leadContact ?? solicitorContact ?? null;
 
   return (
     <FieldArray
@@ -48,7 +50,10 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
       render={arrayHelpers => (
         <>
           {values.team.map((teamMember, index) => {
-            const restrictedType = getContactTypeRestriction(teamMember.teamProfileTypeCode);
+            const restrictedType = getTeamContactTypeRestriction(
+              teamMember.teamProfileTypeCode,
+              PIMS_USER_ONLY_PROFILES,
+            );
             return (
               <React.Fragment key={`disp-team-${index}`}>
                 <Row className="py-3" data-testid={`teamMemberRow[${index}]`}>
@@ -59,8 +64,15 @@ const DispositionTeamSubForm: React.FunctionComponent<React.PropsWithChildren<un
                       field={`team.${index}.teamProfileTypeCode`}
                       options={teamProfileTypes}
                       value={teamMember.teamProfileTypeCode}
-                      onChange={() => {
+                      onChange={event => {
                         setFieldTouched(`team.${index}.contact`);
+                        setFieldValue(
+                          `team.${index}.contact`,
+                          event.target.value ===
+                            ApiGen_CodeTypes_DispositionTeamProfileTypes.KEYCNTCT
+                            ? autoKeyContact
+                            : null,
+                        );
                       }}
                     />
                   </Col>
