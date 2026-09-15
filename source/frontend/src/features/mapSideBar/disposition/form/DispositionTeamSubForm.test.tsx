@@ -148,7 +148,7 @@ describe('DispositionTeamSubForm component', () => {
   });
 
   it('displays an error when the same contact and role are selected twice', async () => {
-    const { getByTestId, getFormikRef, getByText } = setup({
+    const { getByTestId, getFormikRef } = setup({
       initialForm: testForm,
     });
 
