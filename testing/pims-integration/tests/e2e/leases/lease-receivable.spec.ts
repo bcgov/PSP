@@ -16,7 +16,6 @@ let leaseCreateResponseObject: {
 };
 
 test.describe.serial('Lease and Licence integration tests for RECEIVABLE lease.', () => {
-
   test.beforeAll(async ({ browser }) => {
     context = await browser.newContext();
     page = await context.newPage();
@@ -32,7 +31,7 @@ test.describe.serial('Lease and Licence integration tests for RECEIVABLE lease.'
 
   test("Creating a new Lease that's 'Receivable' with minimal data", async () => {
     const responsePromise = page.waitForResponse(
-      response =>
+      (response) =>
         response.request().method() === 'POST' &&
         /\/leases(\?|$)/.test(response.url()) &&
         response.status() === 200
@@ -63,7 +62,7 @@ test.describe.serial('Lease and Licence integration tests for RECEIVABLE lease.'
     await leaseDetailsPage.leaseEditBtn.click();
     await page.getByTestId('filter-backdrop-loading').waitFor({ state: 'hidden' });
     await leaseEditPage.leaseAddRenewalBtn.click();
-    await page.waitForLoadState("domcontentloaded");
+    await page.waitForLoadState('domcontentloaded');
 
     expect(await leaseEditPage.getRenewalHeaderTextByIndex(0)).toBe('Renewal 1');
 

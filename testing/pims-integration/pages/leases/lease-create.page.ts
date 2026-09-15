@@ -34,7 +34,7 @@ export class LeaseCreatePage extends LayoutPage {
     await this.page.goto('/mapview/sidebar/lease/new', { waitUntil: 'domcontentloaded' });
   }
 
-  getLeaseIntendedUseInput(){
+  getLeaseIntendedUseInput() {
     return this.leaseIntendedUseInput;
   }
 

@@ -12,9 +12,7 @@ export class ReminderComponent {
     this.page = page;
 
     this.reminderButton = reminderButton;
-    this.reminderDatePickerInput = page.locator(
-      '.react-datepicker-wrapper input.date-picker'
-    );
+    this.reminderDatePickerInput = page.locator('.react-datepicker-wrapper input.date-picker');
     this.setReminderButton = page.getByRole('button', {
       name: 'Set reminder',
     });
@@ -36,10 +34,8 @@ export class ReminderComponent {
     await this.setDate(date);
     await this.save();
 
-    await expect
-        .poll(async () => await this.isSet())
-        .toBe(true);
-    }
+    await expect.poll(async () => await this.isSet()).toBe(true);
+  }
 
   async save() {
     await this.setReminderButton.click();

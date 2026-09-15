@@ -7,9 +7,7 @@ test.describe('Acquisition file creation', () => {
   }) => {
     await expect(acquisitionSummaryPage.fileDetailsTab).toBeVisible();
 
-    await expect(
-      acquisitionSummaryPage.noticeOfClaimReceivedDateLabel
-    ).toBeVisible();
+    await expect(acquisitionSummaryPage.noticeOfClaimReceivedDateLabel).toBeVisible();
 
     expect(acquisitionWithNoticeOfClaim.fileName).toBeTruthy();
   });

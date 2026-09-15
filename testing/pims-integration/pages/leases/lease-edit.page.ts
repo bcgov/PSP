@@ -1,6 +1,5 @@
-import { Locator, Page } from "@playwright/test";
-import { LayoutPage } from "../layout/layout.page";
-
+import { Locator, Page } from '@playwright/test';
+import { LayoutPage } from '../layout/layout.page';
 
 export class LeaseEditPage extends LayoutPage {
   readonly page: Page;
@@ -36,7 +35,9 @@ export class LeaseEditPage extends LayoutPage {
       year: 'numeric',
     });
 
-    const commencementDtInput = this.page.locator(`[id="datepicker-renewals.${index}.commencementDt"]`);
+    const commencementDtInput = this.page.locator(
+      `[id="datepicker-renewals.${index}.commencementDt"]`
+    );
     await commencementDtInput.click();
     await commencementDtInput.fill(formattedDate);
     await commencementDtInput.press('Enter');

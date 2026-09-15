@@ -28,11 +28,7 @@ export const test = base.extend<AcquisitionFixtures>({
   },
 
   acquisitionWithNoticeOfClaim: async (
-    {
-      page,
-      acquisitionCreatePage,
-      acquisitionSummaryPage,
-    },
+    { page, acquisitionCreatePage, acquisitionSummaryPage },
     use
   ) => {
     const receivedDate = 'Aug 15, 2026';
@@ -47,9 +43,8 @@ export const test = base.extend<AcquisitionFixtures>({
     await acquisitionCreatePage.setNoticeOfClaimReceivedDate(receivedDate);
 
     const responsePromise = page.waitForResponse(
-      response =>
-        response.url().includes('/api/acquisitionfiles') &&
-        response.request().method() === 'POST'
+      (response) =>
+        response.url().includes('/api/acquisitionfiles') && response.request().method() === 'POST'
     );
 
     await acquisitionCreatePage.confirmButtonClick();
@@ -57,11 +52,11 @@ export const test = base.extend<AcquisitionFixtures>({
     const response = await responsePromise;
 
     if (!response.ok()) {
-        const responseBody = await response.text();
+      const responseBody = await response.text();
 
-        throw new Error(
-            `Acquisition creation failed: ${response.status()} ${response.url()}\n${responseBody}`
-        );
+      throw new Error(
+        `Acquisition creation failed: ${response.status()} ${response.url()}\n${responseBody}`
+      );
     }
 
     await acquisitionSummaryPage.fileDetailsTab.waitFor({

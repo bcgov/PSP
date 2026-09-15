@@ -1,7 +1,6 @@
 import { Locator, Page } from '@playwright/test';
 import { LayoutPage } from '../layout/layout.page';
 
-
 export class LeaseDetailsPage extends LayoutPage {
   readonly page: Page;
 
