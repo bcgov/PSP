@@ -43,5 +43,3 @@ export const getTodayPrettyFormatted = (): string => {
     year: 'numeric',
   });
 };
-
-

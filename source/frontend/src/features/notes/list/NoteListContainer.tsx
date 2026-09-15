@@ -16,6 +16,7 @@ export interface INoteListContainerProps {
   entityId: number;
   View: React.FunctionComponent<React.PropsWithChildren<INoteListViewProps>>;
   statusSolver?: IUpdateNotesStrategy | null;
+  canEdit?: boolean;
   onSuccess?: () => void;
 }
 
@@ -24,7 +25,7 @@ export interface INoteListContainerProps {
  */
 export const NoteListContainer: React.FunctionComponent<
   React.PropsWithChildren<INoteListContainerProps>
-> = ({ type, entityId, onSuccess, View, statusSolver }: INoteListContainerProps) => {
+> = ({ type, entityId, onSuccess, View, statusSolver, canEdit }: INoteListContainerProps) => {
   const {
     getAllNotes: { execute: getAllNotes, loading: loadingNotes, response: notesResponse },
     deleteNote: { execute: deleteNote, loading: loadingDeleteNote },
@@ -54,7 +55,7 @@ export const NoteListContainer: React.FunctionComponent<
   // UI components
   const loading = loadingNotes || loadingDeleteNote;
 
-  const editNotesEnabled = !statusSolver || statusSolver?.canEditNotes();
+  const editNotesEnabled = (!statusSolver || statusSolver?.canEditNotes()) && canEdit !== false;
 
   return (
     <View

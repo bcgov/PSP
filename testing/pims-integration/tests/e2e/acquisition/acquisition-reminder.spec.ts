@@ -14,22 +14,14 @@ test.describe('Acquisition reminder feature', () => {
   }) => {
     expect(acquisitionWithNoticeOfClaim.fileName).toBeTruthy();
 
-    await expect(
-      acquisitionSummaryPage.noticeOfClaimReminder.reminderButton
-    ).toBeVisible();
+    await expect(acquisitionSummaryPage.noticeOfClaimReminder.reminderButton).toBeVisible();
 
-    expect(
-      await acquisitionSummaryPage.noticeOfClaimReminder.isSet()
-    ).toBe(false);
+    expect(await acquisitionSummaryPage.noticeOfClaimReminder.isSet()).toBe(false);
 
     await test.step('set the reminder', async () => {
-      await acquisitionSummaryPage.noticeOfClaimReminder.setReminder(
-        INITIAL_REMINDER_DATE
-      );
+      await acquisitionSummaryPage.noticeOfClaimReminder.setReminder(INITIAL_REMINDER_DATE);
 
-      await expect(
-        acquisitionSummaryPage.noticeOfClaimReminder.reminderButton
-      ).toHaveAttribute(
+      await expect(acquisitionSummaryPage.noticeOfClaimReminder.reminderButton).toHaveAttribute(
         'title',
         `Reminder set for ${INITIAL_REMINDER_DATE}`
       );
@@ -38,15 +30,11 @@ test.describe('Acquisition reminder feature', () => {
     await test.step('update the reminder', async () => {
       await acquisitionSummaryPage.noticeOfClaimReminder.openPopover();
 
-      await acquisitionSummaryPage.noticeOfClaimReminder.setDate(
-        UPDATED_REMINDER_DATE
-      );
+      await acquisitionSummaryPage.noticeOfClaimReminder.setDate(UPDATED_REMINDER_DATE);
 
       await acquisitionSummaryPage.noticeOfClaimReminder.save();
 
-      await expect(
-        acquisitionSummaryPage.noticeOfClaimReminder.reminderButton
-      ).toHaveAttribute(
+      await expect(acquisitionSummaryPage.noticeOfClaimReminder.reminderButton).toHaveAttribute(
         'title',
         `Reminder set for ${UPDATED_REMINDER_DATE}`
       );
@@ -57,9 +45,7 @@ test.describe('Acquisition reminder feature', () => {
 
       await acquisitionSummaryPage.noticeOfClaimReminder.remove();
 
-      await expect
-        .poll(() => acquisitionSummaryPage.noticeOfClaimReminder.isSet())
-        .toBe(false);
+      await expect.poll(() => acquisitionSummaryPage.noticeOfClaimReminder.isSet()).toBe(false);
     });
   });
 });

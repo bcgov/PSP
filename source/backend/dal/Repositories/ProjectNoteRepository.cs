@@ -84,6 +84,11 @@ namespace Pims.Dal.Repositories
             }
             return false;
         }
+
+        public PimsProjectNote GetByNoteId(long noteId)
+        {
+            return Context.PimsProjectNotes.AsNoTracking().FirstOrDefault(x => x.NoteId == noteId);
+        }
         #endregion
     }
 }

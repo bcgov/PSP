@@ -54,6 +54,7 @@ describe('ConsultationListView component', () => {
 
   const setup = (
     renderOptions: RenderOptions & { props?: Partial<IConsultationListViewProps> },
+    canEdit = true,
   ) => {
     const utils = render(
       <ConsultationListView
@@ -63,6 +64,7 @@ describe('ConsultationListView component', () => {
         onAdd={onAdd}
         onDelete={onDelete}
         onEdit={onEdit}
+        canEdit={canEdit}
       />,
       {
         ...renderOptions,

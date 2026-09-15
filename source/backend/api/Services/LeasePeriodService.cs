@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Extensions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
@@ -15,18 +17,25 @@ namespace Pims.Api.Services
     public class LeasePeriodService : ILeasePeriodService
     {
         private readonly ILeasePeriodRepository _leasePeriodRepository;
+        private readonly IUserRepository _userRepository;
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly ILeaseService _leaseService;
         private readonly ILeaseStatusSolver _leaseStatusSolver;
+        private readonly ILookupRepository _lookupRepository;
+        private readonly IProjectRepository _projectRepository;
 
-        public LeasePeriodService(ILeasePeriodRepository leasePeriodRepository, ClaimsPrincipal user, ILogger<LeasePeriodService> logger, ILeaseService leaseService, ILeaseStatusSolver leaseStatusSolver)
+
+        public LeasePeriodService(ILeasePeriodRepository leasePeriodRepository, IUserRepository userRepository, ClaimsPrincipal user, ILogger<LeasePeriodService> logger, ILeaseService leaseService, ILeaseStatusSolver leaseStatusSolver, ILookupRepository lookupRepository, IProjectRepository projectRepository)
         {
             _leasePeriodRepository = leasePeriodRepository;
+            _userRepository = userRepository;
             _user = user;
             _logger = logger;
             _leaseService = leaseService;
             _leaseStatusSolver = leaseStatusSolver;
+            _lookupRepository = lookupRepository;
+            _projectRepository = projectRepository;
         }
 
         public IEnumerable<PimsLeasePeriod> GetPeriods(long leaseId)
@@ -41,13 +50,14 @@ namespace Pims.Api.Services
             _logger.LogInformation("Deleting period to lease with id: {id}", leaseId);
             ValidateDeletionRules(period);
 
-            var currentLease = _leaseService.GetById(leaseId);
+            var currentLease = _leaseService.GetById(leaseId) ?? throw new InvalidDataException("Invalid lease");
             var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditPayments(currentLeaseStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
+            currentLease.ThrowIfCannotEditLeaseFile(_user, _userRepository, _projectRepository, _lookupRepository);
             _leasePeriodRepository.Delete(period.Internal_Id);
             _leasePeriodRepository.CommitTransaction();
 
@@ -59,13 +69,14 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating period to lease with id: {id}", leaseId);
             ValidateUpdateRules(period, periodId);
 
-            var currentLease = _leaseService.GetById(leaseId);
+            var currentLease = _leaseService.GetById(leaseId) ?? throw new InvalidDataException("Invalid lease");
             var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditPayments(currentLeaseStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
+            currentLease.ThrowIfCannotEditLeaseFile(_user, _userRepository, _projectRepository, _lookupRepository);
             _leasePeriodRepository.Update(period);
             _leasePeriodRepository.CommitTransaction();
 
@@ -77,13 +88,14 @@ namespace Pims.Api.Services
             _logger.LogInformation("Adding period to lease with id: {id}", leaseId);
             ValidateAddRules(period);
 
-            var currentLease = _leaseService.GetById(leaseId);
+            var currentLease = _leaseService.GetById(leaseId) ?? throw new InvalidDataException("Invalid lease");
             var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditPayments(currentLeaseStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
+            currentLease.ThrowIfCannotEditLeaseFile(_user, _userRepository, _projectRepository, _lookupRepository);
             _leasePeriodRepository.Add(period);
             _leasePeriodRepository.CommitTransaction();
 

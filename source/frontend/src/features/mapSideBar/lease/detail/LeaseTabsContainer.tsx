@@ -203,6 +203,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
           relationshipType={ApiGen_CodeTypes_DocumentRelationType.Leases}
           title="File Documents"
           onSuccess={onSuccess}
+          canEdit={lease?.canEdit === true}
         />
       ),
       key: LeaseFileTabNames.documents,
@@ -218,6 +219,7 @@ export const LeaseTabsContainer: React.FC<ILeaseTabsContainerProps> = ({
           entityId={lease?.id}
           onSuccess={onSuccess}
           View={NoteListView}
+          canEdit={lease?.canEdit === true}
         />
       ),
       key: LeaseFileTabNames.notes,

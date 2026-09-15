@@ -1,8 +1,10 @@
 using System.Collections.Generic;
+using System.IO;
 using System.Security.Claims;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
+using Pims.Api.Helpers.Extensions;
 using Pims.Core.Api.Services;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
@@ -21,6 +23,11 @@ namespace Pims.Api.Services
         private readonly INoteRelationshipRepository<PimsProjectNote> _projectNoteRepository;
         private readonly INoteRelationshipRepository<PimsPropertyNote> _propertyNoteRepository;
         private readonly INoteRelationshipRepository<PimsResearchFileNote> _researchFileNoteRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly ILookupRepository _lookupRepository;
+        private readonly IProjectRepository _projectRepository;
+        private readonly ILeaseRepository _leaseRepository;
+
 
         /// <summary>
         /// Creates a new instance of a NoteService, and initializes it with the specified arguments.
@@ -45,7 +52,11 @@ namespace Pims.Api.Services
             INoteRelationshipRepository<PimsManagementFileNote> managementFileNoteRepository,
             INoteRelationshipRepository<PimsProjectNote> projectNoteRepository,
             INoteRelationshipRepository<PimsPropertyNote> propertyNoteRepository,
-            INoteRelationshipRepository<PimsResearchFileNote> researchFileNoteRepository)
+            INoteRelationshipRepository<PimsResearchFileNote> researchFileNoteRepository,
+            IUserRepository userRepository,
+            ILookupRepository lookupRepository,
+            IProjectRepository projectRepository,
+            ILeaseRepository leaseRepository)
             : base(user, logger)
         {
             _noteRepository = noteRepository;
@@ -56,6 +67,10 @@ namespace Pims.Api.Services
             _projectNoteRepository = projectNoteRepository;
             _propertyNoteRepository = propertyNoteRepository;
             _researchFileNoteRepository = researchFileNoteRepository;
+            _userRepository = userRepository;
+            _lookupRepository = lookupRepository;
+            _projectRepository = projectRepository;
+            _leaseRepository = leaseRepository;
         }
 
         public PimsNote GetById(long id)
@@ -88,7 +103,10 @@ namespace Pims.Api.Services
         {
             leaseNote.ThrowIfNull(nameof(leaseNote));
             Logger.LogInformation("Adding note for lease with Id: {Id}", leaseNote.ParentId);
-            User.ThrowIfNotAuthorized(Permissions.NoteAdd);
+            User.ThrowIfNotAuthorized(Permissions.NoteAdd, Permissions.LeaseEdit);
+
+            var currentLease = _leaseRepository.GetNoTracking(leaseNote.ParentId) ?? throw new InvalidDataException("Invalid lease");
+            currentLease.ThrowIfCannotEditLeaseFile(User, _userRepository, _projectRepository, _lookupRepository);
 
             return AddNoteRelationship(leaseNote, _leaseNoteRepository);
         }
@@ -135,6 +153,8 @@ namespace Pims.Api.Services
             Logger.LogInformation("Updating note with id {Id}", note.Internal_Id);
             User.ThrowIfNotAuthorized(Permissions.NoteEdit);
 
+            ThrowIfCannotEditLeaseNote(note.Internal_Id);
+
             ValidateVersion(note.Internal_Id, note.ConcurrencyControlNumber);
 
             var updatedNote = _noteRepository.Update(note);
@@ -155,6 +175,11 @@ namespace Pims.Api.Services
             Logger.LogInformation("Deleting note with type {Type} and id {NoteId}", type, noteId);
             User.ThrowIfNotAuthorized(Permissions.NoteDelete);
             bool deleted = false;
+
+            if (type == NoteType.Lease_File)
+            {
+                ThrowIfCannotEditLeaseNote(noteId);
+            }
 
             deleted = type switch
             {
@@ -218,6 +243,20 @@ namespace Pims.Api.Services
             {
                 throw new DbUpdateConcurrencyException("You are working with an older version of this note, please refresh the application and retry.");
             }
+        }
+
+        private void ThrowIfCannotEditLeaseNote(long noteId)
+        {
+            var leaseNote = _leaseNoteRepository.GetByNoteId(noteId);
+
+            if (leaseNote == null)
+            {
+                return;
+            }
+
+            var currentLease = _leaseRepository.GetNoTracking(leaseNote.LeaseId) ?? throw new InvalidDataException("Invalid lease");
+
+            currentLease.ThrowIfCannotEditLeaseFile(User, _userRepository, _projectRepository, _lookupRepository);
         }
     }
 }

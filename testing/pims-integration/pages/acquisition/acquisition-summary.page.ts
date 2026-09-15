@@ -19,10 +19,7 @@ export class AcquisitionSummaryPage extends LayoutPage {
       name: 'File Details',
     });
 
-    this.noticeOfClaimReceivedDateLabel = page.getByText(
-      'Received date:',
-      { exact: true }
-    );
+    this.noticeOfClaimReceivedDateLabel = page.getByText('Received date:', { exact: true });
 
     this.noticeOfClaimReminder = new ReminderComponent(
       page,

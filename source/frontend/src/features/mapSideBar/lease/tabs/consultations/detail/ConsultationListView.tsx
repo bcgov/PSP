@@ -32,6 +32,7 @@ export interface IConsultationListViewProps {
   loading: boolean;
   consultations: ApiGen_Concepts_ConsultationLease[];
   isFileFinalStatus?: boolean;
+  canEdit?: boolean;
   onAdd: () => void;
   onEdit: (consultationId: number) => void;
   onDelete: (consultationId: number) => void;
@@ -48,6 +49,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
   loading,
   consultations,
   isFileFinalStatus,
+  canEdit,
   onAdd,
   onEdit,
   onDelete,
@@ -71,6 +73,9 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
     return grouped;
   }, [consultationTypeCodes, consultations]);
 
+  const canModifyConsultations =
+    keycloak.hasClaim(Claims.LEASE_EDIT) && canEdit === true && !isFileFinalStatus;
+
   if (loading) {
     return <LoadingBackdrop show={loading} parentScreen={true} />;
   }
@@ -88,7 +93,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
             cannotAddComponent={
               <TooltipIcon toolTipId={`agreement-cannot-add-tooltip`} toolTip={cannotEditMessage} />
             }
-            isAddEnabled={!isFileFinalStatus}
+            isAddEnabled={canEdit === true && !isFileFinalStatus}
           />
         }
       >
@@ -115,7 +120,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                     <div>
                       <Row>
                         <Col>{consultation.consultationOutcomeTypeCode?.description}</Col>
-                        {keycloak.hasClaim(Claims.LEASE_EDIT) && !isFileFinalStatus && (
+                        {canModifyConsultations && (
                           <>
                             <Col xs="auto" className="px-1">
                               <RemoveIconButton
@@ -153,7 +158,7 @@ export const ConsultationListView: React.FunctionComponent<IConsultationListView
                             </Col>
                           </>
                         )}
-                        {keycloak.hasClaim(Claims.LEASE_EDIT) && isFileFinalStatus && (
+                        {keycloak.hasClaim(Claims.LEASE_EDIT) && !canModifyConsultations && (
                           <TooltipIcon
                             toolTipId={`consultation-edit-actions-cannot-edit-tooltip`}
                             toolTip={cannotEditMessage}

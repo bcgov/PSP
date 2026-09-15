@@ -25,6 +25,7 @@ const setup = (renderOptions: RenderOptions & IDepositsReceivedContainerProps) =
       statusSolver={
         new LeaseStatusUpdateSolver(toTypeCode(ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE))
       }
+      canEdit={renderOptions.canEdit ?? true}
     />,
     {
       ...renderOptions,
@@ -56,6 +57,7 @@ describe('DepositsReceivedContainer component', () => {
   it('renders as expected', () => {
     const { asFragment } = setup({
       securityDeposits: [...getMockDeposits()],
+      canEdit: true,
       onAdd: mockVoidCallback,
       onEdit: mockCallback,
       onDelete: mockCallback,
@@ -124,6 +126,7 @@ describe('DepositsReceivedContainer component', () => {
       onDelete: mockCallback,
       onReturn: mockCallback,
       claims: [Claims.LEASE_EDIT, Claims.LEASE_VIEW],
+      canEdit: true,
     });
     const dataRow = findFirstRow() as HTMLElement;
 

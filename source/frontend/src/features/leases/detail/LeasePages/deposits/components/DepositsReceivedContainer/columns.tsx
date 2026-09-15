@@ -62,13 +62,14 @@ function renderHolder({
 
 function depositActions(
   isFileFinalStatus: boolean,
+  canEdit: boolean,
   onEdit: (id: number) => void,
   onDelete: (id: number) => void,
   onReturn: (id: number) => void,
 ) {
   return function ({ row: { original, index } }: CellProps<DepositListEntry, string>) {
     const { hasClaim } = useKeycloakWrapper();
-    if (isFileFinalStatus) {
+    if (isFileFinalStatus || !canEdit) {
       return (
         <TooltipIcon
           toolTipId={`deposit-actions-cannot-edit-tooltip`}
@@ -85,17 +86,17 @@ function depositActions(
             innerClassName="mt-3"
           />
         )}
-        {hasClaim(Claims.LEASE_EDIT) && (
+        {hasClaim(Claims.LEASE_EDIT) && canEdit && (
           <EditButton title="edit deposit" onClick={() => onEdit(original.id)} />
         )}
-        {hasClaim(Claims.LEASE_ADD) && (
+        {hasClaim(Claims.LEASE_ADD) && canEdit && (
           <LinkButton
             title="return deposit"
             icon={<MdUndo size={20} id={`return-deposit-${index}`} title="return deposit" />}
             onClick={() => onReturn(original.id)}
           />
         )}
-        {hasClaim(Claims.LEASE_EDIT) && original.depositReturnCount === 0 && (
+        {hasClaim(Claims.LEASE_EDIT) && canEdit && original.depositReturnCount === 0 && (
           <RemoveIconButton
             title="delete deposit"
             id={`delete-deposit-${index}`}
@@ -112,6 +113,7 @@ export interface IPaymentColumnProps {
   onDelete: (id: number) => void;
   onReturn: (id: number) => void;
   isFileFinalStatus?: boolean;
+  canEdit?: boolean;
 }
 
 export const getColumns = ({
@@ -119,6 +121,7 @@ export const getColumns = ({
   onDelete,
   onReturn,
   isFileFinalStatus,
+  canEdit,
 }: IPaymentColumnProps): ColumnWithProps<DepositListEntry>[] => {
   return [
     {
@@ -156,7 +159,7 @@ export const getColumns = ({
       align: 'right',
       maxWidth: 80,
       minWidth: 80,
-      Cell: depositActions(isFileFinalStatus, onEdit, onDelete, onReturn),
+      Cell: depositActions(isFileFinalStatus, canEdit, onEdit, onDelete, onReturn),
     },
   ];
 };

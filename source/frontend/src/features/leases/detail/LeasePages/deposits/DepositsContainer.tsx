@@ -53,6 +53,7 @@ export const DepositsContainer: React.FunctionComponent<
   useEffect(() => {
     lease?.id && getSecurityDeposits(lease.id);
   }, [lease, getSecurityDeposits]);
+  const canEditComments = lease?.canEdit && statusSolver?.canEditDeposits();
   const depositReturns: ApiGen_Concepts_SecurityDepositReturn[] =
     securityDeposits
       ?.flatMap((x: ApiGen_Concepts_SecurityDeposit) => x.depositReturns)
@@ -206,6 +207,7 @@ export const DepositsContainer: React.FunctionComponent<
           <>
             <DepositsReceivedContainer
               statusSolver={statusSolver}
+              canEdit={lease?.canEdit}
               securityDeposits={securityDeposits}
               onAdd={onAddDeposit}
               onEdit={onEditDeposit}
@@ -216,17 +218,24 @@ export const DepositsContainer: React.FunctionComponent<
             <DepositsReturnedContainer
               securityDeposits={securityDeposits}
               depositReturns={depositReturns}
+              canEdit={lease?.canEdit}
               onEdit={onEditReturnDeposit}
               onDelete={onDeleteDepositReturn}
               statusSolver={statusSolver}
             />
 
             <DepositNotes
-              disabled={!editNotes}
-              onEdit={() => setEditNotes(true)}
+              disabled={!editNotes || !canEditComments}
+              onEdit={() => {
+                if (canEditComments) {
+                  setEditNotes(true);
+                }
+              }}
+              canEdit={lease?.canEdit}
               isFileFinalStatus={!statusSolver?.canEditDeposits()}
               onSave={async (notes: string) => {
                 lease?.id && (await updateSecurityDepositNote(lease.id, notes));
+                formikProps.setFieldValue('returnNotes', notes);
                 setEditNotes(false);
                 props.onSuccess();
               }}

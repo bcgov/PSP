@@ -79,6 +79,7 @@ describe('PeriodsPaymentsContainer component', () => {
     renderOptions: RenderOptions &
       Partial<LeasePageProps<IPeriodPaymentsViewProps>> & {
         initialValues?: any;
+        canEdit?: boolean;
       } = {},
   ) => {
     // render component under test
@@ -91,6 +92,7 @@ describe('PeriodsPaymentsContainer component', () => {
             id: 1,
             startDate: '2020-01-01',
             fileStatusTypeCode: toTypeCodeNullable(ApiGen_CodeTypes_LeaseStatusTypes.ACTIVE),
+            canEdit: renderOptions.canEdit ?? true,
           },
           setLease,
         }}
@@ -323,6 +325,7 @@ describe('PeriodsPaymentsContainer component', () => {
           periods: [{ ...defaultFormLeasePeriod, id: 1 }],
         },
         claims: [Claims.LEASE_EDIT],
+        canEdit: true,
       });
 
       const deleteButton = (await findAllByTitle('delete period'))[0];

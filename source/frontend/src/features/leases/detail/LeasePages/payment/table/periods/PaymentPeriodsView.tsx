@@ -30,6 +30,7 @@ export interface IPeriodPaymentsViewProps {
   lease?: LeaseFormModel;
   formikRef: React.RefObject<FormikProps<LeaseFormModel>>;
   isFileFinalStatus?: boolean;
+  canEdit?: boolean;
 }
 
 export const PeriodPaymentsView: React.FunctionComponent<
@@ -43,6 +44,7 @@ export const PeriodPaymentsView: React.FunctionComponent<
   isReceivable,
   lease,
   isFileFinalStatus,
+  canEdit,
 }) => {
   const columns = useMemo(
     () =>
@@ -50,8 +52,9 @@ export const PeriodPaymentsView: React.FunctionComponent<
         onEdit,
         onDelete,
         isFileFinalStatus,
+        canEdit,
       }),
-    [onEdit, onDelete, isFileFinalStatus],
+    [onEdit, onDelete, isFileFinalStatus, canEdit],
   );
   const leaseForm = { ...new LeaseFormModel(), ...lease };
 
@@ -78,6 +81,7 @@ export const PeriodPaymentsView: React.FunctionComponent<
           isReceivable={isReceivable}
           isFileFinalStatus={isFileFinalStatus}
           periodId={row.id ?? undefined}
+          canEdit={canEdit}
         />
       );
     },
@@ -99,7 +103,7 @@ export const PeriodPaymentsView: React.FunctionComponent<
               toolTip={cannotEditMessage}
             />
           }
-          isAddEnabled={!isFileFinalStatus}
+          isAddEnabled={canEdit === true && !isFileFinalStatus}
         />
       }
     >

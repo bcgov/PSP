@@ -37,6 +37,10 @@ namespace Pims.Api.Services
         private readonly IDocumentRelationshipRepository<PimsDispositionFileDocument> _dispositionFileDocumentRepository;
         private readonly IDocumentRelationshipRepository<PimsManagementFileDocument> _managementFileDocumentRepository;
         private readonly IDocumentRelationshipRepository<PimsPropertyDocument> _propertyDocumentRepository;
+        private readonly IUserRepository _userRepository;
+        private readonly ILookupRepository _lookupRepository;
+        private readonly IProjectRepository _projectRepository;
+        private readonly ILeaseRepository _leaseRepository;
 
         public DocumentFileService(
             ClaimsPrincipal user,
@@ -51,7 +55,11 @@ namespace Pims.Api.Services
             IDocumentRelationshipRepository<PimsDispositionFileDocument> dispositionFileDocumentRepository,
             IDocumentRelationshipRepository<PimsManagementFileDocument> managementFileDocumentRepository,
             IDocumentRelationshipRepository<PimsPropertyDocument> propertyDocumentRepository,
-            IDocumentQueueRepository documentQueueRepository)
+            IDocumentQueueRepository documentQueueRepository,
+            IUserRepository userRepository,
+            ILookupRepository lookupRepository,
+            IProjectRepository projectRepository,
+            ILeaseRepository leaseRepository)
             : base(user, logger)
         {
             _documentService = documentService;
@@ -65,6 +73,10 @@ namespace Pims.Api.Services
             _managementFileDocumentRepository = managementFileDocumentRepository;
             _propertyDocumentRepository = propertyDocumentRepository;
             _documentQueueRepository = documentQueueRepository;
+            _userRepository = userRepository;
+            _lookupRepository = lookupRepository;
+            _projectRepository = projectRepository;
+            _leaseRepository = leaseRepository;
         }
 
         public IList<T> GetFileDocuments<T>(FileType fileType, long fileId)
@@ -129,6 +141,10 @@ namespace Pims.Api.Services
         {
             Logger.LogInformation("Uploading document for single Lease");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentAdd, Permissions.LeaseEdit);
+
+            var currentLease = _leaseRepository.GetNoTracking(leaseId) ?? throw new BadRequestException("Invalid lease");
+            currentLease.ThrowIfCannotEditLeaseFile(User, _userRepository, _projectRepository, _lookupRepository);
+
             await UploadDocument(leaseId, uploadRequest, _leaseFileDocumentRepository);
         }
 
@@ -185,6 +201,9 @@ namespace Pims.Api.Services
         {
             Logger.LogInformation("Deleting PIMS document for single lease");
             User.ThrowIfNotAllAuthorized(Permissions.DocumentDelete, Permissions.LeaseEdit);
+
+            var currentLease = _leaseRepository.GetNoTracking(leaseDocument.FileId) ?? throw new BadRequestException("Invalid lease");
+            currentLease.ThrowIfCannotEditLeaseFile(User, _userRepository, _projectRepository, _lookupRepository);
             return await DeletePropertyDocumentAsync(leaseDocument, _leaseFileDocumentRepository);
         }
 

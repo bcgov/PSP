@@ -9,6 +9,7 @@ import { getColumns, ReturnListEntry } from './columns';
 export interface IDepositsReturnedContainerProps {
   securityDeposits: ApiGen_Concepts_SecurityDeposit[];
   depositReturns: ApiGen_Concepts_SecurityDepositReturn[];
+  canEdit?: boolean;
   onEdit: (id: number) => void;
   onDelete: (id: number) => void;
   statusSolver?: LeaseStatusUpdateSolver;
@@ -16,10 +17,11 @@ export interface IDepositsReturnedContainerProps {
 
 const DepositsReturnedContainer: React.FC<
   React.PropsWithChildren<IDepositsReturnedContainerProps>
-> = ({ securityDeposits, depositReturns, statusSolver, onEdit, onDelete }) => {
+> = ({ securityDeposits, depositReturns, canEdit, statusSolver, onEdit, onDelete }) => {
   const columns = getColumns({
     onEdit,
     onDelete,
+    canEdit,
     isFileFinalStatus: !statusSolver.canEditDeposits(),
   });
   const dataSource = depositReturns.reduce(

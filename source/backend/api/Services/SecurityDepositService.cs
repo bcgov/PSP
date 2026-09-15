@@ -1,8 +1,10 @@
 using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using System.Security.Claims;
 using Microsoft.Extensions.Logging;
+using Pims.Api.Helpers.Extensions;
 using Pims.Core.Exceptions;
 using Pims.Core.Extensions;
 using Pims.Core.Security;
@@ -17,18 +19,24 @@ namespace Pims.Api.Services
         private readonly ISecurityDepositRepository _securityDepositRepository;
         private readonly ISecurityDepositReturnRepository _securityDepositReturnRepository;
         private readonly ILeaseService _leaseService;
+        private readonly IUserRepository _userRepository;
         private readonly ClaimsPrincipal _user;
         private readonly ILogger _logger;
         private readonly ILeaseStatusSolver _leaseStatusSolver;
+        private readonly ILookupRepository _lookupRepository;
+        private readonly IProjectRepository _projectRepository;
 
-        public SecurityDepositService(ISecurityDepositRepository securityDepositRepository, ISecurityDepositReturnRepository securityDepositReturnRepository, ILeaseService leaseService, ClaimsPrincipal user, ILogger<SecurityDepositService> logger, ILeaseStatusSolver leaseStatusSolver)
+        public SecurityDepositService(ISecurityDepositRepository securityDepositRepository, ISecurityDepositReturnRepository securityDepositReturnRepository, ILeaseService leaseService, IUserRepository userRepository, ClaimsPrincipal user, ILogger<SecurityDepositService> logger, ILeaseStatusSolver leaseStatusSolver, ILookupRepository lookupRepository, IProjectRepository projectRepository)
         {
             _securityDepositRepository = securityDepositRepository;
             _securityDepositReturnRepository = securityDepositReturnRepository;
             _leaseService = leaseService;
+            _userRepository = userRepository;
             _user = user;
             _logger = logger;
             _leaseStatusSolver = leaseStatusSolver;
+            _lookupRepository = lookupRepository;
+            _projectRepository = projectRepository;
         }
 
         public IEnumerable<PimsSecurityDeposit> GetLeaseDeposits(long leaseId)
@@ -44,13 +52,14 @@ namespace Pims.Api.Services
             _logger.LogInformation("Adding lease deposit for lease id {id}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseAdd);
 
-            var currentLease = _leaseService.GetById(leaseId);
+            var currentLease = _leaseService.GetById(leaseId) ?? throw new InvalidDataException("Invalid lease");
             var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditDeposits(currentLeaseStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
+            currentLease.ThrowIfCannotEditLeaseFile(_user, _userRepository, _projectRepository, _lookupRepository);
             var securityDeposit = _securityDepositRepository.Add(deposit);
             _securityDepositRepository.CommitTransaction();
 
@@ -62,13 +71,14 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating lease deposit for lease id {leaseid} deposit id {depositId}", leaseId, deposit.SecurityDepositId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
 
-            var currentLease = _leaseService.GetById(leaseId);
+            var currentLease = _leaseService.GetById(leaseId) ?? throw new InvalidDataException("Invalid lease");
             var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditDeposits(currentLeaseStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
+            currentLease.ThrowIfCannotEditLeaseFile(_user, _userRepository, _projectRepository, _lookupRepository);
             var currentHolder = _securityDepositRepository.GetById(deposit.SecurityDepositId).PimsSecurityDepositHolder;
             if (currentHolder != null)
             {
@@ -85,6 +95,7 @@ namespace Pims.Api.Services
             _logger.LogInformation("Updating lease deposit note for lease id {leaseId}", leaseId);
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             var lease = _leaseService.GetById(leaseId);
+            var currentLease = _leaseService.GetById(leaseId);
 
             var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(lease?.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditDeposits(currentLeaseStatus))
@@ -92,6 +103,7 @@ namespace Pims.Api.Services
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
+            currentLease.ThrowIfCannotEditLeaseFile(_user, _userRepository, _projectRepository, _lookupRepository);
             lease.ReturnNotes = note;
             _leaseService.Update(lease, new List<UserOverrideCode>());
             _securityDepositRepository.CommitTransaction();
@@ -103,13 +115,14 @@ namespace Pims.Api.Services
             _user.ThrowIfNotAuthorized(Permissions.LeaseEdit);
             ValidateDeletionRules(deposit);
 
-            var currentLease = _leaseService.GetById(deposit.LeaseId);
+            var currentLease = _leaseService.GetById(deposit.LeaseId) ?? throw new InvalidDataException("Invalid lease");
             var currentLeaseStatus = _leaseStatusSolver.GetCurrentLeaseStatus(currentLease?.LeaseStatusTypeCode);
             if (!_leaseStatusSolver.CanEditDeposits(currentLeaseStatus))
             {
                 throw new BusinessRuleViolationException("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
             }
 
+            currentLease.ThrowIfCannotEditLeaseFile(_user, _userRepository, _projectRepository, _lookupRepository);
             bool deleted = _securityDepositRepository.Delete(deposit.SecurityDepositId);
             _securityDepositRepository.CommitTransaction();
             return deleted;

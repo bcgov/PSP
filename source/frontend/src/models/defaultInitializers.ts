@@ -82,6 +82,7 @@ export const getEmptyLease = (): ApiGen_Concepts_Lease => ({
   fileLegalSurveyStatusTypeCode: null,
   leasePurposes: [],
   leaseTeam: [],
+  canEdit: null,
 });
 
 /**

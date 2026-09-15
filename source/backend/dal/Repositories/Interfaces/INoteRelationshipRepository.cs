@@ -14,5 +14,7 @@ namespace Pims.Dal.Repositories
         T AddNoteRelationship(T noteRelationship);
 
         bool DeleteNoteRelationship(long noteId);
+
+        T GetByNoteId(long noteId);
     }
 }
