@@ -15,25 +15,31 @@ yup.addMethod(yup.array, 'unique', function (message, mapper = (val: unknown) =>
 });
 
 export const DispositionTeamYupSchema = yup.object().shape({
-  team: yup.array().of(
-    yup.object().shape(
-      {
-        teamProfileTypeCode: yup.string().when('contact', {
-          is: (contact: object) => !!contact,
-          then: yup.string().required('Select a profile'),
-        }),
-        contact: yup
-          .object()
-          .nullable()
-          .when('teamProfileTypeCode', {
-            is: (teamProfileTypeCode: string) => !!teamProfileTypeCode,
-            then: yup.object().required('Select a team member').nullable(),
+  team: yup
+    .array()
+    .of(
+      yup.object().shape(
+        {
+          teamProfileTypeCode: yup.string().when('contact', {
+            is: (contact: object) => !!contact,
+            then: yup.string().required('Select a profile'),
           }),
-      },
-      [
-        ['teamProfileTypeCode', 'contact'],
-        ['contact', 'teamProfileTypeCode'],
-      ],
+          contact: yup
+            .object()
+            .nullable()
+            .when('teamProfileTypeCode', {
+              is: (teamProfileTypeCode: string) => !!teamProfileTypeCode,
+              then: yup.object().required('Select a team member').nullable(),
+            }),
+        },
+        [
+          ['teamProfileTypeCode', 'contact'],
+          ['contact', 'teamProfileTypeCode'],
+        ],
+      ),
+    )
+    .unique(
+      'You have selected a team member that already has the selected role.',
+      (val: any) => val.teamProfileTypeCode + val?.contact?.organizationId + val?.contact?.personId,
     ),
-  ),
 });

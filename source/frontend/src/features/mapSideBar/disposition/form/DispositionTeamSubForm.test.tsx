@@ -14,6 +14,9 @@ import {
 import { WithDispositionTeam } from '../models/DispositionTeamSubFormModel';
 import DispositionTeamSubForm from './DispositionTeamSubForm';
 import { createRef } from 'react';
+import { IContactSearchResult } from '@/interfaces';
+import { DispositionTeamYupSchema } from '../models/DispositionTeamSubFormYupSchema';
+import { ApiGen_CodeTypes_DispositionTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_DispositionTeamProfileTypes';
 
 describe('DispositionTeamSubForm component', () => {
   // render component under test
@@ -23,7 +26,12 @@ describe('DispositionTeamSubForm component', () => {
   ) => {
     const ref = createRef<FormikProps<WithDispositionTeam>>();
     const utils = render(
-      <Formik innerRef={ref} initialValues={props.initialForm} onSubmit={vi.fn()}>
+      <Formik
+        innerRef={ref}
+        initialValues={props.initialForm}
+        validationSchema={DispositionTeamYupSchema}
+        onSubmit={vi.fn()}
+      >
         {formikProps => <DispositionTeamSubForm />}
       </Formik>,
       {
@@ -43,6 +51,22 @@ describe('DispositionTeamSubForm component', () => {
   };
 
   let testForm: WithDispositionTeam;
+
+  const selectedPerson: IContactSearchResult = {
+    id: '1',
+    summary: 'summary',
+    mailingAddress: '123 mock st',
+    surname: 'last',
+    firstName: 'first',
+    email: 'email',
+    municipalityName: 'city',
+    provinceState: 'province',
+    isDisabled: false,
+    personId: 1,
+    person: null,
+    middleNames: null,
+    organizationName: null,
+  };
 
   beforeEach(() => {
     testForm = { team: [] };
@@ -121,5 +145,52 @@ describe('DispositionTeamSubForm component', () => {
     await act(async () => userEvent.click(addRow));
     await act(async () => selectOptions('team.0.teamProfileTypeCode', 'NEGOTAGENT'));
     expect(getIn(getFormikRef().current?.touched, 'team.0.contact')).toBe(true);
+  });
+
+  it('displays an error when the same contact and role are selected twice', async () => {
+    const { getByTestId, getFormikRef, getByText } = setup({
+      initialForm: testForm,
+    });
+
+    // First team member
+    await act(async () => {
+      await userEvent.click(getByTestId('add-team-member'));
+    });
+
+    await act(async () => {
+      await selectOptions(
+        'team.0.teamProfileTypeCode',
+        ApiGen_CodeTypes_DispositionTeamProfileTypes.LISTAGENT,
+      );
+    });
+
+    await act(async () => {
+      await getFormikRef().current?.setFieldValue('team.0.contact', selectedPerson);
+    });
+
+    // Second team member
+    await act(async () => {
+      await userEvent.click(getByTestId('add-team-member'));
+    });
+
+    await act(async () => {
+      await selectOptions(
+        'team.1.teamProfileTypeCode',
+        ApiGen_CodeTypes_DispositionTeamProfileTypes.LISTAGENT,
+      );
+    });
+
+    // Select SAME person
+    await act(async () => {
+      await getFormikRef().current?.setFieldValue('team.1.contact', selectedPerson);
+    });
+
+    await act(async () => {
+      await getFormikRef().current?.validateForm();
+    });
+
+    expect(getFormikRef().current?.errors.team).toBe(
+      'You have selected a team member that already has the selected role.',
+    );
   });
 });
