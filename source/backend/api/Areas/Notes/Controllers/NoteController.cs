@@ -1,12 +1,10 @@
 using System;
 using System.Collections.Generic;
-using System.IO;
 using MapsterMapper;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.Extensions.Logging;
 using Pims.Api.Constants;
-using Pims.Api.Helpers.Extensions;
 using Pims.Api.Models.Concepts.Note;
 using Pims.Api.Services;
 using Pims.Core.Api.Exceptions;
@@ -15,7 +13,6 @@ using Pims.Core.Extensions;
 using Pims.Core.Json;
 using Pims.Core.Security;
 using Pims.Dal.Entities;
-using Pims.Dal.Repositories;
 using Swashbuckle.AspNetCore.Annotations;
 
 namespace Pims.Api.Areas.Notes.Controllers
