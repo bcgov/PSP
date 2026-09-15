@@ -305,6 +305,37 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
   flex-wrap: nowrap;
 }
 
+.c1 {
+  background-color: #f2f2f2;
+  padding-top: 1rem;
+}
+
+.c2 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c3 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c5.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c4 {
+  font-weight: bold;
+}
+
 .c18 {
   position: relative;
   border-radius: 0.4rem;
@@ -396,37 +427,6 @@ exports[`Research File Update Container > Renders the underlying form 1`] = `
 
 .c20 .form-label {
   margin-bottom: unset;
-}
-
-.c1 {
-  background-color: #f2f2f2;
-  padding-top: 1rem;
-}
-
-.c2 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c3 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c5.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c4 {
-  font-weight: bold;
 }
 
 .c6 {

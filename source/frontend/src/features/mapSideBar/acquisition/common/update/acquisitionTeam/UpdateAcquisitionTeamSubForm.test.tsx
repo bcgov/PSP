@@ -1,5 +1,5 @@
 import { Formik, FormikProps, getIn } from 'formik';
-
+import { createRef } from 'react';
 import { mockLookups } from '@/mocks/index.mock';
 import { lookupCodesSlice } from '@/store/slices/lookupCodes';
 import {
@@ -13,7 +13,6 @@ import {
 
 import { WithAcquisitionTeam } from '../../models';
 import { UpdateAcquisitionTeamSubForm } from './UpdateAcquisitionTeamSubForm';
-import { createRef } from 'react';
 import { ApiGen_CodeTypes_AcquisitionTeamProfileTypes } from '@/models/api/generated/ApiGen_CodeTypes_AcquisitionTeamProfileTypes';
 import { RestrictContactType } from '@/constants/contacts';
 
@@ -162,6 +161,23 @@ describe('AcquisitionTeamSubForm component', () => {
           RestrictContactType.ONLY_INDIVIDUALS,
           RestrictContactType.ONLY_ORGANIZATIONS,
         ],
+      }),
+    );
+  });
+
+  it('restricts key contact selection to PIMS users', async () => {
+    const { getByTestId } = setup({ initialForm: testForm });
+    await act(async () => userEvent.click(getByTestId('add-team-member')));
+    await act(async () =>
+      selectOptions(
+        'team.0.contactTypeCode',
+        ApiGen_CodeTypes_AcquisitionTeamProfileTypes.KEYCNTCT,
+      ),
+    );
+
+    expect(contactInputMock).toHaveBeenLastCalledWith(
+      expect.objectContaining({
+        restrictContactType: [RestrictContactType.ONLY_PIMSUSERS],
       }),
     );
   });

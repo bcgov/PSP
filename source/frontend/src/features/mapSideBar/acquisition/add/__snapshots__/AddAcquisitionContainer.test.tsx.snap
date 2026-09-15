@@ -408,6 +408,32 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   z-index: 10;
 }
 
+.c13 {
+  margin: 1.6rem;
+  padding: 1.6rem;
+  background-color: white;
+  text-align: left;
+  border-radius: 0.5rem;
+}
+
+.c14 {
+  font-weight: bold;
+  color: var(--theme-blue-100);
+  border-bottom: 0.2rem var(--theme-blue-90) solid;
+  margin-bottom: 2.4rem;
+}
+
+.c16.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c15 {
+  font-weight: bold;
+}
+
 .c35 {
   position: relative;
   border-radius: 0.4rem;
@@ -469,32 +495,6 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
   -webkit-text-decoration: none;
   text-decoration: none;
   opacity: unset;
-}
-
-.c13 {
-  margin: 1.6rem;
-  padding: 1.6rem;
-  background-color: white;
-  text-align: left;
-  border-radius: 0.5rem;
-}
-
-.c14 {
-  font-weight: bold;
-  color: var(--theme-blue-100);
-  border-bottom: 0.2rem var(--theme-blue-90) solid;
-  margin-bottom: 2.4rem;
-}
-
-.c16.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c15 {
-  font-weight: bold;
 }
 
 .c28 {
@@ -2383,6 +2383,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                         </option>
                         <option
                           class="option"
+                          data-testid="select-option-KEYCNTCT"
+                          value="KEYCNTCT"
+                        >
+                          Key Contact
+                        </option>
+                        <option
+                          class="option"
                           data-testid="select-option-EXPRAGENT"
                           value="EXPRAGENT"
                         >
@@ -2571,6 +2578,13 @@ exports[`AddAcquisitionContainer component > Sub-interest file > renders as expe
                           value=""
                         >
                           Select profile...
+                        </option>
+                        <option
+                          class="option"
+                          data-testid="select-option-KEYCNTCT"
+                          value="KEYCNTCT"
+                        >
+                          Key Contact
                         </option>
                         <option
                           class="option"
@@ -3505,24 +3519,6 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
   z-index: 10;
 }
 
-.c33 {
-  position: relative;
-  border-radius: 0.4rem;
-  padding-top: 0.8rem;
-  padding-bottom: 0.8rem;
-  padding-left: 1.2rem;
-  padding-right: 2.8rem;
-  word-break: break-all;
-  background-image: none;
-  color: #9F9D9C;
-  border: #606060 solid 0.1rem;
-  cursor: pointer;
-}
-
-.c33.is-invalid {
-  border: #CE3E39 solid 0.1rem;
-}
-
 .c13 {
   margin: 1.6rem;
   padding: 1.6rem;
@@ -3547,6 +3543,24 @@ exports[`AddAcquisitionContainer component > renders as expected 1`] = `
 
 .c15 {
   font-weight: bold;
+}
+
+.c33 {
+  position: relative;
+  border-radius: 0.4rem;
+  padding-top: 0.8rem;
+  padding-bottom: 0.8rem;
+  padding-left: 1.2rem;
+  padding-right: 2.8rem;
+  word-break: break-all;
+  background-image: none;
+  color: #9F9D9C;
+  border: #606060 solid 0.1rem;
+  cursor: pointer;
+}
+
+.c33.is-invalid {
+  border: #CE3E39 solid 0.1rem;
 }
 
 .c29 {
