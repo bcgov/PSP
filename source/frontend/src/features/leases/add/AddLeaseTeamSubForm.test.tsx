@@ -31,7 +31,12 @@ describe('AddLeaseTeamSubForm component', () => {
   const setup = (props: { initialForm: WithLeaseTeam }, renderOptions: RenderOptions = {}) => {
     const ref = createRef<FormikProps<WithLeaseTeam>>();
     const utils = render(
-      <Formik innerRef={ref} initialValues={props.initialForm} validationSchema={AddLeaseTeamYupSchema} onSubmit={vi.fn()}>
+      <Formik
+        innerRef={ref}
+        initialValues={props.initialForm}
+        validationSchema={AddLeaseTeamYupSchema}
+        onSubmit={vi.fn()}
+      >
         {formikProps => <AddLeaseTeamSubForm />}
       </Formik>,
       {
@@ -198,55 +203,49 @@ describe('AddLeaseTeamSubForm component', () => {
   });
 
   it('displays an error when the same contact and role are selected twice', async () => {
-  const { getByTestId, getFormikRef, getByText } = setup({
-    initialForm: testForm,
-  });
+    const { getByTestId, getFormikRef, getByText } = setup({
+      initialForm: testForm,
+    });
 
-  // First team member
-  await act(async () => {
-    await userEvent.click(getByTestId('add-team-member'));
-  });
+    // First team member
+    await act(async () => {
+      await userEvent.click(getByTestId('add-team-member'));
+    });
 
-  await act(async () => {
-    await selectOptions(
-      'team.0.contactTypeCode',
-      ApiGen_CodeTypes_LeaseTeamProfileTypes.PROPANALYST,
+    await act(async () => {
+      await selectOptions(
+        'team.0.contactTypeCode',
+        ApiGen_CodeTypes_LeaseTeamProfileTypes.PROPANALYST,
+      );
+    });
+
+    await act(async () => {
+      await getFormikRef().current?.setFieldValue('team.0.contact', selectedPerson);
+    });
+
+    // Second team member
+    await act(async () => {
+      await userEvent.click(getByTestId('add-team-member'));
+    });
+
+    await act(async () => {
+      await selectOptions(
+        'team.1.contactTypeCode',
+        ApiGen_CodeTypes_LeaseTeamProfileTypes.PROPANALYST,
+      );
+    });
+
+    // Select SAME person
+    await act(async () => {
+      await getFormikRef().current?.setFieldValue('team.1.contact', selectedPerson);
+    });
+
+    await act(async () => {
+      await getFormikRef().current?.validateForm();
+    });
+
+    expect(getFormikRef().current?.errors.team).toBe(
+      'You have selected a team member that already has the selected role.',
     );
   });
-
-  await act(async () => {
-    await getFormikRef().current?.setFieldValue(
-      'team.0.contact',
-      selectedPerson,
-    );
-  });
-
-  // Second team member
-  await act(async () => {
-    await userEvent.click(getByTestId('add-team-member'));
-  });
-
-  await act(async () => {
-    await selectOptions(
-      'team.1.contactTypeCode',
-      ApiGen_CodeTypes_LeaseTeamProfileTypes.PROPANALYST,
-    );
-  });
-
-  // Select SAME person
-  await act(async () => {
-    await getFormikRef().current?.setFieldValue(
-      'team.1.contact',
-      selectedPerson,
-    );
-  });
-
-  await act(async () => {
-    await getFormikRef().current?.validateForm();
-  });
-
-  expect(getFormikRef().current?.errors.team).toBe(
-  'You have selected a team member that already has the selected role.',
-  );
-});
 });
