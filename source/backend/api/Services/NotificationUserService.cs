@@ -180,7 +180,7 @@ namespace Pims.Api.Services
         {
             var lease = notification.Lease;
 
-            if (lease.PimsLeaseStakeholders.Count > 0)
+            if (lease.PimsLeaseStakeholders.Count > 0 && lease.LeasePayRvblTypeCode == "RCVBL")
             {
                 var tenants = GetTenants(lease);
 
@@ -192,7 +192,7 @@ namespace Pims.Api.Services
 
             return $"Lease File #: {lease.LFileNo} " +
                 $"and First Nation Consultation with status: " +
-                $"{notification.LeaseConsultation.ConsultationStatusTypeCodeNavigation.Description}";
+                $"{notification.LeaseConsultation.ConsultationOutcomeTypeCodeNavigation.Description}";
         }
 
         private static string GetTenants(PimsLease lease)
