@@ -33,12 +33,12 @@ export const ContactManagerModal: React.FunctionComponent<
   // Preserve the last search filter while ContactManagerView is unmounted.
   const [searchFilter, setSearchFilter] = useState<IContactFilter>();
 
-  const onlyPimsUsersSelected =
-    searchFilter?.searchBy.length === 1 &&
-    searchFilter.searchBy.includes(RestrictContactType.ONLY_PIMSUSERS);
+  const hasValidContactTypes = Boolean(
+    props.restrictContactType?.includes(RestrictContactType.ONLY_INDIVIDUALS) &&
+      props.restrictContactType?.includes(RestrictContactType.ONLY_ORGANIZATIONS),
+  );
 
-  const showCreateContactButton =
-    !isCreatingContact && searchFilter !== undefined && !onlyPimsUsersSelected;
+  const showCreateContactButton = !isCreatingContact && hasValidContactTypes;
 
   const resetModalState = () => {
     setSearchFilter(undefined);
