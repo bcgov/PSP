@@ -1,5 +1,4 @@
 using System.Collections.Generic;
-using Pims.Api.Models.Concepts.Lease;
 using Pims.Dal.Entities;
 using Pims.Dal.Entities.Models;
 using Pims.Dal.Exceptions;
@@ -53,5 +52,7 @@ namespace Pims.Api.Services
         IEnumerable<PimsLeaseLicenseTeam> GetTeamMembers();
 
         PimsLease GetLeaseAssociations(long leaseId);
+
+        bool CanEdit(PimsLease lease);
     }
 }

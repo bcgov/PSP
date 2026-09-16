@@ -32,11 +32,12 @@ export const useApiContacts = () => {
         api.get<ApiGen_Concepts_Organization>(`/organizations/${id}`),
       getOrganizationConcept: (id: number) =>
         api.get<ApiGen_Concepts_Organization>(`/organizations/concept/${id}`),
-      postOrganization: (organization: ApiGen_Concepts_Organization, userOverride: boolean) =>
-        api.post<ApiGen_Concepts_Organization>(
+      postOrganization: (organization: ApiGen_Concepts_Organization, userOverride: boolean) => {
+        return api.post<ApiGen_Concepts_Organization>(
           `/organizations?userOverride=${userOverride}`,
           organization,
-        ),
+        );
+      },
       putOrganization: (organization: ApiGen_Concepts_Organization) =>
         api.put<ApiGen_Concepts_Organization>(`/organizations/${organization.id}`, organization),
     }),

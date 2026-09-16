@@ -26,6 +26,7 @@ namespace Pims.Api.Test.Services
     public class LeaseServiceTest
     {
         private const string ContractorNotInTeamError = "Contractor is not assigned to the Lease File's team or the associated Project's team";
+        private const string ContractorsCannotRemoveThemselvesError = "Contractors cannot remove themselves from a Lease File. Please contact the admin at pims@gov.bc.ca";
         private TestHelper _helper;
 
         public LeaseServiceTest()
@@ -778,7 +779,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.Update(lease, new List<UserOverrideCode>());
 
             // Assert
-            act.Should().Throw<ContractorNotInTeamException>().WithMessage("Contractors cannot remove themselves from a Lease File. Please contact the admin at pims@gov.bc.ca");
+            act.Should().Throw<ContractorNotInTeamException>().WithMessage(ContractorNotInTeamError);
             leaseRepository.Verify(x => x.Update(It.IsAny<PimsLease>(), It.IsAny<bool>()), Times.Never);
         }
 
@@ -990,7 +991,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.UpdateProperties(lease, new List<UserOverrideCode>());
 
             // Assert
-            act.Should().Throw<ContractorNotInTeamException>().WithMessage("Contractors cannot remove themselves from a Lease File. Please contact the admin at pims@gov.bc.ca");
+            act.Should().Throw<ContractorNotInTeamException>().WithMessage(ContractorNotInTeamError);
             propertyLeaseRepository.Verify(x => x.UpdatePropertyLeases(It.IsAny<long>(), It.IsAny<ICollection<PimsPropertyLease>>()), Times.Never);
         }
 
@@ -1796,7 +1797,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.AddConsultation(new PimsLeaseConsultation());
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            act.Should().Throw<ContractorNotInTeamException>().WithMessage(ContractorNotInTeamError);
             consultationRepository.Verify(x => x.AddConsultation(It.IsAny<PimsLeaseConsultation>()), Times.Never);
         }
 
@@ -1834,18 +1835,30 @@ namespace Pims.Api.Test.Services
         {
             // Arrange
             var service = this.CreateLeaseService(Permissions.LeaseEdit);
-            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
 
-            consultationRepository.Setup(x => x.AddConsultation(It.IsAny<PimsLeaseConsultation>())).Returns(new PimsLeaseConsultation());
+            var lease = EntityHelper.CreateLease(1);
+
+            var consultation = new PimsLeaseConsultation
+            {
+                LeaseId = lease.Internal_Id,
+            };
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository
+                .Setup(x => x.GetNoTracking(lease.Internal_Id))
+                .Returns(lease);
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteConsultation(It.IsAny<LeaseStatusTypes?>())).Returns(false);
+            solver
+                .Setup(x => x.CanEditOrDeleteConsultation(It.IsAny<LeaseStatusTypes?>()))
+                .Returns(false);
 
             // Act
-            Action act = () => service.AddConsultation(new PimsLeaseConsultation());
+            Action act = () => service.AddConsultation(consultation);
 
             // Assert
-            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            act.Should().Throw<BusinessRuleViolationException>(
+                "The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]
@@ -1891,27 +1904,39 @@ namespace Pims.Api.Test.Services
             Action act = () => service.UpdateConsultation(new PimsLeaseConsultation());
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            act.Should().Throw<ContractorNotInTeamException>().WithMessage(ContractorNotInTeamError);
             consultationRepository.Verify(x => x.UpdateConsultation(It.IsAny<PimsLeaseConsultation>()), Times.Never);
         }
 
         [Fact]
-        public void Update_Consultation_FinalFile()
+       public void Update_Consultation_FinalFile()
         {
             // Arrange
             var service = this.CreateLeaseService(Permissions.LeaseEdit);
-            var consultationRepository = this._helper.GetService<Mock<IConsultationRepository>>();
 
-            consultationRepository.Setup(x => x.UpdateConsultation(It.IsAny<PimsLeaseConsultation>())).Returns(new PimsLeaseConsultation());
+            var lease = EntityHelper.CreateLease(1);
+
+            var consultation = new PimsLeaseConsultation
+            {
+                LeaseId = lease.Internal_Id,
+            };
+
+            var leaseRepository = this._helper.GetService<Mock<ILeaseRepository>>();
+            leaseRepository
+                .Setup(x => x.GetNoTracking(lease.Internal_Id))
+                .Returns(lease);
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
-            solver.Setup(x => x.CanEditOrDeleteConsultation(It.IsAny<LeaseStatusTypes?>())).Returns(false);
+            solver
+                .Setup(x => x.CanEditOrDeleteConsultation(It.IsAny<LeaseStatusTypes?>()))
+                .Returns(false);
 
             // Act
-            Action act = () => service.UpdateConsultation(new PimsLeaseConsultation());
+            Action act = () => service.UpdateConsultation(consultation);
 
             // Assert
-            act.Should().Throw<BusinessRuleViolationException>("The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
+            act.Should().Throw<BusinessRuleViolationException>(
+                "The file you are editing is not active, so you cannot save changes. Refresh your browser to see file state.");
         }
 
         [Fact]
@@ -1987,7 +2012,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.DeleteConsultation(1);
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            act.Should().Throw<ContractorNotInTeamException>().WithMessage(ContractorNotInTeamError);
             consultationRepository.Verify(x => x.TryDeleteConsultation(It.IsAny<long>()), Times.Never);
         }
 
@@ -2071,7 +2096,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.UpdateInsuranceByLeaseId(1, new List<PimsInsurance>());
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            act.Should().Throw<ContractorNotInTeamException>().WithMessage(ContractorNotInTeamError);
             leaseRepository.Verify(x => x.UpdateLeaseInsurances(It.IsAny<long>(), It.IsAny<IEnumerable<PimsInsurance>>()), Times.Never);
         }
 
@@ -2177,7 +2202,7 @@ namespace Pims.Api.Test.Services
             Action act = () => service.UpdateStakeholdersByLeaseId(1, new List<PimsLeaseStakeholder>());
 
             // Assert
-            act.Should().Throw<NotAuthorizedException>().WithMessage(ContractorNotInTeamError);
+            act.Should().Throw<ContractorNotInTeamException>().WithMessage(ContractorNotInTeamError);
             stakeholderRepository.Verify(x => x.Update(It.IsAny<long>(), It.IsAny<IEnumerable<PimsLeaseStakeholder>>()), Times.Never);
         }
         #endregion

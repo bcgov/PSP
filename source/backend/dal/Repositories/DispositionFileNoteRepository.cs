@@ -84,6 +84,11 @@ namespace Pims.Dal.Repositories
             }
             return false;
         }
+
+        public PimsDispositionFileNote GetByNoteId(long noteId)
+        {
+            return Context.PimsDispositionFileNotes.AsNoTracking().FirstOrDefault(x => x.NoteId == noteId);
+        }
         #endregion
     }
 }

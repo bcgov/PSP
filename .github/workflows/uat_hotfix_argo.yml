@@ -55,9 +55,30 @@ jobs:
           color: 17a2b8
           timezone: America/Los_Angeles
 
+  ## This workflow builds from source, so the version comes from the working
+  ## tree. For a hotfix the hotfix component must have been bumped manually in
+  ## the PR, so this lands on its own version line (6.6.1.x) and cannot collide
+  ## with the regular one (6.6.0.x).
+  version:
+    name: Resolve application version
+    needs: ci-cd-start-notification
+    runs-on: ubuntu-22.04
+    outputs:
+      version: ${{ steps.resolve.outputs.version }}
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
+      - name: Resolve version
+        id: resolve
+        shell: bash
+        run: |
+          VERSION=$(make version)
+          echo "Resolved application version: ${VERSION}"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
   build-frontend:
     name: Build frontend
-    needs: ci-cd-start-notification
+    needs: [ci-cd-start-notification, version]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -69,14 +90,19 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Call script to build frontend (pims-app and pims-app-base)
+      # The -uat BuildConfigs build from the test branch but target UAT, so
+      # --env uat matches the BuildConfig name and no warning is emitted.
+      - name: Build frontend images (pims-app-base and pims-app)
+        shell: bash
         run: |
-          ./openshift/4.0/player.sh build app-base -apply
-          ./openshift/4.0/player.sh build app -apply
+          ./tools/cicd/build/build-image.sh \
+            --env uat \
+            --version "${{ needs.version.outputs.version }}" \
+            pims-app-base-uat pims-app-uat
 
   build-api:
     name: Build api
-    needs: ci-cd-start-notification
+    needs: [ci-cd-start-notification, version]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -88,11 +114,13 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Call script to build backend (pims-api)
+      - name: Build backend service images
+        shell: bash
         run: |
-          ./openshift/4.0/player.sh build api -apply
-          ./openshift/4.0/player.sh build proxy -apply
-          ./openshift/4.0/player.sh build scheduler -apply
+          ./tools/cicd/build/build-image.sh \
+            --env uat \
+            --version "${{ needs.version.outputs.version }}" \
+            pims-api-uat pims-proxy-uat pims-scheduler-uat
 
   deploy:
     name: Deploy to OpenShift
@@ -108,30 +136,15 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Deploy PIMS frontend
+      ## No mayan step here: a hotfix does not rebuild mayan, so mayan-bcgov:uat
+      ## is left pointing at whatever the last TEST to UAT promotion set.
+      - name: Deploy PIMS services
         shell: bash
         run: |
-          oc tag pims-app:latest-$DESTINATION pims-app:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-app-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-app-$DESTINATION
-      - name: Deploy PIMS api
-        shell: bash
-        run: |
-          oc tag pims-api:latest-$DESTINATION pims-api:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-api-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-api-$DESTINATION
-      - name: Deploy geoserver proxy microservice
-        shell: bash
-        run: |
-          oc tag pims-proxy:latest-$DESTINATION pims-proxy:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
-      - name: Deploy scheduler microservice
-        shell: bash
-        run: |
-          oc tag pims-scheduler:latest-$DESTINATION pims-scheduler:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
+          ./tools/cicd/build/deploy-image.sh \
+            --from latest-uat \
+            --env uat \
+            pims-app pims-api pims-proxy pims-scheduler
 
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
@@ -189,9 +202,12 @@ jobs:
       branch: test
     secrets: inherit
 
+  ## Creates the immutable <version>-uat tags that the PROD promotion consumes.
+  ## mayan-bcgov is included because PROD promotes it from the same version
+  ## tag, even though this workflow does not rebuild or redeploy it.
   tag-release-image:
     name: Release Tag
-    needs: [deploy]
+    needs: [version, deploy]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -203,15 +219,16 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: 3cd915-tools
-      - name: tag uat image such that it can be promoted to prod
+      ## mayan-bcgov is included even though this workflow does not rebuild it,
+      ## so the release tag set is complete for the PROD promotion. Its :uat tag
+      ## carries no PIMS_VERSION, so tag-version.sh will not warn about it.
+      - name: Tag uat images so they can be promoted to prod
         shell: bash
         run: |
-          VERSION=$(make version)
-          oc tag pims-app:uat pims-app:v${VERSION}-master
-          oc tag pims-api:uat pims-api:v${VERSION}-master
-          oc tag pims-proxy:uat pims-proxy:v${VERSION}-master
-          oc tag pims-scheduler:uat pims-scheduler:v${VERSION}-master
-          oc tag mayan-bcgov:uat mayan-bcgov:v${VERSION}-master
+          ./tools/cicd/build/tag-version.sh \
+            --env uat \
+            --version "${{ needs.version.outputs.version }}" \
+            pims-app pims-api pims-proxy pims-scheduler mayan-bcgov
 
   ci-cd-end-notification:
     if: always()

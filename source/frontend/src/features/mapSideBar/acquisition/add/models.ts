@@ -39,6 +39,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
   deliveryDate?: string = '';
   estimatedCompletionDate?: string = '';
   possessionDate?: string = '';
+  ownerRepComment?: string = '';
   rowVersion?: number;
 
   //Progress Statuses
@@ -107,6 +108,9 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
         ? this.estimatedCompletionDate
         : null,
       possessionDate: isValidIsoDateTime(this.possessionDate) ? this.possessionDate : null,
+      ownerRepComment: isValidString(this.ownerRepComment?.trim())
+        ? this.ownerRepComment.trim()
+        : null,
       acquisitionFileProgressStatuses: this.progressStatuses.map(x => x.toApi(this.id ?? 0)),
       acquisitionFileAppraisalStatusTypeCode: toTypeCodeNullable(this.appraisalStatusType),
       acquisitionFileLegalSurveyStatusTypeCode: toTypeCodeNullable(this.legalSurveyStatusType),
@@ -221,6 +225,7 @@ export class AcquisitionForm implements WithAcquisitionTeam, WithAcquisitionOwne
     newForm.deliveryDate = model.deliveryDate ?? undefined;
     newForm.estimatedCompletionDate = model.estimatedCompletionDate ?? undefined;
     newForm.possessionDate = model.possessionDate ?? undefined;
+    newForm.ownerRepComment = model.ownerRepComment ?? '';
     newForm.progressStatuses =
       model.acquisitionFileProgressStatuses.map(x => ProgressStatusModel.fromApi(x)) ?? [];
     newForm.appraisalStatusType = fromTypeCodeNullable(

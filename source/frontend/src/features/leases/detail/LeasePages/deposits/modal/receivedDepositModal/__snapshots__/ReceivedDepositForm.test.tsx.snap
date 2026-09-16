@@ -234,6 +234,17 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
   border-color: #d8292f !important;
 }
 
+.c1.required::before {
+  content: '*';
+  position: absolute;
+  top: 0.75rem;
+  left: 0rem;
+}
+
+.c0 {
+  font-weight: bold;
+}
+
 .c4 {
   position: relative;
   border-radius: 0.4rem;
@@ -250,17 +261,6 @@ exports[`ReceivedDepositForm component > renders as expected 1`] = `
 
 .c4.is-invalid {
   border: #CE3E39 solid 0.1rem;
-}
-
-.c1.required::before {
-  content: '*';
-  position: absolute;
-  top: 0.75rem;
-  left: 0rem;
-}
-
-.c0 {
-  font-weight: bold;
 }
 
 <form

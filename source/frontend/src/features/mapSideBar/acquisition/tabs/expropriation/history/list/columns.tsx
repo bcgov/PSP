@@ -6,7 +6,11 @@ import { EditButton } from '@/components/common/buttons/EditButton';
 import { InlineFlexDiv } from '@/components/common/styles';
 import { ColumnWithProps, DateCell } from '@/components/Table';
 import { Claims } from '@/constants';
+import ReminderContainer from '@/features/notifications/ReminderContainer';
+import ReminderView from '@/features/notifications/ReminderView';
 import { useKeycloakWrapper } from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_ExpropiationOwnerHistoryType } from '@/models/api/generated/ApiGen_CodeTypes_ExpropiationOwnerHistoryType';
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 
 import { ExpropriationEventRow } from '../models';
 
@@ -45,21 +49,54 @@ export const getExpropriationEventColumns = (
       width: 15,
       maxWidth: 15,
       sortable: false,
-      Cell: (cell: CellProps<ExpropriationEventRow>) => {
+      Cell: (props: CellProps<ExpropriationEventRow>) => {
         const { hasClaim } = useKeycloakWrapper();
+        const event = props.row.original;
 
         if (hasClaim(Claims.ACQUISITION_EDIT)) {
           return (
             <ExpropriationActionsDiv>
+              {event.eventType === ApiGen_CodeTypes_ExpropiationOwnerHistoryType.APPEFFCTVDT &&
+                event.eventDate && (
+                  <ReminderContainer
+                    keyDate={event.eventDate}
+                    keyDateLabel="Appraisal effective date"
+                    notificationType={ApiGen_CodeTypes_NotificationTypes.EXPROPH_APPEFFDT}
+                    notificationSource={{
+                      acquisitionFileId: event.acquisitionFileId,
+                      expropOwnerHistoryId: event.id,
+                    }}
+                    View={ReminderView}
+                  />
+                )}
+
               <EditButton
                 title="edit expropriation event"
-                data-testId={`edit-expropriation-event-${cell.row.index}`}
-                onClick={() => onUpdate(cell.row.original.id)}
+                data-testId={`edit-expropriation-event-${props.row.index}`}
+                onClick={() => onUpdate(event.id)}
               />
               <RemoveIconButton
                 title="delete expropriation event"
-                data-testId={`delete-expropriation-event-${cell.row.index}`}
-                onRemove={() => onDelete(cell.row.original.id)}
+                data-testId={`delete-expropriation-event-${props.row.index}`}
+                onRemove={() => onDelete(event.id)}
+              />
+            </ExpropriationActionsDiv>
+          );
+        } else if (
+          event.eventType === ApiGen_CodeTypes_ExpropiationOwnerHistoryType.APPEFFCTVDT &&
+          event.eventDate
+        ) {
+          return (
+            <ExpropriationActionsDiv>
+              <ReminderContainer
+                keyDate={event.eventDate}
+                keyDateLabel="Appraisal effective date"
+                notificationType={ApiGen_CodeTypes_NotificationTypes.EXPROPH_APPEFFDT}
+                notificationSource={{
+                  acquisitionFileId: event.acquisitionFileId,
+                  expropOwnerHistoryId: event.id,
+                }}
+                View={ReminderView}
               />
             </ExpropriationActionsDiv>
           );
@@ -76,4 +113,8 @@ const ExpropriationActionsDiv = styled(InlineFlexDiv)`
   align-items: center;
   flex-grow: 1;
   align-content: space-between;
+
+  button {
+    padding: 0.5rem !important;
+  }
 `;

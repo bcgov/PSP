@@ -57,9 +57,46 @@ jobs:
           color: 17a2b8
           timezone: America/Los_Angeles
 
+  ## Version stamped onto the UAT tags, and the value PROD later promotes from.
+  ## Read from the image being promoted rather than from `make version`, so the
+  ## tag always describes the image content.
+  version:
+    name: Resolve promoted image version
+    needs: ci-cd-start-notification
+    runs-on: ubuntu-22.04
+    outputs:
+      version: ${{ steps.resolve.outputs.version }}
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
+      - name: Login to OpenShift
+        uses: redhat-actions/oc-login@2a1614bc977c054c8786c8e35fc9534bd0ddc156 # v2.0.1
+        with:
+          openshift_server_url: ${{ env.OPENSHIFT_SERVER }}
+          openshift_token: ${{ env.OPENSHIFT_TOKEN }}
+          insecure_skip_tls_verify: true
+          namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
+      - name: Read PIMS_VERSION from the test image
+        id: resolve
+        shell: bash
+        run: |
+          VERSION=$(oc -n "$OPENSHIFT_TOOLS_NAMESPACE" get istag pims-api:test \
+            -o jsonpath='{.image.dockerImageMetadata.Config.Env}' \
+            | jq -r '.[] | select(startswith("PIMS_VERSION=")) | ltrimstr("PIMS_VERSION=")' \
+            | tail -1)
+
+          if [ -z "$VERSION" ]; then
+            echo "::error::pims-api:test carries no PIMS_VERSION."
+            echo "::error::It predates build-image.sh. Rebuild DEV and re-promote to TEST before releasing to UAT."
+            exit 1
+          fi
+
+          echo "Promoting version: ${VERSION}"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
   deploy:
     name: Retag/Deploy to OpenShift
-    needs: ci-cd-start-notification
+    needs: [ci-cd-start-notification, version]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -71,34 +108,22 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Deploy PIMS frontend
+      - name: Deploy PIMS services
         shell: bash
         run: |
-          oc tag pims-app:$RELEASE_TAG pims-app:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-app-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-app-$DESTINATION
-      - name: Deploy PIMS api
-        shell: bash
-        run: |
-          oc tag pims-api:$RELEASE_TAG pims-api:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-api-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-api-$DESTINATION
-      - name: Deploy geoserver proxy microservice
-        shell: bash
-        run: |
-          oc tag pims-proxy:$RELEASE_TAG pims-proxy:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
-      - name: Deploy scheduler microservice
-        shell: bash
-        run: |
-          oc tag pims-scheduler:$RELEASE_TAG pims-scheduler:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
+          ./tools/cicd/build/deploy-image.sh \
+            --from test \
+            --env uat \
+            pims-app pims-api pims-proxy pims-scheduler
+      ## mayan-bcgov has no Deployment, so it is tag-only.
       - name: Deploy mayan
         shell: bash
         run: |
-          oc tag mayan-bcgov:$RELEASE_TAG mayan-bcgov:$DESTINATION
+          ./tools/cicd/build/deploy-image.sh \
+            --from test \
+            --env uat \
+            --no-rollout \
+            mayan-bcgov
 
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.
@@ -158,9 +183,11 @@ jobs:
       branch: test
     secrets: inherit
 
+  ## Creates the immutable <version>-uat tags that the PROD promotion consumes.
+  ## Replaces the previous v<version>-master naming.
   tag-release-image:
     name: Release Tag
-    needs: [deploy]
+    needs: [version, deploy]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -172,15 +199,13 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: 3cd915-tools
-      - name: tag uat image such that it can be promoted to prod
+      - name: Tag uat images so they can be promoted to prod
         shell: bash
         run: |
-          VERSION=$(make version)
-          oc tag pims-app:uat pims-app:v${VERSION}-master
-          oc tag pims-api:uat pims-api:v${VERSION}-master
-          oc tag pims-proxy:uat pims-proxy:v${VERSION}-master
-          oc tag pims-scheduler:uat pims-scheduler:v${VERSION}-master
-          oc tag mayan-bcgov:uat mayan-bcgov:v${VERSION}-master
+          ./tools/cicd/build/tag-version.sh \
+            --env uat \
+            --version "${{ needs.version.outputs.version }}" \
+            pims-app pims-api pims-proxy pims-scheduler mayan-bcgov
 
   ci-cd-end-notification:
     name: CI-CD End Notification to Teams Channel

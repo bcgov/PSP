@@ -11,13 +11,14 @@ import { IConsultationListViewProps } from './ConsultationListView';
 
 export interface IConsultationListProps {
   leaseId: number;
+  canEdit?: boolean;
   View: React.FunctionComponent<React.PropsWithChildren<IConsultationListViewProps>>;
   statusSolver: LeaseStatusUpdateSolver;
 }
 
 export const ConsultationListContainer: React.FunctionComponent<
   React.PropsWithChildren<IConsultationListProps>
-> = ({ leaseId, statusSolver, View }) => {
+> = ({ leaseId, canEdit, statusSolver, View }) => {
   const [leaseConsultations, setLeaseConsultations] = useState<ApiGen_Concepts_ConsultationLease[]>(
     [],
   );
@@ -73,6 +74,7 @@ export const ConsultationListContainer: React.FunctionComponent<
       loading={isLoading}
       consultations={leaseConsultations}
       isFileFinalStatus={!statusSolver.canEditConsulations()}
+      canEdit={canEdit}
       onAdd={handleConsultationAdd}
       onEdit={handleConsultationEdit}
       onDelete={handleConsultationDeleted}

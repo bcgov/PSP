@@ -36,6 +36,36 @@ namespace Pims.Api.Test.Services
             return this._helper.Create<LeasePeriodService>();
         }
 
+        private void SetupEditableLease(PimsLease lease)
+        {
+            lease.RegionCode = 1;
+            lease.ProjectId = null;
+
+            var user = EntityHelper.CreateUser("Test");
+            user.PimsRegionUsers.Add(new PimsRegionUser()
+            {
+                RegionCode = 1,
+            });
+
+            var leaseService = this._helper.GetService<Mock<ILeaseService>>();
+            leaseService.Setup(x => x.GetById(lease.Internal_Id)).Returns(lease);
+
+            var userRepository = this._helper.GetService<Mock<IUserRepository>>();
+            userRepository.Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>())).Returns(user);
+
+            var lookupRepository = this._helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository.Setup(x => x.GetAllRegions()).Returns(new List<PimsRegion>());
+        }
+
+        private void SetupLease(PimsLease lease)
+        {
+            var leaseService = this._helper.GetService<Mock<ILeaseService>>();
+
+            leaseService
+                .Setup(x => x.GetById(lease.Internal_Id))
+                .Returns(lease);
+        }
+
         #region Tests
         #region Add
         [Fact]
@@ -47,12 +77,13 @@ namespace Pims.Api.Test.Services
             var service = this.CreateLeaseServicePeriodWithPermissions(Permissions.LeaseEdit, Permissions.LeaseView);
             var leasePeriodRepository = this._helper.GetService<Mock<ILeasePeriodRepository>>();
 
+            SetupEditableLease(lease);
+
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
             // Act
             var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, LeaseId = lease.Internal_Id, Lease = lease };
-
             var updatedLease = service.AddPeriod(lease.Internal_Id, period);
 
             // Assert
@@ -66,7 +97,7 @@ namespace Pims.Api.Test.Services
             var lease = EntityHelper.CreateLease(1);
 
             var service = this.CreateLeaseServicePeriodWithPermissions(Permissions.LeaseEdit, Permissions.LeaseView);
-            var leasePeriodRepository = this._helper.GetService<Mock<ILeasePeriodRepository>>();
+            this.SetupLease(lease);
 
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(false);
@@ -170,6 +201,8 @@ namespace Pims.Api.Test.Services
             var leasePeriodRepository = this._helper.GetService<Mock<ILeasePeriodRepository>>();
             leasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
 
+            SetupEditableLease(lease);
+
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
@@ -191,6 +224,7 @@ namespace Pims.Api.Test.Services
             lease.PimsLeasePeriods = new List<PimsLeasePeriod>() { originalTerm };
 
             var service = this.CreateLeaseServicePeriodWithPermissions(Permissions.LeaseEdit, Permissions.LeaseView);
+            this.SetupLease(lease);
             var leasePeriodRepository = this._helper.GetService<Mock<ILeasePeriodRepository>>();
             leasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
 
@@ -261,6 +295,8 @@ namespace Pims.Api.Test.Services
             var leasePeriodRepository = this._helper.GetService<Mock<ILeasePeriodRepository>>();
             leasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
 
+            SetupEditableLease(lease);
+
             var solver = this._helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
 
@@ -282,6 +318,7 @@ namespace Pims.Api.Test.Services
             lease.PimsLeasePeriods = new List<PimsLeasePeriod>() { originalTerm };
 
             var service = this.CreateLeaseServicePeriodWithPermissions(Permissions.LeaseEdit);
+            this.SetupLease(lease);
             var leasePeriodRepository = this._helper.GetService<Mock<ILeasePeriodRepository>>();
             leasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(originalTerm);
 

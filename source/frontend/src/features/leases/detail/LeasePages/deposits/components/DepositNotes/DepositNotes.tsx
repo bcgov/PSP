@@ -15,6 +15,7 @@ import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
 export interface IDepositNotesProps {
   disabled?: boolean;
   isFileFinalStatus: boolean;
+  canEdit: boolean;
   onSave: (notes: string) => Promise<void>;
   onEdit: () => void;
   onCancel: () => void;
@@ -27,6 +28,7 @@ export interface IDepositNotesProps {
 export const DepositNotes: FunctionComponent<PropsWithChildren<IDepositNotesProps>> = ({
   disabled,
   isFileFinalStatus,
+  canEdit,
   onEdit,
   onSave,
   onCancel,
@@ -40,7 +42,7 @@ export const DepositNotes: FunctionComponent<PropsWithChildren<IDepositNotesProp
       isCollapsable={collapsed}
       initiallyExpanded={false}
       header={
-        hasClaim(Claims.LEASE_EDIT) && disabled ? (
+        hasClaim(Claims.LEASE_EDIT) && canEdit && disabled ? (
           <SectionListHeader
             claims={[Claims.LEASE_EDIT]}
             title="Deposit Comments"

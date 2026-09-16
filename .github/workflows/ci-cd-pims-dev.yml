@@ -56,9 +56,29 @@ jobs:
           color: 17a2b8
           timezone: America/Los_Angeles
 
+  ## This workflow builds from source, so the version comes from the working
+  ## tree. Resolved once so every build and tag step in the run stamps the same
+  ## value; recomputing per job would let two jobs disagree.
+  version:
+    name: Resolve application version
+    needs: ci-cd-start-notification
+    runs-on: ubuntu-22.04
+    outputs:
+      version: ${{ steps.resolve.outputs.version }}
+    steps:
+      - name: Checkout Source Code
+        uses: actions/checkout@df4cb1c069e1874edd31b4311f1884172cec0e10 #6.0.3
+      - name: Resolve version
+        id: resolve
+        shell: bash
+        run: |
+          VERSION=$(make version)
+          echo "Resolved application version: ${VERSION}"
+          echo "version=${VERSION}" >> "$GITHUB_OUTPUT"
+
   build-frontend:
     name: Build frontend
-    needs: ci-cd-start-notification
+    needs: [ci-cd-start-notification, version]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -70,14 +90,18 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Call script to build frontend (pims-app and pims-app-base)
+      # app-base must precede app: the app build copies its artifacts.
+      - name: Build frontend images (pims-app-base and pims-app)
+        shell: bash
         run: |
-          ./openshift/4.0/player.sh build app-base -apply
-          ./openshift/4.0/player.sh build app -apply
+          ./tools/cicd/build/build-image.sh \
+            --env dev \
+            --version "${{ needs.version.outputs.version }}" \
+            pims-app-base-dev pims-app-dev
 
   build-api:
     name: Build api
-    needs: ci-cd-start-notification
+    needs: [ci-cd-start-notification, version]
     runs-on: ubuntu-22.04
     steps:
       - name: Checkout Source Code
@@ -89,11 +113,13 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Call script to build backend services
+      - name: Build backend service images
+        shell: bash
         run: |
-          ./openshift/4.0/player.sh build api -apply
-          ./openshift/4.0/player.sh build proxy -apply
-          ./openshift/4.0/player.sh build scheduler -apply
+          ./tools/cicd/build/build-image.sh \
+            --env dev \
+            --version "${{ needs.version.outputs.version }}" \
+            pims-api-dev pims-proxy-dev pims-scheduler-dev
 
   detect-dependency-changes:
     runs-on: ubuntu-22.04
@@ -272,7 +298,7 @@ jobs:
 
   deploy:
     name: Deploy to OpenShift
-    needs: [build-frontend, build-api, scan-images]
+    needs: [version, build-frontend, build-api, scan-images]
     if: |
       always() &&
       needs.build-frontend.result == 'success' &&
@@ -289,34 +315,32 @@ jobs:
           openshift_token: ${{ env.OPENSHIFT_TOKEN }}
           insecure_skip_tls_verify: true
           namespace: ${{ env.OPENSHIFT_TOOLS_NAMESPACE }}
-      - name: Deploy PIMS frontend
+      - name: Deploy PIMS services
         shell: bash
         run: |
-          oc tag pims-app:latest-$DESTINATION pims-app:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-app-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-app-$DESTINATION
-      - name: Deploy PIMS api
-        shell: bash
-        run: |
-          oc tag pims-api:latest-$DESTINATION pims-api:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-api-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-api-$DESTINATION
-      - name: Deploy geoserver proxy microservice
-        shell: bash
-        run: |
-          oc tag pims-proxy:latest-$DESTINATION pims-proxy:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-proxy-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-proxy-$DESTINATION
-      - name: Deploy scheduler microservice
-        shell: bash
-        run: |
-          oc tag pims-scheduler:latest-$DESTINATION pims-scheduler:$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout restart deployment/pims-scheduler-$DESTINATION
-          oc -n $DEPLOYMENT_NAMESPACE rollout status --timeout=600s deployment/pims-scheduler-$DESTINATION
+          ./tools/cicd/build/deploy-image.sh \
+            --from latest-dev \
+            --env dev \
+            pims-app pims-api pims-proxy pims-scheduler
+      # mayan-bcgov has no Deployment, so it is tag-only.
       - name: Deploy mayan
         shell: bash
         run: |
-          oc tag mayan-bcgov:latest-$DESTINATION mayan-bcgov:$DESTINATION
+          ./tools/cicd/build/deploy-image.sh \
+            --from latest-dev \
+            --env dev \
+            --no-rollout \
+            mayan-bcgov
+      ## Immutable, version-bearing tags so this specific build can be
+      ## identified and redeployed later. Additive: the mutable dev tag above
+      ## is still what the Deployments reference.
+      - name: Tag images with the application version
+        shell: bash
+        run: |
+          ./tools/cicd/build/tag-version.sh \
+            --env dev \
+            --version "${{ needs.version.outputs.version }}" \
+            pims-app pims-api pims-proxy pims-scheduler mayan-bcgov
 
   # the command:
   # 1) creates an openshift job with generated name to avoid name conflict, substituting the variables in the template.

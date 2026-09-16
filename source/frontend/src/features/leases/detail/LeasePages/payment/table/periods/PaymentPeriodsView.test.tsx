@@ -40,6 +40,7 @@ describe('PeriodsForm component', () => {
         selectedTenants?: IContactSearchResult[];
         onCancel?: () => void;
         setSelectedTenants?: (tenants: IContactSearchResult[]) => void;
+        canEdit?: boolean;
       } = {},
   ) => {
     // render component under test
@@ -53,6 +54,7 @@ describe('PeriodsForm component', () => {
         formikRef={createRef()}
         lease={renderOptions.initialValues ?? ({} as any)}
         isFileFinalStatus={renderOptions.isFileFinalStatus ?? false}
+        canEdit={renderOptions.canEdit ?? true}
       />,
       {
         ...renderOptions,
@@ -100,7 +102,7 @@ describe('PeriodsForm component', () => {
     mockAxios.resetHistory();
   });
   it('renders as expected', async () => {
-    const { component } = await setup({});
+    const { component } = await setup({ canEdit: false });
 
     expect(component.asFragment()).toMatchSnapshot();
   });
@@ -108,6 +110,7 @@ describe('PeriodsForm component', () => {
   it('renders with data as expected', async () => {
     const { component } = await setup({
       initialValues: { ...new LeaseFormModel(), periods: [defaultFormLeasePeriod] },
+      canEdit: false,
     });
 
     expect(component.asFragment()).toMatchSnapshot();
@@ -452,6 +455,7 @@ describe('PeriodsForm component', () => {
     const {
       component: { getAllByTitle, getAllByRole },
     } = await setup({
+      canEdit: true,
       initialValues: {
         ...new LeaseFormModel(),
         periods: [

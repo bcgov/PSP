@@ -44,6 +44,7 @@ export const LeaseRouter: React.FunctionComponent<React.PropsWithChildren<ILease
         customRender={() => (
           <ConsultationListContainer
             leaseId={lease.id}
+            canEdit={lease.canEdit}
             View={ConsultationListView}
             statusSolver={statusSolver}
           />

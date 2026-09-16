@@ -11,6 +11,7 @@ using Pims.Core.Security;
 using Xunit;
 using static Pims.Dal.Entities.PimsLeasePaymentStatusType;
 using Pims.Core.Exceptions;
+using System.Collections.Generic;
 
 namespace Pims.Api.Test.Services
 {
@@ -44,6 +45,33 @@ namespace Pims.Api.Test.Services
             this.leasePaymentRepository = this.helper.GetService<Mock<ILeasePaymentRepository>>();
         }
 
+        private void SetupEditableLease(PimsLease lease)
+        {
+            lease.RegionCode = 1;
+            lease.ProjectId = null;
+
+            var leaseService = this.helper.GetService<Mock<ILeaseService>>();
+            leaseService
+                .Setup(x => x.GetById(lease.Internal_Id))
+                .Returns(lease);
+
+            var pimsUser = EntityHelper.CreateUser("Test");
+            pimsUser.PimsRegionUsers.Add(new PimsRegionUser
+            {
+                RegionCode = 1,
+            });
+
+            var userRepository = this.helper.GetService<Mock<IUserRepository>>();
+            userRepository
+                .Setup(x => x.GetUserInfoByKeycloakUserId(It.IsAny<Guid>()))
+                .Returns(pimsUser);
+
+            var lookupRepository = this.helper.GetService<Mock<ILookupRepository>>();
+            lookupRepository
+                .Setup(x => x.GetAllRegions())
+                .Returns(new List<PimsRegion>());
+        }
+
         #region Tests
         #region Add
         [Fact]
@@ -57,6 +85,7 @@ namespace Pims.Api.Test.Services
             var period = new PimsLeasePeriod() { PeriodStartDate = DateTime.Now, PeriodExpiryDate = DateTime.Now.AddDays(10) };
 
             this.MockCommonServices();
+            this.SetupEditableLease(lease);
             this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
 
             var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
@@ -167,6 +196,7 @@ namespace Pims.Api.Test.Services
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
+            this.SetupEditableLease(lease);
             this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
 
             var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
@@ -193,6 +223,7 @@ namespace Pims.Api.Test.Services
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
+            this.SetupEditableLease(lease);
             this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
 
             var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
@@ -219,6 +250,7 @@ namespace Pims.Api.Test.Services
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
+            this.SetupEditableLease(lease);
             this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
             PimsLeasePayment response = null;
             this.leasePaymentRepository.Setup(x => x.Update(It.IsAny<PimsLeasePayment>())).Callback<PimsLeasePayment>(x => response = x);
@@ -247,6 +279,7 @@ namespace Pims.Api.Test.Services
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
+            this.SetupEditableLease(lease);
             this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), true)).Returns(period);
             PimsLeasePayment response = null;
             this.leasePaymentRepository.Setup(x => x.Update(It.IsAny<PimsLeasePayment>())).Callback<PimsLeasePayment>(x => response = x);
@@ -275,6 +308,7 @@ namespace Pims.Api.Test.Services
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
+            this.SetupEditableLease(lease);
             this.LeasePeriodRepository.Setup(x => x.GetById(It.IsAny<long>(), It.IsAny<bool>())).Returns(period);
 
             var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
@@ -300,6 +334,7 @@ namespace Pims.Api.Test.Services
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
+            this.SetupEditableLease(lease);
 
             var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(true);
@@ -324,6 +359,7 @@ namespace Pims.Api.Test.Services
             this.helper.CreatePimsContext(user, true).AddAndSaveChanges(lease);
 
             this.MockCommonServices();
+            this.SetupEditableLease(lease);
 
             var solver = this.helper.GetService<Mock<ILeaseStatusSolver>>();
             solver.Setup(x => x.CanEditPayments(It.IsAny<LeaseStatusTypes?>())).Returns(false);

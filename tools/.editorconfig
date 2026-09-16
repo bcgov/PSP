@@ -25,6 +25,10 @@ indent_style = tab
 [*.cs]
 indent_size = 4
 
+[*.sh]
+indent_size = 2
+indent_style = space
+
 # IDE0005: Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = warning
 # CA1032: Implement standard exception constructors
@@ -97,11 +101,11 @@ dotnet_diagnostic.SA1122.severity = error
 dotnet_diagnostic.SA1600.severity = none
 # SA1200 Using directive should appear within a namespace declaration
 dotnet_diagnostic.SA1200.severity = none
-# SA1633 The file header is missing or not located at the top of the file. 
+# SA1633 The file header is missing or not located at the top of the file.
 dotnet_diagnostic.SA1633.severity = none
 # SA1642 Constructor summary documentation should begin with standard text
 dotnet_diagnostic.SA1642.severity = none
-# SA1614 Element parameter documentation should have text 
+# SA1614 Element parameter documentation should have text
 dotnet_diagnostic.SA1614.severity = none
 # SA1101 Prefix local calls with this
 dotnet_diagnostic.SA1101.severity = none
@@ -117,7 +121,7 @@ dotnet_diagnostic.SA1505.severity = none
 dotnet_diagnostic.SA1513.severity = none
 # SA1124 Do not use regions
 dotnet_diagnostic.SA1124.severity = none
-# SA1139 Use literal suffix notation  
+# SA1139 Use literal suffix notation
 dotnet_diagnostic.SA1139.severity = none
 # SA1501 Statement should not be on a single line.
 dotnet_diagnostic.SA1501.severity = none
@@ -126,17 +130,17 @@ dotnet_diagnostic.SA1000.severity = none
 
 # TODO: Fix these
 # SA1622 Generic type parameter documentation should have text. // TODO: This should get added
-dotnet_diagnostic.SA1622.severity = none 
+dotnet_diagnostic.SA1622.severity = none
 # SA1618 The documentation for type parameter 'T' is missing. // TODO: This should be an error
-dotnet_diagnostic.SA1618.severity = none 
+dotnet_diagnostic.SA1618.severity = none
 # SA1402 File may only contain a single type. // TODO: This should be enabled
 dotnet_diagnostic.SA1402.severity = none
 # SA1649 File name should match first type name. // TODO: This should be an error || LTSA needs to be skiped
-dotnet_diagnostic.SA1649.severity = none 
+dotnet_diagnostic.SA1649.severity = none
 # CA2254 The logging message template should not vary between calls. // TODO: requires code changes
 dotnet_diagnostic.CA2254.severity = none
 # SA1129 Do not use default value type constructor.
-dotnet_diagnostic.SA1129.severity = none 
+dotnet_diagnostic.SA1129.severity = none
 # S1135 Complete the task associated to this 'TODO' comment
 dotnet_diagnostic.S1135.severity = none
 ##
@@ -157,7 +161,7 @@ dotnet_diagnostic.SA0001.severity = none
 # dotnet format --severity error --exclude entities/ef/** --exclude entities/PimsBaseContext.cs
 # SA1515 Single-line comment should be preceded by blank line.
 dotnet_diagnostic.SA1515.severity = warning
-# SA1516 Elements should be separated by blank line 
+# SA1516 Elements should be separated by blank line
 dotnet_diagnostic.SA1516.severity = warning
 # SA1208 Using directive for 'X' should appear before directive 'Y'
 dotnet_diagnostic.SA1208.severity = warning
@@ -197,11 +201,11 @@ dotnet_diagnostic.SA1005.severity = warning
 dotnet_diagnostic.SA1411.severity = warning
 # SA1519 Braces should not be omitted from multi-line child statement
 dotnet_diagnostic.SA1519.severity = warning
-# SA1202 'public' members should come before 'private' members 
+# SA1202 'public' members should come before 'private' members
 dotnet_diagnostic.SA1202.severity = warning
 # SA1204 Static members should appear before non-static members.
 dotnet_diagnostic.SA1204.severity = warning
-# SA1127 Generic type constraints should be on their own line 
+# SA1127 Generic type constraints should be on their own line
 dotnet_diagnostic.SA1127.severity = warning
 # SA1520 Use braces consistently
 dotnet_diagnostic.SA1520.severity = warning
@@ -215,7 +219,7 @@ dotnet_diagnostic.SA1500.severity = warning
 dotnet_diagnostic.SA1119.severity = warning
 # CA1847 Use 'string.Contains(char)' instead of 'string.Contains(string)' when searching for a single character
 dotnet_diagnostic.CA1847.severity = warning
-# SA1107 Code should not contain multiple statements on one line 
+# SA1107 Code should not contain multiple statements on one line
 dotnet_diagnostic.SA1107.severity = warning
 # IDE0005 Using directive is unnecessary.
 dotnet_diagnostic.IDE0005.severity = warning
@@ -225,7 +229,7 @@ dotnet_diagnostic.SA1518.severity = warning
 dotnet_diagnostic.SA1510.severity = warning
 # SA1116 The parameters should begin on the line after the declaration.
 dotnet_diagnostic.SA1116.severity = warning
-# SA1137 Elements should have the same indentation 
+# SA1137 Elements should have the same indentation
 dotnet_diagnostic.SA1137.severity = warning
 # SA1117 The parameters should all be placed on the same line or each parameter should be placed on its own line.
 dotnet_diagnostic.SA1117.severity = warning
@@ -248,7 +252,7 @@ dotnet_diagnostic.SA1300.severity = warning
 dotnet_diagnostic.CS8019.severity = none
 # SA1502 Element should not be on a single line
 dotnet_diagnostic.SA1502.severity = none
-# SA1516 Elements should be separated by blank line 
+# SA1516 Elements should be separated by blank line
 dotnet_diagnostic.SA1516.severity = none
 # SonarQube
 # S1128 Remove this unnecessary 'using'

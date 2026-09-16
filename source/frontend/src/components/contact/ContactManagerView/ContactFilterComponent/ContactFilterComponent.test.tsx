@@ -1,20 +1,30 @@
 import userEvent from '@testing-library/user-event';
-
 import { act, fillInput, render, RenderOptions } from '@/utils/test-utils';
-
 import {
   ContactFilterComponent,
   defaultFilter,
   IContactFilterComponentProps,
 } from './ContactFilterComponent';
+import { RestrictContactType } from '@/constants/contacts';
 
 const setFilter = vi.fn();
 
 // render component under test
 const setup = (renderOptions: RenderOptions & IContactFilterComponentProps = { setFilter }) => {
-  const { filter, setFilter: setFilterFn, ...rest } = renderOptions;
+  const {
+    filter,
+    setFilter: setFilterFn,
+    restrictContactType,
+    showActiveSelector = true,
+    ...rest
+  } = renderOptions;
   const utils = render(
-    <ContactFilterComponent filter={filter} setFilter={setFilterFn} showActiveSelector />,
+    <ContactFilterComponent
+      filter={filter}
+      setFilter={setFilterFn}
+      restrictContactType={restrictContactType}
+      showActiveSelector={showActiveSelector}
+    />,
     {
       ...rest,
     },
@@ -159,5 +169,56 @@ describe('ContactFilterComponent', () => {
         searchBy: ['pimsusers', 'persons', 'organizations'],
       }),
     );
+  });
+
+  it('shows all contact types when restrictContactType is empty', () => {
+    const { container } = setup({
+      setFilter,
+      restrictContactType: [],
+    });
+
+    expect(container.querySelector('#input-searchBy-persons')).not.toBeNull();
+    expect(container.querySelector('#input-searchBy-organizations')).not.toBeNull();
+    expect(container.querySelector('#input-searchBy-pimsusers')).not.toBeNull();
+  });
+
+  it('searches all contact types when restrictContactType is empty', async () => {
+    const { searchButton } = setup({
+      setFilter,
+      restrictContactType: [],
+    });
+
+    await act(async () => userEvent.click(searchButton));
+
+    expect(setFilter).toHaveBeenCalledWith(
+      expect.objectContaining({
+        searchBy: ['pimsusers', 'persons', 'organizations'],
+      }),
+    );
+  });
+
+  it('shows only individuals when restricted to individuals', () => {
+    const { container } = setup({
+      setFilter,
+      restrictContactType: [RestrictContactType.ONLY_INDIVIDUALS],
+    });
+
+    expect(container.querySelector('#input-searchBy-persons')).not.toBeNull();
+    expect(container.querySelector('#input-searchBy-organizations')).toBeNull();
+    expect(container.querySelector('#input-searchBy-pimsusers')).toBeNull();
+  });
+
+  it('shows multiple allowed contact types', () => {
+    const { container } = setup({
+      setFilter,
+      restrictContactType: [
+        RestrictContactType.ONLY_INDIVIDUALS,
+        RestrictContactType.ONLY_PIMSUSERS,
+      ],
+    });
+
+    expect(container.querySelector('#input-searchBy-persons')).not.toBeNull();
+    expect(container.querySelector('#input-searchBy-pimsusers')).not.toBeNull();
+    expect(container.querySelector('#input-searchBy-organizations')).toBeNull();
   });
 });

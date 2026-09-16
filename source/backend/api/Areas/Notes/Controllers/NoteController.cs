@@ -42,7 +42,6 @@ namespace Pims.Api.Areas.Notes.Controllers
         /// <param name="noteService"></param>
         /// <param name="mapper"></param>
         /// <param name="logger"></param>
-        ///
         public NoteController(INoteService noteService, IMapper mapper, ILogger<NoteController> logger)
         {
             _noteService = noteService;

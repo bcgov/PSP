@@ -33,12 +33,14 @@ export interface IPeriodColumnProps {
   leaseTypeCode?: string;
   gstConstant?: ISystemConstant;
   isFileFinalStatus?: boolean;
+  canEdit?: boolean;
 }
 
 export const getLeasePeriodColumns = ({
   onEdit,
   onDelete,
   isFileFinalStatus,
+  canEdit,
 }: IPeriodColumnProps): ColumnWithProps<FormLeasePeriod>[] => {
   return [
     {
@@ -163,13 +165,14 @@ export const getLeasePeriodColumns = ({
       align: 'right',
       maxWidth: 40,
       minWidth: 40,
-      Cell: paymentActions(isFileFinalStatus, onEdit, onDelete),
+      Cell: paymentActions(isFileFinalStatus, canEdit, onEdit, onDelete),
     },
   ];
 };
 
 const paymentActions = (
   isFileFinalStatus: boolean,
+  canEdit: boolean,
   onEdit: (values: FormLeasePeriod) => void,
   onDelete: (values: FormLeasePeriod) => void,
 ) => {
@@ -183,10 +186,11 @@ const paymentActions = (
 
     return (
       <StyledIcons>
-        {hasClaim(Claims.LEASE_EDIT) && (
+        {hasClaim(Claims.LEASE_EDIT) && canEdit && (
           <EditButton title="edit period" onClick={() => onEdit(original)} />
         )}
         {hasClaim(Claims.LEASE_EDIT) &&
+          canEdit &&
           original.payments.length <= 0 &&
           original.statusTypeCode?.id !== LeasePeriodStatusTypes.EXERCISED && (
             <RemoveIconButton
