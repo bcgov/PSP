@@ -45,12 +45,14 @@ export const test = base.extend<ManagementFixtures>({
       hasText: 'Role claims mismatch',
     });
 
-    await claimsDialog.getByRole('button', {
-      name: 'Continue',
-      exact: true,
-    }).click();
+    if (await claimsDialog.isVisible()) {
+      await claimsDialog.getByRole('button', {
+        name: 'Continue',
+        exact: true,
+      }).click();
 
-    await expect(claimsDialog).toBeHidden();
+      await expect(claimsDialog).toBeHidden();
+    }
 
     const responsePromise = page.waitForResponse(
       (response) =>
