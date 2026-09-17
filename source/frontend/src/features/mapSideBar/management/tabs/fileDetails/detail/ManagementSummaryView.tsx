@@ -1,6 +1,7 @@
 import { first } from 'lodash';
 import { Fragment } from 'react';
 import { FaUserPlus } from 'react-icons/fa';
+import styled from 'styled-components';
 
 import EditButton from '@/components/common/buttons/EditButton';
 import { PrimaryContactSelectorDetails } from '@/components/common/form/PrimaryContactSelector/PrimaryContactSelectorView';
@@ -12,7 +13,10 @@ import { SectionListHeader } from '@/components/common/SectionListHeader';
 import TooltipIcon from '@/components/common/TooltipIcon';
 import { Claims, Roles } from '@/constants';
 import { cannotEditMessage } from '@/features/mapSideBar/acquisition/common/constants';
+import ReminderContainer from '@/features/notifications/ReminderContainer';
+import { ReminderView } from '@/features/notifications/ReminderView';
 import useKeycloakWrapper from '@/hooks/useKeycloakWrapper';
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 import { ApiGen_Concepts_ManagementFile } from '@/models/api/generated/ApiGen_Concepts_ManagementFile';
 import { ApiGen_Concepts_ManagementFileContact } from '@/models/api/generated/ApiGen_Concepts_ManagementFileContact';
 import { ApiGen_Concepts_Organization } from '@/models/api/generated/ApiGen_Concepts_Organization';
@@ -207,7 +211,21 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
       </Section>
       <Section header="Notice of Claim">
         <SectionField label="Received date">
-          {prettyFormatDate(noticeOfClaim?.receivedDate)}
+          <StyledReminderContent>
+            {prettyFormatDate(noticeOfClaim?.receivedDate)}
+            {noticeOfClaim?.receivedDate && (
+              <ReminderContainer
+                keyDate={noticeOfClaim?.receivedDate}
+                keyDateLabel="Received date"
+                notificationType={ApiGen_CodeTypes_NotificationTypes.NOC}
+                notificationSource={{
+                  managementFileId: noticeOfClaim?.managementFileId,
+                  noticeOfClaimId: noticeOfClaim?.id,
+                }}
+                View={ReminderView}
+              />
+            )}
+          </StyledReminderContent>
         </SectionField>
         <SectionField label="Comment">{noticeOfClaim?.comment}</SectionField>
       </Section>
@@ -216,3 +234,10 @@ export const ManagementSummaryView: React.FunctionComponent<IManagementSummaryVi
 };
 
 export default ManagementSummaryView;
+
+const StyledReminderContent = styled.div`
+  display: flex;
+  flex-direction: row;
+  align-items: top;
+  gap: 1.2rem;
+`;

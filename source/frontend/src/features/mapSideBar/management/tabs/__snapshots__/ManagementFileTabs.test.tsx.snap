@@ -104,6 +104,21 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
   font-weight: bold;
 }
 
+.c10 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: top;
+  -webkit-box-align: top;
+  -ms-flex-align: top;
+  align-items: top;
+  gap: 1.2rem;
+}
+
 <div
     class="c0"
   >
@@ -678,7 +693,11 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
                 </div>
                 <div
                   class="c6 text-left col"
-                />
+                >
+                  <div
+                    class="c10"
+                  />
+                </div>
               </div>
               <div
                 class="pb-2 row"

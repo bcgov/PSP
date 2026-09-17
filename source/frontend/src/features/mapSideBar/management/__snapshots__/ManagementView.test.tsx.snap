@@ -672,6 +672,21 @@ exports[`ManagementView component > renders as expected 1`] = `
   max-width: 60rem;
 }
 
+.c44 {
+  display: -webkit-box;
+  display: -webkit-flex;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-flex-direction: row;
+  -ms-flex-direction: row;
+  flex-direction: row;
+  -webkit-align-items: top;
+  -webkit-box-align: top;
+  -ms-flex-align: top;
+  align-items: top;
+  gap: 1.2rem;
+}
+
 @media only screen and (max-width:1199px) {
   .c0.expanded {
     min-width: 70rem;
@@ -1767,7 +1782,11 @@ exports[`ManagementView component > renders as expected 1`] = `
                             </div>
                             <div
                               class="c40 text-left col"
-                            />
+                            >
+                              <div
+                                class="c44"
+                              />
+                            </div>
                           </div>
                           <div
                             class="pb-2 row"

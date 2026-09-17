@@ -19,6 +19,7 @@ namespace Pims.Dal.Repositories
     /// </summary>
     public class ManagementFileRepository : BaseRepository<PimsManagementFile>, IManagementFileRepository
     {
+        private readonly INotificationRepository _notificationRepository;
         #region Constructors
 
         /// <summary>
@@ -27,9 +28,10 @@ namespace Pims.Dal.Repositories
         /// <param name="dbContext"></param>
         /// <param name="user"></param>
         /// <param name="logger"></param>
-        public ManagementFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ManagementFileRepository> logger)
+        public ManagementFileRepository(PimsContext dbContext, ClaimsPrincipal user, ILogger<ManagementFileRepository> logger, INotificationRepository notificationRepository)
             : base(dbContext, user, logger)
         {
+            _notificationRepository = notificationRepository;
         }
 
         #endregion
@@ -296,6 +298,22 @@ namespace Pims.Dal.Repositories
 
             Context.Entry(existingFile).CurrentValues.SetValues(managementFile);
             Context.UpdateChild<PimsManagementFile, long, PimsManagementFileTeam, long>(x => x.PimsManagementFileTeams, managementFile.Internal_Id, managementFile.PimsManagementFileTeams.ToArray());
+
+            var noticeOfClaimIds = managementFile.PimsNoticeOfClaims
+                .Select(noc => noc.NoticeOfClaimId)
+                .ToHashSet();
+
+            var deletedNotificationIds = Context.PimsNoticeOfClaims
+                .Where(noc => noc.ManagementFileId == managementFile.Internal_Id
+                    && !noticeOfClaimIds.Contains(noc.NoticeOfClaimId))
+                .SelectMany(noc => noc.PimsNotifications)
+                .Select(notification => notification.NotificationId)
+                .ToList();
+
+            foreach(var notificationId in deletedNotificationIds)
+            {
+                _notificationRepository.Delete(notificationId);
+            }
             Context.UpdateChild<PimsManagementFile, long, PimsNoticeOfClaim, long>(x => x.PimsNoticeOfClaims, managementFile.Internal_Id, managementFile.PimsNoticeOfClaims.ToArray());
 
             return existingFile;

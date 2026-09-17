@@ -28,7 +28,7 @@ namespace Pims.Api.Services
         private readonly IEmailRepository _chesRepository;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
-        public NotificationUserService(ClaimsPrincipal user, ILogger<DocumentQueueService> logger, INotificationUserOutputRepository userOutputRepository, IEmailRepository chesRepository, IAcquisitionFileRepository acqFileRepository, IDispositionFileRepository dispFileRepository, IWebHostEnvironment webHostEnvironment)
+        public NotificationUserService(ClaimsPrincipal user, ILogger<NotificationUserService> logger, INotificationUserOutputRepository userOutputRepository, IEmailRepository chesRepository, IWebHostEnvironment webHostEnvironment)
             : base(null, logger)
         {
             _user = user;
@@ -98,40 +98,6 @@ namespace Pims.Api.Services
             return;
         }
 
-        private async Task<EmailRequest> GenerateEmailRequest(PimsNotificationUserOutput userNotification)
-        {
-            var emailToContactAddress = userNotification.NotificationUser.User?.Person?.GetEmail();
-            var emailToUsername = userNotification.NotificationUser.User?.Person?.GetFullName();
-            var notificationTypeCodeDescription = userNotification.NotificationUser.Notification.NotificationTypeCodeNavigation.Description;
-
-            if (emailToContactAddress is null)
-            {
-                return null;
-            }
-
-            string path = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources", "EmailNotification.html");
-            if (!File.Exists(path))
-            {
-                throw new FileNotFoundException("HTML template not found.");
-            }
-
-            // Load asynchronously
-            string templateBody = await File.ReadAllTextAsync(path);
-
-            EmailRequest newEmail = new()
-            {
-                Subject = $"PIMS System {notificationTypeCodeDescription}",
-                Body = templateBody
-                            .Replace("{{userName}}", emailToUsername)
-                            .Replace("{{notificationType}}", notificationTypeCodeDescription)
-                            .Replace("{{notificationSource}}", GetNotificationSource(userNotification.NotificationUser.Notification)),
-            };
-
-            newEmail.To.Add(emailToContactAddress);
-
-            return newEmail;
-        }
-
         private static string GetNotificationSource(PimsNotification notification)
         {
             return notification.NotificationTypeCode switch
@@ -140,10 +106,15 @@ namespace Pims.Api.Services
                 or nameof(NotificationTypes.TAKE_LAT)
                 or nameof(NotificationTypes.TAKE_LTC)
                 or nameof(NotificationTypes.TAKE_LPYBLE)
-                or nameof(NotificationTypes.NOC)
                 or nameof(NotificationTypes.EXPROPH_APPEFFDT)
                 or nameof(NotificationTypes.AGMT_SIGND)
                     => $"Acquisition File #: {notification.AcquisitionFile.FileNumberFormatted}",
+
+                nameof(NotificationTypes.NOC) when notification.AcquisitionFile is not null
+                    => $"Acquisition File #: {notification.AcquisitionFile.FileNumberFormatted}",
+
+                nameof(NotificationTypes.NOC) when notification.ManagementFile is not null
+                    => $"Management File #: M-{notification.ManagementFile.ManagementFileId}",
 
                 nameof(NotificationTypes.L_RENEWAL)
                     => $"Lease File #: {notification.Lease.LFileNo} ",
@@ -207,5 +178,40 @@ namespace Pims.Api.Services
                     .Where(name => !string.IsNullOrWhiteSpace(name))
             );
         }
+
+        private async Task<EmailRequest> GenerateEmailRequest(PimsNotificationUserOutput userNotification)
+        {
+            var emailToContactAddress = userNotification.NotificationUser.User?.Person?.GetEmail();
+            var emailToUsername = userNotification.NotificationUser.User?.Person?.GetFullName();
+            var notificationTypeCodeDescription = userNotification.NotificationUser.Notification.NotificationTypeCodeNavigation.Description;
+
+            if (emailToContactAddress is null)
+            {
+                return null;
+            }
+
+            string path = Path.Combine(_webHostEnvironment.ContentRootPath, "Resources", "EmailNotification.html");
+            if (!File.Exists(path))
+            {
+                throw new FileNotFoundException("HTML template not found.");
+            }
+
+            // Load asynchronously
+            string templateBody = await File.ReadAllTextAsync(path);
+
+            EmailRequest newEmail = new()
+            {
+                Subject = $"PIMS System {notificationTypeCodeDescription}",
+                Body = templateBody
+                            .Replace("{{userName}}", emailToUsername)
+                            .Replace("{{notificationType}}", notificationTypeCodeDescription)
+                            .Replace("{{notificationSource}}", GetNotificationSource(userNotification.NotificationUser.Notification)),
+            };
+
+            newEmail.To.Add(emailToContactAddress);
+
+            return newEmail;
+        }
+
     }
 }
