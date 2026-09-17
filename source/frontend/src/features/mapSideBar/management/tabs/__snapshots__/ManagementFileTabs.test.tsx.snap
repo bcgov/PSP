@@ -112,10 +112,10 @@ exports[`ManagementFileTabs component > matches snapshot 1`] = `
   -webkit-flex-direction: row;
   -ms-flex-direction: row;
   flex-direction: row;
-  -webkit-align-items: top;
-  -webkit-box-align: top;
-  -ms-flex-align: top;
-  align-items: top;
+  -webkit-align-items: flex-start;
+  -webkit-box-align: flex-start;
+  -ms-flex-align: flex-start;
+  align-items: flex-start;
   gap: 1.2rem;
 }
 

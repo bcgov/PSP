@@ -299,13 +299,14 @@ namespace Pims.Dal.Repositories
             Context.Entry(existingFile).CurrentValues.SetValues(managementFile);
             Context.UpdateChild<PimsManagementFile, long, PimsManagementFileTeam, long>(x => x.PimsManagementFileTeams, managementFile.Internal_Id, managementFile.PimsManagementFileTeams.ToArray());
 
-            var noticeOfClaimIds = managementFile.PimsNoticeOfClaims
-                .Select(noc => noc.NoticeOfClaimId)
-                .ToHashSet();
+            var noticeOfClaimIdsWithReceivedDates = managementFile.PimsNoticeOfClaims
+                 .Where(noc => noc.ReceivedDt.HasValue)
+                 .Select(noc => noc.NoticeOfClaimId)
+                 .ToHashSet();
 
             var deletedNotificationIds = Context.PimsNoticeOfClaims
                 .Where(noc => noc.ManagementFileId == managementFile.Internal_Id
-                    && !noticeOfClaimIds.Contains(noc.NoticeOfClaimId))
+                    && !noticeOfClaimIdsWithReceivedDates.Contains(noc.NoticeOfClaimId))
                 .SelectMany(noc => noc.PimsNotifications)
                 .Select(notification => notification.NotificationId)
                 .ToList();

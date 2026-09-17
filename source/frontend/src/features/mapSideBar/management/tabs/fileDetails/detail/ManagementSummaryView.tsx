@@ -238,6 +238,6 @@ export default ManagementSummaryView;
 const StyledReminderContent = styled.div`
   display: flex;
   flex-direction: row;
-  align-items: top;
+  align-items: flex-start;
   gap: 1.2rem;
 `;
