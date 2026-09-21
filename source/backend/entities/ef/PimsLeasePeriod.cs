@@ -271,6 +271,9 @@ public partial class PimsLeasePeriod
     [InverseProperty("LeasePeriod")]
     public virtual ICollection<PimsLeasePayment> PimsLeasePayments { get; set; } = new List<PimsLeasePayment>();
 
+    [InverseProperty("LeasePeriod")]
+    public virtual ICollection<PimsNotification> PimsNotifications { get; set; } = new List<PimsNotification>();
+
     [ForeignKey("VblRentFreq")]
     [InverseProperty("PimsLeasePeriodVblRentFreqNavigations")]
     public virtual PimsLeasePmtFreqType VblRentFreqNavigation { get; set; }
