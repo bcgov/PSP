@@ -30,11 +30,14 @@ const onAdd = vi.fn();
 const onDelete = vi.fn();
 
 vi.mock('@/features/notifications/ReminderContainer', () => ({
-  default: (props: any) => <div
+  default: (props: any) => (
+    <div
       data-testid={`reminder-${props.notificationType}`}
       data-key-date={props.keyDate}
       data-take-id={props.notificationSource.takeId}
-      data-acquisition-file-id={props.notificationSource.acquisitionFileId} />,
+      data-acquisition-file-id={props.notificationSource.acquisitionFileId}
+    />
+  ),
 }));
 
 describe('TakesDetailView component', () => {
@@ -518,9 +521,7 @@ describe('TakesDetailView component', () => {
       },
     });
 
-    const reminder = screen.getByTestId(
-      `reminder-${ApiGen_CodeTypes_NotificationTypes.TAKE_SRW}`,
-    );
+    const reminder = screen.getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.TAKE_SRW}`);
 
     expect(reminder).toBeVisible();
     expect(reminder).toHaveAttribute('data-key-date', '2020-01-01');
@@ -539,9 +540,7 @@ describe('TakesDetailView component', () => {
       },
     });
 
-    const reminder = screen.getByTestId(
-      `reminder-${ApiGen_CodeTypes_NotificationTypes.TAKE_LAT}`,
-    );
+    const reminder = screen.getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.TAKE_LAT}`);
 
     expect(reminder).toBeVisible();
     expect(reminder).toHaveAttribute('data-key-date', '2022-11-21');
@@ -560,9 +559,7 @@ describe('TakesDetailView component', () => {
       },
     });
 
-    const reminder = screen.getByTestId(
-      `reminder-${ApiGen_CodeTypes_NotificationTypes.TAKE_LTC}`,
-    );
+    const reminder = screen.getByTestId(`reminder-${ApiGen_CodeTypes_NotificationTypes.TAKE_LTC}`);
 
     expect(reminder).toBeVisible();
     expect(reminder).toHaveAttribute('data-key-date', '2022-11-21');
