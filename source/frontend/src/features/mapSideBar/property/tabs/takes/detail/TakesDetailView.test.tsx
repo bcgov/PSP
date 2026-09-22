@@ -18,6 +18,7 @@ import { toTypeCodeNullable } from '@/utils/formUtils';
 import { act, render, RenderOptions, screen, userEvent, within } from '@/utils/test-utils';
 
 import TakesDetailView, { ITakesDetailViewProps } from './TakesDetailView';
+import { ApiGen_CodeTypes_NotificationTypes } from '@/models/api/generated/ApiGen_CodeTypes_NotificationTypes';
 
 const history = createMemoryHistory();
 const storeState = {
@@ -27,6 +28,14 @@ const storeState = {
 const onEdit = vi.fn();
 const onAdd = vi.fn();
 const onDelete = vi.fn();
+
+vi.mock('@/features/notifications/ReminderContainer', () => ({
+  default: (props: any) => <div
+      data-testid={`reminder-${props.notificationType}`}
+      data-key-date={props.keyDate}
+      data-take-id={props.notificationSource.takeId}
+      data-acquisition-file-id={props.notificationSource.acquisitionFileId} />,
+}));
 
 describe('TakesDetailView component', () => {
   // render component under test
@@ -83,7 +92,7 @@ describe('TakesDetailView component', () => {
   it('hides the add button when the file has been completed', () => {
     const fileProperty = getMockApiPropertyFiles()[0];
     const file: ApiGen_Concepts_File = fileProperty.file as ApiGen_Concepts_File;
-    const { queryByTitle, getByTestId } = setup({
+    const { queryByTitle } = setup({
       props: {
         fileProperty: {
           ...fileProperty,
@@ -495,5 +504,86 @@ describe('TakesDetailView component', () => {
     });
     const latLong = getByText(/Takes for 48.430000, -123.490000/);
     expect(latLong).toBeVisible();
+  });
+
+  it('displays SRW reminder when SRW end date is specified', () => {
+    setup({
+      props: {
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            srwEndDt: '2020-01-01',
+          },
+        ],
+      },
+    });
+
+    const reminder = screen.getByTestId(
+      `reminder-${ApiGen_CodeTypes_NotificationTypes.TAKE_SRW}`,
+    );
+
+    expect(reminder).toBeVisible();
+    expect(reminder).toHaveAttribute('data-key-date', '2020-01-01');
+    expect(reminder).toHaveAttribute('data-take-id', '4');
+  });
+
+  it('displays land of act reminder when land of act end date is specified', () => {
+    setup({
+      props: {
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            landActEndDt: '2022-11-21',
+          },
+        ],
+      },
+    });
+
+    const reminder = screen.getByTestId(
+      `reminder-${ApiGen_CodeTypes_NotificationTypes.TAKE_LAT}`,
+    );
+
+    expect(reminder).toBeVisible();
+    expect(reminder).toHaveAttribute('data-key-date', '2022-11-21');
+    expect(reminder).toHaveAttribute('data-take-id', '4');
+  });
+
+  it('displays TLCA/LTC reminder when TLCA/LTC end date is specified', () => {
+    setup({
+      props: {
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            ltcEndDt: '2022-11-21',
+          },
+        ],
+      },
+    });
+
+    const reminder = screen.getByTestId(
+      `reminder-${ApiGen_CodeTypes_NotificationTypes.TAKE_LTC}`,
+    );
+
+    expect(reminder).toBeVisible();
+    expect(reminder).toHaveAttribute('data-key-date', '2022-11-21');
+    expect(reminder).toHaveAttribute('data-take-id', '4');
+  });
+
+  it('does not display the reminder when SRW end date is not specified', () => {
+    setup({
+      props: {
+        takes: [
+          {
+            ...getMockApiTakes()[0],
+            srwEndDt: null,
+            ltcEndDt: null,
+            landActEndDt: null,
+            leasePayableEndDt: null,
+          },
+        ],
+      },
+    });
+
+    expect(screen.queryByTestId('reminder-container')).toBeNull();
   });
 });
