@@ -6,6 +6,8 @@ import MoreOptionsMenu, { MenuOption } from '@/components/common/MoreOptionsMenu
 import { ApiGen_Concepts_NotificationInboxItem } from '@/models/api/generated/ApiGen_Concepts_NotificationInboxItem';
 import { prettyFormatDate } from '@/utils';
 
+import { notificationGridLayout } from './notificationTableLayout';
+
 export interface INotificationRowProps {
   notification: ApiGen_Concepts_NotificationInboxItem;
   onSelect: (notification: ApiGen_Concepts_NotificationInboxItem) => void;
@@ -83,11 +85,7 @@ export const NotificationRow: FC<INotificationRowProps> = ({
 };
 
 const Row = styled.div`
-  display: grid;
-  grid-template-columns: 2.4rem 1fr 1fr 12rem 3rem;
-  align-items: center;
-  gap: 0.4rem;
-  padding: 0.6rem 0.8rem;
+  ${notificationGridLayout}
   min-height: 4rem;
   cursor: pointer;
 
@@ -129,7 +127,7 @@ const TypeCell = styled.div`
 `;
 
 const DateCell = styled.div`
-  text-align: right;
+  text-align: left;
   color: ${props => props.theme.css.pimsGrey80 ?? '#555'};
   font-variant-numeric: tabular-nums;
   margin-right: 1rem;
@@ -137,7 +135,8 @@ const DateCell = styled.div`
 
 const ActionsCell = styled.div`
   display: flex;
-  justify-content: flex-center;
+  justify-content: center;
+  justify-self: center;
   align-items: center;
   padding: 0.5rem;
   width: 3rem;
