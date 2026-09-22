@@ -3,6 +3,7 @@ import styled from 'styled-components';
 
 import { ApiGen_Concepts_NotificationInboxItem } from '@/models/api/generated/ApiGen_Concepts_NotificationInboxItem';
 
+import NotificationHeader from './NotificationHeader';
 import NotificationRow from './NotificationRow';
 
 export interface INotificationInboxViewProps {
@@ -25,11 +26,17 @@ export const NotificationInboxView: FC<INotificationInboxViewProps> = ({
   onDelete,
 }) => {
   if (!isLoading && items.length === 0) {
-    return <EmptyState>You have no notifications.</EmptyState>;
+    return (
+      <Container>
+        <NotificationHeader />
+        <EmptyState>You have no notifications.</EmptyState>
+      </Container>
+    );
   }
 
   return (
     <Container>
+      <NotificationHeader />
       <List>
         {items.map(item => (
           <NotificationRow

@@ -127,7 +127,7 @@ const TypeCell = styled.div`
 `;
 
 const DateCell = styled.div`
-  text-align: right;
+  text-align: left;
   color: ${props => props.theme.css.pimsGrey80 ?? '#555'};
   font-variant-numeric: tabular-nums;
   margin-right: 1rem;
