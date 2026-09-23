@@ -3,7 +3,7 @@ import { test, expect } from '../../../fixtures/management.fixtures';
 const INITIAL_REMINDER_DATE = 'Sep 17, 2026'
 const UPDATED_REMINDER_DATE = 'Oct 1, 2026'
 
-// Each test drives a full create-acquisition-file + reminder workflow (navigation, async
+// Each test drives a full create-management-file + reminder workflow (navigation, async
 // lookups, form fills, a save round-trip) which comfortably exceeds the default 30s secs.
 test.describe.configure({ timeout: 60_000 });
 
