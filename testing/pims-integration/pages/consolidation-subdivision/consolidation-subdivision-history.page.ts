@@ -1,6 +1,13 @@
 import { expect, Locator, Page } from '@playwright/test';
 import { formatSqToMts } from '../../utils/utils';
 
+type conSubHistory = {
+  pid: string;
+  plan: string;
+  status: string;
+  area: string;
+};
+
 export class ConsolidationSubdivisionHistoryPage {
   private readonly page: Page;
 
@@ -81,7 +88,7 @@ export class ConsolidationSubdivisionHistoryPage {
     this.subconTableContent = operationTable.locator('.tbody .tr-wrapper');
   }
 
-  async verifySubdivisionHistory() {
+  async verifySubdivisionHistory(PID: string, plan: string, status: string, area: string, subdivisions: conSubHistory[]) {
     await expect(this.subdivisionHistorySubtitle).toBeVisible();
 
     await expect(this.subconHistoryCreatedOnLabel).toBeVisible();
@@ -91,35 +98,25 @@ export class ConsolidationSubdivisionHistoryPage {
     await expect(this.subconHistoryTableStatusColumn).toBeVisible();
     await expect(this.subconHistoryTableAreaColumn).toBeVisible();
     await expect(this.subdivisionParentIdentifier).toHaveText(
-      `PID: ${subdivision.subdivisionSource.propertyHistoryIdentifier}`
+      `PID: ${PID}`
     );
-    await expect(this.subdivisionParentPlan).toHaveText(
-      subdivision.subdivisionSource.propertyHistoryPlan
-    );
-    await expect(this.subdivisionParentStatus).toHaveText(
-      subdivision.subdivisionSource.propertyHistoryStatus
-    );
-    await expect(this.subdivisionParentArea).toHaveText(
-      this.transformSqMtsFormat(subdivision.subdivisionSource.propertyHistoryArea)
-    );
+    await expect(this.subdivisionParentPlan).toHaveText(plan);
+    await expect(this.subdivisionParentStatus).toHaveText(status);
+    await expect(this.subdivisionParentArea).toHaveText(area);
 
-    for (let i = 0; i < subdivision.subdivisionDestination.length; i++) {
-      const child = subdivision.subdivisionDestination[i];
-
+    for (let i = 0; i < subdivisions.length; i++) {
+      const child = subdivisions[i];
       const childRow = this.subconTableContent.nth(i + 1);
       const cells = childRow.locator("[role='cell']");
 
-      await expect(cells.nth(2).locator('a')).toHaveText(`PID: ${child.propertyHistoryIdentifier}`);
-
-      await expect(cells.nth(3)).toHaveText(child.propertyHistoryPlan);
-
-      await expect(cells.nth(4)).toHaveText(child.propertyHistoryStatus);
-
-      await expect(cells.nth(5)).toHaveText(formatSqToMts(child.propertyHistoryArea));
+      await expect(cells.nth(2).locator('a')).toHaveText(`PID: ${child.pid}`);
+      await expect(cells.nth(3)).toHaveText(child.plan);
+      await expect(cells.nth(4)).toHaveText(child.status);
+      await expect(cells.nth(5)).toHaveText(formatSqToMts(child.area));
     }
   }
 
-  async verifyConsolidationHistory() {
+  async verifyConsolidationHistory(consolidations: conSubHistory[], PID: string, plan: string, status: string, area: string,) {
     await expect(this.propertyInformationTitle).toBeVisible();
     await expect(this.consolidationHistorySubtitle).toBeVisible();
 
@@ -130,17 +127,17 @@ export class ConsolidationSubdivisionHistoryPage {
     await expect(this.subconHistoryTableStatusColumn).toBeVisible();
     await expect(this.subconHistoryTableAreaColumn).toBeVisible();
 
-    for (let i = 0; i < consolidation.consolidationSource.length; i++) {
-      const parent = consolidation.consolidationSource[i];
+    for (let i = 0; i < consolidations.length; i++) {
+      const parent = consolidations[i];
       const parentRow = this.subconTableContent.nth(i);
       const cells = parentRow.locator("[role='cell']");
 
       await expect(cells.nth(2).locator('a')).toHaveText(
-        `PID: ${parent.propertyHistoryIdentifier}`
+        `PID: ${parent.pid}`
       );
-      await expect(cells.nth(3)).toHaveText(parent.propertyHistoryPlan);
-      await expect(cells.nth(4)).toHaveText(parent.propertyHistoryStatus);
-      await expect(cells.nth(5)).toHaveText(formatSqToMts(parent.propertyHistoryArea));
+      await expect(cells.nth(3)).toHaveText(parent.plan);
+      await expect(cells.nth(4)).toHaveText(parent.status);
+      await expect(cells.nth(5)).toHaveText(formatSqToMts(parent.area));
     }
 
     const numberOfRows = await this.subconTableContent.count();
@@ -148,11 +145,10 @@ export class ConsolidationSubdivisionHistoryPage {
     // Last row contains the consolidation child.
     const childRow = this.subconTableContent.nth(numberOfRows - 1);
     const cells = childRow.locator("[role='cell']");
-    const child = consolidation.consolidationDestination;
 
-    await expect(cells.nth(2).locator('a')).toHaveText(`PID: ${child.propertyHistoryIdentifier}`);
-    await expect(cells.nth(3)).toHaveText(child.propertyHistoryPlan);
-    await expect(cells.nth(4)).toHaveText(child.propertyHistoryStatus);
-    await expect(cells.nth(5)).toHaveText(formatSqToMts(child.propertyHistoryArea));
+    await expect(cells.nth(2).locator('a')).toHaveText(`PID: ${PID}`);
+    await expect(cells.nth(3)).toHaveText(plan);
+    await expect(cells.nth(4)).toHaveText(status);
+    await expect(cells.nth(5)).toHaveText(formatSqToMts(area));
   }
 }
